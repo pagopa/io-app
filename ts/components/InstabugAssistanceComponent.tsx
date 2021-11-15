@@ -18,9 +18,8 @@ type Props = Readonly<{
 const InstabugAssistanceComponent: React.FunctionComponent<Props> = ({
   requestAssistance
 }) => {
-  const [hasPreviousChats, setHasPreviousChats] = React.useState<boolean>(
-    false
-  );
+  const [hasPreviousChats, setHasPreviousChats] =
+    React.useState<boolean>(false);
 
   React.useEffect(() => {
     Replies.hasChats(hasChats => {

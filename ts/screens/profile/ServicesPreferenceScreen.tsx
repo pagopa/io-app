@@ -30,18 +30,19 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
   const { present: confirmManualConfig } = useManualConfigBottomSheet();
+  const { potProfile } = props;
   const [prevPotProfile, setPrevPotProfile] = React.useState<
     typeof props.potProfile
   >(props.potProfile);
   React.useEffect(() => {
     // show error toast only when the profile updating fails
     // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
-    if (!pot.isError(prevPotProfile) && pot.isError(props.potProfile)) {
+    if (!pot.isError(prevPotProfile) && pot.isError(potProfile)) {
       showToast(I18n.t("global.genericError"));
     }
 
-    setPrevPotProfile(props.potProfile);
-  }, [props.potProfile]);
+    setPrevPotProfile(potProfile);
+  }, [potProfile, prevPotProfile]);
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation

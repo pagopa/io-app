@@ -131,11 +131,9 @@ const mapStateToProps = (_: GlobalState) => ({
   merchants: []
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToMerchantDetail: () =>
-    dispatch(
-      navigateToCgnMerchantDetail({ merchantID: "some" as Merchant["id"] })
-    )
+    navigateToCgnMerchantDetail({ merchantID: "some" as Merchant["id"] })
 });
 
 export default connect(

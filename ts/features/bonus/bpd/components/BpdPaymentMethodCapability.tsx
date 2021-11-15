@@ -42,18 +42,10 @@ const handleValueChanged = (props: Props, changeActivation: () => void) => {
   }
 };
 
-/**
- * Represent the bpd capability on a payment method.
- * The user can choose to activate o deactivate bpd on that payment method.
- * If the user is not enrolled to bpd, the activation triggers the onboarding to bpd.
- * @constructor
- */
-const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
-  const hash = getPaymentMethodHash(props.paymentMethod);
-  // Without hash we cannot asks the state for bpd
-  if (hash === undefined) {
-    return null;
-  }
+const InnerBpdPaymentMethodCapability = (
+  props: Props & { hash: string }
+): React.ReactElement => {
+  const { hash } = props;
   useLoadPotValue(hash, props.bpdPotActivation, () =>
     props.loadActualValue(hash as HPan)
   );
@@ -91,6 +83,21 @@ const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
       rightElement={bpdToggle}
     />
   );
+};
+
+/**
+ * Represent the bpd capability on a payment method.
+ * The user can choose to activate o deactivate bpd on that payment method.
+ * If the user is not enrolled to bpd, the activation triggers the onboarding to bpd.
+ * @constructor
+ */
+const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
+  const hash = getPaymentMethodHash(props.paymentMethod);
+  // Without hash we cannot asks the state for bpd
+  if (hash === undefined) {
+    return null;
+  }
+  return <InnerBpdPaymentMethodCapability {...props} hash={hash} />;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

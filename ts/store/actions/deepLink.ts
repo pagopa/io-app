@@ -16,20 +16,24 @@ import {
  */
 export const setDeepLink = createAction(
   "SET_DEEPLINK",
-  resolve => (
-    navigationPayload: NavigationNavigateActionPayload,
-    immediate: boolean = false
-  ) => resolve({ navigationPayload, immediate })
+  resolve =>
+    (
+      navigationPayload: NavigationNavigateActionPayload,
+      immediate: boolean = false
+    ) =>
+      resolve({ navigationPayload, immediate })
 );
 
 export const clearDeepLink = createStandardAction("CLEAR_DEEPLINK")();
 
 export const navigateToDeepLink = createAction(
   "NAVIGATE_TO_DEEPLINK",
-  resolve => (
-    navigationPayload: NavigationNavigateActionPayload,
-    prevRouteKey?: string
-  ) => resolve({ ...navigationPayload, key: prevRouteKey })
+  resolve =>
+    (
+      navigationPayload: NavigationNavigateActionPayload,
+      prevRouteKey?: string
+    ) =>
+      resolve({ ...navigationPayload, key: prevRouteKey })
 );
 
 export type DeepLinkActions = ActionType<

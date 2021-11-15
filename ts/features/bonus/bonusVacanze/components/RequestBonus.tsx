@@ -45,12 +45,8 @@ const styles = StyleSheet.create({
  * @param props
  */
 const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
-  const {
-    onButtonPress,
-    activeBonuses,
-    onBonusPress,
-    availableBonusesList
-  } = props;
+  const { onButtonPress, activeBonuses, onBonusPress, availableBonusesList } =
+    props;
   const maybeBonusVacanzeCategory = fromNullable(
     availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
   );

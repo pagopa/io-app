@@ -1,13 +1,14 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { ContextualHelp } from "../../../components/ContextualHelp";
+import ContextualInfo from "../../../components/ContextualInfo";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -140,7 +141,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   const showHelp = () => {
     props.showModal(
-      <ContextualHelp
+      <ContextualInfo
         onClose={props.hideModal}
         title={I18n.t("wallet.whyAFee.title")}
         body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
@@ -151,9 +152,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ? pagoPaApiUrlPrefixTest
     : pagoPaApiUrlPrefix;
 
-  const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
-    "verifica"
-  );
+  const verifica: PaymentRequestsGetResponse =
+    props.navigation.getParam("verifica");
   const wallet: Wallet = props.navigation.getParam("wallet");
   const idPayment: string = props.navigation.getParam("idPayment");
   const paymentReason = verifica.causaleVersamento;
@@ -186,10 +186,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       props.loadTransactions();
     } else {
       props.dispatchPaymentFailure(
-        maybeOutcomeCode.fold(undefined, oc => {
-          const maybeCode = OutcomeCodesKey.decode(oc);
-          return maybeCode.isRight() ? maybeCode.value : undefined;
-        })
+        maybeOutcomeCode.filter(OutcomeCodesKey.is).toUndefined(),
+        idPayment
       );
     }
     props.dispatchEndPaymentWebview("EXIT_PATH");
@@ -353,26 +351,22 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   };
   return {
     pickPaymentMethod: () =>
-      dispatch(
-        navigateToPaymentPickPaymentMethodScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment")
-        })
-      ),
+      navigateToPaymentPickPaymentMethodScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
+      }),
     pickPsp: () =>
-      dispatch(
-        navigateToPaymentPickPspScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment"),
-          psps: props.navigation.getParam("psps"),
-          wallet: props.navigation.getParam("wallet"),
-          chooseToChange: true
-        })
-      ),
+      navigateToPaymentPickPspScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment"),
+        psps: props.navigation.getParam("psps"),
+        wallet: props.navigation.getParam("wallet"),
+        chooseToChange: true
+      }),
     onCancel: () => {
       ActionSheet.show(
         {
@@ -400,8 +394,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatchCancelPayment,
     dispatchPaymentOutCome: (outComeCode: Option<string>) =>
       dispatch(paymentOutcomeCode(outComeCode)),
-    navigateToOutComePaymentScreen: () =>
-      dispatch(navigateToPaymentOutcomeCode()),
+    navigateToOutComePaymentScreen: () => navigateToPaymentOutcomeCode(),
     loadTransactions: () =>
       dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
 
@@ -413,8 +406,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           transaction: undefined
         })
       ),
-    dispatchPaymentFailure: (outcomeCode: OutcomeCodesKey | undefined) =>
-      dispatch(paymentCompletedFailure(outcomeCode))
+    dispatchPaymentFailure: (
+      outcomeCode: OutcomeCodesKey | undefined,
+      paymentId: string
+    ) => dispatch(paymentCompletedFailure({ outcomeCode, paymentId }))
   };
 };
 

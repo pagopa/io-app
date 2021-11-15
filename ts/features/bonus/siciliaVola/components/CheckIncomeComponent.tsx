@@ -33,13 +33,13 @@ const getCheckIncomeUnderThresholdItems = (): ReadonlyArray<
   RadioItem<boolean>
 > => [
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.under", {
+    body: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.under", {
       amount: formatNumberAmount(threshold, true)
     }),
     id: true
   },
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.over", {
+    body: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.over", {
       amount: formatNumberAmount(threshold, true)
     }),
     id: false
@@ -103,7 +103,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   navigateToSvKoCheckIncomeThreshold: () =>
-    dispatch(navigateToSvKoCheckIncomeThresholdScreen()),
+    navigateToSvKoCheckIncomeThresholdScreen(),
   underThresholdIncome: (isUnderThresholdIncome: boolean) =>
     dispatch(svGenerateVoucherUnderThresholdIncome(isUnderThresholdIncome))
 });

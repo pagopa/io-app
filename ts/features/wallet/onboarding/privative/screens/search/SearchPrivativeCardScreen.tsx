@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ExecutionStatusEnum } from "../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
@@ -64,18 +64,21 @@ const PrivativeReady = (p: {
  * @constructor
  */
 const SearchPrivativeCardScreen = (props: Props): React.ReactElement => {
+  const { privativeSelected, search, failure } = props;
+  const firstRendering = useRef(true);
   useEffect(() => {
-    const { privativeSelected } = props;
     // Is not expected that the user can arrive in this screen without the issuerId and the cardNumber.
-    // If this happens, an event will be send to mixpanel and the failure action will be dispatched.
-    if (privativeSelected === undefined) {
-      props.failure(
-        "privativeSelected is undefined in SearchPrivativeCardScreen"
-      );
-    } else {
-      props.search(privativeSelected);
+    // If this happens, an event will be sent to mixpanel and the failure action will be dispatched.
+    if (firstRendering.current) {
+      if (privativeSelected === undefined) {
+        failure("privativeSelected is undefined in SearchPrivativeCardScreen");
+      } else {
+        search(privativeSelected);
+      }
+      // eslint-disable-next-line functional/immutable-data
+      firstRendering.current = false;
     }
-  }, []);
+  }, [privativeSelected, search, failure]);
 
   const privativeFound = props.privativeFound;
   if (isReady(privativeFound)) {

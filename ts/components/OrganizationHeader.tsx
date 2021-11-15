@@ -1,10 +1,8 @@
 import { Col, Grid, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { ServicePublic } from "../../definitions/backend/ServicePublic";
-import { logosForService } from "../utils/services";
-import H5 from "./ui/H5";
+import { ImageURISource, StyleSheet } from "react-native";
 import { MultiImage } from "./ui/MultiImage";
+import { H2 } from "./core/typography/H2";
 
 const styles = StyleSheet.create({
   serviceCol: {
@@ -18,31 +16,29 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  service: ServicePublic;
+  serviceName: string;
+  organizationName: string;
+  logoURLs: ReadonlyArray<ImageURISource>;
 };
 
 /**
  * A component to render the name of the organization and of the related service
  * with the corresponding image
  */
-const OrganizationHeader = (props: Props) => {
-  const { service } = props;
-  return (
-    <Grid>
-      <Col style={styles.leftColumnStyle}>
-        <H5>{service.organization_name}</H5>
-        <Text>{service.service_name}</Text>
-      </Col>
-      {service.service_id && (
-        <Col style={styles.serviceCol}>
-          <MultiImage
-            style={styles.serviceMultiImage}
-            source={logosForService(service)}
-          />
-        </Col>
-      )}
-    </Grid>
-  );
-};
+const OrganizationHeader = ({
+  serviceName,
+  organizationName,
+  logoURLs
+}: Props) => (
+  <Grid>
+    <Col style={styles.leftColumnStyle}>
+      <H2>{organizationName}</H2>
+      <Text>{serviceName}</Text>
+    </Col>
+    <Col style={styles.serviceCol}>
+      <MultiImage style={styles.serviceMultiImage} source={logoURLs} />
+    </Col>
+  </Grid>
+);
 
 export default OrganizationHeader;

@@ -5,7 +5,7 @@ import { isSome } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { svGenerateVoucherFailure } from "../../store/actions/voucherGeneration";
 import { navigateToSvWorkerSelectDestinationScreen } from "../../navigation/actions";
-import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import CheckIncomeComponent from "../../components/CheckIncomeComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -29,7 +29,7 @@ const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   navigateToSvWorkerSelectDestination: () =>
-    dispatch(navigateToSvWorkerSelectDestinationScreen())
+    navigateToSvWorkerSelectDestinationScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

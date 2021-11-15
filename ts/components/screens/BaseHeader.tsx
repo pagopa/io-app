@@ -279,13 +279,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   };
 
   private renderLeft = () => {
-    const {
-      isSearchEnabled,
-      appLogo,
-      primary,
-      dark,
-      isPagoPATestEnabled
-    } = this.props;
+    const { isSearchEnabled, appLogo, primary, dark, isPagoPATestEnabled } =
+      this.props;
 
     const iconColor = isPagoPATestEnabled
       ? variables.brandHighlight
@@ -317,10 +312,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => {
-    dispatch(navigateBack());
-  }
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateBack: () => navigateBack()
 });
 
 export const BaseHeader = connect(

@@ -40,13 +40,14 @@ const styles = StyleSheet.create({
 
 const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
+  const { account, abiList } = props;
 
   React.useEffect(() => {
-    const abi: Abi | undefined = props.abiList.find(
-      elem => elem.abi === props.account.instituteCode
+    const abi: Abi | undefined = abiList.find(
+      elem => elem.abi === account.instituteCode
     );
     setAbiInfo(abi ?? {});
-  }, [props.account.instituteCode]);
+  }, [account, abiList]);
 
   return (
     <BaseScreenComponent

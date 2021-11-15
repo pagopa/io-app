@@ -13,7 +13,6 @@ import {
   navigateToWalletAddPaymentMethod,
   navigateToWalletHome
 } from "../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
@@ -29,41 +28,40 @@ const loadLocales = () => ({
   body: I18n.t("bonus.bpd.onboarding.noPaymentMethod.body")
 });
 
-const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> = props => {
-  const { headerTitle, skip, addMethod, title, body } = loadLocales();
-  return (
-    <BaseScreenComponent
-      goBack={false}
-      headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-          <View spacer={true} large={true} />
-          <H1>{title}</H1>
-          <View spacer={true} large={true} />
-          <Body>{body}</Body>
-        </View>
-        <FooterTwoButtons
-          onRight={props.addPaymentMethod}
-          onCancel={props.skip}
-          rightText={addMethod}
-          leftText={skip}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> =
+  props => {
+    const { headerTitle, skip, addMethod, title, body } = loadLocales();
+    return (
+      <BaseScreenComponent
+        goBack={false}
+        headerTitle={headerTitle}
+        contextualHelp={emptyContextualHelp}
+      >
+        <SafeAreaView style={IOStyles.flex}>
+          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+            <View spacer={true} large={true} />
+            <H1>{title}</H1>
+            <View spacer={true} large={true} />
+            <Body>{body}</Body>
+          </View>
+          <FooterTwoButtons
+            onRight={props.addPaymentMethod}
+            onCancel={props.skip}
+            rightText={addMethod}
+            leftText={skip}
+          />
+        </SafeAreaView>
+      </BaseScreenComponent>
+    );
+  };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   skip: () => {
-    dispatch(navigationHistoryPop(1));
-    dispatch(navigateToWalletHome());
+    navigateToWalletHome();
   },
   addPaymentMethod: () => {
-    dispatch(navigationHistoryPop(1));
-    dispatch(navigateToWalletHome());
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }));
+    navigateToWalletHome();
+    navigateToWalletAddPaymentMethod({ inPayment: none });
   }
 });
 

@@ -20,9 +20,10 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  */
 const LogoutScreen = (props: Props) => {
   // do logout on component mount
+  const { logout } = props;
   useEffect(() => {
-    props.logout();
-  }, []);
+    logout();
+  }, [logout]);
 
   return (
     <BaseScreenComponent

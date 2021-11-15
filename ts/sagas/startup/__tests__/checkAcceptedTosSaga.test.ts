@@ -4,59 +4,38 @@ import {
   NonNegativeInteger,
   NonNegativeNumber
 } from "italia-ts-commons/lib/numbers";
-import {
-  EmailString,
-  FiscalCode,
-  NonEmptyString
-} from "italia-ts-commons/lib/strings";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../../config";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
+import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("checkAcceptedTosSaga", () => {
-  const firstOnboardingProfile: InitializedProfile = {
-    service_preferences_settings: {
-      mode: ServicesPreferencesModeEnum.AUTO
-    },
+  const firstOnboardingProfile = {
+    ...mockedProfile,
     has_profile: false,
     is_email_enabled: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
-    version: 0 as NonNegativeInteger,
-    spid_email: "test@example.com" as EmailString,
-    family_name: "Connor",
-    name: "John",
-    fiscal_code: "XYZ" as FiscalCode,
-    spid_mobile_phone: "123" as NonEmptyString
+    version: 0 as NonNegativeInteger
   };
 
-  const oldOnboardedProfile: InitializedProfile = {
-    service_preferences_settings: {
-      mode: ServicesPreferencesModeEnum.AUTO
-    },
+  const oldOnboardedProfile = {
+    ...mockedProfile,
     has_profile: true,
+    is_email_enabled: false,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
-    is_email_enabled: false,
-    email: "test@example.com" as EmailString,
-    spid_email: "test@example.com" as EmailString,
-    family_name: "Connor",
-    name: "John",
-    fiscal_code: "XYZ" as FiscalCode,
-    spid_mobile_phone: "123" as NonEmptyString,
     version: 1 as NonNegativeInteger
   };
 
-  const notUpdatedProfile: InitializedProfile = {
+  const notUpdatedProfile = {
     ...oldOnboardedProfile,
     accepted_tos_version: (tosVersion - 1) as NonNegativeNumber
   };
 
-  const updatedProfile: InitializedProfile = {
+  const updatedProfile = {
     ...oldOnboardedProfile,
     accepted_tos_version: tosVersion
   };
@@ -74,7 +53,7 @@ describe("checkAcceptedTosSaga", () => {
   describe("when user has already accepted the last version of ToS", () => {
     it("should do nothing", () =>
       expectSaga(checkAcceptedTosSaga, updatedProfile)
-        .not.put(navigateToTosScreen)
+        .not.call(navigateToTosScreen)
         .run());
   });
 
@@ -84,14 +63,14 @@ describe("checkAcceptedTosSaga", () => {
         ...oldOnboardedProfile,
         accepted_tos_version: undefined
       })
-        .put(navigateToTosScreen)
+        .call(navigateToTosScreen)
         .run());
   });
 
   describe("when user has accepted an old version of ToS", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () =>
       expectSaga(checkAcceptedTosSaga, notUpdatedProfile)
-        .put(navigateToTosScreen)
+        .call(navigateToTosScreen)
         .take(tosAccepted)
         .run());
   });
@@ -99,7 +78,7 @@ describe("checkAcceptedTosSaga", () => {
   describe("when user has never accepted an ToS because he is accessing the app for the first time", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () =>
       expectSaga(checkAcceptedTosSaga, firstOnboardingProfile)
-        .put(navigateToTosScreen)
+        .call(navigateToTosScreen)
         .take(tosAccepted)
         .run());
   });

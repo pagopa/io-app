@@ -113,7 +113,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
       <TopScreenComponent
         headerTitle={I18n.t("send_email_messages.title")}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
       >
         <ScreenContent title={I18n.t("send_email_messages.title")}>
           <Text style={{ paddingHorizontal: customVariables.contentPadding }}>
@@ -199,9 +199,8 @@ class EmailForwardingScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potVisibleServices: VisibleServicesState = visibleServicesSelector(
-    state
-  );
+  const potVisibleServices: VisibleServicesState =
+    visibleServicesSelector(state);
   const visibleServicesId = pot.getOrElse(
     pot.map(potVisibleServices, services =>
       services.map(service => service.service_id)

@@ -4,7 +4,10 @@ import { StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { index } from "fp-ts/lib/Array";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import {
+  bottomSheetContent,
+  useIOBottomSheetRaw
+} from "../../../../../utils/bottomSheet";
 import I18n from "../../../../../i18n";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -17,10 +20,13 @@ import { BaseTypography } from "../../../../../components/core/typography/BaseTy
 import { addEvery } from "../../../../../utils/strings";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../utils/filters";
+import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../../../components/core/typography/Label";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
   discount: Discount;
+  onLandingCtaPress?: (url: string, referer: string) => void;
 };
 
 const styles = StyleSheet.create({
@@ -54,9 +60,11 @@ const CATEGORY_ICON_SIZE = 22;
 const COPY_ICON_SIZE = 24;
 
 const CgnDiscountDetail: React.FunctionComponent<Props> = ({
-  discount
+  discount,
+  onLandingCtaPress
 }: Props) => {
   const [isTap, setIsTap] = React.useState(false);
+  const [isCodeVisible, setIsCodeVisible] = React.useState(false);
   const timerRetry = React.useRef<number | undefined>(undefined);
 
   React.useEffect(
@@ -80,11 +88,11 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       {index(0, [...discount.productCategories]).fold(undefined, categoryKey =>
         getCategorySpecs(categoryKey).fold(undefined, c => (
           <View style={styles.row}>
-            <IconFont
-              name={c.icon}
-              size={CATEGORY_ICON_SIZE}
-              color={IOColors.bluegrey}
-            />
+            {c.icon({
+              height: CATEGORY_ICON_SIZE,
+              width: CATEGORY_ICON_SIZE,
+              fill: IOColors.bluegrey
+            })}
             <View hspacer small />
             <H5 weight={"SemiBold"} color={"bluegrey"}>
               {I18n.t(c.nameKey).toLocaleUpperCase()}
@@ -109,7 +117,9 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
             {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
           </H3>
           <TouchableWithoutFeedback
-            onPress={handleCopyPress}
+            onPress={
+              isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)
+            }
             accessible={true}
             accessibilityRole={"button"}
             accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
@@ -121,10 +131,15 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                 font={"RobotoMono"}
                 style={styles.codeText}
               >
-                {addEvery(discount.staticCode, " ", 3)}
+                {isCodeVisible
+                  ? addEvery(discount.staticCode, " ", 3)
+                  : "••••••••••"}
               </BaseTypography>
+
               <IconFont
-                name={isTap ? "io-complete" : "io-copy"}
+                name={
+                  isCodeVisible ? (isTap ? "io-complete" : "io-copy") : "io-eye"
+                }
                 size={COPY_ICON_SIZE}
                 color={IOColors.blue}
                 style={styles.flexEnd}
@@ -140,14 +155,31 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
             {I18n.t("bonus.cgn.merchantDetail.title.conditions")}
           </H3>
           <H4 weight={"Regular"}>{discount.condition}</H4>
+          <View spacer />
         </>
+      )}
+      {discount.landingPageUrl && discount.landingPageReferrer && (
+        <ButtonDefaultOpacity
+          style={{ width: "100%" }}
+          onPress={() => {
+            onLandingCtaPress?.(
+              discount.landingPageUrl as string,
+              discount.landingPageReferrer as string
+            );
+          }}
+          onPressWithGestureHandler={true}
+        >
+          <Label color={"white"}>
+            {I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
+          </Label>
+        </ButtonDefaultOpacity>
       )}
     </View>
   );
 };
 
 const CgnDiscountDetailHeader = ({ discount }: Props) => (
-  <View style={[IOStyles.row, { alignItems: "center" }]}>
+  <View style={[IOStyles.row, { alignItems: "center" }, IOStyles.flex]}>
     {discount.discount && (
       <>
         <CgnDiscountValueBox value={discount.discount} small />
@@ -158,9 +190,27 @@ const CgnDiscountDetailHeader = ({ discount }: Props) => (
   </View>
 );
 
-export const useCgnDiscountDetailBottomSheet = (discount: Discount) =>
-  useIOBottomSheet(
-    <CgnDiscountDetail {...{ discount }} />,
-    <CgnDiscountDetailHeader {...{ discount }} />,
-    520
+export const useCgnDiscountDetailBottomSheet = (
+  discount: Discount,
+  landingPageHandler?: (url: string, referer: string) => void
+) => {
+  const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
+    440,
+    bottomSheetContent
   );
+
+  return {
+    dismiss,
+    present: () =>
+      openBottomSheet(
+        <CgnDiscountDetail
+          discount={discount}
+          onLandingCtaPress={(url: string, referer: string) => {
+            landingPageHandler?.(url, referer);
+            dismiss();
+          }}
+        />,
+        <CgnDiscountDetailHeader {...{ discount }} />
+      )
+  };
+};

@@ -1,6 +1,5 @@
 import { format as dateFnsFormat } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable } from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -203,46 +202,34 @@ export function getEnabledChannelsForService(
  * Returns a function that generates updated blocked channels from the
  * enabled channels of one service
  */
-export const getBlockedChannels = (
-  potProfile: ProfileState,
-  serviceId: ServiceId
-) => (enabled: EnabledChannels): BlockedInboxOrChannels => {
-  // get the current blocked channels from the profile
-  const profileBlockedChannels = pot.getOrElse(
-    pot.mapNullable(
-      potProfile,
-      userProfile => userProfile.blocked_inbox_or_channels
-    ),
-    {} as BlockedInboxOrChannels
-  );
+export const getBlockedChannels =
+  (potProfile: ProfileState, serviceId: ServiceId) =>
+  (enabled: EnabledChannels): BlockedInboxOrChannels => {
+    // get the current blocked channels from the profile
+    const profileBlockedChannels = pot.getOrElse(
+      pot.mapNullable(
+        potProfile,
+        userProfile => userProfile.blocked_inbox_or_channels
+      ),
+      {} as BlockedInboxOrChannels
+    );
 
-  // compute the blocked channels array for this service
-  const blockedChannelsForService = [
-    !enabled.inbox ? INBOX_CHANNEL : "",
-    !enabled.push ? PUSH_CHANNEL : "",
-    !enabled.email ? EMAIL_CHANNEL : ""
-  ].filter(_ => _ !== "");
+    // compute the blocked channels array for this service
+    const blockedChannelsForService = [
+      !enabled.inbox ? INBOX_CHANNEL : "",
+      !enabled.push ? PUSH_CHANNEL : "",
+      !enabled.email ? EMAIL_CHANNEL : ""
+    ].filter(_ => _ !== "");
 
-  if (blockedChannelsForService.length === 0) {
-    // eslint-disable-next-line functional/immutable-data
-    delete profileBlockedChannels[serviceId];
-  } else {
-    // eslint-disable-next-line functional/immutable-data
-    profileBlockedChannels[serviceId] = blockedChannelsForService;
-  }
+    if (blockedChannelsForService.length === 0) {
+      // eslint-disable-next-line functional/immutable-data
+      delete profileBlockedChannels[serviceId];
+    } else {
+      // eslint-disable-next-line functional/immutable-data
+      profileBlockedChannels[serviceId] = blockedChannelsForService;
+    }
 
-  return {
-    ...profileBlockedChannels
+    return {
+      ...profileBlockedChannels
+    };
   };
-};
-
-// a string log containing profile details
-export const getProfileDetailsLog = (
-  profile: InitializedProfile,
-  separator: string = " / "
-) =>
-  `- spid_email: ${fromNullable(profile.spid_email as string).getOrElse(
-    "n/a"
-  )}${separator}- email: ${fromNullable(profile.email as string).getOrElse(
-    "n/a"
-  )}${separator}- cf: ${profile.fiscal_code as string}`;

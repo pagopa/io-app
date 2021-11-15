@@ -40,7 +40,7 @@ const mapStateToProps = (_: GlobalState) => ({});
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onConfirm: () => {
     dispatch(cgnActivationComplete());
-    dispatch(navigateToCgnDetails());
+    navigateToCgnDetails();
   }
 });
 

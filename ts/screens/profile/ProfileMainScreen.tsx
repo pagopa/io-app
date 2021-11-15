@@ -2,7 +2,6 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
   NavigationEventSubscription,
@@ -12,7 +11,7 @@ import {
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { ContextualHelp } from "../../components/ContextualHelp";
+import ContextualInfo from "../../components/ContextualInfo";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -47,6 +46,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { navigateToLogout } from "../../store/actions/navigation";
+import { getDeviceId } from "../../utils/device";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -112,7 +112,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       tapsOnAppVersion: 0,
-      deviceUniqueId: DeviceInfo.getUniqueId()
+      deviceUniqueId: getDeviceId()
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
@@ -425,7 +425,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       body: TranslationKeys
     ) => {
       this.props.showModal(
-        <ContextualHelp
+        <ContextualInfo
           onClose={this.props.hideModal}
           title={I18n.t(title)}
           body={() => <Markdown>{I18n.t(body)}</Markdown>}
@@ -544,7 +544,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: () => dispatch(navigateToLogout()),
+  logout: () => navigateToLogout(),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),

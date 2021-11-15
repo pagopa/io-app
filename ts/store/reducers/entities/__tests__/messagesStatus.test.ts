@@ -11,8 +11,7 @@ import {
 import { Action } from "../../../actions/types";
 import reducer, {
   EMPTY_MESSAGE_STATUS,
-  MessagesStatus,
-  testableMessageStatusReducer
+  MessagesStatus
 } from "../messages/messagesStatus";
 import { differentProfileLoggedIn } from "../../../actions/crossSessions";
 
@@ -38,7 +37,7 @@ const messageWithContent = {
 
 describe("messagesStatus reducer", () => {
   it("should return the initial state", () => {
-    expect(reducer(undefined, (dymmyAction as unknown) as Action)).toEqual({});
+    expect(reducer(undefined, dymmyAction as unknown as Action)).toEqual({});
   });
 
   it("should return the loaded message with default value", () => {
@@ -86,14 +85,14 @@ describe("messagesStatus reducer", () => {
     });
   });
 
-  it("should return the initial state", () => {
-    const notEmptyState = reducer(
-      undefined,
-      loadMessage.success(messageWithContent)
-    );
-    expect(reducer(notEmptyState, differentProfileLoggedIn())).toEqual(
-      testableMessageStatusReducer?.initial_state
-    );
+  describe("when `differentProfileLoggedIn` is passed and a message is already persisted", () => {
+    it("should return the initial state", () => {
+      const notEmptyState = reducer(
+        undefined,
+        loadMessage.success(messageWithContent)
+      );
+      expect(reducer(notEmptyState, differentProfileLoggedIn())).toEqual({});
+    });
   });
 
   it("should return the loaded message with isArchived state to false", () => {

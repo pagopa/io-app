@@ -21,7 +21,7 @@ release_tag: &release_tag /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
 defaults_js: &defaults_js
   <<: *defaults
   docker:
-    - image: circleci/node:12
+    - image: cimg/node:14.17.4
 
 # android builds
 defaults_android: &defaults_android
@@ -118,12 +118,18 @@ jobs:
       - run:
           command: |
               TEST=$(circleci tests glob **/__test*__/*.ts* | circleci tests split)
-              yarn test $TEST
+              yarn test:ci $TEST --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./tmp/reports/junit
       - run: ./scripts/codecov.sh
+
+      - store_test_results:
+          path: ./tmp/reports/junit/
+
     parallelism: 8
 
-  # Runs Danger checks on PR
-  eslint:
+  # Runs ESlint checks on PR
+  run-eslint:
     <<: *defaults_js
 
     steps:
@@ -133,6 +139,18 @@ jobs:
 
       # Run linter
       - run: yarn lint
+
+  # Check if all files respect the prettier rules
+  run-prettier:
+    <<: *defaults_js
+
+    steps:
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
+
+      # Run linter
+      - run: yarn prettier:check
 
   # Runs Danger checks on PR
   run-danger:
@@ -145,6 +163,28 @@ jobs:
 
       # Run DangerJS
       - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
+
+  # Check for outdated dependencies and create a report
+  check-outdated-dependencies:
+    <<: *defaults_js
+
+    steps:
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
+      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
+       ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
+
+  # Send a Slack message to notify the release of a new app version in beta
+  notify-new-app-version:
+    <<: *defaults_js
+
+    steps:
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
+      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
+       ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
 
   # Create signed Android release
   android-release:
@@ -265,141 +305,6 @@ jobs:
           path: android/app/build/outputs/bundle
           destination: bundle
 
-  # Test ios build
-  test-ios:
-    <<: *defaults_macos
-
-    # Not supported with the current plan
-    # resource_class: large
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
-
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - *ios_gems_cache_key
-
-      - run:
-          name: Configure Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler
-
-      # Remove watchman from node global packages
-      - run:
-          name: Remove watchman from node global packages
-          command: npm r -g watchman
-
-      # Install watchman with brew
-      - run:
-          name: Install watchman
-          command: |
-            brew update
-            brew install watchman || exit 0
-
-      # Install bundle dependencies
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
-
-      # Store bundle cache
-      - save_cache:
-          key: *ios_gems_cache_key
-          paths:
-            - vendor/bundle
-
-      # Fetch CocoaPods specs
-      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-
-      # Re-run postinstall scripts (setup of react-native libs)
-      - run: npm run postinstall
-
-      # Move to the ios project directory and run the test_build lane
-      - run: cd ios && bundle exec fastlane test_build
-
-  # Prepare build for end-to-end iOS tests
-  test-ios-e2e-build:
-    <<: *defaults_macos
-
-    # Not supported with the current plan
-    # resource_class: large
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
-
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - *ios_gems_cache_key
-
-      - run:
-          name: Configure Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler
-
-      # TODO: possibly remove this after the following issue has been fixed:
-      # https://github.com/GeekyAnts/NativeBase/issues/1957
-      - run: "[ -d node_modules/native-base/dist/src/Utils ] && mv node_modules/native-base/dist/src/Utils node_modules/native-base/dist/src/utils"
-      - run: "[ -d node_modules/native-base/src/Utils ] && mv node_modules/native-base/src/Utils node_modules/native-base/src/utils"
-
-      # Remove watchman from node global packages
-      - run:
-          name: Remove watchman from node global packages
-          command: npm r -g watchman
-
-      # Install watchman with brew
-      - run:
-          name: Install watchman
-          command: |
-            brew update
-            brew install watchman || exit 0
-
-      # Install bundle dependencies
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
-
-      # Store bundle cache
-      - save_cache:
-          key: *ios_gems_cache_key
-          paths:
-            - vendor/bundle
-
-      # Fetch CocoaPods specs
-      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-
-      # Re-run postinstall scripts (setup of react-native libs)
-      - run: npm run postinstall
-
-      # Install pods
-      - run: cd ios && bundle exec pod install --verbose
-
-      # Install Detox and ios-sim utils
-      # see: https://github.com/wix/detox/
-      - run: npm install -g detox
-
-      # cleanup metro and haste cache
-      - run: rm -rf /tmp/metro-bundler-cache-*
-      - run: rm -rf /tmp/haste-map-react-native-packager-*
-
-      # Run detox e2e tests
-      - run: detox build -c ios.sim.release
-
-      # Save workspace for next jobs in the workflow
-      - persist_to_workspace:
-          root: /Users/distiller
-          paths:
-            - italia-app
-
-
   # Create a release build, submit to the store and distributes to the beta testers
   ios-beta-release:
     <<: *defaults_macos
@@ -437,9 +342,6 @@ jobs:
 
       - run: ./scripts/ios-release-build.sh
 
-      # Fetch CocoaPods specs
-#      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-
       - add_ssh_keys:
           fingerprints:
             - "f6:10:4f:48:64:51:83:2c:e4:3c:80:36:42:f2:4c:0b"
@@ -451,46 +353,9 @@ jobs:
             cd ios
             bundle exec fastlane beta_circleci_testflight
 
-
-  # Run end-to-end iOS tests
-  test-ios-e2e-run:
-    <<: *defaults_macos
-
-    # Not supported with the current plan
-    # resource_class: large
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
-
-      # Install Detox and ios-sim utils
-      # see: https://github.com/wix/detox/
-      - run: npm install -g detox ios-sim
-
-      # Install required tools
-      # see: https://github.com/wix/detox/blob/master/docs/Guide.RunningOnCI.md
-      - run: brew tap wix/brew
-      - run: brew install applesimutils
-
-      # Enumerate device types available in simulator
-      - run: ios-sim showdevicetypes
-
-      # Start emulator in background
-      - run:
-          command: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
-          background: true
-
-      # Run detox e2e tests
-      - run: detox test --loglevel verbose -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all --debug-synchronization 1000
-
-      # store detox artifacts
-      - store_artifacts:
-          path: /tmp/detox_artifacts
-
   pagopa_specs_diff:
     docker:
-      - image: circleci/android:api-28
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
@@ -499,29 +364,112 @@ jobs:
 
   io_check_uris:
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
           name: check uris validity on static texts
           command: |
             cd scripts/check_urls
-            sudo pip install pipenv
             pipenv install
             pipenv run python3 check_urls.py
-  
+
   io_check_cie_button_exists_ios:
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
           name: check cie button existence
           command: |
             cd scripts/check_cie_button_exists
-            sudo pip install pipenv
             pipenv install
             pipenv run python3 check_cie_button_exists_ios.py
+
+###############################################################################
+# Prepare the environment, build, and run e2e tests
+###############################################################################
+  run-e2e-test-IOS:
+    <<: *defaults_macos
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /Users/distiller
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - *ios_gems_cache_key
+
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler:$BUNDLER_VERSION
+
+      - run:
+          name: Install Bundle
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: *ios_gems_cache_key
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Prepare dependencies for build
+          command: |
+            cp .env.local .env
+            yarn run postinstall
+            cd ios && bundle exec pod install --verbose
+            rm -rf /tmp/metro-bundler-cache-*
+            rm -rf /tmp/haste-map-react-native-packager-*
+
+      - run:
+          name: Install Detox and simulator's utils
+          command: |
+            npm install -g ios-sim
+            brew tap wix/brew
+            brew install applesimutils
+            ios-sim showdevicetypes
+
+      - run:
+          name: Prepare build for Detox
+          command: yarn detox build -c ios.sim.debug
+
+      - run:
+          name: Run E2E tests with io-dev-api server
+          command: |
+            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
+            cd _io-dev-api-server_
+            cp ../scripts/api-config.json config/config.json
+            yarn
+            yarn start > /tmp/io-dev-api-server.log &
+            # wait for the server to be up and running
+            sleep 10
+            cd ..
+            yarn detox clean-framework-cache
+            yarn detox build-framework-cache
+            yarn detox test \
+              --loglevel verbose \
+              -c ios.sim.debug \
+              --cleanup \
+              --artifacts-location /tmp/e2e_artifacts/detox/ \
+              --record-logs all \
+              --take-screenshots all \
+              --record-videos failing \
+              --debug-synchronization 1000
+
+      # store detox artifacts
+      - store_artifacts:
+          path: /tmp/e2e_artifacts
+
+      - store_artifacts:
+          path: /tmp/io-dev-api-server.log
+
 
 workflows:
   version: 2
@@ -529,43 +477,22 @@ workflows:
     jobs:
       - compile-typescript
       - run-tests
-      - eslint
+      - run-eslint
+      - run-prettier
 
       - run-danger:
           filters:
             branches:
               ignore: master
 
-
-
-      # To avoid running too many (long) native builds and tests, this step
-      # waits the approval for the Android native tests.
-#      - hold-android-native:
-#          type: approval
-#          requires:
-#            - compile-typescript
-#            - run-tests
-#            - lint-typescript
-#          filters:
-#            branches:
-#              ignore: master
-
-      # Build Android release
-#      - android-release:
-#          requires:
-#            - hold-android-native
-
-      # Native iOS e2e tests
-#      - hold-ios-e2e-tests:
-#          type: approval
-#          requires:
-#            - compile-typescript
-#      - test-ios-e2e-build:
-#          requires:
-#            - hold-ios-e2e-tests
-#      - test-ios-e2e-run:
-#          requires:
-#            - test-ios-e2e-build
+      # TODO: Native Android e2e tests
+      # TODO: Slack integration
+      - run-e2e-test-IOS:
+          requires:
+            - compile-typescript
+          filters:
+            branches:
+              only: master
 
   # Release workflow triggered only when a new release tag is pushed
   release:
@@ -584,7 +511,13 @@ workflows:
             branches:
               ignore: /.*/
 
-      - eslint:
+      - run-eslint:
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+      - run-prettier:
           filters:
             tags:
               only: *release_tag
@@ -596,7 +529,8 @@ workflows:
           requires:
             - compile-typescript
             - run-tests
-            - eslint
+            - run-eslint
+            - run-prettier
           filters:
             tags:
               only: *release_tag
@@ -608,7 +542,19 @@ workflows:
           requires:
             - compile-typescript
             - run-tests
-            - eslint
+            - run-eslint
+            - run-prettier
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+
+      # Send a Slack message to notify the release of a new app version in beta
+      - notify-new-app-version:
+          requires:
+            - ios-beta-release
+            - alpha-release-android
           filters:
             tags:
               only: *release_tag
@@ -629,4 +575,17 @@ workflows:
     jobs:
       - pagopa_specs_diff
       - io_check_uris
+      # see https://www.pivotaltracker.com/n/projects/2048617/stories/177755852
       # - io_check_cie_button_exists_ios
+
+  # Run a weekly report At 16:00 on Friday
+  weekly-report:
+    triggers:
+      - schedule:
+          cron: "0 14 * * 5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - check-outdated-dependencies

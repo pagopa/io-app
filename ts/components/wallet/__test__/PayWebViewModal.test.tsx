@@ -13,12 +13,14 @@ import { appReducer } from "../../../store/reducers";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
 
-const loadingCases: ReadonlyArray<[
-  url: string,
-  finishPathName: string,
-  outcomeQueryparamName: string,
-  expectedResult: [isFinish: boolean, outcomeCode: string | undefined]
-]> = [
+const loadingCases: ReadonlyArray<
+  [
+    url: string,
+    finishPathName: string,
+    outcomeQueryparamName: string,
+    expectedResult: [isFinish: boolean, outcomeCode: string | undefined]
+  ]
+> = [
   ["http://mydomain.com/path", "/finish/path", "empty", [false, undefined]],
   [
     "http://mydomain.com/finish/path",

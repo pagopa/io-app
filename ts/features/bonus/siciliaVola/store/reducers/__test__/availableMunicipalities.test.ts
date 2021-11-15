@@ -4,36 +4,18 @@ import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   svGenerateVoucherAvailableMunicipality,
-  svGenerateVoucherAvailableProvince,
-  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
 import { getTimeoutError } from "../../../../../../utils/errors";
-import {
-  Municipality,
-  Province,
-  Region,
-  State
-} from "../../../types/SvVoucherRequest";
+import { Municipality } from "../../../types/SvVoucherRequest";
 import { toIndexed } from "../../../../../../store/helpers/indexer";
 
 const genericError = getTimeoutError();
-const mockState: State = {
-  id: 1,
-  name: "state1"
-};
-const mockRegion: Region = {
-  id: 1,
-  name: "reg1"
-};
-const mockProvince: Province = {
-  id: 1,
-  name: "prov1"
-};
+
 const mockResponse: ReadonlyArray<Municipality> = [
-  { id: 1, name: "mun1" },
-  { id: 2, name: "mun2" }
+  { id: "A010", name: "mun1", latitude: 1, longitude: 1 },
+  { id: "A020", name: "mun2", latitude: 2, longitude: 2 }
 ];
 
 describe("Test availableMunicipality reducer", () => {
@@ -52,7 +34,7 @@ describe("Test availableMunicipality reducer", () => {
       store.getState().bonus.sv.voucherGeneration.availableMunicipalities
     ).toStrictEqual(pot.none);
   });
-  it("Should be pot.none after if is dispatched a state, region or province request action", () => {
+  it("Should be pot.none after if is dispatched a state request action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
@@ -60,27 +42,6 @@ describe("Test availableMunicipality reducer", () => {
     expect(
       store.getState().bonus.sv.voucherGeneration.availableMunicipalities
     ).toStrictEqual(pot.none);
-
-    store.dispatch(svGenerateVoucherAvailableRegion.request(mockState));
-    expect(
-      store.getState().bonus.sv.voucherGeneration.availableMunicipalities
-    ).toStrictEqual(pot.none);
-
-    store.dispatch(svGenerateVoucherAvailableProvince.request(mockRegion));
-    expect(
-      store.getState().bonus.sv.voucherGeneration.availableMunicipalities
-    ).toStrictEqual(pot.none);
-  });
-  it("Should be pot.noneLoading after the first loading action dispatched", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-    store.dispatch(
-      svGenerateVoucherAvailableMunicipality.request(mockProvince)
-    );
-
-    expect(
-      store.getState().bonus.sv.voucherGeneration.availableMunicipalities
-    ).toStrictEqual(pot.noneLoading);
   });
   it("Should be pot.some with the response, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -96,9 +57,7 @@ describe("Test availableMunicipality reducer", () => {
   it("Should be pot.Error if is dispatched a failure after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(
-      svGenerateVoucherAvailableMunicipality.request(mockProvince)
-    );
+
     store.dispatch(
       svGenerateVoucherAvailableMunicipality.failure(genericError)
     );

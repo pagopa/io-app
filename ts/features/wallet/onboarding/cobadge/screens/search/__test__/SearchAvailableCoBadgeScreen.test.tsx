@@ -75,12 +75,12 @@ const searchRequestMetaKO: SearchRequestMetadata = {
   serviceProviderName: "ServiceNameHere"
 };
 
-const withSearchRequestMetadata = (
-  metadataList: ReadonlyArray<SearchRequestMetadata>
-) => (response: CobadgeResponse) => ({
-  ...response,
-  payload: { ...response.payload, searchRequestMetadata: [...metadataList] }
-});
+const withSearchRequestMetadata =
+  (metadataList: ReadonlyArray<SearchRequestMetadata>) =>
+  (response: CobadgeResponse) => ({
+    ...response,
+    payload: { ...response.payload, searchRequestMetadata: [...metadataList] }
+  });
 
 describe("Test behaviour of the SearchAvailableCoBadgeScreen", () => {
   jest.useFakeTimers();

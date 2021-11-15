@@ -1,73 +1,75 @@
-import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
 import * as React from "react";
-import { Platform } from "react-native";
+import { useRef, useState } from "react";
+import { AppState, AppStateStatus, Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
 
-const getBrightnessPlatform: () => Promise<number> = () =>
+const getBrightness = (): Promise<number> =>
   Platform.select({
     ios: ScreenBrightness.getBrightness,
     default: ScreenBrightness.getAppBrightness
   })();
 
-const setBrightnessPlatform = (brightness: number): Promise<number> =>
+const setBrightness = (brightness: number): Promise<number> =>
   Platform.select({
     ios: ScreenBrightness.setBrightness,
     default: ScreenBrightness.setAppBrightness
   })(brightness);
 
-// if right return the current brightness
-export const getBrightness = (): TaskEither<Error, number> =>
-  tryCatch(getBrightnessPlatform, reason => new Error(String(reason)));
-
-// if right return the set brightness
-export const setBrightness = (brightness: number): TaskEither<Error, number> =>
-  tryCatch(
-    () => setBrightnessPlatform(brightness),
-    reason => new Error(String(reason))
-  );
-
-const HIGH_BRIGHTNESS = 1.0; // Target screen brightness for a very bright screen
+const HIGH_BRIGHTNESS = 1.0; // Max brightness value
 
 /**
- * Hook that sets the brightness to maximum, until the screen is unmounted
+ * Set the device brightness to the max value and restore the original brightness when
+ * the component is unmount or the app changes state (!== active)
  */
 export const useMaxBrightness = () => {
-  // Brightness effect manager
+  const [initialBrightness, setInitialBrightness] = useState<
+    number | undefined
+  >(undefined);
+  // The current app state
+  const [appState, setAppState] = useState<AppStateStatus | undefined>(
+    undefined
+  );
+  // Track the current async transition, in order to wait before execute the next async transition
+  const currentTransition = useRef<Promise<void>>(Promise.resolve());
+
+  // Change the device brightness
+  const setNewBrightness = async (brightness: number) => {
+    await currentTransition.current;
+    await setBrightness(brightness).catch(_ => undefined);
+  };
+
+  // First mount, read and save the current device brightness
   React.useEffect(() => {
-    // eslint-disable-next-line functional/no-let
-    let myBrightness: number | undefined;
-
-    const myBrightF = async () => {
-      myBrightness = await getBrightness()
-        .fold(
-          () => undefined,
-          _ => _
-        )
-        .run();
+    AppState.addEventListener("change", setAppState);
+    const getCurrentBrightness = async () => {
+      const currentBrightness = await getBrightness().catch(_ => undefined);
+      setInitialBrightness(currentBrightness);
     };
-
-    const mySetBrightF = async () => {
-      await myBrightF();
-      if (myBrightness) {
-        await setBrightness(HIGH_BRIGHTNESS).run();
-      }
-    };
-
-    const finishedSet = mySetBrightF();
-
+    // eslint-disable-next-line functional/immutable-data
+    currentTransition.current = getCurrentBrightness();
     return () => {
-      const restoreDeviceBrightnessF = async () => {
-        await finishedSet;
-        if (myBrightness) {
-          await setBrightness(myBrightness)
-            .fold(
-              () => undefined,
-              _ => _
-            )
-            .run();
-        }
-      };
-      void restoreDeviceBrightnessF();
+      AppState.removeEventListener("change", setAppState);
     };
   }, []);
+
+  // If app state changes of currentBrightness changes, update the brightness
+  React.useEffect(() => {
+    if (initialBrightness === undefined) {
+      return;
+    }
+    const newBrightness =
+      appState === "active" || appState === undefined
+        ? HIGH_BRIGHTNESS
+        : initialBrightness;
+
+    // eslint-disable-next-line functional/immutable-data
+    currentTransition.current = setNewBrightness(newBrightness);
+
+    // unmount and reset the initial brightness
+    return () => {
+      if (initialBrightness) {
+        void setNewBrightness(initialBrightness);
+      }
+    };
+  }, [initialBrightness, appState]);
 };

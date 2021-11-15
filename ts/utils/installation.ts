@@ -2,7 +2,7 @@
  * Utility methods for generating installation IDs for Notification Hubs
  */
 
-import uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 
 // DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING
 const UUID_VERSION_PREFIX = "001";

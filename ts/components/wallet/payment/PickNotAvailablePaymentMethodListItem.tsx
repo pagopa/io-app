@@ -126,16 +126,8 @@ const extractInfoFromPaymentMethod = (
 const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   props: Props
 ) => {
-  const {
-    logo,
-    title,
-    description,
-    bottomSheetTitle,
-    bottomSheetBody
-  } = extractInfoFromPaymentMethod(
-    props.paymentMethod,
-    props.nameSurname ?? ""
-  );
+  const { logo, title, description, bottomSheetTitle, bottomSheetBody } =
+    extractInfoFromPaymentMethod(props.paymentMethod, props.nameSurname ?? "");
 
   const { present } = useIOBottomSheet(bottomSheetBody, bottomSheetTitle, 300);
   return (

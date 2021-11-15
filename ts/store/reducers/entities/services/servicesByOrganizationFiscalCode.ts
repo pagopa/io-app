@@ -54,23 +54,27 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
       const serviceTuples = action.payload;
 
       // Remove service id from the array keyed by organizationFiscalCode
-      const stateUpdate = serviceTuples.reduce<
-        ServiceIdsByOrganizationFiscalCodeState
-      >((accumulator, tuple) => {
-        const serviceId = tuple.e1;
-        const organizationFiscalCode = tuple.e2;
-        const ids = fromNullable(organizationFiscalCode)
-          .map(_ => (accumulator[_] !== undefined ? accumulator[_] : state[_]))
-          .toNullable();
-        if (organizationFiscalCode && ids) {
-          const filteredIds = ids.filter(id => id !== serviceId);
-          return {
-            ...accumulator,
-            [organizationFiscalCode]: filteredIds
-          };
-        }
-        return accumulator;
-      }, {});
+      const stateUpdate =
+        serviceTuples.reduce<ServiceIdsByOrganizationFiscalCodeState>(
+          (accumulator, tuple) => {
+            const serviceId = tuple.e1;
+            const organizationFiscalCode = tuple.e2;
+            const ids = fromNullable(organizationFiscalCode)
+              .map(_ =>
+                accumulator[_] !== undefined ? accumulator[_] : state[_]
+              )
+              .toNullable();
+            if (organizationFiscalCode && ids) {
+              const filteredIds = ids.filter(id => id !== serviceId);
+              return {
+                ...accumulator,
+                [organizationFiscalCode]: filteredIds
+              };
+            }
+            return accumulator;
+          },
+          {}
+        );
 
       return {
         ...state,

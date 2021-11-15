@@ -1,20 +1,23 @@
-import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
+import { call } from "redux-saga/effects";
+import NavigationService from "../../../../../navigation/NavigationService";
 import {
   executeWorkUnit,
-  withFailureHandling,
   withResetNavigationStack
 } from "../../../../../sagas/workUnit";
+import {
+  navigateBack,
+  navigateToWorkunitGenericFailureScreen
+} from "../../../../../store/actions/navigation";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
+import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherCompleted,
   svGenerateVoucherFailure
 } from "../../store/actions/voucherGeneration";
-import SV_ROUTES from "../../navigation/routes";
-import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
-import { navigateBack } from "../../../../../store/actions/navigation";
-import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 
 /**
  * Define the workflow that allows the user to generate a new voucher.
@@ -25,7 +28,7 @@ import { navigationCurrentRouteSelector } from "../../../../../store/reducers/na
  */
 function* svVoucherGenerationWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToSvCheckStatusRouterScreen(),
+    startScreenNavigation: navigateToSvCheckStatusRouterScreen,
     startScreenName: SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS,
     complete: svGenerateVoucherCompleted,
     back: svGenerateVoucherBack,
@@ -38,20 +41,24 @@ function* svVoucherGenerationWorkUnit() {
  * This saga handles the SV activation workflow
  */
 export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
-  const sagaExecution = () =>
-    withFailureHandling(() =>
-      withResetNavigationStack(svVoucherGenerationWorkUnit)
-    );
-  yield call(sagaExecution);
+  const initialRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
 
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-    navigationCurrentRouteSelector
+  const sagaExecution = () =>
+    withResetNavigationStack(svVoucherGenerationWorkUnit);
+
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+    sagaExecution
   );
-  const route = currentRoute.toUndefined();
+
   if (
     // if the activation started from the CTA -> go back
-    route === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
+    initialRoute === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
   ) {
-    yield put(navigateBack());
+    yield call(navigateBack);
+  }
+
+  if (res === "failure") {
+    yield call(navigateToWorkunitGenericFailureScreen);
   }
 }

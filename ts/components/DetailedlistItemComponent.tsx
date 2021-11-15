@@ -106,9 +106,7 @@ const ICON_WIDTH = 24;
 /**
  * A component to display a touchable list item
  */
-export default class DetailedlistItemComponent extends React.PureComponent<
-  Props
-> {
+export default class DetailedlistItemComponent extends React.PureComponent<Props> {
   private getIconName = () =>
     this.props.isSelectionModeEnabled
       ? this.props.isItemSelected

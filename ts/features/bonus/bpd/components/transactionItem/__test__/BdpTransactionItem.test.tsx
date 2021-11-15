@@ -6,7 +6,8 @@ import { AwardPeriodId } from "../../../store/actions/periods";
 describe("Test how the transaction subtitle changes with different timestamps", () => {
   it("Subtitle shouldn't contain hours and minutes, when the transaction has a timestamp 00:00", () => {
     const myTransaction: EnhancedBpdTransaction = {
-      hashPan: "0d4194712c5d820fcbbb2e7ba199e15f73cfd43f8fe49f0aa62e7901253506df" as HPan,
+      hashPan:
+        "0d4194712c5d820fcbbb2e7ba199e15f73cfd43f8fe49f0aa62e7901253506df" as HPan,
       idTrxAcquirer: "10126487773E",
       idTrxIssuer: "R64692",
       amount: 87.79,
@@ -25,7 +26,8 @@ describe("Test how the transaction subtitle changes with different timestamps", 
 
   it("Subtitle should contain hours and minutes when the transaction has a timestamp 00:00", () => {
     const myTransaction: EnhancedBpdTransaction = {
-      hashPan: "0d4194712c5d820fcbbb2e7ba199e15f73cfd43f8fe49f0aa62e7901253506df" as HPan,
+      hashPan:
+        "0d4194712c5d820fcbbb2e7ba199e15f73cfd43f8fe49f0aa62e7901253506df" as HPan,
       idTrxAcquirer: "10126487773E",
       idTrxIssuer: "R64692",
       amount: 100000.79,

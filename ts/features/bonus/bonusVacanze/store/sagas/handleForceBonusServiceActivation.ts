@@ -13,9 +13,9 @@ export function* handleForceBonusServiceActivation(
   bonusTypeId: number
 ): SagaIterator {
   // first: check if we have data about bonus type
-  const bonusVacanze: ReturnType<ReturnType<
-    typeof availableBonusTypesSelectorFromId
-  >> = yield select(availableBonusTypesSelectorFromId(bonusTypeId));
+  const bonusVacanze: ReturnType<
+    ReturnType<typeof availableBonusTypesSelectorFromId>
+  > = yield select(availableBonusTypesSelectorFromId(bonusTypeId));
   // no data
   if (bonusVacanze === undefined) {
     return;

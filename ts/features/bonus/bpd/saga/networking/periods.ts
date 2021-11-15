@@ -53,10 +53,8 @@ export function* bpdLoadPeriodsSaga(
 > {
   void mixpanelTrack(mixpanelActionRequest);
   try {
-    const awardPeriodsResult: SagaCallReturnType<typeof awardPeriods> = yield call(
-      awardPeriods,
-      {} as any
-    );
+    const awardPeriodsResult: SagaCallReturnType<typeof awardPeriods> =
+      yield call(awardPeriods, {} as any);
     if (awardPeriodsResult.isRight()) {
       if (awardPeriodsResult.value.status === 200) {
         const periods = awardPeriodsResult.value.value;

@@ -89,9 +89,8 @@ export function* watchServicesDetailLoadSaga(
   yield fork(watchLoadServicesDetailToTrack);
 
   // Create the channel used for the communication with the handlers.
-  const requestsChannel: Channel<ActionType<
-    typeof loadServiceDetail.request
-  >> = yield call(channel, buffers.expanding());
+  const requestsChannel: Channel<ActionType<typeof loadServiceDetail.request>> =
+    yield call(channel, buffers.expanding());
 
   // fork the handlers
   // eslint-disable-next-line

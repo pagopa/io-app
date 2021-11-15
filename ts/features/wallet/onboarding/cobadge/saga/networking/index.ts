@@ -40,9 +40,9 @@ export function* handleSearchUserCoBadge(
   searchAction: ActionType<typeof searchUserCoBadge.request>
 ) {
   // try to retrieve the searchRequestId for co-badge search
-  const onboardingCoBadgeSearchRequest: ReturnType<typeof onboardingCoBadgeSearchRequestId> = yield select(
-    onboardingCoBadgeSearchRequestId
-  );
+  const onboardingCoBadgeSearchRequest: ReturnType<
+    typeof onboardingCoBadgeSearchRequestId
+  > = yield select(onboardingCoBadgeSearchRequestId);
 
   // get the results
   const result = yield call(
@@ -109,9 +109,9 @@ export function* handleLoadCoBadgeConfiguration(
   _: ActionType<typeof loadCoBadgeAbiConfiguration.request>
 ) {
   try {
-    const getCobadgeServicesResult: SagaCallReturnType<typeof getCobadgeServices> = yield call(
-      getCobadgeServices
-    );
+    const getCobadgeServicesResult: SagaCallReturnType<
+      typeof getCobadgeServices
+    > = yield call(getCobadgeServices);
     if (getCobadgeServicesResult.isRight()) {
       if (getCobadgeServicesResult.value.status === 200) {
         yield put(

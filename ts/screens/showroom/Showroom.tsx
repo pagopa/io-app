@@ -28,12 +28,14 @@ const styles = StyleSheet.create({
 export const Showroom = () => {
   const ref = React.createRef<View>();
 
+  const currentView = ref.current;
+
   useEffect(() => {
-    if (ref.current !== null) {
+    if (currentView !== null) {
       // eslint-disable-next-line
       // RTron.log(JSON.stringify(ref.current.props.style));
     }
-  }, []);
+  }, [currentView]);
 
   return (
     <BaseScreenComponent

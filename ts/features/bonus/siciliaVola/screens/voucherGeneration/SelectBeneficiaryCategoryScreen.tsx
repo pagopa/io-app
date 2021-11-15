@@ -16,7 +16,7 @@ import {
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
-import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import {
   navigateToSvDisabledAdditionalInfoScreen,
   navigateToSvKoSelectBeneficiaryCategoryScreen,
@@ -39,31 +39,31 @@ const getCategoryBeneficiaryItems = (): ReadonlyArray<
   RadioItem<BeneficiaryCategory>
 > => [
   {
-    label: I18n.t(
+    body: I18n.t(
       "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.student"
     ),
     id: "student"
   },
   {
-    label: I18n.t(
+    body: I18n.t(
       "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.disabled"
     ),
     id: "disabled"
   },
   {
-    label: I18n.t(
+    body: I18n.t(
       "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.worker"
     ),
     id: "worker"
   },
   {
-    label: I18n.t(
+    body: I18n.t(
       "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.sick"
     ),
     id: "sick"
   },
   {
-    label: I18n.t(
+    body: I18n.t(
       "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.other"
     ),
     id: "other"
@@ -156,15 +156,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   selectCategory: (category: SvBeneficiaryCategory) =>
     dispatch(svGenerateVoucherSelectCategory(category)),
   navigateToSvStudentSelectDestination: () =>
-    dispatch(navigateToSvStudentSelectDestinationScreen()),
+    navigateToSvStudentSelectDestinationScreen(),
   navigateToSvDisabledAdditionalInfo: () =>
-    dispatch(navigateToSvDisabledAdditionalInfoScreen()),
+    navigateToSvDisabledAdditionalInfoScreen(),
   navigateToSvWorkerCheckIncomeThreshold: () =>
-    dispatch(navigateToSvWorkerCheckIncomeThresholdScreen()),
+    navigateToSvWorkerCheckIncomeThresholdScreen(),
   navigateToSvSickCheckIncomeThreshold: () =>
-    dispatch(navigateToSvSickCheckIncomeThresholdScreen()),
+    navigateToSvSickCheckIncomeThresholdScreen(),
   navigateToSvKoSelectBeneficiaryCategory: () =>
-    dispatch(navigateToSvKoSelectBeneficiaryCategoryScreen())
+    navigateToSvKoSelectBeneficiaryCategoryScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

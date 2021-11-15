@@ -2,17 +2,19 @@ import React, { FC, useEffect, useState } from "react";
 import { List } from "native-base";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import TouchID, { AuthenticationError } from "react-native-touch-id";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
-import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { updatePin } from "../../store/actions/pinset";
 import { identificationRequest } from "../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../config";
-import { authenticateConfig } from "../../utils/biometric";
+import {
+  biometricAuthenticationRequest,
+  getBiometricsType,
+  isBiometricsValidType
+} from "../../utils/biometrics";
 import { showToast } from "../../utils/showToast";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
@@ -35,12 +37,9 @@ const SecurityScreen: FC<Props> = ({
   const [isFingerprintAvailable, setIsFingerprintAvailable] = useState(false);
 
   useEffect(() => {
-    getFingerprintSettings().then(
-      biometryTypeOrUnsupportedReason => {
-        setIsFingerprintAvailable(
-          biometryTypeOrUnsupportedReason !== "UNAVAILABLE" &&
-            biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
-        );
+    getBiometricsType().then(
+      biometricsType => {
+        setIsFingerprintAvailable(isBiometricsValidType(biometricsType));
       },
       _ => undefined
     );
@@ -56,21 +55,16 @@ const SecurityScreen: FC<Props> = ({
       return;
     }
     // if user asks to disable biometric recnognition is required to proceed
-    TouchID.authenticate(
-      I18n.t("identification.biometric.popup.title"),
-      authenticateConfig
-    )
-      .then(() => setFingerprintPreference(biometricPreference))
-      .catch((_: AuthenticationError) =>
-        // this toast will be show either if recognition fails (mismatch or user aborts)
-        // or if meanwhile user disables biometric recognition in OS settings
+    void biometricAuthenticationRequest(
+      () => setFingerprintPreference(biometricPreference),
+      _ =>
         showToast(
           I18n.t(
             "profile.security.list.biometric_recognition.needed_to_disable"
           ),
           "danger"
         )
-      );
+    );
   };
 
   return (

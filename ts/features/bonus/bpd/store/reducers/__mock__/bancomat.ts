@@ -1,13 +1,11 @@
 import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/walletv2/WalletV2";
-import {
-  EnableableFunctionsTypeEnum,
-  PatchedWalletV2
-} from "../../../../../../types/pagopa";
+import { PatchedWalletV2 } from "../../../../../../types/pagopa";
+import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 
 export const bancomat = {
   walletType: WalletTypeEnum.Bancomat,
   createDate: "2021-04-05",
-  enableableFunctions: [EnableableFunctionsTypeEnum.BPD],
+  enableableFunctions: [EnableableFunctionsEnum.BPD],
   favourite: false,
   idWallet: 24415,
   info: {

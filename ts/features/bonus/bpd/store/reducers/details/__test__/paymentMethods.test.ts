@@ -84,21 +84,22 @@ describe("payment methods reducer tests", () => {
   });
 
   it("should return true (at least one active)", () => {
-    const indexedPaymentMethodsOneActive: IndexedById<BpdPotPaymentMethodActivation> = {
-      id1: pot.some({
-        hPan: "hpan1" as HPan,
-        activationStatus: "active"
-      }),
-      id2: pot.some({
-        hPan: "hpan2" as HPan,
-        activationStatus: "inactive"
-      }),
-      id3: pot.some({
-        hPan: "hpan2" as HPan,
-        activationStatus: "notActivable"
-      }),
-      id4: pot.none
-    };
+    const indexedPaymentMethodsOneActive: IndexedById<BpdPotPaymentMethodActivation> =
+      {
+        id1: pot.some({
+          hPan: "hpan1" as HPan,
+          activationStatus: "active"
+        }),
+        id2: pot.some({
+          hPan: "hpan2" as HPan,
+          activationStatus: "inactive"
+        }),
+        id3: pot.some({
+          hPan: "hpan2" as HPan,
+          activationStatus: "notActivable"
+        }),
+        id4: pot.none
+      };
     expect(
       areAnyPaymentMethodsActiveSelector([paymentMethodBancomat]).resultFunc(
         indexedPaymentMethodsOneActive

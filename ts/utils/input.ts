@@ -122,9 +122,8 @@ export function getCreditCardFromState(
   }
 
   if (!CreditCardCVC.is(securityCode.value)) {
-    const detectedBrand: SupportedBrand = CreditCardDetector.validate(
-      securityCode
-    );
+    const detectedBrand: SupportedBrand =
+      CreditCardDetector.validate(securityCode);
 
     // invalid cvc
     return left(

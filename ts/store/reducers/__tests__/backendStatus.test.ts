@@ -216,17 +216,17 @@ describe("test selectors", () => {
     }
   };
 
-  const someStore = ({
+  const someStore = {
     backendStatus: {
       status: some(status)
     }
-  } as any) as GlobalState;
+  } as any as GlobalState;
 
-  const noneStore = ({
+  const noneStore = {
     backendStatus: {
       status: none
     }
-  } as any) as GlobalState;
+  } as any as GlobalState;
 
   it("should return the cashback status", () => {
     const section = sectionStatusSelector("cashback")(someStore);
@@ -245,21 +245,21 @@ describe("test selectors", () => {
   });
 
   it("should return true - someStoreConfig", () => {
-    const someStoreConfig = ({
+    const someStoreConfig = {
       backendStatus: {
         status: some({ ...status, config: { bpd_ranking_v2: true } })
       }
-    } as any) as GlobalState;
+    } as any as GlobalState;
     const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
     expect(bpd_ranking).toBeTruthy();
   });
 
   it("should return false - someStoreConfig", () => {
-    const someStoreConfig = ({
+    const someStoreConfig = {
       backendStatus: {
         status: some({ ...status, config: { bpd_ranking_v2: false } })
       }
-    } as any) as GlobalState;
+    } as any as GlobalState;
     const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
     expect(bpd_ranking).toBeFalsy();
   });

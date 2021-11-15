@@ -16,7 +16,7 @@ import {
   svGenerateVoucherSelectCompany
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { Company } from "../../types/SvVoucherRequest";
 import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
@@ -82,8 +82,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   selectCompany: (company: Company) =>
     dispatch(svGenerateVoucherSelectCompany(company)),
-  navigateToSelectFlightsDateScreen: () =>
-    dispatch(navigateToSvSelectFlightsDateScreen())
+  navigateToSelectFlightsDateScreen: () => navigateToSvSelectFlightsDateScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

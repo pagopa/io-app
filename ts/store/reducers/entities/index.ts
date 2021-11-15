@@ -39,7 +39,7 @@ export type EntitiesState = Readonly<{
 
 export type PersistedEntitiesState = EntitiesState & PersistPartial;
 
-const CURRENT_REDUX_ENTITIES_STORE_VERSION = 0;
+const CURRENT_REDUX_ENTITIES_STORE_VERSION = 1;
 const migrations: MigrationManifest = {
   // version 0
   // remove "currentSelectedService" section
@@ -49,7 +49,16 @@ const migrations: MigrationManifest = {
       ...entities,
       services: { ..._.omit(entities.services, "currentSelectedService") }
     };
-  }
+  },
+  // version 1
+  // remove services section from persisted entities
+  // TO avoid the proliferation of too many API requests until paged messages' API has been introduced
+  // we restore the persistence of services so this RULE doesn't actually migrates the store.
+  // ref: https://pagopa.atlassian.net/browse/IA-292
+  "1": (state: PersistedState): PersistedEntitiesState =>
+    ({
+      ...state
+    } as PersistedEntitiesState)
 };
 
 // A custom configuration to avoid to persist messages section

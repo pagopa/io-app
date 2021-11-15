@@ -28,10 +28,8 @@ export function* handleGetEycaStatus(
   getEycaStatus: ReturnType<typeof BackendCGN>["getEycaStatus"]
 ): Generator<Effect, void, any> {
   try {
-    const eycaInformationResult: SagaCallReturnType<typeof getEycaStatus> = yield call(
-      getEycaStatus,
-      {}
-    );
+    const eycaInformationResult: SagaCallReturnType<typeof getEycaStatus> =
+      yield call(getEycaStatus, {});
     if (eycaInformationResult.isLeft()) {
       yield put(
         cgnEycaStatus.failure(

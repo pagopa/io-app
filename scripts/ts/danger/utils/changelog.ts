@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+// The script need to be executed by the danger bot that doesn't support the optional chaining operator
 import { Either, left, Right, right } from "fp-ts/lib/Either";
 import { fromNullable, none, Option, Some, some } from "fp-ts/lib/Option";
 import { GenericTicket, GenericTicketType } from "../../common/ticket/types";
@@ -26,6 +28,7 @@ const allowedScope = new Map<string, string>([
   ["security", "Security"],
   ["accessibility", "Accessibility"],
   ["bpd", "Bonus Pagamenti Digitali"],
+  ["cgn", "Carta Giovani Nazionale"],
   ["myportal", "MyPortal"]
 ]);
 
@@ -38,10 +41,12 @@ const projectToScope = new Map<string, string>([
   ["2476636", "Carta Giovani Nazionale"],
   ["IASV", "Sicilia Vola"],
   ["IAGP", "EU Covid Certificate"],
-  ["IARS", "Redesign Servizi"]
+  ["IARS", "Redesign Servizi"],
+  ["ASZ", "Zendesk"]
 ]);
 
-const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
+const cleanChangelogRegex =
+  /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
 
 // pattern used to recognize a scope label
 const regex = /(changelog-scope:|epic-)(.*)/m;

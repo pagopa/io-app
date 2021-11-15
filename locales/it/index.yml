@@ -65,6 +65,7 @@ global:
     moreInfo: più info
   accessibility:
     reload: "Ricarica"
+    switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
     description: Descrizione
@@ -160,6 +161,7 @@ global:
     update: "Aggiorna"
     findOutMore: "Scopri di più"
     details: "Dettagli"
+    choose: "Scegli"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -215,11 +217,16 @@ betaBanner:
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
-exit:
-  pressAgain: Premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
+permissionRationale:
+  storage:
+    title: "Consenti l’accesso alla galleria"
+    message: "Potrai salvare bonus e certificati, caricare screenshot e avvisi di pagamento."
+  camera:
+    title: "Consenti l’accesso alla fotocamera"
+    message: "Potrai leggere codici QR e pagare gli avvisi pagoPA."
 startup:
   title: Inizializzazione
   authentication: Utente autenticato
@@ -238,7 +245,7 @@ login:
   welcome:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
-  expiration_info: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso con SPID o CIE, dovrai inserire nuovamente le credenziali per utilizzare IO.
+  expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
@@ -397,7 +404,7 @@ profile:
           confirmToast: "Preferenze aggiornate!"
         alert:
           title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
-          body: "Se confermi quest’opzione, il team di IO non sarà sempre in grado di fornirti tutta l’assistenza necessaria in caso di problemi."
+          body: "Se confermi quest’opzione, in caso di problemi tecnici, il team di supporto di IO potrebbe non avere tutti i dati necessari a risolverli."
         whyBottomSheet:
           title: "Per quali finalità raccogliamo informazioni?"
           body: "**IO non raccoglie dati per finalità di marketing.**  \nUtilizziamo strumenti che ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
@@ -602,15 +609,25 @@ authentication:
       button: "Scarica / Apri CieID"
     card:
       title: Appoggia la carta
-      titleiOS: Riprova di nuovo
+      titleiOS: Tieni ferma la carta
       headerTitle: Entra con CIE
       layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
-      layCardMessageHeaderiOS: Tieni la tua carta d’identità elettronica sul retro dell’iPhone, nella parte in alto.
+      layCardMessageHeaderiOS: Il sensore è posizionato nella parte alta del dispositivo.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
       cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
       readerCardTitle: Tieni ferma la carta per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
+      iosAlert:
+        readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
+        moreTags: Sono state individuate più carte. Per favore avvicina una carta alla volta.
+        readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
+        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
+        invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        tagLost: Hai rimosso la carta troppo presto.
+        cardLocked: Carta CIE bloccata
+        wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
+        wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostTitleiOS: Hai rimosso la carta troppo presto
@@ -989,6 +1006,34 @@ wallet:
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Aggiungi PayPal"
+      start:
+        title: "Paga su IO con PayPal"
+        body: "Abbina il tuo conto PayPal e paga gli avvisi pagoPA più facilmente: puoi usare anche il tuo conto corrente!"
+      selectPsp:
+        title: "Con quale gestore vuoi usare il tuo conto PayPal?"
+        body: "Quando usi pagoPA, sei tu a decidere quale gestore della transazione ti conviene di più.\nPotrai modificare tale scelta ad ogni pagamento in base alla commissione proposta."
+        link: "Cos’è il gestore della transazione?"
+        leftColumnTitle: "Gestore"
+        rightColumnTitle: "Info e costi"
+        infoBottomSheet:
+          title: "Chi è {{pspName}}?"
+          ctaTitle: "Ho capito"
+          row1Description: "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal."
+          row2Description1: "Quando paghi un avviso, potrà applicare un costo massimo fino a "
+          row2Description2: ". Vedrai l'importo esatto prima della conferma."
+          row3Description1: "Informativa Privacy"
+          row3Description2: "Termini e condizioni d’uso"
+        whatIsPspBottomSheet:
+          title: "Cos’è il gestore della transazione?"
+          body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
+      onBoardingCompleted:
+        title: "Fatto!"
+        body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
+        secondaryButton: "Chiudi"
+        primaryButton: "Vedi metodo"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
@@ -1098,18 +1143,8 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
-    bancomat:
-      successful: Bancomat rimosso correttamente
-      failed: Impossibile rimuovere il bancomat
-    satispay:
-      successful: Satispay rimosso correttamente
-      failed: Impossibile rimuovere Satispay
-    bPay:
-      successful: BancomatPay rimosso correttamente
-      failed: Impossibile rimuovere BancomatPay
-    successful: Metodo di pagamento rimosso correttamente
-    failed: Impossibile rimuovere il metodo di pagamento
-    alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
+    successful: Metodo rimosso dal tuo Portafoglio
+    failed: Impossibile rimuovere il metodo dal tuo Portafoglio
   newPaymentMethod:
     add: aggiungi
     show: mostra
@@ -1248,9 +1283,9 @@ wallet:
     submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
   insertManually:
     header: Inserisci dati avviso
-    title: Inserisci i dati dell'avviso
-    info: che ci consentono di identificare il pagamento
-    link: Dove si trovano?
+    title: Cosa devi pagare?
+    info: Inserisci i dati come riportato sull'avviso di pagamento.
+    link: Dove trovo i dati?
     noticeCode: Codice Avviso
     entityCode: Codice Fiscale Ente Creditore
     amount: Importo (€)
@@ -1279,7 +1314,7 @@ wallet:
   payNotice: Paga un avviso
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
-  addPaymentMethodTitle: Aggiungi metodo di pagamento
+  addPaymentMethodTitle: Aggiungi un metodo
   continue: Paga questo avviso
   backToPayments: Torna ai pagamenti
   methods:
@@ -1288,7 +1323,7 @@ wallet:
     card:
       name: Carta di credito, debito o prepagata
       shortName: "Carta"
-      description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
+      description: La carta che usi online e nei negozi
       pagoPaCapability:
         title: Pagamenti in app
         description: Paga gli avvisi che hanno il logo pagoPA
@@ -1306,16 +1341,16 @@ wallet:
       description: I tuoi strumenti digitali preferiti su IO
     loyalty:
       name: Carta di pagamento supermercati
-      description: Le carte emesse dalle catene di supermercati che usi per pagare la spesa
+      description: Il circuito che usi per pagare la spesa
     pagobancomat:
       name: Carta PagoBANCOMAT
-      description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
+      description: Il circuito che usi per pagare nei negozi
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
     satispay:
       name: Satispay
-      description: Abbina il tuo account Satispay
+      description: L’app per pagare in modo smart
     bancomatPay:
       name: BANCOMAT Pay
       description: Abbina il tuo account BANCOMAT Pay
@@ -1326,7 +1361,8 @@ wallet:
       name: Carta BancoPosta o Postepay
       description: Le carte emesse da Poste Italiane
     paypal:
-      name: Paypal
+      name: PayPal
+      description: Paga con la carta o conto corrente collegati
     bancomat:
       name: PagoBANCOMAT
     cobadge:
@@ -1386,9 +1422,6 @@ wallet:
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci manualmente
     enroll_cta: Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.
-    cameraUsagePermissionInfobox:
-      title: "Permesso per utilizzare la fotocamera da parte di IO"
-      message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
       message: IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento
@@ -1401,19 +1434,28 @@ wallet:
     title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato!
+    TECHNICAL: Spiacenti, c’è un problema tecnico con questo avviso
+    DATA: Spiacenti, i dati dell’avviso non sono corretti
+    EC: Spiacenti, l’Ente Creditore sta avendo problemi nella risposta
+    ONGOING: Il pagamento è già in corso, riprova tra qualche minuto
+    ONGOING_SUBTITLE: Se è passato troppo tempo, segnalacelo!
+    REVOKED: Spiacenti, l’Ente Creditore ha revocato questo avviso
+    EXPIRED: Spiacenti, l’avviso è scaduto e non è più possibile pagarlo
+    GENERIC_ERROR: Spiacenti, si è verificato un errore imprevisto
+    GENERIC_ERROR_SUBTITLE: Prova di nuovo o contattaci per ricevere assistenza.
+    DUPLICATED: Questo avviso è stato già pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
-    PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
     PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
     DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato.
-    GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
     PAYMENT_ONGOING_NOCANCEL: Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.
     PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante qui sotto per inviarci una segnalazione.
     PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
+    contactECsubtitle: Contatta l’Ente per maggiori informazioni.
+    assistanceLabel: "Per ricevere assistenza usa il codice:"
     sendReport: Invia segnalazione
     loadingData: errore durante il caricamento, riprova.
   walletCardTransaction:
@@ -1429,8 +1471,6 @@ wallet:
         title: "La tua carta ha più di un logo?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi secondo circuito"
-      removeCta: "Elimina questo metodo"
-      deleteLoading: Eliminazione metodo di pagamento in corso
   satispay:
     details:
       infobox:
@@ -1443,7 +1483,7 @@ wallet:
         validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
     title: "Vuoi eliminare questo metodo?"
-    body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
+    body: "Questo metodo verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Iniziative disponibili"
@@ -1500,12 +1540,12 @@ cardComponent:
   unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
-  deleteLoading: Eliminazione metodo di pagamento in corso
+  deleteLoading: Eliminazione metodo in corso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
-  removeCta: "Elimina questo metodo di pagamento"
+  removeCta: "Elimina questo metodo"
 messages:
   accessibility:
     message:
@@ -1770,9 +1810,7 @@ identification:
     popup:
       reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
-      sensorDescription: Tocca il sensore
-      sensorErrorDescription: Impronta non riconosciuta. Tocca nuovamente il sensore.
-      fallbackLabel: Usa il codice di sblocco
+      sensorDescription: Accedi velocemente
   fail:
     remainingAttempts: Ti rimangono {{attempts}} tentativi.
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
@@ -2098,7 +2136,8 @@ bonus:
       description: "Questa iniziativa è terminata e non è più possibile richiederla"
   bonusVacanze:
     accessibility:
-      card: Il tuo Bonus Vacanze con codice {{code}}, del valore di {{value}} euro è {{status}}
+      preview: Bonus Vacanze, importo massimo {{value}} euro, {{status}}
+      card: Il tuo Bonus Vacanze con codice {{code}}, del valore massimo di {{value}} euro è {{status}}
     statusInfo:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
@@ -2230,6 +2269,9 @@ bonus:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
+    accessibility:
+      card:
+        preview: "Cashback, periodo dal {{startDate}} al {{endDate}}. Importo accumulato {{amount}}  €"
     title: Cashback
     description: "Ottieni un rimborso quando paghi nei negozi con questo metodo"
     name: Cashback
@@ -2500,19 +2542,23 @@ bonus:
         deals: Offerte
         description: Descrizione
         services: Servizi
+        addresses: Indirizzi
         hours: Orari
         validity: Validità
         discountCode: Codice Sconto
         conditions: Condizioni
       cta:
         label: Vai al sito dell'esercente
+        landingPage: Accedi all’agevolazione
       categories:
-        theater: teatro, cinema e spettacolo
-        travel: viaggi
-        mobility: carsharing e mobilità
-        telco: telefonia, servizi internet
-        book: libri, audiolibri, e-book
-        museum: musei, gallerie, parchi
+        counting: e altre {{count}}
+        theater: tempo libero
+        travel: viaggi, trasporti e mobilità
+        food: ristoranti e cucina
+        hotel: hotel
+        service: servizi
+        book: istruzione e formazione
+        shopping: shopping
         sport: sport
         health: salute e benessere
     cta:
@@ -2520,7 +2566,7 @@ bonus:
       goToDetail: Visualizza la Carta Giovani
     detail:
       cta:
-        buyers: Vedi esercenti
+        buyers: Vedi agevolazioni
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
@@ -2663,9 +2709,30 @@ bonus:
           departure: "Data di partenza"
           return: "Data di ritorno"
       summary:
-        title: "SummaryScreen"
+        title: "Riepilogo"
+        subtitle1:
+          normal1: "Proseguendo dichiari sotto la tua responsabilità e consapevole delle sanzioni penali in caso di dichiarazioni non veritiere e di falsità negli atti ("
+          link: "art. 76 del d.P.R. 28 Dicembre 2000, n.445"
+          normal2: ") di possedere i seguenti requisiti"
+        subtitle2: "E di richiedere un codice sconto per un volo con le seguenti caratteristiche:"
+        fields:
+          residence:
+            label: "Residenza:"
+            value: "Sicilia"
+          category:
+            label: "Categoria:"
+            value:
+              disabled: "Disabile grave ai sensi dell’articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
+              student: "Studente fuori sede"
+              worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
+              sick: "Paziente con necessità di cure al di fuori della regione Sicilia"
+          flightDate:
+            label: "Data del volo:"
+            disabled: "Tutte"
+          availableDestination: "Possibili destinazioni:"
       voucherGenerated:
-        title: "VoucherGeneratedScreen"
+        title: "Ecco il tuo codice sconto"
+        subtitle: "Inseriscilo sul portale o comunicalo alla biglietteria della compagnia in fase di acquisto del biglietto. Ti ricordiamo che il codice è nominativo e non può essere usato da altri."
       ko:
         checkIncome:
           title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
@@ -2680,7 +2747,71 @@ bonus:
           title: "Il tuo codice sconto Sicilia Vola è in fase di generazione."
           body: "Riceverai un messaggio in app IO quando sarà pronto."
     voucherList:
-      title: "VoucherListScreen"
+      title: "I tuoi codici sconto disponibili"
+      loading: "Caricamento in corso"
+      filter:
+        title: "Filtra voucher"
+        searchValuePlaceholder: "Cerca codice buono"
+        stateSection:
+          title: "Stato"
+        dateSection:
+          title: "Data"
+          departure: "Data di partenza"
+          return: "Data di ritorno"
+        cta:
+          removeFilter: "Rimuovi"
+          applyFilter:
+            zero: "Applica filtri"
+            other: "Applica filtri ({{count}})"
+      emptyList:
+        title: "Non ci sono codici sconto disponibili"
+        subtitle: "Fai una ricerca per vedere i tuoi codici utilizzati o scaduti oppure richiedi un nuovo codice"
+        cta: "Genera un nuovo codice"
+      error: "Non riusciamo a recuperare i tuoi voucher, riprova per piacere."
+      details:
+        title: "Il tuo codice sconto"
+        fields:
+          uniqueCode: "Codice univoco"
+          beneficiary: "Beneficiario"
+          residence:
+            label: "Residenza"
+            value: "Sicilia"
+          category: "Categoria"
+          flightDate: "Data del volo"
+          possibleDestination: "Possibili destinazioni"
+        cta:
+          voucherRevocation: "Revoca voucher"
+          openQr: "Apri QR code"
+        voucherRevocation:
+          alert:
+            title: "Attenzione"
+            message: "Sei sicuro di voler procedere? Il codice sconto sarà eliminato."
+            cta:
+              ok: "Continua"
+              ko: "Annulla la richiesta"
+          toast:
+            ok: "Voucher eliminato correttamente"
+            ko: "Errore durante l'eliminazione del voucher. Riprova"
+    components:
+      voucherVisualDetails:
+        uniqueCode: "Codice univoco"
+        qrCode: "QR Code"
+        barCode: "Bar Code"
+      destinationLabels:
+        universityName: "Nome ateneo"
+        companyName: "Ragione sociale azienda"
+        hospitalName: "Nome struttura o professionista"
+        municipality: "Comune"
+      voucherBottomsheet:
+        title: "Codice sconto Sicilia Vola"
+        cta:
+          exit: "Esci"
+          voucherRevocation: "Revoca voucher"
+    pdfVoucher:
+      toast:
+        ok: "Voucher salvato con successo"
+        ko: "Problemi durante il salvataggio del voucher"
+
 features:
   euCovidCertificate:
     save:
@@ -2713,7 +2844,7 @@ features:
     revoked:
       title: "Questo certificato \nnon è più valido"
     expired:
-      title: "Questo certifcato è scaduto"
+      title: "Questo certificato è scaduto"
     ko:
       genericError:
         title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"

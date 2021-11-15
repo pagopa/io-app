@@ -5,7 +5,7 @@ import {
   IOFontWeight
 } from "../../../../../components/core/fonts";
 import { IOColorType } from "../../../../../components/core/variables/IOColors";
-import { typographyFactory } from "../../../../../components/core/typography/Factory";
+import { useTypographyFactory } from "../../../../../components/core/typography/Factory";
 
 type AllowedWeight = Extract<IOFontWeight, "Regular">;
 
@@ -21,7 +21,7 @@ type DepartmentLabelProps = Omit<
 
 // Custom Typography component to show the name of Department on CGN card component
 const DepartmentLabel: React.FunctionComponent<DepartmentLabelProps> = props =>
-  typographyFactory<AllowedWeight, AllowedColors>({
+  useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Regular",
     defaultColor: "black",

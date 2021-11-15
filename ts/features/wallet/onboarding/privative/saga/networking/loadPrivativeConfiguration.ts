@@ -16,9 +16,9 @@ export function* handleLoadPrivativeConfiguration(
   _: ActionType<typeof loadPrivativeIssuers.request>
 ) {
   try {
-    const getPrivativeServicesResult: SagaCallReturnType<typeof getPrivativeServices> = yield call(
-      getPrivativeServices
-    );
+    const getPrivativeServicesResult: SagaCallReturnType<
+      typeof getPrivativeServices
+    > = yield call(getPrivativeServices);
     if (getPrivativeServicesResult.isRight()) {
       if (getPrivativeServicesResult.value.status === 200) {
         yield put(

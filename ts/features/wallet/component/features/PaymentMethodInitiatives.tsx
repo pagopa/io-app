@@ -12,11 +12,12 @@ import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  EnableableFunctionsTypeEnum,
-  PaymentMethod
-} from "../../../../types/pagopa";
+import { PaymentMethod } from "../../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
+import {
+  EnableableFunctions,
+  EnableableFunctionsEnum
+} from "../../../../../definitions/pagopa/EnableableFunctions";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -33,15 +34,15 @@ const styles = StyleSheet.create({
 
 const capabilityFactory = (
   paymentMethod: PaymentMethod,
-  capability: EnableableFunctionsTypeEnum,
+  capability: EnableableFunctions,
   index: number,
   bpdRemoteConfig?: BpdConfig
 ) => {
   switch (capability) {
-    case EnableableFunctionsTypeEnum.FA:
-    case EnableableFunctionsTypeEnum.pagoPA:
+    case EnableableFunctionsEnum.FA:
+    case EnableableFunctionsEnum.pagoPA:
       return null;
-    case EnableableFunctionsTypeEnum.BPD:
+    case EnableableFunctionsEnum.BPD:
       return bpdEnabled && bpdRemoteConfig?.program_active ? (
         <View key={`capability_item_${index}`}>
           <BpdPaymentMethodCapability paymentMethod={paymentMethod} />
@@ -60,17 +61,20 @@ const generateCapabilityItems = (
   paymentMethod: PaymentMethod,
   bpdRemoteConfig?: BpdConfig
 ): ReadonlyArray<React.ReactNode> =>
-  paymentMethod.enableableFunctions.reduce((acc, val, i): ReadonlyArray<
-    React.ReactNode
-  > => {
-    const handlerForCapability = capabilityFactory(
-      paymentMethod,
-      val,
-      i,
-      bpdRemoteConfig
-    );
-    return handlerForCapability === null ? acc : [...acc, handlerForCapability];
-  }, [] as ReadonlyArray<React.ReactNode>);
+  paymentMethod.enableableFunctions.reduce(
+    (acc, val, i): ReadonlyArray<React.ReactNode> => {
+      const handlerForCapability = capabilityFactory(
+        paymentMethod,
+        val,
+        i,
+        bpdRemoteConfig
+      );
+      return handlerForCapability === null
+        ? acc
+        : [...acc, handlerForCapability];
+    },
+    [] as ReadonlyArray<React.ReactNode>
+  );
 
 /**
  * This component enlists the different initiatives active on the payment methods

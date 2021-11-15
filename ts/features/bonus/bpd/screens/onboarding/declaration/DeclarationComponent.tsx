@@ -95,16 +95,8 @@ const disclaimerLink =
  * When all the condition are accepted, the continue button will be enabled
  */
 export const DeclarationComponent: React.FunctionComponent<Props> = props => {
-  const {
-    title,
-    header,
-    age,
-    owner,
-    resident,
-    personal_use,
-    disclaimer,
-    cta
-  } = loadLocales();
+  const { title, header, age, owner, resident, personal_use, disclaimer, cta } =
+    loadLocales();
 
   // tracks the condition accepted, used to enabled the "continue" button
   const [state, dispatch] = useReducer(reducer, 0);

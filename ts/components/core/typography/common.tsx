@@ -56,7 +56,5 @@ type TypographyStyle = StyleProp<
 /**
  * Define mandatory all the keys of {@link TypographyProps}
  */
-export type RequiredTypographyProps<
-  WeightPropsType,
-  ColorsPropsType
-> = RequiredAll<TypographyProps<WeightPropsType, ColorsPropsType>>;
+export type RequiredTypographyProps<WeightPropsType, ColorsPropsType> =
+  RequiredAll<TypographyProps<WeightPropsType, ColorsPropsType>>;

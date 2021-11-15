@@ -10,13 +10,13 @@ import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers
  *  If it is true, by dispatching firstServiceLoadSuccess the app stop considering loaded services as read
  */
 export function* handleFirstVisibleServiceLoadSaga(): SagaIterator {
-  const isFirstVisibleServiceLoadCompleted: ReturnType<typeof isFirstVisibleServiceLoadCompletedSelector> = yield select(
-    isFirstVisibleServiceLoadCompletedSelector
-  );
+  const isFirstVisibleServiceLoadCompleted: ReturnType<
+    typeof isFirstVisibleServiceLoadCompletedSelector
+  > = yield select(isFirstVisibleServiceLoadCompletedSelector);
   if (!isFirstVisibleServiceLoadCompleted) {
-    const visibleServicesDetailsLoadState: ReturnType<typeof visibleServicesDetailLoadStateSelector> = yield select(
-      visibleServicesDetailLoadStateSelector
-    );
+    const visibleServicesDetailsLoadState: ReturnType<
+      typeof visibleServicesDetailLoadStateSelector
+    > = yield select(visibleServicesDetailLoadStateSelector);
     if (pot.isSome(visibleServicesDetailsLoadState)) {
       yield put(firstServiceLoadSuccess());
     }
