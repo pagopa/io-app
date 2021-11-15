@@ -8,11 +8,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { CardLogoPreview } from "../component/card/CardLogoPreview";
-
-// TODO temporary type
-type PayPalPaymentMethod = {
-  email: string;
-};
+import { PayPalPaymentMethod } from "../../../types/pagopa";
 
 type OwnProps = {
   paypal: PayPalPaymentMethod;
@@ -38,7 +34,7 @@ const PayPalWalletPreview: React.FunctionComponent<Props> = props => (
     accessibilityLabel={getAccessibilityRepresentation()}
     left={
       <Body style={[IOStyles.flex, { paddingRight: 16 }]} numberOfLines={1}>
-        {props.paypal.email}
+        {props.paypal.info.emailPp}
       </Body>
     }
     image={payPalCard}

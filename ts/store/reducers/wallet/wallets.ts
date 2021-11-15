@@ -6,7 +6,7 @@ import _, { values } from "lodash";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
-import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
+import { WalletTypeEnum } from "../../../../definitions/pagopa/WalletV2";
 import {
   getValueOrElse,
   remoteError,
