@@ -57,6 +57,7 @@ import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
+import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {
@@ -76,6 +77,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_SATISPAY_DETAIL]: {
     screen: SatispayDetailScreen
+  },
+  [ROUTES.WALLET_PAYPAL_DETAIL]: {
+    screen: PaypalDetailScreen
   },
   [ROUTES.WALLET_BPAY_DETAIL]: {
     screen: BPayDetailScreen

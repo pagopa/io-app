@@ -61,6 +61,7 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
 
   const { card, content, paymentMethod } = props;
+  console.log("QUI2", props.paymentMethod);
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: paymentMethod.icon,
     caption: paymentMethod.caption
