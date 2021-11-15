@@ -20,7 +20,7 @@ type OwnProps = {
   selectedState?: State;
   onStateSelected: (state: State) => void;
   selectedMunicipality?: Municipality;
-  onMunicipalitySelected: (municipality: Municipality) => void;
+  onMunicipalitySelected: (municipality?: Municipality) => void;
 };
 
 type Props = OwnProps &
@@ -54,6 +54,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
           icon={false}
           onPress={() => {
             props.onStateSelected(i.item);
+            props.onMunicipalitySelected(undefined);
             hideModal();
           }}
         >
