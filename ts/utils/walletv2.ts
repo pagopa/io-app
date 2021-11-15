@@ -6,7 +6,7 @@ import { fromPredicate, Option } from "fp-ts/lib/Option";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
 import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
-import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
+import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import {
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
@@ -16,6 +16,7 @@ import {
   Wallet
 } from "../types/pagopa";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
+import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -49,6 +50,13 @@ const isWalletV2Satispay = (
 ): paymentMethodInfo is SatispayInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
 
+// check if a PatchedWalletV2 has Paypal as paymentInfo
+const isWalletV2PayPal = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is PayPalInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.PayPal;
+
 // check if a PatchedWalletV2 has Bancomat as paymentInfo
 const isWalletV2Bancomat = (
   wallet: PatchedWalletV2,
@@ -80,6 +88,9 @@ export const fromPatchedWalletV2ToRawPaymentMethod = (
   }
   if (isWalletV2BPay(wallet, wallet.info)) {
     return { ...wallet, kind: "BPay", info: wallet.info };
+  }
+  if (isWalletV2PayPal(wallet, wallet.info)) {
+    return { ...wallet, kind: "PayPal", info: wallet.info };
   }
   return undefined;
 };
