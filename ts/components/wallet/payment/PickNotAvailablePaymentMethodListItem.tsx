@@ -113,7 +113,7 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: paymentMethod.icon,
         title: paymentMethod.kind,
-        description: nameSurname,
+        description: paymentMethod.info.emailPp,
         bottomSheetTitle: arrivingBottomSheetTitle(),
         bottomSheetBody: arrivingBottomSheetBody()
       };
