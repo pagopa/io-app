@@ -46,6 +46,28 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
     }
   }, [searchText]);
 
+  const StateFlatList = (
+    <FlatList
+      data={toArray(props.availableStates)}
+      ListFooterComponent={false}
+      renderItem={i => (
+        <ListItem
+          icon={false}
+          onPress={() => {
+            props.onStateSelected(i.item);
+            hideModal();
+          }}
+        >
+          <H4 weight={"Regular"} color={"bluegreyDark"}>
+            {i.item.name}
+          </H4>
+        </ListItem>
+      )}
+      keyExtractor={i => i.name}
+      keyboardShouldPersistTaps={"handled"}
+    />
+  );
+
   return (
     <>
       <TextboxWithSuggestion
@@ -55,27 +77,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
           "bonus.sv.components.destinationSelector.state.placeholder"
         )}
         showModalInputTextbox={false}
-        wrappedFlatlist={
-          <FlatList
-            data={toArray(props.availableStates)}
-            ListFooterComponent={false}
-            renderItem={i => (
-              <ListItem
-                icon={false}
-                onPress={() => {
-                  props.onStateSelected(i.item);
-                  hideModal();
-                }}
-              >
-                <H4 weight={"Regular"} color={"bluegreyDark"}>
-                  {i.item.name}
-                </H4>
-              </ListItem>
-            )}
-            keyExtractor={i => i.name}
-            keyboardShouldPersistTaps={"handled"}
-          />
-        }
+        wrappedFlatlist={StateFlatList}
         selectedValue={props.selectedState?.name}
       />
       <View spacer />
