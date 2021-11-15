@@ -16,12 +16,12 @@ import {
   Wallet
 } from "../types/pagopa";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
+import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan
 } from "./input";
-import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 
 /**
  * true if the given paymentMethod supports the given walletFunction
