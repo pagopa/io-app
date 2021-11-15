@@ -13,6 +13,7 @@ import CreditCardWalletPreview from "../../creditCard/component/CreditCardWallet
 import PrivativeWalletPreview from "../../privative/component/PrivativeWalletPreview";
 import SatispayWalletPreview from "../../satispay/SatispayWalletPreview";
 import PayPalWalletPreview from "../../paypal/PayPalWalletPreview";
+import { payPalEnabled } from "../../../../config";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -22,7 +23,9 @@ const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
     case "Satispay":
       return <SatispayWalletPreview key={pm.idWallet} satispay={pm} />;
     case "PayPal":
-      return <PayPalWalletPreview key={pm.idWallet} paypal={pm} />;
+      return payPalEnabled ? (
+        <PayPalWalletPreview key={pm.idWallet} paypal={pm} />
+      ) : null;
     case "Bancomat":
       return <BancomatWalletPreview key={pm.idWallet} bancomat={pm} />;
     case "CreditCard":

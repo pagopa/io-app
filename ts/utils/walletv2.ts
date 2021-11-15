@@ -21,6 +21,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "./input";
+import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 
 /**
  * true if the given paymentMethod supports the given walletFunction
@@ -48,6 +49,13 @@ const isWalletV2Satispay = (
   paymentMethodInfo: PatchedPaymentMethodInfo
 ): paymentMethodInfo is SatispayInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
+
+// check if a PatchedWalletV2 has Paypal as paymentInfo
+const isWalletV2PayPal = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is PayPalInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.PayPal;
 
 // check if a PatchedWalletV2 has Bancomat as paymentInfo
 const isWalletV2Bancomat = (
@@ -80,6 +88,9 @@ export const fromPatchedWalletV2ToRawPaymentMethod = (
   }
   if (isWalletV2BPay(wallet, wallet.info)) {
     return { ...wallet, kind: "BPay", info: wallet.info };
+  }
+  if (isWalletV2PayPal(wallet, wallet.info)) {
+    return { ...wallet, kind: "PayPal", info: wallet.info };
   }
   return undefined;
 };
