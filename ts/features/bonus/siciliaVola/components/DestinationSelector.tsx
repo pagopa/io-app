@@ -107,9 +107,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestAvailableMunicipalities: (subString: string) =>
     dispatch(svGenerateVoucherAvailableMunicipality.request(subString))
 });
-const mapStateToProps = (state: GlobalState) => ({
-  availableMunicipalities: availableMunicipalitiesSelector(state)
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,
