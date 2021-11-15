@@ -6,7 +6,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { PayPalPaymentMethod } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
-import { PaypalCard } from "../PaypalCard";
+import PaypalCard from "../PaypalCard";
 
 type NavigationParams = Readonly<{
   paypal: PayPalPaymentMethod;
@@ -22,11 +22,12 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const PaypalDetailScreen: React.FunctionComponent<Props> = props => {
   const paypal: PayPalPaymentMethod = props.navigation.getParam("paypal");
-  console.log("QUI1", paypal);
   return (
     <BasePaymentMethodScreen
       paymentMethod={paypal}
-      card={<PaypalCard email={paypal.info.emailPp} />}
+      card={
+        <PaypalCard email={paypal.info.emailPp} idWallet={paypal.idWallet} />
+      }
       content={<PaymentMethodFeatures paymentMethod={paypal} />}
     />
   );
