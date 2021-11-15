@@ -30,7 +30,7 @@ const FooterLoading = () => (
   </>
 );
 
-const WrappedMunicipalityFlatlist = (props: Props) => {
+const WrappedMunicipalityFlatList = (props: Props) => {
   const { hideModal } = useContext(LightModalContext);
   return (
     <FlatList
@@ -69,4 +69,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WrappedMunicipalityFlatlist);
+)(WrappedMunicipalityFlatList);

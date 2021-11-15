@@ -14,7 +14,7 @@ import { availableMunicipalitiesSelector } from "../store/reducers/voucherGenera
 import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
-import WrappedFlatlist from "./WrappedMunicipalityFlatlist";
+import WrappedFlatList from "./WrappedMunicipalityFlatList";
 
 type OwnProps = {
   availableStates: IndexedById<State>;
@@ -95,7 +95,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         disabled={props.selectedState === undefined}
         showModalInputTextbox={true}
         wrappedFlatlist={
-          <WrappedFlatlist onPress={props.setSelectedMunicipality} />
+          <WrappedFlatList onPress={props.setSelectedMunicipality} />
         }
         selectedValue={props.selectedMunicipality?.name}
       />
