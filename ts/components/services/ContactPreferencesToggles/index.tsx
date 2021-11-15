@@ -30,6 +30,7 @@ type Item = "email" | "push" | "inbox";
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
   serviceId: ServiceId;
+  isSpecialService: boolean;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -108,6 +109,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
       <PreferenceToggleRow
         label={I18n.t("services.serviceIsEnabled")}
         onPress={(value: boolean) => onValueChange(value, "inbox")}
+        disabled={props.isSpecialService}
         graphicalState={graphicalState}
         onReload={loadPreferences}
         value={getChannelPreference(props.servicePreferenceStatus, "inbox")}

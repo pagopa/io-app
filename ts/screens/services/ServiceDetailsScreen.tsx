@@ -209,6 +209,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 <ContactPreferencesToggles
                   serviceId={service.service_id}
                   channels={service.available_notification_channels}
+                  isSpecialService={SpecialServiceMetadata.is(metadata)}
                 />
                 <View spacer={true} large={true} />
 
