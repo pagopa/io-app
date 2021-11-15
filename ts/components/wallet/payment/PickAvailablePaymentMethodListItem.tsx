@@ -56,6 +56,12 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.kind,
         description: nameSurname
       };
+    case "PayPal":
+      return {
+        logo: paymentMethod.icon,
+        title: paymentMethod.caption,
+        description: nameSurname
+      };
     case "Privative":
       return {
         logo: paymentMethod.icon,
