@@ -130,80 +130,80 @@ const ServiceDetailsScreen = (props: Props) => {
   const maybeCTA = getServiceCTA(metadata);
 
   return (
-      <BaseScreenComponent
-        goBack={() => props.navigation.goBack()}
-        headerTitle={I18n.t("serviceDetail.headerTitle")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["services_detail"]}
-      >
-        <Content>
-          <Grid>
-            <OrganizationHeader
-              serviceName={service.service_name}
-              organizationName={service.organization_name}
-              logoURLs={logosForService(service)}
-            />
-          </Grid>
-          <View spacer={true} small={true} />
+    <BaseScreenComponent
+      goBack={() => props.navigation.goBack()}
+      headerTitle={I18n.t("serviceDetail.headerTitle")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["services_detail"]}
+    >
+      <Content>
+        <Grid>
+          <OrganizationHeader
+            serviceName={service.service_name}
+            organizationName={service.organization_name}
+            logoURLs={logosForService(service)}
+          />
+        </Grid>
+        <View spacer={true} small={true} />
 
-          {metadata?.description && (
-            <>
-              <Markdown
-                animated={true}
-                onLoadEnd={onMarkdownEnd}
-                onError={onMarkdownEnd}
-              >
-                {metadata.description}
-              </Markdown>
-              <View spacer={true} large={true} />
-            </>
-          )}
-
-          {canRenderItems && (
-            <>
-              {metadata && (
-                <>
-                  <TosAndPrivacyBox
-                    tosUrl={metadata.tos_url}
-                    privacyUrl={metadata.privacy_url}
-                  />
-                  <View spacer={true} large={true} />
-                </>
-              )}
-
-              <ContactPreferencesToggles
-                serviceId={service.service_id}
-                channels={service.available_notification_channels}
-              />
-              <View spacer={true} large={true} />
-
-              <ServiceMetadata
-                servicesMetadata={service.service_metadata}
-                organizationFiscalCode={service.organization_fiscal_code}
-                getItemOnPress={handleItemOnPress}
-                serviceId={service.service_id}
-                isDebugModeEnabled={props.isDebugModeEnabled}
-              />
-
-              <EdgeBorderComponent />
-
-              <View spacer={true} extralarge={true} />
-            </>
-          )}
-        </Content>
-
-        {maybeCTA.isSome() && (
-          <View footer={true} style={styles.flexRow}>
-            <ExtractedCTABar
-              ctas={maybeCTA.value}
-              xsmall={false}
-              dispatch={props.dispatch}
-              serviceMetadata={metadata}
-              service={service}
-            />
-          </View>
+        {metadata?.description && (
+          <>
+            <Markdown
+              animated={true}
+              onLoadEnd={onMarkdownEnd}
+              onError={onMarkdownEnd}
+            >
+              {metadata.description}
+            </Markdown>
+            <View spacer={true} large={true} />
+          </>
         )}
-      </BaseScreenComponent>
+
+        {canRenderItems && (
+          <>
+            {metadata && (
+              <>
+                <TosAndPrivacyBox
+                  tosUrl={metadata.tos_url}
+                  privacyUrl={metadata.privacy_url}
+                />
+                <View spacer={true} large={true} />
+              </>
+            )}
+
+            <ContactPreferencesToggles
+              serviceId={service.service_id}
+              channels={service.available_notification_channels}
+            />
+            <View spacer={true} large={true} />
+
+            <ServiceMetadata
+              servicesMetadata={service.service_metadata}
+              organizationFiscalCode={service.organization_fiscal_code}
+              getItemOnPress={handleItemOnPress}
+              serviceId={service.service_id}
+              isDebugModeEnabled={props.isDebugModeEnabled}
+            />
+
+            <EdgeBorderComponent />
+
+            <View spacer={true} extralarge={true} />
+          </>
+        )}
+      </Content>
+
+      {maybeCTA.isSome() && (
+        <View footer={true} style={styles.flexRow}>
+          <ExtractedCTABar
+            ctas={maybeCTA.value}
+            xsmall={false}
+            dispatch={props.dispatch}
+            serviceMetadata={metadata}
+            service={service}
+          />
+        </View>
+      )}
+    </BaseScreenComponent>
   );
 };
 
