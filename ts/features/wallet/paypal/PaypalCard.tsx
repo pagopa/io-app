@@ -4,7 +4,8 @@ import { Image, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { connect } from "react-redux";
 import BaseCardComponent from "../component/card/BaseCardComponent";
-import paypalLogo from "../../../../img/wallet/payment-methods/paypal-logo.png";
+import paypalLogoExt from "../../../../img/wallet/payment-methods/paypal-logo.png";
+import paypalLogoMin from "../../../../img/wallet/cards-icons/paypal_card.png";
 import { Body } from "../../../components/core/typography/Body";
 import { BrandImage } from "../component/card/BrandImage";
 import { GlobalState } from "../../../store/reducers/types";
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
 const topLeft = (isFavourite: boolean) => (
   <View style={styles.row}>
     <View style={IOStyles.flex}>
-      <Image source={paypalLogo} style={styles.paypalLogoExt} />
+      <Image source={paypalLogoExt} style={styles.paypalLogoExt} />
     </View>
     {isFavourite && (
       <IconFont name={"io-filled-star"} color={variables.brandPrimary} />
@@ -50,7 +51,7 @@ const PaypalCard: React.FunctionComponent<Props> = (props: Props) => (
       )
     )}
     bottomLeftCorner={<Body>{props.email}</Body>}
-    bottomRightCorner={<BrandImage image={paypalLogo} />}
+    bottomRightCorner={<BrandImage image={paypalLogoMin} />}
   />
 );
 
