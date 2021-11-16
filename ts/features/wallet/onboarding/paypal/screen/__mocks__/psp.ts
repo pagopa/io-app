@@ -1,6 +1,6 @@
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
-import { IOPayPalPsp } from "../../../types";
-import { privacyUrl } from "../../../../../../../config";
+import { IOPayPalPsp } from "../../types";
+import { privacyUrl } from "../../../../../../config";
 
 export const pspList: ReadonlyArray<IOPayPalPsp> = [
   {
