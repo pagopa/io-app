@@ -298,9 +298,7 @@ class Markdown extends React.PureComponent<Props, State> {
     const containerStyle: ViewStyle = {
       height: htmlBodyHeight + (extraBodyHeight || 0)
     };
-
-    const isLoading =
-      html === undefined || (html !== "" && htmlBodyHeight === 0);
+    const isLoading = html === undefined;
 
     return (
       <React.Fragment>
