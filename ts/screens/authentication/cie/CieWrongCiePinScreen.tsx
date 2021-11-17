@@ -33,7 +33,7 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
   private renderFooterButtons = () => {
     const cancelButtonProps = {
       bordered: true,
-      onPress: this.props.abort,
+      onPress: resetToAuthenticationRoute,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
@@ -80,8 +80,6 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
     );
   }
 }
-const mapDispatchToProps = (_: Dispatch) => ({
-  abort: () => resetToAuthenticationRoute()
-});
+const mapDispatchToProps = (_: Dispatch) => ({});
 
 export default connect(undefined, mapDispatchToProps)(CieWrongCiePinScreen);
