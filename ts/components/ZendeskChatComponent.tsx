@@ -1,13 +1,12 @@
 import * as React from "react";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import ZendDesk from "io-react-native-zendesk";
+import { connect } from "react-redux";
+import { useEffect } from "react";
+import * as pot from "italia-ts-commons/lib/pot";
+import { fromNullable, isSome, Option } from "fp-ts/lib/Option";
 import { GlobalState } from "../store/reducers/types";
 import { isLoggedInWithSessionInfo } from "../store/reducers/authentication";
 import { Dispatch } from "../store/actions/types";
-import { connect } from "react-redux";
-import { useEffect } from "react";
-import IconFont from "./ui/IconFont";
-import { IOColors } from "./core/variables/IOColors";
 import {
   initZendesk,
   ZendeskConfig,
@@ -15,11 +14,12 @@ import {
   zendeskDefaultJwtConfig
 } from "../utils/zendesk";
 import { profileSelector } from "../store/reducers/profile";
-import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable, isSome, Option } from "fp-ts/lib/Option";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
+import IconFont from "./ui/IconFont";
+import { IOColors } from "./core/variables/IOColors";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 
-type Props = {} & ReturnType<typeof mapDispatchToProps> &
+type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
