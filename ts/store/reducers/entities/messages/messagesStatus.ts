@@ -10,7 +10,6 @@ import {
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { differentProfileLoggedIn } from "../../../actions/crossSessions";
-import { isTestEnv } from "../../../../utils/environment";
 
 export type MessageStatus = {
   isRead: boolean;
@@ -154,14 +153,6 @@ export const messagesUnreadAndUnarchivedSelector = createSelector(
 );
 
 // some util functions
-// return true if message is archived
-export const isMessageArchived = (
-  messagesStatus: MessagesStatus,
-  messageId: string
-) =>
-  fromNullable(messagesStatus[messageId])
-    .map(ms => ms.isArchived)
-    .getOrElse(false);
 
 // return true if message is read
 export const isMessageRead = (
@@ -172,8 +163,4 @@ export const isMessageRead = (
     .map(ms => ms.isRead)
     .getOrElse(false);
 
-// to keep solid code encapsulation
-export const testableMessageStatusReducer = isTestEnv
-  ? { initial_state: INITIAL_STATE }
-  : undefined;
 export default reducer;

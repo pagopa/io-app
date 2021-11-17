@@ -4,8 +4,9 @@
  * are managed by different global reducers.
  */
 
-import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { getType } from "typesafe-actions";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
@@ -63,5 +64,6 @@ export const paymentByRptIdReducer = (
 
 // Selectors
 
-export const paymentsByRptIdSelector = (state: GlobalState) =>
-  state.entities.paymentByRptId;
+export const paymentsByRptIdSelector = (
+  state: GlobalState
+): PaymentByRptIdState => state.entities.paymentByRptId;

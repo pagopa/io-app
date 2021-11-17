@@ -1,6 +1,5 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -12,6 +11,7 @@ import FooterWithButtons from "../../../../../../../components/ui/FooterWithButt
 import View from "../../../../../../../components/ui/TextWithIcon";
 
 import I18n from "../../../../../../../i18n";
+import { navigateBack } from "../../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
 import {
@@ -78,7 +78,7 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddCoBadgeCancel()),
-  back: () => dispatch(NavigationActions.back()),
+  back: () => navigateBack(),
   searchAll: () => dispatch(searchUserCoBadge.request(undefined))
 });
 

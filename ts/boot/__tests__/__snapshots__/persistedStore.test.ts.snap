@@ -57,6 +57,14 @@ Object {
     "allIds": Object {
       "kind": "PotNone",
     },
+    "allPaginated": Object {
+      "data": Object {
+        "kind": "PotNone",
+      },
+      "lastRequest": None {
+        "_tag": "None",
+      },
+    },
     "byId": Object {},
     "idsByServiceId": Object {},
   },

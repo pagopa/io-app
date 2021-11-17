@@ -1900,6 +1900,47 @@
           }
         ]
       }
+    },
+    "/v3/paypal/searchPSP": {
+      "get": {
+        "tags": [
+          "pay-pal-controller"
+        ],
+        "summary": "getPaypalPsps",
+        "operationId": "getPaypalPspsUsingGET",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": false,
+            "type": "string",
+            "default": "it"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaypalPspListResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
     }
   },
   "securityDefinitions": {
@@ -2437,6 +2478,85 @@
         }
       },
       "title": "PaymentResponse"
+    },
+    "PayPalInfo": {
+      "type": "object",
+      "required": [
+        "emailPp",
+        "psp"
+      ],
+      "properties": {
+        "canceled": {
+          "type": "boolean"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "default": {
+          "type": "boolean"
+        },
+        "emailPp": {
+          "type": "string"
+        },
+        "idPp": {
+          "type": "string"
+        },
+        "psp": {
+          "$ref": "#/definitions/PayPalPsp"
+        }
+      },
+      "title": "PayPal"
+    },
+    "PayPalPsp": {
+      "type": "object",
+      "required": [
+        "avgFee",
+        "codiceAbi",
+        "idPsp",
+        "maxFee",
+        "onboard",
+        "privacyUrl",
+        "ragioneSociale"
+      ],
+      "properties": {
+        "avgFee": {
+          "type": "number",
+          "format": "double"
+        },
+        "codiceAbi": {
+          "type": "string"
+        },
+        "idPsp": {
+          "type": "string"
+        },
+        "maxFee": {
+          "type": "integer"
+        },
+        "onboard": {
+          "type": "boolean"
+        },
+        "privacyUrl": {
+          "type": "string"
+        },
+        "ragioneSociale": {
+          "type": "string"
+        }
+      },
+      "title": "PayPalPsp"
+    },
+    "PaypalPspListResponse": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PayPalPsp"
+          }
+        }
+      },
+      "title": "PaypalPspListResponse"
     },
     "Psp": {
       "type": "object",
@@ -3207,7 +3327,8 @@
             "Card",
             "Bancomat",
             "Satispay",
-            "BPay"
+            "BPay",
+            "PayPal"
           ]
         }
       },

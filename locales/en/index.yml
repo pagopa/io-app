@@ -64,6 +64,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    switchLabel: "Select to activate"
     reload: "Reload"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
@@ -216,8 +217,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Some features will not work.
-exit:
-  pressAgain: press again to exit
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
@@ -1293,7 +1292,7 @@ wallet:
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
-  addPaymentMethodTitle: Add app and other methods
+  addPaymentMethodTitle: Add a method
   continue: Pay this notice
   backToPayments: Back to payments
   methods:
@@ -1302,7 +1301,7 @@ wallet:
     card:
       name: Credit, debit or prepaid card
       shortName: "Card"
-      description: The card issued by your bank that you normally use to pay in stores and online
+      description: The card that you use to pay in stores and online
       pagoPaCapability:
         title: In app payments
         description: Pay your notices with pagoPA logo
@@ -1320,18 +1319,19 @@ wallet:
       description: Use your favourite mobile payment apps in IO
     loyalty:
       name: Supermarket Loyalty Card
-      description: The payment card issued by your supermarket, used to pay for groceries
+      description: The payment card you use to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
-      description: The card with the PagoBANCOMAT logo typically used to withdraw cash or pay in stores
+      description: The card used to pay in stores
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
-      description: Pay with Satispay
+      description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
+      description: Link your BANCOMAT Pay account
     postepayApp:
       name: Postepay
       description: your Postepay app
@@ -1340,6 +1340,7 @@ wallet:
       description: Cards issued by Poste Italiane
     paypal:
       name: PayPal
+      description: Pay with your linked card or bank account
     bancomat:
       name: PagoBANCOMAT
     cobadge:
@@ -1839,7 +1840,7 @@ contextualHelp:
   sendPersonalInfo:
     title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
-    cta: Share your fiscal code and your device's unique identifier, in order to make it easier to solve the problem.
+    cta: Share your fiscal code, in order to make it easier to solve your problem.
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 instabug:

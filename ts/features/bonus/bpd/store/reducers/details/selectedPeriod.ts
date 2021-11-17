@@ -1,9 +1,7 @@
-import { NavigationActions } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import BPD_ROUTES from "../../../navigation/routes";
 import { bpdSelectPeriod } from "../../actions/selectedPeriod";
 import { BpdPeriodWithInfo } from "./periods";
 
@@ -20,12 +18,6 @@ export const bpdSelectedPeriodsReducer = (
     // The user manually selected a specific period
     case getType(bpdSelectPeriod):
       return action.payload;
-    // The user navigate to BpdDetailsScreen. We use the payload to update the
-    // selectedPeriod based on the payload
-    case NavigationActions.NAVIGATE:
-      if (action.routeName === BPD_ROUTES.DETAILS) {
-        return action.params?.specificPeriod ?? null;
-      }
   }
   return state;
 };

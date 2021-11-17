@@ -1,22 +1,13 @@
 import { Task } from "redux-saga";
-import {
-  call,
-  cancel,
-  Effect,
-  fork,
-  put,
-  select,
-  takeEvery
-} from "redux-saga/effects";
+import { call, cancel, Effect, fork, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
+import NavigationService from "../../navigation/NavigationService";
 import {
   applicationChangeState,
   ApplicationState
 } from "../../store/actions/application";
 import { identificationRequest } from "../../store/actions/identification";
-import { navSelector } from "../../store/reducers/navigationHistory";
-import { getCurrentRouteName } from "../../utils/navigation";
 import { startTimer } from "../../utils/timer";
 import { watchNotificationSaga } from "./watchNotificationSaga";
 
@@ -42,8 +33,9 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         // Screens requiring identification when the app pass from background/inactive to active state
         const whiteList: ReadonlyArray<string> = [];
 
-        const nav: ReturnType<typeof navSelector> = yield select(navSelector);
-        const currentRoute = getCurrentRouteName(nav);
+        const currentRoute: ReturnType<
+          typeof NavigationService.getCurrentRouteName
+        > = yield call(NavigationService.getCurrentRouteName);
         const isSecuredRoute =
           // eslint-disable-next-line sonarjs/no-empty-collection
           currentRoute && whiteList.indexOf(currentRoute) !== -1;

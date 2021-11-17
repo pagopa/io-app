@@ -2,8 +2,10 @@ import { fireEvent } from "@testing-library/react-native";
 import { none } from "fp-ts/lib/Option";
 import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import * as CustomNavigationActions from "../../../../../../store/actions/navigation";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
@@ -13,30 +15,30 @@ import CoBadgeChooseType from "../CoBadgeChooseType";
 jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
+
 describe("CoBadgeChooseType component", () => {
   beforeEach(() => jest.useFakeTimers());
   it("should dispatch navigateToWalletAddCreditCard action if press the enabled item", () => {
-    const { component, store } = getComponent(undefined, 1);
+    const { component } = getComponent(undefined, 1);
     const enabledItem = component.queryByTestId("enabledItem");
+    const spyBack = jest.spyOn(CustomNavigationActions, "navigateBack");
+    const spyService = jest.spyOn(
+      NavigationService,
+      "dispatchNavigationAction"
+    );
 
     expect(component).not.toBeNull();
     expect(enabledItem).not.toBeNull();
 
-    const expectedPayload = [
-      {
-        type: NavigationActions.BACK,
-        key: undefined
-      },
-      {
-        type: NavigationActions.NAVIGATE,
-        routeName: ROUTES.WALLET_ADD_CARD,
-        params: { inPayment: none }
-      }
-    ];
-
     if (enabledItem) {
       fireEvent.press(enabledItem);
-      expect(store.getActions()).toEqual(expectedPayload);
+      expect(spyBack).toHaveBeenCalledTimes(1);
+      expect(spyService).toHaveBeenCalledWith(
+        NavigationActions.navigate({
+          routeName: ROUTES.WALLET_ADD_CARD,
+          params: { inPayment: none }
+        })
+      );
     }
   });
   it("should dispatch walletAddCoBadgeStart action if press disabled or unknown item", () => {

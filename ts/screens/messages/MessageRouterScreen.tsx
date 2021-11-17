@@ -1,8 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { NavigationActions, NavigationInjectedProps } from "react-navigation";
-import { connect, useDispatch } from "react-redux";
+import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { euCovidCertificateEnabled } from "../../config";
@@ -11,9 +11,11 @@ import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovid
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { loadMessages } from "../../store/actions/messages";
-import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
-import { useIODispatch } from "../../store/hooks";
+import { DEPRECATED_loadMessages as loadMessages } from "../../store/actions/messages";
+import {
+  navigateBack,
+  navigateToMessageDetailScreenAction
+} from "../../store/actions/navigation";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -64,23 +66,21 @@ const getLoadingState = (
 /**
  * Choose the screen where to navigate, based on the message.content.eu_covid_cert
  * @param message
- * @param dispatch
  */
 const navigateToScreenHandler = (
-  message: CreatedMessageWithContentAndAttachments,
-  dispatch: ReturnType<typeof useIODispatch>
+  message: CreatedMessageWithContentAndAttachments
 ) => {
   const navigateToEuCovidCertificate = (
     authCode: EUCovidCertificateAuthCode,
     messageId: string
   ) => {
-    dispatch(NavigationActions.back());
-    dispatch(navigateToEuCovidCertificateDetailScreen({ authCode, messageId }));
+    navigateBack();
+    navigateToEuCovidCertificateDetailScreen({ authCode, messageId });
   };
 
   const navigateToDetails = (messageId: string) => {
-    dispatch(NavigationActions.back());
-    dispatch(navigateToMessageDetailScreenAction({ messageId }));
+    navigateBack();
+    navigateToMessageDetailScreenAction({ messageId });
   };
 
   if (
@@ -103,12 +103,11 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
   const loadingState = getLoadingState(props);
   const isLoading = !pot.isError(loadingState);
   const { loadMessages } = props;
-  const dispatch = useDispatch();
 
   useEffect(() => {
     // all the messages data are ready, exit condition, navigate to the right screen
     if (isStrictSome(loadingState) && loadingState.value !== undefined) {
-      navigateToScreenHandler(loadingState.value, dispatch);
+      navigateToScreenHandler(loadingState.value);
       return;
     }
     if (firstRendering.current) {
@@ -116,7 +115,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
       // eslint-disable-next-line functional/immutable-data
       firstRendering.current = false;
     }
-  }, [loadingState, loadMessages, dispatch]);
+  }, [loadingState, loadMessages]);
 
   return (
     <LoadingErrorComponent
@@ -129,19 +128,8 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => dispatch(NavigationActions.back()),
-  loadMessages: () => dispatch(loadMessages.request()),
-  navigateToDetails: (messageId: string) => {
-    dispatch(NavigationActions.back());
-    dispatch(navigateToMessageDetailScreenAction({ messageId }));
-  },
-  navigateToEuCovidCertificate: (
-    authCode: EUCovidCertificateAuthCode,
-    messageId: string
-  ) => {
-    dispatch(NavigationActions.back());
-    dispatch(navigateToEuCovidCertificateDetailScreen({ authCode, messageId }));
-  }
+  cancel: () => navigateBack(),
+  loadMessages: () => dispatch(loadMessages.request())
 });
 const mapStateToProps = (state: GlobalState) => ({
   messageState: (messageId: string) =>

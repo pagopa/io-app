@@ -247,8 +247,8 @@ const MessageDueDateBar: React.FunctionComponent<Props> = ({
   ));
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onGoToWallet: () => dispatch(navigateToWalletHome())
+const mapDispatchToProps = (_: Dispatch) => ({
+  onGoToWallet: () => navigateToWalletHome()
 });
 
 export default connect(undefined, mapDispatchToProps)(MessageDueDateBar);

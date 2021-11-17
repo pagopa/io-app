@@ -24,7 +24,6 @@ import {
 } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
-import { isOnboardingCompletedSelector } from "../store/reducers/navigationHistory";
 import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
@@ -32,6 +31,7 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
+import { isOnboardingCompleted } from "../utils/navigation";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
@@ -106,8 +106,10 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   private handleHardwareBack = () => {
-    this.props.navigateBack();
-    return undefined;
+    if (isOnboardingCompleted()) {
+      this.props.navigateBack();
+    }
+    return true;
   };
 
   public componentDidMount() {
@@ -150,7 +152,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     this.props.dispatchAcknowledgeOnEmailValidation(none);
     this.props.reloadProfile();
-    if (!this.props.isOnboardingCompleted) {
+    if (!isOnboardingCompleted()) {
       this.props.acknowledgeEmailInsert();
     } else {
       this.props.navigateBack();
@@ -270,7 +272,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   };
 
   private renderFooter = () => {
-    const { isOnboardingCompleted } = this.props;
+    const onboardingCompleted = isOnboardingCompleted();
     // if the email has been validated
     // show only a button to continuer
     if (this.state.emailHasBeenValidate) {
@@ -326,7 +328,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               primary: true,
               onPress: this.handleOnClose,
               disabled: this.state.isLoading,
-              title: isOnboardingCompleted
+              title: onboardingCompleted
                 ? I18n.t("global.buttons.ok")
                 : I18n.t("global.buttons.continue")
             }}
@@ -339,7 +341,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   public render() {
     const email = this.props.optionEmail.getOrElse(EMPTY_EMAIL);
 
-    const { isOnboardingCompleted } = this.props;
+    const onboardingCompleted = isOnboardingCompleted();
 
     const icon = this.state.emailHasBeenValidate
       ? "io-email-validated"
@@ -351,7 +353,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
-        {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
+        {...(onboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
         accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
@@ -372,7 +374,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               onLoadEnd={this.handleOnContentLoadEnd}
               cssStyle={MARKDOWN_BODY_STYLE}
             >
-              {isOnboardingCompleted
+              {onboardingCompleted
                 ? I18n.t("email.validate.content2", { email })
                 : I18n.t("email.validate.content1", { email })}
             </Markdown>
@@ -404,20 +406,19 @@ const mapStateToProps = (state: GlobalState) => {
     acknowledgeOnEmailValidated: emailValidation.acknowledgeOnEmailValidated,
     optionEmail: profileEmailSelector(state),
     isEmailValidated,
-    potProfile,
-    isOnboardingCompleted: isOnboardingCompletedSelector(state)
+    potProfile
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   sendEmailValidation: () => dispatch(startEmailValidation.request()),
-  navigateBack: () => dispatch(navigateBack()),
+  navigateBack: () => navigateBack(),
   reloadProfile: () => {
     // Refresh profile to check if the email address has been validated
     dispatch(profileLoadRequest());
   },
   navigateToEmailInsertScreen: () => {
-    dispatch(navigateToEmailInsertScreen());
+    navigateToEmailInsertScreen();
   },
   acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
   dispatchAcknowledgeOnEmailValidation: (maybeAcknowledged: Option<boolean>) =>

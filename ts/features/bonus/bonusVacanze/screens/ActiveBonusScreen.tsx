@@ -705,7 +705,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  goBack: () => dispatch(navigateBack()),
+  goBack: () => navigateBack(),
   startPollingBonusFromId: (id: string) =>
     dispatch(startLoadBonusFromIdPolling(id)),
   cancelPollingBonusFromId: () => dispatch(cancelLoadBonusFromIdPolling())

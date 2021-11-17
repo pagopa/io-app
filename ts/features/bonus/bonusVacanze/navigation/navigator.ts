@@ -5,7 +5,6 @@ import EligibilityExpired from "../screens/activation/EligibilityExpired";
 import LoadActivateBonusScreen from "../screens/activation/LoadActivateBonusScreen";
 import ActivateBonusRequestScreen from "../screens/activation/request/ActivateBonusRequestScreen";
 import TimeoutActivationInfoScreen from "../screens/activation/TimeoutActivationInfoScreen";
-import ActiveBonusScreen from "../screens/ActiveBonusScreen";
 import AvailableBonusScreen from "../screens/AvailableBonusScreen";
 import BonusCTAEligibilityStartScreen from "../screens/BonusCTAEligibilityStartScreen";
 import BonusInformationScreen from "../screens/BonusInformationScreen";
@@ -24,9 +23,6 @@ const BonusVacanzeNavigator = createStackNavigator(
     },
     [BONUSVACANZE_ROUTES.BONUS_REQUEST_INFORMATION]: {
       screen: BonusInformationScreen
-    },
-    [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: {
-      screen: ActiveBonusScreen
     },
     [BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING]: {
       screen: LoadBonusEligibilityScreen

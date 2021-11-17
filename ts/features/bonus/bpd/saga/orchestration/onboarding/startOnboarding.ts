@@ -1,6 +1,6 @@
 import { Either, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationActions } from "react-navigation";
+import { StackActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import {
   call,
@@ -12,10 +12,9 @@ import {
   take
 } from "redux-saga/effects";
 import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
-import ROUTES from "../../../../../../navigation/routes";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import { navigateBack } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getAsyncResult } from "../../../../../../utils/saga";
 import {
@@ -62,17 +61,17 @@ export function* isBpdEnabled(): Generator<
   }
 }
 
+/**
+ *  Old style orchestrator, please don't use this as reference for future development
+ *  @deprecated
+ */
 export function* bpdStartOnboardingWorker() {
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-    yield select(navigationCurrentRouteSelector);
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
 
   // go to the loading page (if I'm not on that screen)
-  if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
-    yield put(navigateToBpdOnboardingLoadActivationStatus());
-
-    if (currentRoute.value !== ROUTES.WALLET_HOME) {
-      yield put(navigationHistoryPop(1));
-    }
+  if (currentRoute !== undefined && !isLoadingScreen(currentRoute)) {
+    yield call(navigateToBpdOnboardingLoadActivationStatus);
   }
 
   // read if the bpd is active for the user
@@ -84,15 +83,13 @@ export function* bpdStartOnboardingWorker() {
     // Refresh the wallets to prevent that added cards are not visible
     yield put(fetchWalletsRequest());
 
-    yield put(navigateToBpdOnboardingInformationTos());
-    yield put(navigationHistoryPop(1));
+    yield call(navigateToBpdOnboardingInformationTos);
 
     // wait for the user that choose to continue
     yield take(bpdUserActivate);
 
     // Navigate to the Onboarding Declaration and wait for the action that complete the saga
-    yield put(navigateToBpdOnboardingDeclaration());
-    yield put(navigationHistoryPop(1));
+    yield call(navigateToBpdOnboardingDeclaration);
   }
 
   // The saga ends when the user accepts the declaration
@@ -108,6 +105,10 @@ export function* handleBpdStartOnboardingSaga(): SagaIterator {
     cancelAction: take(bpdOnboardingCancel)
   });
   if (cancelAction) {
-    yield put(NavigationActions.back());
+    yield call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popToTop()
+    );
+    yield call(navigateBack);
   }
 }

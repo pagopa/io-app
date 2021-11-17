@@ -1,5 +1,4 @@
 import { bonusVacanzeEnabled } from "../../../config";
-import { navigateToBonusActivationCompleted } from "../../../features/bonus/bonusVacanze/navigation/action";
 import BONUSVACANZE_ROUTES from "../../../features/bonus/bonusVacanze/navigation/routes";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../actions/application";
@@ -80,15 +79,5 @@ describe("allowed Snapshot Screens Selector test", () => {
     expect(isAllowedSnapshotCurrentScreen(globalState)).toBeTruthy();
     // with a change of state but not in the interested part, no new computation are expected
     expect(isAllowedSnapshotCurrentScreen.recomputations()).toBe(2);
-
-    if (bonusVacanzeEnabled) {
-      globalState = appReducer(
-        globalState,
-        navigateToBonusActivationCompleted()
-      );
-      expect(isAllowedSnapshotCurrentScreen(globalState)).toBeTruthy();
-      // with a change in navigation, a new computation is expected
-      expect(isAllowedSnapshotCurrentScreen.recomputations()).toBe(3);
-    }
   });
 });

@@ -193,7 +193,7 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addPaymentMethod: () => {
     addPaymentMethod(() =>
-      dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }))
+      navigateToWalletAddPaymentMethod({ inPayment: none })
     );
   },
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff())

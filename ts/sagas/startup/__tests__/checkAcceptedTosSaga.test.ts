@@ -53,7 +53,7 @@ describe("checkAcceptedTosSaga", () => {
   describe("when user has already accepted the last version of ToS", () => {
     it("should do nothing", () =>
       expectSaga(checkAcceptedTosSaga, updatedProfile)
-        .not.put(navigateToTosScreen)
+        .not.call(navigateToTosScreen)
         .run());
   });
 
@@ -63,14 +63,14 @@ describe("checkAcceptedTosSaga", () => {
         ...oldOnboardedProfile,
         accepted_tos_version: undefined
       })
-        .put(navigateToTosScreen)
+        .call(navigateToTosScreen)
         .run());
   });
 
   describe("when user has accepted an old version of ToS", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () =>
       expectSaga(checkAcceptedTosSaga, notUpdatedProfile)
-        .put(navigateToTosScreen)
+        .call(navigateToTosScreen)
         .take(tosAccepted)
         .run());
   });
@@ -78,7 +78,7 @@ describe("checkAcceptedTosSaga", () => {
   describe("when user has never accepted an ToS because he is accessing the app for the first time", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () =>
       expectSaga(checkAcceptedTosSaga, firstOnboardingProfile)
-        .put(navigateToTosScreen)
+        .call(navigateToTosScreen)
         .take(tosAccepted)
         .run());
   });

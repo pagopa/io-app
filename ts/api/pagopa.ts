@@ -25,7 +25,6 @@ import { Omit } from "italia-ts-commons/lib/types";
 import _ from "lodash";
 import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
-  AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
   addWalletsBPayUsingPOSTDecoder,
   addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder,
@@ -57,6 +56,8 @@ import {
   FavouriteWalletUsingPOSTT,
   GetAllPspsUsingGETT,
   getConsumerUsingGETDefaultDecoder,
+  getPaypalPspsUsingGETDefaultDecoder,
+  GetPaypalPspsUsingGETT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
@@ -462,7 +463,18 @@ const searchSatispay: GetConsumerUsingGETT = {
   response_decoder: getConsumerUsingGETDefaultDecoder()
 };
 
-const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
+export type AddWalletSatispayUsingPOSTTExtra = r.IPostApiRequestType<
+  { readonly Bearer: string; readonly satispayRequest: SatispayRequest },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2Response>
+  | r.IResponseType<201, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
+const addSatispayToWallet: AddWalletSatispayUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/satispay/add-wallet`,
   query: () => ({}),
@@ -601,6 +613,13 @@ const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
   response_decoder: deleteWalletsByServiceUsingDELETEDefaultDecoder()
 };
 
+const searchPayPalPsp: GetPaypalPspsUsingGETT = {
+  method: "get",
+  url: () => `/v3/paypal/searchPSP`,
+  query: params => ({ language: params.language }),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPaypalPspsUsingGETDefaultDecoder()
+};
 const withPaymentManagerToken =
   <P extends { Bearer: string; LookUpId?: string }, R>(
     f: (p: P) => Promise<R>
@@ -818,7 +837,12 @@ export function PaymentManagerClient(
         withPaymentManagerToken(
           createFetchRequestForApi(deleteWallets, altOptions)
         )
-      )({ service })
+      )({ service }),
+    searchPayPalPsp: flip(
+      withPaymentManagerToken(
+        createFetchRequestForApi(searchPayPalPsp, options)
+      )
+    )({ language: getLocalePrimaryWithFallback() })
   };
 }
 

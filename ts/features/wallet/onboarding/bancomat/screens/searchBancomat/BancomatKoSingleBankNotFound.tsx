@@ -1,6 +1,5 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -10,6 +9,7 @@ import { InfoScreenComponent } from "../../../../../../components/infoScreen/Inf
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
+import { navigateBack } from "../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
@@ -63,7 +63,7 @@ const BancomatKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
-  back: () => dispatch(NavigationActions.back()),
+  back: () => navigateBack(),
   searchPans: (abi?: string) => {
     dispatch(searchUserPans.request(abi));
   }

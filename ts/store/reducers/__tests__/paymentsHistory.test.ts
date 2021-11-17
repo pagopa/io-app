@@ -1,7 +1,8 @@
 import { range } from "fp-ts/lib/Array";
 import { none, some } from "fp-ts/lib/Option";
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Transaction } from "../../../types/pagopa";
 import {
@@ -169,7 +170,7 @@ describe("payments history", () => {
     expect(state[0].transaction).toEqual(validTransaction);
   });
 
-  it("should recognize a sucessfully payment", () => {
+  it("should recognize a successfully payment", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toEqual(some(true));
   });
 
@@ -181,6 +182,20 @@ describe("payments history", () => {
 
   it("should recognize a failed payment", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toEqual(some(false));
+  });
+
+  it("should add a payment in the history because it has the same notice number but a different organization fiscal code", () => {
+    state = reducer(
+      state,
+      paymentVerifica.request({
+        rptId: {
+          ...anRptId,
+          organizationFiscalCode: "00000000001" as OrganizationFiscalCode
+        },
+        startOrigin: "message"
+      })
+    );
+    expect(state.length).toEqual(2);
   });
 
   it("should add a payment in the history", () => {
@@ -195,7 +210,7 @@ describe("payments history", () => {
         startOrigin: "message"
       })
     );
-    expect(state.length).toEqual(2);
+    expect(state.length).toEqual(3);
     expect(state[1].verified_data).toEqual(undefined);
   });
 
