@@ -46,8 +46,8 @@ import { H4 } from "../../../components/core/typography/H4";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
-import { dispatchPickPspOrConfirm } from "./common";
 import { payPalEnabled } from "../../../config";
+import { dispatchPickPspOrConfirm } from "./common";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
