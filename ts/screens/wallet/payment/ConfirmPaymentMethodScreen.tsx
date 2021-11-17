@@ -67,10 +67,7 @@ import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/w
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { Link } from "../../../components/core/typography/Link";
-import {
-  getWalletsById,
-  paymentMethodByIdSelector
-} from "../../../store/reducers/wallet/wallets";
+import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
 import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
 import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 
