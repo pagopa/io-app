@@ -227,6 +227,9 @@ permissionRationale:
   camera:
     title: "Allow camera access"
     message: "You’ll be able to read QR codes and pay pagoPA notices."
+  calendar:
+    title: "TMP CALENDAR TITLE"
+    message: "TMP CALENDAR BODY"
 startup:
   title: Initialization
   authentication: User authenticated
