@@ -132,13 +132,13 @@ const ErrorCodeCopyComponent = ({
  * @param maybeError
  * @param rptId
  * @param onCancel
- * @param payment
+ * @param paymentHistory
  */
 export const errorTransactionUIElements = (
   maybeError: NavigationParams["error"],
   rptId: RptId,
   onCancel: () => void,
-  payment?: PaymentHistory
+  paymentHistory?: PaymentHistory
 ): ScreenUIContents => {
   const errorORUndefined = maybeError.toUndefined();
 
@@ -150,7 +150,7 @@ export const errorTransactionUIElements = (
     };
   }
   const requestAssistance = () =>
-    requestAssistanceForPaymentFailure(rptId, payment);
+    requestAssistanceForPaymentFailure(rptId, paymentHistory);
 
   const errorMacro = getV2ErrorMainType(errorORUndefined);
   const validError = t.keyof(Detail_v2Enum).decode(errorORUndefined);
@@ -296,16 +296,19 @@ const TransactionErrorScreen = (props: Props) => {
   const { paymentsHistory } = props;
 
   const codiceAvviso = getCodiceAvviso(rptId);
+  const organizationFiscalCode = rptId.organizationFiscalCode;
 
-  const payment = paymentsHistory.find(
-    p => codiceAvviso === getCodiceAvviso(p.data)
+  const paymentHistory = paymentsHistory.find(
+    p =>
+      codiceAvviso === getCodiceAvviso(p.data) &&
+      organizationFiscalCode === p.data.organizationFiscalCode
   );
 
   const { title, subtitle, footerButtons, image } = errorTransactionUIElements(
     error,
     rptId,
     onCancel,
-    payment
+    paymentHistory
   );
   const handleBackPress = () => {
     props.backToEntrypointPayment();
