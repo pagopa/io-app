@@ -96,8 +96,8 @@ class PreferencesScreen extends React.Component<Props> {
     await requestIOAndroidPermission(
       PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR,
       {
-        title: I18n.t("permissionRationale.storage.title"),
-        message: I18n.t("permissionRationale.storage.message"),
+        title: I18n.t("permissionRationale.calendar.title"),
+        message: I18n.t("permissionRationale.calendar.message"),
         buttonPositive: I18n.t("global.buttons.choose")
       }
     );
