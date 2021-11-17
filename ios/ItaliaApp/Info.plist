@@ -66,7 +66,7 @@
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
     <key>NSCalendarsUsageDescription</key>
-    <string>IO needs access to the calendar to add event reminders</string>
+    <string>TMP IOS CALENDAR</string>
     <key>NSCameraUsageDescription</key>
     <string>You’ll be able to read QR codes and pay pagoPA notices.</string>
     <key>NSContactsUsageDescription</key>
