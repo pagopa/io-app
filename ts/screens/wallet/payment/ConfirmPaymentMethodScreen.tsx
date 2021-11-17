@@ -38,7 +38,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
-import { Psp, Wallet } from "../../../types/pagopa";
+import { PaymentMethod, Psp, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { PayloadForAction } from "../../../types/utils";
@@ -64,6 +64,12 @@ import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/w
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { Link } from "../../../components/core/typography/Link";
+import {
+  getWalletsById,
+  paymentMethodByIdSelector
+} from "../../../store/reducers/wallet/wallets";
+import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
+import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -130,6 +136,28 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const payUrlSuffix = "/v3/webview/transactions/pay";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
+
+const PaymentMethodCard = (props: {
+  paymentMethod: PaymentMethod | undefined;
+}) => {
+  const { paymentMethod } = props;
+  if (paymentMethod === undefined) {
+    return null;
+  }
+  switch (paymentMethod.kind) {
+    case "CreditCard":
+      return <CreditCardComponent creditCard={paymentMethod} />;
+    case "PayPal":
+      return <PaypalCard paypal={paymentMethod} />;
+    // those method can't pay
+    case "Satispay":
+    case "Bancomat":
+    case "BPay":
+    case "Privative":
+    default:
+      return null;
+  }
+};
 
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
@@ -234,11 +262,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         />
         <View style={styles.padded}>
           <View spacer={true} />
-          <CardComponent
-            type={"Full"}
-            wallet={wallet}
-            hideMenu={true}
-            hideFavoriteIcon={true}
+          <PaymentMethodCard
+            paymentMethod={props.paymentMethod(wallet.idWallet)}
           />
           <View spacer={true} />
           {maybePsp.isNone() ? (
@@ -334,6 +359,8 @@ const mapStateToProps = (state: GlobalState) => {
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
+    paymentMethod: (idWallet: number) =>
+      paymentMethodByIdSelector(state, idWallet),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     outcomeCodes: outcomeCodesSelector(state),
     payStartWebviewPayload,

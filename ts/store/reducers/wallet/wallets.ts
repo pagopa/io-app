@@ -246,6 +246,14 @@ export const creditCardListSelector = createSelector(
     )
 );
 
+export const paymentMethodByIdSelector = createSelector(
+  [paymentMethodsSelector, (_: GlobalState, id: number) => id],
+  (potWallets, id): PaymentMethod | undefined =>
+    pot.toUndefined(
+      pot.map(potWallets, wallets => wallets.find(cc => cc.idWallet === id))
+    )
+);
+
 /**
  * Return a {@link CreditCardPaymentMethod} by walletId
  * Return undefined if not in list

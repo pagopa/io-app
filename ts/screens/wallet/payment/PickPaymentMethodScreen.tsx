@@ -29,6 +29,7 @@ import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
+  paypalListSelector,
   privativeListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
@@ -46,6 +47,7 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import { dispatchPickPspOrConfirm } from "./common";
+import { payPalEnabled } from "../../../config";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -171,6 +173,7 @@ function getValueOrEmptyArray(
 
 const mapStateToProps = (state: GlobalState) => {
   const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
+  const potVisiblePaypal = payPalEnabled ? paypalListSelector(state) : pot.none;
   const potVisibleBancomat = bancomatListVisibleInWalletSelector(state);
   const potVisibleBPay = bPayListVisibleInWalletSelector(state);
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
@@ -181,6 +184,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const visibleWallets = [
     potVisibleCreditCard,
+    potVisiblePaypal,
     potVisibleBancomat,
     potVisibleBPay,
     potVisibleSatispay,
