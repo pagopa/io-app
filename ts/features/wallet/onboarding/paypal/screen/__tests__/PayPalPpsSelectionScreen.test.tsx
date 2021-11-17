@@ -9,7 +9,7 @@ import PayPalPpsSelectionScreen from "../PayPalPspSelectionScreen";
 import I18n from "../../../../../../i18n";
 import { searchPaypalPsp } from "../../store/actions";
 import { getNetworkError } from "../../../../../../utils/errors";
-import { pspList } from "./__mock__/psp";
+import { pspList } from "../__mocks__/psp";
 
 const mockPresentBottomSheet = jest.fn();
 jest.mock("../../../../../../utils/bottomSheet", () => {
