@@ -54,7 +54,11 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
+import {
+  pagoPaApiUrlPrefix,
+  pagoPaApiUrlPrefixTest,
+  payPalEnabled
+} from "../../../config";
 import { H4 } from "../../../components/core/typography/H4";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
@@ -148,7 +152,10 @@ const PaymentMethodCard = (props: {
     case "CreditCard":
       return <CreditCardComponent creditCard={paymentMethod} />;
     case "PayPal":
-      return <PaypalCard paypal={paymentMethod} />;
+      if (payPalEnabled) {
+        return <PaypalCard paypal={paymentMethod} />;
+      }
+      return null;
     // those method can't pay
     case "Satispay":
     case "Bancomat":
