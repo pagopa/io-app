@@ -27,9 +27,7 @@ const PaypalDetailScreen: React.FunctionComponent<Props> = props => {
   return (
     <BasePaymentMethodScreen
       paymentMethod={paypal}
-      card={
-        <PaypalCard email={paypal.info.emailPp} idWallet={paypal.idWallet} />
-      }
+      card={<PaypalCard paypal={paypal} />}
       content={<PaymentMethodFeatures paymentMethod={paypal} />}
     />
   );

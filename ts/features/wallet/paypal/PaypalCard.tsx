@@ -13,10 +13,10 @@ import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import IconFont from "../../../components/ui/IconFont";
 import variables from "../../../theme/variables";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { PayPalPaymentMethod } from "../../../types/pagopa";
 
 type Props = {
-  email: string;
-  idWallet: number;
+  paypal: PayPalPaymentMethod;
 } & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
@@ -46,11 +46,11 @@ const PaypalCard: React.FunctionComponent<Props> = (props: Props) => (
   <BaseCardComponent
     topLeftCorner={topLeft(
       pot.getOrElse(
-        pot.map(props.favoriteWalletId, id => props.idWallet === id),
+        pot.map(props.favoriteWalletId, id => props.paypal.idWallet === id),
         false
       )
     )}
-    bottomLeftCorner={<Body>{props.email}</Body>}
+    bottomLeftCorner={<Body>{props.paypal.info.emailPp}</Body>}
     bottomRightCorner={<BrandImage image={paypalLogoMin} />}
   />
 );
