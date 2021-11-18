@@ -57,3 +57,35 @@ export type Attachment = {
   content: string;
   mimeType: string;
 };
+
+/**
+ * Domain-specific representation of a Message details
+ */
+export type UIMessageDetails = {
+  id: string;
+  prescriptionData?: {
+    nre: string;
+    iup?: string;
+    prescriberFiscalCode: FiscalCode;
+  };
+  attachments?: ReadonlyArray<Attachment>;
+  markdown: MessageBodyMarkdown;
+  dueDate?: Date;
+  paymentData?: PaymentData;
+  greenPass?: { authCode: string };
+};
+
+export type PaymentData = {
+  payee: {
+    fiscalCode: OrganizationFiscalCode;
+  };
+  amount: PaymentAmount;
+  invalidAfterDueDate?: boolean;
+  noticeNumber: PaymentNoticeNumber;
+};
+
+export type Attachment = {
+  name: string;
+  content: string;
+  mimeType: string;
+};
