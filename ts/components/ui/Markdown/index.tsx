@@ -354,9 +354,6 @@ class Markdown extends React.PureComponent<Props, State> {
 
   // When the injected html is loaded inject the script to notify the height
   private handleLoadEnd = () => {
-    this.setState({
-      isLoading: false
-    });
     if (this.props.onLoadEnd) {
       this.props.onLoadEnd();
     }
@@ -374,6 +371,9 @@ class Markdown extends React.PureComponent<Props, State> {
   // A function that handles message sent by the WebView component
   private handleWebViewMessage = (event: WebViewMessageEvent) => {
     const { dispatch } = this.props;
+    this.setState({
+      isLoading: false
+    });
 
     // We validate the format of the message with io-ts
     const messageOrErrors = WebViewMessage.decode(
