@@ -55,7 +55,7 @@ const NewServiceListItem = (props: Props): React.ReactElement => {
 
   return (
     <ListItemComponent
-      accessibilityRole={"link"}
+      accessibilityRole={"button"}
       title={serviceName}
       hasBadge={false} // disabled for these reasons https://www.pivotaltracker.com/story/show/176919053
       onPress={onPress}
