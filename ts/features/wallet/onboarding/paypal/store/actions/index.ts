@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NetworkError } from "../../../../../../utils/errors";
 import { IOPayPalPsp } from "../../types";
 
@@ -11,4 +15,13 @@ export const searchPaypalPsp = createAsyncAction(
   "WALLET_ONBOARDING_PAYPAL_PSP_SEARCH_FAILURE"
 )<void, ReadonlyArray<IOPayPalPsp>, NetworkError>();
 
-export type PayPalOnboardingActions = ActionType<typeof searchPaypalPsp>;
+/**
+ * The user choose to start the workflow to add a new paypal account to the wallet
+ */
+export const walletAddPaypalStart = createStandardAction(
+  "WALLET_ONBOARDING_PAYPAL_START"
+)<void>();
+
+export type PayPalOnboardingActions =
+  | ActionType<typeof searchPaypalPsp>
+  | ActionType<typeof walletAddPaypalStart>;
