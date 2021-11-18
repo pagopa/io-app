@@ -1,6 +1,3 @@
-/**
- * The screen allows to identify a transaction by the QR code on the analogic notice
- */
 import { head } from "fp-ts/lib/Array";
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
@@ -23,6 +20,7 @@ import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -31,7 +29,6 @@ import BaseScreenComponent, {
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-
 import I18n from "../../../i18n";
 import {
   navigateToPaymentManualDataInsertion,
@@ -55,8 +52,8 @@ type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
   isFocused: boolean;
-  // The package react-native-qrcode-scanner automatically asks for android permission, but we have to display before an alert with
-  // the rationale
+  // The package react-native-qrcode-scanner automatically asks for android permission,
+  // but we have to display before an alert with the rationale
   permissionRationaleDisplayed: boolean;
 };
 
@@ -132,6 +129,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
   body: "wallet.QRtoPay.contextualHelpContent"
 };
+
+/**
+ * The screen allows to identify a transaction by the QR code on the analogic notice
+ */
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private goBack = () => this.props.navigation.goBack();
@@ -367,7 +368,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     initialAmount: AmountInEuroCents
   ) => {
     dispatch(paymentInitializeState());
-
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,

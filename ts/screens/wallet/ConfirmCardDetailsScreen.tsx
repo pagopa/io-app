@@ -1,7 +1,3 @@
-/**
- * This screen presents a summary on the credit card after the user
- * inserted the data required to save a new card
- */
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -102,6 +98,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.saveCard.contextualHelpContent"
 };
 
+/**
+ * This screen presents a summary on the credit card after the user
+ * inserted the data required to save a new card
+ */
 class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   public componentDidMount() {
     // reset the credit card boarding state on mount

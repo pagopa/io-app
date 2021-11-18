@@ -1,8 +1,9 @@
-/**
- * Screen for entering the credit card details
- * (holder, pan, cvc, expiration date)
- */
-
+import React, { useState } from "react";
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { NavigationInjectedProps } from "react-navigation";
+import { Content, View } from "native-base";
+import { Col, Grid } from "react-native-easy-grid";
 import {
   fromEither,
   fromPredicate,
@@ -12,12 +13,6 @@ import {
   Option,
   some
 } from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
-import React, { useState } from "react";
-import { Keyboard, ScrollView, StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
-import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -46,7 +41,6 @@ import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
 import { useIOBottomSheet } from "../../utils/bottomSheet";
-
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
 import { isTestEnv } from "../../utils/environment";
@@ -225,6 +219,10 @@ const getAccessiblityLabels = (creditCard: CreditCardState) => ({
       : I18n.t("wallet.dummyCard.accessibility.securityCode.4D.error")
 });
 
+/**
+ * Screen for entering the credit card details
+ * (holder, pan, cvc, expiration date)
+ */
 const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE

@@ -131,31 +131,48 @@ const payUrlSuffix = "/v3/webview/transactions/pay";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 
-const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
+const ConfirmPaymentMethodScreen: React.FC<Props> = ({
+  dispatchCancelPayment,
+  dispatchEndPaymentWebview,
+  dispatchPaymentCompleteSuccessfully,
+  dispatchPaymentFailure,
+  dispatchPaymentOutCome,
+  dispatchPaymentStart,
+  hideModal,
+  idPayment,
+  isPagoPATestEnabled,
+  loadTransactions,
+  navigateToOutComePaymentScreen,
+  onCancel,
+  outcomeCodes,
+  payStartWebviewPayload,
+  pickPaymentMethod,
+  pickPsp,
+  retrievingSessionTokenError,
+  showModal,
+  verifica,
+  wallet
+}: Props) => {
   React.useEffect(() => {
     // show a toast if we got an error while retrieving pm session token
-    if (props.retrievingSessionTokenError.isSome()) {
+    if (retrievingSessionTokenError.isSome()) {
       showToast(I18n.t("global.actions.retry"));
     }
-  }, [props.retrievingSessionTokenError]);
+  }, [retrievingSessionTokenError]);
 
   const showHelp = () => {
-    props.showModal(
+    showModal(
       <ContextualInfo
-        onClose={props.hideModal}
+        onClose={hideModal}
         title={I18n.t("wallet.whyAFee.title")}
         body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
       />
     );
   };
-  const urlPrefix = props.isPagoPATestEnabled
+  const urlPrefix = isPagoPATestEnabled
     ? pagoPaApiUrlPrefixTest
     : pagoPaApiUrlPrefix;
 
-  const verifica: PaymentRequestsGetResponse =
-    props.navigation.getParam("verifica");
-  const wallet: Wallet = props.navigation.getParam("wallet");
-  const idPayment: string = props.navigation.getParam("idPayment");
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const fee = maybePsp.fold(undefined, psp => psp.fixedCost.amount);
@@ -173,26 +190,21 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     // the outcome is a payment done successfully
     if (
       maybeOutcomeCode.isSome() &&
-      isPaymentOutcomeCodeSuccessfully(
-        maybeOutcomeCode.value,
-        props.outcomeCodes
-      )
+      isPaymentOutcomeCodeSuccessfully(maybeOutcomeCode.value, outcomeCodes)
     ) {
       // store the rptid of a payment done
-      props.dispatchPaymentCompleteSuccessfully(
-        props.navigation.getParam("rptId")
-      );
+      dispatchPaymentCompleteSuccessfully();
       // refresh transactions list
-      props.loadTransactions();
+      loadTransactions();
     } else {
-      props.dispatchPaymentFailure(
+      dispatchPaymentFailure(
         maybeOutcomeCode.filter(OutcomeCodesKey.is).toUndefined(),
         idPayment
       );
     }
-    props.dispatchEndPaymentWebview("EXIT_PATH");
-    props.dispatchPaymentOutCome(maybeOutcomeCode);
-    props.navigateToOutComePaymentScreen();
+    dispatchEndPaymentWebview("EXIT_PATH");
+    dispatchPaymentOutCome(maybeOutcomeCode);
+    navigateToOutComePaymentScreen();
   };
 
   // the user press back during the pay web view challenge
@@ -201,8 +213,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       {
         text: I18n.t("payment.abortWebView.confirm"),
         onPress: () => {
-          props.dispatchCancelPayment();
-          props.dispatchEndPaymentWebview("USER_ABORT");
+          dispatchCancelPayment();
+          dispatchEndPaymentWebview("USER_ABORT");
         },
         style: "cancel"
       },
@@ -212,7 +224,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ]);
   };
 
-  const formData = props.payStartWebviewPayload
+  const formData = payStartWebviewPayload
     .map<Record<string, string | number>>(payload => ({
       ...payload,
       ...getLookUpIdPO()
@@ -221,7 +233,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      goBack={props.onCancel}
+      goBack={onCancel}
       headerTitle={I18n.t("wallet.ConfirmPayment.header")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["payment"]}
@@ -249,7 +261,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <H4>{` ${maybePsp.value.businessName}`}</H4>
             </H4>
           )}
-          <Link onPress={props.pickPsp} weight={"Bold"}>
+          <Link onPress={pickPsp} weight={"Bold"}>
             {I18n.t("payment.changePsp")}
           </Link>
           <View spacer={true} large={true} />
@@ -277,9 +289,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           block={true}
           primary={true}
           // a payment is running
-          disabled={props.payStartWebviewPayload.isSome()}
+          disabled={payStartWebviewPayload.isSome()}
           onPress={() =>
-            props.dispatchPaymentStart({
+            dispatchPaymentStart({
               idWallet: wallet.idWallet,
               idPayment,
               language: getLocalePrimaryWithFallback()
@@ -296,7 +308,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             style={styles.child}
             block={true}
             cancel={true}
-            onPress={props.onCancel}
+            onPress={onCancel}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </ButtonDefaultOpacity>
@@ -305,13 +317,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             style={styles.childTwice}
             block={true}
             bordered={true}
-            onPress={props.pickPaymentMethod}
+            onPress={pickPaymentMethod}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
           </ButtonDefaultOpacity>
         </View>
       </View>
-      {props.payStartWebviewPayload.isSome() && (
+      {payStartWebviewPayload.isSome() && (
         <PayWebViewModal
           postUri={urlPrefix + payUrlSuffix}
           formData={formData}
@@ -326,7 +338,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
+const mapStateToProps = (state: GlobalState, { navigation }: OwnProps) => {
+  const rptId = navigation.getParam("rptId");
+  const verifica = navigation.getParam("verifica");
+  const idPayment = navigation.getParam("idPayment");
+  const wallet = navigation.getParam("wallet");
+
   const pmSessionToken = pmSessionTokenSelector(state);
   const paymentStartPayload = paymentStartPayloadSelector(state);
   const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
@@ -334,37 +351,48 @@ const mapStateToProps = (state: GlobalState) => {
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
+    idPayment,
+    isLoading: isLoading(pmSessionToken),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     outcomeCodes: outcomeCodesSelector(state),
     payStartWebviewPayload,
-    isLoading: isLoading(pmSessionToken),
     retrievingSessionTokenError: isError(pmSessionToken)
       ? some(pmSessionToken.error.message)
-      : none
+      : none,
+    rptId,
+    verifica,
+    wallet
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
+const mapDispatchToProps = (dispatch: Dispatch, { navigation }: OwnProps) => {
+  const rptId = navigation.getParam("rptId");
+  const initialAmount = navigation.getParam("initialAmount");
+  const verifica = navigation.getParam("verifica");
+  const idPayment = navigation.getParam("idPayment");
+  const wallet = navigation.getParam("wallet");
+
   const dispatchCancelPayment = () => {
     dispatch(abortRunningPayment());
     showToast(I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"), "success");
   };
+
   return {
     pickPaymentMethod: () =>
       navigateToPaymentPickPaymentMethodScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        idPayment: props.navigation.getParam("idPayment")
+        rptId,
+        initialAmount,
+        verifica,
+        idPayment
       }),
     pickPsp: () =>
       navigateToPaymentPickPspScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        idPayment: props.navigation.getParam("idPayment"),
-        psps: props.navigation.getParam("psps"),
-        wallet: props.navigation.getParam("wallet"),
+        rptId,
+        initialAmount,
+        verifica,
+        idPayment,
+        psps: navigation.getParam("psps"),
+        wallet,
         chooseToChange: true
       }),
     onCancel: () => {
@@ -398,7 +426,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     loadTransactions: () =>
       dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
 
-    dispatchPaymentCompleteSuccessfully: (rptId: RptId) =>
+    dispatchPaymentCompleteSuccessfully: () =>
       dispatch(
         paymentCompletedSuccess({
           kind: "COMPLETED",

@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { constNull } from "fp-ts/lib/function";
+
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {

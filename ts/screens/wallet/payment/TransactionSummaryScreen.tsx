@@ -96,14 +96,14 @@ const NOTICE_ICON_SIZE = 24;
  * (to check if it is valid and if the amount has been updated)
  */
 class TransactionSummaryScreen extends React.Component<Props> {
-  public componentDidMount() {
+  componentDidMount() {
     if (pot.isNone(this.props.potVerifica)) {
       // on component mount, fetch the payment summary if we haven't already
       this.props.dispatchPaymentVerificaRequest();
     }
   }
 
-  public componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props) {
     const { error, potVerifica } = this.props;
     if (error.toUndefined() !== prevProps.error.toUndefined()) {
       // in case the verifica returns an error indicating the payment has been
@@ -124,14 +124,14 @@ class TransactionSummaryScreen extends React.Component<Props> {
       // this is the case when the component is already mounted (eg. process more payments)
       // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
       pot.isNone(this.props.potVerifica) &&
-      this.props.navigation.getParam("rptId").paymentNoticeNumber !==
-        prevProps.navigation.getParam("rptId").paymentNoticeNumber
+      this.props.rptId.paymentNoticeNumber !==
+        prevProps.rptId.paymentNoticeNumber
     ) {
       this.props.dispatchPaymentVerificaRequest();
     }
   }
 
-  private handleBackPress = () => {
+  handleBackPress = () => {
     if (pot.isSome(this.props.paymentId)) {
       // If we have a paymentId (payment check already done) we need to
       // ask the user to cancel the payment and in case reset it
@@ -161,14 +161,14 @@ class TransactionSummaryScreen extends React.Component<Props> {
     }
   };
 
-  private getSecondaryButtonProps = () => ({
+  getSecondaryButtonProps = () => ({
     bordered: pot.isNone(this.props.paymentId),
     cancel: pot.isSome(this.props.paymentId),
     onPress: this.handleBackPress,
     title: I18n.t("global.buttons.cancel")
   });
 
-  private renderFooterSingleButton() {
+  renderFooterSingleButton() {
     return (
       <FooterWithButtons
         type={"SingleButton"}
@@ -177,7 +177,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
-  private handleContinueOnPress = (verifica: PaymentRequestsGetResponse) => {
+  handleContinueOnPress = (verifica: PaymentRequestsGetResponse) => {
     const { maybeFavoriteWallet, hasPayableMethods } = this.props;
     if (hasPayableMethods) {
       this.props.startOrResumePayment(
@@ -194,7 +194,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
   };
 
-  private renderFooterButtons() {
+  renderFooterButtons() {
     const { potVerifica } = this.props;
     const basePrimaryButtonProps = {
       primary: true,
@@ -223,19 +223,19 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
-  private getFooterButtons = () =>
+  getFooterButtons = () =>
     this.props.error.fold(this.renderFooterButtons(), error =>
       error === "PAA_PAGAMENTO_DUPLICATO"
         ? this.renderFooterSingleButton()
         : this.renderFooterButtons()
     );
 
-  public render(): React.ReactNode {
-    const rptId: RptId = this.props.navigation.getParam("rptId");
-    // TODO: it should compare the current an d the initial amount BUT the initialAmount seems to be provided with an incorrect format https://www.pivotaltracker.com/story/show/172084929
+  render(): React.ReactNode {
+    const { rptId, potVerifica } = this.props;
+    // TODO: it should compare the current and the initial amount BUT
+    //  the initialAmount seems to be provided with an incorrect format
+    //  see https://www.pivotaltracker.com/story/show/172084929
     const isAmountUpdated = true;
-
-    const { potVerifica } = this.props;
 
     const recipient = pot
       .toOption(potVerifica)
@@ -338,7 +338,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
 }
 
 // eslint-disable-next-line complexity,sonarjs/cognitive-complexity
-const mapStateToProps = (state: GlobalState) => {
+const mapStateToProps = (state: GlobalState, { navigation }: OwnProps) => {
+  const rptId = navigation.getParam("rptId");
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;
 
@@ -400,7 +401,8 @@ const mapStateToProps = (state: GlobalState) => {
     paymentId,
     maybeFavoriteWallet,
     hasPayableMethods,
-    hasPagoPaMethods
+    hasPagoPaMethods,
+    rptId
   };
 };
 
@@ -446,7 +448,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
               // either we cannot use the default payment method for this
               // payment, or fetching the PSPs for this payment and the
               // default wallet has failed, ask the user to pick a wallet
-
               navigateToPaymentPickPaymentMethodScreen({
                 rptId,
                 initialAmount,

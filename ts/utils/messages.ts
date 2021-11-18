@@ -66,7 +66,7 @@ export function messageNeedsCTABar(
     message.content.eu_covid_cert !== undefined || // eucovid data
     messageNeedsDueDateCTA(message) ||
     messageNeedsPaymentCTA(message) ||
-    getCTA(message).isSome()
+    getCTA(message.content.markdown).isSome()
   );
 }
 
@@ -251,16 +251,15 @@ const extractCTA = (
 /**
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
- * @param message
+ * @param markdown
  * @param serviceMetadata
  * @param serviceId
  */
 export const getCTA = (
-  message: CreatedMessageWithContentAndAttachments,
+  markdown: MessageBodyMarkdown,
   serviceMetadata?: ServicePublicService_metadata,
   serviceId?: ServiceId
-): Option<CTAS> =>
-  extractCTA(message.content.markdown, serviceMetadata, serviceId);
+): Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message

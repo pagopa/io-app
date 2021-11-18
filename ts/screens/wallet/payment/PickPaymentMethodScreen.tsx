@@ -1,6 +1,3 @@
-/**
- * This screen allows the user to select the payment method for a selected transaction
- */
 import { some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -76,6 +73,9 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   />
 );
 
+/**
+ * This screen allows the user to select the payment method for a selected transaction
+ */
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
@@ -204,41 +204,49 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  goBack: () => navigateBack(),
-  navigateToConfirmOrPickPsp: (wallet: Wallet) => {
-    dispatchPickPspOrConfirm(dispatch)(
-      props.navigation.getParam("rptId"),
-      props.navigation.getParam("initialAmount"),
-      props.navigation.getParam("verifica"),
-      props.navigation.getParam("idPayment"),
-      some(wallet),
-      failureReason => {
-        // selecting the payment method has failed, show a toast and stay in
-        // this screen
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
+  const initialAmount = props.navigation.getParam("initialAmount");
+  const verifica = props.navigation.getParam("verifica");
+  const idPayment = props.navigation.getParam("idPayment");
+  const rptId = props.navigation.getParam("rptId");
 
-        if (failureReason === "FETCH_PSPS_FAILURE") {
-          // fetching the PSPs for the payment has failed
-          showToast(I18n.t("wallet.payWith.fetchPspFailure"), "warning");
-        } else if (failureReason === "NO_PSPS_AVAILABLE") {
-          // this wallet cannot be used for this payment
-          // TODO: perhaps we can temporarily hide the selected wallet from
-          //       the list of available wallets
-          showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
+  return {
+    goBack: () => navigateBack(),
+    navigateToConfirmOrPickPsp: (wallet: Wallet) => {
+      dispatchPickPspOrConfirm(dispatch)(
+        rptId,
+        initialAmount,
+        verifica,
+        idPayment,
+        some(wallet),
+        failureReason => {
+          // selecting the payment method has failed, show a toast and stay in
+          // this screen
+
+          if (failureReason === "FETCH_PSPS_FAILURE") {
+            // fetching the PSPs for the payment has failed
+            showToast(I18n.t("wallet.payWith.fetchPspFailure"), "warning");
+          } else if (failureReason === "NO_PSPS_AVAILABLE") {
+            // this wallet cannot be used for this payment
+            // TODO: perhaps we can temporarily hide the selected wallet from
+            //       the list of available wallets
+            showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
+          }
         }
-      }
-    );
-  },
-  navigateToAddPaymentMethod: () =>
-    navigateToWalletAddPaymentMethod({
-      inPayment: some({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        idPayment: props.navigation.getParam("idPayment")
+      );
+    },
+
+    navigateToAddPaymentMethod: () =>
+      navigateToWalletAddPaymentMethod({
+        inPayment: some({
+          rptId,
+          initialAmount,
+          verifica,
+          idPayment
+        })
       })
-    })
-});
+  };
+};
 
 export default connect(
   mapStateToProps,

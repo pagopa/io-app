@@ -98,7 +98,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
       </View>
     );
     const maybeCtas = getCTA(
-      this.props.message,
+      this.props.message.content.markdown,
       maybeServiceMetadata,
       this.props.service?.service_id
     );

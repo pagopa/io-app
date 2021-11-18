@@ -4,9 +4,9 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationParams } from "react-navigation";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
-import { I18n } from "../../../../i18n";
+import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -24,7 +24,6 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
 
-const rptId = {} as RptId;
 const initialAmount = "300" as AmountInEuroCents;
 const verifica = {} as PaymentRequestsGetResponse;
 const idPayment = "123";
@@ -55,6 +54,7 @@ jest.mock("../../../../utils/bottomSheet", () => ({
   __esModule: true,
   useIOBottomSheet: () => ({ present: mockPresentFn })
 }));
+
 describe("PickPaymentMethodScreen", () => {
   jest.useFakeTimers();
 
@@ -97,7 +97,6 @@ describe("PickPaymentMethodScreen", () => {
       fireEvent.press(addPaymentMethodButton);
       expect(spy).toHaveBeenCalledWith({
         inPayment: some({
-          rptId,
           initialAmount,
           verifica,
           idPayment
@@ -234,7 +233,6 @@ const renderPickPaymentMethodScreen = (store: Store<GlobalState, Action>) =>
     PickPaymentMethodScreen,
     WALLET_ONBOARDING_PRIVATIVE_ROUTES.ADD_PRIVATIVE,
     {
-      rptId,
       initialAmount,
       verifica,
       idPayment

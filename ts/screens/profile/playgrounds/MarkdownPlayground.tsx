@@ -42,7 +42,7 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
       markdown: markdownText
     }
   } as CreatedMessageWithContent;
-  const maybeCTA = getCTA(message);
+  const maybeCTA = getCTA(message.content.markdown);
   const ctaMessage = maybeCTA.isSome()
     ? `${maybeCTA.value.cta_1 ? "2" : "1"} cta found!`
     : "no CTA found";

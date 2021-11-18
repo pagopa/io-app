@@ -17,12 +17,12 @@ import { isTextIncludedCaseInsensitive } from "./strings";
  * The arrays will have first the service logo, then the organization logo.
  */
 export function logosForService(
-  service: ServicePublic,
+  serviceData: { service_id: string; organization_fiscal_code: string },
   logosRepoUrl: string = `${contentRepoUrl}/logos`
 ): ReadonlyArray<ImageURISource> {
   return [
-    `services/${service.service_id.toLowerCase()}`,
-    `organizations/${service.organization_fiscal_code.replace(/^0+/, "")}`
+    `services/${serviceData.service_id.toLowerCase()}`,
+    `organizations/${serviceData.organization_fiscal_code.replace(/^0+/, "")}`
   ].map(u => ({
     uri: `${logosRepoUrl}/${u}.png`
   }));
