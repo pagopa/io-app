@@ -10,7 +10,7 @@ import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
-  loadMessage as loadMessageAction,
+  DEPRECATED_loadMessage as loadMessageAction,
   DEPRECATED_loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";

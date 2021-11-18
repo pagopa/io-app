@@ -13,7 +13,8 @@ export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   return {
     id: messageFromApi.id,
     fiscalCode: messageFromApi.fiscal_code,
-    createdAt: messageFromApi.created_at,
+    category: null,
+    createdAt: new Date(messageFromApi.created_at),
     serviceId: messageFromApi.sender_service_id,
     serviceName: enriched.service_name,
     organizationName: enriched.organization_name,
