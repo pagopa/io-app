@@ -302,7 +302,6 @@ class Markdown extends React.PureComponent<Props, State> {
       height: htmlBodyHeight + (extraBodyHeight || 0)
     };
 
-
     return (
       <React.Fragment>
         {this.state.isLoading && (
