@@ -1,5 +1,10 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  cgnEnabled,
+  payPalEnabled
+} from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
@@ -56,6 +61,9 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
+import WALLET_ONBOARDING_PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
+import PayPalPspSelectionScreen from "../features/wallet/onboarding/paypal/screen/PayPalPspSelectionScreen";
+import PayPalStartOnboardingScreen from "../features/wallet/onboarding/paypal/screen/PayPalStartOnboardingScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -208,11 +216,23 @@ const cgnConfigMap = cgnEnabled
     }
   : {};
 
+const paypalConfigMap = payPalEnabled
+  ? {
+      [WALLET_ONBOARDING_PAYPAL_ROUTES.START]: {
+        screen: PayPalStartOnboardingScreen
+      },
+      [WALLET_ONBOARDING_PAYPAL_ROUTES.SEARCH_PSP]: {
+        screen: PayPalPspSelectionScreen
+      }
+    }
+  : {};
+
 const routeConfig = {
   ...baseRouteConfigMap,
   ...bonusVacanzeConfigMap,
   ...bpdConfigMap,
-  ...cgnConfigMap
+  ...cgnConfigMap,
+  ...paypalConfigMap
 };
 
 /**

@@ -22,6 +22,22 @@ export const walletAddPaypalStart = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_START"
 )<void>();
 
+export const walletAddPaypalCompleted = createStandardAction(
+  "WALLET_ONBOARDING_PAYPAL_COMPLETED"
+)<void>();
+
+export const walletAddPaypalBack = createStandardAction(
+  "WALLET_ONBOARDING_PAYPAL_BACK"
+)<void>();
+
+export const walletAddPaypalCancel = createStandardAction(
+  "WALLET_ONBOARDING_PAYPAL_CANCEL"
+)<void>();
+
+export const walletAddPaypalFailure = createStandardAction(
+  "WALLET_ONBOARDING_PAYPAL_FAILURE"
+)<void>();
+
 export type PayPalOnboardingActions =
   | ActionType<typeof searchPaypalPsp>
   | ActionType<typeof walletAddPaypalStart>;

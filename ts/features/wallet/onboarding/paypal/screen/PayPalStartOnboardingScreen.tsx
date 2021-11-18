@@ -12,6 +12,7 @@ import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoSc
 import PPLogo from "../../../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import Oval from "../../../../../../img/wallet/payment-methods/paypal/oval.svg";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -43,13 +44,14 @@ const PayPalLogo = () => (
  * It shows the PP logo and some texts
  * At the bottom 2 CTA to cancel or continue
  */
-const PayPalStartOnboardingScreen = (_: Props): React.ReactElement | null => {
+const PayPalStartOnboardingScreen = (
+  props: Props
+): React.ReactElement | null => {
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,
     bordered: true,
-    // TODO replace with the effective handler
-    onPress: undefined,
+    onPress: props.cancel,
     title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
@@ -62,7 +64,7 @@ const PayPalStartOnboardingScreen = (_: Props): React.ReactElement | null => {
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={props.goBack}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
@@ -89,7 +91,10 @@ const PayPalStartOnboardingScreen = (_: Props): React.ReactElement | null => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  goBack: () => dispatch(walletAddPaypalBack()),
+  cancel: () => dispatch(walletAddPaypalCancel())
+});
 const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
