@@ -24,10 +24,7 @@ import {
 } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import {
-  isPaymentDoneSuccessfully,
-  PaymentHistory
-} from "../../store/reducers/payments/history";
+import { PaymentHistory } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
@@ -44,6 +41,7 @@ import {
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
+import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -133,7 +131,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       PaymentRequestsGetResponse,
       "causaleVersamento",
       string
-    >(payment.verified_data, "causaleVersamento", m => m).fold(
+    >(payment.verifiedData, "causaleVersamento", m => m).fold(
       notAvailable,
       cv => cv
     );
@@ -167,7 +165,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       PaymentRequestsGetResponse,
       "enteBeneficiario",
       EnteBeneficiario | undefined
-    >(payment.verified_data, "enteBeneficiario", m => m).getOrElse(undefined);
+    >(payment.verifiedData, "enteBeneficiario", m => m).getOrElse(undefined);
 
     const outcomeCode = payment.outcomeCode ?? "-";
     return {

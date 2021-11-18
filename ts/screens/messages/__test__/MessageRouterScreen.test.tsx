@@ -17,7 +17,7 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import {
-  loadMessage,
+  DEPRECATED_loadMessage,
   DEPRECATED_loadMessages as loadMessages
 } from "../../../store/actions/messages";
 import { appReducer } from "../../../store/reducers";
@@ -312,7 +312,10 @@ describe("Test MessageRouterScreen", () => {
 
     routerScreen.store.dispatch(loadMessages.success(["messageId"]));
     routerScreen.store.dispatch(
-      loadMessage.failure({ id: "messageId", error: new Error("An error") })
+      DEPRECATED_loadMessage.failure({
+        id: "messageId",
+        error: new Error("An error")
+      })
     );
 
     expect(
