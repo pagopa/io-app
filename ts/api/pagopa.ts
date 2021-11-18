@@ -242,7 +242,9 @@ export type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
 >;
 const getWalletsV2: GetWalletsV2UsingGETTExtra = {
   method: "get",
-  url: () => "/v2/wallet",
+  // despite the endpoint is v3, the wallets returned by this API are of type V2
+  // v3 is the same of v2 but in addition it includes paypal ¯\_(ツ)_/¯
+  url: () => "/v3/wallet",
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getWalletsV2UsingGETDecoder(PatchedWalletV2ListResponse)
