@@ -62,14 +62,15 @@ describe("the ZendeskChatComponent", () => {
 
   describe("when the user press the zendesk button and has an initializedProfile", () => {
     const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store);
-    const zendeskButton = component.getByTestId("zendeskButton");
     const mockProfile = {
       name: "testUser",
       email: "test@email.it" as EmailAddress
     } as InitializedProfile;
 
     store.dispatch(profileLoadSuccess(mockProfile));
+
+    const component = renderComponent(store);
+    const zendeskButton = component.getByTestId("zendeskButton");
     fireEvent(zendeskButton, "onPress");
 
     it("should call startChat with the profile data", () => {
