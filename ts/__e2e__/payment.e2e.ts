@@ -1,5 +1,3 @@
-import adapter from "detox/runners/jest/adapter";
-
 import I18n from "../i18n";
 import { formatNumberCentsToAmount } from "../utils/stringBuilder";
 import { e2eWaitRenderTimeout } from "./config";
@@ -7,7 +5,6 @@ import { ensureLoggedIn } from "./utils";
 
 describe("Payment", () => {
   beforeEach(async () => {
-    await adapter.beforeEach();
     await device.reloadReactNative();
     await ensureLoggedIn();
   });

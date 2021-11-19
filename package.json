@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.38.0-rc.1",
+  "version": "1.38.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.23.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.23.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -227,6 +227,7 @@
     "fs-extra": "^7.0.0",
     "italia-utils": "^4.1.1",
     "jest": "^26.6.3",
+    "jest-circus": "^26.6.3",
     "jest-junit": "^13.0.0",
     "js-yaml": "^3.13.1",
     "jsdoc-to-markdown": "^6.0.1",
@@ -258,41 +259,6 @@
     "fp-ts": "1.17.4",
     "io-ts": "1.8.5",
     "react-devtools-core": "4.13.0"
-  },
-  "detox": {
-    "test-runner": "./node_modules/.bin/jest",
-    "specs": "e2e",
-    "runner-config": "jest-e2e.config.js",
-    "devices": {
-      "simulator": {
-        "type": "ios.simulator",
-        "device": {
-          "type": "iPhone 12 Pro Max"
-        }
-      }
-    },
-    "apps": {
-      "ios.release": {
-        "type": "ios.app",
-        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app",
-        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
-      },
-      "ios.debug": {
-        "type": "ios.app",
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
-        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
-      }
-    },
-    "configurations": {
-      "ios.sim.release": {
-        "device": "simulator",
-        "app": "ios.release"
-      },
-      "ios.sim.debug": {
-        "device": "simulator",
-        "app": "ios.debug"
-      }
-    }
   },
   "react-native": {
     "path": "path-browserify"
