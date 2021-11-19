@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Button, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -36,6 +36,7 @@ import {
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
+import { walletAddPaypalStart } from "../../features/wallet/onboarding/paypal/store/actions";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -215,7 +216,12 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 serviceId={service.service_id}
                 isDebugModeEnabled={this.props.isDebugModeEnabled}
               />
-
+              <Button
+                onPress={() => {
+                  this.props.dispatch(walletAddPaypalStart());
+                }}
+                title={"test paypal"}
+              />
               <EdgeBorderComponent />
 
               <View spacer={true} extralarge={true} />

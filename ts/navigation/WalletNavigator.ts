@@ -61,9 +61,8 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
-import WALLET_ONBOARDING_PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
-import PayPalPspSelectionScreen from "../features/wallet/onboarding/paypal/screen/PayPalPspSelectionScreen";
-import PayPalStartOnboardingScreen from "../features/wallet/onboarding/paypal/screen/PayPalStartOnboardingScreen";
+import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
+import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -218,11 +217,8 @@ const cgnConfigMap = cgnEnabled
 
 const paypalConfigMap = payPalEnabled
   ? {
-      [WALLET_ONBOARDING_PAYPAL_ROUTES.START]: {
-        screen: PayPalStartOnboardingScreen
-      },
-      [WALLET_ONBOARDING_PAYPAL_ROUTES.SEARCH_PSP]: {
-        screen: PayPalPspSelectionScreen
+      [PAYPAL_ROUTES.ONBOARDING.MAIN]: {
+        screen: paypalOnboardingNavigator
       }
     }
   : {};

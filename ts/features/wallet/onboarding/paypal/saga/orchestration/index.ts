@@ -4,7 +4,7 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import WALLET_ONBOARDING_PAYPAL_ROUTES from "../../navigation/routes";
+import PAYPAL_ROUTES from "../../navigation/routes";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import {
   walletAddPaypalBack,
@@ -19,10 +19,10 @@ function* paypalWorkOnboaringUnit() {
     startScreenNavigation: () =>
       NavigationService.dispatchNavigationAction(
         NavigationActions.navigate({
-          routeName: WALLET_ONBOARDING_PAYPAL_ROUTES.START
+          routeName: PAYPAL_ROUTES.ONBOARDING.START
         })
       ),
-    startScreenName: WALLET_ONBOARDING_PAYPAL_ROUTES.START,
+    startScreenName: PAYPAL_ROUTES.ONBOARDING.START,
     complete: walletAddPaypalCompleted,
     back: walletAddPaypalBack,
     cancel: walletAddPaypalCancel,

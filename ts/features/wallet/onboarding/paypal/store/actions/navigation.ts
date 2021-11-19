@@ -1,7 +1,7 @@
 import { NavigationActions } from "react-navigation";
-import WALLET_ONBOARDING_PAYPAL_ROUTES from "../../navigation/routes";
+import PAYPAL_ROUTES from "../../navigation/routes";
 
 export const navigateToPaypalSearchPsp = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PAYPAL_ROUTES.SEARCH_PSP
+    routeName: PAYPAL_ROUTES.ONBOARDING.SEARCH_PSP
   });
