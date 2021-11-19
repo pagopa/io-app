@@ -6,7 +6,12 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  AccessibilityRole,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import customVariables from "../../theme/variables";
 import OrganizationLogo from "../services/OrganizationLogo";
@@ -19,6 +24,7 @@ type Props = Readonly<{
   style?: StyleProp<ViewStyle>;
   logoUri?: React.ComponentProps<typeof MultiImage>["source"];
   rightItem?: React.ReactNode;
+  accessibilityRole?: AccessibilityRole;
 }>;
 
 const styles = StyleSheet.create({
@@ -57,7 +63,11 @@ export default class SectionHeaderComponent extends React.Component<Props> {
           this.props.style
         ]}
       >
-        <H2 style={IOStyles.flex} accessible={true} accessibilityRole={"text"}>
+        <H2
+          style={IOStyles.flex}
+          accessible={true}
+          accessibilityRole={this.props.accessibilityRole}
+        >
           {this.props.sectionHeader}
         </H2>
         <>

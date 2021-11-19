@@ -227,6 +227,9 @@ permissionRationale:
   camera:
     title: "Allow camera access"
     message: "You’ll be able to read QR codes and pay pagoPA notices."
+  calendar:
+    title: "Allow calendar access"
+    message: "You’ll be able to add deadlines to your calendar and set a reminder."
 startup:
   title: Initialization
   authentication: User authenticated
@@ -1840,7 +1843,7 @@ contextualHelp:
   sendPersonalInfo:
     title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
-    cta: Share your fiscal code and your device's unique identifier, in order to make it easier to solve the problem.
+    cta: Share your fiscal code, in order to make it easier to solve your problem.
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 instabug:

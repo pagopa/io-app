@@ -49,7 +49,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 export class MessageDetailScreen extends React.PureComponent<Props, never> {
-  onServiceLinkPressHandler = (service: ServicePublic) => {
+  private onServiceLinkPressHandler = (service: ServicePublic) => {
     // When a service gets selected, before navigating to the service detail
     // screen, we issue a loadServiceMetadata request to refresh the service metadata
     this.props.navigateToServiceDetailsScreen({
@@ -94,8 +94,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       paymentsByRptId,
       potMessage,
       maybeMeta,
-      maybeServiceMetadata,
-      refreshService
+      maybeServiceMetadata
     } = this.props;
 
     return (
@@ -110,7 +109,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           potMessage={potMessage}
           messageId={messageId}
           onRetry={() => maybeMeta.map(meta => loadMessageWithRelations(meta))}
-          onServiceLinkPressHandler={(id: string) => refreshService(id)}
+          onServiceLinkPressHandler={_ =>
+            this.props.maybeService.map(this.onServiceLinkPressHandler)
+          }
           paymentsByRptId={paymentsByRptId}
           service={maybeService.toUndefined()}
           maybeServiceMetadata={maybeServiceMetadata}

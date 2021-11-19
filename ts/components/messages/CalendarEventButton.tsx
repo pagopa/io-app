@@ -1,6 +1,11 @@
 import { Text } from "native-base";
 import React from "react";
-import { Alert, Dimensions, StyleSheet } from "react-native";
+import {
+  Alert,
+  Dimensions,
+  PermissionsAndroid,
+  StyleSheet
+} from "react-native";
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -26,6 +31,7 @@ import {
   saveCalendarEvent,
   searchEventInCalendar
 } from "../../utils/calendar";
+import { requestIOAndroidPermission } from "../../utils/permission";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
@@ -227,13 +233,22 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
   };
 
   // Create an action to add or remove the event
-  private onPressHandler = () => {
+  private onPressHandler = async () => {
     const { calendarEvent, message, preferredCalendar } = this.props;
     const { due_date } = message.content;
 
     if (due_date === undefined) {
       return;
     }
+
+    await requestIOAndroidPermission(
+      PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR,
+      {
+        title: I18n.t("permissionRationale.calendar.title"),
+        message: I18n.t("permissionRationale.calendar.message"),
+        buttonPositive: I18n.t("global.buttons.choose")
+      }
+    );
 
     // Check the authorization status
     void checkAndRequestPermission()
