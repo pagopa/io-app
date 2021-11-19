@@ -1,5 +1,4 @@
 import { device } from "detox";
-import adapter from "detox/runners/jest/adapter";
 
 import I18n from "../i18n";
 import { e2eWaitRenderTimeout } from "./config";
@@ -7,7 +6,6 @@ import { ensureLoggedIn } from "./utils";
 
 describe("Messages Screen", () => {
   beforeEach(async () => {
-    await adapter.beforeEach();
     await device.reloadReactNative();
     await ensureLoggedIn();
   });
