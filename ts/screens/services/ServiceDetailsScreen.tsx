@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
@@ -96,29 +97,22 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * can enable/disable the service and customize the notification settings.
  */
 const ServiceDetailsScreen = (props: Props) => {
-  const serviceId = props.navigation.getParam("service").service_id;
   const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
 
   useEffect(() => {
-    props.loadServiceDetail(serviceId);
+    props.loadServiceDetail(props.serviceId);
   }, []);
 
   const onMarkdownEnd = () => setIsMarkdownLoaded(true);
 
-  const { potService } = props;
+  const { service } = props;
 
   // This has been considered just to avoid compiling errors
   // once we navigate from list or a message we always have the service data since they're previously loaded
-  if (potService === undefined) {
-    return null;
-  }
-  const maybeService = pot.toOption(potService);
-
-  if (maybeService.isNone()) {
+  if (service === undefined) {
     return null;
   }
 
-  const service = maybeService.value;
   const metadata = service.service_metadata;
 
   // if markdown content is not available, render immediately what is possible
@@ -211,7 +205,10 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => {
   const serviceId = props.navigation.getParam("service").service_id;
 
   return {
-    potService: serviceByIdSelector(serviceId)(state),
+    serviceId,
+    service: fromNullable(serviceByIdSelector(serviceId)(state))
+      .chain(pot.toOption)
+      .toUndefined(),
     isInboxEnabled: isInboxEnabledSelector(state),
     isEmailEnabled: isEmailEnabledSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),

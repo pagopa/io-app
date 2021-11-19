@@ -31,7 +31,7 @@ const service: ServicePublic = {
 
 describe("ServiceDetailsScreen", () => {
   describe("when service's data load fails", () => {
-    it("should render the ogranization's fiscal code", () => {
+    it("should render the organization's fiscal code even if services list load is in failure", () => {
       const { component, store } = renderComponent();
       store.dispatch(loadVisibleServices.failure(new Error("load failed")));
       expect(
@@ -39,7 +39,7 @@ describe("ServiceDetailsScreen", () => {
       ).toBeDefined();
     });
 
-    it("should render the ogranization's fiscal code", () => {
+    it("should render the organization's fiscal code even if service detail load is in failure", () => {
       const { component, store } = renderComponent();
       store.dispatch(
         loadServiceDetail.failure({
@@ -51,12 +51,6 @@ describe("ServiceDetailsScreen", () => {
         component.getByText(service.organization_fiscal_code)
       ).toBeDefined();
     });
-  });
-
-  it("expect to match snapshot", () => {
-    const { component } = renderComponent();
-
-    expect(component).toMatchSnapshot();
   });
 });
 
