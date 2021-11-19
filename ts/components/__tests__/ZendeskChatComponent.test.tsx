@@ -28,6 +28,8 @@ const mockPublicSession: PublicSession = {
   walletToken: "walletToken",
   zendeskToken: "zendeskToken"
 };
+
+jest.useFakeTimers();
 describe("the ZendeskChatComponent", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   it("should render the zendesk button", () => {
