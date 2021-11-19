@@ -1,8 +1,10 @@
+import { NavigationParams } from "react-navigation";
+import { createStore, Store } from "redux";
+import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { GlobalState } from "../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
-import { NavigationParams } from "react-navigation";
 import ROUTES from "../../navigation/routes";
 import ZendeskChatComponent from "../ZendeskChatComponent";
 import {
@@ -14,9 +16,7 @@ import { SessionToken } from "../../types/SessionToken";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { SpidLevelEnum } from "../../../definitions/backend/SpidLevel";
 import MockZendesk from "../../__mocks__/io-react-native-zendesk";
-import { createStore, Store } from "redux";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { fireEvent } from "@testing-library/react-native";
 import { profileLoadSuccess } from "../../store/actions/profile";
 import { EmailAddress } from "../../../definitions/backend/EmailAddress";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
