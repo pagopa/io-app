@@ -53,22 +53,27 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
         )
       )
       .getOrElse({});
+
     ZendDesk.setUserIdentity(zendeskIdentity);
   }, [zendeskToken, profile]);
 
   const startChat = () => {
     const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
-
     ZendDesk.startChat({
       botName: "IO BOT",
       name: isSome(maybeProfile) ? maybeProfile.value.name : undefined,
-      email: isSome(maybeProfile) ? maybeProfile.value.email : undefined
+      email: isSome(maybeProfile) ? maybeProfile.value.email : undefined,
+      department: "appiotest"
     });
   };
 
   return (
-    <ButtonDefaultOpacity onPress={startChat} transparent={true}>
-      <IconFont name="io-chat" color={IOColors.red} />
+    <ButtonDefaultOpacity
+      onPress={startChat}
+      transparent={true}
+      testID={"zendeskButton"}
+    >
+      <IconFont name="io-chat" color={IOColors.red} testID={"zendeskIcon"} />
     </ButtonDefaultOpacity>
   );
 };

@@ -4,5 +4,6 @@
 
 export default {
   init: jest.fn(),
-  setUserIdentity: jest.fn()
+  setUserIdentity: jest.fn(),
+  startChat: jest.fn()
 };
