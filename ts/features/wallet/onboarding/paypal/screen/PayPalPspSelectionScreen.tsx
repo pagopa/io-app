@@ -111,7 +111,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   useEffect(searchPaypalPsp, [dispatch]);
   useEffect(() => {
     // auto select if the psp list has 1 element
-    setSelectedPsp(pspList[0]);
+    setSelectedPsp(pspList.length === 1 ? pspList[0] : undefined);
   }, [pspList]);
 
   const buttonsProps = {
