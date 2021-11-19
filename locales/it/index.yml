@@ -227,6 +227,9 @@ permissionRationale:
   camera:
     title: "Consenti l’accesso alla fotocamera"
     message: "Potrai leggere codici QR e pagare gli avvisi pagoPA."
+  calendar:
+    title: "Consenti l’accesso al calendario"
+    message: "Potrai aggiungere le scadenze al tuo calendario e impostare un promemoria."
 startup:
   title: Inizializzazione
   authentication: Utente autenticato

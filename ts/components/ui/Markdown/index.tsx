@@ -216,6 +216,7 @@ type State = {
   htmlBodyHeight: number;
   webviewKey: number;
   appState: string;
+  isLoading: boolean;
 };
 
 /**
@@ -230,7 +231,8 @@ class Markdown extends React.PureComponent<Props, State> {
       html: undefined,
       htmlBodyHeight: 0,
       webviewKey: 0,
-      appState: AppState.currentState
+      appState: AppState.currentState,
+      isLoading: true
     };
   }
 
@@ -263,6 +265,7 @@ class Markdown extends React.PureComponent<Props, State> {
 
     // If the children changes we need to re-compile it
     if (children !== prevChildren) {
+      this.setState({ isLoading: true });
       this.compileMarkdownAsync(
         children,
         animated,
@@ -299,12 +302,9 @@ class Markdown extends React.PureComponent<Props, State> {
       height: htmlBodyHeight + (extraBodyHeight || 0)
     };
 
-    const isLoading =
-      html === undefined || (html !== "" && htmlBodyHeight === 0);
-
     return (
       <React.Fragment>
-        {isLoading && (
+        {this.state.isLoading && (
           <ActivityIndicator
             testID={this.props.testID}
             size={"large"}
@@ -357,7 +357,6 @@ class Markdown extends React.PureComponent<Props, State> {
     if (this.props.onLoadEnd) {
       this.props.onLoadEnd();
     }
-
     setTimeout(() => {
       // to avoid yellow box warning
       // it's ugly but it works https://github.com/react-native-community/react-native-webview/issues/341#issuecomment-466639820
@@ -372,6 +371,9 @@ class Markdown extends React.PureComponent<Props, State> {
   // A function that handles message sent by the WebView component
   private handleWebViewMessage = (event: WebViewMessageEvent) => {
     const { dispatch } = this.props;
+    this.setState({
+      isLoading: false
+    });
 
     // We validate the format of the message with io-ts
     const messageOrErrors = WebViewMessage.decode(
