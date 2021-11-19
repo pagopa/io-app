@@ -125,10 +125,10 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
     continueButtonProps: {
       testID: "continueButtonId",
       bordered: false,
-      // TODO replace with the effective handler
       onPress: () => {
         if (selectedPsp) {
           props.pspSelected(selectedPsp);
+          // TODO navigate to paypal onboarding webview see https://pagopa.atlassian.net/browse/IA-471
         }
       },
       title: I18n.t("global.buttons.continue")

@@ -14,6 +14,6 @@ export const onboardingPaypalReducer = combineReducers<
 >({
   // the psp whose handle the payment for PayPal
   psp: searchPspReducer,
-  // the PSP selected to handle payments with PayPal
+  // the psp selected to handle payments with PayPal
   selectedPsp: selectedPspReducer
 });

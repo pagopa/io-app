@@ -38,6 +38,7 @@ export const walletAddPaypalFailure = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_FAILURE"
 )<void>();
 
+// user selects the psp to handle payments within Paypal
 export const walletAddPaypalPspSelected = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_PSP_SELECTED"
 )<IOPayPalPsp>();

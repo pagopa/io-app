@@ -1,6 +1,6 @@
-// handle the request of search for PayPal psp
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
@@ -13,7 +13,6 @@ import {
 import { PayPalPsp as NetworkPsp } from "../../../../../../../definitions/pagopa/PayPalPsp";
 import { IOPayPalPsp } from "../../types";
 import { getPayPalPspIconUrl } from "../../../../../../utils/paymentMethod";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 
 // convert a paypal psp returned by the API into the app domain model
 const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
@@ -27,7 +26,7 @@ const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
 });
 
 /**
- * search for paypal psp
+ * handle the request of searching for PayPal psp
  * @param sarchPsp
  * @param sessionManager
  */

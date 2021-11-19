@@ -13,9 +13,9 @@ import {
   walletAddPaypalFailure
 } from "../../store/actions";
 
-function* paypalWorkUnit() {
+// handle the flow of paypal onboarding
+function* paypalWorkOnboaringUnit() {
   return yield call(executeWorkUnit, {
-    // TODO check the documentation if this is the suggested way
     startScreenNavigation: () =>
       NavigationService.dispatchNavigationAction(
         NavigationActions.navigate({
@@ -31,5 +31,5 @@ function* paypalWorkUnit() {
 }
 
 export function* addPaypalToWallet() {
-  yield call(withResetNavigationStack, paypalWorkUnit);
+  yield call(withResetNavigationStack, paypalWorkOnboaringUnit);
 }
