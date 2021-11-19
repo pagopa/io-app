@@ -35,7 +35,7 @@ import {
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
-import SpecialServicesRouter from "../../components/services/SpecialServices/SpecialServicesRouter";
+import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
@@ -243,8 +243,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               {SpecialServiceMetadata.is(metadata) && (
                 <>
                   <View spacer small />
-                  <SpecialServicesRouter
-                    custom_special_flow={metadata.custom_special_flow}
+                  <SpecialServicesCTA
+                    customSpecialFlow={metadata.custom_special_flow}
                   />
                 </>
               )}

@@ -11,7 +11,7 @@ import { cgnEnabled } from "../../../config";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 type Props = {
-  custom_special_flow: CustomSpecialFlow;
+  customSpecialFlow: CustomSpecialFlow;
 };
 
 const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
@@ -19,13 +19,13 @@ const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
   boolean
 >([["cgn" as CustomSpecialFlow, cgnEnabled]]);
 
-const SpecialServicesRouter = (props: Props) => {
-  const { custom_special_flow } = props;
+const SpecialServicesCTA = (props: Props) => {
+  const { customSpecialFlow } = props;
 
   // utility to open
   const openAppStore = useCallback(() => openAppStoreUrl(), []);
 
-  return fromNullable(custom_special_flow).fold(null, csf =>
+  return fromNullable(customSpecialFlow).fold(null, csf =>
     fromNullable(mapFlowFeatureFlag.get(csf)).fold(null, isFlowEnabled => {
       if (!isFlowEnabled) {
         return (
@@ -34,12 +34,12 @@ const SpecialServicesRouter = (props: Props) => {
           </ButtonDefaultOpacity>
         );
       }
-      switch (custom_special_flow) {
+      switch (customSpecialFlow) {
         case "cgn":
           // TODO Implement the correct CTA component
           return (
             <ButtonDefaultOpacity block primary onPress={constNull}>
-              <Label color={"white"}>{custom_special_flow}</Label>
+              <Label color={"white"}>{customSpecialFlow}</Label>
             </ButtonDefaultOpacity>
           );
         default:
@@ -53,4 +53,4 @@ const SpecialServicesRouter = (props: Props) => {
   );
 };
 
-export default SpecialServicesRouter;
+export default SpecialServicesCTA;
