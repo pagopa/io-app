@@ -26,7 +26,12 @@ import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components
 import { PspRadioItem } from "../components/PspRadioItem";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { IOPayPalPsp } from "../types";
-import { searchPaypalPsp as searchPaypalPspAction } from "../store/actions";
+import {
+  searchPaypalPsp as searchPaypalPspAction,
+  walletAddPaypalBack,
+  walletAddPaypalCancel,
+  walletAddPaypalPspSelected
+} from "../store/actions";
 import { payPalPspSelector } from "../store/reducers/searchPsp";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -86,25 +91,6 @@ const getLocales = () => ({
   )
 });
 
-const buttonsProps = () => {
-  const cancelButtonProps = {
-    testID: "cancelButtonId",
-    primary: false,
-    bordered: true,
-    // TODO replace with the effective handler
-    onPress: undefined,
-    title: I18n.t("global.buttons.cancel")
-  };
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    // TODO replace with the effective handler
-    onPress: undefined,
-    title: I18n.t("global.buttons.continue")
-  };
-  return { cancelButtonProps, continueButtonProps };
-};
-
 /**
  * This screen is where the user picks a PSP that will be used to handle PayPal transactions within PayPal
  * Only 1 psp can be selected
@@ -117,10 +103,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
     280
   );
   const pspList = getValueOrElse(props.pspList, []);
-  const [selectedPsp, setSelectedPsp] = useState<
-    IOPayPalPsp["id"] | undefined
-  >();
-
+  const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
   const dispatch = useDispatch();
   const searchPaypalPsp = () => {
     dispatch(searchPaypalPspAction.request());
@@ -128,8 +111,29 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   useEffect(searchPaypalPsp, [dispatch]);
   useEffect(() => {
     // auto select if the psp list has 1 element
-    setSelectedPsp(pspList.length === 1 ? pspList[0].id : undefined);
+    setSelectedPsp(pspList[0]);
   }, [pspList]);
+
+  const buttonsProps = {
+    cancelButtonProps: {
+      testID: "cancelButtonId",
+      primary: false,
+      bordered: true,
+      onPress: props.cancel,
+      title: I18n.t("global.buttons.cancel")
+    },
+    continueButtonProps: {
+      testID: "continueButtonId",
+      bordered: false,
+      // TODO replace with the effective handler
+      onPress: () => {
+        if (selectedPsp) {
+          props.pspSelected(selectedPsp);
+        }
+      },
+      title: I18n.t("global.buttons.continue")
+    }
+  };
 
   return (
     <BaseScreenComponent
@@ -160,16 +164,18 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
               <RadioButtonList<IOPayPalPsp["id"]>
                 key="paypal_psp_selection"
                 items={getPspListRadioItems(pspList)}
-                selectedItem={selectedPsp}
-                onPress={setSelectedPsp}
+                selectedItem={selectedPsp?.id}
+                onPress={(idPsp: string) => {
+                  setSelectedPsp(pspList.find(p => p.id === idPsp));
+                }}
               />
             </ScrollView>
           </View>
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
-            leftButton={buttonsProps().cancelButtonProps}
+            leftButton={buttonsProps.cancelButtonProps}
             rightButton={{
-              ...buttonsProps().continueButtonProps,
+              ...buttonsProps.continueButtonProps,
               disabled: selectedPsp === undefined
             }}
           />
@@ -186,7 +192,11 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  goBack: () => dispatch(walletAddPaypalBack()),
+  cancel: () => dispatch(walletAddPaypalCancel()),
+  pspSelected: (psp: IOPayPalPsp) => dispatch(walletAddPaypalPspSelected(psp))
+});
 const mapStateToProps = (state: GlobalState) => ({
   pspList: payPalPspSelector(state)
 });

@@ -38,6 +38,11 @@ export const walletAddPaypalFailure = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_FAILURE"
 )<void>();
 
+export const walletAddPaypalPspSelected = createStandardAction(
+  "WALLET_ONBOARDING_PAYPAL_PSP_SELECTED"
+)<IOPayPalPsp>();
+
 export type PayPalOnboardingActions =
   | ActionType<typeof searchPaypalPsp>
-  | ActionType<typeof walletAddPaypalStart>;
+  | ActionType<typeof walletAddPaypalStart>
+  | ActionType<typeof walletAddPaypalPspSelected>;

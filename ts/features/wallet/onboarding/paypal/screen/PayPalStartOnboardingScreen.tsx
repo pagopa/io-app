@@ -13,6 +13,8 @@ import PPLogo from "../../../../../../img/wallet/payment-methods/paypal/paypal_l
 import Oval from "../../../../../../img/wallet/payment-methods/paypal/oval.svg";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import { navigateToPaypalSearchPsp } from "../store/actions/navigation";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -47,6 +49,10 @@ const PayPalLogo = () => (
 const PayPalStartOnboardingScreen = (
   props: Props
 ): React.ReactElement | null => {
+  const navigationContext = useNavigationContext();
+  const navigateToSearchPsp = () =>
+    navigationContext.navigate(navigateToPaypalSearchPsp());
+
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,
@@ -57,8 +63,7 @@ const PayPalStartOnboardingScreen = (
   const continueButtonProps = {
     testID: "continueButtonId",
     bordered: false,
-    // TODO replace with the effective handler
-    onPress: undefined,
+    onPress: navigateToSearchPsp,
     title: I18n.t("global.buttons.continue")
   };
 

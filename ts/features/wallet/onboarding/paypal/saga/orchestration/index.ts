@@ -5,7 +5,6 @@ import {
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import WALLET_ONBOARDING_PAYPAL_ROUTES from "../../navigation/routes";
-import { SagaCallReturnType } from "../../../../../../types/utils";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import {
   walletAddPaypalBack,
@@ -32,8 +31,5 @@ function* paypalWorkUnit() {
 }
 
 export function* addPaypalToWallet() {
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    paypalWorkUnit
-  );
+  yield call(withResetNavigationStack, paypalWorkUnit);
 }
