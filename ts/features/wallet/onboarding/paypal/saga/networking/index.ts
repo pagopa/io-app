@@ -5,14 +5,19 @@ import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { searchPaypalPsp } from "../../store/actions";
 import {
+  searchPaypalPsp,
+  walletAddPaypalRefreshPMToken
+} from "../../store/actions";
+import {
+  getError,
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
 import { PayPalPsp as NetworkPsp } from "../../../../../../../definitions/pagopa/PayPalPsp";
 import { IOPayPalPsp } from "../../types";
 import { getPayPalPspIconUrl } from "../../../../../../utils/paymentMethod";
+import { Option } from "fp-ts/lib/Option";
 
 // convert a paypal psp returned by the API into the app domain model
 const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
@@ -65,5 +70,28 @@ export function* handlePaypalSearchPsp(
     }
   } catch (e) {
     yield put(searchPaypalPsp.failure(getNetworkError(e)));
+  }
+}
+
+export function* refreshPMToken(
+  sessionManager: SessionManager<PaymentManagerToken>
+) {
+  try {
+    // Request a new token to the PM. This prevent expired token during paypal onboarding checkout
+    // If the request for the new token fails a new Error is caught
+    const pagoPaToken: Option<PaymentManagerToken> = yield call(
+      sessionManager.getNewToken
+    );
+    if (pagoPaToken.isSome()) {
+      yield put(walletAddPaypalRefreshPMToken.success(pagoPaToken.value));
+    } else {
+      yield put(
+        walletAddPaypalRefreshPMToken.failure(
+          new Error("cant load pm session token")
+        )
+      );
+    }
+  } catch (e) {
+    yield put(walletAddPaypalRefreshPMToken.failure(getError(e)));
   }
 }
