@@ -28,7 +28,7 @@ const getAccessibilityRepresentation = () => {
 const PayPalWalletPreview: React.FunctionComponent<Props> = props => {
   const navigation = useNavigationContext();
   const navigateToDetailScreen = () =>
-    navigation.navigate(navigateToPayPalDetailScreen(props.paypal.idWallet));
+    navigation.navigate(navigateToPayPalDetailScreen(props.paypal));
   return (
     <CardLogoPreview
       accessibilityLabel={getAccessibilityRepresentation()}
