@@ -7,7 +7,7 @@ import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
-  loadMessage as loadMessageAction,
+  DEPRECATED_loadMessage as loadMessageAction,
   DEPRECATED_loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../../store/actions/messages";

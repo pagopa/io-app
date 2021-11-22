@@ -1,7 +1,3 @@
-/**
- * Generators for the message entity that can be called directly
- * without dispatching a redux action.
- */
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { call, Effect, put, select } from "redux-saga/effects";
@@ -9,16 +5,16 @@ import { call, Effect, put, select } from "redux-saga/effects";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { BackendClient } from "../../api/backend";
-import { loadMessage as loadMessageAction } from "../../store/actions/messages";
+import { DEPRECATED_loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
-import { isDevEnv } from "../../utils/environment";
+import { isTestEnv } from "../../utils/environment";
 
 /**
  * A saga to fetch a message from the Backend and save it in the redux store.
+ * Can be called directly without dispatching a redux action.
  */
-
 export function* loadMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
@@ -99,4 +95,4 @@ function* fetchMessage(
   }
 }
 
-export const testFetchMessage = isDevEnv ? fetchMessage : undefined;
+export const testFetchMessage = isTestEnv ? fetchMessage : undefined;

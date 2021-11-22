@@ -11,6 +11,7 @@ import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import { UIMessage } from "./messages/types";
 
 export type PaidReason = Readonly<
   | {
@@ -67,3 +68,13 @@ export const paymentByRptIdReducer = (
 export const paymentsByRptIdSelector = (
   state: GlobalState
 ): PaymentByRptIdState => state.entities.paymentByRptId;
+
+/**
+ * Given an rptId as a string, return true if there is a matching paid transaction.
+ * TODO: just a placeholder for now, see https://pagopa.atlassian.net/browse/IA-417
+ * @param state
+ */
+export const isNoticePaid =
+  (_state: GlobalState) => (_category: UIMessage["category"]) =>
+    // state.entities.paymentByRptId[rptId] !== undefined;
+    false;

@@ -10,7 +10,7 @@ import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
-  loadMessage as loadMessageAction,
+  DEPRECATED_loadMessage as loadMessageAction,
   DEPRECATED_loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
@@ -21,7 +21,7 @@ import { messagesStatusSelector } from "../../store/reducers/entities/messages/m
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
-import { isDevEnv } from "../../utils/environment";
+import { isTestEnv } from "../../utils/environment";
 
 /**
  * A generator to load messages from the Backend.
@@ -171,4 +171,4 @@ export function* watchLoadMessages(
   );
 }
 
-export const testLoadMessages = isDevEnv ? loadMessages : undefined;
+export const testLoadMessages = isTestEnv ? loadMessages : undefined;

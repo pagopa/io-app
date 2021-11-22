@@ -23,10 +23,12 @@ import {
   isBancomat,
   isBPay,
   isCreditCard,
+  isPayPal,
   isPrivativeCard,
   isRawCreditCard,
   isSatispay,
   PaymentMethod,
+  PayPalPaymentMethod,
   PrivativePaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
@@ -254,6 +256,29 @@ export const creditCardByIdSelector = createSelector(
     pot.toUndefined(
       pot.map(potCreditCardList, creditCardList =>
         creditCardList.find(cc => cc.idWallet === id)
+      )
+    )
+);
+
+/**
+ * Return the paypal list in the wallet
+ */
+export const paypalListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<PayPalPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isPayPal))
+);
+
+/**
+ * Return a {@link PayPalPaymentMethod} by walletId
+ * Return undefined if not in list
+ */
+export const payPalByIdSelector = createSelector(
+  [paypalListSelector, (_: GlobalState, id: number) => id],
+  (potPaypalList, id): PayPalPaymentMethod | undefined =>
+    pot.toUndefined(
+      pot.map(potPaypalList, paypalList =>
+        paypalList.find(pp => pp.idWallet === id)
       )
     )
 );

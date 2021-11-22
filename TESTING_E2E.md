@@ -21,7 +21,7 @@ Since Detox is installed as an NPM package, you can run every command using `yar
 Preparing a build to test:
 
 ```
-yarn detox build --configuration ios.sim.release
+RN_SRC_EXT=e2e.ts yarn detox build --configuration ios.sim.release
 ```
 
 Launching the test suite:
