@@ -1,5 +1,10 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  cgnEnabled,
+  payPalEnabled
+} from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
@@ -56,8 +61,10 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
-import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
+import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
+import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import ROUTES from "./routes";
+import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {
@@ -212,11 +219,20 @@ const cgnConfigMap = cgnEnabled
     }
   : {};
 
+const paypalConfigMap = payPalEnabled
+  ? {
+      [PAYPAL_ROUTES.ONBOARDING.MAIN]: {
+        screen: paypalOnboardingNavigator
+      }
+    }
+  : {};
+
 const routeConfig = {
   ...baseRouteConfigMap,
   ...bonusVacanzeConfigMap,
   ...bpdConfigMap,
-  ...cgnConfigMap
+  ...cgnConfigMap,
+  ...paypalConfigMap
 };
 
 /**

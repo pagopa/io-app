@@ -145,7 +145,7 @@ const PaypalOnboardingCheckoutScreen = (props: Props) => {
       ) : (
         // the checkout is completed handle load wallets failures
         <LoadingErrorComponent
-          isLoading={pot.isLoading(props.paypalPaymentMethod)}
+          isLoading={!pot.isError(props.paypalPaymentMethod)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
           onRetry={props.loadWallets}
         />

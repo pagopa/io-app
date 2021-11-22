@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -16,6 +16,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToPayPalDetailScreen } from "../../../../../store/actions/navigation";
+import { NavigationContext } from "react-navigation";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -26,10 +27,11 @@ type Props = ReturnType<typeof mapStateToProps> &
  * @constructor
  */
 const PayPalOnboardingCompletedSuccessScreen = (props: Props) => {
-  const navigation = useNavigationContext();
+  const navigation = useContext(NavigationContext);
   const navigateToDetailScreen = () => {
     if (pot.isSome(props.paypalPaymentMethod)) {
-      navigation.navigate(
+      console.log("sono qui");
+      navigation.dispatch(
         navigateToPayPalDetailScreen(props.paypalPaymentMethod.value)
       );
     }
