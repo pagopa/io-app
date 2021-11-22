@@ -261,15 +261,6 @@ export const creditCardByIdSelector = createSelector(
 );
 
 /**
- * Return the paypal list in the wallet
- */
-export const paypalListSelector = createSelector(
-  [paymentMethodsSelector],
-  (paymentMethodPot): pot.Pot<ReadonlyArray<PayPalPaymentMethod>, Error> =>
-    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isPayPal))
-);
-
-/**
  * Return a {@link PayPalPaymentMethod} by walletId
  * Return undefined if not in list
  */
@@ -304,7 +295,7 @@ export const satispayListSelector = createSelector(
 );
 
 /**
- * Return the paypal (only 1 can be in the wallet) payment method, undefined if it is not present
+ * Return the paypal (only 1 can be in the wallet) payment method
  */
 export const paypalSelector = createSelector(
   [paymentMethodsSelector],
