@@ -3,14 +3,17 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { ListItem, View } from "native-base";
 import { debounce } from "lodash";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FlatList } from "react-native";
 import { GlobalState } from "../../../../store/reducers/types";
 import TextboxWithSuggestion from "../../../../components/ui/TextboxWithSuggestion";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IndexedById, toArray } from "../../../../store/helpers/indexer";
 import { Municipality, State } from "../types/SvVoucherRequest";
-import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
+import {
+  svGenerateVoucherAvailableMunicipality,
+  svGenerateVoucherResetAvailableMunicipality
+} from "../store/actions/voucherGeneration";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import WrappedFlatList from "./WrappedMunicipalityFlatList";
@@ -30,6 +33,9 @@ type Props = OwnProps &
 const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
   const { hideModal } = useContext(LightModalContext);
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
+
+  const refVal = useRef<string | undefined>();
+
   const performMunicipalitySearch = (text: string) => {
     if (text.length < 3) {
       return;
@@ -40,6 +46,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
   const debounceRef = React.useRef(debounce(performMunicipalitySearch, 300));
 
   useEffect(() => {
+    refVal.current = searchText;
     if (searchText) {
       debounceRef.current(searchText);
     }
@@ -97,9 +104,21 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         disabled={props.selectedState === undefined}
         showModalInputTextbox={true}
         wrappedFlatlist={
-          <WrappedFlatList onPress={props.onMunicipalitySelected} />
+          <WrappedFlatList
+            onPress={(selectedMunicipality: Municipality) => {
+              props.onMunicipalitySelected(selectedMunicipality);
+              props.resetAvailableMunicipalities();
+            }}
+            onRetry={searchText => {
+              if (searchText) {
+                debounceRef.current(searchText);
+              }
+            }}
+            selectedText={refVal}
+          />
         }
         selectedValue={props.selectedMunicipality?.name}
+        onClose={props.resetAvailableMunicipalities}
       />
     </>
   );
@@ -107,7 +126,9 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestAvailableMunicipalities: (subString: string) =>
-    dispatch(svGenerateVoucherAvailableMunicipality.request(subString))
+    dispatch(svGenerateVoucherAvailableMunicipality.request(subString)),
+  resetAvailableMunicipalities: () =>
+    dispatch(svGenerateVoucherResetAvailableMunicipality())
 });
 const mapStateToProps = (_: GlobalState) => ({});
 
