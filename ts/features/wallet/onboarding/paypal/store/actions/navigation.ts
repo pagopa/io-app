@@ -10,3 +10,8 @@ export const navigateToPayPalCheckout = () =>
   NavigationActions.navigate({
     routeName: PAYPAL_ROUTES.ONBOARDING.CHECKOUT
   });
+
+export const navigateToPayPalCheckoutSuccess = () =>
+  NavigationActions.navigate({
+    routeName: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_SUCCESS
+  });

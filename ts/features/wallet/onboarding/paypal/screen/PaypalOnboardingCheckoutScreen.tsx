@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { constNull } from "fp-ts/es6/function";
+import { none, Option } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -23,6 +23,11 @@ import { isPagoPATestEnabledSelector } from "../../../../../store/reducers/persi
 import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
 import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
+import { isPaymentOutcomeCodeSuccessfully } from "../../../../../utils/payment";
+import { outcomeCodesSelector } from "../../../../../store/reducers/wallet/outcomeCode";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import { navigateToPayPalCheckoutSuccess } from "../store/actions/navigation";
+import { Button } from "react-native";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -31,7 +36,23 @@ const payUrlSuffix = "/v3/webview/paypal/onboarding/psp";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 
-const getScreenContent = (props: Props) => {
+const CheckoutContent = (
+  props: Props & { oncheckoutCompleted: () => void }
+) => {
+  const handleCheckoutOutcome = (maybeOutcomeCode: Option<string>) => {
+    // the outcome code is successfully
+    if (
+      maybeOutcomeCode.isSome() &&
+      isPaymentOutcomeCodeSuccessfully(
+        maybeOutcomeCode.value,
+        props.outcomeCodes
+      )
+    ) {
+    } else {
+      // TODO implement!
+    }
+  };
+
   const LoadingOrError = (loadingProps: { hasError: boolean }) => (
     <LoadingErrorComponent
       testID={"PayPalPpsSelectionScreenLoadingError"}
@@ -64,7 +85,7 @@ const getScreenContent = (props: Props) => {
           postUri={urlPrefix + payUrlSuffix}
           formData={formData}
           finishPathName={webViewExitPathName}
-          onFinish={constNull}
+          onFinish={handleCheckoutOutcome}
           outcomeQueryparamName={webViewOutcomeParamName}
           onGoBack={props.goBack}
           modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
@@ -84,6 +105,9 @@ const PaypalOnboardingCheckoutScreen = (props: Props) => {
   useEffect(() => {
     refreshPMtoken();
   }, [refreshPMtoken]);
+  const navigation = useNavigationContext();
+  const navigateToCheckoutSuccessScreen = () =>
+    navigation.navigate(navigateToPayPalCheckoutSuccess());
   return (
     <BaseScreenComponent
       goBack={props.goBack}
@@ -91,7 +115,7 @@ const PaypalOnboardingCheckoutScreen = (props: Props) => {
       contextualHelp={emptyContextualHelp}
       faqCategories={["payment"]}
     >
-      {getScreenContent(props)}
+      <Button title={"ciao"} onPress={navigateToCheckoutSuccessScreen} />
     </BaseScreenComponent>
   );
 };
@@ -104,7 +128,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => ({
   pmToken: pmSessionTokenSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  pspSelected: paypalOnboardingSelectedPsp(state)
+  pspSelected: paypalOnboardingSelectedPsp(state),
+  outcomeCodes: outcomeCodesSelector(state)
 });
 
 export default connect(
