@@ -2,7 +2,7 @@
 
 import { getType } from "typesafe-actions";
 
-import { loadMessage } from "../../../actions/messages";
+import { DEPRECATED_loadMessage } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -17,7 +17,7 @@ const messagesIdsByServiceIdReducer = (
   action: Action
 ): MessagesIdsByServiceId => {
   switch (action.type) {
-    case getType(loadMessage.success): {
+    case getType(DEPRECATED_loadMessage.success): {
       const message = action.payload;
       const serviceId = message.sender_service_id;
       const messagesIds = state[serviceId];

@@ -5,8 +5,8 @@ import { testSaga } from "redux-saga-test-plan";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { loadMessage as loadMessageAction } from "../../../store/actions/messages";
-import { testFetchMessage, loadMessage } from "../messages";
+import { DEPRECATED_loadMessage as loadMessageAction } from "../../../store/actions/messages";
+import { testFetchMessage, loadMessage } from "../loadMessage";
 
 const fetchMessage = testFetchMessage!;
 
