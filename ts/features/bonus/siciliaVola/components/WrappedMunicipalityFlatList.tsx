@@ -6,14 +6,19 @@ import { ListItem, View } from "native-base";
 import { useContext } from "react";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
-import { isLoading, isReady } from "../../bpd/model/RemoteValue";
+import { isError, isLoading, isReady } from "../../bpd/model/RemoteValue";
 import { toArray } from "../../../../store/helpers/indexer";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Municipality } from "../types/SvVoucherRequest";
 import { LightModalContext } from "../../../../components/ui/LightModal";
+import I18n from "../../../../i18n";
+import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
+import { Link } from "../../../../components/core/typography/Link";
 
 type Props = {
   onPress: (municipality: Municipality) => void;
+  onRetry: (s?: string) => void;
+  selectedText: React.MutableRefObject<string | undefined>;
 } & ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -30,6 +35,23 @@ const FooterLoading = () => (
   </>
 );
 
+const FooterError = (props: Props) => (
+  <View style={{ flex: 1, alignItems: "center" }}>
+    <H4 weight={"Regular"}>
+      {I18n.t("bonus.sv.components.destinationSelector.municipality.ko.label1")}
+    </H4>
+    <Link
+      onPress={() => {
+        if (props.selectedText.current) {
+          props.requestAvailableMunicipalities(props.selectedText.current);
+        }
+      }}
+    >
+      {I18n.t("bonus.sv.components.destinationSelector.municipality.ko.label2")}
+    </Link>
+  </View>
+);
+
 const WrappedMunicipalityFlatList = (props: Props) => {
   const { hideModal } = useContext(LightModalContext);
   return (
@@ -40,7 +62,11 @@ const WrappedMunicipalityFlatList = (props: Props) => {
           : []
       }
       ListFooterComponent={
-        isLoading(props.availableMunicipalities) && <FooterLoading />
+        isLoading(props.availableMunicipalities) ? (
+          <FooterLoading />
+        ) : (
+          isError(props.availableMunicipalities) && FooterError(props)
+        )
       }
       renderItem={i => (
         <ListItem
@@ -61,7 +87,10 @@ const WrappedMunicipalityFlatList = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  requestAvailableMunicipalities: (subString: string) =>
+    dispatch(svGenerateVoucherAvailableMunicipality.request(subString))
+});
 const mapStateToProps = (state: GlobalState) => ({
   availableMunicipalities: availableMunicipalitiesSelector(state)
 });

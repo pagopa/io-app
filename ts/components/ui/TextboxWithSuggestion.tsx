@@ -52,6 +52,7 @@ type CommonProps = {
 type Props = {
   selectedValue?: string;
   disabled?: boolean;
+  onClose?: () => void;
 } & CommonProps;
 
 type ModalProps = {
@@ -133,7 +134,10 @@ const TextboxWithSuggestion = (props: Props) => {
                 title={props.title}
                 label={props.label}
                 placeholder={props.placeholder}
-                onClose={hideModal}
+                onClose={() => {
+                  hideModal();
+                  props.onClose?.();
+                }}
                 onChangeText={props.onChangeText}
                 showModalInputTextbox={props.showModalInputTextbox}
                 wrappedFlatlist={props.wrappedFlatlist}
