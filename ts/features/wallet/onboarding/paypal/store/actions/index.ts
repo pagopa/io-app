@@ -3,10 +3,10 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { Option } from "fp-ts/lib/Option";
 import { NetworkError } from "../../../../../../utils/errors";
 import { IOPayPalPsp } from "../../types";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
-import { Option } from "fp-ts/lib/Option";
 
 /**
  * Request the available psp for Paypal

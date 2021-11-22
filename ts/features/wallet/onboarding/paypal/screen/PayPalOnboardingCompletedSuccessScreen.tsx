@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import * as pot from "italia-ts-commons/lib/pot";
+import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { View } from "native-base";
@@ -13,10 +12,7 @@ import { confirmButtonProps } from "../../../../bonus/bonusVacanze/components/bu
 import { GlobalState } from "../../../../../store/reducers/types";
 import I18n from "../../../../../i18n";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
-import { navigateToPayPalDetailScreen } from "../../../../../store/actions/navigation";
-import { NavigationContext } from "react-navigation";
+import { walletAddPaypalCompleted } from "../store/actions";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -26,53 +22,39 @@ type Props = ReturnType<typeof mapStateToProps> &
  * @param props
  * @constructor
  */
-const PayPalOnboardingCompletedSuccessScreen = (props: Props) => {
-  const navigation = useContext(NavigationContext);
-  const navigateToDetailScreen = () => {
-    if (pot.isSome(props.paypalPaymentMethod)) {
-      console.log("sono qui");
-      navigation.dispatch(
-        navigateToPayPalDetailScreen(props.paypalPaymentMethod.value)
-      );
-    }
-  };
-
-  return (
-    <BaseScreenComponent
-      goBack={false}
-      customGoBack={<View />}
-      showInstabugChat={false}
+const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
+  <BaseScreenComponent
+    goBack={false}
+    customGoBack={<View />}
+    showInstabugChat={false}
+  >
+    <SafeAreaView
+      style={IOStyles.flex}
+      testID={"PayPalOnboardingCompletedSuccessScreen"}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"PayPalOnboardingCompletedSuccessScreen"}
-      >
-        <InfoScreenComponent
-          image={renderInfoRasterImage(successImage)}
-          title={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")}
-          body={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.body")}
-        />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={confirmButtonProps(
-            navigateToDetailScreen,
-            I18n.t(
-              "wallet.onboarding.paypal.onBoardingCompleted.primaryButton"
-            ),
-            undefined,
-            "primaryButtonId"
-          )}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+      <InfoScreenComponent
+        image={renderInfoRasterImage(successImage)}
+        title={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")}
+        body={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.body")}
+      />
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={confirmButtonProps(
+          props.paypalOnboardingCompleted,
+          I18n.t("wallet.onboarding.paypal.onBoardingCompleted.primaryButton"),
+          undefined,
+          "primaryButtonId"
+        )}
+      />
+    </SafeAreaView>
+  </BaseScreenComponent>
+);
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-
-const mapStateToProps = (state: GlobalState) => ({
-  paypalPaymentMethod: paypalSelector(state)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  paypalOnboardingCompleted: () => dispatch(walletAddPaypalCompleted())
 });
+
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,

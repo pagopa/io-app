@@ -1,4 +1,5 @@
-import { call } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions } from "react-navigation";
 import {
   executeWorkUnit,
@@ -12,6 +13,9 @@ import {
   walletAddPaypalCompleted,
   walletAddPaypalFailure
 } from "../../store/actions";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { paypalSelector } from "../../../../../../store/reducers/wallet/wallets";
+import { navigateToPayPalDetailScreen } from "../../../../../../store/actions/navigation";
 
 // handle the flow of paypal onboarding
 function* paypalWorkOnboaringUnit() {
@@ -31,5 +35,19 @@ function* paypalWorkOnboaringUnit() {
 }
 
 export function* addPaypalToWallet() {
-  yield call(withResetNavigationStack, paypalWorkOnboaringUnit);
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+    withResetNavigationStack,
+    paypalWorkOnboaringUnit
+  );
+  if (res === "completed") {
+    const paypal: ReturnType<typeof paypalSelector> = yield select(
+      paypalSelector
+    );
+    if (pot.isSome(paypal)) {
+      yield call(
+        NavigationService.dispatchNavigationAction,
+        navigateToPayPalDetailScreen(paypal.value)
+      );
+    }
+  }
 }
