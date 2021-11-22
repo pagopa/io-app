@@ -3330,6 +3330,7 @@
             "Bancomat",
             "Satispay",
             "BPay",
+            "Generic",
             "PayPal"
           ]
         }
