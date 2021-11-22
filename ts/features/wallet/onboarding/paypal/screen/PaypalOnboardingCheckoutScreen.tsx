@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { constNull } from "fp-ts/es6/function";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -22,7 +23,6 @@ import { isPagoPATestEnabledSelector } from "../../../../../store/reducers/persi
 import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
 import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
-import { constNull } from "fp-ts/es6/function";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -60,12 +60,13 @@ const getScreenContent = (props: Props) => {
       };
       return (
         <PayWebViewModal
+          showInfoHeader={false}
           postUri={urlPrefix + payUrlSuffix}
           formData={formData}
           finishPathName={webViewExitPathName}
           onFinish={constNull}
           outcomeQueryparamName={webViewOutcomeParamName}
-          onGoBack={constNull}
+          onGoBack={props.goBack}
           modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
         />
       );
