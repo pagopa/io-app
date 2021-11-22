@@ -17,7 +17,7 @@ export const paypalOnboardingNavigator = createStackNavigator(
     }
   },
   {
-    // Let each screen handle the header and navigation
+    // Let each screen handles the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
       gesturesEnabled: false
