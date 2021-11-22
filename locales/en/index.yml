@@ -2788,6 +2788,9 @@ bonus:
           title: "Select a municipality"
           label: "Municipality"
           placeholder: "Select a municipality"
+          ko:
+            label1: "Error loading municipalities. "
+            label2: "Try again"
     pdfVoucher:
       toast:
         ok: "Voucher saved successfully"

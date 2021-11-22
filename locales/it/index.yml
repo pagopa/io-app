@@ -2816,6 +2816,9 @@ bonus:
           title: "Seleziona un comune"
           label: "Comune"
           placeholder: "Seleziona un comune"
+          ko:
+            label1: "Errore durante il caricamento dei comuni. "
+            label2: "Riprova"
     pdfVoucher:
       toast:
         ok: "Voucher salvato con successo"
