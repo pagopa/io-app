@@ -152,7 +152,7 @@ const PaymentMethodCard = (props: {
         return <PaypalCard paypal={paymentMethod} />;
       }
       return null;
-    // those method can't pay
+    // those methods can't pay
     case "Satispay":
     case "Bancomat":
     case "BPay":
@@ -266,7 +266,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         <View style={styles.padded}>
           <View spacer={true} />
           <PaymentMethodCard
-            paymentMethod={props.paymentMethod(wallet.idWallet)}
+            paymentMethod={props.getPaymentMethodById(wallet.idWallet)}
           />
           <View spacer={true} />
           {maybePsp.isNone() ? (
@@ -362,7 +362,7 @@ const mapStateToProps = (state: GlobalState) => {
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
-    paymentMethod: (idWallet: number) =>
+    getPaymentMethodById: (idWallet: number) =>
       paymentMethodByIdSelector(state, idWallet),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     outcomeCodes: outcomeCodesSelector(state),
