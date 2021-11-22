@@ -29,6 +29,7 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
+  PayPalPaymentMethod,
   PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
@@ -419,6 +420,12 @@ export const navigateToSatispayDetailScreen = (
       params: { satispay }
     })
   );
+
+export const navigateToPayPalDetailScreen = (paypal: PayPalPaymentMethod) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PAYPAL_DETAIL,
+    params: { paypal }
+  });
 
 /**
  * @deprecated
