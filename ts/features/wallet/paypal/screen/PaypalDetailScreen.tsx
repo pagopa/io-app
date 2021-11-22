@@ -6,9 +6,11 @@ import PaymentMethodFeatures from "../../component/features/PaymentMethodFeature
 import PaypalCard from "../PaypalCard";
 import { GlobalState } from "../../../../store/reducers/types";
 import { payPalByIdSelector } from "../../../../store/reducers/wallet/wallets";
+import { PayPalPaymentMethod } from "../../../../types/pagopa";
+import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 
 type NavigationParams = Readonly<{
-  idWallet: number;
+  paypal: PayPalPaymentMethod;
 }>;
 
 type Props = NavigationInjectedProps<NavigationParams> &
@@ -19,10 +21,11 @@ type Props = NavigationInjectedProps<NavigationParams> &
  * @constructor
  */
 const PaypalDetailScreen: React.FunctionComponent<Props> = props => {
-  const paypal = props.paymentMethod(props.navigation.getParam("idWallet"));
+  const paypalPaymentMethod = props.navigation.getParam("paypal");
+  const paypal = props.paymentMethod(paypalPaymentMethod.idWallet);
   // it should not never happen since this screen is shown from a navigation that starts from a paypal payment method
   if (paypal === undefined) {
-    return null;
+    return <WorkunitGenericFailure />;
   }
   return (
     <BasePaymentMethodScreen

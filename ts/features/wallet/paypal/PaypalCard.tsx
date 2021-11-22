@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  bottomLeftStyle: {
+    ...IOStyles.flex,
+    paddingRight: 16
   }
 });
 
@@ -50,7 +54,11 @@ const PaypalCard: React.FunctionComponent<Props> = (props: Props) => (
         false
       )
     )}
-    bottomLeftCorner={<Body>{props.paypal.info.emailPp}</Body>}
+    bottomLeftCorner={
+      <Body style={styles.bottomLeftStyle} numberOfLines={1}>
+        {props.paypal.info.emailPp}
+      </Body>
+    }
     bottomRightCorner={<BrandImage image={paypalLogoMin} />}
   />
 );

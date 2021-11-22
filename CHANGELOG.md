@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.38.0-rc.2](https://github.com/pagopa/io-app/compare/1.38.0-rc.1...1.38.0-rc.2) (2021-11-18)
+
+
+### Features
+
+* [[IA-341](https://pagopa.atlassian.net/browse/IA-341)] & [[IA-342](https://pagopa.atlassian.net/browse/IA-342)] Improved the accessibility of national services list ([#3504](https://github.com/pagopa/io-app/issues/3504)) ([16b7171](https://github.com/pagopa/io-app/commit/16b71711e02a5a2ad7d8e754593bcc79ba94ddc1))
+* [[IA-421](https://pagopa.atlassian.net/browse/IA-421)] Add Paypal search psp API/action/store/reducer ([#3483](https://github.com/pagopa/io-app/issues/3483)) ([6dff355](https://github.com/pagopa/io-app/commit/6dff355754fadfbbab46ef6a146c801d89009dc9))
+* [[IA-445](https://pagopa.atlassian.net/browse/IA-445)] Add PayPal payment method type ([#3491](https://github.com/pagopa/io-app/issues/3491)) ([48492d3](https://github.com/pagopa/io-app/commit/48492d3ed2cbef4069022dee261c1aec36fe9874))
+* [[IA-467](https://pagopa.atlassian.net/browse/IA-467)] Add an alert explaining why the calendar permissions are required on Android ([#3507](https://github.com/pagopa/io-app/issues/3507)) ([284260e](https://github.com/pagopa/io-app/commit/284260e494f82b22a2869091f65b167a27ac626f))
+
+
+### Bug Fixes
+
+* [[IA-420](https://pagopa.atlassian.net/browse/IA-420)] All space characters text cause infinite loading in the MarkDown component ([#3502](https://github.com/pagopa/io-app/issues/3502)) ([31872a7](https://github.com/pagopa/io-app/commit/31872a788ecb560dfdfe33de4ab39fad1a398ee8))
+* [[IA-441](https://pagopa.atlassian.net/browse/IA-441)] When the contextual help data is not available, app starts an infinite loop of requests ([#3485](https://github.com/pagopa/io-app/issues/3485)) ([5b1d0ca](https://github.com/pagopa/io-app/commit/5b1d0ca7d4fb78c10044ad5ec3ede635263d7d63))
+* [[IA-447](https://pagopa.atlassian.net/browse/IA-447)] In MessageDetailsScreen the link to related services doesn't work ([#3493](https://github.com/pagopa/io-app/issues/3493)) ([0afd11c](https://github.com/pagopa/io-app/commit/0afd11c28fef2bc7b607e4d4fa8512af32b99d82))
+* [[IA-466](https://pagopa.atlassian.net/browse/IA-466)] Cannot cancel CIE login if a wrong PIN is inserted ([#3505](https://github.com/pagopa/io-app/issues/3505)) ([623e86a](https://github.com/pagopa/io-app/commit/623e86adc70fb6a0ff4f3ea07dc655d2c304b804))
+* [[IABT-1291](https://pagopa.atlassian.net/browse/IABT-1291)] Wrong payment history selection [#3492](https://github.com/pagopa/io-app/issues/3492) ([d4305da](https://github.com/pagopa/io-app/commit/d4305dad8b919b84bdc7569969414e05198761b1))
+* Move misplaced mocks ([#3500](https://github.com/pagopa/io-app/issues/3500)) ([efa2e9d](https://github.com/pagopa/io-app/commit/efa2e9d9f57b815cf65cff84b5723018c55544c7))
+
+
+### Chores
+
+* [[IA-315](https://pagopa.atlassian.net/browse/IA-315)] Add suite tests on notification saga ([#3453](https://github.com/pagopa/io-app/issues/3453)) ([3d6a472](https://github.com/pagopa/io-app/commit/3d6a472f5b7daee703d98c371d9ae86600605167))
+* [[IA-450](https://pagopa.atlassian.net/browse/IA-450)] Message list should remember its scroll offset ([#3495](https://github.com/pagopa/io-app/issues/3495)) ([4ae1281](https://github.com/pagopa/io-app/commit/4ae128126fd69214760ebb10f24abe76d9c2c60b))
+* [[IA-464](https://pagopa.atlassian.net/browse/IA-464)] Copy improvement ([#3503](https://github.com/pagopa/io-app/issues/3503)) ([e63ed1c](https://github.com/pagopa/io-app/commit/e63ed1c3200fbd2081edf760065951303cc204c8))
+* [[IAI-88](https://pagopa.atlassian.net/browse/IAI-88)] Execute e2e tests when merge on master ([#3489](https://github.com/pagopa/io-app/issues/3489)) ([1276a8f](https://github.com/pagopa/io-app/commit/1276a8f9e7b9c7b86e36f423d3b66f664ca78fe3))
+* Refactoring tests in GivenWhenThen style ([#3494](https://github.com/pagopa/io-app/issues/3494)) ([cd62e19](https://github.com/pagopa/io-app/commit/cd62e19dd0a1e9b8b9a6139d7a23df22bb28ac1e))
+* Sync .env.local feature flags with .env.production ([#3488](https://github.com/pagopa/io-app/issues/3488)) ([4a0284d](https://github.com/pagopa/io-app/commit/4a0284d18732dbf9464d8386438d1b47146e2650))
+
 ## [1.38.0-rc.1](https://github.com/pagopa/io-app/compare/1.38.0-rc.0...1.38.0-rc.1) (2021-11-11)
 
 

@@ -2489,10 +2489,6 @@
         "canceled": {
           "type": "boolean"
         },
-        "creationDate": {
-          "type": "string",
-          "format": "date-time"
-        },
         "default": {
           "type": "boolean"
         },
@@ -3334,6 +3330,7 @@
             "Bancomat",
             "Satispay",
             "BPay",
+            "Generic",
             "PayPal"
           ]
         }
