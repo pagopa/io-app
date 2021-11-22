@@ -11,7 +11,7 @@ const selectedPspReducer = (
   action: Action
 ): PayPalSelectedPspState => {
   switch (action.type) {
-    // reset when the starts the paypal onboarding flow
+    // reset the state when paypal onboarding flow starts
     case getType(walletAddPaypalStart):
       return initialState;
     case getType(walletAddPaypalPspSelected):
