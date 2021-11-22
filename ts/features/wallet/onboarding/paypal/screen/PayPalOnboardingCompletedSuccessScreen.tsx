@@ -1,9 +1,9 @@
 import React from "react";
+import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { View } from "native-base";
 import { SafeAreaView } from "react-native";
-import { constNull } from "fp-ts/lib/function";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
@@ -15,6 +15,7 @@ import I18n from "../../../../../i18n";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import { navigateToPayPalDetailScreen } from "../../../../../store/actions/navigation";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -26,10 +27,14 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 const PayPalOnboardingCompletedSuccessScreen = (props: Props) => {
   const navigation = useNavigationContext();
-  const navigateToDetailScreen = () =>
-    navigation.navigate(
-      navigateToPayPalDetailScreen(props.paypalPaymentMethod)
-    );
+  const navigateToDetailScreen = () => {
+    if (pot.isSome(props.paypalPaymentMethod)) {
+      navigation.navigate(
+        navigateToPayPalDetailScreen(props.paypalPaymentMethod.value)
+      );
+    }
+  };
+
   return (
     <BaseScreenComponent
       goBack={false}
@@ -48,7 +53,7 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => {
         <FooterWithButtons
           type={"SingleButton"}
           leftButton={confirmButtonProps(
-            props.methodDetails,
+            navigateToDetailScreen,
             I18n.t(
               "wallet.onboarding.paypal.onBoardingCompleted.primaryButton"
             ),
