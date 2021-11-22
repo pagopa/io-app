@@ -17,7 +17,7 @@ describe("tryLoadPreviousPageMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
     page_size: defaultPageSize,
-    maximum_id: undefined
+    minimum_id: undefined
   };
 
   describe("when the response is successful", () => {
