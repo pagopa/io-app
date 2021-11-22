@@ -127,7 +127,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
       bordered: false,
       onPress: () => {
         if (selectedPsp) {
-          props.pspSelected(selectedPsp);
+          props.setPspSelected(selectedPsp);
           // TODO navigate to paypal onboarding webview see https://pagopa.atlassian.net/browse/IA-471
         }
       },
@@ -195,7 +195,8 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(walletAddPaypalBack()),
   cancel: () => dispatch(walletAddPaypalCancel()),
-  pspSelected: (psp: IOPayPalPsp) => dispatch(walletAddPaypalPspSelected(psp))
+  setPspSelected: (psp: IOPayPalPsp) =>
+    dispatch(walletAddPaypalPspSelected(psp))
 });
 const mapStateToProps = (state: GlobalState) => ({
   pspList: payPalPspSelector(state)

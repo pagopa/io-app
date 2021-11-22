@@ -16,7 +16,7 @@ export const searchPaypalPsp = createAsyncAction(
 )<void, ReadonlyArray<IOPayPalPsp>, NetworkError>();
 
 /**
- * The user choose to start the workflow to add a new paypal account to the wallet
+ * The user chooses to start the workflow to add a new paypal account to the wallet
  */
 export const walletAddPaypalStart = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_START"
