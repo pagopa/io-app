@@ -319,6 +319,7 @@ class Pinpad extends React.PureComponent<Props, State> {
               white={this.props.buttonType === "primary"}
               onPress={this.confirmResetAlert}
               alignCenter={true}
+              accessibilityRole="button"
             >
               {`${I18n.t("identification.unlockCode.reset.button")} `}
               <Text
