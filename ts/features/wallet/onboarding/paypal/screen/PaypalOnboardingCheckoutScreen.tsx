@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Option } from "fp-ts/lib/Option";
@@ -28,6 +29,8 @@ import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../../../utils/payment";
 import { outcomeCodesSelector } from "../../../../../store/reducers/wallet/outcomeCode";
 import { navigateToPayPalCheckoutSuccess } from "../store/actions/navigation";
+import { fetchWalletsRequestWithExpBackoff } from "../../../../../store/actions/wallet/wallets";
+import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -106,14 +109,18 @@ const CheckoutContent = (
  */
 const PaypalOnboardingCheckoutScreen = (props: Props) => {
   const [checkoutComplete, setCheckoutCompleted] = useState(false);
+  const navigation = useContext(NavigationContext);
   const { refreshPMtoken } = props;
   useEffect(() => {
     refreshPMtoken();
   }, [refreshPMtoken]);
-  const navigation = useContext(NavigationContext);
-  const navigateToSuccessScreen = () =>
-    navigation.dispatch(navigateToPayPalCheckoutSuccess());
-  const handeCheckoutComplete = (outcomeCode: Option<string>) => {
+  useEffect(() => {
+    // paypal has been added to the user wallet, go to the success screen
+    if (pot.isSome(props.paypalPaymentMethod)) {
+      navigation.dispatch(navigateToPayPalCheckoutSuccess());
+    }
+  }, [navigation, props.paypalPaymentMethod]);
+  const handleCheckoutComplete = (outcomeCode: Option<string>) => {
     setCheckoutCompleted(true);
     props.setOutcomeCode(outcomeCode);
   };
@@ -124,16 +131,23 @@ const PaypalOnboardingCheckoutScreen = (props: Props) => {
       contextualHelp={emptyContextualHelp}
       faqCategories={["payment"]}
     >
-      {!checkoutComplete && (
+      {!checkoutComplete ? (
         <CheckoutContent
           {...props}
-          onCheckoutSuccess={outcode => {
-            handeCheckoutComplete(outcode);
-            navigateToSuccessScreen();
+          onCheckoutSuccess={outcomeCode => {
+            props.loadWallets();
+            handleCheckoutComplete(outcomeCode);
           }}
-          onCheckoutFailure={outcode => {
-            handeCheckoutComplete(outcode);
+          onCheckoutFailure={outcomeCode => {
+            handleCheckoutComplete(outcomeCode);
           }}
+        />
+      ) : (
+        // the checkout is completed handle load wallets failures
+        <LoadingErrorComponent
+          isLoading={pot.isLoading(props.paypalPaymentMethod)}
+          loadingCaption={I18n.t("global.remoteStates.loading")}
+          onRetry={props.loadWallets}
         />
       )}
     </BaseScreenComponent>
@@ -144,13 +158,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(walletAddPaypalBack()),
   cancel: () => dispatch(walletAddPaypalCancel()),
   setOutcomeCode: (oc: Option<string>) => dispatch(walletAddPaypaOutcome(oc)),
-  refreshPMtoken: () => dispatch(walletAddPaypalRefreshPMToken.request())
+  refreshPMtoken: () => dispatch(walletAddPaypalRefreshPMToken.request()),
+  loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff())
 });
 const mapStateToProps = (state: GlobalState) => ({
   pmToken: pmSessionTokenSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   pspSelected: paypalOnboardingSelectedPsp(state),
-  outcomeCodes: outcomeCodesSelector(state)
+  outcomeCodes: outcomeCodesSelector(state),
+  paypalPaymentMethod: paypalSelector(state)
 });
 
 export default connect(

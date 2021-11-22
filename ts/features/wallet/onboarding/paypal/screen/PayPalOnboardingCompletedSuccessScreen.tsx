@@ -13,6 +13,8 @@ import { confirmButtonProps } from "../../../../bonus/bonusVacanze/components/bu
 import { GlobalState } from "../../../../../store/reducers/types";
 import I18n from "../../../../../i18n";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -22,40 +24,48 @@ type Props = ReturnType<typeof mapStateToProps> &
  * @param props
  * @constructor
  */
-const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
-  <BaseScreenComponent
-    goBack={false}
-    customGoBack={<View />}
-    showInstabugChat={false}
-  >
-    <SafeAreaView
-      style={IOStyles.flex}
-      testID={"PayPalOnboardingCompletedSuccessScreen"}
+const PayPalOnboardingCompletedSuccessScreen = (props: Props) => {
+  const navigation = useNavigationContext();
+  const navigateToDetailScreen = () =>
+    navigation.navigate(
+      navigateToPayPalDetailScreen(props.paypalPaymentMethod)
+    );
+  return (
+    <BaseScreenComponent
+      goBack={false}
+      customGoBack={<View />}
+      showInstabugChat={false}
     >
-      <InfoScreenComponent
-        image={renderInfoRasterImage(successImage)}
-        title={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")}
-        body={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.body")}
-      />
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={confirmButtonProps(
-          props.methodDetails,
-          I18n.t("wallet.onboarding.paypal.onBoardingCompleted.primaryButton"),
-          undefined,
-          "primaryButtonId"
-        )}
-      />
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"PayPalOnboardingCompletedSuccessScreen"}
+      >
+        <InfoScreenComponent
+          image={renderInfoRasterImage(successImage)}
+          title={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")}
+          body={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.body")}
+        />
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={confirmButtonProps(
+            props.methodDetails,
+            I18n.t(
+              "wallet.onboarding.paypal.onBoardingCompleted.primaryButton"
+            ),
+            undefined,
+            "primaryButtonId"
+          )}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  // TODO replace with the effective handler
-  methodDetails: constNull
+const mapDispatchToProps = (_: Dispatch) => ({});
+
+const mapStateToProps = (state: GlobalState) => ({
+  paypalPaymentMethod: paypalSelector(state)
 });
-
-const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,

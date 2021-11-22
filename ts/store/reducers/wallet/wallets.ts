@@ -23,10 +23,12 @@ import {
   isBancomat,
   isBPay,
   isCreditCard,
+  isPayPal,
   isPrivativeCard,
   isRawCreditCard,
   isSatispay,
   PaymentMethod,
+  PayPalPaymentMethod,
   PrivativePaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
@@ -276,6 +278,17 @@ export const satispayListSelector = createSelector(
   [paymentMethodsSelector],
   (paymentMethodPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
     pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isSatispay))
+);
+
+/**
+ * Return the paypal (only 1 can be in the wallet) payment method, undefined if it is not present
+ */
+export const paypalSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<PayPalPaymentMethod, Error> =>
+    pot.mapNullable(paymentMethodPot, paymentMethod =>
+      paymentMethod.find(isPayPal)
+    )
 );
 
 /**
