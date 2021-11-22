@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { none, Option } from "fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
+import { NavigationContext } from "react-navigation";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
+  walletAddPaypaOutcome,
   walletAddPaypalBack,
   walletAddPaypalCancel,
   walletAddPaypalRefreshPMToken
@@ -25,9 +27,7 @@ import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../../../utils/payment";
 import { outcomeCodesSelector } from "../../../../../store/reducers/wallet/outcomeCode";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToPayPalCheckoutSuccess } from "../store/actions/navigation";
-import { Button } from "react-native";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -37,7 +37,10 @@ const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 
 const CheckoutContent = (
-  props: Props & { oncheckoutCompleted: () => void }
+  props: Props & {
+    onCheckoutSuccess: (outcode: Option<string>) => void;
+    onCheckoutFailure: (outcode: Option<string>) => void;
+  }
 ) => {
   const handleCheckoutOutcome = (maybeOutcomeCode: Option<string>) => {
     // the outcome code is successfully
@@ -48,9 +51,10 @@ const CheckoutContent = (
         props.outcomeCodes
       )
     ) {
-    } else {
-      // TODO implement!
+      props.onCheckoutSuccess(maybeOutcomeCode);
+      return;
     }
+    props.onCheckoutFailure(maybeOutcomeCode);
   };
 
   const LoadingOrError = (loadingProps: { hasError: boolean }) => (
@@ -101,13 +105,18 @@ const CheckoutContent = (
  * As first step it asks for a fresh token to the Payment Manager, it will be included in the webview
  */
 const PaypalOnboardingCheckoutScreen = (props: Props) => {
+  const [checkoutComplete, setCheckoutCompleted] = useState(false);
   const { refreshPMtoken } = props;
   useEffect(() => {
     refreshPMtoken();
   }, [refreshPMtoken]);
-  const navigation = useNavigationContext();
-  const navigateToCheckoutSuccessScreen = () =>
-    navigation.navigate(navigateToPayPalCheckoutSuccess());
+  const navigation = useContext(NavigationContext);
+  const navigateToSuccessScreen = () =>
+    navigation.dispatch(navigateToPayPalCheckoutSuccess());
+  const handeCheckoutComplete = (outcomeCode: Option<string>) => {
+    setCheckoutCompleted(true);
+    props.setOutcomeCode(outcomeCode);
+  };
   return (
     <BaseScreenComponent
       goBack={props.goBack}
@@ -115,7 +124,18 @@ const PaypalOnboardingCheckoutScreen = (props: Props) => {
       contextualHelp={emptyContextualHelp}
       faqCategories={["payment"]}
     >
-      <Button title={"ciao"} onPress={navigateToCheckoutSuccessScreen} />
+      {!checkoutComplete && (
+        <CheckoutContent
+          {...props}
+          onCheckoutSuccess={outcode => {
+            handeCheckoutComplete(outcode);
+            navigateToSuccessScreen();
+          }}
+          onCheckoutFailure={outcode => {
+            handeCheckoutComplete(outcode);
+          }}
+        />
+      )}
     </BaseScreenComponent>
   );
 };
@@ -123,6 +143,7 @@ const PaypalOnboardingCheckoutScreen = (props: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(walletAddPaypalBack()),
   cancel: () => dispatch(walletAddPaypalCancel()),
+  setOutcomeCode: (oc: Option<string>) => dispatch(walletAddPaypaOutcome(oc)),
   refreshPMtoken: () => dispatch(walletAddPaypalRefreshPMToken.request())
 });
 const mapStateToProps = (state: GlobalState) => ({
