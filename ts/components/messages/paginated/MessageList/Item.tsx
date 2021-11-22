@@ -5,7 +5,6 @@ import React from "react";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import I18n from "../../../../i18n";
-import { PaidReason } from "../../../../store/reducers/entities/payments";
 import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
@@ -14,14 +13,14 @@ import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import DetailedlistItemComponent from "../../../DetailedlistItemComponent";
 
 type Props = {
+  hasPaidBadge: boolean;
   isRead: boolean;
-  message: UIMessage;
-  service?: ServicePublic;
-  payment?: PaidReason;
-  onPress: (id: string) => void;
-  onLongPress: (id: string) => void;
-  isSelectionModeEnabled: boolean;
   isSelected: boolean;
+  isSelectionModeEnabled: boolean;
+  message: UIMessage;
+  onLongPress: () => void;
+  onPress: () => void;
+  service?: ServicePublic;
 };
 
 const UNKNOWN_SERVICE_DATA = {
@@ -30,15 +29,7 @@ const UNKNOWN_SERVICE_DATA = {
 };
 
 class MessageListItem extends React.PureComponent<Props> {
-  private handlePress = () => {
-    this.props.onPress(this.props.message.id);
-  };
-
-  private handleLongPress = () => {
-    this.props.onLongPress(this.props.message.id);
-  };
-
-  private announceMessage = (message: UIMessage) =>
+  announceMessage = (message: UIMessage) =>
     // TODO: establish relation
     // const newMessage = message.isRead
     //   ? I18n.t("messages.accessibility.message.read")
@@ -50,8 +41,16 @@ class MessageListItem extends React.PureComponent<Props> {
       receivedAt: convertReceivedDateToAccessible(message.createdAt)
     });
 
-  public render() {
-    const { isRead, message, isSelectionModeEnabled, isSelected } = this.props;
+  render() {
+    const {
+      hasPaidBadge,
+      isRead,
+      isSelected,
+      isSelectionModeEnabled,
+      message,
+      onLongPress,
+      onPress
+    } = this.props;
 
     const uiDate = convertDateToWordDistance(
       message.createdAt,
@@ -61,17 +60,17 @@ class MessageListItem extends React.PureComponent<Props> {
     return (
       <DetailedlistItemComponent
         isNew={!isRead}
-        onPressItem={this.handlePress}
+        onPressItem={onPress}
         text11={
           message.organizationName || UNKNOWN_SERVICE_DATA.organizationName
         }
         text12={uiDate}
         text2={message.serviceName || UNKNOWN_SERVICE_DATA.serviceName}
         text3={message.title || "no title"}
-        onLongPressItem={this.handleLongPress}
+        onLongPressItem={onLongPress}
         isSelectionModeEnabled={isSelectionModeEnabled}
         isItemSelected={isSelected}
-        // isPaid={this.paid}
+        isPaid={hasPaidBadge}
         accessible={true}
         accessibilityLabel={this.announceMessage(message)}
       />

@@ -1,8 +1,12 @@
 import React from "react";
 import { Animated, FlatList, ListRenderItemInfo } from "react-native";
 
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import {
+  MessageCategory,
+  UIMessage
+} from "../../../../store/reducers/entities/messages/types";
 import ItemSeparatorComponent from "../../../ItemSeparatorComponent";
+import { ErrorLoadingComponent } from "../../ErrorLoadingComponent";
 import MessageListItem from "./Item";
 
 export const ITEM_HEIGHT = 114;
@@ -31,20 +35,47 @@ export const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 type RenderItemProps = {
   isRead: boolean;
-  onLongPress: (id: string) => void;
-  onPress: (id: string) => void;
+  hasPaidBadge: (id: MessageCategory) => boolean;
+  onLongPress: (message: UIMessage) => void;
+  onPress: (message: UIMessage) => void;
   selectedMessageIds?: ReadonlySet<string>;
 };
 export const renderItem =
-  ({ isRead, onLongPress, onPress, selectedMessageIds }: RenderItemProps) =>
+  ({
+    isRead,
+    hasPaidBadge,
+    onLongPress,
+    onPress,
+    selectedMessageIds
+  }: RenderItemProps) =>
   ({ item: message }: ListRenderItemInfo<UIMessage>) =>
     (
       <MessageListItem
+        hasPaidBadge={hasPaidBadge(message.category)}
         isRead={isRead}
         message={message}
-        onPress={onPress}
-        onLongPress={onLongPress}
+        onPress={() => onPress(message)}
+        onLongPress={() => onLongPress(message)}
         isSelectionModeEnabled={!!selectedMessageIds}
         isSelected={!!selectedMessageIds?.has(message.id)}
       />
     );
+
+export type EmptyComponent = React.ComponentProps<
+  typeof FlatList
+>["ListEmptyComponent"];
+type RenderEmptyListProps = {
+  error?: string;
+  EmptyComponent?: EmptyComponent;
+};
+export const renderEmptyList =
+  ({ error, EmptyComponent }: RenderEmptyListProps) =>
+  () => {
+    if (error !== undefined) {
+      return <ErrorLoadingComponent />;
+    }
+    if (EmptyComponent) {
+      return <EmptyComponent />;
+    }
+    return null;
+  };

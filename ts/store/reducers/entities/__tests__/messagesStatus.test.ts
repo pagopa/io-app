@@ -3,7 +3,7 @@ import { CreatedMessageWithContent } from "../../../../../definitions/backend/Cr
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageContent } from "../../../../../definitions/backend/MessageContent";
 import {
-  loadMessage,
+  DEPRECATED_loadMessage,
   removeMessages,
   setMessageReadState,
   setMessagesArchivedState
@@ -43,7 +43,10 @@ describe("messagesStatus reducer", () => {
   it("should return the loaded message with default value", () => {
     [1, 2, 3].forEach(_ => {
       // should return always the same state (cause the id is the same)
-      const state = reducer(undefined, loadMessage.success(messageWithContent));
+      const state = reducer(
+        undefined,
+        DEPRECATED_loadMessage.success(messageWithContent)
+      );
       expect(state).toEqual({ [messageWithContent.id]: EMPTY_MESSAGE_STATUS });
       testLength(state, 1);
     });
@@ -52,7 +55,7 @@ describe("messagesStatus reducer", () => {
   it("should return the loaded message with default value", () => {
     const state = reducer(
       { [messageWithContent.id]: EMPTY_MESSAGE_STATUS },
-      loadMessage.success({ ...messageWithContent, id: "NEW_ID" })
+      DEPRECATED_loadMessage.success({ ...messageWithContent, id: "NEW_ID" })
     );
     expect(state.NEW_ID).toEqual(EMPTY_MESSAGE_STATUS);
     testLength(state, 2);
@@ -89,7 +92,7 @@ describe("messagesStatus reducer", () => {
     it("should return the initial state", () => {
       const notEmptyState = reducer(
         undefined,
-        loadMessage.success(messageWithContent)
+        DEPRECATED_loadMessage.success(messageWithContent)
       );
       expect(reducer(notEmptyState, differentProfileLoggedIn())).toEqual({});
     });
