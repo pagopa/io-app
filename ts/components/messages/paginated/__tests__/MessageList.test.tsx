@@ -16,9 +16,8 @@ import I18n from "../../../../i18n";
 import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 
 jest.useFakeTimers();
-jest.mock("native-base", () => ({
-  ...(jest.requireActual("native-base") as any),
-  Toast: { show: jest.fn() }
+jest.mock("../../../../utils/showToast", () => ({
+  showToast: jest.fn()
 }));
 
 const messages = successReloadMessagesPayload.messages;

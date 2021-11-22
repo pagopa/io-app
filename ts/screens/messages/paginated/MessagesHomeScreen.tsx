@@ -123,7 +123,10 @@ const MessagesHomeScreen = ({
                 messages={allMessages}
                 searchText={_}
                 renderSearchResults={results => (
-                  <MessageList filteredMessages={results} />
+                  <MessageList
+                    filteredMessages={results}
+                    onPressItem={navigateToMessageDetail}
+                  />
                 )}
               />
             )

@@ -6,7 +6,8 @@ import { loadPreviousPageMessages as loadPreviousPageMessagesAction } from "../.
 import { SagaCallReturnType } from "../../types/utils";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
-import { isDevEnv } from "../../utils/environment";
+import { isTestEnv } from "../../utils/environment";
+import { getError } from "../../utils/errors";
 
 import { handleResponse } from "./utils";
 
@@ -45,7 +46,7 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
             messages: items.map(toUIMessage),
             pagination: { previous: prev }
           }),
-        error => loadPreviousPageMessagesAction.failure(error)
+        error => loadPreviousPageMessagesAction.failure(getError(error))
       );
 
       yield put(nextAction);
@@ -55,6 +56,6 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
   };
 }
 
-export const testTryLoadPreviousPageMessages = isDevEnv
+export const testTryLoadPreviousPageMessages = isTestEnv
   ? tryLoadPreviousPageMessages
   : undefined;

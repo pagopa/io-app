@@ -6,6 +6,7 @@ import {
   UIMessage
 } from "../../../../store/reducers/entities/messages/types";
 import ItemSeparatorComponent from "../../../ItemSeparatorComponent";
+import { ErrorLoadingComponent } from "../../ErrorLoadingComponent";
 import MessageListItem from "./Item";
 
 export const ITEM_HEIGHT = 114;
@@ -59,3 +60,22 @@ export const renderItem =
         isSelected={!!selectedMessageIds?.has(message.id)}
       />
     );
+
+export type EmptyComponent = React.ComponentProps<
+  typeof FlatList
+>["ListEmptyComponent"];
+type RenderEmptyListProps = {
+  error?: string;
+  EmptyComponent?: EmptyComponent;
+};
+export const renderEmptyList =
+  ({ error, EmptyComponent }: RenderEmptyListProps) =>
+  () => {
+    if (error !== undefined) {
+      return <ErrorLoadingComponent />;
+    }
+    if (EmptyComponent) {
+      return <EmptyComponent />;
+    }
+    return null;
+  };

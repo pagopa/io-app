@@ -1,7 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import React, { useEffect, useRef, useState } from "react";
-import { Toast } from "native-base";
 import {
   ActivityIndicator,
   Animated,
@@ -29,21 +28,21 @@ import {
 } from "../../../../store/reducers/entities/messages/allPaginated";
 import { MessageState } from "../../../../store/reducers/entities/messages/messagesById";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
-
 import { GlobalState } from "../../../../store/reducers/types";
 import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../../../theme/variables";
-
+import { showToast } from "../../../../utils/showToast";
 import { isIos } from "../../../../utils/platform";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import { isNoticePaid } from "../../../../store/reducers/entities/payments";
-import { ErrorLoadingComponent } from "../../ErrorLoadingComponent";
 import {
   AnimatedFlatList,
+  EmptyComponent,
   generateItemLayout,
   ITEM_HEIGHT,
   ItemSeparator,
+  renderEmptyList,
   renderItem
 } from "./helpers";
 
@@ -80,9 +79,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
-  ListEmptyComponent?: React.ComponentProps<
-    typeof FlatList
-  >["ListEmptyComponent"];
+  ListEmptyComponent?: EmptyComponent;
 
   /** This list is used instead of the messages from the store */
   filteredMessages?: ReadonlyArray<UIMessage>;
@@ -159,11 +156,7 @@ const MessageList = ({
 
   useEffect(() => {
     if (error) {
-      Toast.show({
-        text: I18n.t("global.genericError"),
-        type: "warning",
-        duration: 3000
-      });
+      showToast(I18n.t("global.genericError"), "warning");
     }
   }, [error]);
 
@@ -233,17 +226,12 @@ const MessageList = ({
 
       <AnimatedFlatList
         ItemSeparatorComponent={ItemSeparator}
-        ListEmptyComponent={() => {
-          if (error !== undefined) {
-            return <ErrorLoadingComponent />;
-          }
-          if (ListEmptyComponent) {
-            return <ListEmptyComponent />;
-          }
-          return null;
-        }}
+        ListEmptyComponent={renderEmptyList({
+          error,
+          EmptyComponent: ListEmptyComponent
+        })}
         data={messages}
-        initialNumToRender={10}
+        initialNumToRender={pageSize}
         keyExtractor={(message: UIMessage): string => message.id}
         ref={flatListRef}
         refreshControl={refreshControl}

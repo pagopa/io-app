@@ -6,7 +6,8 @@ import { loadNextPageMessages as loadNextPageMessagesAction } from "../../store/
 import { SagaCallReturnType } from "../../types/utils";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
-import { isDevEnv } from "../../utils/environment";
+import { isTestEnv } from "../../utils/environment";
+import { getError } from "../../utils/errors";
 
 import { handleResponse } from "./utils";
 
@@ -43,7 +44,7 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
             messages: items.map(toUIMessage),
             pagination: { next }
           }),
-        error => loadNextPageMessagesAction.failure(error)
+        error => loadNextPageMessagesAction.failure(getError(error))
       );
 
       yield put(nextAction);
@@ -53,6 +54,6 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
   };
 }
 
-export const testTryLoadNextPageMessages = isDevEnv
+export const testTryLoadNextPageMessages = isTestEnv
   ? tryLoadNextPageMessages
   : undefined;

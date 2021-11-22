@@ -9,7 +9,7 @@ import { DEPRECATED_loadMessage as loadMessageAction } from "../../store/actions
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
-import { isDevEnv } from "../../utils/environment";
+import { isTestEnv } from "../../utils/environment";
 
 /**
  * A saga to fetch a message from the Backend and save it in the redux store.
@@ -95,4 +95,4 @@ function* fetchMessage(
   }
 }
 
-export const testFetchMessage = isDevEnv ? fetchMessage : undefined;
+export const testFetchMessage = isTestEnv ? fetchMessage : undefined;
