@@ -46,7 +46,7 @@ export const walletAddPaypalPspSelected = createStandardAction(
 
 /**
  * user is going to onboard paypal, the challenge with the PM begins.
- * here a fresh payment manager token is needed
+ * a fresh PM token is required
  */
 export const walletAddPaypalRefreshPMToken = createAsyncAction(
   "WALLET_ONBOARDING_PAYPAL_REFRESH_PM_TOKEN_REQUEST",

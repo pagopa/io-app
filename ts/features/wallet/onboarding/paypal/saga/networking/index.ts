@@ -1,6 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
+import { Option } from "fp-ts/lib/Option";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
@@ -17,7 +18,6 @@ import {
 import { PayPalPsp as NetworkPsp } from "../../../../../../../definitions/pagopa/PayPalPsp";
 import { IOPayPalPsp } from "../../types";
 import { getPayPalPspIconUrl } from "../../../../../../utils/paymentMethod";
-import { Option } from "fp-ts/lib/Option";
 
 // convert a paypal psp returned by the API into the app domain model
 const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
@@ -73,11 +73,11 @@ export function* handlePaypalSearchPsp(
   }
 }
 
+// refresh PM token to ensure it doesn't expire during the onboarding process
 export function* refreshPMToken(
   sessionManager: SessionManager<PaymentManagerToken>
 ) {
   try {
-    // Request a new token to the PM. This prevent expired token during paypal onboarding checkout
     // If the request for the new token fails a new Error is caught
     const pagoPaToken: Option<PaymentManagerToken> = yield call(
       sessionManager.getNewToken

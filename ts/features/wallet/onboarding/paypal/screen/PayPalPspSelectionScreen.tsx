@@ -33,6 +33,8 @@ import {
   walletAddPaypalPspSelected
 } from "../store/actions";
 import { payPalPspSelector } from "../store/reducers/searchPsp";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import { navigateToPayPalCheckout } from "../store/actions/navigation";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -105,6 +107,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
   const dispatch = useDispatch();
+  const navigation = useNavigationContext();
   const searchPaypalPsp = () => {
     dispatch(searchPaypalPspAction.request());
   };
@@ -128,7 +131,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
       onPress: () => {
         if (selectedPsp) {
           props.setPspSelected(selectedPsp);
-          // TODO navigate to paypal onboarding webview see https://pagopa.atlassian.net/browse/IA-471
+          navigation.navigate(navigateToPayPalCheckout());
         }
       },
       title: I18n.t("global.buttons.continue")
