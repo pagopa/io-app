@@ -10,6 +10,7 @@ import { Action } from "../../../../../../store/actions/types";
 import {
   svGenerateVoucherAvailableMunicipality,
   svGenerateVoucherAvailableState,
+  svGenerateVoucherResetAvailableMunicipality,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -34,6 +35,7 @@ const reducer = (
   switch (action.type) {
     case getType(svGenerateVoucherStart):
     case getType(svGenerateVoucherAvailableState.request):
+    case getType(svGenerateVoucherResetAvailableMunicipality):
       return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableMunicipality.request):
       return remoteLoading;
