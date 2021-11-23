@@ -4,7 +4,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { setLocale } from "../../../../../../i18n";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import PaypalOnboardingCheckoutScreen from "../PaypalOnboardingCheckoutScreen";
+import PayPalOnboardingCheckoutScreen from "../PayPalOnboardingCheckoutScreen";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   walletAddPaypalPspSelected,
@@ -14,7 +14,7 @@ import PAYPAL_ROUTES from "../../navigation/routes";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { pspList } from "../__mocks__/psp";
 
-describe("PaypalOnboardingCheckoutScreen", () => {
+describe("PayPalOnboardingCheckoutScreen", () => {
   beforeAll(() => {
     setLocale("it");
   });
@@ -37,7 +37,7 @@ describe("PaypalOnboardingCheckoutScreen", () => {
       const render = renderComponent(store);
       expect(
         render.component.queryByTestId(
-          "PaypalOnboardingCheckoutScreenLoadingError"
+          "PayPalOnboardingCheckoutScreenLoadingError"
         )
       ).not.toBeNull();
     });
@@ -53,7 +53,7 @@ describe("PaypalOnboardingCheckoutScreen", () => {
       const render = renderComponent(store);
       expect(
         render.component.queryByTestId(
-          "PaypalOnboardingCheckoutScreenLoadingError"
+          "PayPalOnboardingCheckoutScreenLoadingError"
         )
       ).not.toBeNull();
       store.dispatch(walletAddPaypalRefreshPMToken.failure(Error("an error")));
@@ -73,7 +73,7 @@ describe("PaypalOnboardingCheckoutScreen", () => {
       const render = renderComponent(store);
       expect(
         render.component.queryByTestId(
-          "PaypalOnboardingCheckoutScreenLoadingError"
+          "PayPalOnboardingCheckoutScreenLoadingError"
         )
       ).not.toBeNull();
       store.dispatch(
@@ -95,7 +95,7 @@ describe("PaypalOnboardingCheckoutScreen", () => {
       const render = renderComponent(store);
       expect(
         render.component.queryByTestId(
-          "PaypalOnboardingCheckoutScreenLoadingError"
+          "PayPalOnboardingCheckoutScreenLoadingError"
         )
       ).not.toBeNull();
       store.dispatch(
@@ -111,7 +111,7 @@ describe("PaypalOnboardingCheckoutScreen", () => {
 
 const renderComponent = (store: Store) => ({
   component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    PaypalOnboardingCheckoutScreen,
+    PayPalOnboardingCheckoutScreen,
     PAYPAL_ROUTES.ONBOARDING.CHECKOUT,
     {},
     store

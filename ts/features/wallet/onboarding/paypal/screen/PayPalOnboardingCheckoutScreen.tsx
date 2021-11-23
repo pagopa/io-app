@@ -63,7 +63,7 @@ const CheckoutContent = (
 
   const LoadingOrError = (loadingProps: { hasError: boolean }) => (
     <LoadingErrorComponent
-      testID={"PaypalOnboardingCheckoutScreenLoadingError"}
+      testID={"PayPalOnboardingCheckoutScreenLoadingError"}
       isLoading={!loadingProps.hasError}
       loadingCaption={I18n.t("global.remoteStates.loading")}
       onRetry={props.refreshPMtoken}
@@ -110,7 +110,7 @@ const CheckoutContent = (
  * This screen includes a webview where the paypal checkout happens. This flow is external to IO, it happens in the Payment Manager
  * As first step it asks for a fresh token from the Payment Manager, it will be included in the webview
  */
-const PaypalOnboardingCheckoutScreen = (props: Props) => {
+const PayPalOnboardingCheckoutScreen = (props: Props) => {
   const [checkoutComplete, setCheckoutCompleted] = useState(false);
   const navigation = useContext(NavigationContext);
   const { refreshPMtoken } = props;
@@ -174,4 +174,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PaypalOnboardingCheckoutScreen);
+)(PayPalOnboardingCheckoutScreen);
