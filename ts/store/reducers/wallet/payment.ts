@@ -47,7 +47,7 @@ export type PaymentStartWebViewPayload = PaymentStartPayload & {
 };
 
 // TODO: instead of keeping one single state, it would be more correct to keep
-//       a state for each rptid - this will make unnecessary to reset the state
+//       a state for each RptId - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
   verifica: PotFromActions<

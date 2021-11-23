@@ -17,6 +17,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
+
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
@@ -103,7 +104,9 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
-import { watchLoadNextPageMessages } from "./startup/watchLoadNextPageMessages";
+import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
+import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
+import watchReloadAllMessages from "./messages/watchReloadAllMessages";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -120,7 +123,7 @@ const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
-// eslint-disable-next-line
+// eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
@@ -196,7 +199,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // FIXME: since it looks like we load the session info every
   //        time we get a session token, think about merging the
   //        two steps.
-  // eslint-disable-next-line
+  // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
@@ -250,7 +253,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   ) {
     // Delete all data while keeping current session:
     // Delete the current unlock code from the Keychain
-    // eslint-disable-next-line
     yield call(deletePin);
     // Delete all onboarding data
     yield put(clearOnboarding());
@@ -264,7 +266,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line functional/no-let
   let storedPin: PinString;
 
   // Start watching for requests of refresh the profile
@@ -456,8 +458,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(watchLoadMessages, backendClient.getMessages);
 
   if (usePaginatedMessages) {
-    // Load the next page of messages when requested
     yield fork(watchLoadNextPageMessages, backendClient.getMessages);
+    yield fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+    yield fork(watchReloadAllMessages, backendClient.getMessages);
   }
 
   // Load a message when requested

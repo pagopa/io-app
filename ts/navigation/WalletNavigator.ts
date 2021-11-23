@@ -61,6 +61,7 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
+import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
 import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
 import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import ROUTES from "./routes";
@@ -83,6 +84,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_SATISPAY_DETAIL]: {
     screen: SatispayDetailScreen
+  },
+  [ROUTES.WALLET_PAYPAL_DETAIL]: {
+    screen: PaypalDetailScreen
   },
   [ROUTES.WALLET_BPAY_DETAIL]: {
     screen: BPayDetailScreen

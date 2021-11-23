@@ -4,7 +4,7 @@ import { NavigationContext } from "react-navigation";
 
 /**
  * Call the action when the component isFocused() and dontExecuteBefore has passed since the last update.
- * TODO: rewrite this component following all the hooks role
+ * TODO: rewrite this component following all the hooks rules
  * @param loadAction
  * @param dontExecuteBefore
  */
