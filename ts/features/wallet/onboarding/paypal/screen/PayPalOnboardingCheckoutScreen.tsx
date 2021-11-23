@@ -28,7 +28,10 @@ import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../../../utils/payment";
 import { outcomeCodesSelector } from "../../../../../store/reducers/wallet/outcomeCode";
-import { navigateToPayPalCheckoutSuccess } from "../store/actions/navigation";
+import {
+  navigateToPayPalCheckoutFailure,
+  navigateToPayPalCheckoutSuccess
+} from "../store/actions/navigation";
 import { fetchWalletsRequestWithExpBackoff } from "../../../../../store/actions/wallet/wallets";
 import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
 import WorkunitGenericFailure from "../../../../../components/error/WorkunitGenericFailure";
@@ -142,6 +145,7 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
           }}
           onCheckoutFailure={outcomeCode => {
             handleCheckoutComplete(outcomeCode);
+            navigation.dispatch(navigateToPayPalCheckoutFailure());
           }}
         />
       ) : (

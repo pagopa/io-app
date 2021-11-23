@@ -15,3 +15,8 @@ export const navigateToPayPalCheckoutSuccess = () =>
   NavigationActions.navigate({
     routeName: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_SUCCESS
   });
+
+export const navigateToPayPalCheckoutFailure = () =>
+  NavigationActions.navigate({
+    routeName: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_FAILURE
+  });

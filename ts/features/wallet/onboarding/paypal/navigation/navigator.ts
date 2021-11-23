@@ -3,6 +3,7 @@ import PayPalStartOnboardingScreen from "../screen/PayPalStartOnboardingScreen";
 import PayPalPspSelectionScreen from "../screen/PayPalPspSelectionScreen";
 import PayPalOnboardingCheckoutScreen from "../screen/PayPalOnboardingCheckoutScreen";
 import PayPalOnboardingCompletedSuccessScreen from "../screen/PayPalOnboardingCompletedSuccessScreen";
+import PayPalOnboardingCheckoutFailureScreen from "../screen/PayPalOnboardingCheckoutFailureScreen";
 import PAYPAL_ROUTES from "./routes";
 
 export const paypalOnboardingNavigator = createStackNavigator(
@@ -18,6 +19,9 @@ export const paypalOnboardingNavigator = createStackNavigator(
     },
     [PAYPAL_ROUTES.ONBOARDING.CHECKOUT_SUCCESS]: {
       screen: PayPalOnboardingCompletedSuccessScreen
+    },
+    [PAYPAL_ROUTES.ONBOARDING.CHECKOUT_FAILURE]: {
+      screen: PayPalOnboardingCheckoutFailureScreen
     }
   },
   {
