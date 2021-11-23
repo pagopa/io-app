@@ -24,7 +24,7 @@ const PayPalOnboardingCheckoutFailureScreen = (props: Props) =>
     outcomeCode => (
       <OutcomeCodeMessageComponent
         outcomeCode={outcomeCode}
-        successComponent={null}
+        successComponent={() => null}
         onClose={props.exit}
       />
     )
