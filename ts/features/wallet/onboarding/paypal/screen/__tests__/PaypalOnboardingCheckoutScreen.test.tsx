@@ -18,6 +18,7 @@ describe("PaypalOnboardingCheckoutScreen", () => {
   beforeAll(() => {
     setLocale("it");
   });
+  jest.useFakeTimers();
 
   it(`screen should be defined`, () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
