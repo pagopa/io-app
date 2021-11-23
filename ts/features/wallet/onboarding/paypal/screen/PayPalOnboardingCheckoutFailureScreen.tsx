@@ -11,7 +11,14 @@ import { walletAddPaypalFailure } from "../store/actions";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+/**
+ * Show an error screen indicating the reason of the failure
+ * The CTA ends the onboarding flow
+ * @param props
+ * @constructor
+ */
 const PayPalOnboardingCheckoutFailureScreen = (props: Props) =>
+  // TODO review the error code messages see https://pagopa.atlassian.net/browse/IA-484
   extractOutcomeCode(props.outcomeCode).fold(
     <WorkunitGenericFailure />,
     outcomeCode => (
