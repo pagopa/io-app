@@ -31,6 +31,7 @@ import { outcomeCodesSelector } from "../../../../../store/reducers/wallet/outco
 import { navigateToPayPalCheckoutSuccess } from "../store/actions/navigation";
 import { fetchWalletsRequestWithExpBackoff } from "../../../../../store/actions/wallet/wallets";
 import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
+import WorkunitGenericFailure from "../../../../../components/error/WorkunitGenericFailure";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -46,7 +47,7 @@ const CheckoutContent = (
   }
 ) => {
   const handleCheckoutOutcome = (maybeOutcomeCode: Option<string>) => {
-    // the outcome code is successfully
+    // the outcome code is present and it is a success
     if (
       maybeOutcomeCode.isSome() &&
       isPaymentOutcomeCodeSuccessfully(
@@ -78,8 +79,9 @@ const CheckoutContent = (
     sessionToken => {
       // it should not never happen since this screen is just before the psp selection
       if (props.pspSelected === null) {
-        return <LoadingOrError hasError={true} />;
+        return <WorkunitGenericFailure />;
       }
+      // we have all we need to starts the checkout into the webview
       const formData = {
         idPsp: props.pspSelected.id,
         language: getLocalePrimaryWithFallback(),
@@ -95,7 +97,7 @@ const CheckoutContent = (
           onFinish={handleCheckoutOutcome}
           outcomeQueryparamName={webViewOutcomeParamName}
           onGoBack={props.goBack}
-          modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
+          modalHeaderTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
         />
       );
     },
@@ -104,8 +106,8 @@ const CheckoutContent = (
 };
 
 /**
- * This screen includes a webview where the paypal onboarding happens. It is external to IO
- * As first step it asks for a fresh token to the Payment Manager, it will be included in the webview
+ * This screen includes a webview where the paypal checkout happens. This flow is external to IO, it happens in the Payment Manager
+ * As first step it asks for a fresh token from the Payment Manager, it will be included in the webview
  */
 const PaypalOnboardingCheckoutScreen = (props: Props) => {
   const [checkoutComplete, setCheckoutCompleted] = useState(false);
@@ -129,7 +131,6 @@ const PaypalOnboardingCheckoutScreen = (props: Props) => {
       goBack={props.goBack}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
       contextualHelp={emptyContextualHelp}
-      faqCategories={["payment"]}
     >
       {!checkoutComplete ? (
         <CheckoutContent

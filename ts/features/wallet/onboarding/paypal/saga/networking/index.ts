@@ -73,12 +73,12 @@ export function* handlePaypalSearchPsp(
   }
 }
 
-// refresh PM token to ensure it doesn't expire during the onboarding process
+// refresh PM token (it is needed in the webview) to ensure it won't expire during the checkout process
 export function* refreshPMToken(
   sessionManager: SessionManager<PaymentManagerToken>
 ) {
   try {
-    // If the request for the new token fails a new Error is caught
+    // If the request for the new token fails a new Error is raised
     const pagoPaToken: Option<PaymentManagerToken> = yield call(
       sessionManager.getNewToken
     );

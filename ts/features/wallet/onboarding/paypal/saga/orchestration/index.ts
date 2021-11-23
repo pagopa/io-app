@@ -37,6 +37,7 @@ export function* addPaypalToWallet() {
     withResetNavigationStack,
     paypalWorkOnboaringUnit
   );
+  // onboarding gone successfully, go to the paypal screen detail
   if (res === "completed") {
     yield call(
       NavigationService.dispatchNavigationAction,
