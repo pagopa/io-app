@@ -61,6 +61,9 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
+import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
+import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
+import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
 import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";

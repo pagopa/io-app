@@ -35,7 +35,7 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
         {
           enrich_result_data: true,
           page_size: action.payload.pageSize,
-          maximum_id: action.payload.cursor
+          minimum_id: action.payload.cursor
         }
       );
 

@@ -109,6 +109,7 @@ const reduceLoadNextPage = (
         .toOption(state.data)
         .map(previousState =>
           pot.some({
+            ...previousState,
             page: previousState.page.concat(action.payload.messages),
             next: action.payload.pagination.next
           })
@@ -136,7 +137,6 @@ const reduceLoadNextPage = (
   }
 };
 
-// TODO: handle pull-to-refresh
 const reduceLoadPreviousPage = (
   state: AllPaginated = INITIAL_STATE,
   action: Action
@@ -146,13 +146,16 @@ const reduceLoadPreviousPage = (
       return { data: pot.toLoading(state.data), lastRequest: some("previous") };
 
     case getType(loadPreviousPageMessages.success):
-      // we store the previous item only if the list was empty
       const nextData = pot
         .toOption(state.data)
         .map(previousState =>
           pot.some({
+            ...previousState,
             page: action.payload.messages.concat(previousState.page),
-            previous: action.payload.pagination.previous
+            // preserve previous if not present or it will be impossible to
+            // retrieve further messages
+            previous:
+              action.payload.pagination.previous ?? previousState.previous
           })
         )
         .getOrElse(
