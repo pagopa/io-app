@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import {
-  loadMessage,
+  DEPRECATED_loadMessage,
   removeMessages,
   setMessageReadState,
   setMessagesArchivedState
@@ -31,7 +31,7 @@ const reducer = (
   action: Action
 ): MessagesStatus => {
   switch (action.type) {
-    case getType(loadMessage.success): {
+    case getType(DEPRECATED_loadMessage.success): {
       const { id } = action.payload;
       // if hits, skip it!
       if (state[id] !== undefined) {
