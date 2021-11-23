@@ -121,7 +121,7 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
     refreshPMtoken();
   }, [refreshPMtoken]);
   useEffect(() => {
-    // paypal has been added to the user wallet, go to the success screen
+    // paypal has been added (1 for the whole wallet) to the user's wallet, go to the success screen
     if (pot.isSome(props.paypalPaymentMethod)) {
       navigation.dispatch(navigateToPayPalCheckoutSuccess());
     }
