@@ -149,10 +149,71 @@ describe("allPaginated reducer", () => {
             })
           );
         });
+
+        describe("with an empty response", () => {
+          // no messages, no cursor
+          const actionWithEmptyPagination = loadPreviousPageMessages.success({
+            messages: [],
+            pagination: {}
+          });
+
+          it("should preserve the `previous` cursor", () => {
+            const intermediateState = reducer(initialState, action);
+            expect(
+              reducer(intermediateState, actionWithEmptyPagination).data
+            ).toEqual(
+              pot.some({
+                page: successLoadPreviousPageMessagesPayload.messages,
+                previous:
+                  successLoadPreviousPageMessagesPayload.pagination.previous
+              })
+            );
+          });
+        });
+
         it("should set the lastRequest to 'none'", () => {
           expect(reducer(initialState, action).lastRequest).toEqual(none);
         });
       });
+    });
+  });
+
+  describe("when loadPreviousPageMessages and loadNextPageMessages success actions follow each other", () => {
+    const initialState: AllPaginated = {
+      data: pot.some({
+        page: [],
+        previous: "abcde",
+        next: "12345"
+      }),
+      lastRequest: none
+    };
+
+    it("the loadNext should not affect the existing `previous` cursor", () => {
+      const action = loadNextPageMessages.success(
+        successLoadNextPageMessagesPayload
+      );
+
+      expect(reducer(initialState, action).data).toEqual(
+        pot.some({
+          page: successLoadNextPageMessagesPayload.messages,
+          previous: "abcde",
+          next: successLoadNextPageMessagesPayload.pagination.next
+        })
+      );
+    });
+
+    it("the loadPrevious should not affect the existing `next` cursor", () => {
+      const action = loadPreviousPageMessages.success(
+        successLoadPreviousPageMessagesPayload
+      );
+
+      expect(reducer(initialState, action).data).toEqual(
+        pot.some({
+          page: successLoadPreviousPageMessagesPayload.messages,
+          previous: successLoadPreviousPageMessagesPayload.pagination.previous,
+          next: "12345"
+        })
+      );
     });
   });
 

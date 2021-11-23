@@ -141,6 +141,7 @@ const MessageList = ({
   isRefreshing,
   isReloadingAll,
   loadNextPage,
+  loadPreviousPage,
   nextCursor,
   previousCursor,
   reloadAll
@@ -203,13 +204,10 @@ const MessageList = ({
         if (isFirstLoad) {
           setIsFirstLoad(false);
         }
-
         if (messages.length === 0) {
           reloadAll();
         } else if (previousCursor !== undefined) {
-          // TODO: support pull-to-refresh
-          //  https://pagopa.atlassian.net/browse/IA-269
-          // loadPreviousPage(previousCursor);
+          loadPreviousPage(previousCursor);
         }
       }}
     />
