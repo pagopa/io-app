@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+
 import I18n from "../../i18n";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import {
@@ -45,20 +46,28 @@ const styles = StyleSheet.create({
  * A component to render the button related to the payment
  * paired with a message.
  */
-const PaymentButton = (props: Props) => {
+const PaymentButton = ({
+  amount: paymentAmount,
+  isEmailValidated,
+  isUpdatedNeededPagoPa,
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletHomeScreen,
+  noticeNumber,
+  organizationFiscalCode
+}: Props) => {
   const handleOnPress = () => {
-    const amount = getAmountFromPaymentAmount(props.amount);
+    const amount = getAmountFromPaymentAmount(paymentAmount);
 
     const rptId = getRptIdFromNoticeNumber(
-      props.organizationFiscalCode,
-      props.noticeNumber
+      organizationFiscalCode,
+      noticeNumber
     );
 
     if (amount.isSome() && rptId.isSome()) {
       // TODO: optimize the management of the payment initialization
-      if (props.isEmailValidated && !props.isUpdatedNeededPagoPa) {
-        props.paymentInitializeState();
-        props.navigateToPaymentTransactionSummaryScreen({
+      if (isEmailValidated && !isUpdatedNeededPagoPa) {
+        paymentInitializeState();
+        navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
           initialAmount: amount.value,
           paymentStartOrigin: "message"
@@ -66,7 +75,7 @@ const PaymentButton = (props: Props) => {
       } else {
         // Navigating to Wallet home, having the email address is not validated,
         // it will be displayed RemindEmailValidationOverlay
-        props.navigateToWalletHomeScreen();
+        navigateToWalletHomeScreen();
       }
     }
   };
