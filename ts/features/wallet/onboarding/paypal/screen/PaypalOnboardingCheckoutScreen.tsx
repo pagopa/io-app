@@ -63,7 +63,7 @@ const CheckoutContent = (
 
   const LoadingOrError = (loadingProps: { hasError: boolean }) => (
     <LoadingErrorComponent
-      testID={"PayPalPpsSelectionScreenLoadingError"}
+      testID={"PaypalOnboardingCheckoutScreenLoadingError"}
       isLoading={!loadingProps.hasError}
       loadingCaption={I18n.t("global.remoteStates.loading")}
       onRetry={props.refreshPMtoken}
@@ -74,7 +74,7 @@ const CheckoutContent = (
     : pagoPaApiUrlPrefix;
   return fold(
     props.pmToken,
-    () => <LoadingOrError hasError={true} />,
+    () => <LoadingOrError hasError={false} />,
     () => <LoadingOrError hasError={false} />,
     sessionToken => {
       // it should not never happen since this screen is just before the psp selection
@@ -90,6 +90,7 @@ const CheckoutContent = (
       };
       return (
         <PayWebViewModal
+          testID={"PayWebViewModalTestID"}
           showInfoHeader={false}
           postUri={urlPrefix + payUrlSuffix}
           formData={formData}

@@ -16,8 +16,9 @@ import I18n from "../../i18n";
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { Label } from "../../components/core/typography/Label";
+import { WithTestID } from "../../types/WithTestID";
 
-type Props = {
+type OwnProps = {
   // the uri to send the form data thought POST
   postUri: string;
   // data to include into the form to submit
@@ -45,6 +46,8 @@ type Props = {
   // if undefined -> true as default
   showInfoHeader?: boolean;
 };
+
+type Props = WithTestID<OwnProps>;
 
 const styles = StyleSheet.create({
   descriptionContainer: { paddingHorizontal: 20, paddingVertical: 14 },
@@ -195,6 +198,7 @@ export const PayWebViewModal = (props: Props) => {
         )}
 
         <WebView
+          testID={props.testID}
           textZoom={100}
           source={{
             html:
