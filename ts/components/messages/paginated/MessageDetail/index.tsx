@@ -2,7 +2,7 @@ import { Content } from "native-base";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 import variables from "../../../../theme/variables";
 import {
   UIMessage,
@@ -17,7 +17,7 @@ type Props = Readonly<{
   navigateToWalletHome: () => void;
   onServiceLinkPress?: () => void;
   organizationFiscalCode?: OrganizationFiscalCode;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: ServiceMetadata;
 }>;
 
 const styles = StyleSheet.create({
