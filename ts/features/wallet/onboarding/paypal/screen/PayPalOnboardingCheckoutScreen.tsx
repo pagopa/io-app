@@ -117,11 +117,13 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
   const [checkoutComplete, setCheckoutCompleted] = useState(false);
   const navigation = useContext(NavigationContext);
   const { refreshPMtoken } = props;
+  // refresh the PM at the startup
   useEffect(() => {
     refreshPMtoken();
   }, [refreshPMtoken]);
+
   useEffect(() => {
-    // paypal has been added (1 for the whole wallet) to the user's wallet, go to the success screen
+    // paypal has been added (only 1 for the whole wallet) to the user's wallet, go to the success screen
     if (pot.isSome(props.paypalPaymentMethod)) {
       navigation.dispatch(navigateToPayPalCheckoutSuccess());
     }
