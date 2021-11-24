@@ -247,7 +247,7 @@ export const creditCardListSelector = createSelector(
 );
 
 /**
- * from a given ID return the relative {@link PayPalPaymentMethod} or undefined
+ * from a given ID return the relative {@link PaymentMethod} or undefined
  */
 export const paymentMethodByIdSelector = createSelector(
   [paymentMethodsSelector, (_: GlobalState, id: number) => id],
