@@ -43,6 +43,18 @@ const payUrlSuffix = "/v3/webview/paypal/onboarding/psp";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 
+const LoadingOrError = (loadingProps: {
+  hasError: boolean;
+  onRetry: () => void;
+}) => (
+  <LoadingErrorComponent
+    testID={"PayPalOnboardingCheckoutScreenLoadingError"}
+    isLoading={!loadingProps.hasError}
+    loadingCaption={I18n.t("global.remoteStates.loading")}
+    onRetry={loadingProps.onRetry}
+  />
+);
+
 const CheckoutContent = (
   props: Props & {
     onCheckoutSuccess: (outcode: Option<string>) => void;
@@ -61,24 +73,17 @@ const CheckoutContent = (
       props.onCheckoutSuccess(maybeOutcomeCode);
       return;
     }
+    // if the outcome code is not present or it is not a success code -> failure
     props.onCheckoutFailure(maybeOutcomeCode);
   };
 
-  const LoadingOrError = (loadingProps: { hasError: boolean }) => (
-    <LoadingErrorComponent
-      testID={"PayPalOnboardingCheckoutScreenLoadingError"}
-      isLoading={!loadingProps.hasError}
-      loadingCaption={I18n.t("global.remoteStates.loading")}
-      onRetry={props.refreshPMtoken}
-    />
-  );
   const urlPrefix = props.isPagoPATestEnabled
     ? pagoPaApiUrlPrefixTest
     : pagoPaApiUrlPrefix;
   return fold(
     props.pmToken,
-    () => <LoadingOrError hasError={false} />,
-    () => <LoadingOrError hasError={false} />,
+    () => <LoadingOrError hasError={false} onRetry={props.refreshPMtoken} />,
+    () => <LoadingOrError hasError={false} onRetry={props.refreshPMtoken} />,
     sessionToken => {
       // it should not never happen since this screen is just before the psp selection
       if (props.pspSelected === null) {
@@ -105,13 +110,18 @@ const CheckoutContent = (
         />
       );
     },
-    _ => <LoadingOrError hasError={true} />
+    _ => <LoadingOrError hasError={true} onRetry={props.refreshPMtoken} />
   );
 };
 
 /**
  * This screen includes a webview where the paypal checkout happens. This flow is external to IO, it happens in the Payment Manager
  * As first step it asks for a fresh token from the Payment Manager, it will be included in the webview
+ * 1. request for a fresh PM token
+ * 2. starts the checkout challenge in the webview
+ * 3. handle the outcome code coming from the step 2
+ * 4a. if success: reload the wallet, find the added paypal, checkout success
+ * 4b. if failure: navigate to failure screen
  */
 const PayPalOnboardingCheckoutScreen = (props: Props) => {
   const [checkoutComplete, setCheckoutCompleted] = useState(false);
