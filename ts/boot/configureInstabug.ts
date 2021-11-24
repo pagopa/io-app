@@ -1,6 +1,7 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import Instabug, {
   BugReporting,
+  CrashReporting,
   NetworkLogger,
   Replies
 } from "instabug-reactnative";
@@ -60,7 +61,7 @@ export const initialiseInstabug = () => {
     // avoid Instabug to log network requests
     NetworkLogger.setEnabled(false);
   }
-
+  CrashReporting.setEnabled(false);
   Instabug.setString(
     Instabug.strings.commentFieldHintForQuestion,
     I18n.t("instabug.overrideText.commentFieldHintForQuestion")
