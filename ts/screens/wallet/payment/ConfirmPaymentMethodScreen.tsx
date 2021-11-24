@@ -141,10 +141,7 @@ const PaymentMethodCard = (props: {
   paymentMethod: PaymentMethod | undefined;
 }) => {
   const { paymentMethod } = props;
-  if (paymentMethod === undefined) {
-    return null;
-  }
-  switch (paymentMethod.kind) {
+  switch (paymentMethod?.kind) {
     case "CreditCard":
       return <CreditCardComponent creditCard={paymentMethod} />;
     case "PayPal":
@@ -157,7 +154,7 @@ const PaymentMethodCard = (props: {
     case "Bancomat":
     case "BPay":
     case "Privative":
-    default:
+    case undefined:
       return null;
   }
 };
