@@ -1,9 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -217,8 +216,7 @@ const ServiceDetailsScreen = (props: Props) => {
         )}
       </SafeAreaView>
     </BaseScreenComponent>
-    );
-  }
+  );
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
