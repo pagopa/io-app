@@ -1,16 +1,10 @@
 import { none, some } from "fp-ts/lib/Option";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import {
-  IPatternStringTag,
-  IWithinRangeStringTag
-} from "italia-ts-commons/lib/strings";
+import { IPatternStringTag } from "italia-ts-commons/lib/strings";
 
-import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  isPaymentDoneSuccessfully,
-  PaymentHistory
-} from "../../../store/reducers/payments/history";
+import { PaymentHistory } from "../../../store/reducers/payments/history";
+import { isPaymentDoneSuccessfully } from "../../../store/reducers/payments/utils";
+import { paymentVerificaResponseWithMessage as verifiedData } from "../../../__mocks__/paymentPayloads";
 
 const data: RptId = {
   organizationFiscalCode: "01199250158" as string &
@@ -21,26 +15,6 @@ const data: RptId = {
     checkDigit: "19" as string & IPatternStringTag<"[0-9]{2}">,
     iuv13: "3456789999999" as string & IPatternStringTag<"[0-9]{13}">
   }
-};
-
-// eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
-const verified_data: PaymentRequestsGetResponse = {
-  importoSingoloVersamento: 1 as ImportoEuroCents,
-  codiceContestoPagamento: "03314e90321011eaa22f931313a0ec7c" as string &
-    IWithinRangeStringTag<32, 33>,
-  ibanAccredito: "IT00V0000000000000000000000" as
-    | (string & IPatternStringTag<"[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{1,30}">)
-    | undefined,
-  causaleVersamento: "Avviso di prova app IO",
-  enteBeneficiario: {
-    identificativoUnivocoBeneficiario: "01199250158",
-    denominazioneBeneficiario: "Comune di Milano"
-  },
-  spezzoniCausaleVersamento: [
-    {
-      spezzoneCausaleVersamento: "causale versamento di prova"
-    }
-  ]
 };
 
 // a successful payment
@@ -85,7 +59,8 @@ const paymentHistorySuccess: PaymentHistory = {
     rrn: "200380002021",
     numAut: "431061"
   },
-  verified_data
+  verifiedData,
+  startOrigin: "message"
 };
 
 // an incomplete payment
@@ -93,7 +68,8 @@ const paymentHistoryIncomplete: PaymentHistory = {
   started_at: "2020-04-16T13:59:19.031Z",
   data,
   paymentId: "ca7d9be4-7da1-442d-92c6-d403d7361f65",
-  verified_data
+  verifiedData,
+  startOrigin: "message"
 };
 
 // a failed payment
@@ -109,7 +85,8 @@ const paymentHistoryFailed: PaymentHistory = {
       IPatternStringTag<"^[0-9]{11}$">
   },
   started_at: "2020-04-05T15:51:16.237Z",
-  failure: "PPT_DOMINIO_SCONOSCIUTO"
+  failure: "PPT_DOMINIO_SCONOSCIUTO",
+  startOrigin: "message"
 };
 
 describe("test the checkPaymentOutcome function", () => {

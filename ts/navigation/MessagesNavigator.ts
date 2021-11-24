@@ -9,9 +9,10 @@ import { euCovidCertificateEnabled, usePaginatedMessages } from "../config";
 import EuCovidCertNavigator from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
+import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
-import PaginatedMessagesHomeScreen from "../screens/messages/PaginatedMessagesHomeScreen";
+import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 
 import ROUTES from "./routes";
 
@@ -28,7 +29,9 @@ const baseMessageRouteConfig: NavigationRouteConfigMap<
     screen: MessageRouterScreen
   },
   [ROUTES.MESSAGE_DETAIL]: {
-    screen: MessageDetailScreen
+    screen: usePaginatedMessages
+      ? PaginatedMessageDetailScreen
+      : MessageDetailScreen
   }
 };
 

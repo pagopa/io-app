@@ -33,7 +33,9 @@ const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 // Default number of workers to fetch service.
 const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
 
-const DEFAULT_PAGE_SIZE = 8;
+// TODO: calculate the page size based on available screen space and item's height
+// https://pagopa.atlassian.net/browse/IA-474
+const DEFAULT_PAGE_SIZE = 12;
 
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
