@@ -39,6 +39,7 @@ export function* addPaypalToWallet() {
   );
   // onboarding gone successfully, go to the paypal screen detail
   if (res === "completed") {
+    // reset the stack to land in the wallet section
     yield call(
       NavigationService.dispatchNavigationAction,
       StackActions.popToTop()
