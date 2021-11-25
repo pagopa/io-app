@@ -6,6 +6,7 @@ import { Dispatch } from "redux";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 
 import I18n from "../../i18n";
+import NavigationService from "../../navigation/NavigationService";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -70,7 +71,8 @@ const PaymentButton = ({
         navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
           initialAmount: amount.value,
-          paymentStartOrigin: "message"
+          paymentStartOrigin: "message",
+          startRoute: NavigationService.getCurrentRoute()
         });
       } else {
         // Navigating to Wallet home, having the email address is not validated,

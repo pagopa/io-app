@@ -7,9 +7,9 @@ import {
   NavigationState
 } from "react-navigation";
 import {
-  getCurrentRouteName as deprecatedGetCurrentRouteName,
-  getCurrentRouteKey as deprecatedGetCurrentRouteKey,
-  getCurrentRoute as utilsGetCurrentRoute
+  getCurrentRoute as utilsGetCurrentRoute,
+  getCurrentRouteKey as utilsGetCurrentRouteKey,
+  getCurrentRouteName as utilsGetCurrentRouteName
 } from "../utils/navigation";
 
 // eslint-disable-next-line functional/no-let
@@ -36,14 +36,10 @@ const dispatchNavigationAction = (action: NavigationAction) => {
 };
 
 const getCurrentRouteName = (): string | undefined =>
-  currentRouteState
-    ? deprecatedGetCurrentRouteName(currentRouteState)
-    : undefined;
+  currentRouteState ? utilsGetCurrentRouteName(currentRouteState) : undefined;
 
 const getCurrentRouteKey = (): string | undefined =>
-  currentRouteState
-    ? deprecatedGetCurrentRouteKey(currentRouteState)
-    : undefined;
+  currentRouteState ? utilsGetCurrentRouteKey(currentRouteState) : undefined;
 
 const getCurrentRoute = (): NavigationLeafRoute | undefined =>
   currentRouteState ? utilsGetCurrentRoute(currentRouteState) : undefined;
