@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { ListItem, View } from "native-base";
-import { connect, useDispatch } from "react-redux";
-import { Dispatch } from "redux";
+import { useDispatch } from "react-redux";
 import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -13,7 +12,6 @@ import { Body } from "../../../../../components/core/typography/Body";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { isError, isReady } from "../../../../bonus/bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { IOPayPalPsp } from "../types";
 import { searchPaypalPsp as searchPaypalPspAction } from "../store/actions";
@@ -28,9 +26,7 @@ import {
   PSP_LOGO_MAX_HEIGHT,
   PSP_LOGO_MAX_WIDTH
 } from "../components/PspRadioItem";
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+import { useIOSelector } from "../../../../../store/hooks";
 
 const styles = StyleSheet.create({
   radioListHeaderRightColumn: {
@@ -93,13 +89,14 @@ const backButtonProps = (onPress: () => void) => ({
 });
 
 /**
- * This screen is where the user picks a PSP that will be used to handle PayPal transactions within PayPal
+ * This screen is where the user updates the PSP that will be used for the payment
  * Only 1 psp can be selected
  */
-const PayPalPspUpdateScreen = (props: Props): React.ReactElement | null => {
+const PayPalPspUpdateScreen = (): React.ReactElement | null => {
   const locales = getLocales();
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
+  const pspList = useIOSelector(payPalPspSelector);
   const searchPaypalPsp = () => {
     dispatch(searchPaypalPspAction.request());
   };
@@ -159,7 +156,7 @@ const PayPalPspUpdateScreen = (props: Props): React.ReactElement | null => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
-      {isReady(props.pspList) ? (
+      {isReady(pspList) ? (
         <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsSelectionScreen"}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <View spacer={true} small={true} />
@@ -173,7 +170,7 @@ const PayPalPspUpdateScreen = (props: Props): React.ReactElement | null => {
                 rightColumnTitle={locales.rightColumnTitle}
               />
               <View spacer={true} small={true} />
-              {props.pspList.value.map(psp => (
+              {pspList.value.map(psp => (
                 // TODO replace with the effective handler see https://pagopa.atlassian.net/browse/IA-499
                 <PspItem
                   psp={psp}
@@ -191,7 +188,7 @@ const PayPalPspUpdateScreen = (props: Props): React.ReactElement | null => {
       ) : (
         <LoadingErrorComponent
           testID={"PayPalPpsSelectionScreenLoadingError"}
-          isLoading={!isError(props.pspList)}
+          isLoading={!isError(pspList)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
           onRetry={searchPaypalPsp}
         />
@@ -200,12 +197,4 @@ const PayPalPspUpdateScreen = (props: Props): React.ReactElement | null => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (state: GlobalState) => ({
-  pspList: payPalPspSelector(state)
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PayPalPspUpdateScreen);
+export default PayPalPspUpdateScreen;
