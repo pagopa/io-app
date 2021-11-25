@@ -98,7 +98,7 @@ const CheckoutContent = (
  * This screen includes a webview where the paypal checkout happens. This flow is external to IO, it happens in the Payment Manager
  * As first step it asks for a fresh token from the Payment Manager, it will be included in the webview
  * 1. request for a fresh PM token
- * 2. starts the checkout challenge in the webview
+ * 2. when the PM token is obtained, starts the checkout challenge in the webview
  * 3. handle the outcome code coming from the step 2
  * 4. navigate to the checkout completed screen
  */
