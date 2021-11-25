@@ -322,6 +322,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             block={true}
             cancel={true}
             onPress={props.onCancel}
+            testID={"cancelPaymentButton"}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </ButtonDefaultOpacity>
