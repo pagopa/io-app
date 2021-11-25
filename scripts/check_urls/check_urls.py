@@ -212,6 +212,10 @@ if not run_test and __name__ == '__main__':
 	print("scanning local folders...")
 	all_uris = set()
 	urls_black_list = {
+		# still not available
+		"https://io.italia.it/carta-giovani-nazionale/informativa-beneficiari",
+		# still not available
+		"https://io.italia.it/carta-giovani-nazionale/guida-beneficiari",
 		# the article is available but the response status code is 403
 		"https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection",
 		"https://assets.cdn.io.italia.it",
