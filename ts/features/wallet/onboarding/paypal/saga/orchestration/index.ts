@@ -1,5 +1,5 @@
 import { call } from "redux-saga/effects";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -39,6 +39,10 @@ export function* addPaypalToWallet() {
   );
   // onboarding gone successfully, go to the paypal screen detail
   if (res === "completed") {
+    yield call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popToTop()
+    );
     yield call(
       NavigationService.dispatchNavigationAction,
       navigateToPayPalDetailScreen()
