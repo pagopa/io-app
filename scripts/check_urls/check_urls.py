@@ -25,7 +25,7 @@ tagged_people = ["<!here>"]
 SLACK_CHANNEL = "#io_dev_app_status"
 
 # a list of remote uris consumed by the app for content presentation
-remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
+remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/bonus_available_v2.json",
                       "https://assets.cdn.io.italia.it/contextualhelp/data.json",
                       "https://assets.cdn.io.italia.it/status/backend.json"]
 
