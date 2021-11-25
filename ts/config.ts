@@ -79,7 +79,7 @@ export const euCovidCertificateEnabled: boolean =
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
 // Paypal configuration
-export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
+export const payPalEnabled: boolean = true;
 
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
@@ -123,8 +123,7 @@ export const totServiceFetchWorkers = t.Integer.decode(
   parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_SERVICE_FETCH_WORKERS);
 
-export const shouldDisplayVersionInfoOverlay =
-  Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
+export const shouldDisplayVersionInfoOverlay = false;
 
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
