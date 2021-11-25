@@ -41,7 +41,7 @@ describe("PayPalPspUpdateScreen", () => {
   });
 
   describe("when the psp list is loading", () => {
-    it("then it should a loading", () => {
+    it("then a loading should be shown", () => {
       const render = renderComponent();
       render.store.dispatch(searchPaypalPsp.request());
       expect(
@@ -51,7 +51,7 @@ describe("PayPalPspUpdateScreen", () => {
   });
 
   describe("when the psp list is in error", () => {
-    it("then the error and retry button should be shown", () => {
+    it("then the error content and retry button should be shown", () => {
       const render = renderComponent();
       render.store.dispatch(
         searchPaypalPsp.failure(getNetworkError(new Error("test")))
