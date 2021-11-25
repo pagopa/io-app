@@ -8,7 +8,11 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import {
+  NavigationInjectedProps,
+  NavigationLeafRoute,
+  StackActions
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -20,6 +24,7 @@ import IconFont from "../../../components/ui/IconFont";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
@@ -65,6 +70,7 @@ export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
+  startRoute: NavigationLeafRoute | undefined;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -157,7 +163,15 @@ class TransactionSummaryScreen extends React.Component<Props> {
         }
       );
     } else {
-      this.props.navigation.goBack();
+      const startRoute = this.props.navigation.getParam("startRoute");
+      if (startRoute !== undefined) {
+        if (startRoute.routeName === ROUTES.MESSAGE_DETAIL) {
+          this.props.navigation.dispatch(StackActions.popToTop());
+        }
+        this.props.navigation.navigate(startRoute);
+      } else {
+        this.props.navigation.goBack();
+      }
     }
   };
 
