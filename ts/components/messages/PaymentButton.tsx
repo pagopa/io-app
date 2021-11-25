@@ -13,6 +13,7 @@ import {
   navigateToWalletHome
 } from "../../store/actions/navigation";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
+import { useIODispatch } from "../../store/hooks";
 import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -56,6 +57,7 @@ const PaymentButton = ({
   noticeNumber,
   organizationFiscalCode
 }: Props) => {
+  const dispatch = useIODispatch();
   const handleOnPress = () => {
     const amount = getAmountFromPaymentAmount(paymentAmount);
 
@@ -67,7 +69,7 @@ const PaymentButton = ({
     if (amount.isSome() && rptId.isSome()) {
       // TODO: optimize the management of the payment initialization
       if (isEmailValidated && !isUpdatedNeededPagoPa) {
-        paymentInitializeState();
+        dispatch(paymentInitializeState());
         navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
           initialAmount: amount.value,
