@@ -272,6 +272,15 @@ export const creditCardByIdSelector = createSelector(
 );
 
 /**
+ * Return the paypal list in the wallet
+ */
+export const paypalListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<PayPalPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isPayPal))
+);
+
+/**
  * Return a privative card list in the wallet
  */
 export const privativeListSelector = createSelector(
