@@ -47,6 +47,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
 
   useEffect(() => {
     // Passed to the WrappedFlatList in order to make the selectedText reactable
+    // eslint-disable-next-line functional/immutable-data
     refVal.current = searchText;
     if (searchText) {
       debounceRef.current(searchText);
