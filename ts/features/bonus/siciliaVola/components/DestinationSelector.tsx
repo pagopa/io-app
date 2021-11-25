@@ -46,6 +46,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
   const debounceRef = React.useRef(debounce(performMunicipalitySearch, 300));
 
   useEffect(() => {
+    // Passed to the WrappedFlatList in order to make the selectedText reactable
     refVal.current = searchText;
     if (searchText) {
       debounceRef.current(searchText);
