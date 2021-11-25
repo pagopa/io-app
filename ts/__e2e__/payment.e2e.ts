@@ -10,8 +10,8 @@ describe("Payment", () => {
   });
 
   describe("When the user want to pay starting from a message", () => {
-    describe("And press cancel in the Payment Transaction Summary screen", () => {
-      it("Should return to the message detail", async () => {
+    describe("And press cancel in the payment transaction summary screen", () => {
+      it("Should return to the message details screen", async () => {
         await openPaymentFromMessage();
         const cancelButton = element(by.text(I18n.t("global.buttons.cancel")));
         await waitFor(cancelButton)
@@ -23,8 +23,8 @@ describe("Payment", () => {
           .withTimeout(e2eWaitRenderTimeout);
       });
     });
-    describe("And press cancel in the Payment Confirm screen", () => {
-      it("Should return to the message detail", async () => {
+    describe("And press cancel in the payment confirm screen", () => {
+      it("Should return to the message details screen", async () => {
         await openPaymentFromMessage();
         await waitFor(element(by.text(I18n.t("wallet.continue"))))
           .toExist()
@@ -61,8 +61,8 @@ describe("Payment", () => {
     });
   });
 
-  describe("when the user want to pay using the manual insertion", () => {
-    it("should allow the user to complete a payment", async () => {
+  describe("When the user want to pay using the manual insertion", () => {
+    it("Should allow the user to complete a payment", async () => {
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
       await element(by.text(I18n.t("wallet.payNotice"))).tap();
 
