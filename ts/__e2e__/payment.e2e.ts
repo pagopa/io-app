@@ -54,6 +54,7 @@ describe("Payment", () => {
       });
     });
 
+    // TODO: this could be executed just one time until we have a way to reset the dev server between tests
     it("Should allow the user to complete a payment", async () => {
       await openPaymentFromMessage();
       await completePaymentFlow();
