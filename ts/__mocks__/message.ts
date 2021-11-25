@@ -1,5 +1,7 @@
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
+import { UIMessageDetails } from "../store/reducers/entities/messages/types";
+import { toUIMessageDetails } from "../store/reducers/entities/messages/transformers";
 
 import { service_1 } from "./messages";
 
@@ -58,3 +60,9 @@ export const paymentValidInvalidAfterDueDate: CreatedMessageWithContentAndAttach
       due_date: "2021-12-01T13:29:35.770Z"
     }
   } as any;
+
+export const successLoadMessageDetails: UIMessageDetails = toUIMessageDetails(
+  paymentValidInvalidAfterDueDate
+);
+
+export const apiPayload = { ...paymentValidInvalidAfterDueDate };

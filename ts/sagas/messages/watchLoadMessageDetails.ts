@@ -7,6 +7,7 @@ import { loadMessageDetails as loadMessageDetailsAction } from "../../store/acti
 import { SagaCallReturnType } from "../../types/utils";
 import { getError } from "../../utils/errors";
 import { toUIMessageDetails } from "../../store/reducers/entities/messages/transformers";
+import { isTestEnv } from "../../utils/environment";
 
 import { handleResponse } from "./utils";
 
@@ -26,7 +27,6 @@ export default function* watcher(
  * A saga to fetch a message from the Backend and save it in the redux store.
  *
  * @param getMessage
- * @param id
  */
 export function tryLoadMessageDetails(getMessage: LocalBeClient) {
   return function* gen(
@@ -61,3 +61,7 @@ export function tryLoadMessageDetails(getMessage: LocalBeClient) {
     }
   };
 }
+
+export const testTryLoadMessageDetails = isTestEnv
+  ? tryLoadMessageDetails
+  : undefined;
