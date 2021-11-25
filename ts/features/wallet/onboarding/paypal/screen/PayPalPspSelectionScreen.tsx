@@ -137,7 +137,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={props.goBack}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
