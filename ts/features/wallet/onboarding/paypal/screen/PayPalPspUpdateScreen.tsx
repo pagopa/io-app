@@ -97,6 +97,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
   );
   return (
     <ListItem
+      testID={`pspItemTestID_${psp.id}`}
       style={styles.pspListItem}
       accessibilityRole={"button"}
       onPress={constNull}
@@ -155,7 +156,7 @@ const PayPalPspUpdateScreen = (): React.ReactElement | null => {
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
       {isReady(pspList) ? (
-        <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsUpdateScreen"}>
+        <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <View spacer={true} small={true} />
             <H1>{locales.title}</H1>
