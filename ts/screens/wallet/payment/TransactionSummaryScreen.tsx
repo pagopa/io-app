@@ -163,8 +163,16 @@ class TransactionSummaryScreen extends React.Component<Props> {
         }
       );
     } else {
+      /**
+       * Since the payment flow starts from the next screen, even though we are already
+       * in the payment flow, it is really difficult to make up for the static stack organization in a homogeneous way.
+       * The only solution that allows to avoid to heavily modify the existing logic is to distinguish based on the starting screen,
+       * in order to perform the right navigation actions if we are not in the wallet stack.
+       * TODO: This is a temporary (and not scalable) solution, a complete refactoring of the payment workflow is strongly recommended
+       */
       const startRoute = this.props.navigation.getParam("startRoute");
       if (startRoute !== undefined) {
+        // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
         if (startRoute.routeName === ROUTES.MESSAGE_DETAIL) {
           this.props.navigation.dispatch(StackActions.popToTop());
         }
