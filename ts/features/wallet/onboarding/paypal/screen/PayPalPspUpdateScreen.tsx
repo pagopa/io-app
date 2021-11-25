@@ -88,6 +88,51 @@ const backButtonProps = (onPress: () => void) => ({
   title: I18n.t("global.buttons.cancel")
 });
 
+const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
+  const { psp } = props;
+  const imgDimensions = useImageResize(
+    PSP_LOGO_MAX_WIDTH,
+    PSP_LOGO_MAX_HEIGHT,
+    psp.logoUrl
+  );
+  return (
+    <ListItem
+      style={styles.pspListItem}
+      accessibilityRole={"button"}
+      onPress={constNull}
+    >
+      <View style={{ flex: 1 }}>
+        {imgDimensions.fold<React.ReactNode>(
+          <H4
+            weight={"SemiBold"}
+            color={"bluegreyDark"}
+            testID={"pspNameTestID"}
+          >
+            {psp.name}
+          </H4>,
+          imgDim => (
+            <Image
+              testID={"pspNameLogoID"}
+              source={{ uri: psp.logoUrl }}
+              style={[styles.pspLogo, { width: imgDim[0], height: imgDim[1] }]}
+              resizeMode={"contain"}
+            />
+          )
+        )}
+      </View>
+      <View style={IOStyles.row}>
+        <Label color={"blue"}>{formatNumberCentsToAmount(psp.fee)}</Label>
+        <IconFont
+          style={{ justifyContent: "center" }}
+          name={"io-right"}
+          size={24}
+          color={customVariables.contentPrimaryBackground}
+        />
+      </View>
+    </ListItem>
+  );
+};
+
 /**
  * This screen is where the user updates the PSP that will be used for the payment
  * Only 1 psp can be selected
@@ -102,53 +147,6 @@ const PayPalPspUpdateScreen = (): React.ReactElement | null => {
   };
   useEffect(searchPaypalPsp, [dispatch]);
 
-  const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
-    const { psp } = props;
-    const imgDimensions = useImageResize(
-      PSP_LOGO_MAX_WIDTH,
-      PSP_LOGO_MAX_HEIGHT,
-      psp.logoUrl
-    );
-    return (
-      <ListItem
-        style={styles.pspListItem}
-        accessibilityRole={"button"}
-        onPress={constNull}
-      >
-        <View style={{ flex: 1 }}>
-          {imgDimensions.fold<React.ReactNode>(
-            <H4
-              weight={"SemiBold"}
-              color={"bluegreyDark"}
-              testID={"pspNameTestID"}
-            >
-              {psp.name}
-            </H4>,
-            imgDim => (
-              <Image
-                testID={"pspNameLogoID"}
-                source={{ uri: psp.logoUrl }}
-                style={[
-                  styles.pspLogo,
-                  { width: imgDim[0], height: imgDim[1] }
-                ]}
-                resizeMode={"contain"}
-              />
-            )
-          )}
-        </View>
-        <View style={IOStyles.row}>
-          <Label color={"blue"}>{formatNumberCentsToAmount(psp.fee)}</Label>
-          <IconFont
-            style={{ justifyContent: "center" }}
-            name={"io-right"}
-            size={24}
-            color={customVariables.contentPrimaryBackground}
-          />
-        </View>
-      </ListItem>
-    );
-  };
   const goBack = () => navigation.goBack();
   return (
     <BaseScreenComponent
@@ -171,7 +169,7 @@ const PayPalPspUpdateScreen = (): React.ReactElement | null => {
               />
               <View spacer={true} small={true} />
               {pspList.value.map(psp => (
-                // TODO replace with the effective handler see https://pagopa.atlassian.net/browse/IA-499
+                // TODO replace the on press with the effective handler see https://pagopa.atlassian.net/browse/IA-499
                 <PspItem
                   psp={psp}
                   key={`paypal_psp:${psp.id}`}
