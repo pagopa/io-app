@@ -23,6 +23,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { LabelledItem } from "../../../components/LabelledItem";
 import I18n from "../../../i18n";
+import NavigationService from "../../../navigation/NavigationService";
 import {
   navigateBack,
   navigateToPaymentTransactionSummaryScreen,
@@ -258,7 +259,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "manual_insertion"
+      paymentStartOrigin: "manual_insertion",
+      startRoute: NavigationService.getCurrentRoute()
     });
   }
 });
