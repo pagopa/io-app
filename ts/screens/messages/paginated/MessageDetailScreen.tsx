@@ -35,6 +35,7 @@ import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import ErrorState from "../MessageDetailScreen/ErrorState";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { toUIService } from "../../../store/reducers/entities/services/transformers";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -97,7 +98,7 @@ const MessageDetailScreen = ({
     // When a service gets selected, before navigating to the service detail
     // screen, we issue a loadServiceMetadata request to refresh the service metadata
     if (service) {
-      navigateToServiceDetailsScreen({ service });
+      navigateToServiceDetailsScreen({ service: service.raw });
     }
   };
 
@@ -136,7 +137,7 @@ const MessageDetailScreen = ({
           message={message}
           messageDetails={details}
           navigateToWalletHome={navigateToWalletHome}
-          organizationFiscalCode={service?.organization_fiscal_code}
+          service={service}
           serviceMetadata={maybeServiceMetadata}
           onServiceLinkPress={onServiceLinkPressHandler}
         />
@@ -154,9 +155,10 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageDetails = getDetailsByMessageId(state, message.id);
   const isRead = isMessageRead(messagesStatus, message.id);
   const goBack = () => ownProps.navigation.goBack();
-  const service = pot.toUndefined(
-    serviceByIdSelector(message.serviceId)(state) || pot.none
-  );
+  const service = pot
+    .toOption(serviceByIdSelector(message.serviceId)(state) || pot.none)
+    .map(toUIService)
+    .toUndefined();
   // Map the potential message to the potential service
   const maybeServiceMetadata = serviceMetadataByIdSelector(message.serviceId)(
     state
