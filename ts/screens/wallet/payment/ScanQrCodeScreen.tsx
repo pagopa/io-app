@@ -33,6 +33,7 @@ import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 import I18n from "../../../i18n";
+import NavigationService from "../../../navigation/NavigationService";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen,
@@ -371,7 +372,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "qrcode_scan"
+      paymentStartOrigin: "qrcode_scan",
+      startRoute: NavigationService.getCurrentRoute()
     });
   }
 });
