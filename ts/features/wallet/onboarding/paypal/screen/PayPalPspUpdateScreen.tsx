@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { View } from "native-base";
+import React, { useEffect } from "react";
+import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { ListItem, View } from "native-base";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
+import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import I18n from "../../../../../i18n";
@@ -10,23 +11,23 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Body } from "../../../../../components/core/typography/Body";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import {
-  RadioButtonList,
-  RadioItem
-} from "../../../../../components/core/selection/RadioButtonList";
-import {
-  getValueOrElse,
-  isError,
-  isReady
-} from "../../../../bonus/bpd/model/RemoteValue";
+import { isError, isReady } from "../../../../bonus/bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { PspRadioItem } from "../components/PspRadioItem";
 import { IOPayPalPsp } from "../types";
 import { searchPaypalPsp as searchPaypalPspAction } from "../store/actions";
 import { payPalPspSelector } from "../store/reducers/searchPsp";
-import { constNull } from "fp-ts/lib/function";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import customVariables from "../../../../../theme/variables";
+import IconFont from "../../../../../components/ui/IconFont";
+import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
+import { Label } from "../../../../../components/core/typography/Label";
+import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
+import {
+  PSP_LOGO_MAX_HEIGHT,
+  PSP_LOGO_MAX_WIDTH
+} from "../components/PspRadioItem";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -35,11 +36,24 @@ const styles = StyleSheet.create({
   radioListHeaderRightColumn: {
     flex: 1,
     textAlign: "right"
+  },
+  pspLogo: {
+    height: 32,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start"
+  },
+  pspListItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 0,
+    paddingRight: 0,
+    flex: 1
   }
 });
 
 // an header over the psp list with 2 columns
-const RadioListHeader = (props: {
+const PspListHeader = (props: {
   leftColumnTitle: string;
   rightColumnTitle: string;
 }) => {
@@ -61,27 +75,12 @@ const RadioListHeader = (props: {
   );
 };
 
-const getPspListRadioItems = (
-  pspList: ReadonlyArray<IOPayPalPsp>
-): ReadonlyArray<RadioItem<IOPayPalPsp["id"]>> =>
-  pspList.map(psp => ({
-    id: psp.id,
-    body: <PspRadioItem psp={psp} />
-  }));
-
 const getLocales = () => ({
-  title: I18n.t("wallet.onboarding.paypal.selectPsp.title"),
-  body: I18n.t("wallet.onboarding.paypal.selectPsp.body"),
-  link: I18n.t("wallet.onboarding.paypal.selectPsp.link"),
-  leftColumnTitle: I18n.t("wallet.onboarding.paypal.selectPsp.leftColumnTitle"),
+  title: I18n.t("wallet.onboarding.paypal.updatePsp.title"),
+  body: I18n.t("wallet.onboarding.paypal.updatePsp.body"),
+  leftColumnTitle: I18n.t("wallet.onboarding.paypal.updatePsp.leftColumnTitle"),
   rightColumnTitle: I18n.t(
-    "wallet.onboarding.paypal.selectPsp.rightColumnTitle"
-  ),
-  whatIsPspBody: I18n.t(
-    "wallet.onboarding.paypal.selectPsp.whatIsPspBottomSheet.body"
-  ),
-  whatIsPspTitle: I18n.t(
-    "wallet.onboarding.paypal.selectPsp.whatIsPspBottomSheet.title"
+    "wallet.onboarding.paypal.updatePsp.rightColumnTitle"
   )
 });
 
@@ -97,22 +96,66 @@ const backButtonProps = (onPress: () => void) => ({
  * This screen is where the user picks a PSP that will be used to handle PayPal transactions within PayPal
  * Only 1 psp can be selected
  */
-const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
+const PayPalPspUpdateScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
-  const pspList = getValueOrElse(props.pspList, []);
-  const [selectedPsp, setSelectedPsp] = useState<
-    IOPayPalPsp["id"] | undefined
-  >();
-
+  const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const searchPaypalPsp = () => {
     dispatch(searchPaypalPspAction.request());
   };
   useEffect(searchPaypalPsp, [dispatch]);
 
+  const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
+    const { psp } = props;
+    const imgDimensions = useImageResize(
+      PSP_LOGO_MAX_WIDTH,
+      PSP_LOGO_MAX_HEIGHT,
+      psp.logoUrl
+    );
+    return (
+      <ListItem
+        style={styles.pspListItem}
+        accessibilityRole={"button"}
+        onPress={constNull}
+      >
+        <View style={{ flex: 1 }}>
+          {imgDimensions.fold<React.ReactNode>(
+            <H4
+              weight={"SemiBold"}
+              color={"bluegreyDark"}
+              testID={"pspNameTestID"}
+            >
+              {psp.name}
+            </H4>,
+            imgDim => (
+              <Image
+                testID={"pspNameLogoID"}
+                source={{ uri: psp.logoUrl }}
+                style={[
+                  styles.pspLogo,
+                  { width: imgDim[0], height: imgDim[1] }
+                ]}
+                resizeMode={"contain"}
+              />
+            )
+          )}
+        </View>
+        <View style={IOStyles.row}>
+          <Label color={"blue"}>{formatNumberCentsToAmount(psp.fee)}</Label>
+          <IconFont
+            style={{ justifyContent: "center" }}
+            name={"io-right"}
+            size={24}
+            color={customVariables.contentPrimaryBackground}
+          />
+        </View>
+      </ListItem>
+    );
+  };
+  const goBack = () => navigation.goBack();
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={goBack}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
@@ -125,22 +168,24 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
             <ScrollView>
               <Body>{locales.body}</Body>
               <View spacer={true} large={true} />
-              <RadioListHeader
+              <PspListHeader
                 leftColumnTitle={locales.leftColumnTitle}
                 rightColumnTitle={locales.rightColumnTitle}
               />
               <View spacer={true} small={true} />
-              <RadioButtonList<IOPayPalPsp["id"]>
-                key="paypal_psp_selection"
-                items={getPspListRadioItems(pspList)}
-                selectedItem={selectedPsp}
-                onPress={setSelectedPsp}
-              />
+              {props.pspList.value.map(psp => (
+                // TODO replace with the effective handler see https://pagopa.atlassian.net/browse/IA-499
+                <PspItem
+                  psp={psp}
+                  key={`paypal_psp:${psp.id}`}
+                  onPress={constNull}
+                />
+              ))}
             </ScrollView>
           </View>
           <FooterWithButtons
             type={"SingleButton"}
-            leftButton={backButtonProps(constNull)}
+            leftButton={backButtonProps(goBack)}
           />
         </SafeAreaView>
       ) : (
@@ -163,4 +208,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PayPalPspSelectionScreen);
+)(PayPalPspUpdateScreen);

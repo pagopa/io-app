@@ -999,7 +999,9 @@ wallet:
         body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
       updatePsp:
         title: "Con quale gestore vuoi pagare?"
-        body: "Ogni gestore propone un costo di transazione.\nIn questa lista trovi tutti i gestori compatibili\ncon il tuo metodo, anche se non sei loro cliente."
+        body: "Ogni gestore propone un costo di transazione.\nIn questa lista trovi tutti i gestori compatibili con il tuo metodo, anche se non sei loro cliente."
+        leftColumnTitle: "Gestore"
+        rightColumnTitle: "Costo Transazione (€)"
       selectPsp:
         title: "Which payment provider do you want to use PayPal with?"
         body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."

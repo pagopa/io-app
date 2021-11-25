@@ -13,8 +13,8 @@ import { TestID } from "../../../../../types/WithTestID";
 import { IOPayPalPsp } from "../types";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 
-const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
-const PSP_LOGO_MAX_HEIGHT = 32;
+export const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
+export const PSP_LOGO_MAX_HEIGHT = 32;
 type RadioItemProps = {
   psp: IOPayPalPsp;
 } & TestID;
