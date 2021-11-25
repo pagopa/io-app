@@ -155,7 +155,7 @@ const PayPalPspUpdateScreen = (): React.ReactElement | null => {
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
       {isReady(pspList) ? (
-        <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsSelectionScreen"}>
+        <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsUpdateScreen"}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <View spacer={true} small={true} />
             <H1>{locales.title}</H1>
@@ -185,7 +185,7 @@ const PayPalPspUpdateScreen = (): React.ReactElement | null => {
         </SafeAreaView>
       ) : (
         <LoadingErrorComponent
-          testID={"PayPalPpsSelectionScreenLoadingError"}
+          testID={"PayPalPpsUpdateScreenLoadingError"}
           isLoading={!isError(pspList)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
           onRetry={searchPaypalPsp}
