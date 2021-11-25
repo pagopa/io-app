@@ -1,10 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { View } from "native-base";
-import { SafeAreaView } from "react-native";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 import successImage from "../../../../../../img/pictograms/payment-completed.png";
@@ -22,32 +18,23 @@ type Props = ReturnType<typeof mapStateToProps> &
  * @param props
  * @constructor
  */
-const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
-  <BaseScreenComponent
-    goBack={false}
-    customGoBack={<View />}
-    showInstabugChat={false}
-  >
-    <SafeAreaView
-      style={IOStyles.flex}
-      testID={"PayPalOnboardingCompletedSuccessScreen"}
-    >
-      <InfoScreenComponent
-        image={renderInfoRasterImage(successImage)}
-        title={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")}
-        body={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.body")}
-      />
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={confirmButtonProps(
-          props.paypalOnboardingCompleted,
-          I18n.t("wallet.onboarding.paypal.onBoardingCompleted.primaryButton"),
-          undefined,
-          "primaryButtonId"
-        )}
-      />
-    </SafeAreaView>
-  </BaseScreenComponent>
+const PayPalOnboardingCompletedSuccessComponent = (props: Props) => (
+  <>
+    <InfoScreenComponent
+      image={renderInfoRasterImage(successImage)}
+      title={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")}
+      body={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.body")}
+    />
+    <FooterWithButtons
+      type={"SingleButton"}
+      leftButton={confirmButtonProps(
+        props.paypalOnboardingCompleted,
+        I18n.t("wallet.onboarding.paypal.onBoardingCompleted.primaryButton"),
+        undefined,
+        "primaryButtonId"
+      )}
+    />
+  </>
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -59,4 +46,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PayPalOnboardingCompletedSuccessScreen);
+)(PayPalOnboardingCompletedSuccessComponent);

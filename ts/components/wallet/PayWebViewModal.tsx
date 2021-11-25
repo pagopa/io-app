@@ -45,6 +45,8 @@ type OwnProps = {
   modalHeaderTitle?: string;
   // if undefined -> true as default
   showInfoHeader?: boolean;
+  // if undefined -> true as default
+  isVisible?: boolean;
 };
 
 type Props = WithTestID<OwnProps>;
@@ -172,7 +174,7 @@ export const PayWebViewModal = (props: Props) => {
     <Modal
       animationType="fade"
       transparent={false}
-      visible={true}
+      visible={props.isVisible ?? true}
       onRequestClose={props.onGoBack}
     >
       <BaseScreenComponent

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Option } from "fp-ts/lib/Option";
@@ -26,15 +25,8 @@ import { isPagoPATestEnabledSelector } from "../../../../../store/reducers/persi
 import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
 import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
-import { isPaymentOutcomeCodeSuccessfully } from "../../../../../utils/payment";
-import { outcomeCodesSelector } from "../../../../../store/reducers/wallet/outcomeCode";
-import {
-  navigateToPayPalCheckoutFailure,
-  navigateToPayPalCheckoutSuccess
-} from "../store/actions/navigation";
-import { fetchWalletsRequestWithExpBackoff } from "../../../../../store/actions/wallet/wallets";
-import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
 import WorkunitGenericFailure from "../../../../../components/error/WorkunitGenericFailure";
+import { navigateToPayPalCheckoutCompleted } from "../store/actions/navigation";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -57,26 +49,10 @@ const LoadingOrError = (loadingProps: {
 
 const CheckoutContent = (
   props: Props & {
-    onCheckoutSuccess: (outcode: Option<string>) => void;
-    onCheckoutFailure: (outcode: Option<string>) => void;
+    onCheckoutCompleted: (outcode: Option<string>) => void;
   }
 ) => {
-  const handleCheckoutOutcome = (maybeOutcomeCode: Option<string>) => {
-    // the outcome code is present and it is a success
-    if (
-      maybeOutcomeCode.isSome() &&
-      isPaymentOutcomeCodeSuccessfully(
-        maybeOutcomeCode.value,
-        props.outcomeCodes
-      )
-    ) {
-      props.onCheckoutSuccess(maybeOutcomeCode);
-      return;
-    }
-    // if the outcome code is not present or it is not a success code -> failure
-    props.onCheckoutFailure(maybeOutcomeCode);
-  };
-
+  const [isOnboardingCompleted, setIsOnboardingComplete] = useState(false);
   const urlPrefix = props.isPagoPATestEnabled
     ? pagoPaApiUrlPrefixTest
     : pagoPaApiUrlPrefix;
@@ -102,8 +78,12 @@ const CheckoutContent = (
           showInfoHeader={false}
           postUri={urlPrefix + payUrlSuffix}
           formData={formData}
+          isVisible={!isOnboardingCompleted}
           finishPathName={webViewExitPathName}
-          onFinish={handleCheckoutOutcome}
+          onFinish={outcomeCode => {
+            setIsOnboardingComplete(true);
+            props.onCheckoutCompleted(outcomeCode);
+          }}
           outcomeQueryparamName={webViewOutcomeParamName}
           onGoBack={props.goBack}
           modalHeaderTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
@@ -120,11 +100,9 @@ const CheckoutContent = (
  * 1. request for a fresh PM token
  * 2. starts the checkout challenge in the webview
  * 3. handle the outcome code coming from the step 2
- * 4a. if success: reload the wallet, find the added paypal, checkout success
- * 4b. if failure: navigate to failure screen
+ * 4. navigate to the checkout completed screen
  */
 const PayPalOnboardingCheckoutScreen = (props: Props) => {
-  const [checkoutComplete, setCheckoutCompleted] = useState(false);
   const navigation = useContext(NavigationContext);
   const { refreshPMtoken } = props;
   // refresh the PM at the startup
@@ -132,42 +110,21 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
     refreshPMtoken();
   }, [refreshPMtoken]);
 
-  useEffect(() => {
-    // paypal has been added (only 1 for the whole wallet) to the user's wallet, go to the success screen
-    if (pot.isSome(props.paypalPaymentMethod)) {
-      navigation.dispatch(navigateToPayPalCheckoutSuccess());
-    }
-  }, [navigation, props.paypalPaymentMethod]);
-  const handleCheckoutComplete = (outcomeCode: Option<string>) => {
-    setCheckoutCompleted(true);
+  const handleCheckoutCompleted = (outcomeCode: Option<string>) => {
     props.setOutcomeCode(outcomeCode);
+    navigation.dispatch(navigateToPayPalCheckoutCompleted());
   };
+
   return (
     <BaseScreenComponent
       goBack={props.goBack}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      {!checkoutComplete ? (
-        <CheckoutContent
-          {...props}
-          onCheckoutSuccess={outcomeCode => {
-            props.loadWallets();
-            handleCheckoutComplete(outcomeCode);
-          }}
-          onCheckoutFailure={outcomeCode => {
-            handleCheckoutComplete(outcomeCode);
-            navigation.dispatch(navigateToPayPalCheckoutFailure());
-          }}
-        />
-      ) : (
-        // the checkout is completed handle load wallets failures
-        <LoadingErrorComponent
-          isLoading={!pot.isError(props.paypalPaymentMethod)}
-          loadingCaption={I18n.t("global.remoteStates.loading")}
-          onRetry={props.loadWallets}
-        />
-      )}
+      <CheckoutContent
+        {...props}
+        onCheckoutCompleted={handleCheckoutCompleted}
+      />
     </BaseScreenComponent>
   );
 };
@@ -176,15 +133,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(walletAddPaypalBack()),
   cancel: () => dispatch(walletAddPaypalCancel()),
   setOutcomeCode: (oc: Option<string>) => dispatch(walletAddPaypaOutcome(oc)),
-  refreshPMtoken: () => dispatch(walletAddPaypalRefreshPMToken.request()),
-  loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff())
+  refreshPMtoken: () => dispatch(walletAddPaypalRefreshPMToken.request())
 });
 const mapStateToProps = (state: GlobalState) => ({
   pmToken: pmSessionTokenSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  pspSelected: paypalOnboardingSelectedPsp(state),
-  outcomeCodes: outcomeCodesSelector(state),
-  paypalPaymentMethod: paypalSelector(state)
+  pspSelected: paypalOnboardingSelectedPsp(state)
 });
 
 export default connect(

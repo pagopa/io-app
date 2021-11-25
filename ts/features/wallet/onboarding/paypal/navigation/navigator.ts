@@ -2,8 +2,8 @@ import { createStackNavigator } from "react-navigation-stack";
 import PayPalStartOnboardingScreen from "../screen/PayPalStartOnboardingScreen";
 import PayPalPspSelectionScreen from "../screen/PayPalPspSelectionScreen";
 import PayPalOnboardingCheckoutScreen from "../screen/PayPalOnboardingCheckoutScreen";
-import PayPalOnboardingCompletedSuccessScreen from "../screen/PayPalOnboardingCompletedSuccessScreen";
-import PayPalOnboardingCheckoutFailureScreen from "../screen/PayPalOnboardingCheckoutFailureScreen";
+import PayPalOnboardingCompletedSuccessComponent from "../screen/PayPalOnboardingCompletedSuccessComponent";
+import PayPalOnboardingCheckoutCompletedScreen from "../screen/PayPalOnboardingCheckoutCompletedScreen";
 import PAYPAL_ROUTES from "./routes";
 
 export const paypalOnboardingNavigator = createStackNavigator(
@@ -18,10 +18,10 @@ export const paypalOnboardingNavigator = createStackNavigator(
       screen: PayPalOnboardingCheckoutScreen
     },
     [PAYPAL_ROUTES.ONBOARDING.CHECKOUT_SUCCESS]: {
-      screen: PayPalOnboardingCompletedSuccessScreen
+      screen: PayPalOnboardingCompletedSuccessComponent
     },
-    [PAYPAL_ROUTES.ONBOARDING.CHECKOUT_FAILURE]: {
-      screen: PayPalOnboardingCheckoutFailureScreen
+    [PAYPAL_ROUTES.ONBOARDING.CHECKOUT_COMPLETED]: {
+      screen: PayPalOnboardingCheckoutCompletedScreen
     }
   },
   {
