@@ -18,7 +18,6 @@ import BaseScreenComponent, {
 import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
-import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import {
@@ -38,7 +37,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
-import { Psp, Wallet } from "../../../types/pagopa";
+import { PaymentMethod, Psp, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { PayloadForAction } from "../../../types/utils";
@@ -54,7 +53,11 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
+import {
+  pagoPaApiUrlPrefix,
+  pagoPaApiUrlPrefixTest,
+  payPalEnabled
+} from "../../../config";
 import { H4 } from "../../../components/core/typography/H4";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
@@ -64,6 +67,9 @@ import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/w
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { Link } from "../../../components/core/typography/Link";
+import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
+import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
+import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -130,6 +136,28 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const payUrlSuffix = "/v3/webview/transactions/pay";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
+
+const PaymentMethodCard = (props: {
+  paymentMethod: PaymentMethod | undefined;
+}) => {
+  const { paymentMethod } = props;
+  switch (paymentMethod?.kind) {
+    case "CreditCard":
+      return <CreditCardComponent creditCard={paymentMethod} />;
+    case "PayPal":
+      if (payPalEnabled) {
+        return <PaypalCard paypal={paymentMethod} />;
+      }
+      return null;
+    // those methods can't pay
+    case "Satispay":
+    case "Bancomat":
+    case "BPay":
+    case "Privative":
+    case undefined:
+      return null;
+  }
+};
 
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
@@ -234,11 +262,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         />
         <View style={styles.padded}>
           <View spacer={true} />
-          <CardComponent
-            type={"Full"}
-            wallet={wallet}
-            hideMenu={true}
-            hideFavoriteIcon={true}
+          <PaymentMethodCard
+            paymentMethod={props.getPaymentMethodById(wallet.idWallet)}
           />
           <View spacer={true} />
           {maybePsp.isNone() ? (
@@ -334,6 +359,8 @@ const mapStateToProps = (state: GlobalState) => {
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
+    getPaymentMethodById: (idWallet: number) =>
+      paymentMethodByIdSelector(state, idWallet),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     outcomeCodes: outcomeCodesSelector(state),
     payStartWebviewPayload,
