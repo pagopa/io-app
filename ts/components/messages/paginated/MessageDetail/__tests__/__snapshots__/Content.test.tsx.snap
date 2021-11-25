@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageDetailData component when service's contact detail are not defined should match the snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "backgroundColor": "#F5F6F7",
+        "padding": 24,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Object {
+        "color": "#000",
+        "fontFamily": "System",
+        "fontSize": 16,
+      }
+    }
+  >
+    Date and time sending:
+    <Text
+      bold={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+       10/18 - 16.00
+    </Text>
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#000",
+        "fontFamily": "System",
+        "fontSize": 16,
+      }
+    }
+  >
+    Sender:
+    <Text
+      bold={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+       Ċentru tas-Saħħa
+    </Text>
+  </Text>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "display": "flex",
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      Service: 
+    </Text>
+    <Text
+      accessibilityRole="link"
+      color="blue"
+      defaultColor="blue"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "textDecorationLine": "underline",
+        }
+      }
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "textDecorationLine": "underline",
+          },
+          Object {
+            "color": "#0073E6",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "700",
+          },
+        ]
+      }
+      weight="Bold"
+    >
+      health
+    </Text>
+  </View>
+</View>
+`;
