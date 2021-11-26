@@ -17,8 +17,8 @@ import I18n from "../../../i18n";
 import { IOColors } from "../../core/variables/IOColors";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
-import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
+import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
   isFirst: boolean;
