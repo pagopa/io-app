@@ -1,3 +1,9 @@
+### 2021-11-26
+- add `PAYPAL` to Wallet (V1) enum
+- renamed `PayPalInfo` to `PayPalAccountPspInfo`
+- sync `PayPalAccountPspInfo` with the last spec
+- ignored `dataAssociazione` field in `PayPalPspInfo` since the app doesn't use it
+
 ### 2021-11-11
 - add PayPal payment method in WalletV2. 
 - `emailPp` and `psp` in `PayPalInfo` differently from the official specs are made as required ([more info](https://pagopa.atlassian.net/browse/IA-445))
