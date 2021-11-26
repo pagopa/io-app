@@ -20,7 +20,7 @@
     "withValidDueDateCount": 1,
     "withInValidDueDateCount": 1,
     "standardMessageCount": 1,
-    "allowRandomValues": true
+    "allowRandomValues": false
   },
   "wallet": {
     "payment": {

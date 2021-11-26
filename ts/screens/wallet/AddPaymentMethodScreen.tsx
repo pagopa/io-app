@@ -33,6 +33,7 @@ import CreditCard from "../../../img/wallet/payment-methods/creditcard.svg";
 import GDOLogo from "../../../img/wallet/unknown-gdo-primary.svg";
 import { walletAddBPayStart } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
+import { walletAddPaypalStart } from "../../features/wallet/onboarding/paypal/store/actions";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -71,8 +72,7 @@ const getpaymentMethods = (
     name: I18n.t("wallet.methods.paypal.name"),
     description: I18n.t("wallet.methods.paypal.description"),
     icon: PaypalLogo,
-    // TODO replace with effective dispatch
-    onPress: constNull,
+    onPress: payPalEnabled ? props.startPaypalOnboarding : constNull,
     status: payPalEnabled ? "implemented" : "notImplemented",
     section: "digital_payments"
   },
@@ -201,6 +201,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateBack: () => navigateBack(),
   startBPayOnboarding: () => dispatch(walletAddBPayStart()),
   startSatispayOnboarding: () => dispatch(walletAddSatispayStart()),
+  startPaypalOnboarding: () => dispatch(walletAddPaypalStart()),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToAddCreditCard: () =>

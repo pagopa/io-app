@@ -92,7 +92,17 @@ type OwnProps = {
 };
 
 const Loader = () => (
-  <ActivityIndicator animating={true} style={styles.activityIndicator} />
+  <ActivityIndicator
+    animating={true}
+    size={"large"}
+    style={styles.activityIndicator}
+    color={customVariables.brandPrimary}
+    accessible={true}
+    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
+    importantForAccessibility={"no-hide-descendants"}
+    testID={"activityIndicator"}
+  />
 );
 
 const animated = {
