@@ -851,7 +851,7 @@ payment:
   errorDetails: Dettagli
   currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
-  changePsp: Modifica gestore
+  changePsp: Scegli gestore
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
@@ -1017,7 +1017,7 @@ wallet:
         title: "Paga su IO con PayPal"
         body: "Abbina il tuo conto PayPal e paga gli avvisi pagoPA più facilmente: puoi usare anche il tuo conto corrente!"
       updatePsp:
-        headerTitle: "Modifica gestore"
+        headerTitle: "Scegli gestore"
         title: "Con quale gestore vuoi pagare?"
         body: "Ogni gestore propone un costo di transazione.\nIn questa lista trovi tutti i gestori compatibili con il tuo metodo, anche se non sei loro cliente."
         leftColumnTitle: "Gestore"
