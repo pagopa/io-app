@@ -1020,9 +1020,9 @@ wallet:
         body: "Now have a look at the current settings of your new method."
         primaryButton: "View method"
       onBoardingCompletedWhilePayment:
-        title: "TMP title"
-        body: "TMP body"
-        primaryButton: "TMP CTA"
+        title: "That's it!"
+        body: "Now you can continue with your payment."
+        primaryButton: "Continue"
     coBadge:
       headerTitle: "Add international circuit"
       start:
