@@ -34,7 +34,6 @@ import { LevelEnum } from "../../../definitions/content/SectionStatus";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
-  navigateToAddCreditCard: () => void;
 }>;
 
 type Props = OwnProps &

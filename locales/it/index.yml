@@ -1036,8 +1036,11 @@ wallet:
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
-        secondaryButton: "Chiudi"
         primaryButton: "Vedi metodo"
+      onBoardingCompletedWhilePayment:
+        title: "TMP title"
+        body: "TMP body"
+        primaryButton: "TMP CTA"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
