@@ -999,6 +999,7 @@ wallet:
         title: "Pay on IO with PayPal"
         body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
       updatePsp:
+        headerTitle: "Modifica gestore"
         title: "Con quale gestore vuoi pagare?"
         body: "Ogni gestore propone un costo di transazione.\nIn questa lista trovi tutti i gestori compatibili con il tuo metodo, anche se non sei loro cliente."
         leftColumnTitle: "Gestore"

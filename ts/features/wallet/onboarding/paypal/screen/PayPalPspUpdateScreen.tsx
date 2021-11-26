@@ -153,7 +153,7 @@ const PayPalPspUpdateScreen = (): React.ReactElement | null => {
     <BaseScreenComponent
       goBack={goBack}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
+      headerTitle={I18n.t("wallet.onboarding.paypal.updatePsp.headerTitle")}
     >
       {isReady(pspList) ? (
         <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
