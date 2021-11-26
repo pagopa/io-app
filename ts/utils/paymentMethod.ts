@@ -45,6 +45,7 @@ import {
 import { mixpanelTrack } from "../mixpanel";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 import { isExpired } from "./dates";
+import { getPaypalAccountEmail } from "./paypal";
 
 export const getPaymentMethodHash = (
   pm: RawPaymentMethod
@@ -53,7 +54,7 @@ export const getPaymentMethodHash = (
     case "Satispay":
       return pm.info.uuid;
     case "PayPal":
-      return pm.info.emailPp;
+      return getPaypalAccountEmail(pm.info) ?? "todo";
     case "BPay":
       return pm.info.uidHash;
     case "Bancomat":
@@ -121,7 +122,7 @@ export const getTitleFromBancomat = (
 
 const getTitleForSatispay = () => I18n.t("wallet.methods.satispay.name");
 const getTitleForPaypal = (paypal: RawPayPalPaymentMethod) =>
-  paypal.info.emailPp;
+  getPaypalAccountEmail(paypal.info);
 /**
  * Choose a textual representation for a {@link PatchedWalletV2}
  * @param paymentMethod

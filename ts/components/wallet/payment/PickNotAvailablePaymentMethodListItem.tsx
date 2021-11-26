@@ -18,6 +18,7 @@ import { IOColors } from "../../core/variables/IOColors";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
+import { getPaypalAccountEmail } from "../../../utils/paypal";
 
 type Props = {
   isFirst: boolean;
@@ -113,7 +114,7 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: paymentMethod.icon,
         title: paymentMethod.kind,
-        description: paymentMethod.info.emailPp,
+        description: getPaypalAccountEmail(paymentMethod.info),
         bottomSheetTitle: arrivingBottomSheetTitle(),
         bottomSheetBody: arrivingBottomSheetBody()
       };
