@@ -1019,7 +1019,7 @@ wallet:
         title: "That's it!"
         body: "Now have a look at the current settings of your new method."
         secondaryButton: "Close"
-        primaryButton: "View method"
+        primaryButton: "Continue"
     coBadge:
       headerTitle: "Add international circuit"
       start:

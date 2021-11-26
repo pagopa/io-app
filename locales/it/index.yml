@@ -1037,7 +1037,7 @@ wallet:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
         secondaryButton: "Chiudi"
-        primaryButton: "Vedi metodo"
+        primaryButton: "Continua"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
