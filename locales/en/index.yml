@@ -998,6 +998,12 @@ wallet:
       start:
         title: "Pay on IO with PayPal"
         body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      updatePsp:
+        headerTitle: "Choose the PSP"
+        title: "Which payment provider do you want to pay with?"
+        body: "Each provider presents a transaction fee.\nIn this list you will find all the providers compatible with your method, even if you are not their client."
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Maximum Fee (€)"
       selectPsp:
         title: "Which payment provider do you want to use PayPal with?"
         body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
@@ -1177,9 +1183,9 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    headerTitle: "Choose the provider"
-    title: Which provider do you want to pay with?
-    info: Each provider proposes a transaction cost.
+    headerTitle: "Choose the PSP"
+    title: Which payment provider do you want to pay with?
+    info: Each provider presents a transaction fee.
     info2: In this list you will find all the providers
     info2Bold: compatible with your method, even if you are not their client.
     provider: Provider
