@@ -24,7 +24,6 @@ import I18n from "../../i18n";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { zendeskEnabled } from "../../config";
 import ZendeskChatComponent from "../ZendeskChatComponent";
-import { isLoggedInWithSessionInfo } from "../../store/reducers/authentication";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -246,7 +245,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         {!isSearchEnabled && showInstabugChat !== false && (
           <InstabugChatsComponent />
         )}
-        {zendeskEnabled && this.props.isLoggedIn && <ZendeskChatComponent />}
+        {zendeskEnabled && <ZendeskChatComponent />}
 
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
@@ -314,8 +313,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  isLoggedIn: isLoggedInWithSessionInfo(state.authentication)
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
 const mapDispatchToProps = (_: Dispatch) => ({
