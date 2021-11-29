@@ -60,7 +60,7 @@ const CheckoutContent = (
     () => <LoadingOrError hasError={false} onRetry={props.refreshPMtoken} />,
     () => <LoadingOrError hasError={false} onRetry={props.refreshPMtoken} />,
     sessionToken => {
-      // it should not never happen since this screen is just before the psp selection
+      // it should not never happen since this screen is just after the psp selection
       if (props.pspSelected === null) {
         return <WorkunitGenericFailure />;
       }
