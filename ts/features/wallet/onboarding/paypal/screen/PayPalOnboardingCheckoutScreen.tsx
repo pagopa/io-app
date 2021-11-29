@@ -7,7 +7,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
-  walletAddPaypaOutcome,
+  walletAddPaypalOutcome,
   walletAddPaypalBack,
   walletAddPaypalCancel,
   walletAddPaypalRefreshPMToken
@@ -132,7 +132,7 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(walletAddPaypalBack()),
   cancel: () => dispatch(walletAddPaypalCancel()),
-  setOutcomeCode: (oc: Option<string>) => dispatch(walletAddPaypaOutcome(oc)),
+  setOutcomeCode: (oc: Option<string>) => dispatch(walletAddPaypalOutcome(oc)),
   refreshPMtoken: () => dispatch(walletAddPaypalRefreshPMToken.request())
 });
 const mapStateToProps = (state: GlobalState) => ({
