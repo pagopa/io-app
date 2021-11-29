@@ -91,8 +91,13 @@ const MessageDetailScreen = ({
     if (!isRead) {
       setMessageReadState(message.id, true);
     }
-    loadMessageDetails(message.id);
-  }, []);
+    if (
+      pot.isError(messageDetails) ||
+      (pot.isNone(messageDetails) && !pot.isLoading(messageDetails))
+    ) {
+      loadMessageDetails(message.id);
+    }
+  }, [isRead, message.id, messageDetails]);
 
   const onServiceLinkPressHandler = () => {
     // When a service gets selected, before navigating to the service detail
