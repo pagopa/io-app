@@ -9,10 +9,12 @@ import { PaymentMethod } from "../../../types/pagopa";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
+import paypalLogo from "../../../../img/wallet/cards-icons/paypal_card.png";
 import IconFont from "../../ui/IconFont";
 import { IOColors } from "../../core/variables/IOColors";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getCardIconFromBrandLogo } from "../card/Logo";
+import I18n from "../../../i18n";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
@@ -58,9 +60,9 @@ const extractInfoFromPaymentMethod = (
       };
     case "PayPal":
       return {
-        logo: paymentMethod.icon,
-        title: paymentMethod.caption,
-        description: nameSurname
+        logo: paypalLogo,
+        title: I18n.t("wallet.methods.paypal.name"),
+        description: paymentMethod.caption
       };
     case "Privative":
       return {

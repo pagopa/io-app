@@ -22,7 +22,7 @@ describe("Messages Screen", () => {
       // exists (but is not visible)
 
       await waitFor(
-        element(by.id(`MessageListItem_00000000000000000000000020`))
+        element(by.id(`MessageListItem_00000000000000000000000021`))
       )
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);

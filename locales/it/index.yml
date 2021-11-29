@@ -717,6 +717,7 @@ authentication:
       error_22: "Per usare IO è necessario consentire l'accesso ad alcuni dei tuoi dati: accedi nuovamente e dai il tuo consenso al passaggio di dati."
       error_23: "La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, contatta il tuo fornitore di identità SPID."
       error_25: "Hai annullato l'operazione di login: puoi riprovare quando vuoi."
+      error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
@@ -1365,7 +1366,7 @@ wallet:
       description: Le carte emesse da Poste Italiane
     paypal:
       name: PayPal
-      description: Paga con la carta o conto corrente collegati
+      description: Paga con carta o conto corrente collegati
     bancomat:
       name: PagoBANCOMAT
     cobadge:
