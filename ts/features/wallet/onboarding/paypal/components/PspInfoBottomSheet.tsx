@@ -55,7 +55,7 @@ const getItem = (props: Props) => [
         {I18n.t(
           "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row2Description1"
         )}
-        <Label color={"bluegrey"}>
+        <Label color={"bluegreyDark"}>
           {formatNumberCentsToAmount(props.pspFee, true)}
         </Label>
         {I18n.t(
