@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
@@ -10,12 +9,9 @@ import { PayPalPaymentMethod } from "../../../../types/pagopa";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { paypalSelector } from "../../../../store/reducers/wallet/wallets";
 
-type NavigationParams = Readonly<{
-  paypal: PayPalPaymentMethod;
-}>;
-
-type Props = NavigationInjectedProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps>;
+type Props = { paypal: PayPalPaymentMethod } & ReturnType<
+  typeof mapStateToProps
+>;
 
 /**
  * Detail screen for a paypal payment method
