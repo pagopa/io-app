@@ -43,7 +43,7 @@ export type UIMessageDetails = {
   markdown: MessageBodyMarkdown;
   dueDate?: Date;
   paymentData?: PaymentData;
-  greenPass?: GreenPass;
+  euCovidCertificate?: EUCovidCertificate;
 
   // @deprecated please use it only for backward compatibility
   raw: CreatedMessageWithContentAndAttachments;
@@ -55,7 +55,7 @@ export type PrescriptionData = {
   prescriberFiscalCode?: FiscalCode;
 };
 
-export type GreenPass = { authCode: string };
+export type EUCovidCertificate = { authCode: string };
 
 export type PaymentData = {
   payee: {

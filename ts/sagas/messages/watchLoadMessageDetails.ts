@@ -3,7 +3,7 @@ import { ActionType, getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { BackendClient } from "../../api/backend";
-import { loadMessageDetails as loadMessageDetailsAction } from "../../store/actions/messages";
+import { loadMessageDetails } from "../../store/actions/messages";
 import { SagaCallReturnType } from "../../types/utils";
 import { getError } from "../../utils/errors";
 import { toUIMessageDetails } from "../../store/reducers/entities/messages/transformers";
@@ -11,14 +11,14 @@ import { isTestEnv } from "../../utils/environment";
 
 import { handleResponse } from "./utils";
 
-type LocalActionType = ActionType<typeof loadMessageDetailsAction["request"]>;
+type LocalActionType = ActionType<typeof loadMessageDetails["request"]>;
 type LocalBeClient = ReturnType<typeof BackendClient>["getMessage"];
 
 export default function* watcher(
   getMessage: LocalBeClient
 ): Generator<Effect, void, SagaCallReturnType<typeof getMessage>> {
   yield takeLatest(
-    getType(loadMessageDetailsAction.request),
+    getType(loadMessageDetails.request),
     tryLoadMessageDetails(getMessage)
   );
 }
@@ -28,7 +28,7 @@ export default function* watcher(
  *
  * @param getMessage
  */
-export function tryLoadMessageDetails(getMessage: LocalBeClient) {
+function tryLoadMessageDetails(getMessage: LocalBeClient) {
   return function* gen(
     action: LocalActionType
   ): Generator<Effect, void, SagaCallReturnType<typeof getMessage>> {
@@ -42,9 +42,9 @@ export function tryLoadMessageDetails(getMessage: LocalBeClient) {
         handleResponse<CreatedMessageWithContentAndAttachments>(
           response,
           (message: CreatedMessageWithContentAndAttachments) =>
-            loadMessageDetailsAction.success(toUIMessageDetails(message)),
+            loadMessageDetails.success(toUIMessageDetails(message)),
           error =>
-            loadMessageDetailsAction.failure({
+            loadMessageDetails.failure({
               id,
               error: getError(error)
             })
@@ -53,7 +53,7 @@ export function tryLoadMessageDetails(getMessage: LocalBeClient) {
       yield put(nextAction);
     } catch (error) {
       yield put(
-        loadMessageDetailsAction.failure({
+        loadMessageDetails.failure({
           id,
           error: getError(error)
         })

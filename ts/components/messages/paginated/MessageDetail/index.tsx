@@ -39,37 +39,9 @@ const styles = StyleSheet.create({
   padded: {
     paddingHorizontal: variables.contentPadding
   },
-  serviceContainer: {
-    marginBottom: variables.contentPadding
-  },
-  subjectContainer: {
-    marginBottom: variables.spacerSmallHeight
-  },
-  ctaBarContainer: {
-    backgroundColor: variables.brandGray,
-    padding: variables.contentPadding,
-    marginBottom: variables.contentPadding
-  },
   webview: {
     marginLeft: variables.contentPadding,
     marginRight: variables.contentPadding
-  },
-  messageIDContainer: {
-    width: "100%",
-    alignContent: "space-between",
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap"
-  },
-  messageIDLabelContainer: {
-    flex: 1,
-    height: variables.lineHeightBase,
-    marginBottom: 5
-  },
-  messageIDBtnContainer: {
-    flex: 0,
-    marginBottom: 5,
-    height: variables.lineHeightBase
   }
 });
 

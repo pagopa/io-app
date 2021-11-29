@@ -2,7 +2,6 @@ import { View as NBView } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import { useDispatch } from "react-redux";
 
 import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
 import {
@@ -17,6 +16,7 @@ import {
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import ExtractedCTABar from "../../../cta/ExtractedCTABar";
+import { useIODispatch } from "../../../../store/hooks";
 import PaymentButton from "../../PaymentButton";
 import CalendarEventButton from "../../CalendarEventButton";
 
@@ -50,6 +50,18 @@ const renderPaymentButton = (isPaid: boolean, paymentData?: PaymentData) => {
   );
 };
 
+function renderCalendarEventButton(
+  isPaid: boolean,
+  expirationInfo: MessagePaymentExpirationInfo,
+  legacyMessage: UIMessageDetails["raw"],
+  dueDate?: Date
+) {
+  if (dueDate === undefined || isPaid || isExpired(expirationInfo)) {
+    return null;
+  }
+  return <CalendarEventButton message={legacyMessage} />;
+}
+
 /**
  * A smart component to show the action buttons of a message.
  * It requires context and full redux support.
@@ -66,18 +78,16 @@ const CtaBar = ({
   service,
   serviceMetadata
 }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
 
-  function renderCalendarEventButton() {
-    if (dueDate === undefined || isPaid || isExpired(expirationInfo)) {
-      return null;
-    }
-    return <CalendarEventButton message={legacyMessage} />;
-  }
-
   const paymentButton = renderPaymentButton(isPaid, paymentData);
-  const calendarButton = renderCalendarEventButton();
+  const calendarButton = renderCalendarEventButton(
+    isPaid,
+    expirationInfo,
+    legacyMessage,
+    dueDate
+  );
 
   const footer1 = (paymentButton || calendarButton) && (
     <NBView footer={true} style={styles.row}>

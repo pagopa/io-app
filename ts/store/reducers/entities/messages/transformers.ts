@@ -8,7 +8,7 @@ import {
   UIMessage,
   UIMessageDetails,
   PrescriptionData,
-  GreenPass
+  EUCovidCertificate
 } from "./types";
 
 /**
@@ -36,16 +36,12 @@ const getAttachments = ({
   attachments
 }: CreatedMessageWithContentAndAttachments["content"]):
   | ReadonlyArray<Attachment>
-  | undefined => {
-  if (attachments) {
-    return attachments.map(({ name, content, mime_type }) => ({
-      name,
-      content,
-      mimeType: mime_type
-    }));
-  }
-  return undefined;
-};
+  | undefined =>
+  attachments?.map(({ name, content, mime_type }) => ({
+    name,
+    content,
+    mimeType: mime_type
+  }));
 
 const getPaymentData = ({
   payment_data
@@ -79,10 +75,10 @@ const getPrescriptionData = ({
   return undefined;
 };
 
-const getGreenPass = ({
+const getEUCovidCertificate = ({
   eu_covid_cert
 }: CreatedMessageWithContentAndAttachments["content"]):
-  | GreenPass
+  | EUCovidCertificate
   | undefined => {
   if (eu_covid_cert) {
     return {
@@ -110,7 +106,7 @@ export const toUIMessageDetails = (
     markdown: content.markdown,
     dueDate,
     paymentData: getPaymentData(content),
-    greenPass: getGreenPass(content),
+    euCovidCertificate: getEUCovidCertificate(content),
     raw: messageFromApi
   };
 };

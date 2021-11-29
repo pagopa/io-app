@@ -1,8 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
-import { fromNullable } from "fp-ts/lib/Option";
 
 import { PrescriptionData } from "../../../../../definitions/backend/PrescriptionData";
 import I18n from "../../../../i18n";
@@ -29,7 +28,8 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   note: {
-    lineHeight: 16
+    lineHeight: 16,
+    paddingTop: 4
   },
   label: {
     lineHeight: 22
@@ -41,77 +41,75 @@ const styles = StyleSheet.create({
 
 export const svgXml = "image/svg+xml";
 
-const footerItem = () => (
-  <React.Fragment>
-    <ItemSeparatorComponent />
-    <View spacer={true} />
-    <Text style={[styles.note, styles.padded]}>
-      {I18n.t("messages.medical.note")}
-    </Text>
-  </React.Fragment>
-);
-
-const headerItem = (organizationName?: string) => (
-  <View style={styles.padded}>
-    <Text bold={true} style={styles.customHeader}>
-      {I18n.t("messages.medical.nationalService").toUpperCase()}
-    </Text>
-    {organizationName && (
-      <Text style={styles.label}>{organizationName.toUpperCase()}</Text>
-    )}
-    <View spacer={true} xsmall={true} />
-    <ItemSeparatorComponent noPadded={true} bold={true} />
-  </View>
-);
-
-const renderItem =
-  (
-    attachmentsWithSvg: Array<Attachment>,
-    prescriptionData?: PrescriptionData
-  ) =>
-  ({ item }: { item: Attachment }) => {
-    const value = getPrescriptionDataFromName(prescriptionData, item.name);
-    const xml = fromNullable(attachmentsWithSvg.find(_ => _.name === item.name))
-      .map(({ content }) => Buffer.from(content, "base64").toString("ascii"))
-      .toUndefined();
-    return (
-      <View style={styles.padded}>
-        <View spacer={true} small={true} />
-        <Text style={styles.label}>
-          {I18n.t(`messages.medical.${item.name}`, {
-            defaultValue: I18n.t("messages.medical.not_available")
-          }).toUpperCase()}
+const Item = ({
+  prescriptionData,
+  item,
+  idx
+}: {
+  prescriptionData?: PrescriptionData;
+  item: Attachment;
+  idx: number;
+}) => {
+  const value = getPrescriptionDataFromName(prescriptionData, item.name);
+  const xml = Buffer.from(item.content, "base64").toString("ascii");
+  return (
+    <View style={styles.padded} key={`attachment-${idx}`}>
+      <View spacer={true} small={true} />
+      <Text style={styles.label}>
+        {I18n.t(`messages.medical.${item.name}`, {
+          defaultValue: I18n.t("messages.medical.not_available")
+        }).toUpperCase()}
+      </Text>
+      {xml && <SvgXml xml={xml} width={"100%"} height={BARCODE_HEIGHT} />}
+      {value.isSome() && (
+        <Text semibold={true} style={{ textAlign: "center" }}>
+          {I18n.t("global.symbols.asterisk")}
+          {value.value}
+          {I18n.t("global.symbols.asterisk")}
         </Text>
-        {xml && <SvgXml xml={xml} width={"100%"} height={BARCODE_HEIGHT} />}
-        {value.isSome() && (
-          <Text semibold={true} style={{ textAlign: "center" }}>
-            {I18n.t("global.symbols.asterisk")}
-            {value.value}
-            {I18n.t("global.symbols.asterisk")}
-          </Text>
-        )}
-        <View spacer={true} />
-      </View>
-    );
-  };
+      )}
+      <View spacer={true} />
+    </View>
+  );
+};
 
 const MedicalPrescriptionAttachments = ({
   attachments,
   organizationName,
   prescriptionData
-}: Props) => {
-  const attachmentsWithSvg = attachments.filter(_ => _.mimeType === svgXml);
+}: Props) => (
+  <View>
+    <View style={styles.padded}>
+      <Text bold={true} style={styles.customHeader}>
+        {I18n.t("messages.medical.nationalService").toUpperCase()}
+      </Text>
+      {organizationName && (
+        <Text style={styles.label}>{organizationName.toUpperCase()}</Text>
+      )}
+      <View spacer={true} xsmall={true} />
+      <ItemSeparatorComponent noPadded={true} bold={true} />
+    </View>
 
-  return (
-    <FlatList
-      data={attachmentsWithSvg}
-      renderItem={renderItem(attachmentsWithSvg, prescriptionData)}
-      keyExtractor={(_, idx: number) => `attachment-${idx}`}
-      ItemSeparatorComponent={ItemSeparatorComponent}
-      ListHeaderComponent={headerItem(organizationName)}
-      ListFooterComponent={footerItem()}
-    />
-  );
-};
+    {attachments
+      .filter(_ => _.mimeType === svgXml)
+      .map((attachment, index) => (
+        <>
+          <Item
+            prescriptionData={prescriptionData}
+            item={attachment}
+            idx={index}
+          />
+          <ItemSeparatorComponent />
+        </>
+      ))}
+
+    <ItemSeparatorComponent />
+
+    <View spacer={true} />
+    <Text style={[styles.note, styles.padded]}>
+      {I18n.t("messages.medical.note")}
+    </Text>
+  </View>
+);
 
 export default MedicalPrescriptionAttachments;

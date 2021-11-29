@@ -120,7 +120,7 @@ const CalendarIcon: React.FunctionComponent<{
   status: PaymentStatus;
   dueDate: Date;
 }> = ({ status, dueDate }) => {
-  const iconBackgoundColor = getCalendarIconBackgroundColor(status);
+  const iconBackgroundColor = getCalendarIconBackgroundColor(status);
 
   const textColor = getCalendarTextColor(status);
 
@@ -128,7 +128,7 @@ const CalendarIcon: React.FunctionComponent<{
     <CalendarIconComponent
       month={capitalize(formatDateAsMonth(dueDate))}
       day={formatDateAsDay(dueDate)}
-      backgroundColor={iconBackgoundColor}
+      backgroundColor={iconBackgroundColor}
       textColor={textColor}
     />
   );

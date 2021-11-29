@@ -1,7 +1,7 @@
 import I18n from "i18n-js";
-import { Text, View } from "native-base";
-import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Text as NBText, View as NBView } from "native-base";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 import customVariables from "../../../../theme/variables";
 import { format, formatDateAsLocal } from "../../../../utils/dates";
@@ -23,9 +23,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center"
   },
-  service: {
-    display: "flex",
+  section: {
+    flex: 1,
     flexDirection: "row"
+  },
+  sectionValue: {
+    flex: 1
   }
 });
 
@@ -48,43 +51,53 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text>
-        {I18n.t("messageDetails.dateSending")}
-        <Text bold={true}>{` ${date} - ${time}`}</Text>
-      </Text>
+      <View style={styles.section}>
+        <NBText>{I18n.t("messageDetails.dateSending")}</NBText>
+        <NBText
+          style={styles.sectionValue}
+          bold={true}
+        >{` ${date} - ${time}`}</NBText>
+      </View>
 
-      <Text>
-        {I18n.t("messageDetails.sender")}
-        <Text bold={true}>{` ${message.organizationName}`}</Text>
-      </Text>
+      <View style={styles.section}>
+        <NBText> {I18n.t("messageDetails.sender")}</NBText>
+        <NBText
+          style={styles.sectionValue}
+          bold={true}
+        >{` ${message.organizationName} asda e ck iofsi wferjiu fdjrklfjwio asewe`}</NBText>
+      </View>
 
-      <View style={styles.service}>
-        <Text>{`${I18n.t("messageDetails.service")} `}</Text>
-        <Link weight={"Bold"} onPress={goToServiceDetail}>
-          {message.serviceName}
+      <View style={styles.section}>
+        <NBText>{`${I18n.t("messageDetails.service")} `}</NBText>
+        <Link
+          weight={"Bold"}
+          style={styles.sectionValue}
+          onPress={goToServiceDetail}
+        >
+          {message.serviceName} {" asda e ck iofsi wferjiu fdjrklfjwio asewe"}
         </Link>
       </View>
 
       {hasEmailOrPhone && (
         <>
-          <View spacer={true} />
+          <NBView spacer={true} />
 
-          <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
-          <View spacer={true} xsmall={true} />
+          <NBText bold={true}>{I18n.t("messageDetails.question")}</NBText>
+          <NBView spacer={true} xsmall={true} />
 
-          <Text>{I18n.t("messageDetails.answer")}</Text>
-          <View spacer={true} />
+          <NBText>{I18n.t("messageDetails.answer")}</NBText>
+          <NBView spacer={true} />
 
           <View style={styles.row}>
-            <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
+            <NBText style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
               message.id
-            }`}</Text>
+            }`}</NBText>
             <CopyButtonComponent textToCopy={textToCopy} />
           </View>
-          <View spacer={true} />
+          <NBView spacer={true} />
 
           <EmailCallCTA phone={phone} email={email} />
-          <View spacer={true} small={true} />
+          <NBView spacer={true} small={true} />
         </>
       )}
     </View>
