@@ -63,7 +63,6 @@ export const PspRadioItem = (
         pspFee={psp.fee}
         pspName={psp.name}
         pspPrivacyUrl={psp.privacyUrl}
-        pspTosUrl={psp.tosUrl}
       />,
       I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
         pspName: psp.name

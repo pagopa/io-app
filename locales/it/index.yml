@@ -1034,7 +1034,7 @@ wallet:
           row1Description: "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal."
           row2Description1: "Quando paghi un avviso, potrà applicare un costo massimo fino a "
           row2Description2: ". Vedrai l'importo esatto prima della conferma."
-          row3Description1: "Si applicano i Termini e condizioni d’uso e l’Informativa Privacy"
+          row3Description1: "Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di {{psp}}"
         whatIsPspBottomSheet:
           title: "Cos’è il gestore della transazione?"
           body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."

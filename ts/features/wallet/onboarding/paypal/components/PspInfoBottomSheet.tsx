@@ -73,7 +73,8 @@ const getItem = (props: Props) => [
         >
           <Link weight={"SemiBold"}>
             {I18n.t(
-              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1"
+              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1",
+              { psp: props.pspName }
             )}
           </Link>
         </TouchableWithoutFeedback>
