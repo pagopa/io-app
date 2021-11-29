@@ -20,9 +20,7 @@ const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
   logoUrl: getPayPalPspIconUrl(psp.codiceAbi),
   name: psp.ragioneSociale,
   fee: psp.maxFee as NonNegativeNumber,
-  privacyUrl: psp.privacyUrl,
-  // TODO see https://pagopa.atlassian.net/browse/IA-436
-  tosUrl: ""
+  privacyUrl: psp.privacyUrl
 });
 
 /**
