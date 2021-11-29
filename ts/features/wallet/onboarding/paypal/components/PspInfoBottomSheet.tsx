@@ -31,7 +31,6 @@ type Props = {
   pspName: string;
   pspFee: NonNegativeNumber;
   pspPrivacyUrl: string;
-  pspTosUrl: string;
   onButtonPress: () => void;
 };
 
@@ -68,20 +67,13 @@ const getItem = (props: Props) => [
   {
     icon: <EditIcon width={iconSize} height={iconSize} />,
     description: (
-      <View style={{ flexDirection: "column" }}>
+      <View>
         <TouchableWithoutFeedback
           onPress={() => openWebUrl(props.pspPrivacyUrl)}
         >
           <Link weight={"SemiBold"}>
             {I18n.t(
               "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1"
-            )}
-          </Link>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => openWebUrl(props.pspTosUrl)}>
-          <Link weight={"SemiBold"}>
-            {I18n.t(
-              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description2"
             )}
           </Link>
         </TouchableWithoutFeedback>
