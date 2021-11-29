@@ -11,11 +11,6 @@ export const navigateToPayPalCheckout = () =>
     routeName: PAYPAL_ROUTES.ONBOARDING.CHECKOUT
   });
 
-export const navigateToPayPalCheckoutSuccess = () =>
-  NavigationActions.navigate({
-    routeName: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_SUCCESS
-  });
-
 export const navigateToPayPalCheckoutCompleted = () =>
   NavigationActions.navigate({
     routeName: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_COMPLETED
