@@ -65,7 +65,7 @@ PODS:
   - jail-monkey (2.3.2):
     - React
   - libevent (2.1.12)
-  - Mixpanel (3.6.5)
+  - Mixpanel (3.6.1)
   - OpenSSL-Universal (1.1.180)
   - Permission-Calendars (2.2.2):
     - RNPermissions
@@ -771,7 +771,7 @@ SPEC CHECKSUMS:
   instabug-reactnative: aae9da235f22a48455fd837f5983c144d169330c
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  Mixpanel: de8296d8568806ab17bfced0f823c908b808e1e0
+  Mixpanel: 61e6d8c0717c8e94ccc6d3a1ae8677b9a78f64c5
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   Permission-Calendars: 17bb6a871acc7580754be7b56cfb25537e1b57de
   Permission-Camera: 5d2aaf95592660b6dcb5e8d1d90ed5d0156cad02
