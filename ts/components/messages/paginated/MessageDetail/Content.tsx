@@ -60,11 +60,11 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
       </View>
 
       <View style={styles.section}>
-        <NBText> {I18n.t("messageDetails.sender")}</NBText>
+        <NBText>{I18n.t("messageDetails.sender")}</NBText>
         <NBText
           style={styles.sectionValue}
           bold={true}
-        >{` ${message.organizationName} asda e ck iofsi wferjiu fdjrklfjwio asewe`}</NBText>
+        >{` ${message.organizationName}`}</NBText>
       </View>
 
       <View style={styles.section}>
@@ -74,7 +74,7 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
           style={styles.sectionValue}
           onPress={goToServiceDetail}
         >
-          {message.serviceName} {" asda e ck iofsi wferjiu fdjrklfjwio asewe"}
+          {message.serviceName}
         </Link>
       </View>
 
