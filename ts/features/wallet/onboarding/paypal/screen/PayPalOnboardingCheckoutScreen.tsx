@@ -9,7 +9,6 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
   walletAddPaypalOutcome,
   walletAddPaypalBack,
-  walletAddPaypalCancel,
   walletAddPaypalRefreshPMToken
 } from "../store/actions";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -131,7 +130,6 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(walletAddPaypalBack()),
-  cancel: () => dispatch(walletAddPaypalCancel()),
   setOutcomeCode: (oc: Option<string>) => dispatch(walletAddPaypalOutcome(oc)),
   refreshPMtoken: () => dispatch(walletAddPaypalRefreshPMToken.request())
 });
