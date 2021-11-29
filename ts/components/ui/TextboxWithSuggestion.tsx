@@ -1,20 +1,7 @@
 import * as React from "react";
-import { useContext, useState } from "react";
-import {
-  Body,
-  Container,
-  Content,
-  Left,
-  ListItem,
-  Right,
-  View
-} from "native-base";
-import {
-  ActivityIndicator,
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet
-} from "react-native";
+import { ReactNode, useContext, useState } from "react";
+import { Body, Container, Content, Left, Right, View } from "native-base";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
@@ -30,7 +17,6 @@ import IconFont from "./IconFont";
 const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 1,
-    borderColor: IOColors.bluegreyDark,
     paddingBottom: 10
   },
   inputContainer: {
@@ -41,54 +27,39 @@ const styles = StyleSheet.create({
 
 /**
  * Props explanation:
- * - data -> array of suggested items, shown in the modal.
- * - keyExtractor -> method that given an item of the array and the index return the unique value to use as key for the item.
  * - onChangeText -> method that notify when the user changes the searching text in the modal.
- * - renderItem -> method that given an item return a ReactElement which will be inserted inside a ListItem.
  * - title -> the title of the modal screen.
  * - label -> displayed on top the search text-box both.
  * - placeholder -> placeholder of the search text-box.
- * - isLoading -> when true show a loader at the middle of the modal.
+ * - showModalInputTextbox -> boolean that control the input textbox in the modal
+ * - wrappedFlatlist -> the Flatlist component that show the suggestions that the user can choose from. Note that if the list needs to react
+ *                      and change the showed data when the text change a connected component that wrap the Flatlist is needed.
  */
-type CommonProps<T> = {
-  data: ReadonlyArray<T>;
-  keyExtractor: (item: T, index: number) => string;
-  onChangeText: (value: string) => void;
-  renderItem: (item: ListRenderItemInfo<T>) => React.ReactElement;
+type CommonProps = {
+  onChangeText?: (value: string) => void;
   title: string;
   label: string;
   placeholder: string;
-  isLoading: boolean;
+  showModalInputTextbox: boolean;
+  wrappedFlatlist: ReactNode;
 };
 
 /**
  * Props explanation:
- * - onSelectValue -> method that inform about selected value from the suggested ones. The returned string will be used to set the search text-box.
+ * - selectedValue -> value to show in the initial textbox.
+ * - disabled -> if true disable the onPress on the initial textBox and show the border light gray
  */
-type Props<T> = {
-  onSelectValue: (value: T) => string;
-} & CommonProps<T>;
+type Props = {
+  selectedValue?: string;
+  disabled?: boolean;
+  onClose?: () => void;
+} & CommonProps;
 
-type ModalProps<T> = {
+type ModalProps = {
   onClose: () => void;
-} & CommonProps<T>;
+} & CommonProps;
 
-const FooterLoading = () => (
-  <>
-    <View spacer={true} />
-    <ActivityIndicator
-      color={"black"}
-      accessible={false}
-      importantForAccessibility={"no-hide-descendants"}
-      accessibilityElementsHidden={true}
-      testID={"activityIndicator"}
-    />
-  </>
-);
-
-const TextboxWithSuggestionModal = <T extends unknown>(
-  props: ModalProps<T>
-) => {
+const TextboxWithSuggestionModal = (props: ModalProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   return (
     <Container>
@@ -107,27 +78,24 @@ const TextboxWithSuggestionModal = <T extends unknown>(
       </AppHeader>
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
-          <LabelledItem
-            iconPosition={"right"}
-            label={props.label}
-            inputProps={{
-              value: inputValue,
-              onChangeText: v => {
-                setInputValue(v);
-                props.onChangeText(v);
-              },
-              placeholder: props.placeholder
-            }}
-          />
-          <View spacer large />
-
-          <FlatList
-            data={props.data}
-            ListFooterComponent={props.isLoading && <FooterLoading />}
-            renderItem={props.renderItem}
-            keyExtractor={props.keyExtractor}
-            keyboardShouldPersistTaps={"handled"}
-          />
+          {props.showModalInputTextbox && (
+            <>
+              <LabelledItem
+                iconPosition={"right"}
+                label={props.label}
+                inputProps={{
+                  value: inputValue,
+                  onChangeText: v => {
+                    setInputValue(v);
+                    props.onChangeText?.(v);
+                  },
+                  placeholder: props.placeholder
+                }}
+              />
+              <View spacer large />
+            </>
+          )}
+          {props.wrappedFlatlist}
         </Content>
       </SafeAreaView>
     </Container>
@@ -138,54 +106,48 @@ const TextboxWithSuggestionModal = <T extends unknown>(
  * This component is a wrapper around a modal that contains:
  * - a LabelledItem component
  * - a Flatlist that shows a list of results from which the user has to choose
- * Two callbacks are available:
+ * A callback is available:
  * - onChangeText -> executed when the user inserts or cancels some character from the LabelledItem
- * - onSelectValue -> executed when the user selects an item before the modal is hide
  * @param props
  * @constructor
  */
-const TextboxWithSuggestion = <T extends unknown>(props: Props<T>) => {
+const TextboxWithSuggestion = (props: Props) => {
   const { showModal, hideModal } = useContext(LightModalContext);
-  const [selectedValue, setSelectedValue] = useState<string | undefined>(
-    undefined
-  );
 
+  const borderBottomColor = props.disabled
+    ? IOColors.bluegreyLight
+    : IOColors.bluegreyDark;
   return (
     <>
-      <View style={styles.container}>
-        <H5 color={"bluegreyDark"}>{props.label}</H5>
+      <View style={[styles.container, { borderBottomColor }]}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <H5 color={"bluegreyDark"}>{props.label}</H5>
+          <View hspacer={true} />
+        </View>
         <View spacer={true} />
         <TouchableDefaultOpacity
           style={styles.inputContainer}
+          disabled={props.disabled}
           onPress={() =>
             showModal(
-              <TextboxWithSuggestionModal<T>
-                data={props.data}
-                keyExtractor={props.keyExtractor}
-                renderItem={i => (
-                  <ListItem
-                    icon={false}
-                    onPress={() => {
-                      setSelectedValue(props.onSelectValue(i.item));
-                      hideModal();
-                    }}
-                  >
-                    {props.renderItem(i)}
-                  </ListItem>
-                )}
+              <TextboxWithSuggestionModal
                 title={props.title}
                 label={props.label}
                 placeholder={props.placeholder}
-                onClose={hideModal}
+                onClose={() => {
+                  hideModal();
+                  props.onClose?.();
+                }}
                 onChangeText={props.onChangeText}
-                isLoading={props.isLoading}
+                showModalInputTextbox={props.showModalInputTextbox}
+                wrappedFlatlist={props.wrappedFlatlist}
               />
             )
           }
         >
-          {selectedValue ? (
+          {props.selectedValue ? (
             <H4 weight={"Regular"} color={"bluegrey"}>
-              {selectedValue}
+              {props.selectedValue}
             </H4>
           ) : (
             <H4 weight={"Regular"} color={"bluegreyLight"}>
