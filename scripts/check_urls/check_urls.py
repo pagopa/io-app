@@ -25,9 +25,9 @@ tagged_people = ["<!here>"]
 SLACK_CHANNEL = "#io_dev_app_status"
 
 # a list of remote uris consumed by the app for content presentation
-remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
+remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/bonus_available_v2.json",
                       "https://assets.cdn.io.italia.it/contextualhelp/data.json",
-                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/status/backend.json"]
+                      "https://assets.cdn.io.italia.it/status/backend.json"]
 
 
 class IOUrl(object):
@@ -212,16 +212,20 @@ if not run_test and __name__ == '__main__':
 	print("scanning local folders...")
 	all_uris = set()
 	urls_black_list = {
+		# still not available
+		"https://io.italia.it/carta-giovani-nazionale/informativa-beneficiari",
+		# still not available
+		"https://io.italia.it/carta-giovani-nazionale/guida-beneficiari",
 		# the article is available but the response status code is 403
 		"https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection",
 		"https://assets.cdn.io.italia.it",
 		"https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
 		"https://www.trusttechnologies.it/contatti/#form"}
 	locales = (abspath(join(dirname(__file__), "../..", "locales")), {})
-	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), {"testFaker.ts", "PayWebViewModal.tsx"})
+	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts"})
 	for directory, black_list in [locales, ts_dir]:
 		files_found = scan_directory(directory, black_list, urls_black_list)
-		print("find %d files in %s" % (len(files_found.keys()), directory))
+		print("found %d files in %s" % (len(files_found.keys()), directory))
 		all_uris.update(list(map(lambda kv: IOUrl(kv[0], "|".join(kv[1])), files_found.items())))
 	print("scanning remote resources...")
 	for ru in remote_content_uri:
