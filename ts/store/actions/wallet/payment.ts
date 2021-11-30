@@ -25,9 +25,9 @@ import {
   PaymentStartPayload
 } from "../../reducers/wallet/payment";
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
-import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 import { NetworkError } from "../../../utils/errors";
 import { PspData } from "../../../../definitions/pagopa/PspData";
+import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
  * IMPORTANT!
