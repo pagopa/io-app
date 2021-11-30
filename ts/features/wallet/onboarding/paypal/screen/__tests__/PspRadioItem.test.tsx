@@ -17,8 +17,7 @@ const payPalPsp: IOPayPalPsp = {
   logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
   name: "PayTipper",
   fee: 100 as NonNegativeNumber,
-  privacyUrl,
-  tosUrl: privacyUrl
+  privacyUrl
 };
 
 describe("PspRadioItem", () => {

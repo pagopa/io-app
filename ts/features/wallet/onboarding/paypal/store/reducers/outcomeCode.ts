@@ -2,7 +2,7 @@ import { getType } from "typesafe-actions";
 
 import { none, Option } from "fp-ts/lib/Option";
 import { Action } from "../../../../../../store/actions/types";
-import { walletAddPaypalStart, walletAddPaypaOutcome } from "../actions";
+import { walletAddPaypalStart, walletAddPaypalOutcome } from "../actions";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type PaypalOnboardingOutcomeCodeState = Option<string>;
@@ -15,7 +15,7 @@ const outcomeCodeReducer = (
     // reset the state when paypal onboarding flow starts
     case getType(walletAddPaypalStart):
       return initialState;
-    case getType(walletAddPaypaOutcome):
+    case getType(walletAddPaypalOutcome):
       return action.payload;
     default:
       return state;
