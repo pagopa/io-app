@@ -55,7 +55,7 @@ export function* addPaypalToWallet(
           navigateToPayPalDetailScreen()
         );
         break;
-      // if the destination if to return back, remove 1 screen from the stack
+      // if the destination is to return back, remove 1 screen from the stack
       case "back":
         yield call(
           NavigationService.dispatchNavigationAction,
