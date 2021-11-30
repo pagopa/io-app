@@ -68,13 +68,30 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <ButtonDefaultOpacity
-      onPress={startChat}
-      transparent={true}
-      testID={"zendeskButton"}
-    >
-      <IconFont name="io-chat" color={IOColors.red} testID={"zendeskIcon"} />
-    </ButtonDefaultOpacity>
+    <>
+      <ButtonDefaultOpacity
+        onPress={startChat}
+        transparent={true}
+        testID={"zendeskOpenTicketButton"}
+      >
+        <IconFont
+          name="io-question"
+          color={IOColors.red}
+          testID={"zendeskOpenTicketIcon"}
+        />
+      </ButtonDefaultOpacity>
+      <ButtonDefaultOpacity
+        onPress={startChat}
+        transparent={true}
+        testID={"zendeskShowTicketsButton"}
+      >
+        <IconFont
+          name="io-chat"
+          color={IOColors.red}
+          testID={"zendeskShowTicketsIcon"}
+        />
+      </ButtonDefaultOpacity>
+    </>
   );
 };
 
