@@ -3,7 +3,7 @@ import ZendDesk from "io-react-native-zendesk";
 import { connect } from "react-redux";
 import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable, isSome, Option } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { GlobalState } from "../store/reducers/types";
 import { isLoggedInWithSessionInfo } from "../store/reducers/authentication";
 import { Dispatch } from "../store/actions/types";
@@ -40,6 +40,14 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
     );
     initZendesk(zendeskConfig);
 
+    // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
+    // The AnonymousConfig is used both for the users authenticated with name and email and for the anonymous user.
+    // Since the zendesk session token and the profile are provided by two different endpoint
+    // we sequentially check both:
+    // - if the zendeskToken is present the user will be authenticated via jwt
+    // - if the zendeskToken is not present but there is the profile,
+    //   the user will be authenticated, in anonymous mode, with the profile data (if available)
+    // - as last nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
     const zendeskIdentity = fromNullable(zendeskToken)
       .map((zT: string): ZendDesk.JwtIdentity | ZendDesk.AnonymousIdentity => ({
         token: zT
