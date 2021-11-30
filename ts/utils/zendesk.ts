@@ -21,7 +21,7 @@ export const zendeskDefaultAnonymousConfig: ZendeskConfig = {
   url: "https://appiotest.zendesk.com"
 };
 
-export const initZendesk = (zendeskConfig: ZendeskConfig) => {
+export const initSupportAssistance = (zendeskConfig: ZendeskConfig) => {
   ZendDesk.init({
     key: zendeskConfig.key,
     appId: zendeskConfig.appId,

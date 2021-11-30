@@ -8,7 +8,7 @@ import { GlobalState } from "../store/reducers/types";
 import { isLoggedInWithSessionInfo } from "../store/reducers/authentication";
 import { Dispatch } from "../store/actions/types";
 import {
-  initZendesk,
+  initSupportAssistance,
   ZendeskConfig,
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
@@ -38,7 +38,7 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
         ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
         : zendeskDefaultAnonymousConfig
     );
-    initZendesk(zendeskConfig);
+    initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
     // The AnonymousConfig is used both for the users authenticated with name and email and for the anonymous user.
