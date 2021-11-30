@@ -57,16 +57,6 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
     ZendDesk.setUserIdentity(zendeskIdentity);
   }, [zendeskToken, profile]);
 
-  const startChat = () => {
-    const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
-    ZendDesk.startChat({
-      botName: "IO BOT",
-      name: isSome(maybeProfile) ? maybeProfile.value.name : undefined,
-      email: isSome(maybeProfile) ? maybeProfile.value.email : undefined,
-      department: "appiotest"
-    });
-  };
-
   return (
     <>
       <ButtonDefaultOpacity
