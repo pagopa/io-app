@@ -17,9 +17,6 @@ import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { SpidLevelEnum } from "../../../definitions/backend/SpidLevel";
 import MockZendesk from "../../__mocks__/io-react-native-zendesk";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { profileLoadSuccess } from "../../store/actions/profile";
-import { EmailAddress } from "../../../definitions/backend/EmailAddress";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 
 const mockPublicSession: PublicSession = {
   bpdToken: "bpdToken",
@@ -32,15 +29,25 @@ const mockPublicSession: PublicSession = {
 jest.useFakeTimers();
 describe("the ZendeskChatComponent", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  it("should render the zendesk button", () => {
+  it("should render the zendesk open ticket button", () => {
     const store = createStore(appReducer, globalState as any);
     const component = renderComponent(store);
-    expect(component.getByTestId("zendeskButton")).toBeDefined();
+    expect(component.getByTestId("zendeskOpenTicketButton")).toBeDefined();
   });
-  it("should render the zendesk icon", () => {
+  it("should render the zendesk open ticket icon", () => {
     const store = createStore(appReducer, globalState as any);
     const component = renderComponent(store);
-    expect(component.getByTestId("zendeskIcon")).toBeDefined();
+    expect(component.getByTestId("zendeskOpenTicketIcon")).toBeDefined();
+  });
+  it("should render the zendesk show tickets button", () => {
+    const store = createStore(appReducer, globalState as any);
+    const component = renderComponent(store);
+    expect(component.getByTestId("zendeskShowTicketsButton")).toBeDefined();
+  });
+  it("should render the zendesk show tickets icon", () => {
+    const store = createStore(appReducer, globalState as any);
+    const component = renderComponent(store);
+    expect(component.getByTestId("zendeskShowTicketsIcon")).toBeDefined();
   });
   describe("when the user is authenticated with session info", () => {
     const store = createStore(appReducer, globalState as any);
@@ -62,26 +69,24 @@ describe("the ZendeskChatComponent", () => {
     });
   });
 
-  describe("when the user press the zendesk button and has an initializedProfile", () => {
-    const store = createStore(appReducer, globalState as any);
-    const mockProfile = {
-      name: "testUser",
-      email: "test@email.it" as EmailAddress
-    } as InitializedProfile;
+  describe("when the user press the zendesk open ticket button", () => {
+    it("should call openTicket", () => {
+      const store = createStore(appReducer, globalState as any);
 
-    store.dispatch(profileLoadSuccess(mockProfile));
+      const component = renderComponent(store);
+      const zendeskButton = component.getByTestId("zendeskOpenTicketButton");
+      fireEvent(zendeskButton, "onPress");
+      expect(MockZendesk.openTicket).toBeCalledWith();
+    });
+  });
+  describe("when the user press the zendesk show tickets button", () => {
+    it("should call showTickets", () => {
+      const store = createStore(appReducer, globalState as any);
 
-    const component = renderComponent(store);
-    const zendeskButton = component.getByTestId("zendeskButton");
-    fireEvent(zendeskButton, "onPress");
-
-    it("should call startChat with the profile data", () => {
-      expect(MockZendesk.startChat).toBeCalledWith({
-        botName: "IO BOT",
-        name: mockProfile.name,
-        email: mockProfile.email,
-        department: "appiotest"
-      });
+      const component = renderComponent(store);
+      const zendeskButton = component.getByTestId("zendeskShowTicketsButton");
+      fireEvent(zendeskButton, "onPress");
+      expect(MockZendesk.showTickets).toBeCalledWith();
     });
   });
 });
