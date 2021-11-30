@@ -1500,6 +1500,9 @@ wallet:
     code18:
       title: "TMP 18"
       description: "TMP 18"
+    code19:
+      title: "TMP 19"
+      description: "TMP 19"
     addCreditCard:
       success:
         title: "Your card has been successfully added!"

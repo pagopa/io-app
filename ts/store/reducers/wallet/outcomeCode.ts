@@ -110,6 +110,18 @@ const OutcomeCodesPrintable = (): OutcomeCodes => ({
     },
     icon: authorizationDenied,
     status: "errorBlocking"
+  },
+  "19": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code19.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code19.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code19.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code19.description")
+    },
+    icon: authorizationDenied,
+    status: "errorBlocking"
   }
 });
 
