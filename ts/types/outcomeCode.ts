@@ -30,7 +30,8 @@ const OutcomeCodes = {
   "4": OutcomeCode,
   "7": OutcomeCode,
   "8": OutcomeCode,
-  "10": OutcomeCode
+  "10": OutcomeCode,
+  "18": OutcomeCode
 };
 
 const OutcomeCodesCodec = t.type(OutcomeCodes);

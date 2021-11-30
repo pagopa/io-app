@@ -1502,10 +1502,10 @@ wallet:
       visualizeCard: Visualizza carta
     fallback:
       title: "Spiacenti, si è verificato un errore imprevisto"
-      description: "Non è stato addebitato alcun importo."
+      description: "Se il problema persiste, contatta l’assistenza."
     code1:
       title: "Spiacenti, si è verificato un errore imprevisto"
-      description: "Non è stato addebitato alcun importo."
+      description: "Se il problema persiste, contatta l’assistenza."
     code2:
       title: "Autorizzazione negata"
       description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
@@ -1519,7 +1519,10 @@ wallet:
       title: "L’operazione è stata annullata"
     code10:
       title: "Autorizzazione negata"
-      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+      description: "Probabilmente hai superato il massimale del tuo metodo. Verifica con la tua banca prima di riprovare."
+    code18:
+      title: "TMP 18"
+      description: "TMP 18"
     addCreditCard:
       success:
         title: "La tua carta è stata aggiunta con successo!"

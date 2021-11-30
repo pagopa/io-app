@@ -1479,10 +1479,10 @@ wallet:
       visualizeCard: View card
     fallback:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code1:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code2:
       title: "Authorization declined"
       description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
@@ -1497,6 +1497,9 @@ wallet:
     code10:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
+    code18:
+      title: "TMP 18"
+      description: "TMP 18"
     addCreditCard:
       success:
         title: "Your card has been successfully added!"
