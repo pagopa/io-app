@@ -1,5 +1,5 @@
 ### 2021-11-26
-- add `PAYPAL` to Wallet (V1) enum
+- add `PAYPAL` to `type` field in Wallet (V1) enum
 - renamed `PayPalInfo` to `PayPalAccountPspInfo`
 - sync `PayPalAccountPspInfo` with the last spec
 - ignored `dataAssociazione` field in `PayPalPspInfo` since the app doesn't use it

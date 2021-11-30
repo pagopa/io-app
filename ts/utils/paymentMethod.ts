@@ -54,7 +54,7 @@ export const getPaymentMethodHash = (
     case "Satispay":
       return pm.info.uuid;
     case "PayPal":
-      return getPaypalAccountEmail(pm.info) ?? "todo";
+      return getPaypalAccountEmail(pm.info);
     case "BPay":
       return pm.info.uidHash;
     case "Bancomat":
