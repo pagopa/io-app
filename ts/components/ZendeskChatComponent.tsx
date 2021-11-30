@@ -70,7 +70,7 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
   return (
     <>
       <ButtonDefaultOpacity
-        onPress={startChat}
+        onPress={() => ZendDesk.openTicket()}
         transparent={true}
         testID={"zendeskOpenTicketButton"}
       >
@@ -81,7 +81,7 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
         />
       </ButtonDefaultOpacity>
       <ButtonDefaultOpacity
-        onPress={startChat}
+        onPress={() => ZendDesk.showTickets()}
         transparent={true}
         testID={"zendeskShowTicketsButton"}
       >
