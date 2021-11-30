@@ -33,7 +33,7 @@ import {
 } from "../../actions/wallet/wallets";
 import { walletAddPaypalRefreshPMToken } from "../../../features/wallet/onboarding/paypal/store/actions";
 import { PspData } from "../../../../definitions/pagopa/PspData";
-import { NetworkError } from "../../../utils/errors";
+import { getError } from "../../../utils/errors";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -83,7 +83,7 @@ export type PaymentState = Readonly<{
   paymentStartPayload: PaymentStartPayload | undefined;
   // pm fresh session token (used inside paywebview)
   pmSessionToken: RemoteValue<PaymentManagerToken, Error>;
-  pspsV2: RemoteValue<ReadonlyArray<PspData>, NetworkError>;
+  pspsV2: RemoteValue<ReadonlyArray<PspData>, Error>;
 }>;
 
 /**
@@ -324,6 +324,16 @@ const reducer = (
       return {
         ...state,
         pspsV2: remoteLoading
+      };
+    case getType(pspForPaymentV2.success):
+      return {
+        ...state,
+        pspsV2: remoteReady(action.payload)
+      };
+    case getType(pspForPaymentV2.failure):
+      return {
+        ...state,
+        pspsV2: remoteError(getError(action.payload))
       };
   }
   return state;
