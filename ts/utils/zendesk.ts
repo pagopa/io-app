@@ -7,6 +7,8 @@ export type ZendeskConfig = {
   url: string;
   token?: string;
 };
+export type JwtIdentity = ZendDesk.JwtIdentity;
+export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 
 export const zendeskDefaultJwtConfig: ZendeskConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
@@ -21,11 +23,7 @@ export const zendeskDefaultAnonymousConfig: ZendeskConfig = {
   url: "https://appiotest.zendesk.com"
 };
 
-export const initSupportAssistance = (zendeskConfig: ZendeskConfig) => {
-  ZendDesk.init({
-    key: zendeskConfig.key,
-    appId: zendeskConfig.appId,
-    url: zendeskConfig.url,
-    clientId: zendeskConfig.clientId
-  });
-};
+export const initSupportAssistance = ZendDesk.init;
+export const setUserIdentity = ZendDesk.setUserIdentity;
+export const openSupportTicket = ZendDesk.openTicket;
+export const showSupportTickets = ZendDesk.showTickets;

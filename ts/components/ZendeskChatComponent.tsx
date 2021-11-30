@@ -1,5 +1,4 @@
 import * as React from "react";
-import ZendDesk from "io-react-native-zendesk";
 import { connect } from "react-redux";
 import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -8,7 +7,12 @@ import { GlobalState } from "../store/reducers/types";
 import { isLoggedInWithSessionInfo } from "../store/reducers/authentication";
 import { Dispatch } from "../store/actions/types";
 import {
+  AnonymousIdentity,
   initSupportAssistance,
+  JwtIdentity,
+  openSupportTicket,
+  setUserIdentity,
+  showSupportTickets,
   ZendeskConfig,
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
@@ -49,12 +53,12 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
     //   the user will be authenticated, in anonymous mode, with the profile data (if available)
     // - as last nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
     const zendeskIdentity = fromNullable(zendeskToken)
-      .map((zT: string): ZendDesk.JwtIdentity | ZendDesk.AnonymousIdentity => ({
+      .map((zT: string): JwtIdentity | AnonymousIdentity => ({
         token: zT
       }))
       .alt(
         maybeProfile.map(
-          (mP: InitializedProfile): ZendDesk.AnonymousIdentity => ({
+          (mP: InitializedProfile): AnonymousIdentity => ({
             name: mP.name,
             email: mP.email
           })
@@ -62,13 +66,13 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
       )
       .getOrElse({});
 
-    ZendDesk.setUserIdentity(zendeskIdentity);
+    setUserIdentity(zendeskIdentity);
   }, [zendeskToken, profile]);
 
   return (
     <>
       <ButtonDefaultOpacity
-        onPress={() => ZendDesk.openTicket()}
+        onPress={() => openSupportTicket()}
         transparent={true}
         testID={"zendeskOpenTicketButton"}
       >
@@ -79,7 +83,7 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
         />
       </ButtonDefaultOpacity>
       <ButtonDefaultOpacity
-        onPress={() => ZendDesk.showTickets()}
+        onPress={() => showSupportTickets()}
         transparent={true}
         testID={"zendeskShowTicketsButton"}
       >
