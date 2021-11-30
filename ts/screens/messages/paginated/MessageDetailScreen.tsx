@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
@@ -36,6 +36,7 @@ import { getDetailsByMessageId } from "../../../store/reducers/entities/messages
 import ErrorState from "../MessageDetailScreen/ErrorState";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -87,7 +88,7 @@ const MessageDetailScreen = ({
   service,
   setMessageReadState
 }: Props) => {
-  useEffect(() => {
+  useOnFirstRender(() => {
     if (!isRead) {
       setMessageReadState(message.id, true);
     }
@@ -97,7 +98,7 @@ const MessageDetailScreen = ({
     ) {
       loadMessageDetails(message.id);
     }
-  }, [isRead, message.id, messageDetails]);
+  });
 
   const onServiceLinkPressHandler = () => {
     // When a service gets selected, before navigating to the service detail
