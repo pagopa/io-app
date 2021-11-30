@@ -1,1079 +1,641 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MedicalPrescriptionAttachments component when an attachment is present and has mimeType=image/svg+xml should render the SVG 1`] = `
-<RCTScrollView
-  ItemSeparatorComponent={[Function]}
-  ListFooterComponent={
-    <React.Fragment>
-      <ItemSeparatorComponent />
-      <Styled(ViewNB)
-        spacer={true}
-      />
-      <Styled(Text)
-        style={
-          Array [
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Styled(Text)>
-    </React.Fragment>
-  }
-  ListHeaderComponent={
-    <Styled(ViewNB)
-      style={
+<View
+  style={Object {}}
+>
+  <View
+    style={
+      Array [
+        Object {},
         Object {
           "paddingHorizontal": 24,
-        }
-      }
-    >
-      <Styled(Text)
-        bold={true}
-        style={
+        },
+      ]
+    }
+  >
+    <Text
+      bold={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "marginBottom": -4,
-          }
-        }
-      >
-        NATIONAL HEALTH SERVICE
-      </Styled(Text)>
-      <Styled(Text)
-        style={
+          },
+        ]
+      }
+    >
+      NATIONAL HEALTH SERVICE
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "lineHeight": 22,
-          }
-        }
-      >
-        WHO
-      </Styled(Text)>
-      <Styled(ViewNB)
-        spacer={true}
-        xsmall={true}
-      />
-      <ItemSeparatorComponent
-        bold={true}
-        noPadded={true}
-      />
-    </Styled(ViewNB)>
-  }
-  data={
-    Array [
-      Object {
-        "content": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gU3ZnIFZlY3RvciBJY29ucyA6IGh0dHA6Ly93d3cub25saW5ld2ViZm9udHMuY29tL2ljb24gLS0+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwMCAxMDAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMDAwIDEwMDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPG1ldGFkYXRhPiBTdmcgVmVjdG9yIEljb25zIDogaHR0cDovL3d3dy5vbmxpbmV3ZWJmb250cy5jb20vaWNvbiA8L21ldGFkYXRhPg0KPGc+PHBhdGggZD0iTTk3My43LDI2My4yQzk0MSwxNjUuMiw4MzQuOCw5MS43LDcyMC41LDkxLjdjLTg5LjgsMC0xNzEuNSw0OS0yMjAuNSwxMjIuNUM0NTEsMTQwLjcsMzY5LjMsOTEuNywyNzkuNSw5MS43Yy0xMTQuMywwLTIxMi4zLDczLjUtMjQ1LDE3MS41QzEwLDMwNCwxMCwzNDQuOCwxMCw0MDJjMTYuMywxNjMuMywxNzEuNSwzNDMsNDY1LjUsNDk4LjJjOC4yLDAsMTYuMyw4LjIsMjQuNSw4LjJzOC4yLDAsMTYuMywwQzUzMi43LDkwMC4yLDk2NS41LDY4Ny44LDk5MCw0MDJDOTkwLDM0NC44LDk5MCwzMDQsOTczLjcsMjYzLjIiLz48L2c+DQo8L3N2Zz4=
-  ",
-        "mimeType": "image/svg+xml",
-        "name": "barcodes",
-      },
-    ]
-  }
-  disableVirtualization={false}
-  getItem={[Function]}
-  getItemCount={[Function]}
-  horizontal={false}
-  initialNumToRender={10}
-  keyExtractor={[Function]}
-  maxToRenderPerBatch={10}
-  onContentSizeChange={[Function]}
-  onEndReachedThreshold={2}
-  onLayout={[Function]}
-  onMomentumScrollEnd={[Function]}
-  onScroll={[Function]}
-  onScrollBeginDrag={[Function]}
-  onScrollEndDrag={[Function]}
-  removeClippedSubviews={false}
-  renderItem={[Function]}
-  scrollEventThrottle={50}
-  stickyHeaderIndices={Array []}
-  updateCellsBatchingPeriod={50}
-  viewabilityConfigCallbackPairs={Array []}
-  windowSize={21}
->
-  <View>
-    <View
-      onLayout={[Function]}
+          },
+        ]
+      }
     >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        <Text
-          bold={true}
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "marginBottom": -4,
-              },
-            ]
-          }
-        >
-          NATIONAL HEALTH SERVICE
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "lineHeight": 22,
-              },
-            ]
-          }
-        >
-          WHO
-        </Text>
-        <View
-          spacer={true}
-          style={Object {}}
-          xsmall={true}
-        />
-        <View
-          style={
-            Array [
-              Object {},
-              Object {
-                "backgroundColor": "#C9C9C9",
-              },
-              false,
-              Object {
-                "height": 2,
-              },
-            ]
-          }
-        />
-      </View>
-    </View>
+      WHO
+    </Text>
     <View
-      onLayout={[Function]}
-      style={null}
+      spacer={true}
+      style={Object {}}
+      xsmall={true}
+    />
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "backgroundColor": "#C9C9C9",
+          },
+          false,
+          Object {
+            "height": 2,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "paddingHorizontal": 24,
+        },
+      ]
+    }
+  >
+    <View
+      small={true}
+      spacer={true}
+      style={Object {}}
+    />
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "lineHeight": 22,
+          },
+        ]
+      }
     >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        <View
-          small={true}
-          spacer={true}
-          style={Object {}}
-        />
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "lineHeight": 22,
-              },
-            ]
-          }
-        >
-          BARCODES
-        </Text>
-        <RNSVGSvgView
-          align="xMidYMid"
-          bbHeight={52}
-          bbWidth="100%"
-          enableBackground="new 0 0 1000 1000"
-          focusable={false}
-          height={52}
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
-              },
-              Object {
-                "flex": 0,
-                "height": 52,
-                "width": "100%",
-              },
-            ]
-          }
-          vbHeight={1000}
-          vbWidth={1000}
-          version={1.1}
-          width="100%"
-          x="0px"
-          xml="<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+      BARCODES
+    </Text>
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={52}
+      bbWidth="100%"
+      enableBackground="new 0 0 1000 1000"
+      focusable={false}
+      height={52}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 52,
+            "width": "100%",
+          },
+        ]
+      }
+      vbHeight={1000}
+      vbWidth={1000}
+      version={1.1}
+      width="100%"
+      x="0px"
+      xml="<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
 <!DOCTYPE svg PUBLIC \\"-//W3C//DTD SVG 1.1//EN\\" \\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\\">
 <svg version=\\"1.1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 1000 1000\\" enable-background=\\"new 0 0 1000 1000\\" xml:space=\\"preserve\\">
 <metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
 <g><path d=\\"M973.7,263.2C941,165.2,834.8,91.7,720.5,91.7c-89.8,0-171.5,49-220.5,122.5C451,140.7,369.3,91.7,279.5,91.7c-114.3,0-212.3,73.5-245,171.5C10,304,10,344.8,10,402c16.3,163.3,171.5,343,465.5,498.2c8.2,0,16.3,8.2,24.5,8.2s8.2,0,16.3,0C532.7,900.2,965.5,687.8,990,402C990,344.8,990,304,973.7,263.2\\"/></g>
 </svg>"
-          xmlSpace="preserve"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          y="0px"
-        >
-          <RNSVGGroup>
-            <RNSVGGroup>
-              <RNSVGPath
-                d="M973.7,263.2C941,165.2,834.8,91.7,720.5,91.7c-89.8,0-171.5,49-220.5,122.5C451,140.7,369.3,91.7,279.5,91.7c-114.3,0-212.3,73.5-245,171.5C10,304,10,344.8,10,402c16.3,163.3,171.5,343,465.5,498.2c8.2,0,16.3,8.2,24.5,8.2s8.2,0,16.3,0C532.7,900.2,965.5,687.8,990,402C990,344.8,990,304,973.7,263.2"
-              />
-            </RNSVGGroup>
-          </RNSVGGroup>
-        </RNSVGSvgView>
-        <View
-          spacer={true}
-          style={Object {}}
-        />
-      </View>
-    </View>
-    <View
-      onLayout={[Function]}
+      xmlSpace="preserve"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      y="0px"
     >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "backgroundColor": "#C9C9C9",
-            },
-            Object {
-              "marginLeft": 24,
-              "marginRight": 24,
-            },
-            Object {
-              "height": 0.5,
-            },
-          ]
-        }
-      />
-      <View
-        spacer={true}
-        style={Object {}}
-      />
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#000",
-              "fontFamily": "System",
-              "fontSize": 16,
-            },
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Text>
-    </View>
+      <RNSVGGroup>
+        <RNSVGGroup>
+          <RNSVGPath
+            d="M973.7,263.2C941,165.2,834.8,91.7,720.5,91.7c-89.8,0-171.5,49-220.5,122.5C451,140.7,369.3,91.7,279.5,91.7c-114.3,0-212.3,73.5-245,171.5C10,304,10,344.8,10,402c16.3,163.3,171.5,343,465.5,498.2c8.2,0,16.3,8.2,24.5,8.2s8.2,0,16.3,0C532.7,900.2,965.5,687.8,990,402C990,344.8,990,304,973.7,263.2"
+          />
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      spacer={true}
+      style={Object {}}
+    />
   </View>
-</RCTScrollView>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "backgroundColor": "#C9C9C9",
+        },
+        Object {
+          "marginLeft": 24,
+          "marginRight": 24,
+        },
+        Object {
+          "height": 0.5,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "backgroundColor": "#C9C9C9",
+        },
+        Object {
+          "marginLeft": 24,
+          "marginRight": 24,
+        },
+        Object {
+          "height": 0.5,
+        },
+      ]
+    }
+  />
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "lineHeight": 16,
+          "paddingTop": 4,
+        },
+        Object {
+          "paddingHorizontal": 24,
+        },
+      ]
+    }
+  >
+    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+  </Text>
+</View>
 `;
 
 exports[`MedicalPrescriptionAttachments component when an attachment is present and prescriptionData is present should render it 1`] = `
-<RCTScrollView
-  ItemSeparatorComponent={[Function]}
-  ListFooterComponent={
-    <React.Fragment>
-      <ItemSeparatorComponent />
-      <Styled(ViewNB)
-        spacer={true}
-      />
-      <Styled(Text)
-        style={
-          Array [
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Styled(Text)>
-    </React.Fragment>
-  }
-  ListHeaderComponent={
-    <Styled(ViewNB)
-      style={
+<View
+  style={Object {}}
+>
+  <View
+    style={
+      Array [
+        Object {},
         Object {
           "paddingHorizontal": 24,
-        }
-      }
-    >
-      <Styled(Text)
-        bold={true}
-        style={
+        },
+      ]
+    }
+  >
+    <Text
+      bold={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "marginBottom": -4,
-          }
-        }
-      >
-        NATIONAL HEALTH SERVICE
-      </Styled(Text)>
-      <Styled(Text)
-        style={
+          },
+        ]
+      }
+    >
+      NATIONAL HEALTH SERVICE
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "lineHeight": 22,
-          }
-        }
-      >
-        WHO
-      </Styled(Text)>
-      <Styled(ViewNB)
-        spacer={true}
-        xsmall={true}
-      />
-      <ItemSeparatorComponent
-        bold={true}
-        noPadded={true}
-      />
-    </Styled(ViewNB)>
-  }
-  data={Array []}
-  disableVirtualization={false}
-  getItem={[Function]}
-  getItemCount={[Function]}
-  horizontal={false}
-  initialNumToRender={10}
-  keyExtractor={[Function]}
-  maxToRenderPerBatch={10}
-  onContentSizeChange={[Function]}
-  onEndReachedThreshold={2}
-  onLayout={[Function]}
-  onMomentumScrollEnd={[Function]}
-  onScroll={[Function]}
-  onScrollBeginDrag={[Function]}
-  onScrollEndDrag={[Function]}
-  removeClippedSubviews={false}
-  renderItem={[Function]}
-  scrollEventThrottle={50}
-  stickyHeaderIndices={Array []}
-  updateCellsBatchingPeriod={50}
-  viewabilityConfigCallbackPairs={Array []}
-  windowSize={21}
->
-  <View>
-    <View
-      onLayout={[Function]}
+          },
+        ]
+      }
     >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        <Text
-          bold={true}
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "marginBottom": -4,
-              },
-            ]
-          }
-        >
-          NATIONAL HEALTH SERVICE
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "lineHeight": 22,
-              },
-            ]
-          }
-        >
-          WHO
-        </Text>
-        <View
-          spacer={true}
-          style={Object {}}
-          xsmall={true}
-        />
-        <View
-          style={
-            Array [
-              Object {},
-              Object {
-                "backgroundColor": "#C9C9C9",
-              },
-              false,
-              Object {
-                "height": 2,
-              },
-            ]
-          }
-        />
-      </View>
-    </View>
+      WHO
+    </Text>
     <View
-      onLayout={[Function]}
-    >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "backgroundColor": "#C9C9C9",
-            },
-            Object {
-              "marginLeft": 24,
-              "marginRight": 24,
-            },
-            Object {
-              "height": 0.5,
-            },
-          ]
-        }
-      />
-      <View
-        spacer={true}
-        style={Object {}}
-      />
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#000",
-              "fontFamily": "System",
-              "fontSize": 16,
-            },
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Text>
-    </View>
+      spacer={true}
+      style={Object {}}
+      xsmall={true}
+    />
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "backgroundColor": "#C9C9C9",
+          },
+          false,
+          Object {
+            "height": 2,
+          },
+        ]
+      }
+    />
   </View>
-</RCTScrollView>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "backgroundColor": "#C9C9C9",
+        },
+        Object {
+          "marginLeft": 24,
+          "marginRight": 24,
+        },
+        Object {
+          "height": 0.5,
+        },
+      ]
+    }
+  />
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "lineHeight": 16,
+          "paddingTop": 4,
+        },
+        Object {
+          "paddingHorizontal": 24,
+        },
+      ]
+    }
+  >
+    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+  </Text>
+</View>
 `;
 
 exports[`MedicalPrescriptionAttachments component when an attachment is present should render it 1`] = `
-<RCTScrollView
-  ItemSeparatorComponent={[Function]}
-  ListFooterComponent={
-    <React.Fragment>
-      <ItemSeparatorComponent />
-      <Styled(ViewNB)
-        spacer={true}
-      />
-      <Styled(Text)
-        style={
-          Array [
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Styled(Text)>
-    </React.Fragment>
-  }
-  ListHeaderComponent={
-    <Styled(ViewNB)
-      style={
+<View
+  style={Object {}}
+>
+  <View
+    style={
+      Array [
+        Object {},
         Object {
           "paddingHorizontal": 24,
-        }
-      }
-    >
-      <Styled(Text)
-        bold={true}
-        style={
+        },
+      ]
+    }
+  >
+    <Text
+      bold={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "marginBottom": -4,
-          }
-        }
-      >
-        NATIONAL HEALTH SERVICE
-      </Styled(Text)>
-      <Styled(Text)
-        style={
+          },
+        ]
+      }
+    >
+      NATIONAL HEALTH SERVICE
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "lineHeight": 22,
-          }
-        }
-      >
-        WHO
-      </Styled(Text)>
-      <Styled(ViewNB)
-        spacer={true}
-        xsmall={true}
-      />
-      <ItemSeparatorComponent
-        bold={true}
-        noPadded={true}
-      />
-    </Styled(ViewNB)>
-  }
-  data={Array []}
-  disableVirtualization={false}
-  getItem={[Function]}
-  getItemCount={[Function]}
-  horizontal={false}
-  initialNumToRender={10}
-  keyExtractor={[Function]}
-  maxToRenderPerBatch={10}
-  onContentSizeChange={[Function]}
-  onEndReachedThreshold={2}
-  onLayout={[Function]}
-  onMomentumScrollEnd={[Function]}
-  onScroll={[Function]}
-  onScrollBeginDrag={[Function]}
-  onScrollEndDrag={[Function]}
-  removeClippedSubviews={false}
-  renderItem={[Function]}
-  scrollEventThrottle={50}
-  stickyHeaderIndices={Array []}
-  updateCellsBatchingPeriod={50}
-  viewabilityConfigCallbackPairs={Array []}
-  windowSize={21}
->
-  <View>
-    <View
-      onLayout={[Function]}
+          },
+        ]
+      }
     >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        <Text
-          bold={true}
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "marginBottom": -4,
-              },
-            ]
-          }
-        >
-          NATIONAL HEALTH SERVICE
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "lineHeight": 22,
-              },
-            ]
-          }
-        >
-          WHO
-        </Text>
-        <View
-          spacer={true}
-          style={Object {}}
-          xsmall={true}
-        />
-        <View
-          style={
-            Array [
-              Object {},
-              Object {
-                "backgroundColor": "#C9C9C9",
-              },
-              false,
-              Object {
-                "height": 2,
-              },
-            ]
-          }
-        />
-      </View>
-    </View>
+      WHO
+    </Text>
     <View
-      onLayout={[Function]}
-    >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "backgroundColor": "#C9C9C9",
-            },
-            Object {
-              "marginLeft": 24,
-              "marginRight": 24,
-            },
-            Object {
-              "height": 0.5,
-            },
-          ]
-        }
-      />
-      <View
-        spacer={true}
-        style={Object {}}
-      />
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#000",
-              "fontFamily": "System",
-              "fontSize": 16,
-            },
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Text>
-    </View>
+      spacer={true}
+      style={Object {}}
+      xsmall={true}
+    />
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "backgroundColor": "#C9C9C9",
+          },
+          false,
+          Object {
+            "height": 2,
+          },
+        ]
+      }
+    />
   </View>
-</RCTScrollView>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "backgroundColor": "#C9C9C9",
+        },
+        Object {
+          "marginLeft": 24,
+          "marginRight": 24,
+        },
+        Object {
+          "height": 0.5,
+        },
+      ]
+    }
+  />
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "lineHeight": 16,
+          "paddingTop": 4,
+        },
+        Object {
+          "paddingHorizontal": 24,
+        },
+      ]
+    }
+  >
+    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+  </Text>
+</View>
 `;
 
 exports[`MedicalPrescriptionAttachments component when the organization name is defined should render it 1`] = `
-<RCTScrollView
-  ItemSeparatorComponent={[Function]}
-  ListFooterComponent={
-    <React.Fragment>
-      <ItemSeparatorComponent />
-      <Styled(ViewNB)
-        spacer={true}
-      />
-      <Styled(Text)
-        style={
-          Array [
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Styled(Text)>
-    </React.Fragment>
-  }
-  ListHeaderComponent={
-    <Styled(ViewNB)
-      style={
+<View
+  style={Object {}}
+>
+  <View
+    style={
+      Array [
+        Object {},
         Object {
           "paddingHorizontal": 24,
-        }
-      }
-    >
-      <Styled(Text)
-        bold={true}
-        style={
+        },
+      ]
+    }
+  >
+    <Text
+      bold={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "marginBottom": -4,
-          }
-        }
-      >
-        NATIONAL HEALTH SERVICE
-      </Styled(Text)>
-      <Styled(Text)
-        style={
+          },
+        ]
+      }
+    >
+      NATIONAL HEALTH SERVICE
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "lineHeight": 22,
-          }
-        }
-      >
-        WHO
-      </Styled(Text)>
-      <Styled(ViewNB)
-        spacer={true}
-        xsmall={true}
-      />
-      <ItemSeparatorComponent
-        bold={true}
-        noPadded={true}
-      />
-    </Styled(ViewNB)>
-  }
-  data={Array []}
-  disableVirtualization={false}
-  getItem={[Function]}
-  getItemCount={[Function]}
-  horizontal={false}
-  initialNumToRender={10}
-  keyExtractor={[Function]}
-  maxToRenderPerBatch={10}
-  onContentSizeChange={[Function]}
-  onEndReachedThreshold={2}
-  onLayout={[Function]}
-  onMomentumScrollEnd={[Function]}
-  onScroll={[Function]}
-  onScrollBeginDrag={[Function]}
-  onScrollEndDrag={[Function]}
-  removeClippedSubviews={false}
-  renderItem={[Function]}
-  scrollEventThrottle={50}
-  stickyHeaderIndices={Array []}
-  updateCellsBatchingPeriod={50}
-  viewabilityConfigCallbackPairs={Array []}
-  windowSize={21}
->
-  <View>
-    <View
-      onLayout={[Function]}
+          },
+        ]
+      }
     >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        <Text
-          bold={true}
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "marginBottom": -4,
-              },
-            ]
-          }
-        >
-          NATIONAL HEALTH SERVICE
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "lineHeight": 22,
-              },
-            ]
-          }
-        >
-          WHO
-        </Text>
-        <View
-          spacer={true}
-          style={Object {}}
-          xsmall={true}
-        />
-        <View
-          style={
-            Array [
-              Object {},
-              Object {
-                "backgroundColor": "#C9C9C9",
-              },
-              false,
-              Object {
-                "height": 2,
-              },
-            ]
-          }
-        />
-      </View>
-    </View>
+      WHO
+    </Text>
     <View
-      onLayout={[Function]}
-    >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "backgroundColor": "#C9C9C9",
-            },
-            Object {
-              "marginLeft": 24,
-              "marginRight": 24,
-            },
-            Object {
-              "height": 0.5,
-            },
-          ]
-        }
-      />
-      <View
-        spacer={true}
-        style={Object {}}
-      />
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#000",
-              "fontFamily": "System",
-              "fontSize": 16,
-            },
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Text>
-    </View>
+      spacer={true}
+      style={Object {}}
+      xsmall={true}
+    />
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "backgroundColor": "#C9C9C9",
+          },
+          false,
+          Object {
+            "height": 2,
+          },
+        ]
+      }
+    />
   </View>
-</RCTScrollView>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "backgroundColor": "#C9C9C9",
+        },
+        Object {
+          "marginLeft": 24,
+          "marginRight": 24,
+        },
+        Object {
+          "height": 0.5,
+        },
+      ]
+    }
+  />
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "lineHeight": 16,
+          "paddingTop": 4,
+        },
+        Object {
+          "paddingHorizontal": 24,
+        },
+      ]
+    }
+  >
+    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+  </Text>
+</View>
 `;
 
 exports[`MedicalPrescriptionAttachments component with default properties should render 1`] = `
-<RCTScrollView
-  ItemSeparatorComponent={[Function]}
-  ListFooterComponent={
-    <React.Fragment>
-      <ItemSeparatorComponent />
-      <Styled(ViewNB)
-        spacer={true}
-      />
-      <Styled(Text)
-        style={
-          Array [
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Styled(Text)>
-    </React.Fragment>
-  }
-  ListHeaderComponent={
-    <Styled(ViewNB)
-      style={
+<View
+  style={Object {}}
+>
+  <View
+    style={
+      Array [
+        Object {},
         Object {
           "paddingHorizontal": 24,
-        }
-      }
-    >
-      <Styled(Text)
-        bold={true}
-        style={
+        },
+      ]
+    }
+  >
+    <Text
+      bold={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "marginBottom": -4,
-          }
-        }
-      >
-        NATIONAL HEALTH SERVICE
-      </Styled(Text)>
-      <Styled(ViewNB)
-        spacer={true}
-        xsmall={true}
-      />
-      <ItemSeparatorComponent
-        bold={true}
-        noPadded={true}
-      />
-    </Styled(ViewNB)>
-  }
-  data={Array []}
-  disableVirtualization={false}
-  getItem={[Function]}
-  getItemCount={[Function]}
-  horizontal={false}
-  initialNumToRender={10}
-  keyExtractor={[Function]}
-  maxToRenderPerBatch={10}
-  onContentSizeChange={[Function]}
-  onEndReachedThreshold={2}
-  onLayout={[Function]}
-  onMomentumScrollEnd={[Function]}
-  onScroll={[Function]}
-  onScrollBeginDrag={[Function]}
-  onScrollEndDrag={[Function]}
-  removeClippedSubviews={false}
-  renderItem={[Function]}
-  scrollEventThrottle={50}
-  stickyHeaderIndices={Array []}
-  updateCellsBatchingPeriod={50}
-  viewabilityConfigCallbackPairs={Array []}
-  windowSize={21}
->
-  <View>
-    <View
-      onLayout={[Function]}
+          },
+        ]
+      }
     >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        <Text
-          bold={true}
-          style={
-            Array [
-              Object {
-                "color": "#000",
-                "fontFamily": "System",
-                "fontSize": 16,
-              },
-              Object {
-                "marginBottom": -4,
-              },
-            ]
-          }
-        >
-          NATIONAL HEALTH SERVICE
-        </Text>
-        <View
-          spacer={true}
-          style={Object {}}
-          xsmall={true}
-        />
-        <View
-          style={
-            Array [
-              Object {},
-              Object {
-                "backgroundColor": "#C9C9C9",
-              },
-              false,
-              Object {
-                "height": 2,
-              },
-            ]
-          }
-        />
-      </View>
-    </View>
+      NATIONAL HEALTH SERVICE
+    </Text>
     <View
-      onLayout={[Function]}
-    >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "backgroundColor": "#C9C9C9",
-            },
-            Object {
-              "marginLeft": 24,
-              "marginRight": 24,
-            },
-            Object {
-              "height": 0.5,
-            },
-          ]
-        }
-      />
-      <View
-        spacer={true}
-        style={Object {}}
-      />
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#000",
-              "fontFamily": "System",
-              "fontSize": 16,
-            },
-            Object {
-              "lineHeight": 16,
-            },
-            Object {
-              "paddingHorizontal": 24,
-            },
-          ]
-        }
-      >
-        Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-      </Text>
-    </View>
+      spacer={true}
+      style={Object {}}
+      xsmall={true}
+    />
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "backgroundColor": "#C9C9C9",
+          },
+          false,
+          Object {
+            "height": 2,
+          },
+        ]
+      }
+    />
   </View>
-</RCTScrollView>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "backgroundColor": "#C9C9C9",
+        },
+        Object {
+          "marginLeft": 24,
+          "marginRight": 24,
+        },
+        Object {
+          "height": 0.5,
+        },
+      ]
+    }
+  />
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "lineHeight": 16,
+          "paddingTop": 4,
+        },
+        Object {
+          "paddingHorizontal": 24,
+        },
+      ]
+    }
+  >
+    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+  </Text>
+</View>
 `;

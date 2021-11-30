@@ -3,50 +3,58 @@
 exports[`MessageDetailData component when service's contact detail are not defined should match the snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "backgroundColor": "#F5F6F7",
-        "padding": 24,
-      },
-    ]
+    Object {
+      "backgroundColor": "#F5F6F7",
+      "padding": 24,
+    }
   }
 >
-  <Text
+  <View
     style={
       Object {
-        "color": "#000",
-        "fontFamily": "System",
-        "fontSize": 16,
+        "flex": 1,
+        "flexDirection": "row",
       }
     }
   >
-    Date and time sending:
     <Text
-      bold={true}
       style={
         Object {
           "color": "#000",
           "fontFamily": "System",
           "fontSize": 16,
         }
+      }
+    >
+      Date and time sending:
+    </Text>
+    <Text
+      bold={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
       }
     >
        10/18 - 16.00
     </Text>
-  </Text>
-  <Text
+  </View>
+  <View
     style={
       Object {
-        "color": "#000",
-        "fontFamily": "System",
-        "fontSize": 16,
+        "flex": 1,
+        "flexDirection": "row",
       }
     }
   >
-    Sender:
     <Text
-      bold={true}
       style={
         Object {
           "color": "#000",
@@ -55,18 +63,32 @@ exports[`MessageDetailData component when service's contact detail are not defin
         }
       }
     >
+      Sender:
+    </Text>
+    <Text
+      bold={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
        Ċentru tas-Saħħa
     </Text>
-  </Text>
+  </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "display": "flex",
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <Text
@@ -95,6 +117,9 @@ exports[`MessageDetailData component when service's contact detail are not defin
       onPress={[Function]}
       style={
         Array [
+          Object {
+            "flex": 1,
+          },
           Object {
             "fontSize": 16,
             "textDecorationLine": "underline",
