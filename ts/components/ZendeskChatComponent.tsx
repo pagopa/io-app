@@ -16,7 +16,7 @@ import {
   ZendeskConfig,
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
-} from "../utils/zendesk";
+} from "../utils/supportAssistance";
 import { profileSelector } from "../store/reducers/profile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import IconFont from "./ui/IconFont";
