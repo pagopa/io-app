@@ -1016,8 +1016,7 @@ wallet:
           row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
           row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
           row2Description2: ". You'll see the right amount before confirming the payment."
-          row3Description1: "Privacy Policy"
-          row3Description2: "Terms and Conditions"
+          row3Description1: "{{psp}}’s Terms and Conditions and Privacy Policy apply"
         whatIsPspBottomSheet:
           title: "What is a payment provider?"
           body: "The Payment Service Provider (PSP) collects the amount on behalf of the Payee, and it may charge a fee for its service.\nWhenever you'll pay, you can to choose the provider that suits you best, whether you're a customer or not."

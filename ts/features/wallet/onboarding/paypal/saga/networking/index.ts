@@ -1,12 +1,17 @@
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
+import { Option } from "fp-ts/lib/Option";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { searchPaypalPsp } from "../../store/actions";
 import {
+  searchPaypalPsp,
+  walletAddPaypalRefreshPMToken
+} from "../../store/actions";
+import {
+  getError,
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
@@ -20,9 +25,7 @@ const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
   logoUrl: getPayPalPspIconUrl(psp.codiceAbi),
   name: psp.ragioneSociale,
   fee: psp.maxFee as NonNegativeNumber,
-  privacyUrl: psp.privacyUrl,
-  // TODO see https://pagopa.atlassian.net/browse/IA-436
-  tosUrl: ""
+  privacyUrl: psp.privacyUrl
 });
 
 /**
@@ -65,5 +68,28 @@ export function* handlePaypalSearchPsp(
     }
   } catch (e) {
     yield put(searchPaypalPsp.failure(getNetworkError(e)));
+  }
+}
+
+// refresh PM token (it is needed in the webview) to ensure it won't expire during the checkout process
+export function* refreshPMToken(
+  sessionManager: SessionManager<PaymentManagerToken>
+) {
+  try {
+    // If the request for the new token fails a new Error is raised
+    const pagoPaToken: Option<PaymentManagerToken> = yield call(
+      sessionManager.getNewToken
+    );
+    if (pagoPaToken.isSome()) {
+      yield put(walletAddPaypalRefreshPMToken.success(pagoPaToken.value));
+    } else {
+      yield put(
+        walletAddPaypalRefreshPMToken.failure(
+          new Error("cant load pm session token")
+        )
+      );
+    }
+  } catch (e) {
+    yield put(walletAddPaypalRefreshPMToken.failure(getError(e)));
   }
 }
