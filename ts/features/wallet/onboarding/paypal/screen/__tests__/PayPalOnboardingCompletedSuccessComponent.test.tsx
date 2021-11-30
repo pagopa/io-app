@@ -4,10 +4,10 @@ import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import PayPalOnboardingCompletedSuccessScreen from "../PayPalOnboardingCompletedSuccessScreen";
+import PayPalOnboardingCompletedSuccessComponent from "../PayPalOnboardingCompletedSuccessComponent";
 import { setLocale } from "../../../../../../i18n";
 
-describe("PayPalOnboardingCompletedSuccessScreen", () => {
+describe("PayPalOnboardingCompletedSuccessComponent", () => {
   beforeAll(() => {
     setLocale("it");
   });
@@ -22,7 +22,7 @@ describe("PayPalOnboardingCompletedSuccessScreen", () => {
   it(`screen should be defined`, () => {
     const render = renderComponent(store);
     expect(
-      render.component.queryByTestId("PayPalOnboardingCompletedSuccessScreen")
+      render.component.queryByTestId("InfoScreenComponent")
     ).not.toBeNull();
   });
 
@@ -34,7 +34,7 @@ describe("PayPalOnboardingCompletedSuccessScreen", () => {
 
 const renderComponent = (store: Store) => ({
   component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    PayPalOnboardingCompletedSuccessScreen,
+    PayPalOnboardingCompletedSuccessComponent,
     "N/A",
     {},
     store

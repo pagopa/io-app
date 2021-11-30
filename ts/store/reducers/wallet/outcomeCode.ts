@@ -118,7 +118,7 @@ const fallbackOutcomeCodes = (): OutcomeCode => ({
 // This function extracts, given an Option<string>, the outcomeCode object from the OutcomeCodesPrintable object
 // that contains the list of outcome codes.
 // If the string is none or if the the code is not a key of the OutcomeCodesPrintable the fallback outcome code object is returned.
-const extractOutcomeCode = (code: Option<string>): Option<OutcomeCode> =>
+export const extractOutcomeCode = (code: Option<string>): Option<OutcomeCode> =>
   code.fold(some(fallbackOutcomeCodes()), c =>
     OutcomeCodesKey.decode(c).fold(
       _ => some(fallbackOutcomeCodes()),

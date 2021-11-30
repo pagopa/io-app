@@ -281,20 +281,6 @@ export const paypalListSelector = createSelector(
 );
 
 /**
- * Return a {@link PayPalPaymentMethod} by walletId
- * Return undefined if not in list
- */
-export const payPalByIdSelector = createSelector(
-  [paypalListSelector, (_: GlobalState, id: number) => id],
-  (potPaypalList, id): PayPalPaymentMethod | undefined =>
-    pot.toUndefined(
-      pot.map(potPaypalList, paypalList =>
-        paypalList.find(pp => pp.idWallet === id)
-      )
-    )
-);
-
-/**
  * Return a privative card list in the wallet
  */
 export const privativeListSelector = createSelector(
@@ -312,6 +298,17 @@ export const satispayListSelector = createSelector(
   [paymentMethodsSelector],
   (paymentMethodPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
     pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isSatispay))
+);
+
+/**
+ * Return the paypal (only 1 can be in the wallet) payment method
+ */
+export const paypalSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<PayPalPaymentMethod, Error> =>
+    pot.mapNullable(paymentMethodPot, paymentMethod =>
+      paymentMethod.find(isPayPal)
+    )
 );
 
 /**

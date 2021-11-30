@@ -3,8 +3,10 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { Option } from "fp-ts/lib/Option";
 import { NetworkError } from "../../../../../../utils/errors";
 import { IOPayPalPsp } from "../../types";
+import { PaymentManagerToken } from "../../../../../../types/pagopa";
 
 /**
  * Request the available psp for Paypal
@@ -43,7 +45,22 @@ export const walletAddPaypalPspSelected = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_PSP_SELECTED"
 )<IOPayPalPsp>();
 
+/**
+ * user is going to onboard paypal, a fresh PM token is required
+ */
+export const walletAddPaypalRefreshPMToken = createAsyncAction(
+  "WALLET_ONBOARDING_PAYPAL_REFRESH_PM_TOKEN_REQUEST",
+  "WALLET_ONBOARDING_PAYPAL_REFRESH_PM_TOKEN_SUCCESS",
+  "WALLET_ONBOARDING_PAYPAL_REFRESH_PM_TOKEN_FAILURE"
+)<void, PaymentManagerToken, Error>();
+
+export const walletAddPaypalOutcome = createStandardAction(
+  "WALLET_ONBOARDING_PAYPAL_OUTCOME_CODE"
+)<Option<string>>();
+
 export type PayPalOnboardingActions =
   | ActionType<typeof searchPaypalPsp>
   | ActionType<typeof walletAddPaypalStart>
-  | ActionType<typeof walletAddPaypalPspSelected>;
+  | ActionType<typeof walletAddPaypalPspSelected>
+  | ActionType<typeof walletAddPaypalRefreshPMToken>
+  | ActionType<typeof walletAddPaypalOutcome>;
