@@ -223,6 +223,16 @@ const MessageList = ({
     />
   );
 
+  const renderListFooter = () => {
+    if (isLoadingMore || isReloadingAll) {
+      return <Loader />;
+    }
+    if (messages.length > 0 && !nextCursor) {
+      return <EdgeBorderComponent />;
+    }
+    return null;
+  };
+
   return (
     <>
       {/* in iOS refresh indicator is shown only when user does pull to refresh on list
@@ -263,15 +273,7 @@ const MessageList = ({
         onLayout={handleOnLayoutChange}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.1}
-        ListFooterComponent={() => {
-          if (isLoadingMore || isReloadingAll) {
-            return <Loader />;
-          }
-          if (messages.length > 0 && !nextCursor) {
-            <EdgeBorderComponent />;
-          }
-          return null;
-        }}
+        ListFooterComponent={renderListFooter}
       />
     </>
   );

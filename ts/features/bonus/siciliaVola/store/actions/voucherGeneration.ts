@@ -138,6 +138,13 @@ export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
 )<string, ReadonlyArray<Municipality>, NetworkError>();
 
 /**
+ * Reset the available municipalities
+ */
+export const svGenerateVoucherResetAvailableMunicipality = createStandardAction(
+  "SV_GENERATE_VOUCHER_SELECT_RESET_AVAILABLE_MUNICIPALITY"
+)<void>();
+
+/**
  * get and handle the voucher pdf download
  */
 export const svGetPdfVoucher = createAsyncAction(
@@ -162,4 +169,5 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherGeneratedVoucher>
   | ActionType<typeof svGenerateVoucherAvailableState>
   | ActionType<typeof svGenerateVoucherAvailableMunicipality>
-  | ActionType<typeof svGetPdfVoucher>;
+  | ActionType<typeof svGetPdfVoucher>
+  | ActionType<typeof svGenerateVoucherResetAvailableMunicipality>;

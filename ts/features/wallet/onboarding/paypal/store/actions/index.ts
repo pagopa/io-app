@@ -56,7 +56,7 @@ export const walletAddPaypalRefreshPMToken = createAsyncAction(
   "WALLET_ONBOARDING_PAYPAL_REFRESH_PM_TOKEN_FAILURE"
 )<void, PaymentManagerToken, Error>();
 
-export const walletAddPaypaOutcome = createStandardAction(
+export const walletAddPaypalOutcome = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_OUTCOME_CODE"
 )<Option<string>>();
 
@@ -65,4 +65,4 @@ export type PayPalOnboardingActions =
   | ActionType<typeof walletAddPaypalStart>
   | ActionType<typeof walletAddPaypalPspSelected>
   | ActionType<typeof walletAddPaypalRefreshPMToken>
-  | ActionType<typeof walletAddPaypaOutcome>;
+  | ActionType<typeof walletAddPaypalOutcome>;
