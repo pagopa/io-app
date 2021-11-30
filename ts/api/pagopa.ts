@@ -60,6 +60,8 @@ import {
   GetPaypalPspsUsingGETT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
+  getPspListV2UsingGETDefaultDecoder,
+  GetPspListV2UsingGETT,
   getPspUsingGETDecoder,
   GetPspUsingGETT,
   getSelectedPspUsingGETDecoder,
@@ -622,6 +624,15 @@ const searchPayPalPsp: GetPaypalPspsUsingGETT = {
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPaypalPspsUsingGETDefaultDecoder()
 };
+
+const getPspListV2: GetPspListV2UsingGETT = {
+  method: "get",
+  url: ({ idPayment }) => `/v2/payments/${idPayment}/psps`,
+  query: ({ language, idWallet }) => ({ language, idWallet }),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPspListV2UsingGETDefaultDecoder()
+};
+
 const withPaymentManagerToken =
   <P extends { Bearer: string; LookUpId?: string }, R>(
     f: (p: P) => Promise<R>
@@ -844,7 +855,15 @@ export function PaymentManagerClient(
       withPaymentManagerToken(
         createFetchRequestForApi(searchPayPalPsp, options)
       )
-    )({ language: getLocalePrimaryWithFallback() })
+    )({ language: getLocalePrimaryWithFallback() }),
+    getPspV2: (payload: { idWallet: number; idPayment: string }) =>
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(getPspListV2, options))
+      )({
+        language: getLocalePrimaryWithFallback(),
+        idWallet: payload.idWallet.toString(),
+        idPayment: payload.idPayment
+      })
   };
 }
 
