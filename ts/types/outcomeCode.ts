@@ -31,6 +31,7 @@ const OutcomeCodes = {
   "7": OutcomeCode,
   "8": OutcomeCode,
   "10": OutcomeCode,
+  "15": OutcomeCode,
   "18": OutcomeCode,
   "19": OutcomeCode
 };

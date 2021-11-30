@@ -1503,6 +1503,9 @@ wallet:
     code19:
       title: "TMP 19"
       description: "TMP 19"
+    code15:
+      title: "Abilita il metodo per effettuare pagamenti in app"
+      description: "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
     addCreditCard:
       success:
         title: "Your card has been successfully added!"

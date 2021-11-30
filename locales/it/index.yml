@@ -1520,6 +1520,9 @@ wallet:
     code10:
       title: "Autorizzazione negata"
       description: "Probabilmente hai superato il massimale del tuo metodo. Verifica con la tua banca prima di riprovare."
+    code15:
+      title: "Abilita il metodo per effettuare pagamenti in app"
+      description: "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
     code18:
       title: "TMP 18"
       description: "TMP 18"

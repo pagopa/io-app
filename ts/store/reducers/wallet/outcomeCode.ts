@@ -16,6 +16,7 @@ import authorizationDenied from "../../../../img/servicesStatus/error-detail-ico
 import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
 import sessionExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import cardProblemOrOperationCanceled from "../../../../img/wallet/errors/payment-unknown-icon.png";
+import doubtImage from "../../../../img/pictograms/doubt.png";
 import { GlobalState } from "../types";
 
 export type OutcomeCodeState = {
@@ -97,6 +98,18 @@ const OutcomeCodesPrintable = (): OutcomeCodes => ({
       "it-IT": I18n.t("wallet.outcomeMessage.code10.description")
     },
     icon: authorizationDenied,
+    status: "errorBlocking"
+  },
+  "15": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code15.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code15.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code15.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code15.description")
+    },
+    icon: doubtImage,
     status: "errorBlocking"
   },
   "18": {
