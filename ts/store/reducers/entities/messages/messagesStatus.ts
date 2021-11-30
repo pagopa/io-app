@@ -170,12 +170,13 @@ export const isMessageRead = (
  * @param state
  * @param messageId
  */
-export const getMessageStatus =
-  (state: GlobalState) =>
-  (messageId: string): MessageStatus =>
-    fromNullable(state.entities.messagesStatus[messageId]).getOrElse({
+export const getMessageStatus = createSelector(
+  [messagesStatusSelector, (_: GlobalState, messageId: string) => messageId],
+  (messagesStatus, messageId) =>
+    fromNullable(messagesStatus[messageId]).getOrElse({
       isRead: false,
       isArchived: false
-    });
+    })
+);
 
 export default reducer;

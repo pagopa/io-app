@@ -299,7 +299,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     allMessages,
-    getMessageStatus: getMessageStatus(state),
+    getMessageStatus: (id: string) => getMessageStatus(state, id),
     error,
     hasPaidBadge: isNoticePaid(state),
     isLoadingMore: isLoadingNextPage(state),

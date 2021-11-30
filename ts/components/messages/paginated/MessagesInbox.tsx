@@ -42,7 +42,7 @@ const MessagesInbox = ({ navigateToMessageDetail }: Props) => {
     <View style={styles.listWrapper}>
       <View style={styles.listContainer}>
         <MessageList
-          onPressItem={(message: UIMessage) => navigateToMessageDetail(message)}
+          onPressItem={navigateToMessageDetail}
           ListEmptyComponent={ListEmptyComponent}
         />
       </View>
