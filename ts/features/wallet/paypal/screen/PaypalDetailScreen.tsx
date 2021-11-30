@@ -5,13 +5,10 @@ import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import PaypalCard from "../PaypalCard";
 import { GlobalState } from "../../../../store/reducers/types";
-import { PayPalPaymentMethod } from "../../../../types/pagopa";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { paypalSelector } from "../../../../store/reducers/wallet/wallets";
 
-type Props = { paypal: PayPalPaymentMethod } & ReturnType<
-  typeof mapStateToProps
->;
+type Props = ReturnType<typeof mapStateToProps>;
 
 /**
  * Detail screen for a paypal payment method
