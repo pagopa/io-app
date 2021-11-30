@@ -30,6 +30,7 @@ import {
   addCreditCardWebViewEnd,
   refreshPMTokenWhileAddCreditCard
 } from "../../actions/wallet/wallets";
+import { walletAddPaypalRefreshPMToken } from "../../../features/wallet/onboarding/paypal/store/actions";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -280,17 +281,20 @@ const reducer = (
         paymentStartPayload: action.payload,
         pmSessionToken: remoteLoading
       };
+    case getType(walletAddPaypalRefreshPMToken.request):
     case getType(refreshPMTokenWhileAddCreditCard.request):
       return {
         ...state,
         pmSessionToken: remoteLoading
       };
+    case getType(walletAddPaypalRefreshPMToken.success):
     case getType(refreshPMTokenWhileAddCreditCard.success):
     case getType(paymentExecuteStart.success):
       return {
         ...state,
         pmSessionToken: remoteReady(action.payload)
       };
+    case getType(walletAddPaypalRefreshPMToken.failure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(paymentExecuteStart.failure):
       return {
