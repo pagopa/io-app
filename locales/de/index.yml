@@ -858,6 +858,7 @@ messages:
     senderInfo:  Absenderdienst unbekannt
     serviceInfo: Service-Info unbekannt
     departmentInfo: Abteilungsinfo unbekannt
+    noTitle: Kein Titel
   loadingErrorTitle: Das Laden der Mitteilungen ist fehlgeschlagen
   cta:
     archive: Archiviert

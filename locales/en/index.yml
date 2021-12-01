@@ -1557,6 +1557,7 @@ messages:
     senderInfo:  Sender service unknown
     serviceInfo: Service info unknown
     departmentInfo: Department info unknown
+    noTitle: No title
   loadingErrorTitle: Loading messages has failed
   cta:
     archive: Archive
