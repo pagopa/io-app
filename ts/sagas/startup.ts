@@ -107,6 +107,7 @@ import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWit
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
 import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
 import watchReloadAllMessages from "./messages/watchReloadAllMessages";
+import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -461,6 +462,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield fork(watchLoadNextPageMessages, backendClient.getMessages);
     yield fork(watchLoadPreviousPageMessages, backendClient.getMessages);
     yield fork(watchReloadAllMessages, backendClient.getMessages);
+    yield fork(watchLoadMessageDetails, backendClient.getMessage);
   }
 
   // Load a message when requested

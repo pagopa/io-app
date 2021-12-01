@@ -54,7 +54,7 @@ const MessagesHomeScreen = ({
 
   const navigateToMessageDetail = (message: UIMessage) => {
     // TODO: https://pagopa.atlassian.net/browse/IA-463
-    // if message is a GreenPass, navigate to the dedicated navigator
+    // if message is a EUCovidCertificate, navigate to the dedicated navigator
     //   navigateToEuCovidCertificate(
     //     message.content.eu_covid_cert.auth_code as EUCovidCertificateAuthCode,
     //     message.id
