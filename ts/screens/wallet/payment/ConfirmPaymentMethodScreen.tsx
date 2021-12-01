@@ -37,16 +37,18 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
-import { PaymentMethod, Psp, Wallet } from "../../../types/pagopa";
+import { isRawPayPal, PaymentMethod, Psp, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { PayloadForAction } from "../../../types/utils";
 import {
   paymentStartPayloadSelector,
   PaymentStartWebViewPayload,
-  pmSessionTokenSelector
+  pmSessionTokenSelector,
+  pspV2Selector
 } from "../../../store/reducers/wallet/payment";
 import {
+  getValueOrElse,
   isError,
   isLoading,
   isReady
@@ -186,7 +188,10 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const idPayment: string = props.navigation.getParam("idPayment");
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
-  const fee = maybePsp.fold(undefined, psp => psp.fixedCost.amount);
+  const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
+  const fee = isPayingWithPaypal
+    ? props.payPalPsp?.fee
+    : maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
   const totalAmount = maybePsp.fold(
     verifica.importoSingoloVersamento,
@@ -265,22 +270,27 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           <PaymentMethodCard
             paymentMethod={props.getPaymentMethodById(wallet.idWallet)}
           />
-          <View spacer={true} />
-          {maybePsp.isNone() ? (
-            <H4 weight={"Regular"}>{I18n.t("payment.noPsp")}</H4>
-          ) : (
-            <H4 weight={"Regular"}>
-              {I18n.t("payment.currentPsp")}
-              <H4>{` ${maybePsp.value.businessName}`}</H4>
-            </H4>
+          {/* show change psp only if the payment method is a credit card */}
+          {!isPayingWithPaypal && (
+            <>
+              <View spacer={true} />
+              {maybePsp.isNone() ? (
+                <H4 weight={"Regular"}>{I18n.t("payment.noPsp")}</H4>
+              ) : (
+                <H4 weight={"Regular"}>
+                  {I18n.t("payment.currentPsp")}
+                  <H4>{` ${maybePsp.value.businessName}`}</H4>
+                </H4>
+              )}
+              <Link onPress={props.pickPsp} weight={"Bold"}>
+                {I18n.t("payment.changePsp")}
+              </Link>
+              <View spacer={true} large={true} />
+              <Link onPress={showHelp} testID="why-a-fee">
+                {I18n.t("wallet.whyAFee.title")}
+              </Link>
+            </>
           )}
-          <Link onPress={props.pickPsp} weight={"Bold"}>
-            {I18n.t("payment.changePsp")}
-          </Link>
-          <View spacer={true} large={true} />
-          <Link onPress={showHelp} testID="why-a-fee">
-            {I18n.t("wallet.whyAFee.title")}
-          </Link>
         </View>
       </Content>
 
@@ -355,11 +365,15 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const pmSessionToken = pmSessionTokenSelector(state);
   const paymentStartPayload = paymentStartPayloadSelector(state);
+  const payPalPsp = getValueOrElse(pspV2Selector(state), []).find(
+    psp => psp.defaultPsp
+  );
   const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
     isReady(pmSessionToken) && paymentStartPayload
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
+    payPalPsp,
     getPaymentMethodById: (idWallet: number) =>
       paymentMethodByIdSelector(state, idWallet),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
