@@ -269,7 +269,7 @@ export const getCTA = (
  */
 export const getMessageCTA = (
   markdown: MessageBodyMarkdown,
-  serviceMetadata?: ServicePublicService_metadata,
+  serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
 ): Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
 
