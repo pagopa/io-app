@@ -63,7 +63,7 @@ const ZendeskChatComponent = () => {
       .getOrElse({});
 
     setUserIdentity(zendeskIdentity);
-  }, [zendeskToken, profile, zendeskConfig]);
+  }, [zendeskToken, profile]);
 
   return (
     <>
