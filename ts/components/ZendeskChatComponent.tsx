@@ -1,11 +1,8 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { GlobalState } from "../store/reducers/types";
-import { isLoggedInWithSessionInfo } from "../store/reducers/authentication";
-import { Dispatch } from "../store/actions/types";
+import { zendeskTokenSelector } from "../store/reducers/authentication";
 import {
   AnonymousIdentity,
   initSupportAssistance,
@@ -22,12 +19,11 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import IconFont from "./ui/IconFont";
 import { IOColors } from "./core/variables/IOColors";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { useIOSelector } from "../store/hooks";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
-  const { zendeskToken, profile } = props;
+const ZendeskChatComponent = () => {
+  const zendeskToken = useIOSelector(zendeskTokenSelector);
+  const profile = useIOSelector(profileSelector);
   const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskConfig>(
     zendeskToken
       ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
@@ -97,14 +93,4 @@ const ZendeskChatComponent: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  zendeskToken: isLoggedInWithSessionInfo(state.authentication)
-    ? (state.authentication.sessionInfo.zendeskToken as string)
-    : undefined,
-  profile: profileSelector(state)
-});
-const mapDispatchToProps = (_: Dispatch) => ({});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ZendeskChatComponent);
+export default ZendeskChatComponent;
