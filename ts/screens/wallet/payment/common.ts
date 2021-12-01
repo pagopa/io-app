@@ -20,6 +20,7 @@ import {
   pspsForLocale,
   walletHasFavoriteAvailablePsp
 } from "../../../utils/payment";
+import { getPayPalPspIconUrl } from "../../../utils/paymentMethod";
 
 /**
  * Common action dispatchers for payment screens
@@ -86,7 +87,8 @@ export const dispatchPickPspOrConfirm =
   ) => {
     if (maybeSelectedWallet.isSome()) {
       const selectedWallet = maybeSelectedWallet.value;
-      console.log(isRawPayPal(selectedWallet.paymentMethod));
+      // if the paying method is paypal retrieve psp from new API
+      // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/445844411/Modifiche+al+flusso+di+pagamento
       if (isRawPayPal(selectedWallet.paymentMethod)) {
         dispatch(
           pspForPaymentV2WithCallbacks({
@@ -105,7 +107,7 @@ export const dispatchPickPspOrConfirm =
                 idPayment,
                 psps: pspList.map<Psp>(p => ({
                   id: parseInt(p.idPsp, 10),
-                  logoPSP: "",
+                  logoPSP: getPayPalPspIconUrl(p.codiceAbi),
                   fixedCost: {
                     currency: "EUR",
                     amount: p.fee,
