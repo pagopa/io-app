@@ -1,7 +1,7 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { call, Effect, put, select } from "redux-saga/effects";
-import { ActionType } from "typesafe-actions";
+import { call, Effect, put, select, take } from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 
 import { BackendClient } from "../../api/backend";
@@ -18,7 +18,8 @@ import {
   paymentIdPolling,
   paymentUpdateWalletPsp,
   paymentVerifica,
-  pspForPaymentV2
+  pspForPaymentV2,
+  pspForPaymentV2WithCallbacks
 } from "../../store/actions/wallet/payment";
 import {
   fetchPsp,
@@ -869,5 +870,24 @@ export function* getPspV2(
     }
   } catch (e) {
     yield put(pspForPaymentV2.failure(getNetworkError(e)));
+  }
+}
+
+/**
+ * @deprecated this function request and handle the psp list by using a callback approach
+ * it should not be used. Use instead {@link pspForPaymentV2} action and relative saga {@link getPspV2}
+ */
+export function* getPspV2WithCallbacks(
+  action: ActionType<typeof pspForPaymentV2WithCallbacks>
+) {
+  yield put(pspForPaymentV2.request(action.payload));
+  const result = yield take([
+    getType(pspForPaymentV2.success),
+    getType(pspForPaymentV2.failure)
+  ]);
+  if (isActionOf(pspForPaymentV2.failure, result)) {
+    action.payload.onFailure();
+  } else if (isActionOf(pspForPaymentV2.success, result)) {
+    action.payload.onSuccess(result.payload);
   }
 }
