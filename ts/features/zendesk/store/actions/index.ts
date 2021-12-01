@@ -1,4 +1,4 @@
-import { createStandardAction } from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
 /**
  * The user chooses to start the workflow to open a support request
@@ -33,3 +33,10 @@ export const zendeskSupportBack = createStandardAction(
 export const zendeskSupportFailure = createStandardAction(
   "ZENDESK_SUPPORT_FAILURE"
 )<string>();
+
+export type ZendeskSupportActions =
+  | ActionType<typeof zendeskSupportStart>
+  | ActionType<typeof zendeskSupportCompleted>
+  | ActionType<typeof zendeskSupportCancel>
+  | ActionType<typeof zendeskSupportBack>
+  | ActionType<typeof zendeskSupportFailure>;
