@@ -4,11 +4,11 @@ import {
   euCovidCertReducer,
   EuCovidCertState
 } from "../../../euCovidCert/store/reducers";
-import { mvlReducer, MVLState } from "../../../mvl/store/reducers";
+import { mvlReducer, MvlState } from "../../../mvl/store/reducers";
 
 export type FeaturesState = {
   euCovidCert: EuCovidCertState;
-  mvl: MVLState;
+  mvl: MvlState;
 };
 
 export const featuresReducer = combineReducers<FeaturesState, Action>({

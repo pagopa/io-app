@@ -1,6 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../utils/errors";
-import { MVLData, MVLId, WithMVLId } from "../../types/MVLData";
+import { MvlData, MvlId, WithMVLId } from "../../types/MvlData";
 
 /**
  * The user requests the MVL details, starting from the MVLId
@@ -9,6 +9,6 @@ export const mvlLoadDetails = createAsyncAction(
   "MVL_DETAILS_REQUEST",
   "MVL_DETAILS_SUCCESS",
   "MVL_DETAILS_FAILURE"
-)<MVLId, MVLData, WithMVLId<NetworkError>>();
+)<MvlId, MvlData, WithMVLId<NetworkError>>();
 
-export type MVLActions = ActionType<typeof mvlLoadDetails>;
+export type MvlActions = ActionType<typeof mvlLoadDetails>;

@@ -10,10 +10,10 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
-import { MVLData, MVLId } from "../../types/MVLData";
+import { MvlData, MvlId } from "../../types/MvlData";
 import { mvlLoadDetails } from "../actions";
 
-export type MVLByIdState = IndexedById<pot.Pot<MVLData, Error>>;
+export type MvlByIdState = IndexedById<pot.Pot<MvlData, Error>>;
 
 /**
  * Store the MVL data based on the MVLId used to issue the request
@@ -21,9 +21,9 @@ export type MVLByIdState = IndexedById<pot.Pot<MVLData, Error>>;
  * @param action
  */
 export const mvlByIdReducer = (
-  state: MVLByIdState = {},
+  state: MvlByIdState = {},
   action: Action
-): MVLByIdState => {
+): MvlByIdState => {
   switch (action.type) {
     case getType(mvlLoadDetails.request):
       return toLoading(action.payload, state);
@@ -46,7 +46,7 @@ export const mvlByIdReducer = (
 export const mvlFromIdSelector = createSelector(
   [
     (state: GlobalState) => state.features.mvl.byId,
-    (_: GlobalState, id: MVLId) => id
+    (_: GlobalState, id: MvlId) => id
   ],
-  (byId, id): pot.Pot<MVLData, Error> => byId[id] ?? pot.none
+  (byId, id): pot.Pot<MvlData, Error> => byId[id] ?? pot.none
 );

@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
-import { mvlByIdReducer, MVLByIdState } from "./byId";
+import { mvlByIdReducer, MvlByIdState } from "./byId";
 
-export type MVLState = {
-  byId: MVLByIdState;
+export type MvlState = {
+  byId: MvlByIdState;
 };
 
-export const mvlReducer = combineReducers<MVLState, Action>({
+export const mvlReducer = combineReducers<MvlState, Action>({
   // save, using the MVLId as key, the pot.Pot<MVLData, Error> response
   byId: mvlByIdReducer
 });
