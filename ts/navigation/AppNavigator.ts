@@ -7,6 +7,8 @@ import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
+import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
+import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
 
 /**
  * The main stack of screens of the Application.
@@ -36,6 +38,9 @@ const navigator = createStackNavigator(
     },
     [ROUTES.WORKUNIT_GENERIC_FAILURE]: {
       screen: WorkunitGenericFailure
+    },
+    [ZENDESK_ROUTES.HELP_CENTER]: {
+      screen: zendeskSupportNavigator
     }
   },
   {
