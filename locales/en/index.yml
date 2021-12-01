@@ -995,6 +995,7 @@ wallet:
     paypal:
       name: "PayPal"
       headerTitle: "Add PayPal"
+      emailNotAvailable: "not available"
       start:
         title: "Pay on IO with PayPal"
         body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"

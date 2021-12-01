@@ -14,6 +14,7 @@ import IconFont from "../../../components/ui/IconFont";
 import variables from "../../../theme/variables";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { PayPalPaymentMethod } from "../../../types/pagopa";
+import { getPaypalAccountEmail } from "../../../utils/paypal";
 
 type Props = {
   paypal: PayPalPaymentMethod;
@@ -56,7 +57,7 @@ const PaypalCard: React.FunctionComponent<Props> = (props: Props) => (
     )}
     bottomLeftCorner={
       <Body style={styles.bottomLeftStyle} numberOfLines={1}>
-        {props.paypal.info.emailPp}
+        {getPaypalAccountEmail(props.paypal.info)}
       </Body>
     }
     bottomRightCorner={<BrandImage image={paypalLogoMin} />}
