@@ -60,8 +60,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const getpaymentMethods = (
   props: Props,
-  onlyPaymentMethodCanPay: boolean,
-  isPaymentOnGoing: boolean = false
+  options: {
+    onlyPaymentMethodCanPay: boolean;
+    isPaymentOnGoing: boolean;
+  }
 ): ReadonlyArray<IPaymentMethod> => [
   {
     name: I18n.t("wallet.methods.card.name"),
@@ -78,7 +80,7 @@ const getpaymentMethods = (
     onPress: payPalEnabled
       ? () =>
           props.startPaypalOnboarding(
-            isPaymentOnGoing ? "back" : "payment_method_details"
+            options.isPaymentOnGoing ? "back" : "payment_method_details"
           )
       : undefined,
     status: payPalEnabled ? "implemented" : "notImplemented",
@@ -88,7 +90,7 @@ const getpaymentMethods = (
     name: I18n.t("wallet.methods.bancomatPay.name"),
     description: I18n.t("wallet.methods.bancomatPay.description"),
     icon: BpayLogo,
-    status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
+    status: !options.onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
     onPress: props.startBPayOnboarding,
     section: "digital_payments"
   },
@@ -106,7 +108,9 @@ const getpaymentMethods = (
     icon: CreditCard,
     onPress: props.startAddBancomat,
     status:
-      bpdEnabled && !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
+      bpdEnabled && !options.onlyPaymentMethodCanPay
+        ? "implemented"
+        : "notImplemented",
     section: "bancomat"
   },
   {
@@ -114,7 +118,7 @@ const getpaymentMethods = (
     description: I18n.t("wallet.methods.loyalty.description"),
     icon: GDOLogo,
     onPress: props.startAddPrivative,
-    status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented"
+    status: !options.onlyPaymentMethodCanPay ? "implemented" : "notImplemented"
   }
 ];
 
@@ -174,17 +178,21 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               <View spacer={true} />
               {/* since we're paying show only those method can pay with pagoPA */}
               <PaymentMethodsList
-                paymentMethods={getpaymentMethods(props, true, true)}
+                paymentMethods={getpaymentMethods(props, {
+                  onlyPaymentMethodCanPay: true,
+                  isPaymentOnGoing: inPayment.isSome()
+                })}
               />
             </View>
           </Content>
         ) : (
           <Content noPadded={true} style={IOStyles.horizontalContentPadding}>
             <PaymentMethodsList
-              paymentMethods={getpaymentMethods(
-                props,
-                canAddOnlyPayablePaymentMethod === true
-              )}
+              paymentMethods={getpaymentMethods(props, {
+                onlyPaymentMethodCanPay:
+                  canAddOnlyPayablePaymentMethod === true,
+                isPaymentOnGoing: inPayment.isSome()
+              })}
             />
           </Content>
         )}
