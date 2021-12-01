@@ -8,6 +8,10 @@ import { Byte } from "../../../types/digitalInformationUnit";
  */
 export type MVLId = string & IUnitTag<"MVLId">;
 
+export type WithMVLId<T> = T & {
+  id: MVLId;
+};
+
 /**
  * The content of the MVL with two possible representation
  */
@@ -47,13 +51,11 @@ type MVLMetadata = {
 /**
  * Represent a MVL (Messaggio a valore legale - Legal message)
  */
-export type MVLData = {
-  // The unique Id of the message
-  id: MVLId;
+export type MVLData = WithMVLId<{
   // The body (content) that could be html (mandatory) or plain (optional)
   body: MVLBody;
   // The MVL could have some attachments with metadata and the url to download the resource
   attachments: ReadonlyArray<MVLAttachment>;
   // Some additional metadata that should be represented
   metadata: MVLMetadata;
-};
+}>;
