@@ -1013,6 +1013,7 @@ wallet:
     paypal:
       name: "PayPal"
       headerTitle: "Aggiungi PayPal"
+      emailNotAvailable: "non disponibile"
       start:
         title: "Paga su IO con PayPal"
         body: "Abbina il tuo conto PayPal e paga gli avvisi pagoPA più facilmente: puoi usare anche il tuo conto corrente!"

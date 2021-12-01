@@ -2482,27 +2482,41 @@
     "PayPalInfo": {
       "type": "object",
       "required": [
-        "emailPp",
-        "psp"
+        "pspInfo"
       ],
       "properties": {
-        "canceled": {
-          "type": "boolean"
+        "pspInfo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PayPalAccountPspInfo"
+          }
+        }
+      },
+      "title": "PayPal"
+    },
+    "PayPalAccountPspInfo": {
+      "type": "object",
+      "required": [
+        "abi",
+        "default",
+        "email",
+        "ragioneSociale"
+      ],
+      "properties": {
+        "abi": {
+          "type": "string"
         },
         "default": {
           "type": "boolean"
         },
-        "emailPp": {
+        "email": {
           "type": "string"
         },
-        "idPp": {
+        "ragioneSociale": {
           "type": "string"
-        },
-        "psp": {
-          "$ref": "#/definitions/PayPalPsp"
         }
       },
-      "title": "PayPal"
+      "title": "PayPalAccountPspInfo"
     },
     "PayPalPsp": {
       "type": "object",
@@ -3246,7 +3260,8 @@
           "enum": [
             "CREDIT_CARD",
             "BANK_ACCOUNT",
-            "EXTERNAL_PS"
+            "EXTERNAL_PS",
+            "PAYPAL"
           ]
         }
       },
