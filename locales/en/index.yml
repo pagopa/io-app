@@ -703,6 +703,7 @@ authentication:
       error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
       error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
       error_25: "You have canceled the login operation: you can try again whenever you want."
+      error_1001: "Access Denied: You are not of the minimum age required to use IO"
   expiredSessionBanner:
     title: Security notice
     message: To keep your private information safe, please login again with your SPID credentials, thanks!
@@ -997,6 +998,12 @@ wallet:
       start:
         title: "Pay on IO with PayPal"
         body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      updatePsp:
+        headerTitle: "Choose the PSP"
+        title: "Which payment provider do you want to pay with?"
+        body: "Each provider presents a transaction fee.\nIn this list you will find all the providers compatible with your method, even if you are not their client."
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Maximum Fee (€)"
       selectPsp:
         title: "Which payment provider do you want to use PayPal with?"
         body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
@@ -1009,8 +1016,7 @@ wallet:
           row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
           row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
           row2Description2: ". You'll see the right amount before confirming the payment."
-          row3Description1: "Privacy Policy"
-          row3Description2: "Terms and Conditions"
+          row3Description1: "{{psp}}’s Terms and Conditions and Privacy Policy apply"
         whatIsPspBottomSheet:
           title: "What is a payment provider?"
           body: "The Payment Service Provider (PSP) collects the amount on behalf of the Payee, and it may charge a fee for its service.\nWhenever you'll pay, you can to choose the provider that suits you best, whether you're a customer or not."
@@ -1176,9 +1182,9 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    headerTitle: "Choose the provider"
-    title: Which provider do you want to pay with?
-    info: Each provider proposes a transaction cost.
+    headerTitle: "Choose the PSP"
+    title: Which payment provider do you want to pay with?
+    info: Each provider presents a transaction fee.
     info2: In this list you will find all the providers
     info2Bold: compatible with your method, even if you are not their client.
     provider: Provider
@@ -2782,6 +2788,18 @@ bonus:
         cta:
           exit: "Exit"
           voucherRevocation: "Voucher revocation"
+      destinationSelector:
+        state:
+          title: "Select a state"
+          label: "State"
+          placeholder: "Select a state"
+        municipality:
+          title: "Select a municipality"
+          label: "Municipality"
+          placeholder: "Select a municipality"
+          ko:
+            label1: "Error loading municipalities. "
+            label2: "Try again"
     pdfVoucher:
       toast:
         ok: "Voucher saved successfully"

@@ -16,8 +16,9 @@ import I18n from "../../i18n";
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { Label } from "../../components/core/typography/Label";
+import { WithTestID } from "../../types/WithTestID";
 
-type Props = {
+type OwnProps = {
   // the uri to send the form data thought POST
   postUri: string;
   // data to include into the form to submit
@@ -42,7 +43,13 @@ type Props = {
   ) => void;
   onGoBack: () => void;
   modalHeaderTitle?: string;
+  // if undefined -> true as default
+  showInfoHeader?: boolean;
+  // if undefined -> true as default
+  isVisible?: boolean;
 };
+
+type Props = WithTestID<OwnProps>;
 
 const styles = StyleSheet.create({
   descriptionContainer: { paddingHorizontal: 20, paddingVertical: 14 },
@@ -128,6 +135,7 @@ export const PayWebViewModal = (props: Props) => {
   const [outcomeCode, setOutcomeCode] = React.useState<string | undefined>(
     undefined
   );
+  const { showInfoHeader = true } = props;
   const navigationUrlsRef = React.useRef<Array<string>>([]);
   useHardwareBackButton(() => {
     props.onGoBack();
@@ -166,7 +174,7 @@ export const PayWebViewModal = (props: Props) => {
     <Modal
       animationType="fade"
       transparent={false}
-      visible={true}
+      visible={props.isVisible ?? true}
       onRequestClose={props.onGoBack}
     >
       <BaseScreenComponent
@@ -174,22 +182,25 @@ export const PayWebViewModal = (props: Props) => {
         contextualHelp={emptyContextualHelp}
         headerTitle={props.modalHeaderTitle}
       >
-        <View
-          style={styles.descriptionContainer}
-          testID={"PayWebViewModal-description"}
-        >
-          <InfoBox
-            iconName={"io-info"}
-            iconColor={IOColors.bluegreyDark}
-            iconSize={24}
+        {showInfoHeader && (
+          <View
+            style={styles.descriptionContainer}
+            testID={"PayWebViewModal-description"}
           >
-            <Label weight={"Regular"} color={"bluegrey"}>
-              {I18n.t("wallet.challenge3ds.description")}
-            </Label>
-          </InfoBox>
-        </View>
+            <InfoBox
+              iconName={"io-info"}
+              iconColor={IOColors.bluegreyDark}
+              iconSize={24}
+            >
+              <Label weight={"Regular"} color={"bluegrey"}>
+                {I18n.t("wallet.challenge3ds.description")}
+              </Label>
+            </InfoBox>
+          </View>
+        )}
 
         <WebView
+          testID={props.testID}
           textZoom={100}
           source={{
             html:
