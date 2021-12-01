@@ -16,10 +16,10 @@ import {
 } from "../utils/supportAssistance";
 import { profileSelector } from "../store/reducers/profile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
+import { useIOSelector } from "../store/hooks";
 import IconFont from "./ui/IconFont";
 import { IOColors } from "./core/variables/IOColors";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { useIOSelector } from "../store/hooks";
 
 const ZendeskChatComponent = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
@@ -63,7 +63,7 @@ const ZendeskChatComponent = () => {
       .getOrElse({});
 
     setUserIdentity(zendeskIdentity);
-  }, [zendeskToken, profile]);
+  }, [zendeskToken, profile, zendeskConfig]);
 
   return (
     <>
