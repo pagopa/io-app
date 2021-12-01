@@ -1,0 +1,5 @@
+const ZENDESK_ROUTES = {
+  HELP_CENTER: "ZENDESK_HELP_CENTER"
+};
+
+export default ZENDESK_ROUTES;
