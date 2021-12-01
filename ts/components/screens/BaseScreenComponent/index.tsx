@@ -29,6 +29,9 @@ import Markdown from "../../ui/Markdown";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 
 import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
+import { zendeskEnabled } from "../../../config";
+import { useDispatch } from "react-redux";
+import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 
 export type ContextualHelpProps = {
   title: string;
@@ -150,6 +153,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           customVariables.colorWhite
         )
       );
+
       setIsHelpVisible(true);
       setMarkdownContentLoaded(!contextualHelpMarkdown);
     };
@@ -195,7 +199,16 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           title: I18n.t(contextualHelpMarkdown.title)
         }
       : undefined;
-
+    const dispatch = useDispatch();
+    const onShowHelp = () => {
+      // TODO: Add remote FF
+      // TODO: remove instabug
+      if (zendeskEnabled) {
+        dispatch(zendeskSupportStart());
+      } else {
+        showHelp();
+      }
+    };
     return (
       <Container>
         <BaseHeader
@@ -210,7 +223,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           goBack={goBack}
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
-          onShowHelp={contextualHelpConfig ? showHelp : undefined}
+          onShowHelp={contextualHelpConfig ? onShowHelp : undefined}
           isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
