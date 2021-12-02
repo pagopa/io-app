@@ -23,7 +23,7 @@ export const mvlMockPdfAttachment: MvlAttachment = {
 
 export const mvlMockOtherAttachment: MvlAttachment = {
   name: "image.png",
-  contentType: "undefined",
+  contentType: "other",
   size: 125952 as Byte,
   resourceUrl: { href: "htts://www.randomImage.com/image.png" }
 };

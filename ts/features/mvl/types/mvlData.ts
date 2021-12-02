@@ -27,7 +27,7 @@ export type MvlAttachment = {
   // a display name for the file
   name: string;
   // atm we have to distinguish only the pdf files from the others for a custom (future) view
-  contentType: Extract<ContentType, "application/pdf"> | "undefined";
+  contentType: Extract<ContentType, "application/pdf"> | "other";
   // size (in Byte) of the attachment, for display purpose
   size: Byte;
   // The url that can be used to retrieve the resource
