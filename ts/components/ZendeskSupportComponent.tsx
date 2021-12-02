@@ -78,6 +78,7 @@ const ZendeskSupportComponent = () => {
         onPress={() => navigation.navigate(navigateToZendeskAskPermissions())}
         text={I18n.t("support.helpCenter.cta.contactSupport")}
         disabled={false}
+        testID={"contactSupportButton"}
       />
 
       <ButtonWithImage
@@ -89,6 +90,7 @@ const ZendeskSupportComponent = () => {
         text={I18n.t("support.helpCenter.cta.seeReports")}
         disabled={false}
         light={true}
+        testID={"showTicketsButton"}
       />
     </>
   );
