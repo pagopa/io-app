@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyListComponent matches the snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "alignItems": "center",
+        "padding": 24,
+      },
+    ]
+  }
+>
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+  <Image
+    source={
+      Object {
+        "testUri": "../../../img/messages/empty-message-list-icon.png",
+      }
+    }
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "paddingTop": 24,
+        },
+      ]
+    }
+  >
+    Your message list is empty.
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "paddingTop": 24,
+          "textAlign": "center",
+        },
+      ]
+    }
+  >
+    Refresh to check for any new messages.
+  </Text>
+</View>
+`;
