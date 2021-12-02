@@ -21,7 +21,6 @@ import { navigateToZendeskAskPermissions } from "../features/zendesk/store/actio
 import { useNavigationContext } from "../utils/hooks/useOnFocus";
 import { zendeskSupportCompleted } from "../features/zendesk/store/actions";
 import I18n from "../i18n";
-import ButtonWithImage from "./ButtonWithImage";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
 
