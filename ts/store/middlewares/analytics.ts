@@ -166,7 +166,6 @@ const trackAction =
       case getType(loadMessages.success):
       // end pay webview Payment (payment + onboarding credit card) actions (with properties)
       case getType(addCreditCardWebViewEnd):
-      case getType(paymentWebViewEnd):
         return mp.track(action.type, {
           exitType: action.payload
         });
@@ -174,6 +173,11 @@ const trackAction =
       case getType(paymentOutcomeCode):
         return mp.track(action.type, {
           outCome: action.payload.getOrElse("")
+        });
+      case getType(paymentWebViewEnd):
+        return mp.track(action.type, {
+          exitType: action.payload.reason,
+          paymentMethodType: action.payload.paymentMethodType
         });
       //
       // Payment actions (with properties)

@@ -31,6 +31,7 @@ import {
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentExecuteStart,
+  PaymentMethodType,
   paymentWebViewEnd,
   PaymentWebViewEndReason
 } from "../../../store/actions/wallet/payment";
@@ -195,6 +196,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
+  const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
   const fee: number | undefined = isPayingWithPaypal
     ? props.payPalPsp?.fee
     : maybePsp.fold(undefined, psp => psp.fixedCost.amount);
@@ -229,7 +231,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         idPayment
       );
     }
-    props.dispatchEndPaymentWebview("EXIT_PATH");
+    props.dispatchEndPaymentWebview("EXIT_PATH", paymentMethodType);
     props.dispatchPaymentOutCome(maybeOutcomeCode);
     props.navigateToOutComePaymentScreen((fee ?? 0) as ImportoEuroCents);
   };
@@ -241,7 +243,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         text: I18n.t("payment.abortWebView.confirm"),
         onPress: () => {
           props.dispatchCancelPayment();
-          props.dispatchEndPaymentWebview("USER_ABORT");
+          props.dispatchEndPaymentWebview("USER_ABORT", paymentMethodType);
         },
         style: "cancel"
       },
@@ -439,8 +441,11 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatchPaymentStart: (
       payload: PayloadForAction<typeof paymentExecuteStart["request"]>
     ) => dispatch(paymentExecuteStart.request(payload)),
-    dispatchEndPaymentWebview: (reason: PaymentWebViewEndReason) => {
-      dispatch(paymentWebViewEnd(reason));
+    dispatchEndPaymentWebview: (
+      reason: PaymentWebViewEndReason,
+      paymentMethodType: PaymentMethodType
+    ) => {
+      dispatch(paymentWebViewEnd({ reason, paymentMethodType }));
     },
     dispatchCancelPayment,
     dispatchPaymentOutCome: (outComeCode: Option<string>) =>

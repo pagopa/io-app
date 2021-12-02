@@ -144,7 +144,7 @@ const reducer = (
     case getType(paymentWebViewEnd):
       return replaceLastItem(state, {
         ...state[state.length - 1],
-        webViewCloseReason: action.payload
+        webViewCloseReason: action.payload.reason
       });
     case getType(differentProfileLoggedIn):
     case getType(clearCache): {
