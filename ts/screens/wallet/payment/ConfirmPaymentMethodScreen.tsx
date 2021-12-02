@@ -38,6 +38,12 @@ import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { isRawPayPal, PaymentMethod, Psp, Wallet } from "../../../types/pagopa";
+import {
+  isCreditCard,
+  PaymentMethod,
+  Psp,
+  Wallet
+} from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { PayloadForAction } from "../../../types/utils";
@@ -251,7 +257,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       ...getLookUpIdPO()
     }))
     .getOrElse({});
-
+  const paymentMethod = props.getPaymentMethodById(wallet.idWallet);
+  const ispaymentMethodCreditCard =
+    paymentMethod !== undefined && isCreditCard(paymentMethod);
   return (
     <BaseScreenComponent
       goBack={props.onCancel}
@@ -351,6 +359,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         <PayWebViewModal
           postUri={urlPrefix + payUrlSuffix}
           formData={formData}
+          showInfoHeader={ispaymentMethodCreditCard}
           finishPathName={webViewExitPathName}
           onFinish={handlePaymentOutcome}
           outcomeQueryparamName={webViewOutcomeParamName}

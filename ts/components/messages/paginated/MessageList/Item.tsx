@@ -15,6 +15,7 @@ import DetailedlistItemComponent from "../../../DetailedlistItemComponent";
 type Props = {
   hasPaidBadge: boolean;
   isRead: boolean;
+  isArchived: boolean;
   isSelected: boolean;
   isSelectionModeEnabled: boolean;
   message: UIMessage;
@@ -28,54 +29,49 @@ const UNKNOWN_SERVICE_DATA = {
   serviceName: I18n.t("messages.errorLoading.serviceInfo")
 };
 
-class MessageListItem extends React.PureComponent<Props> {
-  announceMessage = (message: UIMessage) =>
-    // TODO: establish relation
-    // const newMessage = message.isRead
-    //   ? I18n.t("messages.accessibility.message.read")
-    //   : I18n.t("messages.accessibility.message.unread");
-    I18n.t("messages.accessibility.message.description", {
-      organizationName: message.organizationName,
-      serviceName: message.serviceName,
-      subject: message.title,
-      receivedAt: convertReceivedDateToAccessible(message.createdAt)
-    });
+const announceMessage = (message: UIMessage, isRead: boolean): string =>
+  I18n.t("messages.accessibility.message.description", {
+    newMessage: isRead
+      ? I18n.t("messages.accessibility.message.read")
+      : I18n.t("messages.accessibility.message.unread"),
+    organizationName: message.organizationName,
+    serviceName: message.serviceName,
+    subject: message.title,
+    receivedAt: convertReceivedDateToAccessible(message.createdAt)
+  });
 
-  render() {
-    const {
-      hasPaidBadge,
-      isRead,
-      isSelected,
-      isSelectionModeEnabled,
-      message,
-      onLongPress,
-      onPress
-    } = this.props;
+const MessageListItem = ({
+  hasPaidBadge,
+  isRead,
+  isArchived,
+  isSelected,
+  isSelectionModeEnabled,
+  message,
+  onLongPress,
+  onPress
+}: Props) => {
+  const uiDate = convertDateToWordDistance(
+    message.createdAt,
+    I18n.t("messages.yesterday")
+  );
 
-    const uiDate = convertDateToWordDistance(
-      message.createdAt,
-      I18n.t("messages.yesterday")
-    );
-
-    return (
-      <DetailedlistItemComponent
-        isNew={!isRead}
-        onPressItem={onPress}
-        text11={
-          message.organizationName || UNKNOWN_SERVICE_DATA.organizationName
-        }
-        text12={uiDate}
-        text2={message.serviceName || UNKNOWN_SERVICE_DATA.serviceName}
-        text3={message.title || "no title"}
-        onLongPressItem={onLongPress}
-        isSelectionModeEnabled={isSelectionModeEnabled}
-        isItemSelected={isSelected}
-        isPaid={hasPaidBadge}
-        accessible={true}
-        accessibilityLabel={this.announceMessage(message)}
-      />
-    );
-  }
-}
+  return (
+    <DetailedlistItemComponent
+      isNew={!isRead}
+      isArchived={isArchived}
+      onPressItem={onPress}
+      text11={message.organizationName || UNKNOWN_SERVICE_DATA.organizationName}
+      text12={uiDate}
+      text2={message.serviceName || UNKNOWN_SERVICE_DATA.serviceName}
+      text3={message.title || I18n.t("messages.errorLoading.noTitle")}
+      onLongPressItem={onLongPress}
+      isSelectionModeEnabled={isSelectionModeEnabled}
+      isItemSelected={isSelected}
+      isPaid={hasPaidBadge}
+      accessible={true}
+      accessibilityLabel={announceMessage(message, isRead)}
+    />
+  );
+};
 
 export default MessageListItem;

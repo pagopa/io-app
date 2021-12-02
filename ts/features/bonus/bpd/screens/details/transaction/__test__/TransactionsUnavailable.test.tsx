@@ -19,7 +19,11 @@ describe("TransactionsUnavailable component", () => {
       search: { isSearchEnabled: false },
       persistedPreferences: { isPagoPATestEnabled: false },
       network: { isConnected: true },
-      instabug: { unreadMessages: 0 }
+      instabug: { unreadMessages: 0 },
+      authentication: {
+        kind: "LoggedOutWithoutIdp",
+        reason: "NOT_LOGGED_IN"
+      }
     });
   });
 
