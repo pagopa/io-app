@@ -22,6 +22,8 @@ import { useNavigationContext } from "../utils/hooks/useOnFocus";
 import { zendeskSupportCompleted } from "../features/zendesk/store/actions";
 import I18n from "../i18n";
 import ButtonWithImage from "./ButtonWithImage";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { Label } from "./core/typography/Label";
 
 const ZendeskSupportComponent = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
@@ -73,25 +75,33 @@ const ZendeskSupportComponent = () => {
 
   return (
     <>
-      <ButtonWithImage
-        icon={""}
+      <ButtonDefaultOpacity
+        style={{
+          alignSelf: "stretch"
+        }}
         onPress={() => navigation.navigate(navigateToZendeskAskPermissions())}
-        text={I18n.t("support.helpCenter.cta.contactSupport")}
         disabled={false}
         testID={"contactSupportButton"}
-      />
+      >
+        <Label color={"white"}>
+          {I18n.t("support.helpCenter.cta.contactSupport")}
+        </Label>
+      </ButtonDefaultOpacity>
 
-      <ButtonWithImage
-        icon={""}
+      <ButtonDefaultOpacity
         onPress={() => {
           showSupportTickets();
           workUnitCompleted();
         }}
-        text={I18n.t("support.helpCenter.cta.seeReports")}
+        style={{
+          alignSelf: "stretch"
+        }}
         disabled={false}
-        light={true}
+        bordered={true}
         testID={"showTicketsButton"}
-      />
+      >
+        <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
+      </ButtonDefaultOpacity>
     </>
   );
 };
