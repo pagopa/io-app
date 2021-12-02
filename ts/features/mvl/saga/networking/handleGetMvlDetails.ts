@@ -7,14 +7,14 @@ import { mvlMockData } from "../../types/__mock__/mvlMock";
  * Handle the remote call to retrieve the MVL details
  * TODO: Placeholder stub, implement me!
  * @param _
- * @param __
+ * @param action
  */
 export function* handleGetMvl(
   // TODO: this will be the backend remote call
   _: unknown,
-  __: ActionType<typeof mvlDetailsLoad.request>
+  action: ActionType<typeof mvlDetailsLoad.request>
 ) {
   // TODO: remote call -> convert from remote data format to MvlData -> dispatch
   yield delay(125);
-  yield put(mvlDetailsLoad.success(mvlMockData));
+  yield put(mvlDetailsLoad.success({ ...mvlMockData, id: action.payload }));
 }

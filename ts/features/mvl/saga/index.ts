@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, delay, takeLatest } from "redux-saga/effects";
+import { call, takeLatest } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { waitBackoffError } from "../../../utils/backoffError";
