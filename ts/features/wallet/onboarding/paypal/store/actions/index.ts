@@ -17,12 +17,14 @@ export const searchPaypalPsp = createAsyncAction(
   "WALLET_ONBOARDING_PAYPAL_PSP_SEARCH_FAILURE"
 )<void, ReadonlyArray<IOPayPalPsp>, NetworkError>();
 
+// describes the next step should be done when the onboarding is completed
+export type OnOnboardingCompleted = "payment_method_details" | "back";
 /**
  * The user chooses to start the workflow to add a new paypal account to the wallet
  */
 export const walletAddPaypalStart = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_START"
-)<void>();
+)<OnOnboardingCompleted>();
 
 export const walletAddPaypalCompleted = createStandardAction(
   "WALLET_ONBOARDING_PAYPAL_COMPLETED"

@@ -1013,6 +1013,7 @@ wallet:
     paypal:
       name: "PayPal"
       headerTitle: "Aggiungi PayPal"
+      emailNotAvailable: "non disponibile"
       start:
         title: "Paga su IO con PayPal"
         body: "Abbina il tuo conto PayPal e paga gli avvisi pagoPA più facilmente: puoi usare anche il tuo conto corrente!"
@@ -1041,8 +1042,11 @@ wallet:
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
-        secondaryButton: "Chiudi"
         primaryButton: "Vedi metodo"
+      onBoardingCompletedWhilePayment:
+        title: "Fatto!"
+        body: "Ora puoi continuare con il pagamento."
+        primaryButton: "Continua"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
@@ -1582,6 +1586,7 @@ messages:
     senderInfo: Mittente sconosciuto
     serviceInfo: Info sul servizio mancanti
     departmentInfo: Info sul dipartimento mancanti
+    noTitle: Senza titolo
   loadingErrorTitle: Non è stato possibile caricare i messaggi
   cta:
     archive: Archivia
