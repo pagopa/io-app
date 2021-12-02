@@ -3,12 +3,12 @@ import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
 import IngressScreen from "../screens/ingress/IngressScreen";
+import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
+import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
-import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
-import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
 
 /**
  * The main stack of screens of the Application.

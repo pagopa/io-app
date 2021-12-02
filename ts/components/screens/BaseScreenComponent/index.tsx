@@ -12,6 +12,7 @@ import React, {
   useState
 } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
+import { useDispatch } from "react-redux";
 import { TranslationKeys } from "../../../../locales/locales";
 import {
   defaultAttachmentTypeConfiguration,
@@ -28,10 +29,9 @@ import { SearchType } from "../../search/SearchButton";
 import Markdown from "../../ui/Markdown";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 
-import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
 import { zendeskEnabled } from "../../../config";
-import { useDispatch } from "react-redux";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
 
 export type ContextualHelpProps = {
   title: string;

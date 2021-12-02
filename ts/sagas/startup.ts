@@ -70,6 +70,7 @@ import {
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -120,7 +121,6 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**

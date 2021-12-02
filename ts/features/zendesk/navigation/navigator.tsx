@@ -1,8 +1,8 @@
 import { createStackNavigator } from "react-navigation-stack";
-import ZENDESK_ROUTES from "./routes";
 import ZendeskSupportHelpCenter from "../screens/ZendeskSupportHelpCenter";
 import ZendeskAskPermissions from "../screens/ZendeskAskPermissions";
 import ZendeskChooseCategory from "../screens/ZendeskChooseCategory";
+import ZENDESK_ROUTES from "./routes";
 
 export const zendeskSupportNavigator = createStackNavigator(
   {

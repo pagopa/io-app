@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
+import { useDispatch } from "react-redux";
 import { zendeskTokenSelector } from "../store/reducers/authentication";
 import {
   AnonymousIdentity,
@@ -16,12 +17,11 @@ import {
 import { profileSelector } from "../store/reducers/profile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { useIOSelector } from "../store/hooks";
-import ButtonWithImage from "./ButtonWithImage";
 import { navigateToZendeskAskPermissions } from "../features/zendesk/store/actions/navigation";
 import { useNavigationContext } from "../utils/hooks/useOnFocus";
-import { useDispatch } from "react-redux";
 import { zendeskSupportCompleted } from "../features/zendesk/store/actions";
 import I18n from "../i18n";
+import ButtonWithImage from "./ButtonWithImage";
 
 const ZendeskSupportComponent = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);

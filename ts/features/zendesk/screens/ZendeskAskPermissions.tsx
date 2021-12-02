@@ -1,8 +1,8 @@
 import React from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { SafeAreaView, ScrollView } from "react-native";
 import { H1 } from "../../../components/core/typography/H1";
 import View from "../../../components/ui/TextWithIcon";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";

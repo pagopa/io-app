@@ -1,4 +1,5 @@
 import { call } from "redux-saga/effects";
+import { NavigationActions } from "react-navigation";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -11,7 +12,6 @@ import {
 } from "../../store/actions";
 import ZENDESK_ROUTES from "../../navigation/routes";
 import NavigationService from "../../../../navigation/NavigationService";
-import { NavigationActions } from "react-navigation";
 
 function* zendeskSupportWorkUnit() {
   return yield call(executeWorkUnit, {

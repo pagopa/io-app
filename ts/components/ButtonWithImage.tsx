@@ -2,9 +2,9 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
+import { WithTestID } from "../types/WithTestID";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
-import { WithTestID } from "../types/WithTestID";
 
 const styles = StyleSheet.create({
   viewRL: {
