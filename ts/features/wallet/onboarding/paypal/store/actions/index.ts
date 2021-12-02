@@ -63,6 +63,10 @@ export const walletAddPaypalOutcome = createStandardAction(
 export type PayPalOnboardingActions =
   | ActionType<typeof searchPaypalPsp>
   | ActionType<typeof walletAddPaypalStart>
+  | ActionType<typeof walletAddPaypalCompleted>
+  | ActionType<typeof walletAddPaypalBack>
+  | ActionType<typeof walletAddPaypalCancel>
+  | ActionType<typeof walletAddPaypalFailure>
   | ActionType<typeof walletAddPaypalPspSelected>
   | ActionType<typeof walletAddPaypalRefreshPMToken>
   | ActionType<typeof walletAddPaypalOutcome>;

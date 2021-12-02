@@ -11,6 +11,7 @@ import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
+import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
@@ -424,6 +425,7 @@ export const actionTracking =
       void trackContentAction(mixpanel)(action);
       void trackServiceAction(mixpanel)(action);
       void trackEuCovidCertificateActions(mixpanel)(action);
+      void trackPaypalOnboarding(mixpanel)(action);
     }
     return next(action);
   };
