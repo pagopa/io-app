@@ -1042,8 +1042,11 @@ wallet:
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
-        secondaryButton: "Chiudi"
         primaryButton: "Vedi metodo"
+      onBoardingCompletedWhilePayment:
+        title: "Fatto!"
+        body: "Ora puoi continuare con il pagamento."
+        primaryButton: "Continua"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
