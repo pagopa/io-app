@@ -366,7 +366,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   }
 
   if (mvlEnabled) {
-    // Start watching for EU Covid Certificate actions
+    // Start watching for MVL actions
     yield fork(watchMvlSaga, sessionToken);
   }
 
