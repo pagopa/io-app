@@ -155,13 +155,13 @@ export const messagesUnreadAndUnarchivedSelector = createSelector(
 // some util functions
 
 // return true if message is read
-export const isMessageRead = (
-  messagesStatus: MessagesStatus,
-  messageId: string
-) =>
-  fromNullable(messagesStatus[messageId])
-    .map(ms => ms.isRead)
-    .getOrElse(false);
+export const isMessageRead = createSelector(
+  [messagesStatusSelector, (_: GlobalState, messageId: string) => messageId],
+  (messagesStatus, messageId) =>
+    fromNullable(messagesStatus[messageId])
+      .map(ms => ms.isRead)
+      .getOrElse(false)
+);
 
 /**
  * Retrieve the MessageStatus given an ID.
