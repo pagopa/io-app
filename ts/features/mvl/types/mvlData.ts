@@ -15,7 +15,7 @@ export type WithMVLId<T> = T & {
 /**
  * The content of the MVL with two possible representation
  */
-type MvlBody = {
+export type MvlBody = {
   html: string;
   plain?: string;
 };
@@ -23,7 +23,7 @@ type MvlBody = {
 /**
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
  */
-type MvlAttachment = {
+export type MvlAttachment = {
   // a display name for the file
   name: string;
   // atm we have to distinguish only the pdf files from the others for a custom (future) view
@@ -38,7 +38,7 @@ type MvlAttachment = {
  * Additional metadata
  * TODO: Just an initial stub, should be completed and refined
  */
-type MvlMetadata = {
+export type MvlMetadata = {
   sender: string;
   receiver: string;
   cc: ReadonlyArray<string>;

@@ -5,10 +5,10 @@ import { MvlData, MvlId, WithMVLId } from "../../types/MvlData";
 /**
  * The user requests the MVL details, starting from the MVLId
  */
-export const mvlLoadDetails = createAsyncAction(
+export const mvlDetailsLoad = createAsyncAction(
   "MVL_DETAILS_REQUEST",
   "MVL_DETAILS_SUCCESS",
   "MVL_DETAILS_FAILURE"
 )<MvlId, MvlData, WithMVLId<NetworkError>>();
 
-export type MvlActions = ActionType<typeof mvlLoadDetails>;
+export type MvlActions = ActionType<typeof mvlDetailsLoad>;

@@ -11,7 +11,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
 import { MvlData, MvlId } from "../../types/MvlData";
-import { mvlLoadDetails } from "../actions";
+import { mvlDetailsLoad } from "../actions";
 
 export type MvlByIdState = IndexedById<pot.Pot<MvlData, Error>>;
 
@@ -25,11 +25,11 @@ export const mvlByIdReducer = (
   action: Action
 ): MvlByIdState => {
   switch (action.type) {
-    case getType(mvlLoadDetails.request):
+    case getType(mvlDetailsLoad.request):
       return toLoading(action.payload, state);
-    case getType(mvlLoadDetails.success):
+    case getType(mvlDetailsLoad.success):
       return toSome(action.payload.id, state, action.payload);
-    case getType(mvlLoadDetails.failure):
+    case getType(mvlDetailsLoad.failure):
       return toError(
         action.payload.id,
         state,
