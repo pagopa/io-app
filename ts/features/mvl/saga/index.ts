@@ -19,7 +19,7 @@ export function* watchMvlSaga(_: SessionToken): SagaIterator {
   yield takeLatest(
     mvlDetailsLoad.request,
     function* (action: ActionType<typeof mvlDetailsLoad.request>) {
-      // wait backoff time it there were previous errors
+      // wait backoff time if there were previous errors
       yield call(waitBackoffError, mvlDetailsLoad.failure);
       yield call(handleGetMvl, null, action);
     }
