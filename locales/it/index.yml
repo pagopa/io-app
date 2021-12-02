@@ -1586,6 +1586,7 @@ messages:
     senderInfo: Mittente sconosciuto
     serviceInfo: Info sul servizio mancanti
     departmentInfo: Info sul dipartimento mancanti
+    noTitle: Senza titolo
   loadingErrorTitle: Non è stato possibile caricare i messaggi
   cta:
     archive: Archivia
