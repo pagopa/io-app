@@ -37,9 +37,9 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
-import { isRawPayPal, PaymentMethod, Psp, Wallet } from "../../../types/pagopa";
 import {
   isCreditCard,
+  isRawPayPal,
   PaymentMethod,
   Psp,
   Wallet
@@ -231,7 +231,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     }
     props.dispatchEndPaymentWebview("EXIT_PATH");
     props.dispatchPaymentOutCome(maybeOutcomeCode);
-    props.navigateToOutComePaymentScreen();
+    props.navigateToOutComePaymentScreen(fee as ImportoEuroCents);
   };
 
   // the user press back during the pay web view challenge
@@ -445,7 +445,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatchCancelPayment,
     dispatchPaymentOutCome: (outComeCode: Option<string>) =>
       dispatch(paymentOutcomeCode(outComeCode)),
-    navigateToOutComePaymentScreen: () => navigateToPaymentOutcomeCode(),
+    navigateToOutComePaymentScreen: (fee: ImportoEuroCents) =>
+      navigateToPaymentOutcomeCode({ fee }),
     loadTransactions: () =>
       dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
 
