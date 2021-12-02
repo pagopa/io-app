@@ -1,3 +1,4 @@
+import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 import { Byte } from "../../../../types/digitalInformationUnit";
 import {
   MvlAttachment,
@@ -29,9 +30,9 @@ export const mvlMockOtherAttachment: MvlAttachment = {
 };
 
 export const mvlMockMetadata: MvlMetadata = {
-  sender: "sender@mailpec.com",
-  receiver: "receiver@emailpec.com",
-  cc: ["cc1@emailpec.com", "cc2@emailpec.com"],
+  sender: "sender@mailpec.com" as EmailAddress,
+  receiver: "receiver@emailpec.com" as EmailAddress,
+  cc: ["cc1@emailpec.com" as EmailAddress, "cc2@emailpec.com" as EmailAddress],
   certificates: [],
   signature: null
 };

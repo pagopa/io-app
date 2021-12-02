@@ -1,5 +1,6 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ValidUrl } from "@pagopa/ts-commons/lib/url";
+import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
 import { ContentType } from "../../../types/contentType";
 import { Byte } from "../../../types/digitalInformationUnit";
 
@@ -39,9 +40,9 @@ export type MvlAttachment = {
  * TODO: Just an initial stub, should be completed and refined
  */
 export type MvlMetadata = {
-  sender: string;
-  receiver: string;
-  cc: ReadonlyArray<string>;
+  sender: EmailAddress;
+  receiver: EmailAddress;
+  cc: ReadonlyArray<EmailAddress>;
   // a placeholder for certificates data
   certificates: ReadonlyArray<unknown>;
   // a placeholder for signature details
