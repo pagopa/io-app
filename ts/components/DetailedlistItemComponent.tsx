@@ -18,6 +18,7 @@ type OwnProps = Readonly<{
   text3: string;
   isNew: boolean;
   isPaid?: boolean;
+  isArchived?: boolean;
   onPressItem: () => void;
   onLongPressItem?: () => void;
   isSelectionModeEnabled?: boolean;
@@ -91,13 +92,12 @@ const styles = StyleSheet.create({
     height: 25,
     flexDirection: "row"
   },
-  badgeInfoExpired: {
-    backgroundColor: IOColors.white,
-    borderColor: IOColors.red
-  },
   badgeInfoPaid: {
     borderColor: IOColors.aqua,
     backgroundColor: IOColors.aqua
+  },
+  archived: {
+    opacity: 0.75
   }
 });
 
@@ -115,17 +115,20 @@ export default class DetailedlistItemComponent extends React.PureComponent<Props
       : "io-right";
 
   public render() {
+    const { isArchived } = this.props;
     return (
       <TouchableDefaultOpacity
         onPress={this.props.onPressItem}
         onLongPress={this.props.onLongPressItem}
-        style={styles.verticalPad}
+        style={[styles.verticalPad, isArchived && styles.archived]}
         {...this.props}
       >
         <View style={styles.spaced}>
           <H5>{this.props.text11}</H5>
           <Text bold={true} style={styles.text12}>
-            {this.props.text12}
+            {isArchived
+              ? `${I18n.t("messages.tab.archive")} ${this.props.text12}`
+              : this.props.text12}
           </Text>
         </View>
 

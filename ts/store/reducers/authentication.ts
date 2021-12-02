@@ -153,6 +153,11 @@ export const supportTokenSelector = (state: GlobalState): SupportTokenState =>
     ? state.authentication.supportToken ?? remoteUndefined
     : remoteUndefined;
 
+export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.zendeskToken
+    : undefined;
+
 export const tokenFromNameSelector = (
   tokenName: TokenName
 ): ((state: GlobalState) => Option<string>) =>
