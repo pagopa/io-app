@@ -19,7 +19,7 @@ const mockFailure: WithMVLId<NetworkError> = {
 
 const errorFromFailure = new Error(getNetworkErrorMessage(mockFailure));
 
-describe("byAuthCode reducer & selector behaviour", () => {
+describe("mvl.byId reducer & selector behaviour", () => {
   jest.useFakeTimers();
 
   describe("When no mvlDetailsLoad have not been dispatch", () => {
