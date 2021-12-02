@@ -79,6 +79,8 @@ const contextualHelpModalAnimation = Platform.select<
   default: "none"
 });
 
+// TODO: remove disabler when instabug is removed
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
   (props: Props, _) => {
     const {
