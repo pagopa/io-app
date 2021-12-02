@@ -7,22 +7,22 @@ import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 
 const ZendeskChooseCategory = () => (
-    <BaseScreenComponent
-      showInstabugChat={false}
-      goBack={true}
-      customRightIcon={{
-        iconName: "",
-        onPress: () => true
-      }}
-      headerTitle={I18n.t("support.chooseCategory.header")}
-    >
-      <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("support.chooseCategory.title.category")}</H1>
-          <View spacer />
-        </ScrollView>
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
+  <BaseScreenComponent
+    showInstabugChat={false}
+    goBack={true}
+    customRightIcon={{
+      iconName: "",
+      onPress: () => true
+    }}
+    headerTitle={I18n.t("support.chooseCategory.header")}
+  >
+    <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
+      <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <H1>{I18n.t("support.chooseCategory.title.category")}</H1>
+        <View spacer />
+      </ScrollView>
+    </SafeAreaView>
+  </BaseScreenComponent>
+);
 
 export default ZendeskChooseCategory;
