@@ -1,23 +1,35 @@
 import React from "react";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { SafeAreaView } from "react-native";
-import { H1 } from "../../../components/core/typography/H1";
+import { SafeAreaView, ScrollView } from "react-native";
+import View from "../../../components/ui/TextWithIcon";
+import { useDispatch } from "react-redux";
+import { zendeskSupportBack } from "../store/actions";
+import ZendeskSupportComponent from "../../../components/ZendeskSupportComponent";
 
-type Props = {};
-const ZendeskSupportHelpCenter = (_: Props): React.ReactElement => {
+const ZendeskSupportHelpCenter = () => {
+  const dispatch = useDispatch();
+  const workUnitBack = () => dispatch(zendeskSupportBack());
   return (
     <BaseScreenComponent
-      contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
+      showInstabugChat={false}
+      customGoBack={<View />}
+      customRightIcon={{
+        iconName: "io-close",
+        onPress: workUnitBack,
+        accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
+      }}
+      headerTitle={I18n.t("support.helpCenter.header")}
     >
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"PayPalStartOnboardingScreen"}
+        testID={"ZendeskSupportHelpCenterScreen"}
       >
-        <H1>{"Test"}</H1>
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <View spacer />
+          <ZendeskSupportComponent />
+        </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
   );
