@@ -105,15 +105,18 @@ export const dispatchPickPspOrConfirm =
                 initialAmount,
                 verifica,
                 idPayment,
-                psps: pspList.map<Psp>(p => ({
-                  id: parseInt(p.idPsp, 10),
-                  logoPSP: getPayPalPspIconUrl(p.codiceAbi),
-                  fixedCost: {
-                    currency: "EUR",
-                    amount: p.fee,
-                    decimalDigits: 2
-                  }
-                })),
+                // there should exists only 1 psp that can handle Paypal transactions
+                psps: pspList
+                  .filter(pd => pd.defaultPsp)
+                  .map<Psp>(p => ({
+                    id: parseInt(p.idPsp, 10),
+                    logoPSP: getPayPalPspIconUrl(p.codiceAbi),
+                    fixedCost: {
+                      currency: "EUR",
+                      amount: p.fee,
+                      decimalDigits: 2
+                    }
+                  })),
                 wallet: maybeSelectedWallet.value
               });
             }
