@@ -163,4 +163,20 @@ export const isMessageRead = (
     .map(ms => ms.isRead)
     .getOrElse(false);
 
+/**
+ * Retrieve the MessageStatus given an ID.
+ * Fallback to all false if not found.
+ *
+ * @param state
+ * @param messageId
+ */
+export const getMessageStatus = createSelector(
+  [messagesStatusSelector, (_: GlobalState, messageId: string) => messageId],
+  (messagesStatus, messageId) =>
+    fromNullable(messagesStatus[messageId]).getOrElse({
+      isRead: false,
+      isArchived: false
+    })
+);
+
 export default reducer;
