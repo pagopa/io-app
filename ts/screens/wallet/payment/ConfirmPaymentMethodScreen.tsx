@@ -195,7 +195,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
-  const fee = isPayingWithPaypal
+  const fee: number | undefined = isPayingWithPaypal
     ? props.payPalPsp?.fee
     : maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
@@ -231,7 +231,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     }
     props.dispatchEndPaymentWebview("EXIT_PATH");
     props.dispatchPaymentOutCome(maybeOutcomeCode);
-    props.navigateToOutComePaymentScreen(fee as ImportoEuroCents);
+    props.navigateToOutComePaymentScreen((fee ?? 0) as ImportoEuroCents);
   };
 
   // the user press back during the pay web view challenge
