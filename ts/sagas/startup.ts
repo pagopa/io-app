@@ -29,6 +29,7 @@ import {
   bpdEnabled,
   cgnEnabled,
   euCovidCertificateEnabled,
+  mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   svEnabled,
@@ -39,6 +40,7 @@ import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
+import { watchMvlSaga } from "../features/mvl/saga";
 import I18n from "../i18n";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
@@ -361,6 +363,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (euCovidCertificateEnabled) {
     // Start watching for EU Covid Certificate actions
     yield fork(watchEUCovidCertificateSaga, sessionToken);
+  }
+
+  if (mvlEnabled) {
+    // Start watching for MVL actions
+    yield fork(watchMvlSaga, sessionToken);
   }
 
   // Load the user metadata
