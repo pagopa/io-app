@@ -1,6 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../utils/errors";
-import { MvlData, MvlId, WithMVLId } from "../../types/MvlData";
+import { MvlData, MvlId, WithMVLId } from "../../types/mvlData";
 
 /**
  * The user requests the MVL details, starting from the MVLId

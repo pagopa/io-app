@@ -10,7 +10,7 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
-import { MvlData, MvlId } from "../../types/MvlData";
+import { MvlData, MvlId } from "../../types/mvlData";
 import { mvlDetailsLoad } from "../actions";
 
 export type MvlByIdState = IndexedById<pot.Pot<MvlData, Error>>;

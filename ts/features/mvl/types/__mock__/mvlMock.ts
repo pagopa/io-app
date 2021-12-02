@@ -5,7 +5,7 @@ import {
   MvlData,
   MvlId,
   MvlMetadata
-} from "../MvlData";
+} from "../mvlData";
 
 export const mvlMockId = "mockId" as MvlId;
 
