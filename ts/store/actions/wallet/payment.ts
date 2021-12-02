@@ -291,6 +291,7 @@ export const pspForPaymentV2 = createAsyncAction(
 /**
  * @deprecated
  * this action is used only to mimic the existing payment logic (callbacks hell 😈)
+ * use {@link pspForPaymentV2} instead
  */
 export const pspForPaymentV2WithCallbacks = createStandardAction(
   "PAYMENT_PSP_V2_WITH_CALLBACKS"
