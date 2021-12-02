@@ -10,11 +10,7 @@ import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
-import {
-  cgnTestOverlay,
-  shouldDisplayVersionInfoOverlay,
-  testOverlayCaption
-} from "./config";
+import { shouldDisplayVersionInfoOverlay, testOverlayCaption } from "./config";
 
 import { setLocale } from "./i18n";
 import AppNavigator from "./navigation/AppNavigator";
@@ -149,9 +145,6 @@ class RootContainer extends React.PureComponent<Props> {
           }}
         />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
-        {cgnTestOverlay && (
-          <BetaTestingOverlay title="🛠️ CGN TEST VERSION 🛠️" />
-        )}
         {!isStringNullyOrEmpty(testOverlayCaption) && (
           <BetaTestingOverlay
             title={`🛠️ TEST VERSION 🛠️`}
