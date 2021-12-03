@@ -7,6 +7,7 @@ import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 
 const ZendeskChooseCategory = () => (
+  // The void customRightIcon is needed to have a centered header title
   <BaseScreenComponent
     showInstabugChat={false}
     goBack={true}
