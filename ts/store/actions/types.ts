@@ -13,13 +13,14 @@ import { BpdActions } from "../../features/bonus/bpd/store/actions";
 import { CgnActions } from "../../features/bonus/cgn/store/actions";
 import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
 import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
+import { MvlActions } from "../../features/mvl/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
 import { PrivativeActions } from "../../features/wallet/onboarding/privative/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
-import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -96,7 +97,8 @@ export type Action =
   | CgnActions
   | EuCovidCertActions
   | OutcomeCodeActions
-  | SvActions;
+  | SvActions
+  | MvlActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
