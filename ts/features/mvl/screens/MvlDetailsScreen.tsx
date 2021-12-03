@@ -17,9 +17,9 @@ type Props = unknown;
  */
 export const MvlDetailsScreen = (_: Props): React.ReactElement => (
   <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-    <SafeAreaView style={IOStyles.flex} testID={"MVLDetailsScreen"}>
+    <SafeAreaView style={IOStyles.flex} testID={"MvlDetailsScreen"}>
       <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <H1>TMP MVLDetailsScreen</H1>
+        <H1>TMP MvlDetailsScreen</H1>
       </ScrollView>
     </SafeAreaView>
   </BaseScreenComponent>

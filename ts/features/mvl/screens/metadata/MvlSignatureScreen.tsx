@@ -14,9 +14,9 @@ type Props = unknown;
  */
 export const MvlSignatureScreen = (_: Props): React.ReactElement => (
   <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-    <SafeAreaView style={IOStyles.flex} testID={"MVLSignatureScreen"}>
+    <SafeAreaView style={IOStyles.flex} testID={"MvlSignatureScreen"}>
       <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <H1>TMP MVLSignatureScreen</H1>
+        <H1>TMP MvlSignatureScreen</H1>
       </ScrollView>
     </SafeAreaView>
   </BaseScreenComponent>
