@@ -25,6 +25,7 @@ export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
   url: "https://appiotest.zendesk.com"
 };
 
+// If is not possible to get the Zendesk remote config assume it as active.
 export const isZendeskActiveRemotely = (zRC: ZendeskConfig | undefined) =>
   fromNullable(zRC).fold(true, zRC => zRC.active);
 
