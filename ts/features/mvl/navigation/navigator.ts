@@ -1,8 +1,8 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { MvlCertificatesScreen } from "../screens/metadata/MVLCertificatesScreen";
+import { MvlCertificatesScreen } from "../screens/metadata/MvlCertificatesScreen";
 import { MvlRecipientsScreen } from "../screens/metadata/MvlRecipientsScreen";
 import { MvlSignatureScreen } from "../screens/metadata/MvlSignatureScreen";
-import { MvlRouterScreen } from "../screens/MVLRouterScreen";
+import { MvlRouterScreen } from "../screens/MvlRouterScreen";
 import MVL_ROUTES from "./routes";
 
 const MvlNavigator = createStackNavigator(
