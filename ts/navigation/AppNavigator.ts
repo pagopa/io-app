@@ -9,39 +9,52 @@ import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
+import { zendeskEnabled } from "../config";
 
 /**
  * The main stack of screens of the Application.
  */
+const configMap = {
+  [ROUTES.INGRESS]: {
+    // This is the first screen that gets loaded by the app navigator
+    // On component mount, the screen will dispatch an
+    // APPLICATION_INITIALIZED action that gets handled by the startup saga.
+    screen: IngressScreen
+  },
+  [ROUTES.BACKGROUND]: {
+    screen: BackgroundScreen
+  },
+  [ROUTES.AUTHENTICATION]: {
+    // The navigator used during authentication
+    screen: AuthenticationNavigator
+  },
+  [ROUTES.ONBOARDING]: {
+    // The navigator user during onboarding for authenticated users
+    screen: OnboardingNavigator
+  },
+  [ROUTES.MAIN]: {
+    // The navigator used for authenticated users on onboarding completed
+    screen: MainNavigator
+  },
+  [ROUTES.WORKUNIT_GENERIC_FAILURE]: {
+    screen: WorkunitGenericFailure
+  },
+  [ZENDESK_ROUTES.HELP_CENTER]: {
+    screen: zendeskSupportNavigator
+  }
+};
+
+const zendeskMap = zendeskEnabled
+  ? {
+      [ZENDESK_ROUTES.MAIN]: {
+        screen: zendeskSupportNavigator
+      }
+    }
+  : {};
 const navigator = createStackNavigator(
   {
-    [ROUTES.INGRESS]: {
-      // This is the first screen that gets loaded by the app navigator
-      // On component mount, the screen will dispatch an
-      // APPLICATION_INITIALIZED action that gets handled by the startup saga.
-      screen: IngressScreen
-    },
-    [ROUTES.BACKGROUND]: {
-      screen: BackgroundScreen
-    },
-    [ROUTES.AUTHENTICATION]: {
-      // The navigator used during authentication
-      screen: AuthenticationNavigator
-    },
-    [ROUTES.ONBOARDING]: {
-      // The navigator user during onboarding for authenticated users
-      screen: OnboardingNavigator
-    },
-    [ROUTES.MAIN]: {
-      // The navigator used for authenticated users on onboarding completed
-      screen: MainNavigator
-    },
-    [ROUTES.WORKUNIT_GENERIC_FAILURE]: {
-      screen: WorkunitGenericFailure
-    },
-    [ZENDESK_ROUTES.HELP_CENTER]: {
-      screen: zendeskSupportNavigator
-    }
+    ...configMap,
+    ...zendeskMap
   },
   {
     // Let each screen handle the header and navigation
