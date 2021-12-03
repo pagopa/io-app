@@ -5,11 +5,11 @@ import BackgroundScreen from "../screens/BackgroundScreen";
 import IngressScreen from "../screens/ingress/IngressScreen";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
+import { zendeskEnabled } from "../config";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
-import { zendeskEnabled } from "../config";
 
 /**
  * The main stack of screens of the Application.
