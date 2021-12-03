@@ -32,6 +32,9 @@ import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 import { zendeskEnabled } from "../../../config";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
+import { useIOSelector } from "../../../store/hooks";
+import { zendeskRemoteConfigSelector } from "../../../store/reducers/backendStatus";
+import { isZendeskActiveRemotely } from "../../../utils/supportAssistance";
 
 // TODO: remove disabler when instabug is removed
 /* eslint-disable sonarjs/cognitive-complexity */
@@ -202,10 +205,10 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
         }
       : undefined;
     const dispatch = useDispatch();
+    const zendeskRemoteConfig = useIOSelector(zendeskRemoteConfigSelector);
     const onShowHelp = () => {
-      // TODO: Add remote FF
       // TODO: remove instabug
-      if (zendeskEnabled) {
+      if (zendeskEnabled && isZendeskActiveRemotely(zendeskRemoteConfig)) {
         dispatch(zendeskSupportStart());
       } else {
         showHelp();

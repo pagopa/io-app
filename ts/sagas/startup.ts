@@ -123,6 +123,8 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { zendeskRemoteConfigSelector } from "../store/reducers/backendStatus";
+import { isZendeskActiveRemotely } from "../utils/supportAssistance";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -146,7 +148,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield call(initMixpanel);
   // listen for mixpanel enabling events
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
-  if (zendeskEnabled) {
+
+  const zendeskRemoteConfig: ReturnType<typeof zendeskRemoteConfigSelector> =
+    yield select(zendeskRemoteConfigSelector);
+  if (zendeskEnabled && isZendeskActiveRemotely(zendeskRemoteConfig)) {
     yield fork(watchZendeskSupportSaga);
   }
   // Get last logged in Profile from the state
