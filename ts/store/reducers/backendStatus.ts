@@ -12,6 +12,7 @@ import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { GlobalState } from "./types";
+import { ZendeskConfig } from "../../../definitions/content/ZendeskConfig";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -64,6 +65,12 @@ export const cgnMerchantVersionSelector = createSelector(
       .mapNullable(bs => bs.config)
       .mapNullable(config => config.cgn_merchants_v2)
       .toUndefined()
+);
+
+export const zendeskRemoteConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): ZendeskConfig | undefined =>
+    backendStatus.map(bs => bs.config.zendesk).toUndefined()
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
