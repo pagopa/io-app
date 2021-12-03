@@ -8,6 +8,7 @@ import {
   bpdTransactionsLoadPage,
   bpdTransactionsLoadRequiredData
 } from "../../features/bonus/bpd/store/actions/transactions";
+import { mvlDetailsLoad } from "../../features/mvl/store/actions";
 import { Action } from "../actions/types";
 import {
   fetchTransactionsFailure,
@@ -49,6 +50,7 @@ const monitoredActions: ReadonlyArray<
     bpdTransactionsLoadRequiredData.success
   ],
   [euCovidCertificateGet.failure, euCovidCertificateGet.success],
+  [mvlDetailsLoad.failure, mvlDetailsLoad.success],
   [svPossibleVoucherStateGet.failure, svPossibleVoucherStateGet.success],
   [svVoucherListGet.failure, svVoucherListGet.success],
   [svGetPdfVoucher.failure, svGetPdfVoucher.success]
