@@ -22,9 +22,6 @@ const indicator = (
 
 /**
  * The loading of the MVL remote data
- * - Body
- * - Attachments
- * - Metadata
  * @param _
  * @constructor
  */

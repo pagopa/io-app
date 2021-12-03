@@ -35,6 +35,7 @@ const renderByPot = (
     (_, __) => <MvlLoadingScreen />,
     _ => <MvlGenericErrorScreen id={id} />
   );
+
 /**
  * Entrypoint for the MVL, handle the loading, error, success and future business logic ko, routing the screen rendering
  * @constructor
