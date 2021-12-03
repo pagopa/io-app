@@ -2,6 +2,8 @@ import React from "react";
 import { NavigationParams } from "react-navigation";
 import { fireEvent } from "@testing-library/react-native";
 
+import configureMockStore from "redux-mock-store";
+import { some } from "fp-ts/lib/Option";
 import * as mixpanel from "../../../../mixpanel";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -11,9 +13,7 @@ import ROUTES from "../../../../navigation/routes";
 import I18n from "../../../../i18n";
 
 import BaseScreenComponent, { Props } from "../index";
-import configureMockStore from "redux-mock-store";
 import { BackendStatusState } from "../../../../store/reducers/backendStatus";
-import { some } from "fp-ts/lib/Option";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 
 jest.useFakeTimers();
