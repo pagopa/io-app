@@ -16,7 +16,7 @@ export const MvlCertificatesScreen = (_: Props): React.ReactElement => (
   <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
     <SafeAreaView style={IOStyles.flex} testID={"MVLCertificatesScreen"}>
       <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <H1>MVLCertificatesScreen</H1>
+        <H1>TMP MVLCertificatesScreen</H1>
       </ScrollView>
     </SafeAreaView>
   </BaseScreenComponent>

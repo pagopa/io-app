@@ -8,18 +8,18 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 type Props = unknown;
 
 /**
- * This screen displays all the details for a MVL:
+ * The loading of the MVL remote data
  * - Body
  * - Attachments
  * - Metadata
  * @param _
  * @constructor
  */
-export const MvlDetailsScreen = (_: Props): React.ReactElement => (
+export const MvlLoadingScreen = (_: Props): React.ReactElement => (
   <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-    <SafeAreaView style={IOStyles.flex} testID={"MVLDetailsScreen"}>
+    <SafeAreaView style={IOStyles.flex} testID={"MvlLoadingScreen"}>
       <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <H1>TMP MVLDetailsScreen</H1>
+        <H1>TMP MvlLoadingScreen</H1>
       </ScrollView>
     </SafeAreaView>
   </BaseScreenComponent>

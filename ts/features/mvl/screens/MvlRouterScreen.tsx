@@ -1,11 +1,14 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { H1 } from "../../../components/core/typography/H1";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { MvlId } from "../types/mvlData";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { mvlDetailsLoad } from "../store/actions";
+import { mvlFromIdSelector } from "../store/reducers/byId";
+import { MvlData, MvlId } from "../types/mvlData";
+import { MvlGenericErrorScreen } from "./ko/MvlGenericErrorScreen";
+import { MvlDetailsScreen } from "./MvlDetailsScreen";
+import { MvlLoadingScreen } from "./MvlLoadingScreen";
 
 type NavigationParams = Readonly<{
   // TODO: assumption, we have an unique id that we should use to retrieve the MVL, maybe this could be the messageId? let's see!
@@ -13,18 +16,40 @@ type NavigationParams = Readonly<{
 }>;
 
 /**
+ * Render the view based on pot
+ * @param id
+ * @param value
+ */
+const renderByPot = (
+  id: MvlId,
+  value: pot.Pot<MvlData, Error>
+): React.ReactElement =>
+  pot.fold(
+    value,
+    () => <MvlLoadingScreen />,
+    () => <MvlLoadingScreen />,
+    _ => <MvlLoadingScreen />,
+    _ => <MvlGenericErrorScreen id={id} />,
+    _ => <MvlDetailsScreen />,
+    _ => <MvlLoadingScreen />,
+    (_, __) => <MvlLoadingScreen />,
+    _ => <MvlGenericErrorScreen id={id} />
+  );
+/**
  * Entrypoint for the MVL, handle the loading, error, success and future business logic ko, routing the screen rendering
- * @param _
  * @constructor
+ * @param props
  */
 export const MvlRouterScreen = (
-  _: NavigationInjectedProps<NavigationParams>
-): React.ReactElement => (
-  <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-    <SafeAreaView style={IOStyles.flex} testID={"MVLRouterScreen"}>
-      <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <H1>MVLRouterScreen</H1>
-      </ScrollView>
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+  props: NavigationInjectedProps<NavigationParams>
+): React.ReactElement => {
+  const mvlId = props.navigation.getParam("id");
+  const mvlPot = useIOSelector(state => mvlFromIdSelector(state, mvlId));
+  const dispatch = useIODispatch();
+  useOnFirstRender(() => {
+    if (!pot.isSome(mvlPot)) {
+      dispatch(mvlDetailsLoad.request(mvlId));
+    }
+  });
+  return renderByPot(mvlId, mvlPot);
+};
