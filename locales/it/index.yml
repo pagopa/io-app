@@ -1528,8 +1528,8 @@ wallet:
       title: "Abilita il metodo per effettuare pagamenti in app"
       description: "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
     code18:
-      title: "TMP 18"
-      description: "TMP 18"
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Se il problema persiste, contatta l’assistenza."
     code19:
       title: "TMP 19"
       description: "TMP 19"

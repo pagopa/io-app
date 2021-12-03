@@ -1502,8 +1502,8 @@ wallet:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
     code18:
-      title: "TMP 18"
-      description: "TMP 18"
+      title: "Sorry, an unexpected error has occurred"
+      description: "If this problem persists, please contact support."
     code19:
       title: "TMP 19"
       description: "TMP 19"
