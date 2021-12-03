@@ -1,9 +1,11 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
+
 import { makeFontStyleObject } from "../theme/fonts";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
+import { MessageCategory } from "../store/reducers/entities/messages/types";
 import { IOColors } from "./core/variables/IOColors";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
@@ -12,6 +14,8 @@ import { H5 } from "./core/typography/H5";
 import { H3 } from "./core/typography/H3";
 
 type OwnProps = Readonly<{
+  // TODO: this component is clearly too complex. Please separate the Message part from the Transactions one.
+  category?: MessageCategory;
   text11: string;
   text12: string;
   text2: string;
@@ -98,13 +102,17 @@ const styles = StyleSheet.create({
   },
   archived: {
     opacity: 0.75
+  },
+  qrContainer: {
+    marginRight: 16
   }
 });
 
 const ICON_WIDTH = 24;
 
 /**
- * A component to display a touchable list item
+ * A component to display a touchable list item.
+ * TODO: please consider separating the Transaction part from the Message one.
  */
 export default class DetailedlistItemComponent extends React.PureComponent<Props> {
   private getIconName = () =>
@@ -115,7 +123,8 @@ export default class DetailedlistItemComponent extends React.PureComponent<Props
       : "io-right";
 
   public render() {
-    const { isArchived } = this.props;
+    const { isArchived, category } = this.props;
+    const isEuCovidCert = category?.tag === "EU_COVID_CERT";
     return (
       <TouchableDefaultOpacity
         onPress={this.props.onPressItem}
@@ -153,6 +162,12 @@ export default class DetailedlistItemComponent extends React.PureComponent<Props
               <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
                 <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
               </Badge>
+            )}
+
+            {isEuCovidCert && (
+              <View style={styles.qrContainer}>
+                <IconFont name={"io-qr"} color={IOColors.blue} />
+              </View>
             )}
 
             <IconFont
