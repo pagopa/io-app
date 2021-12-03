@@ -25,6 +25,7 @@ const ZendeskAskPermissions = () => {
     title: I18n.t("support.askPermissions.cta.allow")
   };
   return (
+    // The void customRightIcon is needed to have a centered header title
     <BaseScreenComponent
       showInstabugChat={false}
       goBack={true}
