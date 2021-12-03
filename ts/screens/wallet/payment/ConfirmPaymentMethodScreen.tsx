@@ -232,7 +232,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       );
     }
     props.dispatchEndPaymentWebview("EXIT_PATH", paymentMethodType);
-    props.dispatchPaymentOutCome(maybeOutcomeCode);
+    props.dispatchPaymentOutCome(maybeOutcomeCode, paymentMethodType);
     props.navigateToOutComePaymentScreen((fee ?? 0) as ImportoEuroCents);
   };
 
@@ -448,8 +448,11 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(paymentWebViewEnd({ reason, paymentMethodType }));
     },
     dispatchCancelPayment,
-    dispatchPaymentOutCome: (outComeCode: Option<string>) =>
-      dispatch(paymentOutcomeCode(outComeCode)),
+    dispatchPaymentOutCome: (
+      outComeCode: Option<string>,
+      paymentMethodType: PaymentMethodType
+    ) =>
+      dispatch(paymentOutcomeCode({ outcome: outComeCode, paymentMethodType })),
     navigateToOutComePaymentScreen: (fee: ImportoEuroCents) =>
       navigateToPaymentOutcomeCode({ fee }),
     loadTransactions: () =>

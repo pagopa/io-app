@@ -169,8 +169,12 @@ const trackAction =
         return mp.track(action.type, {
           exitType: action.payload
         });
-      case getType(addCreditCardOutcomeCode):
       case getType(paymentOutcomeCode):
+        return mp.track(action.type, {
+          outCome: action.payload.outcome.getOrElse(""),
+          paymentMethodType: action.payload.paymentMethodType
+        });
+      case getType(addCreditCardOutcomeCode):
         return mp.track(action.type, {
           outCome: action.payload.getOrElse("")
         });
