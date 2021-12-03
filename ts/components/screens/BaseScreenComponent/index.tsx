@@ -12,6 +12,7 @@ import React, {
   useState
 } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
+import { useDispatch } from "react-redux";
 import { TranslationKeys } from "../../../../locales/locales";
 import {
   defaultAttachmentTypeConfiguration,
@@ -28,8 +29,12 @@ import { SearchType } from "../../search/SearchButton";
 import Markdown from "../../ui/Markdown";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 
+import { zendeskEnabled } from "../../../config";
+import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
 
+// TODO: remove disabler when instabug is removed
+/* eslint-disable sonarjs/cognitive-complexity */
 export type ContextualHelpProps = {
   title: string;
   body: () => React.ReactNode;
@@ -150,6 +155,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           customVariables.colorWhite
         )
       );
+
       setIsHelpVisible(true);
       setMarkdownContentLoaded(!contextualHelpMarkdown);
     };
@@ -195,7 +201,16 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           title: I18n.t(contextualHelpMarkdown.title)
         }
       : undefined;
-
+    const dispatch = useDispatch();
+    const onShowHelp = () => {
+      // TODO: Add remote FF
+      // TODO: remove instabug
+      if (zendeskEnabled) {
+        dispatch(zendeskSupportStart());
+      } else {
+        showHelp();
+      }
+    };
     return (
       <Container>
         <BaseHeader
@@ -210,7 +225,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           goBack={goBack}
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
-          onShowHelp={contextualHelpConfig ? showHelp : undefined}
+          onShowHelp={contextualHelpConfig ? onShowHelp : undefined}
           isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
