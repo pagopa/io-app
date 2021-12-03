@@ -8,8 +8,11 @@ import { OrganizationFiscalCode } from "../../../../../definitions/backend/Organ
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 
-// just a placeholder for now
-export type MessageCategory = null;
+// TODO: use type from API definitions once they are available
+export type MessageCategory =
+  | { tag: "EU_COVID_CERT" }
+  | { tag: "PAYMENT"; rptId: string }
+  | { tag: "GENERIC" };
 
 /**
  * Domain-specific representation of a Message with aggregated data.

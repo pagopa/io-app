@@ -8,7 +8,8 @@ import {
   UIMessage,
   UIMessageDetails,
   PrescriptionData,
-  EUCovidCertificate
+  EUCovidCertificate,
+  MessageCategory
 } from "./types";
 
 /**
@@ -21,7 +22,8 @@ export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   return {
     id: messageFromApi.id,
     fiscalCode: messageFromApi.fiscal_code,
-    category: null,
+    // TODO: replace with actual types from API
+    category: (messageFromApi as any).category as MessageCategory,
     createdAt: new Date(messageFromApi.created_at),
     serviceId: messageFromApi.sender_service_id,
     serviceName: enriched.service_name,

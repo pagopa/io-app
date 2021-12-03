@@ -9,10 +9,15 @@ import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
 } from "../../../../utils/convertDateToWordDistance";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import {
+  MessageCategory,
+  UIMessage
+} from "../../../../store/reducers/entities/messages/types";
 import DetailedlistItemComponent from "../../../DetailedlistItemComponent";
+import { category } from "fp-ts";
 
 type Props = {
+  category: MessageCategory;
   hasPaidBadge: boolean;
   isRead: boolean;
   isArchived: boolean;
@@ -40,7 +45,12 @@ const announceMessage = (message: UIMessage, isRead: boolean): string =>
     receivedAt: convertReceivedDateToAccessible(message.createdAt)
   });
 
+/**
+ * TODO: please merge this component with DetailedlistItemComponent since it is here
+ *       only to provide backward compatibility with the legacy components.
+ */
 const MessageListItem = ({
+  category,
   hasPaidBadge,
   isRead,
   isArchived,
@@ -57,6 +67,7 @@ const MessageListItem = ({
 
   return (
     <DetailedlistItemComponent
+      category={category}
       isNew={!isRead}
       isArchived={isArchived}
       onPressItem={onPress}
