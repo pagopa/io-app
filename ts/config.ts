@@ -124,8 +124,7 @@ export const totServiceFetchWorkers = t.Integer.decode(
   parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_SERVICE_FETCH_WORKERS);
 
-export const shouldDisplayVersionInfoOverlay =
-  Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
+export const shouldDisplayVersionInfoOverlay = true;
 
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";

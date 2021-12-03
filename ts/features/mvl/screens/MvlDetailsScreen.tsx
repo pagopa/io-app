@@ -15,7 +15,7 @@ type Props = unknown;
  * @param _
  * @constructor
  */
-export const MVLDetailsScreen = (_: Props): React.ReactElement => (
+export const MvlDetailsScreen = (_: Props): React.ReactElement => (
   <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
     <SafeAreaView style={IOStyles.flex} testID={"MVLDetailsScreen"}>
       <ScrollView style={[IOStyles.horizontalContentPadding]}>

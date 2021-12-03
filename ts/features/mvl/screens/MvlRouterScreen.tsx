@@ -12,7 +12,7 @@ type Props = unknown;
  * @param _
  * @constructor
  */
-export const MVLRouterScreen = (_: Props): React.ReactElement => (
+export const MvlRouterScreen = (_: Props): React.ReactElement => (
   <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
     <SafeAreaView style={IOStyles.flex} testID={"MVLRouterScreen"}>
       <ScrollView style={[IOStyles.horizontalContentPadding]}>

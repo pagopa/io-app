@@ -8,15 +8,15 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 type Props = unknown;
 
 /**
- * This screen displays the certificates for a MVL
+ * This screen displays the signature details for a MVL
  * @param _
  * @constructor
  */
-export const MVLCertificatesScreen = (_: Props): React.ReactElement => (
+export const MvlSignatureScreen = (_: Props): React.ReactElement => (
   <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-    <SafeAreaView style={IOStyles.flex} testID={"MVLCertificatesScreen"}>
+    <SafeAreaView style={IOStyles.flex} testID={"MVLSignatureScreen"}>
       <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <H1>MVLCertificatesScreen</H1>
+        <H1>MVLSignatureScreen</H1>
       </ScrollView>
     </SafeAreaView>
   </BaseScreenComponent>
