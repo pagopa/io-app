@@ -73,8 +73,6 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
-import { zendeskRemoteConfigSelector } from "../store/reducers/backendStatus";
-import { isZendeskActiveRemotely } from "../utils/supportAssistance";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -149,9 +147,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // listen for mixpanel enabling events
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
-  const zendeskRemoteConfig: ReturnType<typeof zendeskRemoteConfigSelector> =
-    yield select(zendeskRemoteConfigSelector);
-  if (zendeskEnabled && isZendeskActiveRemotely(zendeskRemoteConfig)) {
+  if (zendeskEnabled) {
     yield fork(watchZendeskSupportSaga);
   }
   // Get last logged in Profile from the state
