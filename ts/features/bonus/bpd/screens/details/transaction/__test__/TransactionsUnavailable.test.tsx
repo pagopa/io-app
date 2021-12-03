@@ -7,6 +7,7 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
 import BPD_ROUTES from "../../../../navigation/routes";
 import TransactionsUnavailable from "../TransactionsUnavailable";
+import { some } from "fp-ts/lib/Option";
 
 describe("TransactionsUnavailable component", () => {
   const mockStore = configureMockStore();
@@ -23,6 +24,9 @@ describe("TransactionsUnavailable component", () => {
       authentication: {
         kind: "LoggedOutWithoutIdp",
         reason: "NOT_LOGGED_IN"
+      },
+      backendStatus: {
+        status: some({ config: { zendesk: { active: false } } })
       }
     });
   });
