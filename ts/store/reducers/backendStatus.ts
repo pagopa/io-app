@@ -11,8 +11,8 @@ import { Action } from "../actions/types";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
-import { GlobalState } from "./types";
 import { ZendeskConfig } from "../../../definitions/content/ZendeskConfig";
+import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted

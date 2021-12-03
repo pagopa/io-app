@@ -31,10 +31,10 @@ import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 
 import { zendeskEnabled } from "../../../config";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
-import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
 import { useIOSelector } from "../../../store/hooks";
 import { zendeskRemoteConfigSelector } from "../../../store/reducers/backendStatus";
 import { isZendeskActiveRemotely } from "../../../utils/supportAssistance";
+import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
 
 // TODO: remove disabler when instabug is removed
 /* eslint-disable sonarjs/cognitive-complexity */
