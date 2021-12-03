@@ -2866,3 +2866,20 @@ webView:
     missingParams: Not all information necessary to access this page are available
     missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
+support:
+  helpCenter:
+    header: "IO helps you"
+    cta:
+      contactSupport: "Contact support"
+      seeReports: "See reports in progress"
+  askPermissions:
+    header: "Contact support"
+    title: "To continue, we need your consent"
+    cta:
+      allow: "Allow"
+      denies: "Do not allow"
+  chooseCategory:
+    header: "Contact support"
+    title:
+      category: "Select a topic"
+      subCategory: "What is it about?"
