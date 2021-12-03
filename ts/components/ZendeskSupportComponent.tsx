@@ -2,12 +2,12 @@ import * as React from "react";
 import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
+import { useDispatch } from "react-redux";
 import { zendeskTokenSelector } from "../store/reducers/authentication";
 import {
   AnonymousIdentity,
   initSupportAssistance,
   JwtIdentity,
-  openSupportTicket,
   setUserIdentity,
   showSupportTickets,
   ZendeskConfig,
@@ -17,13 +17,20 @@ import {
 import { profileSelector } from "../store/reducers/profile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { useIOSelector } from "../store/hooks";
-import IconFont from "./ui/IconFont";
-import { IOColors } from "./core/variables/IOColors";
+import { navigateToZendeskAskPermissions } from "../features/zendesk/store/actions/navigation";
+import { useNavigationContext } from "../utils/hooks/useOnFocus";
+import { zendeskSupportCompleted } from "../features/zendesk/store/actions";
+import I18n from "../i18n";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { Label } from "./core/typography/Label";
 
-const ZendeskChatComponent = () => {
+const ZendeskSupportComponent = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const profile = useIOSelector(profileSelector);
+  const navigation = useNavigationContext();
+  const dispatch = useDispatch();
+  const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
+
   const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskConfig>(
     zendeskToken
       ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
@@ -68,29 +75,34 @@ const ZendeskChatComponent = () => {
   return (
     <>
       <ButtonDefaultOpacity
-        onPress={() => openSupportTicket()}
-        transparent={true}
-        testID={"zendeskOpenTicketButton"}
+        style={{
+          alignSelf: "stretch"
+        }}
+        onPress={() => navigation.navigate(navigateToZendeskAskPermissions())}
+        disabled={false}
+        testID={"contactSupportButton"}
       >
-        <IconFont
-          name="io-question"
-          color={IOColors.red}
-          testID={"zendeskOpenTicketIcon"}
-        />
+        <Label color={"white"}>
+          {I18n.t("support.helpCenter.cta.contactSupport")}
+        </Label>
       </ButtonDefaultOpacity>
+
       <ButtonDefaultOpacity
-        onPress={() => showSupportTickets()}
-        transparent={true}
-        testID={"zendeskShowTicketsButton"}
+        onPress={() => {
+          showSupportTickets();
+          workUnitCompleted();
+        }}
+        style={{
+          alignSelf: "stretch"
+        }}
+        disabled={false}
+        bordered={true}
+        testID={"showTicketsButton"}
       >
-        <IconFont
-          name="io-chat"
-          color={IOColors.red}
-          testID={"zendeskShowTicketsIcon"}
-        />
+        <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
       </ButtonDefaultOpacity>
     </>
   );
 };
 
-export default ZendeskChatComponent;
+export default ZendeskSupportComponent;
