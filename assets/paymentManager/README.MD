@@ -1,3 +1,6 @@
+### 2021-12-03
+- ignored `payPals` filed in `Wallet` since the app doesn't use it
+
 ### 2021-11-30
 - add `/v2/payments/{idPayment}/psps` API definition
 - add `PspDataListResponse` definition
