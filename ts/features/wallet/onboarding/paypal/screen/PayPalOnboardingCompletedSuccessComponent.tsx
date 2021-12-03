@@ -6,7 +6,31 @@ import { confirmButtonProps } from "../../../../bonus/bonusVacanze/components/bu
 import I18n from "../../../../../i18n";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { walletAddPaypalCompleted } from "../store/actions";
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { isPaymentOngoingSelector } from "../../../../../store/reducers/wallet/payment";
+
+const getLocales = (isPaymentOnGoing: boolean) => {
+  if (isPaymentOnGoing) {
+    return {
+      title: I18n.t(
+        "wallet.onboarding.paypal.onBoardingCompletedWhilePayment.title"
+      ),
+      body: I18n.t(
+        "wallet.onboarding.paypal.onBoardingCompletedWhilePayment.body"
+      ),
+      ctaTitle: I18n.t(
+        "wallet.onboarding.paypal.onBoardingCompletedWhilePayment.primaryButton"
+      )
+    };
+  }
+  return {
+    title: I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title"),
+    body: I18n.t("wallet.onboarding.paypal.onBoardingCompleted.body"),
+    ctaTitle: I18n.t(
+      "wallet.onboarding.paypal.onBoardingCompleted.primaryButton"
+    )
+  };
+};
 
 /**
  * this screen shows that the onboarding is completed successfully
@@ -15,18 +39,20 @@ import { useIODispatch } from "../../../../../store/hooks";
  */
 const PayPalOnboardingCompletedSuccessComponent = () => {
   const dispatch = useIODispatch();
+  const isPaymentOnGoing = useIOSelector(isPaymentOngoingSelector);
+  const locales = getLocales(isPaymentOnGoing);
   return (
     <>
       <InfoScreenComponent
         image={renderInfoRasterImage(successImage)}
-        title={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")}
-        body={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.body")}
+        title={locales.title}
+        body={locales.body}
       />
       <FooterWithButtons
         type={"SingleButton"}
         leftButton={confirmButtonProps(
           () => dispatch(walletAddPaypalCompleted()),
-          I18n.t("wallet.onboarding.paypal.onBoardingCompleted.primaryButton"),
+          locales.ctaTitle,
           undefined,
           "primaryButtonId"
         )}

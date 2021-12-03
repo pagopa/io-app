@@ -29,16 +29,19 @@ import {
   bpdEnabled,
   cgnEnabled,
   euCovidCertificateEnabled,
+  mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   svEnabled,
-  usePaginatedMessages
+  usePaginatedMessages,
+  zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
+import { watchMvlSaga } from "../features/mvl/saga";
 import I18n from "../i18n";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
@@ -69,6 +72,7 @@ import {
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -142,7 +146,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield call(initMixpanel);
   // listen for mixpanel enabling events
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
-
+  if (zendeskEnabled) {
+    yield fork(watchZendeskSupportSaga);
+  }
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield select(profileSelector);
@@ -361,6 +367,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (euCovidCertificateEnabled) {
     // Start watching for EU Covid Certificate actions
     yield fork(watchEUCovidCertificateSaga, sessionToken);
+  }
+
+  if (mvlEnabled) {
+    // Start watching for MVL actions
+    yield fork(watchMvlSaga, sessionToken);
   }
 
   // Load the user metadata

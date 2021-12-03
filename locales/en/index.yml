@@ -1024,8 +1024,11 @@ wallet:
       onBoardingCompleted:
         title: "That's it!"
         body: "Now have a look at the current settings of your new method."
-        secondaryButton: "Close"
         primaryButton: "View method"
+      onBoardingCompletedWhilePayment:
+        title: "That's it!"
+        body: "Now you can continue with your payment."
+        primaryButton: "Continue"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -1570,6 +1573,7 @@ messages:
     senderInfo:  Sender service unknown
     serviceInfo: Service info unknown
     departmentInfo: Department info unknown
+    noTitle: No title
   loadingErrorTitle: Loading messages has failed
   cta:
     archive: Archive
@@ -2874,3 +2878,20 @@ webView:
     missingParams: Not all information necessary to access this page are available
     missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
+support:
+  helpCenter:
+    header: "IO helps you"
+    cta:
+      contactSupport: "Contact support"
+      seeReports: "See reports in progress"
+  askPermissions:
+    header: "Contact support"
+    title: "To continue, we need your consent"
+    cta:
+      allow: "Allow"
+      denies: "Do not allow"
+  chooseCategory:
+    header: "Contact support"
+    title:
+      category: "Select a topic"
+      subCategory: "What is it about?"

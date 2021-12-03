@@ -54,7 +54,6 @@ export const bonusVacanzeEnabled: boolean =
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
-export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
 export const bpdTransactionsPaging: boolean =
   Config.BPD_TRANSACTIONS_PAGING === "YES";
@@ -69,7 +68,6 @@ export const isPlaygroundsEnabled: boolean =
 
 // CGN Feature Flag
 export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
-export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 
 // EU Covid Certificate feature flag
 export const euCovidCertificateEnabled: boolean =
@@ -141,3 +139,6 @@ export const localServicesWebUrl: string = t.string
   .getOrElse("https://io.italia.it");
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;
+
+export const testOverlayCaption: string | undefined =
+  Config.TEST_OVERLAY_CAPTION;
