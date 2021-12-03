@@ -2840,6 +2840,9 @@ bonus:
 
 features:
   mvl:
+    loading:
+      title: "Sto caricando i dettagli del messaggio"
+      subtitle: "Attendi qualche secondo"
     ko:
       genericError:
         title: "TMP Generic error title"
