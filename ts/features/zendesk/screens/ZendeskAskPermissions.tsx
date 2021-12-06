@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
+import { getReadableVersion } from "react-native-device-info";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -31,7 +32,6 @@ import {
   getSystemVersion
 } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
-import { getReadableVersion } from "react-native-device-info";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 
 type Item = {
@@ -51,7 +51,7 @@ type ItemProps = {
 };
 
 const iconProps = { width: 30, height: 30 };
-const items = (props: ItemProps): ReadonlyArray<Item> => [
+const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
     icon: <NameSurnameIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.nameSurname"),
@@ -139,6 +139,7 @@ const ZendeskAskPermissions = () => {
     onPress: () => navigation.navigate(navigateToZendeskChooseCategory()),
     title: I18n.t("support.askPermissions.cta.allow")
   };
+  const items = getItems(itemsProps);
   return (
     <BaseScreenComponent
       showInstabugChat={false}
@@ -158,7 +159,7 @@ const ZendeskAskPermissions = () => {
           <View spacer small={true} />
           <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
           <ScrollView>
-            {items(itemsProps).map((item, idx) => (
+            {items.map((item, idx) => (
               <ItemComponent key={`permission_item_${idx}`} {...item} />
             ))}
             <EdgeBorderComponent />
