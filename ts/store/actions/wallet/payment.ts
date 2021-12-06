@@ -25,6 +25,8 @@ import {
   PaymentStartPayload
 } from "../../reducers/wallet/payment";
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
+import { NetworkError } from "../../../utils/errors";
+import { PspData } from "../../../../definitions/pagopa/PspData";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
@@ -274,6 +276,19 @@ export const runStartOrResumePaymentActivationSaga = createStandardAction(
 )<RunStartOrResumePaymentActivationSagaPayload>();
 
 /**
+ * get the list of psp that can handle the payment with the given paymentMethod
+ */
+export const pspForPaymentV2 = createAsyncAction(
+  "PAYMENT_PSP_V2_REQUEST",
+  "PAYMENT_PSP_V2_SUCCESS",
+  "PAYMENT_PSP_V2_FAILURE"
+)<
+  { idWallet: number; idPayment: string },
+  ReadonlyArray<PspData>,
+  NetworkError
+>();
+
+/**
  * All possible payment actions
  */
 export type PaymentActions =
@@ -295,4 +310,5 @@ export type PaymentActions =
   | ActionType<typeof abortRunningPayment>
   | ActionType<typeof paymentFetchAllPspsForPaymentId>
   | ActionType<typeof paymentRedirectionUrls>
-  | ActionType<typeof runStartOrResumePaymentActivationSaga>;
+  | ActionType<typeof runStartOrResumePaymentActivationSaga>
+  | ActionType<typeof pspForPaymentV2>;
