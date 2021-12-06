@@ -3,6 +3,7 @@ import { BackendStatusState } from "../backendStatus";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { Config } from "../../../../definitions/content/Config";
+import { AssistanceToolEnum } from "../../../../definitions/content/ZendeskConfig";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -190,7 +191,7 @@ export const baseRawBackendStatus: BackendStatus = {
     bpd_ranking_v2: true,
     cgn_merchants_v2: false,
     zendesk: {
-      active: false
+      assistanceTool: AssistanceToolEnum.none
     }
   }
 };
@@ -210,7 +211,7 @@ export const baseBackendConfig: Config = {
   bpd_ranking_v2: true,
   cgn_merchants_v2: true,
   zendesk: {
-    active: false
+    assistanceTool: AssistanceToolEnum.none
   }
 };
 
