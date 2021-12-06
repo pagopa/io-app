@@ -34,8 +34,8 @@ import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIOSelector } from "../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
-import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
 
 // TODO: remove disabler when instabug is removed
 /* eslint-disable sonarjs/cognitive-complexity */
