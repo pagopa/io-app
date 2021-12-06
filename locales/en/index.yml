@@ -1076,8 +1076,8 @@ wallet:
       headerTitle: "Add supermarket card"
       choosePrivativeIssuer:
         loading: "Loading settings\n\nPlease wait a few seconds"
-        title: "Choose your card brand"
-        body: "You can only add cards that allow you to pay in supermarkets."
+        title: "Choose the card brand"
+        body: "By adding the card to your Wallet, you’ll be able to join the initiatives available on IO."
         koDisabled:
           title: "This supermarket doesn't offer this feature yet"
           body: "We are working to allow you to add your card soon."
