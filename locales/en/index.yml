@@ -1316,7 +1316,7 @@ wallet:
         bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
     bonus:
-      name: Discount, bonus and other services
+      name: Discounts, bonuses and other initiatives
       description: Public initiatives to support Economy, or services related to payments
     digital:
       name: App and digital payment tools
