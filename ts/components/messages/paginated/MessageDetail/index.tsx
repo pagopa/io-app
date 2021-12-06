@@ -22,7 +22,7 @@ import MessageMarkdown from "../../MessageMarkdown";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
 import { MessageTitle } from "./common/MessageTitle";
 import MessageContent from "./Content";
-import CtaBar from "./CtaBar";
+import CtaBar from "./common/CtaBar";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 
 const styles = StyleSheet.create({
@@ -153,15 +153,14 @@ const MessageDetailsComponent = ({
           </React.Fragment>
         )}
 
-        {prescriptionData === undefined && (
-          <CtaBar
-            expirationInfo={paymentExpirationInfo}
-            isPaid={hasPaidBadge}
-            messageDetails={messageDetails}
-            service={service}
-            serviceMetadata={serviceMetadata}
-          />
-        )}
+        <CtaBar
+          isPrescription={prescriptionData !== undefined}
+          expirationInfo={paymentExpirationInfo}
+          isPaid={hasPaidBadge}
+          messageDetails={messageDetails}
+          service={service}
+          serviceMetadata={serviceMetadata}
+        />
       </>
     </>
   );
