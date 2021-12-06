@@ -925,7 +925,7 @@ wallet:
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
-        text1: "Aggiungendo al tuo Portafoglio tutte le carte Maestro, Mastercard, V-Pay e Visa a te associate, potrai aderire alle iniziative disponibili su IO."
+        text1: "Aggiungendo al tuo Portafoglio tutte le carte Maestro, Mastercard, V&#8209Pay e Visa a te associate, potrai aderire alle iniziative disponibili su IO."
         text3: "Per maggiori informazioni consulta l'"
         text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
