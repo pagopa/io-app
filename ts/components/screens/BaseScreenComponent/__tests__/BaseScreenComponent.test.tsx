@@ -4,6 +4,7 @@ import { fireEvent } from "@testing-library/react-native";
 
 import configureMockStore from "redux-mock-store";
 import { some } from "fp-ts/lib/Option";
+import { Store } from "redux";
 import * as mixpanel from "../../../../mixpanel";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -17,7 +18,6 @@ import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../definitions/content/Config";
-import { Store } from "redux";
 
 jest.useFakeTimers();
 
