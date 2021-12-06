@@ -1112,7 +1112,7 @@ wallet:
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
-  paymentMethodDesc: Credit, debit, prepaid card, PagoBANCOMAT, app
+  paymentMethodDesc: Credit, debit, prepaid cards, PayPal and others
   walletLoadMessage: Loading payment methods...
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
