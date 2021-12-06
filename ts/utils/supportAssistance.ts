@@ -1,6 +1,6 @@
 import ZendDesk from "io-react-native-zendesk";
 import { fromNullable } from "fp-ts/lib/Option";
-import { ZendeskConfig } from "../../definitions/content/ZendeskConfig";
+import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 
 export type ZendeskAppConfig = {
   key: string;
@@ -25,9 +25,9 @@ export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
   url: "https://appiotest.zendesk.com"
 };
 
-// If is not possible to get the Zendesk remote config assume it as active.
-export const isZendeskActiveRemotely = (zRC: ZendeskConfig | undefined) =>
-  fromNullable(zRC).fold(true, zRC => zRC.active);
+// If is not possible to get the assistance tool remotely assume it is none.
+export const assistanceToolRemoteConfig = (aTC: ToolEnum | undefined) =>
+  fromNullable(aTC).fold(ToolEnum.none, aT => aT);
 
 export const initSupportAssistance = ZendDesk.init;
 export const setUserIdentity = ZendDesk.setUserIdentity;
