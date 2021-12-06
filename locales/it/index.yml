@@ -2894,3 +2894,21 @@ webView:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
     missingToken: Non hai l'autorizzazione per avviare questo flusso
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
+support:
+  helpCenter:
+    header: "IO ti aiuto"
+    cta:
+      contactSupport: "Contatta l'assistenza"
+      seeReports: "Vedi segnalazioni in corso"
+  askPermissions:
+    header: "Contatta l'assistenza"
+    title: "Per continuare, abbiamo bisogno del tuo consenso"
+    cta:
+      allow: "Consenti"
+      denies: "Non consentire"
+  chooseCategory:
+    header: "Contatta l'assistenza"
+    title:
+      category: "Seleziona un argomento"
+      subCategory: "Di cosa si tratta?"
+
