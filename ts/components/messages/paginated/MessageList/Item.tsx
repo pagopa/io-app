@@ -14,7 +14,6 @@ import {
   UIMessage
 } from "../../../../store/reducers/entities/messages/types";
 import DetailedlistItemComponent from "../../../DetailedlistItemComponent";
-import { category } from "fp-ts";
 
 type Props = {
   category: MessageCategory;
