@@ -925,7 +925,7 @@ wallet:
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
-        text1: "Aggiungendo al tuo Portafoglio tutte le carte Maestro, Mastercard, V&#8209Pay e Visa a te associate, potrai aderire alle iniziative disponibili su IO."
+        text1: "Aggiungendo al tuo Portafoglio tutte le carte Maestro, Mastercard, V-Pay e Visa a te associate, potrai aderire alle iniziative disponibili su IO."
         text3: "Per maggiori informazioni consulta l'"
         text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
@@ -1095,7 +1095,7 @@ wallet:
       choosePrivativeIssuer:
         loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
         title: "Scegli il marchio della tua carta"
-        body: "Puoi aggiungere soltanto carte che ti permettono di pagare nei supermercati."
+        body: "Aggiungendo la carta al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO."
         koDisabled:
           title: "Questo supermercato non offre ancora questa funzionalità"
           body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
