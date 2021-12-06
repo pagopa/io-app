@@ -15,7 +15,6 @@ import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 
 import ROUTES from "./routes";
-import ZendeskAskPermissions from "../features/zendesk/screens/ZendeskAskPermissions";
 
 const baseMessageRouteConfig: NavigationRouteConfigMap<
   NavigationStackOptions,
@@ -30,7 +29,9 @@ const baseMessageRouteConfig: NavigationRouteConfigMap<
     screen: MessageRouterScreen
   },
   [ROUTES.MESSAGE_DETAIL]: {
-    screen: ZendeskAskPermissions
+    screen: usePaginatedMessages
+      ? PaginatedMessageDetailScreen
+      : MessageDetailScreen
   }
 };
 

@@ -144,7 +144,7 @@ const ZendeskAskPermissions = () => {
     <BaseScreenComponent
       showInstabugChat={false}
       goBack={true}
-      // The avoid customRightIcon is needed to have a centered header title
+      // customRightIcon is needed to have a centered header title
       customRightIcon={{
         iconName: "",
         onPress: () => true
