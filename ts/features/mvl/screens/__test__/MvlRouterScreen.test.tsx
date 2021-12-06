@@ -2,6 +2,7 @@ import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { Action } from "../../../../store/actions/types";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
@@ -15,12 +16,7 @@ describe("MvlRouterScreen behaviour", () => {
 
   describe("When the screen is rendered with the default state and feature.mvl.byId={}", () => {
     it("Should render the MvlLoadingScreen", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const store = createStore(appReducer, globalState as any);
-      const render = renderComponent(store);
+      const render = dispatchActionAndRenderComponent([]);
 
       expect(render.component.queryByTestId("MvlLoadingScreen")).not.toBeNull();
     });
@@ -44,12 +40,7 @@ describe("MvlRouterScreen behaviour", () => {
 
     describe("And the mvlDetailsLoad fails", () => {
       it("Should render the MvlGenericFailureScreen", () => {
-        const globalState = appReducer(
-          undefined,
-          applicationChangeState("active")
-        );
-        const store = createStore(appReducer, globalState as any);
-        const render = renderComponent(store);
+        const render = dispatchActionAndRenderComponent([]);
 
         render.store.dispatch(
           mvlDetailsLoad.failure({
@@ -67,12 +58,7 @@ describe("MvlRouterScreen behaviour", () => {
 
     describe("And the mvlDetailsLoad is successful ", () => {
       it("Should render the MvlDetailsScreen", () => {
-        const globalState = appReducer(
-          undefined,
-          applicationChangeState("active")
-        );
-        const store = createStore(appReducer, globalState as any);
-        const render = renderComponent(store);
+        const render = dispatchActionAndRenderComponent([]);
 
         render.store.dispatch(mvlDetailsLoad.success(mvlMockData));
 
@@ -84,19 +70,13 @@ describe("MvlRouterScreen behaviour", () => {
   });
   describe("When the screen is rendered with a failure in feature.mvl.byId", () => {
     it("Should render the MvlLoadingScreen", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const store = createStore(appReducer, globalState as any);
-      store.dispatch(
+      const render = dispatchActionAndRenderComponent([
         mvlDetailsLoad.failure({
           kind: "generic",
           id: mvlMockId,
           value: new Error("An error")
         })
-      );
-      const render = renderComponent(store);
+      ]);
 
       expect(render.component.queryByTestId("MvlLoadingScreen")).not.toBeNull();
     });
@@ -128,14 +108,9 @@ describe("MvlRouterScreen behaviour", () => {
 
   describe("When the screen is rendered with a success in feature.mvl.byId", () => {
     it("Should render the MvlDetailsScreen", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const store = createStore(appReducer, globalState as any);
-      store.dispatch(mvlDetailsLoad.success(mvlMockData));
-      const render = renderComponent(store);
-
+      const render = dispatchActionAndRenderComponent([
+        mvlDetailsLoad.success(mvlMockData)
+      ]);
       expect(render.component.queryByTestId("MvlDetailsScreen")).not.toBeNull();
     });
 
@@ -156,6 +131,13 @@ describe("MvlRouterScreen behaviour", () => {
     });
   });
 });
+
+const dispatchActionAndRenderComponent = (actions: ReadonlyArray<Action>) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  actions.forEach(a => store.dispatch(a));
+  return renderComponent(store);
+};
 
 const renderComponent = (store: Store) => ({
   component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
