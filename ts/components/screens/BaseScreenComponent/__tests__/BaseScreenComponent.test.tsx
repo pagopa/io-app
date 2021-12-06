@@ -17,6 +17,7 @@ import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../definitions/content/Config";
+import { Store } from "redux";
 
 jest.useFakeTimers();
 
@@ -26,76 +27,123 @@ const defaultProps: Props = {
 };
 
 describe("BaseScreenComponent", () => {
-  it("renders the help button when contextualHelp is defined", () => {
-    const { component } = renderComponent({
-      ...defaultProps,
-      contextualHelp: { title: "fake help", body: () => null }
-    });
-    expect(
-      component.getByA11yLabel(
-        I18n.t("global.accessibility.contextualHelp.open.label")
-      )
-    ).toBeDefined();
-  });
-
-  it("renders the help button when contextualHelpMarkdown is defined", () => {
-    const { component } = renderComponent({
-      ...defaultProps,
-      contextualHelpMarkdown: {
-        title:
-          "bonus.bonusVacanze.eligibility.activateBonus.contextualHelp.title",
-        body: "bonus.bonusVacanze.eligibility.activateBonus.contextualHelp.body"
-      }
-    });
-    expect(
-      component.getByA11yLabel(
-        I18n.t("global.accessibility.contextualHelp.open.label")
-      )
-    ).toBeDefined();
-  });
-
-  describe("when the help button is pressed", () => {
-    it("should show the contextual help modal", () => {
-      const { component } = renderComponent({
-        ...defaultProps,
-        contextualHelp: { title: "fake help", body: () => null }
-      });
-      const helpButton = component.getByA11yLabel(
-        I18n.t("global.accessibility.contextualHelp.open.label")
-      );
-      fireEvent(helpButton, "onPress");
-      expect(component.getByText("fake help")).toBeDefined();
-    });
-
-    it("should send the analytics OPEN_CONTEXTUAL_HELP event with the screen name", () => {
-      const spy_mixpanelTrack = jest.spyOn(mixpanel, "mixpanelTrack");
-      const { component } = renderComponent({
-        ...defaultProps,
-        contextualHelp: { title: "fake help", body: () => null }
-      });
-      const helpButton = component.getByA11yLabel(
-        I18n.t("global.accessibility.contextualHelp.open.label")
-      );
-      fireEvent(helpButton, "onPress");
-      expect(spy_mixpanelTrack).toHaveBeenCalledWith("OPEN_CONTEXTUAL_HELP", {
-        SCREEN_NAME: ROUTES.MESSAGES_HOME
-      });
-    });
-  });
-});
-
-function renderComponent(props = defaultProps) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
-  const store = mockStore({
+  const state = {
     ...globalState,
     backendStatus: {
       status: some({
         config: { assistanceTool: { tool: ToolEnum.none } } as Config
       } as BackendStatus)
     } as BackendStatusState
+  };
+  describe("when the assistanceTool is instabug", () => {
+    it("and contextualHelp is defined renders the help button", () => {
+      const { component } = renderComponent(
+        {
+          ...defaultProps,
+          contextualHelp: { title: "fake help", body: () => null }
+        },
+        mockStore({
+          ...state,
+          backendStatus: {
+            status: some({
+              config: { assistanceTool: { tool: ToolEnum.instabug } } as Config
+            } as BackendStatus)
+          } as BackendStatusState
+        })
+      );
+      expect(
+        component.getByA11yLabel(
+          I18n.t("global.accessibility.contextualHelp.open.label")
+        )
+      ).toBeDefined();
+    });
+
+    it("and the contextualHelpMarkdown is defined renders the help button", () => {
+      const { component } = renderComponent(
+        {
+          ...defaultProps,
+          contextualHelpMarkdown: {
+            title:
+              "bonus.bonusVacanze.eligibility.activateBonus.contextualHelp.title",
+            body: "bonus.bonusVacanze.eligibility.activateBonus.contextualHelp.body"
+          }
+        },
+        mockStore({
+          ...state,
+          backendStatus: {
+            status: some({
+              config: { assistanceTool: { tool: ToolEnum.instabug } } as Config
+            } as BackendStatus)
+          } as BackendStatusState
+        })
+      );
+      expect(
+        component.getByA11yLabel(
+          I18n.t("global.accessibility.contextualHelp.open.label")
+        )
+      ).toBeDefined();
+    });
   });
 
+  describe("when the help button is pressed", () => {
+    describe("and the assistanceTool is instabug", () => {
+      it("should show the contextual help modal", () => {
+        const { component } = renderComponent(
+          {
+            ...defaultProps,
+            contextualHelp: { title: "fake help", body: () => null }
+          },
+          mockStore({
+            ...state,
+            backendStatus: {
+              status: some({
+                config: {
+                  assistanceTool: { tool: ToolEnum.instabug }
+                } as Config
+              } as BackendStatus)
+            } as BackendStatusState
+          })
+        );
+        const helpButton = component.getByA11yLabel(
+          I18n.t("global.accessibility.contextualHelp.open.label")
+        );
+        fireEvent(helpButton, "onPress");
+        expect(component.getByText("fake help")).toBeDefined();
+      });
+
+      it("should send the analytics OPEN_CONTEXTUAL_HELP event with the screen name", () => {
+        const spy_mixpanelTrack = jest.spyOn(mixpanel, "mixpanelTrack");
+        const { component } = renderComponent(
+          {
+            ...defaultProps,
+            contextualHelp: { title: "fake help", body: () => null }
+          },
+          mockStore({
+            ...state,
+            backendStatus: {
+              status: some({
+                config: {
+                  assistanceTool: { tool: ToolEnum.instabug }
+                } as Config
+              } as BackendStatus)
+            } as BackendStatusState
+          })
+        );
+        const helpButton = component.getByA11yLabel(
+          I18n.t("global.accessibility.contextualHelp.open.label")
+        );
+        fireEvent(helpButton, "onPress");
+        expect(spy_mixpanelTrack).toHaveBeenCalledWith("OPEN_CONTEXTUAL_HELP", {
+          SCREEN_NAME: ROUTES.MESSAGES_HOME
+        });
+      });
+    });
+  });
+});
+
+function renderComponent(props = defaultProps, store: Store<GlobalState>) {
   return {
     component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       () => <BaseScreenComponent {...props} ref={undefined} />,

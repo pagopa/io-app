@@ -8,6 +8,9 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
 import BPD_ROUTES from "../../../../navigation/routes";
 import TransactionsUnavailable from "../TransactionsUnavailable";
+import { ToolEnum } from "../../../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../../../definitions/content/Config";
+import { BackendStatus } from "../../../../../../../../definitions/content/BackendStatus";
 
 describe("TransactionsUnavailable component", () => {
   const mockStore = configureMockStore();
@@ -26,7 +29,9 @@ describe("TransactionsUnavailable component", () => {
         reason: "NOT_LOGGED_IN"
       },
       backendStatus: {
-        status: some({ config: { zendesk: { active: false } } })
+        status: some({
+          config: { assistanceTool: { tool: ToolEnum.none } } as Config
+        } as BackendStatus)
       }
     });
   });
