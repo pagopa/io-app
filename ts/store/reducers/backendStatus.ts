@@ -11,7 +11,7 @@ import { Action } from "../actions/types";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
-import { ZendeskConfig } from "../../../definitions/content/ZendeskConfig";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -67,10 +67,10 @@ export const cgnMerchantVersionSelector = createSelector(
       .toUndefined()
 );
 
-export const zendeskRemoteConfigSelector = createSelector(
+export const assistanceToolConfigSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): ZendeskConfig | undefined =>
-    backendStatus.map(bs => bs.config.zendesk).toUndefined()
+  (backendStatus): ToolEnum | undefined =>
+    backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
