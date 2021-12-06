@@ -1,39 +1,32 @@
-import {
-  Content as NBContent,
-  H3,
-  H3 as NBH3,
-  Text as NBText,
-  View as NBView
-} from "native-base";
+import { Content as NBContent, View as NBView } from "native-base";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
 import { useState } from "react";
+import { StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 
 import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
-import variables from "../../../../theme/variables";
 import {
-  PrescriptionData,
   UIMessage,
   UIMessageDetails
 } from "../../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
-import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
-import OrganizationHeader from "../../../OrganizationHeader";
+import variables from "../../../../theme/variables";
+import { getExpireStatus } from "../../../../utils/dates";
 import {
   cleanMarkdownFromCTAs,
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
-import { getExpireStatus } from "../../../../utils/dates";
-import I18n from "../../../../i18n";
-import MessageMarkdown from "../../MessageMarkdown";
+import OrganizationHeader from "../../../OrganizationHeader";
 
 import MedicalPrescriptionIdentifiersComponent from "../../MedicalPrescriptionIdentifiersComponent";
-import DueDateBar from "./DueDateBar";
-import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
-import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
+import MessageMarkdown from "../../MessageMarkdown";
 import MessageContent from "./Content";
 import CtaBar from "./CtaBar";
+import DueDateBar from "./DueDateBar";
+import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
+import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
+import { MessageTitle } from "./MessageTitle";
 
 const styles = StyleSheet.create({
   padded: {
@@ -55,21 +48,6 @@ type Props = Readonly<{
   serviceMetadata?: ServicePublicService_metadata;
   service?: UIService;
 }>;
-
-const renderTitle = (
-  title: string,
-  prescriptionData?: PrescriptionData
-): React.ReactNode => {
-  if (prescriptionData) {
-    return (
-      <>
-        <NBH3>{I18n.t("messages.medical.prescription")}</NBH3>
-        <NBText>{I18n.t("messages.medical.memo")}</NBText>
-      </>
-    );
-  }
-  return <H3>{title}</H3>;
-};
 
 const OrganizationTitle = ({ name, organizationName, logoURLs }: UIService) => (
   <OrganizationHeader
@@ -122,7 +100,10 @@ const MessageDetailsComponent = ({
 
           <NBView spacer={true} large={true} />
 
-          {renderTitle(message.title, prescriptionData)}
+          <MessageTitle
+            title={message.title}
+            prescriptionData={prescriptionData}
+          />
 
           <NBView spacer={true} />
         </View>
