@@ -18,15 +18,12 @@ import {
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
 import OrganizationHeader from "../../../OrganizationHeader";
-
-import MedicalPrescriptionIdentifiersComponent from "../../MedicalPrescriptionIdentifiersComponent";
 import MessageMarkdown from "../../MessageMarkdown";
+import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
+import { MessageTitle } from "./common/MessageTitle";
 import MessageContent from "./Content";
 import CtaBar from "./CtaBar";
-import DueDateBar from "./DueDateBar";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
-import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
-import { MessageTitle } from "./MessageTitle";
 
 const styles = StyleSheet.create({
   padded: {
@@ -42,7 +39,6 @@ type Props = Readonly<{
   hasPaidBadge: boolean;
   message: UIMessage;
   messageDetails: UIMessageDetails;
-  navigateToWalletHome: () => void;
   onServiceLinkPress?: () => void;
   organizationFiscalCode?: OrganizationFiscalCode;
   serviceMetadata?: ServicePublicService_metadata;
@@ -81,7 +77,6 @@ const MessageDetailsComponent = ({
   hasPaidBadge,
   message,
   messageDetails,
-  navigateToWalletHome,
   onServiceLinkPress,
   service,
   serviceMetadata
@@ -108,28 +103,13 @@ const MessageDetailsComponent = ({
           <NBView spacer={true} />
         </View>
 
-        {prescriptionData && (
-          <MedicalPrescriptionIdentifiersComponent
-            prescriptionData={prescriptionData}
-          />
-        )}
-
-        {prescriptionData === undefined && dueDate !== undefined && (
-          <DueDateBar
-            dueDate={dueDate}
-            expirationInfo={paymentExpirationInfo}
-            isPaid={hasPaidBadge}
-            onGoToWallet={navigateToWalletHome}
-          />
-        )}
-
-        {prescriptionData !== undefined && dueDate !== undefined && (
-          <MedicalPrescriptionDueDateBar
-            dueDate={dueDate}
-            messageDetails={messageDetails}
-            paymentExpirationInfo={paymentExpirationInfo}
-          />
-        )}
+        <HeaderDueDateBar
+          hasPaidBadge={hasPaidBadge}
+          messageDetails={messageDetails}
+          paymentExpirationInfo={paymentExpirationInfo}
+          dueDate={dueDate}
+          prescriptionData={prescriptionData}
+        />
 
         <MessageMarkdown
           webViewStyle={styles.webview}

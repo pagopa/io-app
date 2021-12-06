@@ -1,10 +1,7 @@
-import { H3, H3 as NBH3, Text as NBText, View } from "native-base";
+import { H3, H3 as NBH3, Text as NBText } from "native-base";
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { GlobalState } from "../../../../../store/reducers/types";
-import I18n from "../../../../i18n";
-import { PrescriptionData } from "../../../../store/reducers/entities/messages/types";
+import I18n from "../../../../../i18n";
+import { PrescriptionData } from "../../../../../store/reducers/entities/messages/types";
 
 type Props = {
   title: string;

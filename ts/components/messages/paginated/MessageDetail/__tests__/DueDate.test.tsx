@@ -1,16 +1,15 @@
 import React from "react";
-import configureMockStore from "redux-mock-store";
 import { NavigationParams } from "react-navigation";
-import {} from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
+import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
+import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 
 import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
-import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
-import { MessagePaymentExpirationInfo } from "../../../../../utils/messages";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { MessagePaymentExpirationInfo } from "../../../../../utils/messages";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
 
 import DueDateBar from "../DueDateBar";
 
@@ -27,8 +26,7 @@ const expirationInfo: MessagePaymentExpirationInfo = {
 const defaultProps: React.ComponentProps<typeof DueDateBar> = {
   dueDate: uiMessageDetails.dueDate!,
   expirationInfo,
-  isPaid: false,
-  onGoToWallet: jest.fn()
+  isPaid: false
 };
 
 describe("the `DueDateBar` component", () => {
