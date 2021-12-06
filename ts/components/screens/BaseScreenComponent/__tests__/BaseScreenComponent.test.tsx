@@ -15,6 +15,8 @@ import I18n from "../../../../i18n";
 import BaseScreenComponent, { Props } from "../index";
 import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
+import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../definitions/content/Config";
 
 jest.useFakeTimers();
 
@@ -88,7 +90,9 @@ function renderComponent(props = defaultProps) {
   const store = mockStore({
     ...globalState,
     backendStatus: {
-      status: some({ config: { zendesk: { active: false } } } as BackendStatus)
+      status: some({
+        config: { assistanceTool: { tool: ToolEnum.none } } as Config
+      } as BackendStatus)
     } as BackendStatusState
   });
 
