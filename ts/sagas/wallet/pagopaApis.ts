@@ -17,7 +17,8 @@ import {
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentUpdateWalletPsp,
-  paymentVerifica
+  paymentVerifica,
+  pspForPaymentV2
 } from "../../store/actions/wallet/payment";
 import {
   fetchPsp,
@@ -51,6 +52,7 @@ import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import {
   getError,
   getErrorFromNetworkError,
+  getGenericError,
   getNetworkError,
   isTimeoutError
 } from "../../utils/errors";
@@ -830,5 +832,42 @@ export function* paymentIdPollingRequestHandler(
     }
   } catch (e) {
     yield put(paymentIdPolling.failure(e.message));
+  }
+}
+
+/**
+ * request the list of psp that can handle a payment from a given idWallet and idPayment
+ * @param getPspV2
+ * @param pmSessionManager
+ * @param action
+ */
+export function* getPspV2(
+  getPspV2: ReturnType<typeof PaymentManagerClient>["getPspV2"],
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof pspForPaymentV2["request"]>
+) {
+  const getPspV2Request = getPspV2(action.payload);
+  const request = pmSessionManager.withRefresh(getPspV2Request);
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(pspForPaymentV2.success(response.value.value.data));
+      } else {
+        yield put(
+          pspForPaymentV2.failure(
+            getGenericError(Error(`response status ${response.value.status}`))
+          )
+        );
+      }
+    } else {
+      yield put(
+        pspForPaymentV2.failure(
+          getGenericError(Error(readablePrivacyReport(response.value)))
+        )
+      );
+    }
+  } catch (e) {
+    yield put(pspForPaymentV2.failure(getNetworkError(e)));
   }
 }
