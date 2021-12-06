@@ -911,22 +911,21 @@ wallet:
     bancomat:
       title: Ricerca delle tue carte PagoBANCOMAT
       description:
-        text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
+        text1: "Aggiungendo PagoBANCOMAT al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
         text2: informativa sul trattamento dei dati personali.
         text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
         text4: cercando fra quelle disponibili
     bpay:
       title: Ricerca dei tuoi account BANCOMAT Pay
       description:
-        text1: "IO cercherà tutti gli account BANCOMAT Pay associati a te.\nProseguendo accetti l'"
+        text1: "Aggiungendo BANCOMAT Pay al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
         text2: informativa sul trattamento dei dati personali.
         text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
         text4: cercando fra quelle disponibili
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
-        text1: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
-        text2: le banche aderenti al servizio
+        text1: "Aggiungendo al tuo Portafoglio tutte le carte Maestro, Mastercard, V-Pay e Visa a te associate, potrai aderire alle iniziative disponibili su IO."
         text3: "Per maggiori informazioni consulta l'"
         text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
