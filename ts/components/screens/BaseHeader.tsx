@@ -22,8 +22,6 @@ import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import I18n from "../../i18n";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
-import { zendeskEnabled } from "../../config";
-import ZendeskChatComponent from "../ZendeskChatComponent";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -245,7 +243,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         {!isSearchEnabled && showInstabugChat !== false && (
           <InstabugChatsComponent />
         )}
-        {zendeskEnabled && <ZendeskChatComponent />}
 
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />

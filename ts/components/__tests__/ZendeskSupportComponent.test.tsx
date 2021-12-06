@@ -6,7 +6,7 @@ import { applicationChangeState } from "../../store/actions/application";
 import { GlobalState } from "../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
 import ROUTES from "../../navigation/routes";
-import ZendeskChatComponent from "../ZendeskChatComponent";
+import ZendeskSupportComponent from "../ZendeskSupportComponent";
 import {
   idpSelected,
   loginSuccess,
@@ -25,29 +25,19 @@ const mockPublicSession: PublicSession = {
   walletToken: "walletToken",
   zendeskToken: "zendeskToken"
 };
-
 jest.useFakeTimers();
-describe("the ZendeskChatComponent", () => {
+
+describe("the ZendeskSupportComponent", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   it("should render the zendesk open ticket button", () => {
     const store = createStore(appReducer, globalState as any);
     const component = renderComponent(store);
-    expect(component.getByTestId("zendeskOpenTicketButton")).toBeDefined();
-  });
-  it("should render the zendesk open ticket icon", () => {
-    const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store);
-    expect(component.getByTestId("zendeskOpenTicketIcon")).toBeDefined();
+    expect(component.getByTestId("contactSupportButton")).toBeDefined();
   });
   it("should render the zendesk show tickets button", () => {
     const store = createStore(appReducer, globalState as any);
     const component = renderComponent(store);
-    expect(component.getByTestId("zendeskShowTicketsButton")).toBeDefined();
-  });
-  it("should render the zendesk show tickets icon", () => {
-    const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store);
-    expect(component.getByTestId("zendeskShowTicketsIcon")).toBeDefined();
+    expect(component.getByTestId("showTicketsButton")).toBeDefined();
   });
   describe("when the user is authenticated with session info", () => {
     const store = createStore(appReducer, globalState as any);
@@ -70,21 +60,14 @@ describe("the ZendeskChatComponent", () => {
   });
 
   describe("when the user press the zendesk open ticket button", () => {
-    it("should call openTicket", () => {
-      const store = createStore(appReducer, globalState as any);
-
-      const component = renderComponent(store);
-      const zendeskButton = component.getByTestId("zendeskOpenTicketButton");
-      fireEvent(zendeskButton, "onPress");
-      expect(MockZendesk.openTicket).toBeCalledWith();
-    });
+    it.todo("should call openTicket");
   });
   describe("when the user press the zendesk show tickets button", () => {
     it("should call showTickets", () => {
       const store = createStore(appReducer, globalState as any);
 
       const component = renderComponent(store);
-      const zendeskButton = component.getByTestId("zendeskShowTicketsButton");
+      const zendeskButton = component.getByTestId("showTicketsButton");
       fireEvent(zendeskButton, "onPress");
       expect(MockZendesk.showTickets).toBeCalledWith();
     });
@@ -93,7 +76,7 @@ describe("the ZendeskChatComponent", () => {
 
 function renderComponent(store: Store<GlobalState>) {
   return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    ZendeskChatComponent,
+    ZendeskSupportComponent,
     ROUTES.MAIN,
     {},
     store
