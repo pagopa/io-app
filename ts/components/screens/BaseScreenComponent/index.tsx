@@ -32,9 +32,10 @@ import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 import { zendeskEnabled } from "../../../config";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIOSelector } from "../../../store/hooks";
-import { zendeskRemoteConfigSelector } from "../../../store/reducers/backendStatus";
-import { isZendeskActiveRemotely } from "../../../utils/supportAssistance";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
 import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 
 // TODO: remove disabler when instabug is removed
 /* eslint-disable sonarjs/cognitive-complexity */
@@ -205,14 +206,33 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
         }
       : undefined;
     const dispatch = useDispatch();
-    const zendeskRemoteConfig = useIOSelector(zendeskRemoteConfigSelector);
+    const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+    const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
     const onShowHelp = () => {
-      // TODO: remove instabug
-      if (zendeskEnabled && isZendeskActiveRemotely(zendeskRemoteConfig)) {
-        dispatch(zendeskSupportStart());
-      } else {
-        showHelp();
+      switch (choosenTool) {
+        case ToolEnum.zendesk:
+          // TODO: remove local feature flag
+          if (zendeskEnabled) {
+            dispatch(zendeskSupportStart());
+          }
+          return;
+        case ToolEnum.instabug:
+          // TODO: remove instabug
+          showHelp();
+          return;
+        case ToolEnum.none:
+        case ToolEnum.web:
+          return undefined;
       }
+    };
+
+    const canShowHelp = () => {
+      const isZendesk = choosenTool === ToolEnum.zendesk;
+      const isZendeskAvailable = isZendesk && zendeskEnabled;
+      return (
+        contextualHelpConfig &&
+        (choosenTool === ToolEnum.instabug || isZendeskAvailable)
+      );
     };
     return (
       <Container>
@@ -228,7 +248,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           goBack={goBack}
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
-          onShowHelp={contextualHelpConfig ? onShowHelp : undefined}
+          onShowHelp={canShowHelp() ? onShowHelp : undefined}
           isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
