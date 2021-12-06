@@ -30,7 +30,8 @@ const defaultProps = {
   isPaid: true,
   messageDetails: uiMessageDetails,
   service: uiService,
-  servicesMetadata: undefined
+  servicesMetadata: undefined,
+  isPrescription: false
 };
 
 describe("the `CtaBar` component", () => {
