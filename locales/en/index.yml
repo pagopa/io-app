@@ -2873,8 +2873,17 @@ support:
       contactSupport: "Contact support"
       seeReports: "See reports in progress"
   askPermissions:
+    nameSurname: "Nome e Cognome"
+    fiscalCode: "Codice fiscale"
+    emailAddress: "Indirizzo email"
+    deviceAndOS: "Dispositivo e sistema operativo"
+    ipAddress: "Indirizzo IP"
+    currentAppVersion: "Versione in uso dell'app"
+    identityProvider: "Identity Provider"
     header: "Contact support"
     title: "To continue, we need your consent"
+    body: "Per ricevere supporto è necessario inviare al team di IO alcuni dati. Se neghi il consenso, potrai inviare una richiesta generica via email."
+    listHeader: "Verranno inviati i seguenti dati:"
     cta:
       allow: "Allow"
       denies: "Do not allow"

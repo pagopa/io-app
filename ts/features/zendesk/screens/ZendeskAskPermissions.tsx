@@ -1,30 +1,131 @@
-import React from "react";
+import React, { ReactNode, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H1 } from "../../../components/core/typography/H1";
-import View from "../../../components/ui/TextWithIcon";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { navigateToZendeskChooseCategory } from "../store/actions/navigation";
 import { H4 } from "../../../components/core/typography/H4";
 import { H3 } from "../../../components/core/typography/H3";
-import { ListItem } from "native-base";
-import FiscalCode from "../../../../img/assistence/fiscalCode.svg";
+import { ListItem, View } from "native-base";
+import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
+import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
+import WebSiteIcon from "../../../../img/assistance/website.svg";
+import InfoIcon from "../../../../img/assistance/info.svg";
+import DeviceIcon from "../../../../img/assistance/telefonia.svg";
+import LoginIcon from "../../../../img/assistance/login.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
+import { idpSelector } from "../../../store/reducers/authentication";
 import {
-  idpSelector,
-  selectedIdentityProviderSelector
-} from "../../../store/reducers/authentication";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
+  profileEmailSelector,
+  profileFiscalCodeSelector,
+  profileNameSelector
+} from "../../../store/reducers/profile";
+import {
+  getIpAddress,
+  getModel,
+  getSystemVersion
+} from "../../../utils/device";
+import { isIos } from "../../../utils/platform";
+import { getReadableVersion } from "react-native-device-info";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
+
+type Item = {
+  icon: ReactNode;
+  title: string;
+  value: string;
+};
+
+type ItemProps = {
+  fiscalCode: string;
+  nameSurname: string;
+  email: string;
+  deviceDescription: string;
+  ipAddress: string;
+  currentVersion: string;
+  identityProvider: string;
+};
+
+const iconProps = { width: 30, height: 30 };
+const items = (props: ItemProps): ReadonlyArray<Item> => [
+  {
+    icon: <NameSurnameIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.nameSurname"),
+    value: props.nameSurname
+  },
+  {
+    icon: <FiscalCodeIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.fiscalCode"),
+    value: props.fiscalCode
+  },
+  {
+    icon: <DeviceIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.deviceAndOS"),
+    value: props.deviceDescription
+  },
+  {
+    icon: <WebSiteIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.ipAddress"),
+    value: props.ipAddress
+  },
+  {
+    icon: <InfoIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.currentAppVersion"),
+    value: props.currentVersion
+  },
+  {
+    icon: <LoginIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.identityProvider"),
+    value: props.identityProvider
+  }
+];
+
+const ItemComponent = (props: Item & { key: string }) => (
+  <ListItem key={props.key}>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center"
+      }}
+    >
+      {props.icon}
+      <View hspacer />
+      <View style={{ flex: 1, flexDirection: "column" }}>
+        <H4>{props.title}</H4>
+        <H5 weight={"Regular"}>{props.value}</H5>
+      </View>
+    </View>
+  </ListItem>
+);
 
 const ZendeskAskPermissions = () => {
   const navigation = useNavigationContext();
-  const idp = useIOSelector(idpSelector);
+  const notAvailable = I18n.t("global.remoteStates.notAvailable");
+  const identityProvider = useIOSelector(idpSelector)
+    .map(idp => idp.name)
+    .getOrElse(notAvailable);
+  const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
+  const nameSurname = useIOSelector(profileNameSelector) ?? notAvailable;
+  const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
+  const [ipAddress, setIpAddress] = useState<string>(notAvailable);
+  const itemsProps: ItemProps = {
+    fiscalCode,
+    nameSurname,
+    email,
+    deviceDescription: `${getModel()} · ${
+      isIos ? "iOS" : "Android"
+    } · ${getSystemVersion()}`,
+    ipAddress,
+    currentVersion: getReadableVersion(),
+    identityProvider
+  };
+  getIpAddress().then(setIpAddress).catch(constNull);
 
-  RTron.log(idp);
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,
@@ -39,10 +140,10 @@ const ZendeskAskPermissions = () => {
     title: I18n.t("support.askPermissions.cta.allow")
   };
   return (
-    // The void customRightIcon is needed to have a centered header title
     <BaseScreenComponent
       showInstabugChat={false}
       goBack={true}
+      // The avoid customRightIcon is needed to have a centered header title
       customRightIcon={{
         iconName: "",
         onPress: () => true
@@ -50,30 +151,19 @@ const ZendeskAskPermissions = () => {
       headerTitle={I18n.t("support.askPermissions.header")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
           <H1>{I18n.t("support.askPermissions.title")}</H1>
           <View spacer />
-          <H4 weight={"Regular"}>
-            {
-              "Per ricevere supporto è necessario inviare al team di IO alcuni dati. Se neghi il consenso, potrai inviare una richiesta generica via email."
-            }
-          </H4>
-          <View spacer />
-          <H3>{"Verranno inviati i seguenti dati:"}</H3>
-          <View spacer />
-          <ListItem first={true}>
-            <View
-              style={{ flex: 1, flexDirection: "row", alignItems: "center" }}
-            >
-              <FiscalCode width={30} height={30} />
-              <View hspacer />
-              <View style={{ flex: 1, flexDirection: "column" }}>
-                <H4>{"Codice Fiscale"}</H4>
-                <H5 weight={"Regular"}>{"RSSMRA60D20F205R"}</H5>
-              </View>
-            </View>
-          </ListItem>
-        </ScrollView>
+          <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
+          <View spacer small={true} />
+          <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
+          <ScrollView>
+            {items(itemsProps).map((item, idx) => (
+              <ItemComponent key={`permission_item_${idx}`} {...item} />
+            ))}
+            <EdgeBorderComponent />
+          </ScrollView>
+        </View>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps}
