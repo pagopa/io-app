@@ -289,6 +289,20 @@ export const pspForPaymentV2 = createAsyncAction(
 >();
 
 /**
+ * @deprecated
+ * this action is used only to mimic the existing payment logic (callbacks hell 😈)
+ * use {@link pspForPaymentV2} instead
+ */
+export const pspForPaymentV2WithCallbacks = createStandardAction(
+  "PAYMENT_PSP_V2_WITH_CALLBACKS"
+)<{
+  idWallet: number;
+  idPayment: string;
+  onSuccess: (psp: ReadonlyArray<PspData>) => void;
+  onFailure: () => void;
+}>();
+
+/**
  * All possible payment actions
  */
 export type PaymentActions =
@@ -311,4 +325,5 @@ export type PaymentActions =
   | ActionType<typeof paymentFetchAllPspsForPaymentId>
   | ActionType<typeof paymentRedirectionUrls>
   | ActionType<typeof runStartOrResumePaymentActivationSaga>
-  | ActionType<typeof pspForPaymentV2>;
+  | ActionType<typeof pspForPaymentV2>
+  | ActionType<typeof pspForPaymentV2WithCallbacks>;
