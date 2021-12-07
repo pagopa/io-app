@@ -1,15 +1,9 @@
 import React from "react";
-import { NavigationParams } from "react-navigation";
-import configureMockStore from "redux-mock-store";
-import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
-import ROUTES from "../../../../../navigation/routes";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
+import { render } from "@testing-library/react-native";
 
+import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
 import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { MessagePaymentExpirationInfo } from "../../../../../utils/messages";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 
 import DueDateBar from "../DueDateBar";
 
@@ -32,7 +26,7 @@ const defaultProps: React.ComponentProps<typeof DueDateBar> = {
 describe("the `DueDateBar` component", () => {
   describe("when `isPaid` is true ", () => {
     it("should match the snapshot", () => {
-      const { component } = renderComponent({
+      const component = renderComponent({
         ...defaultProps,
         isPaid: true
       });
@@ -43,7 +37,7 @@ describe("the `DueDateBar` component", () => {
   describe("when `isPaid` is false ", () => {
     describe("and `expirationInfo` is EXPIRED ", () => {
       it("should match the snapshot", () => {
-        const { component } = renderComponent({
+        const component = renderComponent({
           ...defaultProps,
           expirationInfo: { ...expirationInfo, expireStatus: "EXPIRED" }
         });
@@ -53,7 +47,7 @@ describe("the `DueDateBar` component", () => {
 
     describe("and `expirationInfo` is EXPIRING ", () => {
       it("should match the snapshot", () => {
-        const { component } = renderComponent({
+        const component = renderComponent({
           ...defaultProps,
           expirationInfo: { ...expirationInfo, expireStatus: "EXPIRING" }
         });
@@ -63,7 +57,7 @@ describe("the `DueDateBar` component", () => {
 
     describe("and `expirationInfo` is VALID ", () => {
       it("should match the snapshot", () => {
-        const { component } = renderComponent({
+        const component = renderComponent({
           ...defaultProps,
           expirationInfo: { ...expirationInfo, expireStatus: "VALID" }
         });
@@ -73,18 +67,5 @@ describe("the `DueDateBar` component", () => {
   });
 });
 
-const renderComponent = (props: React.ComponentProps<typeof DueDateBar>) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore(globalState);
-
-  return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      () => <DueDateBar {...props} />,
-      ROUTES.MESSAGE_DETAIL,
-      {},
-      store
-    ),
-    store
-  };
-};
+const renderComponent = (props: React.ComponentProps<typeof DueDateBar>) =>
+  render(<DueDateBar {...props} />);
