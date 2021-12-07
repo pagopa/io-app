@@ -1,7 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
-import { makeFontStyleObject } from "../theme/fonts";
+import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
 import { IOColors } from "./core/variables/IOColors";
@@ -18,7 +17,6 @@ type OwnProps = Readonly<{
   text3: string;
   isNew: boolean;
   isPaid?: boolean;
-  isArchived?: boolean;
   onPressItem: () => void;
   onLongPressItem?: () => void;
   isSelectionModeEnabled?: boolean;
@@ -40,9 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   badgeContainer: {
     flex: 0,
     paddingRight: 8,
@@ -51,19 +46,6 @@ const styles = StyleSheet.create({
   },
   viewStyle: {
     flexDirection: "row"
-  },
-  text11: {
-    color: customVariables.brandDarkestGray
-  },
-  new: {
-    ...makeFontStyleObject(Platform.select, "700")
-  },
-  notNew: {
-    ...makeFontStyleObject(Platform.select, "400")
-  },
-  text3: {
-    fontSize: 18,
-    color: customVariables.brandDarkestGray
   },
   text12: {
     lineHeight: 18,
@@ -95,9 +77,6 @@ const styles = StyleSheet.create({
   badgeInfoPaid: {
     borderColor: IOColors.aqua,
     backgroundColor: IOColors.aqua
-  },
-  archived: {
-    opacity: 0.75
   }
 });
 
@@ -123,7 +102,6 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
       this.props.isNew !== nextProps.isNew ||
       this.props.isSelectionModeEnabled !== nextProps.isSelectionModeEnabled ||
       this.props.isItemSelected !== nextProps.isItemSelected ||
-      this.props.isArchived !== nextProps.isArchived ||
       this.props.text3 !== nextProps.text3 ||
       this.props.text2 !== nextProps.text2 ||
       this.props.text12 !== nextProps.text12 ||
@@ -132,20 +110,17 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
   }
 
   public render() {
-    const { isArchived } = this.props;
     return (
       <TouchableDefaultOpacity
         onPress={this.props.onPressItem}
         onLongPress={this.props.onLongPressItem}
-        style={[styles.verticalPad, isArchived && styles.archived]}
+        style={styles.verticalPad}
         {...this.props}
       >
         <View style={styles.spaced}>
           <H5>{this.props.text11}</H5>
           <Text bold={true} style={styles.text12}>
-            {isArchived
-              ? `${I18n.t("messages.tab.archive")} ${this.props.text12}`
-              : this.props.text12}
+            {this.props.text12}
           </Text>
         </View>
 
