@@ -19,7 +19,7 @@ export type WithMVLId<T> = T & {
  */
 export type MvlBody = {
   html: string;
-  plain?: string;
+  plain: string;
 };
 
 /**
