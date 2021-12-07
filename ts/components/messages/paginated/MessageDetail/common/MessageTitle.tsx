@@ -1,11 +1,10 @@
 import { H3, H3 as NBH3, Text as NBText } from "native-base";
 import * as React from "react";
 import I18n from "../../../../../i18n";
-import { PrescriptionData } from "../../../../../store/reducers/entities/messages/types";
 
 type Props = {
   title: string;
-  prescriptionData?: PrescriptionData;
+  isPrescriptionData: boolean;
 };
 
 /**
@@ -14,7 +13,7 @@ type Props = {
  * @constructor
  */
 export const MessageTitle = (props: Props): React.ReactElement =>
-  props.prescriptionData ? (
+  props.isPrescriptionData ? (
     <>
       <NBH3>{I18n.t("messages.medical.prescription")}</NBH3>
       <NBText>{I18n.t("messages.medical.memo")}</NBText>

@@ -19,10 +19,10 @@ import {
 } from "../../../../utils/messages";
 import OrganizationHeader from "../../../OrganizationHeader";
 import MessageMarkdown from "../../MessageMarkdown";
+import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
 import { MessageTitle } from "./common/MessageTitle";
 import MessageContent from "./Content";
-import CtaBar from "./common/CtaBar";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 
 const styles = StyleSheet.create({
@@ -84,6 +84,7 @@ const MessageDetailsComponent = ({
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
   const { attachments, dueDate, markdown, prescriptionData } = messageDetails;
   const paymentExpirationInfo = getPaymentExpirationInfo(messageDetails);
+  const isPrescriptionData = prescriptionData !== undefined;
 
   return (
     <>
@@ -97,7 +98,7 @@ const MessageDetailsComponent = ({
 
           <MessageTitle
             title={message.title}
-            prescriptionData={prescriptionData}
+            isPrescriptionData={isPrescriptionData}
           />
 
           <NBView spacer={true} />
@@ -154,7 +155,7 @@ const MessageDetailsComponent = ({
         )}
 
         <CtaBar
-          isPrescription={prescriptionData !== undefined}
+          isPrescription={isPrescriptionData}
           expirationInfo={paymentExpirationInfo}
           isPaid={hasPaidBadge}
           messageDetails={messageDetails}
