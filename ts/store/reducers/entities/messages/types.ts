@@ -12,6 +12,9 @@ import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLive
 // just a placeholder for now
 export type MessageCategory = null;
 
+/**
+ * The unique ID of a UIMessage and UIMessageDetails, used to avoid to pass wrong id as parameters
+ */
 export type UIMessageId = string & IUnitTag<"UIMessageId">;
 
 export type WithUIMessageId<T> = T & {
