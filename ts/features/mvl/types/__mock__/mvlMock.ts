@@ -1,7 +1,7 @@
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 import { message_1 } from "../../../../__mocks__/message";
-import { toUIMessage } from "../../../../store/reducers/entities/messages/transformers";
+import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { Byte } from "../../../../types/digitalInformationUnit";
 import {
   Mvl,
@@ -56,7 +56,7 @@ const message: CreatedMessageWithContentAndAttachments = {
 };
 
 export const mvlMock: Mvl = {
-  message: toUIMessage(message),
+  message: toUIMessageDetails(message),
   legalMessage: mvlMockData,
   id: mvlMockId
 };

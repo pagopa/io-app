@@ -1,7 +1,7 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ValidUrl } from "@pagopa/ts-commons/lib/url";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { UIMessageDetails } from "../../../store/reducers/entities/messages/types";
 import { ContentType } from "../../../types/contentType";
 import { Byte } from "../../../types/digitalInformationUnit";
 
@@ -68,6 +68,6 @@ export type MvlData = {
  * - The additional legal message data
  */
 export type Mvl = WithMVLId<{
-  message: UIMessage;
+  message: UIMessageDetails;
   legalMessage: MvlData;
 }>;
