@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
 });
 
 // return a payment button only when the advice is not paid and the payment_data is defined
-const renderPaymentButton = (isPaid: boolean, paymentData?: PaymentData) => {
-  if (isPaid || paymentData === undefined) {
+const renderPaymentButton = (paymentData?: PaymentData) => {
+  if (paymentData === undefined) {
     return null;
   }
   const { amount, noticeNumber, payee } = paymentData;
@@ -88,7 +88,7 @@ const CtaBar = ({
 
   const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
 
-  const paymentButton = renderPaymentButton(isPaid, paymentData);
+  const paymentButton = renderPaymentButton(paymentData);
   const calendarButton = renderCalendarEventButton(
     isPaid,
     expirationInfo,

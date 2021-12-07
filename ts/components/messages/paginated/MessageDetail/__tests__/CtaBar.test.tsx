@@ -52,11 +52,11 @@ describe("the `CtaBar` component", () => {
 
   describe("when `paymentData` is defined", () => {
     describe("and `isPaid` is true", () => {
-      it("should not render the payment button", () => {
+      it("should render the payment button", () => {
         const { component } = renderComponent(defaultProps);
         expect(
           component.queryByText(I18n.t("messages.cta.seeNotice"))
-        ).toBeNull();
+        ).not.toBeNull();
       });
     });
     describe("and `isPaid` is false", () => {
