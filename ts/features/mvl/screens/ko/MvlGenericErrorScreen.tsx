@@ -1,0 +1,55 @@
+import { View } from "native-base";
+import * as React from "react";
+import { SafeAreaView, ScrollView } from "react-native";
+import image from "../../../../../img/servicesStatus/error-detail-icon.png";
+import { Body } from "../../../../components/core/typography/Body";
+import { H1 } from "../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
+import { useIODispatch } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { mvlDetailsLoad } from "../../store/actions";
+import { MvlId } from "../../types/mvlData";
+
+type Props = {
+  id: MvlId;
+};
+
+/**
+ * A generic error has occurred during the loading of the MVL details
+ * @constructor
+ */
+export const MvlGenericErrorScreen = (props: Props): React.ReactElement => {
+  const dispatch = useIODispatch();
+  const retry = () => dispatch(mvlDetailsLoad.request(props.id));
+
+  return (
+    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+      <SafeAreaView style={IOStyles.flex} testID={"MvlGenericErrorScreen"}>
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <H1>TMP MvlGenericErrorScreen</H1>
+          <View spacer={true} extralarge={true} />
+          <View spacer={true} extralarge={true} />
+          <InfoScreenComponent
+            image={renderInfoRasterImage(image)}
+            title={I18n.t("features.mvl.ko.genericError.title")}
+            body={
+              <Body style={{ textAlign: "center" }}>
+                {I18n.t("features.mvl.ko.genericError.subtitle")}
+              </Body>
+            }
+          />
+        </ScrollView>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={confirmButtonProps(retry, I18n.t("global.buttons.retry"))}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
