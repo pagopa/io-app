@@ -18,10 +18,7 @@ import { navigateToServiceDetailsScreen } from "../../../store/actions/navigatio
 import { loadServiceDetail } from "../../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
-import {
-  isMessageRead,
-  messagesStatusSelector
-} from "../../../store/reducers/entities/messages/messagesStatus";
+import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import {
@@ -152,9 +149,8 @@ const MessageDetailScreen = ({
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const message: UIMessage = ownProps.navigation.getParam("message");
-  const messagesStatus = messagesStatusSelector(state);
   const messageDetails = getDetailsByMessageId(state, message.id);
-  const isRead = isMessageRead(messagesStatus, message.id);
+  const isRead = isMessageRead(state, message.id);
   const goBack = () => ownProps.navigation.goBack();
   const service = pot
     .toOption(serviceByIdSelector(message.serviceId)(state) || pot.none)
@@ -164,7 +160,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const maybeServiceMetadata = serviceMetadataByIdSelector(message.serviceId)(
     state
   );
-  const hasPaidBadge = isNoticePaid(state)(message.category);
+  const hasPaidBadge = isNoticePaid(state, message.category);
 
   return {
     goBack,
