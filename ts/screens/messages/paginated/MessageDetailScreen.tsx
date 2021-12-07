@@ -34,7 +34,10 @@ import MessageDetailComponent from "../../../components/messages/paginated/Messa
 import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import ErrorState from "../MessageDetailScreen/ErrorState";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import {
+  UIMessage,
+  UIMessageId
+} from "../../../store/reducers/entities/messages/types";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
@@ -185,7 +188,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
-  loadMessageDetails: (id: string) =>
+  loadMessageDetails: (id: UIMessageId) =>
     dispatch(loadMessageDetails.request({ id })),
   setMessageReadState: (messageId: string, isRead: boolean) =>
     dispatch(setMessageReadState(messageId, isRead)),
