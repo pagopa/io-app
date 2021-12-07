@@ -1,18 +1,11 @@
-import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ValidUrl } from "@pagopa/ts-commons/lib/url";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
-import { UIMessageDetails } from "../../../store/reducers/entities/messages/types";
+import {
+  UIMessageDetails,
+  WithUIMessageId
+} from "../../../store/reducers/entities/messages/types";
 import { ContentType } from "../../../types/contentType";
 import { Byte } from "../../../types/digitalInformationUnit";
-
-/**
- * The unique ID of a MVLId, used to avoid to pass wrong id as parameters
- */
-export type MvlId = string & IUnitTag<"MvlId">;
-
-export type WithMVLId<T> = T & {
-  id: MvlId;
-};
 
 /**
  * The content of the MVL with two possible representation
@@ -67,7 +60,7 @@ export type MvlData = {
  * - A classic message data
  * - The additional legal message data
  */
-export type Mvl = WithMVLId<{
+export type Mvl = WithUIMessageId<{
   message: UIMessageDetails;
   legalMessage: MvlData;
 }>;

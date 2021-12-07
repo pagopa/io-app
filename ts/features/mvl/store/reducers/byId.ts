@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import {
   toError,
   toLoading,
@@ -10,7 +11,7 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
-import { Mvl, MvlId } from "../../types/mvlData";
+import { Mvl } from "../../types/mvlData";
 import { mvlDetailsLoad } from "../actions";
 
 export type MvlByIdState = IndexedById<pot.Pot<Mvl, Error>>;
@@ -46,7 +47,7 @@ export const mvlByIdReducer = (
 export const mvlFromIdSelector = createSelector(
   [
     (state: GlobalState) => state.features.mvl.byId,
-    (_: GlobalState, id: MvlId) => id
+    (_: GlobalState, id: UIMessageId) => id
   ],
   (byId, id): pot.Pot<Mvl, Error> => byId[id] ?? pot.none
 );

@@ -11,13 +11,13 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { useIODispatch } from "../../../../store/hooks";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { mvlDetailsLoad } from "../../store/actions";
-import { MvlId } from "../../types/mvlData";
 
 type Props = {
-  id: MvlId;
+  id: UIMessageId;
 };
 
 /**

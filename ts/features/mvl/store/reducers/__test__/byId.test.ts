@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { WithUIMessageId } from "../../../../../store/reducers/entities/messages/types";
 import {
   getGenericError,
   getNetworkErrorMessage,
@@ -12,11 +13,10 @@ import {
   mvlMockData,
   mvlMockId
 } from "../../../types/__mock__/mvlMock";
-import { WithMVLId } from "../../../types/mvlData";
 import { mvlDetailsLoad } from "../../actions";
 import { mvlFromIdSelector } from "../byId";
 
-const mockFailure: WithMVLId<NetworkError> = {
+const mockFailure: WithUIMessageId<NetworkError> = {
   id: mvlMockId,
   ...getGenericError(new Error("A generic error"))
 };

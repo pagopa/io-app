@@ -2,17 +2,11 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../../definiti
 import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 import { message_1 } from "../../../../__mocks__/message";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { Byte } from "../../../../types/digitalInformationUnit";
-import {
-  Mvl,
-  MvlAttachment,
-  MvlBody,
-  MvlData,
-  MvlId,
-  MvlMetadata
-} from "../mvlData";
+import { Mvl, MvlAttachment, MvlBody, MvlData, MvlMetadata } from "../mvlData";
 
-export const mvlMockId = "mockId" as MvlId;
+export const mvlMockId = "mockId" as UIMessageId;
 
 export const mvlMockBody: MvlBody = {
   html: "This is an html <b>text</b>",
