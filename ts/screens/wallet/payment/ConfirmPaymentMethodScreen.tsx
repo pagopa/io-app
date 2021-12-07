@@ -78,6 +78,7 @@ import { Link } from "../../../components/core/typography/Link";
 import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
 import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
 import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
+import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -298,6 +299,15 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <Link onPress={showHelp} testID="why-a-fee">
                 {I18n.t("wallet.whyAFee.title")}
               </Link>
+            </>
+          )}
+          {isPayingWithPaypal && (
+            <>
+              <View spacer={true} />
+              <PayPalCheckoutPspComponent
+                fee={fee as ImportoEuroCents}
+                pspName={props.payPalPsp?.ragioneSociale ?? "-"}
+              />
             </>
           )}
         </View>
