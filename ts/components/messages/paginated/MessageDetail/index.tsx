@@ -84,7 +84,7 @@ const MessageDetailsComponent = ({
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
   const { attachments, dueDate, markdown, prescriptionData } = messageDetails;
   const paymentExpirationInfo = getPaymentExpirationInfo(messageDetails);
-  const isPrescriptionData = prescriptionData !== undefined;
+  const isPrescription = prescriptionData !== undefined;
 
   return (
     <>
@@ -96,10 +96,7 @@ const MessageDetailsComponent = ({
 
           <NBView spacer={true} large={true} />
 
-          <MessageTitle
-            title={message.title}
-            isPrescriptionData={isPrescriptionData}
-          />
+          <MessageTitle title={message.title} isPrescription={isPrescription} />
 
           <NBView spacer={true} />
         </View>
@@ -155,7 +152,7 @@ const MessageDetailsComponent = ({
         )}
 
         <CtaBar
-          isPrescription={isPrescriptionData}
+          isPrescription={isPrescription}
           expirationInfo={paymentExpirationInfo}
           isPaid={hasPaidBadge}
           messageDetails={messageDetails}

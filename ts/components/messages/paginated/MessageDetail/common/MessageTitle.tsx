@@ -4,7 +4,7 @@ import I18n from "../../../../../i18n";
 
 type Props = {
   title: string;
-  isPrescriptionData: boolean;
+  isPrescription: boolean;
 };
 
 /**
@@ -13,7 +13,7 @@ type Props = {
  * @constructor
  */
 export const MessageTitle = (props: Props): React.ReactElement =>
-  props.isPrescriptionData ? (
+  props.isPrescription ? (
     <>
       <NBH3>{I18n.t("messages.medical.prescription")}</NBH3>
       <NBText>{I18n.t("messages.medical.memo")}</NBText>
