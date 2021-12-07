@@ -157,7 +157,7 @@ const ZendeskAskPermissions = () => {
       // customRightIcon is needed to have a centered header title
       customRightIcon={{
         iconName: "",
-        onPress: () => true
+        onPress: constNull
       }}
       headerTitle={I18n.t("support.askPermissions.header")}
     >
