@@ -875,7 +875,8 @@ export function* getPspV2(
 
 /**
  * @deprecated this function request and handle the psp list by using a callback approach
- * it should not be used. Use instead {@link pspForPaymentV2} action and relative saga {@link getPspV2}
+ * it should not be used!
+ * Use instead {@link pspForPaymentV2} action and relative saga {@link getPspV2} to retrieve the psp list
  */
 export function* getPspV2WithCallbacks(
   action: ActionType<typeof pspForPaymentV2WithCallbacks>
