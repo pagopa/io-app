@@ -34,6 +34,7 @@ import {
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
+import PaymentOutcomeCodeMessage from "../../screens/wallet/payment/PaymentOutcomeCodeMessage";
 
 /**
  * @deprecated
@@ -617,10 +618,13 @@ export const navigateToAddCreditCardOutcomeCode = (
 /**
  * @deprecated
  */
-export const navigateToPaymentOutcomeCode = () =>
+export const navigateToPaymentOutcomeCode = (
+  params: InferNavigationParams<typeof PaymentOutcomeCodeMessage>
+) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
-      routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
+      routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE,
+      params
     })
   );
 
