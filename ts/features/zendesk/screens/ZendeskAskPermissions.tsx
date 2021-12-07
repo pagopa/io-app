@@ -18,6 +18,8 @@ import InfoIcon from "../../../../img/assistance/info.svg";
 import DeviceIcon from "../../../../img/assistance/telefonia.svg";
 import LoginIcon from "../../../../img/assistance/login.svg";
 import BugIcon from "../../../../img/assistance/ladybug.svg";
+import StockIcon from "../../../../img/assistance/giacenza.svg";
+import EmailIcon from "../../../../img/assistance/email.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
 import { idpSelector } from "../../../store/reducers/authentication";
@@ -62,6 +64,16 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     icon: <FiscalCodeIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode
+  },
+  {
+    icon: <EmailIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.emailAddress"),
+    value: props.email
+  },
+  {
+    icon: <StockIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.stock"),
+    value: I18n.t("support.askPermissions.stockValue")
   },
   {
     icon: <DeviceIcon {...iconProps} />,

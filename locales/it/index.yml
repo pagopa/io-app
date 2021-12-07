@@ -2910,6 +2910,8 @@ support:
     identityProvider: "Identity Provider"
     diagnosticData: "Dati di diagnostica"
     diagnosticDataValue: "Dati non sensibili legati al funzionamento dell’app"
+    stock: "Dati dell’avviso di pagamento"
+    stockValue: "Incluso l’errore che hai appena ricevuto"
     header: "Contatta l'assistenza"
     title: "Per continuare, abbiamo bisogno del tuo consenso"
     body: "Per ricevere supporto è necessario inviare al team di IO alcuni dati. Se neghi il consenso, potrai inviare una richiesta generica via email."
