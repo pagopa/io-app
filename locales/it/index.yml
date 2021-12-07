@@ -1047,6 +1047,11 @@ wallet:
         title: "Fatto!"
         body: "Ora puoi continuare con il pagamento."
         primaryButton: "Continua"
+      paymentCheckout:
+        transactionCost: "Costo della transazione"
+        pspHandler: "Gestito da {{pspName}}"
+        privacyDisclaimer: "Proseguendo dichiari di aver letto e compreso i"
+        privacyTerms: "Termini e condizioni d’uso e l’Informativa Privacy"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
