@@ -201,12 +201,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ? props.payPalPsp?.fee
     : maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
-  const totalAmount = maybePsp.fold(
-    verifica.importoSingoloVersamento,
-    fee =>
-      (verifica.importoSingoloVersamento as number) +
-      (fee.fixedCost.amount as number)
-  );
+  const totalAmount =
+    (verifica.importoSingoloVersamento as number) + (fee ?? 0);
 
   // emit an event to inform the pay web view finished
   // dispatch the outcome code and navigate to payment outcome code screen
