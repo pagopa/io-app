@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 
 const CIE_PIN_LENGTH = 8;
 const FORGOT_PIN_PAGE_URL =
-  "https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/";
+  "https://www.cartaidentita.interno.gov.it/cittadini/smarrimento-pin-e-puk/";
 
 const getContextualHelp = () => ({
   title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
