@@ -17,10 +17,7 @@ import { loadServiceDetail } from "../../../store/actions/services";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import { messageStateByIdSelector } from "../../../store/reducers/entities/messages/messagesById";
-import {
-  isMessageRead,
-  messagesStatusSelector
-} from "../../../store/reducers/entities/messages/messagesStatus";
+import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
 import { paymentsByRptIdSelector } from "../../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
@@ -123,8 +120,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
-  const messagesStatus = messagesStatusSelector(state);
-  const isRead = isMessageRead(messagesStatus, messageId);
+  const isRead = isMessageRead(state, messageId);
   const paymentsByRptId = paymentsByRptIdSelector(state);
   const goBack = () => ownProps.navigation.goBack();
   const potMessage = fromNullable(
