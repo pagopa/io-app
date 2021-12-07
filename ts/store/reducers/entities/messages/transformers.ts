@@ -20,6 +20,7 @@ import {
 export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   const enriched = messageFromApi as EnrichedMessage;
   // TODO: replace with actual types from API, for now use it if available
+  // see https://pagopa.atlassian.net/browse/IA-554
   const category: MessageCategory | undefined = (messageFromApi as any)
     .category;
   return {
