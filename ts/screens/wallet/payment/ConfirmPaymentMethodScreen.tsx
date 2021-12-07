@@ -309,6 +309,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <PayPalCheckoutPspComponent
                 fee={fee as ImportoEuroCents}
                 pspName={props.payPalPsp?.ragioneSociale ?? "-"}
+                privacyUrl={props.payPalPsp?.privacyUrl}
               />
             </>
           )}
