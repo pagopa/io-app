@@ -36,7 +36,8 @@ type Props = {
 };
 
 /**
- * this component show the fee associated to the current psp that handles the payment within Paypal
+ * this component shows the psp details (cost, name and privacy url) associated
+ * to the current psp that is handling the payment addressed with Paypal
  * @constructor
  */
 export const PayPalCheckoutPspComponent = (props: Props) => {
