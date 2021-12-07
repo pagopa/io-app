@@ -8,11 +8,7 @@ import {
   getNetworkErrorMessage,
   NetworkError
 } from "../../../../../utils/errors";
-import {
-  mvlMock,
-  mvlMockData,
-  mvlMockId
-} from "../../../types/__mock__/mvlMock";
+import { mvlMock, mvlMockId } from "../../../types/__mock__/mvlMock";
 import { mvlDetailsLoad } from "../../actions";
 import { mvlFromIdSelector } from "../byId";
 
@@ -58,9 +54,9 @@ describe("mvl.byId reducer & selector behaviour", () => {
     it("should return pot.some when call mvlFromIdSelector with the same id", () => {
       const byId = store.getState().features.mvl.byId;
 
-      expect(byId[mvlMockId]).toStrictEqual(pot.some(mvlMockData));
+      expect(byId[mvlMockId]).toStrictEqual(pot.some(mvlMock));
       expect(mvlFromIdSelector(store.getState(), mvlMockId)).toStrictEqual(
-        pot.some(mvlMockData)
+        pot.some(mvlMock)
       );
     });
   });
@@ -102,10 +98,10 @@ describe("mvl.byId reducer & selector behaviour", () => {
         store.dispatch(mvlDetailsLoad.success(mvlMock));
 
         expect(store.getState().features.mvl.byId[mvlMockId]).toStrictEqual(
-          pot.some(mvlMockData)
+          pot.some(mvlMock)
         );
         expect(mvlFromIdSelector(store.getState(), mvlMockId)).toStrictEqual(
-          pot.some(mvlMockData)
+          pot.some(mvlMock)
         );
       });
     });
