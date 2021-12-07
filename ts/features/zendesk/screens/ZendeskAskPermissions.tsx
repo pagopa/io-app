@@ -33,6 +33,7 @@ import {
 } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Item = {
   icon: ReactNode;
@@ -50,7 +51,7 @@ type ItemProps = {
   identityProvider: string;
 };
 
-const iconProps = { width: 30, height: 30 };
+const iconProps = { width: 24, height: 24 };
 const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
     icon: <NameSurnameIcon {...iconProps} />,
@@ -93,7 +94,7 @@ const ItemComponent = (props: Item & { key: string }) => (
         alignItems: "center"
       }}
     >
-      {props.icon}
+      <View style={{ backgroundColor: "white" }}>{props.icon}</View>
       <View hspacer />
       <View style={{ flex: 1, flexDirection: "column" }}>
         <H4>{props.title}</H4>
@@ -103,6 +104,10 @@ const ItemComponent = (props: Item & { key: string }) => (
   </ListItem>
 );
 
+/**
+ * this screen shows the kinds of data the app could collect when a user is asking for assistance
+ * @constructor
+ */
 const ZendeskAskPermissions = () => {
   const navigation = useNavigationContext();
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
@@ -152,19 +157,20 @@ const ZendeskAskPermissions = () => {
       headerTitle={I18n.t("support.askPermissions.header")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-          <H1>{I18n.t("support.askPermissions.title")}</H1>
-          <View spacer />
-          <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
-          <View spacer small={true} />
-          <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
-          <ScrollView>
+        <ScrollView>
+          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+            <H1>{I18n.t("support.askPermissions.title")}</H1>
+            <View spacer />
+            <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
+            <View spacer small={true} />
+            <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
+
             {items.map((item, idx) => (
               <ItemComponent key={`permission_item_${idx}`} {...item} />
             ))}
             <EdgeBorderComponent />
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps}
