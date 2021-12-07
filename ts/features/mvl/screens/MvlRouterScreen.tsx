@@ -5,7 +5,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { mvlDetailsLoad } from "../store/actions";
 import { mvlFromIdSelector } from "../store/reducers/byId";
-import { MvlData, MvlId } from "../types/mvlData";
+import { Mvl, MvlId } from "../types/mvlData";
 import { MvlGenericErrorScreen } from "./ko/MvlGenericErrorScreen";
 import { MvlDetailsScreen } from "./MvlDetailsScreen";
 import { MvlLoadingScreen } from "./MvlLoadingScreen";
@@ -22,7 +22,7 @@ type NavigationParams = Readonly<{
  */
 const renderByPot = (
   id: MvlId,
-  value: pot.Pot<MvlData, Error>
+  value: pot.Pot<Mvl, Error>
 ): React.ReactElement =>
   pot.fold(
     value,

@@ -7,7 +7,11 @@ import {
   getNetworkErrorMessage,
   NetworkError
 } from "../../../../../utils/errors";
-import { mvlMockData, mvlMockId } from "../../../types/__mock__/mvlMock";
+import {
+  mvlMock,
+  mvlMockData,
+  mvlMockId
+} from "../../../types/__mock__/mvlMock";
 import { WithMVLId } from "../../../types/mvlData";
 import { mvlDetailsLoad } from "../../actions";
 import { mvlFromIdSelector } from "../byId";
@@ -50,7 +54,7 @@ describe("mvl.byId reducer & selector behaviour", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(mvlDetailsLoad.request(mvlMockId));
-    store.dispatch(mvlDetailsLoad.success(mvlMockData));
+    store.dispatch(mvlDetailsLoad.success(mvlMock));
     it("should return pot.some when call mvlFromIdSelector with the same id", () => {
       const byId = store.getState().features.mvl.byId;
 
@@ -95,7 +99,7 @@ describe("mvl.byId reducer & selector behaviour", () => {
           pot.noneLoading
         );
 
-        store.dispatch(mvlDetailsLoad.success(mvlMockData));
+        store.dispatch(mvlDetailsLoad.success(mvlMock));
 
         expect(store.getState().features.mvl.byId[mvlMockId]).toStrictEqual(
           pot.some(mvlMockData)

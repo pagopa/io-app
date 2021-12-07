@@ -10,10 +10,10 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
-import { MvlData, MvlId } from "../../types/mvlData";
+import { Mvl, MvlId } from "../../types/mvlData";
 import { mvlDetailsLoad } from "../actions";
 
-export type MvlByIdState = IndexedById<pot.Pot<MvlData, Error>>;
+export type MvlByIdState = IndexedById<pot.Pot<Mvl, Error>>;
 
 /**
  * Store the MVL data based on the MVLId used to issue the request
@@ -41,12 +41,12 @@ export const mvlByIdReducer = (
 };
 
 /**
- * From MVLId to MvlData
+ * From MVLId to Mvl
  */
 export const mvlFromIdSelector = createSelector(
   [
     (state: GlobalState) => state.features.mvl.byId,
     (_: GlobalState, id: MvlId) => id
   ],
-  (byId, id): pot.Pot<MvlData, Error> => byId[id] ?? pot.none
+  (byId, id): pot.Pot<Mvl, Error> => byId[id] ?? pot.none
 );

@@ -1,6 +1,10 @@
+import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
+import { message_1 } from "../../../../__mocks__/message";
+import { toUIMessage } from "../../../../store/reducers/entities/messages/transformers";
 import { Byte } from "../../../../types/digitalInformationUnit";
 import {
+  Mvl,
   MvlAttachment,
   MvlBody,
   MvlData,
@@ -38,8 +42,21 @@ export const mvlMockMetadata: MvlMetadata = {
 };
 
 export const mvlMockData: MvlData = {
-  id: mvlMockId,
   body: mvlMockBody,
   attachments: [mvlMockPdfAttachment, mvlMockPdfAttachment],
   metadata: mvlMockMetadata
+};
+
+const message: CreatedMessageWithContentAndAttachments = {
+  ...message_1,
+  content: {
+    ...message_1.content,
+    due_date: undefined
+  }
+};
+
+export const mvlMock: Mvl = {
+  message: toUIMessage(message),
+  legalMessage: mvlMockData,
+  id: mvlMockId
 };

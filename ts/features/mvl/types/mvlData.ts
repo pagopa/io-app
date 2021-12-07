@@ -1,6 +1,7 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ValidUrl } from "@pagopa/ts-commons/lib/url";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
+import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import { ContentType } from "../../../types/contentType";
 import { Byte } from "../../../types/digitalInformationUnit";
 
@@ -52,11 +53,21 @@ export type MvlMetadata = {
 /**
  * Represent a MVL (Messaggio a valore legale - Legal message)
  */
-export type MvlData = WithMVLId<{
+export type MvlData = {
   // The body (content) that could be html (mandatory) or plain (optional)
   body: MvlBody;
   // The MVL could have some attachments with metadata and the url to download the resource
   attachments: ReadonlyArray<MvlAttachment>;
   // Some additional metadata that should be represented
   metadata: MvlMetadata;
+};
+
+/**
+ * A legal message composed by:
+ * - A classic message data
+ * - The additional legal message data
+ */
+export type Mvl = WithMVLId<{
+  message: UIMessage;
+  legalMessage: MvlData;
 }>;
