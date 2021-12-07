@@ -117,6 +117,7 @@ import {
   paymentInitializeState,
   paymentUpdateWalletPsp,
   paymentVerifica,
+  pspForPaymentV2,
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
@@ -179,6 +180,7 @@ import {
   fetchPspRequestHandler,
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
+  getPspV2,
   getWallets,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
@@ -833,6 +835,13 @@ export function* watchWalletSaga(
     getType(updatePaymentStatus.request),
     updatePaymentStatusSaga,
     paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(pspForPaymentV2.request),
+    getPspV2,
+    paymentManagerClient.getPspV2,
     pmSessionManager
   );
 
