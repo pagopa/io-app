@@ -95,6 +95,9 @@ export const getPaymentIdFromGlobalState = (state: GlobalState) =>
 export const allPspsSelector = (state: GlobalState) =>
   state.wallet.payment.allPsps;
 
+export const pspV2Selector = (state: GlobalState): PaymentState["pspsV2"] =>
+  state.wallet.payment.pspsV2;
+
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();
 
