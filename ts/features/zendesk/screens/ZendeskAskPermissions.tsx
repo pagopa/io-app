@@ -33,7 +33,6 @@ import {
 } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Item = {
   icon: ReactNode;
