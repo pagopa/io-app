@@ -2880,6 +2880,8 @@ support:
     ipAddress: "Indirizzo IP"
     currentAppVersion: "Versione in uso dell'app"
     identityProvider: "Identity Provider"
+    diagnosticData: "Dati di diagnostica"
+    diagnosticDataValue: "Dati non sensibili legati al funzionamento dell’app"
     header: "Contact support"
     title: "To continue, we need your consent"
     body: "Per ricevere supporto è necessario inviare al team di IO alcuni dati. Se neghi il consenso, potrai inviare una richiesta generica via email."

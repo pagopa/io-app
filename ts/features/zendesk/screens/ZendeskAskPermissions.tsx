@@ -17,6 +17,7 @@ import WebSiteIcon from "../../../../img/assistance/website.svg";
 import InfoIcon from "../../../../img/assistance/info.svg";
 import DeviceIcon from "../../../../img/assistance/telefonia.svg";
 import LoginIcon from "../../../../img/assistance/login.svg";
+import BugIcon from "../../../../img/assistance/ladybug.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
 import { idpSelector } from "../../../store/reducers/authentication";
@@ -81,11 +82,16 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     icon: <LoginIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.identityProvider"),
     value: props.identityProvider
+  },
+  {
+    icon: <BugIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.diagnosticData"),
+    value: I18n.t("support.askPermissions.diagnosticDataValue")
   }
 ];
 
-const ItemComponent = (props: Item & { key: string }) => (
-  <ListItem key={props.key}>
+const ItemComponent = (props: Item) => (
+  <ListItem>
     <View
       style={{
         flex: 1,
@@ -93,7 +99,7 @@ const ItemComponent = (props: Item & { key: string }) => (
         alignItems: "center"
       }}
     >
-      <View style={{ backgroundColor: "white" }}>{props.icon}</View>
+      <View>{props.icon}</View>
       <View hspacer />
       <View style={{ flex: 1, flexDirection: "column" }}>
         <H4>{props.title}</H4>
