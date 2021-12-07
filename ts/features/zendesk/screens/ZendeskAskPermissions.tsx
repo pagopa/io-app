@@ -1,7 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
-import { getReadableVersion } from "react-native-device-info";
 import { ListItem, View } from "native-base";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -33,6 +32,7 @@ import {
 } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
+import { getAppVersion } from "../../../utils/appVersion";
 
 type Item = {
   icon: ReactNode;
@@ -125,7 +125,7 @@ const ZendeskAskPermissions = () => {
       isIos ? "iOS" : "Android"
     } · ${getSystemVersion()}`,
     ipAddress,
-    currentVersion: getReadableVersion(),
+    currentVersion: getAppVersion(),
     identityProvider
   };
   getIpAddress().then(setIpAddress).catch(constNull);
