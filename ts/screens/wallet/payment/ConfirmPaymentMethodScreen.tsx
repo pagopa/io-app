@@ -196,6 +196,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
+  // each payment method has its own psp fee
   const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
   const fee: number | undefined = isPayingWithPaypal
     ? props.payPalPsp?.fee
@@ -280,7 +281,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           <PaymentMethodCard
             paymentMethod={props.getPaymentMethodById(wallet.idWallet)}
           />
-          {/* show change psp only if the payment method is a credit card */}
+          {/* show the ability to change psp only when the payment method is a credit card */}
           {!isPayingWithPaypal && (
             <>
               <View spacer={true} />
