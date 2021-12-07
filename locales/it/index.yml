@@ -1534,8 +1534,8 @@ wallet:
       title: "Spiacenti, si è verificato un errore imprevisto"
       description: "Se il problema persiste, contatta l’assistenza."
     code19:
-      title: "TMP 19"
-      description: "TMP 19"
+      title: "Autorizzazione negata"
+      description: "Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento."
     addCreditCard:
       success:
         title: "La tua carta è stata aggiunta con successo!"
