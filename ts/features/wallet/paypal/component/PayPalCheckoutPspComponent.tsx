@@ -48,10 +48,10 @@ export const PayPalCheckoutPspComponent = (props: Props) => {
           <IconFont
             name="io-transactions"
             size={24}
-            color={IOColors.bluegreyDark}
+            color={IOColors.bluegrey}
           />
           <View hspacer small={true} />
-          <H3>
+          <H3 color={"bluegrey"}>
             {I18n.t("wallet.onboarding.paypal.paymentCheckout.transactionCost")}
           </H3>
         </View>

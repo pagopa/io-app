@@ -15,7 +15,6 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -124,18 +123,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   padded: { paddingHorizontal: customVariables.contentPadding },
-  alert: {
-    backgroundColor: customVariables.brandHighLighter,
-    paddingHorizontal: customVariables.contentPadding,
-    paddingVertical: 11,
-    flexDirection: "row"
-  },
-  alertIcon: {
-    alignSelf: "center",
-    paddingRight: 18
-  },
-  flex: { flex: 1 },
-  textColor: { color: customVariables.brandDarkGray }
+  flex: { flex: 1 }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -311,19 +299,6 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           )}
         </View>
       </Content>
-
-      <View style={styles.alert}>
-        <IconFont
-          style={styles.alertIcon}
-          name={"io-notice"}
-          size={24}
-          color={customVariables.brandDarkGray}
-        />
-        <Text style={[styles.flex, styles.textColor]}>
-          <Text bold={true}>{I18n.t("global.genericAlert")}</Text>
-          {` ${I18n.t("wallet.ConfirmPayment.info")}`}
-        </Text>
-      </View>
 
       <View footer={true}>
         <ButtonDefaultOpacity
