@@ -505,7 +505,7 @@ cie:
   title: Touch the card
   layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
   layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
-  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
+  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
 spid:
   login: LOGIN
   loginButton: LOGIN WITH
@@ -2823,6 +2823,14 @@ bonus:
         ko: "Problems saving the voucher"
 
 features:
+  mvl:
+    loading:
+      title: "Loading message details"
+      subtitle: "Please wait"
+    ko:
+      genericError:
+        title: "TMP Generic error title"
+        subtitle: "TMP Generic error subtitle"
   euCovidCertificate:
     save:
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
