@@ -312,6 +312,10 @@ describe("getErrorDescriptionV2", () => {
         I18n.t("wallet.errors.EC")
       ),
       Tuple2<DetailV2Keys | undefined, string>(
+        "PPT_ERRORE_EMESSO_DA_PAA",
+        I18n.t("wallet.errors.EC")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
         "PAA_PAGAMENTO_IN_CORSO",
         I18n.t("wallet.errors.ONGOING")
       ),
