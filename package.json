@@ -136,7 +136,7 @@
     "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^7.3.1",
     "react-native-qrcode-scanner": "^1.5.3",
-    "react-native-reanimated": "^1.13.1",
+    "react-native-reanimated": "^2.3.0",
     "react-native-render-html": "^6.3.1",
     "react-native-responsive-screen": "^1.4.1",
     "react-native-screen-brightness": "^2.0.0-alpha",
