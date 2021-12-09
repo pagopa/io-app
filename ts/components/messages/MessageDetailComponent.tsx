@@ -3,11 +3,9 @@ import { Content, H3, Text, View } from "native-base";
 import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { CommonServiceMetadata } from "../../../definitions/backend/CommonServiceMetadata";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
@@ -29,7 +27,7 @@ type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
   serviceDetail?: ServicePublic;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: CommonServiceMetadata;
   onServiceLinkPress?: () => void;
 }>;
 

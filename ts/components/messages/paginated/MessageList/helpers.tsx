@@ -53,6 +53,7 @@ export const renderItem =
     const { isRead, isArchived } = getMessageStatus(message.id);
     return (
       <MessageListItem
+        category={message.category}
         hasPaidBadge={hasPaidBadge(message.category)}
         isRead={isRead}
         isArchived={isArchived}
