@@ -1049,7 +1049,7 @@ wallet:
         primaryButton: "Continua"
       paymentCheckout:
         transactionCost: "Costo della transazione"
-        pspHandler: "Gestito da {{pspName}}"
+        pspHandler: "Gestita da {{pspName}}"
         privacyDisclaimer: "Proseguendo dichiari di aver letto e compreso i"
         privacyTerms: "Termini e condizioni d’uso e l’Informativa Privacy"
     coBadge:
