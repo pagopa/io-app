@@ -29,7 +29,6 @@ const defaultProps: React.ComponentProps<typeof MessageDetail> = {
   hasPaidBadge: false,
   message: toUIMessage(medicalPrescription),
   messageDetails: toUIMessageDetails(medicalPrescription),
-  navigateToWalletHome: jest.fn(),
   onServiceLinkPress: jest.fn(),
   service: toUIService(service_1),
   serviceMetadata: { phone: "+123333", email: "hola@vpn.com" } as any

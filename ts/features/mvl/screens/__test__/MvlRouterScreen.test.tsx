@@ -8,7 +8,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import MVL_ROUTES from "../../navigation/routes";
 import { mvlDetailsLoad } from "../../store/actions";
-import { mvlMockData, mvlMockId } from "../../types/__mock__/mvlMock";
+import { mvlMock, mvlMockId } from "../../types/__mock__/mvlMock";
 import { MvlRouterScreen } from "../MvlRouterScreen";
 
 describe("MvlRouterScreen behaviour", () => {
@@ -60,7 +60,7 @@ describe("MvlRouterScreen behaviour", () => {
       it("Should render the MvlDetailsScreen", () => {
         const render = dispatchActionAndRenderComponent([]);
 
-        render.store.dispatch(mvlDetailsLoad.success(mvlMockData));
+        render.store.dispatch(mvlDetailsLoad.success(mvlMock));
 
         expect(
           render.component.queryByTestId("MvlDetailsScreen")
@@ -109,7 +109,7 @@ describe("MvlRouterScreen behaviour", () => {
   describe("When the screen is rendered with a success in feature.mvl.byId", () => {
     it("Should render the MvlDetailsScreen", () => {
       const render = dispatchActionAndRenderComponent([
-        mvlDetailsLoad.success(mvlMockData)
+        mvlDetailsLoad.success(mvlMock)
       ]);
       expect(render.component.queryByTestId("MvlDetailsScreen")).not.toBeNull();
     });
@@ -120,7 +120,7 @@ describe("MvlRouterScreen behaviour", () => {
         applicationChangeState("active")
       );
       const store = createStore(appReducer, globalState as any);
-      store.dispatch(mvlDetailsLoad.success(mvlMockData));
+      store.dispatch(mvlDetailsLoad.success(mvlMock));
       const mockStore = configureMockStore<GlobalState>();
       const finalStore: ReturnType<typeof mockStore> = mockStore({
         ...store.getState()

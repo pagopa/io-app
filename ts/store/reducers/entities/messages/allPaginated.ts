@@ -1,6 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 
 import {
   loadNextPageMessages,
@@ -184,7 +185,7 @@ const reduceLoadPreviousPage = (
 // Selectors
 
 /**
- * Return the whole state for this reducer.
+ * Return the data container for this reducer.
  * @param state
  */
 export const allPaginatedMessagesSelector = (
@@ -192,49 +193,56 @@ export const allPaginatedMessagesSelector = (
 ): AllPaginated["data"] => state.entities.messages.allPaginated.data;
 
 /**
+ * Return the whole state for this reducer.
+ * @param state
+ */
+export const allPaginatedSelector = (state: GlobalState): AllPaginated =>
+  state.entities.messages.allPaginated;
+
+/**
  * Return the list of messages currently available.
  * @param state
  */
-export const allMessagesSelector = (
-  state: GlobalState
-): ReadonlyArray<UIMessage> =>
-  pot.getOrElse(
-    pot.map(state.entities.messages.allPaginated.data, _ => _.page),
-    []
-  );
+export const allMessagesSelector = createSelector(
+  allPaginatedMessagesSelector,
+  allPaginated =>
+    pot.getOrElse(
+      pot.map(allPaginated, _ => _.page),
+      []
+    )
+);
 
 /**
  * True if the state is loading and the last request is for a next page.
  * @param state
  */
-export const isLoadingNextPage = (state: GlobalState): boolean => {
-  const { data, lastRequest } = state.entities.messages.allPaginated;
-  return lastRequest
-    .map(_ => _ === "next" && pot.isLoading(data))
-    .getOrElse(false);
-};
+export const isLoadingNextPage = createSelector(
+  allPaginatedSelector,
+  ({ data, lastRequest }) =>
+    lastRequest.map(_ => _ === "next" && pot.isLoading(data)).getOrElse(false)
+);
 
 /**
  * True if the state is loading and the last request is for a previous page.
  * @param state
  */
-export const isLoadingPreviousPage = (state: GlobalState): boolean => {
-  const { data, lastRequest } = state.entities.messages.allPaginated;
-  return lastRequest
-    .map(_ => _ === "previous" && pot.isLoading(data))
-    .getOrElse(false);
-};
+export const isLoadingPreviousPage = createSelector(
+  allPaginatedSelector,
+  ({ data, lastRequest }) =>
+    lastRequest
+      .map(_ => _ === "previous" && pot.isLoading(data))
+      .getOrElse(false)
+);
 
 /**
  * True if the state is loading and the last request is for all the messages
  * resulting in a complete reset.
  * @param state
  */
-export const isReloading = (state: GlobalState): boolean => {
-  const { data, lastRequest } = state.entities.messages.allPaginated;
-  return lastRequest
-    .map(_ => _ === "all" && pot.isLoading(data))
-    .getOrElse(false);
-};
+export const isReloading = createSelector(
+  allPaginatedSelector,
+  ({ data, lastRequest }) =>
+    lastRequest.map(_ => _ === "all" && pot.isLoading(data)).getOrElse(false)
+);
 
 export default reducer;
