@@ -11,7 +11,10 @@ import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
 } from "../../../../utils/convertDateToWordDistance";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import {
+  MessageCategory,
+  UIMessage
+} from "../../../../store/reducers/entities/messages/types";
 import TouchableDefaultOpacity from "../../../TouchableDefaultOpacity";
 import { H5 } from "../../../core/typography/H5";
 import { H3 } from "../../../core/typography/H3";
@@ -78,10 +81,14 @@ const styles = StyleSheet.create({
   },
   archived: {
     opacity: 0.75
+  },
+  qrContainer: {
+    marginRight: 16
   }
 });
 
 type Props = {
+  category: MessageCategory;
   hasPaidBadge: boolean;
   isRead: boolean;
   isArchived: boolean;
@@ -110,6 +117,7 @@ const announceMessage = (message: UIMessage, isRead: boolean): string =>
   });
 
 const MessageListItem = ({
+  category,
   hasPaidBadge,
   isRead,
   isArchived,
@@ -132,6 +140,7 @@ const MessageListItem = ({
       ? "io-checkbox-on"
       : "io-checkbox-off"
     : "io-right";
+  const isEuCovidCert = category?.tag === "EU_COVID_CERT";
 
   return (
     <TouchableDefaultOpacity
@@ -170,6 +179,13 @@ const MessageListItem = ({
               <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
             </Badge>
           )}
+
+          {isEuCovidCert && (
+            <View style={styles.qrContainer}>
+              <IconFont name={"io-qr"} color={IOColors.blue} />
+            </View>
+          )}
+
           <IconFont
             name={iconName}
             size={ICON_WIDTH}
