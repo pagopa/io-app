@@ -2,7 +2,6 @@
  * Aggregates all defined reducers
  */
 import AsyncStorage from "@react-native-community/async-storage";
-import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
@@ -86,7 +85,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   //
   appState: appStateReducer,
   navigation: navigationReducer,
-  network: networkReducer,
   backoffError: backoffErrorReducer,
   deepLink: deepLinkReducer,
   wallet: walletReducer,

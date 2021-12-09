@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.38.0-rc.4](https://github.com/pagopa/io-app/compare/1.38.0-rc.3...1.38.0-rc.4) (2021-12-09)
+
+
+### Features
+
+* [[IA-174](https://pagopa.atlassian.net/browse/IA-174),[IA-484](https://pagopa.atlassian.net/browse/IA-484)] Handle new outcome error codes ([#3530](https://github.com/pagopa/io-app/issues/3530)) ([a32b1d8](https://github.com/pagopa/io-app/commit/a32b1d8878265cc37c7b5bbe0b50ee003b4961a6))
+* [[IA-418](https://pagopa.atlassian.net/browse/IA-418)] Identify Green Pass on the new message list ([#3546](https://github.com/pagopa/io-app/issues/3546)) ([97cefbd](https://github.com/pagopa/io-app/commit/97cefbda794c5e59416b23c4df4e340c970df24f))
+* [[IA-458](https://pagopa.atlassian.net/browse/IA-458)] Pay with Paypal ([#3534](https://github.com/pagopa/io-app/issues/3534)) ([68442f1](https://github.com/pagopa/io-app/commit/68442f12d06ee89fe8e5d539f415f24b0535b01f))
+
+
+### Bug Fixes
+
+* [[IA-503](https://pagopa.atlassian.net/browse/IA-503)] Improve rendering performance in Message list ([#3540](https://github.com/pagopa/io-app/issues/3540)) ([adaac30](https://github.com/pagopa/io-app/commit/adaac30932da2f020dfc90fb10f2215571bec062))
+* [[IABT-1303](https://pagopa.atlassian.net/browse/IABT-1303)] When a payment is done the "See notice" button isn't shown ([#3553](https://github.com/pagopa/io-app/issues/3553)) ([bc9c4b3](https://github.com/pagopa/io-app/commit/bc9c4b3b8ef8cbd16a75b3d19d02a4b115a35a29))
+
+
+### Chores
+
+* [[IA-557](https://pagopa.atlassian.net/browse/IA-557)] Remove useless permission and show prominent disclosure in the read device storage cases ([#3563](https://github.com/pagopa/io-app/issues/3563)) ([cea26f8](https://github.com/pagopa/io-app/commit/cea26f868f053c5680558800b37c133c214982fe))
+* **Messaggi a valore legale:** [[IAMVL-16](https://pagopa.atlassian.net/browse/IAMVL-16)] Extract common components shared by MessageDetailsComponent and MVLDetailsScreen ([#3551](https://github.com/pagopa/io-app/issues/3551)) ([5fc683d](https://github.com/pagopa/io-app/commit/5fc683df0c836919d287210c7778637eaa34bdda))
+* **Messaggi a valore legale:** [[IAMVL-17](https://pagopa.atlassian.net/browse/IAMVL-17)] Refinement of MVL datamodel ([#3555](https://github.com/pagopa/io-app/issues/3555)) ([334cd26](https://github.com/pagopa/io-app/commit/334cd267fe240a2cb8888cd306bd7e488cad7bf8))
+* [[IA-468](https://pagopa.atlassian.net/browse/IA-468)] Handle Payment Verification code for EC category ([#3556](https://github.com/pagopa/io-app/issues/3556)) ([422a016](https://github.com/pagopa/io-app/commit/422a0162ad12a627dbe1a446f8ebce9fe7b4c7ce))
+* **Messaggi a valore legale:** [[IAMVL-9](https://pagopa.atlassian.net/browse/IAMVL-9)] Stub screens and navigation ([#3545](https://github.com/pagopa/io-app/issues/3545)) ([c7d1106](https://github.com/pagopa/io-app/commit/c7d1106c207bb1890d4615c6f9b48112c5e30074))
+* [[IA-499](https://pagopa.atlassian.net/browse/IA-499)] Add psp list API - V2 ([#3531](https://github.com/pagopa/io-app/issues/3531)) ([7672cb0](https://github.com/pagopa/io-app/commit/7672cb0d8ed2c236d9bf9de1a8e76d1e1459278d))
+* [[IA-531](https://pagopa.atlassian.net/browse/IA-531)] Zendesk workunit ([#3538](https://github.com/pagopa/io-app/issues/3538)) ([1eb8bed](https://github.com/pagopa/io-app/commit/1eb8bed42d54de4f9c2d994a2e2fba678eb02fd3))
+* [[IA-539](https://pagopa.atlassian.net/browse/IA-539)] Revert "Enable FF for testing purpose" ([#3541](https://github.com/pagopa/io-app/issues/3541)) ([412146c](https://github.com/pagopa/io-app/commit/412146c1ff1e1e1d948c4112021e300fd67e6e1e))
+* [[IA-549](https://pagopa.atlassian.net/browse/IA-549)] Align mock backendStatus ([#3548](https://github.com/pagopa/io-app/issues/3548)) ([cc017cb](https://github.com/pagopa/io-app/commit/cc017cb1c69dc0da57337dff3f856f575be10536))
+* [[IAI-100](https://pagopa.atlassian.net/browse/IAI-100)] Add generic test overlay ([#3537](https://github.com/pagopa/io-app/issues/3537)) ([bf85e48](https://github.com/pagopa/io-app/commit/bf85e4852626fa241fce5a5c0cf74246a13ef917))
+* Update check_url script config ([#3554](https://github.com/pagopa/io-app/issues/3554)) ([d75e35f](https://github.com/pagopa/io-app/commit/d75e35fde918e23670946c146721c7761fac6475))
+
 ## [1.38.0-rc.3](https://github.com/pagopa/io-app/compare/1.38.0-rc.2...1.38.0-rc.3) (2021-12-02)
 
 

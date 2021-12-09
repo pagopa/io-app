@@ -2,14 +2,12 @@ import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../../components/messages/MessageDetailComponent";
 import I18n from "../../../i18n";
 import { PaymentByRptIdState } from "../../../store/reducers/entities/payments";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CommonServiceMetadata } from "../../../../definitions/backend/CommonServiceMetadata";
 
 import ErrorState from "./ErrorState";
 
@@ -24,7 +22,7 @@ type Props = {
   onServiceLinkPressHandler: (id: string) => void;
   paymentsByRptId: PaymentByRptIdState;
   service?: ServicePublic;
-  maybeServiceMetadata?: ServicePublicService_metadata;
+  maybeServiceMetadata?: CommonServiceMetadata;
 };
 
 const styles = StyleSheet.create({
