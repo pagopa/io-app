@@ -47,6 +47,8 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import { payPalEnabled } from "../../../config";
+import { pspV2Selector } from "../../../store/reducers/wallet/payment";
+import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchPickPspOrConfirm } from "./common";
 
 type NavigationParams = Readonly<{
@@ -179,8 +181,11 @@ const mapStateToProps = (state: GlobalState) => {
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
   const potPsps = state.wallet.payment.psps;
+  const pspV2 = pspV2Selector(state);
   const isLoading =
-    pot.isLoading(potVisibleCreditCard) || pot.isLoading(potPsps);
+    pot.isLoading(potVisibleCreditCard) ||
+    pot.isLoading(potPsps) ||
+    isLoadingRemote(pspV2);
 
   const visibleWallets = [
     potVisibleCreditCard,

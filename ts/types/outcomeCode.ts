@@ -27,10 +27,14 @@ const OutcomeCodes = {
   "0": OutcomeCodeR,
   "1": OutcomeCode,
   "2": OutcomeCode,
+  "3": OutcomeCode,
   "4": OutcomeCode,
   "7": OutcomeCode,
   "8": OutcomeCode,
-  "10": OutcomeCode
+  "10": OutcomeCode,
+  "15": OutcomeCode,
+  "18": OutcomeCode,
+  "19": OutcomeCode
 };
 
 const OutcomeCodesCodec = t.type(OutcomeCodes);

@@ -8,7 +8,8 @@ import {
   UIMessage,
   UIMessageDetails,
   PrescriptionData,
-  EUCovidCertificate
+  EUCovidCertificate,
+  UIMessageId
 } from "./types";
 
 /**
@@ -19,7 +20,7 @@ import {
 export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   const enriched = messageFromApi as EnrichedMessage;
   return {
-    id: messageFromApi.id,
+    id: messageFromApi.id as UIMessageId,
     fiscalCode: messageFromApi.fiscal_code,
     category: null,
     createdAt: new Date(messageFromApi.created_at),
@@ -100,7 +101,7 @@ export const toUIMessageDetails = (
   const dueDate = content.due_date ? new Date(content.due_date) : undefined;
 
   return {
-    id,
+    id: id as UIMessageId,
     prescriptionData: getPrescriptionData(content),
     attachments: getAttachments(content),
     markdown: content.markdown,
