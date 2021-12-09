@@ -19,7 +19,10 @@ import { loadServiceDetail } from "../../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
-import { UIMessage, UIMessageId } from "../../../store/reducers/entities/messages/types";
+import {
+  UIMessage,
+  UIMessageId
+} from "../../../store/reducers/entities/messages/types";
 import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
