@@ -1030,10 +1030,10 @@ wallet:
         body: "Now you can continue with your payment."
         primaryButton: "Continue"
       paymentCheckout:
-        transactionCost: "Costo della transazione"
-        pspHandler: "Gestito da {{pspName}}"
-        privacyDisclaimer: "Proseguendo dichiari di aver letto e compreso i"
-        privacyTerms: "Termini e condizioni d’uso e l’Informativa Privacy"
+        transactionCost: "Transaction cost"
+        pspHandler: "Processed by {{pspName}}"
+        privacyDisclaimer: "By continuing, you declare you have read and understood the"
+        privacyTerms: "Terms and Conditions of Use and Privacy Policy"
     coBadge:
       headerTitle: "Add international circuit"
       start:
