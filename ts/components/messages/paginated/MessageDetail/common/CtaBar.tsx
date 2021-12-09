@@ -3,29 +3,30 @@ import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 
-import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
 import {
   getMessageCTA,
   isExpired,
   MessagePaymentExpirationInfo
-} from "../../../../utils/messages";
+} from "../../../../../utils/messages";
 import {
   PaymentData,
   UIMessageDetails
-} from "../../../../store/reducers/entities/messages/types";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { UIService } from "../../../../store/reducers/entities/services/types";
-import ExtractedCTABar from "../../../cta/ExtractedCTABar";
-import { useIODispatch } from "../../../../store/hooks";
-import PaymentButton from "../../PaymentButton";
-import CalendarEventButton from "../../CalendarEventButton";
+} from "../../../../../store/reducers/entities/messages/types";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { UIService } from "../../../../../store/reducers/entities/services/types";
+import { CommonServiceMetadata } from "../../../../../../definitions/backend/CommonServiceMetadata";
+import ExtractedCTABar from "../../../../cta/ExtractedCTABar";
+import { useIODispatch } from "../../../../../store/hooks";
+import PaymentButton from "../../../PaymentButton";
+import CalendarEventButton from "../../../CalendarEventButton";
 
 type Props = {
   expirationInfo: MessagePaymentExpirationInfo;
   isPaid: boolean;
+  isPrescription: boolean;
   messageDetails: UIMessageDetails;
   service?: UIService;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: CommonServiceMetadata;
 };
 
 const styles = StyleSheet.create({
@@ -74,11 +75,17 @@ function renderCalendarEventButton(
 const CtaBar = ({
   isPaid,
   expirationInfo,
+  isPrescription,
   messageDetails,
   service,
   serviceMetadata
-}: Props) => {
+}: Props): React.ReactElement | null => {
   const dispatch = useIODispatch();
+  // in case of medical prescription, we shouldn't render the CtaBar
+  if (isPrescription) {
+    return null;
+  }
+
   const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
 
   const paymentButton = renderPaymentButton(paymentData);

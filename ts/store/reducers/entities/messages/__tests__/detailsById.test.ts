@@ -1,14 +1,15 @@
-import { getType } from "typesafe-actions";
 import { pot } from "@pagopa/ts-commons";
-
-import { loadMessageDetails } from "../../../../actions/messages";
-import reducer from "../detailsById";
+import { getType } from "typesafe-actions";
 import {
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
 } from "../../../../../__mocks__/message";
 
-const id = paymentValidInvalidAfterDueDate.id;
+import { loadMessageDetails } from "../../../../actions/messages";
+import reducer from "../detailsById";
+import { UIMessageId } from "../types";
+
+const id = paymentValidInvalidAfterDueDate.id as UIMessageId;
 
 describe("detailsById reducer", () => {
   describe(`when a ${getType(loadMessageDetails.request)} is sent`, () => {

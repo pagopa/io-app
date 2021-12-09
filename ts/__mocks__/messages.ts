@@ -9,12 +9,13 @@ import {
   PreviousPageMessagesSuccessPayload,
   ReloadMessagesPayload
 } from "../store/actions/messages";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
 
 const timeToLive = 3600 as unknown as TimeToLiveSeconds;
 
-export const messageId_1 = "FAT00001";
-export const messageId_2 = "PMT00002";
-export const messageId_3 = "PMT00003";
+export const messageId_1 = "FAT00001" as UIMessageId;
+export const messageId_2 = "PMT00002" as UIMessageId;
+export const messageId_3 = "PMT00003" as UIMessageId;
 export const serviceId_1 = "service_one" as ServiceId;
 export const serviceId_2 = "service_two" as ServiceId;
 
@@ -75,7 +76,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_1,
     fiscalCode: apiPayload.items[0].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" },
     createdAt: new Date("2021-10-18T16:00:35.541Z"),
     serviceId: serviceId_1,
     timeToLive,
@@ -87,7 +88,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_2,
     fiscalCode: apiPayload.items[1].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" },
     createdAt: new Date("2021-10-18T16:00:34.541Z"),
     serviceId: serviceId_1,
     timeToLive,
@@ -99,7 +100,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_3,
     fiscalCode: apiPayload.items[2].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" },
     createdAt: new Date("2021-10-18T16:00:30.541Z"),
     serviceId: serviceId_2,
     timeToLive,

@@ -301,7 +301,8 @@ const mapStateToProps = (state: GlobalState) => {
     allMessages,
     getMessageStatus: (id: string) => getMessageStatus(state, id),
     error,
-    hasPaidBadge: isNoticePaid(state),
+    hasPaidBadge: (category: UIMessage["category"]) =>
+      isNoticePaid(state, category),
     isLoadingMore: isLoadingNextPage(state),
     isRefreshing: isLoadingPreviousPage(state),
     isReloadingAll: isReloading(state),

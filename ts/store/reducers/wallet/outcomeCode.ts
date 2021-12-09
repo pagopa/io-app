@@ -16,6 +16,7 @@ import authorizationDenied from "../../../../img/servicesStatus/error-detail-ico
 import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
 import sessionExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import cardProblemOrOperationCanceled from "../../../../img/wallet/errors/payment-unknown-icon.png";
+import doubtImage from "../../../../img/pictograms/doubt.png";
 import { GlobalState } from "../types";
 
 export type OutcomeCodeState = {
@@ -53,6 +54,18 @@ const OutcomeCodesPrintable = (): OutcomeCodes => ({
       "it-IT": I18n.t("wallet.outcomeMessage.code2.description")
     },
     icon: authorizationDenied,
+    status: "errorBlocking"
+  },
+  "3": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code3.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code3.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code3.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code3.description")
+    },
+    icon: doubtImage,
     status: "errorBlocking"
   },
   "4": {
@@ -95,6 +108,42 @@ const OutcomeCodesPrintable = (): OutcomeCodes => ({
     description: {
       "en-EN": I18n.t("wallet.outcomeMessage.code10.description"),
       "it-IT": I18n.t("wallet.outcomeMessage.code10.description")
+    },
+    icon: authorizationDenied,
+    status: "errorBlocking"
+  },
+  "15": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code15.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code15.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code15.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code15.description")
+    },
+    icon: doubtImage,
+    status: "errorBlocking"
+  },
+  "18": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code18.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code18.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code18.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code18.description")
+    },
+    icon: authorizationDenied,
+    status: "errorBlocking"
+  },
+  "19": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code19.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code19.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code19.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code19.description")
     },
     icon: authorizationDenied,
     status: "errorBlocking"

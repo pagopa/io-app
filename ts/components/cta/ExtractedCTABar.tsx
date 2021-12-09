@@ -1,10 +1,8 @@
 import { View } from "native-base";
 import React, { ReactElement } from "react";
 import { Dispatch } from "redux";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { CommonServiceMetadata } from "../../../definitions/backend/CommonServiceMetadata";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
 import { ExtractedCtaButton } from "./ExtractedCtaButton";
@@ -16,7 +14,7 @@ type Props = {
   // service and serviceMetadata could come from message or service detail
   // they could be useful to determine if a cta action is valid or not
   service?: ServicePublic;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: CommonServiceMetadata;
 };
 
 /**
