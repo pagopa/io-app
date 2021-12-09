@@ -146,7 +146,7 @@ exports[`PayPalCheckoutPspComponent it should match the snapshot 1`] = `
         weight="Bold"
         weightColorFactory={[Function]}
       >
-        € 1.23
+        € 1,23
       </Text>
       <Text
         color="bluegrey"

@@ -3,11 +3,14 @@ import React from "react";
 import { PayPalCheckoutPspComponent } from "../PayPalCheckoutPspComponent";
 import { ImportoEuroCents } from "../../../../../../definitions/backend/ImportoEuroCents";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
-import I18n from "../../../../../i18n";
+import I18n, { setLocale } from "../../../../../i18n";
 
 const fee = 123 as ImportoEuroCents;
 
 describe("PayPalCheckoutPspComponent", () => {
+  beforeAll(() => {
+    setLocale("it");
+  });
   jest.useFakeTimers();
   it(`it should match the snapshot`, () => {
     const component = render(
