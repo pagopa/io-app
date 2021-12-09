@@ -20,7 +20,6 @@ type AllowedRegularColors = Extract<
   | "white"
   | "red"
   | "grey"
-  | "greyGradientTop"
 >;
 
 // all the possible colors

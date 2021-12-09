@@ -1,40 +1,77 @@
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { Body } from "../../../components/core/typography/Body";
+import Attachment from "../../../../img/features/mvl/attachment.svg";
+import LegalMessage from "../../../../img/features/mvl/legalMessage.svg";
 import { H5 } from "../../../components/core/typography/H5";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { HeaderDueDateBar } from "../../../components/messages/paginated/MessageDetail/common/HeaderDueDateBar";
 import { MessageTitle } from "../../../components/messages/paginated/MessageDetail/common/MessageTitle";
 import OrganizationHeader from "../../../components/OrganizationHeader";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
 import { UIMessageDetails } from "../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../store/reducers/entities/services/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { Mvl } from "../types/mvlData";
-import LegalMessage from "../../../../img/features/mvl/legalMessage.svg";
-import Attachment from "../../../../img/features/mvl/attachment.svg";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import I18n from "../../../i18n";
 
 type Props = { mvl: Mvl };
 
 const styles = StyleSheet.create({
-  row: { flexDirection: "row", justifyContent: "space-between" }
+  row: { flexDirection: "row", flexWrap: "wrap" },
+  rightElement: { paddingLeft: 8 },
+  spacer: {
+    marginLeft: 8,
+    marginRight: 8,
+    backgroundColor: IOColors.greyLight,
+    width: 1
+  }
 });
 
+/**
+ * Icon + text element
+ * @param props
+ * @constructor
+ */
+const HeaderItem = (props: { text: string; image: React.ReactElement }) => (
+  <View style={styles.row}>
+    {props.image}
+    <H5 weight={"Regular"} color={"bluegrey"} style={[styles.rightElement]}>
+      {props.text}
+    </H5>
+  </View>
+);
+
+/**
+ * An header displaying the legal message icon + text.
+ * Optionally display the attachment icon + text if at least one attachment is available
+ * @param props
+ * @constructor
+ */
 const LegalMessageHeader = (props: { hasAttachments: boolean }) => (
   <View style={styles.row}>
-    <H5 weight={"Regular"} color={"greyGradientTop"}>
-      {I18n.t("features.mvl.title")}
-    </H5>
+    <HeaderItem
+      text={I18n.t("features.mvl.title")}
+      image={<LegalMessage width={16} height={16} fill={IOColors.bluegrey} />}
+    />
     {props.hasAttachments && (
-      <H5 weight={"Regular"} color={"greyGradientTop"}>
-        {I18n.t("features.mvl.details.hasAttachments")}
-      </H5>
+      <>
+        <View style={styles.spacer} />
+        <HeaderItem
+          text={I18n.t("features.mvl.details.hasAttachments")}
+          image={<Attachment width={16} height={16} fill={IOColors.bluegrey} />}
+        />
+      </>
     )}
   </View>
 );
 
+/**
+ * The header for a legal message, including the OrganizationHeader, MessageTitle and LegalMessageHeader
+ * @param props
+ * @constructor
+ */
 const Header = (props: {
   message: UIMessageDetails;
   hasAttachments: boolean;
@@ -51,10 +88,9 @@ const Header = (props: {
     <View spacer={true} large={true} />
 
     <MessageTitle title={props.message.subject} isPrescription={false} />
-
+    <View spacer={true} small={true} />
+    <View spacer={true} xsmall={true} />
     <LegalMessageHeader hasAttachments={props.hasAttachments} />
-    {/* <LegalMessage width={64} height={64} fill={IOColors.red} /> */}
-    {/* <Attachment width={64} height={64} fill={IOColors.red} /> */}
 
     <View spacer={true} />
   </>
