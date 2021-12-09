@@ -76,7 +76,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_1,
     fiscalCode: apiPayload.items[0].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" },
     createdAt: new Date("2021-10-18T16:00:35.541Z"),
     serviceId: serviceId_1,
     timeToLive,
@@ -88,7 +88,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_2,
     fiscalCode: apiPayload.items[1].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" },
     createdAt: new Date("2021-10-18T16:00:34.541Z"),
     serviceId: serviceId_1,
     timeToLive,
@@ -100,7 +100,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_3,
     fiscalCode: apiPayload.items[2].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" },
     createdAt: new Date("2021-10-18T16:00:30.541Z"),
     serviceId: serviceId_2,
     timeToLive,

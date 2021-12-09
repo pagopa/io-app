@@ -3,7 +3,6 @@ import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 
-import { ServicePublicService_metadata } from "../../../../../../definitions/backend/ServicePublic";
 import {
   getMessageCTA,
   isExpired,
@@ -15,6 +14,7 @@ import {
 } from "../../../../../store/reducers/entities/messages/types";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { UIService } from "../../../../../store/reducers/entities/services/types";
+import { CommonServiceMetadata } from "../../../../../../definitions/backend/CommonServiceMetadata";
 import ExtractedCTABar from "../../../../cta/ExtractedCTABar";
 import { useIODispatch } from "../../../../../store/hooks";
 import PaymentButton from "../../../PaymentButton";
@@ -26,7 +26,7 @@ type Props = {
   isPrescription: boolean;
   messageDetails: UIMessageDetails;
   service?: UIService;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: CommonServiceMetadata;
 };
 
 const styles = StyleSheet.create({
