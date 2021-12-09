@@ -9,6 +9,7 @@ jest.useFakeTimers();
 const messages = successReloadMessagesPayload.messages;
 
 const defaultProps: React.ComponentProps<typeof Item> = {
+  category: { tag: "GENERIC" },
   hasPaidBadge: false,
   isRead: false,
   isArchived: false,
@@ -39,6 +40,16 @@ describe("MessageList Item component", () => {
     it("should match the snapshot", () => {
       expect(
         render(<Item {...defaultProps} isRead={true} />).toJSON()
+      ).toMatchSnapshot();
+    });
+  });
+
+  describe("when a EU_CODIV_CERT is present", () => {
+    it("should match the snapshot", () => {
+      expect(
+        render(
+          <Item {...defaultProps} category={{ tag: "EU_COVID_CERT" }} />
+        ).toJSON()
       ).toMatchSnapshot();
     });
   });
