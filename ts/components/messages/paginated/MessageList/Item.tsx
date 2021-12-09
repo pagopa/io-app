@@ -116,10 +116,6 @@ const announceMessage = (message: UIMessage, isRead: boolean): string =>
     receivedAt: convertReceivedDateToAccessible(message.createdAt)
   });
 
-/**
- * TODO: please merge this component with DetailedlistItemComponent since it is here
- *       only to provide backward compatibility with the legacy components.
- */
 const MessageListItem = ({
   category,
   hasPaidBadge,
