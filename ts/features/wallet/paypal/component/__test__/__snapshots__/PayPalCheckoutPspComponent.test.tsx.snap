@@ -173,7 +173,7 @@ exports[`PayPalCheckoutPspComponent it should match the snapshot 1`] = `
         }
         weight="Regular"
       >
-        Gestito da pspName
+        Gestita da pspName
       </Text>
     </View>
   </View>
