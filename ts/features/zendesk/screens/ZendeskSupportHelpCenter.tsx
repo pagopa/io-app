@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import View from "../../../components/ui/TextWithIcon";
-import { zendeskSupportBack } from "../store/actions";
+import { getZendeskConfig, zendeskSupportBack } from "../store/actions";
 import ZendeskSupportComponent from "../../../components/ZendeskSupportComponent";
 
 const ZendeskSupportHelpCenter = () => {
   const dispatch = useDispatch();
   const workUnitBack = () => dispatch(zendeskSupportBack());
+  const requestZendeskConfig = () => dispatch(getZendeskConfig.request());
+  useEffect(() => {
+    requestZendeskConfig();
+  }, [requestZendeskConfig()]);
+
   return (
     <BaseScreenComponent
       showInstabugChat={false}
