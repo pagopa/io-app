@@ -9,8 +9,11 @@ import { PublicMessage } from "../../../../../definitions/backend/PublicMessage"
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 
-// just a placeholder for now
-export type MessageCategory = null;
+// TODO: use type from API definitions once they are available
+export type MessageCategory =
+  | { tag: "EU_COVID_CERT" }
+  | { tag: "PAYMENT"; rptId: string }
+  | { tag: "GENERIC" };
 
 /**
  * The unique ID of a UIMessage and UIMessageDetails, used to avoid to pass wrong id as parameters
