@@ -12,7 +12,6 @@ import { MvlDetailsScreen } from "./MvlDetailsScreen";
 import { MvlLoadingScreen } from "./MvlLoadingScreen";
 
 type NavigationParams = Readonly<{
-  // TODO: assumption, we have an unique id that we should use to retrieve the MVL, maybe this could be the messageId? let's see!
   id: UIMessageId;
 }>;
 
