@@ -54,7 +54,6 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-
   get data(): MessageData {
     const serviceDetail = this.props.serviceDetail;
     const metadata = fromNullable(this.props.serviceMetadata);

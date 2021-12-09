@@ -49,12 +49,13 @@ export function convertDateToWordDistance(
  * This function converts the distance from now to date in :
  * Today, H.mm; yesterday, H.mm; MM/DD/YYYY, H.mm depending on the system locale
  */
-export function convertDateTimeToWordDistance(
-  date: Date
-): string {
+export function convertDateTimeToWordDistance(date: Date): string {
   const today = new Date();
   const distance = differenceInCalendarDays(today, date);
-  const formattedTime = localeDateFormat(date, I18n.t("global.dateFormats.timeFormat"));
+  const formattedTime = localeDateFormat(
+    date,
+    I18n.t("global.dateFormats.timeFormat")
+  );
   // 0 days, distance < one day
   if (distance < 1) {
     return `${capitalize(I18n.t("global.date.today"))}, ${formattedTime}`;
