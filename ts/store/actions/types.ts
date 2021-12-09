@@ -53,6 +53,7 @@ import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
+import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 
 export type Action =
   | AnalyticsActions
@@ -98,7 +99,8 @@ export type Action =
   | EuCovidCertActions
   | OutcomeCodeActions
   | SvActions
-  | MvlActions;
+  | MvlActions
+  | ZendeskSupportActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
