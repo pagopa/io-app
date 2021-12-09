@@ -10,6 +10,8 @@ import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
 import { getType } from "typesafe-actions";
 import { getZendeskConfig, zendeskSelectedCategory } from "../actions";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../store/reducers/types";
 
 export type ZendeskConfig = RemoteValue<
   {
@@ -62,5 +64,10 @@ const reducer = (
   }
   return state;
 };
+
+export const zendeskConfigSelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.zendeskConfig],
+  (zendeskConfig: ZendeskConfig): ZendeskConfig => zendeskConfig
+);
 
 export default reducer;
