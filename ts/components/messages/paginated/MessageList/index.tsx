@@ -301,8 +301,8 @@ const mapStateToProps = (state: GlobalState) => {
     allMessages,
     getMessageStatus: (id: string) => getMessageStatus(state, id),
     error,
-    // TODO: propagate category once it's ready
-    hasPaidBadge: (_: UIMessage["category"]) => isNoticePaid(state, null),
+    hasPaidBadge: (category: UIMessage["category"]) =>
+      isNoticePaid(state, category),
     isLoadingMore: isLoadingNextPage(state),
     isRefreshing: isLoadingPreviousPage(state),
     isReloadingAll: isReloading(state),
