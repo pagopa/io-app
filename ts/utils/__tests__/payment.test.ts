@@ -283,6 +283,7 @@ describe("getV2ErrorMacro", () => {
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_CANALE_DISABILITATO", "TECHNICAL"),
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_SINTASSI_EXTRAXSD", "DATA"),
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_STAZIONE_INT_PA_TIMEOUT", "EC"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_ERRORE_EMESSO_DA_PAA", "EC"),
       Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_IN_CORSO", "ONGOING"),
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_PAGAMENTO_IN_CORSO", "ONGOING"),
       Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_ANNULLATO", "REVOKED"),
@@ -309,6 +310,10 @@ describe("getErrorDescriptionV2", () => {
       ),
       Tuple2<DetailV2Keys | undefined, string>(
         "PPT_STAZIONE_INT_PA_TIMEOUT",
+        I18n.t("wallet.errors.EC")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PPT_ERRORE_EMESSO_DA_PAA",
         I18n.t("wallet.errors.EC")
       ),
       Tuple2<DetailV2Keys | undefined, string>(
