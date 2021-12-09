@@ -14,7 +14,7 @@ const ZendeskSupportHelpCenter = () => {
   const requestZendeskConfig = () => dispatch(getZendeskConfig.request());
   useEffect(() => {
     requestZendeskConfig();
-  }, [requestZendeskConfig()]);
+  }, [requestZendeskConfig]);
 
   return (
     <BaseScreenComponent
