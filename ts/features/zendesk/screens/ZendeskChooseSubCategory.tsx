@@ -1,5 +1,7 @@
 import React from "react";
 import { FlatList, SafeAreaView, ScrollView } from "react-native";
+import { useDispatch } from "react-redux";
+import { ListItem } from "native-base";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H1 } from "../../../components/core/typography/H1";
@@ -7,9 +9,7 @@ import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
-import { useDispatch } from "react-redux";
 import { H4 } from "../../../components/core/typography/H4";
-import { ListItem } from "native-base";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../../components/ui/IconFont";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";

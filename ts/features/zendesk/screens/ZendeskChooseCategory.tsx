@@ -1,5 +1,7 @@
 import React from "react";
 import { FlatList, SafeAreaView, ScrollView } from "react-native";
+import { useDispatch } from "react-redux";
+import { ListItem } from "native-base";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H1 } from "../../../components/core/typography/H1";
@@ -12,10 +14,8 @@ import {
   isLoading,
   isUndefined
 } from "../../bonus/bpd/model/RemoteValue";
-import { useDispatch } from "react-redux";
 import { toArray } from "../../../store/helpers/indexer";
 import { H4 } from "../../../components/core/typography/H4";
-import { ListItem } from "native-base";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../../components/ui/IconFont";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
