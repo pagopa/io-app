@@ -4,11 +4,12 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../../definiti
 
 import {
   Attachment,
+  EUCovidCertificate,
+  MessageCategory,
   PaymentData,
+  PrescriptionData,
   UIMessage,
   UIMessageDetails,
-  PrescriptionData,
-  EUCovidCertificate,
   UIMessageId
 } from "./types";
 
@@ -19,10 +20,14 @@ import {
  */
 export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   const enriched = messageFromApi as EnrichedMessage;
+  // TODO: replace with actual types from API, for now use it if available
+  // see https://pagopa.atlassian.net/browse/IA-554
+  const category: MessageCategory | undefined = (messageFromApi as any)
+    .category;
   return {
     id: messageFromApi.id as UIMessageId,
     fiscalCode: messageFromApi.fiscal_code,
-    category: null,
+    category: category ?? { tag: "GENERIC" },
     createdAt: new Date(messageFromApi.created_at),
     serviceId: messageFromApi.sender_service_id,
     serviceName: enriched.service_name,

@@ -6,7 +6,6 @@ import { Body, Container, List, ListItem, Spinner, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import ConnectionBar from "../../components/ConnectionBar";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -69,7 +68,6 @@ class IngressScreen extends React.PureComponent<Props> {
         appLogo={false}
       >
         <Container style={styles.container}>
-          <ConnectionBar />
           <Text white={true} alignCenter={true}>
             {I18n.t("startup.title")}
           </Text>
