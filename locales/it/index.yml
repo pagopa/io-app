@@ -2852,6 +2852,7 @@ bonus:
 
 features:
   mvl:
+    title: "messaggio a valore legale"
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
@@ -2859,6 +2860,8 @@ features:
       genericError:
         title: "TMP Generic error title"
         subtitle: "TMP Generic error subtitle"
+    details:
+      hasAttachments: "contiene allegati"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."

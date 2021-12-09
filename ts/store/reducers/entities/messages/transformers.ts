@@ -99,7 +99,6 @@ export const toUIMessageDetails = (
 ): UIMessageDetails => {
   const { id, content } = messageFromApi;
   const dueDate = content.due_date ? new Date(content.due_date) : undefined;
-
   return {
     id: id as UIMessageId,
     prescriptionData: getPrescriptionData(content),
@@ -108,6 +107,7 @@ export const toUIMessageDetails = (
     dueDate,
     paymentData: getPaymentData(content),
     euCovidCertificate: getEUCovidCertificate(content),
+    subject: content.subject,
     raw: messageFromApi
   };
 };

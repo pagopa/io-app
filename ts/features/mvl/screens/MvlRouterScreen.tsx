@@ -30,7 +30,7 @@ const renderByPot = (
     () => <MvlLoadingScreen />,
     _ => <MvlLoadingScreen />,
     _ => <MvlGenericErrorScreen id={id} />,
-    _ => <MvlDetailsScreen />,
+    mvl => <MvlDetailsScreen mvl={mvl} />,
     _ => <MvlLoadingScreen />,
     (_, __) => <MvlLoadingScreen />,
     _ => <MvlGenericErrorScreen id={id} />

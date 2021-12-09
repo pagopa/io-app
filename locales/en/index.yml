@@ -2824,6 +2824,7 @@ bonus:
 
 features:
   mvl:
+    title: "legal message"
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
@@ -2831,6 +2832,8 @@ features:
       genericError:
         title: "TMP Generic error title"
         subtitle: "TMP Generic error subtitle"
+    details:
+      hasAttachments: "contains attachments"
   euCovidCertificate:
     save:
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
