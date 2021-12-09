@@ -23,9 +23,6 @@ const styles = StyleSheet.create({
   },
   pspHeader: {
     flexDirection: "row"
-  },
-  icon: {
-    padding: 8
   }
 });
 
