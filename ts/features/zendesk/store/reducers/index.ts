@@ -71,4 +71,10 @@ export const zendeskConfigSelector = createSelector(
   (zendeskConfig: ZendeskConfig): ZendeskConfig => zendeskConfig
 );
 
+export const zendeskSelectedCategorySelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
+  (zendeskConfig: ZendeskCategory | undefined): ZendeskCategory | undefined =>
+    zendeskConfig
+);
+
 export default reducer;
