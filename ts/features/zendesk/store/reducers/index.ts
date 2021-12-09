@@ -2,6 +2,7 @@ import { IndexedById, toIndexed } from "../../../../store/helpers/indexer";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import {
   remoteError,
+  remoteLoading,
   remoteReady,
   remoteUndefined,
   RemoteValue
@@ -38,7 +39,7 @@ const reducer = (
 ): ZendeskState => {
   switch (action.type) {
     case getType(getZendeskConfig.request):
-      return INITIAL_STATE;
+      return { zendeskConfig: remoteLoading };
     case getType(getZendeskConfig.success):
       return {
         zendeskConfig: remoteReady({
