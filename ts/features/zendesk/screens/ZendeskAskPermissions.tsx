@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
@@ -28,11 +28,7 @@ import {
   profileFiscalCodeSelector,
   profileNameSelector
 } from "../../../store/reducers/profile";
-import {
-  getIpAddress,
-  getModel,
-  getSystemVersion
-} from "../../../utils/device";
+import { getModel, getSystemVersion } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import { getAppVersion } from "../../../utils/appVersion";
@@ -48,7 +44,6 @@ type ItemProps = {
   nameSurname: string;
   email: string;
   deviceDescription: string;
-  ipAddress: string;
   currentVersion: string;
   identityProvider: string;
 };
@@ -83,7 +78,7 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
     icon: <WebSiteIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.ipAddress"),
-    value: props.ipAddress
+    value: ""
   },
   {
     icon: <InfoIcon {...iconProps} />,
@@ -134,7 +129,6 @@ const ZendeskAskPermissions = () => {
   const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
   const nameSurname = useIOSelector(profileNameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
-  const [ipAddress, setIpAddress] = useState<string>(notAvailable);
   const itemsProps: ItemProps = {
     fiscalCode,
     nameSurname,
@@ -142,11 +136,9 @@ const ZendeskAskPermissions = () => {
     deviceDescription: `${getModel()} · ${
       isIos ? "iOS" : "Android"
     } · ${getSystemVersion()}`,
-    ipAddress,
     currentVersion: getAppVersion(),
     identityProvider
   };
-  getIpAddress().then(setIpAddress).catch(constNull);
 
   const cancelButtonProps = {
     testID: "cancelButtonId",
