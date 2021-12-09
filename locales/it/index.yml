@@ -1438,7 +1438,6 @@ wallet:
     readStorageDisclosure:
       title: Consenti l'accesso alla galleria
       message: Potrai caricare screenshot e avvisi di pagamento
-      cta: Scegli
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
       message: IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento
