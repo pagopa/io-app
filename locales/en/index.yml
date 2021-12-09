@@ -1483,13 +1483,16 @@ wallet:
       visualizeCard: View card
     fallback:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code1:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code2:
       title: "Authorization declined"
       description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
+    code3:
+      title: "The card details are incorrect"
+      description: "Delete the card from your Wallet and add it again. Make sure to enter the details exactly as they appear on the card."
     code4:
       title: "Sorry, the session has expired"
       description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
@@ -1501,6 +1504,15 @@ wallet:
     code10:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
+    code18:
+      title: "Sorry, an unexpected error has occurred"
+      description: "If this problem persists, please contact support."
+    code19:
+      title: "Authorization declined"
+      description: "You may have removed pagoPA from your PayPal automatic payments. Delete your PayPal account from the Wallet, add it back and try to make the payment again."
+    code15:
+      title: "Enable in-app payments first"
+      description: "Before trying again, select the method in your Wallet and turn on the 'in-app payments' feature."
     addCreditCard:
       success:
         title: "Your card has been successfully added!"
@@ -2811,6 +2823,14 @@ bonus:
         ko: "Problems saving the voucher"
 
 features:
+  mvl:
+    loading:
+      title: "Loading message details"
+      subtitle: "Please wait"
+    ko:
+      genericError:
+        title: "TMP Generic error title"
+        subtitle: "TMP Generic error subtitle"
   euCovidCertificate:
     save:
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."

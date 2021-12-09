@@ -1,14 +1,12 @@
+import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
+import { message_1 } from "../../../../__mocks__/message";
+import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { Byte } from "../../../../types/digitalInformationUnit";
-import {
-  MvlAttachment,
-  MvlBody,
-  MvlData,
-  MvlId,
-  MvlMetadata
-} from "../mvlData";
+import { Mvl, MvlAttachment, MvlBody, MvlData, MvlMetadata } from "../mvlData";
 
-export const mvlMockId = "mockId" as MvlId;
+export const mvlMockId = "mockId" as UIMessageId;
 
 export const mvlMockBody: MvlBody = {
   html: "This is an html <b>text</b>",
@@ -38,8 +36,21 @@ export const mvlMockMetadata: MvlMetadata = {
 };
 
 export const mvlMockData: MvlData = {
-  id: mvlMockId,
   body: mvlMockBody,
   attachments: [mvlMockPdfAttachment, mvlMockPdfAttachment],
   metadata: mvlMockMetadata
+};
+
+const message: CreatedMessageWithContentAndAttachments = {
+  ...message_1,
+  content: {
+    ...message_1.content,
+    due_date: undefined
+  }
+};
+
+export const mvlMock: Mvl = {
+  message: toUIMessageDetails(message),
+  legalMessage: mvlMockData,
+  id: mvlMockId
 };

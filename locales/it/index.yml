@@ -1506,13 +1506,16 @@ wallet:
       visualizeCard: Visualizza carta
     fallback:
       title: "Spiacenti, si è verificato un errore imprevisto"
-      description: "Non è stato addebitato alcun importo."
+      description: "Se il problema persiste, contatta l’assistenza."
     code1:
       title: "Spiacenti, si è verificato un errore imprevisto"
-      description: "Non è stato addebitato alcun importo."
+      description: "Se il problema persiste, contatta l’assistenza."
     code2:
       title: "Autorizzazione negata"
       description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
+    code3:
+      title: "I dati della carta non sono corretti"
+      description: "Elimina la carta dal tuo Portafoglio e prova ad aggiungerla di nuovo. Assicurati che i dati inseriti siano riportati esattamente come sulla carta."
     code4:
       title: "Spiacenti, la sessione è scaduta"
       description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
@@ -1523,7 +1526,16 @@ wallet:
       title: "L’operazione è stata annullata"
     code10:
       title: "Autorizzazione negata"
-      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+      description: "Probabilmente hai superato il massimale del tuo metodo. Verifica con la tua banca prima di riprovare."
+    code15:
+      title: "Abilita il metodo per effettuare pagamenti in app"
+      description: "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
+    code18:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Se il problema persiste, contatta l’assistenza."
+    code19:
+      title: "Autorizzazione negata"
+      description: "Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento."
     addCreditCard:
       success:
         title: "La tua carta è stata aggiunta con successo!"
@@ -2839,6 +2851,14 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
 
 features:
+  mvl:
+    loading:
+      title: "Sto caricando i dettagli del messaggio"
+      subtitle: "Attendi qualche secondo"
+    ko:
+      genericError:
+        title: "TMP Generic error title"
+        subtitle: "TMP Generic error subtitle"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."

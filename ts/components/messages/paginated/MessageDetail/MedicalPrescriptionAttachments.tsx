@@ -93,14 +93,14 @@ const MedicalPrescriptionAttachments = ({
     {attachments
       .filter(_ => _.mimeType === svgXml)
       .map((attachment, index) => (
-        <>
+        <View key={index}>
           <Item
             prescriptionData={prescriptionData}
             item={attachment}
             idx={index}
           />
           <ItemSeparatorComponent />
-        </>
+        </View>
       ))}
 
     <ItemSeparatorComponent />
