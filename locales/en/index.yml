@@ -1412,6 +1412,10 @@ wallet:
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
+    readStorageDisclosure:
+      title: Allow gallery access
+      message: You’ll be able to upload screenshots and payment notices.
+      cta: Scegli
     settingsAlert:
       title: It seems access to Photos has been denied
       message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices

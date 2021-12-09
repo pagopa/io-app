@@ -5,7 +5,6 @@ import { Header, NativeBase, View } from "native-base";
 import * as React from "react";
 import { ColorValue, ViewProps } from "react-native";
 import variables from "../../theme/variables";
-import ConnectionBar from "../ConnectionBar";
 
 type Props = NativeBase.Header & ViewProps & { backgroundColor?: ColorValue };
 
@@ -21,7 +20,6 @@ const AppHeader = (props: React.PropsWithChildren<Props>) => (
       iosBarStyle={"dark-content"}
       {...props}
     />
-    <ConnectionBar />
   </View>
 );
 
