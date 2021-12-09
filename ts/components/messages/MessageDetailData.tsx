@@ -3,7 +3,6 @@ import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { subDays } from "date-fns";
 import {
   ServicePublic,
   ServicePublicService_metadata
@@ -55,8 +54,6 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-  private tmpDate = subDays(new Date(), 2);
-  private date = convertDateTimeToWordDistance(this.tmpDate);
 
   get data(): MessageData {
     const serviceDetail = this.props.serviceDetail;
@@ -97,7 +94,9 @@ class MessageDetailData extends React.PureComponent<Props> {
       <View style={styles.container}>
         <Text>
           {I18n.t("messageDetails.dateSending")}
-          <Text bold={true}>{` ${this.date}`}</Text>
+          <Text bold={true}>{` ${convertDateTimeToWordDistance(
+            this.props.message.created_at
+          )}`}</Text>
         </Text>
 
         {this.data.organization_name.isSome() && (
