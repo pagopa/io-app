@@ -14,7 +14,7 @@ import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import ROUTES from "../../../../../navigation/routes";
 import I18n from "../../../../../i18n";
 
-import CtaBar from "../CtaBar";
+import CtaBar from "../common/CtaBar";
 
 jest.useFakeTimers();
 
@@ -30,7 +30,8 @@ const defaultProps = {
   isPaid: true,
   messageDetails: uiMessageDetails,
   service: uiService,
-  servicesMetadata: undefined
+  servicesMetadata: undefined,
+  isPrescription: false
 };
 
 describe("the `CtaBar` component", () => {
