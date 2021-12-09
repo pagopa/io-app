@@ -5,7 +5,6 @@ import { StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 
-import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
 import {
   UIMessage,
   UIMessageDetails
@@ -17,6 +16,7 @@ import {
   cleanMarkdownFromCTAs,
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
+import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import OrganizationHeader from "../../../OrganizationHeader";
 import MessageMarkdown from "../../MessageMarkdown";
 import CtaBar from "./common/CtaBar";
@@ -41,7 +41,7 @@ type Props = Readonly<{
   messageDetails: UIMessageDetails;
   onServiceLinkPress?: () => void;
   organizationFiscalCode?: OrganizationFiscalCode;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: CommonServiceMetadata;
   service?: UIService;
 }>;
 
