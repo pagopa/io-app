@@ -64,14 +64,18 @@ export const PayPalCheckoutPspComponent = (props: Props) => {
           })}
         </Label>
       </ListItem>
-      <View spacer={true} />
-      <Label color={"bluegrey"} weight={"Regular"}>
-        {I18n.t("wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer")}
-      </Label>
       {privacyUrl && (
-        <Link onPress={() => openWebUrl(privacyUrl)}>
-          {I18n.t("wallet.onboarding.paypal.paymentCheckout.privacyTerms")}
-        </Link>
+        <>
+          <View spacer={true} />
+          <Label color={"bluegrey"} weight={"Regular"}>
+            {I18n.t(
+              "wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer"
+            )}
+          </Label>
+          <Link onPress={() => openWebUrl(privacyUrl)}>
+            {I18n.t("wallet.onboarding.paypal.paymentCheckout.privacyTerms")}
+          </Link>
+        </>
       )}
     </View>
   );
