@@ -19,10 +19,7 @@ import {
 } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
-import {
-  isMessageRead,
-  messagesStatusSelector
-} from "../../../store/reducers/entities/messages/messagesStatus";
+import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
 import {
   serviceByIdSelector,
   serviceMetadataByIdSelector
@@ -34,7 +31,10 @@ import MessageDetailComponent from "../../../components/messages/paginated/Messa
 import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import ErrorState from "../MessageDetailScreen/ErrorState";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import {
+  UIMessage,
+  UIMessageId
+} from "../../../store/reducers/entities/messages/types";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
@@ -157,9 +157,8 @@ const MessageDetailScreen = ({
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const message: UIMessage = ownProps.navigation.getParam("message");
-  const messagesStatus = messagesStatusSelector(state);
   const messageDetails = getDetailsByMessageId(state, message.id);
-  const isRead = isMessageRead(messagesStatus, message.id);
+  const isRead = isMessageRead(state, message.id);
   const goBack = () => ownProps.navigation.goBack();
   const service = pot
     .toOption(serviceByIdSelector(message.serviceId)(state) || pot.none)
@@ -169,7 +168,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const maybeServiceMetadata = serviceMetadataByIdSelector(message.serviceId)(
     state
   );
-  const hasPaidBadge = isNoticePaid(state)(message.category);
+  const hasPaidBadge = isNoticePaid(state, message.category);
 
   return {
     goBack,
@@ -185,7 +184,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
-  loadMessageDetails: (id: string) =>
+  loadMessageDetails: (id: UIMessageId) =>
     dispatch(loadMessageDetails.request({ id })),
   setMessageReadState: (messageId: string, isRead: boolean) =>
     dispatch(setMessageReadState(messageId, isRead)),

@@ -14,7 +14,8 @@ import { CreatedMessageWithContentAndAttachments } from "../../../definitions/ba
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import {
   UIMessage,
-  UIMessageDetails
+  UIMessageDetails,
+  UIMessageId
 } from "../reducers/entities/messages/types";
 import { Cursor } from "../reducers/entities/messages/allPaginated";
 
@@ -25,7 +26,7 @@ export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_REQUEST",
   "MESSAGE_DETAILS_LOAD_SUCCESS",
   "MESSAGE_DETAILS_LOAD_FAILURE"
-)<{ id: string }, UIMessageDetails, { id: string; error: Error }>();
+)<{ id: UIMessageId }, UIMessageDetails, { id: string; error: Error }>();
 
 /**
  * Load a single message's details given its content

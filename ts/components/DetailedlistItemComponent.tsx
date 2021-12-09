@@ -1,11 +1,8 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
-
-import { makeFontStyleObject } from "../theme/fonts";
+import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
-import { MessageCategory } from "../store/reducers/entities/messages/types";
 import { IOColors } from "./core/variables/IOColors";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
@@ -14,15 +11,12 @@ import { H5 } from "./core/typography/H5";
 import { H3 } from "./core/typography/H3";
 
 type OwnProps = Readonly<{
-  // TODO: this component is clearly too complex. Please separate the Message part from the Transactions one.
-  category?: MessageCategory;
   text11: string;
   text12: string;
   text2: string;
   text3: string;
   isNew: boolean;
   isPaid?: boolean;
-  isArchived?: boolean;
   onPressItem: () => void;
   onLongPressItem?: () => void;
   isSelectionModeEnabled?: boolean;
@@ -44,9 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   badgeContainer: {
     flex: 0,
     paddingRight: 8,
@@ -55,19 +46,6 @@ const styles = StyleSheet.create({
   },
   viewStyle: {
     flexDirection: "row"
-  },
-  text11: {
-    color: customVariables.brandDarkestGray
-  },
-  new: {
-    ...makeFontStyleObject(Platform.select, "700")
-  },
-  notNew: {
-    ...makeFontStyleObject(Platform.select, "400")
-  },
-  text3: {
-    fontSize: 18,
-    color: customVariables.brandDarkestGray
   },
   text12: {
     lineHeight: 18,
@@ -99,22 +77,15 @@ const styles = StyleSheet.create({
   badgeInfoPaid: {
     borderColor: IOColors.aqua,
     backgroundColor: IOColors.aqua
-  },
-  archived: {
-    opacity: 0.75
-  },
-  qrContainer: {
-    marginRight: 16
   }
 });
 
 const ICON_WIDTH = 24;
 
 /**
- * A component to display a touchable list item.
- * TODO: please consider separating the Transaction part from the Message one.
+ * A component to display a touchable list item
  */
-export default class DetailedlistItemComponent extends React.PureComponent<Props> {
+export default class DetailedlistItemComponent extends React.Component<Props> {
   private getIconName = () =>
     this.props.isSelectionModeEnabled
       ? this.props.isItemSelected
@@ -122,22 +93,34 @@ export default class DetailedlistItemComponent extends React.PureComponent<Props
         : "io-checkbox-off"
       : "io-right";
 
+  shouldComponentUpdate(nextProps: Readonly<Props>): boolean {
+    // assuming that:
+    //  - messages are immutable
+    //  - if the component is somehow reused the text content changes (avoid stale callbacks)
+    return (
+      this.props.isPaid !== nextProps.isPaid ||
+      this.props.isNew !== nextProps.isNew ||
+      this.props.isSelectionModeEnabled !== nextProps.isSelectionModeEnabled ||
+      this.props.isItemSelected !== nextProps.isItemSelected ||
+      this.props.text3 !== nextProps.text3 ||
+      this.props.text2 !== nextProps.text2 ||
+      this.props.text12 !== nextProps.text12 ||
+      this.props.text11 !== nextProps.text11
+    );
+  }
+
   public render() {
-    const { isArchived, category } = this.props;
-    const isEuCovidCert = category?.tag === "EU_COVID_CERT";
     return (
       <TouchableDefaultOpacity
         onPress={this.props.onPressItem}
         onLongPress={this.props.onLongPressItem}
-        style={[styles.verticalPad, isArchived && styles.archived]}
+        style={styles.verticalPad}
         {...this.props}
       >
         <View style={styles.spaced}>
           <H5>{this.props.text11}</H5>
           <Text bold={true} style={styles.text12}>
-            {isArchived
-              ? `${I18n.t("messages.tab.archive")} ${this.props.text12}`
-              : this.props.text12}
+            {this.props.text12}
           </Text>
         </View>
 
@@ -162,12 +145,6 @@ export default class DetailedlistItemComponent extends React.PureComponent<Props
               <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
                 <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
               </Badge>
-            )}
-
-            {isEuCovidCert && (
-              <View style={styles.qrContainer}>
-                <IconFont name={"io-qr"} color={IOColors.blue} />
-              </View>
             )}
 
             <IconFont
