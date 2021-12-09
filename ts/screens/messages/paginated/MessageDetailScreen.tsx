@@ -19,7 +19,7 @@ import { loadServiceDetail } from "../../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { UIMessage, UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
@@ -176,7 +176,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
-  loadMessageDetails: (id: string) =>
+  loadMessageDetails: (id: UIMessageId) =>
     dispatch(loadMessageDetails.request({ id })),
   setMessageReadState: (messageId: string, isRead: boolean) =>
     dispatch(setMessageReadState(messageId, isRead)),
