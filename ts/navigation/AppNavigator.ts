@@ -44,6 +44,7 @@ const configMap = {
   }
 };
 
+// The addition of the screen to the stack is only protected by local FF
 const zendeskMap = zendeskEnabled
   ? {
       [ZENDESK_ROUTES.MAIN]: {

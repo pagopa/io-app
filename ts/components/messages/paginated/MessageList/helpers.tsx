@@ -1,10 +1,8 @@
 import React from "react";
 import { Animated, FlatList, ListRenderItemInfo } from "react-native";
 
-import {
-  MessageCategory,
-  UIMessage
-} from "../../../../store/reducers/entities/messages/types";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import { MessageStatus } from "../../../../store/reducers/entities/messages/messagesStatus";
 import ItemSeparatorComponent from "../../../ItemSeparatorComponent";
 import { ErrorLoadingComponent } from "../../ErrorLoadingComponent";

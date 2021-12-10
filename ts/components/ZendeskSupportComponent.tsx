@@ -10,7 +10,7 @@ import {
   JwtIdentity,
   setUserIdentity,
   showSupportTickets,
-  ZendeskConfig,
+  ZendeskAppConfig,
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../utils/supportAssistance";
@@ -31,7 +31,7 @@ const ZendeskSupportComponent = () => {
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
 
-  const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskConfig>(
+  const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
     zendeskToken
       ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
       : zendeskDefaultAnonymousConfig
