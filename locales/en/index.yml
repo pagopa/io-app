@@ -1029,6 +1029,11 @@ wallet:
         title: "That's it!"
         body: "Now you can continue with your payment."
         primaryButton: "Continue"
+      paymentCheckout:
+        transactionCost: "Transaction cost"
+        pspHandler: "Processed by {{pspName}}"
+        privacyDisclaimer: "By continuing, you declare you have read and understood the"
+        privacyTerms: "Terms and Conditions of Use and Privacy Policy"
     coBadge:
       headerTitle: "Add international circuit"
       start:
