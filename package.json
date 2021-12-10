@@ -1,8 +1,8 @@
 {
   "name": "italia-app",
-  "version": "1.38.0-rc.2",
-  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/special-service-specs/api_backend.yaml",
-  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.23.0-RELEASE/api_public.yaml",
+  "version": "1.38.0-rc.4",
+  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0-RELEASE/api_backend.yaml",
+  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_cgn.yaml",
@@ -13,7 +13,7 @@
   "io_bpd_award_periods": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/award.json",
   "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/winning_transactions.json",
   "io_bpd_winning_transactions_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/winning_transactions_v2.json",
-  "io_eu_covid_cert": "https://raw.githubusercontent.com/pagopa/io-backend/v7.23.0/api_eucovidcert.yaml",
+  "io_eu_covid_cert": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0/api_eucovidcert.yaml",
   "io_sicilia_vola_token": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_mit_voucher.yaml",
   "api_sicilia_vola": "assets/SiciliaVola.yml",
   "pagopa_api": "assets/paymentManager/spec.json",
@@ -32,8 +32,8 @@
     "start-breaking-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as major",
     "attach": "react-native attach",
     "postinstall": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
-    "test:ci": "jest --ci --runInBand",
-    "test:dev": "jest --detectOpenHandles --coverage=false",
+    "test:ci": "TZ=utc jest --ci --runInBand",
+    "test:dev": "TZ=utc jest --detectOpenHandles --coverage=false",
     "prettify": "prettier --write \"ts/**/*.(ts|tsx)\"",
     "prettier:check": "prettier --check \"ts/**/*.(ts|tsx)\"",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
@@ -98,7 +98,7 @@
     "hoist-non-react-statics": "^3.0.1",
     "instabug-reactnative": "^9.1.6",
     "io-ts": "1.8.5",
-    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.4",
+    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.9",
     "italia-ts-commons": "8.6.0",
     "jail-monkey": "^2.3.2",
     "lodash": "^4.17.21",
@@ -130,7 +130,6 @@
     "react-native-masked-text": "^1.13.0",
     "react-native-mixpanel": "1.2.0",
     "react-native-modal-datetime-picker": "^10.2.0",
-    "react-native-offline": "5.2.0",
     "react-native-popup-menu": "^0.15.11",
     "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^7.3.1",
@@ -227,6 +226,7 @@
     "fs-extra": "^7.0.0",
     "italia-utils": "^4.1.1",
     "jest": "^26.6.3",
+    "jest-circus": "^26.6.3",
     "jest-junit": "^13.0.0",
     "js-yaml": "^3.13.1",
     "jsdoc-to-markdown": "^6.0.1",
@@ -258,41 +258,6 @@
     "fp-ts": "1.17.4",
     "io-ts": "1.8.5",
     "react-devtools-core": "4.13.0"
-  },
-  "detox": {
-    "test-runner": "./node_modules/.bin/jest",
-    "specs": "e2e",
-    "runner-config": "jest-e2e.config.js",
-    "devices": {
-      "simulator": {
-        "type": "ios.simulator",
-        "device": {
-          "type": "iPhone 12 Pro Max"
-        }
-      }
-    },
-    "apps": {
-      "ios.release": {
-        "type": "ios.app",
-        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app",
-        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
-      },
-      "ios.debug": {
-        "type": "ios.app",
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
-        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
-      }
-    },
-    "configurations": {
-      "ios.sim.release": {
-        "device": "simulator",
-        "app": "ios.release"
-      },
-      "ios.sim.debug": {
-        "device": "simulator",
-        "app": "ios.debug"
-      }
-    }
   },
   "react-native": {
     "path": "path-browserify"

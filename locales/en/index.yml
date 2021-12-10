@@ -505,7 +505,7 @@ cie:
   title: Touch the card
   layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
   layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
-  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
+  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
 spid:
   login: LOGIN
   loginButton: LOGIN WITH
@@ -703,6 +703,7 @@ authentication:
       error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
       error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
       error_25: "You have canceled the login operation: you can try again whenever you want."
+      error_1001: "Access Denied: You are not of the minimum age required to use IO"
   expiredSessionBanner:
     title: Security notice
     message: To keep your private information safe, please login again with your SPID credentials, thanks!
@@ -994,9 +995,16 @@ wallet:
     paypal:
       name: "PayPal"
       headerTitle: "Add PayPal"
+      emailNotAvailable: "not available"
       start:
         title: "Pay on IO with PayPal"
         body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      updatePsp:
+        headerTitle: "Choose the PSP"
+        title: "Which payment provider do you want to pay with?"
+        body: "Each provider presents a transaction fee.\nIn this list you will find all the providers compatible with your method, even if you are not their client."
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Maximum Fee (€)"
       selectPsp:
         title: "Which payment provider do you want to use PayPal with?"
         body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
@@ -1009,16 +1017,23 @@ wallet:
           row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
           row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
           row2Description2: ". You'll see the right amount before confirming the payment."
-          row3Description1: "Privacy Policy"
-          row3Description2: "Terms and Conditions"
+          row3Description1: "{{psp}}’s Terms and Conditions and Privacy Policy apply"
         whatIsPspBottomSheet:
           title: "What is a payment provider?"
           body: "The Payment Service Provider (PSP) collects the amount on behalf of the Payee, and it may charge a fee for its service.\nWhenever you'll pay, you can to choose the provider that suits you best, whether you're a customer or not."
       onBoardingCompleted:
         title: "That's it!"
         body: "Now have a look at the current settings of your new method."
-        secondaryButton: "Close"
         primaryButton: "View method"
+      onBoardingCompletedWhilePayment:
+        title: "That's it!"
+        body: "Now you can continue with your payment."
+        primaryButton: "Continue"
+      paymentCheckout:
+        transactionCost: "Transaction cost"
+        pspHandler: "Processed by {{pspName}}"
+        privacyDisclaimer: "By continuing, you declare you have read and understood the"
+        privacyTerms: "Terms and Conditions of Use and Privacy Policy"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -1176,9 +1191,9 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    headerTitle: "Choose the provider"
-    title: Which provider do you want to pay with?
-    info: Each provider proposes a transaction cost.
+    headerTitle: "Choose the PSP"
+    title: Which payment provider do you want to pay with?
+    info: Each provider presents a transaction fee.
     info2: In this list you will find all the providers
     info2Bold: compatible with your method, even if you are not their client.
     provider: Provider
@@ -1402,6 +1417,9 @@ wallet:
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
+    readStorageDisclosure:
+      title: Allow gallery access
+      message: You’ll be able to upload screenshots and payment notices.
     settingsAlert:
       title: It seems access to Photos has been denied
       message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
@@ -1473,13 +1491,16 @@ wallet:
       visualizeCard: View card
     fallback:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code1:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code2:
       title: "Authorization declined"
       description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
+    code3:
+      title: "The card details are incorrect"
+      description: "Delete the card from your Wallet and add it again. Make sure to enter the details exactly as they appear on the card."
     code4:
       title: "Sorry, the session has expired"
       description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
@@ -1491,6 +1512,15 @@ wallet:
     code10:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
+    code18:
+      title: "Sorry, an unexpected error has occurred"
+      description: "If this problem persists, please contact support."
+    code19:
+      title: "Authorization declined"
+      description: "You may have removed pagoPA from your PayPal automatic payments. Delete your PayPal account from the Wallet, add it back and try to make the payment again."
+    code15:
+      title: "Enable in-app payments first"
+      description: "Before trying again, select the method in your Wallet and turn on the 'in-app payments' feature."
     addCreditCard:
       success:
         title: "Your card has been successfully added!"
@@ -1551,6 +1581,7 @@ messages:
     senderInfo:  Sender service unknown
     serviceInfo: Service info unknown
     departmentInfo: Department info unknown
+    noTitle: No title
   loadingErrorTitle: Loading messages has failed
   cta:
     archive: Archive
@@ -2782,12 +2813,32 @@ bonus:
         cta:
           exit: "Exit"
           voucherRevocation: "Voucher revocation"
+      destinationSelector:
+        state:
+          title: "Select a state"
+          label: "State"
+          placeholder: "Select a state"
+        municipality:
+          title: "Select a municipality"
+          label: "Municipality"
+          placeholder: "Select a municipality"
+          ko:
+            label1: "Error loading municipalities. "
+            label2: "Try again"
     pdfVoucher:
       toast:
         ok: "Voucher saved successfully"
         ko: "Problems saving the voucher"
 
 features:
+  mvl:
+    loading:
+      title: "Loading message details"
+      subtitle: "Please wait"
+    ko:
+      genericError:
+        title: "TMP Generic error title"
+        subtitle: "TMP Generic error subtitle"
   euCovidCertificate:
     save:
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
@@ -2843,3 +2894,20 @@ webView:
     missingParams: Not all information necessary to access this page are available
     missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
+support:
+  helpCenter:
+    header: "IO helps you"
+    cta:
+      contactSupport: "Contact support"
+      seeReports: "See reports in progress"
+  askPermissions:
+    header: "Contact support"
+    title: "To continue, we need your consent"
+    cta:
+      allow: "Allow"
+      denies: "Do not allow"
+  chooseCategory:
+    header: "Contact support"
+    title:
+      category: "Select a topic"
+      subCategory: "What is it about?"

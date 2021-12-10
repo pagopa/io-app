@@ -1,7 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
-import { makeFontStyleObject } from "../theme/fonts";
+import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
 import { IOColors } from "./core/variables/IOColors";
@@ -39,9 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   badgeContainer: {
     flex: 0,
     paddingRight: 8,
@@ -50,19 +46,6 @@ const styles = StyleSheet.create({
   },
   viewStyle: {
     flexDirection: "row"
-  },
-  text11: {
-    color: customVariables.brandDarkestGray
-  },
-  new: {
-    ...makeFontStyleObject(Platform.select, "700")
-  },
-  notNew: {
-    ...makeFontStyleObject(Platform.select, "400")
-  },
-  text3: {
-    fontSize: 18,
-    color: customVariables.brandDarkestGray
   },
   text12: {
     lineHeight: 18,
@@ -91,10 +74,6 @@ const styles = StyleSheet.create({
     height: 25,
     flexDirection: "row"
   },
-  badgeInfoExpired: {
-    backgroundColor: IOColors.white,
-    borderColor: IOColors.red
-  },
   badgeInfoPaid: {
     borderColor: IOColors.aqua,
     backgroundColor: IOColors.aqua
@@ -106,13 +85,29 @@ const ICON_WIDTH = 24;
 /**
  * A component to display a touchable list item
  */
-export default class DetailedlistItemComponent extends React.PureComponent<Props> {
+export default class DetailedlistItemComponent extends React.Component<Props> {
   private getIconName = () =>
     this.props.isSelectionModeEnabled
       ? this.props.isItemSelected
         ? "io-checkbox-on"
         : "io-checkbox-off"
       : "io-right";
+
+  shouldComponentUpdate(nextProps: Readonly<Props>): boolean {
+    // assuming that:
+    //  - messages are immutable
+    //  - if the component is somehow reused the text content changes (avoid stale callbacks)
+    return (
+      this.props.isPaid !== nextProps.isPaid ||
+      this.props.isNew !== nextProps.isNew ||
+      this.props.isSelectionModeEnabled !== nextProps.isSelectionModeEnabled ||
+      this.props.isItemSelected !== nextProps.isItemSelected ||
+      this.props.text3 !== nextProps.text3 ||
+      this.props.text2 !== nextProps.text2 ||
+      this.props.text12 !== nextProps.text12 ||
+      this.props.text11 !== nextProps.text11
+    );
+  }
 
   public render() {
     return (

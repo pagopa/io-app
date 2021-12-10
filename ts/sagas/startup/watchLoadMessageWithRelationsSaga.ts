@@ -6,7 +6,7 @@ import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { SagaCallReturnType } from "../../types/utils";
-import { loadMessage } from "../messages/messages";
+import { loadMessage } from "../messages/loadMessage";
 
 /**
  * Load message with related entities (e.g. the sender service).

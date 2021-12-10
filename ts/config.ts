@@ -33,7 +33,9 @@ const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 // Default number of workers to fetch service.
 const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
 
-const DEFAULT_PAGE_SIZE = 8;
+// TODO: calculate the page size based on available screen space and item's height
+// https://pagopa.atlassian.net/browse/IA-474
+const DEFAULT_PAGE_SIZE = 12;
 
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
@@ -52,7 +54,6 @@ export const bonusVacanzeEnabled: boolean =
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
-export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
 export const bpdTransactionsPaging: boolean =
   Config.BPD_TRANSACTIONS_PAGING === "YES";
@@ -67,7 +68,6 @@ export const isPlaygroundsEnabled: boolean =
 
 // CGN Feature Flag
 export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
-export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 
 // EU Covid Certificate feature flag
 export const euCovidCertificateEnabled: boolean =
@@ -85,6 +85,9 @@ export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 // Paginated messages
 export const usePaginatedMessages: boolean =
   Config.PAGINATED_MESSAGES === "YES";
+
+// MVL messages
+export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
@@ -136,3 +139,6 @@ export const localServicesWebUrl: string = t.string
   .getOrElse("https://io.italia.it");
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;
+
+export const testOverlayCaption: string | undefined =
+  Config.TEST_OVERLAY_CAPTION;

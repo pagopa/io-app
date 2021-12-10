@@ -71,7 +71,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
 
   // return a payment button only when the advice is not paid and the payment_data is defined
   private renderPaymentButton(): React.ReactNode {
-    if (this.paid || this.props.message.content.payment_data === undefined) {
+    if (this.props.message.content.payment_data === undefined) {
       return null;
     }
     const paymentData = this.props.message.content.payment_data;

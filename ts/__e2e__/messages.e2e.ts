@@ -1,5 +1,4 @@
 import { device } from "detox";
-import adapter from "detox/runners/jest/adapter";
 
 import I18n from "../i18n";
 import { e2eWaitRenderTimeout } from "./config";
@@ -7,7 +6,6 @@ import { ensureLoggedIn } from "./utils";
 
 describe("Messages Screen", () => {
   beforeEach(async () => {
-    await adapter.beforeEach();
     await device.reloadReactNative();
     await ensureLoggedIn();
   });
@@ -24,7 +22,7 @@ describe("Messages Screen", () => {
       // exists (but is not visible)
 
       await waitFor(
-        element(by.id(`MessageListItem_00000000000000000000000020`))
+        element(by.id(`MessageListItem_00000000000000000000000021`))
       )
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);

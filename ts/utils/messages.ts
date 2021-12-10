@@ -248,6 +248,7 @@ const extractCTA = (
 /**
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
+ * @deprecated please use getMessageCTA instead
  * @param message
  * @param serviceMetadata
  * @param serviceId
@@ -257,7 +258,20 @@ export const getCTA = (
   serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
 ): Option<CTAS> =>
-  extractCTA(message.content.markdown, serviceMetadata, serviceId);
+  getMessageCTA(message.content.markdown, serviceMetadata, serviceId);
+
+/**
+ * Extract the CTAs if they are nested inside the message markdown content.
+ * The returned CTAs are already localized.
+ * @param markdown
+ * @param serviceMetadata
+ * @param serviceId
+ */
+export const getMessageCTA = (
+  markdown: MessageBodyMarkdown,
+  serviceMetadata?: ServiceMetadata,
+  serviceId?: ServiceId
+): Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
