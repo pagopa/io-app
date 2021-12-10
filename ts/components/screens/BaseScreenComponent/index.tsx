@@ -188,7 +188,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       }
     };
 
-    const contextualHelpConfig = contextualHelp
+    const contextualHelpConfig: ContextualHelpProps | undefined = contextualHelp
       ? { body: contextualHelp.body, title: contextualHelp.title }
       : contextualHelpMarkdown
       ? {
@@ -208,32 +208,32 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     const dispatch = useDispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-    const onShowHelp = () => {
+
+    const onShowHelp = (): (() => void) | undefined => {
       switch (choosenTool) {
         case ToolEnum.zendesk:
           // TODO: remove local feature flag
           if (zendeskEnabled) {
-            dispatch(zendeskSupportStart());
+            return () => {
+              dispatch(zendeskSupportStart());
+            };
           }
-          return;
+          return undefined;
         case ToolEnum.instabug:
           // TODO: remove instabug
-          showHelp();
-          return;
+          return () => showHelp();
         case ToolEnum.none:
         case ToolEnum.web:
+          return undefined;
+        default:
           return undefined;
       }
     };
 
-    const canShowHelp = () => {
-      const isZendesk = choosenTool === ToolEnum.zendesk;
-      const isZendeskAvailable = isZendesk && zendeskEnabled;
-      return (
-        contextualHelpConfig &&
-        (choosenTool === ToolEnum.instabug || isZendeskAvailable)
-      );
-    };
+    // help can be shown only when remote FF is instabug or (zendesk + ff local)
+    const canShowHelp = (): boolean =>
+      contextualHelpConfig !== undefined && onShowHelp !== undefined;
+
     return (
       <Container>
         <BaseHeader
@@ -248,7 +248,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           goBack={goBack}
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
-          onShowHelp={canShowHelp() ? onShowHelp : undefined}
+          onShowHelp={canShowHelp && onShowHelp()}
           isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
