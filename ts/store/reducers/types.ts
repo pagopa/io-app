@@ -29,6 +29,7 @@ import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
+import { AssistanceToolsState } from "./assistanceTools";
 
 export type GlobalState = Readonly<{
   appState: AppState;
@@ -60,6 +61,7 @@ export type GlobalState = Readonly<{
   features: FeaturesState;
   internalRouteNavigation: InternalRouteNavigationState;
   crossSessions: CrossSessionsState;
+  assistanceTools: AssistanceToolsState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;
