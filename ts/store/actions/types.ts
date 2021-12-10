@@ -21,6 +21,7 @@ import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal
 import { PrivativeActions } from "../../features/wallet/onboarding/privative/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
+import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -53,7 +54,6 @@ import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
-import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 
 export type Action =
   | AnalyticsActions
