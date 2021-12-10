@@ -14,16 +14,15 @@ import { Action } from "../../../../store/actions/types";
 import { getZendeskConfig, zendeskSelectedCategory } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 
-export type ZendeskConfig = RemoteValue<
-  {
-    panicMode: boolean;
-    zendeskCategories?: {
-      id: string;
-      categories: IndexedById<ZendeskCategory>;
-    };
-  },
-  NetworkError
->;
+type ZendeskValue = {
+  panicMode: boolean;
+  zendeskCategories?: {
+    id: string;
+    categories: IndexedById<ZendeskCategory>;
+  };
+};
+export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
+
 export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
@@ -44,7 +43,6 @@ const reducer = (
       return {
         zendeskConfig: remoteReady({
           panicMode: action.payload.panicMode,
-          id: action.payload.zendeskCategories?.id,
           zendeskCategories: action.payload.zendeskCategories
             ? {
                 id: action.payload.zendeskCategories.id,
