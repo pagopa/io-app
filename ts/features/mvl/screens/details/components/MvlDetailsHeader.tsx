@@ -22,6 +22,7 @@ type Props = {
 const styles = StyleSheet.create({
   row: { flexDirection: "row", flexWrap: "wrap" },
   rightElement: { paddingLeft: 8 },
+  alignCenter: { alignSelf: "center" },
   spacer: {
     marginLeft: 8,
     marginRight: 8,
@@ -58,14 +59,28 @@ const LegalMessageHeader = (props: { hasAttachments: boolean }) => (
   <View style={styles.row}>
     <HeaderItem
       text={I18n.t("features.mvl.title")}
-      image={<LegalMessage width={16} height={16} fill={IOColors.bluegrey} />}
+      image={
+        <LegalMessage
+          width={16}
+          height={16}
+          fill={IOColors.bluegrey}
+          style={styles.alignCenter}
+        />
+      }
     />
     {props.hasAttachments && (
       <>
         <View style={styles.spacer} />
         <HeaderItem
           text={I18n.t("features.mvl.details.hasAttachments")}
-          image={<Attachment width={16} height={16} fill={IOColors.bluegrey} />}
+          image={
+            <Attachment
+              width={16}
+              height={16}
+              fill={IOColors.bluegrey}
+              style={styles.alignCenter}
+            />
+          }
         />
       </>
     )}
