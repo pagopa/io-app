@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
+import { useDispatch } from "react-redux";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -31,6 +32,7 @@ import { getModel, getSystemVersion } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import { getAppVersion } from "../../../utils/appVersion";
+import { zendeskSupportCancel } from "../store/actions";
 
 type Item = {
   icon: ReactNode;
@@ -117,6 +119,9 @@ const ItemComponent = (props: Item) => (
  */
 const ZendeskAskPermissions = () => {
   const navigation = useNavigationContext();
+  const dispatch = useDispatch();
+  const workUnitCancel = () => dispatch(zendeskSupportCancel());
+
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const identityProvider = useIOSelector(idpSelector)
     .map(idp => idp.name)
@@ -139,7 +144,7 @@ const ZendeskAskPermissions = () => {
     testID: "cancelButtonId",
     primary: false,
     bordered: true,
-    onPress: () => true, // TODO: complete the workunit and send the user to the web form
+    onPress: workUnitCancel, // TODO: complete the workunit and send the user to the web form
     title: I18n.t("support.askPermissions.cta.denies")
   };
   const continueButtonProps = {
