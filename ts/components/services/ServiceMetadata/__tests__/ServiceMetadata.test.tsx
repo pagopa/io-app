@@ -8,14 +8,14 @@ import { capitalize } from "../../../../utils/strings";
 import * as utilsUrl from "../../../../utils/url";
 import I18n from "../../../../i18n";
 import ServiceMetadata from "../../ServiceMetadata";
-import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
 import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
+import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 
 jest.mock("../../../../utils/platform");
 
 const spyOpenWebUrl = jest.spyOn(utilsUrl, "openWebUrl");
 
-const defaultServiceMetadata: ServicePublicService_metadata = {
+const defaultServiceMetadata: CommonServiceMetadata = {
   scope: ServiceScopeEnum.NATIONAL
 };
 
@@ -208,7 +208,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_android: androidUrl
-        } as ServicePublicService_metadata
+        } as CommonServiceMetadata
       };
       it(`should render the Android link`, () => {
         const component = renderComponent(currentOptions);
@@ -234,7 +234,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_ios: "dummy"
-        } as ServicePublicService_metadata
+        } as CommonServiceMetadata
       };
       it(`should not render it`, () => {
         expect(renderComponent(currentOptions).queryByRole("link")).toBeNull();
@@ -255,7 +255,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_ios: iosUrl
-        } as ServicePublicService_metadata
+        } as CommonServiceMetadata
       };
       it(`should render the iOS link`, () => {
         const component = renderComponent(currentOptions);
@@ -281,7 +281,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_android: "dummy"
-        } as ServicePublicService_metadata
+        } as CommonServiceMetadata
       };
       it(`should not render it`, () => {
         expect(renderComponent(currentOptions).queryByRole("link")).toBeNull();

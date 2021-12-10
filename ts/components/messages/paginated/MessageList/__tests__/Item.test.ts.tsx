@@ -1,6 +1,7 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 
+import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 import { successReloadMessagesPayload } from "../../../../../__mocks__/messages";
 import Item from "../Item";
 
@@ -9,6 +10,7 @@ jest.useFakeTimers();
 const messages = successReloadMessagesPayload.messages;
 
 const defaultProps: React.ComponentProps<typeof Item> = {
+  category: { tag: "GENERIC" } as MessageCategory,
   hasPaidBadge: false,
   isRead: false,
   isArchived: false,
@@ -39,6 +41,19 @@ describe("MessageList Item component", () => {
     it("should match the snapshot", () => {
       expect(
         render(<Item {...defaultProps} isRead={true} />).toJSON()
+      ).toMatchSnapshot();
+    });
+  });
+
+  describe("when a EU_CODIV_CERT is present", () => {
+    it("should match the snapshot", () => {
+      expect(
+        render(
+          <Item
+            {...defaultProps}
+            category={{ tag: "EU_COVID_CERT" } as MessageCategory}
+          />
+        ).toJSON()
       ).toMatchSnapshot();
     });
   });

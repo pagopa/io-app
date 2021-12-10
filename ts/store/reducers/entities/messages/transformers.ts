@@ -1,28 +1,34 @@
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 
 import {
   Attachment,
+  EUCovidCertificate,
   PaymentData,
+  PrescriptionData,
   UIMessage,
   UIMessageDetails,
-  PrescriptionData,
-  EUCovidCertificate,
   UIMessageId
 } from "./types";
 
 /**
  * Map an enriched message item from API to the app domain.
+ * Since `category` is optional, it falls back on GENERIC.
  *
  * @param messageFromApi
  */
 export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   const enriched = messageFromApi as EnrichedMessage;
+  const category: MessageCategory = enriched.category || {
+    tag: TagEnum.GENERIC
+  };
   return {
     id: messageFromApi.id as UIMessageId,
     fiscalCode: messageFromApi.fiscal_code,
-    category: null,
+    category,
     createdAt: new Date(messageFromApi.created_at),
     serviceId: messageFromApi.sender_service_id,
     serviceName: enriched.service_name,
