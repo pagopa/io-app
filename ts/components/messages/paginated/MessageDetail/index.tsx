@@ -12,7 +12,6 @@ import {
   UIMessageDetails
 } from "../../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
-import variables from "../../../../theme/variables";
 import { getExpireStatus } from "../../../../utils/dates";
 import {
   cleanMarkdownFromCTAs,

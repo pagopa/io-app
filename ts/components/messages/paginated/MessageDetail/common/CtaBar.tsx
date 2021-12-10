@@ -17,7 +17,7 @@ import ExtractedCTABar from "../../../../cta/ExtractedCTABar";
 import { useIODispatch } from "../../../../../store/hooks";
 import PaymentButton from "../../../PaymentButton";
 import CalendarEventButton from "../../../CalendarEventButton";
-import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
 
 type Props = {
   expirationInfo: MessagePaymentExpirationInfo;
