@@ -2938,8 +2938,10 @@ support:
       allow: "Consenti"
       denies: "Non consentire"
   chooseCategory:
-    header: "Contatta l'assistenza"
+    header: "Scrivici"
     title:
       category: "Seleziona un argomento"
-      subCategory: "Di cosa si tratta?"
+      subCategory: "Puoi darci più dettagli?"
+    subTitle:
+      category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 
