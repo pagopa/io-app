@@ -2,13 +2,11 @@ import React from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { NavigationInjectedProps } from "react-navigation";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
-import {
-  paymentPspsSelector,
-  paymentVerificaSelector
-} from "../../../store/reducers/wallet/payment";
+import { paymentVerificaSelector } from "../../../store/reducers/wallet/payment";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -19,9 +17,17 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { Label } from "../../../components/core/typography/Label";
 import { profileEmailSelector } from "../../../store/reducers/profile";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
+
+type NavigationParams = Readonly<{
+  fee: ImportoEuroCents;
+}>;
+
+type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps;
 
 const successBody = (emailAddress: string) => (
   <Label weight={"Regular"} color={"bluegrey"} style={{ textAlign: "center" }}>
@@ -62,13 +68,13 @@ const successFooter = (onClose: () => void) => (
  * If the outcome code is of type success the render a single buttons footer that allow the user to go to the wallet home.
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
-  const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
+  const outcomeCode = props.outcomeCode.outcomeCode.toNullable();
 
   const renderSuccessComponent = () => {
-    if (pot.isSome(props.verifica) && pot.isSome(props.psps)) {
+    if (pot.isSome(props.verifica)) {
       const totalAmount =
         (props.verifica.value.importoSingoloVersamento as number) +
-        (props.psps.value[0].fixedCost.amount as number);
+        (props.navigation.getParam("fee") as number);
 
       return successComponent(
         props.profileEmail.getOrElse(""),
@@ -96,7 +102,6 @@ const mapDispatchToProps = (_: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => ({
   outcomeCode: lastPaymentOutcomeCodeSelector(state),
   profileEmail: profileEmailSelector(state),
-  psps: paymentPspsSelector(state),
   verifica: paymentVerificaSelector(state)
 });
 

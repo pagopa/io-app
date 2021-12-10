@@ -505,7 +505,7 @@ cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
   layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti un suono.
-  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
+  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
@@ -1013,6 +1013,7 @@ wallet:
     paypal:
       name: "PayPal"
       headerTitle: "Aggiungi PayPal"
+      emailNotAvailable: "non disponibile"
       start:
         title: "Paga su IO con PayPal"
         body: "Abbina il tuo conto PayPal e paga gli avvisi pagoPA più facilmente: puoi usare anche il tuo conto corrente!"
@@ -1041,8 +1042,16 @@ wallet:
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
-        secondaryButton: "Chiudi"
         primaryButton: "Vedi metodo"
+      onBoardingCompletedWhilePayment:
+        title: "Fatto!"
+        body: "Ora puoi continuare con il pagamento."
+        primaryButton: "Continua"
+      paymentCheckout:
+        transactionCost: "Costo della transazione"
+        pspHandler: "Gestita da {{pspName}}"
+        privacyDisclaimer: "Proseguendo dichiari di aver letto e compreso i"
+        privacyTerms: "Termini e condizioni d’uso e l’Informativa Privacy"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
@@ -1431,6 +1440,9 @@ wallet:
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci manualmente
     enroll_cta: Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.
+    readStorageDisclosure:
+      title: Consenti l'accesso alla galleria
+      message: Potrai caricare screenshot e avvisi di pagamento
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
       message: IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento
@@ -1502,13 +1514,16 @@ wallet:
       visualizeCard: Visualizza carta
     fallback:
       title: "Spiacenti, si è verificato un errore imprevisto"
-      description: "Non è stato addebitato alcun importo."
+      description: "Se il problema persiste, contatta l’assistenza."
     code1:
       title: "Spiacenti, si è verificato un errore imprevisto"
-      description: "Non è stato addebitato alcun importo."
+      description: "Se il problema persiste, contatta l’assistenza."
     code2:
       title: "Autorizzazione negata"
       description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
+    code3:
+      title: "I dati della carta non sono corretti"
+      description: "Elimina la carta dal tuo Portafoglio e prova ad aggiungerla di nuovo. Assicurati che i dati inseriti siano riportati esattamente come sulla carta."
     code4:
       title: "Spiacenti, la sessione è scaduta"
       description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
@@ -1519,7 +1534,16 @@ wallet:
       title: "L’operazione è stata annullata"
     code10:
       title: "Autorizzazione negata"
-      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+      description: "Probabilmente hai superato il massimale del tuo metodo. Verifica con la tua banca prima di riprovare."
+    code15:
+      title: "Abilita il metodo per effettuare pagamenti in app"
+      description: "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
+    code18:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Se il problema persiste, contatta l’assistenza."
+    code19:
+      title: "Autorizzazione negata"
+      description: "Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento."
     addCreditCard:
       success:
         title: "La tua carta è stata aggiunta con successo!"
@@ -1582,6 +1606,7 @@ messages:
     senderInfo: Mittente sconosciuto
     serviceInfo: Info sul servizio mancanti
     departmentInfo: Info sul dipartimento mancanti
+    noTitle: Senza titolo
   loadingErrorTitle: Non è stato possibile caricare i messaggi
   cta:
     archive: Archivia
@@ -2834,6 +2859,14 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
 
 features:
+  mvl:
+    loading:
+      title: "Sto caricando i dettagli del messaggio"
+      subtitle: "Attendi qualche secondo"
+    ko:
+      genericError:
+        title: "TMP Generic error title"
+        subtitle: "TMP Generic error subtitle"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
@@ -2889,3 +2922,21 @@ webView:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
     missingToken: Non hai l'autorizzazione per avviare questo flusso
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
+support:
+  helpCenter:
+    header: "IO ti aiuto"
+    cta:
+      contactSupport: "Contatta l'assistenza"
+      seeReports: "Vedi segnalazioni in corso"
+  askPermissions:
+    header: "Contatta l'assistenza"
+    title: "Per continuare, abbiamo bisogno del tuo consenso"
+    cta:
+      allow: "Consenti"
+      denies: "Non consentire"
+  chooseCategory:
+    header: "Contatta l'assistenza"
+    title:
+      category: "Seleziona un argomento"
+      subCategory: "Di cosa si tratta?"
+

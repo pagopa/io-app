@@ -7,6 +7,7 @@ import { CardLogoPreview } from "../component/card/CardLogoPreview";
 import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { navigateToPayPalDetailScreen } from "../../../store/actions/navigation";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { getPaypalAccountEmail } from "../../../utils/paypal";
 
 type OwnProps = {
   paypal: PayPalPaymentMethod;
@@ -34,7 +35,7 @@ const PayPalWalletPreview: React.FunctionComponent<Props> = props => {
       accessibilityLabel={getAccessibilityRepresentation()}
       left={
         <Body style={[IOStyles.flex, { paddingRight: 16 }]} numberOfLines={1}>
-          {props.paypal.info.emailPp}
+          {getPaypalAccountEmail(props.paypal.info)}
         </Body>
       }
       image={payPalCard}

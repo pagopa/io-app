@@ -8,7 +8,7 @@ const DISPLAYED_DIGITS = 2;
  * is to be displayed. The only currently supposed
  * currency is EUR => "AMOUNT €". Other currencies,
  * e.g. USD, can be handled here differently ("$ AMOUNT")
- * @param amount amount (can be a float, will be truncated to its 2nd digit )
+ * @param cents amount (can be a float, will be truncated to its 2nd digit )
  */
 export const centsToAmount = (cents: number): number =>
   cents / Math.pow(10, DISPLAYED_DIGITS);

@@ -1,39 +1,30 @@
-import {
-  Content as NBContent,
-  H3,
-  H3 as NBH3,
-  Text as NBText,
-  View as NBView
-} from "native-base";
+import { Content as NBContent, View as NBView } from "native-base";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
 import { useState } from "react";
+import { StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 import variables from "../../../../theme/variables";
 import {
-  PrescriptionData,
   UIMessage,
   UIMessageDetails
 } from "../../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
-import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
-import OrganizationHeader from "../../../OrganizationHeader";
+import variables from "../../../../theme/variables";
+import { getExpireStatus } from "../../../../utils/dates";
 import {
   cleanMarkdownFromCTAs,
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
-import { getExpireStatus } from "../../../../utils/dates";
-import I18n from "../../../../i18n";
+import OrganizationHeader from "../../../OrganizationHeader";
 import MessageMarkdown from "../../MessageMarkdown";
-
-import MedicalPrescriptionIdentifiersComponent from "../../MedicalPrescriptionIdentifiersComponent";
-import DueDateBar from "./DueDateBar";
-import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
-import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
+import CtaBar from "./common/CtaBar";
+import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
+import { MessageTitle } from "./common/MessageTitle";
 import MessageContent from "./Content";
-import CtaBar from "./CtaBar";
+import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 
 const styles = StyleSheet.create({
   padded: {
@@ -49,27 +40,11 @@ type Props = Readonly<{
   hasPaidBadge: boolean;
   message: UIMessage;
   messageDetails: UIMessageDetails;
-  navigateToWalletHome: () => void;
   onServiceLinkPress?: () => void;
   organizationFiscalCode?: OrganizationFiscalCode;
   serviceMetadata?: ServiceMetadata;
   service?: UIService;
 }>;
-
-const renderTitle = (
-  title: string,
-  prescriptionData?: PrescriptionData
-): React.ReactNode => {
-  if (prescriptionData) {
-    return (
-      <>
-        <NBH3>{I18n.t("messages.medical.prescription")}</NBH3>
-        <NBText>{I18n.t("messages.medical.memo")}</NBText>
-      </>
-    );
-  }
-  return <H3>{title}</H3>;
-};
 
 const OrganizationTitle = ({ name, organizationName, logoURLs }: UIService) => (
   <OrganizationHeader
@@ -103,7 +78,6 @@ const MessageDetailsComponent = ({
   hasPaidBadge,
   message,
   messageDetails,
-  navigateToWalletHome,
   onServiceLinkPress,
   service,
   serviceMetadata
@@ -111,6 +85,7 @@ const MessageDetailsComponent = ({
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
   const { attachments, dueDate, markdown, prescriptionData } = messageDetails;
   const paymentExpirationInfo = getPaymentExpirationInfo(messageDetails);
+  const isPrescription = prescriptionData !== undefined;
 
   return (
     <>
@@ -122,33 +97,18 @@ const MessageDetailsComponent = ({
 
           <NBView spacer={true} large={true} />
 
-          {renderTitle(message.title, prescriptionData)}
+          <MessageTitle title={message.title} isPrescription={isPrescription} />
 
           <NBView spacer={true} />
         </View>
 
-        {prescriptionData && (
-          <MedicalPrescriptionIdentifiersComponent
-            prescriptionData={prescriptionData}
-          />
-        )}
-
-        {prescriptionData === undefined && dueDate !== undefined && (
-          <DueDateBar
-            dueDate={dueDate}
-            expirationInfo={paymentExpirationInfo}
-            isPaid={hasPaidBadge}
-            onGoToWallet={navigateToWalletHome}
-          />
-        )}
-
-        {prescriptionData !== undefined && dueDate !== undefined && (
-          <MedicalPrescriptionDueDateBar
-            dueDate={dueDate}
-            messageDetails={messageDetails}
-            paymentExpirationInfo={paymentExpirationInfo}
-          />
-        )}
+        <HeaderDueDateBar
+          hasPaidBadge={hasPaidBadge}
+          messageDetails={messageDetails}
+          paymentExpirationInfo={paymentExpirationInfo}
+          dueDate={dueDate}
+          prescriptionData={prescriptionData}
+        />
 
         <MessageMarkdown
           webViewStyle={styles.webview}
@@ -192,15 +152,14 @@ const MessageDetailsComponent = ({
           </React.Fragment>
         )}
 
-        {prescriptionData === undefined && (
-          <CtaBar
-            expirationInfo={paymentExpirationInfo}
-            isPaid={hasPaidBadge}
-            messageDetails={messageDetails}
-            service={service}
-            serviceMetadata={serviceMetadata}
-          />
-        )}
+        <CtaBar
+          isPrescription={isPrescription}
+          expirationInfo={paymentExpirationInfo}
+          isPaid={hasPaidBadge}
+          messageDetails={messageDetails}
+          service={service}
+          serviceMetadata={serviceMetadata}
+        />
       </>
     </>
   );

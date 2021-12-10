@@ -3,6 +3,7 @@ import { BackendStatusState } from "../backendStatus";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { Config } from "../../../../definitions/content/Config";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -188,7 +189,10 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     bpd_ranking: true,
     bpd_ranking_v2: true,
-    cgn_merchants_v2: false
+    cgn_merchants_v2: false,
+    assistanceTool: {
+      tool: ToolEnum.none
+    }
   }
 };
 
@@ -205,7 +209,10 @@ export const baseBackendConfig: Config = {
   },
   bpd_ranking: true,
   bpd_ranking_v2: true,
-  cgn_merchants_v2: true
+  cgn_merchants_v2: true,
+  assistanceTool: {
+    tool: ToolEnum.none
+  }
 };
 
 export const withBpdRankingConfig = (
