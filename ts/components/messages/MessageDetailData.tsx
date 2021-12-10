@@ -13,7 +13,6 @@ import { CreatedMessageWithContentAndAttachments } from "../../../definitions/ba
 import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
 import { CommonServiceMetadata } from "../../../definitions/backend/CommonServiceMetadata";
 
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: customVariables.brandGray,
