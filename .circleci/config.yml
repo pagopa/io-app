@@ -526,17 +526,17 @@ workflows:
               ignore: /.*/
 
       # Build Android alpha release & submit to play store
-#      - alpha-release-android:
-#          requires:
-#            - compile-typescript
-#            - run-tests
-#            - run-eslint
-#            - run-prettier
-#          filters:
-#            tags:
-#              only: *release_tag
-#            branches:
-#              ignore: /.*/
+      - alpha-release-android:
+          requires:
+            - compile-typescript
+            - run-tests
+            - run-eslint
+            - run-prettier
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
 
       # Create a release build, submit to the store and distributes to the beta testers
       - ios-beta-release:
@@ -552,15 +552,15 @@ workflows:
               ignore: /.*/
 
       # Send a Slack message to notify the release of a new app version in beta
-#      - notify-new-app-version:
-#          requires:
-#            - ios-beta-release
-#            - alpha-release-android
-#          filters:
-#            tags:
-#              only: *release_tag
-#            branches:
-#              ignore: /.*/
+      - notify-new-app-version:
+          requires:
+            - ios-beta-release
+            - alpha-release-android
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
 
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
