@@ -18,7 +18,6 @@ import InfoIcon from "../../../../img/assistance/info.svg";
 import DeviceIcon from "../../../../img/assistance/telefonia.svg";
 import LoginIcon from "../../../../img/assistance/login.svg";
 import BugIcon from "../../../../img/assistance/ladybug.svg";
-import StockIcon from "../../../../img/assistance/giacenza.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
@@ -49,6 +48,8 @@ type ItemProps = {
 };
 
 const iconProps = { width: 24, height: 24 };
+
+// TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
 const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
     icon: <NameSurnameIcon {...iconProps} />,
@@ -64,11 +65,6 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     icon: <EmailIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.emailAddress"),
     value: props.email
-  },
-  {
-    icon: <StockIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.stock"),
-    value: I18n.t("support.askPermissions.stockValue")
   },
   {
     icon: <DeviceIcon {...iconProps} />,
