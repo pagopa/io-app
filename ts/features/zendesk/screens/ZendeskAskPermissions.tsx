@@ -36,7 +36,7 @@ import { getAppVersion } from "../../../utils/appVersion";
 type Item = {
   icon: ReactNode;
   title: string;
-  value: string;
+  value?: string;
 };
 
 type ItemProps = {
@@ -77,8 +77,7 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   },
   {
     icon: <WebSiteIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.ipAddress"),
-    value: ""
+    title: I18n.t("support.askPermissions.ipAddress")
   },
   {
     icon: <InfoIcon {...iconProps} />,
@@ -110,7 +109,7 @@ const ItemComponent = (props: Item) => (
       <View hspacer />
       <View style={{ flex: 1, flexDirection: "column" }}>
         <H4>{props.title}</H4>
-        <H5 weight={"Regular"}>{props.value}</H5>
+        {props.value && <H5 weight={"Regular"}>{props.value}</H5>}
       </View>
     </View>
   </ListItem>
