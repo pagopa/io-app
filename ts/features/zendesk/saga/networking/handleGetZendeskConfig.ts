@@ -1,6 +1,6 @@
+import { call, put } from "redux-saga/effects";
 import { ContentClient } from "../../../../api/content";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { call, put } from "redux-saga/effects";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getZendeskConfig } from "../../store/actions";
 

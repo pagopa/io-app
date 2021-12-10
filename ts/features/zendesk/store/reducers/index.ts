@@ -1,3 +1,4 @@
+import { getType } from "typesafe-actions";
 import { IndexedById, toIndexed } from "../../../../store/helpers/indexer";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import {
@@ -8,7 +9,6 @@ import {
 } from "../../../bonus/bpd/model/RemoteValue";
 import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
-import { getType } from "typesafe-actions";
 import { getZendeskConfig, zendeskSelectedCategory } from "../actions";
 
 export type ZendeskConfig = RemoteValue<
