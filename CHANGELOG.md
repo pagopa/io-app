@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.38.0-rc.6](https://github.com/pagopa/io-app/compare/1.38.0-rc.5...1.38.0-rc.6) (2021-12-10)
+
+
+### Chores
+
+* set Paypal feature flag ON ([#3569](https://github.com/pagopa/io-app/issues/3569)) ([b063144](https://github.com/pagopa/io-app/commit/b063144370cf5ae363f86169eccdf212e413b5d2))
+
 ## [1.38.0-rc.5](https://github.com/pagopa/io-app/compare/1.38.0-rc.4...1.38.0-rc.5) (2021-12-10)
 
 
