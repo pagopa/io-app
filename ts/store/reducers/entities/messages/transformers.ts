@@ -1,11 +1,12 @@
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 
 import {
   Attachment,
   EUCovidCertificate,
-  MessageCategory,
   PaymentData,
   PrescriptionData,
   UIMessage,
@@ -15,19 +16,19 @@ import {
 
 /**
  * Map an enriched message item from API to the app domain.
+ * Since `category` is optional, it falls back on GENERIC.
  *
  * @param messageFromApi
  */
 export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   const enriched = messageFromApi as EnrichedMessage;
-  // TODO: replace with actual types from API, for now use it if available
-  // see https://pagopa.atlassian.net/browse/IA-554
-  const category: MessageCategory | undefined = (messageFromApi as any)
-    .category;
+  const category: MessageCategory = enriched.category || {
+    tag: TagEnum.GENERIC
+  };
   return {
     id: messageFromApi.id as UIMessageId,
     fiscalCode: messageFromApi.fiscal_code,
-    category: category ?? { tag: "GENERIC" },
+    category,
     createdAt: new Date(messageFromApi.created_at),
     serviceId: messageFromApi.sender_service_id,
     serviceName: enriched.service_name,
