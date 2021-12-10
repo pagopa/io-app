@@ -1,6 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import Svg from "react-native-svg";
 import Attachment from "../../../../../../img/features/mvl/attachment.svg";
 import LegalMessage from "../../../../../../img/features/mvl/legalMessage.svg";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -35,6 +36,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const headerImageProps: React.ComponentProps<typeof Svg> = {
+  width: 16,
+  height: 16,
+  fill: IOColors.bluegrey,
+  style: styles.alignCenter
+};
+
 /**
  * Icon + text element
  * @param props
@@ -59,28 +67,14 @@ const LegalMessageHeader = (props: { hasAttachments: boolean }) => (
   <View style={styles.row}>
     <HeaderItem
       text={I18n.t("features.mvl.title")}
-      image={
-        <LegalMessage
-          width={16}
-          height={16}
-          fill={IOColors.bluegrey}
-          style={styles.alignCenter}
-        />
-      }
+      image={<LegalMessage {...headerImageProps} />}
     />
     {props.hasAttachments && (
       <>
         <View style={styles.spacer} />
         <HeaderItem
           text={I18n.t("features.mvl.details.hasAttachments")}
-          image={
-            <Attachment
-              width={16}
-              height={16}
-              fill={IOColors.bluegrey}
-              style={styles.alignCenter}
-            />
-          }
+          image={<Attachment {...headerImageProps} />}
         />
       </>
     )}
