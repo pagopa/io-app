@@ -4,6 +4,7 @@ import { TimeToLiveSeconds } from "../../definitions/backend/TimeToLiveSeconds";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { OrganizationFiscalCode } from "../../definitions/backend/OrganizationFiscalCode";
+import { MessageCategory } from "../../definitions/backend/MessageCategory";
 import {
   NextPageMessagesSuccessPayload,
   PreviousPageMessagesSuccessPayload,
@@ -76,7 +77,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_1,
     fiscalCode: apiPayload.items[0].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:35.541Z"),
     serviceId: serviceId_1,
     timeToLive,
@@ -88,7 +89,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_2,
     fiscalCode: apiPayload.items[1].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:34.541Z"),
     serviceId: serviceId_1,
     timeToLive,
@@ -100,7 +101,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_3,
     fiscalCode: apiPayload.items[2].fiscal_code as FiscalCode,
-    category: null,
+    category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:30.541Z"),
     serviceId: serviceId_2,
     timeToLive,

@@ -6,6 +6,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Badge } from "native-base";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import I18n from "../../../../i18n";
 import {
   convertDateToWordDistance,
@@ -78,10 +79,14 @@ const styles = StyleSheet.create({
   },
   archived: {
     opacity: 0.75
+  },
+  qrContainer: {
+    marginRight: 16
   }
 });
 
 type Props = {
+  category: MessageCategory;
   hasPaidBadge: boolean;
   isRead: boolean;
   isArchived: boolean;
@@ -110,6 +115,7 @@ const announceMessage = (message: UIMessage, isRead: boolean): string =>
   });
 
 const MessageListItem = ({
+  category,
   hasPaidBadge,
   isRead,
   isArchived,
@@ -132,6 +138,7 @@ const MessageListItem = ({
       ? "io-checkbox-on"
       : "io-checkbox-off"
     : "io-right";
+  const isEuCovidCert = category?.tag === "EU_COVID_CERT";
 
   return (
     <TouchableDefaultOpacity
@@ -170,6 +177,13 @@ const MessageListItem = ({
               <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
             </Badge>
           )}
+
+          {isEuCovidCert && (
+            <View style={styles.qrContainer}>
+              <IconFont name={"io-qr"} color={IOColors.blue} />
+            </View>
+          )}
+
           <IconFont
             name={iconName}
             size={ICON_WIDTH}

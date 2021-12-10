@@ -8,12 +8,10 @@ import { PaymentNoticeNumber } from "../../../../../definitions/backend/PaymentN
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
-
-// just a placeholder for now
-export type MessageCategory = null;
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 
 /**
- * The unique ID of a UIMessage and UIMessageDetails, used to avoid to pass wrong id as parameters
+ * The unique ID of a UIMessage and UIMessageDetails, used to avoid passing the wrong ID as parameters
  */
 export type UIMessageId = string & IUnitTag<"UIMessageId">;
 
@@ -26,11 +24,7 @@ export type WithUIMessageId<T> = T & {
  */
 export type UIMessage = WithUIMessageId<{
   fiscalCode: FiscalCode;
-
-  // TODO:  https://pagopa.atlassian.net/browse/IA-417
-  //        and https://pagopa.atlassian.net/browse/IA-418
   category: MessageCategory;
-
   createdAt: Date;
   serviceId: ServiceId;
   serviceName: string;

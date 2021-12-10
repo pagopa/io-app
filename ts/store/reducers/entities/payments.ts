@@ -79,5 +79,10 @@ export const isNoticePaid = createSelector(
     paymentsByRptIdSelector,
     (_: GlobalState, category: UIMessage["category"]) => category
   ],
-  (_paymentByRptId, _category) => false
+  (paymentByRptId, category) => {
+    if (category.tag === "PAYMENT") {
+      return !!paymentByRptId[category.rptId];
+    }
+    return false;
+  }
 );

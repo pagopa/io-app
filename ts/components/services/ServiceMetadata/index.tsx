@@ -1,13 +1,13 @@
 import React from "react";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
+import { CommonServiceMetadata } from "../../../../definitions/backend/CommonServiceMetadata";
 import { isAndroid, isIos } from "../../../utils/platform";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ItemAction } from "../../../utils/url";
-import SectionHeader from ".././SectionHeader";
-import LinkRow from ".././LinkRow";
+import SectionHeader from "../SectionHeader";
+import LinkRow from "../LinkRow";
 
-import { ServicePublicService_metadata } from "../../../../definitions/backend/ServicePublic";
 import InformationRow from "./InformationRow";
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
   isDebugModeEnabled: boolean;
   organizationFiscalCode: OrganizationFiscalCode;
   serviceId: ServiceId;
-  servicesMetadata?: ServicePublicService_metadata;
+  servicesMetadata?: CommonServiceMetadata;
 };
 
 /**

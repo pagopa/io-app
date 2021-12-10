@@ -322,8 +322,6 @@ PODS:
   - react-native-mixpanel (1.2.0):
     - Mixpanel (~> 3.6.0)
     - React
-  - react-native-netinfo (4.7.0):
-    - React
   - react-native-screen-brightness (2.0.0-alpha):
     - React
   - react-native-slider (3.0.3):
@@ -530,7 +528,6 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
-  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -673,8 +670,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
-  react-native-netinfo:
-    :path: "../node_modules/@react-native-community/netinfo"
   react-native-screen-brightness:
     :path: "../node_modules/react-native-screen-brightness"
   react-native-slider:
@@ -803,7 +798,6 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
-  react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -855,6 +849,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: 2bdf8544f7cd0fd4c002546f5704b813845beb2a
   ZendeskSupportSDK: 3a8e508ab1d9dd22dc038df6c694466414e037ba
 
-PODFILE CHECKSUM: eb8085af15261f979e57ec1a58985cd1ed011308
+PODFILE CHECKSUM: cfe9cf6887cc0c4a2fe426f861721f73b4fcf161
 
 COCOAPODS: 1.10.1
