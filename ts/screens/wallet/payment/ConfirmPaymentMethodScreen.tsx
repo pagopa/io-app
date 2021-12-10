@@ -15,7 +15,6 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -78,6 +77,7 @@ import { Link } from "../../../components/core/typography/Link";
 import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
 import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
 import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
+import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -122,18 +122,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   padded: { paddingHorizontal: customVariables.contentPadding },
-  alert: {
-    backgroundColor: customVariables.brandHighLighter,
-    paddingHorizontal: customVariables.contentPadding,
-    paddingVertical: 11,
-    flexDirection: "row"
-  },
-  alertIcon: {
-    alignSelf: "center",
-    paddingRight: 18
-  },
-  flex: { flex: 1 },
-  textColor: { color: customVariables.brandDarkGray }
+  flex: { flex: 1 }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -200,12 +189,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ? props.payPalPsp?.fee
     : maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
-  const totalAmount = maybePsp.fold(
-    verifica.importoSingoloVersamento,
-    fee =>
-      (verifica.importoSingoloVersamento as number) +
-      (fee.fixedCost.amount as number)
-  );
+  const totalAmount =
+    (verifica.importoSingoloVersamento as number) + (fee ?? 0);
 
   // emit an event to inform the pay web view finished
   // dispatch the outcome code and navigate to payment outcome code screen
@@ -300,21 +285,18 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               </Link>
             </>
           )}
+          {isPayingWithPaypal && (
+            <>
+              <View spacer={true} />
+              <PayPalCheckoutPspComponent
+                fee={fee as ImportoEuroCents}
+                pspName={props.payPalPsp?.ragioneSociale ?? "-"}
+                privacyUrl={props.payPalPsp?.privacyUrl}
+              />
+            </>
+          )}
         </View>
       </Content>
-
-      <View style={styles.alert}>
-        <IconFont
-          style={styles.alertIcon}
-          name={"io-notice"}
-          size={24}
-          color={customVariables.brandDarkGray}
-        />
-        <Text style={[styles.flex, styles.textColor]}>
-          <Text bold={true}>{I18n.t("global.genericAlert")}</Text>
-          {` ${I18n.t("wallet.ConfirmPayment.info")}`}
-        </Text>
-      </View>
 
       <View footer={true}>
         <ButtonDefaultOpacity

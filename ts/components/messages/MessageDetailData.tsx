@@ -3,10 +3,7 @@ import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import CopyButtonComponent from "../CopyButtonComponent";
@@ -14,6 +11,8 @@ import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
+import { CommonServiceMetadata } from "../../../definitions/backend/CommonServiceMetadata";
+
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   serviceDetail: Option<ServicePublic>;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: CommonServiceMetadata;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
 }>;
@@ -46,7 +45,7 @@ type MessageData = {
   service_detail: Option<ServicePublic>;
   organization_name: Option<string>;
   service_name: Option<string>;
-  metadata: Option<ServicePublicService_metadata>;
+  metadata: Option<CommonServiceMetadata>;
 };
 
 /**
