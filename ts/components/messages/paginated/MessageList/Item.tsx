@@ -6,15 +6,13 @@ import { StyleSheet, Text, View } from "react-native";
 import { Badge } from "native-base";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import I18n from "../../../../i18n";
 import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
 } from "../../../../utils/convertDateToWordDistance";
-import {
-  MessageCategory,
-  UIMessage
-} from "../../../../store/reducers/entities/messages/types";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import TouchableDefaultOpacity from "../../../TouchableDefaultOpacity";
 import { H5 } from "../../../core/typography/H5";
 import { H3 } from "../../../core/typography/H3";
