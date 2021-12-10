@@ -10,15 +10,10 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { getExpireStatus } from "../../../../utils/dates";
 import { MessagePaymentExpirationInfo } from "../../../../utils/messages";
-
-// TODO: use type from API definitions once they are available
-export type MessageCategory =
-  | { tag: "EU_COVID_CERT" }
-  | { tag: "PAYMENT"; rptId: string }
-  | { tag: "GENERIC" };
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 
 /**
- * The unique ID of a UIMessage and UIMessageDetails, used to avoid to pass wrong id as parameters
+ * The unique ID of a UIMessage and UIMessageDetails, used to avoid passing the wrong ID as parameters
  */
 export type UIMessageId = string & IUnitTag<"UIMessageId">;
 
@@ -31,11 +26,7 @@ export type WithUIMessageId<T> = T & {
  */
 export type UIMessage = WithUIMessageId<{
   fiscalCode: FiscalCode;
-
-  // TODO:  https://pagopa.atlassian.net/browse/IA-417
-  //        and https://pagopa.atlassian.net/browse/IA-418
   category: MessageCategory;
-
   createdAt: Date;
   serviceId: ServiceId;
   serviceName: string;
