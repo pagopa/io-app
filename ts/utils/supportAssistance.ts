@@ -27,7 +27,7 @@ export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
 
 // If is not possible to get the assistance tool remotely assume it is none.
 export const assistanceToolRemoteConfig = (aTC: ToolEnum | undefined) =>
-  fromNullable(aTC).fold(ToolEnum.none, aT => aT);
+  fromNullable(aTC).getOrElse(ToolEnum.none);
 
 export const initSupportAssistance = ZendDesk.init;
 export const setUserIdentity = ZendDesk.setUserIdentity;
