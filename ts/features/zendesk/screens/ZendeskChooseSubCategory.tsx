@@ -13,67 +13,50 @@ import { H1 } from "../../../components/core/typography/H1";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
-import { zendeskConfigSelector } from "../store/reducers";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
-import { toArray } from "../../../store/helpers/indexer";
+import { zendeskSelectedCategorySelector } from "../store/reducers";
 import { H4 } from "../../../components/core/typography/H4";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../../components/ui/IconFont";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import { navigateToZendeskChooseSubCategory } from "../store/actions/navigation";
-import {
-  zendeskSelectedCategory,
-  zendeskSupportCompleted
-} from "../store/actions";
-import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import {
   hasSubCategories,
   openSupportTicket
 } from "../../../utils/supportAssistance";
+import { zendeskSupportCompleted } from "../store/actions";
 import { getFullLocale } from "../../../utils/locale";
+import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 
 /**
- * this screen shows the categories for which the user can ask support with the assistance
+ * this screen shows the sub-categories for which the user can ask support with the assistance
+ * see {@link ZendeskChooseCategory} to check the previous category screen
  */
-const ZendeskChooseCategory = () => {
+const ZendeskChooseSubCategory = () => {
+  const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useDispatch();
-  const navigation = useNavigationContext();
-  const zendeskConfig = useIOSelector(zendeskConfigSelector);
-  const selectedCategory = (category: ZendeskCategory) =>
-    dispatch(zendeskSelectedCategory(category));
   const zendeskWorkunitComplete = () => dispatch(zendeskSupportCompleted());
 
-  // It should never happens since if config is undefined or in error the user can open directly a ticket and if it is in loading the user
-  // should wait in the ZendeskSupportHelpCenter screen
-  if (!isReady(zendeskConfig)) {
+  // It should never happens since it is selected in the previous screen
+  if (selectedCategory === undefined) {
     return <WorkunitGenericFailure />;
   }
 
-  const categories: ReadonlyArray<ZendeskCategory> = toArray(
-    zendeskConfig.value.zendeskCategories?.categories ?? {}
-  );
-
-  // It should never happens since if the zendeskCategories are not in the config or if the array is void the user can open directly a ticket
-  if (categories.length === 0) {
+  // It should never happens since it is checked in the previous screen
+  if (!hasSubCategories(selectedCategory)) {
     return <WorkunitGenericFailure />;
   }
 
+  const subCategories =
+    selectedCategory.zendeskSubCategories?.subCategories ?? [];
   const locale = getFullLocale();
 
-  const renderItem = (listItem: ListRenderItemInfo<ZendeskCategory>) => {
-    const category = listItem.item;
+  const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
+    const subCategory = listItem.item;
     return (
       <ListItem
         onPress={() => {
-          selectedCategory(category);
-          // TODO: set category as custom field
-          if (hasSubCategories(category)) {
-            navigation.navigate(navigateToZendeskChooseSubCategory());
-          } else {
-            openSupportTicket();
-            zendeskWorkunitComplete();
-          }
+          // TODO: set sub-category as custom field
+          openSupportTicket();
+          zendeskWorkunitComplete();
         }}
         first={listItem.index === 0}
         style={{ paddingRight: 0 }}
@@ -81,7 +64,6 @@ const ZendeskChooseCategory = () => {
         <View
           style={{
             flex: 1,
-            flexGrow: 1,
             flexDirection: "row",
             justifyContent: "space-between"
           }}
@@ -94,7 +76,7 @@ const ZendeskChooseCategory = () => {
               flexGrow: 1
             }}
           >
-            {category.description[locale]}
+            {subCategory.description[locale]}
           </H4>
           <View>
             <IconFont
@@ -117,18 +99,14 @@ const ZendeskChooseCategory = () => {
         iconName: "",
         onPress: () => true
       }}
-      headerTitle={I18n.t("support.chooseCategory.header")}
+      headerTitle={selectedCategory.description[locale]}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("support.chooseCategory.title.category")}</H1>
-          <View spacer />
-          <H4 weight={"Regular"}>
-            {I18n.t("support.chooseCategory.subTitle.category")}
-          </H4>
+          <H1>{I18n.t("support.chooseCategory.title.subCategory")}</H1>
           <View spacer />
           <FlatList
-            data={categories}
+            data={subCategories}
             keyExtractor={c => c.value}
             renderItem={renderItem}
           />
@@ -138,4 +116,4 @@ const ZendeskChooseCategory = () => {
   );
 };
 
-export default ZendeskChooseCategory;
+export default ZendeskChooseSubCategory;
