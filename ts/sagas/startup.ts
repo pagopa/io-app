@@ -146,6 +146,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield call(initMixpanel);
   // listen for mixpanel enabling events
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
+
   if (zendeskEnabled) {
     yield fork(watchZendeskSupportSaga);
   }
