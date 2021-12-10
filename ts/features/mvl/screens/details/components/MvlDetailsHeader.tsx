@@ -73,7 +73,11 @@ const LegalMessageHeader = (props: { hasAttachments: boolean }) => (
 );
 
 /**
- * The header for a legal message, including the OrganizationHeader, MessageTitle, LegalMessageHeader and HeaderDueDateBar
+ * The header for a legal message, including the
+ * - OrganizationHeader (name of the sender organization, service and logo)
+ * - MessageTitle (title of the message)
+ * - LegalMessageHeader (default text + icons) to identify a legal message and, optionally, if has attachment
+ * - HeaderDueDateBar (the bar in case of due date of the message)
  * @param props
  * @constructor
  */
