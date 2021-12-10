@@ -17,13 +17,21 @@ export function* handleGetMvl(
 ) {
   // TODO: remote call -> convert from remote data format to MvlData -> dispatch
   yield delay(125);
+  const dueDate = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
   yield put(
     mvlDetailsLoad.success({
       ...mvlMock,
       message: {
         ...mvlMock.message,
         serviceId: "service2" as ServiceId,
-        dueDate: new Date()
+        dueDate,
+        raw: {
+          ...mvlMock.message.raw,
+          content: {
+            ...mvlMock.message.raw.content,
+            due_date: dueDate
+          }
+        }
       },
       id: action.payload
     })
