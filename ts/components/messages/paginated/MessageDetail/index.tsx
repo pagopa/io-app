@@ -3,6 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 
 import {
@@ -12,12 +13,6 @@ import {
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../../../utils/messages";
-import { getExpireStatus } from "../../../../utils/dates";
-import {
-  cleanMarkdownFromCTAs,
-  MessagePaymentExpirationInfo
-} from "../../../../utils/messages";
-import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import OrganizationHeader from "../../../OrganizationHeader";
 import MessageMarkdown from "../../MessageMarkdown";
 import CtaBar from "./common/CtaBar";
