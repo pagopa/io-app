@@ -8,7 +8,7 @@ import { mvlDetailsLoad } from "../store/actions";
 import { mvlFromIdSelector } from "../store/reducers/byId";
 import { Mvl } from "../types/mvlData";
 import { MvlGenericErrorScreen } from "./ko/MvlGenericErrorScreen";
-import { MvlDetailsScreen } from "./MvlDetailsScreen";
+import { MvlDetailsScreen } from "./details/MvlDetailsScreen";
 import { MvlLoadingScreen } from "./MvlLoadingScreen";
 
 type NavigationParams = Readonly<{
