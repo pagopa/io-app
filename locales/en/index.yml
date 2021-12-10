@@ -2907,7 +2907,7 @@ support:
       allow: "Allow"
       denies: "Do not allow"
   chooseCategory:
-    header: "Write to us"
+    header: "Write us"
     title:
       category: "Select a topic"
       subCategory: "Can you give us more details?"
