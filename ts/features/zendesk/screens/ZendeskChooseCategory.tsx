@@ -1,5 +1,11 @@
 import React from "react";
-import { FlatList, SafeAreaView, ScrollView } from "react-native";
+import {
+  FlatList,
+  ListRenderItem,
+  ListRenderItemInfo,
+  SafeAreaView,
+  ScrollView
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { ListItem } from "native-base";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -9,11 +15,7 @@ import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { zendeskConfigSelector } from "../store/reducers";
-import {
-  isError,
-  isLoading,
-  isUndefined
-} from "../../bonus/bpd/model/RemoteValue";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import { toArray } from "../../../store/helpers/indexer";
 import { H4 } from "../../../components/core/typography/H4";
 import customVariables from "../../../theme/variables";
@@ -29,6 +31,9 @@ import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory
 import { openSupportTicket } from "../../../utils/supportAssistance";
 import { getFullLocale } from "../../../utils/locale";
 
+/**
+ * this screen shows the categories for which the user can ask support with the assistance
+ */
 const ZendeskChooseCategory = () => {
   const dispatch = useDispatch();
   const navigation = useNavigationContext();
@@ -37,25 +42,73 @@ const ZendeskChooseCategory = () => {
     dispatch(zendeskSelectedCategory(category));
   const zendeskWorkunitComplete = () => dispatch(zendeskSupportCompleted());
 
-  // It should never happens since if config is undefined or in error the user can open directly a ticket and if is in loading the user
+  // It should never happens since if config is undefined or in error the user can open directly a ticket and if it is in loading the user
   // should wait in the ZendeskSupportHelpCenter screen
-  if (
-    isUndefined(zendeskConfig) ||
-    isError(zendeskConfig) ||
-    isLoading(zendeskConfig)
-  ) {
+  if (!isReady(zendeskConfig)) {
     return <WorkunitGenericFailure />;
   }
 
-  const indexedCategories = zendeskConfig.value.zendeskCategories?.categories;
-  const categories = indexedCategories ? toArray(indexedCategories) : [];
+  const categories: ReadonlyArray<ZendeskCategory> = toArray(
+    zendeskConfig.value.zendeskCategories?.categories ?? {}
+  );
 
   // It should never happens since if the zendeskCategories are not in the config or if the array is void the user can open directly a ticket
-  if (indexedCategories === undefined || categories.length === 0) {
+  if (categories.length === 0) {
     return <WorkunitGenericFailure />;
   }
 
   const locale = getFullLocale();
+
+  const renderItem = (listItem: ListRenderItemInfo<ZendeskCategory>) => {
+    const category = listItem.item;
+    return (
+      <ListItem
+        onPress={() => {
+          selectedCategory(category);
+          // TODO: set category as custom field
+          if (
+            category.zendeskSubCategories !== undefined &&
+            category.zendeskSubCategories.subCategories.length > 0
+          ) {
+            navigation.navigate(navigateToZendeskChooseSubCategory());
+          } else {
+            openSupportTicket();
+            zendeskWorkunitComplete();
+          }
+        }}
+        first={listItem.index === 0}
+        style={{ paddingRight: 0 }}
+      >
+        <View
+          style={{
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <H4
+            weight={"Regular"}
+            color={"bluegreyDark"}
+            style={{
+              flex: 1,
+              flexGrow: 1
+            }}
+          >
+            {category.description[locale]}
+          </H4>
+          <View>
+            <IconFont
+              name={"io-right"}
+              size={24}
+              color={customVariables.contentPrimaryBackground}
+            />
+          </View>
+        </View>
+      </ListItem>
+    );
+  };
+
   // The void customRightIcon is needed to have a centered header title
   return (
     <BaseScreenComponent
@@ -78,43 +131,7 @@ const ZendeskChooseCategory = () => {
           <FlatList
             data={categories}
             keyExtractor={c => c.value}
-            renderItem={i => (
-              <ListItem
-                onPress={() => {
-                  const category = i.item;
-                  selectedCategory(category);
-                  // TODO: set category as custom field
-                  if (
-                    category.zendeskSubCategories !== undefined &&
-                    category.zendeskSubCategories.subCategories.length > 0
-                  ) {
-                    navigation.navigate(navigateToZendeskChooseSubCategory());
-                  } else {
-                    openSupportTicket();
-                    zendeskWorkunitComplete();
-                  }
-                }}
-                first={i.index === 0}
-                style={{ paddingRight: 0 }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "space-between"
-                  }}
-                >
-                  <H4 weight={"Regular"} color={"bluegreyDark"}>
-                    {i.item.description[locale]}
-                  </H4>
-                  <IconFont
-                    name={"io-right"}
-                    size={24}
-                    color={customVariables.contentPrimaryBackground}
-                  />
-                </View>
-              </ListItem>
-            )}
+            renderItem={renderItem}
           />
         </ScrollView>
       </SafeAreaView>
