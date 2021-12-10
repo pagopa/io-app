@@ -150,7 +150,7 @@ const ZendeskAskPermissions = () => {
   const continueButtonProps = {
     testID: "continueButtonId",
     bordered: false,
-    onPress: () => navigation.navigate(navigateToZendeskChooseCategory()),
+    onPress: () => navigation.navigate(navigateToZendeskChooseCategory()), // TODO: if is not possible to get the category open a ticket request
     title: I18n.t("support.askPermissions.cta.allow")
   };
   const items = getItems(itemsProps);
