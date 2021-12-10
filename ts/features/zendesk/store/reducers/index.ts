@@ -3,6 +3,7 @@ import { IndexedById, toIndexed } from "../../../../store/helpers/indexer";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import {
   remoteError,
+  remoteLoading,
   remoteReady,
   remoteUndefined,
   RemoteValue
@@ -11,16 +12,14 @@ import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
 import { getZendeskConfig, zendeskSelectedCategory } from "../actions";
 
-export type ZendeskConfig = RemoteValue<
-  {
-    panicMode: boolean;
-    zendeskCategories?: {
-      id: string;
-      categories: IndexedById<ZendeskCategory>;
-    };
-  },
-  NetworkError
->;
+type ZendeskValue = {
+  panicMode: boolean;
+  zendeskCategories?: {
+    id: string;
+    categories: IndexedById<ZendeskCategory>;
+  };
+};
+export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
 export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
@@ -36,12 +35,11 @@ const reducer = (
 ): ZendeskState => {
   switch (action.type) {
     case getType(getZendeskConfig.request):
-      return INITIAL_STATE;
+      return { zendeskConfig: remoteLoading };
     case getType(getZendeskConfig.success):
       return {
         zendeskConfig: remoteReady({
           panicMode: action.payload.panicMode,
-          id: action.payload.zendeskCategories?.id,
           zendeskCategories: action.payload.zendeskCategories
             ? {
                 id: action.payload.zendeskCategories.id,

@@ -50,9 +50,7 @@ export const getZendeskConfig = createAsyncAction(
   "GET_ZENDESK_CONFIG_FAILURE"
 )<void, Zendesk, NetworkError>();
 
-/**
- * The workflow fails
- */
+// user selected a category
 export const zendeskSelectedCategory = createStandardAction(
   "ZENDESK_SELECTED_CATEGORY"
 )<ZendeskCategory>();
