@@ -1,5 +1,10 @@
 import React from "react";
-import { FlatList, SafeAreaView, ScrollView } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  SafeAreaView,
+  ScrollView
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { ListItem } from "native-base";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -13,10 +18,18 @@ import { H4 } from "../../../components/core/typography/H4";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../../components/ui/IconFont";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import { openSupportTicket } from "../../../utils/supportAssistance";
+import {
+  hasSubCategories,
+  openSupportTicket
+} from "../../../utils/supportAssistance";
 import { zendeskSupportCompleted } from "../store/actions";
 import { getFullLocale } from "../../../utils/locale";
+import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 
+/**
+ * this screen shows the sub-categories for which the user can ask support with the assistance
+ * see {@link ZendeskChooseCategory} to check the previous category screen
+ */
 const ZendeskChooseSubCategory = () => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useDispatch();
@@ -28,15 +41,55 @@ const ZendeskChooseSubCategory = () => {
   }
 
   // It should never happens since it is checked in the previous screen
-  if (
-    selectedCategory.zendeskSubCategories === undefined ||
-    selectedCategory.zendeskSubCategories.subCategories.length === 0
-  ) {
+  if (!hasSubCategories(selectedCategory)) {
     return <WorkunitGenericFailure />;
   }
 
-  const subCategories = selectedCategory.zendeskSubCategories.subCategories;
+  const subCategories =
+    selectedCategory.zendeskSubCategories?.subCategories ?? [];
   const locale = getFullLocale();
+
+  const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
+    const subCategory = listItem.item;
+    return (
+      <ListItem
+        onPress={() => {
+          // TODO: set sub-category as custom field
+          openSupportTicket();
+          zendeskWorkunitComplete();
+        }}
+        first={listItem.index === 0}
+        style={{ paddingRight: 0 }}
+      >
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <H4
+            weight={"Regular"}
+            color={"bluegreyDark"}
+            style={{
+              flex: 1,
+              flexGrow: 1
+            }}
+          >
+            {subCategory.description[locale]}
+          </H4>
+          <View>
+            <IconFont
+              name={"io-right"}
+              size={24}
+              color={customVariables.contentPrimaryBackground}
+            />
+          </View>
+        </View>
+      </ListItem>
+    );
+  };
+
   // The void customRightIcon is needed to have a centered header title
   return (
     <BaseScreenComponent
@@ -55,34 +108,7 @@ const ZendeskChooseSubCategory = () => {
           <FlatList
             data={subCategories}
             keyExtractor={c => c.value}
-            renderItem={i => (
-              <ListItem
-                onPress={() => {
-                  // TODO: set sub-category as custom field
-                  openSupportTicket();
-                  zendeskWorkunitComplete();
-                }}
-                first={i.index === 0}
-                style={{ paddingRight: 0 }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "space-between"
-                  }}
-                >
-                  <H4 weight={"Regular"} color={"bluegreyDark"}>
-                    {i.item.description[locale]}
-                  </H4>
-                  <IconFont
-                    name={"io-right"}
-                    size={24}
-                    color={customVariables.contentPrimaryBackground}
-                  />
-                </View>
-              </ListItem>
-            )}
+            renderItem={renderItem}
           />
         </ScrollView>
       </SafeAreaView>

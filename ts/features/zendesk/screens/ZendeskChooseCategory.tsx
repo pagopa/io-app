@@ -27,7 +27,10 @@ import {
   zendeskSupportCompleted
 } from "../store/actions";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
-import { openSupportTicket } from "../../../utils/supportAssistance";
+import {
+  hasSubCategories,
+  openSupportTicket
+} from "../../../utils/supportAssistance";
 import { getFullLocale } from "../../../utils/locale";
 
 /**
@@ -65,10 +68,7 @@ const ZendeskChooseCategory = () => {
         onPress={() => {
           selectedCategory(category);
           // TODO: set category as custom field
-          if (
-            category.zendeskSubCategories !== undefined &&
-            category.zendeskSubCategories.subCategories.length > 0
-          ) {
+          if (hasSubCategories(category)) {
             navigation.navigate(navigateToZendeskChooseSubCategory());
           } else {
             openSupportTicket();
