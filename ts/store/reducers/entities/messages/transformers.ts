@@ -114,6 +114,7 @@ export const toUIMessageDetails = (
     paymentData: getPaymentData(content),
     euCovidCertificate: getEUCovidCertificate(content),
     subject: content.subject,
+    serviceId: messageFromApi.sender_service_id,
     raw: messageFromApi
   };
 };

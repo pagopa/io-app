@@ -1,5 +1,6 @@
 import { delay, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { mvlDetailsLoad } from "../../store/actions";
 import { mvlMock } from "../../types/__mock__/mvlMock";
 
@@ -16,5 +17,15 @@ export function* handleGetMvl(
 ) {
   // TODO: remote call -> convert from remote data format to MvlData -> dispatch
   yield delay(125);
-  yield put(mvlDetailsLoad.success({ ...mvlMock, id: action.payload }));
+  yield put(
+    mvlDetailsLoad.success({
+      ...mvlMock,
+      message: {
+        ...mvlMock.message,
+        serviceId: "service2" as ServiceId,
+        dueDate: new Date()
+      },
+      id: action.payload
+    })
+  );
 }

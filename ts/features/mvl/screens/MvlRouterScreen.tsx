@@ -48,6 +48,7 @@ export const MvlRouterScreen = (
   const mvlPot = useIOSelector(state => mvlFromIdSelector(state, mvlId));
   const dispatch = useIODispatch();
   useOnFirstRender(() => {
+    // TODO: setMessageRead https://pagopa.atlassian.net/browse/IAMVL-21
     if (!pot.isSome(mvlPot)) {
       dispatch(mvlDetailsLoad.request(mvlId));
     }

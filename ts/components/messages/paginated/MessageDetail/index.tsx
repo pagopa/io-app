@@ -131,6 +131,7 @@ const MessageDetailsComponent = ({
           messageDetails={messageDetails}
           service={service}
           serviceMetadata={serviceMetadata}
+          legacySafeArea={true}
         />
       </>
     </>

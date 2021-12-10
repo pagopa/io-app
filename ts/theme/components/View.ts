@@ -88,8 +88,8 @@ export default (): Theme => ({
     paddingLeft: variables.footerPaddingLeft,
     paddingRight: variables.footerPaddingRight,
     paddingTop: variables.footerPaddingTop,
-    borderBottomWidth: variables.footerBottomBorderWidth,
-    borderBottomColor: variables.brandGray,
+    // borderBottomWidth: variables.footerBottomBorderWidth,
+    // borderBottomColor: variables.brandGray,
     // iOS shadow
     shadowColor: variables.footerShadowColor,
     shadowOffset: {

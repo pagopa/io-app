@@ -43,6 +43,7 @@ export type UIMessage = WithUIMessageId<{
  */
 export type UIMessageDetails = WithUIMessageId<{
   subject: string;
+  serviceId: ServiceId;
   prescriptionData?: PrescriptionData;
   attachments?: ReadonlyArray<Attachment>;
   markdown: MessageBodyMarkdown;
