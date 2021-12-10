@@ -1,17 +1,13 @@
 import * as React from "react";
 import {
-  PrescriptionData,
+  getPaymentExpirationInfo,
   UIMessageDetails
 } from "../../../../../store/reducers/entities/messages/types";
-import { MessagePaymentExpirationInfo } from "../../../../../utils/messages";
 import MedicalPrescriptionIdentifiersComponent from "../../../MedicalPrescriptionIdentifiersComponent";
 import DueDateBar from "../DueDateBar";
 import MedicalPrescriptionDueDateBar from "../MedicalPrescriptionDueDateBar";
 
 type Props = {
-  prescriptionData?: PrescriptionData;
-  dueDate?: Date;
-  paymentExpirationInfo: MessagePaymentExpirationInfo;
   messageDetails: UIMessageDetails;
   hasPaidBadge: boolean;
 };
@@ -21,28 +17,34 @@ type Props = {
  * @param props
  * @constructor
  */
-export const HeaderDueDateBar = (props: Props): React.ReactElement => (
-  <>
-    {props.prescriptionData && (
-      <MedicalPrescriptionIdentifiersComponent
-        prescriptionData={props.prescriptionData}
-      />
-    )}
+export const HeaderDueDateBar = (props: Props): React.ReactElement => {
+  const paymentExpirationInfo = getPaymentExpirationInfo(props.messageDetails);
 
-    {props.prescriptionData === undefined && props.dueDate !== undefined && (
-      <DueDateBar
-        dueDate={props.dueDate}
-        expirationInfo={props.paymentExpirationInfo}
-        isPaid={props.hasPaidBadge}
-      />
-    )}
+  return (
+    <>
+      {props.messageDetails.prescriptionData && (
+        <MedicalPrescriptionIdentifiersComponent
+          prescriptionData={props.messageDetails.prescriptionData}
+        />
+      )}
 
-    {props.prescriptionData !== undefined && props.dueDate !== undefined && (
-      <MedicalPrescriptionDueDateBar
-        dueDate={props.dueDate}
-        messageDetails={props.messageDetails}
-        paymentExpirationInfo={props.paymentExpirationInfo}
-      />
-    )}
-  </>
-);
+      {props.messageDetails.prescriptionData === undefined &&
+        props.messageDetails.dueDate !== undefined && (
+          <DueDateBar
+            dueDate={props.messageDetails.dueDate}
+            expirationInfo={paymentExpirationInfo}
+            isPaid={props.hasPaidBadge}
+          />
+        )}
+
+      {props.messageDetails.prescriptionData !== undefined &&
+        props.messageDetails.dueDate !== undefined && (
+          <MedicalPrescriptionDueDateBar
+            dueDate={props.messageDetails.dueDate}
+            messageDetails={props.messageDetails}
+            paymentExpirationInfo={paymentExpirationInfo}
+          />
+        )}
+    </>
+  );
+};

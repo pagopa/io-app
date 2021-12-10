@@ -10,6 +10,7 @@ import {
   MessagePaymentExpirationInfo
 } from "../../../../../utils/messages";
 import {
+  getPaymentExpirationInfo,
   PaymentData,
   UIMessageDetails
 } from "../../../../../store/reducers/entities/messages/types";
@@ -21,9 +22,7 @@ import PaymentButton from "../../../PaymentButton";
 import CalendarEventButton from "../../../CalendarEventButton";
 
 type Props = {
-  expirationInfo: MessagePaymentExpirationInfo;
   isPaid: boolean;
-  isPrescription: boolean;
   messageDetails: UIMessageDetails;
   service?: UIService;
   serviceMetadata?: ServicePublicService_metadata;
@@ -74,18 +73,16 @@ function renderCalendarEventButton(
  */
 const CtaBar = ({
   isPaid,
-  expirationInfo,
-  isPrescription,
   messageDetails,
   service,
   serviceMetadata
 }: Props): React.ReactElement | null => {
   const dispatch = useIODispatch();
   // in case of medical prescription, we shouldn't render the CtaBar
-  if (isPrescription) {
+  if (messageDetails.prescriptionData !== undefined) {
     return null;
   }
-
+  const expirationInfo = getPaymentExpirationInfo(messageDetails);
   const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
 
   const paymentButton = renderPaymentButton(paymentData);

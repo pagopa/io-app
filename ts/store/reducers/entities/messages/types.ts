@@ -8,6 +8,8 @@ import { PaymentNoticeNumber } from "../../../../../definitions/backend/PaymentN
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
+import { getExpireStatus } from "../../../../utils/dates";
+import { MessagePaymentExpirationInfo } from "../../../../utils/messages";
 
 // TODO: use type from API definitions once they are available
 export type MessageCategory =
@@ -82,4 +84,21 @@ export type Attachment = {
   name: string;
   content: string;
   mimeType: string;
+};
+
+export const getPaymentExpirationInfo = (
+  messageDetails: UIMessageDetails
+): MessagePaymentExpirationInfo => {
+  const { paymentData, dueDate } = messageDetails;
+  if (paymentData && dueDate) {
+    const expireStatus = getExpireStatus(dueDate);
+    return {
+      kind: paymentData.invalidAfterDueDate ? "EXPIRABLE" : "UNEXPIRABLE",
+      expireStatus,
+      dueDate
+    };
+  }
+  return {
+    kind: "UNEXPIRABLE"
+  };
 };

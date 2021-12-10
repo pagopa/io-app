@@ -12,11 +12,7 @@ import {
 } from "../../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
-import { getExpireStatus } from "../../../../utils/dates";
-import {
-  cleanMarkdownFromCTAs,
-  MessagePaymentExpirationInfo
-} from "../../../../utils/messages";
+import { cleanMarkdownFromCTAs } from "../../../../utils/messages";
 import OrganizationHeader from "../../../OrganizationHeader";
 import MessageMarkdown from "../../MessageMarkdown";
 import CtaBar from "./common/CtaBar";
@@ -53,23 +49,6 @@ const OrganizationTitle = ({ name, organizationName, logoURLs }: UIService) => (
   />
 );
 
-const getPaymentExpirationInfo = (
-  messageDetails: UIMessageDetails
-): MessagePaymentExpirationInfo => {
-  const { paymentData, dueDate } = messageDetails;
-  if (paymentData && dueDate) {
-    const expireStatus = getExpireStatus(dueDate);
-    return {
-      kind: paymentData.invalidAfterDueDate ? "EXPIRABLE" : "UNEXPIRABLE",
-      expireStatus,
-      dueDate
-    };
-  }
-  return {
-    kind: "UNEXPIRABLE"
-  };
-};
-
 /**
  * Render a single message with all of its details
  */
@@ -82,8 +61,7 @@ const MessageDetailsComponent = ({
   serviceMetadata
 }: Props) => {
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
-  const { attachments, dueDate, markdown, prescriptionData } = messageDetails;
-  const paymentExpirationInfo = getPaymentExpirationInfo(messageDetails);
+  const { attachments, markdown, prescriptionData } = messageDetails;
   const isPrescription = prescriptionData !== undefined;
 
   return (
@@ -104,9 +82,6 @@ const MessageDetailsComponent = ({
         <HeaderDueDateBar
           hasPaidBadge={hasPaidBadge}
           messageDetails={messageDetails}
-          paymentExpirationInfo={paymentExpirationInfo}
-          dueDate={dueDate}
-          prescriptionData={prescriptionData}
         />
 
         <MessageMarkdown
@@ -152,8 +127,6 @@ const MessageDetailsComponent = ({
         )}
 
         <CtaBar
-          isPrescription={isPrescription}
-          expirationInfo={paymentExpirationInfo}
           isPaid={hasPaidBadge}
           messageDetails={messageDetails}
           service={service}
