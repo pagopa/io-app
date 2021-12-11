@@ -7,6 +7,7 @@ import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import {
   AnonymousIdentity,
   initSupportAssistance,
+  isPanicModeActive,
   JwtIdentity,
   setUserIdentity,
   showSupportTickets,
@@ -26,10 +27,12 @@ import { Label } from "../../../components/core/typography/Label";
 import { H3, View } from "native-base";
 import AdviceComponent from "../../../components/AdviceComponent";
 import { H4 } from "../../../components/core/typography/H4";
+import { zendeskConfigSelector } from "../store/reducers";
 
 const ZendeskSupportComponent = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const profile = useIOSelector(profileSelector);
+  const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
@@ -75,27 +78,32 @@ const ZendeskSupportComponent = () => {
     setUserIdentity(zendeskIdentity);
   }, [zendeskToken, profile]);
 
+  const handleContactSupportPress = () => {
+    if (isPanicModeActive(zendeskRemoteConfig)) {
+      // Go to panic mode screen
+      return;
+    } else {
+      navigation.navigate(navigateToZendeskAskPermissions());
+    }
+  };
+
   return (
     <>
-      <H3>{I18n.t("instabug.contextualHelp.title1")}</H3>
+      <H3>{I18n.t("support.helpCenter.supportComponent.title")}</H3>
       <View spacer={true} />
       <H4 weight={"Regular"}>
-        {
-          "Per richiedere assistenza o suggerire un miglioramento, scrivici: ti risponderemo il prima possibile."
-        }
+        {I18n.t("support.helpCenter.supportComponent.subtitle")}
       </H4>
       <View spacer={true} large={true} />
       <AdviceComponent
-        text={
-          "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un Ente, contatta quest’ultimo. Troverai i riferimenti all’interno del messaggio o nella scheda del servizio in questione."
-        }
+        text={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
       />
       <View spacer={true} />
       <ButtonDefaultOpacity
         style={{
           alignSelf: "stretch"
         }}
-        onPress={() => navigation.navigate(navigateToZendeskAskPermissions())}
+        onPress={handleContactSupportPress}
         disabled={false}
         testID={"contactSupportButton"}
       >

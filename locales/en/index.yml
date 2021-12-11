@@ -2900,6 +2900,10 @@ support:
     cta:
       contactSupport: "Contact support"
       seeReports: "See reports in progress"
+    supportComponent:
+      title: "Do you need help?"
+      subtitle: "To request assistance or suggest an improvement, write to us: we will reply as soon as possible."
+      adviceMessage: "If your problem concerns the content of a message or the service of an organization, contact the latter. You will find the references within the message or in the card of the service in question."
   askPermissions:
     header: "Contact support"
     title: "To continue, we need your consent"
