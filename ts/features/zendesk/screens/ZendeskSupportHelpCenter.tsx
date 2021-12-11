@@ -35,8 +35,8 @@ import {
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
-  "contentLoaded" | "faqCategories" | "startingRoute"
-> & { title: string; body: () => React.ReactNode };
+  "faqCategories" | "startingRoute"
+> & { title: string; body: () => React.ReactNode; contentLoaded: boolean };
 
 /**
  * This component must be used only here.
