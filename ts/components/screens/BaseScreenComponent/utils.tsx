@@ -16,6 +16,14 @@ import {
 } from "../../ui/Markdown/handlers/link";
 import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
 import { RequestAssistancePayload } from "../../ContextualHelp";
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import { ScreenCHData } from "../../../../definitions/content/ScreenCHData";
+import { ContextualHelpData } from "../../ContextualHelp/ContextualHelpComponent";
+import Markdown from "../../ui/Markdown";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import React from "react";
+import { ContextualHelpProps, ContextualHelpPropsMarkdown } from "./index";
+import I18n from "../../../i18n";
 
 /**
  * Run side-effects from the Instabug library based on the type of support.
@@ -67,3 +75,45 @@ export const handleOnLinkClicked = (hideHelp: () => void) => (url: string) => {
   const customHandledLink = deriveCustomHandledLink(url);
   customHandledLink.map(link => handleItemOnPress(link.url)());
 };
+
+export const getContextualHelpConfig = (
+  contextualHelp: ContextualHelpProps | undefined,
+  contextualHelpMarkdown: ContextualHelpPropsMarkdown | undefined,
+  onLoadEnd: () => void,
+  onLinkClicked: (url: string) => void
+): ContextualHelpProps | undefined =>
+  contextualHelp
+    ? { body: contextualHelp.body, title: contextualHelp.title }
+    : contextualHelpMarkdown
+    ? {
+        body: () => (
+          <Markdown onLinkClicked={onLinkClicked} onLoadEnd={onLoadEnd}>
+            {I18n.t(contextualHelpMarkdown.body)}
+          </Markdown>
+        ),
+        title: I18n.t(contextualHelpMarkdown.title)
+      }
+    : undefined;
+
+/**
+ If contextualData (loaded from the content server) contains the route of the current screen,
+ title, content, faqs are read from it, otherwise they came from the locales stored in app
+ */
+export const getContextualHelpData = (
+  maybeContextualData: Option<ScreenCHData>,
+  defaultData: ContextualHelpData,
+  onReady: () => void
+): ContextualHelpData =>
+  maybeContextualData.fold<ContextualHelpData>(defaultData, data => ({
+    title: data.title,
+    content: <Markdown onLoadEnd={onReady}>{data.content}</Markdown>,
+    faqs: fromNullable(data.faqs)
+      // ensure the array is defined and not empty
+      .mapNullable(faqs => (faqs.length > 0 ? faqs : undefined))
+      // if remote faqs are not defined or empty, fallback to the local ones
+      .fold(defaultData.faqs, fqs =>
+        fqs.map(f => ({ title: f.title, content: f.body }))
+      )
+  }));
+
+export const reloadContextualHelpDataThreshold = (30 * 1000) as Millisecond;
