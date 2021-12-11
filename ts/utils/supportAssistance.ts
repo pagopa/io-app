@@ -1,6 +1,7 @@
 import ZendDesk from "io-react-native-zendesk";
 import { fromNullable } from "fp-ts/lib/Option";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
+import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
 import { getValueOrElse } from "../features/bonus/bpd/model/RemoteValue";
 
@@ -39,3 +40,7 @@ export const initSupportAssistance = ZendDesk.init;
 export const setUserIdentity = ZendDesk.setUserIdentity;
 export const openSupportTicket = ZendDesk.openTicket;
 export const showSupportTickets = ZendDesk.showTickets;
+
+// return true if zendeskSubCategories is defined and subCategories > 0
+export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
+  (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;

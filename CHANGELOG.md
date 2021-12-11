@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.38.0-rc.6](https://github.com/pagopa/io-app/compare/1.38.0-rc.5...1.38.0-rc.6) (2021-12-10)
+
+
+### Chores
+
+* set Paypal feature flag ON ([#3569](https://github.com/pagopa/io-app/issues/3569)) ([b063144](https://github.com/pagopa/io-app/commit/b063144370cf5ae363f86169eccdf212e413b5d2))
+
+## [1.38.0-rc.5](https://github.com/pagopa/io-app/compare/1.38.0-rc.4...1.38.0-rc.5) (2021-12-10)
+
+
+### Features
+
+* [[IA-512](https://pagopa.atlassian.net/browse/IA-512)] Select category screen ([#3565](https://github.com/pagopa/io-app/issues/3565)) ([75e09eb](https://github.com/pagopa/io-app/commit/75e09ebf1f184d8732077dea31defa4544178eb1))
+
+
+### Bug Fixes
+
+* Use current time for time-based assertions [#3568](https://github.com/pagopa/io-app/issues/3568) ([f37456e](https://github.com/pagopa/io-app/commit/f37456e3ab95a57c4d948936faf93f0247e6cb72))
+
+
+### Chores
+
+* [[IA-536](https://pagopa.atlassian.net/browse/IA-536)] Add remote zendesk config ([#3561](https://github.com/pagopa/io-app/issues/3561)) ([ff5b7b3](https://github.com/pagopa/io-app/commit/ff5b7b33700cedb57bee4abbbd95fcc63bc17dce))
+* [[IA-541](https://pagopa.atlassian.net/browse/IA-541)] Add remote assistanceTool ff ([#3544](https://github.com/pagopa/io-app/issues/3544)) ([66c1d48](https://github.com/pagopa/io-app/commit/66c1d48bab67d5045305bb39842e6cd138ff1b8f))
+* [[IA-550](https://pagopa.atlassian.net/browse/IA-550)] Add Paypal checkout psp info banner ([#3559](https://github.com/pagopa/io-app/issues/3559)) ([c10142d](https://github.com/pagopa/io-app/commit/c10142da689c0cc9a5bad04f8884527027aad5f8))
+* Upgrade to v7.26.0-RELEASE ([#3564](https://github.com/pagopa/io-app/issues/3564)) ([ea7912c](https://github.com/pagopa/io-app/commit/ea7912cc8d6906b86c81a561f8447b1e66b39538))
+
 ## [1.38.0-rc.4](https://github.com/pagopa/io-app/compare/1.38.0-rc.3...1.38.0-rc.4) (2021-12-09)
 
 
