@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
+import { none } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { NavigationInjectedProps } from "react-navigation";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -12,14 +16,11 @@ import {
   zendeskSupportCompleted
 } from "../store/actions";
 import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
-import { none } from "fp-ts/lib/Option";
 import { ContextualHelpData } from "../../../components/ContextualHelp/ContextualHelpComponent";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
-import * as pot from "italia-ts-commons/lib/pot";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIOSelector } from "../../../store/hooks";
 import { getFAQsFromCategories } from "../../../utils/faq";
-import { NavigationInjectedProps } from "react-navigation";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import themeVariables from "../../../theme/variables";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
@@ -31,7 +32,6 @@ import {
   handleOnLinkClicked,
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
-import { constNull } from "fp-ts/lib/function";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -75,7 +75,7 @@ const FaqManager = (props: FaqManagerProps) => {
   const contextualHelpData: ContextualHelpData = getContextualHelpData(
     maybeContextualData,
     {
-      title: title,
+      title,
       faqs: getFAQsFromCategories(faqCategories ?? []),
       content: body()
     },

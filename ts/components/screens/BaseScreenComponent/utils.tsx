@@ -1,5 +1,8 @@
 import { BugReporting } from "instabug-reactnative";
 
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import React from "react";
 import {
   DefaultReportAttachmentTypeConfiguration,
   TypeLogs,
@@ -16,14 +19,11 @@ import {
 } from "../../ui/Markdown/handlers/link";
 import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
 import { RequestAssistancePayload } from "../../ContextualHelp";
-import { fromNullable, Option } from "fp-ts/lib/Option";
 import { ScreenCHData } from "../../../../definitions/content/ScreenCHData";
 import { ContextualHelpData } from "../../ContextualHelp/ContextualHelpComponent";
 import Markdown from "../../ui/Markdown";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import React from "react";
-import { ContextualHelpProps, ContextualHelpPropsMarkdown } from "./index";
 import I18n from "../../../i18n";
+import { ContextualHelpProps, ContextualHelpPropsMarkdown } from "./index";
 
 /**
  * Run side-effects from the Instabug library based on the type of support.

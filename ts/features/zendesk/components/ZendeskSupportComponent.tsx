@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { useDispatch } from "react-redux";
+import { H3, View } from "native-base";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import {
   AnonymousIdentity,
@@ -27,7 +28,6 @@ import { zendeskSupportCompleted } from "../store/actions";
 import I18n from "../../../i18n";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../components/core/typography/Label";
-import { H3, View } from "native-base";
 import AdviceComponent from "../../../components/AdviceComponent";
 import { H4 } from "../../../components/core/typography/H4";
 import { zendeskConfigSelector } from "../store/reducers";

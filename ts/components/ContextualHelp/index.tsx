@@ -20,16 +20,16 @@ import { remoteUndefined } from "../../features/bonus/bpd/model/RemoteValue";
 import { FAQsCategoriesType, getFAQsFromCategories } from "../../utils/faq";
 import { instabugReportOpened } from "../../store/actions/debug";
 
+import {
+  getContextualHelpData,
+  reloadContextualHelpDataThreshold
+} from "../screens/BaseScreenComponent/utils";
 import SendSupportRequestOptions, {
   SupportRequestOptions
 } from "./SendSupportRequestOptions";
 import ContextualHelpComponent, {
   ContextualHelpData
 } from "./ContextualHelpComponent";
-import {
-  getContextualHelpData,
-  reloadContextualHelpDataThreshold
-} from "../screens/BaseScreenComponent/utils";
 
 export type RequestAssistancePayload = {
   supportType: BugReporting.reportType;
