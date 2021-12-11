@@ -1,25 +1,35 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import image from "../../../../img/servicesStatus/error-detail-icon.png";
+import image from "../../../../img/assistance/panicMode.png";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { cancelButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { useDispatch } from "react-redux";
+import { zendeskSupportCompleted } from "../store/actions";
 
-const ZendeskPanicMode = () => (
-  <SafeAreaView style={IOStyles.flex}>
-    <InfoScreenComponent
-      image={renderInfoRasterImage(image)}
-      title={I18n.t("bonus.sv.voucherGeneration.ko.checkIncome.title")}
-      body={I18n.t("bonus.sv.voucherGeneration.ko.checkIncome.body")}
-    />
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={cancelButtonProps(() => true, I18n.t("global.buttons.exit"))}
-    />
-  </SafeAreaView>
-);
+const ZendeskPanicMode = () => {
+  const dispatch = useDispatch();
+  const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
+
+  return (
+    <SafeAreaView style={IOStyles.flex}>
+      <InfoScreenComponent
+        image={renderInfoRasterImage(image)}
+        title={I18n.t("support.panicMode.title")}
+        body={I18n.t("support.panicMode.body")}
+      />
+      <FooterWithButtons
+        type="SingleButton"
+        leftButton={cancelButtonProps(
+          workUnitCompleted,
+          I18n.t("global.buttons.close")
+        )}
+      />
+    </SafeAreaView>
+  );
+};
 
 export default ZendeskPanicMode;
