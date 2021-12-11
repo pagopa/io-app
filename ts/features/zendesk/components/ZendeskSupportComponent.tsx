@@ -23,6 +23,9 @@ import { zendeskSupportCompleted } from "../features/zendesk/store/actions";
 import I18n from "../i18n";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
+import { H3, View } from "native-base";
+import AdviceComponent from "./AdviceComponent";
+import { H4 } from "./core/typography/H4";
 
 const ZendeskSupportComponent = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
@@ -74,6 +77,20 @@ const ZendeskSupportComponent = () => {
 
   return (
     <>
+      <H3>{I18n.t("instabug.contextualHelp.title1")}</H3>
+      <View spacer={true} />
+      <H4 weight={"Regular"}>
+        {
+          "Per richiedere assistenza o suggerire un miglioramento, scrivici: ti risponderemo il prima possibile."
+        }
+      </H4>
+      <View spacer={true} large={true} />
+      <AdviceComponent
+        text={
+          "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un Ente, contatta quest’ultimo. Troverai i riferimenti all’interno del messaggio o nella scheda del servizio in questione."
+        }
+      />
+      <View spacer={true} />
       <ButtonDefaultOpacity
         style={{
           alignSelf: "stretch"
@@ -86,7 +103,7 @@ const ZendeskSupportComponent = () => {
           {I18n.t("support.helpCenter.cta.contactSupport")}
         </Label>
       </ButtonDefaultOpacity>
-
+      <View spacer={true} />
       <ButtonDefaultOpacity
         onPress={() => {
           showSupportTickets();
