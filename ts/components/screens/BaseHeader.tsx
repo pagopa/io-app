@@ -22,6 +22,9 @@ import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import I18n from "../../i18n";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { assistanceToolRemoteConfig } from "../../utils/supportAssistance";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -229,9 +232,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       onShowHelp,
       isSearchAvailable,
       showInstabugChat,
-      customRightIcon
+      customRightIcon,
+      assistanceToolConfig
     } = this.props;
 
+    const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
     return (
       <Right>
         {isSearchAvailable?.enabled && (
@@ -240,9 +245,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onSearchTap={isSearchAvailable.onSearchTap}
           />
         )}
-        {!isSearchEnabled && showInstabugChat !== false && (
-          <InstabugChatsComponent />
-        )}
+        {!isSearchEnabled &&
+          showInstabugChat !== false &&
+          choosenTool === ToolEnum.instabug && <InstabugChatsComponent />}
 
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
@@ -310,7 +315,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
 const mapDispatchToProps = (_: Dispatch) => ({
