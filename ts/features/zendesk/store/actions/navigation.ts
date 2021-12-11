@@ -5,6 +5,10 @@ export const navigateToZendeskAskPermissions = () =>
   NavigationActions.navigate({
     routeName: ZENDESK_ROUTES.ASK_PERMISSIONS
   });
+export const navigateToZendeskPanicMode = () =>
+  NavigationActions.navigate({
+    routeName: ZENDESK_ROUTES.PANIC_MODE
+  });
 export const navigateToZendeskChooseCategory = () =>
   NavigationActions.navigate({
     routeName: ZENDESK_ROUTES.CHOOSE_CATEGORY

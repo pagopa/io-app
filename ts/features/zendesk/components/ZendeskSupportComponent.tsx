@@ -18,7 +18,10 @@ import {
 import { profileSelector } from "../../../store/reducers/profile";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { useIOSelector } from "../../../store/hooks";
-import { navigateToZendeskAskPermissions } from "../store/actions/navigation";
+import {
+  navigateToZendeskAskPermissions,
+  navigateToZendeskPanicMode
+} from "../store/actions/navigation";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { zendeskSupportCompleted } from "../store/actions";
 import I18n from "../../../i18n";
@@ -81,7 +84,7 @@ const ZendeskSupportComponent = () => {
   const handleContactSupportPress = () => {
     if (isPanicModeActive(zendeskRemoteConfig)) {
       // Go to panic mode screen
-      return;
+      navigation.navigate(navigateToZendeskPanicMode());
     } else {
       navigation.navigate(navigateToZendeskAskPermissions());
     }
