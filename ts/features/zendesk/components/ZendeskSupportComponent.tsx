@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { useDispatch } from "react-redux";
-import { zendeskTokenSelector } from "../store/reducers/authentication";
+import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import {
   AnonymousIdentity,
   initSupportAssistance,
@@ -13,19 +13,19 @@ import {
   ZendeskAppConfig,
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
-} from "../utils/supportAssistance";
-import { profileSelector } from "../store/reducers/profile";
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
-import { useIOSelector } from "../store/hooks";
-import { navigateToZendeskAskPermissions } from "../features/zendesk/store/actions/navigation";
-import { useNavigationContext } from "../utils/hooks/useOnFocus";
-import { zendeskSupportCompleted } from "../features/zendesk/store/actions";
-import I18n from "../i18n";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { Label } from "./core/typography/Label";
+} from "../../../utils/supportAssistance";
+import { profileSelector } from "../../../store/reducers/profile";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { useIOSelector } from "../../../store/hooks";
+import { navigateToZendeskAskPermissions } from "../store/actions/navigation";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { zendeskSupportCompleted } from "../store/actions";
+import I18n from "../../../i18n";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../components/core/typography/Label";
 import { H3, View } from "native-base";
-import AdviceComponent from "./AdviceComponent";
-import { H4 } from "./core/typography/H4";
+import AdviceComponent from "../../../components/AdviceComponent";
+import { H4 } from "../../../components/core/typography/H4";
 
 const ZendeskSupportComponent = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
