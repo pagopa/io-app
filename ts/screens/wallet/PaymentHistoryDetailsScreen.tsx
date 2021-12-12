@@ -118,7 +118,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     this.props.assistanceToolConfig
   );
 
-  handleAskAssistance = () => {
+  private handleAskAssistance = () => {
     switch (this.choosenTool) {
       case ToolEnum.instabug:
         this.instabugLogAndOpenReport();
@@ -357,7 +357,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 <View spacer={true} extralarge={true} />
               </React.Fragment>
             )}
-          {/* This check is redundant, in fact if you can't show the help here you can't get there */}
+          {/* This check is redundant, since if the help can't be shown the user can't get there */}
           {canShowHelp(this.choosenTool) && this.renderHelper()}
         </SlidedContentComponent>
       </BaseScreenComponent>
