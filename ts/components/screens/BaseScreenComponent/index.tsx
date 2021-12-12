@@ -26,12 +26,13 @@ import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import ContextualHelp, { RequestAssistancePayload } from "../../ContextualHelp";
 import { SearchType } from "../../search/SearchButton";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
-
-import { zendeskEnabled } from "../../../config";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIOSelector } from "../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
-import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
+import {
+  assistanceToolRemoteConfig,
+  canShowHelp
+} from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import {
   getContextualHelpConfig,
@@ -204,20 +205,17 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       switch (choosenTool) {
         case ToolEnum.zendesk:
           // TODO: remove local feature flag
-          if (zendeskEnabled) {
-            return () => {
-              dispatch(
-                zendeskSupportStart({
-                  // If contextualHelpConfig is undefined this function is not called
-                  faqCategories,
-                  contextualHelp,
-                  contextualHelpMarkdown,
-                  startingRoute: currentScreenName
-                })
-              );
-            };
-          }
-          return undefined;
+          return () => {
+            dispatch(
+              zendeskSupportStart({
+                // If contextualHelpConfig is undefined this function is not called
+                faqCategories,
+                contextualHelp,
+                contextualHelpMarkdown,
+                startingRoute: currentScreenName
+              })
+            );
+          };
         case ToolEnum.instabug:
           // TODO: remove instabug
           return () => showHelp();
@@ -229,10 +227,9 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       }
     };
 
-    // help can be shown only when remote FF is instabug or (zendesk + ff local)
-    const canShowHelp = (): boolean =>
-      contextualHelpConfig !== undefined && onShowHelp !== undefined;
-
+    // help button can be shown only when remote FF is instabug or (zendesk + ff local) and the contextualHelpConfig is defined
+    const canShowHelpButton: boolean =
+      canShowHelp(choosenTool) && contextualHelpConfig !== undefined;
     return (
       <Container>
         <BaseHeader
@@ -247,7 +244,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           goBack={goBack}
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
-          onShowHelp={canShowHelp() ? onShowHelp() : undefined}
+          onShowHelp={canShowHelpButton ? onShowHelp() : undefined}
           isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
