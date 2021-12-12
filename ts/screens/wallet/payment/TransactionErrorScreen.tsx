@@ -54,7 +54,10 @@ import {
 } from "../../../store/reducers/payments/history";
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
-import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
+import {
+  assistanceToolRemoteConfig,
+  canShowHelp
+} from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 
@@ -219,16 +222,13 @@ export const errorTransactionUIElements = (
     )
   ];
 
-  const canOpenAssistance =
-    choosenTool === ToolEnum.instabug || choosenTool === ToolEnum.zendesk;
-
   switch (errorMacro) {
     case "TECHNICAL":
       return {
         image,
         title: I18n.t("wallet.errors.TECHNICAL"),
         subtitle,
-        footerButtons: canOpenAssistance
+        footerButtons: canShowHelp(choosenTool)
           ? [...sendReportButtonConfirm, ...closeButtonCancel]
           : [...closeButtonCancel]
       };
@@ -237,7 +237,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.DATA"),
         subtitle,
-        footerButtons: canOpenAssistance
+        footerButtons: canShowHelp(choosenTool)
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
@@ -246,7 +246,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.EC"),
         subtitle,
-        footerButtons: canOpenAssistance
+        footerButtons: canShowHelp(choosenTool)
           ? [...sendReportButtonConfirm, ...closeButtonCancel]
           : [...closeButtonCancel]
       };
@@ -269,7 +269,7 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
           </H4>
         ),
-        footerButtons: canOpenAssistance
+        footerButtons: canShowHelp(choosenTool)
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
@@ -313,7 +313,7 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
           </H4>
         ),
-        footerButtons: canOpenAssistance
+        footerButtons: canShowHelp(choosenTool)
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
