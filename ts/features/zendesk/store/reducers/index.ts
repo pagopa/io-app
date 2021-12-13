@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { IndexedById, toIndexed } from "../../../../store/helpers/indexer";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import {
@@ -11,6 +12,7 @@ import {
 import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
 import { getZendeskConfig, zendeskSelectedCategory } from "../actions";
+import { GlobalState } from "../../../../store/reducers/types";
 
 type ZendeskValue = {
   panicMode: boolean;
@@ -20,6 +22,7 @@ type ZendeskValue = {
   };
 };
 export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
+
 export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
@@ -60,5 +63,16 @@ const reducer = (
   }
   return state;
 };
+
+export const zendeskConfigSelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.zendeskConfig],
+  (zendeskConfig: ZendeskConfig): ZendeskConfig => zendeskConfig
+);
+
+export const zendeskSelectedCategorySelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
+  (zendeskConfig: ZendeskCategory | undefined): ZendeskCategory | undefined =>
+    zendeskConfig
+);
 
 export default reducer;
