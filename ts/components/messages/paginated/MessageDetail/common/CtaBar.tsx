@@ -2,7 +2,6 @@ import { View as NBView } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
-
 import {
   getMessageCTA,
   isExpired,
@@ -14,11 +13,11 @@ import {
 } from "../../../../../store/reducers/entities/messages/types";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { UIService } from "../../../../../store/reducers/entities/services/types";
-import { CommonServiceMetadata } from "../../../../../../definitions/backend/CommonServiceMetadata";
 import ExtractedCTABar from "../../../../cta/ExtractedCTABar";
 import { useIODispatch } from "../../../../../store/hooks";
 import PaymentButton from "../../../PaymentButton";
 import CalendarEventButton from "../../../CalendarEventButton";
+import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
 
 type Props = {
   expirationInfo: MessagePaymentExpirationInfo;
@@ -26,7 +25,7 @@ type Props = {
   isPrescription: boolean;
   messageDetails: UIMessageDetails;
   service?: UIService;
-  serviceMetadata?: CommonServiceMetadata;
+  serviceMetadata?: ServiceMetadata;
 };
 
 const styles = StyleSheet.create({

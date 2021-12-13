@@ -5,18 +5,18 @@ import { StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import variables from "../../../../theme/variables";
 import {
   UIMessage,
   UIMessageDetails
 } from "../../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
-import variables from "../../../../theme/variables";
 import { getExpireStatus } from "../../../../utils/dates";
 import {
   cleanMarkdownFromCTAs,
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
-import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import OrganizationHeader from "../../../OrganizationHeader";
 import MessageMarkdown from "../../MessageMarkdown";
 import CtaBar from "./common/CtaBar";
@@ -41,7 +41,7 @@ type Props = Readonly<{
   messageDetails: UIMessageDetails;
   onServiceLinkPress?: () => void;
   organizationFiscalCode?: OrganizationFiscalCode;
-  serviceMetadata?: CommonServiceMetadata;
+  serviceMetadata?: ServiceMetadata;
   service?: UIService;
 }>;
 
