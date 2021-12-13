@@ -42,7 +42,8 @@ const projectToScope = new Map<string, string>([
   ["IASV", "Sicilia Vola"],
   ["IAGP", "EU Covid Certificate"],
   ["IARS", "Redesign Servizi"],
-  ["ASZ", "Zendesk"]
+  ["ASZ", "Zendesk"],
+  ["IAMVL", "Messaggi a valore legale"]
 ]);
 
 const cleanChangelogRegex =

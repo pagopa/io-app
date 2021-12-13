@@ -4,11 +4,9 @@ import { StyleSheet } from "react-native";
 
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import I18n from "../../../i18n";
-import ListSelectionBar from "../../ListSelectionBar";
-import { useItemsSelection } from "../../../utils/hooks/useItemsSelection";
 import { EmptyListComponent } from "../EmptyListComponent";
 
-import MessageList, { AnimatedProps } from "./MessageList";
+import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -20,39 +18,18 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  animated: AnimatedProps["animated"];
-  isActive: boolean;
-  messages: ReadonlyArray<UIMessage>;
-  navigateToMessageDetail: (id: string) => void;
-  setMessagesArchivedState: (
-    ids: ReadonlyArray<string>,
-    archived: boolean
-  ) => void;
+  navigateToMessageDetail: (message: UIMessage) => void;
 };
 
-const MessagesInbox = ({
-  animated,
-  messages,
-  navigateToMessageDetail,
-  setMessagesArchivedState
-}: Props) => {
-  const { selectedItems, toggleItem, setAllItems, resetSelection } =
-    useItemsSelection();
-
-  const toggleAllMessagesSelection = () => {
-    selectedItems.map(items =>
-      setAllItems(messages.length === items.size ? [] : messages.map(_ => _.id))
-    );
-  };
-
-  const archiveMessages = () => {
-    resetSelection();
-    const ids: Array<string> = selectedItems
-      .map(_ => Array.from(_))
-      .getOrElse([]);
-    setMessagesArchivedState(ids, true);
-  };
-
+/**
+ * Container for the message inbox.
+ * It looks redundant at the moment but will be used later on once we bring back
+ * states and filtering in the Messages.
+ *
+ * @param navigateToMessageDetail
+ * @constructor
+ */
+const MessagesInbox = ({ navigateToMessageDetail }: Props) => {
   const ListEmptyComponent = () => (
     <EmptyListComponent
       image={require("../../../../img/messages/empty-message-list-icon.png")}
@@ -65,32 +42,10 @@ const MessagesInbox = ({
     <View style={styles.listWrapper}>
       <View style={styles.listContainer}>
         <MessageList
-          onPressItem={(id: string) => {
-            if (selectedItems.isSome()) {
-              // Is the selection mode is active a simple "press" must act as
-              // a "longPress" (select the item).
-              toggleItem(id);
-            } else {
-              navigateToMessageDetail(id);
-            }
-          }}
-          onLongPressItem={toggleItem}
-          selectedMessageIds={selectedItems.toUndefined()}
+          onPressItem={navigateToMessageDetail}
           ListEmptyComponent={ListEmptyComponent}
-          animated={animated}
         />
       </View>
-
-      {selectedItems.isSome() && (
-        <ListSelectionBar
-          onResetSelection={resetSelection}
-          onToggleAllSelection={toggleAllMessagesSelection}
-          onToggleSelection={archiveMessages}
-          primaryButtonText={I18n.t("messages.cta.archive")}
-          selectedItems={selectedItems.map(_ => _.size).getOrElse(0)}
-          totalItems={messages.length}
-        />
-      )}
     </View>
   );
 };

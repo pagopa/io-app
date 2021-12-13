@@ -10,14 +10,7 @@ import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
-import {
-  bpdApiSitUrlPrefix,
-  bpdApiUatUrlPrefix,
-  bpdApiUrlPrefix,
-  bpdTestOverlay,
-  cgnTestOverlay,
-  shouldDisplayVersionInfoOverlay
-} from "./config";
+import { shouldDisplayVersionInfoOverlay, testOverlayCaption } from "./config";
 
 import { setLocale } from "./i18n";
 import AppNavigator from "./navigation/AppNavigator";
@@ -35,6 +28,7 @@ import { preferredLanguageSelector } from "./store/reducers/persistedPreferences
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 import { getCurrentRouteName } from "./utils/navigation";
+import { isStringNullyOrEmpty } from "./utils/strings";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -134,13 +128,6 @@ class RootContainer extends React.PureComponent<Props> {
 
     // if we have no information about the backend, don't force the update
 
-    const bpdEndpointStr =
-      bpdApiUrlPrefix === bpdApiSitUrlPrefix
-        ? "SIT"
-        : bpdApiUrlPrefix === bpdApiUatUrlPrefix
-        ? "UAT"
-        : "PROD";
-
     return (
       <Root>
         <StatusBar barStyle={"dark-content"} />
@@ -158,13 +145,10 @@ class RootContainer extends React.PureComponent<Props> {
           }}
         />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
-        {cgnTestOverlay && (
-          <BetaTestingOverlay title="🛠️ CGN TEST VERSION 🛠️" />
-        )}
-        {bpdTestOverlay && (
+        {!isStringNullyOrEmpty(testOverlayCaption) && (
           <BetaTestingOverlay
-            title="🛠️ BPD TEST VERSION 🛠️"
-            body={bpdEndpointStr}
+            title={`🛠️ TEST VERSION 🛠️`}
+            body={testOverlayCaption}
           />
         )}
         <RootModal />

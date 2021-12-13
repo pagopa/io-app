@@ -17,6 +17,7 @@ import I18n from "../../../i18n";
 import { IOColors } from "../../core/variables/IOColors";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
+import { getPaypalAccountEmail } from "../../../utils/paypal";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
@@ -106,6 +107,14 @@ const extractInfoFromPaymentMethod = (
         logo: satispayLogo,
         title: paymentMethod.kind,
         description: nameSurname,
+        bottomSheetTitle: arrivingBottomSheetTitle(),
+        bottomSheetBody: arrivingBottomSheetBody()
+      };
+    case "PayPal":
+      return {
+        logo: paymentMethod.icon,
+        title: paymentMethod.kind,
+        description: getPaypalAccountEmail(paymentMethod.info),
         bottomSheetTitle: arrivingBottomSheetTitle(),
         bottomSheetBody: arrivingBottomSheetBody()
       };

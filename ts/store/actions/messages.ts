@@ -12,13 +12,27 @@ import {
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
-import { UIMessage } from "../reducers/entities/messages/types";
+import {
+  UIMessage,
+  UIMessageDetails,
+  UIMessageId
+} from "../reducers/entities/messages/types";
 import { Cursor } from "../reducers/entities/messages/allPaginated";
 
 /**
  * Load a single message's details given its ID
  */
-export const loadMessage = createAsyncAction(
+export const loadMessageDetails = createAsyncAction(
+  "MESSAGE_DETAILS_LOAD_REQUEST",
+  "MESSAGE_DETAILS_LOAD_SUCCESS",
+  "MESSAGE_DETAILS_LOAD_FAILURE"
+)<{ id: UIMessageId }, UIMessageDetails, { id: string; error: Error }>();
+
+/**
+ * Load a single message's details given its content
+ * @deprecated use loadMessageDetails instead
+ */
+export const DEPRECATED_loadMessage = createAsyncAction(
   "MESSAGE_LOAD_REQUEST",
   "MESSAGE_LOAD_SUCCESS",
   "MESSAGE_LOAD_FAILURE"
@@ -76,7 +90,7 @@ export const reloadAllMessages = createAsyncAction(
   "MESSAGES_RELOAD_REQUEST",
   "MESSAGES_RELOAD_SUCCESS",
   "MESSAGES_RELOAD_FAILURE"
-)<void, ReloadMessagesPayload, Error>();
+)<Pick<LoadMessagesRequestPayload, "pageSize">, ReloadMessagesPayload, Error>();
 
 /**
  *  @deprecated Please use actions with pagination instead
@@ -102,11 +116,12 @@ export const setMessagesArchivedState = createAction(
 );
 
 export type MessagesActions =
-  | ActionType<typeof loadMessage>
+  | ActionType<typeof DEPRECATED_loadMessage>
   | ActionType<typeof loadMessageWithRelations>
   | ActionType<typeof reloadAllMessages>
   | ActionType<typeof loadNextPageMessages>
   | ActionType<typeof loadPreviousPageMessages>
+  | ActionType<typeof loadMessageDetails>
   | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
   | ActionType<typeof setMessageReadState>

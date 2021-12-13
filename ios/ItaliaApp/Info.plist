@@ -34,7 +34,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>1</string>
+    <string>6</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -66,7 +66,7 @@
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
     <key>NSCalendarsUsageDescription</key>
-    <string>IO needs access to the calendar to add event reminders</string>
+    <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
     <key>NSCameraUsageDescription</key>
     <string>You’ll be able to read QR codes and pay pagoPA notices.</string>
     <key>NSContactsUsageDescription</key>

@@ -1901,6 +1901,81 @@
         ]
       }
     },
+    "/v2/payments/{idPayment}/psps": {
+      "get": {
+        "tags": [
+          "payments-v-2-controller"
+        ],
+        "summary": "getPspListV2",
+        "operationId": "getPspListV2UsingGET",
+        "parameters": [
+          {
+            "name": "idPayment",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idWallet",
+            "in": "query",
+            "description": "idWallet",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cellphoneNumber",
+            "in": "query",
+            "description": "cellphoneNumber",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "externalPsId",
+            "in": "query",
+            "description": "externalPsId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "isList",
+            "in": "query",
+            "description": "isList",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PspDataListResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
     "/v3/paypal/searchPSP": {
       "get": {
         "tags": [
@@ -2479,6 +2554,45 @@
       },
       "title": "PaymentResponse"
     },
+    "PayPalInfo": {
+      "type": "object",
+      "required": [
+        "pspInfo"
+      ],
+      "properties": {
+        "pspInfo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PayPalAccountPspInfo"
+          }
+        }
+      },
+      "title": "PayPal"
+    },
+    "PayPalAccountPspInfo": {
+      "type": "object",
+      "required": [
+        "abi",
+        "default",
+        "email",
+        "ragioneSociale"
+      ],
+      "properties": {
+        "abi": {
+          "type": "string"
+        },
+        "default": {
+          "type": "boolean"
+        },
+        "email": {
+          "type": "string"
+        },
+        "ragioneSociale": {
+          "type": "string"
+        }
+      },
+      "title": "PayPalAccountPspInfo"
+    },
     "PayPalPsp": {
       "type": "object",
       "required": [
@@ -2643,6 +2757,67 @@
         }
       },
       "title": "Psp"
+    },
+    "PspDataListResponse": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "allowEmptyValue": false,
+          "items": {
+            "$ref": "#/definitions/PspData"
+          }
+        }
+      },
+      "title": "PspDataListResponse"
+    },
+    "PspData": {
+      "type": "object",
+      "required": [
+        "codiceAbi",
+        "defaultPsp",
+        "fee",
+        "idPsp",
+        "onboard",
+        "privacyUrl",
+        "ragioneSociale"
+      ],
+      "properties": {
+        "codiceAbi": {
+          "type": "string",
+          "allowEmptyValue": false
+        },
+        "defaultPsp": {
+          "type": "boolean",
+          "example": false,
+          "allowEmptyValue": false
+        },
+        "fee": {
+          "type": "integer",
+          "allowEmptyValue": false
+        },
+        "idPsp": {
+          "type": "string",
+          "allowEmptyValue": false
+        },
+        "onboard": {
+          "type": "boolean",
+          "example": false,
+          "allowEmptyValue": false
+        },
+        "privacyUrl": {
+          "type": "string",
+          "allowEmptyValue": false
+        },
+        "ragioneSociale": {
+          "type": "string",
+          "allowEmptyValue": false
+        }
+      },
+      "title": "PspData"
     },
     "PspListResponseCD": {
       "type": "object",
@@ -3196,6 +3371,12 @@
         "satispay": {
           "$ref": "#/definitions/Satispay"
         },
+        "payPals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PayPalInfo"
+          }
+        },
         "saved": {
           "type": "boolean"
         },
@@ -3215,7 +3396,8 @@
           "enum": [
             "CREDIT_CARD",
             "BANK_ACCOUNT",
-            "EXTERNAL_PS"
+            "EXTERNAL_PS",
+            "PAYPAL"
           ]
         }
       },
@@ -3298,7 +3480,9 @@
             "Card",
             "Bancomat",
             "Satispay",
-            "BPay"
+            "BPay",
+            "Generic",
+            "PayPal"
           ]
         }
       },

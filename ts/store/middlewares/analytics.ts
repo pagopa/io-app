@@ -46,7 +46,7 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  loadMessage,
+  DEPRECATED_loadMessage,
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
   setMessageReadState
@@ -252,7 +252,7 @@ const trackAction =
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
-      case getType(loadMessage.failure):
+      case getType(DEPRECATED_loadMessage.failure):
       case getType(logoutFailure):
         return mp.track(action.type, {
           reason: action.payload.error.message
@@ -371,7 +371,7 @@ const trackAction =
       //  profile First time Login
       case getType(profileFirstLogin):
       // other
-      case getType(loadMessage.success):
+      case getType(DEPRECATED_loadMessage.success):
       case getType(updateNotificationsInstallationToken):
       case getType(notificationsInstallationTokenRegistered):
       case getType(loadAllBonusActivations.request):

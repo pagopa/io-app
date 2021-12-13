@@ -1,43 +1,49 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
+  Animated,
   FlatList,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
   RefreshControl,
   StyleSheet,
   Vibration
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
+
 import { pageSize } from "../../../../config";
-import { loadNextPageMessages } from "../../../../store/actions/messages";
-import { navigateToMessageRouterScreen } from "../../../../store/actions/navigation";
+import I18n from "../../../../i18n";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../../../store/actions/messages";
 import { Dispatch } from "../../../../store/actions/types";
 import {
   allPaginatedMessagesSelector,
   Cursor,
   isLoadingNextPage,
-  isLoadingPreviousPage
+  isLoadingPreviousPage,
+  isReloading
 } from "../../../../store/reducers/entities/messages/allPaginated";
 import { MessageState } from "../../../../store/reducers/entities/messages/messagesById";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
-
 import { GlobalState } from "../../../../store/reducers/types";
 import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../../../theme/variables";
-
+import { showToast } from "../../../../utils/showToast";
 import { isIos } from "../../../../utils/platform";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
-import { ErrorLoadingComponent } from "../../ErrorLoadingComponent";
+import { isNoticePaid } from "../../../../store/reducers/entities/payments";
+import { getMessageStatus } from "../../../../store/reducers/entities/messages/messagesStatus";
 import {
   AnimatedFlatList,
+  EmptyComponent,
   generateItemLayout,
   ITEM_HEIGHT,
   ItemSeparator,
+  renderEmptyList,
   renderItem
 } from "./helpers";
 
@@ -74,29 +80,44 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
-  ListEmptyComponent?: React.ComponentProps<
-    typeof FlatList
-  >["ListEmptyComponent"];
+  ListEmptyComponent?: EmptyComponent;
 
   /** This list is used instead of the messages from the store */
   filteredMessages?: ReadonlyArray<UIMessage>;
 
   onLongPressItem?: (id: string) => void;
-  onPressItem?: (id: string) => void;
+  onPressItem?: (message: UIMessage) => void;
 
   /** An optional list of messages to mark as selected */
   selectedMessageIds?: ReadonlySet<string>;
 };
 
-export type AnimatedProps = {
-  animated?: {
-    onScroll: (_: NativeSyntheticEvent<NativeScrollEvent>) => void;
-    scrollEventThrottle?: number;
-  };
+const Loader = () => (
+  <ActivityIndicator
+    animating={true}
+    size={"large"}
+    style={styles.activityIndicator}
+    color={customVariables.brandPrimary}
+    accessible={true}
+    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
+    importantForAccessibility={"no-hide-descendants"}
+    testID={"activityIndicator"}
+  />
+);
+
+const animated = {
+  onScroll: Animated.event([
+    {
+      nativeEvent: {
+        contentOffset: { y: new Animated.Value(0) }
+      }
+    }
+  ]),
+  scrollEventThrottle: 8
 };
 
 type Props = OwnProps &
-  AnimatedProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -117,22 +138,25 @@ type Props = OwnProps &
  */
 const MessageList = ({
   ListEmptyComponent,
-  animated,
   filteredMessages,
   onLongPressItem,
+  hasPaidBadge,
 
-  onPressItem = (_: string) => undefined,
+  onPressItem = (_: UIMessage) => undefined,
   selectedMessageIds,
 
   // extracted from the store
+  allMessages,
   error,
+  getMessageStatus,
   isLoadingMore,
   isRefreshing,
+  isReloadingAll,
   loadNextPage,
   loadPreviousPage,
-  allMessages,
   nextCursor,
-  previousCursor
+  previousCursor,
+  reloadAll
 }: Props) => {
   const messages = filteredMessages ?? allMessages;
 
@@ -143,11 +167,11 @@ const MessageList = ({
 
   const [isFirstLoad, setIsFirstLoad] = useState(isIos);
 
-  const onEndReached = () => {
-    if (nextCursor && !isLoadingMore) {
-      loadNextPage(nextCursor);
+  useEffect(() => {
+    if (error) {
+      showToast(I18n.t("global.genericError"), "warning");
     }
-  };
+  }, [error]);
 
   const scrollTo = (index: number, animated: boolean = false) => {
     if (flatListRef.current && messages.length > 0) {
@@ -162,7 +186,7 @@ const MessageList = ({
     }
   };
 
-  const onLongPress = (id: string) => {
+  const onLongPress = ({ id }: UIMessage) => {
     if (!onLongPressItem) {
       return;
     }
@@ -175,6 +199,12 @@ const MessageList = ({
     }
   };
 
+  const onEndReached = () => {
+    if (nextCursor && !isLoadingMore) {
+      loadNextPage(nextCursor);
+    }
+  };
+
   const refreshControl = (
     <RefreshControl
       refreshing={isRefreshing}
@@ -182,45 +212,53 @@ const MessageList = ({
         if (isRefreshing) {
           return;
         }
+
         if (isFirstLoad) {
           setIsFirstLoad(false);
         }
-        if (previousCursor) {
+        if (messages.length === 0) {
+          reloadAll();
+        } else if (previousCursor !== undefined) {
           loadPreviousPage(previousCursor);
         }
       }}
     />
   );
 
+  const renderListFooter = () => {
+    if (isLoadingMore || isReloadingAll) {
+      return <Loader />;
+    }
+    if (messages.length > 0 && !nextCursor) {
+      return <EdgeBorderComponent />;
+    }
+    return null;
+  };
+
   return (
     <>
-      <NavigationEvents onWillFocus={() => scrollTo(0)} />
       {/* in iOS refresh indicator is shown only when user does pull to refresh on list
           so only for iOS devices the ActivityIndicator is shown in place of RefreshControl
           see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load
           see https://github.com/facebook/react-native/issues/15892
         */}
-      {isRefreshing && isFirstLoad && (
-        <ActivityIndicator animating={true} style={styles.activityIndicator} />
-      )}
+      {isRefreshing && isFirstLoad && <Loader />}
 
       <AnimatedFlatList
         ItemSeparatorComponent={ItemSeparator}
-        ListEmptyComponent={
-          error !== undefined ? (
-            <ErrorLoadingComponent />
-          ) : (
-            <ListEmptyComponent />
-          )
-        }
+        ListEmptyComponent={renderEmptyList({
+          error,
+          EmptyComponent: ListEmptyComponent
+        })}
         data={messages}
-        initialNumToRender={10}
+        initialNumToRender={pageSize}
         keyExtractor={(message: UIMessage): string => message.id}
         ref={flatListRef}
         refreshControl={refreshControl}
         refreshing={isRefreshing}
         renderItem={renderItem({
-          isRead: false, // TODO: likely an information to be added on the BE
+          hasPaidBadge,
+          getMessageStatus,
           onLongPress,
           onPress: onPressItem,
           selectedMessageIds
@@ -232,16 +270,12 @@ const MessageList = ({
           generateItemLayout(messages.length)(index)
         }
         onScroll={(...args) => {
-          if (animated) {
-            animated.onScroll(...args);
-          }
+          animated.onScroll(...args);
         }}
         onLayout={handleOnLayoutChange}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={
-          messages.length > 0 && !nextCursor && <EdgeBorderComponent />
-        }
+        onEndReachedThreshold={0.1}
+        ListFooterComponent={renderListFooter}
       />
     </>
   );
@@ -265,25 +299,37 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     allMessages,
-    nextCursor,
-    previousCursor,
+    getMessageStatus: (id: string) => getMessageStatus(state, id),
     error,
+    hasPaidBadge: (category: UIMessage["category"]) =>
+      isNoticePaid(state, category),
     isLoadingMore: isLoadingNextPage(state),
-    isRefreshing: isLoadingPreviousPage(state)
+    isRefreshing: isLoadingPreviousPage(state),
+    isReloadingAll: isReloading(state),
+    nextCursor,
+    previousCursor
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  /**
+   * Perform a complete refresh of the page, discarding the existing state.
+   */
+  reloadAll: () => {
+    dispatch(reloadAllMessages.request({ pageSize }));
+  },
+
   loadNextPage: (cursor: Cursor) => {
     dispatch(loadNextPageMessages.request({ pageSize, cursor }));
   },
+
+  /**
+   * We load the maximum amount of messages because we don't actually support
+   * true backwards pagination. Is just to refresh the data.
+   */
   loadPreviousPage: (cursor: Cursor) => {
-    // We load the maximum amount of messages because we don't actually support
-    // true backwards pagination. Is just to refresh the data.
-    dispatch(loadNextPageMessages.request({ pageSize: 100, cursor }));
-  },
-  navigateToMessageDetail: (messageId: string) =>
-    navigateToMessageRouterScreen({ messageId })
+    dispatch(loadPreviousPageMessages.request({ pageSize: 100, cursor }));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

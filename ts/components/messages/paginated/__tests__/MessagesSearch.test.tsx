@@ -4,12 +4,12 @@ import { render } from "@testing-library/react-native";
 import {
   service_1,
   service_2,
-  successPayload
+  successReloadMessagesPayload
 } from "../../../../__mocks__/messages";
 import I18n from "../../../../i18n";
 import MessagesSearch from "../MessagesSearch";
 
-const messages = successPayload.messages;
+const messages = successReloadMessagesPayload.messages;
 
 describe("MessagesSearch component", () => {
   describe("when there are no messages", () => {

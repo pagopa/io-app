@@ -243,6 +243,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         {!isSearchEnabled && showInstabugChat !== false && (
           <InstabugChatsComponent />
         )}
+
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
         )}
