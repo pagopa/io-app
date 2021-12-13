@@ -77,10 +77,10 @@ export const euCovidCertificateEnabled: boolean =
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
 // Paypal configuration
-export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
+export const payPalEnabled: boolean = true;
 
 // Zendesk Feature Flag
-export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
+export const zendeskEnabled: boolean = true;
 
 // Paginated messages
 export const usePaginatedMessages: boolean =

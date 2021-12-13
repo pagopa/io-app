@@ -20,6 +20,7 @@ import DeviceIcon from "../../../../img/assistance/telefonia.svg";
 import LoginIcon from "../../../../img/assistance/login.svg";
 import BugIcon from "../../../../img/assistance/ladybug.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
+import StockIcon from "../../../../img/assistance/giacenza.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
 import { idpSelector } from "../../../store/reducers/authentication";
@@ -35,6 +36,7 @@ import { getAppVersion } from "../../../utils/appVersion";
 import { zendeskSupportCancel } from "../store/actions";
 
 type Item = {
+  id?: string;
   icon: ReactNode;
   title: string;
   value?: string;
@@ -69,6 +71,12 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     value: props.email
   },
   {
+    id: "paymentIssues",
+    icon: <StockIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.stock"),
+    value: I18n.t("support.askPermissions.stockValue")
+  },
+  {
     icon: <DeviceIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.deviceAndOS"),
     value: props.deviceDescription
@@ -89,8 +97,8 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   },
   {
     icon: <BugIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.diagnosticData"),
-    value: I18n.t("support.askPermissions.diagnosticDataValue")
+    title: I18n.t("support.askPermissions.navigationData"),
+    value: I18n.t("support.askPermissions.navigationDataValue")
   }
 ];
 
@@ -118,6 +126,8 @@ const ItemComponent = (props: Item) => (
  * @constructor
  */
 const ZendeskAskPermissions = () => {
+  // TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
+  const assistanceForPayment = false;
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
@@ -153,7 +163,10 @@ const ZendeskAskPermissions = () => {
     onPress: () => navigation.navigate(navigateToZendeskChooseCategory()), // TODO: if is not possible to get the category open a ticket request
     title: I18n.t("support.askPermissions.cta.allow")
   };
-  const items = getItems(itemsProps);
+  // if user is not asking assistance for a payment, remove the related item from those ones shown
+  const items = getItems(itemsProps).filter(it =>
+    !assistanceForPayment ? it.id !== "paymentIssues" : true
+  );
   return (
     <BaseScreenComponent
       showInstabugChat={false}
