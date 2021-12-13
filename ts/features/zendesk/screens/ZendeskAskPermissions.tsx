@@ -139,7 +139,7 @@ const ItemComponent = (props: Item) => (
  */
 const ZendeskAskPermissions = () => {
   // TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
-  const assistanceForPayment = true;
+  const assistanceForPayment = false;
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
@@ -176,17 +176,17 @@ const ZendeskAskPermissions = () => {
     onPress: () => navigation.navigate(navigateToZendeskChooseCategory()), // TODO: if is not possible to get the category open a ticket request
     title: I18n.t("support.askPermissions.cta.allow")
   };
-  const items = getItems(itemsProps)
+  const itemsToRemove: ReadonlyArray<string> = [
     // if user is not asking assistance for a payment, remove the related items from those ones shown
-    .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
+    ...(!assistanceForPayment ? ["paymentIssues"] : []),
     // if user is not logged in, remove the items related to his/her profile
-    .filter(it =>
-      isUserLoggedIn
-        ? true
-        : !["profileNameSurname", "profileFiscalCode", "profileEmail"].includes(
-            it.id ?? ""
-          )
-    );
+    ...(!isUserLoggedIn
+      ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
+      : [])
+  ];
+  const items = getItems(itemsProps)
+    .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
+    .filter(it => !itemsToRemove.includes(it.id ?? ""));
   return (
     <BaseScreenComponent
       showInstabugChat={false}
