@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.38.0-rc.7](https://github.com/pagopa/io-app/compare/1.38.0-rc.6...1.38.0-rc.7) (2021-12-13)
+
+
+### Features
+
+* [[IA-301](https://pagopa.atlassian.net/browse/IA-301),[IA-302](https://pagopa.atlassian.net/browse/IA-302),[IA-479](https://pagopa.atlassian.net/browse/IA-479),[IA-506](https://pagopa.atlassian.net/browse/IA-506)] Track Paypal onboarding & payment events ([#3536](https://github.com/pagopa/io-app/issues/3536)) ([4ea4f8e](https://github.com/pagopa/io-app/commit/4ea4f8e47f72ca46e7e73d3a1d4b855f7158949e))
+
+
+### Chores
+
+* [[IA-439](https://pagopa.atlassian.net/browse/IA-439)] Fixes timestamp visualization on MessageDetailScreen ([#3562](https://github.com/pagopa/io-app/issues/3562)) ([9f1a0d7](https://github.com/pagopa/io-app/commit/9f1a0d71682e72102960c7ec8020c3beb5c983d2))
+* Revert "set Paypal feature flag ON" ([#3570](https://github.com/pagopa/io-app/issues/3570)) ([eda342a](https://github.com/pagopa/io-app/commit/eda342abbc22ed43846fd38fc09e3eba99fd54ae))
+* set CGN Feature flag ON ([373e4f8](https://github.com/pagopa/io-app/commit/373e4f85797a1de0f78cf2a9bb7e267d0dee8cd5))
+* **Redesign Servizi:** [[IARS-44](https://pagopa.atlassian.net/browse/IARS-44)] Handles "Special" services category inside service detail screen ([#3480](https://github.com/pagopa/io-app/issues/3480)) ([adacd33](https://github.com/pagopa/io-app/commit/adacd3354c60595e5912ff4029eb7f58703e56c1))
+
 ## [1.38.0-rc.6](https://github.com/pagopa/io-app/compare/1.38.0-rc.5...1.38.0-rc.6) (2021-12-10)
 
 
