@@ -3,21 +3,14 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
-import variables from "../../../../theme/variables";
 import {
   UIMessage,
   UIMessageDetails
 } from "../../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
-import { getExpireStatus } from "../../../../utils/dates";
-import {
-  cleanMarkdownFromCTAs,
-  MessagePaymentExpirationInfo
-} from "../../../../utils/messages";
 import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../../../utils/messages";
 import OrganizationHeader from "../../../OrganizationHeader";

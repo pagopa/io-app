@@ -18,17 +18,9 @@ import {
   isExpired,
   MessagePaymentExpirationInfo
 } from "../../../../../utils/messages";
-import {
-  PaymentData,
-  UIMessageDetails
-} from "../../../../../store/reducers/entities/messages/types";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { UIService } from "../../../../../store/reducers/entities/services/types";
 import ExtractedCTABar from "../../../../cta/ExtractedCTABar";
 import CalendarEventButton from "../../../CalendarEventButton";
 import PaymentButton from "../../../PaymentButton";
-import CalendarEventButton from "../../../CalendarEventButton";
-import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
 
 type Props = {
   isPaid: boolean;
