@@ -129,7 +129,7 @@ const ServiceDetailsScreen = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      goBack={props.navigation.goBack}
+      goBack={() => props.navigation.goBack()}
       headerTitle={I18n.t("serviceDetail.headerTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["services_detail"]}

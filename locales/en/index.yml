@@ -2907,7 +2907,9 @@ support:
       allow: "Allow"
       denies: "Do not allow"
   chooseCategory:
-    header: "Contact support"
+    header: "Write us"
     title:
       category: "Select a topic"
-      subCategory: "What is it about?"
+      subCategory: "Can you give us more details?"
+    subTitle:
+      category: "Help us better understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
