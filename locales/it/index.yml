@@ -2926,8 +2926,8 @@ support:
   helpCenter:
     header: "IO ti aiuto"
     cta:
-      contactSupport: "Contatta l'assistenza"
-      seeReports: "Vedi segnalazioni in corso"
+      contactSupport: "Scrivici"
+      seeReports: "Vedi le tue richieste"
     supportComponent:
       title: "Hai bisogno d’aiuto?"
       subtitle: "Per richiedere assistenza o suggerire un miglioramento, scrivici: ti risponderemo il prima possibile."
