@@ -1,5 +1,4 @@
 import { call, put } from "redux-saga/effects";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { Option } from "fp-ts/lib/Option";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
@@ -18,6 +17,7 @@ import {
 import { PayPalPsp as NetworkPsp } from "../../../../../../../definitions/pagopa/PayPalPsp";
 import { IOPayPalPsp } from "../../types";
 import { getPayPalPspIconUrl } from "../../../../../../utils/paymentMethod";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 
 // convert a paypal psp returned by the API into the app domain model
 const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
@@ -61,7 +61,7 @@ export function* handlePaypalSearchPsp(
       yield put(
         searchPaypalPsp.failure(
           getGenericError(
-            new Error(readableReport(searchPayPalPspRequest.value))
+            new Error(readablePrivacyReport(searchPayPalPspRequest.value))
           )
         )
       );

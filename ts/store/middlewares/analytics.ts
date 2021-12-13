@@ -11,6 +11,7 @@ import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
+import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
@@ -165,14 +166,22 @@ const trackAction =
       case getType(loadMessages.success):
       // end pay webview Payment (payment + onboarding credit card) actions (with properties)
       case getType(addCreditCardWebViewEnd):
-      case getType(paymentWebViewEnd):
         return mp.track(action.type, {
           exitType: action.payload
         });
-      case getType(addCreditCardOutcomeCode):
       case getType(paymentOutcomeCode):
         return mp.track(action.type, {
+          outCome: action.payload.outcome.getOrElse(""),
+          paymentMethodType: action.payload.paymentMethodType
+        });
+      case getType(addCreditCardOutcomeCode):
+        return mp.track(action.type, {
           outCome: action.payload.getOrElse("")
+        });
+      case getType(paymentWebViewEnd):
+        return mp.track(action.type, {
+          exitType: action.payload.reason,
+          paymentMethodType: action.payload.paymentMethodType
         });
       //
       // Payment actions (with properties)
@@ -424,6 +433,7 @@ export const actionTracking =
       void trackContentAction(mixpanel)(action);
       void trackServiceAction(mixpanel)(action);
       void trackEuCovidCertificateActions(mixpanel)(action);
+      void trackPaypalOnboarding(mixpanel)(action);
     }
     return next(action);
   };
