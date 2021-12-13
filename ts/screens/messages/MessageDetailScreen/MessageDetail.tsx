@@ -7,8 +7,7 @@ import MessageDetailComponent from "../../../components/messages/MessageDetailCo
 import I18n from "../../../i18n";
 import { PaymentByRptIdState } from "../../../store/reducers/entities/payments";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { CommonServiceMetadata } from "../../../../definitions/backend/CommonServiceMetadata";
-
+import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import ErrorState from "./ErrorState";
 
 type Props = {
@@ -22,7 +21,7 @@ type Props = {
   onServiceLinkPressHandler: (id: string) => void;
   paymentsByRptId: PaymentByRptIdState;
   service?: ServicePublic;
-  maybeServiceMetadata?: CommonServiceMetadata;
+  maybeServiceMetadata?: ServiceMetadata;
 };
 
 const styles = StyleSheet.create({

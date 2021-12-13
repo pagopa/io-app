@@ -180,8 +180,9 @@ export default function outcomeCodeReducer(
   action: Action
 ): OutcomeCodeState {
   switch (action.type) {
-    case getType(addCreditCardOutcomeCode):
     case getType(paymentOutcomeCode):
+      return { outcomeCode: extractOutcomeCode(action.payload.outcome) };
+    case getType(addCreditCardOutcomeCode):
       return { outcomeCode: extractOutcomeCode(action.payload) };
     case getType(resetLastPaymentOutcomeCode):
       return initialOutcomeCodeState;
