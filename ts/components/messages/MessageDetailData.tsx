@@ -11,7 +11,7 @@ import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
-import { CommonServiceMetadata } from "../../../definitions/backend/CommonServiceMetadata";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   serviceDetail: Option<ServicePublic>;
-  serviceMetadata?: CommonServiceMetadata;
+  serviceMetadata?: ServiceMetadata;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
 }>;
@@ -44,7 +44,7 @@ type MessageData = {
   service_detail: Option<ServicePublic>;
   organization_name: Option<string>;
   service_name: Option<string>;
-  metadata: Option<CommonServiceMetadata>;
+  metadata: Option<ServiceMetadata>;
 };
 
 /**
