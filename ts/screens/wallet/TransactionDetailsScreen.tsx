@@ -203,16 +203,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
-          <Link
-            onPress={this.handleOnFullReasonPress}
-            accessible
-            accessibilityRole={"button"}
-            accessibilityLabel={`${I18n.t("wallet.transactionFullReason")} ${
-              this.state.showFullReason
-                ? I18n.t("global.accessibility.expanded")
-                : I18n.t("global.accessibility.collapsed")
-            }`}
-          >
+          <Link onPress={this.handleOnFullReasonPress}>
             {I18n.t("wallet.transactionFullReason")}
           </Link>
           {this.state.showFullReason && (
