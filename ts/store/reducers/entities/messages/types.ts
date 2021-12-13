@@ -1,27 +1,30 @@
+import { IUnitTag } from "@pagopa/ts-commons/lib/units";
+import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
+import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
+import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
+import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
+import { PaymentNoticeNumber } from "../../../../../definitions/backend/PaymentNoticeNumber";
+import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
-import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
-import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
-import { PaymentNoticeNumber } from "../../../../../definitions/backend/PaymentNoticeNumber";
-import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
-import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 
-// just a placeholder for now
-export type MessageCategory = null;
+/**
+ * The unique ID of a UIMessage and UIMessageDetails, used to avoid passing the wrong ID as parameters
+ */
+export type UIMessageId = string & IUnitTag<"UIMessageId">;
+
+export type WithUIMessageId<T> = T & {
+  id: UIMessageId;
+};
 
 /**
  * Domain-specific representation of a Message with aggregated data.
  */
-export type UIMessage = {
-  id: string;
+export type UIMessage = WithUIMessageId<{
   fiscalCode: FiscalCode;
-
-  // TODO:  https://pagopa.atlassian.net/browse/IA-417
-  //        and https://pagopa.atlassian.net/browse/IA-418
   category: MessageCategory;
-
   createdAt: Date;
   serviceId: ServiceId;
   serviceName: string;
@@ -31,13 +34,12 @@ export type UIMessage = {
 
   // @deprecated please use it only for backward compatibility
   raw: PublicMessage;
-};
+}>;
 
 /**
  * Domain-specific representation of a Message details
  */
-export type UIMessageDetails = {
-  id: string;
+export type UIMessageDetails = WithUIMessageId<{
   prescriptionData?: PrescriptionData;
   attachments?: ReadonlyArray<Attachment>;
   markdown: MessageBodyMarkdown;
@@ -47,7 +49,7 @@ export type UIMessageDetails = {
 
   // @deprecated please use it only for backward compatibility
   raw: CreatedMessageWithContentAndAttachments;
-};
+}>;
 
 export type PrescriptionData = {
   nre: string;

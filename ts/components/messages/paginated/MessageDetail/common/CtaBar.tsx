@@ -2,30 +2,30 @@ import { View as NBView } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
-
-import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
 import {
   getMessageCTA,
   isExpired,
   MessagePaymentExpirationInfo
-} from "../../../../utils/messages";
+} from "../../../../../utils/messages";
 import {
   PaymentData,
   UIMessageDetails
-} from "../../../../store/reducers/entities/messages/types";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { UIService } from "../../../../store/reducers/entities/services/types";
-import ExtractedCTABar from "../../../cta/ExtractedCTABar";
-import { useIODispatch } from "../../../../store/hooks";
-import PaymentButton from "../../PaymentButton";
-import CalendarEventButton from "../../CalendarEventButton";
+} from "../../../../../store/reducers/entities/messages/types";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { UIService } from "../../../../../store/reducers/entities/services/types";
+import ExtractedCTABar from "../../../../cta/ExtractedCTABar";
+import { useIODispatch } from "../../../../../store/hooks";
+import PaymentButton from "../../../PaymentButton";
+import CalendarEventButton from "../../../CalendarEventButton";
+import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
 
 type Props = {
   expirationInfo: MessagePaymentExpirationInfo;
   isPaid: boolean;
+  isPrescription: boolean;
   messageDetails: UIMessageDetails;
   service?: UIService;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: ServiceMetadata;
 };
 
 const styles = StyleSheet.create({
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
 });
 
 // return a payment button only when the advice is not paid and the payment_data is defined
-const renderPaymentButton = (isPaid: boolean, paymentData?: PaymentData) => {
-  if (isPaid || paymentData === undefined) {
+const renderPaymentButton = (paymentData?: PaymentData) => {
+  if (paymentData === undefined) {
     return null;
   }
   const { amount, noticeNumber, payee } = paymentData;
@@ -74,14 +74,20 @@ function renderCalendarEventButton(
 const CtaBar = ({
   isPaid,
   expirationInfo,
+  isPrescription,
   messageDetails,
   service,
   serviceMetadata
-}: Props) => {
+}: Props): React.ReactElement | null => {
   const dispatch = useIODispatch();
+  // in case of medical prescription, we shouldn't render the CtaBar
+  if (isPrescription) {
+    return null;
+  }
+
   const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
 
-  const paymentButton = renderPaymentButton(isPaid, paymentData);
+  const paymentButton = renderPaymentButton(paymentData);
   const calendarButton = renderCalendarEventButton(
     isPaid,
     expirationInfo,

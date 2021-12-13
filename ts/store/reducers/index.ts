@@ -2,7 +2,6 @@
  * Aggregates all defined reducers
  */
 import AsyncStorage from "@react-native-community/async-storage";
-import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
@@ -51,6 +50,7 @@ import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
+import assistanceToolsReducer from "./assistanceTools";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -86,7 +86,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   //
   appState: appStateReducer,
   navigation: navigationReducer,
-  network: networkReducer,
   backoffError: backoffErrorReducer,
   deepLink: deepLinkReducer,
   wallet: walletReducer,
@@ -99,6 +98,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   bonus: bonusReducer,
   features: featuresReducer,
   internalRouteNavigation: internalRouteNavigationReducer,
+  assistanceTools: assistanceToolsReducer,
   //
   // persisted state
   //

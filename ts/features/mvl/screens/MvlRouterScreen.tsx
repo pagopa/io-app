@@ -2,17 +2,17 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { mvlDetailsLoad } from "../store/actions";
 import { mvlFromIdSelector } from "../store/reducers/byId";
-import { MvlData, MvlId } from "../types/mvlData";
+import { Mvl } from "../types/mvlData";
 import { MvlGenericErrorScreen } from "./ko/MvlGenericErrorScreen";
 import { MvlDetailsScreen } from "./MvlDetailsScreen";
 import { MvlLoadingScreen } from "./MvlLoadingScreen";
 
 type NavigationParams = Readonly<{
-  // TODO: assumption, we have an unique id that we should use to retrieve the MVL, maybe this could be the messageId? let's see!
-  id: MvlId;
+  id: UIMessageId;
 }>;
 
 /**
@@ -21,8 +21,8 @@ type NavigationParams = Readonly<{
  * @param value
  */
 const renderByPot = (
-  id: MvlId,
-  value: pot.Pot<MvlData, Error>
+  id: UIMessageId,
+  value: pot.Pot<Mvl, Error>
 ): React.ReactElement =>
   pot.fold(
     value,

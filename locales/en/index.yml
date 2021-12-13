@@ -106,6 +106,7 @@ global:
     tomorrow: "tomorrow"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    shortFormatWithTime: "%d/%m/%Y, %H.%M"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
     fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
@@ -114,6 +115,7 @@ global:
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
     shortNumericMonthYear: "%m/%-y"
+    timeFormat: "%H.%M"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -1029,6 +1031,11 @@ wallet:
         title: "That's it!"
         body: "Now you can continue with your payment."
         primaryButton: "Continue"
+      paymentCheckout:
+        transactionCost: "Transaction cost"
+        pspHandler: "Processed by {{pspName}}"
+        privacyDisclaimer: "By continuing, you declare you have read and understood the"
+        privacyTerms: "Terms and Conditions of Use and Privacy Policy"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -1412,6 +1419,9 @@ wallet:
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
+    readStorageDisclosure:
+      title: Allow gallery access
+      message: You’ll be able to upload screenshots and payment notices.
     settingsAlert:
       title: It seems access to Photos has been denied
       message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
@@ -1483,13 +1493,16 @@ wallet:
       visualizeCard: View card
     fallback:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code1:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code2:
       title: "Authorization declined"
       description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
+    code3:
+      title: "The card details are incorrect"
+      description: "Delete the card from your Wallet and add it again. Make sure to enter the details exactly as they appear on the card."
     code4:
       title: "Sorry, the session has expired"
       description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
@@ -1501,6 +1514,15 @@ wallet:
     code10:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
+    code18:
+      title: "Sorry, an unexpected error has occurred"
+      description: "If this problem persists, please contact support."
+    code19:
+      title: "Authorization declined"
+      description: "You may have removed pagoPA from your PayPal automatic payments. Delete your PayPal account from the Wallet, add it back and try to make the payment again."
+    code15:
+      title: "Enable in-app payments first"
+      description: "Before trying again, select the method in your Wallet and turn on the 'in-app payments' feature."
     addCreditCard:
       success:
         title: "Your card has been successfully added!"
@@ -2887,7 +2909,9 @@ support:
       allow: "Allow"
       denies: "Do not allow"
   chooseCategory:
-    header: "Contact support"
+    header: "Write us"
     title:
       category: "Select a topic"
-      subCategory: "What is it about?"
+      subCategory: "Can you give us more details?"
+    subTitle:
+      category: "Help us better understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."

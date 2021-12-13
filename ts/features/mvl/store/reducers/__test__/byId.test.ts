@@ -2,17 +2,17 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { WithUIMessageId } from "../../../../../store/reducers/entities/messages/types";
 import {
   getGenericError,
   getNetworkErrorMessage,
   NetworkError
 } from "../../../../../utils/errors";
-import { mvlMockData, mvlMockId } from "../../../types/__mock__/mvlMock";
-import { WithMVLId } from "../../../types/mvlData";
+import { mvlMock, mvlMockId } from "../../../types/__mock__/mvlMock";
 import { mvlDetailsLoad } from "../../actions";
 import { mvlFromIdSelector } from "../byId";
 
-const mockFailure: WithMVLId<NetworkError> = {
+const mockFailure: WithUIMessageId<NetworkError> = {
   id: mvlMockId,
   ...getGenericError(new Error("A generic error"))
 };
@@ -50,13 +50,13 @@ describe("mvl.byId reducer & selector behaviour", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(mvlDetailsLoad.request(mvlMockId));
-    store.dispatch(mvlDetailsLoad.success(mvlMockData));
+    store.dispatch(mvlDetailsLoad.success(mvlMock));
     it("should return pot.some when call mvlFromIdSelector with the same id", () => {
       const byId = store.getState().features.mvl.byId;
 
-      expect(byId[mvlMockId]).toStrictEqual(pot.some(mvlMockData));
+      expect(byId[mvlMockId]).toStrictEqual(pot.some(mvlMock));
       expect(mvlFromIdSelector(store.getState(), mvlMockId)).toStrictEqual(
-        pot.some(mvlMockData)
+        pot.some(mvlMock)
       );
     });
   });
@@ -95,13 +95,13 @@ describe("mvl.byId reducer & selector behaviour", () => {
           pot.noneLoading
         );
 
-        store.dispatch(mvlDetailsLoad.success(mvlMockData));
+        store.dispatch(mvlDetailsLoad.success(mvlMock));
 
         expect(store.getState().features.mvl.byId[mvlMockId]).toStrictEqual(
-          pot.some(mvlMockData)
+          pot.some(mvlMock)
         );
         expect(mvlFromIdSelector(store.getState(), mvlMockId)).toStrictEqual(
-          pot.some(mvlMockData)
+          pot.some(mvlMock)
         );
       });
     });
