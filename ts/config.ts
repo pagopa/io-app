@@ -80,7 +80,7 @@ export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 export const payPalEnabled: boolean = true;
 
 // Zendesk Feature Flag
-export const zendeskEnabled: boolean = true;
+export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
 // Paginated messages
 export const usePaginatedMessages: boolean =
