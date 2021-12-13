@@ -21,7 +21,7 @@ export function* watchEUCovidCertificateSaga(
   yield takeLatest(
     euCovidCertificateGet.request,
     function* (action: ActionType<typeof euCovidCertificateGet.request>) {
-      // wait backoff time it there were previous errors
+      // wait backoff time if there were previous errors
       yield call(waitBackoffError, euCovidCertificateGet.failure);
       yield call(
         handleGetEuCovidCertificate,

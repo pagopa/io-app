@@ -7,16 +7,18 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { capitalize } from "../../../../utils/strings";
 import * as utilsUrl from "../../../../utils/url";
 import I18n from "../../../../i18n";
-import ServiceMetadata from "../../ServiceMetadata";
-import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
 import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import { StandardServiceCategoryEnum } from "../../../../../definitions/backend/StandardServiceCategory";
+import ServiceMetadataComponent from "../../ServiceMetadata";
 
 jest.mock("../../../../utils/platform");
 
 const spyOpenWebUrl = jest.spyOn(utilsUrl, "openWebUrl");
 
-const defaultServiceMetadata: ServicePublicService_metadata = {
-  scope: ServiceScopeEnum.NATIONAL
+const defaultServiceMetadata: ServiceMetadata = {
+  scope: ServiceScopeEnum.NATIONAL,
+  category: StandardServiceCategoryEnum.STANDARD
 };
 
 const defaultProps = {
@@ -208,7 +210,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_android: androidUrl
-        } as ServicePublicService_metadata
+        } as ServiceMetadata
       };
       it(`should render the Android link`, () => {
         const component = renderComponent(currentOptions);
@@ -234,7 +236,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_ios: "dummy"
-        } as ServicePublicService_metadata
+        } as ServiceMetadata
       };
       it(`should not render it`, () => {
         expect(renderComponent(currentOptions).queryByRole("link")).toBeNull();
@@ -255,7 +257,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_ios: iosUrl
-        } as ServicePublicService_metadata
+        } as ServiceMetadata
       };
       it(`should render the iOS link`, () => {
         const component = renderComponent(currentOptions);
@@ -281,7 +283,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_android: "dummy"
-        } as ServicePublicService_metadata
+        } as ServiceMetadata
       };
       it(`should not render it`, () => {
         expect(renderComponent(currentOptions).queryByRole("link")).toBeNull();
@@ -290,6 +292,8 @@ describe("ServiceMetadata component", () => {
   });
 });
 
-function renderComponent(props: Parameters<typeof ServiceMetadata>[0]) {
-  return render(<ServiceMetadata {...props} />);
+function renderComponent(
+  props: Parameters<typeof ServiceMetadataComponent>[0]
+) {
+  return render(<ServiceMetadataComponent {...props} />);
 }

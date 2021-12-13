@@ -25,7 +25,6 @@ import { Omit } from "italia-ts-commons/lib/types";
 import _ from "lodash";
 import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
-  AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
   addWalletsBPayUsingPOSTDecoder,
   addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder,
@@ -61,6 +60,8 @@ import {
   GetPaypalPspsUsingGETT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
+  getPspListV2UsingGETDefaultDecoder,
+  GetPspListV2UsingGETT,
   getPspUsingGETDecoder,
   GetPspUsingGETT,
   getSelectedPspUsingGETDecoder,
@@ -243,7 +244,9 @@ export type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
 >;
 const getWalletsV2: GetWalletsV2UsingGETTExtra = {
   method: "get",
-  url: () => "/v2/wallet",
+  // despite the endpoint is v3, the wallets returned by this API are of type v2
+  // v3 is the same of v2 but in addition it includes Paypal ¯\_(ツ)_/¯
+  url: () => "/v3/wallet",
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getWalletsV2UsingGETDecoder(PatchedWalletV2ListResponse)
@@ -464,7 +467,18 @@ const searchSatispay: GetConsumerUsingGETT = {
   response_decoder: getConsumerUsingGETDefaultDecoder()
 };
 
-const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
+export type AddWalletSatispayUsingPOSTTExtra = r.IPostApiRequestType<
+  { readonly Bearer: string; readonly satispayRequest: SatispayRequest },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2Response>
+  | r.IResponseType<201, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
+const addSatispayToWallet: AddWalletSatispayUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/satispay/add-wallet`,
   query: () => ({}),
@@ -605,11 +619,20 @@ const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
 
 const searchPayPalPsp: GetPaypalPspsUsingGETT = {
   method: "get",
-  url: () => `/v3/paypal/searchPSP`,
+  url: () => `/v3/paypal/psps`,
   query: params => ({ language: params.language }),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPaypalPspsUsingGETDefaultDecoder()
 };
+
+const getPspListV2: GetPspListV2UsingGETT = {
+  method: "get",
+  url: ({ idPayment }) => `/v2/payments/${idPayment}/psps`,
+  query: ({ language, idWallet }) => ({ language, idWallet }),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPspListV2UsingGETDefaultDecoder()
+};
+
 const withPaymentManagerToken =
   <P extends { Bearer: string; LookUpId?: string }, R>(
     f: (p: P) => Promise<R>
@@ -832,7 +855,15 @@ export function PaymentManagerClient(
       withPaymentManagerToken(
         createFetchRequestForApi(searchPayPalPsp, options)
       )
-    )({ language: getLocalePrimaryWithFallback() })
+    )({ language: getLocalePrimaryWithFallback() }),
+    getPspV2: (payload: { idWallet: number; idPayment: string }) =>
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(getPspListV2, options))
+      )({
+        language: getLocalePrimaryWithFallback(),
+        idWallet: payload.idWallet.toString(),
+        idPayment: payload.idPayment
+      })
   };
 }
 

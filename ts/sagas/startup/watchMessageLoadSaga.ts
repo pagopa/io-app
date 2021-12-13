@@ -3,8 +3,8 @@ import { call, fork, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { totMessageFetchWorkers } from "../../config";
-import { loadMessage as loadMessageAction } from "../../store/actions/messages";
-import { loadMessage } from "../messages/messages";
+import { DEPRECATED_loadMessage as loadMessageAction } from "../../store/actions/messages";
+import { loadMessage } from "../messages/loadMessage";
 
 /**
  * This generator listens for loadMessage.request actions and forwards them

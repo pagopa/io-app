@@ -1,26 +1,19 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { constNull } from "fp-ts/lib/function";
 import payPalCard from "../../../../img/wallet/cards-icons/paypal_card.png";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
 import { CardLogoPreview } from "../component/card/CardLogoPreview";
-
-// TODO temporary type
-type PayPalPaymentMethod = {
-  email: string;
-};
+import { PayPalPaymentMethod } from "../../../types/pagopa";
+import { navigateToPayPalDetailScreen } from "../../../store/actions/navigation";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { getPaypalAccountEmail } from "../../../utils/paypal";
 
 type OwnProps = {
   paypal: PayPalPaymentMethod;
 };
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
+type Props = OwnProps;
 
 const getAccessibilityRepresentation = () => {
   const paypal = I18n.t("wallet.onboarding.paypal.name");
@@ -33,27 +26,22 @@ const getAccessibilityRepresentation = () => {
  * @param props
  * @constructor
  */
-const PayPalWalletPreview: React.FunctionComponent<Props> = props => (
-  <CardLogoPreview
-    accessibilityLabel={getAccessibilityRepresentation()}
-    left={
-      <Body style={[IOStyles.flex, { paddingRight: 16 }]} numberOfLines={1}>
-        {props.paypal.email}
-      </Body>
-    }
-    image={payPalCard}
-    onPress={() => props.navigateToPayPalDetails(props.paypal)}
-  />
-);
+const PayPalWalletPreview: React.FunctionComponent<Props> = props => {
+  const navigation = useNavigationContext();
+  const navigateToDetailScreen = () =>
+    navigation.navigate(navigateToPayPalDetailScreen());
+  return (
+    <CardLogoPreview
+      accessibilityLabel={getAccessibilityRepresentation()}
+      left={
+        <Body style={[IOStyles.flex, { paddingRight: 16 }]} numberOfLines={1}>
+          {getPaypalAccountEmail(props.paypal.info)}
+        </Body>
+      }
+      image={payPalCard}
+      onPress={navigateToDetailScreen}
+    />
+  );
+};
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  // TODO replace with the effective handler
-  navigateToPayPalDetails: (_: PayPalPaymentMethod) => constNull
-});
-
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PayPalWalletPreview);
+export default PayPalWalletPreview;

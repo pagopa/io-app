@@ -3,7 +3,7 @@ import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { TypeEnum } from "../../../../../../definitions/pagopa/walletv2/CardInfo";
-import { WalletTypeEnum } from "../../../../../../definitions/pagopa/walletv2/WalletV2";
+import { WalletTypeEnum } from "../../../../../../definitions/pagopa/WalletV2";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { fetchWalletsSuccess } from "../../../../../store/actions/wallet/wallets";

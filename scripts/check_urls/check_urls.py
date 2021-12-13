@@ -25,9 +25,9 @@ tagged_people = ["<!here>"]
 SLACK_CHANNEL = "#io_dev_app_status"
 
 # a list of remote uris consumed by the app for content presentation
-remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
+remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/bonus_available_v2.json",
                       "https://assets.cdn.io.italia.it/contextualhelp/data.json",
-                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/status/backend.json"]
+                      "https://assets.cdn.io.italia.it/status/backend.json"]
 
 
 class IOUrl(object):
@@ -60,7 +60,7 @@ def scan_directory(path, file_black_list, black_list_url, ext_set={'*.ts*'}):
 	# exclude test files
 	for f in files:
 		name = basename(f)
-		if name.endswith("test.ts") or name.endswith("test.tsx") or name in file_black_list:
+		if name.endswith(("test.ts", "test.tsx", "tsx.snap")) or name in file_black_list:
 			to_remove.append(f)
 	for tr in to_remove:
 		files.remove(tr)
@@ -167,7 +167,7 @@ def send_slack_message(invalid_uris_list: List[IOUrl]):
 		if len(invalid_uris_list) > 0:
 			tags = " ".join(tagged_people)
 			message = "[URLs Check] :warning: %s There are %d uris in *IO App* that are not working" % (
-			tags, len(invalid_uris_list))
+				tags, len(invalid_uris_list))
 			message_blocks = []
 			message_blocks.append({
 				"type": "section",
@@ -208,20 +208,27 @@ run_test = len(argv) > 1 and argv[1] == "run_tests"
 # since this code is executed multiple time for each process spawned
 # we have to ensure the init part is execute only the first time
 if not run_test and __name__ == '__main__':
+	files_black_list = {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts", "mvlMock.ts","message.ts"}
+
 	manager = Manager()
 	print("scanning local folders...")
 	all_uris = set()
 	urls_black_list = {
+		"https://appiotest.zendesk.com",
+		# still not available
+		"https://io.italia.it/carta-giovani-nazionale/informativa-beneficiari",
+		# still not available
+		"https://io.italia.it/carta-giovani-nazionale/guida-beneficiari",
 		# the article is available but the response status code is 403
 		"https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection",
 		"https://assets.cdn.io.italia.it",
 		"https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
 		"https://www.trusttechnologies.it/contatti/#form"}
 	locales = (abspath(join(dirname(__file__), "../..", "locales")), {})
-	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), {"testFaker.ts", "PayWebViewModal.tsx"})
+	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), files_black_list)
 	for directory, black_list in [locales, ts_dir]:
 		files_found = scan_directory(directory, black_list, urls_black_list)
-		print("find %d files in %s" % (len(files_found.keys()), directory))
+		print("found %d files in %s" % (len(files_found.keys()), directory))
 		all_uris.update(list(map(lambda kv: IOUrl(kv[0], "|".join(kv[1])), files_found.items())))
 	print("scanning remote resources...")
 	for ru in remote_content_uri:

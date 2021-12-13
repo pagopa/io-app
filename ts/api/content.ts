@@ -18,6 +18,7 @@ import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
 import { SpidIdps } from "../../definitions/content/SpidIdps";
+import { Zendesk } from "../../definitions/content/Zendesk";
 
 type GetMunicipalityT = IGetApiRequestType<
   {
@@ -125,6 +126,21 @@ const getIdpsT: GetIdpsListT = {
   response_decoder: basicResponseDecoder(SpidIdps)
 };
 
+type GetZendeskConfigT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<Zendesk>
+>;
+
+const getZendeskConfigT: GetZendeskConfigT = {
+  method: "get",
+  url: () => "/assistanceTools/zendesk.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(Zendesk)
+};
+
 /**
  * A client for the static content
  */
@@ -144,6 +160,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
       getPrivativeServicesT,
       options
     ),
-    getIdps: createFetchRequestForApi(getIdpsT, options)
+    getIdps: createFetchRequestForApi(getIdpsT, options),
+    getZendeskConfig: createFetchRequestForApi(getZendeskConfigT, options)
   };
 }
