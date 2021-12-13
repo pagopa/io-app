@@ -21,6 +21,7 @@ import LoginIcon from "../../../../img/assistance/login.svg";
 import BugIcon from "../../../../img/assistance/ladybug.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import StockIcon from "../../../../img/assistance/giacenza.svg";
+import BatteryIcon from "../../../../img/assistance/battery.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
 import {
@@ -88,6 +89,11 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     value: props.deviceDescription
   },
   {
+    icon: <BatteryIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.devicePerformance"),
+    value: I18n.t("support.askPermissions.devicePerformanceData")
+  },
+  {
     icon: <WebSiteIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.ipAddress")
   },
@@ -133,7 +139,7 @@ const ItemComponent = (props: Item) => (
  */
 const ZendeskAskPermissions = () => {
   // TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
-  const assistanceForPayment = false;
+  const assistanceForPayment = true;
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
