@@ -9,3 +9,7 @@ export const navigateToZendeskChooseCategory = () =>
   NavigationActions.navigate({
     routeName: ZENDESK_ROUTES.CHOOSE_CATEGORY
   });
+export const navigateToZendeskChooseSubCategory = () =>
+  NavigationActions.navigate({
+    routeName: ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY
+  });
