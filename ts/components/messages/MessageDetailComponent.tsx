@@ -3,7 +3,6 @@ import { Content, H3, Text, View } from "native-base";
 import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { CommonServiceMetadata } from "../../../definitions/backend/CommonServiceMetadata";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -15,6 +14,7 @@ import {
 } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import OrganizationHeader from "../OrganizationHeader";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
@@ -27,7 +27,7 @@ type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
   serviceDetail?: ServicePublic;
-  serviceMetadata?: CommonServiceMetadata;
+  serviceMetadata?: ServiceMetadata;
   onServiceLinkPress?: () => void;
 }>;
 
