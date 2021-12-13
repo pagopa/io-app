@@ -23,7 +23,10 @@ import EmailIcon from "../../../../img/assistance/email.svg";
 import StockIcon from "../../../../img/assistance/giacenza.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
-import { idpSelector } from "../../../store/reducers/authentication";
+import {
+  idpSelector,
+  isLoggedIn
+} from "../../../store/reducers/authentication";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
@@ -56,16 +59,19 @@ const iconProps = { width: 24, height: 24 };
 // TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
 const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
+    id: "profileNameSurname",
     icon: <NameSurnameIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.nameSurname"),
     value: props.nameSurname
   },
   {
+    id: "profileFiscalCode",
     icon: <FiscalCodeIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode
   },
   {
+    id: "profileEmail",
     icon: <EmailIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.emailAddress"),
     value: props.email
@@ -133,6 +139,7 @@ const ZendeskAskPermissions = () => {
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
 
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
+  const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = useIOSelector(idpSelector)
     .map(idp => idp.name)
     .getOrElse(notAvailable);
@@ -163,10 +170,17 @@ const ZendeskAskPermissions = () => {
     onPress: () => navigation.navigate(navigateToZendeskChooseCategory()), // TODO: if is not possible to get the category open a ticket request
     title: I18n.t("support.askPermissions.cta.allow")
   };
-  // if user is not asking assistance for a payment, remove the related item from those ones shown
-  const items = getItems(itemsProps).filter(it =>
-    !assistanceForPayment ? it.id !== "paymentIssues" : true
-  );
+  const items = getItems(itemsProps)
+    // if user is not asking assistance for a payment, remove the related items from those ones shown
+    .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
+    // if user is not logged in, remove the items related to his/her profile
+    .filter(it =>
+      isUserLoggedIn
+        ? true
+        : !["profileNameSurname", "profileFiscalCode", "profileEmail"].includes(
+            it.id ?? ""
+          )
+    );
   return (
     <BaseScreenComponent
       showInstabugChat={false}
