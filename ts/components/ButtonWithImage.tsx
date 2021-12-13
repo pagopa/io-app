@@ -2,6 +2,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
+import { WithTestID } from "../types/WithTestID";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
 
@@ -79,18 +80,18 @@ const lightStyles = StyleSheet.create({
   }
 });
 
-type Props = {
+type Props = WithTestID<{
   icon: string;
   onPress: () => void;
   text: string;
   disabled?: boolean;
   light?: boolean;
-};
+}>;
 
 // Create a button consisting of an icon + label
 class ButtonWithImage extends React.PureComponent<Props> {
   public render() {
-    const { icon, onPress, text, disabled, light } = this.props;
+    const { icon, onPress, text, disabled, light, testID } = this.props;
     return (
       <ButtonDefaultOpacity
         disabled={disabled === true}
@@ -100,6 +101,7 @@ class ButtonWithImage extends React.PureComponent<Props> {
           baseStyles.button,
           light ? lightStyles.button : darkStyles.button
         ]}
+        testID={testID}
       >
         <View style={styles.viewRL}>
           <IconFont

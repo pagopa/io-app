@@ -14,7 +14,8 @@ import {
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
   paymentVerifica,
-  paymentWebViewEnd
+  paymentWebViewEnd,
+  pspForPaymentV2
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 import {
@@ -30,6 +31,9 @@ import {
   addCreditCardWebViewEnd,
   refreshPMTokenWhileAddCreditCard
 } from "../../actions/wallet/wallets";
+import { walletAddPaypalRefreshPMToken } from "../../../features/wallet/onboarding/paypal/store/actions";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { getError } from "../../../utils/errors";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -47,7 +51,7 @@ export type PaymentStartWebViewPayload = PaymentStartPayload & {
 };
 
 // TODO: instead of keeping one single state, it would be more correct to keep
-//       a state for each rptid - this will make unnecessary to reset the state
+//       a state for each RptId - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
   verifica: PotFromActions<
@@ -79,6 +83,7 @@ export type PaymentState = Readonly<{
   paymentStartPayload: PaymentStartPayload | undefined;
   // pm fresh session token (used inside paywebview)
   pmSessionToken: RemoteValue<PaymentManagerToken, Error>;
+  pspsV2: RemoteValue<ReadonlyArray<PspData>, Error>;
 }>;
 
 /**
@@ -89,6 +94,9 @@ export const getPaymentIdFromGlobalState = (state: GlobalState) =>
 
 export const allPspsSelector = (state: GlobalState) =>
   state.wallet.payment.allPsps;
+
+export const pspV2Selector = (state: GlobalState): PaymentState["pspsV2"] =>
+  state.wallet.payment.pspsV2;
 
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();
@@ -131,7 +139,8 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   allPsps: pot.none,
   entrypointRoute: undefined,
   paymentStartPayload: undefined,
-  pmSessionToken: remoteUndefined
+  pmSessionToken: remoteUndefined,
+  pspsV2: remoteUndefined
 };
 
 /**
@@ -280,17 +289,20 @@ const reducer = (
         paymentStartPayload: action.payload,
         pmSessionToken: remoteLoading
       };
+    case getType(walletAddPaypalRefreshPMToken.request):
     case getType(refreshPMTokenWhileAddCreditCard.request):
       return {
         ...state,
         pmSessionToken: remoteLoading
       };
+    case getType(walletAddPaypalRefreshPMToken.success):
     case getType(refreshPMTokenWhileAddCreditCard.success):
     case getType(paymentExecuteStart.success):
       return {
         ...state,
         pmSessionToken: remoteReady(action.payload)
       };
+    case getType(walletAddPaypalRefreshPMToken.failure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(paymentExecuteStart.failure):
       return {
@@ -310,6 +322,21 @@ const reducer = (
       return {
         ...state,
         pmSessionToken: PAYMENT_INITIAL_STATE.pmSessionToken
+      };
+    case getType(pspForPaymentV2.request):
+      return {
+        ...state,
+        pspsV2: remoteLoading
+      };
+    case getType(pspForPaymentV2.success):
+      return {
+        ...state,
+        pspsV2: remoteReady(action.payload)
+      };
+    case getType(pspForPaymentV2.failure):
+      return {
+        ...state,
+        pspsV2: remoteError(getError(action.payload))
       };
   }
   return state;

@@ -6,7 +6,7 @@ import { NavigationParams } from "react-navigation";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { WalletTypeEnum } from "../../../../../definitions/pagopa/walletv2/WalletV2";
+import { WalletTypeEnum } from "../../../../../definitions/pagopa/WalletV2";
 
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onboarding/privative/navigation/routes";
 import I18n from "../../../../i18n";

@@ -8,6 +8,7 @@ import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
+import PaginatedMessageDetailScreen from "../../screens/messages/paginated/MessageDetailScreen";
 import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
 import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
@@ -33,6 +34,7 @@ import {
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
+import PaymentOutcomeCodeMessage from "../../screens/wallet/payment/PaymentOutcomeCodeMessage";
 
 /**
  * @deprecated
@@ -187,6 +189,17 @@ export const navigateToMessageDetailScreenAction = (
       params
     })
   );
+
+/**
+ * Open the Message Detail screen supporting the new UIMessage type.
+ */
+export const navigateToPaginatedMessageDetailScreenAction = (
+  params: InferNavigationParams<typeof PaginatedMessageDetailScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.MESSAGE_DETAIL,
+    params
+  });
 
 /**
  * @deprecated
@@ -420,6 +433,11 @@ export const navigateToSatispayDetailScreen = (
     })
   );
 
+export const navigateToPayPalDetailScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PAYPAL_DETAIL
+  });
+
 /**
  * @deprecated
  */
@@ -600,10 +618,13 @@ export const navigateToAddCreditCardOutcomeCode = (
 /**
  * @deprecated
  */
-export const navigateToPaymentOutcomeCode = () =>
+export const navigateToPaymentOutcomeCode = (
+  params: InferNavigationParams<typeof PaymentOutcomeCodeMessage>
+) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
-      routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
+      routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE,
+      params
     })
   );
 

@@ -1,11 +1,9 @@
-import adapter from "detox/runners/jest/adapter";
 import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
 
 describe("Credit Card onboarding", () => {
   beforeEach(async () => {
-    await adapter.beforeEach();
     await device.reloadReactNative();
     await ensureLoggedIn();
   });

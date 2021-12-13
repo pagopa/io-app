@@ -29,6 +29,7 @@ import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
+  paypalListSelector,
   privativeListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
@@ -45,6 +46,9 @@ import { H4 } from "../../../components/core/typography/H4";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
+import { payPalEnabled } from "../../../config";
+import { pspV2Selector } from "../../../store/reducers/wallet/payment";
+import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchPickPspOrConfirm } from "./common";
 
 type NavigationParams = Readonly<{
@@ -171,16 +175,21 @@ function getValueOrEmptyArray(
 
 const mapStateToProps = (state: GlobalState) => {
   const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
+  const potVisiblePaypal = payPalEnabled ? paypalListSelector(state) : pot.none;
   const potVisibleBancomat = bancomatListVisibleInWalletSelector(state);
   const potVisibleBPay = bPayListVisibleInWalletSelector(state);
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
   const potPsps = state.wallet.payment.psps;
+  const pspV2 = pspV2Selector(state);
   const isLoading =
-    pot.isLoading(potVisibleCreditCard) || pot.isLoading(potPsps);
+    pot.isLoading(potVisibleCreditCard) ||
+    pot.isLoading(potPsps) ||
+    isLoadingRemote(pspV2);
 
   const visibleWallets = [
     potVisibleCreditCard,
+    potVisiblePaypal,
     potVisibleBancomat,
     potVisibleBPay,
     potVisibleSatispay,

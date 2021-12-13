@@ -9,7 +9,10 @@ import { getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../../../definitions/backend/CreatedMessageWithoutContent";
-import { loadMessage, removeMessages } from "../../../actions/messages";
+import {
+  DEPRECATED_loadMessage,
+  removeMessages
+} from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -31,7 +34,7 @@ const reducer = (
   action: Action
 ): MessageStateById => {
   switch (action.type) {
-    case getType(loadMessage.request):
+    case getType(DEPRECATED_loadMessage.request):
       return {
         ...state,
         [action.payload.id]: {
@@ -40,7 +43,7 @@ const reducer = (
         }
       };
 
-    case getType(loadMessage.success): {
+    case getType(DEPRECATED_loadMessage.success): {
       const id = action.payload.id;
       const prevState = state[id];
       if (prevState === undefined) {
@@ -52,7 +55,7 @@ const reducer = (
         [id]: { ...prevState, message: pot.some(action.payload) }
       };
     }
-    case getType(loadMessage.failure): {
+    case getType(DEPRECATED_loadMessage.failure): {
       const id = action.payload.id;
       const prevState = state[id];
       if (prevState === undefined) {

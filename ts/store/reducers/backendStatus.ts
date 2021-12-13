@@ -11,6 +11,7 @@ import { Action } from "../actions/types";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -64,6 +65,12 @@ export const cgnMerchantVersionSelector = createSelector(
       .mapNullable(bs => bs.config)
       .mapNullable(config => config.cgn_merchants_v2)
       .toUndefined()
+);
+
+export const assistanceToolConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): ToolEnum | undefined =>
+    backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times

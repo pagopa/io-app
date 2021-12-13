@@ -25,10 +25,20 @@ import {
   PaymentStartPayload
 } from "../../reducers/wallet/payment";
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
+import { NetworkError } from "../../../utils/errors";
+import { PspData } from "../../../../definitions/pagopa/PspData";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
-// where the payment started, more info https://docs.google.com/presentation/d/11rEttb7lJYlRqgFpl4QopyjFmjt2Q0K8uis6JhAQaCw/edit#slide=id.p
+/**
+ * IMPORTANT!
+ *
+ * The payment flow is quite complex and involves more than two actors.
+ * Please refer to https://docs.google.com/presentation/d/11rEttb7lJYlRqgFpl4QopyjFmjt2Q0K8uis6JhAQaCw/edit#slide=id.p
+ * and make sure you understand it _before_ working on it.
+ */
+
 export type PaymentStartOrigin = "message" | "qrcode_scan" | "manual_insertion";
+
 /**
  * Resets the payment state before starting a new payment
  */
@@ -266,6 +276,33 @@ export const runStartOrResumePaymentActivationSaga = createStandardAction(
 )<RunStartOrResumePaymentActivationSagaPayload>();
 
 /**
+ * get the list of psp that can handle the payment with the given paymentMethod
+ */
+export const pspForPaymentV2 = createAsyncAction(
+  "PAYMENT_PSP_V2_REQUEST",
+  "PAYMENT_PSP_V2_SUCCESS",
+  "PAYMENT_PSP_V2_FAILURE"
+)<
+  { idWallet: number; idPayment: string },
+  ReadonlyArray<PspData>,
+  NetworkError
+>();
+
+/**
+ * @deprecated
+ * this action is used only to mimic the existing payment logic (callbacks hell 😈)
+ * use {@link pspForPaymentV2} instead
+ */
+export const pspForPaymentV2WithCallbacks = createStandardAction(
+  "PAYMENT_PSP_V2_WITH_CALLBACKS"
+)<{
+  idWallet: number;
+  idPayment: string;
+  onSuccess: (psp: ReadonlyArray<PspData>) => void;
+  onFailure: () => void;
+}>();
+
+/**
  * All possible payment actions
  */
 export type PaymentActions =
@@ -287,4 +324,6 @@ export type PaymentActions =
   | ActionType<typeof abortRunningPayment>
   | ActionType<typeof paymentFetchAllPspsForPaymentId>
   | ActionType<typeof paymentRedirectionUrls>
-  | ActionType<typeof runStartOrResumePaymentActivationSaga>;
+  | ActionType<typeof runStartOrResumePaymentActivationSaga>
+  | ActionType<typeof pspForPaymentV2>
+  | ActionType<typeof pspForPaymentV2WithCallbacks>;

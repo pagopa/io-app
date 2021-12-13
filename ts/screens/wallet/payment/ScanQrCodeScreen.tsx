@@ -33,6 +33,7 @@ import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 import I18n from "../../../i18n";
+import NavigationService from "../../../navigation/NavigationService";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen,
@@ -47,6 +48,7 @@ import { openAppSettings } from "../../../utils/appSettings";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
+import { isAndroid } from "../../../utils/platform";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -177,6 +179,24 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
   };
 
+  private onShowImagePicker = async () => {
+    // on Android we have to show a prominent disclosure on how we use READ_EXTERNAL_STORAGE permission
+    // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/444727486/2021-11-18+Android#2021-12-08
+    if (isAndroid) {
+      await AsyncAlert(
+        I18n.t("wallet.QRtoPay.readStorageDisclosure.title"),
+        I18n.t("wallet.QRtoPay.readStorageDisclosure.message"),
+        [
+          {
+            text: I18n.t("global.buttons.choose"),
+            style: "default"
+          }
+        ]
+      );
+    }
+    this.showImagePicker();
+  };
+
   /**
    * Start image chooser
    */
@@ -301,7 +321,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 bottomContent={
                   <View>
                     <ButtonDefaultOpacity
-                      onPress={this.showImagePicker}
+                      onPress={this.onShowImagePicker}
                       style={styles.button}
                       bordered={true}
                     >
@@ -371,7 +391,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "qrcode_scan"
+      paymentStartOrigin: "qrcode_scan",
+      startRoute: NavigationService.getCurrentRoute()
     });
   }
 });

@@ -19,12 +19,13 @@ module.exports = {
       babelConfig: true
     }
   },
-  setupFiles: ["./jestSetup.js"],
-  setupFilesAfterEnv: [
-    "@testing-library/jest-native/extend-expect",
-    "./ts/__e2e__/init.js"
-  ],
+  setupFilesAfterEnv: ["./e2e/globalSetup.js"],
   testMatch: ["**/__e2e__/*.e2e.ts?(x)"],
   forceExit: true,
-  verbose: true
+  verbose: true,
+  maxWorkers: 1,
+  testTimeout: 300000,
+  testEnvironment: "./e2e/environment",
+  testRunner: "jest-circus/runner",
+  reporters: ["detox/runners/jest/streamlineReporter"]
 };

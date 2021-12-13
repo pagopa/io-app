@@ -5,13 +5,20 @@ import {
   NavigationStackProp
 } from "react-navigation-stack/src/types";
 
-import { euCovidCertificateEnabled, usePaginatedMessages } from "../config";
+import {
+  euCovidCertificateEnabled,
+  mvlEnabled,
+  usePaginatedMessages
+} from "../config";
 import EuCovidCertNavigator from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
+import MvlNavigator from "../features/mvl/navigation/navigator";
+import MVL_ROUTES from "../features/mvl/navigation/routes";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
-import PaginatedMessagesHomeScreen from "../screens/messages/PaginatedMessagesHomeScreen";
+import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageDetailScreen";
+import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 
 import ROUTES from "./routes";
 
@@ -28,7 +35,9 @@ const baseMessageRouteConfig: NavigationRouteConfigMap<
     screen: MessageRouterScreen
   },
   [ROUTES.MESSAGE_DETAIL]: {
-    screen: MessageDetailScreen
+    screen: usePaginatedMessages
+      ? PaginatedMessageDetailScreen
+      : MessageDetailScreen
   }
 };
 
@@ -43,12 +52,24 @@ const euCovidCertificateRouteConfig: NavigationRouteConfigMap<
     }
   : {};
 
+const mvlRouteConfig: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = mvlEnabled
+  ? {
+      [MVL_ROUTES.MAIN]: {
+        screen: MvlNavigator
+      }
+    }
+  : {};
+
 const messageRouteConfig: NavigationRouteConfigMap<
   NavigationStackOptions,
   NavigationStackProp<NavigationRoute, any>
 > = {
   ...baseMessageRouteConfig,
-  ...euCovidCertificateRouteConfig
+  ...euCovidCertificateRouteConfig,
+  ...mvlRouteConfig
 };
 
 const MessagesNavigator = createStackNavigator(messageRouteConfig, {

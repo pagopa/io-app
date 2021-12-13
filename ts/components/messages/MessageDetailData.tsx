@@ -3,17 +3,15 @@ import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
-import { format, formatDateAsLocal } from "../../utils/dates";
 import CopyButtonComponent from "../CopyButtonComponent";
 import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   serviceDetail: Option<ServicePublic>;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: ServiceMetadata;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
 }>;
@@ -46,7 +44,7 @@ type MessageData = {
   service_detail: Option<ServicePublic>;
   organization_name: Option<string>;
   service_name: Option<string>;
-  metadata: Option<ServicePublicService_metadata>;
+  metadata: Option<ServiceMetadata>;
 };
 
 /**
@@ -54,9 +52,6 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-  private date = formatDateAsLocal(this.props.message.created_at);
-  private time = format(this.props.message.created_at, "HH.mm");
-
   get data(): MessageData {
     const serviceDetail = this.props.serviceDetail;
     const metadata = fromNullable(this.props.serviceMetadata);
@@ -96,7 +91,9 @@ class MessageDetailData extends React.PureComponent<Props> {
       <View style={styles.container}>
         <Text>
           {I18n.t("messageDetails.dateSending")}
-          <Text bold={true}>{` ${this.date} - ${this.time}`}</Text>
+          <Text bold={true}>{` ${convertDateTimeToWordDistance(
+            this.props.message.created_at
+          )}`}</Text>
         </Text>
 
         {this.data.organization_name.isSome() && (

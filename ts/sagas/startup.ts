@@ -17,6 +17,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
+
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
@@ -28,16 +29,19 @@ import {
   bpdEnabled,
   cgnEnabled,
   euCovidCertificateEnabled,
+  mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   svEnabled,
-  usePaginatedMessages
+  usePaginatedMessages,
+  zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
+import { watchMvlSaga } from "../features/mvl/saga";
 import I18n from "../i18n";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
@@ -68,6 +72,7 @@ import {
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -103,7 +108,10 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
-import { watchLoadNextPageMessages } from "./startup/watchLoadNextPageMessages";
+import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
+import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
+import watchReloadAllMessages from "./messages/watchReloadAllMessages";
+import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -120,7 +128,7 @@ const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
-// eslint-disable-next-line
+// eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
@@ -139,6 +147,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // listen for mixpanel enabling events
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
+  if (zendeskEnabled) {
+    yield fork(watchZendeskSupportSaga);
+  }
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield select(profileSelector);
@@ -196,7 +207,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // FIXME: since it looks like we load the session info every
   //        time we get a session token, think about merging the
   //        two steps.
-  // eslint-disable-next-line
+  // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
@@ -250,7 +261,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   ) {
     // Delete all data while keeping current session:
     // Delete the current unlock code from the Keychain
-    // eslint-disable-next-line
     yield call(deletePin);
     // Delete all onboarding data
     yield put(clearOnboarding());
@@ -264,7 +274,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line functional/no-let
   let storedPin: PinString;
 
   // Start watching for requests of refresh the profile
@@ -358,6 +368,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (euCovidCertificateEnabled) {
     // Start watching for EU Covid Certificate actions
     yield fork(watchEUCovidCertificateSaga, sessionToken);
+  }
+
+  if (mvlEnabled) {
+    // Start watching for MVL actions
+    yield fork(watchMvlSaga, sessionToken);
   }
 
   // Load the user metadata
@@ -456,8 +471,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(watchLoadMessages, backendClient.getMessages);
 
   if (usePaginatedMessages) {
-    // Load the next page of messages when requested
     yield fork(watchLoadNextPageMessages, backendClient.getMessages);
+    yield fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+    yield fork(watchReloadAllMessages, backendClient.getMessages);
+    yield fork(watchLoadMessageDetails, backendClient.getMessage);
   }
 
   // Load a message when requested

@@ -21,6 +21,7 @@ import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomCo
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
+import { mixpanelTrack } from "../../mixpanel";
 import {
   idpLoginUrlChanged,
   loginFailure,
@@ -42,8 +43,7 @@ import {
 } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { getUrlBasepath } from "../../utils/url";
-import { mixpanelTrack } from "../../mixpanel";
-import { isDevEnv } from "../../utils/environment";
+import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -103,12 +103,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// if the app is running in dev env, add "http" to allow the dev-server usage
-const originSchemasWhiteList = [
-  "https://*",
-  "intent://*",
-  ...(isDevEnv ? ["http://*"] : [])
-];
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView

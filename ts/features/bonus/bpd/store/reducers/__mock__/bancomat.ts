@@ -1,4 +1,4 @@
-import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/walletv2/WalletV2";
+import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/WalletV2";
 import { PatchedWalletV2 } from "../../../../../../types/pagopa";
 import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 

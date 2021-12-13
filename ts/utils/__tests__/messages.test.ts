@@ -18,8 +18,9 @@ import {
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../messages";
-import { ServicePublicService_metadata } from "../../../definitions/backend/ServicePublic";
 import { ServiceScope } from "../../../definitions/backend/ServiceScope";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
+import { StandardServiceCategoryEnum } from "../../../definitions/backend/StandardServiceCategory";
 
 const messageBody = `### this is a message
 
@@ -121,24 +122,20 @@ const messageInvalidAfterDueDate = {
   }
 };
 
-const serviceMetadataBase: ServicePublicService_metadata = {
+const serviceMetadataBase: ServiceMetadata = {
   description:
-    "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>" as ServicePublicService_metadata["description"],
+    "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>" as ServiceMetadata["description"],
   scope: "LOCAL" as ServiceScope,
-  address:
-    "Piazza di Spagna, Roma, Italia" as ServicePublicService_metadata["address"],
-  email: "mock.service@email.com" as ServicePublicService_metadata["email"],
-  pec: "mock.pec@email.com" as ServicePublicService_metadata["pec"],
-  phone: "5555555" as ServicePublicService_metadata["phone"],
-  web_url: "https://www.google.com" as ServicePublicService_metadata["web_url"],
-  app_android:
-    "https://www.google.com" as ServicePublicService_metadata["app_android"],
-  app_ios: "https://www.google.com" as ServicePublicService_metadata["app_ios"],
-  support_url:
-    "https://www.sos.com" as ServicePublicService_metadata["support_url"],
-  tos_url: "https://www.tos.com" as ServicePublicService_metadata["tos_url"],
-  privacy_url:
-    "https://www.privacy.com" as ServicePublicService_metadata["privacy_url"],
+  address: "Piazza di Spagna, Roma, Italia" as ServiceMetadata["address"],
+  email: "mock.service@email.com" as ServiceMetadata["email"],
+  pec: "mock.pec@email.com" as ServiceMetadata["pec"],
+  phone: "5555555" as ServiceMetadata["phone"],
+  web_url: "https://www.google.com" as ServiceMetadata["web_url"],
+  app_android: "https://www.google.com" as ServiceMetadata["app_android"],
+  app_ios: "https://www.google.com" as ServiceMetadata["app_ios"],
+  support_url: "https://www.sos.com" as ServiceMetadata["support_url"],
+  tos_url: "https://www.tos.com" as ServiceMetadata["tos_url"],
+  privacy_url: "https://www.privacy.com" as ServiceMetadata["privacy_url"],
   cta: `---
   it:
       cta_1: 
@@ -149,7 +146,8 @@ const serviceMetadataBase: ServicePublicService_metadata = {
           text: "go1"
           action: "ioit://SERVICE_WEBVIEW"
   ---
-  ` as ServicePublicService_metadata["cta"]
+  ` as ServiceMetadata["cta"],
+  category: StandardServiceCategoryEnum.STANDARD
 };
 
 // test "it" as default language
@@ -260,9 +258,9 @@ some noise`;
   });
 
   it("should have a valid CTA for service", () => {
-    const validServiceMetadata: ServicePublicService_metadata = {
+    const validServiceMetadata: ServiceMetadata = {
       ...serviceMetadataBase,
-      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
+      token_name: "myPortalToken" as ServiceMetadata["token_name"]
     };
     const maybeCTAs = getCTA(
       {
@@ -286,7 +284,7 @@ some noise`;
   });
 
   it("should not have a valid CTA for service (for the given route 'SERVICE_WEBVIEW' token_name must present in service metadata)", () => {
-    const validServiceMetadata: ServicePublicService_metadata = {
+    const validServiceMetadata: ServiceMetadata = {
       ...serviceMetadataBase
     };
     const maybeCTAs = getCTA(
@@ -358,11 +356,10 @@ en:
         text: "Internal with params"
         action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
 ---`;
-    const validServiceMetadata: ServicePublicService_metadata = {
+    const validServiceMetadata: ServiceMetadata = {
       ...serviceMetadataBase,
-      token_name:
-        "myPortalToken" as ServicePublicService_metadata["token_name"],
-      cta: CTA_SERVICE as ServicePublicService_metadata["cta"]
+      token_name: "myPortalToken" as ServiceMetadata["token_name"],
+      cta: CTA_SERVICE as ServiceMetadata["cta"]
     };
     const maybeCTA = getServiceCTA(validServiceMetadata);
     expect(maybeCTA.isSome()).toBeTruthy();
@@ -377,9 +374,9 @@ en:
   });
 
   it("Should not extract a CTA for the service without cta attribute", () => {
-    const invalidServiceMetadata: ServicePublicService_metadata = {
+    const invalidServiceMetadata: ServiceMetadata = {
       ...serviceMetadataBase,
-      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
+      token_name: "myPortalToken" as ServiceMetadata["token_name"]
     };
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
@@ -396,9 +393,9 @@ en:
         text: "Internal with params"
         action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
 ---`;
-    const invalidServiceMetadata: ServicePublicService_metadata = {
+    const invalidServiceMetadata: ServiceMetadata = {
       ...serviceMetadataBase,
-      cta: CTA_SERVICE as ServicePublicService_metadata["cta"]
+      cta: CTA_SERVICE as ServiceMetadata["cta"]
     };
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
@@ -407,9 +404,9 @@ en:
 
 describe("isCtaActionValid", () => {
   it("should be a valid action for service", () => {
-    const validServiceMetadata: ServicePublicService_metadata = {
+    const validServiceMetadata: ServiceMetadata = {
       ...serviceMetadataBase,
-      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
+      token_name: "myPortalToken" as ServiceMetadata["token_name"]
     };
     const CTA = {
       text: "dummy",
@@ -421,7 +418,7 @@ describe("isCtaActionValid", () => {
   });
 
   it("should NOT be a valid action for service", () => {
-    const invalidServiceMetadata: ServicePublicService_metadata = {
+    const invalidServiceMetadata: ServiceMetadata = {
       ...serviceMetadataBase
     };
     const CTA = {
