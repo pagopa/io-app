@@ -35,7 +35,7 @@ type Props = { mvl: Mvl };
 export const MvlDetailsScreen = (props: Props): React.ReactElement => {
   const hasAttachments = props.mvl.legalMessage.attachments.length > 0;
   const { service, serviceMetadata } = useIOSelector(state =>
-    mapDispatchToProps(state, props)
+    selectServiceState(state, props)
   );
 
   return (
@@ -65,7 +65,7 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
   );
 };
 
-const mapDispatchToProps = (state: GlobalState, props: Props) => {
+const selectServiceState = (state: GlobalState, props: Props) => {
   const service = pot
     .toOption(
       serviceByIdSelector(props.mvl.message.serviceId)(state) || pot.none
