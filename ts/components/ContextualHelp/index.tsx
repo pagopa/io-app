@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { InteractionManager, Modal, ModalBaseProps } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Container } from "native-base";
 
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { loadContextualHelpData } from "../../store/actions/content";
 import { Dispatch } from "../../store/actions/types";
 import { screenContextualHelpDataSelector } from "../../store/reducers/content";
@@ -21,8 +19,11 @@ import { loadSupportToken } from "../../store/actions/authentication";
 import { remoteUndefined } from "../../features/bonus/bpd/model/RemoteValue";
 import { FAQsCategoriesType, getFAQsFromCategories } from "../../utils/faq";
 import { instabugReportOpened } from "../../store/actions/debug";
-import Markdown from "../ui/Markdown";
 
+import {
+  getContextualHelpData,
+  reloadContextualHelpDataThreshold
+} from "../screens/BaseScreenComponent/utils";
 import SendSupportRequestOptions, {
   SupportRequestOptions
 } from "./SendSupportRequestOptions";
@@ -54,27 +55,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-/**
- If contextualData (loaded from the content server) contains the route of the current screen,
- title, content, faqs are read from it, otherwise they came from the locales stored in app
- */
-const getContextualHelpData = (
-  maybeContextualData: Option<ScreenCHData>,
-  defaultData: ContextualHelpData,
-  onReady: () => void
-): ContextualHelpData =>
-  maybeContextualData.fold<ContextualHelpData>(defaultData, data => ({
-    title: data.title,
-    content: <Markdown onLoadEnd={onReady}>{data.content}</Markdown>,
-    faqs: fromNullable(data.faqs)
-      // ensure the array is defined and not empty
-      .mapNullable(faqs => (faqs.length > 0 ? faqs : undefined))
-      // if remote faqs are not defined or empty, fallback to the local ones
-      .fold(defaultData.faqs, fqs =>
-        fqs.map(f => ({ title: f.title, content: f.body }))
-      )
-  }));
-const reloadContextualHelpDataThreshold = (30 * 1000) as Millisecond;
 /**
  * A modal to show the contextual help related to a screen.
  * The contextual help is characterized by:
