@@ -15,7 +15,6 @@ import {
 export type ZendeskStartPayload = {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  contentLoaded: boolean;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
 };

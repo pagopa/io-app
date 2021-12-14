@@ -208,8 +208,6 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
             return () => {
               dispatch(
                 zendeskSupportStart({
-                  // If contextualHelpConfig is undefined this function is not called
-                  contentLoaded: markdownContentLoaded,
                   faqCategories,
                   contextualHelp,
                   contextualHelpMarkdown,
