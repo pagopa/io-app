@@ -46,8 +46,8 @@ import { canEycaCardBeShown } from "../utils/eyca";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const HEADER_BACKGROUND_COLOR = "#C2DBEC";
-const GRADIENT_END_COLOR = "#94C0DD";
+const HEADER_BACKGROUND_COLOR = "#9184B7";
+const GRADIENT_END_COLOR = "#5C488F";
 
 /**
  * Screen to display all the information about the active CGN
@@ -80,7 +80,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         headerBackgroundColor={HEADER_BACKGROUND_COLOR}
         goBack
         headerTitle={I18n.t("bonus.cgn.name")}
-        titleColor={"black"}
+        titleColor={"white"}
         contextualHelp={emptyContextualHelp}
       >
         <SafeAreaView style={IOStyles.flex}>
