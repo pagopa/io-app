@@ -1,18 +1,17 @@
 import React from "react";
-import configureMockStore from "redux-mock-store";
 import { NavigationParams } from "react-navigation";
+import configureMockStore from "redux-mock-store";
+import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
+import { service_1 } from "../../../../../__mocks__/messages";
+import I18n from "../../../../../i18n";
+import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 
 import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
-import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
 import { toUIService } from "../../../../../store/reducers/entities/services/transformers";
-import { service_1 } from "../../../../../__mocks__/messages";
-import { MessagePaymentExpirationInfo } from "../../../../../utils/messages";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
-import I18n from "../../../../../i18n";
 
 import CtaBar from "../common/CtaBar";
 
@@ -22,16 +21,10 @@ const uiMessageDetails = toUIMessageDetails(paymentValidInvalidAfterDueDate);
 const uiService = toUIService(service_1);
 
 const defaultProps = {
-  expirationInfo: {
-    kind: "EXPIRABLE",
-    expireStatus: "VALID",
-    dueDate: uiMessageDetails.dueDate
-  } as MessagePaymentExpirationInfo,
   isPaid: true,
   messageDetails: uiMessageDetails,
   service: uiService,
-  servicesMetadata: undefined,
-  isPrescription: false
+  servicesMetadata: undefined
 };
 
 describe("the `CtaBar` component", () => {
@@ -85,6 +78,10 @@ describe("the `CtaBar` component", () => {
       it("should render the calendar button", () => {
         const { component } = renderComponent({
           ...defaultProps,
+          messageDetails: {
+            ...defaultProps.messageDetails,
+            dueDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24)
+          },
           isPaid: false
         });
         expect(
@@ -95,11 +92,7 @@ describe("the `CtaBar` component", () => {
     describe("and the payment has expired", () => {
       it("should not render the calendar button", () => {
         const { component } = renderComponent({
-          ...defaultProps,
-          expirationInfo: {
-            ...defaultProps.expirationInfo,
-            expireStatus: "EXPIRED"
-          }
+          ...defaultProps
         });
         expect(
           component.queryByText(I18n.t("messages.cta.reminder"))
