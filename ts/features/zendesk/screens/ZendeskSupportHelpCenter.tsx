@@ -91,16 +91,16 @@ const FaqManager = (props: FaqManagerProps) => {
     _ => contentHasLoaded
   );
 
-  const isContentReady = contextualHelpData.content === undefined;
+  const isContentLoading = contextualHelpData.content === undefined;
 
   return (
     <>
-      {isContentReady && (
+      {isContentLoading && (
         <View centerJustified={true}>
           <ActivityIndicator color={themeVariables.brandPrimaryLight} />
         </View>
       )}
-      {!isContentReady && (
+      {!isContentLoading && (
         <>
           {!isStringNullyOrEmpty(contextualHelpData.title) && (
             <>
