@@ -28,23 +28,20 @@ export const HeaderDueDateBar = (props: Props): React.ReactElement => {
         />
       )}
 
-      {props.messageDetails.prescriptionData === undefined &&
-        props.messageDetails.dueDate !== undefined && (
+      {props.messageDetails.dueDate !== undefined &&
+        (props.messageDetails.prescriptionData === undefined ? (
           <DueDateBar
             dueDate={props.messageDetails.dueDate}
             expirationInfo={paymentExpirationInfo}
             isPaid={props.hasPaidBadge}
           />
-        )}
-
-      {props.messageDetails.prescriptionData !== undefined &&
-        props.messageDetails.dueDate !== undefined && (
+        ) : (
           <MedicalPrescriptionDueDateBar
             dueDate={props.messageDetails.dueDate}
             messageDetails={props.messageDetails}
             paymentExpirationInfo={paymentExpirationInfo}
           />
-        )}
+        ))}
     </>
   );
 };
