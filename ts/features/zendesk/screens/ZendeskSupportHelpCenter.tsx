@@ -34,7 +34,6 @@ import {
   handleOnLinkClicked,
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
