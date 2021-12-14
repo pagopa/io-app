@@ -10,6 +10,11 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { cancelButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { zendeskSupportCompleted } from "../store/actions";
 
+/**
+ * This screen is show to the user when the panic mode in the remote Zendesk config is activated.
+ * It allow the user only to exit from the Zendesk workflow.
+ * @constructor
+ */
 const ZendeskPanicMode = () => {
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
