@@ -47,7 +47,7 @@ const SelectorItem = (props: {
   onPress: () => void;
 }) =>
   props.currentSelected ? (
-    <H4 weight={"Regular"} color={"bluegreyLight"}>
+    <H4 weight={"SemiBold"} color={"bluegreyLight"}>
       {props.text}
     </H4>
   ) : (
@@ -87,6 +87,7 @@ export const MvlBody = (props: Props): React.ReactElement => {
   return (
     <>
       <Content mode={mode} body={props.body} />
+      <View spacer={true} small={true} />
       <Selector currentValue={mode} onValueChanged={setMode} />
     </>
   );
