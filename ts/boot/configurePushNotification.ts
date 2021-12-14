@@ -8,13 +8,24 @@ import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
-import { debugRemotePushNotification } from "../config";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+
+import {
+  debugRemotePushNotification,
+  pageSize,
+  usePaginatedMessages
+} from "../config";
 import { setMixpanelPushNotificationToken } from "../mixpanel";
-import { DEPRECATED_loadMessages as loadMessages } from "../store/actions/messages";
+import {
+  DEPRECATED_loadMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../store/actions/messages";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
+import { getCursors } from "../store/reducers/entities/messages/allPaginated";
 import { isDevEnv } from "../utils/environment";
 import { store } from "./configureStoreAndPersistor";
 
@@ -29,6 +40,26 @@ const NotificationPayload = t.partial({
   })
 });
 
+/**
+ * Decide how to refresh the messages based on pagination.
+ */
+function handleMessageReload() {
+  const cursors = getCursors(store.getState());
+  if (pot.isNone(cursors)) {
+    // nothing in the collection, refresh
+    store.dispatch(reloadAllMessages.request({ pageSize }));
+  } else if (pot.isSome(cursors)) {
+    // something in the collection, get the new ones only
+    store.dispatch(
+      loadPreviousPageMessages.request({
+        cursor: cursors.value.previous,
+        pageSize: 100
+      })
+    );
+  }
+}
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function configurePushNotifications() {
   // if isDevEnv, disable push notification to avoid crash for missing firebase settings
   if (isDevEnv) {
@@ -75,7 +106,11 @@ function configurePushNotifications() {
         // We just received a push notification about a new message
         if (notification.foreground) {
           // The App is in foreground so just refresh the messages list
-          store.dispatch(loadMessages.request());
+          if (usePaginatedMessages) {
+            handleMessageReload();
+          } else {
+            store.dispatch(DEPRECATED_loadMessages.request());
+          }
         } else {
           // The App was closed/in background and has been now opened clicking
           // on the push notification.
@@ -89,9 +124,11 @@ function configurePushNotifications() {
             )
           );
 
-          // finally, refresh the message list to start loading the content of
-          // the new message
-          store.dispatch(loadMessages.request());
+          if (!usePaginatedMessages) {
+            // finally, refresh the message list to start loading the content of
+            // the new message - only needed for legacy system
+            store.dispatch(DEPRECATED_loadMessages.request());
+          }
         }
       });
 
