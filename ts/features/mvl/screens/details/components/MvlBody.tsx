@@ -29,6 +29,11 @@ const HtmlBody = (props: { html: string }): React.ReactElement | null => {
   return <IORenderHtml source={{ html: props.html }} />;
 };
 
+/**
+ * Switch between different body representation
+ * @param props
+ * @constructor
+ */
 const Content = (props: {
   mode: RenderMode;
   body: MvlData["body"];
@@ -41,6 +46,11 @@ const Content = (props: {
   }
 };
 
+/**
+ * The single element of the {@link Selector}, handling the enable and disable state
+ * @param props
+ * @constructor
+ */
 const SelectorItem = (props: {
   currentSelected: boolean;
   text: string;
@@ -54,6 +64,11 @@ const SelectorItem = (props: {
     <Link onPress={() => props.onPress()}>{props.text}</Link>
   );
 
+/**
+ * A textual selector that allows the user to change representation, switching from html to plain text
+ * @param props
+ * @constructor
+ */
 const Selector = (props: {
   currentValue: RenderMode;
   onValueChanged: (mode: RenderMode) => void;
@@ -76,7 +91,8 @@ const Selector = (props: {
 );
 
 /**
- * Render the body of a legal message, allows the user to choose between plain text or html representation
+ * Render the body of a legal message, allows the user to choose between plain text or html representation.
+ * The default representation is the plain text
  * @constructor
  * @param props
  */
