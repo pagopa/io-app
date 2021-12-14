@@ -50,7 +50,6 @@ const FaqManager = (props: FaqManagerProps) => {
     getContextualHelpDataFromRouteSelector(props.startingRoute)
   );
   const maybeContextualData = pot.getOrElse(potContextualData, none);
-  const loadContextualHelp = () => dispatch(loadContextualHelpData.request());
 
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
@@ -68,9 +67,9 @@ const FaqManager = (props: FaqManagerProps) => {
       pot.isNone(potContextualData)
     ) {
       setLastContextualDataUpdate(now);
-      loadContextualHelp();
+      dispatch(loadContextualHelpData.request());
     }
-  }, [lastContextualDataUpdate, potContextualData, loadContextualHelpData]);
+  }, [dispatch, lastContextualDataUpdate, potContextualData]);
 
   const contextualHelpData: ContextualHelpData = getContextualHelpData(
     maybeContextualData,
