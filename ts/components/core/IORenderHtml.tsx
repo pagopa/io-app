@@ -65,6 +65,12 @@ const tagsStyles: MixedStyleRecord = {
   }
 };
 
+const renderersProps = {
+  img: {
+    enableExperimentalPercentWidth: true
+  }
+};
+
 /**
  * Wraps the {@link RenderHtml} component with the custom IO Styles & logic
  * This is an experimental component
@@ -81,6 +87,7 @@ export const IORenderHtml = (props: Props): React.ReactElement => {
       systemFonts={allUsedFonts}
       contentWidth={width}
       tagsStyles={tagsStyles}
+      renderersProps={renderersProps}
     />
   );
 };
