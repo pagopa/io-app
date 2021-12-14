@@ -212,6 +212,11 @@ export const allMessagesSelector = createSelector(
     )
 );
 
+export const getById = createSelector(
+  [allMessagesSelector, (_: GlobalState, messageId: string) => messageId],
+  (page, messageId) => page.find(_ => _.id === messageId)
+);
+
 /**
  * True if the state is loading and the last request is for a next page.
  * @param state
@@ -232,6 +237,10 @@ export const isLoadingPreviousPage = createSelector(
     lastRequest
       .map(_ => _ === "previous" && pot.isLoading(data))
       .getOrElse(false)
+);
+
+export const getCursors = createSelector(allPaginatedSelector, ({ data }) =>
+  pot.map(data, ({ previous, next }) => ({ previous, next }))
 );
 
 /**
