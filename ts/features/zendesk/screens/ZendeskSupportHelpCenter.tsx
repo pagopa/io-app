@@ -34,6 +34,7 @@ import {
   handleOnLinkClicked,
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -77,22 +78,18 @@ const FaqManager = (props: FaqManagerProps) => {
     }
   }, [dispatch, lastContextualDataUpdate, potContextualData]);
 
-  if (contextualHelpConfig === undefined && maybeContextualData === undefined) {
-    return null;
-  }
-
   const defaultData: ContextualHelpData = fromNullable(
     contextualHelpConfig
   ).fold(
     {
       title: "",
-      faqs: [],
+      faqs: getFAQsFromCategories(faqCategories ?? []),
       content: constNull
     },
     cHC => ({
       title: cHC.title,
       faqs: getFAQsFromCategories(faqCategories ?? []),
-      content: cHC.body
+      content: cHC.body()
     })
   );
   const contextualHelpData: ContextualHelpData = getContextualHelpData(
@@ -100,7 +97,6 @@ const FaqManager = (props: FaqManagerProps) => {
     defaultData,
     () => setContentHasLoaded(true)
   );
-
   /**
    content is loaded when:
    - provided one from props is loaded or
