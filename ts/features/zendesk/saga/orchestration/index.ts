@@ -1,5 +1,6 @@
 import { call } from "redux-saga/effects";
 import { NavigationActions } from "react-navigation";
+import { ActionType } from "typesafe-actions";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -8,17 +9,21 @@ import {
   zendeskSupportBack,
   zendeskSupportCancel,
   zendeskSupportCompleted,
-  zendeskSupportFailure
+  zendeskSupportFailure,
+  zendeskSupportStart
 } from "../../store/actions";
 import ZENDESK_ROUTES from "../../navigation/routes";
 import NavigationService from "../../../../navigation/NavigationService";
 
-function* zendeskSupportWorkUnit() {
+function* zendeskSupportWorkUnit(
+  zendeskStart: ActionType<typeof zendeskSupportStart>
+) {
   return yield call(executeWorkUnit, {
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
         NavigationActions.navigate({
-          routeName: ZENDESK_ROUTES.HELP_CENTER
+          routeName: ZENDESK_ROUTES.HELP_CENTER,
+          params: zendeskStart.payload
         })
       );
     },
@@ -30,6 +35,10 @@ function* zendeskSupportWorkUnit() {
   });
 }
 
-export function* zendeskSupport() {
-  yield call(withResetNavigationStack, zendeskSupportWorkUnit);
+export function* zendeskSupport(
+  zendeskStart: ActionType<typeof zendeskSupportStart>
+) {
+  yield call(withResetNavigationStack, () =>
+    zendeskSupportWorkUnit(zendeskStart)
+  );
 }

@@ -2906,8 +2906,15 @@ support:
   helpCenter:
     header: "IO helps you"
     cta:
-      contactSupport: "Contact support"
-      seeReports: "See reports in progress"
+      contactSupport: "Write us"
+      seeReports: "See your requests"
+    supportComponent:
+      title: "Need help?"
+      subtitle: "If you need support or want to suggest an improvement, please write to us: we will get back to you as soon as possible."
+      adviceMessage: "If your problem concerns the content of a message or the service of an Institution, contact the latter. You will find the contact details within the message or in the tab of the service concerned."
+  panicMode:
+    title: "Sorry, we cannot help you at the moment"
+    body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
   askPermissions:
     header: "Contact support"
     title: "To continue, we need your consent"
