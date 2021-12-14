@@ -2872,6 +2872,9 @@ features:
         subtitle: "TMP Generic error subtitle"
     details:
       hasAttachments: "contiene allegati"
+      body:
+        plain: "testo semplice"
+        html: "html"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."

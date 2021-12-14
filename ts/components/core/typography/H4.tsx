@@ -54,7 +54,7 @@ type BoldKindProps = SemiBoldProps | BoldProps | RegularProps;
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
-const fontSize = 16;
+export const h4FontSize = 16;
 
 /**
  * A custom function to calculate the values if no weight or color is provided.
@@ -63,7 +63,7 @@ const fontSize = 16;
  * @param weight
  * @param color
  */
-const calculateWeightColor = (
+export const calculateH4WeightColor = (
   weight?: AllowedWeight,
   color?: AllowedColors
 ): RequiredTypographyProps<AllowedWeight, AllowedColors> => {
@@ -91,7 +91,7 @@ const calculateWeightColor = (
 export const H4: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
-    weightColorFactory: calculateWeightColor,
+    weightColorFactory: calculateH4WeightColor,
     font: fontName,
-    fontStyle: { fontSize }
+    fontStyle: { fontSize: h4FontSize }
   });

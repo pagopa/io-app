@@ -7,8 +7,14 @@
 import { Platform } from "react-native";
 
 export type IOFontFamily = keyof typeof fonts;
-export type IOFontWeight = "Light" | "Regular" | "SemiBold" | "Bold";
-export type FontWeightValue = "300" | "400" | "600" | "700";
+
+const weights = ["Light", "Regular", "SemiBold", "Bold"] as const;
+export type IOFontWeight = typeof weights[number];
+
+const weightValues = ["300", "400", "600", "700"] as const;
+export type FontWeightValue = typeof weightValues[number];
+
+const fontKeys: ReadonlyArray<IOFontFamily> = ["TitilliumWeb", "RobotoMono"];
 
 /**
  * Choose the font name based on the platform
@@ -62,6 +68,22 @@ const makeFontFamilyName = (
     android: `${fonts[font]}-${weight || "Regular"}${isItalic ? "Italic" : ""}`,
     ios: fonts[font]
   });
+
+/**
+ * All the used font.
+ * Since it is calculated only once and with few elements, readability was preferred.
+ */
+export const allUsedFonts = [
+  ...new Set(
+    fontKeys.flatMap(font =>
+      weights.flatMap(weight =>
+        [FontStyle.normal, FontStyle.italic].flatMap(fontStyle =>
+          makeFontFamilyName(font, weight, fontStyle === FontStyle.italic)
+        )
+      )
+    )
+  )
+];
 
 /**
  * Return a {@link FontStyleObject} with the fields filled based on the platform (iOS or Android).
