@@ -106,12 +106,14 @@ global:
     tomorrow: "domani"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    shortFormatWithTime: "%d/%m/%Y, %H.%M"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
     fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
+    timeFormat: "%H.%M"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -2860,6 +2862,7 @@ bonus:
 
 features:
   mvl:
+    title: "messaggio a valore legale"
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
@@ -2867,6 +2870,8 @@ features:
       genericError:
         title: "TMP Generic error title"
         subtitle: "TMP Generic error subtitle"
+    details:
+      hasAttachments: "contiene allegati"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
@@ -2926,8 +2931,8 @@ support:
   helpCenter:
     header: "IO ti aiuto"
     cta:
-      contactSupport: "Contatta l'assistenza"
-      seeReports: "Vedi segnalazioni in corso"
+      contactSupport: "Scrivici"
+      seeReports: "Vedi le tue richieste"
     supportComponent:
       title: "Hai bisogno d’aiuto?"
       subtitle: "Per richiedere assistenza o suggerire un miglioramento, scrivici: ti risponderemo il prima possibile."

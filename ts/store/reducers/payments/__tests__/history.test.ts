@@ -100,7 +100,13 @@ describe("history reducer", () => {
       // eslint-disable-next-line functional/no-let
       let state = reducer(initialState, paymentVerificaRequest);
       state = reducer(state, paymentVerificaSuccess);
-      state = reducer(state, paymentOutcomeCode(some(randomCode)));
+      state = reducer(
+        state,
+        paymentOutcomeCode({
+          outcome: some(randomCode),
+          paymentMethodType: "CreditCard"
+        })
+      );
       expect(state.length).toEqual(1);
       expect(state[0].outcomeCode).toEqual(randomCode);
     });

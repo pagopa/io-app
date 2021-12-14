@@ -46,11 +46,11 @@ type FaqManagerProps = Pick<
  */
 const FaqManager = (props: FaqManagerProps) => {
   const dispatch = useDispatch();
+  const workUnitComplete = () => dispatch(zendeskSupportCompleted());
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)
   );
   const maybeContextualData = pot.getOrElse(potContextualData, none);
-  const loadContextualHelp = () => dispatch(loadContextualHelpData.request());
 
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
@@ -68,9 +68,9 @@ const FaqManager = (props: FaqManagerProps) => {
       pot.isNone(potContextualData)
     ) {
       setLastContextualDataUpdate(now);
-      loadContextualHelp();
+      dispatch(loadContextualHelpData.request());
     }
-  }, [lastContextualDataUpdate, potContextualData, loadContextualHelpData]);
+  }, [dispatch, lastContextualDataUpdate, potContextualData]);
 
   const contextualHelpData: ContextualHelpData = getContextualHelpData(
     maybeContextualData,
@@ -92,16 +92,16 @@ const FaqManager = (props: FaqManagerProps) => {
     _ => contentHasLoaded
   );
 
-  const isContentReady = contextualHelpData.content === undefined;
+  const isContentLoading = contextualHelpData.content === undefined;
 
   return (
     <>
-      {isContentReady && (
+      {isContentLoading && (
         <View centerJustified={true}>
           <ActivityIndicator color={themeVariables.brandPrimaryLight} />
         </View>
       )}
-      {!isContentReady && (
+      {!isContentLoading && (
         <>
           {!isStringNullyOrEmpty(contextualHelpData.title) && (
             <>
@@ -117,7 +117,7 @@ const FaqManager = (props: FaqManagerProps) => {
           )}
           {contextualHelpData.faqs && isContentLoaded && (
             <FAQComponent
-              onLinkClicked={() => true}
+              onLinkClicked={workUnitComplete}
               faqs={contextualHelpData.faqs}
             />
           )}

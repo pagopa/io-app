@@ -76,6 +76,14 @@ export const handleOnLinkClicked = (hideHelp: () => void) => (url: string) => {
   customHandledLink.map(link => handleItemOnPress(link.url)());
 };
 
+/**
+ * Extract a title and a body (ContextualHelpProps) if the contextualHelp or the contextualHelpMarkdown in input are defined,
+ * otherwise returns undefined.
+ * @param contextualHelp
+ * @param contextualHelpMarkdown
+ * @param onLoadEnd
+ * @param onLinkClicked
+ */
 export const getContextualHelpConfig = (
   contextualHelp: ContextualHelpProps | undefined,
   contextualHelpMarkdown: ContextualHelpPropsMarkdown | undefined,

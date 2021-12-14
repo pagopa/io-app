@@ -16,6 +16,7 @@ import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTyp
 import {
   PaymentManagerToken,
   Psp,
+  RawPaymentMethod,
   Transaction,
   Wallet
 } from "../../../types/pagopa";
@@ -202,10 +203,15 @@ export const paymentExecuteStart = createAsyncAction(
 )<PaymentStartPayload, PaymentManagerToken, Error>();
 
 export type PaymentWebViewEndReason = "USER_ABORT" | "EXIT_PATH";
+export type PaymentMethodType = Extract<
+  RawPaymentMethod["kind"],
+  "CreditCard" | "PayPal"
+>;
 // event fired when the paywebview ends its challenge (used to reset payment values)
-export const paymentWebViewEnd = createStandardAction(
-  "PAYMENT_WEB_VIEW_END"
-)<PaymentWebViewEndReason>();
+export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<{
+  reason: PaymentWebViewEndReason;
+  paymentMethodType: PaymentMethodType;
+}>();
 
 // used to accumulate all the urls browsed into the pay webview
 export const paymentRedirectionUrls = createStandardAction(
