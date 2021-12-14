@@ -1,7 +1,7 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { call, Effect, put, select } from "redux-saga/effects";
-import { ActionType } from "typesafe-actions";
+import { call, Effect, put, select, take } from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 
 import { BackendClient } from "../../api/backend";
@@ -17,7 +17,9 @@ import {
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentUpdateWalletPsp,
-  paymentVerifica
+  paymentVerifica,
+  pspForPaymentV2,
+  pspForPaymentV2WithCallbacks
 } from "../../store/actions/wallet/payment";
 import {
   fetchPsp,
@@ -51,6 +53,7 @@ import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import {
   getError,
   getErrorFromNetworkError,
+  getGenericError,
   getNetworkError,
   isTimeoutError
 } from "../../utils/errors";
@@ -830,5 +833,62 @@ export function* paymentIdPollingRequestHandler(
     }
   } catch (e) {
     yield put(paymentIdPolling.failure(e.message));
+  }
+}
+
+/**
+ * request the list of psp that can handle a payment from a given idWallet and idPayment
+ * @param getPspV2
+ * @param pmSessionManager
+ * @param action
+ */
+export function* getPspV2(
+  getPspV2: ReturnType<typeof PaymentManagerClient>["getPspV2"],
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof pspForPaymentV2["request"]>
+) {
+  const getPspV2Request = getPspV2(action.payload);
+  const request = pmSessionManager.withRefresh(getPspV2Request);
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(pspForPaymentV2.success(response.value.value.data));
+      } else {
+        yield put(
+          pspForPaymentV2.failure(
+            getGenericError(Error(`response status ${response.value.status}`))
+          )
+        );
+      }
+    } else {
+      yield put(
+        pspForPaymentV2.failure(
+          getGenericError(Error(readablePrivacyReport(response.value)))
+        )
+      );
+    }
+  } catch (e) {
+    yield put(pspForPaymentV2.failure(getNetworkError(e)));
+  }
+}
+
+/**
+ * @deprecated this function request and handle the psp list by using a callback approach
+ * it should not be used!
+ * Use instead {@link pspForPaymentV2} action and relative saga {@link getPspV2} to retrieve the psp list
+ */
+export function* getPspV2WithCallbacks(
+  action: ActionType<typeof pspForPaymentV2WithCallbacks>
+) {
+  yield put(pspForPaymentV2.request(action.payload));
+  const result = yield take([
+    getType(pspForPaymentV2.success),
+    getType(pspForPaymentV2.failure)
+  ]);
+  if (isActionOf(pspForPaymentV2.failure, result)) {
+    action.payload.onFailure();
+  } else if (isActionOf(pspForPaymentV2.success, result)) {
+    action.payload.onSuccess(result.payload);
   }
 }

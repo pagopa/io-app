@@ -5,10 +5,7 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import {
   loadServiceDetail,
   removeServiceTuples
@@ -16,6 +13,7 @@ import {
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 
 export type ServicesByIdState = Readonly<{
   [key: string]: pot.Pot<ServicePublic, Error> | undefined;
@@ -87,7 +85,7 @@ export const serviceByIdSelector =
 
 export const serviceMetadataByIdSelector =
   (id: ServiceId) =>
-  (state: GlobalState): ServicePublicService_metadata | undefined => {
+  (state: GlobalState): ServiceMetadata | undefined => {
     const maybeServiceById = serviceByIdSelector(id)(state);
 
     return maybeServiceById

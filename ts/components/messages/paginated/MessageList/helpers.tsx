@@ -1,10 +1,9 @@
 import React from "react";
 import { Animated, FlatList, ListRenderItemInfo } from "react-native";
 
-import {
-  MessageCategory,
-  UIMessage
-} from "../../../../store/reducers/entities/messages/types";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { MessageStatus } from "../../../../store/reducers/entities/messages/messagesStatus";
 import ItemSeparatorComponent from "../../../ItemSeparatorComponent";
 import { ErrorLoadingComponent } from "../../ErrorLoadingComponent";
 import MessageListItem from "./Item";
@@ -34,7 +33,7 @@ export const ItemSeparator = () => <ItemSeparatorComponent noPadded={true} />;
 export const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 type RenderItemProps = {
-  isRead: boolean;
+  getMessageStatus: (id: string) => MessageStatus;
   hasPaidBadge: (id: MessageCategory) => boolean;
   onLongPress: (message: UIMessage) => void;
   onPress: (message: UIMessage) => void;
@@ -42,17 +41,20 @@ type RenderItemProps = {
 };
 export const renderItem =
   ({
-    isRead,
+    getMessageStatus,
     hasPaidBadge,
     onLongPress,
     onPress,
     selectedMessageIds
   }: RenderItemProps) =>
-  ({ item: message }: ListRenderItemInfo<UIMessage>) =>
-    (
+  ({ item: message }: ListRenderItemInfo<UIMessage>) => {
+    const { isRead, isArchived } = getMessageStatus(message.id);
+    return (
       <MessageListItem
+        category={message.category}
         hasPaidBadge={hasPaidBadge(message.category)}
         isRead={isRead}
+        isArchived={isArchived}
         message={message}
         onPress={() => onPress(message)}
         onLongPress={() => onLongPress(message)}
@@ -60,6 +62,7 @@ export const renderItem =
         isSelected={!!selectedMessageIds?.has(message.id)}
       />
     );
+  };
 
 export type EmptyComponent = React.ComponentProps<
   typeof FlatList

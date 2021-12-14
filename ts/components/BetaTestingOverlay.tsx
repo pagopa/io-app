@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   versionContainer: {
     position: "absolute",
     top: Platform.select({
-      ios: 20 + (isIphoneX() ? getStatusBarHeight() : 0),
+      ios: 35 + (isIphoneX() ? getStatusBarHeight() : 0),
       android: 0
     }),
     left: 0,

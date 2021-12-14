@@ -30,11 +30,11 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
-  PayPalPaymentMethod,
   PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
+import PaymentOutcomeCodeMessage from "../../screens/wallet/payment/PaymentOutcomeCodeMessage";
 
 /**
  * @deprecated
@@ -433,10 +433,9 @@ export const navigateToSatispayDetailScreen = (
     })
   );
 
-export const navigateToPayPalDetailScreen = (paypal: PayPalPaymentMethod) =>
+export const navigateToPayPalDetailScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_PAYPAL_DETAIL,
-    params: { paypal }
+    routeName: ROUTES.WALLET_PAYPAL_DETAIL
   });
 
 /**
@@ -619,10 +618,13 @@ export const navigateToAddCreditCardOutcomeCode = (
 /**
  * @deprecated
  */
-export const navigateToPaymentOutcomeCode = () =>
+export const navigateToPaymentOutcomeCode = (
+  params: InferNavigationParams<typeof PaymentOutcomeCodeMessage>
+) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
-      routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
+      routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE,
+      params
     })
   );
 

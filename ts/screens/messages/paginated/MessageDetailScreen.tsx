@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import * as pot from "italia-ts-commons/lib/pot";
+import { Text, View } from "native-base";
+import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { Text, View } from "native-base";
-import * as pot from "italia-ts-commons/lib/pot";
+import MessageDetailComponent from "../../../components/messages/paginated/MessageDetail";
 
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -13,28 +14,26 @@ import {
   loadMessageDetails,
   setMessageReadState
 } from "../../../store/actions/messages";
-import {
-  navigateToServiceDetailsScreen,
-  navigateToWalletHome
-} from "../../../store/actions/navigation";
+import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
+import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
+import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
 import {
-  isMessageRead,
-  messagesStatusSelector
-} from "../../../store/reducers/entities/messages/messagesStatus";
+  UIMessage,
+  UIMessageId
+} from "../../../store/reducers/entities/messages/types";
+import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
   serviceMetadataByIdSelector
 } from "../../../store/reducers/entities/services/servicesById";
+import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../store/reducers/types";
 import { InferNavigationParams } from "../../../types/react";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import ServiceDetailsScreen from "../../services/ServiceDetailsScreen";
-import MessageDetailComponent from "../../../components/messages/paginated/MessageDetail";
-import { isNoticePaid } from "../../../store/reducers/entities/payments";
-import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import ErrorState from "../MessageDetailScreen/ErrorState";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -81,23 +80,27 @@ const MessageDetailScreen = ({
   maybeServiceMetadata,
   message,
   messageDetails,
-  navigateToWalletHome,
   refreshService,
   service,
   setMessageReadState
 }: Props) => {
-  useEffect(() => {
+  useOnFirstRender(() => {
     if (!isRead) {
       setMessageReadState(message.id, true);
     }
-    loadMessageDetails(message.id);
-  }, []);
+    if (
+      pot.isError(messageDetails) ||
+      (pot.isNone(messageDetails) && !pot.isLoading(messageDetails))
+    ) {
+      loadMessageDetails(message.id);
+    }
+  });
 
   const onServiceLinkPressHandler = () => {
     // When a service gets selected, before navigating to the service detail
     // screen, we issue a loadServiceMetadata request to refresh the service metadata
     if (service) {
-      navigateToServiceDetailsScreen({ service });
+      navigateToServiceDetailsScreen({ service: service.raw });
     }
   };
 
@@ -135,8 +138,7 @@ const MessageDetailScreen = ({
           hasPaidBadge={hasPaidBadge}
           message={message}
           messageDetails={details}
-          navigateToWalletHome={navigateToWalletHome}
-          organizationFiscalCode={service?.organization_fiscal_code}
+          service={service}
           serviceMetadata={maybeServiceMetadata}
           onServiceLinkPress={onServiceLinkPressHandler}
         />
@@ -150,18 +152,18 @@ const MessageDetailScreen = ({
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const message: UIMessage = ownProps.navigation.getParam("message");
-  const messagesStatus = messagesStatusSelector(state);
   const messageDetails = getDetailsByMessageId(state, message.id);
-  const isRead = isMessageRead(messagesStatus, message.id);
+  const isRead = isMessageRead(state, message.id);
   const goBack = () => ownProps.navigation.goBack();
-  const service = pot.toUndefined(
-    serviceByIdSelector(message.serviceId)(state) || pot.none
-  );
+  const service = pot
+    .toOption(serviceByIdSelector(message.serviceId)(state) || pot.none)
+    .map(toUIService)
+    .toUndefined();
   // Map the potential message to the potential service
   const maybeServiceMetadata = serviceMetadataByIdSelector(message.serviceId)(
     state
   );
-  const hasPaidBadge = isNoticePaid(state)(message.category);
+  const hasPaidBadge = isNoticePaid(state, message.category);
 
   return {
     goBack,
@@ -177,14 +179,13 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
-  loadMessageDetails: (id: string) =>
+  loadMessageDetails: (id: UIMessageId) =>
     dispatch(loadMessageDetails.request({ id })),
   setMessageReadState: (messageId: string, isRead: boolean) =>
     dispatch(setMessageReadState(messageId, isRead)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => navigateToServiceDetailsScreen(params),
-  navigateToWalletHome: () => navigateToWalletHome()
+  ) => navigateToServiceDetailsScreen(params)
 });
 
 export default connect(

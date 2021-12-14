@@ -12,10 +12,7 @@ import { MIN_CHARACTER_SEARCH_TEXT } from "../../../components/search/SearchButt
 import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../../components/SectionStatus";
 import I18n from "../../../i18n";
-import {
-  reloadAllMessages,
-  setMessagesArchivedState
-} from "../../../store/actions/messages";
+import { reloadAllMessages } from "../../../store/actions/messages";
 import { Dispatch } from "../../../store/actions/types";
 import {
   isSearchMessagesEnabledSelector,
@@ -51,14 +48,13 @@ const MessagesHomeScreen = ({
   isSearchEnabled,
   messageSectionStatusActive,
   reloadFirstPage,
-  searchText,
-  updateMessagesArchivedState
+  searchText
 }: Props) => {
   const navigation = useContext(NavigationContext);
 
   const navigateToMessageDetail = (message: UIMessage) => {
     // TODO: https://pagopa.atlassian.net/browse/IA-463
-    // if message is a GreenPass, navigate to the dedicated navigator
+    // if message is a EUCovidCertificate, navigate to the dedicated navigator
     //   navigateToEuCovidCertificate(
     //     message.content.eu_covid_cert.auth_code as EUCovidCertificateAuthCode,
     //     message.id
@@ -105,11 +101,7 @@ const MessagesHomeScreen = ({
             title={I18n.t("messages.contentTitle")}
             iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
           />
-          <MessagesInbox
-            messages={allMessages}
-            navigateToMessageDetail={navigateToMessageDetail}
-            setMessagesArchivedState={updateMessagesArchivedState}
-          />
+          <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
         </React.Fragment>
       )}
 
@@ -149,11 +141,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   // used for the first rendering only
   reloadFirstPage: () => {
     dispatch(reloadAllMessages.request({ pageSize }));
-  },
-  updateMessagesArchivedState: (
-    ids: ReadonlyArray<string>,
-    archived: boolean
-  ) => dispatch(setMessagesArchivedState(ids, archived))
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);

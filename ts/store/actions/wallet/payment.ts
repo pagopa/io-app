@@ -16,6 +16,7 @@ import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTyp
 import {
   PaymentManagerToken,
   Psp,
+  RawPaymentMethod,
   Transaction,
   Wallet
 } from "../../../types/pagopa";
@@ -25,6 +26,8 @@ import {
   PaymentStartPayload
 } from "../../reducers/wallet/payment";
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
+import { NetworkError } from "../../../utils/errors";
+import { PspData } from "../../../../definitions/pagopa/PspData";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
@@ -200,10 +203,15 @@ export const paymentExecuteStart = createAsyncAction(
 )<PaymentStartPayload, PaymentManagerToken, Error>();
 
 export type PaymentWebViewEndReason = "USER_ABORT" | "EXIT_PATH";
+export type PaymentMethodType = Extract<
+  RawPaymentMethod["kind"],
+  "CreditCard" | "PayPal"
+>;
 // event fired when the paywebview ends its challenge (used to reset payment values)
-export const paymentWebViewEnd = createStandardAction(
-  "PAYMENT_WEB_VIEW_END"
-)<PaymentWebViewEndReason>();
+export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<{
+  reason: PaymentWebViewEndReason;
+  paymentMethodType: PaymentMethodType;
+}>();
 
 // used to accumulate all the urls browsed into the pay webview
 export const paymentRedirectionUrls = createStandardAction(
@@ -274,6 +282,33 @@ export const runStartOrResumePaymentActivationSaga = createStandardAction(
 )<RunStartOrResumePaymentActivationSagaPayload>();
 
 /**
+ * get the list of psp that can handle the payment with the given paymentMethod
+ */
+export const pspForPaymentV2 = createAsyncAction(
+  "PAYMENT_PSP_V2_REQUEST",
+  "PAYMENT_PSP_V2_SUCCESS",
+  "PAYMENT_PSP_V2_FAILURE"
+)<
+  { idWallet: number; idPayment: string },
+  ReadonlyArray<PspData>,
+  NetworkError
+>();
+
+/**
+ * @deprecated
+ * this action is used only to mimic the existing payment logic (callbacks hell 😈)
+ * use {@link pspForPaymentV2} instead
+ */
+export const pspForPaymentV2WithCallbacks = createStandardAction(
+  "PAYMENT_PSP_V2_WITH_CALLBACKS"
+)<{
+  idWallet: number;
+  idPayment: string;
+  onSuccess: (psp: ReadonlyArray<PspData>) => void;
+  onFailure: () => void;
+}>();
+
+/**
  * All possible payment actions
  */
 export type PaymentActions =
@@ -295,4 +330,6 @@ export type PaymentActions =
   | ActionType<typeof abortRunningPayment>
   | ActionType<typeof paymentFetchAllPspsForPaymentId>
   | ActionType<typeof paymentRedirectionUrls>
-  | ActionType<typeof runStartOrResumePaymentActivationSaga>;
+  | ActionType<typeof runStartOrResumePaymentActivationSaga>
+  | ActionType<typeof pspForPaymentV2>
+  | ActionType<typeof pspForPaymentV2WithCallbacks>;

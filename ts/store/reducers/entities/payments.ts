@@ -6,6 +6,7 @@
 
 import { getType } from "typesafe-actions";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { createSelector } from "reselect";
 
 import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../actions/wallet/payment";
@@ -72,9 +73,16 @@ export const paymentsByRptIdSelector = (
 /**
  * Given an rptId as a string, return true if there is a matching paid transaction.
  * TODO: just a placeholder for now, see https://pagopa.atlassian.net/browse/IA-417
- * @param state
  */
-export const isNoticePaid =
-  (_state: GlobalState) => (_category: UIMessage["category"]) =>
-    // state.entities.paymentByRptId[rptId] !== undefined;
-    false;
+export const isNoticePaid = createSelector(
+  [
+    paymentsByRptIdSelector,
+    (_: GlobalState, category: UIMessage["category"]) => category
+  ],
+  (paymentByRptId, category) => {
+    if (category.tag === "PAYMENT") {
+      return !!paymentByRptId[category.rptId];
+    }
+    return false;
+  }
+);

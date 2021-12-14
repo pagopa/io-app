@@ -1,5 +1,6 @@
 import { call } from "redux-saga/effects";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
+import { ActionType } from "typesafe-actions";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -10,8 +11,11 @@ import {
   walletAddPaypalBack,
   walletAddPaypalCancel,
   walletAddPaypalCompleted,
-  walletAddPaypalFailure
+  walletAddPaypalFailure,
+  walletAddPaypalStart
 } from "../../store/actions";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { navigateToPayPalDetailScreen } from "../../../../../../store/actions/navigation";
 
 // handle the flow of paypal onboarding
 function* paypalWorkOnboaringUnit() {
@@ -30,6 +34,34 @@ function* paypalWorkOnboaringUnit() {
   });
 }
 
-export function* addPaypalToWallet() {
-  yield call(withResetNavigationStack, paypalWorkOnboaringUnit);
+export function* addPaypalToWallet(
+  action: ActionType<typeof walletAddPaypalStart>
+) {
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+    withResetNavigationStack,
+    paypalWorkOnboaringUnit
+  );
+  // onboarding gone successfully, go to the paypal screen detail
+  if (res === "completed") {
+    switch (action.payload) {
+      case "payment_method_details":
+        // reset the stack to land in the wallet section
+        yield call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.popToTop()
+        );
+        yield call(
+          NavigationService.dispatchNavigationAction,
+          navigateToPayPalDetailScreen()
+        );
+        break;
+      // if the destination is to return back, remove 1 screen from the stack
+      case "back":
+        yield call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.pop({ n: 1 })
+        );
+        break;
+    }
+  }
 }

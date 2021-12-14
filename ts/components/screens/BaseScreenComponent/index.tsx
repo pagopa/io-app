@@ -12,12 +12,12 @@ import React, {
   useState
 } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
+import { useDispatch } from "react-redux";
 import { TranslationKeys } from "../../../../locales/locales";
 import {
   defaultAttachmentTypeConfiguration,
   DefaultReportAttachmentTypeConfiguration
 } from "../../../boot/configureInstabug";
-import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import customVariables from "../../../theme/variables";
 import { noAnalyticsRoutes } from "../../../utils/analytics";
@@ -25,11 +25,22 @@ import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import ContextualHelp, { RequestAssistancePayload } from "../../ContextualHelp";
 import { SearchType } from "../../search/SearchButton";
-import Markdown from "../../ui/Markdown";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 
-import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
+import { zendeskEnabled } from "../../../config";
+import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import { useIOSelector } from "../../../store/hooks";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import {
+  getContextualHelpConfig,
+  handleOnContextualHelpDismissed,
+  handleOnLinkClicked
+} from "./utils";
 
+// TODO: remove disabler when instabug is removed
+/* eslint-disable sonarjs/cognitive-complexity */
 export type ContextualHelpProps = {
   title: string;
   body: () => React.ReactNode;
@@ -125,7 +136,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
         setIsHelpVisible(false);
         // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
         // we force handling here. The timeout is due to wait until the modal is completely hidden
-        // otherwise in the Instabug screeshot we will see the contextual help content instead the screen below
+        // otherwise in the Instabug screenshot we will see the contextual help content instead the screen below
         // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
         setTimeout(() => {
           handleOnContextualHelpDismissed(
@@ -150,6 +161,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           customVariables.colorWhite
         )
       );
+
       setIsHelpVisible(true);
       setMarkdownContentLoaded(!contextualHelpMarkdown);
     };
@@ -178,23 +190,49 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       }
     };
 
-    const contextualHelpConfig = contextualHelp
-      ? { body: contextualHelp.body, title: contextualHelp.title }
-      : contextualHelpMarkdown
-      ? {
-          body: () => (
-            <Markdown
-              onLinkClicked={handleOnLinkClicked(hideHelp)}
-              onLoadEnd={() => {
-                setMarkdownContentLoaded(true);
-              }}
-            >
-              {I18n.t(contextualHelpMarkdown.body)}
-            </Markdown>
-          ),
-          title: I18n.t(contextualHelpMarkdown.title)
-        }
-      : undefined;
+    const contextualHelpConfig = getContextualHelpConfig(
+      contextualHelp,
+      contextualHelpMarkdown,
+      () => setMarkdownContentLoaded(true),
+      handleOnLinkClicked(hideHelp)
+    );
+    const dispatch = useDispatch();
+    const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+    const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+    const onShowHelp = (): (() => void) | undefined => {
+      switch (choosenTool) {
+        case ToolEnum.zendesk:
+          // TODO: remove local feature flag
+          if (zendeskEnabled) {
+            return () => {
+              dispatch(
+                zendeskSupportStart({
+                  // If contextualHelpConfig is undefined this function is not called
+                  contentLoaded: markdownContentLoaded,
+                  faqCategories,
+                  contextualHelp,
+                  contextualHelpMarkdown,
+                  startingRoute: currentScreenName
+                })
+              );
+            };
+          }
+          return undefined;
+        case ToolEnum.instabug:
+          // TODO: remove instabug
+          return () => showHelp();
+        case ToolEnum.none:
+        case ToolEnum.web:
+          return undefined;
+        default:
+          return undefined;
+      }
+    };
+
+    // help can be shown only when remote FF is instabug or (zendesk + ff local)
+    const canShowHelp = (): boolean =>
+      contextualHelpConfig !== undefined && onShowHelp !== undefined;
 
     return (
       <Container>
@@ -210,7 +248,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           goBack={goBack}
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
-          onShowHelp={contextualHelpConfig ? showHelp : undefined}
+          onShowHelp={canShowHelp() ? onShowHelp() : undefined}
           isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
