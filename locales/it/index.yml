@@ -2931,8 +2931,15 @@ support:
   helpCenter:
     header: "IO ti aiuto"
     cta:
-      contactSupport: "Contatta l'assistenza"
-      seeReports: "Vedi segnalazioni in corso"
+      contactSupport: "Scrivici"
+      seeReports: "Vedi le tue richieste"
+    supportComponent:
+      title: "Hai bisogno d’aiuto?"
+      subtitle: "Per richiedere assistenza o suggerire un miglioramento, scrivici: ti risponderemo il prima possibile."
+      adviceMessage: "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un Ente, contatta quest’ultimo. Troverai i riferimenti all’interno del messaggio o nella scheda del servizio in questione."
+  panicMode:
+    title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
+    body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
   askPermissions:
     header: "Contatta l'assistenza"
     title: "Per continuare, abbiamo bisogno del tuo consenso"
