@@ -77,7 +77,6 @@ const Selector = (props: {
 
 /**
  * Render the body of a legal message, allows the user to choose between plain text or html representation
- * TODO: this is a placeholder, will be implemented in https://pagopa.atlassian.net/browse/IAMVL-23
  * @constructor
  * @param props
  */
