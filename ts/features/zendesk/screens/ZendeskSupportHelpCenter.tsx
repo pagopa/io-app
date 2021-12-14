@@ -46,6 +46,7 @@ type FaqManagerProps = Pick<
  */
 const FaqManager = (props: FaqManagerProps) => {
   const dispatch = useDispatch();
+  const workUnitComplete = () => dispatch(zendeskSupportCompleted());
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)
   );
@@ -116,7 +117,7 @@ const FaqManager = (props: FaqManagerProps) => {
           )}
           {contextualHelpData.faqs && isContentLoaded && (
             <FAQComponent
-              onLinkClicked={() => true}
+              onLinkClicked={workUnitComplete}
               faqs={contextualHelpData.faqs}
             />
           )}
