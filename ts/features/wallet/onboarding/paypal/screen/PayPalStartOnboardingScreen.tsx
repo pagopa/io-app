@@ -15,6 +15,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToPaypalSearchPsp } from "../store/actions/navigation";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -86,6 +87,7 @@ const PayPalStartOnboardingScreen = (
             </Body>
           }
         />
+        <SectionStatusComponent sectionKey={"paypal"} />
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps}
