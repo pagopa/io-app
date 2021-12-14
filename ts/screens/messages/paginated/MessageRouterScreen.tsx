@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -79,8 +79,11 @@ const MessageRouterScreen = ({
   // (avoid displaying error at the first frame)
   const firstRendering = useRef(true);
   const isLoading = !pot.isError(maybeMessageDetails);
+  const errorMessage = pot.isError(maybeMessageDetails)
+    ? maybeMessageDetails.error
+    : undefined;
 
-  const tryLoadMessageDetails = () => {
+  const tryLoadMessageDetails = useCallback(() => {
     if (maybeMessage === undefined) {
       if (pot.isNone(cursors)) {
         // nothing in the collection, refresh
@@ -91,7 +94,14 @@ const MessageRouterScreen = ({
       }
     }
     loadMessageDetails(messageId);
-  };
+  }, [
+    maybeMessage,
+    cursors,
+    messageId,
+    loadMessageDetails,
+    loadPreviousPage,
+    reloadPage
+  ]);
 
   useEffect(() => {
     // message in the list and its details loaded: green light
@@ -107,10 +117,18 @@ const MessageRouterScreen = ({
       // eslint-disable-next-line functional/immutable-data
       firstRendering.current = false;
     }
-  }, [messageId, maybeMessage, maybeMessageDetails, loadMessageDetails]);
+  }, [
+    loadMessageDetails,
+    maybeMessage,
+    maybeMessageDetails,
+    messageId,
+    navigation,
+    tryLoadMessageDetails
+  ]);
 
   return (
     <LoadingErrorComponent
+      errorText={errorMessage}
       isLoading={isLoading}
       loadingCaption={I18n.t("messageDetails.loadingText")}
       onAbort={cancel}
