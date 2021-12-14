@@ -50,7 +50,7 @@ export const mvlMockMetadata: MvlMetadata = {
 
 export const mvlMockData: MvlData = {
   body: mvlMockBody,
-  attachments: [mvlMockPdfAttachment, mvlMockPdfAttachment],
+  attachments: [mvlMockPdfAttachment, mvlMockOtherAttachment],
   metadata: mvlMockMetadata
 };
 
