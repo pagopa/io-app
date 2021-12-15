@@ -89,7 +89,7 @@ type AuthenticationStateWithIdp =
 export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 
 // Initially the user is logged out and hasn't selected an IDP
-const INITIAL_STATE: LoggedOutWithoutIdp = {
+export const INITIAL_STATE: LoggedOutWithoutIdp = {
   kind: "LoggedOutWithoutIdp",
   reason: "NOT_LOGGED_IN"
 };
