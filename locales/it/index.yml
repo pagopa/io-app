@@ -2598,7 +2598,7 @@ bonus:
         sport: sport
         health: salute e benessere
     cta:
-      activeBonus: Richiedi la tua CGN
+      activeBonus: Attiva la Carta
       goToDetail: Visualizza la Carta Giovani
     detail:
       cta:
