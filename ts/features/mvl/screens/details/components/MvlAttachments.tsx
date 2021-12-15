@@ -2,6 +2,8 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Svg from "react-native-svg";
+import Default from "../../../../../../img/features/mvl/attachmentsIcon/default.svg";
+import Pdf from "../../../../../../img/features/mvl/attachmentsIcon/pdf.svg";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -9,11 +11,10 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import IconFont from "../../../../../components/ui/IconFont";
+import I18n from "../../../../../i18n";
 import { formatByte } from "../../../../../types/digitalInformationUnit";
 import { MvlAttachment, MvlData } from "../../../types/mvlData";
-import Pdf from "../../../../../../img/features/mvl/attachmentsIcon/pdf.svg";
-import Default from "../../../../../../img/features/mvl/attachmentsIcon/default.svg";
-import I18n from "../../../../../i18n";
+import { useDownloadAttachmentConfirmationBottomSheet } from "./attachment/DownloadAttachmentConfirmationBottomSheet";
 
 type Props = {
   attachments: MvlData["attachments"];
@@ -73,37 +74,40 @@ const AttachmentIcon = (props: {
  * @param props
  * @constructor
  */
-const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => (
-  <TouchableOpacity
-    style={styles.container}
-    onPress={() => console.log(props.attachment.resourceUrl)}
-  >
-    <View style={styles.flexColumn}>
-      <View style={styles.row}>
-        <AttachmentIcon contentType={props.attachment.contentType} />
-        <View style={[IOStyles.flex, styles.paddingLeft]}>
-          <H3
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            ellipsizeMode={"middle"}
-            numberOfLines={1}
-          >
-            {props.attachment.name}
-          </H3>
-          <H5 color={"bluegrey"} weight={"Regular"}>
-            {formatByte(props.attachment.size)}
-          </H5>
+const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
+  const { present } = useDownloadAttachmentConfirmationBottomSheet(
+    props.attachment
+  );
+
+  return (
+    <TouchableOpacity style={styles.container} onPress={present}>
+      <View style={styles.flexColumn}>
+        <View style={styles.row}>
+          <AttachmentIcon contentType={props.attachment.contentType} />
+          <View style={[IOStyles.flex, styles.paddingLeft]}>
+            <H3
+              color={"bluegrey"}
+              weight={"SemiBold"}
+              ellipsizeMode={"middle"}
+              numberOfLines={1}
+            >
+              {props.attachment.name}
+            </H3>
+            <H5 color={"bluegrey"} weight={"Regular"}>
+              {formatByte(props.attachment.size)}
+            </H5>
+          </View>
+          <IconFont
+            name={"io-right"}
+            color={IOColors.blue}
+            size={24}
+            style={styles.icon}
+          />
         </View>
-        <IconFont
-          name={"io-right"}
-          color={IOColors.blue}
-          size={24}
-          style={styles.icon}
-        />
       </View>
-    </View>
-  </TouchableOpacity>
-);
+    </TouchableOpacity>
+  );
+};
 
 /**
  * Render all the attachments of a legal message as listItem that can have different representation based on the contentType

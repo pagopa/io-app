@@ -4,7 +4,14 @@ import { message_1 } from "../../../../__mocks__/message";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { Byte } from "../../../../types/digitalInformationUnit";
-import { Mvl, MvlAttachment, MvlBody, MvlData, MvlMetadata } from "../mvlData";
+import {
+  Mvl,
+  MvlAttachment,
+  MvlAttachmentId,
+  MvlBody,
+  MvlData,
+  MvlMetadata
+} from "../mvlData";
 
 export const mvlMockId = "mockId" as UIMessageId;
 
@@ -27,6 +34,7 @@ export const mvlMockBody: MvlBody = {
 };
 
 export const mvlMockPdfAttachment: MvlAttachment = {
+  id: "1" as MvlAttachmentId,
   name: "invoice.pdf",
   contentType: "application/pdf",
   size: 1959520 as Byte,
@@ -34,6 +42,7 @@ export const mvlMockPdfAttachment: MvlAttachment = {
 };
 
 export const mvlMockOtherAttachment: MvlAttachment = {
+  id: "2" as MvlAttachmentId,
   name: "image.png",
   contentType: "other",
   size: 125952 as Byte,
