@@ -51,6 +51,11 @@ const svgProps: React.ComponentProps<typeof Svg> = {
   style: styles.icon
 };
 
+/**
+ * Custom icon of the attachment, based on the contentType (at the moment only the pdf have a custom representation)
+ * @param props
+ * @constructor
+ */
 const AttachmentIcon = (props: {
   contentType: MvlAttachment["contentType"];
 }) => {
@@ -62,6 +67,12 @@ const AttachmentIcon = (props: {
   }
 };
 
+/**
+ * Represent a single attachment of the legal message.
+ * An item that displays the file name and size.
+ * @param props
+ * @constructor
+ */
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => (
   <TouchableOpacity
     style={styles.container}
