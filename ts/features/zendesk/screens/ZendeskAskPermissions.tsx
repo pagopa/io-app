@@ -189,7 +189,9 @@ const ZendeskAskPermissions = () => {
   ];
   const items = getItems(itemsProps)
     .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
-    .filter(it => !itemsToRemove.includes(it.id ?? ""));
+    .filter(it => !itemsToRemove.includes(it.id ?? ""))
+    // remove these item whose have no value associated
+    .filter(it => it.value !== notAvailable);
   return (
     <BaseScreenComponent
       showInstabugChat={false}
