@@ -311,7 +311,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                       ]
                     }
                   >
-                    Vedi metodo
+                    Continua
                   </Text>
                 </View>
               </View>
