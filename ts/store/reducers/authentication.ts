@@ -176,7 +176,7 @@ function matchWithIdp<O>(
   whenWithoutIdp: O,
   whenWithIdp: (state: AuthenticationStateWithIdp) => O
 ): O {
-  if (state.kind === "LoggedOutWithoutIdp" || state.kind === undefined) {
+  if (state.kind === "LoggedOutWithoutIdp") {
     return whenWithoutIdp;
   }
 
