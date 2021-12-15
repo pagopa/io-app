@@ -35,6 +35,7 @@ const DownloadAttachmentConfirmationBottomSheet = (
             ...cancelButtonProps(props.onCancel),
             onPressWithGestureHandler: true
           }}
+          // TODO: start the download & save on device https://pagopa.atlassian.net/browse/IAMVL-27
           rightButton={{
             ...confirmButtonProps(
               props.onConfirm,
