@@ -113,7 +113,7 @@ const getpaymentMethods = (
         }
       : undefined,
     status: payPalEnabled ? "implemented" : "notImplemented",
-    section: "digital_payments"
+    section: "paypal"
   },
   {
     name: I18n.t("wallet.methods.bancomatPay.name"),
