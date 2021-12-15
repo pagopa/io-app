@@ -3,7 +3,7 @@
   "version": "1.38.0-rc.7",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0-RELEASE/api_public.yaml",
-  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.0/definitions.yml",
+  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/IA-570-add-paypal-banner/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_cgn.yaml",
   "io_cgn_merchants_specs": "https://raw.githubusercontent.com/pagopa/io-backend/4af86d5391ddabab46bfba8b7ec160fd02f9a4c6/api_cgn_operator_search.yaml",
