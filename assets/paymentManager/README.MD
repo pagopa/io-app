@@ -1,3 +1,6 @@
+### 2021-12-03
+- ignored `payPals` field in `Wallet` since the relative model is different from the one returned by the API and the app doesn't use it
+
 ### 2021-11-30
 - add `/v2/payments/{idPayment}/psps` API definition
 - add `PspDataListResponse` definition

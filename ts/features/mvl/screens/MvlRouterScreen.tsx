@@ -8,7 +8,7 @@ import { mvlDetailsLoad } from "../store/actions";
 import { mvlFromIdSelector } from "../store/reducers/byId";
 import { Mvl } from "../types/mvlData";
 import { MvlGenericErrorScreen } from "./ko/MvlGenericErrorScreen";
-import { MvlDetailsScreen } from "./MvlDetailsScreen";
+import { MvlDetailsScreen } from "./details/MvlDetailsScreen";
 import { MvlLoadingScreen } from "./MvlLoadingScreen";
 
 type NavigationParams = Readonly<{
@@ -30,7 +30,7 @@ const renderByPot = (
     () => <MvlLoadingScreen />,
     _ => <MvlLoadingScreen />,
     _ => <MvlGenericErrorScreen id={id} />,
-    _ => <MvlDetailsScreen />,
+    mvl => <MvlDetailsScreen mvl={mvl} />,
     _ => <MvlLoadingScreen />,
     (_, __) => <MvlLoadingScreen />,
     _ => <MvlGenericErrorScreen id={id} />
@@ -48,6 +48,7 @@ export const MvlRouterScreen = (
   const mvlPot = useIOSelector(state => mvlFromIdSelector(state, mvlId));
   const dispatch = useIODispatch();
   useOnFirstRender(() => {
+    // TODO: setMessageRead https://pagopa.atlassian.net/browse/IAMVL-21
     if (!pot.isSome(mvlPot)) {
       dispatch(mvlDetailsLoad.request(mvlId));
     }

@@ -1,22 +1,22 @@
 import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { fireEvent } from "@testing-library/react-native";
-import { appReducer } from "../../store/reducers";
-import { applicationChangeState } from "../../store/actions/application";
-import { GlobalState } from "../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
-import ROUTES from "../../navigation/routes";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ROUTES from "../../../../navigation/routes";
 import ZendeskSupportComponent from "../ZendeskSupportComponent";
 import {
   idpSelected,
   loginSuccess,
   sessionInformationLoadSuccess
-} from "../../store/actions/authentication";
-import { SessionToken } from "../../types/SessionToken";
-import { PublicSession } from "../../../definitions/backend/PublicSession";
-import { SpidLevelEnum } from "../../../definitions/backend/SpidLevel";
-import MockZendesk from "../../__mocks__/io-react-native-zendesk";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
+} from "../../../../store/actions/authentication";
+import { SessionToken } from "../../../../types/SessionToken";
+import { PublicSession } from "../../../../../definitions/backend/PublicSession";
+import { SpidLevelEnum } from "../../../../../definitions/backend/SpidLevel";
+import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
+import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 
 const mockPublicSession: PublicSession = {
   bpdToken: "bpdToken",
