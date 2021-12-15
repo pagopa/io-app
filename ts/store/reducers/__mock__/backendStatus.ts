@@ -109,6 +109,18 @@ export const baseRawBackendStatus: BackendStatus = {
         "en-EN": "possible slowness"
       }
     },
+    paypal: {
+      is_visible: true,
+      level: LevelEnum.warning,
+      badge: {
+        "it-IT": "warning message",
+        "en-EN": "possible slowness"
+      },
+      message: {
+        "it-IT": "warning message",
+        "en-EN": "possible slowness"
+      }
+    },
     satispay: {
       is_visible: false,
       level: LevelEnum.critical,
