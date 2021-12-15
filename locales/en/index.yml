@@ -1561,6 +1561,7 @@ messages:
     message:
       read: "Message"
       unread: "Unread message"
+      archived: Archived
       description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "received on"
       received_at: "received at"
