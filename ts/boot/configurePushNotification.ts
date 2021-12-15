@@ -57,6 +57,8 @@ function handleMessageReload() {
       })
     );
   }
+  // TODO: shall we deep link in foreground?
+  // see https://pagopaspa.slack.com/archives/C013V764P9U/p1639558176007600
 }
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -95,7 +97,10 @@ function configurePushNotifications() {
       }
 
       const maybeMessageId = fromEither(
-        NotificationPayload.decode(notification)
+        NotificationPayload.decode(notification).mapLeft(_errors => {
+          // TODO: https://pagopa.atlassian.net/browse/IA-573
+          // mixpanel.track("NOTIFICATION_PARSING_FAILURE", { reason: readablePrivacyReport(_errors) });
+        })
       ).chain(payload =>
         fromNullable(payload.message_id).alt(
           fromNullable(payload.data).mapNullable(_ => _.message_id)
@@ -117,12 +122,7 @@ function configurePushNotifications() {
           // Save the message id of the notification in the store so the App can
           // navigate to the message detail screen as soon as possible (if
           // needed after the user login/insert the unlock code)
-          store.dispatch(
-            updateNotificationsPendingMessage(
-              messageId,
-              notification.foreground
-            )
-          );
+          store.dispatch(updateNotificationsPendingMessage(messageId, false));
 
           if (!usePaginatedMessages) {
             // finally, refresh the message list to start loading the content of
