@@ -11,7 +11,7 @@
   "io_bpd_citizen_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.1/bonus/specs/bpd/citizen_v2.json",
   "io_bpd_payment": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.1/bonus/specs/bpd/payment.json",
   "io_bpd_award_periods": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.1/bonus/specs/bpd/award.json",
-  "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/11.0.1/bonus/specs/bpd/winning_transactions.json",
+  "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.1/bonus/specs/bpd/winning_transactions.json",
   "io_bpd_winning_transactions_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.1/bonus/specs/bpd/winning_transactions_v2.json",
   "io_eu_covid_cert": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0/api_eucovidcert.yaml",
   "io_sicilia_vola_token": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_mit_voucher.yaml",
