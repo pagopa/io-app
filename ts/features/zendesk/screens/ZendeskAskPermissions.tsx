@@ -35,7 +35,6 @@ import {
 } from "../../../store/reducers/profile";
 import { getModel, getSystemVersion } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
-import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import { getAppVersion } from "../../../utils/appVersion";
 import { zendeskSupportCancel } from "../store/actions";
 
@@ -214,7 +213,6 @@ const ZendeskAskPermissions = () => {
             {items.map((item, idx) => (
               <ItemComponent key={`permission_item_${idx}`} {...item} />
             ))}
-            <EdgeBorderComponent />
           </View>
         </ScrollView>
         <FooterWithButtons
