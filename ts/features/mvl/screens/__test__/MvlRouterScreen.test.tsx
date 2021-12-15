@@ -11,6 +11,12 @@ import { mvlDetailsLoad } from "../../store/actions";
 import { mvlMock, mvlMockId } from "../../types/__mock__/mvlMock";
 import { MvlRouterScreen } from "../MvlRouterScreen";
 
+jest.mock("@gorhom/bottom-sheet", () => ({
+  useBottomSheetModal: () => ({
+    present: jest.fn()
+  })
+}));
+
 describe("MvlRouterScreen behaviour", () => {
   jest.useFakeTimers();
 
