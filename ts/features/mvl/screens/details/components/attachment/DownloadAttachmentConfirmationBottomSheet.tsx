@@ -1,9 +1,7 @@
 import { View } from "native-base";
-import { useState } from "react";
 import * as React from "react";
-import { TouchableWithoutFeedback } from "react-native";
+import { useState } from "react";
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
-import { CheckBox } from "../../../../../../components/core/selection/checkbox/CheckBox";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";

@@ -53,7 +53,7 @@ const svgProps: React.ComponentProps<typeof Svg> = {
 };
 
 /**
- * Custom icon of the attachment, based on the contentType (at the moment only the pdf have a custom representation)
+ * Custom icon for the attachment, based on the contentType (at the moment only the pdf have a custom representation)
  * @param props
  * @constructor
  */
