@@ -83,6 +83,23 @@ describe("MessageList Item component", () => {
     });
   });
 
+  describe("when `isArchived` is true", () => {
+    it("should match the snapshot", () => {
+      expect(
+        render(<Item {...defaultProps} isArchived={true} />).toJSON()
+      ).toMatchSnapshot();
+    });
+    describe("and `hasPaidBadge` is also true", () => {
+      it("should match the snapshot", () => {
+        expect(
+          render(
+            <Item {...defaultProps} isArchived={true} hasPaidBadge={true} />
+          ).toJSON()
+        ).toMatchSnapshot();
+      });
+    });
+  });
+
   describe("when the user taps on the item", () => {
     it("should call only the `onPress` callback", () => {
       const onPress = jest.fn();
