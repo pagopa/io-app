@@ -1044,7 +1044,7 @@ wallet:
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
-        primaryButton: "Vedi metodo"
+        primaryButton: "Continua"
       onBoardingCompletedWhilePayment:
         title: "Fatto!"
         body: "Ora puoi continuare con il pagamento."

@@ -1026,7 +1026,7 @@ wallet:
       onBoardingCompleted:
         title: "That's it!"
         body: "Now have a look at the current settings of your new method."
-        primaryButton: "View method"
+        primaryButton: "Continue"
       onBoardingCompletedWhilePayment:
         title: "That's it!"
         body: "Now you can continue with your payment."
