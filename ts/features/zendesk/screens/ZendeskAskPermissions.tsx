@@ -39,6 +39,10 @@ import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderCompo
 import { getAppVersion } from "../../../utils/appVersion";
 import { zendeskSupportCancel } from "../store/actions";
 
+/**
+ * id is optional since some items should recognized since they can be removed from the whole list
+ * i.e: items about profile || payment
+ */
 type Item = {
   id?: string;
   icon: ReactNode;
