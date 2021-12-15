@@ -2872,6 +2872,8 @@ features:
         subtitle: "TMP Generic error subtitle"
     details:
       hasAttachments: "contiene allegati"
+      attachments:
+        title: "Allegati"
       body:
         plain: "testo semplice"
         html: "html"

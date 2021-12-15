@@ -9,11 +9,19 @@ export type TeraByte = number & IUnitTag<"TeraByte">;
 
 const unitOrder = ["B", "kB", "MB", "GB", "TB"];
 
-export const formatByte = (b: Byte) => {
+/**
+ * Generate a textual representation for a Digital Information Unit
+ * @param b
+ * @param startIndex the starting Digital Information Unit
+ */
+const internalFormatDigitalInformationUnit = (
+  b: number,
+  startIndex: number
+) => {
   // eslint-disable-next-line functional/no-let
   let acc: number = b;
   // eslint-disable-next-line functional/no-let
-  let index = 0;
+  let index = startIndex;
   while (acc >= 1024 && index < unitOrder.length - 1) {
     acc /= 1024;
     index++;
@@ -27,10 +35,14 @@ export const formatByte = (b: Byte) => {
   return `${formatRepresentation} ${unitOrder[index]}`;
 };
 
-export const formatKiloByte = (kB: KiloByte) => formatByte((kB * 1024) as Byte);
+export const formatByte = (b: Byte) =>
+  internalFormatDigitalInformationUnit(b, 0);
+
+export const formatKiloByte = (kB: KiloByte) =>
+  internalFormatDigitalInformationUnit(kB, 1);
 export const formatMegaByte = (mB: MegaByte) =>
-  formatKiloByte((mB * 1024) as KiloByte);
+  internalFormatDigitalInformationUnit(mB, 2);
 export const formatGigaByte = (gB: GigaByte) =>
-  formatMegaByte((gB * 1024) as MegaByte);
+  internalFormatDigitalInformationUnit(gB, 3);
 export const formatTeraByte = (tB: TeraByte) =>
-  formatGigaByte((tB * 1024) as GigaByte);
+  internalFormatDigitalInformationUnit(tB, 4);

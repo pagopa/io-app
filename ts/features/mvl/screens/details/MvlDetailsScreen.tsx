@@ -48,7 +48,7 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
             service={service}
           />
           <MvlBody body={props.mvl.legalMessage.body} />
-          <View spacer={true} />
+          <View spacer={true} large={true} />
           <MvlAttachments attachments={props.mvl.legalMessage.attachments} />
           <View spacer={true} />
           <MvlMetadataComponent metadata={props.mvl.legalMessage.metadata} />

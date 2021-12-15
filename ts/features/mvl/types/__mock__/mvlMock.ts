@@ -29,7 +29,7 @@ export const mvlMockBody: MvlBody = {
 export const mvlMockPdfAttachment: MvlAttachment = {
   name: "invoice.pdf",
   contentType: "application/pdf",
-  size: 125952 as Byte,
+  size: 1959520 as Byte,
   resourceUrl: { href: "htts://www.invoicepdf.com/invoce.pdf" }
 };
 

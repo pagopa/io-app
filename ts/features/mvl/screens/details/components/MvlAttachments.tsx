@@ -1,16 +1,19 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import Svg from "react-native-svg";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import IconFont from "../../../../../components/ui/IconFont";
 import { formatByte } from "../../../../../types/digitalInformationUnit";
 import { MvlAttachment, MvlData } from "../../../types/mvlData";
+import Pdf from "../../../../../../img/features/mvl/attachmentsIcon/pdf.svg";
+import Default from "../../../../../../img/features/mvl/attachmentsIcon/default.svg";
+import I18n from "../../../../../i18n";
 
 type Props = {
   attachments: MvlData["attachments"];
@@ -32,30 +35,60 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between"
+  },
+  icon: {
+    alignSelf: "center"
+  },
+  paddingLeft: {
+    paddingLeft: 8
   }
 });
+
+const svgProps: React.ComponentProps<typeof Svg> = {
+  width: 32,
+  height: 32,
+  fill: IOColors.blue,
+  style: styles.icon
+};
+
+const AttachmentIcon = (props: {
+  contentType: MvlAttachment["contentType"];
+}) => {
+  switch (props.contentType) {
+    case "application/pdf":
+      return <Pdf {...svgProps} />;
+    case "other":
+      return <Default {...svgProps} />;
+  }
+};
 
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => (
   <TouchableOpacity
     style={styles.container}
-    onPress={() => console.log("onpress")}
+    onPress={() => console.log(props.attachment.resourceUrl)}
   >
     <View style={styles.flexColumn}>
       <View style={styles.row}>
-        <View style={IOStyles.flex}>
+        <AttachmentIcon contentType={props.attachment.contentType} />
+        <View style={[IOStyles.flex, styles.paddingLeft]}>
           <H3
             color={"bluegrey"}
             weight={"SemiBold"}
             ellipsizeMode={"middle"}
-            numberOfLines={2}
+            numberOfLines={1}
           >
             {props.attachment.name}
           </H3>
           <H5 color={"bluegrey"} weight={"Regular"}>
-            {formatByte(1037)}
+            {formatByte(props.attachment.size)}
           </H5>
         </View>
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        <IconFont
+          name={"io-right"}
+          color={IOColors.blue}
+          size={24}
+          style={styles.icon}
+        />
       </View>
     </View>
   </TouchableOpacity>
@@ -68,8 +101,16 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => (
  */
 export const MvlAttachments = (props: Props): React.ReactElement => (
   <>
+    <ItemSeparatorComponent noPadded={true} />
+    <View spacer={true} large={true} />
+    <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
     {props.attachments.map((attachment, index) => (
-      <MvlAttachmentItem attachment={attachment} key={index} />
+      <View key={index}>
+        <MvlAttachmentItem attachment={attachment} />
+        {index < props.attachments.length - 1 && (
+          <ItemSeparatorComponent noPadded={true} />
+        )}
+      </View>
     ))}
   </>
 );
