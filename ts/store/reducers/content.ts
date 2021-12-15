@@ -126,6 +126,31 @@ export const screenContextualHelpDataSelector = createSelector<
     })
 );
 
+/**
+ * Return a pot with screen contextual help data given a route if they are loaded and defined otherwise return undefined
+ * @param route
+ */
+export const getContextualHelpDataFromRouteSelector = (route: string) =>
+  createSelector<
+    GlobalState,
+    pot.Pot<ContextualHelp, Error>,
+    pot.Pot<Option<ScreenCHData>, Error>
+  >([contextualHelpDataSelector], contextualHelpData =>
+    pot.map(contextualHelpData, data => {
+      if (route === undefined) {
+        return none;
+      }
+      const locale = getRemoteLocale();
+      const screenData =
+        data[locale] !== undefined
+          ? data[locale].screens.find(
+              s => s.route_name.toLowerCase() === route.toLocaleLowerCase()
+            )
+          : undefined;
+      return fromNullable(screenData);
+    })
+  );
+
 export default function content(
   state: ContentState = initialContentState,
   action: Action
