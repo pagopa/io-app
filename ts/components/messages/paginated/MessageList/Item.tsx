@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   icon: {
-    width: 90,
+    width: 98,
     alignItems: "flex-start",
     justifyContent: "flex-end",
     flexDirection: "row"
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
-    width: 65,
+    width: 74,
     height: 25,
     flexDirection: "row"
   },
@@ -77,8 +77,9 @@ const styles = StyleSheet.create({
     borderColor: IOColors.aqua,
     backgroundColor: IOColors.aqua
   },
-  archived: {
-    opacity: 0.75
+  badgeInfoArchived: {
+    borderColor: IOColors.greyLight,
+    backgroundColor: IOColors.greyLight
   },
   qrContainer: {
     marginRight: 16
@@ -144,15 +145,13 @@ const MessageListItem = ({
     <TouchableDefaultOpacity
       onPress={onPress}
       onLongPress={onLongPress}
-      style={[styles.verticalPad, isArchived && styles.archived]}
+      style={styles.verticalPad}
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead)}
     >
       <View style={styles.spaced}>
         <H5>{organizationName}</H5>
-        <Text style={styles.text12}>
-          {isArchived ? `${I18n.t("messages.tab.archive")} ${uiDate}` : uiDate}
-        </Text>
+        <Text style={styles.text12}>{uiDate}</Text>
       </View>
 
       <View style={styles.viewStyle}>
@@ -175,6 +174,13 @@ const MessageListItem = ({
           {hasPaidBadge && (
             <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
               <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
+            </Badge>
+          )}
+          {isArchived && !hasPaidBadge && (
+            <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
+              <H5 color="bluegreyDark">
+                {I18n.t("messages.accessibility.message.archived")}
+              </H5>
             </Badge>
           )}
 

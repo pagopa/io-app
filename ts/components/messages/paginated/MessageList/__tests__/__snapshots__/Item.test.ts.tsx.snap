@@ -192,7 +192,7 @@ exports[`MessageList Item component when \`hasPaidBadge\` is true should match t
           "alignItems": "flex-start",
           "flexDirection": "row",
           "justifyContent": "flex-end",
-          "width": 90,
+          "width": 98,
         }
       }
     >
@@ -215,7 +215,7 @@ exports[`MessageList Item component when \`hasPaidBadge\` is true should match t
               "borderWidth": 1,
               "flexDirection": "row",
               "height": 25,
-              "width": 65,
+              "width": 74,
             },
             Object {
               "backgroundColor": "#00C5CA",
@@ -305,7 +305,7 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "opacity": 0.75,
+      "opacity": 1,
       "paddingVertical": 16,
     }
   }
@@ -355,7 +355,7 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
         }
       }
     >
-      Archived 18 Oct
+      18 Oct
     </Text>
   </View>
   <View
@@ -481,7 +481,7 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
           "alignItems": "flex-start",
           "flexDirection": "row",
           "justifyContent": "flex-end",
-          "width": 90,
+          "width": 98,
         }
       }
     >
@@ -504,7 +504,7 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
               "borderWidth": 1,
               "flexDirection": "row",
               "height": 25,
-              "width": 65,
+              "width": 74,
             },
             Object {
               "backgroundColor": "#00C5CA",
@@ -594,7 +594,7 @@ exports[`MessageList Item component when \`isArchived\` is true should match the
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "opacity": 0.75,
+      "opacity": 1,
       "paddingVertical": 16,
     }
   }
@@ -644,7 +644,7 @@ exports[`MessageList Item component when \`isArchived\` is true should match the
         }
       }
     >
-      Archived 18 Oct
+      18 Oct
     </Text>
   </View>
   <View
@@ -770,10 +770,66 @@ exports[`MessageList Item component when \`isArchived\` is true should match the
           "alignItems": "flex-start",
           "flexDirection": "row",
           "justifyContent": "flex-end",
-          "width": 90,
+          "width": 98,
         }
       }
     >
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#ED1727",
+              "borderRadius": 13.5,
+              "height": 27,
+              "justifyContent": "center",
+              "paddingBottom": 3,
+              "paddingLeft": 6,
+              "paddingRight": 6,
+              "paddingTop": 3,
+            },
+            Object {
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 25,
+              "width": 74,
+            },
+            Object {
+              "backgroundColor": "#E6E9F2",
+              "borderColor": "#E6E9F2",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          defaultColor="bluegreyDark"
+          defaultWeight="SemiBold"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 14,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          Archived
+        </Text>
+      </View>
       <Text
         accessibilityElementsHidden={true}
         accessibilityLabel=""
@@ -958,7 +1014,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           "alignItems": "flex-start",
           "flexDirection": "row",
           "justifyContent": "flex-end",
-          "width": 90,
+          "width": 98,
         }
       }
     >
@@ -1191,7 +1247,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           "alignItems": "flex-start",
           "flexDirection": "row",
           "justifyContent": "flex-end",
-          "width": 90,
+          "width": 98,
         }
       }
     >
@@ -1424,7 +1480,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           "alignItems": "flex-start",
           "flexDirection": "row",
           "justifyContent": "flex-end",
-          "width": 90,
+          "width": 98,
         }
       }
     >
@@ -1657,7 +1713,7 @@ exports[`MessageList Item component when a EU_CODIV_CERT is present should match
           "alignItems": "flex-start",
           "flexDirection": "row",
           "justifyContent": "flex-end",
-          "width": 90,
+          "width": 98,
         }
       }
     >
@@ -1928,7 +1984,7 @@ exports[`MessageList Item component with all the flags set to false should match
           "alignItems": "flex-start",
           "flexDirection": "row",
           "justifyContent": "flex-end",
-          "width": 90,
+          "width": 98,
         }
       }
     >
