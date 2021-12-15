@@ -165,9 +165,9 @@ export function createRootReducer(
           (isActionOf(logoutFailure, action) &&
             !action.payload.options.keepUserData))
           ? ({
-              // eslint-disable-next-line no-underscore-dangle
               authentication: {
                 ...autenticationInitialState,
+                // eslint-disable-next-line no-underscore-dangle
                 _persist: state.authentication._persist
               },
               // data should be kept across multiple sessions
