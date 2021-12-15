@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { messagesUnreadAndUnarchivedSelector } from "../store/reducers/entities/messages";
 import { GlobalState } from "../store/reducers/types";
+import { usePaginatedMessages } from "../config";
 import TabIconComponent from "./ui/TabIconComponent";
 
 type OwnProps = {
@@ -16,11 +17,12 @@ type Props = OwnProps & ReturnType<typeof mapStateToProps>;
  */
 class MessagesTabIcon extends React.PureComponent<Props> {
   public render() {
-    const { color, messagesUnreaded } = this.props;
+    const { color, messagesUnread } = this.props;
     return (
       <TabIconComponent
         iconName={"io-messaggi"}
-        badgeValue={messagesUnreaded}
+        // badge is disabled with paginated messages see https://pagopa.atlassian.net/browse/IA-572
+        badgeValue={usePaginatedMessages ? undefined : messagesUnread}
         color={color}
       />
     );
@@ -29,7 +31,7 @@ class MessagesTabIcon extends React.PureComponent<Props> {
 
 function mapStateToProps(state: GlobalState) {
   return {
-    messagesUnreaded: messagesUnreadAndUnarchivedSelector(state)
+    messagesUnread: messagesUnreadAndUnarchivedSelector(state)
   };
 }
 
