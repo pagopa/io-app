@@ -23,6 +23,7 @@ type Props = {
 const DownloadAttachmentConfirmationBottomSheet = (
   props: Props
 ): React.ReactElement => {
+  // TODO: the preference should be serialized in the store if true when the user tap on the confirm button https://pagopa.atlassian.net/browse/IAMVL-26
   const [dontAskAgain, setDontAskAgain] = useState<boolean>(false);
 
   return (

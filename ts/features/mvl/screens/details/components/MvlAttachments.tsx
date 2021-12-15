@@ -80,6 +80,7 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
   );
 
   return (
+    // TODO: should present only if the user doesn't choose "don't ask again" https://pagopa.atlassian.net/browse/IAMVL-26
     <TouchableOpacity style={styles.container} onPress={present}>
       <View style={styles.flexColumn}>
         <View style={styles.row}>
