@@ -5,7 +5,6 @@ import { StyleSheet } from "react-native";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
-import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
@@ -13,6 +12,7 @@ import { cgnOtpDataSelector } from "../../../store/reducers/otp";
 import { isReady } from "../../../../bpd/model/RemoteValue";
 import { cgnGenerateOtp, resetOtpState } from "../../../store/actions/otp";
 import { OtpCodeComponent } from "../../otp/OtpCodeComponent";
+import Eye from "../../../../../../../img/icons/Eye.svg";
 
 const styles = StyleSheet.create({
   row: {
@@ -83,13 +83,10 @@ const CgnOTPCodeComponent = () => {
             {"••••••••••"}
           </BaseTypography>
 
-          <IconFont
-            name={
-              isCodeVisible ? (isCopyTap ? "io-complete" : "io-copy") : "io-eye"
-            }
-            size={COPY_ICON_SIZE}
-            color={IOColors.blue}
-            style={styles.flexEnd}
+          <Eye
+            width={COPY_ICON_SIZE}
+            height={COPY_ICON_SIZE}
+            fill={IOColors.blue}
           />
         </View>
       )}
