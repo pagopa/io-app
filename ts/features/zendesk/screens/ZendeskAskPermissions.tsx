@@ -38,6 +38,11 @@ import { isIos } from "../../../utils/platform";
 import { getAppVersion } from "../../../utils/appVersion";
 import { zendeskSupportCompleted } from "../store/actions";
 import { openWebUrl } from "../../../utils/url";
+import { zendeskConfigSelector } from "../store/reducers";
+import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
+import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
+import { toArray } from "../../../store/helpers/indexer";
+import { openSupportTicket } from "../../../utils/supportAssistance";
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -147,6 +152,7 @@ const ZendeskAskPermissions = () => {
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
+  const zendeskConfig = useIOSelector(zendeskConfigSelector);
 
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
@@ -174,6 +180,21 @@ const ZendeskAskPermissions = () => {
     openWebUrl(assistanceWebFormLink);
     workUnitCompleted();
   };
+
+  // TODO: open directly a ticket with category "payment" if assistanceForPayment: https://pagopa.atlassian.net/browse/IA-575
+  const handleOnContinuePress = () => {
+    // if is not possible to get the config or if the config has any category open directly a ticket.
+    if (
+      !isReady(zendeskConfig) ||
+      toArray(zendeskConfig.value.zendeskCategories?.categories ?? {})
+        .length === 0
+    ) {
+      openSupportTicket();
+      workUnitCompleted();
+    } else {
+      navigation.navigate(navigateToZendeskChooseCategory());
+    }
+  };
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,
@@ -184,7 +205,7 @@ const ZendeskAskPermissions = () => {
   const continueButtonProps = {
     testID: "continueButtonId",
     bordered: false,
-    onPress: () => navigation.navigate(navigateToZendeskChooseCategory()), // TODO: if is not possible to get the category open a ticket request
+    onPress: handleOnContinuePress,
     title: I18n.t("support.askPermissions.cta.allow")
   };
   const itemsToRemove: ReadonlyArray<string> = [
