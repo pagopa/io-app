@@ -115,18 +115,19 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
  * @constructor
  * @param props
  */
-export const MvlAttachments = (props: Props): React.ReactElement => (
-  <>
-    <ItemSeparatorComponent noPadded={true} />
-    <View spacer={true} large={true} />
-    <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
-    {props.attachments.map((attachment, index) => (
-      <View key={index}>
-        <MvlAttachmentItem attachment={attachment} />
-        {index < props.attachments.length - 1 && (
-          <ItemSeparatorComponent noPadded={true} />
-        )}
-      </View>
-    ))}
-  </>
-);
+export const MvlAttachments = (props: Props): React.ReactElement | null =>
+  props.attachments.length > 0 ? (
+    <>
+      <ItemSeparatorComponent noPadded={true} />
+      <View spacer={true} large={true} />
+      <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
+      {props.attachments.map((attachment, index) => (
+        <View key={index}>
+          <MvlAttachmentItem attachment={attachment} />
+          {index < props.attachments.length - 1 && (
+            <ItemSeparatorComponent noPadded={true} />
+          )}
+        </View>
+      ))}
+    </>
+  ) : null;
