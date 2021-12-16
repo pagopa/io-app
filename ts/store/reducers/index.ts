@@ -16,7 +16,10 @@ import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import appStateReducer from "./appState";
-import authenticationReducer, { AuthenticationState } from "./authentication";
+import authenticationReducer, {
+  AuthenticationState,
+  INITIAL_STATE as autenticationInitialState
+} from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
 import backoffErrorReducer from "./backoffError";
@@ -162,8 +165,11 @@ export function createRootReducer(
           (isActionOf(logoutFailure, action) &&
             !action.payload.options.keepUserData))
           ? ({
-              // eslint-disable-next-line no-underscore-dangle
-              authentication: { _persist: state.authentication._persist },
+              authentication: {
+                ...autenticationInitialState,
+                // eslint-disable-next-line no-underscore-dangle
+                _persist: state.authentication._persist
+              },
               // data should be kept across multiple sessions
               entities: {
                 services: state.entities.services,

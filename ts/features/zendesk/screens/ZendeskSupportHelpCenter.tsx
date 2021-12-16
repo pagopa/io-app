@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
-import { none } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationInjectedProps } from "react-navigation";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpProps
+} from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import View from "../../../components/ui/TextWithIcon";
 import {
@@ -36,7 +38,10 @@ import {
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
   "faqCategories" | "startingRoute"
-> & { title: string; body: () => React.ReactNode; contentLoaded: boolean };
+> & {
+  contentLoaded: boolean;
+  contextualHelpConfig: ContextualHelpProps | undefined;
+};
 
 /**
  * This component must be used only here.
@@ -46,18 +51,18 @@ type FaqManagerProps = Pick<
  */
 const FaqManager = (props: FaqManagerProps) => {
   const dispatch = useDispatch();
+  const workUnitComplete = () => dispatch(zendeskSupportCompleted());
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)
   );
   const maybeContextualData = pot.getOrElse(potContextualData, none);
-  const loadContextualHelp = () => dispatch(loadContextualHelpData.request());
 
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
   );
   const [lastContextualDataUpdate, setLastContextualDataUpdate] =
     useState<Date>(new Date());
-  const { title, body, faqCategories, contentLoaded } = props;
+  const { contextualHelpConfig, faqCategories, contentLoaded } = props;
   useEffect(() => {
     const now = new Date();
     // if the contextual data is empty or is in error and last reload was done before the threshold -> try to reload
@@ -68,20 +73,29 @@ const FaqManager = (props: FaqManagerProps) => {
       pot.isNone(potContextualData)
     ) {
       setLastContextualDataUpdate(now);
-      loadContextualHelp();
+      dispatch(loadContextualHelpData.request());
     }
-  }, [lastContextualDataUpdate, potContextualData, loadContextualHelpData]);
+  }, [dispatch, lastContextualDataUpdate, potContextualData]);
 
+  const defaultData: ContextualHelpData = fromNullable(
+    contextualHelpConfig
+  ).fold(
+    {
+      title: "",
+      faqs: getFAQsFromCategories(faqCategories ?? []),
+      content: constNull
+    },
+    cHC => ({
+      title: cHC.title,
+      faqs: getFAQsFromCategories(faqCategories ?? []),
+      content: cHC.body()
+    })
+  );
   const contextualHelpData: ContextualHelpData = getContextualHelpData(
     maybeContextualData,
-    {
-      title,
-      faqs: getFAQsFromCategories(faqCategories ?? []),
-      content: body()
-    },
+    defaultData,
     () => setContentHasLoaded(true)
   );
-
   /**
    content is loaded when:
    - provided one from props is loaded or
@@ -92,16 +106,16 @@ const FaqManager = (props: FaqManagerProps) => {
     _ => contentHasLoaded
   );
 
-  const isContentReady = contextualHelpData.content === undefined;
+  const isContentLoading = contextualHelpData.content === undefined;
 
   return (
     <>
-      {isContentReady && (
+      {isContentLoading && (
         <View centerJustified={true}>
           <ActivityIndicator color={themeVariables.brandPrimaryLight} />
         </View>
       )}
-      {!isContentReady && (
+      {!isContentLoading && (
         <>
           {!isStringNullyOrEmpty(contextualHelpData.title) && (
             <>
@@ -117,7 +131,7 @@ const FaqManager = (props: FaqManagerProps) => {
           )}
           {contextualHelpData.faqs && isContentLoaded && (
             <FAQComponent
-              onLinkClicked={() => true}
+              onLinkClicked={workUnitComplete}
               faqs={contextualHelpData.faqs}
             />
           )}
@@ -182,8 +196,7 @@ const ZendeskSupportHelpCenter = (props: Props) => {
       >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <FaqManager
-            title={contextualHelpConfig?.title ?? ""}
-            body={contextualHelpConfig?.body ?? constNull}
+            contextualHelpConfig={contextualHelpConfig}
             faqCategories={faqCategories}
             contentLoaded={markdownContentLoaded}
             startingRoute={startingRoute}

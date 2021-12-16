@@ -32,6 +32,14 @@ import AdviceComponent from "../../../components/AdviceComponent";
 import { H4 } from "../../../components/core/typography/H4";
 import { zendeskConfigSelector } from "../store/reducers";
 
+/**
+ * This component represents the entry point for the Zendesk workflow.
+ * It has 2 buttons that respectively allow a user to open a ticket and see the already opened tickets.
+ *
+ * Here is managed the initialization of the Zendesk SDK and is chosen the config to use between authenticated or anonymous.
+ * If the panic mode is active in the remote Zendesk config pressing the open a ticket button, the user will be sent to the {@link ZendeskPanicMode}
+ * @constructor
+ */
 const ZendeskSupportComponent = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const profile = useIOSelector(profileSelector);

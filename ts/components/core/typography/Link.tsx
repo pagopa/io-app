@@ -13,6 +13,8 @@ type OwnProps = ExternalTypographyProps<
 
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 16;
+export const linkDefaultColor: AllowedColors = "blue";
+export const linkDefaultWeight: AllowedWeight = "SemiBold";
 
 /**
  * Typography component to render `Link` text with font size {@link fontSize} and fontFamily {@link fontName}.
@@ -24,8 +26,8 @@ export const Link: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
     accessibilityRole: props.onPress ? "link" : undefined,
     ...props,
-    defaultWeight: "SemiBold",
-    defaultColor: "blue",
+    defaultWeight: linkDefaultWeight,
+    defaultColor: linkDefaultColor,
     font: fontName,
     fontStyle: {
       fontSize,

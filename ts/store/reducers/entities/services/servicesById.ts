@@ -13,7 +13,7 @@ import {
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 
 export type ServicesByIdState = Readonly<{
   [key: string]: pot.Pot<ServicePublic, Error> | undefined;
@@ -85,7 +85,7 @@ export const serviceByIdSelector =
 
 export const serviceMetadataByIdSelector =
   (id: ServiceId) =>
-  (state: GlobalState): CommonServiceMetadata | undefined => {
+  (state: GlobalState): ServiceMetadata | undefined => {
     const maybeServiceById = serviceByIdSelector(id)(state);
 
     return maybeServiceById

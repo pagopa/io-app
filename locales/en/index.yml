@@ -106,6 +106,7 @@ global:
     tomorrow: "tomorrow"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    shortFormatWithTime: "%d/%m/%Y, %H.%M"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
     fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
@@ -114,6 +115,7 @@ global:
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
     shortNumericMonthYear: "%m/%-y"
+    timeFormat: "%H.%M"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -2832,6 +2834,7 @@ bonus:
 
 features:
   mvl:
+    title: "legal message"
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
@@ -2839,6 +2842,11 @@ features:
       genericError:
         title: "TMP Generic error title"
         subtitle: "TMP Generic error subtitle"
+    details:
+      hasAttachments: "contains attachments"
+      body:
+        plain: "plain text"
+        html: "html"
   euCovidCertificate:
     save:
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
@@ -2898,21 +2906,36 @@ support:
   helpCenter:
     header: "IO helps you"
     cta:
-      contactSupport: "Contact support"
-      seeReports: "See reports in progress"
+      contactSupport: "Write us"
+      seeReports: "See your requests"
     supportComponent:
-      title: "Do you need help?"
-      subtitle: "To request assistance or suggest an improvement, write to us: we will reply as soon as possible."
-      adviceMessage: "If your problem concerns the content of a message or the service of an organization, contact the latter. You will find the references within the message or in the card of the service in question."
+      title: "Need help?"
+      subtitle: "If you need support or want to suggest an improvement, please write to us: we will get back to you as soon as possible."
+      adviceMessage: "If your problem concerns the content of a message or the service of an Institution, contact the latter. You will find the contact details within the message or in the tab of the service concerned."
   panicMode:
-    title: "Unfortunately, we can't help you right now"
-    body: "We know there is a problem and we are working to solve it. If the problem persists, or if you need assistance on another topic, please try again to write to us later."
+    title: "Sorry, we cannot help you at the moment"
+    body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
   askPermissions:
-    header: "Contact support"
-    title: "To continue, we need your consent"
+    nameSurname: "Name and Surname"
+    fiscalCode: "Fiscal code"
+    emailAddress: "Email address"
+    deviceAndOS: "Device and Operating System"
+    ipAddress: "IP address"
+    currentAppVersion: "Version of the app in use"
+    identityProvider: "Identity Provider"
+    navigationData: "In-app navigation data"
+    navigationDataValue: "Such as the the last screen or message displayed in IO."
+    stock: "Payment Notice details"
+    stockValue: "Including the error you just received"
+    header: "Write us"
+    title: "Do you give us your consent?"
+    body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
+    listHeader: "If you consent, we'll access this data:"
+    devicePerformance: "Device performance"
+    devicePerformanceData: "Memory and battery level"
     cta:
       allow: "Allow"
-      denies: "Do not allow"
+      denies: "Deny"
   chooseCategory:
     header: "Write us"
     title:

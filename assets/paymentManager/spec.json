@@ -3371,12 +3371,6 @@
         "satispay": {
           "$ref": "#/definitions/Satispay"
         },
-        "payPals": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PayPalInfo"
-          }
-        },
         "saved": {
           "type": "boolean"
         },
