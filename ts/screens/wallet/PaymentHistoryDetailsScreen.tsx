@@ -372,7 +372,9 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // Start the assistance without FAQ ("n/a" is a placeholder)
   zendeskSupportWorkunitStart: () =>
-    dispatch(zendeskSupportStart({ startingRoute: "n/a" }))
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    )
 });
 
 export default connect(

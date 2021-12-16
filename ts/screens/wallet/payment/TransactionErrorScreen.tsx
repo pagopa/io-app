@@ -375,7 +375,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentManualDataInsertion({ isInvalidAmount }),
   backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
   zendeskSupportWorkunitStart: () =>
-    dispatch(zendeskSupportStart({ startingRoute: "n/a" }))
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    )
 });
 
 export default connect(
