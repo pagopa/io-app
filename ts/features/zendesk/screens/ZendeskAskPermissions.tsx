@@ -36,7 +36,8 @@ import {
 import { getModel, getSystemVersion } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
 import { getAppVersion } from "../../../utils/appVersion";
-import { zendeskSupportCancel } from "../store/actions";
+import { zendeskSupportCompleted } from "../store/actions";
+import { openWebUrl } from "../../../utils/url";
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -145,7 +146,7 @@ const ZendeskAskPermissions = () => {
   const assistanceForPayment = false;
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
-  const workUnitCancel = () => dispatch(zendeskSupportCancel());
+  const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
 
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
@@ -166,11 +167,18 @@ const ZendeskAskPermissions = () => {
     identityProvider
   };
 
+  const assistanceWebFormLink =
+    "https://io.assistenza.pagopa.it/hc/it-it/requests/new";
+
+  const handleOnCancel = () => {
+    openWebUrl(assistanceWebFormLink);
+    workUnitCompleted();
+  };
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,
     bordered: true,
-    onPress: workUnitCancel, // TODO: complete the workunit and send the user to the web form
+    onPress: handleOnCancel,
     title: I18n.t("support.askPermissions.cta.denies")
   };
   const continueButtonProps = {
