@@ -14,7 +14,7 @@ import { toUIService } from "../../../../store/reducers/entities/services/transf
 import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { Mvl } from "../../types/mvlData";
-import { MvlAttachments } from "./components/MvlAttachments";
+import { MvlAttachments } from "./components/attachment/MvlAttachments";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
 import { MvlMetadataComponent } from "./components/MvlMetadata";
