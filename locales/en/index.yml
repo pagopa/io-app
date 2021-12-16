@@ -1023,6 +1023,10 @@ wallet:
         whatIsPspBottomSheet:
           title: "What is a payment provider?"
           body: "The Payment Service Provider (PSP) collects the amount on behalf of the Payee, and it may charge a fee for its service.\nWhenever you'll pay, you can to choose the provider that suits you best, whether you're a customer or not."
+      paypalAlreadyAdded:
+        alert:
+          title: "You already have a PayPal account in your Wallet"
+          message: "By continuing, the new account will replace the current one."
       onBoardingCompleted:
         title: "That's it!"
         body: "Now have a look at the current settings of your new method."
