@@ -39,8 +39,7 @@ import { getAppVersion } from "../../../utils/appVersion";
 import { zendeskSupportCompleted } from "../store/actions";
 import { openWebUrl } from "../../../utils/url";
 import { zendeskConfigSelector } from "../store/reducers";
-import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
-import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import { toArray } from "../../../store/helpers/indexer";
 import { openSupportTicket } from "../../../utils/supportAssistance";
 
