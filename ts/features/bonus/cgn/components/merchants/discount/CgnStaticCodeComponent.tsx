@@ -10,6 +10,7 @@ import { BaseTypography } from "../../../../../../components/core/typography/Bas
 import { addEvery } from "../../../../../../utils/strings";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import Eye from "../../../../../../../img/icons/Eye.svg";
 
 type Props = {
   staticCode: string & INonEmptyStringTag;
@@ -69,12 +70,20 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
           {isCodeVisible ? addEvery(staticCode, " ", 3) : "••••••••••"}
         </BaseTypography>
 
-        <IconFont
-          name={isCodeVisible ? (isTap ? "io-complete" : "io-copy") : "io-eye"}
-          size={COPY_ICON_SIZE}
-          color={IOColors.blue}
-          style={styles.flexEnd}
-        />
+        {isCodeVisible ? (
+          <IconFont
+            name={isTap ? "io-complete" : "io-copy"}
+            size={COPY_ICON_SIZE}
+            color={IOColors.blue}
+            style={styles.flexEnd}
+          />
+        ) : (
+          <Eye
+            width={COPY_ICON_SIZE}
+            height={COPY_ICON_SIZE}
+            fill={IOColors.blue}
+          />
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
