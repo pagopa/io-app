@@ -99,13 +99,6 @@ function tagOrIcon({
       </Badge>
     );
   }
-  if (qrCode) {
-    return (
-      <View style={styles.qrContainer}>
-        <IconFont name={"io-qr"} color={IOColors.blue} />
-      </View>
-    );
-  }
   if (archived) {
     return (
       <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
@@ -113,6 +106,13 @@ function tagOrIcon({
           {I18n.t("messages.accessibility.message.archived")}
         </H5>
       </Badge>
+    );
+  }
+  if (qrCode) {
+    return (
+      <View style={styles.qrContainer}>
+        <IconFont name={"io-qr"} color={IOColors.blue} />
+      </View>
     );
   }
   return null;

@@ -29,14 +29,6 @@ describe("MessageList Item component", () => {
     });
   });
 
-  describe("when `hasPaidBadge` is true", () => {
-    it("should match the snapshot", () => {
-      expect(
-        render(<Item {...defaultProps} hasPaidBadge={true} />).toJSON()
-      ).toMatchSnapshot();
-    });
-  });
-
   describe("when `isRead` is true", () => {
     it("should match the snapshot", () => {
       expect(
@@ -82,7 +74,7 @@ describe("MessageList Item component", () => {
     { isArchived: true, hasPaidBadge: true, category: euCovidCertCategory },
     { isArchived: false, hasPaidBadge: true, category: euCovidCertCategory }
   ].forEach(testProps => {
-    describe(`when isArchived=${testProps.isArchived} hasPaidBadge=${testProps.hasPaidBadge} category=${testProps.category}`, () => {
+    describe(`when isArchived=${testProps.isArchived} hasPaidBadge=${testProps.hasPaidBadge} category=${testProps.category.tag}`, () => {
       it("should match the snapshot", () => {
         expect(
           render(<Item {...defaultProps} {...testProps} />).toJSON()
