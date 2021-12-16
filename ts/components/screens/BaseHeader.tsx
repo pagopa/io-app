@@ -14,7 +14,7 @@ import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { maybeNotNullyString } from "../../utils/strings";
+import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
@@ -260,7 +260,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             accessible={customRightIcon.accessibilityLabel !== undefined}
             accessibilityLabel={customRightIcon.accessibilityLabel}
           >
-            <IconFont name={customRightIcon.iconName} />
+            {!isStringNullyOrEmpty(customRightIcon.iconName) && (
+              <IconFont name={customRightIcon.iconName} />
+            )}
           </ButtonDefaultOpacity>
         )}
         {fromNullable(this.props.accessibilityEvents).fold(
