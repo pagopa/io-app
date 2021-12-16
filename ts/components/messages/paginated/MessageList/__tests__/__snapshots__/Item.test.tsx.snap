@@ -23,11 +23,14 @@ exports[`MessageList Item component when \`hasPaidBadge\` is true should match t
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
     }
   >
     <Text
@@ -59,11 +62,18 @@ exports[`MessageList Item component when \`hasPaidBadge\` is true should match t
     </Text>
     <Text
       style={
-        Object {
-          "fontWeight": "bold",
-          "lineHeight": 18,
-          "marginBottom": -4,
-        }
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
       }
     >
       18 Oct
@@ -71,48 +81,71 @@ exports[`MessageList Item component when \`hasPaidBadge\` is true should match t
   </View>
   <View
     style={
-      Object {
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
-    <Text>
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
       health
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 4,
-        "width": "100%",
-      }
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
     }
   />
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "minHeight": 24,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "flex": 0,
-            "paddingRight": 8,
-            "paddingTop": 6.5,
-          }
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
         }
       >
         <RNSVGSvgView
@@ -152,9 +185,12 @@ exports[`MessageList Item component when \`hasPaidBadge\` is true should match t
       </View>
       <View
         style={
-          Object {
-            "width": "95%",
-          }
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
         }
       >
         <Text
@@ -188,12 +224,15 @@ exports[`MessageList Item component when \`hasPaidBadge\` is true should match t
     </View>
     <View
       style={
-        Object {
-          "alignItems": "flex-start",
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-          "width": 98,
-        }
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
       }
     >
       <View
@@ -312,11 +351,14 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
     }
   >
     <Text
@@ -348,11 +390,18 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
     </Text>
     <Text
       style={
-        Object {
-          "fontWeight": "bold",
-          "lineHeight": 18,
-          "marginBottom": -4,
-        }
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
       }
     >
       18 Oct
@@ -360,48 +409,71 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
   </View>
   <View
     style={
-      Object {
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
-    <Text>
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
       health
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 4,
-        "width": "100%",
-      }
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
     }
   />
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "minHeight": 24,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "flex": 0,
-            "paddingRight": 8,
-            "paddingTop": 6.5,
-          }
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
         }
       >
         <RNSVGSvgView
@@ -441,9 +513,12 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
       </View>
       <View
         style={
-          Object {
-            "width": "95%",
-          }
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
         }
       >
         <Text
@@ -477,12 +552,15 @@ exports[`MessageList Item component when \`isArchived\` is true and \`hasPaidBad
     </View>
     <View
       style={
-        Object {
-          "alignItems": "flex-start",
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-          "width": 98,
-        }
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
       }
     >
       <View
@@ -601,11 +679,14 @@ exports[`MessageList Item component when \`isArchived\` is true should match the
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
     }
   >
     <Text
@@ -637,11 +718,18 @@ exports[`MessageList Item component when \`isArchived\` is true should match the
     </Text>
     <Text
       style={
-        Object {
-          "fontWeight": "bold",
-          "lineHeight": 18,
-          "marginBottom": -4,
-        }
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
       }
     >
       18 Oct
@@ -649,48 +737,71 @@ exports[`MessageList Item component when \`isArchived\` is true should match the
   </View>
   <View
     style={
-      Object {
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
-    <Text>
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
       health
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 4,
-        "width": "100%",
-      }
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
     }
   />
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "minHeight": 24,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "flex": 0,
-            "paddingRight": 8,
-            "paddingTop": 6.5,
-          }
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
         }
       >
         <RNSVGSvgView
@@ -730,9 +841,12 @@ exports[`MessageList Item component when \`isArchived\` is true should match the
       </View>
       <View
         style={
-          Object {
-            "width": "95%",
-          }
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
         }
       >
         <Text
@@ -766,12 +880,15 @@ exports[`MessageList Item component when \`isArchived\` is true should match the
     </View>
     <View
       style={
-        Object {
-          "alignItems": "flex-start",
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-          "width": 98,
-        }
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
       }
     >
       <View
@@ -890,11 +1007,14 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
     }
   >
     <Text
@@ -926,11 +1046,18 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
     </Text>
     <Text
       style={
-        Object {
-          "fontWeight": "bold",
-          "lineHeight": 18,
-          "marginBottom": -4,
-        }
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
       }
     >
       18 Oct
@@ -938,45 +1065,68 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
   </View>
   <View
     style={
-      Object {
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
-    <Text>
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
       health
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 4,
-        "width": "100%",
-      }
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
     }
   />
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "minHeight": 24,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "width": "95%",
-          }
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
         }
       >
         <Text
@@ -1010,12 +1160,15 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
     </View>
     <View
       style={
-        Object {
-          "alignItems": "flex-start",
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-          "width": 98,
-        }
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
       }
     >
       <Text
@@ -1078,11 +1231,14 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
     }
   >
     <Text
@@ -1114,11 +1270,18 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     </Text>
     <Text
       style={
-        Object {
-          "fontWeight": "bold",
-          "lineHeight": 18,
-          "marginBottom": -4,
-        }
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
       }
     >
       18 Oct
@@ -1126,48 +1289,71 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
   </View>
   <View
     style={
-      Object {
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
-    <Text>
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
       health
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 4,
-        "width": "100%",
-      }
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
     }
   />
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "minHeight": 24,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "flex": 0,
-            "paddingRight": 8,
-            "paddingTop": 6.5,
-          }
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
         }
       >
         <RNSVGSvgView
@@ -1207,9 +1393,12 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       </View>
       <View
         style={
-          Object {
-            "width": "95%",
-          }
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
         }
       >
         <Text
@@ -1243,12 +1432,15 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     </View>
     <View
       style={
-        Object {
-          "alignItems": "flex-start",
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-          "width": 98,
-        }
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
       }
     >
       <Text
@@ -1311,11 +1503,14 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
     }
   >
     <Text
@@ -1347,11 +1542,18 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     </Text>
     <Text
       style={
-        Object {
-          "fontWeight": "bold",
-          "lineHeight": 18,
-          "marginBottom": -4,
-        }
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
       }
     >
       18 Oct
@@ -1359,48 +1561,71 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
   </View>
   <View
     style={
-      Object {
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
-    <Text>
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
       health
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 4,
-        "width": "100%",
-      }
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
     }
   />
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "minHeight": 24,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "flex": 0,
-            "paddingRight": 8,
-            "paddingTop": 6.5,
-          }
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
         }
       >
         <RNSVGSvgView
@@ -1440,9 +1665,12 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       </View>
       <View
         style={
-          Object {
-            "width": "95%",
-          }
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
         }
       >
         <Text
@@ -1476,12 +1704,15 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     </View>
     <View
       style={
-        Object {
-          "alignItems": "flex-start",
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-          "width": 98,
-        }
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
       }
     >
       <Text
@@ -1544,11 +1775,14 @@ exports[`MessageList Item component when a EU_CODIV_CERT is present should match
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
     }
   >
     <Text
@@ -1580,11 +1814,18 @@ exports[`MessageList Item component when a EU_CODIV_CERT is present should match
     </Text>
     <Text
       style={
-        Object {
-          "fontWeight": "bold",
-          "lineHeight": 18,
-          "marginBottom": -4,
-        }
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
       }
     >
       18 Oct
@@ -1592,48 +1833,71 @@ exports[`MessageList Item component when a EU_CODIV_CERT is present should match
   </View>
   <View
     style={
-      Object {
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
-    <Text>
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
       health
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 4,
-        "width": "100%",
-      }
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
     }
   />
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "minHeight": 24,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "flex": 0,
-            "paddingRight": 8,
-            "paddingTop": 6.5,
-          }
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
         }
       >
         <RNSVGSvgView
@@ -1673,9 +1937,12 @@ exports[`MessageList Item component when a EU_CODIV_CERT is present should match
       </View>
       <View
         style={
-          Object {
-            "width": "95%",
-          }
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
         }
       >
         <Text
@@ -1709,19 +1976,25 @@ exports[`MessageList Item component when a EU_CODIV_CERT is present should match
     </View>
     <View
       style={
-        Object {
-          "alignItems": "flex-start",
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-          "width": 98,
-        }
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "marginRight": 16,
-          }
+          Array [
+            Object {},
+            Object {
+              "marginRight": 16,
+            },
+          ]
         }
       >
         <Text
@@ -1815,11 +2088,14 @@ exports[`MessageList Item component with all the flags set to false should match
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
     }
   >
     <Text
@@ -1851,11 +2127,18 @@ exports[`MessageList Item component with all the flags set to false should match
     </Text>
     <Text
       style={
-        Object {
-          "fontWeight": "bold",
-          "lineHeight": 18,
-          "marginBottom": -4,
-        }
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
       }
     >
       18 Oct
@@ -1863,48 +2146,71 @@ exports[`MessageList Item component with all the flags set to false should match
   </View>
   <View
     style={
-      Object {
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
-    <Text>
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
       health
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 4,
-        "width": "100%",
-      }
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
     }
   />
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "minHeight": 24,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
       }
     >
       <View
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "flex": 0,
-            "paddingRight": 8,
-            "paddingTop": 6.5,
-          }
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
         }
       >
         <RNSVGSvgView
@@ -1944,9 +2250,12 @@ exports[`MessageList Item component with all the flags set to false should match
       </View>
       <View
         style={
-          Object {
-            "width": "95%",
-          }
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
         }
       >
         <Text
@@ -1980,12 +2289,15 @@ exports[`MessageList Item component with all the flags set to false should match
     </View>
     <View
       style={
-        Object {
-          "alignItems": "flex-start",
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-          "width": 98,
-        }
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
       }
     >
       <Text

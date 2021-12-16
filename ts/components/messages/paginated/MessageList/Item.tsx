@@ -1,9 +1,6 @@
-/**
- * A component to display the list item in the MessagesHomeScreen
- */
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Badge } from "native-base";
+import { StyleSheet } from "react-native";
+import { Badge, Text, View } from "native-base";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
@@ -115,6 +112,9 @@ const announceMessage = (message: UIMessage, isRead: boolean): string =>
     receivedAt: convertReceivedDateToAccessible(message.createdAt)
   });
 
+/**
+ * A component to display the list item in the MessagesHomeScreen
+ */
 const MessageListItem = ({
   category,
   hasPaidBadge,
