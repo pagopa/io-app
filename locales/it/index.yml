@@ -1424,6 +1424,9 @@ wallet:
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci manualmente
     enroll_cta: Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.
+    readStorageDisclosure:
+      title: Consenti l'accesso alla galleria
+      message: Potrai caricare screenshot e avvisi di pagamento
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
       message: IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento

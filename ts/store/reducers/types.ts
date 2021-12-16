@@ -3,7 +3,6 @@ import { PersistPartial } from "redux-persist";
 
 import { BonusState } from "../../features/bonus/bonusVacanze/store/reducers";
 import { FeaturesState } from "../../features/common/store/reducers";
-import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
@@ -31,11 +30,6 @@ import { WalletState } from "./wallet";
 import { InternalRouteNavigationState } from "./internalRouteNavigation";
 import { CrossSessionsState } from "./crossSessions";
 import { BackoffErrorState } from "./backoffError";
-
-type NetworkState = Readonly<{
-  isConnected: boolean;
-  actionQueue: ReadonlyArray<Action>;
-}>;
 
 export type GlobalState = Readonly<{
   appState: AppState;

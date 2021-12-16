@@ -129,7 +129,6 @@
     "react-native-masked-text": "^1.13.0",
     "react-native-mixpanel": "1.2.0",
     "react-native-modal-datetime-picker": "^10.2.0",
-    "react-native-offline": "5.2.0",
     "react-native-popup-menu": "^0.15.11",
     "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^7.3.1",
