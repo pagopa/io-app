@@ -36,7 +36,7 @@ type BoldKindProps = SemiBoldProps | BoldProps;
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
-const fontSize = 18;
+export const h3FontSize = 18;
 
 /**
  * A custom function to calculate the values if no weight or color is provided.
@@ -45,7 +45,7 @@ const fontSize = 18;
  * @param weight
  * @param color
  */
-const calculateWeightColor = (
+export const calculateH3WeightColor = (
   weight?: AllowedWeight,
   color?: AllowedColors
 ): RequiredTypographyProps<AllowedWeight, AllowedColors> => {
@@ -71,7 +71,7 @@ const calculateWeightColor = (
 export const H3: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
-    weightColorFactory: calculateWeightColor,
+    weightColorFactory: calculateH3WeightColor,
     font: fontName,
-    fontStyle: { fontSize }
+    fontStyle: { fontSize: h3FontSize }
   });

@@ -2872,6 +2872,9 @@ features:
         subtitle: "TMP Generic error subtitle"
     details:
       hasAttachments: "contiene allegati"
+      body:
+        plain: "testo semplice"
+        html: "html"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
@@ -2941,8 +2944,23 @@ support:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
   askPermissions:
+    nameSurname: "Nome e Cognome"
+    fiscalCode: "Codice fiscale"
+    emailAddress: "Indirizzo email"
+    deviceAndOS: "Dispositivo e sistema operativo"
+    ipAddress: "Indirizzo IP"
+    currentAppVersion: "Versione in uso dell'app"
+    identityProvider: "Identity Provider"
+    navigationData: "Dati di navigazione in app IO"
+    navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"
+    devicePerformance: "Performance del dispositivo"
+    devicePerformanceData: "Livello di memoria e batteria"
+    stock: "Dati dell’avviso di pagamento"
+    stockValue: "Incluso l’errore che hai appena ricevuto"
     header: "Contatta l'assistenza"
     title: "Per continuare, abbiamo bisogno del tuo consenso"
+    body: "Per ricevere supporto è necessario inviare al team di IO alcuni dati. Se neghi il consenso, potrai inviare una richiesta generica via email."
+    listHeader: "Verranno inviati i seguenti dati:"
     cta:
       allow: "Consenti"
       denies: "Non consentire"
