@@ -20,6 +20,7 @@ import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
   discount: Discount;
+  merchantType: "online" | "offline";
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -36,10 +37,12 @@ const styles = StyleSheet.create({
 
 const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   discount,
+  merchantType,
   navigateToLandingWebview
 }: Props) => {
   const { present } = useCgnDiscountDetailBottomSheet(
     discount,
+    merchantType,
     navigateToLandingWebview
   );
   return (

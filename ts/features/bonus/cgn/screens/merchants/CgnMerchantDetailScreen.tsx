@@ -65,7 +65,14 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   const { merchantDetail, requestMerchantDetail } = props;
   const merchantID = props.navigation.getParam("merchantID");
   const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) => (
-    <CgnMerchantDiscountItem discount={item} />
+    <CgnMerchantDiscountItem
+      discount={item}
+      merchantType={
+        isReady(merchantDetail) && merchantDetail.value.websiteUrl
+          ? "online"
+          : "offline"
+      }
+    />
   );
 
   const loadMerchantDetail = useCallback(() => {
