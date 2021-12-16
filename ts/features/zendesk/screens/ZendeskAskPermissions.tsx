@@ -9,7 +9,10 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H1 } from "../../../components/core/typography/H1";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import { navigateToZendeskChooseCategory } from "../store/actions/navigation";
+import {
+  navigateToZendeskAskPermissionsPayload,
+  navigateToZendeskChooseCategory
+} from "../store/actions/navigation";
 import { H4 } from "../../../components/core/typography/H4";
 import { H3 } from "../../../components/core/typography/H3";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -42,6 +45,7 @@ import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import { toArray } from "../../../store/helpers/indexer";
 import { openSupportTicket } from "../../../utils/supportAssistance";
+import { NavigationInjectedProps } from "react-navigation";
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -141,13 +145,17 @@ const ItemComponent = (props: Item) => (
   </ListItem>
 );
 
+type Props = NavigationInjectedProps<navigateToZendeskAskPermissionsPayload>;
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor
  */
-const ZendeskAskPermissions = () => {
+const ZendeskAskPermissions = (props: Props) => {
   // TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
-  const assistanceForPayment = false;
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
+
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());

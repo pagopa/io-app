@@ -159,6 +159,9 @@ const ZendeskSupportHelpCenter = (props: Props) => {
     "contextualHelpMarkdown"
   );
   const startingRoute = props.navigation.getParam("startingRoute");
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
     !contextualHelpMarkdown
@@ -202,7 +205,9 @@ const ZendeskSupportHelpCenter = (props: Props) => {
             startingRoute={startingRoute}
           />
           <View spacer />
-          <ZendeskSupportComponent />
+          <ZendeskSupportComponent
+            assistanceForPayment={assistanceForPayment}
+          />
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>

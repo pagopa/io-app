@@ -84,7 +84,9 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const zendeskAssistanceLogAndStart = () => {
     // TODO: set attempt as custom field
     // TODO: set credit-card-support as category
-    dispatch(zendeskSupportStart({ startingRoute: "n/a" }));
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    );
   };
 
   const handleAskAssistance = () => {

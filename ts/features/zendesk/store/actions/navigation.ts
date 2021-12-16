@@ -1,9 +1,16 @@
 import { NavigationActions } from "react-navigation";
 import ZENDESK_ROUTES from "../../navigation/routes";
 
-export const navigateToZendeskAskPermissions = () =>
+export type navigateToZendeskAskPermissionsPayload = {
+  assistanceForPayment: boolean;
+};
+
+export const navigateToZendeskAskPermissions = (
+  params: navigateToZendeskAskPermissionsPayload
+) =>
   NavigationActions.navigate({
-    routeName: ZENDESK_ROUTES.ASK_PERMISSIONS
+    routeName: ZENDESK_ROUTES.ASK_PERMISSIONS,
+    params
   });
 export const navigateToZendeskPanicMode = () =>
   NavigationActions.navigate({
