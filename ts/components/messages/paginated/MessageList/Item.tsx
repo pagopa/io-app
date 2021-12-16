@@ -83,6 +83,41 @@ const styles = StyleSheet.create({
   }
 });
 
+function tagOrIcon({
+  paid,
+  archived,
+  qrCode
+}: {
+  paid: boolean;
+  archived: boolean;
+  qrCode: boolean;
+}) {
+  if (paid) {
+    return (
+      <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
+        <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
+      </Badge>
+    );
+  }
+  if (qrCode) {
+    return (
+      <View style={styles.qrContainer}>
+        <IconFont name={"io-qr"} color={IOColors.blue} />
+      </View>
+    );
+  }
+  if (archived) {
+    return (
+      <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
+        <H5 color="bluegreyDark">
+          {I18n.t("messages.accessibility.message.archived")}
+        </H5>
+      </Badge>
+    );
+  }
+  return null;
+}
+
 type Props = {
   category: MessageCategory;
   hasPaidBadge: boolean;
@@ -139,7 +174,6 @@ const MessageListItem = ({
       ? "io-checkbox-on"
       : "io-checkbox-off"
     : "io-right";
-  const isEuCovidCert = category?.tag === "EU_COVID_CERT";
 
   return (
     <TouchableDefaultOpacity
@@ -171,24 +205,11 @@ const MessageListItem = ({
         </View>
 
         <View style={styles.icon}>
-          {hasPaidBadge && (
-            <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
-              <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
-            </Badge>
-          )}
-          {isArchived && !hasPaidBadge && (
-            <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
-              <H5 color="bluegreyDark">
-                {I18n.t("messages.accessibility.message.archived")}
-              </H5>
-            </Badge>
-          )}
-
-          {isEuCovidCert && (
-            <View style={styles.qrContainer}>
-              <IconFont name={"io-qr"} color={IOColors.blue} />
-            </View>
-          )}
+          {tagOrIcon({
+            paid: hasPaidBadge,
+            archived: isArchived,
+            qrCode: category?.tag === "EU_COVID_CERT"
+          })}
 
           <IconFont
             name={iconName}

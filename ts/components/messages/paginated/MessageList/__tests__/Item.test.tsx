@@ -45,19 +45,6 @@ describe("MessageList Item component", () => {
     });
   });
 
-  describe("when a EU_CODIV_CERT is present", () => {
-    it("should match the snapshot", () => {
-      expect(
-        render(
-          <Item
-            {...defaultProps}
-            category={{ tag: "EU_COVID_CERT" } as MessageCategory}
-          />
-        ).toJSON()
-      ).toMatchSnapshot();
-    });
-  });
-
   describe("when `isSelectionModeEnabled` is true", () => {
     describe("and `isSelected` is false", () => {
       it("should match the snapshot", () => {
@@ -83,18 +70,22 @@ describe("MessageList Item component", () => {
     });
   });
 
-  describe("when `isArchived` is true", () => {
-    it("should match the snapshot", () => {
-      expect(
-        render(<Item {...defaultProps} isArchived={true} />).toJSON()
-      ).toMatchSnapshot();
-    });
-    describe("and `hasPaidBadge` is also true", () => {
+  const euCovidCertCategory = { tag: "EU_COVID_CERT" } as MessageCategory;
+  [
+    { isArchived: false, hasPaidBadge: false, category: defaultProps.category },
+    { isArchived: true, hasPaidBadge: false, category: defaultProps.category },
+    { isArchived: true, hasPaidBadge: true, category: defaultProps.category },
+    { isArchived: false, hasPaidBadge: true, category: defaultProps.category },
+    // with Green Pass
+    { isArchived: false, hasPaidBadge: false, category: euCovidCertCategory },
+    { isArchived: true, hasPaidBadge: false, category: euCovidCertCategory },
+    { isArchived: true, hasPaidBadge: true, category: euCovidCertCategory },
+    { isArchived: false, hasPaidBadge: true, category: euCovidCertCategory }
+  ].forEach(testProps => {
+    describe(`when isArchived=${testProps.isArchived} hasPaidBadge=${testProps.hasPaidBadge} category=${testProps.category}`, () => {
       it("should match the snapshot", () => {
         expect(
-          render(
-            <Item {...defaultProps} isArchived={true} hasPaidBadge={true} />
-          ).toJSON()
+          render(<Item {...defaultProps} {...testProps} />).toJSON()
         ).toMatchSnapshot();
       });
     });
