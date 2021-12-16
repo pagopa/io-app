@@ -46,6 +46,8 @@ import { AsyncAlert } from "../../../utils/asyncAlert";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { isAndroid } from "../../../utils/platform";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 type OwnProps = NavigationInjectedProps;
 

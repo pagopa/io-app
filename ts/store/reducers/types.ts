@@ -40,7 +40,6 @@ export type GlobalState = Readonly<{
   entities: PersistedEntitiesState;
   instabug: InstabugUnreadMessagesState;
   nav: NavigationState;
-  network: NetworkState;
   backoffError: BackoffErrorState;
   notifications: NotificationsState;
   onboarding: OnboardingState;
