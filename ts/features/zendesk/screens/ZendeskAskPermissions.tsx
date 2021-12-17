@@ -68,7 +68,6 @@ type ItemProps = {
 
 const iconProps = { width: 24, height: 24 };
 
-// TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
 const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
     id: "profileNameSurname",
@@ -150,7 +149,6 @@ type Props = NavigationInjectedProps<navigateToZendeskAskPermissionsPayload>;
  * @constructor
  */
 const ZendeskAskPermissions = (props: Props) => {
-  // TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
   const assistanceForPayment = props.navigation.getParam(
     "assistanceForPayment"
   );
@@ -187,13 +185,13 @@ const ZendeskAskPermissions = (props: Props) => {
     workUnitCompleted();
   };
 
-  // TODO: open directly a ticket with category "payment" if assistanceForPayment: https://pagopa.atlassian.net/browse/IA-575
   const handleOnContinuePress = () => {
     // if is not possible to get the config or if the config has any category open directly a ticket.
     if (
       !isReady(zendeskConfig) ||
       Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
-        .length === 0
+        .length === 0 ||
+      assistanceForPayment
     ) {
       openSupportTicket();
       workUnitCompleted();
