@@ -80,6 +80,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         headerBackgroundColor={HEADER_BACKGROUND_COLOR}
         goBack
         headerTitle={I18n.t("bonus.cgn.name")}
+        dark={true}
         titleColor={"white"}
         contextualHelp={emptyContextualHelp}
       >
