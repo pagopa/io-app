@@ -2,13 +2,13 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { ComponentProps } from "react";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "./IconFont";
 import Markdown from "./Markdown";
-import { ComponentProps } from "react";
 
 type Props = {
   title: string;
