@@ -131,7 +131,7 @@ const FaqManager = (props: FaqManagerProps) => {
           )}
           {contextualHelpData.faqs && isContentLoaded && (
             <FAQComponent
-              onLinkClicked={workUnitComplete}
+              onLinkClicked={handleOnLinkClicked(() => workUnitComplete())}
               faqs={contextualHelpData.faqs}
             />
           )}
