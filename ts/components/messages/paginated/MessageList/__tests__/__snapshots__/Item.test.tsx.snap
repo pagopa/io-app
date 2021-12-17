@@ -1,0 +1,3594 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageList Item component when \`isRead\` is true should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and \`isSelected\` is false should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        R
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and \`isSelected\` is true should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        S
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when isArchived=false hasPaidBadge=false category=EU_COVID_CERT should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "marginRight": 16,
+            },
+          ]
+        }
+      >
+        <Text
+          accessibilityElementsHidden={true}
+          accessibilityLabel=""
+          accessible={false}
+          allowFontScaling={false}
+          importantForAccessibility="no-hide-descendants"
+          style={
+            Array [
+              Object {
+                "color": "#0073E6",
+                "fontSize": 12,
+              },
+              Array [
+                Object {},
+                Object {
+                  "color": "#0073E6",
+                },
+                Object {},
+              ],
+              Object {
+                "fontFamily": "io-icon-font",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          y
+        </Text>
+      </View>
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when isArchived=false hasPaidBadge=false category=GENERIC should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when isArchived=false hasPaidBadge=true category=EU_COVID_CERT should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#ED1727",
+              "borderRadius": 13.5,
+              "height": 27,
+              "justifyContent": "center",
+              "paddingBottom": 3,
+              "paddingLeft": 6,
+              "paddingRight": 6,
+              "paddingTop": 3,
+            },
+            Object {
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 25,
+              "width": 74,
+            },
+            Object {
+              "backgroundColor": "#00C5CA",
+              "borderColor": "#00C5CA",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          defaultColor="bluegreyDark"
+          defaultWeight="SemiBold"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 14,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          Paid
+        </Text>
+      </View>
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when isArchived=false hasPaidBadge=true category=GENERIC should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#ED1727",
+              "borderRadius": 13.5,
+              "height": 27,
+              "justifyContent": "center",
+              "paddingBottom": 3,
+              "paddingLeft": 6,
+              "paddingRight": 6,
+              "paddingTop": 3,
+            },
+            Object {
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 25,
+              "width": 74,
+            },
+            Object {
+              "backgroundColor": "#00C5CA",
+              "borderColor": "#00C5CA",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          defaultColor="bluegreyDark"
+          defaultWeight="SemiBold"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 14,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          Paid
+        </Text>
+      </View>
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when isArchived=true hasPaidBadge=false category=EU_COVID_CERT should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#ED1727",
+              "borderRadius": 13.5,
+              "height": 27,
+              "justifyContent": "center",
+              "paddingBottom": 3,
+              "paddingLeft": 6,
+              "paddingRight": 6,
+              "paddingTop": 3,
+            },
+            Object {
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 25,
+              "width": 74,
+            },
+            Object {
+              "backgroundColor": "#E6E9F2",
+              "borderColor": "#E6E9F2",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          defaultColor="bluegreyDark"
+          defaultWeight="SemiBold"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 14,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          Archived
+        </Text>
+      </View>
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when isArchived=true hasPaidBadge=false category=GENERIC should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#ED1727",
+              "borderRadius": 13.5,
+              "height": 27,
+              "justifyContent": "center",
+              "paddingBottom": 3,
+              "paddingLeft": 6,
+              "paddingRight": 6,
+              "paddingTop": 3,
+            },
+            Object {
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 25,
+              "width": 74,
+            },
+            Object {
+              "backgroundColor": "#E6E9F2",
+              "borderColor": "#E6E9F2",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          defaultColor="bluegreyDark"
+          defaultWeight="SemiBold"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 14,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          Archived
+        </Text>
+      </View>
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when isArchived=true hasPaidBadge=true category=EU_COVID_CERT should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#ED1727",
+              "borderRadius": 13.5,
+              "height": 27,
+              "justifyContent": "center",
+              "paddingBottom": 3,
+              "paddingLeft": 6,
+              "paddingRight": 6,
+              "paddingTop": 3,
+            },
+            Object {
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 25,
+              "width": 74,
+            },
+            Object {
+              "backgroundColor": "#00C5CA",
+              "borderColor": "#00C5CA",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          defaultColor="bluegreyDark"
+          defaultWeight="SemiBold"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 14,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          Paid
+        </Text>
+      </View>
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when isArchived=true hasPaidBadge=true category=GENERIC should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#ED1727",
+              "borderRadius": 13.5,
+              "height": 27,
+              "justifyContent": "center",
+              "paddingBottom": 3,
+              "paddingLeft": 6,
+              "paddingRight": 6,
+              "paddingTop": 3,
+            },
+            Object {
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 25,
+              "width": 74,
+            },
+            Object {
+              "backgroundColor": "#00C5CA",
+              "borderColor": "#00C5CA",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          defaultColor="bluegreyDark"
+          defaultWeight="SemiBold"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 14,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          Paid
+        </Text>
+      </View>
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component with all the flags set to false should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  "
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegreyDark"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Ċentru tas-Saħħa
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontWeight": "bold",
+            "lineHeight": 18,
+            "marginBottom": -4,
+          },
+        ]
+      }
+    >
+      18 Oct
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "minHeight": 24,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "width": "95%",
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 98,
+          },
+        ]
+      }
+    >
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        style={
+          Array [
+            Object {
+              "color": "#0073E6",
+              "fontSize": 24,
+            },
+            Array [
+              Object {},
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        t
+      </Text>
+    </View>
+  </View>
+</View>
+`;

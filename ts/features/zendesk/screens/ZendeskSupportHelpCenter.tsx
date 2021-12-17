@@ -31,7 +31,6 @@ import FAQComponent from "../../../components/FAQComponent";
 import {
   getContextualHelpConfig,
   getContextualHelpData,
-  handleOnLinkClicked,
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
 
@@ -131,7 +130,11 @@ const FaqManager = (props: FaqManagerProps) => {
           )}
           {contextualHelpData.faqs && isContentLoaded && (
             <FAQComponent
-              onLinkClicked={workUnitComplete}
+              shouldHandleLink={_ => {
+                // when a link is clicked in the faq, terminate the workunit before the link will be handled (i.e: internal or external navigation)
+                workUnitComplete();
+                return true;
+              }}
               faqs={contextualHelpData.faqs}
             />
           )}
@@ -171,7 +174,12 @@ const ZendeskSupportHelpCenter = (props: Props) => {
     contextualHelp,
     contextualHelpMarkdown,
     () => setMarkdownContentLoaded(true),
-    handleOnLinkClicked(() => workUnitComplete())
+    constNull,
+    _ => {
+      // when a link is clicked in the contextual help, terminate the workunit before the link will be handled (i.e: internal or external navigation)
+      workUnitComplete();
+      return true;
+    }
   );
 
   /**

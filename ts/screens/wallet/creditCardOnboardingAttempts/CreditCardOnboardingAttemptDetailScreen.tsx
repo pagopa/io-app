@@ -96,6 +96,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
         break;
       case ToolEnum.zendesk:
         zendeskAssistanceLogAndStart();
+        break;
     }
   };
 

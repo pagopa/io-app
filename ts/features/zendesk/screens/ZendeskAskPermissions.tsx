@@ -43,7 +43,6 @@ import { zendeskSupportCompleted } from "../store/actions";
 import { openWebUrl } from "../../../utils/url";
 import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
-import { toArray } from "../../../store/helpers/indexer";
 import { openSupportTicket } from "../../../utils/supportAssistance";
 import { NavigationInjectedProps } from "react-navigation";
 
@@ -193,7 +192,7 @@ const ZendeskAskPermissions = (props: Props) => {
     // if is not possible to get the config or if the config has any category open directly a ticket.
     if (
       !isReady(zendeskConfig) ||
-      toArray(zendeskConfig.value.zendeskCategories?.categories ?? {})
+      Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
         .length === 0
     ) {
       openSupportTicket();

@@ -125,6 +125,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         break;
       case ToolEnum.zendesk:
         this.zendeskAssistanceLogAndStart();
+        break;
     }
   };
 
