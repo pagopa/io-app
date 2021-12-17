@@ -198,6 +198,12 @@ type OwnProps = {
   useCustomSortedList?: boolean;
   onLoadEnd?: () => void;
   onLinkClicked?: (url: string) => void;
+  /**
+   * if shouldHandleLink returns true the clicked link will be handled by the Markdown component
+   * otherwise Markdown will ignore it. If shouldHandleLink is not defined assume () => true
+   * @param url
+   */
+  shouldHandleLink?: (url: string) => boolean;
   onError?: (error: any) => void;
   /**
    * The code will be inserted in the html body between
@@ -371,6 +377,7 @@ class Markdown extends React.PureComponent<Props, State> {
   // A function that handles message sent by the WebView component
   private handleWebViewMessage = (event: WebViewMessageEvent) => {
     const { dispatch } = this.props;
+    const { shouldHandleLink = () => true } = this.props;
     this.setState({
       isLoading: false
     });
@@ -383,6 +390,9 @@ class Markdown extends React.PureComponent<Props, State> {
     messageOrErrors.map(message => {
       switch (message.type) {
         case "LINK_MESSAGE":
+          if (!shouldHandleLink(message.payload.href)) {
+            break;
+          }
           handleLinkMessage(dispatch, message.payload.href);
           fromNullable(this.props.onLinkClicked).map(s =>
             s(message.payload.href)

@@ -1041,6 +1041,10 @@ wallet:
         whatIsPspBottomSheet:
           title: "Cos’è il gestore della transazione?"
           body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
+      paypalAlreadyAdded:
+        alert:
+          title: "Hai già un account PayPal nel tuo Portafoglio"
+          message: "Se prosegui, il nuovo account sostituirà quello attuale."
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
@@ -1586,6 +1590,7 @@ messages:
     message:
       read: "Messaggio"
       unread: "Messaggio non letto"
+      archived: Archiviato
       description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
