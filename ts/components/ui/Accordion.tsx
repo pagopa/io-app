@@ -8,11 +8,13 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "./IconFont";
 import Markdown from "./Markdown";
+import { ComponentProps } from "react";
 
 type Props = {
   title: string;
   content: string;
-  onLinkClicked?: (url: string) => void;
+  onLinkClicked?: ComponentProps<typeof Markdown>["onLinkClicked"];
+  shouldHandleLink?: ComponentProps<typeof Markdown>["shouldHandleLink"];
 };
 
 const styles = StyleSheet.create({
@@ -74,6 +76,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
   const renderContent = (content: string) => (
     <View style={styles.pad}>
       <Markdown
+        shouldHandleLink={props.shouldHandleLink}
         onLinkClicked={(url: string) => {
           fromNullable(props.onLinkClicked).map(s => s(url));
         }}
