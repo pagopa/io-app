@@ -2603,7 +2603,7 @@ bonus:
         sport: sport
         health: salute e benessere
     cta:
-      activeBonus: Attiva la tua Carta Giovani
+      activeBonus: Attiva la Carta
       goToDetail: Visualizza la Carta Giovani
     detail:
       cta:
