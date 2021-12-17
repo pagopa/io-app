@@ -2885,6 +2885,8 @@ features:
       body:
         plain: "testo semplice"
         html: "html"
+      metadata:
+        title: "il messaggio ha valore legale"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
