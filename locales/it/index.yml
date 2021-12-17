@@ -1041,6 +1041,10 @@ wallet:
         whatIsPspBottomSheet:
           title: "Cos’è il gestore della transazione?"
           body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
+      paypalAlreadyAdded:
+        alert:
+          title: "Hai già un account PayPal nel tuo Portafoglio"
+          message: "Se prosegui, il nuovo account sostituirà quello attuale."
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
@@ -2944,8 +2948,23 @@ support:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
   askPermissions:
+    nameSurname: "Nome e Cognome"
+    fiscalCode: "Codice fiscale"
+    emailAddress: "Indirizzo email"
+    deviceAndOS: "Dispositivo e sistema operativo"
+    ipAddress: "Indirizzo IP"
+    currentAppVersion: "Versione in uso dell'app"
+    identityProvider: "Identity Provider"
+    navigationData: "Dati di navigazione in app IO"
+    navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"
+    devicePerformance: "Performance del dispositivo"
+    devicePerformanceData: "Livello di memoria e batteria"
+    stock: "Dati dell’avviso di pagamento"
+    stockValue: "Incluso l’errore che hai appena ricevuto"
     header: "Contatta l'assistenza"
     title: "Per continuare, abbiamo bisogno del tuo consenso"
+    body: "Per ricevere supporto è necessario inviare al team di IO alcuni dati. Se neghi il consenso, potrai inviare una richiesta generica via email."
+    listHeader: "Verranno inviati i seguenti dati:"
     cta:
       allow: "Consenti"
       denies: "Non consentire"
