@@ -18,15 +18,15 @@ export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 
 export const zendeskDefaultJwtConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
-  appId: "7f23d5b0eadc5b4f2cc83df3898c6f607bad769fe053a186",
-  clientId: "mobile_sdk_client_4bf774ed28b085195cc5",
-  url: "https://appiotest.zendesk.com"
+  appId: "4ed72c757f79ed15dfa46546dcb672fc86a0af949a119156",
+  clientId: "mobile_sdk_client_28679ae6f72da9ab5ef0",
+  url: "https://pagopa.zendesk.com"
 };
 export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
-  appId: "8547479b47fdacd0e8f74a4fb076a41014dee620d1d890b3",
-  clientId: "mobile_sdk_client_518ee6a8160220698f97",
-  url: "https://appiotest.zendesk.com"
+  appId: "a6f500a77dc0bd00f25a5306e4217ea37c11d0e7fed1e768",
+  clientId: "mobile_sdk_client_aa8f9ebd96018279049b",
+  url: "https://pagopa.zendesk.com"
 };
 
 // If is not possible to get the assistance tool remotely assume it is none.
