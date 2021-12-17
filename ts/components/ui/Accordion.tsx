@@ -2,6 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { ComponentProps } from "react";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -12,7 +13,8 @@ import Markdown from "./Markdown";
 type Props = {
   title: string;
   content: string;
-  onLinkClicked?: (url: string) => void;
+  onLinkClicked?: ComponentProps<typeof Markdown>["onLinkClicked"];
+  shouldHandleLink?: ComponentProps<typeof Markdown>["shouldHandleLink"];
 };
 
 const styles = StyleSheet.create({
@@ -74,6 +76,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
   const renderContent = (content: string) => (
     <View style={styles.pad}>
       <Markdown
+        shouldHandleLink={props.shouldHandleLink}
         onLinkClicked={(url: string) => {
           fromNullable(props.onLinkClicked).map(s => s(url));
         }}

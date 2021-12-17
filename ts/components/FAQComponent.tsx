@@ -1,10 +1,13 @@
 import * as React from "react";
+import { ComponentProps } from "react";
 import { FAQType } from "../utils/faq";
 import Accordion from "./ui/Accordion";
+import Markdown from "./ui/Markdown";
 
 type Props = Readonly<{
   faqs: ReadonlyArray<FAQType>;
-  onLinkClicked?: (url: string) => void;
+  onLinkClicked?: ComponentProps<typeof Markdown>["onLinkClicked"];
+  shouldHandleLink?: ComponentProps<typeof Markdown>["shouldHandleLink"];
 }>;
 
 const FAQComponent: React.FunctionComponent<Props> = (props: Props) => (
@@ -15,6 +18,7 @@ const FAQComponent: React.FunctionComponent<Props> = (props: Props) => (
         title={faqType.title}
         content={faqType.content}
         onLinkClicked={props.onLinkClicked}
+        shouldHandleLink={props.shouldHandleLink}
       />
     ))}
   </>
