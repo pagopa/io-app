@@ -28,8 +28,12 @@ import { getPaymentOutcomeCodeDescription } from "../../../utils/payment";
 import { useIOSelector } from "../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import {
+  addTicketCustomField,
+  appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp
+  canShowHelp,
+  zendeskCategoryId,
+  zendeskPaymentMethodCategoryValue
 } from "../../../utils/supportAssistance";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
@@ -82,8 +86,10 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
     openInstabugQuestionReport();
   };
   const zendeskAssistanceLogAndStart = () => {
-    // TODO: set attempt as custom field
-    // TODO: set credit-card-support as category
+    // Set metodo_di_pagamento as category
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentMethodCategoryValue);
+    // Append the attempt in the log
+    appendLog(JSON.stringify(attempt));
     dispatch(
       zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
     );

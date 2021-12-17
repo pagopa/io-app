@@ -55,8 +55,12 @@ import {
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import {
+  addTicketCustomField,
+  appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp
+  canShowHelp,
+  zendeskCategoryId,
+  zendeskPaymentCategoryValue
 } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
@@ -112,6 +116,18 @@ const requestAssistanceForPaymentFailure = (
   openInstabugQuestionReport();
 };
 
+const requestZendeskAssistanceForPaymentFailure = (
+  _: RptId,
+  payment?: PaymentHistory
+) => {
+  // Set pagamenti_pagopa as category
+  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+  // TODO: add rptId custom field
+  if (payment) {
+    // Append the payment history details in the log
+    appendLog(getPaymentHistoryDetails(payment));
+  }
+};
 type ScreenUIContents = {
   image: ImageSourcePropType;
   title: string;
@@ -166,6 +182,7 @@ export const errorTransactionUIElements = (
         requestAssistanceForPaymentFailure(rptId, paymentHistory);
         break;
       case ToolEnum.zendesk:
+        requestZendeskAssistanceForPaymentFailure(rptId, paymentHistory);
         handleZendeskRequestAssistance?.();
         break;
       default:
