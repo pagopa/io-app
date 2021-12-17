@@ -131,6 +131,7 @@ const FaqManager = (props: FaqManagerProps) => {
           {contextualHelpData.faqs && isContentLoaded && (
             <FAQComponent
               shouldHandleLink={_ => {
+                // when a link is clicked in the faq, terminate the workunit before the link will be handled (i.e: internal or external navigation)
                 workUnitComplete();
                 return true;
               }}
@@ -172,6 +173,7 @@ const ZendeskSupportHelpCenter = (props: Props) => {
     () => setMarkdownContentLoaded(true),
     constNull,
     _ => {
+      // when a link is clicked in the contextual help, terminate the workunit before the link will be handled (i.e: internal or external navigation)
       workUnitComplete();
       return true;
     }
