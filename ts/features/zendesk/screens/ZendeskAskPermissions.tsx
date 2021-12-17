@@ -185,7 +185,7 @@ const ZendeskAskPermissions = () => {
     // if is not possible to get the config or if the config has any category open directly a ticket.
     if (
       !isReady(zendeskConfig) ||
-      toArray(zendeskConfig.value.zendeskCategories?.categories ?? {})
+      Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
         .length === 0
     ) {
       openSupportTicket();
