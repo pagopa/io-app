@@ -1,9 +1,6 @@
-/**
- * A component to display the list item in the MessagesHomeScreen
- */
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Badge } from "native-base";
+import { StyleSheet } from "react-native";
+import { Badge, Text, View } from "native-base";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
@@ -51,7 +48,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   icon: {
-    width: 90,
+    width: 98,
     alignItems: "flex-start",
     justifyContent: "flex-end",
     flexDirection: "row"
@@ -69,7 +66,7 @@ const styles = StyleSheet.create({
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
-    width: 65,
+    width: 74,
     height: 25,
     flexDirection: "row"
   },
@@ -77,13 +74,49 @@ const styles = StyleSheet.create({
     borderColor: IOColors.aqua,
     backgroundColor: IOColors.aqua
   },
-  archived: {
-    opacity: 0.75
+  badgeInfoArchived: {
+    borderColor: IOColors.greyLight,
+    backgroundColor: IOColors.greyLight
   },
   qrContainer: {
     marginRight: 16
   }
 });
+
+function tagOrIcon({
+  paid,
+  archived,
+  qrCode
+}: {
+  paid: boolean;
+  archived: boolean;
+  qrCode: boolean;
+}) {
+  if (paid) {
+    return (
+      <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
+        <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
+      </Badge>
+    );
+  }
+  if (archived) {
+    return (
+      <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
+        <H5 color="bluegreyDark">
+          {I18n.t("messages.accessibility.message.archived")}
+        </H5>
+      </Badge>
+    );
+  }
+  if (qrCode) {
+    return (
+      <View style={styles.qrContainer}>
+        <IconFont name={"io-qr"} color={IOColors.blue} />
+      </View>
+    );
+  }
+  return null;
+}
 
 type Props = {
   category: MessageCategory;
@@ -114,6 +147,9 @@ const announceMessage = (message: UIMessage, isRead: boolean): string =>
     receivedAt: convertReceivedDateToAccessible(message.createdAt)
   });
 
+/**
+ * A component to display the list item in the MessagesHomeScreen
+ */
 const MessageListItem = ({
   category,
   hasPaidBadge,
@@ -138,21 +174,18 @@ const MessageListItem = ({
       ? "io-checkbox-on"
       : "io-checkbox-off"
     : "io-right";
-  const isEuCovidCert = category?.tag === "EU_COVID_CERT";
 
   return (
     <TouchableDefaultOpacity
       onPress={onPress}
       onLongPress={onLongPress}
-      style={[styles.verticalPad, isArchived && styles.archived]}
+      style={styles.verticalPad}
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead)}
     >
       <View style={styles.spaced}>
         <H5>{organizationName}</H5>
-        <Text style={styles.text12}>
-          {isArchived ? `${I18n.t("messages.tab.archive")} ${uiDate}` : uiDate}
-        </Text>
+        <Text style={styles.text12}>{uiDate}</Text>
       </View>
 
       <View style={styles.viewStyle}>
@@ -172,17 +205,11 @@ const MessageListItem = ({
         </View>
 
         <View style={styles.icon}>
-          {hasPaidBadge && (
-            <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
-              <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
-            </Badge>
-          )}
-
-          {isEuCovidCert && (
-            <View style={styles.qrContainer}>
-              <IconFont name={"io-qr"} color={IOColors.blue} />
-            </View>
-          )}
+          {tagOrIcon({
+            paid: hasPaidBadge,
+            archived: isArchived,
+            qrCode: category?.tag === "EU_COVID_CERT"
+          })}
 
           <IconFont
             name={iconName}
