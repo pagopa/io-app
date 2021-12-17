@@ -55,6 +55,7 @@ import { deletePin } from "../utils/keychain";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { mixpanelTrack } from "../mixpanel";
 import { readablePrivacyReport } from "../utils/reporters";
+import { resetAssistanceData } from "../utils/supportAssistance";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -386,6 +387,8 @@ function* checkStoreHashedFiscalCode(
     checkIsDifferentFiscalCode === true ||
     checkIsDifferentFiscalCode === undefined
   ) {
+    // clean up any assistance date
+    resetAssistanceData();
     // delete current store pin
     yield call(deletePin);
     yield put(differentProfileLoggedIn());
