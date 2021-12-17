@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
 import { useDispatch } from "react-redux";
+import { NavigationInjectedProps } from "react-navigation";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -44,7 +45,6 @@ import { openWebUrl } from "../../../utils/url";
 import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import { openSupportTicket } from "../../../utils/supportAssistance";
-import { NavigationInjectedProps } from "react-navigation";
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
