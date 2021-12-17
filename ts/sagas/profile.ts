@@ -387,7 +387,7 @@ function* checkStoreHashedFiscalCode(
     checkIsDifferentFiscalCode === true ||
     checkIsDifferentFiscalCode === undefined
   ) {
-    // clean up any assistance date
+    // clean up any assistance data
     resetAssistanceData();
     // delete current store pin
     yield call(deletePin);

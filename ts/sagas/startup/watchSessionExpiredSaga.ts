@@ -10,7 +10,7 @@ import { resetAssistanceData } from "../../utils/supportAssistance";
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
   yield takeLatest(getType(sessionExpired), function* () {
-    // clean up any assistance date
+    // clean up any assistance data
     resetAssistanceData();
     yield put(clearCache());
     // start again the application

@@ -56,7 +56,7 @@ export function* watchLogoutSaga(
         };
         yield put(logoutFailure(logoutError));
       } finally {
-        // clean up any assistance date
+        // clean up any assistance data
         resetAssistanceData();
         // If keepUserData is false, startApplicationInitialization is
         // dispatched within the componentDidMount of IngressScreen
