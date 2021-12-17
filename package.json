@@ -97,7 +97,7 @@
     "hastscript": "^7.0.2",
     "hoist-non-react-statics": "^3.0.1",
     "instabug-reactnative": "^9.1.6",
-    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.11",
+    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.12",
     "io-ts": "1.8.5",
     "italia-ts-commons": "8.6.0",
     "jail-monkey": "^2.3.2",
