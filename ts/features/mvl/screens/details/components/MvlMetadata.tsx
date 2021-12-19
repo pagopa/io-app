@@ -40,14 +40,13 @@ const Header = (): React.ReactElement => (
 
 /**
  * An accordion that allows the user to navigate and see all the legal message related metadata
- * TODO: this is a placeholder, will be implemented in https://pagopa.atlassian.net/browse/IAMVL-20
  * @constructor
  * @param _
  */
 export const MvlMetadataComponent = (_: Props): React.ReactElement => (
   <View style={styles.background}>
     <RawAccordion header={<Header />}>
-      <H2>{"Metadata placeholder"}</H2>
+      <H2 style={{ height: 500 }}>{"Metadata placeholder"}</H2>
     </RawAccordion>
   </View>
 );
