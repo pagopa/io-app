@@ -2863,6 +2863,14 @@ features:
         title: "the message has legal value"
         description: "On {{date}} at {{time}} the message \"{{subject}}\" was sent to you by \"{{sender}}\""
         messageId: "Message identifier:"
+        links:
+          copy: "Copy message identifier"
+          sender: "Show full list of recipients"
+          signature: "Show signature details"
+          certificates: "Show certificates"
+          originalMessage: "Download original message"
+          datiCert: "Download daticert.xml"
+          smime: "Download smime.p7s"
   euCovidCertificate:
     save:
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."

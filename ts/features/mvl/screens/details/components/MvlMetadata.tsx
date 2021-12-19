@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { Toast, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import LegalMessage from "../../../../../../img/features/mvl/legalMessage.svg";
@@ -6,10 +6,13 @@ import { RawAccordion } from "../../../../../components/core/RawAccordion";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
+import { Link } from "../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import I18n from "../../../../../i18n";
 import themeVariables from "../../../../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { MvlMetadata } from "../../../types/mvlData";
 
@@ -27,6 +30,9 @@ const styles = StyleSheet.create({
     marginVertical: themeVariables.contentPadding,
     marginLeft: themeVariables.contentPadding,
     flex: 1
+  },
+  link: {
+    paddingVertical: 16
   }
 });
 
@@ -41,7 +47,7 @@ const Header = (): React.ReactElement => (
 );
 
 const Description = (props: Props): React.ReactElement => (
-  <View style={IOStyles.horizontalContentPadding}>
+  <View>
     <Body>
       {I18n.t("features.mvl.details.metadata.description", {
         date: localeDateFormat(
@@ -61,6 +67,66 @@ const Description = (props: Props): React.ReactElement => (
   </View>
 );
 
+type LinkRepresentation = {
+  text: string;
+  action: () => void;
+};
+
+const tmpNotImplementedFeedback = () => {
+  Toast.show({
+    text: I18n.t("wallet.incoming.title")
+  });
+};
+
+const generateLinks = (props: Props): ReadonlyArray<LinkRepresentation> => [
+  {
+    text: I18n.t("features.mvl.details.metadata.links.copy"),
+    action: () => clipboardSetStringWithFeedback(props.metadata.id)
+  },
+  {
+    text: I18n.t("features.mvl.details.metadata.links.sender"),
+    action: tmpNotImplementedFeedback
+  },
+  {
+    text: I18n.t("features.mvl.details.metadata.links.signature"),
+    action: tmpNotImplementedFeedback
+  },
+  {
+    text: I18n.t("features.mvl.details.metadata.links.certificates"),
+    action: tmpNotImplementedFeedback
+  },
+  {
+    text: I18n.t("features.mvl.details.metadata.links.originalMessage"),
+    action: tmpNotImplementedFeedback
+  },
+  {
+    text: I18n.t("features.mvl.details.metadata.links.datiCert"),
+    action: tmpNotImplementedFeedback
+  },
+  {
+    text: I18n.t("features.mvl.details.metadata.links.smime"),
+    action: tmpNotImplementedFeedback
+  }
+];
+
+const Links = (props: Props): React.ReactElement => {
+  const links = generateLinks(props);
+  return (
+    <>
+      {links.map((l, index) => (
+        <View key={index}>
+          <Link onPress={l.action} style={styles.link}>
+            {l.text}
+          </Link>
+          {index < links.length - 1 && (
+            <ItemSeparatorComponent noPadded={true} />
+          )}
+        </View>
+      ))}
+    </>
+  );
+};
+
 /**
  * An accordion that allows the user to navigate and see all the legal message related metadata
  * @constructor
@@ -69,10 +135,11 @@ const Description = (props: Props): React.ReactElement => (
 export const MvlMetadataComponent = (props: Props): React.ReactElement => (
   <View style={styles.background}>
     <RawAccordion header={<Header />}>
-      <>
+      <View style={IOStyles.horizontalContentPadding}>
         <Description {...props} />
         <View spacer={true} />
-      </>
+        <Links {...props} />
+      </View>
     </RawAccordion>
   </View>
 );
