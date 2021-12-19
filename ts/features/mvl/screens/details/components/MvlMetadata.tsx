@@ -3,12 +3,14 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import LegalMessage from "../../../../../../img/features/mvl/legalMessage.svg";
 import { RawAccordion } from "../../../../../components/core/RawAccordion";
-import { H2 } from "../../../../../components/core/typography/H2";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
+import { H4 } from "../../../../../components/core/typography/H4";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import themeVariables from "../../../../../theme/variables";
+import { localeDateFormat } from "../../../../../utils/locale";
 import { MvlMetadata } from "../../../types/mvlData";
 
 type Props = {
@@ -38,15 +40,39 @@ const Header = (): React.ReactElement => (
   </View>
 );
 
+const Description = (props: Props): React.ReactElement => (
+  <View style={IOStyles.horizontalContentPadding}>
+    <Body>
+      {I18n.t("features.mvl.details.metadata.description", {
+        date: localeDateFormat(
+          props.metadata.timestamp,
+          I18n.t("global.dateFormats.shortFormat")
+        ),
+        time: localeDateFormat(
+          props.metadata.timestamp,
+          I18n.t("global.dateFormats.timeFormatWithTimezone")
+        ),
+        subject: props.metadata.subject,
+        sender: props.metadata.sender
+      })}
+    </Body>
+    <H4>{I18n.t("features.mvl.details.metadata.messageId")}</H4>
+    <Body>{props.metadata.id}</Body>
+  </View>
+);
+
 /**
  * An accordion that allows the user to navigate and see all the legal message related metadata
  * @constructor
- * @param _
+ * @param props
  */
-export const MvlMetadataComponent = (_: Props): React.ReactElement => (
+export const MvlMetadataComponent = (props: Props): React.ReactElement => (
   <View style={styles.background}>
     <RawAccordion header={<Header />}>
-      <H2 style={{ height: 500 }}>{"Metadata placeholder"}</H2>
+      <>
+        <Description {...props} />
+        <View spacer={true} />
+      </>
     </RawAccordion>
   </View>
 );
