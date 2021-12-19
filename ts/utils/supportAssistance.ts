@@ -41,6 +41,7 @@ export const initSupportAssistance = ZendDesk.init;
 export const setUserIdentity = ZendDesk.setUserIdentity;
 export const openSupportTicket = ZendDesk.openTicket;
 export const showSupportTickets = ZendDesk.showTickets;
+export const resetAssistanceData = ZendDesk.reset;
 
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
