@@ -1590,6 +1590,7 @@ messages:
     message:
       read: "Messaggio"
       unread: "Messaggio non letto"
+      archived: Archiviato
       description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
@@ -2602,7 +2603,7 @@ bonus:
         sport: sport
         health: salute e benessere
     cta:
-      activeBonus: Attiva la tua Carta Giovani
+      activeBonus: Attiva la Carta
       goToDetail: Visualizza la Carta Giovani
     detail:
       cta:

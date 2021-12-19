@@ -4,6 +4,7 @@ import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
 import { getValueOrElse } from "../features/bonus/bpd/model/RemoteValue";
+import { zendeskEnabled } from "../config";
 
 export type ZendeskAppConfig = {
   key: string;
@@ -40,7 +41,21 @@ export const initSupportAssistance = ZendDesk.init;
 export const setUserIdentity = ZendDesk.setUserIdentity;
 export const openSupportTicket = ZendDesk.openTicket;
 export const showSupportTickets = ZendDesk.showTickets;
+export const resetAssistanceData = ZendDesk.reset;
 
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
+
+// help can be shown only when remote FF is instabug or (zendesk + ff local)
+export const canShowHelp = (assistanceTool: ToolEnum): boolean => {
+  switch (assistanceTool) {
+    case ToolEnum.instabug:
+      return true;
+    case ToolEnum.zendesk:
+      return zendeskEnabled;
+    case ToolEnum.web:
+    case ToolEnum.none:
+      return false;
+  }
+};

@@ -1565,6 +1565,7 @@ messages:
     message:
       read: "Message"
       unread: "Unread message"
+      archived: Archived
       description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "received on"
       received_at: "received at"
@@ -2574,7 +2575,7 @@ bonus:
         sport: sport
         health: health and wellness
     cta:
-      activeBonus: Activate your Carta Giovani
+      activeBonus: Request your CGN
       goToDetail: View your Carta Giovani
     detail:
       cta:
