@@ -12,6 +12,7 @@ import {
   UIManager
 } from "react-native";
 import I18n from "../../../i18n";
+import themeVariables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../variables/IOStyles";
@@ -35,6 +36,10 @@ const styles = StyleSheet.create({
   row: {
     ...IOStyles.row,
     justifyContent: "space-between"
+  },
+  internalHeader: {
+    flex: 1,
+    paddingRight: themeVariables.contentPadding
   }
 });
 
@@ -98,9 +103,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
         }
       >
         <View style={[styles.row, headerStyle]}>
-          <View style={[IOStyles.flex, { paddingRight: 16 }]}>
-            {props.header}
-          </View>
+          <View style={styles.internalHeader}>{props.header}</View>
           <Animated.View
             testID={"ArrowAccordion"}
             style={{
