@@ -1,12 +1,10 @@
 import { NavigationActions } from "react-navigation";
 import ZENDESK_ROUTES from "../../navigation/routes";
-
-export type navigateToZendeskAskPermissionsPayload = {
-  assistanceForPayment: boolean;
-};
+import { InferNavigationParams } from "../../../../types/react";
+import ZendeskAskPermissions from "../../screens/ZendeskAskPermissions";
 
 export const navigateToZendeskAskPermissions = (
-  params: navigateToZendeskAskPermissionsPayload
+  params: InferNavigationParams<typeof ZendeskAskPermissions>
 ) =>
   NavigationActions.navigate({
     routeName: ZENDESK_ROUTES.ASK_PERMISSIONS,

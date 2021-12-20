@@ -10,10 +10,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H1 } from "../../../components/core/typography/H1";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import {
-  navigateToZendeskAskPermissionsPayload,
-  navigateToZendeskChooseCategory
-} from "../store/actions/navigation";
+import { navigateToZendeskChooseCategory } from "../store/actions/navigation";
 import { H4 } from "../../../components/core/typography/H4";
 import { H3 } from "../../../components/core/typography/H3";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -143,7 +140,7 @@ const ItemComponent = (props: Item) => (
   </ListItem>
 );
 
-type Props = NavigationInjectedProps<navigateToZendeskAskPermissionsPayload>;
+type Props = NavigationInjectedProps<{ assistanceForPayment: boolean }>;
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor
