@@ -2,8 +2,10 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge, Text, View } from "native-base";
 
+import LegalMessage from "../../../../../img/messages/legal-message.svg";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 import I18n from "../../../../i18n";
 import {
   convertDateToWordDistance,
@@ -118,6 +120,15 @@ function tagOrIcon({
   return null;
 }
 
+function getTopIcon(category: MessageCategory) {
+  switch (category.tag) {
+    case TagEnum.LEGAL_MESSAGE:
+      return <LegalMessage width={20} height={20} />;
+    default:
+      return null;
+  }
+}
+
 type Props = {
   category: MessageCategory;
   hasPaidBadge: boolean;
@@ -185,6 +196,7 @@ const MessageListItem = ({
     >
       <View style={styles.spaced}>
         <H5>{organizationName}</H5>
+        {getTopIcon(category)}
         <Text style={styles.text12}>{uiDate}</Text>
       </View>
 
