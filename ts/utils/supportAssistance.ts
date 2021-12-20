@@ -42,6 +42,12 @@ export const setUserIdentity = ZendDesk.setUserIdentity;
 export const openSupportTicket = ZendDesk.openTicket;
 export const showSupportTickets = ZendDesk.showTickets;
 export const resetAssistanceData = ZendDesk.reset;
+export const addTicketCustomField = ZendDesk.addTicketCustomField;
+export const appendLog = ZendDesk.appendLog;
+export const zendeskCategoryId = "1900004702053";
+export const zendeskBlockedPaymentRptIdId = "4414297346833";
+export const zendeskPaymentCategoryValue = "pagamenti_pagopa";
+export const zendeskPaymentMethodCategoryValue = "metodo_di_pagamento";
 
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
