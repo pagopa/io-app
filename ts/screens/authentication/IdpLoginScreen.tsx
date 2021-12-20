@@ -44,6 +44,12 @@ import {
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { getUrlBasepath } from "../../utils/url";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import {
+  appendLog,
+  assistanceToolRemoteConfig
+} from "../../utils/supportAssistance";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -103,6 +109,19 @@ const styles = StyleSheet.create({
   }
 });
 
+const handleSendAssistanceLog = (
+  assistanceTool: ToolEnum,
+  log: string,
+  typeLog?: TypeLogs
+) => {
+  switch (assistanceTool) {
+    case ToolEnum.instabug:
+      instabugLog(log, TypeLogs.ERROR, typeLog ?? TypeLogs.INFO);
+      break;
+    case ToolEnum.zendesk:
+      appendLog(log);
+  }
+};
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -114,6 +133,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
       requestState: pot.noneLoading
     };
   }
+
+  private choosenTool = assistanceToolRemoteConfig(
+    this.props.assistanceToolConfig
+  );
 
   get idp(): string {
     return this.props.loggedOutWithIdpAuth?.idp.id ?? "n/a";
@@ -147,8 +170,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
         `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
     );
 
-    instabugLog(logText, TypeLogs.ERROR, "login");
-    Instabug.appendTags([loginFailureTag]);
+    handleSendAssistanceLog(this.choosenTool, logText, TypeLogs.ERROR);
+    if (this.choosenTool === ToolEnum.instabug) {
+      Instabug.appendTags([loginFailureTag]);
+    }
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
@@ -156,8 +181,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    instabugLog(`login success`, TypeLogs.DEBUG, "login");
-    Instabug.resetTags();
+    handleSendAssistanceLog(this.choosenTool, `login success`, TypeLogs.DEBUG);
+    if (this.choosenTool === ToolEnum.instabug) {
+      Instabug.resetTags();
+    }
     this.props.dispatchLoginSuccess(token, this.idp);
   };
 
@@ -332,7 +359,8 @@ const mapStateToProps = (state: GlobalState) => {
     loggedInAuth: isLoggedIn(state.authentication)
       ? state.authentication
       : undefined,
-    selectedIdpTextData
+    selectedIdpTextData,
+    assistanceToolConfig: assistanceToolConfigSelector(state)
   };
 };
 
