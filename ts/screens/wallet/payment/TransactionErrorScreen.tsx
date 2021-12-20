@@ -12,7 +12,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   instabugLog,
   openInstabugQuestionReport,
@@ -65,6 +65,11 @@ import {
 } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import {
+  isProfileEmailValidatedSelector,
+  profileSelector,
+  ProfileState
+} from "../../../store/reducers/profile";
 
 type NavigationParams = {
   error: Option<
@@ -155,6 +160,15 @@ const ErrorCodeCopyComponent = ({
   </View>
 );
 
+const canShowHelpButton = (
+  choosenTool: ToolEnum,
+  profile: ProfileState,
+  isProfileEmailValidated: boolean
+): boolean => canShowHelp(
+    choosenTool,
+    !pot.isSome(profile) || isProfileEmailValidated
+  );
+
 /**
  * Convert the error code into a user-readable string
  * @param maybeError
@@ -162,6 +176,7 @@ const ErrorCodeCopyComponent = ({
  * @param onCancel
  * @param choosenTool
  * @param paymentHistory
+ * @param canShowHelpButton
  * @param handleZendeskRequestAssistance
  */
 export const errorTransactionUIElements = (
@@ -170,6 +185,7 @@ export const errorTransactionUIElements = (
   onCancel: () => void,
   choosenTool: ToolEnum,
   handleZendeskRequestAssistance: () => void,
+  canShowHelpButton: boolean,
   paymentHistory?: PaymentHistory
 ): ScreenUIContents => {
   const errorORUndefined = maybeError.toUndefined();
@@ -250,7 +266,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.TECHNICAL"),
         subtitle,
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...sendReportButtonConfirm, ...closeButtonCancel]
           : [...closeButtonCancel]
       };
@@ -259,7 +275,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.DATA"),
         subtitle,
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
@@ -268,7 +284,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.EC"),
         subtitle,
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...sendReportButtonConfirm, ...closeButtonCancel]
           : [...closeButtonCancel]
       };
@@ -291,7 +307,7 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
           </H4>
         ),
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
@@ -335,7 +351,7 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
           </H4>
         ),
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
@@ -364,6 +380,11 @@ const TransactionErrorScreen = (props: Props) => {
     onCancel,
     choosenTool,
     props.zendeskSupportWorkunitStart,
+    canShowHelpButton(
+      choosenTool,
+      props.profile,
+      props.isProfileEmailValidated
+    ),
     paymentHistory
   );
   const handleBackPress = () => {
@@ -389,7 +410,9 @@ const TransactionErrorScreen = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   paymentsHistory: paymentsHistorySelector(state),
-  assistanceToolConfig: assistanceToolConfigSelector(state)
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  profile: profileSelector(state),
+  isProfileEmailValidated: isProfileEmailValidatedSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
