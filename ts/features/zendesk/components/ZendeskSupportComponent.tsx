@@ -3,30 +3,51 @@ import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { useDispatch } from "react-redux";
-import { zendeskTokenSelector } from "../store/reducers/authentication";
+import { H3, View } from "native-base";
+import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import {
   AnonymousIdentity,
   initSupportAssistance,
+  isPanicModeActive,
   JwtIdentity,
   setUserIdentity,
   showSupportTickets,
   ZendeskAppConfig,
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
-} from "../utils/supportAssistance";
-import { profileSelector } from "../store/reducers/profile";
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
-import { useIOSelector } from "../store/hooks";
-import { navigateToZendeskAskPermissions } from "../features/zendesk/store/actions/navigation";
-import { useNavigationContext } from "../utils/hooks/useOnFocus";
-import { zendeskSupportCompleted } from "../features/zendesk/store/actions";
-import I18n from "../i18n";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { Label } from "./core/typography/Label";
+} from "../../../utils/supportAssistance";
+import { profileSelector } from "../../../store/reducers/profile";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { useIOSelector } from "../../../store/hooks";
+import {
+  navigateToZendeskAskPermissions,
+  navigateToZendeskPanicMode
+} from "../store/actions/navigation";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { zendeskSupportCompleted } from "../store/actions";
+import I18n from "../../../i18n";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../components/core/typography/Label";
+import AdviceComponent from "../../../components/AdviceComponent";
+import { H4 } from "../../../components/core/typography/H4";
+import { zendeskConfigSelector } from "../store/reducers";
 
-const ZendeskSupportComponent = () => {
+type Props = {
+  assistanceForPayment: boolean;
+};
+/**
+ * This component represents the entry point for the Zendesk workflow.
+ * It has 2 buttons that respectively allow a user to open a ticket and see the already opened tickets.
+ *
+ * Here is managed the initialization of the Zendesk SDK and is chosen the config to use between authenticated or anonymous.
+ * If the panic mode is active in the remote Zendesk config pressing the open a ticket button, the user will be sent to the {@link ZendeskPanicMode}
+ * @constructor
+ */
+const ZendeskSupportComponent = (props: Props) => {
+  const { assistanceForPayment } = props;
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const profile = useIOSelector(profileSelector);
+  const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
@@ -72,13 +93,34 @@ const ZendeskSupportComponent = () => {
     setUserIdentity(zendeskIdentity);
   }, [zendeskToken, profile]);
 
+  const handleContactSupportPress = () => {
+    if (isPanicModeActive(zendeskRemoteConfig)) {
+      // Go to panic mode screen
+      navigation.navigate(navigateToZendeskPanicMode());
+    } else {
+      navigation.navigate(
+        navigateToZendeskAskPermissions({ assistanceForPayment })
+      );
+    }
+  };
+
   return (
     <>
+      <H3>{I18n.t("support.helpCenter.supportComponent.title")}</H3>
+      <View spacer={true} />
+      <H4 weight={"Regular"}>
+        {I18n.t("support.helpCenter.supportComponent.subtitle")}
+      </H4>
+      <View spacer={true} large={true} />
+      <AdviceComponent
+        text={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
+      />
+      <View spacer={true} />
       <ButtonDefaultOpacity
         style={{
           alignSelf: "stretch"
         }}
-        onPress={() => navigation.navigate(navigateToZendeskAskPermissions())}
+        onPress={handleContactSupportPress}
         disabled={false}
         testID={"contactSupportButton"}
       >
@@ -86,7 +128,7 @@ const ZendeskSupportComponent = () => {
           {I18n.t("support.helpCenter.cta.contactSupport")}
         </Label>
       </ButtonDefaultOpacity>
-
+      <View spacer={true} />
       <ButtonDefaultOpacity
         onPress={() => {
           showSupportTickets();

@@ -10,6 +10,7 @@ import {
 } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SagaCallReturnType } from "../../types/utils";
+import { resetAssistanceData } from "../../utils/supportAssistance";
 
 /**
  * Handles the logout flow
@@ -55,6 +56,8 @@ export function* watchLogoutSaga(
         };
         yield put(logoutFailure(logoutError));
       } finally {
+        // clean up any assistance data
+        resetAssistanceData();
         // If keepUserData is false, startApplicationInitialization is
         // dispatched within the componentDidMount of IngressScreen
         resetToAuthenticationRoute();

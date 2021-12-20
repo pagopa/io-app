@@ -4,11 +4,11 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import customVariables from "../../../../theme/variables";
-import { format, formatDateAsLocal } from "../../../../utils/dates";
 import CopyButtonComponent from "../../../CopyButtonComponent";
 import { Link } from "../../../core/typography/Link";
 import EmailCallCTA from "../../../screens/EmailCallCTA";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { convertDateTimeToWordDistance } from "../../../../utils/convertDateToWordDistance";
 
 const styles = StyleSheet.create({
   container: {
@@ -44,8 +44,6 @@ type Props = Readonly<{
  */
 const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
   const { phone, email } = serviceContacts;
-  const date = formatDateAsLocal(message.createdAt);
-  const time = format(message.createdAt, "HH.mm");
   const textToCopy: string = `${message.serviceName} - ${message.id}`;
   const hasEmailOrPhone = phone !== undefined || email !== undefined;
 
@@ -56,7 +54,7 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
         <NBText
           style={styles.sectionValue}
           bold={true}
-        >{` ${date} - ${time}`}</NBText>
+        >{` ${convertDateTimeToWordDistance(message.createdAt)}`}</NBText>
       </View>
 
       <View style={styles.section}>

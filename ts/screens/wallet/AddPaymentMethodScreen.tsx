@@ -1,6 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Content, View } from "native-base";
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -36,6 +37,9 @@ import {
   OnOnboardingCompleted,
   walletAddPaypalStart
 } from "../../features/wallet/onboarding/paypal/store/actions";
+import { GlobalState } from "../../store/reducers/types";
+import { paypalSelector } from "../../store/reducers/wallet/wallets";
+import { AsyncAlert } from "../../utils/asyncAlert";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -51,7 +55,9 @@ type NavigationParams = Readonly<{
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
+  OwnProps;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.newPaymentMethod.contextualHelpTitle",
@@ -78,13 +84,36 @@ const getpaymentMethods = (
     description: I18n.t("wallet.methods.paypal.description"),
     icon: PaypalLogo,
     onPress: payPalEnabled
-      ? () =>
-          props.startPaypalOnboarding(
-            options.isPaymentOnGoing ? "back" : "payment_method_details"
-          )
+      ? async () => {
+          const startPaypalOnboarding = () =>
+            props.startPaypalOnboarding(
+              options.isPaymentOnGoing ? "back" : "payment_method_details"
+            );
+          if (props.isPaypalAlreadyAdded) {
+            await AsyncAlert(
+              I18n.t("wallet.onboarding.paypal.paypalAlreadyAdded.alert.title"),
+              I18n.t(
+                "wallet.onboarding.paypal.paypalAlreadyAdded.alert.message"
+              ),
+              [
+                {
+                  text: I18n.t("global.buttons.continue"),
+                  style: "default",
+                  onPress: startPaypalOnboarding
+                },
+                {
+                  text: I18n.t("global.buttons.cancel"),
+                  style: "cancel"
+                }
+              ]
+            );
+            return;
+          }
+          startPaypalOnboarding();
+        }
       : undefined,
     status: payPalEnabled ? "implemented" : "notImplemented",
-    section: "digital_payments"
+    section: "paypal"
   },
   {
     name: I18n.t("wallet.methods.bancomatPay.name"),
@@ -220,4 +249,11 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     })
 });
 
-export default connect(undefined, mapDispatchToProps)(AddPaymentMethodScreen);
+const mapStateToProps = (state: GlobalState) => ({
+  isPaypalAlreadyAdded: pot.isSome(paypalSelector(state))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddPaymentMethodScreen);
