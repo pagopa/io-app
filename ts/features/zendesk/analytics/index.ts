@@ -5,7 +5,6 @@ import { Action } from "../../../store/actions/types";
 import {
   getZendeskConfig,
   zendeskSelectedCategory,
-  zendeskSupportBack,
   zendeskSupportCancel,
   zendeskSupportCompleted,
   zendeskSupportFailure,
