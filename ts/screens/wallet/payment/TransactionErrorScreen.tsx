@@ -169,8 +169,8 @@ export const errorTransactionUIElements = (
   rptId: RptId,
   onCancel: () => void,
   choosenTool: ToolEnum,
-  paymentHistory?: PaymentHistory,
-  handleZendeskRequestAssistance?: () => void
+  handleZendeskRequestAssistance: () => void,
+  paymentHistory?: PaymentHistory
 ): ScreenUIContents => {
   const errorORUndefined = maybeError.toUndefined();
 
@@ -188,7 +188,7 @@ export const errorTransactionUIElements = (
         break;
       case ToolEnum.zendesk:
         requestZendeskAssistanceForPaymentFailure(rptId, paymentHistory);
-        handleZendeskRequestAssistance?.();
+        handleZendeskRequestAssistance();
         break;
       default:
         return;
@@ -363,8 +363,8 @@ const TransactionErrorScreen = (props: Props) => {
     rptId,
     onCancel,
     choosenTool,
-    paymentHistory,
-    props.zendeskSupportWorkunitStart
+    props.zendeskSupportWorkunitStart,
+    paymentHistory
   );
   const handleBackPress = () => {
     props.backToEntrypointPayment();

@@ -10,10 +10,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H1 } from "../../../components/core/typography/H1";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import {
-  navigateToZendeskAskPermissionsPayload,
-  navigateToZendeskChooseCategory
-} from "../store/actions/navigation";
+import { navigateToZendeskChooseCategory } from "../store/actions/navigation";
 import { H4 } from "../../../components/core/typography/H4";
 import { H3 } from "../../../components/core/typography/H3";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -153,7 +150,7 @@ const ItemComponent = (props: Item) => (
   </ListItem>
 );
 
-type Props = NavigationInjectedProps<navigateToZendeskAskPermissionsPayload>;
+type Props = NavigationInjectedProps<{ assistanceForPayment: boolean }>;
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor
@@ -218,13 +215,15 @@ const ZendeskAskPermissions = (props: Props) => {
     itemsWithCustomField.map(it => {
       addTicketCustomField(it.zendeskId!, it.value!);
     });
-    // if is not possible to get the config or if the config has any category open directly a ticket.
-    if (
+
+    const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
       Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
         .length === 0 ||
-      assistanceForPayment
-    ) {
+      assistanceForPayment;
+
+    // if is not possible to get the config or if the config has any category open directly a ticket.
+    if (canSkipCategoryChoice()) {
       openSupportTicket();
       workUnitCompleted();
     } else {
