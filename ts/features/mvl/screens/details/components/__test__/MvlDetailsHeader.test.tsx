@@ -9,7 +9,7 @@ describe("MvlDetailsHeader", () => {
   describe("When the mvl has attachments", () => {
     it("Should be rendered the hasAttachments HeaderItem", () => {
       const component = renderComponent({
-        message: mvlMock.message,
+        mvl: mvlMock,
         hasAttachments: true
       });
       expect(
@@ -19,7 +19,7 @@ describe("MvlDetailsHeader", () => {
 
     it("Should be rendered the legalMessage HeaderItem", () => {
       const component = renderComponent({
-        message: mvlMock.message,
+        mvl: mvlMock,
         hasAttachments: true
       });
       expect(
@@ -31,7 +31,7 @@ describe("MvlDetailsHeader", () => {
   describe("When the mvl has no attachments", () => {
     it("Should not be rendered the hasAttachments HeaderItem", () => {
       const component = renderComponent({
-        message: mvlMock.message,
+        mvl: mvlMock,
         hasAttachments: false
       });
       expect(
