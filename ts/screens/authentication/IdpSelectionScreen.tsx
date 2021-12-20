@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import { TypeLogs } from "../../boot/configureInstabug";
 import AdviceComponent from "../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
@@ -27,6 +27,11 @@ import {
 } from "../../store/actions/navigation";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { isLoading } from "../../features/bonus/bpd/model/RemoteValue";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../utils/supportAssistance";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -52,6 +57,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const [counter, setCounter] = useState(0);
   const { requestIdps, setSelectedIdp, navigateToIdpTest } = props;
+  const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
@@ -59,7 +65,12 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       setCounter(newValue);
     } else {
       props.setSelectedIdp(idp);
-      instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
+      handleSendAssistanceLog(
+        choosenTool,
+        `IDP selected: ${idp.id}`,
+        TypeLogs.DEBUG,
+        "login"
+      );
       props.navigateToIdpSelection();
     }
   };
@@ -119,7 +130,8 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
 
 const mapStateToProps = (state: GlobalState) => ({
   idps: idpsSelector(state),
-  isIdpsLoading: isLoading(idpsStateSelector(state))
+  isIdpsLoading: isLoading(idpsStateSelector(state)),
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -41,7 +41,13 @@ import { zendeskSupportCompleted } from "../store/actions";
 import { openWebUrl } from "../../../utils/url";
 import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
-import { openSupportTicket } from "../../../utils/supportAssistance";
+import {
+  addTicketCustomField,
+  openSupportTicket,
+  zendeskCurrentAppVersionId,
+  zendeskDeviceAndOSId,
+  zendeskidentityProviderId
+} from "../../../utils/supportAssistance";
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -52,6 +58,7 @@ type Item = {
   icon: ReactNode;
   title: string;
   value?: string;
+  zendeskId?: string;
 };
 
 type ItemProps = {
@@ -93,7 +100,8 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
     icon: <DeviceIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.deviceAndOS"),
-    value: props.deviceDescription
+    value: props.deviceDescription,
+    zendeskId: zendeskDeviceAndOSId
   },
   {
     icon: <BatteryIcon {...iconProps} />,
@@ -107,12 +115,14 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
     icon: <InfoIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.currentAppVersion"),
-    value: props.currentVersion
+    value: props.currentVersion,
+    zendeskId: zendeskCurrentAppVersionId
   },
   {
     icon: <LoginIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.identityProvider"),
-    value: props.identityProvider
+    value: props.identityProvider,
+    zendeskId: zendeskidentityProviderId
   },
   {
     icon: <BugIcon {...iconProps} />,
@@ -177,12 +187,33 @@ const ZendeskAskPermissions = (props: Props) => {
   const assistanceWebFormLink =
     "https://io.assistenza.pagopa.it/hc/it-it/requests/new";
 
+  const itemsToRemove: ReadonlyArray<string> = [
+    // if user is not asking assistance for a payment, remove the related items from those ones shown
+    ...(!assistanceForPayment ? ["paymentIssues"] : []),
+    // if user is not logged in, remove the items related to his/her profile
+    ...(!isUserLoggedIn
+      ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
+      : [])
+  ];
+  const items = getItems(itemsProps)
+    .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
+    .filter(it => !itemsToRemove.includes(it.id ?? ""))
+    // remove these item whose have no value associated
+    .filter(it => it.value !== notAvailable);
+
   const handleOnCancel = () => {
     openWebUrl(assistanceWebFormLink);
     workUnitCompleted();
   };
 
   const handleOnContinuePress = () => {
+    // Set custom fields
+    items.forEach(it => {
+      if (it.value !== undefined && it.zendeskId !== undefined) {
+        addTicketCustomField(it.zendeskId, it.value);
+      }
+    });
+
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
       Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
@@ -210,19 +241,7 @@ const ZendeskAskPermissions = (props: Props) => {
     onPress: handleOnContinuePress,
     title: I18n.t("support.askPermissions.cta.allow")
   };
-  const itemsToRemove: ReadonlyArray<string> = [
-    // if user is not asking assistance for a payment, remove the related items from those ones shown
-    ...(!assistanceForPayment ? ["paymentIssues"] : []),
-    // if user is not logged in, remove the items related to his/her profile
-    ...(!isUserLoggedIn
-      ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
-      : [])
-  ];
-  const items = getItems(itemsProps)
-    .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
-    .filter(it => !itemsToRemove.includes(it.id ?? ""))
-    // remove these item whose have no value associated
-    .filter(it => it.value !== notAvailable);
+
   return (
     <BaseScreenComponent
       showInstabugChat={false}
