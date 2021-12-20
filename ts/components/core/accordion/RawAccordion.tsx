@@ -16,9 +16,12 @@ import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../variables/IOStyles";
 
 type Props = {
-  // The accordion component must accept one children
+  // The header component, an arrow indicating the open/closed state will be added on the right
   header: React.ReactElement;
+  // The accordion component must accept one children
   children: React.ReactElement;
+  // The component should be animated?
+  animated?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -32,35 +35,51 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Obtains the degree starting from the open state
+ * @param isOpen
+ */
+const getDegree = (isOpen: boolean) => (isOpen ? "-90deg" : "-270deg");
+
+/**
+ * The base accordion component, implements the opening and closing logic for viewing the children
+ * @param props
+ * @constructor
+ */
 export const RawAccordion: React.FunctionComponent<Props> = props => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const animatedController = useRef(new Animated.Value(1)).current;
+  const shouldAnimate = props.animated ?? true;
 
-  const arrowAngle = animatedController.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["-90deg", "-270deg"]
-  });
+  const arrowAngle = shouldAnimate
+    ? animatedController.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["-90deg", "-270deg"]
+      })
+    : getDegree(isOpen);
 
   useEffect(() => {
-    if (Platform.OS === "android") {
+    if (Platform.OS === "android" && shouldAnimate) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
-  }, []);
+  }, [shouldAnimate]);
+
+  const onPress = () => {
+    if (shouldAnimate) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      Animated.timing(animatedController, {
+        duration: 300,
+        toValue: isOpen ? 1 : 0,
+        useNativeDriver: true,
+        easing: Easing.linear
+      }).start();
+    }
+    setOpen(!isOpen);
+  };
 
   return (
     <View>
-      <TouchableOpacity
-        onPress={() => {
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-          Animated.timing(animatedController, {
-            duration: 300,
-            toValue: isOpen ? 1 : 0,
-            useNativeDriver: true,
-            easing: Easing.linear
-          }).start();
-          setOpen(!isOpen);
-        }}
-      >
+      <TouchableOpacity onPress={onPress}>
         <View style={styles.row}>
           {props.header}
           <Animated.View
