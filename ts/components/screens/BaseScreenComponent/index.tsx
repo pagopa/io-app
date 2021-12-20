@@ -13,6 +13,7 @@ import React, {
 } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { useDispatch } from "react-redux";
+import * as pot from "italia-ts-commons/lib/pot";
 import { TranslationKeys } from "../../../../locales/locales";
 import {
   defaultAttachmentTypeConfiguration,
@@ -34,6 +35,10 @@ import {
   canShowHelp
 } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import {
+  isProfileEmailValidatedSelector,
+  profileSelector
+} from "../../../store/reducers/profile";
 import {
   getContextualHelpConfig,
   handleOnContextualHelpDismissed,
@@ -199,6 +204,10 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     );
     const dispatch = useDispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+    const profile = useIOSelector(profileSelector);
+    const isProfileEmailValidated = useIOSelector(
+      isProfileEmailValidatedSelector
+    );
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
     const onShowHelp = (): (() => void) | undefined => {
@@ -230,7 +239,10 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
 
     // help button can be shown only when remote FF is instabug or (zendesk + ff local) and the contextualHelpConfig is defined
     const canShowHelpButton: boolean =
-      canShowHelp(choosenTool) && contextualHelpConfig !== undefined;
+      canShowHelp(
+        choosenTool,
+        !pot.isSome(profile) || isProfileEmailValidated
+      ) && contextualHelpConfig !== undefined;
     return (
       <Container>
         <BaseHeader
