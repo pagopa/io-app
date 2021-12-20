@@ -208,13 +208,10 @@ const ZendeskAskPermissions = (props: Props) => {
 
   const handleOnContinuePress = () => {
     // Set custom fields
-    const itemsWithCustomField = items
-      .filter(it => it.value !== undefined)
-      .filter(it => it.zendeskId !== undefined);
-
-    itemsWithCustomField.forEach(it => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      addTicketCustomField(it.zendeskId!, it.value!);
+    items.forEach(it => {
+      if (it.value !== undefined && it.zendeskId !== undefined) {
+        addTicketCustomField(it.zendeskId, it.value);
+      }
     });
 
     const canSkipCategoryChoice = (): boolean =>
