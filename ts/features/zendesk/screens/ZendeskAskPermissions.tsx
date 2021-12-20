@@ -186,13 +186,14 @@ const ZendeskAskPermissions = (props: Props) => {
   };
 
   const handleOnContinuePress = () => {
-    // if is not possible to get the config or if the config has any category open directly a ticket.
-    if (
+    const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
       Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
         .length === 0 ||
-      assistanceForPayment
-    ) {
+      assistanceForPayment;
+
+    // if is not possible to get the config or if the config has any category open directly a ticket.
+    if (canSkipCategoryChoice()) {
       openSupportTicket();
       workUnitCompleted();
     } else {
