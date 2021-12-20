@@ -43,7 +43,7 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
       <SafeAreaView style={IOStyles.flex} testID={"MvlDetailsScreen"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <MvlDetailsHeader
-            message={props.mvl.message}
+            mvl={props.mvl}
             hasAttachments={hasAttachments}
             service={service}
           />
