@@ -2,7 +2,7 @@ import { Toast, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import LegalMessage from "../../../../../../img/features/mvl/legalMessage.svg";
-import { RawAccordion } from "../../../../../components/core/RawAccordion";
+import { RawAccordion } from "../../../../../components/core/accordion/RawAccordion";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";

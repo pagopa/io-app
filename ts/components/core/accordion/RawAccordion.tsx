@@ -10,10 +10,10 @@ import {
   TouchableOpacity,
   UIManager
 } from "react-native";
-import themeVariables from "../../theme/variables";
-import customVariables from "../../theme/variables";
-import IconFont from "../ui/IconFont";
-import { IOStyles } from "./variables/IOStyles";
+import themeVariables from "../../../theme/variables";
+import customVariables from "../../../theme/variables";
+import IconFont from "../../ui/IconFont";
+import { IOStyles } from "../variables/IOStyles";
 
 type Props = {
   // The accordion component must accept one children
