@@ -20,7 +20,6 @@ const trackZendesk =
     switch (action.type) {
       case getType(zendeskSupportCompleted):
       case getType(zendeskSupportCancel):
-      case getType(zendeskSupportBack):
       case getType(getZendeskConfig.request):
       case getType(getZendeskConfig.success):
         return mp.track(action.type);

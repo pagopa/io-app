@@ -40,13 +40,6 @@ export const zendeskSupportCancel = createStandardAction(
 )<void>();
 
 /**
- * The user chooses `back` from the first screen
- */
-export const zendeskSupportBack = createStandardAction(
-  "ZENDESK_SUPPORT_BACK"
-)<void>();
-
-/**
  * The workflow fails
  */
 export const zendeskSupportFailure = createStandardAction(
@@ -71,7 +64,6 @@ export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportStart>
   | ActionType<typeof zendeskSupportCompleted>
   | ActionType<typeof zendeskSupportCancel>
-  | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>
   | ActionType<typeof getZendeskConfig>
   | ActionType<typeof zendeskSelectedCategory>;
