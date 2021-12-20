@@ -44,6 +44,7 @@ export const showSupportTickets = ZendDesk.showTickets;
 export const addTicketCustomField = ZendDesk.addTicketCustomField;
 export const appendLog = ZendDesk.appendLog;
 export const zendeskCategoryId = "1900004702053";
+export const zendeskBlockedPaymentRptIdId = "4414297346833";
 export const zendeskPaymentCategoryValue = "pagamenti_pagopa";
 export const zendeskPaymentMethodCategoryValue = "metodo_di_pagamento";
 

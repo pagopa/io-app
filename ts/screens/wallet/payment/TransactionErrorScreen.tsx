@@ -59,6 +59,7 @@ import {
   appendLog,
   assistanceToolRemoteConfig,
   canShowHelp,
+  zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategoryValue
 } from "../../../utils/supportAssistance";
@@ -117,12 +118,16 @@ const requestAssistanceForPaymentFailure = (
 };
 
 const requestZendeskAssistanceForPaymentFailure = (
-  _: RptId,
+  rptId: RptId,
   payment?: PaymentHistory
 ) => {
   // Set pagamenti_pagopa as category
   addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
-  // TODO: add rptId custom field
+  // Add rptId custom field
+  addTicketCustomField(
+    zendeskBlockedPaymentRptIdId,
+    RptIdFromString.encode(rptId)
+  );
   if (payment) {
     // Append the payment history details in the log
     appendLog(getPaymentHistoryDetails(payment));
