@@ -41,6 +41,7 @@ export const initSupportAssistance = ZendDesk.init;
 export const setUserIdentity = ZendDesk.setUserIdentity;
 export const openSupportTicket = ZendDesk.openTicket;
 export const showSupportTickets = ZendDesk.showTickets;
+export const resetAssistanceData = ZendDesk.reset;
 export const addTicketCustomField = ZendDesk.addTicketCustomField;
 export const appendLog = ZendDesk.appendLog;
 export const zendeskCategoryId = "1900004702053";
