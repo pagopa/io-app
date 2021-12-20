@@ -109,6 +109,21 @@
 
     <!-- END Mixpanel -->
 
+    <!-- Zendesk activities style -->
+    <activity android:name="zendesk.support.guide.HelpCenterActivity"
+      android:theme="@style/ZendeskTheme" />
+
+    <activity android:name="zendesk.support.guide.ViewArticleActivity"
+      android:theme="@style/ZendeskTheme" />
+
+    <activity android:name="zendesk.support.request.RequestActivity"
+      android:theme="@style/ZendeskTheme" />
+
+    <activity android:name="zendesk.support.requestlist.RequestListActivity"
+      android:theme="@style/ZendeskTheme" />
+    <activity android:name="zendesk.messaging.MessagingActivity"
+      android:theme="@style/ZendeskTheme" />
+    <!-- END Zendesk -->
 
     <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:windowSoftInputMode="adjustResize">
       <intent-filter>
