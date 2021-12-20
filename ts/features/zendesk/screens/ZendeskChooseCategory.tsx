@@ -47,12 +47,11 @@ const ZendeskChooseCategory = () => {
   const zendeskWorkUnitFailure = (reason: string) =>
     dispatch(zendeskSupportFailure(reason));
 
-  zendeskWorkUnitFailure("Config undefined");
   // It should never happens since if config is undefined or in error the user can open directly a ticket and if it is in loading the user
   // should wait in the ZendeskSupportHelpCenter screen
   if (!isReady(zendeskConfig)) {
     zendeskWorkUnitFailure("Config undefined");
-    return;
+    return null;
   }
 
   const categories: ReadonlyArray<ZendeskCategory> = toArray(
@@ -63,7 +62,8 @@ const ZendeskChooseCategory = () => {
 
   // It should never happens since if the zendeskCategories are not in the config or if the array is void the user can open directly a ticket
   if (categories.length === 0 || categoriesId === undefined) {
-    return <WorkunitGenericFailure />;
+    zendeskWorkUnitFailure("The config has no categories");
+    return null;
   }
 
   const locale = getFullLocale();

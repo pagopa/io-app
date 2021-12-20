@@ -43,13 +43,13 @@ const ZendeskChooseSubCategory = () => {
   // It should never happens since it is selected in the previous screen
   if (selectedCategory === undefined) {
     zendeskWorkUnitFailure("The category has not been selected");
-    return;
+    return null;
   }
 
   // It should never happens since it is checked in the previous screen
   if (!hasSubCategories(selectedCategory)) {
     zendeskWorkUnitFailure("The selected category has no sub-categories");
-    return;
+    return null;
   }
 
   // The check for subCategories and subCategoriesId is already done just above
