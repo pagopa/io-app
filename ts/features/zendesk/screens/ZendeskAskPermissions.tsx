@@ -222,7 +222,7 @@ const ZendeskAskPermissions = (props: Props) => {
         .length === 0 ||
       assistanceForPayment;
 
-    // if is not possible to get the config or if the config has any category open directly a ticket.
+    // if is not possible to get the config, if the config has any category or if is an assistanceForPayment request open directly a ticket.
     if (canSkipCategoryChoice()) {
       openSupportTicket();
       workUnitCompleted();
