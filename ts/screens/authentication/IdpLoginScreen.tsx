@@ -43,13 +43,13 @@ import {
 } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { getUrlBasepath } from "../../utils/url";
-import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &

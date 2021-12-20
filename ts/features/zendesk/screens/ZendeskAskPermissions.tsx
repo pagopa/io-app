@@ -212,7 +212,8 @@ const ZendeskAskPermissions = (props: Props) => {
       .filter(it => it.value !== undefined)
       .filter(it => it.zendeskId !== undefined);
 
-    itemsWithCustomField.map(it => {
+    itemsWithCustomField.forEach(it => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       addTicketCustomField(it.zendeskId!, it.value!);
     });
 
