@@ -207,7 +207,7 @@ const ZendeskAskPermissions = (props: Props) => {
   };
 
   const handleOnContinuePress = () => {
-    // Set custom field
+    // Set custom fields
     const itemsWithCustomField = items
       .filter(it => it.value !== undefined)
       .filter(it => it.zendeskId !== undefined);
