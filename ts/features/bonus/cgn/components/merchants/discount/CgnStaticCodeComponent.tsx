@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { StyleSheet } from "react-native";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";

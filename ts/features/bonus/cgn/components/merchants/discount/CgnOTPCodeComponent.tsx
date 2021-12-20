@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "native-base";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { StyleSheet } from "react-native";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";

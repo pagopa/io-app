@@ -12,6 +12,7 @@ type Props = {
 };
 
 const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
+  // These logic to check will be replaced with explicit discount type information received by API
   const renderProperCodeVisualization = (discount: Discount) => {
     if (discount.staticCode) {
       return <CgnStaticCodeComponent staticCode={discount.staticCode} />;
@@ -25,7 +26,7 @@ const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
     return <></>;
   };
 
-  return merchantType === "offline" ? (
+  return merchantType === "offline" || discount.landingPageUrl !== undefined ? (
     <></>
   ) : (
     <>
