@@ -19,6 +19,7 @@ import customVariables from "../../../theme/variables";
 import IconFont from "../../../components/ui/IconFont";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
 import {
+  addTicketCustomField,
   hasSubCategories,
   openSupportTicket
 } from "../../../utils/supportAssistance";
@@ -45,8 +46,12 @@ const ZendeskChooseSubCategory = () => {
     return <WorkunitGenericFailure />;
   }
 
+  // The check for subCategories and subCategoriesId is already done just above
   const subCategories =
     selectedCategory.zendeskSubCategories?.subCategories ?? [];
+  const subCategoriesId: string =
+    selectedCategory.zendeskSubCategories?.id ?? "";
+
   const locale = getFullLocale();
 
   const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
@@ -54,7 +59,8 @@ const ZendeskChooseSubCategory = () => {
     return (
       <ListItem
         onPress={() => {
-          // TODO: set sub-category as custom field
+          // Set sub-category as custom field
+          addTicketCustomField(subCategoriesId, subCategory.value);
           openSupportTicket();
           zendeskWorkunitComplete();
         }}
