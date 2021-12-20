@@ -41,7 +41,7 @@ describe("MvlDetailsHeader", () => {
 
     it("Should be rendered the legalMessage HeaderItem", () => {
       const component = renderComponent({
-        message: mvlMock.message,
+        mvl: mvlMock,
         hasAttachments: false
       });
       expect(
