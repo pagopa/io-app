@@ -12,7 +12,7 @@ import {
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
-import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import { TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -46,8 +46,8 @@ import { getUrlBasepath } from "../../utils/url";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
-  appendLog,
-  assistanceToolRemoteConfig
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 
@@ -109,19 +109,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const handleSendAssistanceLog = (
-  assistanceTool: ToolEnum,
-  log: string,
-  typeLog?: TypeLogs
-) => {
-  switch (assistanceTool) {
-    case ToolEnum.instabug:
-      instabugLog(log, TypeLogs.ERROR, typeLog ?? TypeLogs.INFO);
-      break;
-    case ToolEnum.zendesk:
-      appendLog(log);
-  }
-};
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -170,7 +157,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
     );
 
-    handleSendAssistanceLog(this.choosenTool, logText, TypeLogs.ERROR);
+    handleSendAssistanceLog(this.choosenTool, logText, TypeLogs.ERROR, "login");
     if (this.choosenTool === ToolEnum.instabug) {
       Instabug.appendTags([loginFailureTag]);
     }
@@ -181,7 +168,12 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    handleSendAssistanceLog(this.choosenTool, `login success`, TypeLogs.DEBUG);
+    handleSendAssistanceLog(
+      this.choosenTool,
+      `login success`,
+      TypeLogs.DEBUG,
+      "login"
+    );
     if (this.choosenTool === ToolEnum.instabug) {
       Instabug.resetTags();
     }
