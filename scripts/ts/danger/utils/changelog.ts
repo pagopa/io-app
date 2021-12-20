@@ -38,7 +38,7 @@ const projectToScope = new Map<string, string>([
   ["2463683", "My Portal"],
   ["2477137", "Bonus Pagamenti Digitali"],
   ["IAC", "Bonus Pagamenti Digitali"],
-  ["2476636", "Carta Giovani Nazionale"],
+  ["IOACGN", "Carta Giovani Nazionale"],
   ["IASV", "Sicilia Vola"],
   ["IAGP", "EU Covid Certificate"],
   ["IARS", "Redesign Servizi"],
