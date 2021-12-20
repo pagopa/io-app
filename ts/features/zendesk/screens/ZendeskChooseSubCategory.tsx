@@ -18,6 +18,7 @@ import { H4 } from "../../../components/core/typography/H4";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../../components/ui/IconFont";
 import {
+  addTicketCustomField,
   hasSubCategories,
   openSupportTicket
 } from "../../../utils/supportAssistance";
@@ -51,8 +52,12 @@ const ZendeskChooseSubCategory = () => {
     return;
   }
 
+  // The check for subCategories and subCategoriesId is already done just above
   const subCategories =
     selectedCategory.zendeskSubCategories?.subCategories ?? [];
+  const subCategoriesId: string =
+    selectedCategory.zendeskSubCategories?.id ?? "";
+
   const locale = getFullLocale();
 
   const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
@@ -60,7 +65,8 @@ const ZendeskChooseSubCategory = () => {
     return (
       <ListItem
         onPress={() => {
-          // TODO: set sub-category as custom field
+          // Set sub-category as custom field
+          addTicketCustomField(subCategoriesId, subCategory.value);
           openSupportTicket();
           zendeskWorkunitComplete();
         }}

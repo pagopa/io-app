@@ -28,6 +28,7 @@ import {
 } from "../store/actions";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import {
+  addTicketCustomField,
   hasSubCategories,
   openSupportTicket
 } from "../../../utils/supportAssistance";
@@ -57,11 +58,12 @@ const ZendeskChooseCategory = () => {
   const categories: ReadonlyArray<ZendeskCategory> = toArray(
     zendeskConfig.value.zendeskCategories?.categories ?? {}
   );
+  const categoriesId: string | undefined =
+    zendeskConfig.value.zendeskCategories?.id;
 
   // It should never happens since if the zendeskCategories are not in the config or if the array is void the user can open directly a ticket
-  if (categories.length === 0) {
-    zendeskWorkUnitFailure("No category retrieved");
-    return;
+  if (categories.length === 0 || categoriesId === undefined) {
+    return <WorkunitGenericFailure />;
   }
 
   const locale = getFullLocale();
@@ -72,7 +74,8 @@ const ZendeskChooseCategory = () => {
       <ListItem
         onPress={() => {
           selectedCategory(category);
-          // TODO: set category as custom field
+          // Set category as custom field
+          addTicketCustomField(categoriesId, category.value);
           if (hasSubCategories(category)) {
             navigation.navigate(navigateToZendeskChooseSubCategory());
           } else {
