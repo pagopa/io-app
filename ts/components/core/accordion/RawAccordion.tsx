@@ -2,6 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import {
+  AccessibilityProps,
   Animated,
   Easing,
   LayoutAnimation,
@@ -10,7 +11,7 @@ import {
   TouchableOpacity,
   UIManager
 } from "react-native";
-import themeVariables from "../../../theme/variables";
+import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../variables/IOStyles";
@@ -22,11 +23,12 @@ type Props = {
   children: React.ReactElement;
   // The component should be animated?
   animated?: boolean;
+  headerStyle?: React.ComponentProps<typeof View>["style"];
+  accessibilityLabel?: AccessibilityProps["accessibilityLabel"];
 };
 
 const styles = StyleSheet.create({
   headerIcon: {
-    paddingHorizontal: themeVariables.contentPadding,
     alignSelf: "center"
   },
   row: {
@@ -50,6 +52,8 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const animatedController = useRef(new Animated.Value(1)).current;
   const shouldAnimate = props.animated ?? true;
+  const headerStyle = props.headerStyle ?? {};
+  const accessibilityLabel = `${props.accessibilityLabel}, ` ?? "";
 
   const arrowAngle = shouldAnimate
     ? animatedController.interpolate({
@@ -59,8 +63,8 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
     : getDegree(isOpen);
 
   useEffect(() => {
-    if (Platform.OS === "android" && shouldAnimate) {
-      UIManager.setLayoutAnimationEnabledExperimental(true);
+    if (Platform.OS === "android") {
+      UIManager.setLayoutAnimationEnabledExperimental(shouldAnimate);
     }
   }, [shouldAnimate]);
 
@@ -78,10 +82,22 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
   };
 
   return (
-    <View>
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.row}>
-          {props.header}
+    <View style={IOStyles.flex}>
+      <TouchableOpacity
+        onPress={onPress}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityLabel={
+          accessibilityLabel +
+          (isOpen
+            ? I18n.t("global.accessibility.expanded")
+            : I18n.t("global.accessibility.collapsed"))
+        }
+      >
+        <View style={[styles.row, headerStyle]}>
+          <View style={[IOStyles.flex, { paddingRight: 16 }]}>
+            {props.header}
+          </View>
           <Animated.View
             style={{
               ...styles.headerIcon,

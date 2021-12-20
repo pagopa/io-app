@@ -25,11 +25,9 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.greyLight,
     marginHorizontal: -themeVariables.contentPadding
   },
-  header: {
-    ...IOStyles.row,
+  headerContent: {
     marginVertical: themeVariables.contentPadding,
-    marginLeft: themeVariables.contentPadding,
-    flex: 1
+    marginHorizontal: themeVariables.contentPadding
   },
   link: {
     paddingVertical: 16
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 const Header = (): React.ReactElement => (
-  <View style={styles.header}>
+  <View style={[IOStyles.row, IOStyles.flex]}>
     <LegalMessage width={24} height={24} fill={IOColors.blue} />
     <View hspacer={true} />
     <H3 numberOfLines={1} style={IOStyles.flex}>
@@ -134,7 +132,11 @@ const Links = (props: Props): React.ReactElement => {
  */
 export const MvlMetadataComponent = (props: Props): React.ReactElement => (
   <View style={styles.background}>
-    <RawAccordion header={<Header />}>
+    <RawAccordion
+      header={<Header />}
+      headerStyle={styles.headerContent}
+      accessibilityLabel={I18n.t("features.mvl.details.metadata.title")}
+    >
       <View style={IOStyles.horizontalContentPadding}>
         <Description {...props} />
         <View spacer={true} />
