@@ -16,6 +16,7 @@ import customVariables from "../../../theme/variables";
 import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../variables/IOStyles";
 
+// TODO: handle external initial open/closed state
 type Props = {
   // The header component, an arrow indicating the open/closed state will be added on the right
   header: React.ReactElement;
@@ -53,7 +54,9 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
   const animatedController = useRef(new Animated.Value(1)).current;
   const shouldAnimate = props.animated ?? true;
   const headerStyle = props.headerStyle ?? {};
-  const accessibilityLabel = `${props.accessibilityLabel}, ` ?? "";
+  const accessibilityLabel = props.accessibilityLabel
+    ? `${props.accessibilityLabel}, `
+    : "";
 
   const arrowAngle = shouldAnimate
     ? animatedController.interpolate({
@@ -99,6 +102,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
             {props.header}
           </View>
           <Animated.View
+            testID={"ArrowAccordion"}
             style={{
               ...styles.headerIcon,
               transform: [{ rotateZ: arrowAngle }]
