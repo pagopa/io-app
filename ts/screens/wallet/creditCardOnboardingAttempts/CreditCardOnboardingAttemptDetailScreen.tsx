@@ -2,7 +2,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   instabugLog,
   openInstabugQuestionReport,
@@ -14,7 +14,6 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import IconFont from "../../../components/ui/IconFont";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { CreditCardInsertion } from "../../../store/reducers/wallet/creditCard";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -26,13 +25,24 @@ import { BadgeComponent } from "../../../components/screens/BadgeComponent";
 import { getPanDescription } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
 import { getPaymentOutcomeCodeDescription } from "../../../utils/payment";
+import { useIOSelector } from "../../../store/hooks";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import {
+  addTicketCustomField,
+  appendLog,
+  assistanceToolRemoteConfig,
+  canShowHelp,
+  zendeskCategoryId,
+  zendeskPaymentMethodCategoryValue
+} from "../../../utils/supportAssistance";
+import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 
 type NavigationParams = Readonly<{
   attempt: CreditCardInsertion;
 }>;
 
-type Props = NavigationInjectedProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps>;
+type Props = NavigationInjectedProps<NavigationParams>;
 
 const styles = StyleSheet.create({
   row: {
@@ -65,13 +75,35 @@ const instabugTag = "credit-card-support";
  * This screen shows credit card onboarding attempt details and allows the user
  * to ask assistance about this attempts
  */
-const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
-  props: Props
-) => {
+const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
+  const dispatch = useDispatch();
   const attempt = props.navigation.getParam("attempt");
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const outcomeCodes = useIOSelector(outcomeCodesSelector);
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const instabugLogAndOpenReport = () => {
     instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
     openInstabugQuestionReport();
+  };
+  const zendeskAssistanceLogAndStart = () => {
+    // Set metodo_di_pagamento as category
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentMethodCategoryValue);
+    // Append the attempt in the log
+    appendLog(JSON.stringify(attempt));
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    );
+  };
+
+  const handleAskAssistance = () => {
+    switch (choosenTool) {
+      case ToolEnum.instabug:
+        instabugLogAndOpenReport();
+        break;
+      case ToolEnum.zendesk:
+        zendeskAssistanceLogAndStart();
+        break;
+    }
   };
 
   const renderSeparator = () => (
@@ -89,7 +121,7 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
       </Label>
       <View spacer={true} />
       <ButtonDefaultOpacity
-        onPress={instabugLogAndOpenReport}
+        onPress={handleAskAssistance}
         bordered={true}
         block={true}
       >
@@ -116,10 +148,7 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
       };
   const errorDescription =
     !attempt.onboardingComplete && attempt.outcomeCode
-      ? getPaymentOutcomeCodeDescription(
-          attempt.outcomeCode,
-          props.outcomeCodes
-        )
+      ? getPaymentOutcomeCodeDescription(attempt.outcomeCode, outcomeCodes)
       : undefined;
   return (
     <BaseScreenComponent
@@ -175,16 +204,11 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
           when
         )}
         {renderSeparator()}
-        {renderHelper()}
+        {/* This check is redundant, since if the help can't be shown the user can't get there */}
+        {canShowHelp(choosenTool) && renderHelper()}
       </SlidedContentComponent>
     </BaseScreenComponent>
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  outcomeCodes: outcomeCodesSelector(state)
-});
-
-export default connect(mapStateToProps)(
-  CreditCardOnboardingAttemptDetailScreen
-);
+export default CreditCardOnboardingAttemptDetailScreen;

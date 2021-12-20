@@ -7,3 +7,9 @@ import DeviceInfo from "react-native-device-info";
 export const getDeviceId = (): string => DeviceInfo.getUniqueId();
 
 export const getFontScale = (): Promise<number> => DeviceInfo.getFontScale();
+
+export const getModel = (): string => DeviceInfo.getModel();
+
+export const getSystemVersion = (): string => DeviceInfo.getSystemVersion();
+
+export const getIpAddress = (): Promise<string> => DeviceInfo.getIpAddress();

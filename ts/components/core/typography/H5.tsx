@@ -45,7 +45,9 @@ type BoldKindProps = SemiBoldProps | RegularProps;
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
-const fontSize = 14;
+export const h5FontSize = 14;
+export const h5DefaultColor: AllowedColors = "bluegreyDark";
+export const h5DefaultWeight: AllowedWeight = "SemiBold";
 
 /**
  * Typography component to render `H5` text with font size {@link fontSize} and fontFamily {@link fontName}.
@@ -56,8 +58,8 @@ const fontSize = 14;
 export const H5: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
-    defaultWeight: "SemiBold",
-    defaultColor: "bluegreyDark",
+    defaultWeight: h5DefaultWeight,
+    defaultColor: h5DefaultColor,
     font: fontName,
-    fontStyle: { fontSize }
+    fontStyle: { fontSize: h5FontSize }
   });
