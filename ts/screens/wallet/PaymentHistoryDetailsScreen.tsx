@@ -46,8 +46,12 @@ import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus
 import { Dispatch } from "../../store/actions/types";
 import { zendeskSupportStart } from "../../features/zendesk/store/actions";
 import {
+  addTicketCustomField,
+  appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp
+  canShowHelp,
+  zendeskCategoryId,
+  zendeskPaymentCategoryValue
 } from "../../utils/supportAssistance";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 
@@ -109,8 +113,13 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   };
 
   private zendeskAssistanceLogAndStart = () => {
-    // TODO: set log as custom field
-    // TODO: set payment as category
+    // Set pagamenti_pagopa as category
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+    // Append the payment history details in the log
+    appendLog(
+      getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
+    );
+
     this.props.zendeskSupportWorkunitStart();
   };
 
@@ -373,7 +382,9 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // Start the assistance without FAQ ("n/a" is a placeholder)
   zendeskSupportWorkunitStart: () =>
-    dispatch(zendeskSupportStart({ startingRoute: "n/a" }))
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    )
 });
 
 export default connect(

@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
 import { useDispatch } from "react-redux";
+import { NavigationInjectedProps } from "react-navigation";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -36,7 +37,11 @@ import {
 import { getModel, getSystemVersion } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
 import { getAppVersion } from "../../../utils/appVersion";
-import { zendeskSupportCancel } from "../store/actions";
+import { zendeskSupportCompleted } from "../store/actions";
+import { openWebUrl } from "../../../utils/url";
+import { zendeskConfigSelector } from "../store/reducers";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { openSupportTicket } from "../../../utils/supportAssistance";
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -60,7 +65,6 @@ type ItemProps = {
 
 const iconProps = { width: 24, height: 24 };
 
-// TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
 const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   {
     id: "profileNameSurname",
@@ -136,16 +140,20 @@ const ItemComponent = (props: Item) => (
   </ListItem>
 );
 
+type Props = NavigationInjectedProps<{ assistanceForPayment: boolean }>;
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor
  */
-const ZendeskAskPermissions = () => {
-  // TODO: add payment advice info: https://pagopa.atlassian.net/browse/IA-564
-  const assistanceForPayment = false;
+const ZendeskAskPermissions = (props: Props) => {
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
+
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
-  const workUnitCancel = () => dispatch(zendeskSupportCancel());
+  const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
+  const zendeskConfig = useIOSelector(zendeskConfigSelector);
 
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
@@ -166,17 +174,40 @@ const ZendeskAskPermissions = () => {
     identityProvider
   };
 
+  const assistanceWebFormLink =
+    "https://io.assistenza.pagopa.it/hc/it-it/requests/new";
+
+  const handleOnCancel = () => {
+    openWebUrl(assistanceWebFormLink);
+    workUnitCompleted();
+  };
+
+  const handleOnContinuePress = () => {
+    const canSkipCategoryChoice = (): boolean =>
+      !isReady(zendeskConfig) ||
+      Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
+        .length === 0 ||
+      assistanceForPayment;
+
+    // if is not possible to get the config, if the config has any category or if is an assistanceForPayment request open directly a ticket.
+    if (canSkipCategoryChoice()) {
+      openSupportTicket();
+      workUnitCompleted();
+    } else {
+      navigation.navigate(navigateToZendeskChooseCategory());
+    }
+  };
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,
     bordered: true,
-    onPress: workUnitCancel, // TODO: complete the workunit and send the user to the web form
+    onPress: handleOnCancel,
     title: I18n.t("support.askPermissions.cta.denies")
   };
   const continueButtonProps = {
     testID: "continueButtonId",
     bordered: false,
-    onPress: () => navigation.navigate(navigateToZendeskChooseCategory()), // TODO: if is not possible to get the category open a ticket request
+    onPress: handleOnContinuePress,
     title: I18n.t("support.askPermissions.cta.allow")
   };
   const itemsToRemove: ReadonlyArray<string> = [

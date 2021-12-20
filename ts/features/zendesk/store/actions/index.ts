@@ -17,6 +17,7 @@ export type ZendeskStartPayload = {
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
+  assistanceForPayment: boolean;
 };
 /**
  * The user chooses to start the workflow to open a support request
