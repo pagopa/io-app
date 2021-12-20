@@ -164,10 +164,8 @@ const canShowHelpButton = (
   choosenTool: ToolEnum,
   profile: ProfileState,
   isProfileEmailValidated: boolean
-): boolean => canShowHelp(
-    choosenTool,
-    !pot.isSome(profile) || isProfileEmailValidated
-  );
+): boolean =>
+  canShowHelp(choosenTool, !pot.isSome(profile) || isProfileEmailValidated);
 
 /**
  * Convert the error code into a user-readable string
