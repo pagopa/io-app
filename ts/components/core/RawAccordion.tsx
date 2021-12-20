@@ -38,7 +38,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
 
   const arrowAngle = animatedController.interpolate({
     inputRange: [0, 1],
-    outputRange: ["-90deg", "90deg"]
+    outputRange: ["-90deg", "-270deg"]
   });
 
   useEffect(() => {
