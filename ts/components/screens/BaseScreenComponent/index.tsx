@@ -205,13 +205,15 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       switch (choosenTool) {
         case ToolEnum.zendesk:
           // TODO: remove local feature flag
+          // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
           return () => {
             dispatch(
               zendeskSupportStart({
                 faqCategories,
                 contextualHelp,
                 contextualHelpMarkdown,
-                startingRoute: currentScreenName
+                startingRoute: currentScreenName,
+                assistanceForPayment: false
               })
             );
           };
