@@ -12,6 +12,7 @@ import {
   zendeskSupportStart
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../utils/errors";
+import { zendeskEnabled } from "../../../config";
 
 const trackZendesk =
   (mp: NonNullable<typeof mixpanel>) =>
@@ -20,13 +21,16 @@ const trackZendesk =
       case getType(zendeskSupportCompleted):
       case getType(zendeskSupportCancel):
       case getType(zendeskSupportBack):
-      case getType(zendeskSupportFailure):
       case getType(getZendeskConfig.request):
       case getType(getZendeskConfig.success):
         return mp.track(action.type);
       case getType(zendeskSupportStart):
         return mp.track(action.type, {
           isAssistanceForPayment: action.payload.assistanceForPayment
+        });
+      case getType(zendeskSupportFailure):
+        return mp.track(action.type, {
+          reason: action.payload
         });
       case getType(zendeskSelectedCategory):
         return mp.track(action.type, {
@@ -43,4 +47,4 @@ const trackZendesk =
 const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>
   Promise.resolve();
 
-export default false ? trackZendesk : emptyTracking;
+export default zendeskEnabled ? trackZendesk : emptyTracking;
