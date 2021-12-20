@@ -7,10 +7,11 @@ import { BaseTypography } from "../../../../../../components/core/typography/Bas
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { cgnOtpDataSelector } from "../../../store/reducers/otp";
-import { isReady } from "../../../../bpd/model/RemoteValue";
+import { isLoading, isReady } from "../../../../bpd/model/RemoteValue";
 import { cgnGenerateOtp, resetOtpState } from "../../../store/actions/otp";
 import { OtpCodeComponent } from "../../otp/OtpCodeComponent";
 import Eye from "../../../../../../../img/icons/Eye.svg";
+import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
 
 const styles = StyleSheet.create({
   row: {
@@ -41,7 +42,9 @@ const CgnOTPCodeComponent = () => {
     setIsCodeVisible(false);
   };
 
-  return isCodeVisible && isReady(otp) ? (
+  return isLoading(otp) ? (
+    <ActivityIndicator />
+  ) : isCodeVisible && isReady(otp) ? (
     <OtpCodeComponent
       otp={otp.value}
       onEnd={resetOtp}
