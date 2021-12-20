@@ -1,20 +1,13 @@
 import { none, some } from "italia-ts-commons/lib/pot";
 import { FiscalCode } from "italia-ts-commons/lib/strings";
-import { Municipality } from "../../../definitions/content/Municipality";
 import { extractFiscalCodeData } from "../profile";
+import { mockedMunicipality } from "../__mocks__/municipality";
 
 describe("extracting data from fiscal code", () => {
   // mario rossi / roma / rm / 1-1-1980
   const goodCf = "RSSMRA80A01H501U" as FiscalCode;
-  const goodMunicipality: Municipality = {
-    codiceProvincia: "091",
-    codiceRegione: "12",
-    denominazione: "Roma",
-    denominazioneInItaliano: "Roma",
-    denominazioneRegione: "Lazio",
-    siglaProvincia: "RM"
-  };
-  const potGood = some(goodMunicipality);
+
+  const potGood = some(mockedMunicipality);
   const data = extractFiscalCodeData(goodCf, potGood);
   it("should return the extracted data", () => {
     expect(data.birthDate).toBeDefined();
