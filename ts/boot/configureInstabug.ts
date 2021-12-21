@@ -102,7 +102,7 @@ export const openInstabugQuestionReport = (
     attachmentTypeConfiguration.screenshot,
     attachmentTypeConfiguration.extraScreenshot,
     false,
-    attachmentTypeConfiguration.screenRecording
+    false
   );
   BugReporting.showWithOptions(BugReporting.reportType.question, [
     BugReporting.option.commentFieldRequired,
