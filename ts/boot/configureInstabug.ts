@@ -101,6 +101,8 @@ export const openInstabugQuestionReport = (
   Instabug.setEnabledAttachmentTypes(
     attachmentTypeConfiguration.screenshot,
     attachmentTypeConfiguration.extraScreenshot,
+    // the gallery attachment & screen recording are disabled because it is impossible to display
+    // a prominent disclosure before this request and Instabug will be removed
     false,
     false
   );
