@@ -15,6 +15,7 @@ import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analy
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
+import trackZendesk from "../../features/zendesk/analytics/index";
 import { mixpanel } from "../../mixpanel";
 import { getNetworkErrorMessage } from "../../utils/errors";
 import {
@@ -434,6 +435,7 @@ export const actionTracking =
       void trackServiceAction(mixpanel)(action);
       void trackEuCovidCertificateActions(mixpanel)(action);
       void trackPaypalOnboarding(mixpanel)(action);
+      void trackZendesk(mixpanel)(action);
     }
     return next(action);
   };
