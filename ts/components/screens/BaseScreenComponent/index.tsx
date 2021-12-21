@@ -31,12 +31,12 @@ import { useIOSelector } from "../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import {
   getContextualHelpConfig,
   handleOnContextualHelpDismissed,
   handleOnLinkClicked
 } from "./utils";
-import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
 // TODO: remove disabler when instabug is removed
 /* eslint-disable sonarjs/cognitive-complexity */

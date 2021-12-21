@@ -1,16 +1,16 @@
 import { combineReducers } from "redux";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { Action } from "../actions/types";
 import zendeskReducer, {
   ZendeskState
 } from "../../features/zendesk/store/reducers";
-import { createSelector } from "reselect";
-import { assistanceToolConfigSelector } from "./backendStatus";
-import { isProfileEmailValidatedSelector, profileSelector } from "./profile";
 import {
   assistanceToolRemoteConfig,
   canShowHelp
 } from "../../utils/supportAssistance";
+import { assistanceToolConfigSelector } from "./backendStatus";
+import { isProfileEmailValidatedSelector, profileSelector } from "./profile";
 
 export type AssistanceToolsState = {
   zendesk: ZendeskState;
