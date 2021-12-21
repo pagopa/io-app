@@ -57,9 +57,9 @@ export const zendeskSupportFailure = createStandardAction(
  * Request the zendesk config
  */
 export const getZendeskConfig = createAsyncAction(
-  "GET_ZENDESK_CONFIG_REQUEST",
-  "GET_ZENDESK_CONFIG_SUCCESS",
-  "GET_ZENDESK_CONFIG_FAILURE"
+  "ZENDESK_CONFIG_REQUEST",
+  "ZENDESK_CONFIG_SUCCESS",
+  "ZENDESK_CONFIG_FAILURE"
 )<void, Zendesk, NetworkError>();
 
 // user selected a category
