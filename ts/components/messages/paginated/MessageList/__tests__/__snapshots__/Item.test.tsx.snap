@@ -85,7 +85,6 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -324,7 +323,6 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -611,7 +609,6 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -902,7 +899,6 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -1189,7 +1185,6 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -1517,7 +1512,6 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -1804,7 +1798,6 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -2147,7 +2140,6 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -2490,7 +2482,6 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -2833,7 +2824,6 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -3176,7 +3166,6 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -3519,7 +3508,6 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
@@ -3862,7 +3850,6 @@ exports[`MessageList Item component with all the flags set to false should match
               "marginLeft": 7,
               "overflow": "hidden",
               "textAlign": "right",
-              "width": 70,
             },
           ]
         }
