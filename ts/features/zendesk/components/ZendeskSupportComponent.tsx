@@ -136,9 +136,9 @@ const ZendeskSupportComponent = (props: Props) => {
           {I18n.t("support.helpCenter.cta.contactSupport")}
         </Label>
       </ButtonDefaultOpacity>
+      <View spacer={true} />
       {showAlreadyOpenedTicketButton && (
         <>
-          <View spacer={true} />
           <ButtonDefaultOpacity
             onPress={() => {
               showSupportTickets();
@@ -153,6 +153,7 @@ const ZendeskSupportComponent = (props: Props) => {
           >
             <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
           </ButtonDefaultOpacity>
+          <View spacer={true} />
         </>
       )}
     </>
