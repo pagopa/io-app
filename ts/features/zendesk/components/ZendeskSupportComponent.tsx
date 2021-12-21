@@ -61,13 +61,16 @@ const ZendeskSupportComponent = (props: Props) => {
   );
 
   useEffect(() => {
-    const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
-
     setZendeskConfig(
       zendeskToken
         ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
         : zendeskDefaultAnonymousConfig
     );
+  }, [zendeskToken]);
+
+  useEffect(() => {
+    const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
+
     initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
@@ -96,7 +99,7 @@ const ZendeskSupportComponent = (props: Props) => {
     hasOpenedTickets().then((n: number) =>
       setShowAlreadyOpenedTicketButton(n > 0)
     );
-  }, [zendeskToken, profile]);
+  }, [zendeskConfig, zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
     if (isPanicModeActive(zendeskRemoteConfig)) {
