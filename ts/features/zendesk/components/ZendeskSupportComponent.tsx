@@ -93,7 +93,9 @@ const ZendeskSupportComponent = (props: Props) => {
       .getOrElse({});
 
     setUserIdentity(zendeskIdentity);
-    hasOpenedTickets().then(setShowAlreadyOpenedTicketButton);
+    hasOpenedTickets().then((n: number) =>
+      setShowAlreadyOpenedTicketButton(n > 0)
+    );
   }, [zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
