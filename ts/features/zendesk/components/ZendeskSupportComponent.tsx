@@ -7,6 +7,7 @@ import { H3, View } from "native-base";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import {
   AnonymousIdentity,
+  hasOpenedTickets,
   initSupportAssistance,
   isPanicModeActive,
   JwtIdentity,
@@ -51,7 +52,8 @@ const ZendeskSupportComponent = (props: Props) => {
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
-
+  const [showAlreadyOpenedTicketButton, setShowAlreadyOpenedTicketButton] =
+    React.useState<boolean>(false);
   const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
     zendeskToken
       ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
@@ -91,6 +93,7 @@ const ZendeskSupportComponent = (props: Props) => {
       .getOrElse({});
 
     setUserIdentity(zendeskIdentity);
+    hasOpenedTickets().then(setShowAlreadyOpenedTicketButton);
   }, [zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
@@ -128,21 +131,25 @@ const ZendeskSupportComponent = (props: Props) => {
           {I18n.t("support.helpCenter.cta.contactSupport")}
         </Label>
       </ButtonDefaultOpacity>
-      <View spacer={true} />
-      <ButtonDefaultOpacity
-        onPress={() => {
-          showSupportTickets();
-          workUnitCompleted();
-        }}
-        style={{
-          alignSelf: "stretch"
-        }}
-        disabled={false}
-        bordered={true}
-        testID={"showTicketsButton"}
-      >
-        <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
-      </ButtonDefaultOpacity>
+      {showAlreadyOpenedTicketButton && (
+        <>
+          <View spacer={true} />
+          <ButtonDefaultOpacity
+            onPress={() => {
+              showSupportTickets();
+              workUnitCompleted();
+            }}
+            style={{
+              alignSelf: "stretch"
+            }}
+            disabled={false}
+            bordered={true}
+            testID={"showTicketsButton"}
+          >
+            <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
+          </ButtonDefaultOpacity>
+        </>
+      )}
     </>
   );
 };
