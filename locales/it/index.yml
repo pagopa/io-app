@@ -2937,7 +2937,7 @@ webView:
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
 support:
   helpCenter:
-    header: "IO ti aiuto"
+    header: "Assistenza"
     cta:
       contactSupport: "Scrivici"
       seeReports: "Vedi le tue richieste"
@@ -2962,10 +2962,10 @@ support:
     devicePerformanceData: "Livello di memoria e batteria"
     stock: "Dati dell’avviso di pagamento"
     stockValue: "Incluso l’errore che hai appena ricevuto"
-    header: "Contatta l'assistenza"
-    title: "Per continuare, abbiamo bisogno del tuo consenso"
-    body: "Per ricevere supporto è necessario inviare al team di IO alcuni dati. Se neghi il consenso, potrai inviare una richiesta generica via email."
-    listHeader: "Verranno inviati i seguenti dati:"
+    header: "Scrivici"
+    title: "Ci dai il tuo consenso?"
+    body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
+    listHeader: "Se dai il consenso, riceveremo questi dati:"
     cta:
       allow: "Consenti"
       denies: "Non consentire"
