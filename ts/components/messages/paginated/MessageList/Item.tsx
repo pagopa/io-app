@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   verticalPad: {
     paddingVertical: customVariables.spacerHeight
   },
-  spaced: {
+  titleRow: {
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center"
@@ -41,13 +41,19 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingTop: 6.5
   },
-  viewStyle: {
+  serviceName: {
     flexDirection: "row"
   },
-  text12: {
-    lineHeight: 18,
-    marginBottom: -4,
-    fontWeight: "bold"
+  titleIconAndDate: {
+    flexDirection: "row"
+  },
+  dateTime: {
+    lineHeight: 20,
+    fontWeight: "bold",
+    width: 70,
+    overflow: "hidden",
+    textAlign: "right",
+    marginLeft: 7
   },
   icon: {
     width: 98,
@@ -194,15 +200,20 @@ const MessageListItem = ({
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead)}
     >
-      <View style={styles.spaced}>
+      <View style={styles.titleRow}>
         <H5>{organizationName}</H5>
-        {getTopIcon(category)}
-        <Text style={styles.text12}>{uiDate}</Text>
+        <View style={styles.titleIconAndDate}>
+          {getTopIcon(category)}
+          <Text numberOfLines={1} style={styles.dateTime}>
+            {uiDate}
+          </Text>
+        </View>
       </View>
 
-      <View style={styles.viewStyle}>
+      <View style={styles.serviceName}>
         <Text>{serviceName}</Text>
       </View>
+
       <View style={styles.smallSpacer} />
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
