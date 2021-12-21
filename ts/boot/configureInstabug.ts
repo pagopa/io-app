@@ -101,7 +101,7 @@ export const openInstabugQuestionReport = (
   Instabug.setEnabledAttachmentTypes(
     attachmentTypeConfiguration.screenshot,
     attachmentTypeConfiguration.extraScreenshot,
-    attachmentTypeConfiguration.galleryImage,
+    false,
     attachmentTypeConfiguration.screenRecording
   );
   BugReporting.showWithOptions(BugReporting.reportType.question, [
