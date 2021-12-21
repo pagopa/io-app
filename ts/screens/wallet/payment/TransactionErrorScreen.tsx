@@ -12,7 +12,6 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import * as pot from "italia-ts-commons/lib/pot";
 import {
   instabugLog,
   openInstabugQuestionReport,
@@ -58,18 +57,13 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategoryValue
 } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
-import {
-  isProfileEmailValidatedSelector,
-  profileSelector,
-  ProfileState
-} from "../../../store/reducers/profile";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
 type NavigationParams = {
   error: Option<
@@ -159,13 +153,6 @@ const ErrorCodeCopyComponent = ({
     <CopyButtonComponent textToCopy={error} />
   </View>
 );
-
-const canShowHelpButton = (
-  choosenTool: ToolEnum,
-  profile: ProfileState,
-  isProfileEmailValidated: boolean
-): boolean =>
-  canShowHelp(choosenTool, !pot.isSome(profile) || isProfileEmailValidated);
 
 /**
  * Convert the error code into a user-readable string
@@ -378,11 +365,7 @@ const TransactionErrorScreen = (props: Props) => {
     onCancel,
     choosenTool,
     props.zendeskSupportWorkunitStart,
-    canShowHelpButton(
-      choosenTool,
-      props.profile,
-      props.isProfileEmailValidated
-    ),
+    props.canShowHelp,
     paymentHistory
   );
   const handleBackPress = () => {
@@ -409,8 +392,7 @@ const TransactionErrorScreen = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   paymentsHistory: paymentsHistorySelector(state),
   assistanceToolConfig: assistanceToolConfigSelector(state),
-  profile: profileSelector(state),
-  isProfileEmailValidated: isProfileEmailValidatedSelector(state)
+  canShowHelp: canShowHelpSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

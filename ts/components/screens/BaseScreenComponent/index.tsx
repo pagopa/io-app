@@ -13,7 +13,6 @@ import React, {
 } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { useDispatch } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import { TranslationKeys } from "../../../../locales/locales";
 import {
   defaultAttachmentTypeConfiguration,
@@ -30,20 +29,14 @@ import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIOSelector } from "../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
-import {
-  assistanceToolRemoteConfig,
-  canShowHelp
-} from "../../../utils/supportAssistance";
+import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import {
-  isProfileEmailValidatedSelector,
-  profileSelector
-} from "../../../store/reducers/profile";
 import {
   getContextualHelpConfig,
   handleOnContextualHelpDismissed,
   handleOnLinkClicked
 } from "./utils";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
 // TODO: remove disabler when instabug is removed
 /* eslint-disable sonarjs/cognitive-complexity */
@@ -204,10 +197,8 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     );
     const dispatch = useDispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
-    const profile = useIOSelector(profileSelector);
-    const isProfileEmailValidated = useIOSelector(
-      isProfileEmailValidatedSelector
-    );
+    const canShowHelp = useIOSelector(canShowHelpSelector);
+
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
     const onShowHelp = (): (() => void) | undefined => {
@@ -239,10 +230,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
 
     // help button can be shown only when remote FF is instabug or (zendesk + ff local) and the contextualHelpConfig is defined
     const canShowHelpButton: boolean =
-      canShowHelp(
-        choosenTool,
-        !pot.isSome(profile) || isProfileEmailValidated
-      ) && contextualHelpConfig !== undefined;
+      canShowHelp && contextualHelpConfig !== undefined;
     return (
       <Container>
         <BaseHeader

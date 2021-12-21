@@ -3,7 +3,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { useDispatch } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import {
   instabugLog,
   openInstabugQuestionReport,
@@ -32,16 +31,12 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp,
   zendeskCategoryId,
   zendeskPaymentMethodCategoryValue
 } from "../../../utils/supportAssistance";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import {
-  isProfileEmailValidatedSelector,
-  profileSelector
-} from "../../../store/reducers/profile";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
 type NavigationParams = Readonly<{
   attempt: CreditCardInsertion;
@@ -86,10 +81,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const outcomeCodes = useIOSelector(outcomeCodesSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-  const profile = useIOSelector(profileSelector);
-  const isProfileEmailValidated = useIOSelector(
-    isProfileEmailValidatedSelector
-  );
+  const canShowHelp = useIOSelector(canShowHelpSelector);
 
   const instabugLogAndOpenReport = () => {
     instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
@@ -215,10 +207,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
         )}
         {renderSeparator()}
         {/* This check is redundant, since if the help can't be shown the user can't get there */}
-        {canShowHelp(
-          choosenTool,
-          !pot.isSome(profile) || isProfileEmailValidated
-        ) && renderHelper()}
+        {canShowHelp && renderHelper()}
       </SlidedContentComponent>
     </BaseScreenComponent>
   );
