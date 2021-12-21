@@ -3,6 +3,7 @@ import { NavigationActions } from "react-navigation";
 import { ActionType } from "typesafe-actions";
 import {
   executeWorkUnit,
+  withFailureHandling,
   withResetNavigationStack
 } from "../../../../sagas/workUnit";
 import {
@@ -38,7 +39,7 @@ function* zendeskSupportWorkUnit(
 export function* zendeskSupport(
   zendeskStart: ActionType<typeof zendeskSupportStart>
 ) {
-  yield call(withResetNavigationStack, () =>
-    zendeskSupportWorkUnit(zendeskStart)
+  yield call(withFailureHandling, () =>
+    withResetNavigationStack(() => zendeskSupportWorkUnit(zendeskStart))
   );
 }
