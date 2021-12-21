@@ -103,6 +103,7 @@ export const openInstabugQuestionReport = (
     attachmentTypeConfiguration.extraScreenshot,
     // the gallery attachment & screen recording are disabled because it is impossible to display
     // a prominent disclosure before this request and Instabug will be removed
+    // https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/444727486/2021-11-18+Android#2021-12-21
     false,
     false
   );
