@@ -22,8 +22,8 @@ const getUserLegalMessage: GetUserLegalMessageT = {
   response_decoder: getUserLegalMessageDefaultDecoder()
 };
 
-// client for eu covid to handle API communications
-export const BackendEuCovidCertClient = (
+// client for MVL to handle API communications
+export const BackendMvlClient = (
   baseUrl: string,
   token: SessionToken,
   fetchApi: typeof fetch = defaultRetryingFetch()
@@ -34,7 +34,10 @@ export const BackendEuCovidCertClient = (
   };
   const withBearerToken = withToken(token);
   return {
-    getUserLegalMessage: (id: string) =>
-      withBearerToken(createFetchRequestForApi(getUserLegalMessage, options))
+    getUserLegalMessage: withBearerToken(
+      createFetchRequestForApi(getUserLegalMessage, options)
+    )
   };
 };
+
+export type BackendMvlClient = ReturnType<typeof BackendMvlClient>;
