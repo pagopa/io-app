@@ -1,8 +1,8 @@
 {
   "name": "italia-app",
   "version": "1.38.0-rc.7",
-  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0-RELEASE/api_backend.yaml",
-  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0-RELEASE/api_public.yaml",
+  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/IC-69--update-io-backend-with-legal-message-endpoints/api_backend.yaml",
+  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/IC-69--update-io-backend-with-legal-message-endpoints/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.1/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_cgn.yaml",
