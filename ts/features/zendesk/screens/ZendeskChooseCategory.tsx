@@ -50,7 +50,7 @@ const ZendeskChooseCategory = () => {
   // It should never happens since if config is undefined or in error the user can open directly a ticket and if it is in loading the user
   // should wait in the ZendeskSupportHelpCenter screen
   if (!isReady(zendeskConfig)) {
-    zendeskWorkUnitFailure("Config undefined");
+    zendeskWorkUnitFailure("Config is not ready");
     return null;
   }
 
