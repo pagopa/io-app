@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   dateTime: {
     lineHeight: 20,
     fontWeight: "bold",
-    width: 70,
     overflow: "hidden",
     textAlign: "right",
     marginLeft: 7
