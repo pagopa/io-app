@@ -66,11 +66,10 @@ describe("the ZendeskSupportComponent", () => {
   });
   describe("when the user press the zendesk show tickets button", () => {
     describe("if the user already open a ticket", () => {
-      const store = createStore(appReducer, globalState as any);
-      const component = renderComponent(store);
-      store.dispatch(zendeskRequestTicketNumber.success(1));
-
       it("should call showTickets", () => {
+        const store = createStore(appReducer, globalState as any);
+        const component = renderComponent(store);
+        store.dispatch(zendeskRequestTicketNumber.success(1));
         const zendeskButton = component.getByTestId("showTicketsButton");
         fireEvent(zendeskButton, "onPress");
         expect(MockZendesk.showTickets).toBeCalledWith();
