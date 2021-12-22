@@ -58,8 +58,6 @@ const ZendeskSupportComponent = (props: Props) => {
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
-  const requestTicketNumber = () =>
-    dispatch(zendeskRequestTicketNumber.request());
   const ticketsNumber = useIOSelector(zendeskTicketNumberSelector);
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
@@ -104,8 +102,8 @@ const ZendeskSupportComponent = (props: Props) => {
       .getOrElse({});
 
     setUserIdentity(zendeskIdentity);
-    requestTicketNumber();
-  }, [requestTicketNumber, zendeskConfig, zendeskToken, profile]);
+    dispatch(zendeskRequestTicketNumber.request());
+  }, [dispatch, zendeskConfig, zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
     if (isPanicModeActive(zendeskRemoteConfig)) {
