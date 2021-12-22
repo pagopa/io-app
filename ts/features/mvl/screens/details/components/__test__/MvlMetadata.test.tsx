@@ -3,6 +3,7 @@ import * as React from "react";
 import I18n from "../../../../../../i18n";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import { mvlMockMetadata } from "../../../../types/__mock__/mvlMock";
+import { MvlMetadata } from "../../../../types/mvlData";
 import { MvlMetadataComponent } from "../MvlMetadata";
 
 describe("MvlMetadata", () => {
@@ -43,21 +44,49 @@ describe("MvlMetadata", () => {
           fail("header not found");
         }
       });
-      it("Should display all the 7 link", () => {
-        const res = renderMvlMetadata();
-        const header = res.queryByText(
-          I18n.t("features.mvl.details.metadata.title")
-        );
-        if (header !== null) {
-          fireEvent.press(header);
-          expect(res.queryAllByA11yRole("link").length).toBe(7);
-        } else {
-          fail("header not found");
-        }
+      describe("And there are at least one cc", () => {
+        it("Should display all the 7 link including the recipients link", () => {
+          const res = renderMvlMetadata();
+          const header = res.queryByText(
+            I18n.t("features.mvl.details.metadata.title")
+          );
+          if (header !== null) {
+            fireEvent.press(header);
+            expect(res.queryAllByA11yRole("link").length).toBe(7);
+            expect(
+              res.queryByText(
+                I18n.t("features.mvl.details.metadata.links.recipients")
+              )
+            ).not.toBeNull();
+          } else {
+            fail("header not found");
+          }
+        });
+      });
+      describe("And there aren't any cc", () => {
+        it("Should display only 6 link without the recipients link", () => {
+          const res = renderMvlMetadata({ ...mvlMockMetadata, cc: [] });
+          const header = res.queryByText(
+            I18n.t("features.mvl.details.metadata.title")
+          );
+          if (header !== null) {
+            fireEvent.press(header);
+            expect(res.queryAllByA11yRole("link").length).toBe(6);
+            expect(
+              res.queryByText(
+                I18n.t("features.mvl.details.metadata.links.recipients")
+              )
+            ).toBeNull();
+          } else {
+            fail("header not found");
+          }
+        });
       });
     });
   });
 });
 
-const renderMvlMetadata = () =>
-  render(<MvlMetadataComponent metadata={mvlMockMetadata} />);
+const renderMvlMetadata = (metadata?: MvlMetadata) => {
+  const metadataParams = metadata ?? mvlMockMetadata;
+  return render(<MvlMetadataComponent metadata={metadataParams} />);
+};

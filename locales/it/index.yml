@@ -2893,7 +2893,7 @@ features:
         messageId: "Identificativo messaggio:"
         links:
           copy: "Copia identificativo messaggio"
-          sender: "Mostra elenco completo dei destinatari"
+          recipients: "Mostra elenco completo dei destinatari"
           signature: "Mostra dettagli della firma"
           certificates: "Mostra i certificati"
           originalMessage: "Scarica il messaggio originale"

@@ -81,7 +81,7 @@ const generateLinks = (props: Props): ReadonlyArray<LinkRepresentation> => {
     props.metadata.cc.length > 0
       ? [
           {
-            text: I18n.t("features.mvl.details.metadata.links.sender"),
+            text: I18n.t("features.mvl.details.metadata.links.recipients"),
             action: tmpNotImplementedFeedback
           }
         ]

@@ -2865,7 +2865,7 @@ features:
         messageId: "Message identifier:"
         links:
           copy: "Copy message identifier"
-          sender: "Show full list of recipients"
+          recipients: "Show full list of recipients"
           signature: "Show signature details"
           certificates: "Show certificates"
           originalMessage: "Download original message"
