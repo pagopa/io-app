@@ -53,7 +53,7 @@ function handleMessageReload() {
     store.dispatch(
       loadPreviousPageMessages.request({
         cursor: cursors.value.previous,
-        pageSize: 100
+        pageSize
       })
     );
   }

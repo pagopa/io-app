@@ -128,7 +128,7 @@ const MessageRouterScreen = ({
 
   return (
     <LoadingErrorComponent
-      errorText={errorMessage}
+      errorText={I18n.t("global.genericError")}
       isLoading={isLoading}
       loadingCaption={I18n.t("messageDetails.loadingText")}
       onAbort={cancel}

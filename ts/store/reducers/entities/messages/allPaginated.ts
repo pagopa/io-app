@@ -214,7 +214,7 @@ export const allMessagesSelector = createSelector(
 
 export const getById = createSelector(
   [allMessagesSelector, (_: GlobalState, messageId: string) => messageId],
-  (page, messageId) => page.find(_ => _.id === messageId)
+  (page, messageId): UIMessage | undefined => page.find(_ => _.id === messageId)
 );
 
 /**
