@@ -102,9 +102,7 @@ const getEUCovidCertificate = ({
  * @param messageFromApi
  */
 export const toUIMessageDetails = (
-  messageFromApi:
-    | CreatedMessageWithContentAndAttachments
-    | CreatedMessageWithContent
+  messageFromApi: CreatedMessageWithContent
 ): UIMessageDetails => {
   const { id, content } = messageFromApi;
   const dueDate = content.due_date ? new Date(content.due_date) : undefined;
