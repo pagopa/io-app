@@ -7,7 +7,6 @@ import { H3, View } from "native-base";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import {
   AnonymousIdentity,
-  hasOpenedTickets,
   initSupportAssistance,
   isPanicModeActive,
   JwtIdentity,
@@ -25,13 +24,20 @@ import {
   navigateToZendeskPanicMode
 } from "../store/actions/navigation";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import { zendeskSupportCompleted } from "../store/actions";
+import {
+  zendeskRequestTicketNumber,
+  zendeskSupportCompleted
+} from "../store/actions";
 import I18n from "../../../i18n";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../components/core/typography/Label";
 import AdviceComponent from "../../../components/AdviceComponent";
 import { H4 } from "../../../components/core/typography/H4";
-import { zendeskConfigSelector } from "../store/reducers";
+import {
+  zendeskConfigSelector,
+  zendeskTicketNumberSelector
+} from "../store/reducers";
+import { getValueOrElse } from "../../bonus/bpd/model/RemoteValue";
 
 type Props = {
   assistanceForPayment: boolean;
@@ -51,9 +57,10 @@ const ZendeskSupportComponent = (props: Props) => {
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
+  const requestTicketNumber = () =>
+    dispatch(zendeskRequestTicketNumber.request());
+  const ticketsNumber = useIOSelector(zendeskTicketNumberSelector);
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
-  const [showAlreadyOpenedTicketButton, setShowAlreadyOpenedTicketButton] =
-    React.useState<boolean>(false);
   const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
     zendeskToken
       ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
@@ -96,9 +103,7 @@ const ZendeskSupportComponent = (props: Props) => {
       .getOrElse({});
 
     setUserIdentity(zendeskIdentity);
-    hasOpenedTickets()
-      .then((n: number) => setShowAlreadyOpenedTicketButton(n > 0))
-      .catch(_ => setShowAlreadyOpenedTicketButton(false));
+    requestTicketNumber();
   }, [zendeskConfig, zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
@@ -111,6 +116,10 @@ const ZendeskSupportComponent = (props: Props) => {
       );
     }
   };
+
+  // If the user opened at least at ticket show the "Show tickets" button
+  const showAlreadyOpenedTicketButton: boolean =
+    getValueOrElse(ticketsNumber, 0) > 0;
 
   return (
     <>
