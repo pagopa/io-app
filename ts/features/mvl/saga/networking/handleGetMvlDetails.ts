@@ -6,7 +6,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendMvlClient } from "../../api/backendMvl";
 import { LegalMessageWithContent } from "../../../../../definitions/backend/LegalMessageWithContent";
-import { Mvl, MvlAttachment } from "../../types/mvlData";
+import { Mvl, MvlAttachment, MvlAttachmentId } from "../../types/mvlData";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { Attachment } from "../../../../../definitions/backend/Attachment";
@@ -20,6 +20,7 @@ import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
+    id: attachment.id as MvlAttachmentId,
     name: attachment.name,
     contentType: attachment.content_type.toLowerCase().endsWith("pdf")
       ? "application/pdf"
