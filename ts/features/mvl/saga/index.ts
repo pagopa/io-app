@@ -10,7 +10,6 @@ import { handleGetMvl } from "./networking/handleGetMvlDetails";
 
 /**
  * Handle the MVL Requests
- * TODO: stub entrypoint
  * @param bearerToken
  */
 export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
