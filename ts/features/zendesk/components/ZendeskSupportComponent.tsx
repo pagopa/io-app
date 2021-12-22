@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { useDispatch } from "react-redux";
-import { H3, View } from "native-base";
+import { View } from "native-base";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import {
   AnonymousIdentity,
@@ -38,6 +38,7 @@ import {
   zendeskTicketNumberSelector
 } from "../store/reducers";
 import { getValueOrElse } from "../../bonus/bpd/model/RemoteValue";
+import { H3 } from "../../../components/core/typography/H3";
 
 type Props = {
   assistanceForPayment: boolean;
