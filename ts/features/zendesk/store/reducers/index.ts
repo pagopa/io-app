@@ -11,7 +11,11 @@ import {
 } from "../../../bonus/bpd/model/RemoteValue";
 import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
-import { getZendeskConfig, zendeskSelectedCategory } from "../actions";
+import {
+  getZendeskConfig,
+  zendeskRequestTicketNumber,
+  zendeskSelectedCategory
+} from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 
 type ZendeskValue = {
@@ -26,10 +30,12 @@ export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
 export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
+  ticketNumber: RemoteValue<number, Error>;
 };
 
 const INITIAL_STATE: ZendeskState = {
-  zendeskConfig: remoteUndefined
+  zendeskConfig: remoteUndefined,
+  ticketNumber: remoteUndefined
 };
 
 const reducer = (
@@ -38,9 +44,14 @@ const reducer = (
 ): ZendeskState => {
   switch (action.type) {
     case getType(getZendeskConfig.request):
-      return { zendeskConfig: remoteLoading };
+      return {
+        ...state,
+        zendeskConfig: remoteLoading,
+        selectedCategory: undefined
+      };
     case getType(getZendeskConfig.success):
       return {
+        ...state,
         zendeskConfig: remoteReady({
           panicMode: action.payload.panicMode,
           zendeskCategories: action.payload.zendeskCategories
@@ -56,10 +67,17 @@ const reducer = (
       };
     case getType(getZendeskConfig.failure):
       return {
+        ...state,
         zendeskConfig: remoteError(action.payload)
       };
     case getType(zendeskSelectedCategory):
       return { ...state, selectedCategory: action.payload };
+    case getType(zendeskRequestTicketNumber.request):
+      return { ...state, ticketNumber: remoteLoading };
+    case getType(zendeskRequestTicketNumber.success):
+      return { ...state, ticketNumber: remoteReady(action.payload) };
+    case getType(zendeskRequestTicketNumber.failure):
+      return { ...state, ticketNumber: remoteError(action.payload) };
   }
   return state;
 };
@@ -73,6 +91,12 @@ export const zendeskSelectedCategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
   (zendeskConfig: ZendeskCategory | undefined): ZendeskCategory | undefined =>
     zendeskConfig
+);
+
+export const zendeskTicketNumberSelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.ticketNumber],
+  (ticketNumber: RemoteValue<number, Error>): RemoteValue<number, Error> =>
+    ticketNumber
 );
 
 export default reducer;
