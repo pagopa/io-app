@@ -14,7 +14,7 @@ import View from "../../../components/ui/TextWithIcon";
 import {
   getZendeskConfig,
   ZendeskStartPayload,
-  zendeskSupportBack,
+  zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
 import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
@@ -152,7 +152,7 @@ type Props = NavigationInjectedProps<ZendeskStartPayload>;
  */
 const ZendeskSupportHelpCenter = (props: Props) => {
   const dispatch = useDispatch();
-  const workUnitBack = () => dispatch(zendeskSupportBack());
+  const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
 
   // Navigation prop
@@ -196,7 +196,7 @@ const ZendeskSupportHelpCenter = (props: Props) => {
       customGoBack={<View />}
       customRightIcon={{
         iconName: "io-close",
-        onPress: workUnitBack,
+        onPress: workUnitCancel,
         accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
       }}
       headerTitle={I18n.t("support.helpCenter.header")}
