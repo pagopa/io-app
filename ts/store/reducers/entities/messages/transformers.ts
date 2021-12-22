@@ -4,6 +4,7 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../../definiti
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 
+import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import {
   Attachment,
   EUCovidCertificate,
@@ -13,7 +14,6 @@ import {
   UIMessageDetails,
   UIMessageId
 } from "./types";
-import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 
 /**
  * Map an enriched message item from API to the app domain.

@@ -4,9 +4,9 @@ import { ActionType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { waitBackoffError } from "../../../utils/backoffError";
 import { mvlDetailsLoad } from "../store/actions";
-import { handleGetMvl } from "./networking/handleGetMvlDetails";
 import { BackendMvlClient } from "../api/backendMvl";
 import { apiUrlPrefix } from "../../../config";
+import { handleGetMvl } from "./networking/handleGetMvlDetails";
 
 /**
  * Handle the MVL Requests
