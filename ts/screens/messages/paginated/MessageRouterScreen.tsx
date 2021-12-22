@@ -83,9 +83,6 @@ const MessageRouterScreen = ({
   // (avoid displaying error at the first frame)
   const firstRendering = useRef(true);
   const isLoading = !pot.isError(maybeMessageDetails);
-  const errorMessage = pot.isError(maybeMessageDetails)
-    ? maybeMessageDetails.error
-    : undefined;
 
   const tryLoadMessageDetails = useCallback(() => {
     if (maybeMessage === undefined) {
