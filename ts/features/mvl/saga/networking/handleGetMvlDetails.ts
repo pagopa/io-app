@@ -13,14 +13,20 @@ import { Attachment } from "../../../../../definitions/backend/Attachment";
 import { Byte } from "../../../../types/digitalInformationUnit";
 import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 
-const convertMvlAttachment = (attachment: Attachment): MvlAttachment => ({
-  name: attachment.name,
-  contentType: attachment.content_type.includes("pdf")
-    ? "application/pdf"
-    : "other",
-  size: 12345 as Byte,
-  resourceUrl: { href: attachment.url ?? "" }
-});
+/**
+ * convert the remote legal message attachment into the local model domain
+ * @param attachment
+ */
+const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
+  // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
+  ({
+    name: attachment.name,
+    contentType: attachment.content_type.includes("pdf")
+      ? "application/pdf"
+      : "other",
+    size: 12345 as Byte,
+    resourceUrl: { href: attachment.url ?? "" }
+  });
 
 /**
  * convert the remote legal message model into the local model domain
