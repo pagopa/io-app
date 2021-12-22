@@ -104,7 +104,7 @@ const ZendeskSupportComponent = (props: Props) => {
 
     setUserIdentity(zendeskIdentity);
     requestTicketNumber();
-  }, [zendeskConfig, zendeskToken, profile]);
+  }, [requestTicketNumber, zendeskConfig, zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
     if (isPanicModeActive(zendeskRemoteConfig)) {
