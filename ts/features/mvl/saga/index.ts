@@ -14,7 +14,6 @@ import { handleGetMvl } from "./networking/handleGetMvlDetails";
  * @param bearerToken
  */
 export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
-  // TODO: backendClient
   const mvlClient = BackendMvlClient(apiUrlPrefix, bearerToken);
 
   // handle the request for a new mvlDetailsLoad

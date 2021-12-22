@@ -1,4 +1,4 @@
-import { call, delay, put } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { mvlDetailsLoad } from "../../store/actions";
 import { SagaCallReturnType } from "../../../../types/utils";
@@ -14,7 +14,7 @@ import { Byte } from "../../../../types/digitalInformationUnit";
 import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 
 /**
- * convert the remote legal message attachment into the local model domain
+ * convert the remote legal message attachment into the relative local domain model
  * @param attachment
  */
 const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
@@ -29,7 +29,7 @@ const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
   });
 
 /**
- * convert the remote legal message model into the local model domain
+ * convert the remote legal message model into the relative local domain model
  * @param legalMessageWithContent
  * @param id
  * @param valueNotAvailable
@@ -82,7 +82,6 @@ export function* handleGetMvl(
     > = yield call(getUserLegalMessage, { id: messageId });
     if (getUserLegalMessageRequest.isRight()) {
       if (getUserLegalMessageRequest.value.status === 200) {
-        yield delay(125);
         yield put(
           mvlDetailsLoad.success(
             convertMvlDetail(getUserLegalMessageRequest.value.value, messageId)
