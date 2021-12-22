@@ -17,6 +17,7 @@ import { PublicSession } from "../../../../../definitions/backend/PublicSession"
 import { SpidLevelEnum } from "../../../../../definitions/backend/SpidLevel";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
+import { zendeskRequestTicketNumber } from "../../store/actions";
 
 const mockPublicSession: PublicSession = {
   bpdToken: "bpdToken",
@@ -34,9 +35,10 @@ describe("the ZendeskSupportComponent", () => {
     const component = renderComponent(store);
     expect(component.getByTestId("contactSupportButton")).toBeDefined();
   });
-  it("should render the zendesk show tickets button", () => {
+  it("should render the zendesk show tickets button, if the user already open a ticket", () => {
     const store = createStore(appReducer, globalState as any);
     const component = renderComponent(store);
+    store.dispatch(zendeskRequestTicketNumber.success(1));
     expect(component.getByTestId("showTicketsButton")).toBeDefined();
   });
   describe("when the user is authenticated with session info", () => {
@@ -63,13 +65,15 @@ describe("the ZendeskSupportComponent", () => {
     it.todo("should call openTicket");
   });
   describe("when the user press the zendesk show tickets button", () => {
-    it("should call showTickets", () => {
-      const store = createStore(appReducer, globalState as any);
-
-      const component = renderComponent(store);
-      const zendeskButton = component.getByTestId("showTicketsButton");
-      fireEvent(zendeskButton, "onPress");
-      expect(MockZendesk.showTickets).toBeCalledWith();
+    describe("if the user already open a ticket", () => {
+      it("should call showTickets", () => {
+        const store = createStore(appReducer, globalState as any);
+        const component = renderComponent(store);
+        store.dispatch(zendeskRequestTicketNumber.success(1));
+        const zendeskButton = component.getByTestId("showTicketsButton");
+        fireEvent(zendeskButton, "onPress");
+        expect(MockZendesk.showTickets).toBeCalledWith();
+      });
     });
   });
 });
