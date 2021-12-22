@@ -57,13 +57,16 @@ export const zendeskPaymentMethodCategoryValue = "metodo_di_pagamento";
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
 
-// help can be shown only when remote FF is instabug or (zendesk + ff local)
-export const canShowHelp = (assistanceTool: ToolEnum): boolean => {
+// help can be shown only when remote FF is instabug or (zendesk + local FF + emailValidated)
+export const canShowHelp = (
+  assistanceTool: ToolEnum,
+  isEmailValidated: boolean
+): boolean => {
   switch (assistanceTool) {
     case ToolEnum.instabug:
       return true;
     case ToolEnum.zendesk:
-      return zendeskEnabled;
+      return zendeskEnabled && isEmailValidated;
     case ToolEnum.web:
     case ToolEnum.none:
       return false;

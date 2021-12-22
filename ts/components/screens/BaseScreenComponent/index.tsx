@@ -29,11 +29,9 @@ import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIOSelector } from "../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
-import {
-  assistanceToolRemoteConfig,
-  canShowHelp
-} from "../../../utils/supportAssistance";
+import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import {
   getContextualHelpConfig,
   handleOnContextualHelpDismissed,
@@ -199,6 +197,8 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     );
     const dispatch = useDispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+    const canShowHelp = useIOSelector(canShowHelpSelector);
+
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
     const onShowHelp = (): (() => void) | undefined => {
@@ -230,7 +230,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
 
     // help button can be shown only when remote FF is instabug or (zendesk + ff local) and the contextualHelpConfig is defined
     const canShowHelpButton: boolean =
-      canShowHelp(choosenTool) && contextualHelpConfig !== undefined;
+      canShowHelp && contextualHelpConfig !== undefined;
     return (
       <Container>
         <BaseHeader
