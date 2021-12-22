@@ -67,6 +67,15 @@ export const zendeskSelectedCategory = createStandardAction(
   "ZENDESK_SELECTED_CATEGORY"
 )<ZendeskCategory>();
 
+/**
+ * Request the ticket the user opened in Zendesk
+ */
+export const zendeskRequestTicketNumber = createAsyncAction(
+  "ZENDESK_TICKET_NUMBER_REQUEST",
+  "ZENDESK_TICKET_NUMBER_SUCCESS",
+  "ZENDESK_TICKET_NUMBER_FAILURE"
+)<void, number, Error>();
+
 export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportStart>
   | ActionType<typeof zendeskSupportCompleted>
@@ -74,4 +83,5 @@ export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>
   | ActionType<typeof getZendeskConfig>
-  | ActionType<typeof zendeskSelectedCategory>;
+  | ActionType<typeof zendeskSelectedCategory>
+  | ActionType<typeof zendeskRequestTicketNumber>;
