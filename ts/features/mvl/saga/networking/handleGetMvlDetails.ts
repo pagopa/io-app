@@ -21,7 +21,7 @@ const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
     name: attachment.name,
-    contentType: attachment.content_type.includes("pdf")
+    contentType: attachment.content_type.toLowerCase().endsWith("pdf")
       ? "application/pdf"
       : "other",
     size: 12345 as Byte,
