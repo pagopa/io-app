@@ -31,12 +31,12 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp,
   zendeskCategoryId,
   zendeskPaymentMethodCategoryValue
 } from "../../../utils/supportAssistance";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
 type NavigationParams = Readonly<{
   attempt: CreditCardInsertion;
@@ -81,6 +81,8 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const outcomeCodes = useIOSelector(outcomeCodesSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+  const canShowHelp = useIOSelector(canShowHelpSelector);
+
   const instabugLogAndOpenReport = () => {
     instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
     openInstabugQuestionReport();
@@ -205,7 +207,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
         )}
         {renderSeparator()}
         {/* This check is redundant, since if the help can't be shown the user can't get there */}
-        {canShowHelp(choosenTool) && renderHelper()}
+        {canShowHelp && renderHelper()}
       </SlidedContentComponent>
     </BaseScreenComponent>
   );

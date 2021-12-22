@@ -2909,7 +2909,7 @@ webView:
     convertMessage: Unable to decode the message from the webview
 support:
   helpCenter:
-    header: "IO helps you"
+    header: "Support"
     cta:
       contactSupport: "Write us"
       seeReports: "See your requests"
@@ -2947,4 +2947,4 @@ support:
       category: "Select a topic"
       subCategory: "Can you give us more details?"
     subTitle:
-      category: "Help us better understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
+      category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
