@@ -17,7 +17,7 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../../store/actions/messages";
-import { pageSize } from "../../../../config";
+import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
 import MessageRouterScreen from "../MessageRouterScreen";
@@ -75,7 +75,7 @@ describe("MessageRouterScreen", () => {
         const { spyStoreDispatch } = renderComponent(id, { allPaginated });
         expect(spyStoreDispatch).toHaveBeenCalledWith(
           loadPreviousPageMessages.request({
-            pageSize: 100,
+            pageSize: maximumItemsFromAPI,
             cursor: previousCursor
           })
         );

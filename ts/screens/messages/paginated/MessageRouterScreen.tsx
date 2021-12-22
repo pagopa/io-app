@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { euCovidCertificateEnabled, pageSize } from "../../../config";
+import {
+  euCovidCertificateEnabled,
+  maximumItemsFromAPI,
+  pageSize
+} from "../../../config";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/EUCovidCertificate";
@@ -143,7 +147,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadMessageDetails.request({ id }));
   },
   loadPreviousPage: (cursor?: Cursor) =>
-    dispatch(loadPreviousPageMessages.request({ cursor, pageSize: 100 })),
+    dispatch(
+      loadPreviousPageMessages.request({
+        cursor,
+        pageSize: maximumItemsFromAPI
+      })
+    ),
   reloadPage: () => dispatch(reloadAllMessages.request({ pageSize }))
 });
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {

@@ -12,6 +12,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import {
   debugRemotePushNotification,
+  maximumItemsFromAPI,
   pageSize,
   usePaginatedMessages
 } from "../config";
@@ -49,11 +50,12 @@ function handleMessageReload() {
     // nothing in the collection, refresh
     store.dispatch(reloadAllMessages.request({ pageSize }));
   } else if (pot.isSome(cursors)) {
-    // something in the collection, get the new ones only
+    // something in the collection, get the maximum amount of new ones only,
+    // assuming that the message will be there
     store.dispatch(
       loadPreviousPageMessages.request({
         cursor: cursors.value.previous,
-        pageSize
+        pageSize: maximumItemsFromAPI
       })
     );
   }
