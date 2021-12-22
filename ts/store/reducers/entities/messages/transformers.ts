@@ -13,6 +13,7 @@ import {
   UIMessageDetails,
   UIMessageId
 } from "./types";
+import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 
 /**
  * Map an enriched message item from API to the app domain.
@@ -101,7 +102,9 @@ const getEUCovidCertificate = ({
  * @param messageFromApi
  */
 export const toUIMessageDetails = (
-  messageFromApi: CreatedMessageWithContentAndAttachments
+  messageFromApi:
+    | CreatedMessageWithContentAndAttachments
+    | CreatedMessageWithContent
 ): UIMessageDetails => {
   const { id, content } = messageFromApi;
   const dueDate = content.due_date ? new Date(content.due_date) : undefined;
