@@ -76,36 +76,45 @@ const tmpNotImplementedFeedback = () => {
   });
 };
 
-const generateLinks = (props: Props): ReadonlyArray<LinkRepresentation> => [
-  {
-    text: I18n.t("features.mvl.details.metadata.links.copy"),
-    action: () => clipboardSetStringWithFeedback(props.metadata.id)
-  },
-  {
-    text: I18n.t("features.mvl.details.metadata.links.sender"),
-    action: tmpNotImplementedFeedback
-  },
-  {
-    text: I18n.t("features.mvl.details.metadata.links.signature"),
-    action: tmpNotImplementedFeedback
-  },
-  {
-    text: I18n.t("features.mvl.details.metadata.links.certificates"),
-    action: tmpNotImplementedFeedback
-  },
-  {
-    text: I18n.t("features.mvl.details.metadata.links.originalMessage"),
-    action: tmpNotImplementedFeedback
-  },
-  {
-    text: I18n.t("features.mvl.details.metadata.links.datiCert"),
-    action: tmpNotImplementedFeedback
-  },
-  {
-    text: I18n.t("features.mvl.details.metadata.links.smime"),
-    action: tmpNotImplementedFeedback
-  }
-];
+const generateLinks = (props: Props): ReadonlyArray<LinkRepresentation> => {
+  const sender =
+    props.metadata.cc.length > 0
+      ? [
+          {
+            text: I18n.t("features.mvl.details.metadata.links.sender"),
+            action: tmpNotImplementedFeedback
+          }
+        ]
+      : [];
+
+  return [
+    {
+      text: I18n.t("features.mvl.details.metadata.links.copy"),
+      action: () => clipboardSetStringWithFeedback(props.metadata.id)
+    },
+    ...sender,
+    {
+      text: I18n.t("features.mvl.details.metadata.links.signature"),
+      action: tmpNotImplementedFeedback
+    },
+    {
+      text: I18n.t("features.mvl.details.metadata.links.certificates"),
+      action: tmpNotImplementedFeedback
+    },
+    {
+      text: I18n.t("features.mvl.details.metadata.links.originalMessage"),
+      action: tmpNotImplementedFeedback
+    },
+    {
+      text: I18n.t("features.mvl.details.metadata.links.datiCert"),
+      action: tmpNotImplementedFeedback
+    },
+    {
+      text: I18n.t("features.mvl.details.metadata.links.smime"),
+      action: tmpNotImplementedFeedback
+    }
+  ];
+};
 
 const Links = (props: Props): React.ReactElement => {
   const links = generateLinks(props);
