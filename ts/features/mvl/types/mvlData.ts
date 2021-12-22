@@ -1,3 +1,4 @@
+import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ValidUrl } from "@pagopa/ts-commons/lib/url";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
 import {
@@ -15,10 +16,13 @@ export type MvlBody = {
   plain: string;
 };
 
+export type MvlAttachmentId = string & IUnitTag<"MvlAttachmentId">;
+
 /**
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
  */
 export type MvlAttachment = {
+  id: MvlAttachmentId;
   // a display name for the file
   name: string;
   // atm we have to distinguish only the pdf files from the others for a custom (future) view

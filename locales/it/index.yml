@@ -2877,6 +2877,12 @@ features:
         subtitle: "TMP Generic error subtitle"
     details:
       hasAttachments: "contiene allegati"
+      attachments:
+        title: "Allegati"
+        bottomSheet:
+          title: "Fai attenzione agli allegati"
+          body: "IO non può garantire la sicurezza del contenuto dell’allegato: salva sul tuo dispositivo o condividi solo i file che provengono da mittenti affidabili."
+          checkBox: "OK, non mostrarmelo più"
       body:
         plain: "testo semplice"
         html: "html"
