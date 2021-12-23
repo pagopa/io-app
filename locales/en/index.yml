@@ -2846,8 +2846,8 @@ features:
       subtitle: "Please wait"
     ko:
       genericError:
-        title: "TMP Generic error title"
-        subtitle: "TMP Generic error subtitle"
+        title: "There was an error retrieving the message"
+        subtitle: "Please try again"
     details:
       hasAttachments: "contains attachments"
       attachments:
