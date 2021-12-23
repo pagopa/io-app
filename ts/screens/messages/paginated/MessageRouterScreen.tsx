@@ -7,6 +7,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   euCovidCertificateEnabled,
   maximumItemsFromAPI,
+  mvlEnabled,
   pageSize
 } from "../../../config";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
@@ -36,6 +37,9 @@ import {
   getCursors
 } from "../../../store/reducers/entities/messages/allPaginated";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
+import NavigationService from "../../../navigation/NavigationService";
+import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
 
 type OwnProps = NavigationInjectedProps<{ messageId: UIMessageId }>;
 type Props = OwnProps &
@@ -58,6 +62,11 @@ const navigateToScreenHandler =
           .authCode as EUCovidCertificateAuthCode,
         messageId: message.id
       });
+    } else if (mvlEnabled && message.category.tag === TagEnum.LEGAL_MESSAGE) {
+      navigateBack();
+      NavigationService.dispatchNavigationAction(
+        navigateToMvlDetailsScreen({ id: message.id })
+      );
     } else {
       navigateBack();
       dispatch(
