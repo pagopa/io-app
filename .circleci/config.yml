@@ -474,59 +474,45 @@ jobs:
 
 workflows:
   version: 2
-  build:
+#  build:
+#    jobs:
+#      - compile-typescript
+#      - run-tests
+#      - run-eslint
+#      - run-prettier
+#
+#      - run-danger:
+#          filters:
+#            branches:
+#              ignore: master
+#
+#      # TODO: Native Android e2e tests
+#      # TODO: Slack integration
+#      - run-e2e-test-IOS:
+#          requires:
+#            - compile-typescript
+#          filters:
+#            branches:
+#              only: master
+
+  # Release workflow triggered only when a new release tag is pushed
+  release:
     jobs:
       - compile-typescript
       - run-tests
       - run-eslint
       - run-prettier
 
-      - run-danger:
-          filters:
-            branches:
-              ignore: master
-
-      # TODO: Native Android e2e tests
-      # TODO: Slack integration
-      - run-e2e-test-IOS:
+      # Build Android alpha release & submit to play store
+      - alpha-release-android:
           requires:
             - compile-typescript
-          filters:
-            branches:
-              only: master
+            - run-tests
+            - run-eslint
+            - run-prettier
 
-  # Release workflow triggered only when a new release tag is pushed
-  release:
-    jobs:
-      - compile-typescript:
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
-
-      - run-tests:
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
-
-      - run-eslint:
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
-      - run-prettier:
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
-
-      # Build Android alpha release & submit to play store
-#      - alpha-release-android:
+      # Create a release build, submit to the store and distributes to the beta testers
+#      - ios-beta-release:
 #          requires:
 #            - compile-typescript
 #            - run-tests
@@ -537,19 +523,6 @@ workflows:
 #              only: *release_tag
 #            branches:
 #              ignore: /.*/
-
-      # Create a release build, submit to the store and distributes to the beta testers
-      - ios-beta-release:
-          requires:
-            - compile-typescript
-            - run-tests
-            - run-eslint
-            - run-prettier
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
 
       # Send a Slack message to notify the release of a new app version in beta
 #      - notify-new-app-version:
