@@ -1,9 +1,14 @@
 // watch for all actions regarding Zendesk
 import { takeLatest } from "redux-saga/effects";
-import { getZendeskConfig, zendeskSupportStart } from "../store/actions";
+import {
+  getZendeskConfig,
+  zendeskRequestTicketNumber,
+  zendeskSupportStart
+} from "../store/actions";
 import { ContentClient } from "../../../api/content";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
+import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
 
 export function* watchZendeskSupportSaga() {
   const contentClient = ContentClient();
@@ -15,4 +20,6 @@ export function* watchZendeskSupportSaga() {
     handleGetZendeskConfig,
     contentClient.getZendeskConfig
   );
+
+  yield takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
 }

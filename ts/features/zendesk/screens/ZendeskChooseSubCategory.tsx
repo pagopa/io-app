@@ -17,12 +17,15 @@ import { zendeskSelectedCategorySelector } from "../store/reducers";
 import { H4 } from "../../../components/core/typography/H4";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../../components/ui/IconFont";
-import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
 import {
+  addTicketCustomField,
   hasSubCategories,
   openSupportTicket
 } from "../../../utils/supportAssistance";
-import { zendeskSupportCompleted } from "../store/actions";
+import {
+  zendeskSupportCompleted,
+  zendeskSupportFailure
+} from "../store/actions";
 import { getFullLocale } from "../../../utils/locale";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 
@@ -34,19 +37,27 @@ const ZendeskChooseSubCategory = () => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useDispatch();
   const zendeskWorkunitComplete = () => dispatch(zendeskSupportCompleted());
+  const zendeskWorkUnitFailure = (reason: string) =>
+    dispatch(zendeskSupportFailure(reason));
 
   // It should never happens since it is selected in the previous screen
   if (selectedCategory === undefined) {
-    return <WorkunitGenericFailure />;
+    zendeskWorkUnitFailure("The category has not been selected");
+    return null;
   }
 
   // It should never happens since it is checked in the previous screen
   if (!hasSubCategories(selectedCategory)) {
-    return <WorkunitGenericFailure />;
+    zendeskWorkUnitFailure("The selected category has no sub-categories");
+    return null;
   }
 
+  // The check for subCategories and subCategoriesId is already done just above
   const subCategories =
     selectedCategory.zendeskSubCategories?.subCategories ?? [];
+  const subCategoriesId: string =
+    selectedCategory.zendeskSubCategories?.id ?? "";
+
   const locale = getFullLocale();
 
   const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
@@ -54,7 +65,8 @@ const ZendeskChooseSubCategory = () => {
     return (
       <ListItem
         onPress={() => {
-          // TODO: set sub-category as custom field
+          // Set sub-category as custom field
+          addTicketCustomField(subCategoriesId, subCategory.value);
           openSupportTicket();
           zendeskWorkunitComplete();
         }}

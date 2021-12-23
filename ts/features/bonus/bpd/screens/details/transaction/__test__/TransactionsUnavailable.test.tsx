@@ -3,6 +3,7 @@ import { NavigationParams } from "react-navigation";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
@@ -32,7 +33,8 @@ describe("TransactionsUnavailable component", () => {
         status: some({
           config: { assistanceTool: { tool: ToolEnum.none } } as Config
         } as BackendStatus)
-      }
+      },
+      profile: pot.some({ is_email_validated: true })
     });
   });
 
