@@ -16,12 +16,13 @@ import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../utils/filters";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../components/core/typography/Label";
+import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 import CgnDiscountCodeComponent from "./discount/CgnDiscountCodeComponent";
 
 type Props = {
   discount: Discount;
-  merchantType: "online" | "offline";
+  merchantType?: DiscountCodeType;
   onLandingCtaPress?: (url: string, referer: string) => void;
 };
 
@@ -127,7 +128,7 @@ const CgnDiscountDetailHeader = ({ discount }: Pick<Props, "discount">) => (
 
 export const useCgnDiscountDetailBottomSheet = (
   discount: Discount,
-  merchantType: "online" | "offline",
+  merchantType?: DiscountCodeType,
   landingPageHandler?: (url: string, referer: string) => void
 ) => {
   const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(

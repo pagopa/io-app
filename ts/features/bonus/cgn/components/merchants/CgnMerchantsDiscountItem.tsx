@@ -15,12 +15,13 @@ import I18n from "../../../../../i18n";
 import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { useCgnDiscountDetailBottomSheet } from "./CgnDiscountDetail";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
   discount: Discount;
-  merchantType: "online" | "offline";
+  merchantType?: DiscountCodeType;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 

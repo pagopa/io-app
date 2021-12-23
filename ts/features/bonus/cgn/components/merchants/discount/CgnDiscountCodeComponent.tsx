@@ -3,30 +3,34 @@ import * as React from "react";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import I18n from "../../../../../../i18n";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
+import { DiscountCodeType } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import CgnStaticCodeComponent from "./CgnStaticCodeComponent";
 import CgnOTPCodeComponent from "./CgnOTPCodeComponent";
 
 type Props = {
   discount: Discount;
-  merchantType: "online" | "offline";
+  merchantType?: DiscountCodeType;
 };
 
 const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
-  // These logic to check will be replaced with explicit discount type information received by API
+  const shouldNotRender =
+    merchantType === "bucket" ||
+    merchantType === "landingpage" ||
+    merchantType === undefined;
   const renderProperCodeVisualization = (discount: Discount) => {
-    if (discount.staticCode) {
-      return <CgnStaticCodeComponent staticCode={discount.staticCode} />;
+    switch (merchantType) {
+      case "api":
+        return <CgnOTPCodeComponent />;
+      case "static":
+        return <CgnStaticCodeComponent staticCode={discount.staticCode} />;
+      case "bucket":
+      case "landingpage":
+      default:
+        return <></>;
     }
-    if (
-      discount.staticCode === undefined &&
-      discount.landingPageUrl === undefined
-    ) {
-      return <CgnOTPCodeComponent />;
-    }
-    return <></>;
   };
 
-  return merchantType === "offline" || discount.landingPageUrl !== undefined ? (
+  return shouldNotRender ? (
     <></>
   ) : (
     <>

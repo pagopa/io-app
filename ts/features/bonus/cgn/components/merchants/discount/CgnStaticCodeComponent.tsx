@@ -3,7 +3,6 @@ import { View } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { StyleSheet } from "react-native";
-import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
@@ -11,9 +10,10 @@ import { addEvery } from "../../../../../../utils/strings";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import Eye from "../../../../../../../img/icons/Eye.svg";
+import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 
 type Props = {
-  staticCode: string & INonEmptyStringTag;
+  staticCode: Discount["staticCode"];
 };
 
 const styles = StyleSheet.create({
@@ -67,7 +67,9 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
           font={"RobotoMono"}
           style={styles.codeText}
         >
-          {isCodeVisible ? addEvery(staticCode, " ", 3) : "••••••••••"}
+          {isCodeVisible && staticCode
+            ? addEvery(staticCode, " ", 3)
+            : "••••••••••"}
         </BaseTypography>
 
         {isCodeVisible ? (
