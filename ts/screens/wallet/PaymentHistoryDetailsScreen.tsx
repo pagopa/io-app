@@ -46,10 +46,14 @@ import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus
 import { Dispatch } from "../../store/actions/types";
 import { zendeskSupportStart } from "../../features/zendesk/store/actions";
 import {
+  addTicketCustomField,
+  appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp
+  zendeskCategoryId,
+  zendeskPaymentCategoryValue
 } from "../../utils/supportAssistance";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -109,11 +113,15 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   };
 
   private zendeskAssistanceLogAndStart = () => {
-    // TODO: set log as custom field
-    // TODO: set payment as category
+    // Set pagamenti_pagopa as category
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+    // Append the payment history details in the log
+    appendLog(
+      getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
+    );
+
     this.props.zendeskSupportWorkunitStart();
   };
-
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
@@ -359,7 +367,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               </React.Fragment>
             )}
           {/* This check is redundant, since if the help can't be shown the user can't get there */}
-          {canShowHelp(this.choosenTool) && this.renderHelper()}
+          {this.props.canShowHelp && this.renderHelper()}
         </SlidedContentComponent>
       </BaseScreenComponent>
     );
@@ -368,12 +376,15 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   outcomeCodes: outcomeCodesSelector(state),
-  assistanceToolConfig: assistanceToolConfigSelector(state)
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  canShowHelp: canShowHelpSelector(state)
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // Start the assistance without FAQ ("n/a" is a placeholder)
   zendeskSupportWorkunitStart: () =>
-    dispatch(zendeskSupportStart({ startingRoute: "n/a" }))
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    )
 });
 
 export default connect(

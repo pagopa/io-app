@@ -12,7 +12,6 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-
 import {
   instabugLog,
   openInstabugQuestionReport,
@@ -55,11 +54,16 @@ import {
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import {
+  addTicketCustomField,
+  appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp
+  zendeskBlockedPaymentRptIdId,
+  zendeskCategoryId,
+  zendeskPaymentCategoryValue
 } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
 type NavigationParams = {
   error: Option<
@@ -112,6 +116,22 @@ const requestAssistanceForPaymentFailure = (
   openInstabugQuestionReport();
 };
 
+const requestZendeskAssistanceForPaymentFailure = (
+  rptId: RptId,
+  payment?: PaymentHistory
+) => {
+  // Set pagamenti_pagopa as category
+  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+  // Add rptId custom field
+  addTicketCustomField(
+    zendeskBlockedPaymentRptIdId,
+    RptIdFromString.encode(rptId)
+  );
+  if (payment) {
+    // Append the payment history details in the log
+    appendLog(getPaymentHistoryDetails(payment));
+  }
+};
 type ScreenUIContents = {
   image: ImageSourcePropType;
   title: string;
@@ -141,6 +161,7 @@ const ErrorCodeCopyComponent = ({
  * @param onCancel
  * @param choosenTool
  * @param paymentHistory
+ * @param canShowHelpButton
  * @param handleZendeskRequestAssistance
  */
 export const errorTransactionUIElements = (
@@ -148,8 +169,9 @@ export const errorTransactionUIElements = (
   rptId: RptId,
   onCancel: () => void,
   choosenTool: ToolEnum,
-  paymentHistory?: PaymentHistory,
-  handleZendeskRequestAssistance?: () => void
+  handleZendeskRequestAssistance: () => void,
+  canShowHelpButton: boolean,
+  paymentHistory?: PaymentHistory
 ): ScreenUIContents => {
   const errorORUndefined = maybeError.toUndefined();
 
@@ -166,7 +188,8 @@ export const errorTransactionUIElements = (
         requestAssistanceForPaymentFailure(rptId, paymentHistory);
         break;
       case ToolEnum.zendesk:
-        handleZendeskRequestAssistance?.();
+        requestZendeskAssistanceForPaymentFailure(rptId, paymentHistory);
+        handleZendeskRequestAssistance();
         break;
       default:
         return;
@@ -228,7 +251,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.TECHNICAL"),
         subtitle,
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...sendReportButtonConfirm, ...closeButtonCancel]
           : [...closeButtonCancel]
       };
@@ -237,7 +260,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.DATA"),
         subtitle,
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
@@ -246,7 +269,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.EC"),
         subtitle,
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...sendReportButtonConfirm, ...closeButtonCancel]
           : [...closeButtonCancel]
       };
@@ -269,7 +292,7 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
           </H4>
         ),
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
@@ -313,7 +336,7 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
           </H4>
         ),
-        footerButtons: canShowHelp(choosenTool)
+        footerButtons: canShowHelpButton
           ? [...closeButtonConfirm, ...sendReportButtonCancel]
           : [...closeButtonConfirm]
       };
@@ -341,8 +364,9 @@ const TransactionErrorScreen = (props: Props) => {
     rptId,
     onCancel,
     choosenTool,
-    paymentHistory,
-    props.zendeskSupportWorkunitStart
+    props.zendeskSupportWorkunitStart,
+    props.canShowHelp,
+    paymentHistory
   );
   const handleBackPress = () => {
     props.backToEntrypointPayment();
@@ -367,7 +391,8 @@ const TransactionErrorScreen = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   paymentsHistory: paymentsHistorySelector(state),
-  assistanceToolConfig: assistanceToolConfigSelector(state)
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  canShowHelp: canShowHelpSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -375,7 +400,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentManualDataInsertion({ isInvalidAmount }),
   backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
   zendeskSupportWorkunitStart: () =>
-    dispatch(zendeskSupportStart({ startingRoute: "n/a" }))
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    )
 });
 
 export default connect(

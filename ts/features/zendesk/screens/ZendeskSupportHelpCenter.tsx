@@ -14,7 +14,7 @@ import View from "../../../components/ui/TextWithIcon";
 import {
   getZendeskConfig,
   ZendeskStartPayload,
-  zendeskSupportBack,
+  zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
 import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
@@ -152,7 +152,7 @@ type Props = NavigationInjectedProps<ZendeskStartPayload>;
  */
 const ZendeskSupportHelpCenter = (props: Props) => {
   const dispatch = useDispatch();
-  const workUnitBack = () => dispatch(zendeskSupportBack());
+  const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
 
   // Navigation prop
@@ -162,6 +162,9 @@ const ZendeskSupportHelpCenter = (props: Props) => {
     "contextualHelpMarkdown"
   );
   const startingRoute = props.navigation.getParam("startingRoute");
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
     !contextualHelpMarkdown
@@ -193,7 +196,7 @@ const ZendeskSupportHelpCenter = (props: Props) => {
       customGoBack={<View />}
       customRightIcon={{
         iconName: "io-close",
-        onPress: workUnitBack,
+        onPress: workUnitCancel,
         accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
       }}
       headerTitle={I18n.t("support.helpCenter.header")}
@@ -210,7 +213,9 @@ const ZendeskSupportHelpCenter = (props: Props) => {
             startingRoute={startingRoute}
           />
           <View spacer />
-          <ZendeskSupportComponent />
+          <ZendeskSupportComponent
+            assistanceForPayment={assistanceForPayment}
+          />
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>

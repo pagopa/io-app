@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.38.0-rc.7",
+  "version": "1.38.0-rc.8",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.26.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.1/definitions.yml",
@@ -97,7 +97,7 @@
     "hastscript": "^7.0.2",
     "hoist-non-react-statics": "^3.0.1",
     "instabug-reactnative": "^9.1.6",
-    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.12",
+    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.13",
     "io-ts": "1.8.5",
     "italia-ts-commons": "8.6.0",
     "jail-monkey": "^2.3.2",
