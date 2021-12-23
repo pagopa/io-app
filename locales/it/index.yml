@@ -2873,8 +2873,8 @@ features:
       subtitle: "Attendi qualche secondo"
     ko:
       genericError:
-        title: "TMP Generic error title"
-        subtitle: "TMP Generic error subtitle"
+        title: "Si è verificato un errore nel recupero del messaggio"
+        subtitle: "Riprova per favore"
     details:
       hasAttachments: "contiene allegati"
       attachments:
