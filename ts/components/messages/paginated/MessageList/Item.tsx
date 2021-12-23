@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge, Text, View } from "native-base";
 
-import LegalMessage from "../../../../../img/messages/legal-message.svg";
+import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
@@ -31,9 +31,11 @@ const styles = StyleSheet.create({
     paddingVertical: customVariables.spacerHeight
   },
   titleRow: {
+    flex: 1,
     justifyContent: "space-between",
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    paddingRight: 16
   },
   badgeContainer: {
     flex: 0,
@@ -200,7 +202,7 @@ const MessageListItem = ({
       accessibilityLabel={announceMessage(message, isRead)}
     >
       <View style={styles.titleRow}>
-        <H5>{organizationName}</H5>
+        <H5 numberOfLines={1}>{organizationName}</H5>
         <View style={styles.titleIconAndDate}>
           {getTopIcon(category)}
           <Text numberOfLines={1} style={styles.dateTime}>
