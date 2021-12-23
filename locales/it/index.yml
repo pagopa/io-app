@@ -2603,8 +2603,8 @@ bonus:
         sport: sport
         health: salute e benessere
     cta:
-      activeBonus: Attiva la Carta
-      goToDetail: Visualizza la Carta Giovani
+      activeBonus: Richiedi la Carta
+      goToDetail: Visualizza la Carta
     detail:
       cta:
         buyers: Vedi agevolazioni
@@ -2612,13 +2612,13 @@ bonus:
         eyca:
           copy: Copia numero carta EYCA
           pending: Scopri di più su EYCA
-          bottomSheet: Vedi gli sconti EYCA
+          bottomSheet: Vedi le agevolazioni EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
         active: "La carta è attiva e può essere usata fino al {{date}}"
         warning: "Attenzione! "
-        revoked: "Questa carta è stata annullata per {{reason}}"
+        revoked: "Questa carta è stata revocata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
       ownership: Chi può usufruire degli sconti?
       status:
@@ -2629,18 +2629,18 @@ bonus:
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei 38 paesi europei aderenti al circuito."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
-          revoked: Annullata
+          revoked: Revocata
           expired: Scaduta
         date:
           activated: Attivata il
           expired: Scaduta il
-          revoked: Annullata il
+          revoked: Revocata il
         expiration:
-          cgn: Scadenza CGN
-          eyca: Scadenza EYCA
+          cgn: Scade il
+          eyca: Scade il
     activation:
       eyca:
         loading:
@@ -2656,20 +2656,20 @@ bonus:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
         body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       ineligible:
-        title: "Siamo spiacenti. Non hai le caratteristiche per attivare la Carta Giovani Nazionale."
+        title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
         body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
       timeout:
         title: "Stiamo processando la tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
-        title: "La tua Carta Giovani Nazionale è già attiva!"
+        title: "La tua Carta Giovani Nazionale è attiva!"
         body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
       pending:
         title: "La tua Carta Giovani Nazionale è in fase di attivazione."
         body: "Riceverai un messaggio quando sarà attivata."
       success:
-        title: "Congratulazioni!"
-        body: "La tua Carta Giovani Nazionale è attiva"
+        title: "Fatto!"
+        body: "La tua Carta Giovani Nazionale è attiva."
     otp:
       screen:
         title: Usa codice sconto
@@ -2877,6 +2877,12 @@ features:
         subtitle: "TMP Generic error subtitle"
     details:
       hasAttachments: "contiene allegati"
+      attachments:
+        title: "Allegati"
+        bottomSheet:
+          title: "Fai attenzione agli allegati"
+          body: "IO non può garantire la sicurezza del contenuto dell’allegato: salva sul tuo dispositivo o condividi solo i file che provengono da mittenti affidabili."
+          checkBox: "OK, non mostrarmelo più"
       body:
         plain: "testo semplice"
         html: "html"
@@ -2937,7 +2943,7 @@ webView:
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
 support:
   helpCenter:
-    header: "IO ti aiuto"
+    header: "Assistenza"
     cta:
       contactSupport: "Scrivici"
       seeReports: "Vedi le tue richieste"
@@ -2962,10 +2968,10 @@ support:
     devicePerformanceData: "Livello di memoria e batteria"
     stock: "Dati dell’avviso di pagamento"
     stockValue: "Incluso l’errore che hai appena ricevuto"
-    header: "Contatta l'assistenza"
-    title: "Per continuare, abbiamo bisogno del tuo consenso"
-    body: "Per ricevere supporto è necessario inviare al team di IO alcuni dati. Se neghi il consenso, potrai inviare una richiesta generica via email."
-    listHeader: "Verranno inviati i seguenti dati:"
+    header: "Scrivici"
+    title: "Ci dai il tuo consenso?"
+    body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
+    listHeader: "Se dai il consenso, riceveremo questi dati:"
     cta:
       allow: "Consenti"
       denies: "Non consentire"

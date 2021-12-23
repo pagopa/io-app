@@ -49,11 +49,11 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
-  canShowHelp,
   zendeskCategoryId,
   zendeskPaymentCategoryValue
 } from "../../utils/supportAssistance";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -122,7 +122,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
     this.props.zendeskSupportWorkunitStart();
   };
-
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
@@ -368,7 +367,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               </React.Fragment>
             )}
           {/* This check is redundant, since if the help can't be shown the user can't get there */}
-          {canShowHelp(this.choosenTool) && this.renderHelper()}
+          {this.props.canShowHelp && this.renderHelper()}
         </SlidedContentComponent>
       </BaseScreenComponent>
     );
@@ -377,7 +376,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   outcomeCodes: outcomeCodesSelector(state),
-  assistanceToolConfig: assistanceToolConfigSelector(state)
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  canShowHelp: canShowHelpSelector(state)
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // Start the assistance without FAQ ("n/a" is a placeholder)
