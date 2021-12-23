@@ -32,7 +32,6 @@ import {
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
-  profileNameSelector,
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { getModel, getSystemVersion } from "../../../utils/device";
