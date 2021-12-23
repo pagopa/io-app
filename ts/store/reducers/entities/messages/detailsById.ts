@@ -7,8 +7,6 @@ import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { UIMessageDetails } from "./types";
 
-export type Cursor = string;
-
 /**
  * A list of messages and pagination data.
  */

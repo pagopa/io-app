@@ -28,7 +28,7 @@ import { allMessagesSelector } from "../../../store/reducers/entities/messages/a
 import { pageSize } from "../../../config";
 import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
-import { navigateToPaginatedMessageDetailScreenAction } from "../../../store/actions/navigation";
+import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 
 type Props = NavigationStackScreenProps &
@@ -53,14 +53,8 @@ const MessagesHomeScreen = ({
   const navigation = useContext(NavigationContext);
 
   const navigateToMessageDetail = (message: UIMessage) => {
-    // TODO: https://pagopa.atlassian.net/browse/IA-463
-    // if message is a EUCovidCertificate, navigate to the dedicated navigator
-    //   navigateToEuCovidCertificate(
-    //     message.content.eu_covid_cert.auth_code as EUCovidCertificateAuthCode,
-    //     message.id
-    //   );
     navigation.dispatch(
-      navigateToPaginatedMessageDetailScreenAction({ message })
+      navigateToPaginatedMessageRouterAction({ messageId: message.id })
     );
   };
 
