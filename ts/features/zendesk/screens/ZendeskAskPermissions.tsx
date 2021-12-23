@@ -32,7 +32,8 @@ import {
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
-  profileNameSelector
+  profileNameSelector,
+  profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { getModel, getSystemVersion } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
@@ -171,7 +172,7 @@ const ZendeskAskPermissions = (props: Props) => {
     .map(idp => idp.name)
     .getOrElse(notAvailable);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
-  const nameSurname = useIOSelector(profileNameSelector) ?? notAvailable;
+  const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
   const itemsProps: ItemProps = {
     fiscalCode,
