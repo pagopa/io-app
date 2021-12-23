@@ -27,8 +27,10 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -43,6 +45,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -265,8 +268,10 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -281,6 +286,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -551,8 +557,10 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -567,6 +575,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -837,8 +846,10 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -853,6 +864,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -1127,8 +1139,10 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -1143,6 +1157,7 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -1454,8 +1469,10 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -1470,6 +1487,7 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -1740,8 +1758,10 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -1756,6 +1776,7 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -2082,8 +2103,10 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -2098,6 +2121,7 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -2424,8 +2448,10 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -2440,6 +2466,7 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -2766,8 +2793,10 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -2782,6 +2811,7 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -3108,8 +3138,10 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -3124,6 +3156,7 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -3450,8 +3483,10 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -3466,6 +3501,7 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
@@ -3792,8 +3828,10 @@ exports[`MessageList Item component with all the flags set to false should match
         Object {},
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "space-between",
+          "paddingRight": 16,
         },
       ]
     }
@@ -3808,6 +3846,7 @@ exports[`MessageList Item component with all the flags set to false should match
           "fontSize": 14,
         }
       }
+      numberOfLines={1}
       style={
         Array [
           Object {
