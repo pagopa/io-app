@@ -29,7 +29,10 @@ const mockNavDispatch = jest.fn();
 
 jest.mock("../../../../config", () => ({ euCovidCertificateEnabled: true }));
 jest.mock("../../../../utils/hooks/useOnFocus", () => ({
-  useNavigationContext: () => ({ dispatch: mockNavDispatch })
+  useNavigationContext: () => ({
+    dispatch: mockNavDispatch,
+    state: { routeName: "test-route" }
+  })
 }));
 
 describe("MessageRouterScreen", () => {
