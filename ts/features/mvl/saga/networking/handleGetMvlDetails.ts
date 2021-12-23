@@ -58,6 +58,7 @@ const convertMvlDetail = (
         receiver: EmailAddress.decode(certDataHeader.recipients).getOrElse(
           valueNotAvailable as EmailAddress
         ),
+        // missing field in remote payload
         cc: [],
         certificates: [legalMessageWithContent.legal_message.cert_data.data],
         signature: undefined
