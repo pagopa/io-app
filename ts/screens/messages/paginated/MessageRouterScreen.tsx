@@ -35,6 +35,7 @@ import {
   Cursor,
   getCursors
 } from "../../../store/reducers/entities/messages/allPaginated";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 
 type OwnProps = NavigationInjectedProps<{ messageId: UIMessageId }>;
 type Props = OwnProps &
@@ -76,9 +77,9 @@ const MessageRouterScreen = ({
   reloadPage,
   maybeMessage,
   maybeMessageDetails,
-  messageId,
-  navigation
+  messageId
 }: Props): React.ReactElement => {
+  const navigation = useNavigationContext();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
   // (avoid displaying error at the first frame)
   const firstRendering = useRef(true);

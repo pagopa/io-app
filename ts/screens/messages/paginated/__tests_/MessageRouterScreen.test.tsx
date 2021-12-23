@@ -21,12 +21,22 @@ import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
 import MessageRouterScreen from "../MessageRouterScreen";
+import I18n from "../../../../i18n";
 
 jest.useFakeTimers();
 
+const mockNavDispatch = jest.fn();
+
 jest.mock("../../../../config", () => ({ euCovidCertificateEnabled: true }));
+jest.mock("../../../../utils/hooks/useOnFocus", () => ({
+  useNavigationContext: () => ({ dispatch: mockNavDispatch })
+}));
 
 describe("MessageRouterScreen", () => {
+  beforeEach(() => {
+    mockNavDispatch.mockReset();
+  });
+
   describe("at a cold start, with an empty messages state", () => {
     const id = successLoadMessageDetails.id;
     it("should render the loader", () => {
@@ -127,11 +137,11 @@ describe("MessageRouterScreen", () => {
         };
 
         it("should navigate to the MessageDetail screen", () => {
-          const { navigation } = renderComponent(id, {
+          renderComponent(id, {
             allPaginated,
             detailsById
           });
-          expect(navigation.dispatch).toHaveBeenCalledWith(
+          expect(mockNavDispatch).toHaveBeenCalledWith(
             navigateToPaginatedMessageDetailScreenAction({
               message: targetMessage,
               messageDetails: targetMessageDetails
@@ -151,7 +161,7 @@ describe("MessageRouterScreen", () => {
   });
 
   describe("when is the message details is in Error state", () => {
-    it("should render the error message", () => {
+    it("should render the generic error message", () => {
       const errorMessage = "don't you have bigger fish to fry?";
       const { component } = renderComponent("01", {
         detailsById: { "01": pot.noneError(errorMessage) }
@@ -159,7 +169,10 @@ describe("MessageRouterScreen", () => {
       expect(
         component.queryByTestId("LoadingErrorComponentError")
       ).not.toBeNull();
-      expect(component.queryByText(errorMessage)).not.toBeNull();
+      expect(
+        component.queryByText(I18n.t("global.genericError"))
+      ).not.toBeNull();
+      expect(component.queryByText(errorMessage)).toBeNull();
     });
   });
 });
