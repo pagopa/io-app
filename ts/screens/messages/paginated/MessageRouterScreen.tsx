@@ -40,6 +40,8 @@ import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
 import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 
 type OwnProps = NavigationInjectedProps<{ messageId: UIMessageId }>;
 type Props = OwnProps &
@@ -138,13 +140,15 @@ const MessageRouterScreen = ({
   ]);
 
   return (
-    <LoadingErrorComponent
-      errorText={I18n.t("global.genericError")}
-      isLoading={isLoading}
-      loadingCaption={I18n.t("messageDetails.loadingText")}
-      onAbort={cancel}
-      onRetry={tryLoadMessageDetails}
-    />
+    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+      <LoadingErrorComponent
+        errorText={I18n.t("global.genericError")}
+        isLoading={isLoading}
+        loadingCaption={I18n.t("messageDetails.loadingText")}
+        onAbort={cancel}
+        onRetry={tryLoadMessageDetails}
+      />
+    </BaseScreenComponent>
   );
 };
 
