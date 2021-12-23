@@ -4,6 +4,7 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../../definiti
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 
+import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import {
   Attachment,
   EUCovidCertificate,
@@ -101,7 +102,7 @@ const getEUCovidCertificate = ({
  * @param messageFromApi
  */
 export const toUIMessageDetails = (
-  messageFromApi: CreatedMessageWithContentAndAttachments
+  messageFromApi: CreatedMessageWithContent
 ): UIMessageDetails => {
   const { id, content } = messageFromApi;
   const dueDate = content.due_date ? new Date(content.due_date) : undefined;
