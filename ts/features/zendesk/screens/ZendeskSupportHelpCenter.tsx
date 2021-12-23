@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
-import { none } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationInjectedProps } from "react-navigation";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpProps
+} from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import View from "../../../components/ui/TextWithIcon";
 import {
   getZendeskConfig,
   ZendeskStartPayload,
-  zendeskSupportBack,
+  zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
 import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
@@ -29,14 +31,16 @@ import FAQComponent from "../../../components/FAQComponent";
 import {
   getContextualHelpConfig,
   getContextualHelpData,
-  handleOnLinkClicked,
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
-  "contentLoaded" | "faqCategories" | "startingRoute"
-> & { title: string; body: () => React.ReactNode };
+  "faqCategories" | "startingRoute"
+> & {
+  contentLoaded: boolean;
+  contextualHelpConfig: ContextualHelpProps | undefined;
+};
 
 /**
  * This component must be used only here.
@@ -57,7 +61,7 @@ const FaqManager = (props: FaqManagerProps) => {
   );
   const [lastContextualDataUpdate, setLastContextualDataUpdate] =
     useState<Date>(new Date());
-  const { title, body, faqCategories, contentLoaded } = props;
+  const { contextualHelpConfig, faqCategories, contentLoaded } = props;
   useEffect(() => {
     const now = new Date();
     // if the contextual data is empty or is in error and last reload was done before the threshold -> try to reload
@@ -72,16 +76,25 @@ const FaqManager = (props: FaqManagerProps) => {
     }
   }, [dispatch, lastContextualDataUpdate, potContextualData]);
 
+  const defaultData: ContextualHelpData = fromNullable(
+    contextualHelpConfig
+  ).fold(
+    {
+      title: "",
+      faqs: getFAQsFromCategories(faqCategories ?? []),
+      content: constNull
+    },
+    cHC => ({
+      title: cHC.title,
+      faqs: getFAQsFromCategories(faqCategories ?? []),
+      content: cHC.body()
+    })
+  );
   const contextualHelpData: ContextualHelpData = getContextualHelpData(
     maybeContextualData,
-    {
-      title,
-      faqs: getFAQsFromCategories(faqCategories ?? []),
-      content: body()
-    },
+    defaultData,
     () => setContentHasLoaded(true)
   );
-
   /**
    content is loaded when:
    - provided one from props is loaded or
@@ -117,7 +130,11 @@ const FaqManager = (props: FaqManagerProps) => {
           )}
           {contextualHelpData.faqs && isContentLoaded && (
             <FAQComponent
-              onLinkClicked={workUnitComplete}
+              shouldHandleLink={_ => {
+                // when a link is clicked in the faq, terminate the workunit before the link will be handled (i.e: internal or external navigation)
+                workUnitComplete();
+                return true;
+              }}
               faqs={contextualHelpData.faqs}
             />
           )}
@@ -135,7 +152,7 @@ type Props = NavigationInjectedProps<ZendeskStartPayload>;
  */
 const ZendeskSupportHelpCenter = (props: Props) => {
   const dispatch = useDispatch();
-  const workUnitBack = () => dispatch(zendeskSupportBack());
+  const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
 
   // Navigation prop
@@ -145,6 +162,9 @@ const ZendeskSupportHelpCenter = (props: Props) => {
     "contextualHelpMarkdown"
   );
   const startingRoute = props.navigation.getParam("startingRoute");
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
     !contextualHelpMarkdown
@@ -154,7 +174,12 @@ const ZendeskSupportHelpCenter = (props: Props) => {
     contextualHelp,
     contextualHelpMarkdown,
     () => setMarkdownContentLoaded(true),
-    handleOnLinkClicked(() => workUnitComplete())
+    constNull,
+    _ => {
+      // when a link is clicked in the contextual help, terminate the workunit before the link will be handled (i.e: internal or external navigation)
+      workUnitComplete();
+      return true;
+    }
   );
 
   /**
@@ -171,7 +196,7 @@ const ZendeskSupportHelpCenter = (props: Props) => {
       customGoBack={<View />}
       customRightIcon={{
         iconName: "io-close",
-        onPress: workUnitBack,
+        onPress: workUnitCancel,
         accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
       }}
       headerTitle={I18n.t("support.helpCenter.header")}
@@ -182,14 +207,15 @@ const ZendeskSupportHelpCenter = (props: Props) => {
       >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <FaqManager
-            title={contextualHelpConfig?.title ?? ""}
-            body={contextualHelpConfig?.body ?? constNull}
+            contextualHelpConfig={contextualHelpConfig}
             faqCategories={faqCategories}
             contentLoaded={markdownContentLoaded}
             startingRoute={startingRoute}
           />
           <View spacer />
-          <ZendeskSupportComponent />
+          <ZendeskSupportComponent
+            assistanceForPayment={assistanceForPayment}
+          />
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>

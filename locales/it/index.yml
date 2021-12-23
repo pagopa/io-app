@@ -1041,6 +1041,10 @@ wallet:
         whatIsPspBottomSheet:
           title: "Cos’è il gestore della transazione?"
           body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
+      paypalAlreadyAdded:
+        alert:
+          title: "Hai già un account PayPal nel tuo Portafoglio"
+          message: "Se prosegui, il nuovo account sostituirà quello attuale."
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
@@ -1586,6 +1590,7 @@ messages:
     message:
       read: "Messaggio"
       unread: "Messaggio non letto"
+      archived: Archiviato
       description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
@@ -2598,8 +2603,8 @@ bonus:
         sport: sport
         health: salute e benessere
     cta:
-      activeBonus: Attiva la tua Carta Giovani
-      goToDetail: Visualizza la Carta Giovani
+      activeBonus: Richiedi la Carta
+      goToDetail: Visualizza la Carta
     detail:
       cta:
         buyers: Vedi agevolazioni
@@ -2607,13 +2612,13 @@ bonus:
         eyca:
           copy: Copia numero carta EYCA
           pending: Scopri di più su EYCA
-          bottomSheet: Vedi gli sconti EYCA
+          bottomSheet: Vedi le agevolazioni EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
         active: "La carta è attiva e può essere usata fino al {{date}}"
         warning: "Attenzione! "
-        revoked: "Questa carta è stata annullata per {{reason}}"
+        revoked: "Questa carta è stata revocata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
       ownership: Chi può usufruire degli sconti?
       status:
@@ -2624,18 +2629,18 @@ bonus:
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei 38 paesi europei aderenti al circuito."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
-          revoked: Annullata
+          revoked: Revocata
           expired: Scaduta
         date:
           activated: Attivata il
           expired: Scaduta il
-          revoked: Annullata il
+          revoked: Revocata il
         expiration:
-          cgn: Scadenza CGN
-          eyca: Scadenza EYCA
+          cgn: Scade il
+          eyca: Scade il
     activation:
       eyca:
         loading:
@@ -2651,20 +2656,20 @@ bonus:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
         body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       ineligible:
-        title: "Siamo spiacenti. Non hai le caratteristiche per attivare la Carta Giovani Nazionale."
+        title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
         body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
       timeout:
         title: "Stiamo processando la tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
-        title: "La tua Carta Giovani Nazionale è già attiva!"
+        title: "La tua Carta Giovani Nazionale è attiva!"
         body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
       pending:
         title: "La tua Carta Giovani Nazionale è in fase di attivazione."
         body: "Riceverai un messaggio quando sarà attivata."
       success:
-        title: "Congratulazioni!"
-        body: "La tua Carta Giovani Nazionale è attiva"
+        title: "Fatto!"
+        body: "La tua Carta Giovani Nazionale è attiva."
     otp:
       screen:
         title: Usa codice sconto
@@ -2868,10 +2873,19 @@ features:
       subtitle: "Attendi qualche secondo"
     ko:
       genericError:
-        title: "TMP Generic error title"
-        subtitle: "TMP Generic error subtitle"
+        title: "Si è verificato un errore nel recupero del messaggio"
+        subtitle: "Riprova per favore"
     details:
       hasAttachments: "contiene allegati"
+      attachments:
+        title: "Allegati"
+        bottomSheet:
+          title: "Fai attenzione agli allegati"
+          body: "IO non può garantire la sicurezza del contenuto dell’allegato: salva sul tuo dispositivo o condividi solo i file che provengono da mittenti affidabili."
+          checkBox: "OK, non mostrarmelo più"
+      body:
+        plain: "testo semplice"
+        html: "html"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
@@ -2929,7 +2943,7 @@ webView:
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
 support:
   helpCenter:
-    header: "IO ti aiuto"
+    header: "Assistenza"
     cta:
       contactSupport: "Scrivici"
       seeReports: "Vedi le tue richieste"
@@ -2941,8 +2955,23 @@ support:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
   askPermissions:
-    header: "Contatta l'assistenza"
-    title: "Per continuare, abbiamo bisogno del tuo consenso"
+    nameSurname: "Nome e Cognome"
+    fiscalCode: "Codice fiscale"
+    emailAddress: "Indirizzo email"
+    deviceAndOS: "Dispositivo e sistema operativo"
+    ipAddress: "Indirizzo IP"
+    currentAppVersion: "Versione in uso dell'app"
+    identityProvider: "Identity Provider"
+    navigationData: "Dati di navigazione in app IO"
+    navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"
+    devicePerformance: "Performance del dispositivo"
+    devicePerformanceData: "Livello di memoria e batteria"
+    stock: "Dati dell’avviso di pagamento"
+    stockValue: "Incluso l’errore che hai appena ricevuto"
+    header: "Scrivici"
+    title: "Ci dai il tuo consenso?"
+    body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
+    listHeader: "Se dai il consenso, riceveremo questi dati:"
     cta:
       allow: "Consenti"
       denies: "Non consentire"

@@ -15,9 +15,9 @@ import {
 export type ZendeskStartPayload = {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  contentLoaded: boolean;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
+  assistanceForPayment: boolean;
 };
 /**
  * The user chooses to start the workflow to open a support request
@@ -57,15 +57,24 @@ export const zendeskSupportFailure = createStandardAction(
  * Request the zendesk config
  */
 export const getZendeskConfig = createAsyncAction(
-  "GET_ZENDESK_CONFIG_REQUEST",
-  "GET_ZENDESK_CONFIG_SUCCESS",
-  "GET_ZENDESK_CONFIG_FAILURE"
+  "ZENDESK_CONFIG_REQUEST",
+  "ZENDESK_CONFIG_SUCCESS",
+  "ZENDESK_CONFIG_FAILURE"
 )<void, Zendesk, NetworkError>();
 
 // user selected a category
 export const zendeskSelectedCategory = createStandardAction(
   "ZENDESK_SELECTED_CATEGORY"
 )<ZendeskCategory>();
+
+/**
+ * Request the ticket the user opened in Zendesk
+ */
+export const zendeskRequestTicketNumber = createAsyncAction(
+  "ZENDESK_TICKET_NUMBER_REQUEST",
+  "ZENDESK_TICKET_NUMBER_SUCCESS",
+  "ZENDESK_TICKET_NUMBER_FAILURE"
+)<void, number, Error>();
 
 export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportStart>
@@ -74,4 +83,5 @@ export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>
   | ActionType<typeof getZendeskConfig>
-  | ActionType<typeof zendeskSelectedCategory>;
+  | ActionType<typeof zendeskSelectedCategory>
+  | ActionType<typeof zendeskRequestTicketNumber>;

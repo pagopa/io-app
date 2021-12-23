@@ -19,15 +19,16 @@ import { toArray } from "../../../store/helpers/indexer";
 import { H4 } from "../../../components/core/typography/H4";
 import customVariables from "../../../theme/variables";
 import IconFont from "../../../components/ui/IconFont";
-import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { navigateToZendeskChooseSubCategory } from "../store/actions/navigation";
 import {
   zendeskSelectedCategory,
-  zendeskSupportCompleted
+  zendeskSupportCompleted,
+  zendeskSupportFailure
 } from "../store/actions";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import {
+  addTicketCustomField,
   hasSubCategories,
   openSupportTicket
 } from "../../../utils/supportAssistance";
@@ -43,20 +44,26 @@ const ZendeskChooseCategory = () => {
   const selectedCategory = (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category));
   const zendeskWorkunitComplete = () => dispatch(zendeskSupportCompleted());
+  const zendeskWorkUnitFailure = (reason: string) =>
+    dispatch(zendeskSupportFailure(reason));
 
   // It should never happens since if config is undefined or in error the user can open directly a ticket and if it is in loading the user
   // should wait in the ZendeskSupportHelpCenter screen
   if (!isReady(zendeskConfig)) {
-    return <WorkunitGenericFailure />;
+    zendeskWorkUnitFailure("Config is not ready");
+    return null;
   }
 
   const categories: ReadonlyArray<ZendeskCategory> = toArray(
     zendeskConfig.value.zendeskCategories?.categories ?? {}
   );
+  const categoriesId: string | undefined =
+    zendeskConfig.value.zendeskCategories?.id;
 
   // It should never happens since if the zendeskCategories are not in the config or if the array is void the user can open directly a ticket
-  if (categories.length === 0) {
-    return <WorkunitGenericFailure />;
+  if (categories.length === 0 || categoriesId === undefined) {
+    zendeskWorkUnitFailure("The config has no categories");
+    return null;
   }
 
   const locale = getFullLocale();
@@ -67,7 +74,8 @@ const ZendeskChooseCategory = () => {
       <ListItem
         onPress={() => {
           selectedCategory(category);
-          // TODO: set category as custom field
+          // Set category as custom field
+          addTicketCustomField(categoriesId, category.value);
           if (hasSubCategories(category)) {
             navigation.navigate(navigateToZendeskChooseSubCategory());
           } else {
