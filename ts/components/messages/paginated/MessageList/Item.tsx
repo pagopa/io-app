@@ -130,7 +130,9 @@ function tagOrIcon({
 function getTopIcon(category: MessageCategory) {
   switch (category.tag) {
     case TagEnum.LEGAL_MESSAGE:
-      return <LegalMessage width={20} height={20} />;
+      return (
+        <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
+      );
     default:
       return null;
   }
