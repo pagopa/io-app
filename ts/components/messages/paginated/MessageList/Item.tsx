@@ -2,8 +2,10 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge, Text, View } from "native-base";
 
+import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 import I18n from "../../../../i18n";
 import {
   convertDateToWordDistance,
@@ -28,10 +30,12 @@ const styles = StyleSheet.create({
   verticalPad: {
     paddingVertical: customVariables.spacerHeight
   },
-  spaced: {
+  titleRow: {
+    flex: 1,
     justifyContent: "space-between",
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    paddingRight: 16
   },
   badgeContainer: {
     flex: 0,
@@ -39,13 +43,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingTop: 6.5
   },
-  viewStyle: {
+  serviceName: {
     flexDirection: "row"
   },
-  text12: {
-    lineHeight: 18,
-    marginBottom: -4,
-    fontWeight: "bold"
+  titleIconAndDate: {
+    flexDirection: "row"
+  },
+  dateTime: {
+    lineHeight: 20,
+    fontWeight: "bold",
+    overflow: "hidden",
+    textAlign: "right",
+    marginLeft: 7
   },
   icon: {
     width: 98,
@@ -118,6 +127,17 @@ function tagOrIcon({
   return null;
 }
 
+function getTopIcon(category: MessageCategory) {
+  switch (category.tag) {
+    case TagEnum.LEGAL_MESSAGE:
+      return (
+        <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
+      );
+    default:
+      return null;
+  }
+}
+
 type Props = {
   category: MessageCategory;
   hasPaidBadge: boolean;
@@ -183,14 +203,20 @@ const MessageListItem = ({
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead)}
     >
-      <View style={styles.spaced}>
-        <H5>{organizationName}</H5>
-        <Text style={styles.text12}>{uiDate}</Text>
+      <View style={styles.titleRow}>
+        <H5 numberOfLines={1}>{organizationName}</H5>
+        <View style={styles.titleIconAndDate}>
+          {getTopIcon(category)}
+          <Text numberOfLines={1} style={styles.dateTime}>
+            {uiDate}
+          </Text>
+        </View>
       </View>
 
-      <View style={styles.viewStyle}>
+      <View style={styles.serviceName}>
         <Text>{serviceName}</Text>
       </View>
+
       <View style={styles.smallSpacer} />
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
