@@ -94,7 +94,7 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
               ellipsizeMode={"middle"}
               numberOfLines={1}
             >
-              {props.attachment.name}
+              {props.attachment.displayName}
             </H3>
             {props.attachment.size && (
               <H5 color={"bluegrey"} weight={"Regular"} style={IOStyles.flex}>

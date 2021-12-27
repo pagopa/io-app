@@ -26,7 +26,7 @@ export type MvlId = string & IUnitTag<"MvlId">;
 export type MvlAttachment = {
   id: MvlAttachmentId;
   // a display name for the file
-  name: string;
+  displayName: string;
   // atm we have to distinguish only the pdf files from the others for a custom (future) view
   contentType: Extract<ContentType, "application/pdf"> | "other";
   // size (in Byte) of the attachment, for display purpose

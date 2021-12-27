@@ -36,7 +36,7 @@ const convertMvlAttachment = (
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
     id: attachment.id as MvlAttachmentId,
-    name: attachment.name,
+    displayName: attachment.name,
     contentType: attachment.content_type.toLowerCase().endsWith("pdf")
       ? "application/pdf"
       : "other",
