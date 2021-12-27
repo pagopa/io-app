@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A simplified accordion that accepts a title and one children and uses {@link RawAccordion}
+ * A simplified accordion that accepts a title and one child and uses {@link RawAccordion}
  * @param props
  * @constructor
  */
