@@ -30,7 +30,7 @@ export type MvlAttachment = {
   // atm we have to distinguish only the pdf files from the others for a custom (future) view
   contentType: Extract<ContentType, "application/pdf"> | "other";
   // size (in Byte) of the attachment, for display purpose
-  size: Byte;
+  size?: Byte;
   // The url that can be used to retrieve the resource
   resourceUrl: ValidUrl;
 };

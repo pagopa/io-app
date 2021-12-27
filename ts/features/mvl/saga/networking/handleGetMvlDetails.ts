@@ -1,22 +1,21 @@
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { mvlDetailsLoad } from "../../store/actions";
+import { Attachment } from "../../../../../definitions/backend/Attachment";
+import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
+import { LegalMessageWithContent } from "../../../../../definitions/backend/LegalMessageWithContent";
+import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendMvlClient } from "../../api/backendMvl";
-import { LegalMessageWithContent } from "../../../../../definitions/backend/LegalMessageWithContent";
+import { mvlDetailsLoad } from "../../store/actions";
 import {
   Mvl,
   MvlAttachment,
   MvlAttachmentId,
   MvlId
 } from "../../types/mvlData";
-import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
-import { Attachment } from "../../../../../definitions/backend/Attachment";
-import { Byte } from "../../../../types/digitalInformationUnit";
-import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 
 /**
  * convert the remote legal message attachment into the relative local domain model
@@ -30,7 +29,6 @@ const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
     contentType: attachment.content_type.toLowerCase().endsWith("pdf")
       ? "application/pdf"
       : "other",
-    size: 12345 as Byte,
     resourceUrl: { href: attachment.url ?? "" }
   });
 
