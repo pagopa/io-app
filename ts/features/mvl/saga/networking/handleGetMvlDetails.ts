@@ -3,6 +3,7 @@ import { ActionType } from "typesafe-actions";
 import { Attachment } from "../../../../../definitions/backend/Attachment";
 import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 import { LegalMessageWithContent } from "../../../../../definitions/backend/LegalMessageWithContent";
+import { apiUrlPrefix } from "../../../../config";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { SagaCallReturnType } from "../../../../types/utils";
@@ -17,11 +18,21 @@ import {
   MvlId
 } from "../../types/mvlData";
 
+const generateAttachmentUrl = (
+  messageId: UIMessageId,
+  attachmentId: MvlAttachmentId
+) =>
+  `${apiUrlPrefix}/api/v1/legal-messages/${messageId}/attachments/${attachmentId}`;
+
 /**
  * convert the remote legal message attachment into the relative local domain model
  * @param attachment
+ * @param id
  */
-const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
+const convertMvlAttachment = (
+  attachment: Attachment,
+  id: UIMessageId
+): MvlAttachment =>
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
     id: attachment.id as MvlAttachmentId,
@@ -29,7 +40,9 @@ const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
     contentType: attachment.content_type.toLowerCase().endsWith("pdf")
       ? "application/pdf"
       : "other",
-    resourceUrl: { href: attachment.url ?? "" }
+    resourceUrl: {
+      href: generateAttachmentUrl(id, attachment.id as MvlAttachmentId)
+    }
   });
 
 /**
@@ -55,7 +68,9 @@ const convertMvlDetail = (
         html: eml.html_content,
         plain: eml.plain_text_content
       },
-      attachments: eml.attachments.map(convertMvlAttachment),
+      attachments: eml.attachments.map(attachment =>
+        convertMvlAttachment(attachment, id)
+      ),
       metadata: {
         id: msgId as MvlId,
         timestamp: new Date(certData.data.timestamp),
