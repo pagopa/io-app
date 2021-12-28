@@ -2852,6 +2852,9 @@ features:
       hasAttachments: "contains attachments"
       attachments:
         title: "Attachments"
+        toast:
+          success: "Download complete"
+          failure: "An error occurred while downloading the attachment"
         bottomSheet:
           title: "Pay attention to attachments"
           body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
