@@ -93,6 +93,7 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     value: props.email
   },
   {
+    id: "galleryProminentDisclosure",
     icon: <GalleryIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.prominentDisclosure"),
     value: I18n.t("support.askPermissions.prominentDisclosureData")
@@ -199,7 +200,9 @@ const ZendeskAskPermissions = (props: Props) => {
     // if user is not logged in, remove the items related to his/her profile
     ...(!isUserLoggedIn
       ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
-      : [])
+      : []),
+    // if the OS is IOS remove the item related to the gallery prominent disclosure
+    ...(isIos ? ["galleryProminentDisclosure"] : [])
   ];
   const items = getItems(itemsProps)
     .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
