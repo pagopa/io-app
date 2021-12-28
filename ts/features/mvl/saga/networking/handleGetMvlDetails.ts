@@ -37,9 +37,7 @@ const convertMvlAttachment = (
   ({
     id: attachment.id as MvlAttachmentId,
     displayName: attachment.name,
-    contentType: attachment.content_type.toLowerCase().endsWith("pdf")
-      ? "application/pdf"
-      : "other",
+    contentType: attachment.content_type.toLowerCase(),
     resourceUrl: {
       href: generateAttachmentUrl(id, attachment.id as MvlAttachmentId)
     }

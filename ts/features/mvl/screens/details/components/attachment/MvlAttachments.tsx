@@ -12,6 +12,7 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
 import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
+import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
 import { MvlAttachment, MvlData } from "../../../../types/mvlData";
 import { useDownloadAttachmentConfirmationBottomSheet } from "./DownloadAttachmentConfirmationBottomSheet";
@@ -63,9 +64,9 @@ const AttachmentIcon = (props: {
   contentType: MvlAttachment["contentType"];
 }) => {
   switch (props.contentType) {
-    case "application/pdf":
+    case ContentTypeValues.applicationPdf:
       return <Pdf {...svgProps} />;
-    case "other":
+    default:
       return <Default {...svgProps} />;
   }
 };

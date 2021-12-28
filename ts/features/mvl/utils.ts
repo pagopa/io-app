@@ -3,6 +3,7 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
 import { fetchTimeout } from "../../config";
 import i18n from "../../i18n";
+import { ContentTypeValues } from "../../types/contentType";
 import { showToast } from "../../utils/showToast";
 import { MvlAttachment } from "./types/mvlData";
 
@@ -46,7 +47,7 @@ export const handleDownloadResult = async (
     const result = await downloadAttachment(attachment, header);
     if (Platform.OS === "ios") {
       const fileHandler =
-        attachment.contentType === "application/pdf"
+        attachment.contentType === ContentTypeValues.applicationPdf
           ? ReactNativeBlobUtil.ios.openDocument
           : ReactNativeBlobUtil.ios.presentOptionsMenu;
       fileHandler(result.path());

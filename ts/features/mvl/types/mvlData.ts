@@ -5,7 +5,6 @@ import {
   UIMessageDetails,
   WithUIMessageId
 } from "../../../store/reducers/entities/messages/types";
-import { ContentType } from "../../../types/contentType";
 import { Byte } from "../../../types/digitalInformationUnit";
 
 /**
@@ -27,8 +26,8 @@ export type MvlAttachment = {
   id: MvlAttachmentId;
   // a display name for the file
   displayName: string;
-  // atm we have to distinguish only the pdf files from the others for a custom (future) view
-  contentType: Extract<ContentType, "application/pdf"> | "other";
+  // a generic content type for a file
+  contentType: string;
   // size (in Byte) of the attachment, for display purpose
   size?: Byte;
   // The url that can be used to retrieve the resource
