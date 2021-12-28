@@ -8,7 +8,7 @@ import {
   LayoutAnimation,
   Platform,
   StyleSheet,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   UIManager
 } from "react-native";
 import I18n from "../../../i18n";
@@ -91,7 +91,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
 
   return (
     <View style={IOStyles.flex}>
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         onPress={onPress}
         accessible={true}
         accessibilityRole={"button"}
@@ -118,7 +118,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
             />
           </Animated.View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
       {isOpen && props.children}
     </View>
   );
