@@ -6,7 +6,7 @@ export type ContentTypeEnum =
   | "application/pdf"
   | "application/octet-stream";
 
-// Ensure the Type for IOColor without losing the inferred types
+// Ensure the Type for ContentTypeValues without losing the inferred types
 function asContentTypeEnum<T extends { [key: string]: ContentTypeEnum }>(
   arg: T
 ): T {
