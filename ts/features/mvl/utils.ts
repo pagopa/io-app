@@ -45,6 +45,10 @@ export const handleDownloadResult = async (
 ) => {
   try {
     const result = await downloadAttachment(attachment, header);
+    if (result.info().status !== 200) {
+      showToast(i18n.t("features.mvl.details.attachments.toast.failure"));
+      return;
+    }
     if (Platform.OS === "ios") {
       const fileHandler =
         attachment.contentType === ContentTypeValues.applicationPdf
