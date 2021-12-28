@@ -44,12 +44,6 @@ jest.mock("react-native-blob-util", () => ({
   polyfill: jest.fn()
 }));
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
-
 NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
   forceTouchAvailable: false
 };

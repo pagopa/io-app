@@ -14,6 +14,12 @@ import {
 } from "../../../../../types/__mock__/mvlMock";
 import { MvlAttachments } from "../MvlAttachments";
 
+jest.mock("@gorhom/bottom-sheet", () => ({
+  useBottomSheetModal: () => ({
+    present: jest.fn()
+  })
+}));
+
 describe("MvlAttachments", () => {
   jest.useFakeTimers();
 
