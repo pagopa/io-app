@@ -60,7 +60,7 @@ const convertMvlDetail = (
       attachments: eml.attachments.map(convertMvlAttachment),
       metadata: {
         id: msgId as MvlId,
-        timestamp: new Date(certData.data.timestamp),
+        timestamp: certData.data.timestamp,
         subject: eml.subject,
         sender: EmailAddress.decode(certDataHeader.sender).getOrElse(
           valueNotAvailable as EmailAddress
