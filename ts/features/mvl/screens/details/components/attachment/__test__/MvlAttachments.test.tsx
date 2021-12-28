@@ -38,14 +38,22 @@ describe("MvlAttachments", () => {
         const res = renderComponent({
           attachments: [mvlMockPdfAttachment, mvlMockOtherAttachment]
         });
-        expect(res.queryByText(mvlMockPdfAttachment.name)).not.toBeNull();
         expect(
-          res.queryByText(formatByte(mvlMockPdfAttachment.size))
+          res.queryByText(mvlMockPdfAttachment.displayName)
         ).not.toBeNull();
-        expect(res.queryByText(mvlMockOtherAttachment.name)).not.toBeNull();
+        if (mvlMockPdfAttachment.size) {
+          expect(
+            res.queryByText(formatByte(mvlMockPdfAttachment.size))
+          ).not.toBeNull();
+        }
         expect(
-          res.queryByText(formatByte(mvlMockOtherAttachment.size))
+          res.queryByText(mvlMockOtherAttachment.displayName)
         ).not.toBeNull();
+        if (mvlMockOtherAttachment.size) {
+          expect(
+            res.queryByText(formatByte(mvlMockOtherAttachment.size))
+          ).not.toBeNull();
+        }
       });
     });
   });
