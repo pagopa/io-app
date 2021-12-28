@@ -6,7 +6,6 @@ import {
   Animated,
   Easing,
   LayoutAnimation,
-  Platform,
   StyleSheet,
   TouchableWithoutFeedback,
   UIManager
@@ -14,6 +13,7 @@ import {
 import I18n from "../../../i18n";
 import themeVariables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
+import { isAndroid } from "../../../utils/platform";
 import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../variables/IOStyles";
 
@@ -71,7 +71,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
     : getDegree(isOpen);
 
   useEffect(() => {
-    if (Platform.OS === "android") {
+    if (isAndroid) {
       UIManager.setLayoutAnimationEnabledExperimental(shouldAnimate);
     }
   }, [shouldAnimate]);
