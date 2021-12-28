@@ -2947,7 +2947,7 @@ support:
     prominentDisclosure: "Access to the device gallery"
     prominentDisclosureData: "To upload photos and screenshots"
     cta:
-      allow: "Allow"
+      allow: "Agree"
       denies: "Deny"
   chooseCategory:
     header: "Write us"
