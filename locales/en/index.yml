@@ -1030,7 +1030,7 @@ wallet:
       onBoardingCompleted:
         title: "That's it!"
         body: "Now have a look at the current settings of your new method."
-        primaryButton: "View method"
+        primaryButton: "Continue"
       onBoardingCompletedWhilePayment:
         title: "That's it!"
         body: "Now you can continue with your payment."
@@ -1132,7 +1132,7 @@ wallet:
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
-  paymentMethodDesc: Credit, debit, prepaid card, PagoBANCOMAT, app
+  paymentMethodDesc: Credit, debit, prepaid cards, PayPal and others
   walletLoadMessage: Loading payment methods...
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
@@ -1336,7 +1336,7 @@ wallet:
         bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
     bonus:
-      name: Discount, bonus and other services
+      name: Discounts, bonuses and other initiatives
       description: Public initiatives to support Economy, or services related to payments
     digital:
       name: App and digital payment tools
@@ -2845,8 +2845,8 @@ features:
       subtitle: "Please wait"
     ko:
       genericError:
-        title: "TMP Generic error title"
-        subtitle: "TMP Generic error subtitle"
+        title: "There was an error retrieving the message"
+        subtitle: "Please try again"
     details:
       hasAttachments: "contains attachments"
       attachments:

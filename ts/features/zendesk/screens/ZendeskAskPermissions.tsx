@@ -19,7 +19,7 @@ import WebSiteIcon from "../../../../img/assistance/website.svg";
 import InfoIcon from "../../../../img/assistance/info.svg";
 import DeviceIcon from "../../../../img/assistance/telefonia.svg";
 import LoginIcon from "../../../../img/assistance/login.svg";
-import BugIcon from "../../../../img/assistance/ladybug.svg";
+import HistoryIcon from "../../../../img/assistance/history.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import StockIcon from "../../../../img/assistance/giacenza.svg";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
@@ -32,7 +32,7 @@ import {
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
-  profileNameSelector
+  profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { getModel, getSystemVersion } from "../../../utils/device";
 import { isIos } from "../../../utils/platform";
@@ -125,7 +125,7 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     zendeskId: zendeskidentityProviderId
   },
   {
-    icon: <BugIcon {...iconProps} />,
+    icon: <HistoryIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.navigationData"),
     value: I18n.t("support.askPermissions.navigationDataValue")
   }
@@ -171,7 +171,7 @@ const ZendeskAskPermissions = (props: Props) => {
     .map(idp => idp.name)
     .getOrElse(notAvailable);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
-  const nameSurname = useIOSelector(profileNameSelector) ?? notAvailable;
+  const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
   const itemsProps: ItemProps = {
     fiscalCode,

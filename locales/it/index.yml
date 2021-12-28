@@ -1048,7 +1048,7 @@ wallet:
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
-        primaryButton: "Vedi metodo"
+        primaryButton: "Continua"
       onBoardingCompletedWhilePayment:
         title: "Fatto!"
         body: "Ora puoi continuare con il pagamento."
@@ -1150,7 +1150,7 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
-  paymentMethodDesc: Carte di credito, debito, prepagate, PagoBANCOMAT, app
+  paymentMethodDesc: Carte di credito, debito, prepagate, PayPal, e altri
   walletLoadMessage: Carico i metodi di pagamento...
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
@@ -1358,7 +1358,7 @@ wallet:
         bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
         bottomSheetCTA: Scopri i metodi supportati
     bonus:
-      name: Sconto, bonus e altri servizi
+      name: Sconti, bonus e altre iniziative
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
     digital:
       name: App e strumenti di pagamento digitali
@@ -2873,8 +2873,8 @@ features:
       subtitle: "Attendi qualche secondo"
     ko:
       genericError:
-        title: "TMP Generic error title"
-        subtitle: "TMP Generic error subtitle"
+        title: "Si è verificato un errore nel recupero del messaggio"
+        subtitle: "Riprova per favore"
     details:
       hasAttachments: "contiene allegati"
       attachments:
