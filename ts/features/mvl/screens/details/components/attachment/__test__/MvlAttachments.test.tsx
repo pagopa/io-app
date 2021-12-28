@@ -1,18 +1,18 @@
-import { render } from "@testing-library/react-native";
 import React from "react";
+import { NavigationParams } from "react-navigation";
+import { createStore } from "redux";
 import I18n from "../../../../../../../i18n";
+import { applicationChangeState } from "../../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../../store/reducers/types";
 import { formatByte } from "../../../../../../../types/digitalInformationUnit";
+import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import MVL_ROUTES from "../../../../../navigation/routes";
 import {
   mvlMockOtherAttachment,
   mvlMockPdfAttachment
 } from "../../../../../types/__mock__/mvlMock";
 import { MvlAttachments } from "../MvlAttachments";
-
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
 
 describe("MvlAttachments", () => {
   jest.useFakeTimers();
@@ -20,7 +20,10 @@ describe("MvlAttachments", () => {
   describe("When there are no attachments", () => {
     it("Shouldn't be rendered", () => {
       const res = renderComponent({ attachments: [] });
-      expect(res.toJSON()).toBeNull();
+
+      expect(
+        res.queryByText(I18n.t("features.mvl.details.attachments.title"))
+      ).toBeNull();
     });
   });
 
@@ -59,5 +62,15 @@ describe("MvlAttachments", () => {
   });
 });
 
-const renderComponent = (props: React.ComponentProps<typeof MvlAttachments>) =>
-  render(<MvlAttachments {...props} />);
+const renderComponent = (
+  props: React.ComponentProps<typeof MvlAttachments>
+) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    () => <MvlAttachments {...props} />,
+    MVL_ROUTES.DETAILS,
+    {},
+    store
+  );
+};
