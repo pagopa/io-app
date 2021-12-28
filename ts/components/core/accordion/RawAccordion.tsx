@@ -6,14 +6,14 @@ import {
   Animated,
   Easing,
   LayoutAnimation,
-  Platform,
   StyleSheet,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   UIManager
 } from "react-native";
 import I18n from "../../../i18n";
 import themeVariables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
+import { isAndroid } from "../../../utils/platform";
 import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../variables/IOStyles";
 
@@ -23,7 +23,7 @@ type Props = {
   header: React.ReactElement;
   // The accordion component must accept one children
   children: React.ReactElement;
-  // The component should be animated?
+  // The component should be animated? default: true
   animated?: boolean;
   headerStyle?: React.ComponentProps<typeof View>["style"];
   accessibilityLabel?: AccessibilityProps["accessibilityLabel"];
@@ -71,7 +71,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
     : getDegree(isOpen);
 
   useEffect(() => {
-    if (Platform.OS === "android") {
+    if (isAndroid) {
       UIManager.setLayoutAnimationEnabledExperimental(shouldAnimate);
     }
   }, [shouldAnimate]);
@@ -91,7 +91,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
 
   return (
     <View style={IOStyles.flex}>
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         onPress={onPress}
         accessible={true}
         accessibilityRole={"button"}
@@ -118,7 +118,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
             />
           </Animated.View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
       {isOpen && props.children}
     </View>
   );
