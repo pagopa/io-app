@@ -57,10 +57,11 @@ def scan_directory(path, file_black_list, black_list_url, ext_set={'*.ts*'}):
 	for ext in ext_set:
 		files.extend(list(Path(path).rglob(ext)))
 	to_remove = []
+	black_list_files = tuple(file_black_list)
 	# exclude test files
 	for f in files:
 		name = basename(f)
-		if name.endswith(("test.ts", "test.tsx", "tsx.snap")) or name in file_black_list:
+		if name.endswith(("test.ts", "test.tsx", "tsx.snap")) or str(f).endswith(black_list_files):
 			to_remove.append(f)
 	for tr in to_remove:
 		files.remove(tr)
@@ -208,7 +209,8 @@ run_test = len(argv) > 1 and argv[1] == "run_tests"
 # since this code is executed multiple time for each process spawned
 # we have to ensure the init part is execute only the first time
 if not run_test and __name__ == '__main__':
-	files_black_list = {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts", "mvlMock.ts","message.ts"}
+	files_black_list = {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts", "mvlMock.ts", "message.ts",
+	                    "supportAssistance.ts", "ZendeskAskPermissions.tsx"}
 
 	manager = Manager()
 	print("scanning local folders...")
@@ -224,7 +226,7 @@ if not run_test and __name__ == '__main__':
 		"https://assets.cdn.io.italia.it",
 		"https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
 		"https://www.trusttechnologies.it/contatti/#form"}
-	locales = (abspath(join(dirname(__file__), "../..", "locales")), {})
+	locales = (abspath(join(dirname(__file__), "../..", "locales")), set())
 	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), files_black_list)
 	for directory, black_list in [locales, ts_dir]:
 		files_found = scan_directory(directory, black_list, urls_black_list)
