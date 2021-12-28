@@ -23,6 +23,7 @@ import HistoryIcon from "../../../../img/assistance/history.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import StockIcon from "../../../../img/assistance/giacenza.svg";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
+import GalleryIcon from "../../../../img/assistance/gallery.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
 import {
@@ -90,6 +91,11 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     icon: <EmailIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.emailAddress"),
     value: props.email
+  },
+  {
+    icon: <GalleryIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.prominentDisclosure"),
+    value: I18n.t("support.askPermissions.prominentDisclosureData")
   },
   {
     id: "paymentIssues",
