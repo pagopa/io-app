@@ -23,7 +23,7 @@ type Props = {
   header: React.ReactElement;
   // The accordion component must accept one children
   children: React.ReactElement;
-  // The component should be animated?
+  // The component should be animated? default: true
   animated?: boolean;
   headerStyle?: React.ComponentProps<typeof View>["style"];
   accessibilityLabel?: AccessibilityProps["accessibilityLabel"];
