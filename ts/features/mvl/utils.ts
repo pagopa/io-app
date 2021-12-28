@@ -6,6 +6,11 @@ import i18n from "../../i18n";
 import { showToast } from "../../utils/showToast";
 import { MvlAttachment } from "./types/mvlData";
 
+const savePath =
+  Platform.OS === "ios"
+    ? RNFS.TemporaryDirectoryPath
+    : RNFS.DownloadDirectoryPath;
+
 /**
  * Download an attachment.
  * On iOS download the file using a temporary file with path res.path()
@@ -19,18 +24,12 @@ import { MvlAttachment } from "./types/mvlData";
 export const downloadAttachment = async (
   attachment: MvlAttachment,
   header: { [key: string]: string }
-) => {
-  const savePath =
-    Platform.OS === "ios"
-      ? RNFS.TemporaryDirectoryPath
-      : RNFS.DownloadDirectoryPath;
-
-  return ReactNativeBlobUtil.config({
+) =>
+  ReactNativeBlobUtil.config({
     indicator: true,
     path: savePath + "/" + attachment.displayName,
     timeout: fetchTimeout
   }).fetch("GET", attachment.resourceUrl.href, header);
-};
 
 /**
  * Handle the download of an attachment based on the platform
