@@ -19,7 +19,7 @@ import WebSiteIcon from "../../../../img/assistance/website.svg";
 import InfoIcon from "../../../../img/assistance/info.svg";
 import DeviceIcon from "../../../../img/assistance/telefonia.svg";
 import LoginIcon from "../../../../img/assistance/login.svg";
-import BugIcon from "../../../../img/assistance/ladybug.svg";
+import HistoryIcon from "../../../../img/assistance/history.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import StockIcon from "../../../../img/assistance/giacenza.svg";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
@@ -125,7 +125,7 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     zendeskId: zendeskidentityProviderId
   },
   {
-    icon: <BugIcon {...iconProps} />,
+    icon: <HistoryIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.navigationData"),
     value: I18n.t("support.askPermissions.navigationDataValue")
   }

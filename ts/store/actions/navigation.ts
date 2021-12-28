@@ -9,6 +9,7 @@ import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 import PaginatedMessageDetailScreen from "../../screens/messages/paginated/MessageDetailScreen";
+import PaginatedMessageRouter from "../../screens/messages/paginated/MessageRouterScreen";
 import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
 import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
@@ -198,6 +199,17 @@ export const navigateToPaginatedMessageDetailScreenAction = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.MESSAGE_DETAIL,
+    params
+  });
+
+/**
+ * Open the Message Detail Router supporting the new UIMessage type.
+ */
+export const navigateToPaginatedMessageRouterAction = (
+  params: InferNavigationParams<typeof PaginatedMessageRouter>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.MESSAGE_ROUTER,
     params
   });
 

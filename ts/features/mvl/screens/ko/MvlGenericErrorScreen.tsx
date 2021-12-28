@@ -3,7 +3,6 @@ import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
 import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
@@ -32,7 +31,6 @@ export const MvlGenericErrorScreen = (props: Props): React.ReactElement => {
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex} testID={"MvlGenericErrorScreen"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>TMP MvlGenericErrorScreen</H1>
           <View spacer={true} extralarge={true} />
           <View spacer={true} extralarge={true} />
           <InfoScreenComponent

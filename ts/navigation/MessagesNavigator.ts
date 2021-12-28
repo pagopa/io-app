@@ -17,6 +17,7 @@ import MVL_ROUTES from "../features/mvl/navigation/routes";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
+import PaginatedMessageRouterScreen from "../screens/messages/paginated/MessageRouterScreen";
 import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageDetailScreen";
 import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 
@@ -32,7 +33,9 @@ const baseMessageRouteConfig: NavigationRouteConfigMap<
       : MessagesHomeScreen
   },
   [ROUTES.MESSAGE_ROUTER]: {
-    screen: MessageRouterScreen
+    screen: usePaginatedMessages
+      ? PaginatedMessageRouterScreen
+      : MessageRouterScreen
   },
   [ROUTES.MESSAGE_DETAIL]: {
     screen: usePaginatedMessages
