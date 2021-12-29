@@ -106,7 +106,7 @@ class IngressScreen extends React.PureComponent<Props> {
                 bordered={true}
                 onPress={() => clipboardSetStringWithFeedback(getDeviceId())}
               >
-                <Text>{"copia l'ID per l'assitenza"}</Text>
+                <Text>{"copia l'ID per l'assistenza"}</Text>
               </ButtonDefaultOpacity>
             )}
             <SectionStatusComponent sectionKey={"ingress"} />
