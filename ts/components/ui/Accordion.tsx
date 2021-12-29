@@ -38,6 +38,12 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ *
+ * @param props
+ * @constructor
+ * @deprecated Please use {@link RawAccordion} or {@link IOAccordion}
+ */
 const Accordion: React.FunctionComponent<Props> = (props: Props) => {
   const [expanded, setExpanded] = React.useState(false);
 
