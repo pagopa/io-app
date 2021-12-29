@@ -139,11 +139,12 @@ import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValid
  */
 export const OPERISSUES_10_track = (
   event: string,
-  properties?: Record<string, unknown>
+  properties: Record<string, unknown> | undefined = undefined
 ) => {
   const tag = "OPERISSUES_10_";
   instabugLog(
-    event + (properties ? `__${JSON.stringify(properties)}` : ""),
+    event +
+      (properties !== undefined ? ` [${JSON.stringify(properties)}]` : ""),
     TypeLogs.DEBUG,
     tag
   );
