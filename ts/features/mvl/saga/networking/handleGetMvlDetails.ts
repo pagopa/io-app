@@ -19,7 +19,7 @@ import {
 } from "../../types/mvlData";
 
 const generateAttachmentUrl = (
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: MvlAttachmentId
 ) =>
   `${apiUrlPrefix}/api/v1/legal-messages/${messageId}/attachments/${attachmentId}`;
@@ -31,7 +31,7 @@ const generateAttachmentUrl = (
  */
 const convertMvlAttachment = (
   attachment: Attachment,
-  id: UIMessageId
+  id: string
 ): MvlAttachment =>
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
@@ -67,7 +67,7 @@ const convertMvlDetail = (
         plain: eml.plain_text_content
       },
       attachments: eml.attachments.map(attachment =>
-        convertMvlAttachment(attachment, id)
+        convertMvlAttachment(attachment, certData.data.envelope_id)
       ),
       metadata: {
         id: msgId as MvlId,
