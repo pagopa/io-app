@@ -77,7 +77,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
-import { mixpanelTrack } from "../mixpanel";
+import { mixpanelFlush, mixpanelTrack } from "../mixpanel";
 import { isStringNullyOrEmpty } from "../utils/strings";
 import { localeDateFormat } from "../utils/locale";
 import {
@@ -131,6 +131,8 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
+// eslint-disable-next-line functional/no-let
+let executionCount = 0;
 /**
  * temporary log against https://pagopa.atlassian.net/browse/OPERISSUES-10
  * remove and clean after the issue will be addressed
@@ -142,7 +144,7 @@ export const OPERISSUES_10_track = (
   event: string,
   properties: Record<string, unknown> | undefined = undefined
 ) => {
-  const tag = "OPERISSUES_10_";
+  const tag = `OPERISSUES_10_[${executionCount}]_`;
   instabugLog(
     event +
       (properties !== undefined ? ` [${JSON.stringify(properties)}]` : ""),
@@ -150,6 +152,7 @@ export const OPERISSUES_10_track = (
     `${localeDateFormat(new Date(), "%d/%m/%Y-%H:%M:%S")}-${tag}`
   );
   void mixpanelTrack(`${tag}${event}`, properties);
+  void mixpanelFlush();
 };
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
@@ -158,6 +161,7 @@ const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(): Generator<Effect, void, any> {
+  executionCount++;
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
