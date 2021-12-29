@@ -5,7 +5,7 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import CtaBar from "../../../../components/messages/paginated/MessageDetail/common/CtaBar";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   serviceByIdSelector,
   serviceMetadataByIdSelector
@@ -18,6 +18,8 @@ import { MvlAttachments } from "./components/attachment/MvlAttachments";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
 import { MvlMetadataComponent } from "./components/MvlMetadata";
+import { useEffect } from "react";
+import { loadServiceDetail } from "../../../../store/actions/services";
 
 type Props = { mvl: Mvl };
 
@@ -37,6 +39,12 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
   const { service, serviceMetadata } = useIOSelector(state =>
     selectServiceState(state, props)
   );
+  const dispatch = useIODispatch();
+  useEffect(() => {
+    if (service === undefined) {
+      dispatch(loadServiceDetail.request(props.mvl.message.serviceId));
+    }
+  }, [dispatch, props.mvl.message.serviceId, service]);
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
