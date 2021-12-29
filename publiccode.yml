@@ -9,7 +9,7 @@ releaseDate: '2021-12-29'
 url: 'https://github.com/pagopa/io-app'
 applicationSuite: IO
 landingURL: 'https://io.italia.it/'
-softwareVersion: 1.38.0-rc.9
+softwareVersion: 1.38.0-rc.10
 developmentStatus: beta
 softwareType: standalone/mobile
 roadmap: 'https://io.italia.it/'
