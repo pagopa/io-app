@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
-import * as React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import CtaBar from "../../../../components/messages/paginated/MessageDetail/common/CtaBar";
@@ -13,13 +13,12 @@ import {
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { loadServiceDetail } from "../../../../store/actions/services";
 import { Mvl } from "../../types/mvlData";
 import { MvlAttachments } from "./components/attachment/MvlAttachments";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
 import { MvlMetadataComponent } from "./components/MvlMetadata";
-import { useEffect } from "react";
-import { loadServiceDetail } from "../../../../store/actions/services";
 
 type Props = { mvl: Mvl };
 
