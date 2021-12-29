@@ -526,17 +526,17 @@ workflows:
               ignore: /.*/
 
       # Build Android alpha release & submit to play store
-#      - alpha-release-android:
-#          requires:
-#            - compile-typescript
-#            - run-tests
-#            - run-eslint
-#            - run-prettier
-#          filters:
-#            tags:
-#              only: *release_tag
-#            branches:
-#              ignore: /.*/
+      - alpha-release-android:
+          requires:
+            - compile-typescript
+            - run-tests
+            - run-eslint
+            - run-prettier
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
 
       # Create a release build, submit to the store and distributes to the beta testers
       - ios-beta-release:
@@ -555,7 +555,7 @@ workflows:
       - notify-new-app-version:
           requires:
             - ios-beta-release
-#            - alpha-release-android
+            - alpha-release-android
           filters:
             tags:
               only: *release_tag
