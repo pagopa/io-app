@@ -12,6 +12,7 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
 import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
+import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
 import { MvlAttachment, MvlData } from "../../../../types/mvlData";
 import { useDownloadAttachmentConfirmationBottomSheet } from "./DownloadAttachmentConfirmationBottomSheet";
@@ -28,20 +29,22 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: IOColors.white
   },
-  flexColumn: {
-    flexDirection: "column",
-    flex: 1
-  },
   row: {
     flexDirection: "row",
     alignItems: "flex-start",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    flex: 1
   },
   icon: {
     alignSelf: "center"
   },
-  paddingLeft: {
+  middleSection: {
+    flex: 1,
     paddingLeft: 8
+  },
+  middleLayout: {
+    flex: 1,
+    justifyContent: "center"
   }
 });
 
@@ -61,9 +64,9 @@ const AttachmentIcon = (props: {
   contentType: MvlAttachment["contentType"];
 }) => {
   switch (props.contentType) {
-    case "application/pdf":
+    case ContentTypeValues.applicationPdf:
       return <Pdf {...svgProps} />;
-    case "other":
+    default:
       return <Default {...svgProps} />;
   }
 };
@@ -82,29 +85,31 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
   return (
     // TODO: should present only if the user doesn't choose "don't ask again" https://pagopa.atlassian.net/browse/IAMVL-26
     <TouchableOpacity style={styles.container} onPress={present}>
-      <View style={styles.flexColumn}>
-        <View style={styles.row}>
-          <AttachmentIcon contentType={props.attachment.contentType} />
-          <View style={[IOStyles.flex, styles.paddingLeft]}>
+      <View style={styles.row}>
+        <AttachmentIcon contentType={props.attachment.contentType} />
+        <View style={styles.middleSection}>
+          <View style={styles.middleLayout}>
             <H3
               color={"bluegrey"}
               weight={"SemiBold"}
               ellipsizeMode={"middle"}
               numberOfLines={1}
             >
-              {props.attachment.name}
+              {props.attachment.displayName}
             </H3>
-            <H5 color={"bluegrey"} weight={"Regular"}>
-              {formatByte(props.attachment.size)}
-            </H5>
+            {props.attachment.size && (
+              <H5 color={"bluegrey"} weight={"Regular"} style={IOStyles.flex}>
+                {formatByte(props.attachment.size)}
+              </H5>
+            )}
           </View>
-          <IconFont
-            name={"io-right"}
-            color={IOColors.blue}
-            size={24}
-            style={styles.icon}
-          />
         </View>
+        <IconFont
+          name={"io-right"}
+          color={IOColors.blue}
+          size={24}
+          style={styles.icon}
+        />
       </View>
     </TouchableOpacity>
   );
