@@ -50,6 +50,7 @@ describe("MvlAttachments", () => {
         expect(
           res.queryByText(mvlMockPdfAttachment.displayName)
         ).not.toBeNull();
+        expect(mvlMockPdfAttachment.size).not.toBeNull();
         if (mvlMockPdfAttachment.size) {
           expect(
             res.queryByText(formatByte(mvlMockPdfAttachment.size))
@@ -58,6 +59,7 @@ describe("MvlAttachments", () => {
         expect(
           res.queryByText(mvlMockOtherAttachment.displayName)
         ).not.toBeNull();
+        expect(mvlMockOtherAttachment.size).not.toBeNull();
         if (mvlMockOtherAttachment.size) {
           expect(
             res.queryByText(formatByte(mvlMockOtherAttachment.size))
