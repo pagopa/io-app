@@ -3,6 +3,8 @@ import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import { mixpanelTrack } from "../../mixpanel";
 import { noAnalyticsRoutes } from "../../utils/analytics";
 import { getCurrentRouteName } from "../../utils/navigation";
+import { OPERISSUES_10_track } from "../../sagas/startup";
+import { localeDateFormat } from "../../utils/locale";
 
 export const trackScreen = (
   previousState: NavigationState,
@@ -22,6 +24,10 @@ export const trackScreen = (
     if (!noAnalyticsRoutes.has(screenName)) {
       void mixpanelTrack("SCREEN_CHANGE_V2", {
         SCREEN_NAME: screenName
+      });
+      OPERISSUES_10_track("SCREEN_CHANGE_V2", {
+        SCREEN_NAME: screenName,
+        time: localeDateFormat(new Date(), "%d/%m/%Y-%H:%M:%S")
       });
     }
     // sent to 10-days retention project
