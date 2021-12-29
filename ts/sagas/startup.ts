@@ -141,9 +141,13 @@ export const OPERISSUES_10_track = (
   event: string,
   properties?: Record<string, unknown>
 ) => {
-  const trackEvent = `OPERISSUES_10_${event}`;
-  instabugLog(trackEvent, TypeLogs.DEBUG);
-  void mixpanelTrack(trackEvent, properties);
+  const tag = "OPERISSUES_10_";
+  instabugLog(
+    event + (properties ? `__${JSON.stringify(properties)}` : ""),
+    TypeLogs.DEBUG,
+    tag
+  );
+  void mixpanelTrack(`${tag}${event}`, properties);
 };
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
