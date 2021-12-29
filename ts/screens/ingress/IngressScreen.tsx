@@ -6,6 +6,8 @@ import { Body, Container, List, ListItem, Spinner, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
+import _ from "lodash";
+import { isSome } from "fp-ts/lib/Option";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -20,11 +22,11 @@ import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { IngressCheckBox } from "./CheckBox";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
-import _ from "lodash";
+import { OPERISSUES_10_track } from "../../sagas/startup";
+import { IngressCheckBox } from "./CheckBox";
 
 type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 
@@ -45,6 +47,20 @@ class IngressScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     // Dispatch START_APPLICATION_INITIALIZATION to initialize the app
     this.props.dispatch(startApplicationInitialization());
+  }
+
+  public componentDidUpdate(prevProps: Readonly<Props>) {
+    if (!_.isEqual(prevProps, this.props)) {
+      OPERISSUES_10_track("Ingress_potProfile", {
+        kind: this.props.potProfile.kind
+      });
+      OPERISSUES_10_track("Ingress_SessionInfo", {
+        isSome: isSome(this.props.maybeSessionInfo)
+      });
+      OPERISSUES_10_track("Ingress_SessionToken", {
+        isDefined: this.props.maybeSessionInfo !== undefined
+      });
+    }
   }
 
   public render() {
@@ -125,6 +141,8 @@ function mapStateToProps(state: GlobalState) {
     hasSessionToken: maybeSessionToken !== undefined,
     hasSessionInfo: maybeSessionInfo.isSome(),
     hasProfile: potProfile !== null,
+    potProfile,
+    maybeSessionInfo,
     isProfileEnabled:
       pot.isSome(potProfile) &&
       potProfile.value.has_profile &&

@@ -79,6 +79,7 @@ import { deletePin, getPin } from "../utils/keychain";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { mixpanelTrack } from "../mixpanel";
 import { isStringNullyOrEmpty } from "../utils/strings";
+import { localeDateFormat } from "../utils/locale";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -146,7 +147,7 @@ export const OPERISSUES_10_track = (
     event +
       (properties !== undefined ? ` [${JSON.stringify(properties)}]` : ""),
     TypeLogs.DEBUG,
-    tag
+    `${localeDateFormat(new Date(), "%d/%m/%Y-%H:%M:%S")}-${tag}`
   );
   void mixpanelTrack(`${tag}${event}`, properties);
 };
