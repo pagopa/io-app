@@ -4,18 +4,18 @@ import { StyleSheet } from "react-native";
 import Svg from "react-native-svg";
 import Attachment from "../../../../../../img/features/mvl/attachment.svg";
 import LegalMessage from "../../../../../../img/features/mvl/legalMessage.svg";
+import { H1 } from "../../../../../components/core/typography/H1";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { HeaderDueDateBar } from "../../../../../components/messages/paginated/MessageDetail/common/HeaderDueDateBar";
-import { MessageTitle } from "../../../../../components/messages/paginated/MessageDetail/common/MessageTitle";
 import OrganizationHeader from "../../../../../components/OrganizationHeader";
 import I18n from "../../../../../i18n";
-import { UIMessageDetails } from "../../../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../../../store/reducers/entities/services/types";
 import themeVariables from "../../../../../theme/variables";
+import { Mvl } from "../../../types/mvlData";
 
 type Props = {
-  message: UIMessageDetails;
+  mvl: Mvl;
   hasAttachments: boolean;
   service?: UIService;
 };
@@ -101,7 +101,7 @@ export const MvlDetailsHeader = (props: Props) => (
     )}
     <View spacer={true} large={true} />
 
-    <MessageTitle title={props.message.subject} isPrescription={false} />
+    <H1>{props.mvl.legalMessage.metadata.subject}</H1>
     <View spacer={true} small={true} />
     <View spacer={true} xsmall={true} />
     <LegalMessageHeader hasAttachments={props.hasAttachments} />
@@ -110,7 +110,10 @@ export const MvlDetailsHeader = (props: Props) => (
 
     <View style={styles.withoutHorizontalContentPadding}>
       {/* TODO: TMP, how is calculated hasPaidBadge without using the paginated data? https://pagopa.atlassian.net/browse/IAMVL-22 */}
-      <HeaderDueDateBar hasPaidBadge={false} messageDetails={props.message} />
+      <HeaderDueDateBar
+        hasPaidBadge={false}
+        messageDetails={props.mvl.message}
+      />
     </View>
   </>
 );

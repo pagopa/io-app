@@ -18,6 +18,8 @@ export type MvlBody = {
 
 export type MvlAttachmentId = string & IUnitTag<"MvlAttachmentId">;
 
+export type MvlId = string & IUnitTag<"MvlId">;
+
 /**
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
  */
@@ -38,6 +40,9 @@ export type MvlAttachment = {
  * TODO: Just an initial stub, should be completed and refined
  */
 export type MvlMetadata = {
+  id: MvlId;
+  subject: string;
+  timestamp: Date;
   sender: EmailAddress;
   receiver: EmailAddress;
   cc: ReadonlyArray<EmailAddress>;
