@@ -21,6 +21,10 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import SectionStatusComponent from "../../components/SectionStatus";
 import { IngressCheckBox } from "./CheckBox";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { getDeviceId } from "../../utils/device";
+import _ from "lodash";
 
 type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 
@@ -59,6 +63,15 @@ class IngressScreen extends React.PureComponent<Props> {
         label: I18n.t("startup.profileEnabled")
       }
     ];
+    const showDeviceIdButton = _.isEqual(
+      [
+        this.props.hasSessionToken,
+        this.props.hasSessionInfo,
+        this.props.hasProfile,
+        this.props.isProfileEnabled
+      ],
+      [false, false, true, false]
+    );
     return (
       <BaseScreenComponent
         goBack={false}
@@ -86,6 +99,16 @@ class IngressScreen extends React.PureComponent<Props> {
             ))}
           </List>
           <View style={{ marginTop: 48 }}>
+            {showDeviceIdButton && (
+              <ButtonDefaultOpacity
+                style={{ alignSelf: "center" }}
+                primary={false}
+                bordered={true}
+                onPress={() => clipboardSetStringWithFeedback(getDeviceId())}
+              >
+                <Text>{"copia l'ID per l'assitenza"}</Text>
+              </ButtonDefaultOpacity>
+            )}
             <SectionStatusComponent sectionKey={"ingress"} />
           </View>
         </Container>
