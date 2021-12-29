@@ -6,7 +6,12 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendMvlClient } from "../../api/backendMvl";
 import { LegalMessageWithContent } from "../../../../../definitions/backend/LegalMessageWithContent";
-import { Mvl, MvlAttachment, MvlAttachmentId } from "../../types/mvlData";
+import {
+  Mvl,
+  MvlAttachment,
+  MvlAttachmentId,
+  MvlId
+} from "../../types/mvlData";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { Attachment } from "../../../../../definitions/backend/Attachment";
@@ -42,7 +47,9 @@ const convertMvlDetail = (
 ): Mvl => {
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   const eml = legalMessageWithContent.legal_message.eml;
-  const certDataHeader = legalMessageWithContent.legal_message.cert_data.header;
+  const certData = legalMessageWithContent.legal_message.cert_data;
+  const certDataHeader = certData.header;
+  const msgId = certData.data.msg_id as string;
   return {
     message: toUIMessageDetails(legalMessageWithContent),
     legalMessage: {
@@ -52,6 +59,9 @@ const convertMvlDetail = (
       },
       attachments: eml.attachments.map(convertMvlAttachment),
       metadata: {
+        id: msgId as MvlId,
+        timestamp: certData.data.timestamp,
+        subject: eml.subject,
         sender: EmailAddress.decode(certDataHeader.sender).getOrElse(
           valueNotAvailable as EmailAddress
         ),

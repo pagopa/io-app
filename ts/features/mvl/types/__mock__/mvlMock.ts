@@ -10,6 +10,7 @@ import {
   MvlAttachmentId,
   MvlBody,
   MvlData,
+  MvlId,
   MvlMetadata
 } from "../mvlData";
 
@@ -50,6 +51,9 @@ export const mvlMockOtherAttachment: MvlAttachment = {
 };
 
 export const mvlMockMetadata: MvlMetadata = {
+  id: "opec2951.20210927163605.31146.306.1.66@pec.poc.it" as MvlId,
+  timestamp: new Date("2021-11-09T01:30:00.000Z"),
+  subject: "Legal Message subject",
   sender: "sender@mailpec.com" as EmailAddress,
   receiver: "receiver@emailpec.com" as EmailAddress,
   cc: ["cc1@emailpec.com" as EmailAddress, "cc2@emailpec.com" as EmailAddress],
