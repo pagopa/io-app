@@ -1,37 +1,46 @@
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { mvlDetailsLoad } from "../../store/actions";
+import { Attachment } from "../../../../../definitions/backend/Attachment";
+import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
+import { LegalMessageWithContent } from "../../../../../definitions/backend/LegalMessageWithContent";
+import { apiUrlPrefix } from "../../../../config";
+import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendMvlClient } from "../../api/backendMvl";
-import { LegalMessageWithContent } from "../../../../../definitions/backend/LegalMessageWithContent";
+import { mvlDetailsLoad } from "../../store/actions";
 import {
   Mvl,
   MvlAttachment,
   MvlAttachmentId,
   MvlId
 } from "../../types/mvlData";
-import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
-import { Attachment } from "../../../../../definitions/backend/Attachment";
-import { Byte } from "../../../../types/digitalInformationUnit";
-import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
+
+const generateAttachmentUrl = (
+  messageId: string,
+  attachmentId: MvlAttachmentId
+) =>
+  `${apiUrlPrefix}/api/v1/legal-messages/${messageId}/attachments/${attachmentId}`;
 
 /**
  * convert the remote legal message attachment into the relative local domain model
  * @param attachment
+ * @param id
  */
-const convertMvlAttachment = (attachment: Attachment): MvlAttachment =>
+const convertMvlAttachment = (
+  attachment: Attachment,
+  id: string
+): MvlAttachment =>
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
     id: attachment.id as MvlAttachmentId,
-    name: attachment.name,
-    contentType: attachment.content_type.toLowerCase().endsWith("pdf")
-      ? "application/pdf"
-      : "other",
-    size: 12345 as Byte,
-    resourceUrl: { href: attachment.url ?? "" }
+    displayName: attachment.name,
+    contentType: attachment.content_type.toLowerCase(),
+    resourceUrl: {
+      href: generateAttachmentUrl(id, attachment.id as MvlAttachmentId)
+    }
   });
 
 /**
@@ -57,7 +66,9 @@ const convertMvlDetail = (
         html: eml.html_content,
         plain: eml.plain_text_content
       },
-      attachments: eml.attachments.map(convertMvlAttachment),
+      attachments: eml.attachments.map(attachment =>
+        convertMvlAttachment(attachment, certData.data.envelope_id)
+      ),
       metadata: {
         id: msgId as MvlId,
         timestamp: certData.data.timestamp,

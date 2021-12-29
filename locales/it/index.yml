@@ -2880,9 +2880,12 @@ features:
       hasAttachments: "contiene allegati"
       attachments:
         title: "Allegati"
+        toast:
+          success: "Download completato"
+          failure: "Si è verificato un errore durante il download dell'allegato"
         bottomSheet:
           title: "Fai attenzione agli allegati"
-          body: "IO non può garantire la sicurezza del contenuto dell’allegato: salva sul tuo dispositivo o condividi solo i file che provengono da mittenti affidabili."
+          body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
           checkBox: "OK, non mostrarmelo più"
       body:
         plain: "testo semplice"

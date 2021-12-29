@@ -36,7 +36,7 @@ export const mvlMockBody: MvlBody = {
 
 export const mvlMockPdfAttachment: MvlAttachment = {
   id: "1" as MvlAttachmentId,
-  name: "invoice.pdf",
+  displayName: "invoice.pdf",
   contentType: "application/pdf",
   size: 1959520 as Byte,
   resourceUrl: { href: "htts://www.invoicepdf.com/invoce.pdf" }
@@ -44,7 +44,7 @@ export const mvlMockPdfAttachment: MvlAttachment = {
 
 export const mvlMockOtherAttachment: MvlAttachment = {
   id: "2" as MvlAttachmentId,
-  name: "image.png",
+  displayName: "image.png",
   contentType: "other",
   size: 125952 as Byte,
   resourceUrl: { href: "htts://www.randomImage.com/image.png" }
