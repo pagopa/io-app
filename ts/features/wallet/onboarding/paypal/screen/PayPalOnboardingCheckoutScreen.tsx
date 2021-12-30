@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Option } from "fp-ts/lib/Option";
 import { NavigationContext } from "react-navigation";
+import { Alert } from "react-native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -49,6 +50,7 @@ const LoadingOrError = (loadingProps: {
 const CheckoutContent = (
   props: Props & {
     onCheckoutCompleted: (outcode: Option<string>) => void;
+    onGoBack: () => void;
   }
 ) => {
   const [isOnboardingCompleted, setIsOnboardingComplete] = useState(false);
@@ -84,7 +86,7 @@ const CheckoutContent = (
             props.onCheckoutCompleted(outcomeCode);
           }}
           outcomeQueryparamName={webViewOutcomeParamName}
-          onGoBack={props.goBack}
+          onGoBack={props.onGoBack}
           modalHeaderTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
         />
       );
@@ -114,14 +116,28 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
     navigation.dispatch(navigateToPayPalCheckoutCompleted());
   };
 
+  const handleBack = () => {
+    Alert.alert(I18n.t("wallet.abortWebView.title"), "", [
+      {
+        text: I18n.t("wallet.abortWebView.confirm"),
+        onPress: props.goBack,
+        style: "cancel"
+      },
+      {
+        text: I18n.t("wallet.abortWebView.cancel")
+      }
+    ]);
+  };
+
   return (
     <BaseScreenComponent
-      goBack={props.goBack}
+      goBack={handleBack}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
       <CheckoutContent
         {...props}
+        onGoBack={handleBack}
         onCheckoutCompleted={handleCheckoutCompleted}
       />
     </BaseScreenComponent>
