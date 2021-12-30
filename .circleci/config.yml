@@ -447,6 +447,7 @@ jobs:
             cd _io-dev-api-server_
             cp ../scripts/api-config.json config/config.json
             yarn
+            yarn generate:all
             yarn start > /tmp/io-dev-api-server.log &
             # wait for the server to be up and running
             sleep 10
