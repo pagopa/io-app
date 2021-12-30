@@ -4,6 +4,8 @@ import { NavigationInjectedProps } from "react-navigation";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
+import { setMessageReadState } from "../../../store/actions/messages";
 import { mvlDetailsLoad } from "../store/actions";
 import { mvlFromIdSelector } from "../store/reducers/byId";
 import { Mvl } from "../types/mvlData";
@@ -47,8 +49,11 @@ export const MvlRouterScreen = (
   const mvlId = props.navigation.getParam("id");
   const mvlPot = useIOSelector(state => mvlFromIdSelector(state, mvlId));
   const dispatch = useIODispatch();
+  const isRead = useIOSelector(state => isMessageRead(state, mvlId));
   useOnFirstRender(() => {
-    // TODO: setMessageRead https://pagopa.atlassian.net/browse/IAMVL-21
+    if (!isRead) {
+      dispatch(setMessageReadState(mvlId, true));
+    }
     if (!pot.isSome(mvlPot)) {
       dispatch(mvlDetailsLoad.request(mvlId));
     }

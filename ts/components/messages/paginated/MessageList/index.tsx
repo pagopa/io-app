@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import { pageSize } from "../../../../config";
+import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import I18n from "../../../../i18n";
 import {
   loadNextPageMessages,
@@ -328,7 +328,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
    * true backwards pagination. Is just to refresh the data.
    */
   loadPreviousPage: (cursor: Cursor) => {
-    dispatch(loadPreviousPageMessages.request({ pageSize: 100, cursor }));
+    dispatch(
+      loadPreviousPageMessages.request({
+        pageSize: maximumItemsFromAPI,
+        cursor
+      })
+    );
   }
 });
 
