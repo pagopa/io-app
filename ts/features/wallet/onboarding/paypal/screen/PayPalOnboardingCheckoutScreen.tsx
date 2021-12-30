@@ -116,6 +116,7 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
     navigation.dispatch(navigateToPayPalCheckoutCompleted());
   };
 
+  // notify the user that the current onboarding operation could be interrupted
   const handleBack = () => {
     Alert.alert(I18n.t("wallet.abortWebView.title"), "", [
       {
