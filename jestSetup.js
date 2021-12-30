@@ -39,6 +39,11 @@ jest.mock("react-native-reanimated", () => {
   return Reanimated;
 });
 
+jest.mock("react-native-blob-util", () => ({
+  DocumentDir: jest.fn(),
+  polyfill: jest.fn()
+}));
+
 NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
   forceTouchAvailable: false
 };

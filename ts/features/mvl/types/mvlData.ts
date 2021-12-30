@@ -5,7 +5,6 @@ import {
   UIMessageDetails,
   WithUIMessageId
 } from "../../../store/reducers/entities/messages/types";
-import { ContentType } from "../../../types/contentType";
 import { Byte } from "../../../types/digitalInformationUnit";
 
 /**
@@ -18,17 +17,19 @@ export type MvlBody = {
 
 export type MvlAttachmentId = string & IUnitTag<"MvlAttachmentId">;
 
+export type MvlId = string & IUnitTag<"MvlId">;
+
 /**
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
  */
 export type MvlAttachment = {
   id: MvlAttachmentId;
   // a display name for the file
-  name: string;
-  // atm we have to distinguish only the pdf files from the others for a custom (future) view
-  contentType: Extract<ContentType, "application/pdf"> | "other";
+  displayName: string;
+  // a generic content type for a file
+  contentType: string;
   // size (in Byte) of the attachment, for display purpose
-  size: Byte;
+  size?: Byte;
   // The url that can be used to retrieve the resource
   resourceUrl: ValidUrl;
 };
@@ -38,6 +39,9 @@ export type MvlAttachment = {
  * TODO: Just an initial stub, should be completed and refined
  */
 export type MvlMetadata = {
+  id: MvlId;
+  subject: string;
+  timestamp: Date;
   sender: EmailAddress;
   receiver: EmailAddress;
   cc: ReadonlyArray<EmailAddress>;
