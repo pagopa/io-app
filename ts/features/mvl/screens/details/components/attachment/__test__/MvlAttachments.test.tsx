@@ -1,7 +1,13 @@
-import { render } from "@testing-library/react-native";
 import React from "react";
+import { NavigationParams } from "react-navigation";
+import { createStore } from "redux";
 import I18n from "../../../../../../../i18n";
+import { applicationChangeState } from "../../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../../store/reducers/types";
 import { formatByte } from "../../../../../../../types/digitalInformationUnit";
+import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import MVL_ROUTES from "../../../../../navigation/routes";
 import {
   mvlMockOtherAttachment,
   mvlMockPdfAttachment
@@ -20,7 +26,10 @@ describe("MvlAttachments", () => {
   describe("When there are no attachments", () => {
     it("Shouldn't be rendered", () => {
       const res = renderComponent({ attachments: [] });
-      expect(res.toJSON()).toBeNull();
+
+      expect(
+        res.queryByText(I18n.t("features.mvl.details.attachments.title"))
+      ).toBeNull();
     });
   });
 
@@ -38,18 +47,38 @@ describe("MvlAttachments", () => {
         const res = renderComponent({
           attachments: [mvlMockPdfAttachment, mvlMockOtherAttachment]
         });
-        expect(res.queryByText(mvlMockPdfAttachment.name)).not.toBeNull();
         expect(
-          res.queryByText(formatByte(mvlMockPdfAttachment.size))
+          res.queryByText(mvlMockPdfAttachment.displayName)
         ).not.toBeNull();
-        expect(res.queryByText(mvlMockOtherAttachment.name)).not.toBeNull();
+        expect(mvlMockPdfAttachment.size).not.toBeNull();
+        if (mvlMockPdfAttachment.size) {
+          expect(
+            res.queryByText(formatByte(mvlMockPdfAttachment.size))
+          ).not.toBeNull();
+        }
         expect(
-          res.queryByText(formatByte(mvlMockOtherAttachment.size))
+          res.queryByText(mvlMockOtherAttachment.displayName)
         ).not.toBeNull();
+        expect(mvlMockOtherAttachment.size).not.toBeNull();
+        if (mvlMockOtherAttachment.size) {
+          expect(
+            res.queryByText(formatByte(mvlMockOtherAttachment.size))
+          ).not.toBeNull();
+        }
       });
     });
   });
 });
 
-const renderComponent = (props: React.ComponentProps<typeof MvlAttachments>) =>
-  render(<MvlAttachments {...props} />);
+const renderComponent = (
+  props: React.ComponentProps<typeof MvlAttachments>
+) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    () => <MvlAttachments {...props} />,
+    MVL_ROUTES.DETAILS,
+    {},
+    store
+  );
+};

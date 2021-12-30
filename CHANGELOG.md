@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.38.0-rc.10](https://github.com/pagopa/io-app/compare/1.38.0-rc.9...1.38.0-rc.10) (2021-12-29)
+
+
+### Chores
+
+* [[IA-607](https://pagopa.atlassian.net/browse/IA-607)] Increase debug log for OPERISSUES_10 ([#3625](https://github.com/pagopa/io-app/issues/3625)) ([4dbf2be](https://github.com/pagopa/io-app/commit/4dbf2be4c6d4affc29cda69f17affdd6a135842e))
+* **Messaggi a valore legale:** [[IAMVL-44](https://pagopa.atlassian.net/browse/IAMVL-44)] Revert activate FF and comment Android release out ([#3624](https://github.com/pagopa/io-app/issues/3624))" ([#3626](https://github.com/pagopa/io-app/issues/3626)) ([c9bd787](https://github.com/pagopa/io-app/commit/c9bd78714aec1d64be087a9e2bd928b05606992a))
+
+## [1.38.0-rc.9](https://github.com/pagopa/io-app/compare/1.38.0-rc.8...1.38.0-rc.9) (2021-12-29)
+
+
+### Features
+
+* **Messaggi a valore legale:** [[IAMVL-21](https://pagopa.atlassian.net/browse/IAMVL-21)] Read status for MVL ([#3621](https://github.com/pagopa/io-app/issues/3621)) ([b930aa0](https://github.com/pagopa/io-app/commit/b930aa05f19f0a7732c11745eadf1c77f40385ef))
+
+
+### Bug Fixes
+
+* [[IA-598](https://pagopa.atlassian.net/browse/IA-598)] Fix wrong name surname value in ZendeskAskPermissions screen ([#3610](https://github.com/pagopa/io-app/issues/3610)) ([1225569](https://github.com/pagopa/io-app/commit/1225569a50aa64bb588bf0a413c6f6f239ddb815))
+* [[IA-599](https://pagopa.atlassian.net/browse/IA-599)] Fix wrong icons ([#3615](https://github.com/pagopa/io-app/issues/3615)) ([5647ec6](https://github.com/pagopa/io-app/commit/5647ec680aec1167212b17412528fed7b5a6b74f))
+
+
+### Chores
+
+* **Messaggi a valore legale:** [[IAMVL-13](https://pagopa.atlassian.net/browse/IAMVL-13)] Identify MVL in the list ([#3599](https://github.com/pagopa/io-app/issues/3599)) ([ca979f0](https://github.com/pagopa/io-app/commit/ca979f0bc446773f3b37f4974a1c9d1d8c623603))
+* **Messaggi a valore legale:** [[IAMVL-19](https://pagopa.atlassian.net/browse/IAMVL-19)] Display legal message attachments ([#3583](https://github.com/pagopa/io-app/issues/3583)) ([0c745ee](https://github.com/pagopa/io-app/commit/0c745ee6768fce48bb6acc20ffcf493ecd546693))
+* **Messaggi a valore legale:** [[IAMVL-20](https://pagopa.atlassian.net/browse/IAMVL-20)] Display legal message metadata ([#3596](https://github.com/pagopa/io-app/issues/3596)) ([0dc8658](https://github.com/pagopa/io-app/commit/0dc8658e713e0e451e187631cf63cf867e75eaf9))
+* **Messaggi a valore legale:** [[IAMVL-27](https://pagopa.atlassian.net/browse/IAMVL-27),[IAMVL-34](https://pagopa.atlassian.net/browse/IAMVL-34)] Download attachments ([#3618](https://github.com/pagopa/io-app/issues/3618)) ([dfd4590](https://github.com/pagopa/io-app/commit/dfd4590ac67c20d8731e24030203e4b2623c39ec))
+* **Messaggi a valore legale:** [[IAMVL-32](https://pagopa.atlassian.net/browse/IAMVL-32)] Add get legal message API ([#3609](https://github.com/pagopa/io-app/issues/3609)) ([35b2ac3](https://github.com/pagopa/io-app/commit/35b2ac3d2d3e6f2f2dab0546c4562fea0a07b0f3))
+* **Messaggi a valore legale:** [[IAMVL-33](https://pagopa.atlassian.net/browse/IAMVL-33)] Update legal message error screen ([#3612](https://github.com/pagopa/io-app/issues/3612)) ([7766398](https://github.com/pagopa/io-app/commit/77663988cedf49f76641e1b0e183181d952cc11a))
+* **Messaggi a valore legale:** [[IAMVL-36](https://pagopa.atlassian.net/browse/IAMVL-36)] Fetch service if not present in MvlDetailsScreen ([#3623](https://github.com/pagopa/io-app/issues/3623)) ([4d9ec9c](https://github.com/pagopa/io-app/commit/4d9ec9c5274306199c5c07128f7a952b552bf558))
+* **Messaggi a valore legale:** [[IAMVL-44](https://pagopa.atlassian.net/browse/IAMVL-44)] Activate FF and comment Android release out ([#3624](https://github.com/pagopa/io-app/issues/3624)) ([ef36d06](https://github.com/pagopa/io-app/commit/ef36d0675e560d54a56c8d5e4d0bb86c69d8eb2a))
+* [[IA-505](https://pagopa.atlassian.net/browse/IA-505)] Copy changes related to PayPal ([#3549](https://github.com/pagopa/io-app/issues/3549)) ([e98e05f](https://github.com/pagopa/io-app/commit/e98e05fe3e8b9baf3192c1d8e841f45fb29fa2cc))
+* [IA-563, IA-463] Update push notifications routing for pagination ([#3580](https://github.com/pagopa/io-app/issues/3580)) ([2cf419a](https://github.com/pagopa/io-app/commit/2cf419a089e3f931fb47b7ab330142811019ab07))
+* [[IA-591](https://pagopa.atlassian.net/browse/IA-591)] Copy changes CGN [#3607](https://github.com/pagopa/io-app/issues/3607) ([667e3c4](https://github.com/pagopa/io-app/commit/667e3c470f533b4faf292ed4ebc97f89a42f6102))
+* Disable flaky test for constantPollingFetch ([#3613](https://github.com/pagopa/io-app/issues/3613)) ([a2df9db](https://github.com/pagopa/io-app/commit/a2df9db7dbb673ac6b0949d1f1eaf566377a694b))
+* Update CGN specs endpoint ([#3622](https://github.com/pagopa/io-app/issues/3622)) ([37296c5](https://github.com/pagopa/io-app/commit/37296c520d5f1f2a520816ebeaae2ce08c9ce90f))
+
 ## [1.38.0-rc.8](https://github.com/pagopa/io-app/compare/1.38.0-rc.7...1.38.0-rc.8) (2021-12-22)
 
 
