@@ -106,14 +106,15 @@ global:
     tomorrow: "domani"
   dateFormats:
     shortFormat: "%d/%m/%Y"
-    shortFormatWithTime: "%d/%m/%Y, %H.%M"
+    shortFormatWithTime: "%d/%m/%Y, %H:%M"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
     fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
-    timeFormat: "%H.%M"
+    timeFormat: "%H:%M"
+    timeFormatWithTimezone: "%H:%M:%S (%z)"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -2879,13 +2880,28 @@ features:
       hasAttachments: "contiene allegati"
       attachments:
         title: "Allegati"
+        toast:
+          success: "Download completato"
+          failure: "Si è verificato un errore durante il download dell'allegato"
         bottomSheet:
           title: "Fai attenzione agli allegati"
-          body: "IO non può garantire la sicurezza del contenuto dell’allegato: salva sul tuo dispositivo o condividi solo i file che provengono da mittenti affidabili."
+          body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
           checkBox: "OK, non mostrarmelo più"
       body:
         plain: "testo semplice"
         html: "html"
+      metadata:
+        title: "il messaggio ha valore legale"
+        description: "Il giorno {{date}} alle ore {{time}} il messaggio \"{{subject}}\" ti è stato inviato da \"{{sender}}\""
+        messageId: "Identificativo messaggio:"
+        links:
+          copy: "Copia identificativo messaggio"
+          recipients: "Mostra elenco completo dei destinatari"
+          signature: "Mostra dettagli della firma"
+          certificates: "Mostra i certificati"
+          originalMessage: "Scarica il messaggio originale"
+          datiCert: "Scarica daticert.xml"
+          smime: "Scarica smime.p7s"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."

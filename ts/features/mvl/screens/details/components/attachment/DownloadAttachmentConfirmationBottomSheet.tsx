@@ -7,12 +7,15 @@ import { Body } from "../../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import i18n from "../../../../../../i18n";
+import { useIOSelector } from "../../../../../../store/hooks";
+import { ioBackendAuthenticationHeaderSelector } from "../../../../../../store/reducers/authentication";
 import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { MvlAttachment } from "../../../../types/mvlData";
+import { handleDownloadResult } from "../../../../utils";
 
 type Props = {
   attachment: MvlAttachment;
@@ -74,12 +77,17 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
 ) => {
   const { present, dismiss } = useIOBottomSheetRaw(375);
 
+  const authHeader = useIOSelector(ioBackendAuthenticationHeaderSelector);
+
   const openModalBox = () =>
     present(
       <DownloadAttachmentConfirmationBottomSheet
         attachment={attachment}
         onCancel={dismiss}
-        onConfirm={dismiss}
+        onConfirm={() => {
+          void handleDownloadResult(attachment, authHeader);
+          dismiss();
+        }}
       />,
       i18n.t("features.mvl.details.attachments.bottomSheet.title")
     );

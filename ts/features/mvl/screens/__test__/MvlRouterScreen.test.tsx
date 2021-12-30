@@ -1,11 +1,12 @@
 import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
-import configureMockStore from "redux-mock-store";
+import configureMockStore, { MockStore } from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { setMessageReadState } from "../../../../store/actions/messages";
 import MVL_ROUTES from "../../navigation/routes";
 import { mvlDetailsLoad } from "../../store/actions";
 import { mvlMock, mvlMockId } from "../../types/__mock__/mvlMock";
@@ -39,9 +40,16 @@ describe("MvlRouterScreen behaviour", () => {
       } as GlobalState);
       renderComponent(finalStore);
 
-      expect(finalStore.getActions()).toStrictEqual([
+      expect(finalStore.getActions()).toContainEqual(
         mvlDetailsLoad.request(mvlMockId)
-      ]);
+      );
+    });
+
+    it("Should set the message ID as read", () => {
+      const { store } = renderWithDefaultStore();
+      expect(store.getActions()).toContainEqual(
+        setMessageReadState(mvlMockId, true)
+      );
     });
 
     describe("And the mvlDetailsLoad fails", () => {
@@ -74,15 +82,16 @@ describe("MvlRouterScreen behaviour", () => {
       });
     });
   });
+
   describe("When the screen is rendered with a failure in feature.mvl.byId", () => {
+    const failure = mvlDetailsLoad.failure({
+      kind: "generic",
+      id: mvlMockId,
+      value: new Error("An error")
+    });
+
     it("Should render the MvlLoadingScreen", () => {
-      const render = dispatchActionAndRenderComponent([
-        mvlDetailsLoad.failure({
-          kind: "generic",
-          id: mvlMockId,
-          value: new Error("An error")
-        })
-      ]);
+      const render = dispatchActionAndRenderComponent([failure]);
 
       expect(render.component.queryByTestId("MvlLoadingScreen")).not.toBeNull();
     });
@@ -93,26 +102,22 @@ describe("MvlRouterScreen behaviour", () => {
         applicationChangeState("active")
       );
       const store = createStore(appReducer, globalState as any);
-      store.dispatch(
-        mvlDetailsLoad.failure({
-          kind: "generic",
-          id: mvlMockId,
-          value: new Error("An error")
-        })
-      );
+      store.dispatch(failure);
       const mockStore = configureMockStore<GlobalState>();
       const finalStore: ReturnType<typeof mockStore> = mockStore({
         ...store.getState()
       } as GlobalState);
       renderComponent(finalStore);
 
-      expect(finalStore.getActions()).toStrictEqual([
+      expect(finalStore.getActions()).toContainEqual(
         mvlDetailsLoad.request(mvlMockId)
-      ]);
+      );
     });
   });
 
   describe("When the screen is rendered with a success in feature.mvl.byId", () => {
+    const success = mvlDetailsLoad.success(mvlMock);
+
     it("Should render the MvlDetailsScreen", () => {
       const render = dispatchActionAndRenderComponent([
         mvlDetailsLoad.success(mvlMock)
@@ -133,7 +138,17 @@ describe("MvlRouterScreen behaviour", () => {
       } as GlobalState);
       renderComponent(finalStore);
 
-      expect(finalStore.getActions()).toStrictEqual([]);
+      expect(finalStore.getActions()).not.toContainEqual(
+        mvlDetailsLoad.request(mvlMockId)
+      );
+    });
+
+    it("Should set the message ID as read", () => {
+      const { store } = renderWithDefaultStore();
+      store.dispatch(success);
+      expect(store.getActions()).toContainEqual(
+        setMessageReadState(mvlMockId, true)
+      );
     });
   });
 });
@@ -145,7 +160,7 @@ const dispatchActionAndRenderComponent = (actions: ReadonlyArray<Action>) => {
   return renderComponent(store);
 };
 
-const renderComponent = (store: Store) => ({
+const renderComponent = (store: MockStore<GlobalState> | Store) => ({
   component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     MvlRouterScreen,
     MVL_ROUTES.DETAILS,
@@ -154,3 +169,14 @@ const renderComponent = (store: Store) => ({
   ),
   store
 });
+
+function renderWithDefaultStore() {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  const mockStore = configureMockStore<GlobalState>();
+  const finalStore: ReturnType<typeof mockStore> = mockStore({
+    ...store.getState()
+  } as GlobalState);
+  const result = renderComponent(finalStore);
+  return { ...result, store: result.store as MockStore<GlobalState> };
+}

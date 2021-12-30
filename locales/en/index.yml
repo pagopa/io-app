@@ -106,7 +106,7 @@ global:
     tomorrow: "tomorrow"
   dateFormats:
     shortFormat: "%d/%m/%Y"
-    shortFormatWithTime: "%d/%m/%Y, %H.%M"
+    shortFormatWithTime: "%d/%m/%Y, %H:%M"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
     fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
@@ -115,7 +115,8 @@ global:
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
     shortNumericMonthYear: "%m/%-y"
-    timeFormat: "%H.%M"
+    timeFormat: "%H:%M"
+    timeFormatWithTimezone: "%H:%M:%S (%z)"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -2851,13 +2852,28 @@ features:
       hasAttachments: "contains attachments"
       attachments:
         title: "Attachments"
+        toast:
+          success: "Download complete"
+          failure: "An error occurred while downloading the attachment"
         bottomSheet:
           title: "Pay attention to attachments"
-          body: "IO cannot guarantee the security of the content of the attachment: save on your device or share only the files that come from trusted senders."
+          body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
           checkBox: "OK, don't show me again"
       body:
         plain: "plain text"
         html: "html"
+      metadata:
+        title: "the message has legal value"
+        description: "On {{date}} at {{time}} the message \"{{subject}}\" was sent to you by \"{{sender}}\""
+        messageId: "Message identifier:"
+        links:
+          copy: "Copy message identifier"
+          recipients: "Show full list of recipients"
+          signature: "Show signature details"
+          certificates: "Show certificates"
+          originalMessage: "Download original message"
+          datiCert: "Download daticert.xml"
+          smime: "Download smime.p7s"
   euCovidCertificate:
     save:
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
