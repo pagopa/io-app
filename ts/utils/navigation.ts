@@ -79,8 +79,10 @@ export function getRouteName(route: NavigationRoute): Option<string> {
  */
 export const isOnboardingCompleted = () => {
   const route = NavigationService.getCurrentState();
-  if (route === null) {
+
+  if (route === undefined) {
     return false;
   }
+
   return route.routes?.length > 0 && route.routes[0].routeName === ROUTES.MAIN;
 };
