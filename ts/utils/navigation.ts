@@ -80,7 +80,7 @@ export function getRouteName(route: NavigationRoute): Option<string> {
 export const isOnboardingCompleted = () => {
   const route = NavigationService.getCurrentState();
 
-  if (route === undefined || route === null) {
+  if (route === null) {
     return false;
   }
 
