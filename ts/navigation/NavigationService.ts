@@ -15,7 +15,7 @@ import {
 // eslint-disable-next-line functional/no-let
 let navigator: NavigationContainerComponent | null;
 // eslint-disable-next-line functional/no-let
-let currentRouteState: NavigationState | null;
+let currentRouteState: NavigationState | null = null;
 
 const setTopLevelNavigator = (
   navigatorRef: NavigationContainerComponent | null
@@ -24,7 +24,8 @@ const setTopLevelNavigator = (
 };
 
 const setCurrentState = (state: NavigationState) => {
-  currentRouteState = state;
+  // This is a security check since sometime the onNavigationStateChange could return an undefined state ignoring the type
+  currentRouteState = state ?? null;
 };
 
 const navigate = (routeName: string, params?: NavigationParams) => {
