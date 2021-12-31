@@ -15,7 +15,7 @@ import {
 // eslint-disable-next-line functional/no-let
 let navigator: NavigationContainerComponent | null;
 // eslint-disable-next-line functional/no-let
-let currentRouteState: NavigationState | null;
+let currentRouteState: NavigationState | undefined;
 
 const setTopLevelNavigator = (
   navigatorRef: NavigationContainerComponent | null
@@ -44,7 +44,7 @@ const getCurrentRouteKey = (): string | undefined =>
 const getCurrentRoute = (): NavigationLeafRoute | undefined =>
   currentRouteState ? utilsGetCurrentRoute(currentRouteState) : undefined;
 
-const getCurrentState = (): NavigationState | null => currentRouteState;
+const getCurrentState = (): NavigationState | undefined => currentRouteState;
 
 // add other navigation functions that you need and export them
 export default {
