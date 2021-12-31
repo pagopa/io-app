@@ -24,7 +24,7 @@ const setTopLevelNavigator = (
 };
 
 const setCurrentState = (state: NavigationState) => {
-  // This is a security check since sometime the onNavigationStateChange could return an empty state ignoring the type
+  // This is a security check since sometime the onNavigationStateChange could return an undefined state ignoring the type
   currentRouteState = state ?? null;
 };
 
