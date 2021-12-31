@@ -61,7 +61,7 @@ interface OwnProps {
   appLogo?: boolean;
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
-
+  backButtonTestID?: string;
   // As of now, the following prop is propagated through 4 levels
   // to finally display a checkbox in SendSupportRequestOptions
   shouldAskForScreenshotWithInitialValue?: boolean;
@@ -92,6 +92,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       accessibilityEvents,
       accessibilityLabel,
       appLogo,
+      backButtonTestID,
       children,
       contextualHelp,
       contextualHelpMarkdown,
@@ -237,6 +238,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           onAccessibilityNavigationHeaderFocus={
             onAccessibilityNavigationHeaderFocus
           }
+          backButtonTestID={backButtonTestID}
           accessibilityEvents={accessibilityEvents}
           accessibilityLabel={accessibilityLabel}
           showInstabugChat={showInstabugChat}

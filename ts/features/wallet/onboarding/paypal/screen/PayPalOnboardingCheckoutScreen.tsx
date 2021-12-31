@@ -132,6 +132,7 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
 
   return (
     <BaseScreenComponent
+      backButtonTestID={"host-back-button"}
       goBack={handleBack}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
       contextualHelp={emptyContextualHelp}
