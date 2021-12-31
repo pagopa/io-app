@@ -1,5 +1,14 @@
 This file describes the reason for the patches applied.
 
+### react-native-device-info+8.3.3
+Created on **15/12/2021**
+
+#### Reason:
+- Remove all those methods that use `ACCESS_WIFI_STATE` (Android) in order to exclude that permission
+    - `getIpAddress`
+    - `getIpAddressSync`
+    - `getMacAddress`
+    - `getMacAddressSync`
 
 ### @types/react-native+0.63.2
 Created on **29/07/2020**
