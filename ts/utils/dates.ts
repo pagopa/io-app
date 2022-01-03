@@ -1,16 +1,17 @@
-import { compareDesc, format as dateFnsFormat } from "date-fns";
+import { format as dateFnsFormat } from "date-fns";
+import dfns_de from "date-fns/locale/de";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
-import dfns_de from "date-fns/locale/de";
-import * as t from "io-ts";
+import { Either, left } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as t from "io-ts";
+import { Errors } from "io-ts";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
+import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary, localeDateFormat } from "./locale";
 import { ExpireStatus } from "./messages";
 import { NumberFromString } from "./number";
-import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");
 
@@ -73,6 +74,46 @@ export function format(
   );
 }
 
+/**
+ * Try to parse month and validate as month
+ * @param month
+ */
+export const decodeCreditCardMonth = (
+  month: string | number | undefined
+): Either<Error | Errors, number> => {
+  const monthStr = (month ?? "").toString().trim().padStart(2, "0");
+  if (!CreditCardExpirationMonth.is(monthStr)) {
+    return left(
+      new Error("mont doesn't follow CreditCardExpirationMonth pattern")
+    );
+  }
+  return NumberFromString.decode(monthStr);
+};
+
+/**
+ * Try to parse year and validate as year
+ * @param year
+ */
+export const decodeCreditCardYear = (
+  year: string | number | undefined
+): Either<Error | Errors, number> => {
+  const yearStr = (year ?? "").toString().trim();
+  // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
+  if (yearStr.length === 2) {
+    // check that month is included matches the pattern (00-99)
+    if (!CreditCardExpirationYear.is(yearStr)) {
+      return left(
+        new Error("year doesn't follow CreditCardExpirationYear pattern")
+      );
+    }
+    const now = new Date();
+    return NumberFromString.decode(
+      now.getFullYear().toString().substring(0, 2) + yearStr.toString()
+    );
+  }
+  return left(new Error("year length > 2"));
+};
+
 export const dateFromMonthAndYear = (
   month: string | number | undefined,
   year: string | number | undefined
@@ -104,7 +145,7 @@ export const dateFromMonthAndYear = (
 };
 
 /**
- * if expireMonth and expireYear are defined and they represent a valid date then
+ * if expireMonth and expireYear are defined, and they represent a valid date then
  * return some, with 'true' if the given date is expired compared with now.
  * return none if the input is not valid
  * {@expireYear could be 2 or 4 digits}
@@ -115,11 +156,17 @@ export const isExpired = (
   expireMonth: string | number | undefined,
   expireYear: string | number | undefined
 ): Either<Error, boolean> => {
-  const maybeDate = dateFromMonthAndYear(expireMonth, expireYear);
-  if (maybeDate.isNone()) {
-    return left(Error("invalid input"));
-  }
-  return right(compareDesc(maybeDate.value, new Date()) > 0);
+  const maybeMonth = decodeCreditCardMonth(expireMonth);
+  const maybeYear = decodeCreditCardYear(expireYear);
+
+  return maybeYear
+    .chain(year =>
+      maybeMonth.map(month => {
+        const now = new Date();
+        return year < now.getFullYear() || month < now.getMonth() + 1;
+      })
+    )
+    .mapLeft(_ => new Error("invalid input"));
 };
 
 /**
