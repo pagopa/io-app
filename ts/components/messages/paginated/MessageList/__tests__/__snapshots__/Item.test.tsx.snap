@@ -92,7 +92,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -333,7 +333,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -622,7 +622,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -916,7 +916,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -1205,7 +1205,7 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -1535,7 +1535,7 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -1824,7 +1824,7 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -2169,7 +2169,7 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -2514,7 +2514,7 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -2859,7 +2859,7 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -3204,7 +3204,7 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -3549,7 +3549,7 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
@@ -3894,7 +3894,7 @@ exports[`MessageList Item component with all the flags set to false should match
           ]
         }
       >
-        18 Oct
+        10/18/21
       </Text>
     </View>
   </View>
