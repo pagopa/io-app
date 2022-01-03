@@ -81,7 +81,10 @@ export function format(
 export const decodeCreditCardMonth = (
   month: string | number | undefined
 ): Either<Error | Errors, number> => {
+  // convert month to string (if it is a number) and
+  // ensure it is left padded: 2 -> 02
   const monthStr = (month ?? "").toString().trim().padStart(2, "0");
+  // check that month matches the pattern (01-12)
   if (!CreditCardExpirationMonth.is(monthStr)) {
     return left(
       new Error("mont doesn't follow CreditCardExpirationMonth pattern")
@@ -100,7 +103,7 @@ export const decodeCreditCardYear = (
   const yearStr = (year ?? "").toString().trim();
   // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
   if (yearStr.length === 2) {
-    // check that month is included matches the pattern (00-99)
+    // check that year is included matches the pattern (00-99)
     if (!CreditCardExpirationYear.is(yearStr)) {
       return left(
         new Error("year doesn't follow CreditCardExpirationYear pattern")
@@ -111,33 +114,25 @@ export const decodeCreditCardYear = (
       now.getFullYear().toString().substring(0, 2) + yearStr.toString()
     );
   }
-  return left(new Error("year length > 2"));
+  return NumberFromString.decode(yearStr);
 };
 
+/**
+ * ⚠️ Beware, the Date that this method return is partially correct since is created only from year and month.
+ * Eg: month: "03" year: "2022" will return -> 2022-02-28T23:00:00.000Z
+ * The date thus returned is therefore ambiguous since it may not correspond to the intended semantics
+ * (for example the date returned is not applicable to credit cards that includes the last day of the month)
+ * Using the date thus generated to make comparisons could lead to unexpected behaviour
+ * @param month
+ * @param year
+ * @deprecated
+ */
 export const dateFromMonthAndYear = (
   month: string | number | undefined,
   year: string | number | undefined
 ): Option<Date> => {
-  // convert month to string (if it is a number) and
-  // ensure it is left padded: 2 -> 02
-  const monthStr = (month ?? "").toString().trim().padStart(2, "0");
-  // eslint-disable-next-line functional/no-let
-  let yearStr = (year ?? "").toString().trim();
-  // check that month matches the pattern (01-12)
-  if (!CreditCardExpirationMonth.is(monthStr)) {
-    return none;
-  }
-  // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
-  if (yearStr.length === 2) {
-    // check that month is included matches the pattern (00-99)
-    if (!CreditCardExpirationYear.is(yearStr)) {
-      return none;
-    }
-    const now = new Date();
-    yearStr = now.getFullYear().toString().substring(0, 2) + yearStr.toString();
-  }
-  const maybeMonth = NumberFromString.decode(monthStr);
-  const maybeYear = NumberFromString.decode(yearStr);
+  const maybeMonth = decodeCreditCardMonth(month);
+  const maybeYear = decodeCreditCardYear(year);
   if (maybeMonth.isLeft() || maybeYear.isLeft()) {
     return none;
   }
