@@ -126,7 +126,7 @@ jobs:
       - store_test_results:
           path: ./tmp/reports/junit/
 
-    parallelism: 32
+    parallelism: 8
 
   # Runs ESlint checks on PR
   run-eslint:
