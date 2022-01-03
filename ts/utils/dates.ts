@@ -118,7 +118,7 @@ export const decodeCreditCardYear = (
 };
 
 /**
- * ⚠️ Beware, the Date that this method return is partially correct since is created only from year and month.
+ * ⚠️ Beware, the Date that this method returns is partially correct since is created only from year and month.
  * Eg: month: "03" year: "2022" will return -> 2022-02-28T23:00:00.000Z
  * The date thus returned is therefore ambiguous since it may not correspond to the intended semantics
  * (for example the date returned is not applicable to credit cards that includes the last day of the month)
