@@ -143,6 +143,14 @@ export const sessionTokenSelector = (
     ? state.authentication.sessionToken
     : undefined;
 
+/**
+ * Return the authentication header required for IO Backend requests
+ */
+export const ioBackendAuthenticationHeaderSelector = createSelector(
+  sessionTokenSelector,
+  (token): { [key: string]: string } => ({ Authorization: `Bearer ${token}` })
+);
+
 export const sessionInfoSelector = (state: GlobalState) =>
   isLoggedInWithSessionInfo(state.authentication)
     ? some(state.authentication.sessionInfo)

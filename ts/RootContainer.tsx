@@ -29,6 +29,7 @@ import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 import { getCurrentRouteName } from "./utils/navigation";
 import { isStringNullyOrEmpty } from "./utils/strings";
+import { OPERISSUES_10_track } from "./sagas/startup";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -82,6 +83,7 @@ class RootContainer extends React.PureComponent<Props> {
     this.updateLocale();
     // Hide splash screen
     SplashScreen.hide();
+    OPERISSUES_10_track("New App Session");
   }
 
   /**
