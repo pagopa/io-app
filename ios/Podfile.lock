@@ -436,7 +436,7 @@ PODS:
     - React
   - RNVectorIcons (7.0.0):
     - React
-  - RNZendeskChat (0.3.13):
+  - RNZendeskChat (0.3.14):
     - React
     - ZendeskAnswerBotSDK (~> 2.1.3)
     - ZendeskChatSDK (~> 2.11.1)
@@ -840,7 +840,7 @@ SPEC CHECKSUMS:
   RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
-  RNZendeskChat: f6a9cb5a28ebf798639985151952375b8faef84d
+  RNZendeskChat: 531e9c94f6f7b445b9f21a609ab3c56653d2ca0e
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZendeskAnswerBotProvidersSDK: 8ef75d4484f09c324cd93ce2725364d73dbabcf5
