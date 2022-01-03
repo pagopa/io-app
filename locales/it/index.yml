@@ -2984,6 +2984,8 @@ support:
     devicePerformanceData: "Livello di memoria e batteria"
     stock: "Dati dell’avviso di pagamento"
     stockValue: "Incluso l’errore che hai appena ricevuto"
+    prominentDisclosure: "Accesso alla galleria del dispositivo"
+    prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Scrivici"
     title: "Ci dai il tuo consenso?"
     body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."

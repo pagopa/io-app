@@ -2960,8 +2960,10 @@ support:
     listHeader: "If you consent, we'll access this data:"
     devicePerformance: "Device performance"
     devicePerformanceData: "Memory and battery level"
+    prominentDisclosure: "Access to the device gallery"
+    prominentDisclosureData: "To upload photos and screenshots"
     cta:
-      allow: "Allow"
+      allow: "Agree"
       denies: "Deny"
   chooseCategory:
     header: "Write us"
