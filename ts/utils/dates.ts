@@ -87,7 +87,7 @@ export const decodeCreditCardMonth = (
   // check that month matches the pattern (01-12)
   if (!CreditCardExpirationMonth.is(monthStr)) {
     return left(
-      new Error("mont doesn't follow CreditCardExpirationMonth pattern")
+      new Error("month doesn't follow CreditCardExpirationMonth pattern")
     );
   }
   return NumberFromString.decode(monthStr);
