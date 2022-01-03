@@ -88,6 +88,7 @@ interface OwnProps {
   };
   customGoBack?: React.ReactNode;
   titleColor?: IOColorType;
+  backButtonTestID?: string;
 }
 
 type Props = OwnProps &
@@ -274,13 +275,17 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   };
 
   private renderGoBack = () => {
-    const { goBack, dark, customGoBack } = this.props;
+    const { goBack, dark, customGoBack, backButtonTestID } = this.props;
     return customGoBack ? (
       <Left>{customGoBack}</Left>
     ) : (
       goBack && (
         <Left>
-          <GoBackButton testID={"back-button"} onPress={goBack} white={dark} />
+          <GoBackButton
+            testID={backButtonTestID ?? "back-button"}
+            onPress={goBack}
+            white={dark}
+          />
         </Left>
       )
     );

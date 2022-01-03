@@ -4,6 +4,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 import { successReloadMessagesPayload } from "../../../../../__mocks__/messages";
 import Item from "../Item";
+import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 
 jest.useFakeTimers();
 
@@ -33,6 +34,16 @@ describe("MessageList Item component", () => {
     it("should match the snapshot", () => {
       expect(
         render(<Item {...defaultProps} isRead={true} />).toJSON()
+      ).toMatchSnapshot();
+    });
+  });
+
+  describe(`when category is ${TagEnum.LEGAL_MESSAGE}`, () => {
+    it("should match the snapshot", () => {
+      expect(
+        render(
+          <Item {...defaultProps} category={{ tag: TagEnum.LEGAL_MESSAGE }} />
+        ).toJSON()
       ).toMatchSnapshot();
     });
   });

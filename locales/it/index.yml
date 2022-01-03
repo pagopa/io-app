@@ -106,14 +106,15 @@ global:
     tomorrow: "domani"
   dateFormats:
     shortFormat: "%d/%m/%Y"
-    shortFormatWithTime: "%d/%m/%Y, %H.%M"
+    shortFormatWithTime: "%d/%m/%Y, %H:%M"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
     fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
-    timeFormat: "%H.%M"
+    timeFormat: "%H:%M"
+    timeFormatWithTimezone: "%H:%M:%S (%z)"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -1048,7 +1049,7 @@ wallet:
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
-        primaryButton: "Vedi metodo"
+        primaryButton: "Continua"
       onBoardingCompletedWhilePayment:
         title: "Fatto!"
         body: "Ora puoi continuare con il pagamento."
@@ -1150,7 +1151,7 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
-  paymentMethodDesc: Carte di credito, debito, prepagate, PagoBANCOMAT, app
+  paymentMethodDesc: Carte di credito, debito, prepagate, PayPal, e altri
   walletLoadMessage: Carico i metodi di pagamento...
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
@@ -1358,7 +1359,7 @@ wallet:
         bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
         bottomSheetCTA: Scopri i metodi supportati
     bonus:
-      name: Sconto, bonus e altri servizi
+      name: Sconti, bonus e altre iniziative
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
     digital:
       name: App e strumenti di pagamento digitali
@@ -2873,19 +2874,34 @@ features:
       subtitle: "Attendi qualche secondo"
     ko:
       genericError:
-        title: "TMP Generic error title"
-        subtitle: "TMP Generic error subtitle"
+        title: "Si è verificato un errore nel recupero del messaggio"
+        subtitle: "Riprova per favore"
     details:
       hasAttachments: "contiene allegati"
       attachments:
         title: "Allegati"
+        toast:
+          success: "Download completato"
+          failure: "Si è verificato un errore durante il download dell'allegato"
         bottomSheet:
           title: "Fai attenzione agli allegati"
-          body: "IO non può garantire la sicurezza del contenuto dell’allegato: salva sul tuo dispositivo o condividi solo i file che provengono da mittenti affidabili."
+          body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
           checkBox: "OK, non mostrarmelo più"
       body:
         plain: "testo semplice"
         html: "html"
+      metadata:
+        title: "il messaggio ha valore legale"
+        description: "Il giorno {{date}} alle ore {{time}} il messaggio \"{{subject}}\" ti è stato inviato da \"{{sender}}\""
+        messageId: "Identificativo messaggio:"
+        links:
+          copy: "Copia identificativo messaggio"
+          recipients: "Mostra elenco completo dei destinatari"
+          signature: "Mostra dettagli della firma"
+          certificates: "Mostra i certificati"
+          originalMessage: "Scarica il messaggio originale"
+          datiCert: "Scarica daticert.xml"
+          smime: "Scarica smime.p7s"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
@@ -2968,6 +2984,8 @@ support:
     devicePerformanceData: "Livello di memoria e batteria"
     stock: "Dati dell’avviso di pagamento"
     stockValue: "Incluso l’errore che hai appena ricevuto"
+    prominentDisclosure: "Accesso alla galleria del dispositivo"
+    prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Scrivici"
     title: "Ci dai il tuo consenso?"
     body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
