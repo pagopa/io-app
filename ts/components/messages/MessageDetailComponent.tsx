@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { Content, H3, Text, View } from "native-base";
 import DeviceInfo from "react-native-device-info";
 import * as React from "react";
@@ -101,16 +101,9 @@ export default class MessageDetailComponent extends React.PureComponent<
     return paymentExpirationInfo(this.props.message);
   }
 
-  get service() {
+  get service(): Option<ServicePublic> {
     const { serviceDetail } = this.props;
-    return fromNullable(
-      serviceDetail ??
-        ({
-          organization_name: I18n.t("messages.errorLoading.senderInfo"),
-          department_name: I18n.t("messages.errorLoading.departmentInfo"),
-          service_name: I18n.t("messages.errorLoading.serviceInfo")
-        } as ServicePublic)
-    );
+    return fromNullable(serviceDetail);
   }
 
   get payment() {
