@@ -216,6 +216,8 @@ if not run_test and __name__ == '__main__':
 	print("scanning local folders...")
 	all_uris = set()
 	urls_black_list = {
+    # 403 when this check runs (in the middle of the night)
+    "https://id.lepida.it/docs/manuale_utente.pdf",
 		# still not available
 		"https://io.italia.it/carta-giovani-nazionale/informativa-beneficiari",
 		# still not available
