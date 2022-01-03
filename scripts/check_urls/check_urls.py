@@ -216,7 +216,6 @@ if not run_test and __name__ == '__main__':
 	print("scanning local folders...")
 	all_uris = set()
 	urls_black_list = {
-		"https://appiotest.zendesk.com",
 		# still not available
 		"https://io.italia.it/carta-giovani-nazionale/informativa-beneficiari",
 		# still not available
