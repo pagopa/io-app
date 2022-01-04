@@ -35,7 +35,7 @@ describe("getExpireStatus", () => {
     expect(isExpired("2", "04")).toEqual(right(true));
   });
 
-  it("shouldn't mark the date as expired since we're in the last valid month", () => {
+  it("shouldn't mark the date as expired when passing as argument the current month", () => {
     // 01/01/2020
     MockDate.set(new Date(2020, 0, 1));
     expect(isExpired(1, 2020)).toEqual(right(false));
@@ -44,7 +44,7 @@ describe("getExpireStatus", () => {
     expect(isExpired(1, 2020)).toEqual(right(false));
   });
 
-  it("should mark the date as expired since we're passing the last valid month", () => {
+  it("should mark the date as expired when passing as argument the previous month", () => {
     // 01/01/2020
     const now = new Date(2020, 0, 1);
     MockDate.set(now);
