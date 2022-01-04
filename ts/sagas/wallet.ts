@@ -149,10 +149,7 @@ import {
   setWalletSessionEnabled,
   updatePaymentStatus
 } from "../store/actions/wallet/wallets";
-import {
-  bpdRemoteConfigSelector,
-  isPaypalEnabledSelector
-} from "../store/reducers/backendStatus";
+import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
