@@ -13,19 +13,23 @@ import CreditCardWalletPreview from "../../creditCard/component/CreditCardWallet
 import PrivativeWalletPreview from "../../privative/component/PrivativeWalletPreview";
 import SatispayWalletPreview from "../../satispay/SatispayWalletPreview";
 import PayPalWalletPreview from "../../paypal/PayPalWalletPreview";
-import { payPalEnabled } from "../../../../config";
+import { isPaypalEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
+const paymentMethodPreview = (
+  pm: PaymentMethod,
+  options: { isPaypalEnabled: boolean }
+): React.ReactElement | null => {
   switch (pm.kind) {
     case "Satispay":
       return <SatispayWalletPreview key={pm.idWallet} satispay={pm} />;
     case "PayPal":
-      return payPalEnabled ? (
-        <PayPalWalletPreview key={pm.idWallet} paypal={pm} />
-      ) : null;
+      if (!options.isPaypalEnabled) {
+        return null;
+      }
+      return <PayPalWalletPreview key={pm.idWallet} paypal={pm} />;
     case "Bancomat":
       return <BancomatWalletPreview key={pm.idWallet} bancomat={pm} />;
     case "CreditCard":
@@ -51,7 +55,11 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
   <>
     {pot.toUndefined(
       pot.mapNullable(props.paymentMethods, pm => (
-        <>{pm.map(paymentMethodPreview)}</>
+        <>
+          {pm.map(p =>
+            paymentMethodPreview(p, { isPaypalEnabled: props.isPaypalEnabled })
+          )}
+        </>
       ))
     )}
   </>
@@ -60,7 +68,8 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  paymentMethods: paymentMethodListVisibleInWalletSelector(state)
+  paymentMethods: paymentMethodListVisibleInWalletSelector(state),
+  isPaypalEnabled: isPaypalEnabledSelector(state)
 });
 
 export default connect(
