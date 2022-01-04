@@ -73,6 +73,16 @@ export const assistanceToolConfigSelector = createSelector(
     backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
 );
 
+/**
+ * return the remote config about paypal
+ * if there is no data, false (paypal disabled) is the default value
+ */
+export const isPaypalEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.paypal.enabled).toUndefined() ?? false
+);
+
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 

@@ -16,7 +16,7 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList, {
   IPaymentMethod
 } from "../../components/wallet/PaymentMethodsList";
-import { bpdEnabled, payPalEnabled } from "../../config";
+import { bpdEnabled } from "../../config";
 import { walletAddBancomatStart } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
 import I18n from "../../i18n";
@@ -40,6 +40,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { paypalSelector } from "../../store/reducers/wallet/wallets";
 import { AsyncAlert } from "../../utils/asyncAlert";
+import { isPaypalEnabledSelector } from "../../store/reducers/backendStatus";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -69,6 +70,7 @@ const getpaymentMethods = (
   options: {
     onlyPaymentMethodCanPay: boolean;
     isPaymentOnGoing: boolean;
+    isPaypalEnabled: boolean;
   }
 ): ReadonlyArray<IPaymentMethod> => [
   {
@@ -83,7 +85,7 @@ const getpaymentMethods = (
     name: I18n.t("wallet.methods.paypal.name"),
     description: I18n.t("wallet.methods.paypal.description"),
     icon: PaypalLogo,
-    onPress: payPalEnabled
+    onPress: options.isPaypalEnabled
       ? async () => {
           const startPaypalOnboarding = () =>
             props.startPaypalOnboarding(
@@ -112,7 +114,7 @@ const getpaymentMethods = (
           startPaypalOnboarding();
         }
       : undefined,
-    status: payPalEnabled ? "implemented" : "notImplemented",
+    status: options.isPaypalEnabled ? "implemented" : "notImplemented",
     section: "paypal"
   },
   {
@@ -209,7 +211,8 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               <PaymentMethodsList
                 paymentMethods={getpaymentMethods(props, {
                   onlyPaymentMethodCanPay: true,
-                  isPaymentOnGoing: inPayment.isSome()
+                  isPaymentOnGoing: inPayment.isSome(),
+                  isPaypalEnabled: props.isPaypalEnabled
                 })}
               />
             </View>
@@ -220,7 +223,8 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               paymentMethods={getpaymentMethods(props, {
                 onlyPaymentMethodCanPay:
                   canAddOnlyPayablePaymentMethod === true,
-                isPaymentOnGoing: inPayment.isSome()
+                isPaymentOnGoing: inPayment.isSome(),
+                isPaypalEnabled: props.isPaypalEnabled
               })}
             />
           </Content>
@@ -250,7 +254,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  isPaypalAlreadyAdded: pot.isSome(paypalSelector(state))
+  isPaypalAlreadyAdded: pot.isSome(paypalSelector(state)),
+  isPaypalEnabled: isPaypalEnabledSelector(state)
 });
 
 export default connect(

@@ -76,9 +76,6 @@ export const euCovidCertificateEnabled: boolean =
 // SiciliaVola Feature Flag
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
-// Paypal configuration
-export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
-
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
