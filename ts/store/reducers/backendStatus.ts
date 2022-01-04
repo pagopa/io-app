@@ -74,8 +74,8 @@ export const assistanceToolConfigSelector = createSelector(
 );
 
 /**
- * return the remote config about paypal
- * if there is no data, false (paypal disabled) is the default value
+ * return the remote config about paypal enabled/disabled
+ * if there is no data, false is the default value -> (paypal disabled)
  */
 export const isPaypalEnabledSelector = createSelector(
   backendStatusSelector,
