@@ -587,6 +587,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   }
 }
 
+/**
+ * Wait until the {@link NavigationService} is initialized.
+ * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
+ */
 function* waitForNavigatorServiceInitialization() {
   // eslint-disable-next-line functional/no-let
   let navigator: ReturnType<typeof NavigationService.getNavigator> = yield call(
