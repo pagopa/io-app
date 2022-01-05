@@ -13,15 +13,18 @@ import {
 } from "../utils/navigation";
 
 // eslint-disable-next-line functional/no-let
-let navigator: NavigationContainerComponent | null;
+let navigator: NavigationContainerComponent | null | undefined;
 // eslint-disable-next-line functional/no-let
 let currentRouteState: NavigationState | null = null;
 
 const setTopLevelNavigator = (
-  navigatorRef: NavigationContainerComponent | null
+  navigatorRef: NavigationContainerComponent | null | undefined
 ) => {
   navigator = navigatorRef;
 };
+
+const getNavigator = (): NavigationContainerComponent | null | undefined =>
+  navigator;
 
 const setCurrentState = (state: NavigationState) => {
   // This is a security check since sometime the onNavigationStateChange could return an undefined state ignoring the type
@@ -50,6 +53,7 @@ const getCurrentState = (): NavigationState | null => currentRouteState;
 // add other navigation functions that you need and export them
 export default {
   navigate,
+  getNavigator,
   setTopLevelNavigator,
   dispatchNavigationAction,
   setCurrentState,
