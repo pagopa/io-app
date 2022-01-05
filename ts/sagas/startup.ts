@@ -156,7 +156,7 @@ export const OPERISSUES_10_track = (
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
-const warningWaitNavigatorTime = 10000 as Millisecond;
+const warningWaitNavigatorTime = 2000 as Millisecond;
 
 /**
  * Handles the application startup and the main application logic loop

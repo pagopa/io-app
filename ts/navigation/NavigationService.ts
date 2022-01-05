@@ -38,6 +38,14 @@ const withLogging =
 const setTopLevelNavigator = (
   navigatorRef: NavigationContainerComponent | null | undefined
 ) => {
+  // TODO: remove when the bug is confirmed as solved
+  instabugLog(
+    `Initialize setTopLevelNavigator with argument ${
+      navigator !== null && navigator !== undefined
+    }`,
+    TypeLogs.DEBUG,
+    "NavigationService"
+  );
   navigator = navigatorRef;
 };
 
