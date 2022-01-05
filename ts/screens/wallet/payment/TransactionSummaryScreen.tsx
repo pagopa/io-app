@@ -367,6 +367,10 @@ const mapStateToProps = (state: GlobalState) => {
   const walletById = state.wallet.wallets.walletById;
   const isPaypalEnabled = isPaypalEnabledSelector(state);
   const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
+  /**
+   * if the favourite wallet is Paypal but the relative feature is not enabled,
+   * the favourite wallet will be undefined
+   */
   const maybeFavoriteWallet = fromNullable(
     favouriteWallet &&
       isRawPayPal(favouriteWallet.paymentMethod) &&
