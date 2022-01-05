@@ -1,8 +1,8 @@
-import { getMonth, getYear, subMonths } from "date-fns";
-import MockDate from "mockdate";
+import { getMonth, getYear } from "date-fns";
 import { left, right } from "fp-ts/lib/Either";
-import { formatDateAsShortFormat, getExpireStatus, isExpired } from "../dates";
+import MockDate from "mockdate";
 import I18n from "../../i18n";
+import { formatDateAsShortFormat, getExpireStatus, isExpired } from "../dates";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -35,13 +35,20 @@ describe("getExpireStatus", () => {
     expect(isExpired("2", "04")).toEqual(right(true));
   });
 
-  it("should mark the date as expired since we're passing the last month", () => {
-    const now = new Date(2020, 1, 1);
+  it("shouldn't mark the date as expired when passing as argument the current month", () => {
+    // 01/01/2020
+    MockDate.set(new Date(2020, 0, 1));
+    expect(isExpired(1, 2020)).toEqual(right(false));
+    // 31/01/2020
+    MockDate.set(new Date(2020, 0, 31));
+    expect(isExpired(1, 2020)).toEqual(right(false));
+  });
+
+  it("should mark the date as expired when passing as argument the previous month", () => {
+    // 01/01/2020
+    const now = new Date(2020, 0, 1);
     MockDate.set(now);
-    const aMonthBefore = subMonths(now, 1);
-    expect(
-      isExpired(getMonth(aMonthBefore) + 1, getYear(aMonthBefore))
-    ).toEqual(right(true));
+    expect(isExpired(12, 2019)).toEqual(right(true));
   });
 
   it("should mark the card as valid, not expired", () => {
