@@ -6,6 +6,8 @@ import {
   NavigationParams,
   NavigationState
 } from "react-navigation";
+import { instabugLog, TypeLogs } from "../boot/configureInstabug";
+import { mixpanelTrack } from "../mixpanel";
 import {
   getCurrentRoute as utilsGetCurrentRoute,
   getCurrentRouteKey as utilsGetCurrentRouteKey,
@@ -16,6 +18,22 @@ import {
 let navigator: NavigationContainerComponent | null | undefined;
 // eslint-disable-next-line functional/no-let
 let currentRouteState: NavigationState | null = null;
+
+const withLogging =
+  <A extends Array<unknown>, R>(f: (...a: A) => R) =>
+  (...args: A): R => {
+    if (navigator === null || navigator === undefined) {
+      instabugLog(
+        `call to NavigationService.${f.name} but navigator is ${navigator}`,
+        TypeLogs.ERROR,
+        "NavigationService"
+      );
+      void mixpanelTrack("NAVIGATION_SERVICE_NAVIGATOR_UNDEFINED", {
+        method: f.name
+      });
+    }
+    return f(...args);
+  };
 
 const setTopLevelNavigator = (
   navigatorRef: NavigationContainerComponent | null | undefined
@@ -52,10 +70,10 @@ const getCurrentState = (): NavigationState | null => currentRouteState;
 
 // add other navigation functions that you need and export them
 export default {
-  navigate,
+  navigate: withLogging(navigate),
   getNavigator,
   setTopLevelNavigator,
-  dispatchNavigationAction,
+  dispatchNavigationAction: withLogging(dispatchNavigationAction),
   setCurrentState,
   getCurrentRouteName,
   getCurrentRouteKey,
