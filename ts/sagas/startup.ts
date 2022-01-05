@@ -156,6 +156,8 @@ export const OPERISSUES_10_track = (
 };
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
+const navigatorPollingTime = 125 as Millisecond;
+
 /**
  * Handles the application startup and the main application logic loop
  */
@@ -178,7 +180,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   // before continuing we must wait for the navigatorService to be ready
   while (navigator === null || navigator === undefined) {
-    yield delay(125);
+    yield delay(navigatorPollingTime);
     navigator = yield call(NavigationService.getNavigator);
   }
 
