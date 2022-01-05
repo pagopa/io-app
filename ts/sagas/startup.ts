@@ -171,6 +171,17 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
 
+  // eslint-disable-next-line functional/no-let
+  let navigator: ReturnType<typeof NavigationService.getNavigator> = yield call(
+    NavigationService.getNavigator
+  );
+
+  // before continuing we must wait for the navigatorService to be ready
+  while (navigator === null || navigator === undefined) {
+    yield delay(125);
+    navigator = yield call(NavigationService.getNavigator);
+  }
+
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
   yield call(OPERISSUES_10_track, "initializeApplicationSaga_1");
