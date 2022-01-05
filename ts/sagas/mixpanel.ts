@@ -12,12 +12,6 @@ export function* initMixpanel(): Generator<Effect, void, boolean> {
   const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
     yield select(isMixpanelEnabled);
 
-  instabugLog(
-    `isMixpanelEnabledResult: ${isMixpanelEnabledResult}`,
-    TypeLogs.DEBUG,
-    "initMixpanel"
-  );
-
   if (isMixpanelEnabledResult ?? true) {
     // initialize mixpanel
     yield call(initializeMixPanel);
