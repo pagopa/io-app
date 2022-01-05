@@ -80,6 +80,7 @@ import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { mixpanelFlush, mixpanelTrack } from "../mixpanel";
 import { isStringNullyOrEmpty } from "../utils/strings";
 import { localeDateFormat } from "../utils/locale";
+import NavigationService from "../navigation/NavigationService";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
