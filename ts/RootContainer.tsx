@@ -68,6 +68,7 @@ class RootContainer extends React.PureComponent<Props> {
 
   public componentDidMount() {
     initialiseInstabug();
+    console.log("RootContainer [componentDidMount]");
 
     if (Platform.OS === "android") {
       Linking.getInitialURL()
