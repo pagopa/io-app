@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import { index } from "fp-ts/lib/Array";
+import { lookup } from "fp-ts/lib/Array";
 import {
   bottomSheetContent,
   useIOBottomSheetRaw
@@ -59,7 +59,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   onLandingCtaPress
 }: Props) => (
   <View style={styles.container}>
-    {index(0, [...discount.productCategories]).fold(undefined, categoryKey =>
+    {lookup(0, [...discount.productCategories]).fold(undefined, categoryKey =>
       getCategorySpecs(categoryKey).fold(undefined, c => (
         <View style={styles.row}>
           {c.icon({
