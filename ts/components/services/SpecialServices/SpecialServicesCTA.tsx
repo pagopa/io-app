@@ -8,10 +8,12 @@ import { Label } from "../../core/typography/Label";
 import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
 import { cgnEnabled } from "../../../config";
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 type Props = {
   customSpecialFlow: CustomSpecialFlow;
+  serviceId: ServiceId;
 };
 
 const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
@@ -36,7 +38,7 @@ const SpecialServicesCTA = (props: Props) => {
       }
       switch (customSpecialFlow) {
         case "cgn":
-          return <CgnServiceCTA />;
+          return <CgnServiceCTA serviceId={props.serviceId} />;
         default:
           return (
             <ButtonDefaultOpacity block primary onPress={openAppStore}>

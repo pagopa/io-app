@@ -3,14 +3,19 @@ import { constNull } from "fp-ts/lib/function";
 import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { cgnActivationStart } from "../store/actions/activation";
+import { useIOSelector } from "../../../../store/hooks";
 import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
 import { isStrictSome } from "../../../../utils/pot";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { useNavigationContext } from "../../../../utils/hooks/useOnFocus";
+import CGN_ROUTES from "../navigation/routes";
 
-const CgnServiceCTA = () => {
-  const dispatch = useIODispatch();
+type Props = {
+  serviceId: ServiceId;
+};
+const CgnServiceCTA = (props: Props) => {
+  const navigation = useNavigationContext();
 
   const servicePreference = useIOSelector(servicePreferenceSelector);
 
@@ -18,6 +23,14 @@ const CgnServiceCTA = () => {
     isStrictSome(servicePreference) &&
     isServicePreferenceResponseSuccess(servicePreference.value) &&
     servicePreference.value.value.inbox;
+
+  if (
+    !isStrictSome(servicePreference) ||
+    (isStrictSome(servicePreference) &&
+      servicePreference.value.id !== props.serviceId)
+  ) {
+    return <></>;
+  }
 
   return isServiceActive ? (
     <ButtonDefaultOpacity block bordered danger onPress={constNull}>
@@ -27,7 +40,7 @@ const CgnServiceCTA = () => {
     <ButtonDefaultOpacity
       block
       primary
-      onPress={() => dispatch(cgnActivationStart())}
+      onPress={() => navigation.navigate(CGN_ROUTES.ACTIVATION.CTA_START_CGN)}
     >
       <Label color={"white"}>{I18n.t("bonus.cgn.cta.activeBonus")}</Label>
     </ButtonDefaultOpacity>
