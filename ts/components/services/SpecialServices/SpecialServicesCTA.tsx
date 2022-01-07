@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useCallback } from "react";
-import { constNull } from "fp-ts/lib/function";
 import { fromNullable } from "fp-ts/lib/Option";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import I18n from "../../../i18n";
@@ -8,6 +7,7 @@ import { openAppStoreUrl } from "../../../utils/url";
 import { Label } from "../../core/typography/Label";
 import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
 import { cgnEnabled } from "../../../config";
+import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 type Props = {
@@ -36,12 +36,7 @@ const SpecialServicesCTA = (props: Props) => {
       }
       switch (customSpecialFlow) {
         case "cgn":
-          // TODO Implement the correct CTA component
-          return (
-            <ButtonDefaultOpacity block primary onPress={constNull}>
-              <Label color={"white"}>{customSpecialFlow}</Label>
-            </ButtonDefaultOpacity>
-          );
+          return <CgnServiceCTA />;
         default:
           return (
             <ButtonDefaultOpacity block primary onPress={openAppStore}>
