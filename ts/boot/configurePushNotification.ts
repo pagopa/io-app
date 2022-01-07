@@ -16,7 +16,7 @@ import {
   pageSize,
   usePaginatedMessages
 } from "../config";
-import { setMixpanelPushNotificationToken } from "../mixpanel";
+import { mixpanelTrack, setMixpanelPushNotificationToken } from "../mixpanel";
 import {
   DEPRECATED_loadMessages,
   loadPreviousPageMessages,
@@ -28,6 +28,7 @@ import {
 } from "../store/actions/notifications";
 import { getCursors } from "../store/reducers/entities/messages/allPaginated";
 import { isDevEnv } from "../utils/environment";
+import { readablePrivacyReport } from "../utils/reporters";
 import { store } from "./configureStoreAndPersistor";
 
 /**
@@ -99,9 +100,10 @@ function configurePushNotifications() {
       }
 
       const maybeMessageId = fromEither(
-        NotificationPayload.decode(notification).mapLeft(_errors => {
-          // TODO: https://pagopa.atlassian.net/browse/IA-573
-          // mixpanel.track("NOTIFICATION_PARSING_FAILURE", { reason: readablePrivacyReport(_errors) });
+        NotificationPayload.decode(notification).mapLeft(errors => {
+          void mixpanelTrack("NOTIFICATION_PARSING_FAILURE", {
+            reason: readablePrivacyReport(errors)
+          });
         })
       ).chain(payload =>
         fromNullable(payload.message_id).alt(
