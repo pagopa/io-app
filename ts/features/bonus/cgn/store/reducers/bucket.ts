@@ -45,6 +45,5 @@ const reducer = (
 
 export default reducer;
 
-export const cgnBucketSelector = (
-  state: GlobalState
-): CgnBucketState["data"] => state.bonus.cgn.bucket.data;
+export const cgnBucketSelector = (state: GlobalState): CgnBucketState["data"] =>
+  state.bonus.cgn.bucket.data;
