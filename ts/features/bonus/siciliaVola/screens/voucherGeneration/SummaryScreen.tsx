@@ -1,38 +1,38 @@
+import { View } from "native-base";
 import * as React from "react";
+import { useEffect } from "react";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { useEffect } from "react";
-import { View } from "native-base";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { Link } from "../../../../../components/core/typography/Link";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { formatDateAsLocal } from "../../../../../utils/dates";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { openWebUrl } from "../../../../../utils/url";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import { navigateToSvVoucherGeneratedScreen } from "../../navigation/actions";
 import {
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherFailure
 } from "../../store/actions/voucherGeneration";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { navigateToSvVoucherGeneratedScreen } from "../../navigation/actions";
-import I18n from "../../../../../i18n";
+import { availableDestinationsSelector } from "../../store/reducers/voucherGeneration/availableDestinations";
 import { voucherRequestSelector } from "../../store/reducers/voucherGeneration/voucherRequest";
+import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import {
   destinationsInfoFromVoucherRequest,
   isVoucherRequest
 } from "../../utils";
-import { availableDestinationsSelector } from "../../store/reducers/voucherGeneration/availableDestinations";
-import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { formatDateAsLocal } from "../../../../../utils/dates";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
-import { openWebUrl } from "../../../../../utils/url";
-import { Link } from "../../../../../components/core/typography/Link";
-import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -238,8 +238,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       svGenerateVoucherAvailableDestination.request(availableDestinationRequest)
     ),
-  navigateToVoucherGeneratedScreen: () =>
-    dispatch(navigateToSvVoucherGeneratedScreen())
+  navigateToVoucherGeneratedScreen: () => navigateToSvVoucherGeneratedScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   maybeVoucherRequest: voucherRequestSelector(state),

@@ -14,7 +14,7 @@ import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { maybeNotNullyString } from "../../utils/strings";
+import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
@@ -22,6 +22,9 @@ import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import I18n from "../../i18n";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { assistanceToolRemoteConfig } from "../../utils/supportAssistance";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -85,6 +88,7 @@ interface OwnProps {
   };
   customGoBack?: React.ReactNode;
   titleColor?: IOColorType;
+  backButtonTestID?: string;
 }
 
 type Props = OwnProps &
@@ -229,9 +233,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       onShowHelp,
       isSearchAvailable,
       showInstabugChat,
-      customRightIcon
+      customRightIcon,
+      assistanceToolConfig
     } = this.props;
 
+    const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
     return (
       <Right>
         {isSearchAvailable?.enabled && (
@@ -240,9 +246,10 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onSearchTap={isSearchAvailable.onSearchTap}
           />
         )}
-        {!isSearchEnabled && showInstabugChat !== false && (
-          <InstabugChatsComponent />
-        )}
+        {!isSearchEnabled &&
+          showInstabugChat !== false &&
+          choosenTool === ToolEnum.instabug && <InstabugChatsComponent />}
+
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
         )}
@@ -254,7 +261,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             accessible={customRightIcon.accessibilityLabel !== undefined}
             accessibilityLabel={customRightIcon.accessibilityLabel}
           >
-            <IconFont name={customRightIcon.iconName} />
+            {!isStringNullyOrEmpty(customRightIcon.iconName) && (
+              <IconFont name={customRightIcon.iconName} />
+            )}
           </ButtonDefaultOpacity>
         )}
         {fromNullable(this.props.accessibilityEvents).fold(
@@ -266,13 +275,17 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   };
 
   private renderGoBack = () => {
-    const { goBack, dark, customGoBack } = this.props;
+    const { goBack, dark, customGoBack, backButtonTestID } = this.props;
     return customGoBack ? (
       <Left>{customGoBack}</Left>
     ) : (
       goBack && (
         <Left>
-          <GoBackButton testID={"back-button"} onPress={goBack} white={dark} />
+          <GoBackButton
+            testID={backButtonTestID ?? "back-button"}
+            onPress={goBack}
+            white={dark}
+          />
         </Left>
       )
     );
@@ -309,13 +322,12 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => {
-    dispatch(navigateBack());
-  }
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateBack: () => navigateBack()
 });
 
 export const BaseHeader = connect(

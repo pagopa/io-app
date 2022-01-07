@@ -143,7 +143,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   selectFlightsDate: (flightsDate: FlightsDate) =>
     dispatch(svGenerateVoucherSelectFlightsDate(flightsDate)),
-  navigateToSummaryScreen: () => dispatch(navigateToSvSummaryScreen())
+  navigateToSummaryScreen: () => navigateToSvSummaryScreen()
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

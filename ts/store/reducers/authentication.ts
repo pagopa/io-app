@@ -89,7 +89,7 @@ type AuthenticationStateWithIdp =
 export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 
 // Initially the user is logged out and hasn't selected an IDP
-const INITIAL_STATE: LoggedOutWithoutIdp = {
+export const INITIAL_STATE: LoggedOutWithoutIdp = {
   kind: "LoggedOutWithoutIdp",
   reason: "NOT_LOGGED_IN"
 };
@@ -143,6 +143,14 @@ export const sessionTokenSelector = (
     ? state.authentication.sessionToken
     : undefined;
 
+/**
+ * Return the authentication header required for IO Backend requests
+ */
+export const ioBackendAuthenticationHeaderSelector = createSelector(
+  sessionTokenSelector,
+  (token): { [key: string]: string } => ({ Authorization: `Bearer ${token}` })
+);
+
 export const sessionInfoSelector = (state: GlobalState) =>
   isLoggedInWithSessionInfo(state.authentication)
     ? some(state.authentication.sessionInfo)
@@ -152,6 +160,11 @@ export const supportTokenSelector = (state: GlobalState): SupportTokenState =>
   isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.supportToken ?? remoteUndefined
     : remoteUndefined;
+
+export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.zendeskToken
+    : undefined;
 
 export const tokenFromNameSelector = (
   tokenName: TokenName

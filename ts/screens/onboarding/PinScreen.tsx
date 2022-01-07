@@ -18,13 +18,18 @@ import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
+import { isOnboardingCompleted } from "../../utils/navigation";
 import { maybeNotNullyString } from "../../utils/strings";
 import { GlobalState } from "../../store/reducers/types";
-import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
-import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import { TypeLogs } from "../../boot/configureInstabug";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../utils/supportAssistance";
 
 type Props = NavigationStackScreenProps &
   LightModalContextInterface &
@@ -92,6 +97,9 @@ class PinScreen extends React.PureComponent<Props, State> {
   private headerRef = React.createRef<Text>();
   private confirmationStatusRef = React.createRef<Text>();
   private continueButtonRef = React.createRef<View>();
+  private choosenTool = assistanceToolRemoteConfig(
+    this.props.assistanceToolConfig
+  );
   constructor(props: Props) {
     super(props);
 
@@ -105,7 +113,8 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   // Method called when the first CodeInput is filled
   public onPinFulfill = (code: PinString) => {
-    instabugLog(
+    handleSendAssistanceLog(
+      this.choosenTool,
       `onPinFulfill: len ${code.length} - state PinSelected`,
       TypeLogs.DEBUG,
       instabuglogTag
@@ -125,7 +134,8 @@ class PinScreen extends React.PureComponent<Props, State> {
   // Method called when the confirmation CodeInput is valid and cancel button is pressed
   public onPinConfirmRemoveLastDigit = () => {
     if (this.state.pinState.state === "PinConfirmed") {
-      instabugLog(
+      handleSendAssistanceLog(
+        this.choosenTool,
         `onPinConfirmRemoveLastDigit - state PinSelected`,
         TypeLogs.DEBUG,
         instabuglogTag
@@ -142,7 +152,8 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   // Method called when the confirmation CodeInput is filled
   public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
-    instabugLog(
+    handleSendAssistanceLog(
+      this.choosenTool,
       `onPinConfirmFulfill len ${code.length} valid ${isValid}`,
       TypeLogs.DEBUG,
       instabuglogTag
@@ -154,7 +165,8 @@ class PinScreen extends React.PureComponent<Props, State> {
         this.state.pinState.state === "PinSelected" ||
         this.state.pinState.state === "PinConfirmed"
       ) {
-        instabugLog(
+        handleSendAssistanceLog(
+          this.choosenTool,
           `onPinConfirmFulfill - state PinConfirmError`,
           TypeLogs.DEBUG,
           instabuglogTag
@@ -179,7 +191,8 @@ class PinScreen extends React.PureComponent<Props, State> {
       }
       return;
     }
-    instabugLog(
+    handleSendAssistanceLog(
+      this.choosenTool,
       `onPinConfirmFulfill - state PinConfirmed`,
       TypeLogs.DEBUG,
       instabuglogTag
@@ -357,8 +370,8 @@ class PinScreen extends React.PureComponent<Props, State> {
   }
 
   private handleGoBack = () => {
-    if (this.props.isOnboardingCompleted) {
-      this.props.navigation.goBack();
+    if (isOnboardingCompleted()) {
+      this.props.navigation.goBack(null);
       return;
     }
     Alert.alert(
@@ -403,7 +416,12 @@ class PinScreen extends React.PureComponent<Props, State> {
   }
 
   private setPin = (pin: PinString) => {
-    instabugLog(`setPin - state PinSaved`, TypeLogs.DEBUG, instabuglogTag);
+    handleSendAssistanceLog(
+      this.choosenTool,
+      `setPin - state PinSaved`,
+      TypeLogs.DEBUG,
+      instabuglogTag
+    );
     this.setState({
       pinState: {
         state: "PinSaved",
@@ -421,17 +439,27 @@ class PinScreen extends React.PureComponent<Props, State> {
               savedPin: pot.some(pin)
             }
           });
-          instabugLog(`createPinSuccess`, TypeLogs.DEBUG, instabuglogTag);
+          handleSendAssistanceLog(
+            this.choosenTool,
+            `createPinSuccess`,
+            TypeLogs.DEBUG,
+            instabuglogTag
+          );
           this.props.createPinSuccess(pin);
           // user is updating his/her pin inside the app, go back
-          if (this.props.isOnboardingCompleted) {
+          if (isOnboardingCompleted()) {
             // We need to ask the user to restart the app
             this.showModal();
             this.props.navigation.goBack();
           }
         },
         _ => {
-          instabugLog(`setPin error`, TypeLogs.DEBUG, instabuglogTag);
+          handleSendAssistanceLog(
+            this.choosenTool,
+            `setPin error`,
+            TypeLogs.DEBUG,
+            instabuglogTag
+          );
           // TODO: show toast if error (https://www.pivotaltracker.com/story/show/170819508)
           this.setState({
             pinState: {
@@ -443,7 +471,8 @@ class PinScreen extends React.PureComponent<Props, State> {
         }
       )
       .catch(e => {
-        instabugLog(
+        handleSendAssistanceLog(
+          this.choosenTool,
           `setPin error ${e ? e.toString() : ""}`,
           TypeLogs.DEBUG,
           instabuglogTag
@@ -453,7 +482,7 @@ class PinScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isOnboardingCompleted: isOnboardingCompletedSelector(state)
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

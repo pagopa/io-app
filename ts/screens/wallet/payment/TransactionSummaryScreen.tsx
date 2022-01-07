@@ -3,13 +3,18 @@ import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
-} from "italia-pagopa-commons/lib/pagopa";
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import {
+  NavigationInjectedProps,
+  NavigationLeafRoute,
+  StackActions
+} from "react-navigation";
 import { connect } from "react-redux";
+
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -19,6 +24,7 @@ import IconFont from "../../../components/ui/IconFont";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
@@ -48,22 +54,23 @@ import {
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
+import {
+  alertNoActivePayablePaymentMethods,
+  alertNoPayablePaymentMethods
+} from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import {
-  alertNoActivePayablePaymentMethods,
-  alertNoPayablePaymentMethods
-} from "../../../utils/paymentMethod";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
+  startRoute: NavigationLeafRoute | undefined;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -156,7 +163,23 @@ class TransactionSummaryScreen extends React.Component<Props> {
         }
       );
     } else {
-      this.props.navigation.goBack();
+      /**
+       * Since the payment flow starts from the next screen, even though we are already
+       * in the payment flow, it is really difficult to make up for the static stack organization in a homogeneous way.
+       * The only solution that allows to avoid to heavily modify the existing logic is to distinguish based on the starting screen,
+       * in order to perform the right navigation actions if we are not in the wallet stack.
+       * TODO: This is a temporary (and not scalable) solution, a complete refactoring of the payment workflow is strongly recommended
+       */
+      const startRoute = this.props.navigation.getParam("startRoute");
+      if (startRoute !== undefined) {
+        // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
+        if (startRoute.routeName === ROUTES.MESSAGE_DETAIL) {
+          this.props.navigation.dispatch(StackActions.popToTop());
+        }
+        this.props.navigation.navigate(startRoute);
+      } else {
+        this.props.navigation.goBack();
+      }
     }
   };
 
@@ -423,9 +446,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatch(abortRunningPayment());
   };
 
-  // navigateToMessageDetail: (messageId: string) =>
-  // dispatch(navigateToMessageDetailScreenAction({ messageId }))
-
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,
     maybeFavoriteWallet: ReturnType<
@@ -448,14 +468,13 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
               // either we cannot use the default payment method for this
               // payment, or fetching the PSPs for this payment and the
               // default wallet has failed, ask the user to pick a wallet
-              dispatch(
-                navigateToPaymentPickPaymentMethodScreen({
-                  rptId,
-                  initialAmount,
-                  verifica,
-                  idPayment
-                })
-              );
+
+              navigateToPaymentPickPaymentMethodScreen({
+                rptId,
+                initialAmount,
+                verifica,
+                idPayment
+              });
             },
             hasPayableMethods
           )
@@ -471,31 +490,25 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       >
     >
   ) =>
-    dispatch(
-      navigateToPaymentTransactionErrorScreen({
-        error,
-        onCancel,
-        rptId
-      })
-    );
+    navigateToPaymentTransactionErrorScreen({
+      error,
+      onCancel,
+      rptId
+    });
 
   const dispatchNavigateToPaymentManualDataInsertion = () =>
-    dispatch(
-      navigateToPaymentManualDataInsertion({
-        isInvalidAmount: isManualPaymentInsertion
-      })
-    );
+    navigateToPaymentManualDataInsertion({
+      isInvalidAmount: isManualPaymentInsertion
+    });
 
   return {
-    navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+    navigateToWalletHome: () => navigateToWalletHome(),
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
-      dispatch(
-        navigateToWalletAddPaymentMethod({
-          inPayment: none,
-          showOnlyPayablePaymentMethods: true
-        })
-      ),
+      navigateToWalletAddPaymentMethod({
+        inPayment: none,
+        showOnlyPayablePaymentMethods: true
+      }),
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
     dispatchNavigateToPaymentManualDataInsertion,

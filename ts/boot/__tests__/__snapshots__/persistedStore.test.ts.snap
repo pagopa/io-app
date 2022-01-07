@@ -1,17 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'authentication' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'authentication' state 1`] = `
 Object {
   "kind": "LoggedOutWithoutIdp",
   "reason": "NOT_LOGGED_IN",
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'content' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'content' state 1`] = `
 Object {
   "contextualHelp": Object {
     "kind": "PotNone",
@@ -30,25 +26,19 @@ Object {
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'crossSessions' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'crossSessions' state 1`] = `
 Object {
   "hashedFiscalCode": undefined,
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'debug' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'debug' state 1`] = `
 Object {
   "isDebugModeEnabled": false,
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'entities' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'entities' state 1`] = `
 Object {
   "calendarEvents": Object {
     "byMessageId": Object {},
@@ -57,7 +47,16 @@ Object {
     "allIds": Object {
       "kind": "PotNone",
     },
+    "allPaginated": Object {
+      "data": Object {
+        "kind": "PotNone",
+      },
+      "lastRequest": None {
+        "_tag": "None",
+      },
+    },
     "byId": Object {},
+    "detailsById": Object {},
     "idsByServiceId": Object {},
   },
   "messagesStatus": Object {},
@@ -84,9 +83,7 @@ Object {
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'identification' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'identification' state 1`] = `
 Object {
   "fail": undefined,
   "progress": Object {
@@ -95,17 +92,13 @@ Object {
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'installation' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'installation' state 1`] = `
 Object {
   "isFirstRunAfterInstall": true,
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'notifications' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'notifications' state 1`] = `
 Object {
   "installation": Object {
     "id": "fakeInstallationId",
@@ -116,17 +109,13 @@ Object {
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'onboarding' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'onboarding' state 1`] = `
 Object {
   "isFingerprintAcknowledged": false,
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'payments' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'payments' state 1`] = `
 Object {
   "creditCardInsertion": Array [],
   "current": Object {
@@ -137,9 +126,7 @@ Object {
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'persistedPreferences' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'persistedPreferences' state 1`] = `
 Object {
   "continueWithRootOrJailbreak": false,
   "isCustomEmailChannelEnabled": Object {
@@ -155,25 +142,19 @@ Object {
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'profile' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'profile' state 1`] = `
 Object {
   "kind": "PotNone",
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'userMetadata' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'userMetadata' state 1`] = `
 Object {
   "kind": "PotNone",
 }
 `;
 
-exports[
-  `Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'wallet.wallets.walletById' state 1`
-] = `
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'wallet.wallets.walletById' state 1`] = `
 Object {
   "kind": "PotNone",
 }

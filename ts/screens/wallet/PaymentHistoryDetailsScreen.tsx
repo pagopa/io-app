@@ -24,10 +24,7 @@ import {
 } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import {
-  isPaymentDoneSuccessfully,
-  PaymentHistory
-} from "../../store/reducers/payments/history";
+import { PaymentHistory } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
@@ -44,13 +41,27 @@ import {
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
+import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { Dispatch } from "../../store/actions/types";
+import { zendeskSupportStart } from "../../features/zendesk/store/actions";
+import {
+  addTicketCustomField,
+  appendLog,
+  assistanceToolRemoteConfig,
+  zendeskCategoryId,
+  zendeskPaymentCategoryValue
+} from "../../utils/supportAssistance";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
 type Props = NavigationInjectedProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   flex: {
@@ -101,6 +112,31 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     openInstabugQuestionReport();
   };
 
+  private zendeskAssistanceLogAndStart = () => {
+    // Set pagamenti_pagopa as category
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+    // Append the payment history details in the log
+    appendLog(
+      getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
+    );
+
+    this.props.zendeskSupportWorkunitStart();
+  };
+  private choosenTool = assistanceToolRemoteConfig(
+    this.props.assistanceToolConfig
+  );
+
+  private handleAskAssistance = () => {
+    switch (this.choosenTool) {
+      case ToolEnum.instabug:
+        this.instabugLogAndOpenReport();
+        break;
+      case ToolEnum.zendesk:
+        this.zendeskAssistanceLogAndStart();
+        break;
+    }
+  };
+
   private getData = () => {
     const payment = this.props.navigation.getParam("payment");
     const codiceAvviso = getCodiceAvviso(payment.data);
@@ -133,7 +169,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       PaymentRequestsGetResponse,
       "causaleVersamento",
       string
-    >(payment.verified_data, "causaleVersamento", m => m).fold(
+    >(payment.verifiedData, "causaleVersamento", m => m).fold(
       notAvailable,
       cv => cv
     );
@@ -167,7 +203,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       PaymentRequestsGetResponse,
       "enteBeneficiario",
       EnteBeneficiario | undefined
-    >(payment.verified_data, "enteBeneficiario", m => m).getOrElse(undefined);
+    >(payment.verifiedData, "enteBeneficiario", m => m).getOrElse(undefined);
 
     const outcomeCode = payment.outcomeCode ?? "-";
     return {
@@ -205,6 +241,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     </React.Fragment>
   );
 
+  /**
+   * This fragment is rendered only if {@link canShowHelp} is true
+   */
   private renderHelper = () => (
     <View>
       <Text alignCenter={true} style={styles.padded}>
@@ -212,7 +251,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       </Text>
       <View spacer={true} />
       <ButtonDefaultOpacity
-        onPress={this.instabugLogAndOpenReport}
+        onPress={this.handleAskAssistance}
         bordered={true}
         block={true}
         style={styles.button}
@@ -228,7 +267,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         showInstabugChat={false}
         dark={true}
         headerTitle={I18n.t("payment.details.info.title")}
@@ -263,21 +302,17 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               )}
             </React.Fragment>
           )}
-
           <View spacer={true} xsmall={true} />
           {this.standardRow(
             I18n.t("payment.details.info.outcomeCode"),
             data.outcomeCode
           )}
-
           <View spacer={true} xsmall={true} />
           {this.standardRow(
             I18n.t("payment.details.info.dateAndTime"),
             data.dateTime
           )}
-
           {this.renderSeparator()}
-
           {data.paymentOutcome.isSome() &&
             data.paymentOutcome.value &&
             data.amount.isSome() &&
@@ -331,8 +366,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 <View spacer={true} extralarge={true} />
               </React.Fragment>
             )}
-
-          {this.renderHelper()}
+          {/* This check is redundant, since if the help can't be shown the user can't get there */}
+          {this.props.canShowHelp && this.renderHelper()}
         </SlidedContentComponent>
       </BaseScreenComponent>
     );
@@ -340,7 +375,19 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  outcomeCodes: outcomeCodesSelector(state)
+  outcomeCodes: outcomeCodesSelector(state),
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  canShowHelp: canShowHelpSelector(state)
+});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  // Start the assistance without FAQ ("n/a" is a placeholder)
+  zendeskSupportWorkunitStart: () =>
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    )
 });
 
-export default connect(mapStateToProps)(PaymentHistoryDetailsScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentHistoryDetailsScreen);

@@ -1,7 +1,5 @@
-/* eslint-disable */
-
 import { Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ActionType } from "typesafe-actions";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -14,13 +12,15 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentFetchPspsForPaymentId,
-  paymentUpdateWalletPsp
+  paymentUpdateWalletPsp,
+  pspForPaymentV2WithCallbacks
 } from "../../../store/actions/wallet/payment";
-import { Psp, Wallet } from "../../../types/pagopa";
+import { isRawPayPal, Psp, Wallet } from "../../../types/pagopa";
 import {
   pspsForLocale,
   walletHasFavoriteAvailablePsp
 } from "../../../utils/payment";
+import { getPayPalPspIconUrl } from "../../../utils/paymentMethod";
 
 /**
  * Common action dispatchers for payment screens
@@ -48,16 +48,15 @@ export const dispatchUpdatePspForWalletAndConfirm =
           if (psp !== undefined) {
             dispatch(paymentFetchPspsForPaymentId.success([psp]));
           }
-          dispatch(
-            navigateToPaymentConfirmPaymentMethodScreen({
-              rptId,
-              initialAmount,
-              verifica,
-              idPayment,
-              wallet: action.payload.updatedWallet, // the updated wallet
-              psps
-            })
-          );
+
+          navigateToPaymentConfirmPaymentMethodScreen({
+            rptId,
+            initialAmount,
+            verifica,
+            idPayment,
+            wallet: action.payload.updatedWallet, // the updated wallet
+            psps
+          });
         },
         onFailure
       })
@@ -84,30 +83,68 @@ export const dispatchPickPspOrConfirm =
     // FETCH_PSPS_FAILURE: fetching the PSPs for this wallet has failed
     onFailure: (reason: "NO_PSPS_AVAILABLE" | "FETCH_PSPS_FAILURE") => void,
     hasWallets: boolean = true
+    // eslint-disable-next-line sonarjs/cognitive-complexity
   ) => {
     if (maybeSelectedWallet.isSome()) {
       const selectedWallet = maybeSelectedWallet.value;
-      // the user has selected a wallet (either because it was the favourite one
-      // or because he just added a new card he wants to use for the payment), so
-      // there's no need to ask to select a wallet - we can ask pagopa for the
-      // PSPs that we can use with this wallet.
-      dispatch(
-        paymentFetchPspsForPaymentId.request({
-          idPayment,
-          idWallet: selectedWallet.idWallet,
-          onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
-          onSuccess: successAction => {
-            // filter PSPs for the current locale only (the list will contain
-            // duplicates for all the supported languages)
-            const psps = pspsForLocale(successAction.payload);
-            if (psps.length === 0) {
-              // this payment method cannot be used!
-              onFailure("NO_PSPS_AVAILABLE");
-            } else if (walletHasFavoriteAvailablePsp(selectedWallet, psps)) {
-              // The user already selected a psp in the past for this wallet, and
-              // that PSP can be used for this payment, in this case we can
-              // proceed to the confirmation screen
-              dispatch(
+      // if the paying method is paypal retrieve psp from new API
+      // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/445844411/Modifiche+al+flusso+di+pagamento
+      if (isRawPayPal(selectedWallet.paymentMethod)) {
+        dispatch(
+          pspForPaymentV2WithCallbacks({
+            idPayment,
+            idWallet: selectedWallet.idWallet,
+            onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
+            onSuccess: pspList => {
+              if (pspList.length === 0) {
+                onFailure("NO_PSPS_AVAILABLE");
+                return;
+              }
+              navigateToPaymentConfirmPaymentMethodScreen({
+                rptId,
+                initialAmount,
+                verifica,
+                idPayment,
+                // there should exists only 1 psp that can handle Paypal transactions
+                psps: pspList
+                  .filter(pd => pd.defaultPsp)
+                  .map<Psp>(p => ({
+                    id: parseInt(p.idPsp, 10),
+                    logoPSP: getPayPalPspIconUrl(p.codiceAbi),
+                    fixedCost: {
+                      currency: "EUR",
+                      amount: p.fee,
+                      decimalDigits: 2
+                    }
+                  })),
+                wallet: maybeSelectedWallet.value
+              });
+            }
+          })
+        );
+      } else {
+        // credit card
+        // the user has selected a wallet (either because it was the favourite one
+        // or because he just added a new card he wants to use for the payment), so
+        // there's no need to ask to select a wallet - we can ask pagopa for the
+        // PSPs that we can use with this wallet.
+        dispatch(
+          paymentFetchPspsForPaymentId.request({
+            idPayment,
+            idWallet: selectedWallet.idWallet,
+            onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
+            onSuccess: successAction => {
+              // filter PSPs for the current locale only (the list will contain
+              // duplicates for all the supported languages)
+              const psps = pspsForLocale(successAction.payload);
+              if (psps.length === 0) {
+                // this payment method cannot be used!
+                onFailure("NO_PSPS_AVAILABLE");
+              } else if (walletHasFavoriteAvailablePsp(selectedWallet, psps)) {
+                // The user already selected a psp in the past for this wallet, and
+                // that PSP can be used for this payment, in this case we can
+                // proceed to the confirmation screen
+
                 navigateToPaymentConfirmPaymentMethodScreen({
                   rptId,
                   initialAmount,
@@ -115,24 +152,23 @@ export const dispatchPickPspOrConfirm =
                   idPayment,
                   psps,
                   wallet: maybeSelectedWallet.value
-                })
-              );
-            } else if (psps.length === 1) {
-              // there is only one PSP available for this payment, we can go ahead
-              // and associate it to the current wallet without asking the user to
-              // select it
-              dispatchUpdatePspForWalletAndConfirm(dispatch)(
-                psps[0].id,
-                selectedWallet,
-                rptId,
-                initialAmount,
-                verifica,
-                idPayment,
-                psps,
-                () =>
-                  // associating the only available psp to the wallet has failed, go
-                  // to the psp selection screen anyway
-                  dispatch(
+                });
+              } else if (psps.length === 1) {
+                // there is only one PSP available for this payment, we can go ahead
+                // and associate it to the current wallet without asking the user to
+                // select it
+                dispatchUpdatePspForWalletAndConfirm(dispatch)(
+                  psps[0].id,
+                  selectedWallet,
+                  rptId,
+                  initialAmount,
+                  verifica,
+                  idPayment,
+                  psps,
+                  () =>
+                    // associating the only available psp to the wallet has failed, go
+                    // to the psp selection screen anyway
+
                     navigateToPaymentPickPspScreen({
                       rptId,
                       initialAmount,
@@ -141,12 +177,11 @@ export const dispatchPickPspOrConfirm =
                       psps,
                       idPayment
                     })
-                  )
-              );
-            } else {
-              // we have more than one PSP and we cannot select one automatically,
-              // ask the user to select one PSP
-              dispatch(
+                );
+              } else {
+                // we have more than one PSP and we cannot select one automatically,
+                // ask the user to select one PSP
+
                 navigateToPaymentPickPspScreen({
                   rptId,
                   initialAmount,
@@ -154,35 +189,33 @@ export const dispatchPickPspOrConfirm =
                   wallet: selectedWallet,
                   psps,
                   idPayment
-                })
-              );
+                });
+              }
             }
-          }
-        })
-      );
+          })
+        );
+      }
     } else {
       if (hasWallets) {
         // the user didn't select yet a wallet, ask the user to select one
-        dispatch(
-          navigateToPaymentPickPaymentMethodScreen({
+
+        navigateToPaymentPickPaymentMethodScreen({
+          rptId,
+          initialAmount,
+          verifica,
+          idPayment
+        });
+      } else {
+        // the user never add a wallet, ask the user to add a new one
+
+        navigateToWalletAddPaymentMethod({
+          inPayment: some({
             rptId,
             initialAmount,
             verifica,
             idPayment
           })
-        );
-      } else {
-        // the user never add a wallet, ask the user to add a new one
-        dispatch(
-          navigateToWalletAddPaymentMethod({
-            inPayment: some({
-              rptId,
-              initialAmount,
-              verifica,
-              idPayment
-            })
-          })
-        );
+        });
       }
     }
   };

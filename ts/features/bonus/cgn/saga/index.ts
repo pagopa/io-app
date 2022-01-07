@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
+import { constNull } from "fp-ts/lib/function";
 import {
   cgnActivationStart,
   cgnRequestActivation
@@ -20,6 +21,7 @@ import {
   cgnSelectedMerchant
 } from "../store/actions/merchants";
 import { BackendCgnMerchants } from "../api/backendCgnMerchants";
+import { cgnCodeFromBucket } from "../store/actions/bucket";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -36,6 +38,7 @@ import {
   cgnOfflineMerchantsSaga,
   cgnOnlineMerchantsSaga
 } from "./networking/merchants/cgnMerchantsSaga";
+import { cgnBucketConsuption } from "./networking/bucket";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -89,6 +92,14 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     getType(cgnGenerateOtpAction.request),
     cgnGenerateOtp,
     backendCGN.generateOtp
+  );
+
+  // CGN Bucket Code consuption
+  yield takeLatest(
+    getType(cgnCodeFromBucket.request),
+    cgnBucketConsuption,
+    // TODO Replace once the proper backendCGN client will be defined
+    constNull
   );
 
   // CGN Offline Merchants

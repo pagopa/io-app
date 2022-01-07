@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
-import { constNull } from "fp-ts/lib/function";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -17,30 +15,29 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
-import { privacyUrl } from "../../../../../config";
 import {
   getValueOrElse,
   isError,
-  isReady,
-  remoteReady
+  isReady
 } from "../../../../bonus/bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { PspRadioItem } from "../components/PspRadioItem";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import { IOPayPalPsp } from "../types";
+import {
+  searchPaypalPsp as searchPaypalPspAction,
+  walletAddPaypalBack,
+  walletAddPaypalCancel,
+  walletAddPaypalPspSelected
+} from "../store/actions";
+import { payPalPspSelector } from "../store/reducers/searchPsp";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import { navigateToPayPalCheckout } from "../store/actions/navigation";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-// TODO temporary type. It will be shared in the future or replaced with a new one
-export type PayPalPsp = {
-  id: string;
-  logoUrl: string;
-  name: string;
-  fee: NonNegativeNumber;
-  privacyUrl: string;
-  tosUrl: string;
-};
 
 const styles = StyleSheet.create({
   radioListHeaderRightColumn: {
@@ -48,26 +45,6 @@ const styles = StyleSheet.create({
     textAlign: "right"
   }
 });
-
-// TODO replace fake items with values coming from the store
-const pspList: ReadonlyArray<PayPalPsp> = [
-  {
-    id: "1",
-    logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
-    name: "PayTipper",
-    fee: 100 as NonNegativeNumber,
-    privacyUrl,
-    tosUrl: privacyUrl
-  },
-  {
-    id: "2",
-    logoUrl: "https://www.dropbox.com/s/smk5cyxx1qevn6a/mat_bank.png?dl=1",
-    name: "Mat Bank",
-    fee: 50 as NonNegativeNumber,
-    privacyUrl,
-    tosUrl: privacyUrl
-  }
-];
 
 // an header over the psp list with 2 columns
 const RadioListHeader = (props: {
@@ -93,8 +70,8 @@ const RadioListHeader = (props: {
 };
 
 const getPspListRadioItems = (
-  pspList: ReadonlyArray<PayPalPsp>
-): ReadonlyArray<RadioItem<PayPalPsp["id"]>> =>
+  pspList: ReadonlyArray<IOPayPalPsp>
+): ReadonlyArray<RadioItem<IOPayPalPsp["id"]>> =>
   pspList.map(psp => ({
     id: psp.id,
     body: <PspRadioItem psp={psp} />
@@ -107,43 +84,63 @@ const getLocales = () => ({
   leftColumnTitle: I18n.t("wallet.onboarding.paypal.selectPsp.leftColumnTitle"),
   rightColumnTitle: I18n.t(
     "wallet.onboarding.paypal.selectPsp.rightColumnTitle"
+  ),
+  whatIsPspBody: I18n.t(
+    "wallet.onboarding.paypal.selectPsp.whatIsPspBottomSheet.body"
+  ),
+  whatIsPspTitle: I18n.t(
+    "wallet.onboarding.paypal.selectPsp.whatIsPspBottomSheet.title"
   )
 });
 
-const buttonsProps = () => {
-  const cancelButtonProps = {
-    testID: "cancelButtonId",
-    primary: false,
-    bordered: true,
-    // TODO replace with the effective handler
-    onPress: undefined,
-    title: I18n.t("global.buttons.cancel")
-  };
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    // TODO replace with the effective handler
-    onPress: undefined,
-    title: I18n.t("global.buttons.continue")
-  };
-  return { cancelButtonProps, continueButtonProps };
-};
-
 /**
- * This screen is where the user picks a PSP that will be used to handle PayPal transactions
+ * This screen is where the user picks a PSP that will be used to handle PayPal transactions within PayPal
  * Only 1 psp can be selected
  */
-const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
+const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
-  const pspList = getValueOrElse(props.pspList, []);
-  // auto select if the psp list has 1 element
-  const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"] | undefined>(
-    pspList.length === 1 ? pspList[0].id : undefined
+  const { present: presentWhatIsPspBottomSheet } = useIOBottomSheet(
+    <Body>{locales.whatIsPspBody}</Body>,
+    locales.whatIsPspTitle,
+    280
   );
+  const pspList = getValueOrElse(props.pspList, []);
+  const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
+  const dispatch = useDispatch();
+  const navigation = useNavigationContext();
+  const searchPaypalPsp = () => {
+    dispatch(searchPaypalPspAction.request());
+  };
+  useEffect(searchPaypalPsp, [dispatch]);
+  useEffect(() => {
+    // auto select if the psp list has 1 element
+    setSelectedPsp(pspList.length === 1 ? pspList[0] : undefined);
+  }, [pspList]);
+
+  const buttonsProps = {
+    cancelButtonProps: {
+      testID: "cancelButtonId",
+      primary: false,
+      bordered: true,
+      onPress: props.cancel,
+      title: I18n.t("global.buttons.cancel")
+    },
+    continueButtonProps: {
+      testID: "continueButtonId",
+      bordered: false,
+      onPress: () => {
+        if (selectedPsp) {
+          props.setPspSelected(selectedPsp);
+          navigation.navigate(navigateToPayPalCheckout());
+        }
+      },
+      title: I18n.t("global.buttons.continue")
+    }
+  };
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={props.goBack}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
@@ -155,50 +152,60 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
             <View spacer={true} small={true} />
             <ScrollView>
               <Body>{locales.body}</Body>
-              {/* TODO see https://pagopa.atlassian.net/browse/IA-304 */}
-              <Link onPress={constNull}>{locales.link}</Link>
+              <Link
+                onPress={presentWhatIsPspBottomSheet}
+                testID={"whatIsPSPTestID"}
+              >
+                {locales.link}
+              </Link>
               <View spacer={true} large={true} />
               <RadioListHeader
                 leftColumnTitle={locales.leftColumnTitle}
                 rightColumnTitle={locales.rightColumnTitle}
               />
               <View spacer={true} small={true} />
-              <RadioButtonList<PayPalPsp["id"]>
+              <RadioButtonList<IOPayPalPsp["id"]>
                 key="paypal_psp_selection"
                 items={getPspListRadioItems(pspList)}
-                selectedItem={selectedPsp}
-                onPress={setSelectedPsp}
+                selectedItem={selectedPsp?.id}
+                onPress={(idPsp: string) => {
+                  setSelectedPsp(pspList.find(p => p.id === idPsp));
+                }}
               />
             </ScrollView>
           </View>
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
-            leftButton={buttonsProps().cancelButtonProps}
+            leftButton={buttonsProps.cancelButtonProps}
             rightButton={{
-              ...buttonsProps().continueButtonProps,
+              ...buttonsProps.continueButtonProps,
               disabled: selectedPsp === undefined
             }}
           />
         </SafeAreaView>
       ) : (
         <LoadingErrorComponent
-          testID={"PayPalPpsSelectionScreen"}
+          testID={"PayPalPpsSelectionScreenLoadingError"}
           isLoading={!isError(props.pspList)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
-          // TODO replace with the handler that retries to reload data
-          onRetry={constNull}
+          onRetry={searchPaypalPsp}
         />
       )}
     </BaseScreenComponent>
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({
-  pspList: remoteReady(pspList)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  goBack: () => dispatch(walletAddPaypalBack()),
+  cancel: () => dispatch(walletAddPaypalCancel()),
+  setPspSelected: (psp: IOPayPalPsp) =>
+    dispatch(walletAddPaypalPspSelected(psp))
+});
+const mapStateToProps = (state: GlobalState) => ({
+  pspList: payPalPspSelector(state)
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PayPalPpsSelectionScreen);
+)(PayPalPspSelectionScreen);

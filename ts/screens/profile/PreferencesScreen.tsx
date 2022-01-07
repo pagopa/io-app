@@ -5,7 +5,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, PermissionsAndroid } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -42,6 +42,7 @@ import {
 } from "../../utils/locale";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import ScreenContent from "../../components/screens/ScreenContent";
+import { requestIOAndroidPermission } from "../../utils/permission";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -91,7 +92,16 @@ class PreferencesScreen extends React.Component<Props> {
     super(props);
   }
 
-  private checkPermissionThenGoCalendar = () => {
+  private checkPermissionThenGoCalendar = async () => {
+    await requestIOAndroidPermission(
+      PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR,
+      {
+        title: I18n.t("permissionRationale.calendar.title"),
+        message: I18n.t("permissionRationale.calendar.message"),
+        buttonPositive: I18n.t("global.buttons.choose")
+      }
+    );
+
     void checkAndRequestPermission()
       .then(calendarPermission => {
         if (calendarPermission.authorized) {
@@ -206,15 +216,14 @@ function mapStateToProps(state: GlobalState) {
   };
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToServiceContactPreferenceScreen: () =>
-    dispatch(navigateToServicePreferenceScreen()),
+    navigateToServicePreferenceScreen(),
   navigateToEmailForwardingPreferenceScreen: () =>
-    dispatch(navigateToEmailForwardingPreferenceScreen()),
+    navigateToEmailForwardingPreferenceScreen(),
   navigateToCalendarPreferenceScreen: () =>
-    dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToLanguagePreferenceScreen: () =>
-    dispatch(navigateToLanguagePreferenceScreen())
+    navigateToCalendarPreferenceScreen(),
+  navigateToLanguagePreferenceScreen: () => navigateToLanguagePreferenceScreen()
 });
 
 export default connect(

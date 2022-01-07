@@ -37,6 +37,7 @@ type OwnProps = {
 
 type State = {
   hasError: boolean;
+  errorCode?: string;
   isLoginSuccess?: boolean;
 };
 
@@ -123,7 +124,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     this.props.loginFailure(
       new Error(`login CIE failure with code ${errorCode || "n/a"}`)
     );
-    this.props.resetNavigation();
+    this.setState({ hasError: true, errorCode });
   };
 
   private handleGoBack = () =>
@@ -145,12 +146,17 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 
   private getContent = () => {
     if (this.state.hasError) {
+      const errorTranslationKey = this.state.errorCode
+        ? `authentication.errors.spid.error_${this.state.errorCode}`
+        : "authentication.errors.network.title";
       return (
         <GenericErrorComponent
           onRetry={this.props.resetNavigation}
           onCancel={undefined}
           image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
-          text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
+          text={I18n.t(errorTranslationKey, {
+            defaultValue: I18n.t("authentication.errors.spid.unknown")
+          })}
         />
       );
     } else if (this.state.isLoginSuccess) {
@@ -185,7 +191,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  resetNavigation: () => dispatch(resetToAuthenticationRoute),
+  resetNavigation: () => resetToAuthenticationRoute(),
   loginSuccess: (token: SessionToken) =>
     dispatch(loginSuccess({ token, idp: IdpCIE.id })),
   loginFailure: (error: Error) =>

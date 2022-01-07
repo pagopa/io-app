@@ -4,6 +4,8 @@ import { Linking } from "react-native";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
+import { storeUrl, webStoreURL } from "./appVersion";
+
 /**
  * Generic utilities for url parsing
  */
@@ -91,4 +93,12 @@ export const openWebUrl = (url: string, onError: () => void = constNull) => {
   )({})
     .run()
     .then(ei => ei.fold(onError, constNull), onError);
+};
+
+export const openAppStoreUrl = async (onError: () => void = constNull) => {
+  try {
+    await Linking.openURL(storeUrl);
+  } catch (e) {
+    openWebUrl(webStoreURL, onError);
+  }
 };

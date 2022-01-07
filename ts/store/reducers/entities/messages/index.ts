@@ -25,17 +25,23 @@ import {
   messagesStatusSelector,
   MessageStatus
 } from "./messagesStatus";
+import allPaginatedReducer, { AllPaginated } from "./allPaginated";
+import detailsByIdReducer, { DetailsById } from "./detailsById";
 
 export type MessagesState = Readonly<{
   byId: MessageStateById;
   allIds: MessagesAllIdsState; // FIXME: is this used?
   idsByServiceId: MessagesIdsByServiceId;
+  allPaginated: AllPaginated;
+  detailsById: DetailsById;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
   byId: messagesByIdReducer,
   allIds: messagesAllIdsReducer,
-  idsByServiceId: messagesIdsByServiceIdReducer
+  idsByServiceId: messagesIdsByServiceIdReducer,
+  allPaginated: allPaginatedReducer,
+  detailsById: detailsByIdReducer
 });
 
 // Selectors
@@ -86,7 +92,7 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
     )
 );
 
-export const messagesUnreadedAndUnarchivedSelector = createSelector(
+export const messagesUnreadAndUnarchivedSelector = createSelector(
   lexicallyOrderedMessagesStateSelector,
   potMessagesState =>
     pot.getOrElse(

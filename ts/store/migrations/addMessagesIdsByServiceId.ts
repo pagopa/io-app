@@ -1,7 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import merge from "lodash/merge";
 
-import { messagesStateByIdSelector } from "../reducers/entities/messages/messagesById";
+import {
+  messagesStateByIdSelector,
+  MessageStateById
+} from "../reducers/entities/messages/messagesById";
 import { MessagesIdsByServiceId } from "../reducers/entities/messages/messagesIdsByServiceId";
 import { PersistedGlobalState } from "../reducers/types";
 
@@ -12,7 +15,7 @@ import { PersistedGlobalState } from "../reducers/types";
 export const addMessagesIdsByServiceId = (
   state: PersistedGlobalState
 ): PersistedGlobalState => {
-  const messageStatesById = messagesStateByIdSelector(state);
+  const messageStatesById: MessageStateById = messagesStateByIdSelector(state);
 
   const messagesIdsByServiceId: MessagesIdsByServiceId = Object.keys(
     messageStatesById

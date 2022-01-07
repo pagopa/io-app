@@ -4,6 +4,7 @@
  */
 import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
+import { FC } from "react";
 import {
   Alert,
   FlatList,
@@ -13,6 +14,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Option } from "fp-ts/lib/Option";
+import { SvgProps } from "react-native-svg";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
@@ -32,7 +34,6 @@ import { LevelEnum } from "../../../definitions/content/SectionStatus";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
-  navigateToAddCreditCard: () => void;
 }>;
 
 type Props = OwnProps &
@@ -42,9 +43,8 @@ type Props = OwnProps &
 export type IPaymentMethod = Readonly<{
   name: string;
   description: string;
+  icon: FC<SvgProps>;
   maxFee?: string;
-  icon?: any;
-  image?: any;
   status: "implemented" | "incoming" | "notImplemented";
   section?: SectionStatusKey;
   onPress?: () => void;
@@ -147,6 +147,8 @@ const renderListItem = (
           first={itemInfo.index === 0}
           last={itemInfo.index === paymentMethodsLength}
         >
+          {itemInfo.item.icon({ width: 20, height: 20 })}
+          <View hspacer />
           <View style={styles.flexColumn}>
             <View style={styles.row}>
               <View>
@@ -155,7 +157,6 @@ const renderListItem = (
                   {itemInfo.item.name}
                 </H3>
               </View>
-              <IconFont name={"io-right"} color={IOColors.blue} size={24} />
             </View>
             <H5
               color={"bluegrey"}
@@ -165,6 +166,7 @@ const renderListItem = (
               {itemInfo.item.description}
             </H5>
           </View>
+          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
         </ListItem>
       );
     }

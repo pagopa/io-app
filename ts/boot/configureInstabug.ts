@@ -1,6 +1,7 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import Instabug, {
   BugReporting,
+  CrashReporting,
   NetworkLogger,
   Replies
 } from "instabug-reactnative";
@@ -60,7 +61,7 @@ export const initialiseInstabug = () => {
     // avoid Instabug to log network requests
     NetworkLogger.setEnabled(false);
   }
-
+  CrashReporting.setEnabled(false);
   Instabug.setString(
     Instabug.strings.commentFieldHintForQuestion,
     I18n.t("instabug.overrideText.commentFieldHintForQuestion")
@@ -100,8 +101,11 @@ export const openInstabugQuestionReport = (
   Instabug.setEnabledAttachmentTypes(
     attachmentTypeConfiguration.screenshot,
     attachmentTypeConfiguration.extraScreenshot,
-    attachmentTypeConfiguration.galleryImage,
-    attachmentTypeConfiguration.screenRecording
+    // the gallery attachment & screen recording are disabled because it is impossible to display
+    // a prominent disclosure before this request and Instabug will be removed
+    // https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/444727486/2021-11-18+Android#2021-12-21
+    false,
+    false
   );
   BugReporting.showWithOptions(BugReporting.reportType.question, [
     BugReporting.option.commentFieldRequired,

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { InteractionManager, Modal, ModalBaseProps } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Container } from "native-base";
 
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { loadContextualHelpData } from "../../store/actions/content";
 import { Dispatch } from "../../store/actions/types";
 import { screenContextualHelpDataSelector } from "../../store/reducers/content";
@@ -20,8 +19,11 @@ import { loadSupportToken } from "../../store/actions/authentication";
 import { remoteUndefined } from "../../features/bonus/bpd/model/RemoteValue";
 import { FAQsCategoriesType, getFAQsFromCategories } from "../../utils/faq";
 import { instabugReportOpened } from "../../store/actions/debug";
-import Markdown from "../ui/Markdown";
 
+import {
+  getContextualHelpData,
+  reloadContextualHelpDataThreshold
+} from "../screens/BaseScreenComponent/utils";
 import SendSupportRequestOptions, {
   SupportRequestOptions
 } from "./SendSupportRequestOptions";
@@ -54,27 +56,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 /**
- If contextualData (loaded from the content server) contains the route of the current screen,
- title, content, faqs are read from it, otherwise they came from the locales stored in app
- */
-const getContextualHelpData = (
-  maybeContextualData: Option<ScreenCHData>,
-  defaultData: ContextualHelpData,
-  onReady: () => void
-): ContextualHelpData =>
-  maybeContextualData.fold<ContextualHelpData>(defaultData, data => ({
-    title: data.title,
-    content: <Markdown onLoadEnd={onReady}>{data.content}</Markdown>,
-    faqs: fromNullable(data.faqs)
-      // ensure the array is defined and not empty
-      .mapNullable(faqs => (faqs.length > 0 ? faqs : undefined))
-      // if remote faqs are not defined or empty, fallback to the local ones
-      .fold(defaultData.faqs, fqs =>
-        fqs.map(f => ({ title: f.title, content: f.body }))
-      )
-  }));
-
-/**
  * A modal to show the contextual help related to a screen.
  * The contextual help is characterized by:
  * - a title
@@ -89,21 +70,26 @@ const ContextualHelp: React.FunctionComponent<Props> = (props: Props) => {
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
   );
+  const [lastContextualDataUpdate, setLastContextualDataUpdate] =
+    useState<Date>(new Date());
   const [authenticatedSupportType, setAuthenticatedSupportType] =
     useState<BugReporting.reportType | null>(null);
 
   const { potContextualData, loadContextualHelpData } = props;
 
   useEffect(() => {
-    // if the contextual data is empty or is in error -> try to reload
+    const now = new Date();
+    // if the contextual data is empty or is in error and last reload was done before the threshold -> try to reload
     if (
+      now.getTime() - lastContextualDataUpdate.getTime() >
+        reloadContextualHelpDataThreshold &&
       !pot.isLoading(potContextualData) &&
-      pot.isNone(potContextualData) &&
-      pot.isError(potContextualData)
+      pot.isNone(potContextualData)
     ) {
+      setLastContextualDataUpdate(now);
       loadContextualHelpData();
     }
-  }, [potContextualData, loadContextualHelpData]);
+  }, [lastContextualDataUpdate, potContextualData, loadContextualHelpData]);
 
   // after the modal is fully visible, render the content -
   // in case of complex markdown this can take some time and we don't

@@ -78,14 +78,12 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToLandingWebview: (url: string, referer: string) =>
-    dispatch(
-      navigateToCgnMerchantLandingWebview({
-        landingPageUrl: url,
-        landingPageReferrer: referer
-      })
-    )
+    navigateToCgnMerchantLandingWebview({
+      landingPageUrl: url,
+      landingPageReferrer: referer
+    })
 });
 export default connect(
   mapStateToProps,

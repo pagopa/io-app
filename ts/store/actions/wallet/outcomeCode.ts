@@ -3,6 +3,7 @@
  */
 import { Option } from "fp-ts/lib/Option";
 import { ActionType, createStandardAction } from "typesafe-actions";
+import { PaymentMethodType } from "./payment";
 
 // This action is supposed to be used to update the state with the outcome
 // code when the add credit card workflow is finished
@@ -11,10 +12,11 @@ export const addCreditCardOutcomeCode = createStandardAction(
 )<Option<string>>();
 
 // This action is supposed to be used to update the state with the outcome
-// code when the payment workflow is finished
-export const paymentOutcomeCode = createStandardAction("PAYMENT_OUTCOME_CODE")<
-  Option<string>
->();
+// code when the payment workflow is finished. It brings also the payment method type used to do the payment
+export const paymentOutcomeCode = createStandardAction("PAYMENT_OUTCOME_CODE")<{
+  outcome: Option<string>;
+  paymentMethodType: PaymentMethodType;
+}>();
 
 // Bring the state to the initial value
 export const resetLastPaymentOutcomeCode = createStandardAction(

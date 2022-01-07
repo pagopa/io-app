@@ -1,6 +1,7 @@
 {
   "global": {
-    "autoLogin": true
+    "autoLogin": true,
+    "allowRandomValues" : false
   },
   "profile": {
     "attrs": {
@@ -19,6 +20,12 @@
     "withValidDueDateCount": 1,
     "withInValidDueDateCount": 1,
     "standardMessageCount": 1,
-    "allowRandomValues": true
+    "allowRandomValues": false
+  },
+  "wallet": {
+    "payment": {
+      "amount": 2222,
+      "pspFeeAmount": 100
+    }
   }
 }

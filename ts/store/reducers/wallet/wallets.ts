@@ -6,7 +6,7 @@ import _, { values } from "lodash";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
-import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
+import { WalletTypeEnum } from "../../../../definitions/pagopa/WalletV2";
 import {
   getValueOrElse,
   remoteError,
@@ -23,10 +23,12 @@ import {
   isBancomat,
   isBPay,
   isCreditCard,
+  isPayPal,
   isPrivativeCard,
   isRawCreditCard,
   isSatispay,
   PaymentMethod,
+  PayPalPaymentMethod,
   PrivativePaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
@@ -245,6 +247,17 @@ export const creditCardListSelector = createSelector(
 );
 
 /**
+ * from a given ID return the relative {@link PaymentMethod} or undefined
+ */
+export const paymentMethodByIdSelector = createSelector(
+  [paymentMethodsSelector, (_: GlobalState, id: number) => id],
+  (potWallets, id): PaymentMethod | undefined =>
+    pot.toUndefined(
+      pot.map(potWallets, wallets => wallets.find(cc => cc.idWallet === id))
+    )
+);
+
+/**
  * Return a {@link CreditCardPaymentMethod} by walletId
  * Return undefined if not in list
  */
@@ -256,6 +269,15 @@ export const creditCardByIdSelector = createSelector(
         creditCardList.find(cc => cc.idWallet === id)
       )
     )
+);
+
+/**
+ * Return the paypal list in the wallet
+ */
+export const paypalListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<PayPalPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isPayPal))
 );
 
 /**
@@ -276,6 +298,17 @@ export const satispayListSelector = createSelector(
   [paymentMethodsSelector],
   (paymentMethodPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
     pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isSatispay))
+);
+
+/**
+ * Return the paypal (only 1 can be in the wallet) payment method
+ */
+export const paypalSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<PayPalPaymentMethod, Error> =>
+    pot.mapNullable(paymentMethodPot, paymentMethod =>
+      paymentMethod.find(isPayPal)
+    )
 );
 
 /**

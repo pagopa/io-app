@@ -40,6 +40,9 @@ import {
   isBiometricsValidType
 } from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { assistanceToolRemoteConfig } from "../../utils/supportAssistance";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -482,6 +485,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       ? customVariables.contentPrimaryBackground
       : customVariables.colorWhite;
 
+    const choosenTool = assistanceToolRemoteConfig(
+      this.props.assistanceToolConfig
+    );
+
     return !this.state.canInsertPinTooManyAttempts ? (
       IdentificationLockModal({ countdown })
     ) : (
@@ -490,7 +497,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           accessibilityEvents={{ avoidNavigationEventsUsage: true }}
           accessibilityLabel={I18n.t("identification.title")}
           primary={!isValidatingTask}
-          contextualHelpMarkdown={contextualHelpMarkdown}
+          contextualHelpMarkdown={
+            choosenTool === ToolEnum.instabug
+              ? contextualHelpMarkdown
+              : undefined
+          }
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
         >
@@ -643,7 +654,8 @@ const mapStateToProps = (state: GlobalState) => ({
   identificationFailState: identificationFailSelector(state),
   isFingerprintEnabled: isFingerprintEnabledSelector(state),
   appState: appCurrentStateSelector(state),
-  profileName: profileNameSelector(state)
+  profileName: profileNameSelector(state),
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
 export default connect(

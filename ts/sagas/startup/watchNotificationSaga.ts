@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { ApplicationState } from "../../store/actions/application";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
@@ -35,7 +35,7 @@ export function* watchNotificationSaga(
       yield put(clearNotificationPendingMessage());
 
       // Navigate to message details screen
-      yield put(navigateToMessageRouterScreen({ messageId }));
+      yield call(navigateToMessageRouterScreen, { messageId });
     }
   }
 }

@@ -112,8 +112,8 @@ const TransactionsGraphicalSummary = (props: Props) => (
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  goToTransactions: () => dispatch(navigateToBpdTransactions())
+const mapDispatchToProps = (_: Dispatch) => ({
+  goToTransactions: () => navigateToBpdTransactions()
 });
 
 export default connect(

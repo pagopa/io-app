@@ -16,6 +16,7 @@ import authorizationDenied from "../../../../img/servicesStatus/error-detail-ico
 import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
 import sessionExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import cardProblemOrOperationCanceled from "../../../../img/wallet/errors/payment-unknown-icon.png";
+import doubtImage from "../../../../img/pictograms/doubt.png";
 import { GlobalState } from "../types";
 
 export type OutcomeCodeState = {
@@ -53,6 +54,18 @@ const OutcomeCodesPrintable = (): OutcomeCodes => ({
       "it-IT": I18n.t("wallet.outcomeMessage.code2.description")
     },
     icon: authorizationDenied,
+    status: "errorBlocking"
+  },
+  "3": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code3.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code3.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code3.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code3.description")
+    },
+    icon: doubtImage,
     status: "errorBlocking"
   },
   "4": {
@@ -98,6 +111,42 @@ const OutcomeCodesPrintable = (): OutcomeCodes => ({
     },
     icon: authorizationDenied,
     status: "errorBlocking"
+  },
+  "15": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code15.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code15.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code15.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code15.description")
+    },
+    icon: doubtImage,
+    status: "errorBlocking"
+  },
+  "18": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code18.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code18.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code18.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code18.description")
+    },
+    icon: authorizationDenied,
+    status: "errorBlocking"
+  },
+  "19": {
+    title: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code19.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code19.title")
+    },
+    description: {
+      "en-EN": I18n.t("wallet.outcomeMessage.code19.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code19.description")
+    },
+    icon: authorizationDenied,
+    status: "errorBlocking"
   }
 });
 
@@ -118,7 +167,7 @@ const fallbackOutcomeCodes = (): OutcomeCode => ({
 // This function extracts, given an Option<string>, the outcomeCode object from the OutcomeCodesPrintable object
 // that contains the list of outcome codes.
 // If the string is none or if the the code is not a key of the OutcomeCodesPrintable the fallback outcome code object is returned.
-const extractOutcomeCode = (code: Option<string>): Option<OutcomeCode> =>
+export const extractOutcomeCode = (code: Option<string>): Option<OutcomeCode> =>
   code.fold(some(fallbackOutcomeCodes()), c =>
     OutcomeCodesKey.decode(c).fold(
       _ => some(fallbackOutcomeCodes()),
@@ -131,8 +180,9 @@ export default function outcomeCodeReducer(
   action: Action
 ): OutcomeCodeState {
   switch (action.type) {
-    case getType(addCreditCardOutcomeCode):
     case getType(paymentOutcomeCode):
+      return { outcomeCode: extractOutcomeCode(action.payload.outcome) };
+    case getType(addCreditCardOutcomeCode):
       return { outcomeCode: extractOutcomeCode(action.payload) };
     case getType(resetLastPaymentOutcomeCode):
       return initialOutcomeCodeState;

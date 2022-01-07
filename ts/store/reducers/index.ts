@@ -2,7 +2,6 @@
  * Aggregates all defined reducers
  */
 import AsyncStorage from "@react-native-community/async-storage";
-import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
@@ -17,13 +16,18 @@ import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import appStateReducer from "./appState";
-import authenticationReducer, { AuthenticationState } from "./authentication";
+import authenticationReducer, {
+  AuthenticationState,
+  INITIAL_STATE as autenticationInitialState
+} from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
+import backoffErrorReducer from "./backoffError";
 import cieReducer from "./cie";
 import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";
+import crossSessionsReducer from "./crossSessions";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
@@ -34,8 +38,8 @@ import entitiesReducer, {
 import identificationReducer, { IdentificationState } from "./identification";
 import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
-import navigationReducer from "./navigation";
-import navigationHistoryReducer from "./navigationHistory";
+import internalRouteNavigationReducer from "./internalRouteNavigation";
+import { navigationReducer } from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import paymentsReducer from "./payments";
@@ -44,14 +48,12 @@ import persistedPreferencesReducer, {
 } from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
-import crossSessionsReducer from "./crossSessions";
 import searchReducer from "./search";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
-import internalRouteNavigationReducer from "./internalRouteNavigation";
-import backoffErrorReducer from "./backoffError";
+import assistanceToolsReducer from "./assistanceTools";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -86,21 +88,20 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   // ephemeral state
   //
   appState: appStateReducer,
-  network: networkReducer,
+  navigation: navigationReducer,
   backoffError: backoffErrorReducer,
-  nav: navigationReducer,
   deepLink: deepLinkReducer,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
   backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
-  navigationHistory: navigationHistoryReducer,
   instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,
   features: featuresReducer,
   internalRouteNavigation: internalRouteNavigationReducer,
+  assistanceTools: assistanceToolsReducer,
   //
   // persisted state
   //
@@ -164,8 +165,11 @@ export function createRootReducer(
           (isActionOf(logoutFailure, action) &&
             !action.payload.options.keepUserData))
           ? ({
-              // eslint-disable-next-line no-underscore-dangle
-              authentication: { _persist: state.authentication._persist },
+              authentication: {
+                ...autenticationInitialState,
+                // eslint-disable-next-line no-underscore-dangle
+                _persist: state.authentication._persist
+              },
               // data should be kept across multiple sessions
               entities: {
                 services: state.entities.services,

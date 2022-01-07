@@ -10,8 +10,8 @@ import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
-  loadMessage as loadMessageAction,
-  loadMessages as loadMessagesAction,
+  DEPRECATED_loadMessage as loadMessageAction,
+  DEPRECATED_loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
@@ -21,7 +21,7 @@ import { messagesStatusSelector } from "../../store/reducers/entities/messages/m
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
-import { isDevEnv } from "../../utils/environment";
+import { isTestEnv } from "../../utils/environment";
 
 /**
  * A generator to load messages from the Backend.
@@ -125,7 +125,7 @@ function* loadMessages(
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
-          // we need to load a service if (one of these is true)
+          // we need to load a service if either
           // - service is not cached
           // - service is not loading AND (service is none OR service is error)
           return (
@@ -171,4 +171,4 @@ export function* watchLoadMessages(
   );
 }
 
-export const testLoadMessages = isDevEnv ? loadMessages : undefined;
+export const testLoadMessages = isTestEnv ? loadMessages : undefined;

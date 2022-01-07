@@ -1,6 +1,7 @@
 import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";

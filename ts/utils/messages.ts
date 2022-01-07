@@ -16,10 +16,7 @@ import { Predicate } from "fp-ts/lib/function";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import {
   getInternalRoute,
   handleInternalLink
@@ -32,6 +29,7 @@ import { Locales } from "../../locales/locales";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { mixpanelTrack } from "../mixpanel";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
+import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -200,16 +198,15 @@ export const getPrescriptionDataFromName = (
     return none;
   });
 
-const hasMetadataTokenName = (
-  metadata?: ServicePublicService_metadata
-): boolean => metadata?.token_name !== undefined;
+const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
+  metadata?.token_name !== undefined;
 
 // a mapping between routes name (the key) and predicates (the value)
 // the predicate says if for that specific route the navigation is allowed
 const internalRoutePredicates: Map<
   string,
-  Predicate<ServicePublicService_metadata | undefined>
-> = new Map<string, Predicate<ServicePublicService_metadata | undefined>>([
+  Predicate<ServiceMetadata | undefined>
+> = new Map<string, Predicate<ServiceMetadata | undefined>>([
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
@@ -225,7 +222,7 @@ export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
 
 const extractCTA = (
   text: string,
-  serviceMetadata?: ServicePublicService_metadata,
+  serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
 ): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(text)
@@ -251,16 +248,30 @@ const extractCTA = (
 /**
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
+ * @deprecated please use getMessageCTA instead
  * @param message
  * @param serviceMetadata
  * @param serviceId
  */
 export const getCTA = (
   message: CreatedMessageWithContentAndAttachments,
-  serviceMetadata?: ServicePublicService_metadata,
+  serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
 ): Option<CTAS> =>
-  extractCTA(message.content.markdown, serviceMetadata, serviceId);
+  getMessageCTA(message.content.markdown, serviceMetadata, serviceId);
+
+/**
+ * Extract the CTAs if they are nested inside the message markdown content.
+ * The returned CTAs are already localized.
+ * @param markdown
+ * @param serviceMetadata
+ * @param serviceId
+ */
+export const getMessageCTA = (
+  markdown: MessageBodyMarkdown,
+  serviceMetadata?: ServiceMetadata,
+  serviceId?: ServiceId
+): Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
@@ -268,7 +279,7 @@ export const getCTA = (
  * @param serviceMetadata
  */
 export const getServiceCTA = (
-  serviceMetadata?: ServicePublicService_metadata
+  serviceMetadata?: ServiceMetadata
 ): Option<CTAS> =>
   fromNullable(serviceMetadata?.cta).chain(cta =>
     extractCTA(cta, serviceMetadata)
@@ -282,7 +293,7 @@ export const getServiceCTA = (
  */
 export const isCtaActionValid = (
   cta: CTA,
-  serviceMetadata?: ServicePublicService_metadata
+  serviceMetadata?: ServiceMetadata
 ): boolean => {
   // check if it is an internal navigation
   const maybeInternalRoute = getInternalRoute(cta.action);
@@ -305,7 +316,7 @@ export const isCtaActionValid = (
  */
 export const hasCtaValidActions = (
   ctas: CTAS,
-  serviceMetadata?: ServicePublicService_metadata
+  serviceMetadata?: ServiceMetadata
 ): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
   if (ctas.cta_2 === undefined) {

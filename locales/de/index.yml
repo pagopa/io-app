@@ -34,6 +34,7 @@ global:
     today: "heute"
     tomorrow: "morgen"
   dateFormats:
+    timeFormat: "%H.%M"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD"
@@ -115,8 +116,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Einige Funktionen werden nicht funktionieren.
-exit:
-  pressAgain: zum Beenden erneut drücken
 errors:
   loginError: Es gab einen Fehler bei der Anmeldung, wiederholen Sie den Vorgang.
   profileUpdateError: Beim Aktualisieren Ihres Profils ist ein Fehler aufgetreten.
@@ -292,7 +291,7 @@ cie:
   title: Berühren Sie die Karte
   layCardMessageHeader: Legen Sie für einige Sekunden Ihre elektronische ID-Karte auf der Rückseite Ihres Telefons.
   layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie Ihre Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie einen Ton hören.
-  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
+  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
 spid:
   login: LOGIN
   loginButton: LOGIN MIT
@@ -860,6 +859,7 @@ messages:
     senderInfo:  Absenderdienst unbekannt
     serviceInfo: Service-Info unbekannt
     departmentInfo: Abteilungsinfo unbekannt
+    noTitle: Kein Titel
   loadingErrorTitle: Das Laden der Mitteilungen ist fehlgeschlagen
   cta:
     archive: Archiviert

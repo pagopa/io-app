@@ -59,7 +59,6 @@ type Props = OwnProps &
 
 type State = {
   tapsOnAppVersion: number;
-  deviceUniqueId: string;
 };
 
 const styles = StyleSheet.create({
@@ -111,8 +110,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      tapsOnAppVersion: 0,
-      deviceUniqueId: getDeviceId()
+      tapsOnAppVersion: 0
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
@@ -313,7 +311,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       walletToken,
       setDebugModeEnabled
     } = this.props;
-    const { deviceUniqueId } = this.state;
+    const deviceUniqueId = getDeviceId();
 
     return (
       <React.Fragment>
@@ -393,12 +391,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 false
               )}
 
-            {isDevEnv &&
-              this.debugListItem(
-                `Device unique ID ${deviceUniqueId}`,
-                () => clipboardSetStringWithFeedback(deviceUniqueId),
-                false
-              )}
+            {this.debugListItem(
+              `Device unique ID ${deviceUniqueId}`,
+              () => clipboardSetStringWithFeedback(deviceUniqueId),
+              false
+            )}
 
             {this.debugListItem(
               I18n.t("profile.main.cache.clear"),
@@ -544,7 +541,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: () => dispatch(navigateToLogout()),
+  logout: () => navigateToLogout(),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),

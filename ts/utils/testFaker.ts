@@ -2,14 +2,14 @@ import {
   IPatternStringTag,
   IWithinRangeStringTag
 } from "italia-ts-commons/lib/strings";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Action } from "redux";
+
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import { CreditCard, PatchedWalletV2, Psp, Wallet } from "../types/pagopa";
-// import { applicationChangeState } from "../store/actions/application";
 import {
   loginSuccess,
   idpSelected,
@@ -243,6 +243,7 @@ export const AuthSeq: ReadonlyArray<Action> = [
       "b56c764f75e3fd5c2979c27b9fb3561bcb453ae952c83f0e1bb6075666cfef2aee7169667f187efe65e41789af643249",
     spidLevel: "https://www.spid.gov.it/SpidL2" as SpidLevelEnum,
     walletToken:
-      "666666635248824960766f96115b59ac1c2ca700c7e68192e4a7c26e1e17ca4fcc2a66e158295390624f87f05f53235e"
+      "666666635248824960766f96115b59ac1c2ca700c7e68192e4a7c26e1e17ca4fcc2a66e158295390624f87f05f53235e",
+    zendeskToken: "AAAAAAAAAAAAA4"
   })
 ];

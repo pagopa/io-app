@@ -6,7 +6,7 @@ import {
   RptId,
   rptIdFromPaymentNoticeQrCode,
   RptIdFromString
-} from "italia-pagopa-commons/lib/pagopa";
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 
@@ -214,6 +214,7 @@ const dataSet = new Set<DetailV2Keys>([
 
 const ecSet = new Set<DetailV2Keys>([
   "PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE",
+  "PPT_ERRORE_EMESSO_DA_PAA",
   "PPT_STAZIONE_INT_PA_TIMEOUT",
   "PPT_STAZIONE_INT_PA_ERRORE_RESPONSE",
   "PPT_IBAN_NON_CENSITO",

@@ -2,7 +2,7 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import { some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
@@ -10,6 +10,7 @@ import { FlatList, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
+
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -28,6 +29,7 @@ import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
+  paypalListSelector,
   privativeListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
@@ -44,6 +46,9 @@ import { H4 } from "../../../components/core/typography/H4";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
+import { payPalEnabled } from "../../../config";
+import { pspV2Selector } from "../../../store/reducers/wallet/payment";
+import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchPickPspOrConfirm } from "./common";
 
 type NavigationParams = Readonly<{
@@ -170,16 +175,21 @@ function getValueOrEmptyArray(
 
 const mapStateToProps = (state: GlobalState) => {
   const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
+  const potVisiblePaypal = payPalEnabled ? paypalListSelector(state) : pot.none;
   const potVisibleBancomat = bancomatListVisibleInWalletSelector(state);
   const potVisibleBPay = bPayListVisibleInWalletSelector(state);
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
   const potPsps = state.wallet.payment.psps;
+  const pspV2 = pspV2Selector(state);
   const isLoading =
-    pot.isLoading(potVisibleCreditCard) || pot.isLoading(potPsps);
+    pot.isLoading(potVisibleCreditCard) ||
+    pot.isLoading(potPsps) ||
+    isLoadingRemote(pspV2);
 
   const visibleWallets = [
     potVisibleCreditCard,
+    potVisiblePaypal,
     potVisibleBancomat,
     potVisibleBPay,
     potVisibleSatispay,
@@ -204,7 +214,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  goBack: () => dispatch(navigateBack()),
+  goBack: () => navigateBack(),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     dispatchPickPspOrConfirm(dispatch)(
       props.navigation.getParam("rptId"),
@@ -229,16 +239,14 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     );
   },
   navigateToAddPaymentMethod: () =>
-    dispatch(
-      navigateToWalletAddPaymentMethod({
-        inPayment: some({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment")
-        })
+    navigateToWalletAddPaymentMethod({
+      inPayment: some({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
       })
-    )
+    })
 });
 
 export default connect(

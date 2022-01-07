@@ -87,6 +87,7 @@ class ServiceList extends React.Component<Props> {
       style={styles.padded}
       logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
       rightItem={this.props.renderRightIcon?.(info.section)}
+      accessibilityRole={"header"}
     />
   );
 
