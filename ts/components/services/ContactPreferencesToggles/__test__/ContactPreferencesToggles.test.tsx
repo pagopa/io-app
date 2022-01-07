@@ -183,6 +183,7 @@ const renderComponent = (
     <Provider store={store}>
       <ContactPreferencesToggles
         {...options}
+        isSpecialService={false}
         serviceId={"aServiceID" as ServiceId}
       />
     </Provider>
