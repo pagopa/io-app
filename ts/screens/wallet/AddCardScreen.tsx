@@ -191,12 +191,12 @@ const isCreditCardDateExpiredOrInvalid = (
       return fromEither(isExpired(my[0], my[1]));
     });
 
-const maybeCreditcardValidOrExpired = (
+const maybeCreditCardValidOrExpired = (
   creditCard: CreditCardState
 ): Option<boolean> =>
   isCreditCardDateExpiredOrInvalid(creditCard.expirationDate).map(v => !v);
 
-const getAccessiblityLabels = (creditCard: CreditCardState) => ({
+const getAccessibilityLabels = (creditCard: CreditCardState) => ({
   cardHolder:
     isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
       ? I18n.t("wallet.dummyCard.accessibility.holder.base")
@@ -208,8 +208,8 @@ const getAccessiblityLabels = (creditCard: CreditCardState) => ({
           minLength: MIN_PAN_DIGITS
         }),
   expirationDate:
-    isNone(maybeCreditcardValidOrExpired(creditCard)) ||
-    maybeCreditcardValidOrExpired(creditCard).toUndefined()
+    isNone(maybeCreditCardValidOrExpired(creditCard)) ||
+    maybeCreditCardValidOrExpired(creditCard).toUndefined()
       ? I18n.t("wallet.dummyCard.accessibility.expirationDate.base")
       : I18n.t("wallet.dummyCard.accessibility.expirationDate.error"),
   securityCode3D:
@@ -287,7 +287,7 @@ const AddCardScreen: React.FC<Props> = props => {
       }
     : {};
 
-  const accessiblityLabels = getAccessiblityLabels(creditCard);
+  const accessibilityLabels = getAccessibilityLabels(creditCard);
 
   return (
     <BaseScreenComponent
@@ -316,7 +316,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 ? undefined
                 : isValidCardHolder(creditCard.holder)
             }
-            accessibilityLabel={accessiblityLabels.cardHolder}
+            accessibilityLabel={accessibilityLabels.cardHolder}
             inputProps={{
               value: creditCard.holder.getOrElse(""),
               placeholder: placeholders.placeholderHolder,
@@ -353,7 +353,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 }
               }
             }}
-            accessibilityLabel={accessiblityLabels.pan}
+            accessibilityLabel={accessibilityLabels.pan}
             testID={"pan"}
           />
 
@@ -363,8 +363,8 @@ const AddCardScreen: React.FC<Props> = props => {
               <LabelledItem
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
-                accessibilityLabel={accessiblityLabels.expirationDate}
-                isValid={maybeCreditcardValidOrExpired(
+                accessibilityLabel={accessibilityLabels.expirationDate}
+                isValid={maybeCreditCardValidOrExpired(
                   creditCard
                 ).toUndefined()}
                 inputMaskProps={{
@@ -394,8 +394,8 @@ const AddCardScreen: React.FC<Props> = props => {
                 }
                 accessibilityLabel={
                   detectedBrand.cvvLength === 4
-                    ? accessiblityLabels.securityCode4D
-                    : accessiblityLabels.securityCode3D
+                    ? accessibilityLabels.securityCode4D
+                    : accessibilityLabels.securityCode3D
                 }
                 inputMaskProps={{
                   value: creditCard.securityCode.getOrElse(""),
@@ -445,7 +445,7 @@ const AddCardScreen: React.FC<Props> = props => {
           creditCard,
           props.navigateToConfirmCardDetailsScreen,
           isValidCardHolder(creditCard.holder),
-          maybeCreditcardValidOrExpired(creditCard).toUndefined()
+          maybeCreditCardValidOrExpired(creditCard).toUndefined()
         )}
       />
     </BaseScreenComponent>
