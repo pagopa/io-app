@@ -173,6 +173,7 @@ const ServiceDetailsScreen = (props: Props) => {
               <ContactPreferencesToggles
                 serviceId={service.service_id}
                 channels={service.available_notification_channels}
+                isSpecialService={SpecialServiceMetadata.is(metadata)}
               />
               <View spacer={true} large={true} />
 
