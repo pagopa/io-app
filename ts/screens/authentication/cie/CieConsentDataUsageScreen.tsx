@@ -26,6 +26,13 @@ import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
 import { IdpCIE } from "../LandingScreen";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../../utils/supportAssistance";
+import { GlobalState } from "../../../store/reducers/types";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { TypeLogs } from "../../../boot/configureInstabug";
 
 type NavigationParams = {
   cieConsentUri: string;
@@ -44,7 +51,8 @@ type State = {
 type Props = NavigationScreenProp<NavigationState> &
   OwnProps &
   NavigationStackScreenProps<NavigationParams> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 const loaderComponent = (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
@@ -73,7 +81,10 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: this.props.resetNavigation
+          onPress: () => {
+            this.logDebug("login CIE exit from back press alert");
+            this.props.resetNavigation();
+          }
         }
       ]
     );
@@ -96,12 +107,18 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     this.setState({ hasError: true });
   };
 
-  private handleHttpError = (event: WebViewHttpErrorEvent) => {
-    this.props.loginFailure(
-      new Error(
-        `HTTP error ${event.nativeEvent.description} with Authorization uri`
-      )
+  private logDebug = (log: string) => {
+    handleSendAssistanceLog(
+      assistanceToolRemoteConfig(this.props.assistanceToolConfig),
+      log,
+      TypeLogs.DEBUG
     );
+  };
+
+  private handleHttpError = (event: WebViewHttpErrorEvent) => {
+    const failureMessage = `HTTP error ${event.nativeEvent.description} with Authorization uri`;
+    this.logDebug(failureMessage);
+    this.props.loginFailure(new Error(failureMessage));
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
@@ -121,9 +138,9 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   private handleLoginFailure = (errorCode?: string) => {
-    this.props.loginFailure(
-      new Error(`login CIE failure with code ${errorCode || "n/a"}`)
-    );
+    const failureMessage = `login CIE failure with code ${errorCode || "n/a"}`;
+    this.logDebug(failureMessage);
+    this.props.loginFailure(new Error(failureMessage));
     this.setState({ hasError: true, errorCode });
   };
 
@@ -139,7 +156,10 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: this.props.resetNavigation
+          onPress: () => {
+            this.logDebug("login CIE exit from abort alert");
+            this.props.resetNavigation();
+          }
         }
       ]
     );
@@ -182,7 +202,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   public render(): React.ReactNode {
     return (
       <TopScreenComponent
-        goBack={this.handleAbort}
+        goBack={this.handleBackPress}
         headerTitle={I18n.t("authentication.cie.genericTitle")}
       >
         {this.getContent()}
@@ -197,6 +217,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loginSuccess({ token, idp: IdpCIE.id })),
   loginFailure: (error: Error) =>
     dispatch(loginFailure({ error, idp: IdpCIE.id }))
+});
+
+const mapStateToProps = (state: GlobalState) => ({
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
 export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);
