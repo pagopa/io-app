@@ -69,7 +69,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     };
   }
 
-  private handleBackPress = () => {
+  private showAbortAlert = () => {
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -81,10 +81,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => {
-            this.logDebug("login CIE exit from back press alert");
-            this.props.resetNavigation();
-          }
+          onPress: this.props.resetNavigation
         }
       ]
     );
@@ -92,11 +89,11 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.addEventListener("hardwareBackPress", this.showAbortAlert);
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.removeEventListener("hardwareBackPress", this.showAbortAlert);
   }
 
   get cieAuthorizationUri(): string {
@@ -144,26 +141,6 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     this.setState({ hasError: true, errorCode });
   };
 
-  private handleAbort = () =>
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: () => {
-            this.logDebug("login CIE exit from abort alert");
-            this.props.resetNavigation();
-          }
-        }
-      ]
-    );
-
   private getContent = () => {
     if (this.state.isLoginSuccess) {
       return loaderComponent;
@@ -174,7 +151,10 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         : "authentication.errors.network.title";
       return (
         <GenericErrorComponent
-          onRetry={this.handleAbort}
+          onRetry={() => {
+            this.logDebug("login CIE retry button error component pressed");
+            this.showAbortAlert();
+          }}
           onCancel={undefined}
           image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
           text={I18n.t(errorTranslationKey, {
@@ -202,7 +182,10 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   public render(): React.ReactNode {
     return (
       <TopScreenComponent
-        goBack={this.handleBackPress}
+        goBack={() => {
+          this.logDebug("login CIE back button pressed");
+          this.showAbortAlert();
+        }}
         headerTitle={I18n.t("authentication.cie.genericTitle")}
       >
         {this.getContent()}
