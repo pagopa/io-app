@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import { index } from "fp-ts/lib/Array";
+import { lookup } from "fp-ts/lib/Array";
 import { connect } from "react-redux";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -16,7 +16,7 @@ import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { useCgnDiscountDetailBottomSheet } from "./CgnDiscountDetail";
+import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
@@ -57,7 +57,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               </H4>
             </View>
             <View spacer xsmall />
-            {index(0, [...discount.productCategories]).fold(
+            {lookup(0, [...discount.productCategories]).fold(
               undefined,
               categoryKey =>
                 getCategorySpecs(categoryKey).fold(undefined, c => (

@@ -2,10 +2,6 @@ import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
 import { lookup } from "fp-ts/lib/Array";
-import {
-  bottomSheetContent,
-  useIOBottomSheetRaw
-} from "../../../../../utils/bottomSheet";
 import I18n from "../../../../../i18n";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -53,7 +49,7 @@ const styles = StyleSheet.create({
 
 const CATEGORY_ICON_SIZE = 22;
 
-const CgnDiscountDetail: React.FunctionComponent<Props> = ({
+export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   discount,
   merchantType,
   onLandingCtaPress
@@ -114,7 +110,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   </View>
 );
 
-const CgnDiscountDetailHeader = ({ discount }: Pick<Props, "discount">) => (
+export const CgnDiscountDetailHeader = ({ discount }: Pick<Props, "discount">) => (
   <View style={[IOStyles.row, { alignItems: "center" }, IOStyles.flex]}>
     {discount.discount && (
       <>
@@ -125,30 +121,3 @@ const CgnDiscountDetailHeader = ({ discount }: Pick<Props, "discount">) => (
     <H3 style={IOStyles.flex}>{discount.name}</H3>
   </View>
 );
-
-export const useCgnDiscountDetailBottomSheet = (
-  discount: Discount,
-  merchantType?: DiscountCodeType,
-  landingPageHandler?: (url: string, referer: string) => void
-) => {
-  const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
-    440,
-    bottomSheetContent
-  );
-
-  return {
-    dismiss,
-    present: () =>
-      openBottomSheet(
-        <CgnDiscountDetail
-          discount={discount}
-          merchantType={merchantType}
-          onLandingCtaPress={(url: string, referer: string) => {
-            landingPageHandler?.(url, referer);
-            dismiss();
-          }}
-        />,
-        <CgnDiscountDetailHeader discount={discount} />
-      )
-  };
-};
