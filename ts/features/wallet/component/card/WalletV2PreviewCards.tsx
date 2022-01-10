@@ -20,13 +20,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const paymentMethodPreview = (
   pm: PaymentMethod,
-  options: { isPaypalEnabled: boolean }
+  config: { isPaypalEnabled: boolean }
 ): React.ReactElement | null => {
   switch (pm.kind) {
     case "Satispay":
       return <SatispayWalletPreview key={pm.idWallet} satispay={pm} />;
     case "PayPal":
-      if (!options.isPaypalEnabled) {
+      if (!config.isPaypalEnabled) {
         return null;
       }
       return <PayPalWalletPreview key={pm.idWallet} paypal={pm} />;
