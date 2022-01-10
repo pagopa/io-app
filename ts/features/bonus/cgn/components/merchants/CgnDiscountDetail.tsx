@@ -13,6 +13,7 @@ import { getCategorySpecs } from "../../utils/filters";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../components/core/typography/Label";
 import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import { localeDateFormat } from "../../../../../utils/locale";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 import CgnDiscountCodeComponent from "./discount/CgnDiscountCodeComponent";
 
@@ -54,7 +55,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   merchantType,
   onLandingCtaPress
 }: Props) => (
-  <View style={styles.container}>
+  <View style={styles.container} testID={"discount-detail"}>
     {lookup(0, [...discount.productCategories]).fold(undefined, categoryKey =>
       getCategorySpecs(categoryKey).fold(undefined, c => (
         <View style={styles.row}>
@@ -64,7 +65,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
             fill: IOColors.bluegrey
           })}
           <View hspacer small />
-          <H5 weight={"SemiBold"} color={"bluegrey"}>
+          <H5 weight={"SemiBold"} color={"bluegrey"} testID={"category-name"}>
             {I18n.t(c.nameKey).toLocaleUpperCase()}
           </H5>
         </View>
@@ -74,12 +75,20 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
     <H3 accessible={true} accessibilityRole={"header"}>
       {I18n.t("bonus.cgn.merchantDetail.title.description")}
     </H3>
-    <H4 weight={"Regular"}>{discount.description}</H4>
+    <H4 weight={"Regular"} testID={"discount-description"}>
+      {discount.description}
+    </H4>
     <View spacer />
     <H3 accessible={true} accessibilityRole={"header"}>
       {I18n.t("bonus.cgn.merchantDetail.title.validity")}
     </H3>
-    <H4 weight={"Regular"}>{discount.description}</H4>
+    <H4 weight={"Regular"}>{`${localeDateFormat(
+      discount.startDate,
+      I18n.t("global.dateFormats.shortFormat")
+    )} - ${localeDateFormat(
+      discount.endDate,
+      I18n.t("global.dateFormats.shortFormat")
+    )}`}</H4>
     <CgnDiscountCodeComponent discount={discount} merchantType={merchantType} />
     <View spacer />
     {discount.condition && (
@@ -87,7 +96,9 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         <H3 accessible={true} accessibilityRole={"header"}>
           {I18n.t("bonus.cgn.merchantDetail.title.conditions")}
         </H3>
-        <H4 weight={"Regular"}>{discount.condition}</H4>
+        <H4 weight={"Regular"} testID={"discount-condition"}>
+          {discount.condition}
+        </H4>
         <View spacer />
       </>
     )}
@@ -120,6 +131,8 @@ export const CgnDiscountDetailHeader = ({
         <View hspacer />
       </>
     )}
-    <H3 style={IOStyles.flex}>{discount.name}</H3>
+    <H3 style={IOStyles.flex} testID={"discount-name"}>
+      {discount.name}
+    </H3>
   </View>
 );

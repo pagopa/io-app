@@ -42,41 +42,45 @@ const CgnOTPCodeComponent = () => {
     setIsCodeVisible(false);
   };
 
-  return isLoading(otp) ? (
-    <ActivityIndicator />
-  ) : isCodeVisible && isReady(otp) ? (
-    <OtpCodeComponent
-      otp={otp.value}
-      onEnd={resetOtp}
-      progressConfig={{
-        startPercentage: 100,
-        endPercentage: 0
-      }}
-    />
-  ) : (
-    <TouchableWithoutFeedback
-      onPress={requestOtp}
-      accessible={true}
-      accessibilityRole={"button"}
-      accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
-    >
-      <View style={[styles.row, styles.codeContainer]}>
-        <BaseTypography
-          weight={"Bold"}
-          color={"bluegreyDark"}
-          font={"RobotoMono"}
-          style={styles.codeText}
-        >
-          {"••••••••••"}
-        </BaseTypography>
-
-        <Eye
-          width={COPY_ICON_SIZE}
-          height={COPY_ICON_SIZE}
-          fill={IOColors.blue}
+  return (
+    <View testID={"otp-code-component"}>
+      {isLoading(otp) ? (
+        <ActivityIndicator />
+      ) : isCodeVisible && isReady(otp) ? (
+        <OtpCodeComponent
+          otp={otp.value}
+          onEnd={resetOtp}
+          progressConfig={{
+            startPercentage: 100,
+            endPercentage: 0
+          }}
         />
-      </View>
-    </TouchableWithoutFeedback>
+      ) : (
+        <TouchableWithoutFeedback
+          onPress={requestOtp}
+          accessible={true}
+          accessibilityRole={"button"}
+          accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+        >
+          <View style={[styles.row, styles.codeContainer]}>
+            <BaseTypography
+              weight={"Bold"}
+              color={"bluegreyDark"}
+              font={"RobotoMono"}
+              style={styles.codeText}
+            >
+              {"••••••••••"}
+            </BaseTypography>
+
+            <Eye
+              width={COPY_ICON_SIZE}
+              height={COPY_ICON_SIZE}
+              fill={IOColors.blue}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      )}
+    </View>
   );
 };
 
