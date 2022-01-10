@@ -108,7 +108,8 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     handleSendAssistanceLog(
       assistanceToolRemoteConfig(this.props.assistanceToolConfig),
       log,
-      TypeLogs.DEBUG
+      TypeLogs.DEBUG,
+      "CieConsentDataUsageScreen"
     );
   };
 
@@ -206,4 +207,7 @@ const mapStateToProps = (state: GlobalState) => ({
   assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
-export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CieConsentDataUsageScreen);
