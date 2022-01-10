@@ -110,7 +110,9 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   </View>
 );
 
-export const CgnDiscountDetailHeader = ({ discount }: Pick<Props, "discount">) => (
+export const CgnDiscountDetailHeader = ({
+  discount
+}: Pick<Props, "discount">) => (
   <View style={[IOStyles.row, { alignItems: "center" }, IOStyles.flex]}>
     {discount.discount && (
       <>
