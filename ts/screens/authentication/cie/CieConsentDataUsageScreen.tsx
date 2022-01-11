@@ -26,13 +26,6 @@ import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
 import { IdpCIE } from "../LandingScreen";
-import {
-  assistanceToolRemoteConfig,
-  handleSendAssistanceLog
-} from "../../../utils/supportAssistance";
-import { GlobalState } from "../../../store/reducers/types";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
-import { TypeLogs } from "../../../boot/configureInstabug";
 
 type NavigationParams = {
   cieConsentUri: string;
@@ -51,8 +44,7 @@ type State = {
 type Props = NavigationScreenProp<NavigationState> &
   OwnProps &
   NavigationStackScreenProps<NavigationParams> &
-  ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
@@ -104,19 +96,12 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     this.setState({ hasError: true });
   };
 
-  private logDebug = (log: string) => {
-    handleSendAssistanceLog(
-      assistanceToolRemoteConfig(this.props.assistanceToolConfig),
-      log,
-      TypeLogs.DEBUG,
-      "CieConsentDataUsageScreen"
-    );
-  };
-
   private handleHttpError = (event: WebViewHttpErrorEvent) => {
-    const failureMessage = `HTTP error ${event.nativeEvent.description} with Authorization uri`;
-    this.logDebug(failureMessage);
-    this.props.loginFailure(new Error(failureMessage));
+    this.props.loginFailure(
+      new Error(
+        `HTTP error ${event.nativeEvent.description} with Authorization uri`
+      )
+    );
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
@@ -136,9 +121,9 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   private handleLoginFailure = (errorCode?: string) => {
-    const failureMessage = `login CIE failure with code ${errorCode || "n/a"}`;
-    this.logDebug(failureMessage);
-    this.props.loginFailure(new Error(failureMessage));
+    this.props.loginFailure(
+      new Error(`login CIE failure with code ${errorCode || "n/a"}`)
+    );
     this.setState({ hasError: true, errorCode });
   };
 
@@ -152,10 +137,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         : "authentication.errors.network.title";
       return (
         <GenericErrorComponent
-          onRetry={() => {
-            this.logDebug("login CIE retry button error component pressed");
-            this.showAbortAlert();
-          }}
+          onRetry={this.showAbortAlert}
           onCancel={undefined}
           image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
           text={I18n.t(errorTranslationKey, {
@@ -183,10 +165,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   public render(): React.ReactNode {
     return (
       <TopScreenComponent
-        goBack={() => {
-          this.logDebug("login CIE back button pressed");
-          this.showAbortAlert();
-        }}
+        goBack={this.showAbortAlert}
         headerTitle={I18n.t("authentication.cie.genericTitle")}
       >
         {this.getContent()}
@@ -203,11 +182,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loginFailure({ error, idp: IdpCIE.id }))
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  assistanceToolConfig: assistanceToolConfigSelector(state)
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CieConsentDataUsageScreen);
+export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);
