@@ -14,53 +14,67 @@ describe("hook the login outcome from the url", () => {
   const failureWithCode = remoteHost + failureSuffixWithCode + errorCode;
 
   const urlRedirects: ReadonlyArray<
-    [string, ReturnType<typeof extractLoginResult>]
+    [string, string, ReturnType<typeof extractLoginResult>]
   > = [
-    [success, { success: true, token: successToken }],
-    // with other params
+    ["success happy case", success, { success: true, token: successToken }],
+
     [
+      "with other params",
       success + "&param1=abc&param2=123",
       { success: true, token: successToken }
     ],
-    // with token as not the first param
+
     [
+      "with token as not the first param",
       `${remoteHost}/profile.html?param1=987&token=${successToken}&param2=123`,
       { success: true, token: successToken }
     ],
-    // with token defined but empty
-    [`${remoteHost + successSuffix}`, { success: false }],
-    // with no token
-    [`${remoteHost}/profile.html`, { success: false }],
-    // with no success suffix
-    [`${remoteHost}/anotherPath.html?token=${successToken}`, undefined],
-    // with no success suffix
-    [`${remoteHost}/?token=${successToken}`, undefined],
-    // invalid url
-    [`someStrangeInput`, undefined],
-    [failureWithCode, { success: false, errorCode }],
-    // with other params
-    [failureWithCode + "&param1=abc&param2=123", { success: false, errorCode }],
-    // with errorCode as not the first param
+
     [
+      "with token defined but empty",
+      `${remoteHost + successSuffix}`,
+      { success: false }
+    ],
+    ["with no token", `${remoteHost}/profile.html`, { success: false }],
+    [
+      "with not expected success suffix",
+      `${remoteHost}/anotherPath.html?token=${successToken}`,
+      undefined
+    ],
+    [
+      "with no success suffix",
+      `${remoteHost}/?token=${successToken}`,
+      undefined
+    ],
+    ["invalid url", `someStrangeInput`, undefined],
+    ["empty url", `someStrangeInput`, undefined],
+    ["failure happy case", failureWithCode, { success: false, errorCode }],
+    [
+      "error code with other params",
+      failureWithCode + "&param1=abc&param2=123",
+      { success: false, errorCode }
+    ],
+    [
+      "with errorCode as not the first param",
       `${failureNoCode}?param1=abc&errorCode=${errorCode}&param2=987`,
       { success: false, errorCode }
     ],
-    // with errorCode defined but empty
     [
+      "with errorCode defined but empty",
       `${failureNoCode}?param1=abc&errorCode=&param2=987`,
       { success: false, errorCode: undefined }
     ],
-    // with no errorCode
     [
+      "with no errorCode",
       `${failureNoCode}?param1=abc=&param2=987`,
       { success: false, errorCode: undefined }
     ]
   ];
 
   test.each(urlRedirects)(
-    "given %p as redirect url, return %p",
-    (firstArg, expectedResult) => {
-      const result = extractLoginResult(firstArg);
+    "with case %p, given %p as input, expected result %p",
+    (_, url, expectedResult) => {
+      const result = extractLoginResult(url);
       expect(result).toEqual(expectedResult);
     }
   );
