@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { View } from "native-base";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { StyleSheet } from "react-native";
@@ -52,6 +53,15 @@ const CgnBucketCodeComponent = () => {
     }
   };
 
+  useEffect(
+    () => () => {
+      if (timerRetry.current) {
+        clearTimeout(timerRetry.current);
+      }
+    },
+    []
+  );
+
   return (
     <View testID={"bucket-code-component"}>
       {isLoading(code) ? (
@@ -71,7 +81,7 @@ const CgnBucketCodeComponent = () => {
               style={styles.codeText}
             >
               {isCodeVisible && isReady(code)
-                ? addEvery(code.value.code, " ", 4)
+                ? addEvery(code.value.code, " ", 3)
                 : "••••••••••"}
             </BaseTypography>
 
