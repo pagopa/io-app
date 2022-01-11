@@ -17,7 +17,7 @@ import I18n from "../../../i18n";
 import { H3 } from "../../../components/core/typography/H3";
 import { H5 } from "../../../components/core/typography/H5";
 import { GlobalState } from "../../../store/reducers/types";
-import { payPalEnabled } from "../../../config";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { walletAddSatispayStart } from "./satispay/store/actions";
 import { walletAddBPayStart } from "./bancomatPay/store/actions";
 
@@ -61,7 +61,7 @@ const getMethods = (props: Props): ReadonlyArray<DigitalPaymentItem> => [
     logo: require("../../../../img/wallet/cards-icons/paypal.png"),
     // TODO replace with effective dispatch
     onPress: constNull,
-    implemented: payPalEnabled
+    implemented: props.isPaypalEnabled
   },
   {
     name: I18n.t("wallet.methods.postepayApp.name"),
@@ -95,6 +95,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   startBPayOnboarding: () => dispatch(walletAddBPayStart())
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  isPaypalEnabled: isPaypalEnabledSelector(state)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DigitalMethodsList);

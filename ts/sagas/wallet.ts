@@ -33,8 +33,7 @@ import {
   apiUrlPrefix,
   bpdEnabled,
   fetchPagoPaTimeout,
-  fetchPaymentManagerLongTimeout,
-  payPalEnabled
+  fetchPaymentManagerLongTimeout
 } from "../config";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import {
@@ -964,13 +963,11 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    if (payPalEnabled) {
-      yield fork(
-        watchPaypalOnboardingSaga,
-        paymentManagerClient,
-        pmSessionManager
-      );
-    }
+    yield fork(
+      watchPaypalOnboardingSaga,
+      paymentManagerClient,
+      pmSessionManager
+    );
   }
 
   // Check if a user has a bancomat and has not requested a cobadge yet and send
