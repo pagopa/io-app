@@ -3,20 +3,19 @@ import { constNull } from "fp-ts/lib/function";
 import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
 import { isStrictSome } from "../../../../utils/pot";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { useNavigationContext } from "../../../../utils/hooks/useOnFocus";
-import CGN_ROUTES from "../navigation/routes";
+import { cgnActivationStart } from "../store/actions/activation";
+import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
 
 type Props = {
   serviceId: ServiceId;
 };
 const CgnServiceCTA = (props: Props) => {
-  const navigation = useNavigationContext();
-
+  const dispatch = useIODispatch();
   const servicePreference = useIOSelector(servicePreferenceSelector);
 
   const isServiceActive =
@@ -40,7 +39,10 @@ const CgnServiceCTA = (props: Props) => {
     <ButtonDefaultOpacity
       block
       primary
-      onPress={() => navigation.navigate(CGN_ROUTES.ACTIVATION.CTA_START_CGN)}
+      onPress={() => {
+        dispatch(loadAvailableBonuses.request());
+        dispatch(cgnActivationStart());
+      }}
     >
       <Label color={"white"}>{I18n.t("bonus.cgn.cta.activeBonus")}</Label>
     </ButtonDefaultOpacity>

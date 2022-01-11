@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import { connect } from "react-redux";
 import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
@@ -14,7 +13,6 @@ import {
   cgnRequestActivation
 } from "../../store/actions/activation";
 import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
-import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -28,11 +26,6 @@ const CgnInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
     props.onBack();
     return true;
   });
-  useEffect(() => {
-    if (props.bonus === undefined) {
-      props.loadAvailableBonus();
-    }
-  }, [props.bonus]);
   return (
     <>
       {props.bonus ? (
@@ -56,7 +49,6 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   userActivateCgn: () => dispatch(cgnRequestActivation()),
-  loadAvailableBonus: () => dispatch(loadAvailableBonuses.request()),
   onBack: () => dispatch(cgnActivationBack()),
   onCancel: () => dispatch(cgnActivationCancel())
 });
