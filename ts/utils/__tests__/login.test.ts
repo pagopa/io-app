@@ -1,35 +1,44 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { extractLoginResult, getIntentFallbackUrl } from "../login";
+import { SessionToken } from "../../types/SessionToken";
 
 describe("hook the login outcome from the url", () => {
-  const remoteHost = "https://somedomain.com/somepath/";
+  const remoteHost = "https://somedomain.com/somepath";
   const successSuffix = "/profile.html?token=";
-  const successToken = "ABCDFG0123456";
+  const successToken = "ABCDFG0123456" as SessionToken;
   const success = remoteHost + successSuffix + successToken;
-  const loginResult = extractLoginResult(success);
 
-  // success
-  it("should be NOT undefined", () => {
-    expect(loginResult).not.toBeUndefined();
-  });
-  if (loginResult !== undefined) {
-    it("should be success TRUE", () => {
-      expect(loginResult.success).toBeTruthy();
-    });
-    if (loginResult.success) {
-      it("should extract token correctly", () => {
-        expect(loginResult.token).toEqual(successToken);
-      });
+  const successRedirects: ReadonlyArray<
+    [string, ReturnType<typeof extractLoginResult>]
+  > = [
+    [success, { success: true, token: successToken }],
+    // with other params
+    [
+      success + "&param1=abc&param2=123",
+      { success: true, token: successToken }
+    ],
+    // with token as not the first param
+    [
+      `${remoteHost}/profile.html?param1=987&token=${successToken}&param2=123`,
+      { success: true, token: successToken }
+    ],
+    // with token defined but empty
+    [`${remoteHost + successSuffix}`, { success: false }],
+    // with no token
+    [`${remoteHost}/profile.html`, { success: false }],
+    // with no success suffix
+    [`${remoteHost}/anotherPath.html?token=${successToken}`, undefined],
+    // with no success suffix
+    [`${remoteHost}/?token=${successToken}`, undefined]
+  ];
+
+  test.each(successRedirects)(
+    "given %p as redirect url, return %p",
+    (firstArg, expectedResult) => {
+      const result = extractLoginResult(firstArg);
+      expect(result).toEqual(expectedResult);
     }
-  }
-
-  // no login hooks
-  const loginResultUndefined = extractLoginResult(
-    "https://somedomain.com/path1/path2/index.html?id=12345"
   );
-  it("login result should be undefined", () => {
-    expect(loginResultUndefined).toBeUndefined();
-  });
 
   // failure
   const failureSuffix = "/error.html";
@@ -38,37 +47,36 @@ describe("hook the login outcome from the url", () => {
   const failureNoCode = remoteHost + failureSuffix;
   const failureWithCode = remoteHost + failureSuffixWithCode + errorCode;
 
-  // failure with no code
-  const loginFailureNoCode = extractLoginResult(failureNoCode);
-  it("should be not undefined", () => {
-    expect(loginFailureNoCode).not.toBeUndefined();
-  });
-  if (loginFailureNoCode !== undefined) {
-    it("should be success FALSE", () => {
-      expect(loginFailureNoCode.success).toBeFalsy();
-    });
-    if (!loginFailureNoCode.success) {
-      it("login failure should be undefined", () => {
-        expect(loginFailureNoCode.errorCode).toBeUndefined();
-      });
-    }
-  }
+  const errorsRedirects: ReadonlyArray<
+    [string, ReturnType<typeof extractLoginResult>]
+  > = [
+    [failureWithCode, { success: false, errorCode }],
+    // with other params
+    [failureWithCode + "&param1=abc&param2=123", { success: false, errorCode }],
+    // with errorCode as not the first param
+    [
+      `${failureNoCode}?param1=abc&errorCode=${errorCode}&param2=987`,
+      { success: false, errorCode }
+    ],
+    // with errorCode defined but empty
+    [
+      `${failureNoCode}?param1=abc&errorCode=&param2=987`,
+      { success: false, errorCode: undefined }
+    ],
+    // with no errorCode
+    [
+      `${failureNoCode}?param1=abc=&param2=987`,
+      { success: false, errorCode: undefined }
+    ]
+  ];
 
-  // failure with code
-  const loginFailureWithCode = extractLoginResult(failureWithCode);
-  it("should be not undefined", () => {
-    expect(loginFailureWithCode).not.toBeUndefined();
-  });
-  if (loginFailureWithCode !== undefined) {
-    it("should be success FALSE", () => {
-      expect(loginFailureWithCode.success).toBeFalsy();
-    });
-    if (!loginFailureWithCode.success) {
-      it("should be undefined", () => {
-        expect(loginFailureWithCode.errorCode).toEqual(errorCode);
-      });
+  test.each(errorsRedirects)(
+    "given %p as redirect url, return %p",
+    (firstArg, expectedResult) => {
+      const result = extractLoginResult(firstArg);
+      expect(result).toEqual(expectedResult);
     }
-  }
+  );
 });
 
 describe("getIntentFallbackUrl", () => {
