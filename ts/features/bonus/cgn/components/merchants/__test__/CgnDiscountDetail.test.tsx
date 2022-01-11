@@ -42,9 +42,14 @@ describe("when rendering", () => {
     expect(component.queryByTestId("bucket-code-component")).toBeNull();
   });
 
+  it("on match snapshot for bucket discount", () => {
+    expect(
+      getComponent(mockDiscount, DiscountCodeTypeEnum.bucket).toJSON()
+    ).toMatchSnapshot();
+  });
+
   it("on render bucket discount", () => {
     const component = getComponent(mockDiscount, DiscountCodeTypeEnum.bucket);
-    expect(component.toJSON()).toMatchSnapshot();
     expect(component.queryByTestId("discount-detail")).toBeDefined();
     expect(component.queryByTestId("static-code-component")).toBeNull();
     expect(component.queryByTestId("otp-code-component")).toBeNull();
