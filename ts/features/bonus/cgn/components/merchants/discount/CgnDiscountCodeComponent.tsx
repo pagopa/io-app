@@ -15,8 +15,7 @@ type Props = {
 
 const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
   const shouldNotRender =
-    merchantType === "landingpage" ||
-    merchantType === undefined;
+    merchantType === "landingpage" || merchantType === undefined;
   const renderProperCodeVisualization = (discount: Discount) => {
     switch (merchantType) {
       case "api":
