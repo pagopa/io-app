@@ -1,12 +1,6 @@
 import { NavigationActions } from "react-navigation";
 import { call, Effect, take } from "redux-saga/effects";
-import {
-  ActionCreator,
-  ActionType,
-  getType,
-  isActionOf,
-  TypeConstant
-} from "typesafe-actions";
+import { ActionCreator, ActionType, getType, isActionOf, TypeConstant } from "typesafe-actions";
 import NavigationService from "../../navigation/NavigationService";
 import { navigateToWorkunitGenericFailureScreen } from "../../store/actions/navigation";
 import { SagaCallReturnType } from "../../types/utils";

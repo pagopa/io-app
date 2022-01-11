@@ -8,8 +8,8 @@ import { servicePreferenceSelector } from "../../../../store/reducers/entities/s
 import { isStrictSome } from "../../../../utils/pot";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { cgnActivationStart } from "../store/actions/activation";
 import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
+import { cgnActivationStart } from "../store/actions/activation";
 
 type Props = {
   serviceId: ServiceId;
