@@ -31,23 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white
   },
   otpContainer: {
-    paddingHorizontal: 15,
-    paddingVertical: 36,
-    marginTop: 4,
-    marginBottom: 4,
+    marginVertical: 4,
     justifyContent: "space-between",
     backgroundColor: IOColors.white,
-    flexDirection: "row",
-    shadowColor: "#00274e",
-    borderColor: "black",
-    borderRadius: 8,
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 2
+    flexDirection: "row"
   },
   progressBase: {
     alignSelf: "center",
@@ -55,7 +42,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: "#d9d9d9",
     width: "100%",
-    height: 6,
+    height: 2,
     margin: 4,
     borderRadius: 4
   },
@@ -63,22 +50,21 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     backgroundColor: IOColors.blue,
     width: "50%",
-    height: 6,
+    height: 2,
     borderRadius: 4
   },
   remainingTimeContainer: {
     alignSelf: "center",
-    marginTop: 2,
     width: "100%"
   },
-  optCode: { fontSize: 30, textAlign: "left" }
+  optCode: { fontSize: 16, textAlign: "left" }
 });
 
 // Monospace custom component
 const OtpCode = (code: string) => (
   <BaseTypography
-    color={"blue"}
-    weight={"Bold"}
+    color={"bluegrey"}
+    weight={"Regular"}
     fontStyle={styles.optCode}
     font={"RobotoMono"}
   >
@@ -193,11 +179,6 @@ export const OtpCodeComponent = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.remainingTimeContainer}>
-        <H5 weight={"Regular"} color={"bluegrey"}>
-          {I18n.t("bonus.cgn.otp.code.title")}
-        </H5>
-      </View>
       <TouchableDefaultOpacity
         style={styles.otpContainer}
         onPress={() => clipboardSetStringWithFeedback(props.otp.code)}
