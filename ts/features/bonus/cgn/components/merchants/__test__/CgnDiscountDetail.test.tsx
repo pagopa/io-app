@@ -24,6 +24,8 @@ describe("when rendering", () => {
     const component = getComponent(mockDiscount, DiscountCodeTypeEnum.static);
     expect(component.queryByTestId("discount-detail")).toBeDefined();
     expect(component.queryByTestId("static-code-component")).toBeDefined();
+    expect(component.queryByTestId("otp-code-component")).toBeNull();
+    expect(component.queryByTestId("bucket-code-component")).toBeNull();
   });
 
   it("on match snapshot for OTP discount", () => {
@@ -37,6 +39,16 @@ describe("when rendering", () => {
     expect(component.queryByTestId("discount-detail")).toBeDefined();
     expect(component.queryByTestId("static-code-component")).toBeNull();
     expect(component.queryByTestId("otp-code-component")).toBeDefined();
+    expect(component.queryByTestId("bucket-code-component")).toBeNull();
+  });
+
+  it("on render bucket discount", () => {
+    const component = getComponent(mockDiscount, DiscountCodeTypeEnum.bucket);
+    expect(component.toJSON()).toMatchSnapshot();
+    expect(component.queryByTestId("discount-detail")).toBeDefined();
+    expect(component.queryByTestId("static-code-component")).toBeNull();
+    expect(component.queryByTestId("otp-code-component")).toBeNull();
+    expect(component.queryByTestId("bucket-code-component")).toBeDefined();
   });
 
   it("on match snapshot for landing page discount", () => {
