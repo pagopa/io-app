@@ -59,6 +59,7 @@ Array [
         },
       ]
     }
+    testID="static-code-component"
   >
     <Text
       color="bluegreyDark"
