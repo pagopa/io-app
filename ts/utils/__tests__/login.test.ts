@@ -7,8 +7,13 @@ describe("hook the login outcome from the url", () => {
   const successSuffix = "/profile.html?token=";
   const successToken = "ABCDFG0123456" as SessionToken;
   const success = remoteHost + successSuffix + successToken;
+  const failureSuffix = "/error.html";
+  const errorCode = "123456";
+  const failureSuffixWithCode = failureSuffix + "?errorCode=";
+  const failureNoCode = remoteHost + failureSuffix;
+  const failureWithCode = remoteHost + failureSuffixWithCode + errorCode;
 
-  const successRedirects: ReadonlyArray<
+  const urlRedirects: ReadonlyArray<
     [string, ReturnType<typeof extractLoginResult>]
   > = [
     [success, { success: true, token: successToken }],
@@ -29,27 +34,9 @@ describe("hook the login outcome from the url", () => {
     // with no success suffix
     [`${remoteHost}/anotherPath.html?token=${successToken}`, undefined],
     // with no success suffix
-    [`${remoteHost}/?token=${successToken}`, undefined]
-  ];
-
-  test.each(successRedirects)(
-    "given %p as redirect url, return %p",
-    (firstArg, expectedResult) => {
-      const result = extractLoginResult(firstArg);
-      expect(result).toEqual(expectedResult);
-    }
-  );
-
-  // failure
-  const failureSuffix = "/error.html";
-  const errorCode = "123456";
-  const failureSuffixWithCode = "/error.html?errorCode=";
-  const failureNoCode = remoteHost + failureSuffix;
-  const failureWithCode = remoteHost + failureSuffixWithCode + errorCode;
-
-  const errorsRedirects: ReadonlyArray<
-    [string, ReturnType<typeof extractLoginResult>]
-  > = [
+    [`${remoteHost}/?token=${successToken}`, undefined],
+    // invalid url
+    [`someStrangeInput`, undefined],
     [failureWithCode, { success: false, errorCode }],
     // with other params
     [failureWithCode + "&param1=abc&param2=123", { success: false, errorCode }],
@@ -70,7 +57,7 @@ describe("hook the login outcome from the url", () => {
     ]
   ];
 
-  test.each(errorsRedirects)(
+  test.each(urlRedirects)(
     "given %p as redirect url, return %p",
     (firstArg, expectedResult) => {
       const result = extractLoginResult(firstArg);
