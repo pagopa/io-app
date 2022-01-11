@@ -37,12 +37,12 @@ describe("hook the login outcome from the url", () => {
     ],
     ["with no token", `${remoteHost}/profile.html`, { success: false }],
     [
-      "with not expected success suffix",
+      "with token and not expected success suffix",
       `${remoteHost}/anotherPath.html?token=${successToken}`,
       undefined
     ],
     [
-      "with no success suffix",
+      "with token and no success suffix",
       `${remoteHost}/?token=${successToken}`,
       undefined
     ],
