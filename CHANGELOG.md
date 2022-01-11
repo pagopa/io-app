@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.0](https://github.com/pagopa/io-app/compare/1.38.0-rc.12...2.0.0-rc.0) (2022-01-11)
+
+
+### Features
+
+* [[IA-612](https://pagopa.atlassian.net/browse/IA-612)] Activate Paypal from remote feature flag ([#3634](https://github.com/pagopa/io-app/issues/3634)) ([9a7f405](https://github.com/pagopa/io-app/commit/9a7f4057f1478f2becb6eb258fe5347a795151dd))
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[IOACGN-14](https://pagopa.atlassian.net/browse/IOACGN-14)] Implements component to display a code from a bucket for [#3641](https://github.com/pagopa/io-app/issues/3641) ([f251387](https://github.com/pagopa/io-app/commit/f2513874089941e0eb8c589970057e27b1d9e247))
+* **Carta Giovani Nazionale:** [[IOACGN-2](https://pagopa.atlassian.net/browse/IOACGN-2)] Moves OTP Generation inside the discount bottomsheet ([#3594](https://github.com/pagopa/io-app/issues/3594)) ([77172e0](https://github.com/pagopa/io-app/commit/77172e0586bd1daede9793b9eef3c44742132907))
+* [[IA-574](https://pagopa.atlassian.net/browse/IA-574)] Track error with message_id in push notification [#3638](https://github.com/pagopa/io-app/issues/3638) ([7510973](https://github.com/pagopa/io-app/commit/7510973fb08e48913b1e30771371eb97675beae2))
+* **Carta Giovani Nazionale:** [[IOACGN-13](https://pagopa.atlassian.net/browse/IOACGN-13)] Implements action/reducer/saga for code from bucket consuption ([#3635](https://github.com/pagopa/io-app/issues/3635)) ([c96342f](https://github.com/pagopa/io-app/commit/c96342ff7c4a3d760a86e3c33cf3f1a3facc579f))
+* **Redesign Servizi:** [[IARS-45](https://pagopa.atlassian.net/browse/IARS-45)] Disables contact switch on special services ([#3497](https://github.com/pagopa/io-app/issues/3497)) ([3c03dcb](https://github.com/pagopa/io-app/commit/3c03dcbb5ae46458345a52a494ede493e5b3f037))
+
 ## [1.38.0-rc.12](https://github.com/pagopa/io-app/compare/1.38.0-rc.11...1.38.0-rc.12) (2022-01-05)
 
 
