@@ -3,7 +3,7 @@ import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
-import { cgnGenerateOtp } from "../actions/otp";
+import { cgnGenerateOtp, resetOtpState } from "../actions/otp";
 import {
   remoteError,
   remoteLoading,
@@ -39,6 +39,10 @@ const reducer = (
       return {
         ...state,
         data: remoteError(action.payload)
+      };
+    case getType(resetOtpState):
+      return {
+        ...INITIAL_STATE
       };
   }
   return state;
