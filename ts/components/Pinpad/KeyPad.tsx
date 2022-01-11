@@ -4,7 +4,6 @@ import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import StyledIconFont from "../ui/IconFont";
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     marginBottom: -10
   },
   white: {
-    color: variables.colorWhite
+    color: customVariables.colorWhite
   },
   buttonTextDigit: {
     fontSize: radius + 10

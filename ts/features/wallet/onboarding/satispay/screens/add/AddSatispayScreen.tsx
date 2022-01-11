@@ -1,9 +1,8 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet } from "react-native";
 import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satispay";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";

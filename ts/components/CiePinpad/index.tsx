@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import InputPlaceHolder from "../Pinpad/InputPlaceholder";
 import { INPUT_PLACEHOLDER_HEIGHT } from "../Pinpad/Placeholders";
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: "center",
     justifyContent: "center",
-    color: variables.colorWhite
+    color: customVariables.colorWhite
   },
   placeHolderStyle: {
     height: 4,
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     textAlign: "center",
-    fontSize: variables.fontSize3
+    fontSize: customVariables.fontSize3
   },
   input: {
     color: "transparent",
@@ -60,7 +59,7 @@ const CiePinpad = (props: Props) => {
       <InputPlaceHolder
         digits={props.pinLength}
         activeColor={customVariables.colorBlack}
-        inactiveColor={variables.brandLightGray}
+        inactiveColor={customVariables.brandLightGray}
         inputValue={props.pin || ""}
         accessibilityLabel={I18n.t(
           "authentication.cie.pin.accessibility.placeholderLabel"
