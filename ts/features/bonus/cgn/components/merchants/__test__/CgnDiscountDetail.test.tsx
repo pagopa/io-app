@@ -67,18 +67,14 @@ describe("check discount info rendering", () => {
     };
     const component = getComponent(testDiscount, DiscountCodeTypeEnum.static);
     expect(component.queryByTestId("discount-detail")).toBeDefined();
-    if (testDiscount.condition) {
-      expect(component.getByTestId("discount-condition")).toBeDefined();
-      expect(component.getByTestId("discount-condition")).toHaveTextContent(
-        testDiscount.condition
-      );
-    }
-    if (testDiscount.description) {
-      expect(component.getByTestId("discount-description")).toBeDefined();
-      expect(component.getByTestId("discount-description")).toHaveTextContent(
-        testDiscount.description
-      );
-    }
+    expect(component.getByTestId("discount-condition")).toBeDefined();
+    expect(component.getByTestId("discount-condition")).toHaveTextContent(
+      "A discount condition"
+    );
+    expect(component.getByTestId("discount-description")).toBeDefined();
+    expect(component.getByTestId("discount-description")).toHaveTextContent(
+      "A discount description"
+    );
   });
 });
 
