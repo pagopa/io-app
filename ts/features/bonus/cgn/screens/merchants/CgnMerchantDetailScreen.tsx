@@ -30,13 +30,13 @@ import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 
 type NavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -64,9 +64,13 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
 ) => {
   const { merchantDetail, requestMerchantDetail } = props;
   const merchantID = props.navigation.getParam("merchantID");
-  const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) => (
-    <CgnMerchantDiscountItem discount={item} />
-  );
+  const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) =>
+    isReady(merchantDetail) ? (
+      <CgnMerchantDiscountItem
+        discount={item}
+        merchantType={merchantDetail.value.discountCodeType}
+      />
+    ) : null;
 
   const loadMerchantDetail = useCallback(() => {
     requestMerchantDetail(merchantID);
