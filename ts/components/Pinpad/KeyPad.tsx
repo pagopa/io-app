@@ -77,6 +77,11 @@ const renderPinCol = (
       ? [styles.roundButton, styles.transparent]
       : undefined;
 
+  const accessibilityLabel = label.fold(
+    () => undefined,
+    ic => ic.accessibilityLabel
+  );
+
   return (
     <Col key={key}>
       <ButtonDefaultOpacity
@@ -86,6 +91,7 @@ const renderPinCol = (
         block={style === "label"}
         primary={buttonType === "primary"}
         unNamed={buttonType === "light"}
+        accessibilityLabel={accessibilityLabel}
       >
         {label.fold(
           l => (
@@ -109,7 +115,6 @@ const renderPinCol = (
                   ? customVariables.contentPrimaryBackground
                   : customVariables.colorWhite
               }
-              accessibilityLabel={ic.accessibilityLabel}
             />
           )
         )}

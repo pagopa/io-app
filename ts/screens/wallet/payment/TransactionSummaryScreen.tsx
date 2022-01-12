@@ -1,4 +1,4 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
@@ -64,6 +64,8 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
+import { isRawPayPal } from "../../../types/pagopa";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type NavigationParams = Readonly<{
@@ -363,8 +365,19 @@ class TransactionSummaryScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;
-
-  const maybeFavoriteWallet = pot.toOption(getFavoriteWallet(state));
+  const isPaypalEnabled = isPaypalEnabledSelector(state);
+  const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
+  /**
+   * if the favourite wallet is Paypal but the relative feature is not enabled,
+   * the favourite wallet will be undefined
+   */
+  const maybeFavoriteWallet = fromNullable(
+    favouriteWallet &&
+      isRawPayPal(favouriteWallet.paymentMethod) &&
+      !isPaypalEnabled
+      ? undefined
+      : favouriteWallet
+  );
 
   const error: Option<
     PayloadForAction<
