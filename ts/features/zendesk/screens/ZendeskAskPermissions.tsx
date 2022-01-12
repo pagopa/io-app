@@ -44,6 +44,7 @@ import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   addTicketCustomField,
+  addTicketTag,
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
@@ -222,6 +223,9 @@ const ZendeskAskPermissions = (props: Props) => {
         addTicketCustomField(it.zendeskId, it.value);
       }
     });
+
+    // Tag the ticket with the current app version
+    addTicketTag(itemsProps.currentVersion);
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
