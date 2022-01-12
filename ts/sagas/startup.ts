@@ -3,14 +3,30 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Alert } from "react-native";
 import { channel } from "redux-saga";
-import { call, cancel, delay, Effect, fork, put, select, spawn, take, takeEvery, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  cancel,
+  delay,
+  Effect,
+  fork,
+  put,
+  select,
+  spawn,
+  take,
+  takeEvery,
+  takeLatest
+} from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { BackendClient } from "../api/backend";
-import { instabugLog, setInstabugProfileAttributes, TypeLogs } from "../boot/configureInstabug";
+import {
+  instabugLog,
+  setInstabugProfileAttributes,
+  TypeLogs
+} from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
@@ -47,25 +63,44 @@ import { clearNotificationPendingMessage } from "../store/actions/notifications"
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
-import { idpSelector, sessionInfoSelector, sessionTokenSelector } from "../store/reducers/authentication";
+import {
+  idpSelector,
+  sessionInfoSelector,
+  sessionTokenSelector
+} from "../store/reducers/authentication";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
-import { isProfileFirstOnBoarding, profileSelector } from "../store/reducers/profile";
+import {
+  isProfileFirstOnBoarding,
+  profileSelector
+} from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { localeDateFormat } from "../utils/locale";
 import { isStringNullyOrEmpty } from "../utils/strings";
-import { startAndReturnIdentificationResult, watchIdentification } from "./identification";
+import {
+  startAndReturnIdentificationResult,
+  watchIdentification
+} from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
 import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
 import watchReloadAllMessages from "./messages/watchReloadAllMessages";
-import { askMixpanelOptIn, handleSetMixpanelEnabled, initMixpanel } from "./mixpanel";
+import {
+  askMixpanelOptIn,
+  handleSetMixpanelEnabled,
+  initMixpanel
+} from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
-import { loadProfile, watchProfile, watchProfileRefreshRequestsSaga, watchProfileUpsertRequestsSaga } from "./profile";
+import {
+  loadProfile,
+  watchProfile,
+  watchProfileRefreshRequestsSaga,
+  watchProfileUpsertRequestsSaga
+} from "./profile";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
@@ -78,14 +113,21 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
-import { checkSession, watchCheckSessionSaga } from "./startup/watchCheckSessionSaga";
+import {
+  checkSession,
+  watchCheckSessionSaga
+} from "./startup/watchCheckSessionSaga";
 import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
-import { loadUserMetadata, watchLoadUserMetadata, watchUpserUserMetadata } from "./user/userMetadata";
+import {
+  loadUserMetadata,
+  watchLoadUserMetadata,
+  watchUpserUserMetadata
+} from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
