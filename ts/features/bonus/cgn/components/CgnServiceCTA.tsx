@@ -32,6 +32,7 @@ const CgnServiceCTA = (props: Props) => {
   }
 
   return isServiceActive ? (
+    // TODO onPress handler will be implemented once the unsubscribe API will be published by backend repository
     <ButtonDefaultOpacity block bordered danger onPress={constNull}>
       <Label color={"red"}>{I18n.t("bonus.cgn.cta.deactivateBonus")}</Label>
     </ButtonDefaultOpacity>
