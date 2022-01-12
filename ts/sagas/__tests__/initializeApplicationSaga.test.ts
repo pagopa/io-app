@@ -1,6 +1,8 @@
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionExpired } from "../../store/actions/authentication";
@@ -19,11 +21,12 @@ import {
   watchProfile,
   watchProfileUpsertRequestsSaga
 } from "../profile";
-import { initializeApplicationSaga } from "../startup";
+import {
+  initializeApplicationSaga,
+  testWaitForNavigatorServiceInitialization
+} from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import mockedProfile from "../../__mocks__/initializedProfile";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -47,11 +50,13 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch startApplicationInitialization if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
-      .next()
-      .call(initMixpanel)
       .next()
       .next()
       .select(profileSelector)
@@ -75,11 +80,13 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch sessionExpired if check session response is 401", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
-      .next()
-      .call(initMixpanel)
       .next()
       .next()
       .select(profileSelector)
@@ -99,11 +106,13 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
-      .next()
-      .call(initMixpanel)
       .next()
       .next()
       .select(profileSelector)

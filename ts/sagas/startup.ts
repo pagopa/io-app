@@ -78,6 +78,7 @@ import {
 } from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
+import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import {
   startAndReturnIdentificationResult,
@@ -576,3 +577,7 @@ export function* startupSaga(): IterableIterator<Effect> {
     initializeApplicationSaga
   );
 }
+
+export const testWaitForNavigatorServiceInitialization = isTestEnv
+  ? waitForNavigatorServiceInitialization
+  : undefined;
