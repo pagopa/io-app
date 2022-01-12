@@ -204,6 +204,9 @@ export const baseRawBackendStatus: BackendStatus = {
     cgn_merchants_v2: false,
     assistanceTool: {
       tool: ToolEnum.none
+    },
+    paypal: {
+      enabled: false
     }
   }
 };
@@ -224,6 +227,9 @@ export const baseBackendConfig: Config = {
   cgn_merchants_v2: true,
   assistanceTool: {
     tool: ToolEnum.none
+  },
+  paypal: {
+    enabled: false
   }
 };
 
