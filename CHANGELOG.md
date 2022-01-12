@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.0](https://github.com/pagopa/io-app/compare/1.38.0-rc.12...2.0.0-rc.0) (2022-01-11)
+
+
+### Features
+
+* [[IA-612](https://pagopa.atlassian.net/browse/IA-612)] Activate Paypal from remote feature flag ([#3634](https://github.com/pagopa/io-app/issues/3634)) ([9a7f405](https://github.com/pagopa/io-app/commit/9a7f4057f1478f2becb6eb258fe5347a795151dd))
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[IOACGN-14](https://pagopa.atlassian.net/browse/IOACGN-14)] Implements component to display a code from a bucket for [#3641](https://github.com/pagopa/io-app/issues/3641) ([f251387](https://github.com/pagopa/io-app/commit/f2513874089941e0eb8c589970057e27b1d9e247))
+* **Carta Giovani Nazionale:** [[IOACGN-2](https://pagopa.atlassian.net/browse/IOACGN-2)] Moves OTP Generation inside the discount bottomsheet ([#3594](https://github.com/pagopa/io-app/issues/3594)) ([77172e0](https://github.com/pagopa/io-app/commit/77172e0586bd1daede9793b9eef3c44742132907))
+* [[IA-574](https://pagopa.atlassian.net/browse/IA-574)] Track error with message_id in push notification [#3638](https://github.com/pagopa/io-app/issues/3638) ([7510973](https://github.com/pagopa/io-app/commit/7510973fb08e48913b1e30771371eb97675beae2))
+* **Carta Giovani Nazionale:** [[IOACGN-13](https://pagopa.atlassian.net/browse/IOACGN-13)] Implements action/reducer/saga for code from bucket consuption ([#3635](https://github.com/pagopa/io-app/issues/3635)) ([c96342f](https://github.com/pagopa/io-app/commit/c96342ff7c4a3d760a86e3c33cf3f1a3facc579f))
+* **Redesign Servizi:** [[IARS-45](https://pagopa.atlassian.net/browse/IARS-45)] Disables contact switch on special services ([#3497](https://github.com/pagopa/io-app/issues/3497)) ([3c03dcb](https://github.com/pagopa/io-app/commit/3c03dcbb5ae46458345a52a494ede493e5b3f037))
+
+## [1.38.0-rc.12](https://github.com/pagopa/io-app/compare/1.38.0-rc.11...1.38.0-rc.12) (2022-01-05)
+
+
+### Chores
+
+* Restore iOS release & notify new app on CI ([#3637](https://github.com/pagopa/io-app/issues/3637)) ([842a313](https://github.com/pagopa/io-app/commit/842a3132eab2ef4733e70c8294c67400516cc3bc))
+
+## [1.38.0-rc.11](https://github.com/pagopa/io-app/compare/1.38.0-rc.10...1.38.0-rc.11) (2022-01-05)
+
+
+### Bug Fixes
+
+* [[IA-609](https://pagopa.atlassian.net/browse/IA-609)] Increasing the tos version causes an app crash  ([#3630](https://github.com/pagopa/io-app/issues/3630)) ([7f00321](https://github.com/pagopa/io-app/commit/7f00321c8b2461b0d2c2888312f2b14e5da0a13a))
+* [[IA-611](https://pagopa.atlassian.net/browse/IA-611)] When the MessageDetail can't get the relative sender services, app crashes ([#3631](https://github.com/pagopa/io-app/issues/3631)) ([b8fa268](https://github.com/pagopa/io-app/commit/b8fa268fcc443c1d29662bd846de16626a83ecc6))
+* [[IA-616](https://pagopa.atlassian.net/browse/IA-616)] The initializeApplicationSaga could be executed before the NavigationService initialization ([#3636](https://github.com/pagopa/io-app/issues/3636)) ([59e4566](https://github.com/pagopa/io-app/commit/59e4566f2e1257da3996d401422b67ccc30accb9))
+* [[IABT-1272](https://pagopa.atlassian.net/browse/IABT-1272)] Cannot insert a credit cart that expires in the current month ([#3633](https://github.com/pagopa/io-app/issues/3633)) ([b3b2d74](https://github.com/pagopa/io-app/commit/b3b2d74d7dc6aa7a13dbc0ebec63a78a7e801b80))
+* **Carta Giovani Nazionale:** [[IOACGN-6](https://pagopa.atlassian.net/browse/IOACGN-6)] Fix blocking error when merchants search API responds with errors [#3597](https://github.com/pagopa/io-app/issues/3597) ([258f95a](https://github.com/pagopa/io-app/commit/258f95add6c538fd27fc07458d8b984e2f3c4f70))
+
+
+### Chores
+
+* [[IA-480](https://pagopa.atlassian.net/browse/IA-480)] Handle back on Paypal onboarding ([#3629](https://github.com/pagopa/io-app/issues/3629)) ([ad8e021](https://github.com/pagopa/io-app/commit/ad8e02100e7a8ed156bf456ec28630fc3e9e24a8))
+* [[IA-592](https://pagopa.atlassian.net/browse/IA-592)] Add access to gallery prominent disclosure in Zendesk workflow ([#3620](https://github.com/pagopa/io-app/issues/3620)) ([23c9ce1](https://github.com/pagopa/io-app/commit/23c9ce112e7aacd4c8524b2498008c1aa78ba0fd))
+* [[IA-605](https://pagopa.atlassian.net/browse/IA-605)] Add logId in the app code ([#3616](https://github.com/pagopa/io-app/issues/3616)) ([934e0eb](https://github.com/pagopa/io-app/commit/934e0eb021c9afa7c5403074474c9a2b83444389))
+* [[IAI-101](https://pagopa.atlassian.net/browse/IAI-101)] Patch react-native-device-info ([#3582](https://github.com/pagopa/io-app/issues/3582)) ([b3edf51](https://github.com/pagopa/io-app/commit/b3edf515eaccfcafced243dd484b4c340169cadd))
+* [[IAI-103](https://pagopa.atlassian.net/browse/IAI-103)] Explicit code generation for dev-server on e2e job [#3628](https://github.com/pagopa/io-app/issues/3628) ([1a6f5cd](https://github.com/pagopa/io-app/commit/1a6f5cd72986d5a93a26d82385c966399c204c45))
+* Update check-urls files black list ([#3619](https://github.com/pagopa/io-app/issues/3619)) ([62ffe67](https://github.com/pagopa/io-app/commit/62ffe67709a86bca990deb9c06f4ac988e4cfb58))
+
 ## [1.38.0-rc.10](https://github.com/pagopa/io-app/compare/1.38.0-rc.9...1.38.0-rc.10) (2021-12-29)
 
 

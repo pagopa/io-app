@@ -12,22 +12,28 @@ export type ZendeskAppConfig = {
   appId: string;
   clientId: string;
   url: string;
+  logId: string;
   token?: string;
 };
 export type JwtIdentity = ZendDesk.JwtIdentity;
 export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 
+// Id of the log customField
+const logId = "4413845142673";
+
 export const zendeskDefaultJwtConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
   appId: "4ed72c757f79ed15dfa46546dcb672fc86a0af949a119156",
   clientId: "mobile_sdk_client_28679ae6f72da9ab5ef0",
-  url: "https://appio.zendesk.com"
+  url: "https://appio.zendesk.com",
+  logId
 };
 export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
   appId: "a6f500a77dc0bd00f25a5306e4217ea37c11d0e7fed1e768",
   clientId: "mobile_sdk_client_aa8f9ebd96018279049b",
-  url: "https://appio.zendesk.com"
+  url: "https://appio.zendesk.com",
+  logId
 };
 
 // If is not possible to get the assistance tool remotely assume it is none.
@@ -46,6 +52,7 @@ export const resetAssistanceData = ZendDesk.reset;
 export const addTicketCustomField = ZendDesk.addTicketCustomField;
 export const appendLog = ZendDesk.appendLog;
 export const hasOpenedTickets = ZendDesk.hasOpenedTickets;
+export const addTicketTag = ZendDesk.addTicketTag;
 export const zendeskCategoryId = "1900004702053";
 export const zendeskBlockedPaymentRptIdId = "4414297346833";
 export const zendeskDeviceAndOSId = "4414316795921";

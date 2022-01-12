@@ -8361,9 +8361,9 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.13":
-  version "0.3.13"
-  resolved "https://github.com/pagopa/io-react-native-zendesk.git#946e86f7c713c1a8a6dec44e5abdc1cf7b8628b3"
+"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.15":
+  version "0.3.15"
+  resolved "https://github.com/pagopa/io-react-native-zendesk.git#934f72bd2e79dafa66efbedb78721f7063cd3d36"
 
 io-ts@1.8.5:
   version "1.8.5"

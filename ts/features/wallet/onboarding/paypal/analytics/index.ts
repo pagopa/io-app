@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import { mixpanel } from "../../../../../mixpanel";
 import { Action } from "../../../../../store/actions/types";
-import { payPalEnabled } from "../../../../../config";
 import {
   searchPaypalPsp,
   walletAddPaypalBack,
@@ -52,7 +51,4 @@ const trackPaypalOnboarding =
     return Promise.resolve();
   };
 
-const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>
-  Promise.resolve();
-
-export default payPalEnabled ? trackPaypalOnboarding : emptyTracking;
+export default trackPaypalOnboarding;

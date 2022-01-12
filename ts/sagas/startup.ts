@@ -42,7 +42,10 @@ import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { watchMvlSaga } from "../features/mvl/saga";
+import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import I18n from "../i18n";
+import { mixpanelTrack } from "../mixpanel";
+import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
@@ -78,6 +81,10 @@ import {
   watchIdentification
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
+import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
+import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
+import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
+import watchReloadAllMessages from "./messages/watchReloadAllMessages";
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
@@ -108,10 +115,6 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
-import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
-import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
-import watchReloadAllMessages from "./messages/watchReloadAllMessages";
-import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -125,6 +128,9 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
+const navigatorPollingTime = 125 as Millisecond;
+const warningWaitNavigatorTime = 2000 as Millisecond;
+
 /**
  * Handles the application startup and the main application logic loop
  */
@@ -139,11 +145,15 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
 
-  yield call(previousInstallationDataDeleteSaga);
-  yield put(previousInstallationDataDeleteSuccess());
-
   // check if mixpanel could be initialized
   yield call(initMixpanel);
+  yield call(waitForNavigatorServiceInitialization);
+
+  yield call(previousInstallationDataDeleteSaga);
+  yield put(previousInstallationDataDeleteSuccess());
+  yield call(OPERISSUES_10_track, "initializeApplicationSaga_1");
+
+  yield call(OPERISSUES_10_track, "initializeApplicationSaga_2");
   // listen for mixpanel enabling events
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
@@ -513,6 +523,49 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   } else {
     yield call(navigateToMainNavigatorAction);
   }
+}
+
+/**
+ * Wait until the {@link NavigationService} is initialized.
+ * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
+ */
+function* waitForNavigatorServiceInitialization() {
+  // eslint-disable-next-line functional/no-let
+  let navigator: ReturnType<typeof NavigationService.getNavigator> = yield call(
+    NavigationService.getNavigator
+  );
+
+  // eslint-disable-next-line functional/no-let
+  let timeoutLogged = false;
+
+  const startTime = performance.now();
+
+  // before continuing we must wait for the navigatorService to be ready
+  while (navigator === null || navigator === undefined) {
+    const elapsedTime = performance.now() - startTime;
+    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
+      timeoutLogged = true;
+      instabugLog(
+        `NavigationService is not initialized after ${elapsedTime} ms`,
+        TypeLogs.ERROR,
+        "initializeApplicationSaga"
+      );
+      yield call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
+    }
+    yield delay(navigatorPollingTime);
+    navigator = yield call(NavigationService.getNavigator);
+  }
+
+  const initTime = performance.now() - startTime;
+
+  instabugLog(
+    `NavigationService initialized after ${initTime} ms`,
+    TypeLogs.DEBUG,
+    "initializeApplicationSaga"
+  );
+  yield call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
+    elapsedTime: initTime
+  });
 }
 
 export function* startupSaga(): IterableIterator<Effect> {

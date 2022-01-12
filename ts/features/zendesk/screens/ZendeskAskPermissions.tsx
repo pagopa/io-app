@@ -23,6 +23,7 @@ import HistoryIcon from "../../../../img/assistance/history.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import StockIcon from "../../../../img/assistance/giacenza.svg";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
+import GalleryIcon from "../../../../img/assistance/gallery.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { useIOSelector } from "../../../store/hooks";
 import {
@@ -43,6 +44,7 @@ import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   addTicketCustomField,
+  addTicketTag,
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
@@ -90,6 +92,12 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     icon: <EmailIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.emailAddress"),
     value: props.email
+  },
+  {
+    id: "galleryProminentDisclosure",
+    icon: <GalleryIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.prominentDisclosure"),
+    value: I18n.t("support.askPermissions.prominentDisclosureData")
   },
   {
     id: "paymentIssues",
@@ -193,7 +201,9 @@ const ZendeskAskPermissions = (props: Props) => {
     // if user is not logged in, remove the items related to his/her profile
     ...(!isUserLoggedIn
       ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
-      : [])
+      : []),
+    // if the OS is IOS remove the item related to the gallery prominent disclosure
+    ...(isIos ? ["galleryProminentDisclosure"] : [])
   ];
   const items = getItems(itemsProps)
     .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
@@ -213,6 +223,9 @@ const ZendeskAskPermissions = (props: Props) => {
         addTicketCustomField(it.zendeskId, it.value);
       }
     });
+
+    // Tag the ticket with the current app version
+    addTicketTag(itemsProps.currentVersion);
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
