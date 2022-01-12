@@ -22,7 +22,11 @@ import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserData
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { BackendClient } from "../api/backend";
-import { setInstabugProfileAttributes } from "../boot/configureInstabug";
+import {
+  instabugLog,
+  setInstabugProfileAttributes,
+  TypeLogs
+} from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
@@ -75,7 +79,6 @@ import {
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -151,9 +154,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
-  yield call(OPERISSUES_10_track, "initializeApplicationSaga_1");
 
-  yield call(OPERISSUES_10_track, "initializeApplicationSaga_2");
   // listen for mixpanel enabling events
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
