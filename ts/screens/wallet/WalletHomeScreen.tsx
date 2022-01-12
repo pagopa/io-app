@@ -27,7 +27,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -92,6 +92,7 @@ import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { Body } from "../../components/core/typography/Body";
+import { isCGNEnabledSelector } from "../../store/reducers/backendStatus";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -229,7 +230,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   private loadBonusCgn = () => {
-    if (cgnEnabled) {
+    if (this.props.isCgnEnabled) {
       this.props.loadCgnData();
     }
   };
@@ -395,7 +396,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           />
         )}
         {bpdEnabled && <BpdCardsInWalletContainer />}
-        {cgnEnabled && <CgnCardInWalletContainer />}
+        <CgnCardInWalletContainer />
       </View>
     );
   }
@@ -578,7 +579,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           this.newMethodAddedContent
         ) : (
           <>
-            {(bpdEnabled || cgnEnabled) && <FeaturedCardCarousel />}
+            {(bpdEnabled || this.props.isCgnEnabled) && (
+              <FeaturedCardCarousel />
+            )}
             {transactionContent}
           </>
         )}
@@ -600,7 +603,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       (bpdEnabled
         ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
         : 0) +
-      (cgnEnabled && this.props.isCgnInfoAvailable ? 88 : 0) +
+      (this.props.isCgnEnabled && this.props.isCgnInfoAvailable ? 88 : 0) +
       this.getCreditCards().length * 56
     );
   }
@@ -630,6 +633,7 @@ const mapStateToProps = (state: GlobalState) => {
     bpdLoadState: bpdLastUpdateSelector(state),
     cgnDetails: cgnDetailSelector(state),
     isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
+    isCgnEnabled: isCGNEnabledSelector(state),
     bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
     coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state)
   };

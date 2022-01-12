@@ -63,7 +63,7 @@ export const cgnMerchantVersionSelector = createSelector(
   (backendStatus): boolean | undefined =>
     backendStatus
       .mapNullable(bs => bs.config)
-      .mapNullable(config => config.cgn_merchants_v2)
+      .mapNullable(config => config.cgn.merchants_v2)
       .toUndefined()
 );
 
@@ -81,6 +81,16 @@ export const isPaypalEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
     backendStatus.map(bs => bs.config.paypal.enabled).toUndefined() ?? false
+);
+
+/**
+ * return the remote config about CGN enabled/disabled
+ * if there is no data, false is the default value -> (CGN disabled)
+ */
+export const isCGNEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.cgn.enabled).toUndefined() ?? false
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times

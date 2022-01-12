@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { SafeAreaView, ScrollView } from "react-native";
-import { cgnMerchantVersionSelector } from "../../../../store/reducers/backendStatus";
+import {
+  cgnMerchantVersionSelector,
+  isCGNEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
@@ -39,6 +42,7 @@ import GenericErrorComponent from "../../../../components/screens/GenericErrorCo
 import { navigateBack } from "../../../../store/actions/navigation";
 import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { canEycaCardBeShown } from "../utils/eyca";
+import SectionStatusComponent from "../../../../components/SectionStatus";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -69,7 +73,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     return true;
   });
 
-  const canDisplayEycaDetails = canEycaCardBeShown(props.eycaDetails);
+  // to display EYCA info component the CGN initiative needs to be enabled by remote
+  const canDisplayEycaDetails =
+    canEycaCardBeShown(props.eycaDetails) && props.isCgnEnabled;
 
   return props.cgnDetails || props.isCgnInfoLoading ? (
     <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
@@ -123,15 +129,18 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
               )}
             </View>
           </ScrollView>
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={confirmButtonProps(
-              props.isMerchantV2Enabled
-                ? props.navigateToMerchantsTabs
-                : props.navigateToMerchantsList,
-              I18n.t("bonus.cgn.detail.cta.buyers")
-            )}
-          />
+          <SectionStatusComponent sectionKey={"cgn"} />
+          {props.isCgnEnabled && (
+            <FooterWithButtons
+              type={"SingleButton"}
+              leftButton={confirmButtonProps(
+                props.isMerchantV2Enabled
+                  ? props.navigateToMerchantsTabs
+                  : props.navigateToMerchantsList,
+                I18n.t("bonus.cgn.detail.cta.buyers")
+              )}
+            />
+          )}
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
@@ -147,6 +156,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
+  isCgnEnabled: isCGNEnabledSelector(state),
   isCgnInfoLoading: isCgnDetailsLoading(state),
   isMerchantV2Enabled: cgnMerchantVersionSelector(state),
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),

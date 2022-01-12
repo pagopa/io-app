@@ -66,9 +66,6 @@ export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
-// CGN Feature Flag
-export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
-
 // EU Covid Certificate feature flag
 export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";

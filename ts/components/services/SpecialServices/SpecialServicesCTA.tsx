@@ -7,20 +7,23 @@ import I18n from "../../../i18n";
 import { openAppStoreUrl } from "../../../utils/url";
 import { Label } from "../../core/typography/Label";
 import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
-import { cgnEnabled } from "../../../config";
+import { useIOSelector } from "../../../store/hooks";
+import { isCGNEnabledSelector } from "../../../store/reducers/backendStatus";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 type Props = {
   customSpecialFlow: CustomSpecialFlow;
 };
 
-const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
-  CustomSpecialFlow,
-  boolean
->([["cgn" as CustomSpecialFlow, cgnEnabled]]);
-
 const SpecialServicesCTA = (props: Props) => {
   const { customSpecialFlow } = props;
+
+  const isCGNEnabled = useIOSelector(isCGNEnabledSelector);
+
+  const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
+    CustomSpecialFlow,
+    boolean
+  >([["cgn" as CustomSpecialFlow, isCGNEnabled]]);
 
   // utility to open
   const openAppStore = useCallback(() => openAppStoreUrl(), []);

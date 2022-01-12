@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
@@ -200,19 +200,17 @@ const bpdConfigMap = bpdEnabled
     }
   : {};
 
-const cgnConfigMap = cgnEnabled
-  ? {
-      [CGN_ROUTES.ACTIVATION.MAIN]: {
-        screen: CgnActivationNavigator
-      },
-      [CGN_ROUTES.DETAILS.MAIN]: {
-        screen: CgnDetailsNavigator
-      },
-      [CGN_ROUTES.EYCA.ACTIVATION.MAIN]: {
-        screen: CgnEYCAActivationNavigator
-      }
-    }
-  : {};
+const cgnConfigMap = {
+  [CGN_ROUTES.ACTIVATION.MAIN]: {
+    screen: CgnActivationNavigator
+  },
+  [CGN_ROUTES.DETAILS.MAIN]: {
+    screen: CgnDetailsNavigator
+  },
+  [CGN_ROUTES.EYCA.ACTIVATION.MAIN]: {
+    screen: CgnEYCAActivationNavigator
+  }
+};
 
 const paypalConfigMap = {
   [PAYPAL_ROUTES.ONBOARDING.MAIN]: {

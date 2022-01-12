@@ -207,6 +207,10 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     paypal: {
       enabled: false
+    },
+    cgn: {
+      enabled: true,
+      merchants_v2: false
     }
   }
 };
@@ -230,6 +234,10 @@ export const baseBackendConfig: Config = {
   },
   paypal: {
     enabled: false
+  },
+  cgn: {
+    enabled: true,
+    merchants_v2: false
   }
 };
 
