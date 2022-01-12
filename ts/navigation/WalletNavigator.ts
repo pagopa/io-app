@@ -194,7 +194,6 @@ const bpdConfigMap = bpdEnabled
     }
   : {};
 
-
 const paypalConfigMap = {
   [PAYPAL_ROUTES.ONBOARDING.MAIN]: {
     screen: paypalOnboardingNavigator
