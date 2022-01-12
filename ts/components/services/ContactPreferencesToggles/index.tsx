@@ -23,6 +23,7 @@ import {
 import { isStrictSome } from "../../../utils/pot";
 import { showToast } from "../../../utils/showToast";
 import SectionHeader from "../SectionHeader";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
 type Item = "email" | "push" | "inbox";
@@ -69,9 +70,11 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
     [serviceId, loadServicePreference]
   );
 
+  const nav = useNavigationContext();
+
   useEffect(() => {
     loadPreferences();
-  }, [serviceId, loadPreferences]);
+  }, [serviceId, loadPreferences, nav.isFocused()]);
 
   useEffect(() => {
     if (!isFirstRender) {
