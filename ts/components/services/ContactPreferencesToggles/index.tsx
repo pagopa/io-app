@@ -72,9 +72,11 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
 
   const nav = useNavigationContext();
 
+  const isFocused = nav?.isFocused();
+
   useEffect(() => {
     loadPreferences();
-  }, [serviceId, loadPreferences, nav.isFocused()]);
+  }, [serviceId, loadPreferences, isFocused]);
 
   useEffect(() => {
     if (!isFirstRender) {
