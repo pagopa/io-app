@@ -4,8 +4,10 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateBack } from "../../../../../../store/actions/navigation";
-import { navigateToCgnActivationInformationTos } from "../../../navigation/actions";
+import {
+  navigateToCgnActivationInformationTos,
+  navigateToCgnDetails
+} from "../../../navigation/actions";
 import CGN_ROUTES from "../../../navigation/routes";
 import {
   cgnActivationBack,
@@ -13,6 +15,11 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import BONUSVACANZE_ROUTES from "../../../../bonusVacanze/navigation/routes";
+import { navigateBack } from "../../../../../../store/actions/navigation";
+import ROUTES from "../../../../../../navigation/routes";
 
 function* cgnActivationWorkUnit() {
   return yield call(executeWorkUnit, {
@@ -29,6 +36,21 @@ function* cgnActivationWorkUnit() {
  * This saga handles the CGN activation workflow
  */
 export function* handleCgnStartActivationSaga(): SagaIterator {
-  yield call(withResetNavigationStack, cgnActivationWorkUnit);
-  yield call(navigateBack);
+  const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
+    yield call(NavigationService.getCurrentRoute);
+
+  const sagaExecution = () => withResetNavigationStack(cgnActivationWorkUnit);
+  const result: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+    sagaExecution
+  );
+
+  if (initialScreen?.routeName === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
+    yield call(NavigationService.navigate, ROUTES.MESSAGES_HOME);
+  }
+  if (result === "completed") {
+    if (initialScreen?.routeName === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST) {
+      yield call(navigateBack);
+    }
+    yield call(navigateToCgnDetails);
+  }
 }
