@@ -1,10 +1,13 @@
 import React, { ReactElement, useEffect } from "react";
 import { Provider } from "react-redux";
 import { render, RenderOptions } from "@testing-library/react-native";
-import { createAppContainer, NavigationNavigator } from "react-navigation";
+import {
+  createAppContainer,
+  NavigationNavigator,
+  NavigationInjectedProps
+} from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { Store } from "redux";
-import { NavigationInjectedProps } from "react-navigation";
 
 // Creates a simple wrapper for the render method which encloses the element to render in a store provider
 export function renderWithRedux<S>(

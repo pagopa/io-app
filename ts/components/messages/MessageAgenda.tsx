@@ -22,7 +22,6 @@ import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { makeFontStyleObject } from "../../theme/fonts";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
@@ -101,8 +100,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     alignSelf: "center",
-    marginTop: variables.contentPadding,
-    width: screenWidth - variables.contentPadding * 2
+    marginTop: customVariables.contentPadding,
+    width: screenWidth - customVariables.contentPadding * 2
   },
   padded: {
     paddingHorizontal: customVariables.contentPadding
@@ -546,7 +545,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             <ActivityIndicator
               style={styles.progress}
               size={"small"}
-              color={variables.brandDarkGray}
+              color={customVariables.brandDarkGray}
             />
           </View>
         )}
