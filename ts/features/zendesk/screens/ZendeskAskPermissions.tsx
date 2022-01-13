@@ -50,6 +50,7 @@ import {
   zendeskDeviceAndOSId,
   zendeskidentityProviderId
 } from "../../../utils/supportAssistance";
+import { mixpanelTrack } from "../../../mixpanel";
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -213,6 +214,7 @@ const ZendeskAskPermissions = (props: Props) => {
 
   const handleOnCancel = () => {
     openWebUrl(assistanceWebFormLink);
+    void mixpanelTrack("ZENDESK_DENY_PERMISSIONS");
     workUnitCompleted();
   };
 
@@ -236,6 +238,7 @@ const ZendeskAskPermissions = (props: Props) => {
     // if is not possible to get the config, if the config has any category or if is an assistanceForPayment request open directly a ticket.
     if (canSkipCategoryChoice()) {
       openSupportTicket();
+      void mixpanelTrack("ZENDESK_OPEN_TICKET");
       workUnitCompleted();
     } else {
       navigation.navigate(navigateToZendeskChooseCategory());

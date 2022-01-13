@@ -39,6 +39,7 @@ import {
 } from "../store/reducers";
 import { getValueOrElse } from "../../bonus/bpd/model/RemoteValue";
 import { H3 } from "../../../components/core/typography/H3";
+import { mixpanelTrack } from "../../../mixpanel";
 
 type Props = {
   assistanceForPayment: boolean;
@@ -149,6 +150,7 @@ const ZendeskSupportComponent = (props: Props) => {
         <>
           <ButtonDefaultOpacity
             onPress={() => {
+              void mixpanelTrack("ZENDESK_SHOW_TICKETS");
               showSupportTickets();
               workUnitCompleted();
             }}
