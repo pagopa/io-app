@@ -30,7 +30,6 @@ import {
 import { profileNameSelector } from "../../store/reducers/profile";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
@@ -507,7 +506,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         >
           <StatusBar
             barStyle="light-content"
-            backgroundColor={variables.contentPrimaryBackground}
+            backgroundColor={customVariables.contentPrimaryBackground}
           />
           <Content
             primary={!isValidatingTask}

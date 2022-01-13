@@ -25,8 +25,6 @@ import { WalletListResponse as WalletListResponsePagoPA } from "../../definition
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
-import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-
 import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import {
@@ -35,7 +33,10 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
-import { TypeEnum as CreditCardTypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
+import {
+  TypeEnum as CreditCardTypeEnum,
+  CardInfo
+} from "../../definitions/pagopa/walletv2/CardInfo";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
 import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 
