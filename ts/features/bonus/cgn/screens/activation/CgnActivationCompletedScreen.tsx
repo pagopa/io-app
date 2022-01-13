@@ -8,7 +8,6 @@ import { FooterStackButton } from "../../../bonusVacanze/components/buttons/Foot
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { cgnActivationComplete } from "../../store/actions/activation";
-import { navigateToCgnDetails } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
 import paymentCompleted from "../../../../../../img/pictograms/payment-completed.png";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
@@ -40,7 +39,6 @@ const mapStateToProps = (_: GlobalState) => ({});
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onConfirm: () => {
     dispatch(cgnActivationComplete());
-    navigateToCgnDetails();
   }
 });
 
