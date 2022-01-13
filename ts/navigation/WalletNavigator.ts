@@ -1,10 +1,5 @@
 import { createStackNavigator } from "react-navigation-stack";
-import {
-  bonusVacanzeEnabled,
-  bpdEnabled,
-  cgnEnabled,
-  payPalEnabled
-} from "../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
@@ -219,13 +214,11 @@ const cgnConfigMap = cgnEnabled
     }
   : {};
 
-const paypalConfigMap = payPalEnabled
-  ? {
-      [PAYPAL_ROUTES.ONBOARDING.MAIN]: {
-        screen: paypalOnboardingNavigator
-      }
-    }
-  : {};
+const paypalConfigMap = {
+  [PAYPAL_ROUTES.ONBOARDING.MAIN]: {
+    screen: paypalOnboardingNavigator
+  }
+};
 
 const routeConfig = {
   ...baseRouteConfigMap,

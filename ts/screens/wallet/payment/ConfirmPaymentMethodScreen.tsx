@@ -61,11 +61,7 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import {
-  pagoPaApiUrlPrefix,
-  pagoPaApiUrlPrefixTest,
-  payPalEnabled
-} from "../../../config";
+import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
 import { H4 } from "../../../components/core/typography/H4";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
@@ -79,6 +75,7 @@ import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallet
 import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
 import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -137,13 +134,14 @@ const webViewOutcomeParamName = "outcome";
 
 const PaymentMethodCard = (props: {
   paymentMethod: PaymentMethod | undefined;
+  isPaypalEnabled: boolean;
 }) => {
   const { paymentMethod } = props;
   switch (paymentMethod?.kind) {
     case "CreditCard":
       return <CreditCardComponent creditCard={paymentMethod} />;
     case "PayPal":
-      if (payPalEnabled) {
+      if (props.isPaypalEnabled) {
         return <PaypalCard paypal={paymentMethod} />;
       }
       return null;
@@ -264,6 +262,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         <View style={styles.padded}>
           <View spacer={true} />
           <PaymentMethodCard
+            isPaypalEnabled={props.isPaypalEnabled}
             paymentMethod={props.getPaymentMethodById(wallet.idWallet)}
           />
           {/* show the ability to change psp only when the payment method is a credit card */}
@@ -372,6 +371,7 @@ const mapStateToProps = (state: GlobalState) => {
       paymentMethodByIdSelector(state, idWallet),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     outcomeCodes: outcomeCodesSelector(state),
+    isPaypalEnabled: isPaypalEnabledSelector(state),
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
     retrievingSessionTokenError: isError(pmSessionToken)

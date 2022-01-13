@@ -3,7 +3,6 @@ import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import { mixpanelTrack } from "../../mixpanel";
 import { noAnalyticsRoutes } from "../../utils/analytics";
 import { getCurrentRouteName } from "../../utils/navigation";
-import { OPERISSUES_10_track } from "../../sagas/startup";
 
 export const trackScreen = (
   previousState: NavigationState,
@@ -22,9 +21,6 @@ export const trackScreen = (
     // track only those events that are not included in the blacklist
     if (!noAnalyticsRoutes.has(screenName)) {
       void mixpanelTrack("SCREEN_CHANGE_V2", {
-        SCREEN_NAME: screenName
-      });
-      OPERISSUES_10_track("SCREEN_CHANGE_V2", {
         SCREEN_NAME: screenName
       });
     }
