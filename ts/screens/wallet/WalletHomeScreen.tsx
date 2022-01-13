@@ -85,7 +85,6 @@ import {
   pagoPaCreditCardWalletV1Selector
 } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
-import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
@@ -114,10 +113,10 @@ const styles = StyleSheet.create({
   },
   addDescription: {
     lineHeight: 24,
-    fontSize: variables.fontSize1
+    fontSize: customVariables.fontSize1
   },
   white: {
-    color: variables.colorWhite
+    color: customVariables.colorWhite
   },
   container: {
     flex: 1,
@@ -134,26 +133,26 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   emptyListWrapper: {
-    padding: variables.contentPadding,
+    padding: customVariables.contentPadding,
     alignItems: "center"
   },
   emptyListContentTitle: {
-    paddingBottom: variables.contentPadding / 2
+    paddingBottom: customVariables.contentPadding / 2
   },
   bordercColorBrandGray: {
-    borderColor: variables.brandGray
+    borderColor: customVariables.brandGray
   },
   colorBrandGray: {
-    color: variables.brandGray
+    color: customVariables.brandGray
   },
   brandDarkGray: {
-    color: variables.brandDarkGray
+    color: customVariables.brandDarkGray
   },
   whiteBg: {
-    backgroundColor: variables.colorWhite
+    backgroundColor: customVariables.colorWhite
   },
   noBottomPadding: {
-    padding: variables.contentPadding,
+    padding: customVariables.contentPadding,
     paddingBottom: 0
   },
   center: {

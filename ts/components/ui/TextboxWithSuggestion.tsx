@@ -1,8 +1,7 @@
 import * as React from "react";
 import { ReactNode, useContext, useState } from "react";
 import { Body, Container, Content, Left, Right, View } from "native-base";
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
 import { H5 } from "../core/typography/H5";

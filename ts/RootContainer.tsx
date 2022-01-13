@@ -15,7 +15,6 @@ import { shouldDisplayVersionInfoOverlay, testOverlayCaption } from "./config";
 import { setLocale } from "./i18n";
 import AppNavigator from "./navigation/AppNavigator";
 import NavigationService from "./navigation/NavigationService";
-import { OPERISSUES_10_track } from "./sagas/startup";
 import RootModal from "./screens/modal/RootModal";
 import {
   applicationChangeState,
@@ -83,7 +82,6 @@ class RootContainer extends React.PureComponent<Props> {
     this.updateLocale();
     // Hide splash screen
     SplashScreen.hide();
-    OPERISSUES_10_track("RootContainer.componentDidMount");
   }
 
   /**
