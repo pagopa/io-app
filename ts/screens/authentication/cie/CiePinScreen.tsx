@@ -109,10 +109,10 @@ const CiePinScreen: React.FC<Props> = props => {
     setAuthUrlGenerated(undefined);
   };
 
-  const handleAuthenticationOverlayOnClose = () => {
+  const handleAuthenticationOverlayOnClose = useCallback(() => {
     resetState();
     hideModal();
-  };
+  }, [resetState, hideModal]);
 
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
