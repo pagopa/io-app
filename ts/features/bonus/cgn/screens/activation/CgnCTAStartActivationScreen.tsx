@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Alert } from "react-native";
@@ -28,6 +29,8 @@ const loadingCaption = () => I18n.t("global.remoteStates.loading");
  * this is a dummy screen reachable only from a message CTA
  */
 const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
+  const isFirstRender = useRef<boolean>(true);
+
   // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
@@ -35,9 +38,10 @@ const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
 
   React.useEffect(() => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
-    if (availableBonus.length > 0 && cgnBonus) {
-      // navigateBack();
+    if (availableBonus.length > 0 && cgnBonus && isFirstRender.current) {
       startCgn();
+      // eslint-disable-next-line functional/immutable-data
+      isFirstRender.current = false;
     }
   }, [availableBonus, startCgn, cgnBonus]);
 

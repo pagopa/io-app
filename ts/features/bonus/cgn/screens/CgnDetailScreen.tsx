@@ -81,7 +81,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
       <BaseScreenComponent
         headerBackgroundColor={HEADER_BACKGROUND_COLOR}
-        goBack
+        goBack={props.goBack}
         headerTitle={I18n.t("bonus.cgn.name")}
         dark={true}
         titleColor={"white"}

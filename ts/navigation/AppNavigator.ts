@@ -5,7 +5,13 @@ import BackgroundScreen from "../screens/BackgroundScreen";
 import IngressScreen from "../screens/ingress/IngressScreen";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
-import { zendeskEnabled } from "../config";
+import { cgnEnabled, zendeskEnabled } from "../config";
+import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import {
+  CgnActivationNavigator,
+  CgnDetailsNavigator,
+  CgnEYCAActivationNavigator
+} from "../features/bonus/cgn/navigation/navigator";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -44,6 +50,20 @@ const configMap = {
   }
 };
 
+const cgnConfigMap = cgnEnabled
+  ? {
+      [CGN_ROUTES.ACTIVATION.MAIN]: {
+        screen: CgnActivationNavigator
+      },
+      [CGN_ROUTES.DETAILS.MAIN]: {
+        screen: CgnDetailsNavigator
+      },
+      [CGN_ROUTES.EYCA.ACTIVATION.MAIN]: {
+        screen: CgnEYCAActivationNavigator
+      }
+    }
+  : {};
+
 // The addition of the screen to the stack is only protected by local FF
 const zendeskMap = zendeskEnabled
   ? {
@@ -52,9 +72,11 @@ const zendeskMap = zendeskEnabled
       }
     }
   : {};
+
 const navigator = createStackNavigator(
   {
     ...configMap,
+    ...cgnConfigMap,
     ...zendeskMap
   },
   {
