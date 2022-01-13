@@ -2605,6 +2605,7 @@ bonus:
         health: salute e benessere
     cta:
       activeBonus: Richiedi la Carta
+      deactivateBonus: Disattiva la Carta
       goToDetail: Visualizza la Carta
     detail:
       cta:

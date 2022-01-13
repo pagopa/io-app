@@ -1,9 +1,9 @@
 import * as React from "react";
+import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
-import { navigateBack } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
@@ -23,7 +23,9 @@ const loadingCaption = () => I18n.t("global.remoteStates.loading");
 /**
  * this is a dummy screen reachable only from a message CTA
  */
-const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
+const CgnCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
+  const isFirstRender = useRef<boolean>(true);
+
   // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
@@ -31,9 +33,10 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
 
   React.useEffect(() => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
-    if (availableBonus.length > 0 && cgnBonus) {
-      navigateBack();
+    if (availableBonus.length > 0 && cgnBonus && isFirstRender.current) {
       startCgn();
+      // eslint-disable-next-line functional/immutable-data
+      isFirstRender.current = false;
     }
   }, [availableBonus, startCgn, cgnBonus]);
 
@@ -64,4 +67,4 @@ const mapStateToProps = (globalState: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BpdCTAStartOnboardingScreen);
+)(CgnCTAStartOnboardingScreen);

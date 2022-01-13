@@ -209,6 +209,7 @@ const ServiceDetailsScreen = (props: Props) => {
               <>
                 <View spacer small />
                 <SpecialServicesCTA
+                  serviceId={props.serviceId}
                   customSpecialFlow={metadata.custom_special_flow}
                 />
               </>
