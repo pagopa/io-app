@@ -13,10 +13,6 @@ export function* cgnBucketConsuption(
   cgnCodeFromBucketRequest: ReturnType<typeof cgnCodeFromBucket["request"]>
 ) {
   try {
-    // FIXME remove this condition once API specs has been fixed
-    if (cgnCodeFromBucketRequest.payload === undefined) {
-      throw new Error(`discountId is undefined`);
-    }
     const discountBucketCodeResult: SagaCallReturnType<
       typeof getDiscountBucketCode
     > = yield call(getDiscountBucketCode, {
