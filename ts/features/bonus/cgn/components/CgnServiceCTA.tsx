@@ -1,11 +1,11 @@
 import * as React from "react";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
-import { isStrictSome } from "../../../../utils/pot";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
@@ -18,18 +18,17 @@ const CgnServiceCTA = (props: Props) => {
   const dispatch = useIODispatch();
   const servicePreference = useIOSelector(servicePreferenceSelector);
 
-  const isServiceActive =
-    isStrictSome(servicePreference) &&
-    isServicePreferenceResponseSuccess(servicePreference.value) &&
-    servicePreference.value.value.inbox;
-
+  const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
   if (
-    !isStrictSome(servicePreference) ||
-    (isStrictSome(servicePreference) &&
-      servicePreference.value.id !== props.serviceId)
+    !servicePreferenceValue ||
+    servicePreferenceValue.id !== props.serviceId
   ) {
-    return <></>;
+    return null;
   }
+  const isServiceActive =
+    servicePreferenceValue &&
+    isServicePreferenceResponseSuccess(servicePreferenceValue) &&
+    servicePreferenceValue.value.inbox;
 
   return isServiceActive ? (
     // TODO onPress handler will be implemented once the unsubscribe API will be published by backend repository
