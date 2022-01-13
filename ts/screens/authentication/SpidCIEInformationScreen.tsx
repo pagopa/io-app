@@ -21,7 +21,6 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 
 type Props = NavigationInjectedProps;
@@ -33,7 +32,7 @@ type State = {
 const styles = StyleSheet.create({
   value: {
     alignSelf: "flex-start",
-    color: variables.brandPrimary,
+    color: customVariables.brandPrimary,
     paddingTop: 2
   },
   row: {

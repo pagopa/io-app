@@ -1,5 +1,4 @@
-import { Effect } from "redux-saga/effects";
-import { call, put, take } from "redux-saga/effects";
+import { call, put, take, Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { fromNullable } from "fp-ts/lib/Option";

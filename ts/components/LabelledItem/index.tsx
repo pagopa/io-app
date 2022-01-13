@@ -9,7 +9,7 @@
  * icon  |
  *       input
  */
-import { Item, View } from "native-base";
+import { Item, View, Input as InputNativeBase } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -21,7 +21,6 @@ import {
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import color from "color";
-import { Input as InputNativeBase } from "native-base";
 import { TextInputMaskProps } from "react-native-masked-text";
 
 import { isStringNullyOrEmpty } from "../../utils/strings";

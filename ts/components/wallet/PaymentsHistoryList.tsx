@@ -11,7 +11,6 @@ import {
   PaymentHistory,
   PaymentsHistoryState
 } from "../../store/reducers/payments/history";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -30,7 +29,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: variables.colorWhite,
+    backgroundColor: customVariables.colorWhite,
     flex: 1
   },
   subHeaderContent: {
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   brandDarkGray: {
-    color: variables.brandDarkGray
+    color: customVariables.brandDarkGray
   }
 });
 
