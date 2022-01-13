@@ -35,7 +35,6 @@ import {
   PaymentWebViewEndReason
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import {
   isCreditCard,
@@ -106,15 +105,15 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   paddedLR: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
   },
   textRight: {
     textAlign: "right"
   },
   divider: {
     borderTopWidth: 1,
-    borderTopColor: variables.brandGray
+    borderTopColor: customVariables.brandGray
   },
   textCenter: {
     textAlign: "center"

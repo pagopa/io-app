@@ -41,6 +41,7 @@ module.exports = {
     "no-console": "error",
     "no-caller": "error",
     "no-bitwise": "error",
+    "no-duplicate-imports": "error",
     eqeqeq: ["error", "smart"],
     "max-classes-per-file": ["error", 1],
     "guard-for-in": "error",

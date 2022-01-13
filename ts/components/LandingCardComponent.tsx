@@ -5,8 +5,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, ScrollView, StyleSheet } from "react-native";
-import { Col } from "react-native-easy-grid";
-import { Grid } from "react-native-easy-grid";
+import { Col, Grid } from "react-native-easy-grid";
 
 type Props = {
   id: number;

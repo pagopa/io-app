@@ -2,7 +2,6 @@ import { Either } from "fp-ts/lib/Either";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import variables from "../theme/variables";
 import customVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
@@ -53,8 +52,8 @@ export default class ChooserListItem extends React.Component<Props> {
 
     const iconName = isItemSelected ? "io-checkbox-on" : "io-checkbox-off";
     const iconColor = isItemSelected
-      ? variables.selectedColor
-      : variables.unselectedColor;
+      ? customVariables.selectedColor
+      : customVariables.unselectedColor;
 
     const icon = itemIconComponent
       ? itemIconComponent.getOrElseL(f => f(itemId))
