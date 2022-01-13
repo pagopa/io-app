@@ -6,6 +6,7 @@ import { Discount } from "../../../../../../../definitions/cgn/merchants/Discoun
 import { DiscountCodeType } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import CgnStaticCodeComponent from "./CgnStaticCodeComponent";
 import CgnOTPCodeComponent from "./CgnOTPCodeComponent";
+import CgnBucketCodeComponent from "./CgnBucketCodeComponent";
 
 type Props = {
   discount: Discount;
@@ -14,9 +15,7 @@ type Props = {
 
 const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
   const shouldNotRender =
-    merchantType === "bucket" ||
-    merchantType === "landingpage" ||
-    merchantType === undefined;
+    merchantType === "landingpage" || merchantType === undefined;
   const renderProperCodeVisualization = (discount: Discount) => {
     switch (merchantType) {
       case "api":
@@ -24,6 +23,7 @@ const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
       case "static":
         return <CgnStaticCodeComponent staticCode={discount.staticCode} />;
       case "bucket":
+        return <CgnBucketCodeComponent />;
       case "landingpage":
       default:
         return <></>;

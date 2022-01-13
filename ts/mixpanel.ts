@@ -75,14 +75,3 @@ export const mixpanelTrack = (
   event: string,
   properties?: Record<string, unknown>
 ) => mixpanel?.track(event, properties);
-
-/**
- * temporary log against https://pagopa.atlassian.net/browse/OPERISSUES-10
- * remove and clean after the issue will be addressed
- */
-export const mixpanelFlush = async () => {
-  if (mixpanel) {
-    await mixpanel.flush();
-  }
-  return Promise.resolve();
-};
