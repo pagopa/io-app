@@ -13,6 +13,10 @@ export function* cgnBucketConsuption(
   cgnCodeFromBucketRequest: ReturnType<typeof cgnCodeFromBucket["request"]>
 ) {
   try {
+    // FIXME remove this condition once API specs has been fixed
+    if (cgnCodeFromBucketRequest.payload === undefined) {
+      throw new Error(`discountId is undefined`);
+    }
     const discountBucketCodeResult: SagaCallReturnType<
       typeof getDiscountBucketCode
     > = yield call(getDiscountBucketCode, {
@@ -23,26 +27,15 @@ export function* cgnBucketConsuption(
         yield put(
           cgnCodeFromBucket.success(discountBucketCodeResult.value.value)
         );
+        return;
       } else {
-        yield put(
-          cgnCodeFromBucket.failure(
-            getNetworkError(
-              new Error(
-                `response status ${discountBucketCodeResult.value.status}`
-              )
-            )
-          )
+        throw new Error(
+          `response status ${discountBucketCodeResult.value.status}`
         );
       }
-    } else {
-      yield put(
-        cgnCodeFromBucket.failure(
-          getNetworkError(
-            new Error(readablePrivacyReport(discountBucketCodeResult.value))
-          )
-        )
-      );
     }
+
+    throw new Error(readablePrivacyReport(discountBucketCodeResult.value));
   } catch (e) {
     yield put(cgnCodeFromBucket.failure(getNetworkError(e)));
   }
