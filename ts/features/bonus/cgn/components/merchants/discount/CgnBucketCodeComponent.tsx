@@ -17,9 +17,10 @@ import { addEvery } from "../../../../../../utils/strings";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { H3 } from "../../../../../../components/core/typography/H3";
+import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 
 type Props = {
-  discountId: string;
+  discountId: Discount["id"];
 };
 
 const styles = StyleSheet.create({

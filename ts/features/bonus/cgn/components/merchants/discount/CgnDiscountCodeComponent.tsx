@@ -21,10 +21,7 @@ const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
       case "static":
         return <CgnStaticCodeComponent staticCode={discount.staticCode} />;
       case "bucket":
-        return (
-          // TODO Replace with discountID once available by spec
-          <CgnBucketCodeComponent discountId={discount.name.substr(0, 2)} />
-        );
+        return <CgnBucketCodeComponent discountId={discount.id} />;
       case "landingpage":
       default:
         return null;
