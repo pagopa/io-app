@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
  * @param radioItem
  * @param onPress
  */
-const getBody = <T extends unknown>(
+const getBody = <T,>(
   radioItem: RadioItem<T>,
   onPress: (selected: T) => void
 ) => {
@@ -76,7 +76,7 @@ const getBody = <T extends unknown>(
  * The management of the selection is demanded and derived by the `selectedItem` prop.
  * The item with the `id` equal to the `selectedItem` is the active one.
  */
-export const RadioButtonList = <T extends unknown>(props: Props<T>) => (
+export const RadioButtonList = <T,>(props: Props<T>) => (
   <View>
     {props.head && (
       <H4 color={"bluegreyDark"} weight={"Regular"} style={styles.head}>
