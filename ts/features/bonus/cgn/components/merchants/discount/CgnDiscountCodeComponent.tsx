@@ -1,7 +1,5 @@
 import { View } from "native-base";
 import * as React from "react";
-import { H3 } from "../../../../../../components/core/typography/H3";
-import I18n from "../../../../../../i18n";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountCodeType } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import CgnStaticCodeComponent from "./CgnStaticCodeComponent";
@@ -23,21 +21,19 @@ const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
       case "static":
         return <CgnStaticCodeComponent staticCode={discount.staticCode} />;
       case "bucket":
-        return <CgnBucketCodeComponent />;
+        return (
+          // TODO Replace with discountID once available by spec
+          <CgnBucketCodeComponent discountId={discount.name.substr(0, 2)} />
+        );
       case "landingpage":
       default:
-        return <></>;
+        return null;
     }
   };
 
-  return shouldNotRender ? (
-    <></>
-  ) : (
+  return shouldNotRender ? null : (
     <>
       <View spacer small />
-      <H3 accessible={true} accessibilityRole={"header"}>
-        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
-      </H3>
       {renderProperCodeVisualization(discount)}
     </>
   );
