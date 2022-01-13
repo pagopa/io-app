@@ -4,7 +4,6 @@ import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import StyledIconFont from "../ui/IconFont";
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     marginBottom: -10
   },
   white: {
-    color: variables.colorWhite
+    color: customVariables.colorWhite
   },
   buttonTextDigit: {
     fontSize: radius + 10
@@ -78,6 +77,11 @@ const renderPinCol = (
       ? [styles.roundButton, styles.transparent]
       : undefined;
 
+  const accessibilityLabel = label.fold(
+    () => undefined,
+    ic => ic.accessibilityLabel
+  );
+
   return (
     <Col key={key}>
       <ButtonDefaultOpacity
@@ -87,6 +91,7 @@ const renderPinCol = (
         block={style === "label"}
         primary={buttonType === "primary"}
         unNamed={buttonType === "light"}
+        accessibilityLabel={accessibilityLabel}
       >
         {label.fold(
           l => (
@@ -110,7 +115,6 @@ const renderPinCol = (
                   ? customVariables.contentPrimaryBackground
                   : customVariables.colorWhite
               }
-              accessibilityLabel={ic.accessibilityLabel}
             />
           )
         )}

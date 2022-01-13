@@ -10,7 +10,6 @@ import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
-import variables from "../../theme/variables";
 import {
   format,
   formatDateAsDay,
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   padded: {
-    paddingHorizontal: variables.contentPadding
+    paddingHorizontal: customVariables.contentPadding
   },
   messagePaidBg: {
     padding: 24,

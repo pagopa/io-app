@@ -11,10 +11,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import customVariables from "../../../../theme/variables";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -127,16 +124,12 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             </View>
           </ScrollView>
           <FooterWithButtons
-            type={"TwoButtonsInlineHalf"}
-            leftButton={cancelButtonProps(
+            type={"SingleButton"}
+            leftButton={confirmButtonProps(
               props.isMerchantV2Enabled
                 ? props.navigateToMerchantsTabs
                 : props.navigateToMerchantsList,
               I18n.t("bonus.cgn.detail.cta.buyers")
-            )}
-            rightButton={confirmButtonProps(
-              props.navigateToOtp,
-              I18n.t("bonus.cgn.detail.cta.otp")
             )}
           />
         </SafeAreaView>
