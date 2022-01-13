@@ -2576,7 +2576,8 @@ bonus:
         sport: sport
         health: health and wellness
     cta:
-      activeBonus: Request your CGN
+      activeBonus: Request your Card
+      deactivateBonus: Deactivate your Card
       goToDetail: View your Carta Giovani
     detail:
       cta:
