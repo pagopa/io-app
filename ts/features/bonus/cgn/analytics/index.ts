@@ -1,16 +1,15 @@
 import { getType } from "typesafe-actions";
-import { cgnEnabled } from "../../../../config";
 import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
 import {
-  cgnActivationComplete,
-  cgnActivationStart,
-  cgnActivationCancel,
   cgnActivationBack,
+  cgnActivationCancel,
+  cgnActivationComplete,
+  cgnActivationFailure,
+  cgnActivationStart,
   cgnActivationStatus,
-  cgnRequestActivation,
-  cgnActivationFailure
+  cgnRequestActivation
 } from "../store/actions/activation";
 import { cgnDetails } from "../store/actions/details";
 import {
@@ -62,6 +61,4 @@ const trackCgnAction =
     return Promise.resolve();
   };
 
-const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>
-  Promise.resolve();
-export default cgnEnabled ? trackCgnAction : emptyTracking;
+export default trackCgnAction;

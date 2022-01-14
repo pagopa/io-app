@@ -12,6 +12,7 @@ import { cgnGenerateOtp, resetOtpState } from "../../../store/actions/otp";
 import { OtpCodeComponent } from "../../otp/OtpCodeComponent";
 import Eye from "../../../../../../../img/icons/Eye.svg";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
+import { H3 } from "../../../../../../components/core/typography/H3";
 
 const styles = StyleSheet.create({
   row: {
@@ -44,6 +45,9 @@ const CgnOTPCodeComponent = () => {
 
   return (
     <View testID={"otp-code-component"}>
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+      </H3>
       {isLoading(otp) ? (
         <ActivityIndicator />
       ) : isCodeVisible && isReady(otp) ? (
