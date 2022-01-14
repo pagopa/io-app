@@ -9,6 +9,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { isStrictSome } from "../../../../../utils/pot";
+import { cgnUnsubscribe } from "../actions/unsubscribe";
 
 export type CgnDetailsState = {
   information: pot.Pot<Card, NetworkError>;
@@ -39,6 +40,8 @@ const reducer = (
         ...state,
         information: pot.toError(state.information, action.payload)
       };
+    case getType(cgnUnsubscribe.success):
+      return INITIAL_STATE;
   }
   return state;
 };

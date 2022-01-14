@@ -2672,6 +2672,11 @@ bonus:
       success:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
+      deactivate:
+        toast: "La richiesta di disattivazione è avvenuta correttamente"
+        alert:
+          title: "Disattiva carta"
+          message: "Sei sicuro di voler disattivare la tua Carta Giovani Nazionale? Se confermi, perderai la possibilità di accedere alle agevolazioni previste dall’iniziativa e la carta scomparirà dal Portafoglio."
     otp:
       screen:
         title: Usa codice sconto

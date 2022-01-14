@@ -2644,6 +2644,11 @@ bonus:
       success:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
+      deactivate:
+        toast: "The request to deactivate the card has been successfully executed"
+        alert:
+          title: "Deactivate card"
+          message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
     otp:
       screen:
         title: Use discount code

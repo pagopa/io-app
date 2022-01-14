@@ -43,6 +43,8 @@ import { navigateBack } from "../../../../store/actions/navigation";
 import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { canEycaCardBeShown } from "../utils/eyca";
 import SectionStatusComponent from "../../../../components/SectionStatus";
+import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -127,6 +129,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                   <EycaDetailComponent />
                 </>
               )}
+              <View spacer large />
+              <ItemSeparatorComponent noPadded />
+              <CgnUnsubscribe />
             </View>
           </ScrollView>
           <SectionStatusComponent sectionKey={"cgn"} />
@@ -164,6 +169,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  unsubscribe: () => dispatch(cgnUnsubscribe.request()),
   goBack: () => navigateBack(),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),

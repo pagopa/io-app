@@ -1,0 +1,57 @@
+import * as React from "react";
+import { useEffect } from "react";
+import { View } from "native-base";
+import { Alert } from "react-native";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { cgnUnsubscribeSelector } from "../../store/reducers/unsubscribe";
+import { Link } from "../../../../../components/core/typography/Link";
+import I18n from "../../../../../i18n";
+import { cgnUnsubscribe } from "../../store/actions/unsubscribe";
+import { isReady } from "../../../bpd/model/RemoteValue";
+import { showToast } from "../../../../../utils/showToast";
+import { navigateBack } from "../../../../../store/actions/navigation";
+
+const CgnUnsubscribe = () => {
+  const dispatch = useIODispatch();
+  const unsubsriptionStatus = useIOSelector(cgnUnsubscribeSelector);
+
+  const requestUnsubscription = () => {
+    Alert.alert(
+      I18n.t("bonus.cgn.activation.deactivate.alert.title"),
+      I18n.t("bonus.cgn.activation.deactivate.alert.message"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.deactivate"),
+          onPress: () => dispatch(cgnUnsubscribe.request())
+        }
+      ]
+    );
+  };
+
+  useEffect(() => {
+    if (isReady(unsubsriptionStatus)) {
+      showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
+      navigateBack();
+    }
+  }, [unsubsriptionStatus]);
+
+  return (
+    <View style={{ paddingTop: 16, paddingBottom: 60 }}>
+      <Link
+        color={"red"}
+        style={{ textAlign: "center" }}
+        accessibilityRole={"button"}
+        accessibilityLabel={I18n.t("bonus.cgn.cta.deactivateBonus")}
+        onPress={requestUnsubscription}
+      >
+        {I18n.t("bonus.cgn.cta.deactivateBonus")}
+      </Link>
+    </View>
+  );
+};
+
+export default CgnUnsubscribe;
