@@ -83,6 +83,9 @@ export const usePaginatedMessages: boolean =
 // MVL messages
 export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
 
+// CGN new merchants features
+export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 

@@ -12,6 +12,7 @@ import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { cgnMerchantsV2Enabled } from "../../config";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -61,6 +62,7 @@ export const bpdRemoteConfigSelector = createSelector(
 export const cgnMerchantVersionSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean | undefined =>
+    cgnMerchantsV2Enabled &&
     backendStatus
       .mapNullable(bs => bs.config)
       .mapNullable(config => config.cgn.merchants_v2)

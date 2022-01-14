@@ -12,9 +12,21 @@ import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA"
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
+
 type Props = {
   customSpecialFlow: CustomSpecialFlow;
   serviceId: ServiceId;
+};
+
+const UpdateAppCTA = () => {
+  // utility to open the app store on the OS
+  const openAppStore = useCallback(() => openAppStoreUrl(), []);
+
+  return (
+    <ButtonDefaultOpacity block primary onPress={openAppStore}>
+      <Label color={"white"}>{I18n.t("btnUpdateApp")}</Label>
+    </ButtonDefaultOpacity>
+  );
 };
 
 const SpecialServicesCTA = (props: Props) => {
@@ -27,29 +39,20 @@ const SpecialServicesCTA = (props: Props) => {
     boolean
   >([["cgn" as CustomSpecialFlow, isCGNEnabled]]);
 
-  // utility to open
-  const openAppStore = useCallback(() => openAppStoreUrl(), []);
-
   return fromNullable(customSpecialFlow).fold(null, csf =>
-    fromNullable(mapFlowFeatureFlag.get(csf)).fold(null, isFlowEnabled => {
-      if (!isFlowEnabled) {
-        return (
-          <ButtonDefaultOpacity block primary onPress={openAppStore}>
-            <Label color={"white"}>{I18n.t("btnUpdateApp")}</Label>
-          </ButtonDefaultOpacity>
-        );
+    fromNullable(mapFlowFeatureFlag.get(csf)).fold(
+      <UpdateAppCTA />,
+      isEnabled => {
+        switch (csf) {
+          case "cgn":
+            return isEnabled ? (
+              <CgnServiceCTA serviceId={props.serviceId} />
+            ) : null;
+          default:
+            return <UpdateAppCTA />;
+        }
       }
-      switch (customSpecialFlow) {
-        case "cgn":
-          return <CgnServiceCTA serviceId={props.serviceId} />;
-        default:
-          return (
-            <ButtonDefaultOpacity block primary onPress={openAppStore}>
-              <Label color={"white"}>{I18n.t("btnUpdateApp")}</Label>
-            </ButtonDefaultOpacity>
-          );
-      }
-    })
+    )
   );
 };
 
