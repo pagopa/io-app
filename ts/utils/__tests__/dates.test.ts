@@ -2,7 +2,7 @@ import { getMonth, getYear } from "date-fns";
 import { left, right } from "fp-ts/lib/Either";
 import MockDate from "mockdate";
 import { range } from "fp-ts/lib/Array";
-import I18n from "../../i18n";
+import I18n, { availableTranslations, setLocale } from "../../i18n";
 import {
   formatDateAsShortFormat,
   formatDateAsShortFormatUTC,
@@ -72,16 +72,18 @@ describe("getExpireStatus", () => {
 });
 
 describe("formatDateAsShortFormat", () => {
-  const toTest: ReadonlyArray<[Date, string]> = [
-    [new Date(1970, 0, 1), "01/01/1970"],
-    [new Date(2020, 10, 30), "30/11/2020"],
-    [new Date(1900, 5, 5), "05/06/1900"],
-    [new Date(1900, 13, 55), "27/03/1901"], // handle the overflow,
-    [new Date("not a date"), I18n.t("global.date.invalid")] // handle invalid date
-  ];
-
-  toTest.forEach(tt => {
-    expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
+  availableTranslations.forEach(locale => {
+    setLocale(locale);
+    const toTest: ReadonlyArray<[Date, string]> = [
+      [new Date(1970, 0, 1), "01/01/1970"],
+      [new Date(2020, 10, 30), "30/11/2020"],
+      [new Date(1900, 5, 5), "05/06/1900"],
+      [new Date(1900, 13, 55), "27/03/1901"], // handle the overflow,
+      [new Date("not a date"), I18n.t("global.date.invalid")] // handle invalid date
+    ];
+    toTest.forEach(tt => {
+      expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
+    });
   });
 });
 
