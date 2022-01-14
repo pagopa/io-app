@@ -67,6 +67,7 @@ const CgnBucketCodeContent = () => {
   }
 
   // we got an error no code is available
+  // TODO handle all possible errors
   if (isError(code)) {
     return null;
   }
