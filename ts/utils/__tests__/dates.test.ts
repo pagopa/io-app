@@ -3,7 +3,12 @@ import { left, right } from "fp-ts/lib/Either";
 import MockDate from "mockdate";
 import { range } from "fp-ts/lib/Array";
 import I18n from "../../i18n";
-import { formatDateAsShortFormat, getExpireStatus, isExpired } from "../dates";
+import {
+  formatDateAsShortFormat,
+  formatDateAsShortFormatUTC,
+  getExpireStatus,
+  isExpired
+} from "../dates";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -80,7 +85,7 @@ describe("formatDateAsShortFormat", () => {
   });
 });
 
-describe("formatDateAsShortFormatUtc", () => {
+describe("formatDateAsShortFormatUTC", () => {
   const expected = "12/01/1983";
   const toTest: ReadonlyArray<Date> = range(0, 23).map(
     value =>
@@ -88,6 +93,6 @@ describe("formatDateAsShortFormatUtc", () => {
   );
 
   toTest.forEach(tt => {
-    expect(formatDateAsShortFormat(tt)).toEqual(expected);
+    expect(formatDateAsShortFormatUTC(tt)).toEqual(expected);
   });
 });

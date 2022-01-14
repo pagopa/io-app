@@ -26,7 +26,7 @@ import customVariables from "../theme/variables";
 import { dateToAccessibilityReadableFormat } from "../utils/accessibility";
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
-import { formatDateAsShortFormatUtc } from "../utils/dates";
+import { formatDateAsShortFormatUTC } from "../utils/dates";
 import { IOColors } from "./core/variables/IOColors";
 
 interface BaseProps {
@@ -472,7 +472,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         {birthDate &&
           this.renderItem(
-            formatDateAsShortFormatUtc(birthDate),
+            formatDateAsShortFormatUTC(birthDate),
             styles.fullDateText,
             styles.landscapeDateText,
             isLandscape
