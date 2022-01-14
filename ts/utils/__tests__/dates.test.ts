@@ -1,6 +1,7 @@
 import { getMonth, getYear } from "date-fns";
 import { left, right } from "fp-ts/lib/Either";
 import MockDate from "mockdate";
+import { range } from "fp-ts/lib/Array";
 import I18n from "../../i18n";
 import { formatDateAsShortFormat, getExpireStatus, isExpired } from "../dates";
 
@@ -76,5 +77,17 @@ describe("formatDateAsShortFormat", () => {
 
   toTest.forEach(tt => {
     expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
+  });
+});
+
+describe("formatDateAsShortFormatUtc", () => {
+  const expected = "12/01/1983";
+  const toTest: ReadonlyArray<Date> = range(0, 23).map(
+    value =>
+      new Date(`1983-01-12T${value.toString().padStart(2, "0")}:00:00.000Z`)
+  );
+
+  toTest.forEach(tt => {
+    expect(formatDateAsShortFormat(tt)).toEqual(expected);
   });
 });
