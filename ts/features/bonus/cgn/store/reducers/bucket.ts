@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { DiscountBucketCode } from "../../../../../../definitions/cgn/merchants/DiscountBucketCode";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
@@ -9,7 +10,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../bpd/model/RemoteValue";
-import { cgnCodeFromBucket, DiscountBucketCode } from "../actions/bucket";
+import { cgnCodeFromBucket } from "../actions/bucket";
 
 export type CgnBucketState = {
   data: RemoteValue<DiscountBucketCode, NetworkError>;

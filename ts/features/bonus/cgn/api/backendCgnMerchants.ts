@@ -5,6 +5,8 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
+  getDiscountBucketCodeDefaultDecoder,
+  GetDiscountBucketCodeT,
   getMerchantDefaultDecoder,
   GetMerchantT,
   getOfflineMerchantsDefaultDecoder,
@@ -44,6 +46,14 @@ const getMerchant: GetMerchantT = {
   response_decoder: getMerchantDefaultDecoder()
 };
 
+const getDiscountBucketCode: GetDiscountBucketCodeT = {
+  method: "get",
+  url: params => `${BASE_URL}/discount-bucket-code/${params.discountId}`,
+  query: _ => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getDiscountBucketCodeDefaultDecoder()
+};
+
 //
 // A specific backend client to handle cgn requests
 //
@@ -66,6 +76,9 @@ export function BackendCgnMerchants(
     getOfflineMerchants: withToken(
       createFetchRequestForApi(getOfflineMerchants, options)
     ),
-    getMerchant: withToken(createFetchRequestForApi(getMerchant, options))
+    getMerchant: withToken(createFetchRequestForApi(getMerchant, options)),
+    getDiscountBucketCode: withToken(
+      createFetchRequestForApi(getDiscountBucketCode, options)
+    )
   };
 }

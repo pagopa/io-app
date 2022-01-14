@@ -8,7 +8,7 @@ import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
-import { isLoading, isReady } from "../../../../bpd/model/RemoteValue";
+import { isError, isLoading, isReady } from "../../../../bpd/model/RemoteValue";
 import Eye from "../../../../../../../img/icons/Eye.svg";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
 import { cgnBucketSelector } from "../../../store/reducers/bucket";
@@ -16,6 +16,12 @@ import { cgnCodeFromBucket } from "../../../store/actions/bucket";
 import { addEvery } from "../../../../../../utils/strings";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
+import { H3 } from "../../../../../../components/core/typography/H3";
+import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
+
+type Props = {
+  discountId: Discount["id"];
+};
 
 const styles = StyleSheet.create({
   row: {
@@ -31,18 +37,12 @@ const styles = StyleSheet.create({
 const COPY_ICON_SIZE = 24;
 const FEEDBACK_TIMEOUT = 3000 as Millisecond;
 
-const CgnBucketCodeComponent = () => {
+const CgnBucketCodeContent = () => {
   const [isCodeVisible, setIsCodeVisible] = React.useState(false);
   const [isTap, setIsTap] = React.useState(false);
   const timerRetry = React.useRef<number | undefined>(undefined);
 
-  const dispatch = useIODispatch();
   const code = useIOSelector(cgnBucketSelector);
-
-  const requestBucket = () => {
-    dispatch(cgnCodeFromBucket.request());
-    setIsCodeVisible(true);
-  };
 
   const handleCopyPress = () => {
     if (isReady(code)) {
@@ -62,46 +62,69 @@ const CgnBucketCodeComponent = () => {
     []
   );
 
+  if (isLoading(code)) {
+    return <ActivityIndicator />;
+  }
+
+  // we got an error no code is available
+  // TODO handle all possible errors
+  if (isError(code)) {
+    return null;
+  }
+
+  return (
+    <>
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+      </H3>
+      <TouchableWithoutFeedback
+        onPress={isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+      >
+        <View style={[styles.row, styles.codeContainer]}>
+          <BaseTypography
+            weight={"Bold"}
+            color={"bluegreyDark"}
+            font={"RobotoMono"}
+            style={styles.codeText}
+          >
+            {isCodeVisible && isReady(code)
+              ? addEvery(code.value.code, " ", 3)
+              : "••••••••••"}
+          </BaseTypography>
+
+          {isCodeVisible && isReady(code) ? (
+            <IconFont
+              name={isTap ? "io-complete" : "io-copy"}
+              size={COPY_ICON_SIZE}
+              color={IOColors.blue}
+              style={styles.flexEnd}
+            />
+          ) : (
+            <Eye
+              width={COPY_ICON_SIZE}
+              height={COPY_ICON_SIZE}
+              fill={IOColors.blue}
+            />
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    </>
+  );
+};
+
+const CgnBucketCodeComponent = ({ discountId }: Props) => {
+  const dispatch = useIODispatch();
+
+  useEffect(() => {
+    dispatch(cgnCodeFromBucket.request(discountId));
+  }, []);
+
   return (
     <View testID={"bucket-code-component"}>
-      {isLoading(code) ? (
-        <ActivityIndicator />
-      ) : (
-        <TouchableWithoutFeedback
-          onPress={isCodeVisible ? handleCopyPress : requestBucket}
-          accessible={true}
-          accessibilityRole={"button"}
-          accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
-        >
-          <View style={[styles.row, styles.codeContainer]}>
-            <BaseTypography
-              weight={"Bold"}
-              color={"bluegreyDark"}
-              font={"RobotoMono"}
-              style={styles.codeText}
-            >
-              {isCodeVisible && isReady(code)
-                ? addEvery(code.value.code, " ", 3)
-                : "••••••••••"}
-            </BaseTypography>
-
-            {isCodeVisible && isReady(code) ? (
-              <IconFont
-                name={isTap ? "io-complete" : "io-copy"}
-                size={COPY_ICON_SIZE}
-                color={IOColors.blue}
-                style={styles.flexEnd}
-              />
-            ) : (
-              <Eye
-                width={COPY_ICON_SIZE}
-                height={COPY_ICON_SIZE}
-                fill={IOColors.blue}
-              />
-            )}
-          </View>
-        </TouchableWithoutFeedback>
-      )}
+      <CgnBucketCodeContent />
     </View>
   );
 };
