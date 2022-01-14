@@ -90,6 +90,7 @@ interface TypedI18n {
   readonly toNumber: typeof I18n.toNumber;
   readonly toCurrency: typeof I18n.toCurrency;
   readonly strftime: typeof I18n.strftime;
+  readonly toTime: typeof I18n.toTime;
 }
 
 const TypedI18n = I18n as TypedI18n;

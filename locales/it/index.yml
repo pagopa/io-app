@@ -2580,6 +2580,9 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
+      bucket:
+        error:
+          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Offerte
         description: Descrizione
@@ -2678,6 +2681,7 @@ bonus:
           title: "Disattiva carta"
           message: "Sei sicuro di voler disattivare la tua Carta Giovani Nazionale? Se confermi, perderai la possibilità di accedere alle agevolazioni previste dall’iniziativa e la carta scomparirà dal Portafoglio."
     otp:
+      error: "C'è stato un errore nell'ottenimento del codice sconto"
       screen:
         title: Usa codice sconto
         cta: Copia codice
