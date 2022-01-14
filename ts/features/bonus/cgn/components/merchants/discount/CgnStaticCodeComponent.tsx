@@ -11,6 +11,7 @@ import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import Eye from "../../../../../../../img/icons/Eye.svg";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
+import { H3 } from "../../../../../../components/core/typography/H3";
 
 type Props = {
   staticCode: Discount["staticCode"];
@@ -54,41 +55,46 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
   };
 
   return (
-    <TouchableWithoutFeedback
-      onPress={isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)}
-      accessible={true}
-      accessibilityRole={"button"}
-      accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
-      testID={"static-code-component"}
-    >
-      <View style={[styles.row, styles.codeContainer]}>
-        <BaseTypography
-          weight={"Bold"}
-          color={"bluegreyDark"}
-          font={"RobotoMono"}
-          style={styles.codeText}
-        >
-          {isCodeVisible && staticCode
-            ? addEvery(staticCode, " ", 3)
-            : "••••••••••"}
-        </BaseTypography>
+    <>
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+      </H3>
+      <TouchableWithoutFeedback
+        onPress={isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+        testID={"static-code-component"}
+      >
+        <View style={[styles.row, styles.codeContainer]}>
+          <BaseTypography
+            weight={"Bold"}
+            color={"bluegreyDark"}
+            font={"RobotoMono"}
+            style={styles.codeText}
+          >
+            {isCodeVisible && staticCode
+              ? addEvery(staticCode, " ", 3)
+              : "••••••••••"}
+          </BaseTypography>
 
-        {isCodeVisible ? (
-          <IconFont
-            name={isTap ? "io-complete" : "io-copy"}
-            size={COPY_ICON_SIZE}
-            color={IOColors.blue}
-            style={styles.flexEnd}
-          />
-        ) : (
-          <Eye
-            width={COPY_ICON_SIZE}
-            height={COPY_ICON_SIZE}
-            fill={IOColors.blue}
-          />
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+          {isCodeVisible ? (
+            <IconFont
+              name={isTap ? "io-complete" : "io-copy"}
+              size={COPY_ICON_SIZE}
+              color={IOColors.blue}
+              style={styles.flexEnd}
+            />
+          ) : (
+            <Eye
+              width={COPY_ICON_SIZE}
+              height={COPY_ICON_SIZE}
+              fill={IOColors.blue}
+            />
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    </>
   );
 };
 export default CgnStaticCodeComponent;
