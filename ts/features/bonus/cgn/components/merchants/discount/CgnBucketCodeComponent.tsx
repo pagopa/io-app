@@ -18,6 +18,10 @@ import IconFont from "../../../../../../components/ui/IconFont";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
+import { isDiscountBucketCodeResponseSuccess } from "../../../types/DiscountBucketCodeResponse";
+import { H4 } from "../../../../../../components/core/typography/H4";
+import { Link } from "../../../../../../components/core/typography/Link";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 
 type Props = {
   discountId: Discount["id"];
@@ -37,17 +41,24 @@ const styles = StyleSheet.create({
 const COPY_ICON_SIZE = 24;
 const FEEDBACK_TIMEOUT = 3000 as Millisecond;
 
-const CgnBucketCodeContent = () => {
+const CgnBucketCodeContent = ({
+  requestBucketCode
+}: {
+  requestBucketCode: () => void;
+}) => {
   const [isCodeVisible, setIsCodeVisible] = React.useState(false);
   const [isTap, setIsTap] = React.useState(false);
   const timerRetry = React.useRef<number | undefined>(undefined);
 
-  const code = useIOSelector(cgnBucketSelector);
+  const bucketResponse = useIOSelector(cgnBucketSelector);
 
   const handleCopyPress = () => {
-    if (isReady(code)) {
+    if (
+      isReady(bucketResponse) &&
+      isDiscountBucketCodeResponseSuccess(bucketResponse.value)
+    ) {
       setIsTap(true);
-      clipboardSetStringWithFeedback(code.value.code);
+      clipboardSetStringWithFeedback(bucketResponse.value.value.code);
       // eslint-disable-next-line functional/immutable-data
       timerRetry.current = setTimeout(() => setIsTap(false), FEEDBACK_TIMEOUT);
     }
@@ -62,14 +73,36 @@ const CgnBucketCodeContent = () => {
     []
   );
 
-  if (isLoading(code)) {
+  if (isLoading(bucketResponse)) {
     return <ActivityIndicator />;
   }
 
   // we got an error no code is available
-  // TODO handle all possible errors
-  if (isError(code)) {
-    return null;
+  if (isError(bucketResponse)) {
+    return (
+      <TouchableWithoutFeedback
+        onPress={requestBucketCode}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+      >
+        <View>
+          <H4 weight={"Regular"} style={[IOStyles.flex]}>
+            {I18n.t("bonus.cgn.otp.error")}
+          </H4>
+
+          <Link>{I18n.t("global.buttons.retry")}</Link>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+
+  if (isReady(bucketResponse) && bucketResponse.value.kind === "notFound") {
+    return (
+      <H4 weight={"Regular"} style={[IOStyles.flex]}>
+        {I18n.t("bonus.cgn.merchantDetail.bucket.error.noCode")}
+      </H4>
+    );
   }
 
   return (
@@ -90,12 +123,16 @@ const CgnBucketCodeContent = () => {
             font={"RobotoMono"}
             style={styles.codeText}
           >
-            {isCodeVisible && isReady(code)
-              ? addEvery(code.value.code, " ", 3)
+            {isCodeVisible &&
+            isReady(bucketResponse) &&
+            isDiscountBucketCodeResponseSuccess(bucketResponse.value)
+              ? addEvery(bucketResponse.value.value.code, " ", 3)
               : "••••••••••"}
           </BaseTypography>
 
-          {isCodeVisible && isReady(code) ? (
+          {isCodeVisible &&
+          isReady(bucketResponse) &&
+          isDiscountBucketCodeResponseSuccess(bucketResponse.value) ? (
             <IconFont
               name={isTap ? "io-complete" : "io-copy"}
               size={COPY_ICON_SIZE}
@@ -114,9 +151,11 @@ const CgnBucketCodeContent = () => {
     </>
   );
 };
-
 const CgnBucketCodeComponent = ({ discountId }: Props) => {
   const dispatch = useIODispatch();
+
+  const requestBucketCode = () =>
+    dispatch(cgnCodeFromBucket.request(discountId));
 
   useEffect(() => {
     dispatch(cgnCodeFromBucket.request(discountId));
@@ -124,7 +163,7 @@ const CgnBucketCodeComponent = ({ discountId }: Props) => {
 
   return (
     <View testID={"bucket-code-component"}>
-      <CgnBucketCodeContent />
+      <CgnBucketCodeContent requestBucketCode={requestBucketCode} />
     </View>
   );
 };
