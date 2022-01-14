@@ -14,6 +14,7 @@ import Eye from "../../../../../../../img/icons/Eye.svg";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
 import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import { H3 } from "../../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../../components/core/typography/H4";
 
 const styles = StyleSheet.create({
@@ -110,6 +111,9 @@ const CgnOTPCodeContent = () => {
 
 const CgnOTPCodeComponent = () => (
   <View testID={"otp-code-component"}>
+    <H3 accessible={true} accessibilityRole={"header"}>
+      {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+    </H3>
     <CgnOTPCodeContent />
   </View>
 );
