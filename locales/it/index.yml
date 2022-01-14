@@ -391,8 +391,7 @@ profile:
             cta: "Perché?"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati e, ove possibile, li "
-              two: "pseudonimizziamo"
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati"
             cta: "Scopri di più"
           gdpr:
             description:

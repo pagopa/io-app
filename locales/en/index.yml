@@ -391,8 +391,7 @@ profile:
             cta: "Why?"
           security:
             description:
-              one: "We take security measures to protect your data and "
-              two: "pseudonymise it where possible"
+              one: "We take security measures to protect your data"
             cta: "Learn more"
           gdpr:
             description:
