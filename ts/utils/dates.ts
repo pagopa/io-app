@@ -19,6 +19,14 @@ type DFNSLocales = Record<Locales, DateFnsLocale>;
 
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
 
+// return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970) without considering the timezone
+export const formatDateAsShortFormatUtc = (date: Date): string =>
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(
+        new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
+        I18n.t("global.dateFormats.shortFormat")
+      );
 // return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
 export const formatDateAsShortFormat = (date: Date): string =>
   isNaN(date.getTime())
