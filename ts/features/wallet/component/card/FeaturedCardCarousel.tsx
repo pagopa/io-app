@@ -10,7 +10,6 @@ import cashbackLogo from "../../../../../img/bonus/bpd/logo_cashback_blue.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { cgnEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -21,6 +20,8 @@ import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/ac
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import { getRemoteLocale } from "../../../../utils/messages";
+import { useIOSelector } from "../../../../store/hooks";
+import { isCGNEnabledSelector } from "../../../../store/reducers/backendStatus";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -43,8 +44,8 @@ const styles = StyleSheet.create({
  */
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
-
-  if (cgnEnabled) {
+  const isCgnEnabled = useIOSelector(isCGNEnabledSelector);
+  if (isCgnEnabled) {
     bonusMap.set(ID_CGN_TYPE, {
       logo: cgnLogo,
       handler: _ => props.startCgnActivation()
@@ -52,7 +53,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   }
 
   // are there any bonus to activate?
-  const anyBonusNotActive = props.cgnActiveBonus === false;
+  const anyBonusNotActive = props.cgnActiveBonus === false && isCgnEnabled;
   return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
     <View style={styles.container} testID={"FeaturedCardCarousel"}>
       <View style={[IOStyles.horizontalContentPadding]}>
@@ -80,7 +81,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
           switch (b.id_type) {
             case ID_CGN_TYPE:
               return (
-                props.cgnActiveBonus === false && (
+                props.cgnActiveBonus === false &&
+                isCgnEnabled && (
                   <FeaturedCard
                     testID={"FeaturedCardCGNTestID"}
                     key={`featured_bonus_${i}`}
