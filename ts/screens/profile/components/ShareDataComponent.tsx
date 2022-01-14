@@ -23,8 +23,6 @@ const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
   </>
 );
 
-const shareDataSecurityMoreLink =
-  "https://www.pagopa.it/static/781646994f1f8ddad2d95af3aaedac3d/Sicurezza-delle-informazioni_PagoPA-S.p.A..pdf";
 export const ShareDataComponent = (): React.ReactElement => {
   const whyBottomSheet = useIOBottomSheet(
     <MarkdownBody
@@ -32,6 +30,13 @@ export const ShareDataComponent = (): React.ReactElement => {
     />,
     I18n.t("profile.main.privacy.shareData.whyBottomSheet.title"),
     350
+  );
+  const securityBottomSheet = useIOBottomSheet(
+    <MarkdownBody
+      body={I18n.t("profile.main.privacy.shareData.securityBottomSheet.body")}
+    />,
+    I18n.t("profile.main.privacy.shareData.securityBottomSheet.title"),
+    400
   );
 
   return (
@@ -62,11 +67,13 @@ export const ShareDataComponent = (): React.ReactElement => {
           {I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
           )}
+          <Label color={"bluegrey"}>
+            {I18n.t(
+              "profile.main.privacy.shareData.screen.security.description.two"
+            )}
+          </Label>
         </Body>
-        <Link
-          onPress={() => openWebUrl(shareDataSecurityMoreLink)}
-          testID="security"
-        >
+        <Link onPress={securityBottomSheet.present} testID="security">
           {I18n.t("profile.main.privacy.shareData.screen.security.cta")}
         </Link>
       </InfoBox>
