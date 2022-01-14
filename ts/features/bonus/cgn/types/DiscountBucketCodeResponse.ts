@@ -1,7 +1,7 @@
 import { DiscountBucketCode } from "../../../../../definitions/cgn/merchants/DiscountBucketCode";
 
 /**
- * Type representing service preference successfully loaded
+ * Type representing bucket code successfully loaded
  */
 type DiscountBucketCodeResponseSuccess = {
   kind: "success";
@@ -9,14 +9,14 @@ type DiscountBucketCodeResponseSuccess = {
 };
 
 /**
- * Type representing service preference successfully loaded
+ * Type representing that there's no bucket code available
  */
 type DiscountBucketCodeNotFound = {
   kind: "notFound";
 };
 
 /**
- * Type representing service preference successfully loaded
+ * Type representing any other error specified by backend response without the need to be handled by the app
  */
 type DiscountBucketCodeUnhandled = {
   kind: "unhandled";
