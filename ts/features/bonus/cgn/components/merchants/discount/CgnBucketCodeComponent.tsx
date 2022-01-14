@@ -107,9 +107,6 @@ const CgnBucketCodeContent = ({
 
   return (
     <>
-      <H3 accessible={true} accessibilityRole={"header"}>
-        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
-      </H3>
       <TouchableWithoutFeedback
         onPress={isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)}
         accessible={true}
@@ -163,6 +160,9 @@ const CgnBucketCodeComponent = ({ discountId }: Props) => {
 
   return (
     <View testID={"bucket-code-component"}>
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+      </H3>
       <CgnBucketCodeContent requestBucketCode={requestBucketCode} />
     </View>
   );
