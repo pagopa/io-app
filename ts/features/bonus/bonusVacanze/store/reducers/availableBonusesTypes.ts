@@ -13,11 +13,7 @@ import {
   ID_CGN_TYPE
 } from "../../utils/bonus";
 import { loadAvailableBonuses } from "../actions/bonusVacanze";
-import {
-  bonusVacanzeEnabled,
-  bpdEnabled,
-  cgnEnabled
-} from "../../../../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../../../../config";
 import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 
 export type AvailableBonusTypesState = pot.Pot<BonusesAvailable, Error>;
@@ -28,7 +24,7 @@ export const mapBonusIdFeatureFlag = () =>
   new Map<number, boolean>([
     [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
     [ID_BPD_TYPE, bpdEnabled],
-    [ID_CGN_TYPE, cgnEnabled]
+    [ID_CGN_TYPE, true]
   ]);
 
 const reducer = (

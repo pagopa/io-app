@@ -20,11 +20,14 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { bpdEnabled, cgnEnabled } from "../../../../config";
+import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
-import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
+import {
+  bpdRemoteConfigSelector,
+  isCGNEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
@@ -116,7 +119,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       handlersMap.set(ID_BPD_TYPE, _ => bpdHandler());
     }
 
-    if (cgnEnabled) {
+    if (this.props.isCgnEnabled) {
       handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
     }
 
@@ -241,7 +244,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isLoading: isAvailableBonusLoadingSelector(state),
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state)
+  bpdConfig: bpdRemoteConfigSelector(state),
+  isCgnEnabled: isCGNEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

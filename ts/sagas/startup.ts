@@ -31,7 +31,6 @@ import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
   bpdEnabled,
-  cgnEnabled,
   euCovidCertificateEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
@@ -367,10 +366,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
-  if (cgnEnabled) {
-    // Start watching for cgn actions
-    yield fork(watchBonusCgnSaga, sessionToken);
-  }
+  // Start watching for cgn actions
+  yield fork(watchBonusCgnSaga, sessionToken);
 
   if (svEnabled) {
     // Start watching for sv actions
