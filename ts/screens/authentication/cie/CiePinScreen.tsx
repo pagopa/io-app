@@ -104,9 +104,14 @@ const CiePinScreen: React.FC<Props> = props => {
     320
   );
 
+  const handleAuthenticationOverlayOnClose = useCallback(() => {
+    setPin("");
+    setAuthUrlGenerated(undefined);
+    hideModal();
+  }, [setPin, setAuthUrlGenerated, hideModal]);
+
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      setPin("");
       navigate({
         routeName: ROUTES.CIE_CARD_READER_SCREEN,
         params: {
@@ -114,14 +119,15 @@ const CiePinScreen: React.FC<Props> = props => {
           authorizationUri: authUrlGenerated
         }
       });
-      hideModal();
+      handleAuthenticationOverlayOnClose();
     }
-  }, [authUrlGenerated, hideModal, navigate, pin]);
-
-  const handleAuthenticationOverlayOnClose = () => {
-    setPin("");
-    hideModal();
-  };
+  }, [
+    handleAuthenticationOverlayOnClose,
+    authUrlGenerated,
+    hideModal,
+    navigate,
+    pin
+  ]);
 
   const showModal = () => {
     props.requestNfcEnabledCheck();
