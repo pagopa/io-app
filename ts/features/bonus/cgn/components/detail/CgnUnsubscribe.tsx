@@ -34,8 +34,8 @@ const CgnUnsubscribe = () => {
 
   useEffect(() => {
     if (isReady(unsubsriptionStatus)) {
-      showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
       navigateBack();
+      showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
     }
   }, [unsubsriptionStatus]);
 

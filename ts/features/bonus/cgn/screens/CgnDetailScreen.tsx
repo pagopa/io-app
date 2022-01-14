@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
@@ -19,6 +20,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import customVariables from "../../../../theme/variables";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import {
+  cgnDetailSelector,
   cgnDetailsInformationSelector,
   isCgnDetailsLoading
 } from "../store/reducers/details";
@@ -79,7 +81,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   const canDisplayEycaDetails =
     canEycaCardBeShown(props.eycaDetails) && props.isCgnEnabled;
 
-  return props.cgnDetails || props.isCgnInfoLoading ? (
+  return (
     <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
       <BaseScreenComponent
         headerBackgroundColor={HEADER_BACKGROUND_COLOR}
@@ -90,76 +92,80 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         contextualHelp={emptyContextualHelp}
       >
         <SafeAreaView style={IOStyles.flex}>
-          <ScrollView style={[IOStyles.flex]} bounces={false}>
-            <LinearGradient
-              colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}
-            >
-              <View
-                style={[IOStyles.horizontalContentPadding, { height: 149 }]}
-              />
-            </LinearGradient>
-            {props.cgnDetails && (
-              <CgnCardComponent
-                cgnDetails={props.cgnDetails}
-                onCardLoadEnd={onCardLoadEnd}
-              />
-            )}
-            <View
-              style={[
-                IOStyles.flex,
-                IOStyles.horizontalContentPadding,
-                { paddingTop: customVariables.contentPadding }
-              ]}
-            >
-              <View spacer extralarge />
-              <View spacer xsmall />
-              {/* Ownership block rendering owner's fiscal code */}
-              <CgnOwnershipInformation />
-              <ItemSeparatorComponent noPadded />
-              <View spacer />
-              {props.cgnDetails && (
-                // Renders status information including activation and expiring date and a badge that represents the CGN status
-                // ACTIVATED - EXPIRED - REVOKED
-                <CgnStatusDetail cgnDetail={props.cgnDetails} />
-              )}
-              {canDisplayEycaDetails && (
-                <>
+          {pot.isError(props.potCgnDetails) ? ( // subText is a blank space to avoid default value when it is undefined
+            <GenericErrorComponent
+              subText={" "}
+              onRetry={loadCGN}
+              onCancel={props.goBack}
+            />
+          ) : (
+            <>
+              <ScrollView style={[IOStyles.flex]} bounces={false}>
+                <LinearGradient
+                  colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}
+                >
+                  <View
+                    style={[IOStyles.horizontalContentPadding, { height: 149 }]}
+                  />
+                </LinearGradient>
+                {props.cgnDetails && (
+                  <CgnCardComponent
+                    cgnDetails={props.cgnDetails}
+                    onCardLoadEnd={onCardLoadEnd}
+                  />
+                )}
+                <View
+                  style={[
+                    IOStyles.flex,
+                    IOStyles.horizontalContentPadding,
+                    { paddingTop: customVariables.contentPadding }
+                  ]}
+                >
+                  <View spacer extralarge />
+                  <View spacer xsmall />
+                  {/* Ownership block rendering owner's fiscal code */}
+                  <CgnOwnershipInformation />
                   <ItemSeparatorComponent noPadded />
                   <View spacer />
-                  <EycaDetailComponent />
-                </>
+                  {props.cgnDetails && (
+                    // Renders status information including activation and expiring date and a badge that represents the CGN status
+                    // ACTIVATED - EXPIRED - REVOKED
+                    <CgnStatusDetail cgnDetail={props.cgnDetails} />
+                  )}
+                  {canDisplayEycaDetails && (
+                    <>
+                      <ItemSeparatorComponent noPadded />
+                      <View spacer />
+                      <EycaDetailComponent />
+                    </>
+                  )}
+                  <View spacer large />
+                  <ItemSeparatorComponent noPadded />
+                  <CgnUnsubscribe />
+                </View>
+              </ScrollView>
+              <SectionStatusComponent sectionKey={"cgn"} />
+              {props.isCgnEnabled && (
+                <FooterWithButtons
+                  type={"SingleButton"}
+                  leftButton={confirmButtonProps(
+                    props.isMerchantV2Enabled
+                      ? props.navigateToMerchantsTabs
+                      : props.navigateToMerchantsList,
+                    I18n.t("bonus.cgn.detail.cta.buyers")
+                  )}
+                />
               )}
-              <View spacer large />
-              <ItemSeparatorComponent noPadded />
-              <CgnUnsubscribe />
-            </View>
-          </ScrollView>
-          <SectionStatusComponent sectionKey={"cgn"} />
-          {props.isCgnEnabled && (
-            <FooterWithButtons
-              type={"SingleButton"}
-              leftButton={confirmButtonProps(
-                props.isMerchantV2Enabled
-                  ? props.navigateToMerchantsTabs
-                  : props.navigateToMerchantsList,
-                I18n.t("bonus.cgn.detail.cta.buyers")
-              )}
-            />
+            </>
           )}
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
-  ) : (
-    // subText is a blank space to avoid default value when it is undefined
-    <GenericErrorComponent
-      subText={" "}
-      onRetry={loadCGN}
-      onCancel={props.goBack}
-    />
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
+  potCgnDetails: cgnDetailSelector(state),
   cgnDetails: cgnDetailsInformationSelector(state),
   isCgnEnabled: isCGNEnabledSelector(state),
   isCgnInfoLoading: isCgnDetailsLoading(state),
