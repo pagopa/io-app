@@ -2673,6 +2673,7 @@ bonus:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
     otp:
+      error: "C'è stato un errore nell'ottenimento del codice sconto"
       screen:
         title: Usa codice sconto
         cta: Copia codice
