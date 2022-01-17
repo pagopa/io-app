@@ -10,11 +10,12 @@ import {
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
+import { computedProp } from "../../utils/computeProp";
 import { GlobalState } from "./types";
 
 export type UserDataProcessingState = {
   [key in keyof typeof UserDataProcessingChoiceEnum]: pot.Pot<
-    UserDataProcessing,
+    UserDataProcessing | undefined,
     Error
   >;
 };
@@ -34,13 +35,13 @@ const userDataProcessingReducer = (
     case getType(loadUserDataProcessing.request): {
       return {
         ...state,
-        [action.payload]: pot.toLoading(pot.none)
+        ...computedProp(action.payload, pot.toLoading(pot.none))
       };
     }
     case getType(loadUserDataProcessing.success): {
       return {
         ...state,
-        [action.payload.choice]: pot.some(action.payload.value)
+        ...computedProp(action.payload.choice, pot.some(action.payload.value))
       };
     }
 
@@ -49,31 +50,33 @@ const userDataProcessingReducer = (
     case getType(loadUserDataProcessing.failure):
       return {
         ...state,
-        [action.payload.choice]: pot.toError(
-          { ...state[action.payload.choice] },
-          action.payload.error
+        ...computedProp(
+          action.payload.choice,
+          pot.toError({ ...state[action.payload.choice] }, action.payload.error)
         )
       };
 
     case getType(deleteUserDataProcessing.request):
     case getType(upsertUserDataProcessing.request): {
-      const maybeValue = state[action.payload];
-      const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
+      const currentPot = state[action.payload];
+      const prevValue = pot.isSome(currentPot) ? currentPot.value : undefined;
+      const nextValue = pot.toUpdating(currentPot, prevValue);
+
       return {
         ...state,
-        [action.payload]: pot.toUpdating(state[action.payload], prevValue)
+        ...computedProp(action.payload, nextValue)
       };
     }
     case getType(upsertUserDataProcessing.success): {
       return {
         ...state,
-        [action.payload.choice]: pot.some(action.payload)
+        ...computedProp(action.payload.choice, pot.some(action.payload))
       };
     }
     case getType(resetUserDataProcessingRequest): {
       return {
         ...state,
-        [action.payload]: pot.none
+        ...computedProp(action.payload, pot.none)
       };
     }
 
