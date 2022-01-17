@@ -12,6 +12,16 @@ import { MvlBody } from "../MvlBody";
 describe("MvlBody", () => {
   jest.useFakeTimers();
 
+  describe("When the HTML is an empty string", () => {
+    it("Should render neither the `html` option nor the switch separator", async () => {
+      const { queryByText } = renderComponent({
+        body: { ...mvlMockBody, html: "" }
+      });
+      expect(queryByText(I18n.t("features.mvl.details.body.html"))).toBeNull();
+      expect(queryByText(" | ")).toBeNull();
+    });
+  });
+
   describe("When the component is rendered with a valid payload", () => {
     it("Should start with the plain text and render the selector", () => {
       const res = renderComponent({ body: mvlMockBody });
@@ -60,19 +70,9 @@ describe("MvlBody", () => {
   describe("When the component is rendered with an empty payload", () => {
     it("Should render only the selector without a plain body", () => {
       const res = renderComponent({ body: { plain: "", html: "" } });
-      plainStateSelector(res);
-    });
-    describe("And the user taps on 'html'", () => {
-      it("Should render only the selector without an html body", async () => {
-        const res = renderComponent({ body: { plain: "", html: "" } });
-        const html = res.queryByText(I18n.t("features.mvl.details.body.html"));
-        if (html !== null) {
-          await act(async () => fireEvent(html, "onPress"));
-          htmlStateSelector(res);
-        } else {
-          fail("html should be defined");
-        }
-      });
+      expect(
+        res.queryByText(I18n.t("features.mvl.details.body.plain"))
+      ).not.toBeNull();
     });
   });
 });

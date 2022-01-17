@@ -1,7 +1,7 @@
 import { View } from "native-base";
-import * as React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -47,7 +47,7 @@ const Content = (props: {
 };
 
 /**
- * The single element of the {@link Selector}, handling the enable and disable state
+ * The single element of the {@link Selector}, handling the enabled and disabled state
  * @param props
  * @constructor
  */
@@ -71,6 +71,7 @@ const SelectorItem = (props: {
  */
 const Selector = (props: {
   currentValue: RenderMode;
+  hasHtml: boolean;
   onValueChanged: (mode: RenderMode) => void;
 }) => (
   <View style={styles.row}>
@@ -79,14 +80,18 @@ const Selector = (props: {
       text={I18n.t("features.mvl.details.body.plain")}
       onPress={() => props.onValueChanged("plain")}
     />
-    <H4 weight={"Regular"} accessible={false}>
-      {" | "}
-    </H4>
-    <SelectorItem
-      currentSelected={props.currentValue === "html"}
-      text={I18n.t("features.mvl.details.body.html")}
-      onPress={() => props.onValueChanged("html")}
-    />
+    {props.hasHtml && (
+      <H4 weight={"Regular"} accessible={false}>
+        {" | "}
+      </H4>
+    )}
+    {props.hasHtml && (
+      <SelectorItem
+        currentSelected={props.currentValue === "html"}
+        text={I18n.t("features.mvl.details.body.html")}
+        onPress={() => props.onValueChanged("html")}
+      />
+    )}
   </View>
 );
 
@@ -103,7 +108,11 @@ export const MvlBody = (props: Props): React.ReactElement => {
     <>
       <Content mode={mode} body={props.body} />
       <View spacer={true} small={true} />
-      <Selector currentValue={mode} onValueChanged={setMode} />
+      <Selector
+        currentValue={mode}
+        onValueChanged={setMode}
+        hasHtml={NonEmptyString.is(props.body.html)}
+      />
     </>
   );
 };
