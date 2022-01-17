@@ -190,8 +190,8 @@ const CgnBucketCodeComponent = ({ discountId }: Props) => {
       <H3 accessible={true} accessibilityRole={"header"}>
         {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
       </H3>
-      <View spacer small/>
-      <CgnBucketCodeContent/>
+      <View spacer small />
+      <CgnBucketCodeContent />
     </View>
   );
 };
