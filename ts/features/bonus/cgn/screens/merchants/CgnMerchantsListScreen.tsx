@@ -135,7 +135,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {isReady(props.onlineMerchants) && isReady(props.offlineMerchants) ? (
+        {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
           <>
             <View style={[IOStyles.horizontalContentPadding]}>
               <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
