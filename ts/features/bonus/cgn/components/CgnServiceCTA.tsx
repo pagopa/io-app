@@ -1,6 +1,7 @@
 import * as React from "react";
+import { useEffect } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constNull } from "fp-ts/lib/function";
+import { Alert } from "react-native";
 import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
@@ -10,6 +11,11 @@ import { isServicePreferenceResponseSuccess } from "../../../../types/services/S
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
 import { cgnActivationStart } from "../store/actions/activation";
+import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import { isReady } from "../../bpd/model/RemoteValue";
+import { showToast } from "../../../../utils/showToast";
+import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
+import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
 
 type Props = {
   serviceId: ServiceId;
@@ -17,8 +23,17 @@ type Props = {
 const CgnServiceCTA = (props: Props) => {
   const dispatch = useIODispatch();
   const servicePreference = useIOSelector(servicePreferenceSelector);
+  const unsubsriptionStatus = useIOSelector(cgnUnsubscribeSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
+
+  useEffect(() => {
+    if (isReady(unsubsriptionStatus)) {
+      showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
+      dispatch(loadServicePreference.request(props.serviceId));
+    }
+  }, [unsubsriptionStatus]);
+
   if (
     !servicePreferenceValue ||
     servicePreferenceValue.id !== props.serviceId
@@ -30,9 +45,25 @@ const CgnServiceCTA = (props: Props) => {
     isServicePreferenceResponseSuccess(servicePreferenceValue) &&
     servicePreferenceValue.value.inbox;
 
+  const requestUnsubscription = () => {
+    Alert.alert(
+      I18n.t("bonus.cgn.activation.deactivate.alert.title"),
+      I18n.t("bonus.cgn.activation.deactivate.alert.message"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.deactivate"),
+          onPress: () => dispatch(cgnUnsubscribe.request())
+        }
+      ]
+    );
+  };
+
   return isServiceActive ? (
-    // TODO onPress handler will be implemented once the unsubscribe API will be published by backend repository
-    <ButtonDefaultOpacity block bordered danger onPress={constNull}>
+    <ButtonDefaultOpacity block bordered danger onPress={requestUnsubscription}>
       <Label color={"red"}>{I18n.t("bonus.cgn.cta.deactivateBonus")}</Label>
     </ButtonDefaultOpacity>
   ) : (
