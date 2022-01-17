@@ -43,11 +43,9 @@ import {
   WithCertificateHeaderData
 } from "../../types/EUCovidCertificate";
 import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
-import {
-  BaseEuCovidCertificateLayout,
-  Header
-} from "../BaseEuCovidCertificateLayout";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
+import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -250,10 +248,11 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
       }
     });
   };
+  const header = <EuCovidCertHeader {...props} />;
   return (
     <BaseEuCovidCertificateLayout
       testID={"EuCovidCertValidScreen"}
-      headerData={props.headerData}
+      header={header}
       content={
         <View
           collapsable={false}
@@ -263,9 +262,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           {/* add extra space (top,sides,bottom) and padding while capturing the screenshot */}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           {isCapturingScreenShoot && (
-            <View style={IOStyles.horizontalContentPadding}>
-              <Header headerData={props.headerData} />
-            </View>
+            <View style={IOStyles.horizontalContentPadding}>{header}</View>
           )}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           <EuCovidCertValidComponent

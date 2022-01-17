@@ -10,6 +10,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { WithCertificateHeaderData } from "../types/EUCovidCertificate";
+import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -45,7 +46,7 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
 const EuCovidCertRevokedScreen = (props: Props): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertRevokedScreen"}
-    headerData={props.headerData}
+    header={<EuCovidCertHeader {...props} />}
     content={<EuCovidCertRevokedContentComponent {...props} />}
   />
 );

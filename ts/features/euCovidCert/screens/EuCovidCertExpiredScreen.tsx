@@ -9,6 +9,7 @@ import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
+import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
 import { WithCertificateHeaderData } from "../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
@@ -51,8 +52,8 @@ const EuCovidCertExpiredContentComponent = (props: Props) => (
 const EuCovidCertExpiredScreen = (props: Props): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertExpiredScreen"}
-    headerData={props.headerData}
     content={<EuCovidCertExpiredContentComponent {...props} />}
+    header={<EuCovidCertHeader {...props} />}
   />
 );
 

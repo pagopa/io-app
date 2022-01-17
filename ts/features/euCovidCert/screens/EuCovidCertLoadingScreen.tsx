@@ -25,6 +25,8 @@ const euActivityIndicator = (
 const EuCovidCertLoadingScreen = (_: Props): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertLoadingScreen"}
+    /* don't show header during the loading phase since it could be replaced with the one with certificate data */
+    header={<></>}
     content={
       <View>
         <View spacer={true} extralarge={true} />
