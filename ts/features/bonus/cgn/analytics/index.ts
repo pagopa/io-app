@@ -44,6 +44,7 @@ const trackCgnAction =
       case getType(cgnSelectedMerchant.success):
       case getType(cgnGenerateOtp.request): // OTP Related Actions
       case getType(cgnGenerateOtp.success):
+      case getType(cgnCodeFromBucket.request): // Bucket Related Actions
       case getType(cgnEycaActivation.request): // EYCA Related Actions
       case getType(cgnEycaActivationStatusRequest):
       case getType(cgnEycaActivationCancel):
@@ -52,8 +53,6 @@ const trackCgnAction =
       case getType(cgnOfflineMerchants.success):
       case getType(cgnOnlineMerchants.success):
         return mp.track(action.type, { foundMerchants: action.payload.length });
-      case getType(cgnCodeFromBucket.request):
-        return mp.track(action.type, { discountID: action.payload });
       case getType(cgnCodeFromBucket.success):
         return mp.track(action.type, { status: action.payload.kind });
       case getType(cgnEycaStatus.success):
