@@ -9,7 +9,7 @@ import { H2 } from "../../../components/core/typography/H2";
 const styles = StyleSheet.create({
   row: { flexDirection: "row", justifyContent: "space-between" },
   column: { flexDirection: "column", flex: 1 },
-  euFlag: {
+  logo: {
     width: 84,
     height: 84
   }
@@ -30,7 +30,7 @@ export const EuCovidCertHeader = (props: WithCertificateHeaderData) => (
 
       <Image
         source={{ uri: props.headerData.logoUrl }}
-        style={styles.euFlag}
+        style={styles.logo}
         importantForAccessibility={"no"}
         accessibilityElementsHidden={true}
       />
