@@ -2913,7 +2913,7 @@ features:
         headerTitle: "Certificate Details"
         save: "Save details"
     revoked:
-      title: "This certificate is no longer valid"
+      title: "This certificate is not valid"
     expired:
       title: "This certificate has expired"
     ko:
