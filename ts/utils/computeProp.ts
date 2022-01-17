@@ -1,6 +1,7 @@
 /**
  * Create an object with the passed key and value, enforcing type safety.
- * This method should be _always_ used when dealing with dynamic object's keys.
+ * This method should _always_ be used when dealing with union type / enum
+ * dynamic object's keys.
  *
  * ```typescript
  * type CustomObject = {
@@ -19,8 +20,7 @@
  * }
  * ```
  *
- * Thanks to:
- * https://stackoverflow.com/questions/65182369/how-to-make-typescript-type-check-object-literals-with-dynamic-keys
+ * Thanks to: https://stackoverflow.com/a/65182957
  *
  */
 export function computedProp<K extends PropertyKey, V>(
