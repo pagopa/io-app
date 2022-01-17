@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { View } from "native-base";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
@@ -20,8 +20,8 @@ import { H3 } from "../../../../../../components/core/typography/H3";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { isDiscountBucketCodeResponseSuccess } from "../../../types/DiscountBucketCodeResponse";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import { InfoBox } from "../../../../../../components/box/InfoBox";
 
 type Props = {
   discountId: Discount["id"];
@@ -73,35 +73,35 @@ const CgnBucketCodeContent = ({
     []
   );
 
+  useEffect(() => {
+    if (isError(bucketResponse)) {
+      Alert.alert(
+        I18n.t(
+          "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
+        ),
+        I18n.t("bonus.cgn.otp.error"),
+        [
+          {
+            text: I18n.t("bonus.cgn.merchantDetail.bucket.alert.cta"),
+            onPress: requestBucketCode
+          }
+        ]
+      );
+    }
+  }, [bucketResponse]);
+
   if (isLoading(bucketResponse)) {
     return <ActivityIndicator />;
   }
 
   // we got an error no code is available
-  if (isError(bucketResponse)) {
-    return (
-      <TouchableWithoutFeedback
-        onPress={requestBucketCode}
-        accessible={true}
-        accessibilityRole={"button"}
-        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
-      >
-        <View>
-          <H4 weight={"Regular"} style={[IOStyles.flex]}>
-            {I18n.t("bonus.cgn.otp.error")}
-          </H4>
-
-          <Link>{I18n.t("global.buttons.retry")}</Link>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-
   if (isReady(bucketResponse) && bucketResponse.value.kind === "notFound") {
     return (
-      <H4 weight={"Regular"} style={[IOStyles.flex]}>
-        {I18n.t("bonus.cgn.merchantDetail.bucket.error.noCode")}
-      </H4>
+      <InfoBox iconColor={IOColors.aqua} iconName={"io-error"} iconSize={24}>
+        <H4 weight={"Regular"} style={[IOStyles.flex]}>
+          {I18n.t("bonus.cgn.merchantDetail.bucket.error.noCode")}
+        </H4>
+      </InfoBox>
     );
   }
 

@@ -2553,6 +2553,8 @@ bonus:
           byName: Alphabetical order
     merchantDetail:
       bucket:
+        alert:
+          cta: I got it!
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:

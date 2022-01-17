@@ -2581,6 +2581,8 @@ bonus:
           byName: Ordine alfabetico
     merchantDetail:
       bucket:
+        alert:
+          cta: Ho capito!
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
@@ -2676,7 +2678,7 @@ bonus:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
     otp:
-      error: "C'è stato un errore nell'ottenimento del codice sconto"
+      error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       screen:
         title: Usa codice sconto
         cta: Copia codice
