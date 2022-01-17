@@ -28,6 +28,7 @@ import {
   svVoucherListGet
 } from "../../features/bonus/siciliaVola/store/actions/voucherList";
 import { svGetPdfVoucher } from "../../features/bonus/siciliaVola/store/actions/voucherGeneration";
+import { computedProp } from "../../utils/computeProp";
 import { GlobalState } from "./types";
 
 /**
@@ -85,13 +86,13 @@ const reducer = (
   if (failure) {
     return {
       ...state,
-      [failure]: {
+      ...computedProp(failure, {
         lastUpdate: new Date(),
         attempts: Math.min(
           (state[failure]?.attempts ?? 0) + 1,
           backoffConfig().maxAttempts
         )
-      }
+      })
     };
   }
   const successIndex = successActionTypes().indexOf(action.type);
