@@ -58,13 +58,15 @@ const userDataProcessingReducer = (
 
     case getType(deleteUserDataProcessing.request):
     case getType(upsertUserDataProcessing.request): {
-      const currentPot = state[action.payload];
-      const prevValue = pot.isSome(currentPot) ? currentPot.value : undefined;
-      const nextValue = pot.toUpdating(currentPot, prevValue);
+      const maybeValue = state[action.payload];
+      const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
 
       return {
         ...state,
-        ...computedProp(action.payload, nextValue)
+        ...computedProp(
+          action.payload,
+          pot.toUpdating(state[action.payload], prevValue)
+        )
       };
     }
     case getType(upsertUserDataProcessing.success): {
