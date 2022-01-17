@@ -24,7 +24,7 @@ export type WithCertificateHeaderData = {
   headerData: {
     title: string;
     subTitle: string;
-    logoId: string;
+    logoUrl: string;
   };
 };
 

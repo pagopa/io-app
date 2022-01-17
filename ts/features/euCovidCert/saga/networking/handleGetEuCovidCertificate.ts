@@ -33,7 +33,7 @@ export const convertHeaderInfo = (
 ): EUCovidCertificate["headerData"] => ({
   title: headerInfo.title,
   subTitle: headerInfo.subtitle,
-  logoId: headerInfo.logo_id
+  logoUrl: headerInfo.logo_id
 });
 
 // convert a success response to the logical app representation of it

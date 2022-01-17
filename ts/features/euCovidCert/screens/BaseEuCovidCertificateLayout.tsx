@@ -34,7 +34,7 @@ export const Header = (props: WithCertificateHeaderData) => (
     <View style={styles.row}>
       <H1 style={IOStyles.flex}>{props.headerData.title}</H1>
       <Image
-        source={{ uri: props.headerData.logoId }}
+        source={{ uri: props.headerData.logoUrl }}
         style={styles.euFlag}
         importantForAccessibility={"no"}
         accessibilityElementsHidden={true}

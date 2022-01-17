@@ -264,7 +264,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           {isCapturingScreenShoot && (
             <View style={IOStyles.horizontalContentPadding}>
-              <Header headerData={props.validCertificate.headerData} />
+              <Header headerData={props.headerData} />
             </View>
           )}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
