@@ -3,15 +3,7 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  all,
-  call,
-  Effect,
-  put,
-  select,
-  take,
-  takeLatest
-} from "redux-saga/effects";
+import { all, call, Effect, put, select, take, takeLatest } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -45,16 +37,15 @@ import {
   fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
-import {
-  differentProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../store/actions/crossSessions";
+import { differentProfileLoggedIn, setProfileHashedFiscalCode } from "../store/actions/crossSessions";
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { isTestEnv } from "../utils/environment";
 import { deletePin } from "../utils/keychain";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { mixpanelTrack } from "../mixpanel";
 import { readablePrivacyReport } from "../utils/reporters";
+import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
+import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -344,6 +335,17 @@ function* handleLoadBonusBeforeRemoveAccount() {
     // Load the bonus data and no wait because if there are some bonus
     // they will be loaded individually
     yield put(loadAllBonusActivations.request());
+  }
+
+  const cgnActive: ReturnType<typeof cgnDetailSelector> = yield select(
+    cgnDetailSelector
+  );
+
+  if (pot.isNone(cgnActive)) {
+    // Load the bpd data and wait for a response
+    yield put(cgnDetails.request());
+
+    yield take([cgnDetails.success, cgnDetails.failure]);
   }
 }
 
