@@ -22,17 +22,21 @@ type Props = WithTestID<
 
 const styles = StyleSheet.create({
   row: { flexDirection: "row", justifyContent: "space-between" },
+  column: { flexDirection: "column", flex: 1 },
   euFlag: {
     width: 84,
-    height: 56,
-    flex: 0
+    height: 84
   }
 });
 
 export const Header = (props: WithCertificateHeaderData) => (
   <>
     <View style={styles.row}>
-      <H1 style={IOStyles.flex}>{props.headerData.title}</H1>
+      <View style={styles.column}>
+        <H1 style={IOStyles.flex}>{props.headerData.title}</H1>
+        <H2>{props.headerData.subTitle}</H2>
+      </View>
+
       <Image
         source={{ uri: props.headerData.logoUrl }}
         style={styles.euFlag}
@@ -40,7 +44,6 @@ export const Header = (props: WithCertificateHeaderData) => (
         accessibilityElementsHidden={true}
       />
     </View>
-    <H2>{props.headerData.subTitle}</H2>
   </>
 );
 

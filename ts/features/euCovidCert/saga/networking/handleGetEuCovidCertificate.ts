@@ -20,6 +20,7 @@ import {
 import { profileSelector } from "../../../../store/reducers/profile";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { HeaderInfo } from "../../../../../definitions/eu_covid_cert/HeaderInfo";
+import { contentRepoUrl } from "../../../../config";
 
 const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   400: "wrongFormat",
@@ -33,7 +34,7 @@ export const convertHeaderInfo = (
 ): EUCovidCertificate["headerData"] => ({
   title: headerInfo.title,
   subTitle: headerInfo.subtitle,
-  logoUrl: headerInfo.logo_id
+  logoUrl: `${contentRepoUrl}/logos/eucovidcert/${headerInfo.logo_id}.png`
 });
 
 // convert a success response to the logical app representation of it
