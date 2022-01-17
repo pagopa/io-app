@@ -9,8 +9,8 @@ import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
-import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 import { WithCertificateHeaderData } from "../types/EUCovidCertificate";
+import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
