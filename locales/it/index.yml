@@ -2936,7 +2936,7 @@ features:
         headerTitle: "Dettagli del certificato"
         save: "Salva i dettagli"
     revoked:
-      title: "Questo certificato \nnon è più valido"
+      title: "Questo certificato \nnon è valido"
     expired:
       title: "Questo certificato è scaduto"
     ko:
