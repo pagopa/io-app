@@ -45,7 +45,6 @@ const CgnBucketCodeContent = () => {
   const [isCodeVisible, setIsCodeVisible] = React.useState(false);
   const [isTap, setIsTap] = React.useState(false);
   const timerRetry = useRef<number | undefined>(undefined);
-  const isFirstRender = useRef<boolean>(true);
 
   const bucketResponse = useIOSelector(cgnBucketSelector);
 
@@ -70,34 +69,53 @@ const CgnBucketCodeContent = () => {
     []
   );
 
-  useEffect(() => {
-    if (isError(bucketResponse) && !isFirstRender.current) {
-      Alert.alert(
-        I18n.t(
-          "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
-        ),
-        I18n.t("bonus.cgn.otp.error"),
-        [
-          {
-            text: I18n.t("bonus.cgn.merchantDetail.bucket.alert.cta"),
-            style: "cancel"
-          }
-        ]
-      );
-    }
-
-    // eslint-disable-next-line functional/immutable-data
-    isFirstRender.current = false;
-  }, [bucketResponse]);
+  const showAlertError = () =>
+    Alert.alert(
+      I18n.t(
+        "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
+      ),
+      I18n.t("bonus.cgn.otp.error"),
+      [
+        {
+          text: I18n.t("bonus.cgn.merchantDetail.bucket.alert.cta"),
+          style: "cancel"
+        }
+      ]
+    );
 
   if (isLoading(bucketResponse)) {
     return <ActivityIndicator />;
   }
 
   if (isError(bucketResponse)) {
-    return null;
+    return (
+      <TouchableWithoutFeedback
+        onPress={showAlertError}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+      >
+        <View style={[styles.row, styles.codeContainer]}>
+          <BaseTypography
+            weight={"Bold"}
+            color={"bluegreyDark"}
+            font={"RobotoMono"}
+            style={styles.codeText}
+          >
+            {"••••••••••"}
+          </BaseTypography>
+
+          <Eye
+            width={COPY_ICON_SIZE}
+            height={COPY_ICON_SIZE}
+            fill={IOColors.blue}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    );
   }
 
+  // we got an error no code is available
   if (isReady(bucketResponse) && bucketResponse.value.kind === "notFound") {
     return (
       <>
@@ -118,53 +136,46 @@ const CgnBucketCodeContent = () => {
       </>
     );
   }
-  // we got an error no code is available
 
   return (
-    <>
-      <H3 accessible={true} accessibilityRole={"header"}>
-        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
-      </H3>
-      <View spacer small />
-      <TouchableWithoutFeedback
-        onPress={isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)}
-        accessible={true}
-        accessibilityRole={"button"}
-        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
-      >
-        <View style={[styles.row, styles.codeContainer]}>
-          <BaseTypography
-            weight={"Bold"}
-            color={"bluegreyDark"}
-            font={"RobotoMono"}
-            style={styles.codeText}
-          >
-            {isCodeVisible &&
-            isReady(bucketResponse) &&
-            isDiscountBucketCodeResponseSuccess(bucketResponse.value)
-              ? addEvery(bucketResponse.value.value.code, " ", 3)
-              : "••••••••••"}
-          </BaseTypography>
-
+    <TouchableWithoutFeedback
+      onPress={isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)}
+      accessible={true}
+      accessibilityRole={"button"}
+      accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+    >
+      <View style={[styles.row, styles.codeContainer]}>
+        <BaseTypography
+          weight={"Bold"}
+          color={"bluegreyDark"}
+          font={"RobotoMono"}
+          style={styles.codeText}
+        >
           {isCodeVisible &&
           isReady(bucketResponse) &&
-          isDiscountBucketCodeResponseSuccess(bucketResponse.value) ? (
-            <IconFont
-              name={isTap ? "io-complete" : "io-copy"}
-              size={COPY_ICON_SIZE}
-              color={IOColors.blue}
-              style={styles.flexEnd}
-            />
-          ) : (
-            <Eye
-              width={COPY_ICON_SIZE}
-              height={COPY_ICON_SIZE}
-              fill={IOColors.blue}
-            />
-          )}
-        </View>
-      </TouchableWithoutFeedback>
-    </>
+          isDiscountBucketCodeResponseSuccess(bucketResponse.value)
+            ? addEvery(bucketResponse.value.value.code, " ", 3)
+            : "••••••••••"}
+        </BaseTypography>
+
+        {isCodeVisible &&
+        isReady(bucketResponse) &&
+        isDiscountBucketCodeResponseSuccess(bucketResponse.value) ? (
+          <IconFont
+            name={isTap ? "io-complete" : "io-copy"}
+            size={COPY_ICON_SIZE}
+            color={IOColors.blue}
+            style={styles.flexEnd}
+          />
+        ) : (
+          <Eye
+            width={COPY_ICON_SIZE}
+            height={COPY_ICON_SIZE}
+            fill={IOColors.blue}
+          />
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 const CgnBucketCodeComponent = ({ discountId }: Props) => {
@@ -176,7 +187,11 @@ const CgnBucketCodeComponent = ({ discountId }: Props) => {
 
   return (
     <View testID={"bucket-code-component"}>
-      <CgnBucketCodeContent />
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+      </H3>
+      <View spacer small/>
+      <CgnBucketCodeContent/>
     </View>
   );
 };
