@@ -2678,7 +2678,7 @@ bonus:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
     otp:
-      error: "Due to a technical problem we were unable to generate a discount code. Please try again."
+      error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
       screen:
         title: Usa codice sconto
         cta: Copia codice

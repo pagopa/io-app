@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { View } from "native-base";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Alert, StyleSheet } from "react-native";
@@ -41,14 +41,11 @@ const styles = StyleSheet.create({
 const COPY_ICON_SIZE = 24;
 const FEEDBACK_TIMEOUT = 3000 as Millisecond;
 
-const CgnBucketCodeContent = ({
-  requestBucketCode
-}: {
-  requestBucketCode: () => void;
-}) => {
+const CgnBucketCodeContent = () => {
   const [isCodeVisible, setIsCodeVisible] = React.useState(false);
   const [isTap, setIsTap] = React.useState(false);
-  const timerRetry = React.useRef<number | undefined>(undefined);
+  const timerRetry = useRef<number | undefined>(undefined);
+  const isFirstRender = useRef<boolean>(true);
 
   const bucketResponse = useIOSelector(cgnBucketSelector);
 
@@ -74,7 +71,7 @@ const CgnBucketCodeContent = ({
   );
 
   useEffect(() => {
-    if (isError(bucketResponse)) {
+    if (isError(bucketResponse) && !isFirstRender.current) {
       Alert.alert(
         I18n.t(
           "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
@@ -83,30 +80,52 @@ const CgnBucketCodeContent = ({
         [
           {
             text: I18n.t("bonus.cgn.merchantDetail.bucket.alert.cta"),
-            onPress: requestBucketCode
+            style: "cancel"
           }
         ]
       );
     }
+
+    // eslint-disable-next-line functional/immutable-data
+    isFirstRender.current = false;
   }, [bucketResponse]);
 
   if (isLoading(bucketResponse)) {
     return <ActivityIndicator />;
   }
 
-  // we got an error no code is available
+  if (isError(bucketResponse)) {
+    return null;
+  }
+
   if (isReady(bucketResponse) && bucketResponse.value.kind === "notFound") {
     return (
-      <InfoBox iconColor={IOColors.aqua} iconName={"io-error"} iconSize={24}>
-        <H4 weight={"Regular"} style={[IOStyles.flex]}>
-          {I18n.t("bonus.cgn.merchantDetail.bucket.error.noCode")}
-        </H4>
-      </InfoBox>
+      <>
+        <H3 accessible={true} accessibilityRole={"header"}>
+          {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+        </H3>
+        <View spacer small />
+        <InfoBox
+          iconColor={IOColors.aqua}
+          iconName={"io-error"}
+          iconSize={24}
+          alignedCentral
+        >
+          <H4 weight={"Regular"} style={[IOStyles.flex]}>
+            {I18n.t("bonus.cgn.merchantDetail.bucket.error.noCode")}
+          </H4>
+        </InfoBox>
+      </>
     );
   }
+  // we got an error no code is available
 
   return (
     <>
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+      </H3>
+      <View spacer small />
       <TouchableWithoutFeedback
         onPress={isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)}
         accessible={true}
@@ -151,19 +170,13 @@ const CgnBucketCodeContent = ({
 const CgnBucketCodeComponent = ({ discountId }: Props) => {
   const dispatch = useIODispatch();
 
-  const requestBucketCode = () =>
-    dispatch(cgnCodeFromBucket.request(discountId));
-
   useEffect(() => {
     dispatch(cgnCodeFromBucket.request(discountId));
   }, []);
 
   return (
     <View testID={"bucket-code-component"}>
-      <H3 accessible={true} accessibilityRole={"header"}>
-        {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
-      </H3>
-      <CgnBucketCodeContent requestBucketCode={requestBucketCode} />
+      <CgnBucketCodeContent />
     </View>
   );
 };
