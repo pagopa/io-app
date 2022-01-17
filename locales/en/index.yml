@@ -2551,6 +2551,9 @@ bonus:
           byDistance: By proximity to your location
           byName: Alphabetical order
     merchantDetail:
+      bucket:
+        error:
+          noCode: Codes for this discount are temporary over, please try again later
       title:
         deals: Discounts
         description: Description
@@ -2644,6 +2647,7 @@ bonus:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
     otp:
+      error: "An error occurred while requesting the discount code"
       screen:
         title: Use discount code
         cta: Copy code
@@ -2903,7 +2907,7 @@ features:
         headerTitle: "Certificate Details"
         save: "Save details"
     revoked:
-      title: "This certificate is no longer valid"
+      title: "This certificate is not valid"
     expired:
       title: "This certificate has expired"
     ko:

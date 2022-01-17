@@ -21,13 +21,27 @@ export function* cgnBucketConsuption(
     if (discountBucketCodeResult.isRight()) {
       if (discountBucketCodeResult.value.status === 200) {
         yield put(
-          cgnCodeFromBucket.success(discountBucketCodeResult.value.value)
+          cgnCodeFromBucket.success({
+            kind: "success",
+            value: discountBucketCodeResult.value.value
+          })
+        );
+        return;
+      }
+      if (discountBucketCodeResult.value.status === 404) {
+        yield put(
+          cgnCodeFromBucket.success({
+            kind: "notFound"
+          })
         );
         return;
       } else {
-        throw new Error(
-          `response status ${discountBucketCodeResult.value.status}`
+        yield put(
+          cgnCodeFromBucket.success({
+            kind: "unhandled"
+          })
         );
+        return;
       }
     }
 

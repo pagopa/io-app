@@ -2579,6 +2579,9 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
+      bucket:
+        error:
+          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Offerte
         description: Descrizione
@@ -2672,6 +2675,7 @@ bonus:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
     otp:
+      error: "C'è stato un errore nell'ottenimento del codice sconto"
       screen:
         title: Usa codice sconto
         cta: Copia codice
@@ -2931,7 +2935,7 @@ features:
         headerTitle: "Dettagli del certificato"
         save: "Salva i dettagli"
     revoked:
-      title: "Questo certificato \nnon è più valido"
+      title: "Questo certificato \nnon è valido"
     expired:
       title: "Questo certificato è scaduto"
     ko:
