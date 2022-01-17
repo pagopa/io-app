@@ -7,7 +7,7 @@ import {
 const headerData = {
   title: "title",
   subTitle: "sub title",
-  logoId: "logoId"
+  logoUrl: "logoUrl"
 };
 export const revokedCertificate: RevokedCertificate = {
   id: "id" as EUCovidCertificateId,
