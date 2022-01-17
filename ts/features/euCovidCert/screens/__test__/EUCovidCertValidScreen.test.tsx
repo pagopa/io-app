@@ -109,7 +109,12 @@ describe("Test EUCovidCertificateValidScreen", () => {
 
 const renderComponent = (store: Store, validCertificate: ValidCertificate) => ({
   component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    () => <EuCovidCertValidScreen validCertificate={validCertificate} />,
+    () => (
+      <EuCovidCertValidScreen
+        validCertificate={validCertificate}
+        headerData={validCertificate.headerData}
+      />
+    ),
     EUCOVIDCERT_ROUTES.CERTIFICATE,
     {},
     store

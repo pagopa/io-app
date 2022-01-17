@@ -38,7 +38,10 @@ import {
   navigateToEuCovidCertificateMarkdownDetailsScreen,
   navigateToEuCovidCertificateQrCodeFullScreen
 } from "../../navigation/actions";
-import { ValidCertificate } from "../../types/EUCovidCertificate";
+import {
+  ValidCertificate,
+  WithCertificateHeaderData
+} from "../../types/EUCovidCertificate";
 import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
 import {
   BaseEuCovidCertificateLayout,
@@ -48,7 +51,7 @@ import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
-};
+} & WithCertificateHeaderData;
 
 const styles = StyleSheet.create({
   qrCode: {
@@ -250,6 +253,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
   return (
     <BaseEuCovidCertificateLayout
       testID={"EuCovidCertValidScreen"}
+      headerData={props.headerData}
       content={
         <View
           collapsable={false}
@@ -260,7 +264,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           {isCapturingScreenShoot && (
             <View style={IOStyles.horizontalContentPadding}>
-              <Header />
+              <Header headerData={props.validCertificate.headerData} />
             </View>
           )}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}

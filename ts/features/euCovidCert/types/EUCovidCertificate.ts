@@ -20,23 +20,34 @@ type QRCode = {
   content: string;
 };
 
-export type ValidCertificate = WithEUCovidCertificateId & {
-  kind: "valid";
-  qrCode: QRCode;
-  markdownInfo?: string;
-  markdownDetails?: string;
+export type WithCertificateHeaderData = {
+  headerData: {
+    title: string;
+    subTitle: string;
+    logoId: string;
+  };
 };
 
-export type RevokedCertificate = WithEUCovidCertificateId & {
-  kind: "revoked";
-  markdownInfo?: string;
-  revokedOn?: Date;
-};
+export type ValidCertificate = WithEUCovidCertificateId &
+  WithCertificateHeaderData & {
+    kind: "valid";
+    qrCode: QRCode;
+    markdownInfo?: string;
+    markdownDetails?: string;
+  };
 
-type ExpiredCertificate = WithEUCovidCertificateId & {
-  kind: "expired";
-  markdownInfo?: string;
-};
+export type RevokedCertificate = WithEUCovidCertificateId &
+  WithCertificateHeaderData & {
+    kind: "revoked";
+    markdownInfo?: string;
+    revokedOn?: Date;
+  };
+
+type ExpiredCertificate = WithEUCovidCertificateId &
+  WithCertificateHeaderData & {
+    kind: "expired";
+    markdownInfo?: string;
+  };
 
 /**
  * This type represents the EU Covid Certificate with the different states & data
