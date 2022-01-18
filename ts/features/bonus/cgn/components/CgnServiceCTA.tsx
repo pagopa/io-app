@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Alert } from "react-native";
 import { Label } from "../../../../components/core/typography/Label";
@@ -21,6 +21,7 @@ type Props = {
   serviceId: ServiceId;
 };
 const CgnServiceCTA = (props: Props) => {
+  const isFirstRender = useRef<boolean>(true);
   const dispatch = useIODispatch();
   const servicePreference = useIOSelector(servicePreferenceSelector);
   const unsubsriptionStatus = useIOSelector(cgnUnsubscribeSelector);
@@ -28,10 +29,12 @@ const CgnServiceCTA = (props: Props) => {
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
 
   useEffect(() => {
-    if (isReady(unsubsriptionStatus)) {
+    if (isReady(unsubsriptionStatus) && !isFirstRender.current) {
       showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
       dispatch(loadServicePreference.request(props.serviceId));
     }
+    // eslint-disable-next-line functional/immutable-data
+    isFirstRender.current = false;
   }, [unsubsriptionStatus]);
 
   if (

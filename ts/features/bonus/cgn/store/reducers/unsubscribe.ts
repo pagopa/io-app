@@ -11,6 +11,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { cgnUnsubscribe } from "../actions/unsubscribe";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { cgnDetails } from "../actions/details";
+import { cgnActivationComplete } from "../actions/activation";
 
 export type CgnUnsubscribeState = RemoteValue<true, NetworkError>;
 /**
@@ -29,7 +30,8 @@ const reducer = (
       return remoteReady(true);
     case getType(cgnUnsubscribe.failure):
       return remoteError(action.payload);
-    case getType(cgnDetails.success):
+    case getType(cgnDetails.request):
+    case getType(cgnActivationComplete):
       return remoteUndefined;
   }
   return state;

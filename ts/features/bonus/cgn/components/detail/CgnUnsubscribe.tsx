@@ -10,6 +10,7 @@ import { cgnUnsubscribe } from "../../store/actions/unsubscribe";
 import { isReady } from "../../../bpd/model/RemoteValue";
 import { showToast } from "../../../../../utils/showToast";
 import { navigateBack } from "../../../../../store/actions/navigation";
+import { cgnDetails } from "../../store/actions/details";
 
 const CgnUnsubscribe = () => {
   const dispatch = useIODispatch();
@@ -35,6 +36,7 @@ const CgnUnsubscribe = () => {
   useEffect(() => {
     if (isReady(unsubsriptionStatus)) {
       navigateBack();
+      dispatch(cgnDetails.request());
       showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
     }
   }, [unsubsriptionStatus]);
