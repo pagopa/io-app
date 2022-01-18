@@ -2,7 +2,10 @@ import { call, put } from "redux-saga/effects";
 import { cgnUnsubscribe } from "../../../store/actions/unsubscribe";
 import { BackendCGN } from "../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getGenericError, getNetworkError } from "../../../../../../utils/errors";
+import {
+  getGenericError,
+  getNetworkError
+} from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters"; // handle the request for CGN unsubscription
 
 // handle the request for CGN unsubscription
