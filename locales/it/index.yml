@@ -1434,7 +1434,7 @@ wallet:
   missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
   missingDataText:
-    body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online. Puoi però aggiungerla ai fini del Cashback, se la tua banca è supportata.
+    body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online.
     cta: Cerca le tue carte
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
