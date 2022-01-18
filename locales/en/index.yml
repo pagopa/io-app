@@ -1413,7 +1413,7 @@ wallet:
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
-    body: If you can't find the security code, it's likely your card doesn't support online payments. However, you can add it for Cashback purposes, if your bank is supported.
+    body: If you can't find the security code, it's likely your card doesn't support online payments.
     cta: "Search your cards"
   chooseMethod: Select the desired method
   QRtoPay:
