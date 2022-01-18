@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { View } from "native-base";
-import { WithCertificateHeaderData } from "../types/EUCovidCertificate";
+import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { H1 } from "../../../components/core/typography/H1";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H2 } from "../../../components/core/typography/H2";
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const EuCovidCertHeader = (props: WithCertificateHeaderData) => (
+export const EuCovidCertHeader = (props: WithEUCovidCertificateHeaderData) => (
   <>
     <View style={styles.row}>
       <View style={styles.column}>

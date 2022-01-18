@@ -40,7 +40,7 @@ import {
 } from "../../navigation/actions";
 import {
   ValidCertificate,
-  WithCertificateHeaderData
+  WithEUCovidCertificateHeaderData
 } from "../../types/EUCovidCertificate";
 import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
@@ -49,7 +49,7 @@ import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
-} & WithCertificateHeaderData;
+} & WithEUCovidCertificateHeaderData;
 
 const styles = StyleSheet.create({
   qrCode: {

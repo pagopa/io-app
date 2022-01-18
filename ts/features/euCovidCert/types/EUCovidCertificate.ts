@@ -20,7 +20,7 @@ type QRCode = {
   content: string;
 };
 
-export type WithCertificateHeaderData = {
+export type WithEUCovidCertificateHeaderData = {
   headerData: {
     title: string;
     subTitle: string;
@@ -29,7 +29,7 @@ export type WithCertificateHeaderData = {
 };
 
 export type ValidCertificate = WithEUCovidCertificateId &
-  WithCertificateHeaderData & {
+  WithEUCovidCertificateHeaderData & {
     kind: "valid";
     qrCode: QRCode;
     markdownInfo?: string;
@@ -37,14 +37,14 @@ export type ValidCertificate = WithEUCovidCertificateId &
   };
 
 export type RevokedCertificate = WithEUCovidCertificateId &
-  WithCertificateHeaderData & {
+  WithEUCovidCertificateHeaderData & {
     kind: "revoked";
     markdownInfo?: string;
     revokedOn?: Date;
   };
 
 type ExpiredCertificate = WithEUCovidCertificateId &
-  WithCertificateHeaderData & {
+  WithEUCovidCertificateHeaderData & {
     kind: "expired";
     markdownInfo?: string;
   };

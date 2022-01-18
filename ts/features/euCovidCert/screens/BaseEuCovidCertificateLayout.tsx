@@ -39,7 +39,8 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
           style={[IOStyles.horizontalContentPadding]}
           testID={props.testID}
         >
-          {/* if the header is not defined put an empty header to act as a spacer (design directions) */}
+          {/* if the header is not defined put an empty header that works as a spacer
+          (design directions, to avoid content too close with the top of the screen) */}
           {props.header ?? <View style={styles.emptyHeader} />}
           {props.content}
         </ScrollView>

@@ -10,13 +10,13 @@ import { GlobalState } from "../../../store/reducers/types";
 import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
-import { WithCertificateHeaderData } from "../types/EUCovidCertificate";
+import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
     expiredInfo?: string;
-  } & WithCertificateHeaderData;
+  } & WithEUCovidCertificateHeaderData;
 
 const EuCovidCertExpiredContentComponent = (props: Props) => (
   <>
