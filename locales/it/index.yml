@@ -391,8 +391,7 @@ profile:
             cta: "Perché?"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati e, ove possibile, li "
-              two: "pseudonimizziamo"
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati"
             cta: "Scopri di più"
           gdpr:
             description:
@@ -1435,7 +1434,7 @@ wallet:
   missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
   missingDataText:
-    body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online. Puoi però aggiungerla ai fini del Cashback, se la tua banca è supportata.
+    body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online.
     cta: Cerca le tue carte
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
@@ -2580,6 +2579,11 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
+      bucket:
+        alert:
+          cta: Ho capito!
+        error:
+          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Offerte
         description: Descrizione
@@ -2673,6 +2677,7 @@ bonus:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
     otp:
+      error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
       screen:
         title: Usa codice sconto
         cta: Copia codice
@@ -2932,7 +2937,7 @@ features:
         headerTitle: "Dettagli del certificato"
         save: "Salva i dettagli"
     revoked:
-      title: "Questo certificato \nnon è più valido"
+      title: "Questo certificato \nnon è valido"
     expired:
       title: "Questo certificato è scaduto"
     ko:

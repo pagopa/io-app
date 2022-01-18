@@ -391,8 +391,7 @@ profile:
             cta: "Why?"
           security:
             description:
-              one: "We take security measures to protect your data and "
-              two: "pseudonymise it where possible"
+              one: "We take security measures to protect your data"
             cta: "Learn more"
           gdpr:
             description:
@@ -1413,7 +1412,7 @@ wallet:
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
-    body: If you can't find the security code, it's likely your card doesn't support online payments. However, you can add it for Cashback purposes, if your bank is supported.
+    body: If you can't find the security code, it's likely your card doesn't support online payments.
     cta: "Search your cards"
   chooseMethod: Select the desired method
   QRtoPay:
@@ -2552,6 +2551,11 @@ bonus:
           byDistance: By proximity to your location
           byName: Alphabetical order
     merchantDetail:
+      bucket:
+        alert:
+          cta: I got it!
+        error:
+          noCode: Codes for this discount are temporary over, please try again later
       title:
         deals: Discounts
         description: Description
@@ -2645,6 +2649,7 @@ bonus:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
     otp:
+      error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       screen:
         title: Use discount code
         cta: Copy code
@@ -2904,7 +2909,7 @@ features:
         headerTitle: "Certificate Details"
         save: "Save details"
     revoked:
-      title: "This certificate is no longer valid"
+      title: "This certificate is not valid"
     expired:
       title: "This certificate has expired"
     ko:

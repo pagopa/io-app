@@ -132,38 +132,38 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     spacer={true}
     style={Object {}}
   />
-  <Text
-    accessibilityRole="header"
-    accessible={true}
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 18,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 18,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "600",
-        },
-      ]
-    }
-    weight="SemiBold"
-    weightColorFactory={[Function]}
-  >
-    Discount code
-  </Text>
   <View
     style={Object {}}
     testID="otp-code-component"
   >
+    <Text
+      accessibilityRole="header"
+      accessible={true}
+      color="bluegreyDark"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 18,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 18,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+      weightColorFactory={[Function]}
+    >
+      Discount code
+    </Text>
     <View
       accessibilityHint="By pressing the item you will copy the code"
       accessibilityRole="button"
@@ -356,38 +356,43 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
     spacer={true}
     style={Object {}}
   />
-  <Text
-    accessibilityRole="header"
-    accessible={true}
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 18,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 18,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "600",
-        },
-      ]
-    }
-    weight="SemiBold"
-    weightColorFactory={[Function]}
-  >
-    Discount code
-  </Text>
   <View
     style={Object {}}
     testID="bucket-code-component"
   >
+    <Text
+      accessibilityRole="header"
+      accessible={true}
+      color="bluegreyDark"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 18,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 18,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+      weightColorFactory={[Function]}
+    >
+      Discount code
+    </Text>
+    <View
+      small={true}
+      spacer={true}
+      style={Object {}}
+    />
     <View
       accessibilityHint="By pressing the item you will copy the code"
       accessibilityRole="button"
