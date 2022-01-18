@@ -1,7 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { constNull } from "fp-ts/lib/function";
 import {
   cgnActivationStart,
   cgnRequestActivation
@@ -96,12 +95,11 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     backendCGN.generateOtp
   );
 
-  // CGN Otp generation
+  // CGN Unsubscription
   yield takeLatest(
     getType(cgnUnsubscribe.request),
     cgnUnsubscriptionHandler,
-    // FIXME Replace once the default client is available
-    constNull
+    backendCGN.startCgnUnsubscription
   );
 
   // CGN Offline Merchants
