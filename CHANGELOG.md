@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0-rc.0](https://github.com/pagopa/io-app/compare/2.0.0-rc.0...2.1.0-rc.0) (2022-01-18)
+
+
+### Features
+
+* **EU Covid Certificate:** [[IAGP-69](https://pagopa.atlassian.net/browse/IAGP-69)] Update revoked body text ([#3657](https://github.com/pagopa/io-app/issues/3657)) ([49b30ca](https://github.com/pagopa/io-app/commit/49b30ca06ebceb7f279a852621cffec32e041b8f))
+* [[IA-399](https://pagopa.atlassian.net/browse/IA-399)] Fixes the accessibility labels for the PIN icon buttons ([#3645](https://github.com/pagopa/io-app/issues/3645)) ([56e073c](https://github.com/pagopa/io-app/commit/56e073cf57d6704afccc1de92734fda02978a8e7))
+
+
+### Bug Fixes
+
+* [[IA-430](https://pagopa.atlassian.net/browse/IA-430)] When the CIE PIN is wrong or the user goes back, the CIE PIN can't be set again ([#3632](https://github.com/pagopa/io-app/issues/3632)) ([9e488e8](https://github.com/pagopa/io-app/commit/9e488e8d211df7964bd3bb625ac999ac34e9d24b))
+* [[IA-621](https://pagopa.atlassian.net/browse/IA-621)] Remove cashback references from "Insert credit card data -> Are you missing some data?" bottom sheet copy ([#3665](https://github.com/pagopa/io-app/issues/3665)) ([b3326e6](https://github.com/pagopa/io-app/commit/b3326e681f5bae6e83b517cb970943f9733430b4))
+* [[IA-630](https://pagopa.atlassian.net/browse/IA-630)] Profile birthdate is formatted considering the device locale ([#3653](https://github.com/pagopa/io-app/issues/3653)) ([f02f1d0](https://github.com/pagopa/io-app/commit/f02f1d011d059eb21e02d76bee5b8e4945dd54b2))
+* **Carta Giovani Nazionale:** [[IOACGN-16](https://pagopa.atlassian.net/browse/IOACGN-16)] Fixes cropped icons on android ([#3644](https://github.com/pagopa/io-app/issues/3644)) ([0924347](https://github.com/pagopa/io-app/commit/0924347e5d4ebdc47b51decc69a1ca1953d3cccd))
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[IOACGN-22](https://pagopa.atlassian.net/browse/IOACGN-22)] Properly handles networking errors on UI ([#3652](https://github.com/pagopa/io-app/issues/3652)) ([a0439a1](https://github.com/pagopa/io-app/commit/a0439a1eb117bbe634aa3ee537fde116f37a61df))
+* [[IA-493](https://pagopa.atlassian.net/browse/IA-493)] Update privacy/share data copy and link ([#3655](https://github.com/pagopa/io-app/issues/3655)) ([cdc167d](https://github.com/pagopa/io-app/commit/cdc167d4037b9a8b09a1798cc27d5f466f5f4168))
+* **Carta Giovani Nazionale:** [[IOACGN-12](https://pagopa.atlassian.net/browse/IOACGN-12)] Introduces API to load a discount code from a bucket for cgn merchants ([#3651](https://github.com/pagopa/io-app/issues/3651)) ([b4b7491](https://github.com/pagopa/io-app/commit/b4b7491b2b9f252dd6ff315f14eab96789c7113b))
+* **Carta Giovani Nazionale:** [[IOACGN-17](https://pagopa.atlassian.net/browse/IOACGN-17)] Moves CGN FF on remote ([#3648](https://github.com/pagopa/io-app/issues/3648)) ([48c2dfb](https://github.com/pagopa/io-app/commit/48c2dfb999a6c9a4b642d49823e3599e7d1c472c))
+* **Carta Giovani Nazionale:** [[IOACGN-18](https://pagopa.atlassian.net/browse/IOACGN-18)] Integrate tracking for missing CGN Actions ([#3660](https://github.com/pagopa/io-app/issues/3660)) ([462311f](https://github.com/pagopa/io-app/commit/462311fa2ef7546a4aee407e5965a26e867813bc))
+* **Carta Giovani Nazionale:** [[IOACGN-21](https://pagopa.atlassian.net/browse/IOACGN-21)] Implements error handling on bucket code visualization ([#3654](https://github.com/pagopa/io-app/issues/3654)) ([6b2d28f](https://github.com/pagopa/io-app/commit/6b2d28f8e9060b8fea6d931a9b9bca575b77cd52))
+* **Carta Giovani Nazionale:** [[IOACGN-26](https://pagopa.atlassian.net/browse/IOACGN-26)] Updates CGN merchants API path ([#3664](https://github.com/pagopa/io-app/issues/3664)) ([1b6ee47](https://github.com/pagopa/io-app/commit/1b6ee47ba7acca95e9c86155bd04125d901ebe63))
+* **Carta Giovani Nazionale:** [[IOACGN-7](https://pagopa.atlassian.net/browse/IOACGN-7)] Implements CGN Special Service CTA ([#3639](https://github.com/pagopa/io-app/issues/3639)) ([f7025a6](https://github.com/pagopa/io-app/commit/f7025a668e759bfc044f0423415a4df5f71f6c7a))
+* **deps:** bump shelljs from 0.8.4 to 0.8.5 ([#3658](https://github.com/pagopa/io-app/issues/3658)) ([a623fb8](https://github.com/pagopa/io-app/commit/a623fb8759eb7564f2ab65c89aba1813a550b31e))
+* [[IA-608](https://pagopa.atlassian.net/browse/IA-608)] Revert Activate FF and comment Android release out ([#3627](https://github.com/pagopa/io-app/issues/3627)) ([8dd0b14](https://github.com/pagopa/io-app/commit/8dd0b14eeb82240804ec0579516f73bb53cc25a7))
+* [[IA-618](https://pagopa.atlassian.net/browse/IA-618)] Added no-duplicate-imports eslint rule ([#3646](https://github.com/pagopa/io-app/issues/3646)) ([8d2ffac](https://github.com/pagopa/io-app/commit/8d2ffac32fadce8df19063287a2cf83b9825ad3a))
+* [[IA-620](https://pagopa.atlassian.net/browse/IA-620)] Improve SPID/CIE url data extraction ([#3642](https://github.com/pagopa/io-app/issues/3642)) ([1d490f6](https://github.com/pagopa/io-app/commit/1d490f696c9b1028e9856927c3447a4e60b28530))
+* [[IA-625](https://pagopa.atlassian.net/browse/IA-625)] Add app version tag ([#3647](https://github.com/pagopa/io-app/issues/3647)) ([fe40b87](https://github.com/pagopa/io-app/commit/fe40b87970e5ceff8de97b8e2444c1db25ba0312))
+* [[IA-627](https://pagopa.atlassian.net/browse/IA-627)] Integrate Zendesk analytics ([#3649](https://github.com/pagopa/io-app/issues/3649)) ([8e23b2a](https://github.com/pagopa/io-app/commit/8e23b2aca02f8aed1deef2eedd1fc24e9f2e0810))
+* [[IAI-106](https://pagopa.atlassian.net/browse/IAI-106)] Upgrade ESLint toolchain ([#3650](https://github.com/pagopa/io-app/issues/3650)) ([844335b](https://github.com/pagopa/io-app/commit/844335b6265f6e80f02227b402924dca3cf435f7))
+
 ## [2.0.0-rc.0](https://github.com/pagopa/io-app/compare/1.38.0-rc.12...2.0.0-rc.0) (2022-01-11)
 
 
