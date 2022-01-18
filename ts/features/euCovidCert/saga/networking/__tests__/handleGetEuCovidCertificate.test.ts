@@ -2,10 +2,7 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { Certificate } from "../../../../../../definitions/eu_covid_cert/Certificate";
-import {
-  convertHeaderInfo,
-  handleGetEuCovidCertificate
-} from "../handleGetEuCovidCertificate";
+import { handleGetEuCovidCertificate } from "../handleGetEuCovidCertificate";
 import { appReducer } from "../../../../../store/reducers";
 import { euCovidCertificateGet } from "../../../store/actions";
 import {
@@ -30,7 +27,7 @@ import {
 const header_info = {
   title: "title",
   subtitle: "sub title",
-  logo_id: "logoId"
+  logo_id: "logo id"
 };
 
 const revokedCertificate: RevokedCertificate = {
@@ -78,8 +75,7 @@ const cases: ReadonlyArray<
       value: {
         kind: "revoked",
         id: revokedCertificate.uvci as EUCovidCertificate["id"],
-        revokedOn: revokedCertificate.revoked_on,
-        headerData: convertHeaderInfo(revokedCertificate.header_info)
+        revokedOn: revokedCertificate.revoked_on
       },
       authCode
     })
@@ -91,8 +87,7 @@ const cases: ReadonlyArray<
       value: {
         kind: "expired",
         id: expiredCertificate.uvci as EUCovidCertificate["id"],
-        markdownInfo: expiredCertificate.info,
-        headerData: convertHeaderInfo(expiredCertificate.header_info)
+        markdownInfo: expiredCertificate.info
       },
       authCode
     })
@@ -109,8 +104,7 @@ const cases: ReadonlyArray<
           content: validCertificate.qr_code.content
         },
         markdownInfo: validCertificate.info,
-        markdownDetails: validCertificate.detail,
-        headerData: convertHeaderInfo(validCertificate.header_info)
+        markdownDetails: validCertificate.detail
       },
       authCode
     })

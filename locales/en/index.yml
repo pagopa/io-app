@@ -391,8 +391,7 @@ profile:
             cta: "Why?"
           security:
             description:
-              one: "We take security measures to protect your data and "
-              two: "pseudonymise it where possible"
+              one: "We take security measures to protect your data"
             cta: "Learn more"
           gdpr:
             description:
@@ -2553,6 +2552,8 @@ bonus:
           byName: Alphabetical order
     merchantDetail:
       bucket:
+        alert:
+          cta: I got it!
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
@@ -2648,7 +2649,7 @@ bonus:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
     otp:
-      error: "An error occurred while requesting the discount code"
+      error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       screen:
         title: Use discount code
         cta: Copy code
