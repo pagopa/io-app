@@ -389,6 +389,11 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
       Discount code
     </Text>
     <View
+      small={true}
+      spacer={true}
+      style={Object {}}
+    />
+    <View
       accessibilityHint="By pressing the item you will copy the code"
       accessibilityRole="button"
       accessible={true}
