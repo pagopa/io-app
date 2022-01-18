@@ -5,6 +5,7 @@ import { WithCertificateHeaderData } from "../types/EUCovidCertificate";
 import { H1 } from "../../../components/core/typography/H1";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H2 } from "../../../components/core/typography/H2";
+import { isStringNullyOrEmpty } from "../../../utils/strings";
 
 const styles = StyleSheet.create({
   row: { flexDirection: "row", justifyContent: "space-between" },
@@ -27,13 +28,15 @@ export const EuCovidCertHeader = (props: WithCertificateHeaderData) => (
         <H1 style={IOStyles.flex}>{props.headerData.title}</H1>
         <H2>{props.headerData.subTitle}</H2>
       </View>
-
-      <Image
-        source={{ uri: props.headerData.logoUrl }}
-        style={styles.logo}
-        importantForAccessibility={"no"}
-        accessibilityElementsHidden={true}
-      />
+      {/* it could happen we don't want to show any logo, so the url will be empty */}
+      {!isStringNullyOrEmpty(props.headerData.logoUrl) && (
+        <Image
+          source={{ uri: props.headerData.logoUrl }}
+          style={styles.logo}
+          importantForAccessibility={"no"}
+          accessibilityElementsHidden={true}
+        />
+      )}
     </View>
   </>
 );
