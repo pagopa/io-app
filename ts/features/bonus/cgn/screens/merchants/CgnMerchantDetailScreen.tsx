@@ -95,69 +95,80 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
 
   useEffect(loadMerchantDetail, [loadMerchantDetail]);
 
-  return isReady(merchantDetail) ? (
+  return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={merchantDetail.value.name}
+      headerTitle={
+        isReady(merchantDetail) ? merchantDetail.value.name : undefined
+      }
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.flex]} bounces={false}>
-          {merchantDetail.value.imageUrl && (
-            <View style={{ paddingHorizontal: 16 }}>
-              <Image
-                source={{ uri: merchantDetail.value.imageUrl }}
-                style={styles.merchantImage}
-              />
-            </View>
-          )}
-          <View style={IOStyles.horizontalContentPadding}>
-            <View spacer large />
-            <H1>{merchantDetail.value.name}</H1>
-            <View spacer />
-            <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
-            <View spacer small />
-            <FlatList
-              data={merchantDetail.value.discounts}
-              renderItem={renderDiscountListItem}
-              keyExtractor={(item: Discount) => item.name}
-            />
-            <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
-            <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
-            <View spacer large />
-            {merchantDetail.value.addresses &&
-              merchantDetail.value.addresses.length > 0 && (
-                <>
-                  <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
-                  <FlatList
-                    data={merchantDetail.value.addresses}
-                    renderItem={renderAddressesListItem}
-                    keyExtractor={(item: Address) => item.full_address}
-                    ItemSeparatorComponent={() => (
-                      <ItemSeparatorComponent noPadded />
-                    )}
+        {isReady(merchantDetail) ? (
+          <>
+            <ScrollView style={[IOStyles.flex]} bounces={false}>
+              {merchantDetail.value.imageUrl && (
+                <View style={{ paddingHorizontal: 16 }}>
+                  <Image
+                    source={{ uri: merchantDetail.value.imageUrl }}
+                    style={styles.merchantImage}
                   />
-                </>
+                </View>
               )}
-          </View>
-        </ScrollView>
-        {fromNullable(merchantDetail.value.websiteUrl).fold(undefined, url => (
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={confirmButtonProps(
-              () => openWebUrl(url),
-              I18n.t("bonus.cgn.merchantDetail.cta.label")
+              <View style={IOStyles.horizontalContentPadding}>
+                <View spacer large />
+                <H1>{merchantDetail.value.name}</H1>
+                <View spacer />
+                <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
+                <View spacer small />
+                <FlatList
+                  data={merchantDetail.value.discounts}
+                  renderItem={renderDiscountListItem}
+                  keyExtractor={(item: Discount) => item.name}
+                />
+                <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
+                <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
+                <View spacer large />
+                {merchantDetail.value.addresses &&
+                  merchantDetail.value.addresses.length > 0 && (
+                    <>
+                      <H2>
+                        {I18n.t("bonus.cgn.merchantDetail.title.addresses")}
+                      </H2>
+                      <FlatList
+                        data={merchantDetail.value.addresses}
+                        renderItem={renderAddressesListItem}
+                        keyExtractor={(item: Address) => item.full_address}
+                        ItemSeparatorComponent={() => (
+                          <ItemSeparatorComponent noPadded />
+                        )}
+                      />
+                    </>
+                  )}
+              </View>
+            </ScrollView>
+            {fromNullable(merchantDetail.value.websiteUrl).fold(
+              undefined,
+              url => (
+                <FooterWithButtons
+                  type={"SingleButton"}
+                  leftButton={confirmButtonProps(
+                    () => openWebUrl(url),
+                    I18n.t("bonus.cgn.merchantDetail.cta.label")
+                  )}
+                />
+              )
             )}
+          </>
+        ) : (
+          <LoadingErrorComponent
+            isLoading={isLoading(merchantDetail)}
+            loadingCaption={I18n.t("global.remoteStates.loading")}
+            onRetry={loadMerchantDetail}
           />
-        ))}
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
-  ) : (
-    <LoadingErrorComponent
-      isLoading={isLoading(merchantDetail)}
-      loadingCaption={I18n.t("global.remoteStates.loading")}
-      onRetry={loadMerchantDetail}
-    />
   );
 };
 
