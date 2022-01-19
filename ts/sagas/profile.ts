@@ -353,7 +353,7 @@ function* handleLoadBonusBeforeRemoveAccount() {
   );
 
   if (pot.isNone(cgnActive)) {
-    // Load the bpd data and wait for a response
+    // Load the cgn data and wait for a response
     yield put(cgnDetails.request());
 
     yield take([cgnDetails.success, cgnDetails.failure]);
