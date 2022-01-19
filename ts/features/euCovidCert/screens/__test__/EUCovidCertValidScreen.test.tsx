@@ -105,6 +105,25 @@ describe("Test EUCovidCertificateValidScreen", () => {
     }
     expect(render.component.queryByTestId("markdownPreview")).not.toBeNull();
   });
+
+  it("With baseValidCertificate, the header should match the data contained in the certificate", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
+    const render = renderComponent(store, {
+      ...baseValidCertificate,
+      headerData: {
+        title: "titleValid",
+        subTitle: "subtitleValid",
+        logoUrl: "logoUrlValid"
+      }
+    });
+    expect(render.component.queryByText("titleValid")).not.toBeNull();
+    expect(render.component.queryByText("subtitleValid")).not.toBeNull();
+    expect(
+      render.component.findByTestId("EuCovidCertHeaderLogoID")
+    ).not.toBeNull();
+  });
 });
 
 const renderComponent = (store: Store, validCertificate: ValidCertificate) => ({

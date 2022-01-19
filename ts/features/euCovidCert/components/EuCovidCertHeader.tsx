@@ -8,7 +8,10 @@ import { H2 } from "../../../components/core/typography/H2";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 
 const styles = StyleSheet.create({
-  row: { flexDirection: "row", justifyContent: "space-between" },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   column: { flexDirection: "column", flex: 1 },
   logo: {
     width: 84,
@@ -25,12 +28,17 @@ export const EuCovidCertHeader = (props: WithEUCovidCertificateHeaderData) => (
   <>
     <View style={styles.row}>
       <View style={styles.column}>
-        <H1 style={IOStyles.flex}>{props.headerData.title}</H1>
-        <H2>{props.headerData.subTitle}</H2>
+        <H1 style={IOStyles.flex} testID={"EuCovidCertHeaderTitle"}>
+          {props.headerData.title}
+        </H1>
+        <H2 testID={"EuCovidCertHeaderSubTitle"}>
+          {props.headerData.subTitle}
+        </H2>
       </View>
       {/* it could happen we don't want to show any logo, so the url will be empty */}
       {!isStringNullyOrEmpty(props.headerData.logoUrl) && (
         <Image
+          testID={"EuCovidCertHeaderLogoID"}
           source={{ uri: props.headerData.logoUrl }}
           style={styles.logo}
           importantForAccessibility={"no"}

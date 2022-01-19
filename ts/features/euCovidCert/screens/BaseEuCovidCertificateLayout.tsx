@@ -18,7 +18,11 @@ type Props = WithTestID<{
 }>;
 
 const styles = StyleSheet.create({
-  emptyHeader: { flex: 1, height: heightPercentageToDP("10%") }
+  emptyHeader: {
+    flex: 1,
+    height: heightPercentageToDP("10%"),
+    backgroundColor: "red"
+  }
 });
 
 export const BaseEuCovidCertificateLayout = (props: Props) => {
