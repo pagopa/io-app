@@ -3,7 +3,15 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { all, call, Effect, put, select, take, takeLatest } from "redux-saga/effects";
+import {
+  all,
+  call,
+  Effect,
+  put,
+  select,
+  take,
+  takeLatest
+} from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -37,7 +45,10 @@ import {
   fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
-import { differentProfileLoggedIn, setProfileHashedFiscalCode } from "../store/actions/crossSessions";
+import {
+  differentProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../store/actions/crossSessions";
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { isTestEnv } from "../utils/environment";
 import { deletePin } from "../utils/keychain";
