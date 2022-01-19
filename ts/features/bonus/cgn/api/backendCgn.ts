@@ -93,7 +93,7 @@ const startCgnUnsubscription: StartCgnUnsubscriptionT = {
   method: "post",
   url: () => `${BASE_URL}/delete`,
   query: _ => ({}),
-  body: () => "",
+  body: _ => JSON.stringify({}),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: startCgnUnsubscriptionDefaultDecoder()
 };
