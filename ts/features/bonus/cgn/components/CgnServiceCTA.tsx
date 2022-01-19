@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Alert } from "react-native";
+import { constNull } from "fp-ts/lib/function";
 import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
@@ -12,7 +13,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
-import { isError, isLoading, isReady } from "../../bpd/model/RemoteValue";
+import { fold, isLoading } from "../../bpd/model/RemoteValue";
 import { showToast } from "../../../../utils/showToast";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
@@ -25,22 +26,28 @@ const CgnServiceCTA = (props: Props) => {
   const isFirstRender = useRef<boolean>(true);
   const dispatch = useIODispatch();
   const servicePreference = useIOSelector(servicePreferenceSelector);
-  const unsubsriptionStatus = useIOSelector(cgnUnsubscribeSelector);
+  const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
 
   useEffect(() => {
-    if (isReady(unsubsriptionStatus) && !isFirstRender.current) {
-      showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
-      dispatch(loadServicePreference.request(props.serviceId));
-    }
-
-    if (isError(unsubsriptionStatus) && !isFirstRender.current) {
-      showToast(I18n.t("global.genericError"), "danger");
+    if (!isFirstRender.current) {
+      fold(
+        unsubscriptionStatus,
+        constNull,
+        constNull,
+        () => {
+          showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
+          dispatch(loadServicePreference.request(props.serviceId));
+        },
+        () => {
+          showToast(I18n.t("global.genericError"), "danger");
+        }
+      );
     }
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
-  }, [unsubsriptionStatus]);
+  }, [unsubscriptionStatus]);
 
   if (
     !servicePreferenceValue ||
@@ -70,10 +77,11 @@ const CgnServiceCTA = (props: Props) => {
     );
   };
 
-  return isServiceActive ? (
-    isLoading(unsubsriptionStatus) ? (
-      <ActivityIndicator />
-    ) : (
+  if (isServiceActive) {
+    if (isLoading(unsubscriptionStatus)) {
+      return <ActivityIndicator />;
+    }
+    return (
       <ButtonDefaultOpacity
         block
         bordered
@@ -82,8 +90,9 @@ const CgnServiceCTA = (props: Props) => {
       >
         <Label color={"red"}>{I18n.t("bonus.cgn.cta.deactivateBonus")}</Label>
       </ButtonDefaultOpacity>
-    )
-  ) : (
+    );
+  }
+  return (
     <ButtonDefaultOpacity
       block
       primary
