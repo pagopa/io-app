@@ -45,6 +45,7 @@ export const EuCovidCertHeader = (props: WithEUCovidCertificateHeaderData) => (
           style={styles.logo}
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}
+          resizeMode={"contain"}
         />
       )}
     </View>
