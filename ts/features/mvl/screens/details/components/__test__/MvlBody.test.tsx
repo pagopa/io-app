@@ -13,11 +13,12 @@ describe("MvlBody", () => {
   jest.useFakeTimers();
 
   describe("When the HTML is an empty string", () => {
-    it("Should render neither the `html` option nor the switch separator", async () => {
+    it("Should not render the selector", async () => {
       const { queryByText } = renderComponent({
         body: { ...mvlMockBody, html: "" }
       });
       expect(queryByText(I18n.t("features.mvl.details.body.html"))).toBeNull();
+      expect(queryByText(I18n.t("features.mvl.details.body.plain"))).toBeNull();
       expect(queryByText(" | ")).toBeNull();
     });
   });
@@ -67,12 +68,15 @@ describe("MvlBody", () => {
       });
     });
   });
+
   describe("When the component is rendered with an empty payload", () => {
-    it("Should render only the selector without a plain body", () => {
-      const res = renderComponent({ body: { plain: "", html: "" } });
-      expect(
-        res.queryByText(I18n.t("features.mvl.details.body.plain"))
-      ).not.toBeNull();
+    it("Should not render the selector", () => {
+      const { queryByText } = renderComponent({
+        body: { plain: "", html: "" }
+      });
+      expect(queryByText(I18n.t("features.mvl.details.body.html"))).toBeNull();
+      expect(queryByText(I18n.t("features.mvl.details.body.plain"))).toBeNull();
+      expect(queryByText(" | ")).toBeNull();
     });
   });
 });

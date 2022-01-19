@@ -71,7 +71,6 @@ const SelectorItem = (props: {
  */
 const Selector = (props: {
   currentValue: RenderMode;
-  hasHtml: boolean;
   onValueChanged: (mode: RenderMode) => void;
 }) => (
   <View style={styles.row}>
@@ -80,18 +79,14 @@ const Selector = (props: {
       text={I18n.t("features.mvl.details.body.plain")}
       onPress={() => props.onValueChanged("plain")}
     />
-    {props.hasHtml && (
-      <H4 weight={"Regular"} accessible={false}>
-        {" | "}
-      </H4>
-    )}
-    {props.hasHtml && (
-      <SelectorItem
-        currentSelected={props.currentValue === "html"}
-        text={I18n.t("features.mvl.details.body.html")}
-        onPress={() => props.onValueChanged("html")}
-      />
-    )}
+    <H4 weight={"Regular"} accessible={false}>
+      {" | "}
+    </H4>
+    <SelectorItem
+      currentSelected={props.currentValue === "html"}
+      text={I18n.t("features.mvl.details.body.html")}
+      onPress={() => props.onValueChanged("html")}
+    />
   </View>
 );
 
@@ -103,16 +98,14 @@ const Selector = (props: {
  */
 export const MvlBody = (props: Props): React.ReactElement => {
   const [mode, setMode] = useState<RenderMode>("plain");
-
+  const showSelector = NonEmptyString.is(props.body.html);
   return (
     <>
       <Content mode={mode} body={props.body} />
       <View spacer={true} small={true} />
-      <Selector
-        currentValue={mode}
-        onValueChanged={setMode}
-        hasHtml={NonEmptyString.is(props.body.html)}
-      />
+      {showSelector && (
+        <Selector currentValue={mode} onValueChanged={setMode} />
+      )}
     </>
   );
 };
