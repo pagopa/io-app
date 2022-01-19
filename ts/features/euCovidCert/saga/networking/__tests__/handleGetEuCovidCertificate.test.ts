@@ -24,17 +24,25 @@ import {
   StatusEnum as ExpiredStatus
 } from "../../../../../../definitions/eu_covid_cert/ExpiredCertificate";
 
+const header_info = {
+  title: "title",
+  subtitle: "sub title",
+  logo_id: "logo id"
+};
+
 const revokedCertificate: RevokedCertificate = {
   uvci: "revokedCertificateId",
   status: StatusEnum.revoked,
   info: "the revoked reason",
-  revoked_on: new Date()
+  revoked_on: new Date(),
+  header_info
 };
 
 const expiredCertificate: ExpiredCertificate = {
   uvci: "expiredCertificateId",
   status: ExpiredStatus.expired,
-  info: "the expired reason"
+  info: "the expired reason",
+  header_info
 };
 
 const validCertificate: ValidCertificate = {
@@ -45,7 +53,8 @@ const validCertificate: ValidCertificate = {
   qr_code: {
     mime_type: Mime_typeEnum["image/png"],
     content: "iVBOw"
-  }
+  },
+  header_info
 };
 
 const authCode = "123" as EUCovidCertificateAuthCode;
