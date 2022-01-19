@@ -47,7 +47,7 @@ const CgnServiceCTA = (props: Props) => {
     }
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
-  }, [unsubscriptionStatus]);
+  }, [unsubscriptionStatus, dispatch, props.serviceId]);
 
   if (
     !servicePreferenceValue ||

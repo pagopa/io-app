@@ -46,7 +46,7 @@ const CgnUnsubscribe = () => {
 
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
-  }, [unsubsriptionStatus]);
+  }, [unsubsriptionStatus, dispatch]);
 
   return (
     <View style={{ paddingTop: 16, paddingBottom: 60 }}>
