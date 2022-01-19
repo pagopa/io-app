@@ -20,7 +20,7 @@ jest.mock("@gorhom/bottom-sheet", () => ({
 describe("Test EuCovidCertExpiredScreen", () => {
   jest.useFakeTimers();
 
-  it("With EuCovidCertExpiredScreen, the header should match the data contained in the certificate", () => {
+  it("With expiredCertificate, the header should match the data contained in the certificate", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(globalState);

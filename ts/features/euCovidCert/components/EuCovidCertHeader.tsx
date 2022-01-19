@@ -20,7 +20,9 @@ const styles = StyleSheet.create({
 });
 
 /**
- * header with title/subtitle/image content as prop
+ * header with
+ * | title       | logo |
+ * | subtitle    |      |
  * @param props
  * @constructor
  */
@@ -35,7 +37,7 @@ export const EuCovidCertHeader = (props: WithEUCovidCertificateHeaderData) => (
           {props.headerData.subTitle}
         </H2>
       </View>
-      {/* it could happen we don't want to show any logo, so the url will be empty */}
+      {/* it could happen we don't want to show any logo, in that case url will be empty */}
       {!isStringNullyOrEmpty(props.headerData.logoUrl) && (
         <Image
           testID={"EuCovidCertHeaderLogoID"}
