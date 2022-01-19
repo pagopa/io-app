@@ -1,4 +1,4 @@
-import { computedProp } from "../../../../ts/utils/computeProp";
+import { computedProp } from "../../../../ts/types/utils";
 import { initSeverityByType } from "./defaultValues";
 import { GroupBySeverity } from "./GroupBySeverity";
 

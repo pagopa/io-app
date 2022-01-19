@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
+import { computedProp } from "../../types/utils";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 import {
@@ -10,7 +11,6 @@ import {
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
-import { computedProp } from "../../utils/computeProp";
 import { GlobalState } from "./types";
 
 export type UserDataProcessingState = {

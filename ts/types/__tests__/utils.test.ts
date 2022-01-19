@@ -1,4 +1,4 @@
-import { computedProp } from "../computeProp";
+import { computedProp } from "../utils";
 
 describe("computedProp", () => {
   it("should create an object correctly", () => {

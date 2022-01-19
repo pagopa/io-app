@@ -28,8 +28,8 @@ import {
   svVoucherListGet
 } from "../../features/bonus/siciliaVola/store/actions/voucherList";
 import { svGetPdfVoucher } from "../../features/bonus/siciliaVola/store/actions/voucherGeneration";
-import { computedProp } from "../../utils/computeProp";
 import { GlobalState } from "./types";
+import { computedProp } from "../../types/utils";
 
 /**
  * list of monitored actions
