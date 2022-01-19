@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import {
   UIMessageId,
   WithUIMessageId
@@ -15,4 +19,10 @@ export const mvlDetailsLoad = createAsyncAction(
   "MVL_DETAILS_FAILURE"
 )<UIMessageId, Mvl, WithUIMessageId<NetworkError>>();
 
-export type MvlActions = ActionType<typeof mvlDetailsLoad>;
+export const mvlPreferencesDontAskForAttachments = createStandardAction(
+  "MVL_PREFERENCES_DONT_ASK_FOR_ATTACHMENTS"
+)();
+
+export type MvlActions = ActionType<
+  typeof mvlDetailsLoad | typeof mvlPreferencesDontAskForAttachments
+>;
