@@ -1,7 +1,8 @@
 import {
   EUCovidCertificateId,
   RevokedCertificate,
-  ValidCertificate
+  ValidCertificate,
+  ExpiredCertificate
 } from "../EUCovidCertificate";
 
 const headerData = {
@@ -9,6 +10,13 @@ const headerData = {
   subTitle: "sub title",
   logoUrl: "logoUrl"
 };
+
+export const expiredCertificate: ExpiredCertificate = {
+  markdownInfo: "Markdown info",
+  kind: "expired",
+  headerData
+};
+
 export const revokedCertificate: RevokedCertificate = {
   id: "id" as EUCovidCertificateId,
   kind: "revoked",

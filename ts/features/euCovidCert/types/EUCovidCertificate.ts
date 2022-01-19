@@ -43,7 +43,7 @@ export type RevokedCertificate = WithEUCovidCertificateId &
     revokedOn?: Date;
   };
 
-type ExpiredCertificate = WithEUCovidCertificateId &
+export type ExpiredCertificate = WithEUCovidCertificateId &
   WithEUCovidCertificateHeaderData & {
     kind: "expired";
     markdownInfo?: string;
