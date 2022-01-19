@@ -87,7 +87,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     <LoadingSpinnerOverlay
       isLoading={
         props.isCgnInfoLoading ||
-        (props.cgnDetails && cardLoading) ||
+        cardLoading ||
         isLoading(props.unsubscriptionStatus)
       }
     >
