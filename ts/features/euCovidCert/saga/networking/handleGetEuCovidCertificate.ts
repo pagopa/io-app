@@ -19,6 +19,8 @@ import {
 } from "../../types/EUCovidCertificateResponse";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { HeaderInfo } from "../../../../../definitions/eu_covid_cert/HeaderInfo";
+import { contentRepoUrl } from "../../../../config";
 
 const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   400: "wrongFormat",
@@ -26,6 +28,14 @@ const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   410: "notOperational",
   504: "temporarilyNotAvailable"
 };
+
+export const convertHeaderInfo = (
+  headerInfo: HeaderInfo
+): EUCovidCertificate["headerData"] => ({
+  title: headerInfo.title,
+  subTitle: headerInfo.subtitle,
+  logoUrl: `${contentRepoUrl}/logos/eucovidcert/${headerInfo.logo_id}.png`
+});
 
 // convert a success response to the logical app representation of it
 const convertSuccess = (
@@ -43,20 +53,23 @@ const convertSuccess = (
             content: certificate.qr_code.content
           },
           markdownInfo: certificate.info,
-          markdownDetails: certificate.detail
+          markdownDetails: certificate.detail,
+          headerData: convertHeaderInfo(certificate.header_info)
         };
       case "revoked":
         return {
           kind: "revoked",
           id: certificate.uvci as EUCovidCertificate["id"],
           revokedOn: certificate.revoked_on,
-          markdownInfo: certificate.info
+          markdownInfo: certificate.info,
+          headerData: convertHeaderInfo(certificate.header_info)
         };
       case "expired":
         return {
           kind: "expired",
           id: certificate.uvci as EUCovidCertificate["id"],
-          markdownInfo: certificate.info
+          markdownInfo: certificate.info,
+          headerData: convertHeaderInfo(certificate.header_info)
         };
       default:
         return undefined;
