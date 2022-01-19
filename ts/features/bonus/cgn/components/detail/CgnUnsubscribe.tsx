@@ -14,7 +14,7 @@ import { cgnDetails } from "../../store/actions/details";
 
 const CgnUnsubscribe = () => {
   const dispatch = useIODispatch();
-  const unsubsriptionStatus = useIOSelector(cgnUnsubscribeSelector);
+  const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
   const isFirstRender = useRef<boolean>(true);
 
   const requestUnsubscription = () => {
@@ -35,18 +35,18 @@ const CgnUnsubscribe = () => {
   };
 
   useEffect(() => {
-    if (isReady(unsubsriptionStatus)) {
+    if (isReady(unsubscriptionStatus)) {
       navigateBack();
       dispatch(cgnDetails.request());
       showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
     }
-    if (isError(unsubsriptionStatus) && !isFirstRender.current) {
+    if (isError(unsubscriptionStatus) && !isFirstRender.current) {
       showToast(I18n.t("global.genericError"), "danger");
     }
 
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
-  }, [unsubsriptionStatus, dispatch]);
+  }, [unsubscriptionStatus, dispatch]);
 
   return (
     <View style={{ paddingTop: 16, paddingBottom: 60 }}>
