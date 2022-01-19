@@ -30,7 +30,7 @@ export const EuCovidCertHeader = (props: WithEUCovidCertificateHeaderData) => (
   <>
     <View style={styles.row}>
       <View style={styles.column}>
-        <H1 style={IOStyles.flex} testID={"EuCovidCertHeaderTitle"}>
+        <H1 testID={"EuCovidCertHeaderTitle"}>
           {props.headerData.title}
         </H1>
         <H2 testID={"EuCovidCertHeaderSubTitle"}>
