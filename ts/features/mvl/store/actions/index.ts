@@ -19,10 +19,10 @@ export const mvlDetailsLoad = createAsyncAction(
   "MVL_DETAILS_FAILURE"
 )<UIMessageId, Mvl, WithUIMessageId<NetworkError>>();
 
-export const mvlPreferencesDontAskForAttachments = createStandardAction(
-  "MVL_PREFERENCES_DONT_ASK_FOR_ATTACHMENTS"
-)();
+export const mvlPreferencesSetWarningForAttachments = createStandardAction(
+  "MVL_PREFERENCES_SET_WARNING_FOR_ATTACHMENTS"
+)<boolean>();
 
 export type MvlActions = ActionType<
-  typeof mvlDetailsLoad | typeof mvlPreferencesDontAskForAttachments
+  typeof mvlDetailsLoad | typeof mvlPreferencesSetWarningForAttachments
 >;

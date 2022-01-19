@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { mvlPreferencesDontAskForAttachments } from "../actions";
+import { mvlPreferencesSetWarningForAttachments } from "../actions";
 
 export type MvlPreferences = {
   showAlertForAttachments: boolean;
@@ -20,8 +20,8 @@ export const mvlPreferencesReducer = (
   action: Action
 ): MvlPreferences => {
   switch (action.type) {
-    case getType(mvlPreferencesDontAskForAttachments):
-      return { ...state, showAlertForAttachments: false };
+    case getType(mvlPreferencesSetWarningForAttachments):
+      return { ...state, showAlertForAttachments: action.payload };
   }
 
   return state;
