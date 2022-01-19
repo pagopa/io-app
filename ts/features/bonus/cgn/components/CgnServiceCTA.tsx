@@ -12,10 +12,11 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
-import { isReady } from "../../bpd/model/RemoteValue";
+import { isError, isLoading, isReady } from "../../bpd/model/RemoteValue";
 import { showToast } from "../../../../utils/showToast";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
+import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 
 type Props = {
   serviceId: ServiceId;
@@ -32,6 +33,10 @@ const CgnServiceCTA = (props: Props) => {
     if (isReady(unsubsriptionStatus) && !isFirstRender.current) {
       showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
       dispatch(loadServicePreference.request(props.serviceId));
+    }
+
+    if (isError(unsubsriptionStatus) && !isFirstRender.current) {
+      showToast(I18n.t("global.genericError"), "danger");
     }
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
@@ -66,9 +71,18 @@ const CgnServiceCTA = (props: Props) => {
   };
 
   return isServiceActive ? (
-    <ButtonDefaultOpacity block bordered danger onPress={requestUnsubscription}>
-      <Label color={"red"}>{I18n.t("bonus.cgn.cta.deactivateBonus")}</Label>
-    </ButtonDefaultOpacity>
+    isLoading(unsubsriptionStatus) ? (
+      <ActivityIndicator />
+    ) : (
+      <ButtonDefaultOpacity
+        block
+        bordered
+        danger
+        onPress={requestUnsubscription}
+      >
+        <Label color={"red"}>{I18n.t("bonus.cgn.cta.deactivateBonus")}</Label>
+      </ButtonDefaultOpacity>
+    )
   ) : (
     <ButtonDefaultOpacity
       block
