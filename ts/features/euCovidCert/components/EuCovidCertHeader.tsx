@@ -3,7 +3,6 @@ import { Image, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { H1 } from "../../../components/core/typography/H1";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H2 } from "../../../components/core/typography/H2";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 
@@ -30,9 +29,7 @@ export const EuCovidCertHeader = (props: WithEUCovidCertificateHeaderData) => (
   <>
     <View style={styles.row}>
       <View style={styles.column}>
-        <H1 testID={"EuCovidCertHeaderTitle"}>
-          {props.headerData.title}
-        </H1>
+        <H1 testID={"EuCovidCertHeaderTitle"}>{props.headerData.title}</H1>
         <H2 testID={"EuCovidCertHeaderSubTitle"}>
           {props.headerData.subTitle}
         </H2>
