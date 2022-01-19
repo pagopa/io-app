@@ -88,6 +88,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
   <Image
     accessibilityElementsHidden={true}
     importantForAccessibility="no"
+    resizeMode="contain"
     source={
       Object {
         "uri": "logoUrl",

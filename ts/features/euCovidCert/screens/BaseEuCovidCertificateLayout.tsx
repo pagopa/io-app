@@ -20,7 +20,7 @@ type Props = WithTestID<{
 const styles = StyleSheet.create({
   emptyHeader: {
     flex: 1,
-    height: heightPercentageToDP("10%"),
+    height: heightPercentageToDP("10%")
   }
 });
 
