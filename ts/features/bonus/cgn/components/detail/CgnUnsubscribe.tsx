@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { View } from "native-base";
 import { Alert } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -7,7 +7,7 @@ import { cgnUnsubscribeSelector } from "../../store/reducers/unsubscribe";
 import { Link } from "../../../../../components/core/typography/Link";
 import I18n from "../../../../../i18n";
 import { cgnUnsubscribe } from "../../store/actions/unsubscribe";
-import { isReady } from "../../../bpd/model/RemoteValue";
+import { isError, isReady } from "../../../bpd/model/RemoteValue";
 import { showToast } from "../../../../../utils/showToast";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { cgnDetails } from "../../store/actions/details";
@@ -15,6 +15,7 @@ import { cgnDetails } from "../../store/actions/details";
 const CgnUnsubscribe = () => {
   const dispatch = useIODispatch();
   const unsubsriptionStatus = useIOSelector(cgnUnsubscribeSelector);
+  const isFirstRender = useRef<boolean>(true);
 
   const requestUnsubscription = () => {
     Alert.alert(
@@ -39,6 +40,12 @@ const CgnUnsubscribe = () => {
       dispatch(cgnDetails.request());
       showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
     }
+    if (isError(unsubsriptionStatus) && !isFirstRender.current) {
+      showToast(I18n.t("global.genericError"), "danger");
+    }
+
+    // eslint-disable-next-line functional/immutable-data
+    isFirstRender.current = false;
   }, [unsubsriptionStatus]);
 
   return (

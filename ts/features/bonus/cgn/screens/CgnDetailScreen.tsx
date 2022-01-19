@@ -47,6 +47,8 @@ import { canEycaCardBeShown } from "../utils/eyca";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
+import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
+import { isLoading } from "../../bpd/model/RemoteValue";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -82,7 +84,13 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     canEycaCardBeShown(props.eycaDetails) && props.isCgnEnabled;
 
   return (
-    <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
+    <LoadingSpinnerOverlay
+      isLoading={
+        props.isCgnInfoLoading ||
+        cardLoading ||
+        isLoading(props.unsubscriptionStatus)
+      }
+    >
       <BaseScreenComponent
         headerBackgroundColor={HEADER_BACKGROUND_COLOR}
         goBack={props.goBack}
@@ -171,7 +179,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isCgnInfoLoading: isCgnDetailsLoading(state),
   isMerchantV2Enabled: cgnMerchantVersionSelector(state),
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
-  eycaDetails: eycaDetailSelector(state)
+  eycaDetails: eycaDetailSelector(state),
+  unsubscriptionStatus: cgnUnsubscribeSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
