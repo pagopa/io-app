@@ -5,6 +5,7 @@ import { CgnEycaStatusActions } from "./eyca/details";
 import { CgnMerchantsAction } from "./merchants";
 import { CgnOtpActions } from "./otp";
 import { CgnBucketActions } from "./bucket";
+import { CgnUnsubscribeActions } from "./unsubscribe";
 
 export type CgnActions =
   | CgnActivationActions
@@ -13,4 +14,5 @@ export type CgnActions =
   | CgnEycaStatusActions
   | CgnMerchantsAction
   | CgnOtpActions
-  | CgnBucketActions;
+  | CgnBucketActions
+  | CgnUnsubscribeActions;

@@ -391,8 +391,7 @@ profile:
             cta: "Why?"
           security:
             description:
-              one: "We take security measures to protect your data and "
-              two: "pseudonymise it where possible"
+              one: "We take security measures to protect your data"
             cta: "Learn more"
           gdpr:
             description:
@@ -1413,7 +1412,7 @@ wallet:
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
-    body: If you can't find the security code, it's likely your card doesn't support online payments. However, you can add it for Cashback purposes, if your bank is supported.
+    body: If you can't find the security code, it's likely your card doesn't support online payments.
     cta: "Search your cards"
   chooseMethod: Select the desired method
   QRtoPay:
@@ -2553,6 +2552,8 @@ bonus:
           byName: Alphabetical order
     merchantDetail:
       bucket:
+        alert:
+          cta: I got it!
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
@@ -2647,8 +2648,13 @@ bonus:
       success:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
+      deactivate:
+        toast: "The request to deactivate the card has been successfully executed"
+        alert:
+          title: "Deactivate card"
+          message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
     otp:
-      error: "An error occurred while requesting the discount code"
+      error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       screen:
         title: Use discount code
         cta: Copy code
