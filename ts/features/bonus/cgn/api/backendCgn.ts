@@ -19,6 +19,8 @@ import {
   GetEycaStatusT,
   startCgnActivationDefaultDecoder,
   StartCgnActivationT,
+  startCgnUnsubscriptionDefaultDecoder,
+  StartCgnUnsubscriptionT,
   startEycaActivationDefaultDecoder,
   StartEycaActivationT
 } from "../../../../../definitions/cgn/requestTypes";
@@ -80,11 +82,20 @@ const getEycaStatus: GetEycaStatusT = {
 
 const generateOtp: GenerateOtpT = {
   method: "post",
-  url: () => `/api/v1/cgn/otp`,
+  url: () => `${BASE_URL}/otp`,
   query: _ => ({}),
   body: () => "",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: generateOtpDefaultDecoder()
+};
+
+const startCgnUnsubscription: StartCgnUnsubscriptionT = {
+  method: "post",
+  url: () => `${BASE_URL}/delete`,
+  query: _ => ({}),
+  body: _ => JSON.stringify({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: startCgnUnsubscriptionDefaultDecoder()
 };
 
 function ParamAuthorizationBearerHeaderProducer<
@@ -127,6 +138,11 @@ export function BackendCGN(
     getEycaStatus: withBearerToken(
       createFetchRequestForApi(getEycaStatus, options)
     ),
-    generateOtp: withBearerToken(createFetchRequestForApi(generateOtp, options))
+    generateOtp: withBearerToken(
+      createFetchRequestForApi(generateOtp, options)
+    ),
+    startCgnUnsubscription: withBearerToken(
+      createFetchRequestForApi(startCgnUnsubscription, options)
+    )
   };
 }

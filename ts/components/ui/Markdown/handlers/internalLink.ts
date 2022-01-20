@@ -36,7 +36,8 @@ const BPD_ROUTE_NAMES: ReadonlyArray<string> = [
 ];
 
 const CGN_ROUTE_NAMES: ReadonlyArray<string> = [
-  CGN_ROUTES.ACTIVATION.CTA_START_CGN
+  CGN_ROUTES.ACTIVATION.CTA_START_CGN,
+  CGN_ROUTES.DETAILS.DETAILS
 ];
 
 const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];

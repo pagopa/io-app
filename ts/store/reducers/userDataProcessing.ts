@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
+import { computedProp } from "../../types/utils";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 import {
@@ -14,7 +15,7 @@ import { GlobalState } from "./types";
 
 export type UserDataProcessingState = {
   [key in keyof typeof UserDataProcessingChoiceEnum]: pot.Pot<
-    UserDataProcessing,
+    UserDataProcessing | undefined,
     Error
   >;
 };
@@ -34,13 +35,13 @@ const userDataProcessingReducer = (
     case getType(loadUserDataProcessing.request): {
       return {
         ...state,
-        [action.payload]: pot.toLoading(pot.none)
+        ...computedProp(action.payload, pot.toLoading(pot.none))
       };
     }
     case getType(loadUserDataProcessing.success): {
       return {
         ...state,
-        [action.payload.choice]: pot.some(action.payload.value)
+        ...computedProp(action.payload.choice, pot.some(action.payload.value))
       };
     }
 
@@ -49,9 +50,9 @@ const userDataProcessingReducer = (
     case getType(loadUserDataProcessing.failure):
       return {
         ...state,
-        [action.payload.choice]: pot.toError(
-          { ...state[action.payload.choice] },
-          action.payload.error
+        ...computedProp(
+          action.payload.choice,
+          pot.toError({ ...state[action.payload.choice] }, action.payload.error)
         )
       };
 
@@ -59,21 +60,25 @@ const userDataProcessingReducer = (
     case getType(upsertUserDataProcessing.request): {
       const maybeValue = state[action.payload];
       const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
+
       return {
         ...state,
-        [action.payload]: pot.toUpdating(state[action.payload], prevValue)
+        ...computedProp(
+          action.payload,
+          pot.toUpdating(state[action.payload], prevValue)
+        )
       };
     }
     case getType(upsertUserDataProcessing.success): {
       return {
         ...state,
-        [action.payload.choice]: pot.some(action.payload)
+        ...computedProp(action.payload.choice, pot.some(action.payload))
       };
     }
     case getType(resetUserDataProcessingRequest): {
       return {
         ...state,
-        [action.payload]: pot.none
+        ...computedProp(action.payload, pot.none)
       };
     }
 
