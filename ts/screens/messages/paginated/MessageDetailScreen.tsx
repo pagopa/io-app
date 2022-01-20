@@ -91,7 +91,7 @@ const MessageDetailScreen = ({
       setMessageReadState(
         message.id,
         true,
-        message.category.tag === TagEnum.PAYMENT ? "payment" : "unknown"
+        message.category.tag === TagEnum.PAYMENT ? TagEnum.PAYMENT : "unknown"
       );
     }
     if (

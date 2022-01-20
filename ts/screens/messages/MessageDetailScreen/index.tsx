@@ -30,6 +30,7 @@ import ServiceDetailsScreen from "../../services/ServiceDetailsScreen";
 
 import { hasMessagePaymentData } from "../../../utils/messages";
 import MessageDetails from "./MessageDetail";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
@@ -63,7 +64,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       this.props.setMessageReadState(
         potMessage.value.id,
         true,
-        hasMessagePaymentData(potMessage.value) ? "payment" : "unknown"
+        hasMessagePaymentData(potMessage.value) ? TagEnum.PAYMENT : "unknown"
       );
     }
   };

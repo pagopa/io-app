@@ -18,6 +18,8 @@ import {
   UIMessageId
 } from "../reducers/entities/messages/types";
 import { Cursor } from "../reducers/entities/messages/allPaginated";
+import { MessageCategory } from "../../../definitions/backend/MessageCategory";
+import { TagEnum } from "../../../definitions/backend/MessageCategoryPayment";
 
 /**
  * Load a single message's details given its ID
@@ -104,7 +106,9 @@ export const DEPRECATED_loadMessages = createAsyncAction(
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
-export type MessageReadType = "payment" | "unknown";
+export type MessageReadType =
+  | Extract<MessageCategory["tag"], TagEnum.PAYMENT>
+  | "unknown";
 export const setMessageReadState = createAction(
   "MESSAGES_SET_READ",
   resolve => (id: string, read: boolean, messageType: MessageReadType) =>
