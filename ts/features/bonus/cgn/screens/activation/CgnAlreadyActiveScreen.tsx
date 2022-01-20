@@ -1,9 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { connect } from "react-redux";
 import { SafeAreaView } from "react-native";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { Dispatch } from "../../../../../store/actions/types";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
@@ -14,7 +11,10 @@ import image from "../../../../../../img/messages/empty-due-date-list-icon.png";
 import I18n from "../../../../../i18n";
 import { navigateToCgnDetails } from "../../navigation/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { isCgnDetailsLoading, isCgnEnrolledSelector } from "../../store/reducers/details";
+import {
+  isCgnDetailsLoading,
+  isCgnEnrolledSelector
+} from "../../store/reducers/details";
 import { cgnDetails } from "../../store/actions/details";
 import ActivityIndicator from "../../../../../components/ui/ActivityIndicator";
 
@@ -76,16 +76,4 @@ const CgnAlreadyActiveScreen = (): React.ReactElement => {
   );
 };
 
-const mapStateToProps = (_: GlobalState) => ({});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToDetail: () => {
-    dispatch(cgnActivationCancel());
-    navigateToCgnDetails();
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CgnAlreadyActiveScreen);
+export default CgnAlreadyActiveScreen;
