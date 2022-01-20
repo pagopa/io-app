@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0-rc.1](https://github.com/pagopa/io-app/compare/2.1.0-rc.0...2.1.0-rc.1) (2022-01-20)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[IOACGN-9](https://pagopa.atlassian.net/browse/IOACGN-9)] Impelements CGN unsubscription flow ([#3656](https://github.com/pagopa/io-app/issues/3656)) ([161f509](https://github.com/pagopa/io-app/commit/161f5091a951eb97c3fe992c2021c219962da849))
+* **EU Covid Certificate:** [[IAGP-70](https://pagopa.atlassian.net/browse/IAGP-70)] Show certificate header_info in header component ([#3666](https://github.com/pagopa/io-app/issues/3666)) ([7f862d1](https://github.com/pagopa/io-app/commit/7f862d1d1398c936977558e1ca05d12ca59c315e))
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[IOACGN-31](https://pagopa.atlassian.net/browse/IOACGN-31)] Disables CGN remote FF [#3675](https://github.com/pagopa/io-app/issues/3675) ([46190df](https://github.com/pagopa/io-app/commit/46190df31a01b14c3cbd7f4ae31baff740de22f6))
+* **deps:** bump trim-off-newlines from 1.0.1 to 1.0.3 ([#3672](https://github.com/pagopa/io-app/issues/3672)) ([a318ca7](https://github.com/pagopa/io-app/commit/a318ca79865cf2112cba7f48b1ff57a322190bc9))
+* **Messaggi a valore legale:** [[IAMVL-37](https://pagopa.atlassian.net/browse/IAMVL-37)] Hide html selector when no html is present in the body ([#3663](https://github.com/pagopa/io-app/issues/3663)) ([f93ce50](https://github.com/pagopa/io-app/commit/f93ce5029605ad795b6c795eea9a0c063f1184f2))
+* [[IAI-108](https://pagopa.atlassian.net/browse/IAI-108)] Improved type-safety using object dynamic keys ([#3661](https://github.com/pagopa/io-app/issues/3661)) ([c192429](https://github.com/pagopa/io-app/commit/c1924299b1dd8342f8fb6cc86b2bd90ea32343c0))
+* Upgrade spec tag version ([#3668](https://github.com/pagopa/io-app/issues/3668)) ([be2a07c](https://github.com/pagopa/io-app/commit/be2a07c053ec8aa88aa5f2250383a9955772149a))
+* **Carta Giovani Nazionale:** [[IOACGN-24](https://pagopa.atlassian.net/browse/IOACGN-24)] Implements UI component for CGN Buckets errors ([#3659](https://github.com/pagopa/io-app/issues/3659)) ([04280d0](https://github.com/pagopa/io-app/commit/04280d0e294edcac1dbc400191e1926c26ae5b94))
+
 ## [2.1.0-rc.0](https://github.com/pagopa/io-app/compare/2.0.0-rc.0...2.1.0-rc.0) (2022-01-18)
 
 
