@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { View } from "native-base";
 import WebView from "react-native-webview";
 import { Image, ImageBackground, StyleSheet } from "react-native";
@@ -141,6 +142,8 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   const canDisplayEycaLogo = canEycaCardBeShown(props.eycaDetails);
+
+  useEffect(() => () => props.onCardLoadEnd(), []);
 
   return (
     <View style={[styles.cgnCard]} testID={"card-component"}>

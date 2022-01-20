@@ -21,6 +21,7 @@ import {
 } from "../store/actions/merchants";
 import { BackendCgnMerchants } from "../api/backendCgnMerchants";
 import { cgnCodeFromBucket } from "../store/actions/bucket";
+import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -38,6 +39,7 @@ import {
   cgnOnlineMerchantsSaga
 } from "./networking/merchants/cgnMerchantsSaga";
 import { cgnBucketConsuption } from "./networking/bucket";
+import { cgnUnsubscriptionHandler } from "./networking/unsubscribe";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -91,6 +93,13 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     getType(cgnGenerateOtpAction.request),
     cgnGenerateOtp,
     backendCGN.generateOtp
+  );
+
+  // CGN Unsubscription
+  yield takeLatest(
+    getType(cgnUnsubscribe.request),
+    cgnUnsubscriptionHandler,
+    backendCGN.startCgnUnsubscription
   );
 
   // CGN Offline Merchants

@@ -1,7 +1,7 @@
 import { View } from "native-base";
-import * as React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -47,7 +47,7 @@ const Content = (props: {
 };
 
 /**
- * The single element of the {@link Selector}, handling the enable and disable state
+ * The single element of the {@link Selector}, handling the enabled and disabled state
  * @param props
  * @constructor
  */
@@ -98,12 +98,14 @@ const Selector = (props: {
  */
 export const MvlBody = (props: Props): React.ReactElement => {
   const [mode, setMode] = useState<RenderMode>("plain");
-
+  const showSelector = NonEmptyString.is(props.body.html);
   return (
     <>
       <Content mode={mode} body={props.body} />
       <View spacer={true} small={true} />
-      <Selector currentValue={mode} onValueChanged={setMode} />
+      {showSelector && (
+        <Selector currentValue={mode} onValueChanged={setMode} />
+      )}
     </>
   );
 };
