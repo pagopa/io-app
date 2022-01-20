@@ -4,14 +4,20 @@ import { SafeAreaView } from "react-native";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps, confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { cgnActivationCancel } from "../../store/actions/activation";
 import image from "../../../../../../img/messages/empty-due-date-list-icon.png";
 import I18n from "../../../../../i18n";
 import { navigateToCgnDetails } from "../../navigation/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { isCgnDetailsLoading, isCgnEnrolledSelector } from "../../store/reducers/details";
+import {
+  isCgnDetailsLoading,
+  isCgnEnrolledSelector
+} from "../../store/reducers/details";
 import { cgnDetails } from "../../store/actions/details";
 import ActivityIndicator from "../../../../../components/ui/ActivityIndicator";
 
