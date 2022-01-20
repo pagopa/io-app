@@ -10,6 +10,7 @@ import BaseScreenComponent, {
 import I18n from "../../../i18n";
 import {
   loadMessageWithRelations,
+  MessageReadType,
   setMessageReadState
 } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
@@ -27,6 +28,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { InferNavigationParams } from "../../../types/react";
 import ServiceDetailsScreen from "../../services/ServiceDetailsScreen";
 
+import { hasMessagePaymentData } from "../../../utils/messages";
 import MessageDetails from "./MessageDetail";
 
 type MessageDetailScreenNavigationParams = {
@@ -58,7 +60,11 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     const { potMessage, isRead } = this.props;
     if (pot.isSome(potMessage) && !isRead) {
       // Set the message read state to TRUE
-      this.props.setMessageReadState(potMessage.value.id, true);
+      this.props.setMessageReadState(
+        potMessage.value.id,
+        true,
+        hasMessagePaymentData(potMessage.value) ? "payment" : "unknown"
+      );
     }
   };
 
@@ -162,8 +168,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadServiceDetail.request(serviceId)),
   loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
     dispatch(loadMessageWithRelations.request(meta)),
-  setMessageReadState: (messageId: string, isRead: boolean) =>
-    dispatch(setMessageReadState(messageId, isRead)),
+  setMessageReadState: (
+    messageId: string,
+    isRead: boolean,
+    messageType: MessageReadType
+  ) => dispatch(setMessageReadState(messageId, isRead, messageType)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => navigateToServiceDetailsScreen(params)

@@ -104,9 +104,11 @@ export const DEPRECATED_loadMessages = createAsyncAction(
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
+export type MessageReadType = "payment" | "unknown";
 export const setMessageReadState = createAction(
   "MESSAGES_SET_READ",
-  resolve => (id: string, read: boolean) => resolve({ id, read }, { id, read })
+  resolve => (id: string, read: boolean, messageType: MessageReadType) =>
+    resolve({ id, read, messageType }, { id, read })
 );
 
 export const setMessagesArchivedState = createAction(
