@@ -30,7 +30,7 @@ const CgnActivationIneligibleScreen = (props: Props): React.ReactElement => (
       type="SingleButton"
       leftButton={cancelButtonProps(
         props.onCancel,
-        I18n.t("global.buttons.exit")
+        I18n.t("global.buttons.close")
       )}
     />
   </SafeAreaView>

@@ -30,7 +30,7 @@ const CgnActivationPendingScreen = (props: Props): React.ReactElement => (
       type="SingleButton"
       leftButton={cancelButtonProps(
         props.onExit,
-        I18n.t("global.buttons.exit")
+        I18n.t("global.buttons.close")
       )}
     />
   </SafeAreaView>
