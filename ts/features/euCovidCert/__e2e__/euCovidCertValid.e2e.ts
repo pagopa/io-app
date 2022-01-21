@@ -12,12 +12,12 @@ const qrCodeTestId = "QRCode";
 const fullScreenQrCodeTestId = "FullScreenQRCode";
 
 describe("EuCovidCert Valid", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     await device.reloadReactNative();
     await ensureLoggedIn();
   });
 
-  it("should open a valid EuCovidCert", async () => {
+  it("should load all the messages", async () => {
     await waitFor(element(by.text(I18n.t("messages.contentTitle"))))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
@@ -25,7 +25,9 @@ describe("EuCovidCert Valid", () => {
     await waitFor(element(by.id(`MessageListItem_00000000000000000000000021`)))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
+  });
 
+  it("should find the valid EuCovidCert and open it", async () => {
     await waitFor(element(by.text(euCovidCertValidSubject)))
       .toBeVisible()
       .whileElement(by.id(messageListTestId))
@@ -33,7 +35,9 @@ describe("EuCovidCert Valid", () => {
 
     const subject = element(by.text(euCovidCertValidSubject));
     await subject.tap();
+  });
 
+  it("should check all the correct elements in the details page", async () => {
     await waitFor(element(by.text(euCovidCertValidTitle)))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
@@ -49,7 +53,9 @@ describe("EuCovidCert Valid", () => {
     await waitFor(element(by.id(qrCodeTestId)))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
+  });
 
+  it("should open the QRCode in fullscreen and return back to the details page", async () => {
     const qrCode = element(by.id(qrCodeTestId));
     await qrCode.tap();
 
@@ -61,9 +67,12 @@ describe("EuCovidCert Valid", () => {
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
 
+    // Return to the previous screen.
     const closeButton = element(by.text(I18n.t("global.buttons.close")));
     await closeButton.tap();
+  });
 
+  it("should save the QRCode in the gallery", async () => {
     await waitFor(element(by.text(I18n.t("global.genericSave"))))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
