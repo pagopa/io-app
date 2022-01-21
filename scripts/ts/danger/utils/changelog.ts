@@ -8,7 +8,7 @@ const storyTag = new Map<GenericTicketType, string>([
   ["feat", "feat"],
   ["fix", "fix"],
   ["chore", "chore"],
-  ["epic", "epic"]
+  ["epic", "feat"]
 ]);
 
 const storyOrder = new Map<GenericTicketType, number>([
