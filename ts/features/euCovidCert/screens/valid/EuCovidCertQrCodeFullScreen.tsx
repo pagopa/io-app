@@ -46,6 +46,7 @@ export const EuCovidCertQrCodeFullScreen = (
           <View spacer={true} extralarge={true} />
           <View spacer={true} extralarge={true} />
           <Image
+            testID="FullScreenQRCode"
             accessible={true}
             accessibilityRole={"image"}
             accessibilityLabel={I18n.t(

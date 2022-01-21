@@ -5,8 +5,11 @@ import { ensureLoggedIn } from "../../../__e2e__/utils";
 
 const euCovidCertValidSubject = "🏥 EUCovidCert - valid";
 const euCovidCertValidTitle = "Valid Certificate title";
+const euCovidCertValidSubTitle = "Valid Certificate sub title";
 
 const messageListTestId = "messageList";
+const qrCodeTestId = "QRCode";
+const fullScreenQrCodeTestId = "FullScreenQRCode";
 
 describe("EuCovidCert Valid", () => {
   beforeEach(async () => {
@@ -29,11 +32,43 @@ describe("EuCovidCert Valid", () => {
       .scroll(350, "down");
 
     const subject = element(by.text(euCovidCertValidSubject));
-
     await subject.tap();
 
     await waitFor(element(by.text(euCovidCertValidTitle)))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
+
+    await waitFor(element(by.text(euCovidCertValidSubTitle)))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    await waitFor(element(by.text(I18n.t("global.genericSave"))))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    await waitFor(element(by.id(qrCodeTestId)))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    const qrCode = element(by.id(qrCodeTestId));
+    await qrCode.tap();
+
+    await waitFor(element(by.id(fullScreenQrCodeTestId)))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    await waitFor(element(by.text(I18n.t("global.buttons.close"))))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    const closeButton = element(by.text(I18n.t("global.buttons.close")));
+    await closeButton.tap();
+
+    await waitFor(element(by.text(I18n.t("global.genericSave"))))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    const saveButton = element(by.text(I18n.t("global.genericSave")));
+    await saveButton.tap();
   });
 });
