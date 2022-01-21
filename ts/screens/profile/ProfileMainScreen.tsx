@@ -414,9 +414,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               this.debugListItem(
                 I18n.t("profile.main.clearAsyncStorage"),
                 () => {
-                  AsyncStorage.clear()
-                    .then(() => console.log("Cleared"))
-                    .catch(e => console.error(e));
+                  void AsyncStorage.clear();
                 },
                 true
               )}
@@ -424,7 +422,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               this.debugListItem(
                 I18n.t("profile.main.dumpAsyncStorage"),
                 () => {
-                  // eslint-disable no-console
+                  /* eslint-disable no-console */
                   console.log("[DUMP START]");
                   AsyncStorage.getAllKeys()
                     .then(keys => {
@@ -441,7 +439,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     })
                     .then(() => console.log("[DUMP END]"))
                     .catch(e => console.error(e));
-                  // eslint-enable no-console
+                  /* eslint-enable no-console */
                 },
                 false
               )}

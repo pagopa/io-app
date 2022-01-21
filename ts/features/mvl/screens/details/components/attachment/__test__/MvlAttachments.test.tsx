@@ -20,7 +20,7 @@ import { MvlAttachments } from "../MvlAttachments";
 const mockBottomSheetPresent = jest.fn();
 jest.mock("@gorhom/bottom-sheet", () => ({
   useBottomSheetModal: () => ({
-    present: () => mockBottomSheetPresent
+    present: () => mockBottomSheetPresent()
   })
 }));
 
@@ -31,6 +31,10 @@ const spy_handleDownloadResult = jest.spyOn(
 
 describe("MvlAttachments", () => {
   jest.useFakeTimers();
+
+  beforeEach(() => {
+    mockBottomSheetPresent.mockReset();
+  });
 
   describe("When there are no attachments", () => {
     it("Shouldn't be rendered", () => {
@@ -85,11 +89,10 @@ describe("MvlAttachments", () => {
           const { getByText } = renderComponent(props, preferences);
           const item = getByText(mvlMockPdfAttachment.displayName);
           await fireEvent(item, "onPress");
-          expect(mockBottomSheetPresent).not.toHaveBeenCalled();
+          expect(mockBottomSheetPresent).toHaveBeenCalled();
         });
 
         it("Should not call `handleDownloadResult`", async () => {
-          // mockHandleDownloadResult = jest.fn();
           const { getByText } = renderComponent(props, preferences);
           const item = getByText(mvlMockPdfAttachment.displayName);
           await fireEvent(item, "onPress");
@@ -109,7 +112,6 @@ describe("MvlAttachments", () => {
           expect(mockBottomSheetPresent).not.toHaveBeenCalled();
         });
         it("Should call `handleDownloadResult`", async () => {
-          // mockHandleDownloadResult = jest.fn();
           const { getByText } = renderComponent(props, preferences);
           const item = getByText(mvlMockPdfAttachment.displayName);
           await fireEvent(item, "onPress");
