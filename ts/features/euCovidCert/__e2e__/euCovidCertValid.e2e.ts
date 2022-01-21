@@ -55,7 +55,7 @@ describe("EuCovidCert Valid", () => {
       .withTimeout(e2eWaitRenderTimeout);
   });
 
-  it("should open the QRCode in fullscreen and return back to the details page", async () => {
+  it("should open the QRCode in fullscreen and return back", async () => {
     const qrCode = element(by.id(qrCodeTestId));
     await qrCode.tap();
 
@@ -67,7 +67,22 @@ describe("EuCovidCert Valid", () => {
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
 
-    // Return to the previous screen.
+    const closeButton = element(by.text(I18n.t("global.buttons.close")));
+    await closeButton.tap();
+  });
+
+  it("should open the certificate details page and return back", async () => {
+    await waitFor(element(by.text(I18n.t("global.buttons.details"))))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    const detailsButton = element(by.text(I18n.t("global.buttons.details")));
+    await detailsButton.tap();
+
+    await waitFor(element(by.text(I18n.t("global.buttons.close"))))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
     const closeButton = element(by.text(I18n.t("global.buttons.close")));
     await closeButton.tap();
   });
