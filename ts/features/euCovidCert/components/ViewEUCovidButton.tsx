@@ -26,6 +26,7 @@ export const ViewEUCovidButton = (props: Props) => (
     xsmall={true}
     bordered={false}
     style={IOStyles.flex}
+    testID="EuCovidCertCTA"
   >
     <IconFont name={"io-qr"} color={IOColors.white} />
     <Label color={"white"} style={styles.label}>
