@@ -9,6 +9,7 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import AsyncStorage from "@react-native-community/async-storage";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
@@ -408,6 +409,41 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 I18n.t("profile.main.forgetCurrentSession"),
                 dispatchSessionExpired,
                 true
+              )}
+            {isDevEnv &&
+              this.debugListItem(
+                I18n.t("profile.main.clearAsyncStorage"),
+                () => {
+                  AsyncStorage.clear()
+                    .then(() => console.log("Cleared"))
+                    .catch(e => console.error(e));
+                },
+                true
+              )}
+            {isDevEnv &&
+              this.debugListItem(
+                I18n.t("profile.main.dumpAsyncStorage"),
+                () => {
+                  // eslint-disable no-console
+                  console.log("[DUMP START]");
+                  AsyncStorage.getAllKeys()
+                    .then(keys => {
+                      console.log(`\tAvailable keys: ${keys.join(", ")}`);
+                      return Promise.all(
+                        keys.map(key =>
+                          AsyncStorage.getItem(key).then(value => {
+                            // if (/(features)|(euCovidCert)|(mvl)/.test(key)) {
+                            console.log(`\tValue for ${key}\n\t\t`, value);
+                            // }
+                          })
+                        )
+                      );
+                    })
+                    .then(() => console.log("[DUMP END]"))
+                    .catch(e => console.error(e));
+                  // eslint-enable no-console
+                },
+                false
               )}
           </React.Fragment>
         )}
