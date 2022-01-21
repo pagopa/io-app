@@ -1,8 +1,11 @@
+import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { isLeft, isRight } from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { GenericTicket, GenericTicketType } from "../common/ticket/types";
 import { GenericTicketRetrievalResults } from "./utils/titleParser";
+
+declare const danger: DangerDSLType;
 
 export declare function warn(message: string): void;
 export declare function markdown(message: string): void;
