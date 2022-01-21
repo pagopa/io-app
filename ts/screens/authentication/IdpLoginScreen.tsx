@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
   },
   flex2: {
     flex: 2
-  }
+  },
+  webViewWrapper: { flex: 1 }
 });
 
 /**
@@ -319,7 +320,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         }`}
       >
         {!hasError && (
-          <View style={{ backgroundColor: "blue", flex: 1 }}>
+          <View style={styles.webViewWrapper}>
             <WebView
               androidCameraAccessDisabled={true}
               androidMicrophoneAccessDisabled={true}
