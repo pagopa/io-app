@@ -354,7 +354,7 @@ class MessageList extends React.Component<Props, State> {
           ListFooterComponent={
             messageStates.length > 0 && <EdgeBorderComponent />
           }
-          testID="messagesList"
+          testID="messageList"
         />
       </React.Fragment>
     );

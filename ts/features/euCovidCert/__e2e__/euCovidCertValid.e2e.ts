@@ -1,12 +1,12 @@
 import { device } from "detox";
-
 import I18n from "../../../i18n";
 import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../__e2e__/utils";
 
 const euCovidCertValidSubject = "🏥 EUCovidCert - valid";
-const euCovidCertCTA = "EuCovidCertCTA";
-const messagesListId = "messagesList";
+const euCovidCertValidTitle = "Valid Certificate title";
+
+const messageListTestId = "messageList";
 
 describe("EuCovidCert Valid", () => {
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe("EuCovidCert Valid", () => {
     await ensureLoggedIn();
   });
 
-  it("open a valid EuCovidCert", async () => {
+  it("should open a valid EuCovidCert", async () => {
     await waitFor(element(by.text(I18n.t("messages.contentTitle"))))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
@@ -25,11 +25,15 @@ describe("EuCovidCert Valid", () => {
 
     await waitFor(element(by.text(euCovidCertValidSubject)))
       .toBeVisible()
-      .whileElement(by.id(messagesListId))
-      .scroll(250, "down");
+      .whileElement(by.id(messageListTestId))
+      .scroll(350, "down");
 
-    const cta = element(by.id(euCovidCertCTA)).atIndex(0);
+    const subject = element(by.text(euCovidCertValidSubject));
 
-    await cta.tap();
+    await subject.tap();
+
+    await waitFor(element(by.text(euCovidCertValidTitle)))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
   });
 });
