@@ -7,10 +7,12 @@ import { GenericTicket, GenericTicketType } from "../../common/ticket/types";
 const storyTag = new Map<GenericTicketType, string>([
   ["feat", "feat"],
   ["fix", "fix"],
-  ["chore", "chore"]
+  ["chore", "chore"],
+  ["epic", "epic"]
 ]);
 
 const storyOrder = new Map<GenericTicketType, number>([
+  ["epic", 3],
   ["feat", 2],
   ["fix", 1],
   ["chore", 0]
