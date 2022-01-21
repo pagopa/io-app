@@ -309,8 +309,7 @@ const rootPersistConfig: PersistConfig = {
   ],
   // Transform functions used to manipulate state on store/rehydrate
   // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
-  transforms: [DateISO8601Transform, PotTransform],
-  debug: true
+  transforms: [DateISO8601Transform, PotTransform]
 };
 
 const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
@@ -376,10 +375,10 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   >(persistedReducer, enhancer);
   const persistor = persistStore(store);
 
-  // if (isDebuggingInChrome) {
-  // eslint-disable-next-line
-  (window as any).store = store;
-  // }
+  if (isDebuggingInChrome) {
+    // eslint-disable-next-line
+    (window as any).store = store;
+  }
 
   // Run the main saga
   sagaMiddleware.run(rootSaga);

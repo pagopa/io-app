@@ -24,12 +24,6 @@ jest.mock("@gorhom/bottom-sheet", () => ({
   })
 }));
 
-// jeslint-disable-next-line functional/no-let
-// let mockHandleDownloadResult = jest.fn();
-// jest.mock("../../../../../utils", () => ({
-//   handleDownloadResult: (...args) =>
-// }));
-
 const spy_handleDownloadResult = jest.spyOn(
   utilsModule,
   "handleDownloadResult"
@@ -37,10 +31,6 @@ const spy_handleDownloadResult = jest.spyOn(
 
 describe("MvlAttachments", () => {
   jest.useFakeTimers();
-
-  // beforeEach(() => {
-  //   spy_handleDownloadResult.mockReset()
-  // })
 
   describe("When there are no attachments", () => {
     it("Shouldn't be rendered", () => {
