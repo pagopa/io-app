@@ -25,9 +25,13 @@ describe("EuCovidCert Valid", () => {
     await waitFor(element(by.id(`MessageListItem_00000000000000000000000021`)))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
+
+    await waitFor(element(by.id(`MessageListItem_00000000000000000000000001`)))
+      .toExist()
+      .withTimeout(e2eWaitRenderTimeout);
   });
 
-  it("should find the valid EuCovidCert and open it", async () => {
+  it("should find the valid EuCovidCert message and open it", async () => {
     await waitFor(element(by.text(euCovidCertValidSubject)))
       .toBeVisible()
       .whileElement(by.id(messageListTestId))
@@ -87,7 +91,7 @@ describe("EuCovidCert Valid", () => {
     await closeButton.tap();
   });
 
-  it("should save the QRCode in the gallery", async () => {
+  it("should save the certificate in the gallery", async () => {
     await waitFor(element(by.text(I18n.t("global.genericSave"))))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
