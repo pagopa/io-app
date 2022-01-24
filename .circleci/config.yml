@@ -41,6 +41,7 @@ defaults_macos: &defaults_macos
   <<: *defaults
   macos:
     xcode: "12.5.1"
+  resource_class: macos.x86.medium.gen2
   working_directory: /Users/distiller/italia-app
   environment:
     # Fastlane requires locale set to UTF-8
