@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
   },
   flex2: {
     flex: 2
-  }
+  },
+  webViewWrapper: { flex: 1 }
 });
 
 /**
@@ -305,7 +306,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     if (!loggedOutWithIdpAuth) {
       // This condition will be true only temporarily (if the navigation occurs
-      // before the redux state is updated succesfully)
+      // before the redux state is updated successfully)
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
     const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.id);
@@ -319,19 +320,21 @@ class IdpLoginScreen extends React.Component<Props, State> {
         }`}
       >
         {!hasError && (
-          <WebView
-            androidCameraAccessDisabled={true}
-            androidMicrophoneAccessDisabled={true}
-            textZoom={100}
-            originWhitelist={originSchemasWhiteList}
-            source={{ uri: loginUri }}
-            onError={this.handleLoadingError}
-            javaScriptEnabled={true}
-            onNavigationStateChange={this.handleNavigationStateChange}
-            onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-          />
+          <View style={styles.webViewWrapper}>
+            <WebView
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              textZoom={100}
+              originWhitelist={originSchemasWhiteList}
+              source={{ uri: loginUri }}
+              onError={this.handleLoadingError}
+              javaScriptEnabled={true}
+              onNavigationStateChange={this.handleNavigationStateChange}
+              onShouldStartLoadWithRequest={this.handleShouldStartLoading}
+            />
+            {this.renderMask()}
+          </View>
         )}
-        {this.renderMask()}
       </BaseScreenComponent>
     );
   }
