@@ -2,7 +2,7 @@ import { jiraTicketBaseUrl } from "./jira";
 import { JiraIssueType, RemoteJiraTicket } from "./jira/types";
 import { PivotalStory, PivotalStoryType } from "./pivotal/types";
 
-export type GenericTicketType = "feat" | "fix" | "chore";
+export type GenericTicketType = "feat" | "fix" | "chore" | "epic";
 
 /**
  * A generic representation of a ticket, platform independent
@@ -32,7 +32,7 @@ const convertJiraTypeToGeneric = (
     case "Bug":
       return "fix";
     case "Epic":
-      return "feat";
+      return "epic";
     case "Sub-task":
     case "Sottotask":
       return "chore";
