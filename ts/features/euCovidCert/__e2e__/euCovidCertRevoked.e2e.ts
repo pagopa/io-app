@@ -8,6 +8,7 @@ const euCovidCertRevokedTitle = "Revoked Certificate title";
 const euCovidCertRevokedSubTitle = "Revoked Certificate sub title";
 
 const messageListTestId = "messageList";
+const learnMoreLinkTestId = "euCovidCertLearnMoreLink";
 
 describe("EuCovidCert Revoked", () => {
   beforeAll(async () => {
@@ -45,6 +46,10 @@ describe("EuCovidCert Revoked", () => {
       .withTimeout(e2eWaitRenderTimeout);
 
     await waitFor(element(by.text(euCovidCertRevokedSubTitle)))
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    await waitFor(element(by.id(learnMoreLinkTestId)))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
   });
