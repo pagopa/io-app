@@ -108,7 +108,7 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
               color={"bluegrey"}
               weight={"SemiBold"}
               ellipsizeMode={"middle"}
-              numberOfLines={1}
+              numberOfLines={2}
             >
               {props.attachment.displayName}
             </H3>
