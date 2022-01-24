@@ -29,8 +29,8 @@ import { InferNavigationParams } from "../../../types/react";
 import ServiceDetailsScreen from "../../services/ServiceDetailsScreen";
 
 import { hasMessagePaymentData } from "../../../utils/messages";
-import MessageDetails from "./MessageDetail";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
+import MessageDetails from "./MessageDetail";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
