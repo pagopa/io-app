@@ -10,10 +10,10 @@ import {
 } from "../actions";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
-export type PaypalOnOnboardingCompletedState = {
-  onCompleted: OnOnboardingCompleted | undefined;
-  outcome: string | undefined;
-};
+export type PaypalOnOnboardingCompletedState = Partial<{
+  onCompleted: OnOnboardingCompleted;
+  outcome: string;
+}>;
 const initialState: PaypalOnOnboardingCompletedState = {
   onCompleted: undefined,
   outcome: undefined
