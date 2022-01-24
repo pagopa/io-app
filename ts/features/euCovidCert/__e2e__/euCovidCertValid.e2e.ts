@@ -9,7 +9,7 @@ const euCovidCertValidSubTitle = "Valid Certificate sub title";
 
 const messageListTestId = "messageList";
 const qrCodeTestId = "QRCode";
-const fullScreenQrCodeTestId = "FullScreenQRCode";
+const fullScreenQrCodeTestId = "fullScreenQRCode";
 
 describe("EuCovidCert Valid", () => {
   beforeAll(async () => {
