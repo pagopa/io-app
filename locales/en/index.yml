@@ -636,6 +636,8 @@ authentication:
         unknownCardTitle: Unknown card
         unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
         unknownCardHelpLink: What is the Electronic Identity Card?
+    dataUsageConsent:
+      retryCTA: Entra
   spid: SPID
   spid_information_request:
     headerTitle: Insert email address
@@ -702,7 +704,7 @@ authentication:
       error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
       error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
       error_21: "It's been too long since you started accessing: please start over again."
-      error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
+      error_22: "You have not shared your data.\nIn order to use IO, you must agree to the sending of some data. Enter again and give your consent."
       error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
       error_25: "You have canceled the login operation: you can try again whenever you want."
       error_1001: "Access Denied: You are not of the minimum age required to use IO"

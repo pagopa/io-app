@@ -61,7 +61,12 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     };
   }
 
-  private showAbortAlert = () => {
+  private showAbortAlert = (): boolean => {
+    // if the screen is in error state, skip the confirmation alert to go back at the landing screen
+    if (this.state.hasError) {
+      this.props.resetNavigation();
+      return true;
+    }
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -137,7 +142,10 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         : "authentication.errors.network.title";
       return (
         <GenericErrorComponent
-          onRetry={this.showAbortAlert}
+          retryButtonTitle={I18n.t(
+            "authentication.cie.dataUsageConsent.retryCTA"
+          )}
+          onRetry={this.props.resetNavigation}
           onCancel={undefined}
           image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
           text={I18n.t(errorTranslationKey, {
@@ -163,9 +171,10 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   public render(): React.ReactNode {
+    const goBack = this.state.hasError ? false : this.showAbortAlert;
     return (
       <TopScreenComponent
-        goBack={this.showAbortAlert}
+        goBack={goBack}
         headerTitle={I18n.t("authentication.cie.genericTitle")}
       >
         {this.getContent()}

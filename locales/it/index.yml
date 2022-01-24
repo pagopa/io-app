@@ -644,6 +644,8 @@ authentication:
         unknownCardTitle: Carta sconosciuta
         unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+    dataUsageConsent:
+      retryCTA: Entra
   spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
@@ -716,7 +718,7 @@ authentication:
       error_19: "Hai inserito troppe volte un nome utente o una password non corretti: riprova fra qualche minuto o contatta il tuo fornitore di identità SPID per cambiare le tue credenziali."
       error_20: "Per motivi di sicurezza IO richiede un login con un secondo fattore di autenticazione: contatta il tuo fornitore di identità SPID per capire come si usa."
       error_21: "È passato troppo tempo da quando hai iniziato l'accesso: per piacere riparti dall'inizio."
-      error_22: "Per usare IO è necessario consentire l'accesso ad alcuni dei tuoi dati: accedi nuovamente e dai il tuo consenso al passaggio di dati."
+      error_22: "Non hai condiviso i tuoi dati.\nPer poter usare IO, devi acconsentire all'invio di alcuni dati. Entra di nuovo e dai il tuo consenso."
       error_23: "La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, contatta il tuo fornitore di identità SPID."
       error_25: "Hai annullato l'operazione di login: puoi riprovare quando vuoi."
       error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
