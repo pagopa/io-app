@@ -94,5 +94,30 @@ describe("EuCovidCert Valid", () => {
 
     const saveButton = element(by.text(I18n.t("global.genericSave")));
     await saveButton.tap();
+
+    await waitFor(
+      element(
+        by.text(
+          I18n.t(
+            "features.euCovidCertificate.save.bottomSheet.saveAsImage.title"
+          )
+        )
+      )
+    )
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    const saveIntoGalleryButton = element(
+      by.text(
+        I18n.t("features.euCovidCertificate.save.bottomSheet.saveAsImage.title")
+      )
+    );
+    await saveIntoGalleryButton.tap();
+
+    await waitFor(
+      element(by.text(I18n.t("features.euCovidCertificate.save.ok")))
+    )
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
   });
 });
