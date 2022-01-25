@@ -72,8 +72,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: "100%",
-    minHeight: 24,
-    backgroundColor: "red"
+    minHeight: 24
   },
   text3SubContainer: {
     flexGrow: 1,
