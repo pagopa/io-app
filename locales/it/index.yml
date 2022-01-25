@@ -1201,7 +1201,7 @@ wallet:
     contextualHelpTitle: Salva una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
-    title: "E' tutto corretto?"
+    title: "È tutto corretto?"
     subtitle: "Aggiungendo la carta al tuo Portafoglio, potrai effettuare pagamenti in app e aderire alle iniziative disponibili su IO."
     infoTitle: "Usa come metodo preferito"
     info: "Quando paghi in app, IO ti mostra in automatico questo metodo di pagamento"
