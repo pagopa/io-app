@@ -16,6 +16,7 @@ import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCateg
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import * as navigationAction from "../../store/actions/navigation";
 import * as mixpanel from "../../../../mixpanel";
+import { ReactTestInstance } from "react-test-renderer";
 
 jest.useFakeTimers();
 
@@ -49,6 +50,9 @@ const mockedZendeskSubcategories: ZendeskSubCategories = {
 };
 
 describe("the ZendeskChooseCategory screen", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   const zendeskSupportFailureSpy = jest.spyOn(
     zendeskAction,
     "zendeskSupportFailure"
@@ -56,16 +60,21 @@ describe("the ZendeskChooseCategory screen", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   describe("should call the zendeskSupportFailure", () => {
-    // eslint-disable-next-line functional/no-let
-    let store: Store<GlobalState>;
-    beforeEach(() => {
-      store = createStore(appReducer, globalState as any);
-      renderComponent(store);
-    });
     it("if the ZendeskConfig is not ready", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      renderComponent(store);
       store.dispatch(getZendeskConfig.request());
+      expect(zendeskSupportFailureSpy).toBeCalled();
     });
     it("if there isn't a category id", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      renderComponent(store);
       store.dispatch(
         getZendeskConfig.success({
           ...mockedZendeskConfig,
@@ -74,29 +83,30 @@ describe("the ZendeskChooseCategory screen", () => {
           } as ZendeskCategories
         })
       );
+      expect(zendeskSupportFailureSpy).toBeCalled();
     });
     it("if there isn't at least a category", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      renderComponent(store);
       store.dispatch(
         getZendeskConfig.success({
           panicMode: mockedZendeskConfig.panicMode
         })
       );
-    });
-    afterAll(() => {
       expect(zendeskSupportFailureSpy).toBeCalled();
     });
   });
 
   describe("if the Zendesk config is ready and there is at least a category", () => {
-    // eslint-disable-next-line functional/no-let
-    let store: Store<GlobalState>;
-    // eslint-disable-next-line functional/no-let
-    let component: RenderAPI;
-    beforeEach(() => {
-      store = createStore(appReducer, globalState as any);
-      component = renderComponent(store);
-    });
     it("should render the received categories", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store);
       store.dispatch(
         getZendeskConfig.success({
           ...mockedZendeskConfig,
@@ -123,12 +133,16 @@ describe("the ZendeskChooseCategory screen", () => {
         )
       ).toBeNull();
     });
-
     it("should call the addTicketCustomField and the navigateToZendeskChooseSubCategory functions when press the category if it has sub-categories", () => {
       const navigateToZendeskChooseSubCategorySpy = jest.spyOn(
         navigationAction,
         "navigateToZendeskChooseSubCategory"
       );
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store);
       store.dispatch(
         getZendeskConfig.success({
           ...mockedZendeskConfig,
@@ -143,7 +157,7 @@ describe("the ZendeskChooseCategory screen", () => {
           } as ZendeskCategories
         })
       );
-      const categoryItem = component.getByTestId(
+      const categoryItem: ReactTestInstance = component.getByTestId(
         mockedZendeskConfig.zendeskCategories?.categories[0].value as string
       );
       fireEvent(categoryItem, "onPress");
@@ -156,8 +170,13 @@ describe("the ZendeskChooseCategory screen", () => {
         zendeskAction,
         "zendeskSupportCompleted"
       );
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store);
       store.dispatch(getZendeskConfig.success(mockedZendeskConfig));
-      const categoryItem = component.getByTestId(
+      const categoryItem: ReactTestInstance = component.getByTestId(
         mockedZendeskConfig.zendeskCategories?.categories[0].value as string
       );
       fireEvent(categoryItem, "onPress");

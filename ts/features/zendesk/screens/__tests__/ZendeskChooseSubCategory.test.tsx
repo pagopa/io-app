@@ -13,6 +13,7 @@ import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCateg
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import * as mixpanel from "../../../../mixpanel";
 import ZendeskChooseSubCategory from "../ZendeskChooseSubCategory";
+import { ReactTestInstance } from "react-test-renderer";
 
 jest.useFakeTimers();
 
@@ -47,6 +48,9 @@ const mockedCategoryWithSubcategory: ZendeskCategory = {
 };
 
 describe("the ZendeskChooseSubCategory screen", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   const zendeskSupportFailureSpy = jest.spyOn(
     zendeskAction,
     "zendeskSupportFailure"
@@ -54,33 +58,33 @@ describe("the ZendeskChooseSubCategory screen", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   describe("should call the zendeskSupportFailure", () => {
-    // eslint-disable-next-line functional/no-let
-    let store: Store<GlobalState>;
-    beforeEach(() => {
-      store = createStore(appReducer, globalState as any);
+    it("if the selectedCategory is undefined", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
       renderComponent(store);
+      expect(zendeskSupportFailureSpy).toBeCalled();
     });
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    it("if the selectedCategory is undefined", () => {});
     it("if the selected category has not sub-categories", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      renderComponent(store);
       store.dispatch(zendeskSelectedCategory(mockedCategory));
-    });
-    afterAll(() => {
       expect(zendeskSupportFailureSpy).toBeCalled();
     });
   });
 
   describe("if the selected category is defined and has at least a subcategory", () => {
-    // eslint-disable-next-line functional/no-let
-    let store: Store<GlobalState>;
-    // eslint-disable-next-line functional/no-let
-    let component: RenderAPI;
-    beforeEach(() => {
-      store = createStore(appReducer, globalState as any);
-      component = renderComponent(store);
-      store.dispatch(zendeskSelectedCategory(mockedCategoryWithSubcategory));
-    });
     it("should render the subcategory", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store);
+      store.dispatch(zendeskSelectedCategory(mockedCategoryWithSubcategory));
       expect(
         component.queryByTestId(
           mockedZendeskSubcategories.subCategories[0].value as string
@@ -93,7 +97,13 @@ describe("the ZendeskChooseSubCategory screen", () => {
         zendeskAction,
         "zendeskSupportCompleted"
       );
-      const subCategoryItem = component.getByTestId(
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store);
+      store.dispatch(zendeskSelectedCategory(mockedCategoryWithSubcategory));
+      const subCategoryItem: ReactTestInstance = component.getByTestId(
         mockedZendeskSubcategories.subCategories[0].value as string
       );
       fireEvent(subCategoryItem, "onPress");

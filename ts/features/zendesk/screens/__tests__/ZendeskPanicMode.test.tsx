@@ -8,6 +8,7 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 import ZendeskPanicMode from "../ZendeskPanicMode";
 import * as zendeskAction from "../../store/actions";
+import { ReactTestInstance } from "react-test-renderer";
 
 jest.useFakeTimers();
 
@@ -32,7 +33,7 @@ describe("the ZendeskPanicMode screen", () => {
       globalState as any
     );
     const component: RenderAPI = renderComponent(store);
-    const closeButton = component.getByTestId("closeButton");
+    const closeButton: ReactTestInstance = component.getByTestId("closeButton");
     fireEvent(closeButton, "onPress");
     expect(zendeskWorkunitCompletedSpy).toBeCalled();
   });

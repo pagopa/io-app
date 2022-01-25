@@ -52,50 +52,67 @@ const mockedZendeskConfig: Zendesk = {
 };
 
 describe("the ZendeskAskPermissions screen", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   jest.spyOn(device, "getModel").mockReturnValue("mockedModel");
   jest.spyOn(device, "getSystemVersion").mockReturnValue("mockedSystemVersion");
   jest.spyOn(appVersion, "getAppVersion").mockReturnValue("mockedVersion");
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   it("should render the screen container", () => {
-    const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store, true);
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("ZendeskAskPermissions")).toBeDefined();
   });
 
   it("should render the paymentIssues item if assistanceForPayment prop is true", () => {
-    const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store, true);
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("paymentIssues")).toBeDefined();
   });
   it("shouldn't render the paymentIssues item if assistanceForPayment prop is false", () => {
-    const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store, false);
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    const component: RenderAPI = renderComponent(store, false);
     expect(component.queryByTestId("paymentIssues")).toBeNull();
   });
   it("shouldn't render identityProvider, fiscalCode, nameSurname, email items if are not available", () => {
-    const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store, false);
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    const component: RenderAPI = renderComponent(store, false);
     expect(component.queryByTestId("identityProvider")).toBeNull();
     expect(component.queryByTestId("profileFiscalCode")).toBeNull();
     expect(component.queryByTestId("profileNameSurname")).toBeNull();
     expect(component.queryByTestId("profileEmail")).toBeNull();
   });
   it("should render identityProvider if is available", () => {
-    const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store, false);
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    const component: RenderAPI = renderComponent(store, false);
     store.dispatch(idpSelected(mockedIdp));
     expect(component.queryByTestId("identityProvider")).not.toBeNull();
   });
   describe("if user is logged in", () => {
-    // eslint-disable-next-line functional/no-let
-    let store: Store<GlobalState>;
-    // eslint-disable-next-line functional/no-let
-    let component: RenderAPI;
-
-    beforeEach(() => {
-      store = createStore(appReducer, globalState as any);
-      component = renderComponent(store, false);
+    it("should render fiscalCode if is available", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store, false);
       store.dispatch(idpSelected(mockedIdp));
       store.dispatch(
         loginSuccess({
@@ -103,9 +120,6 @@ describe("the ZendeskAskPermissions screen", () => {
           token: "123456" as SessionToken
         })
       );
-    });
-
-    it("should render fiscalCode if is available", () => {
       store.dispatch(
         profileLoadSuccess({
           fiscal_code: "mockedFiscalCode"
@@ -114,6 +128,18 @@ describe("the ZendeskAskPermissions screen", () => {
       expect(component.queryByTestId("profileFiscalCode")).not.toBeNull();
     });
     it("should render nameSurname if is available", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store, false);
+      store.dispatch(idpSelected(mockedIdp));
+      store.dispatch(
+        loginSuccess({
+          idp: "test",
+          token: "123456" as SessionToken
+        })
+      );
       store.dispatch(
         profileLoadSuccess({
           family_name: "mockedFamilyName",
@@ -123,6 +149,18 @@ describe("the ZendeskAskPermissions screen", () => {
       expect(component.queryByTestId("profileNameSurname")).not.toBeNull();
     });
     it("should render email if is available", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store, false);
+      store.dispatch(idpSelected(mockedIdp));
+      store.dispatch(
+        loginSuccess({
+          idp: "test",
+          token: "123456" as SessionToken
+        })
+      );
       store.dispatch(
         profileLoadSuccess({
           email: "mockedEmail"
@@ -139,8 +177,11 @@ describe("the ZendeskAskPermissions screen", () => {
       zendeskAction,
       "zendeskSupportCompleted"
     );
-    const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store, false);
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    const component: RenderAPI = renderComponent(store, false);
     const cancelButton = component.getByTestId("cancelButtonId");
     fireEvent(cancelButton, "onPress");
     expect(openWebUrlSpy).toBeCalled();
@@ -150,35 +191,45 @@ describe("the ZendeskAskPermissions screen", () => {
 
   describe("when the continue button is pressed", () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "mixpanelTrack");
-    // eslint-disable-next-line functional/no-let
-    let store: Store<GlobalState>;
-    // eslint-disable-next-line functional/no-let
-    let component: RenderAPI;
-    // eslint-disable-next-line functional/no-let
-    let continueButton: ReactTestInstance;
-
-    beforeEach(() => {
-      store = createStore(appReducer, globalState as any);
-    });
 
     describe("should call the openSupportTicket, the mixpanelTrack and the workUnitCompleted functions", () => {
       it("if the zendeskConfig is not ready", () => {
-        component = renderComponent(store, false);
+        const store: Store<GlobalState> = createStore(
+          appReducer,
+          globalState as any
+        );
+        const component: RenderAPI = renderComponent(store, false);
         store.dispatch(getZendeskConfig.request());
+        const continueButton: ReactTestInstance =
+          component.getByTestId("continueButtonId");
+        fireEvent(continueButton, "onPress");
+        expect(mixpanelTrackSpy).toBeCalled();
+        expect(MockZendesk.openTicket).toBeCalled();
       });
       it("if the assistanceForPayment prop is true", () => {
-        component = renderComponent(store, true);
+        const store: Store<GlobalState> = createStore(
+          appReducer,
+          globalState as any
+        );
+        const component: RenderAPI = renderComponent(store, true);
         store.dispatch(getZendeskConfig.success(mockedZendeskConfig));
+        const continueButton: ReactTestInstance =
+          component.getByTestId("continueButtonId");
+        fireEvent(continueButton, "onPress");
+        expect(mixpanelTrackSpy).toBeCalled();
+        expect(MockZendesk.openTicket).toBeCalled();
       });
       it("if the there are no category", () => {
-        component = renderComponent(store, false);
+        const store: Store<GlobalState> = createStore(
+          appReducer,
+          globalState as any
+        );
+        const component: RenderAPI = renderComponent(store, false);
         store.dispatch(
           getZendeskConfig.success({ panicMode: mockedZendeskConfig.panicMode })
         );
-      });
-
-      afterEach(() => {
-        continueButton = component.getByTestId("continueButtonId");
+        const continueButton: ReactTestInstance =
+          component.getByTestId("continueButtonId");
         fireEvent(continueButton, "onPress");
         expect(mixpanelTrackSpy).toBeCalled();
         expect(MockZendesk.openTicket).toBeCalled();
@@ -190,9 +241,15 @@ describe("the ZendeskAskPermissions screen", () => {
         navigationAction,
         "navigateToZendeskChooseCategory"
       );
-      component = renderComponent(store, false);
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      const component: RenderAPI = renderComponent(store, false);
       store.dispatch(getZendeskConfig.success(mockedZendeskConfig));
-      continueButton = component.getByTestId("continueButtonId");
+
+      const continueButton: ReactTestInstance =
+        component.getByTestId("continueButtonId");
       fireEvent(continueButton, "onPress");
       expect(navigateToZendeskChooseCategorySpy).toBeCalled();
     });
