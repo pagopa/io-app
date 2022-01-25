@@ -26,7 +26,6 @@ import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
-import { IOStyles } from "../../core/variables/IOStyles";
 
 interface BaseProps {
   wallet: Wallet;
@@ -109,11 +108,7 @@ export default class CardComponent extends React.Component<Props> {
   };
 
   private renderTopRightCorner() {
-    if (
-      this.props.type === "Preview" ||
-      this.props.type === "Picking" ||
-      this.props.type === "Full"
-    ) {
+    if (this.props.type === "Preview" || this.props.type === "Picking") {
       const { wallet } = this.props;
       return (
         <View style={styles.cardLogo}>
@@ -199,8 +194,8 @@ export default class CardComponent extends React.Component<Props> {
     const getBodyIcon = () => {
       switch (type) {
         case "Picking":
-        case "Full":
           return null;
+        case "Full":
         case "Header":
           return (
             <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
