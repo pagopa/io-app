@@ -18,7 +18,7 @@ const initialState: PaypalOnOnboardingCompletedState = {
   onCompleted: undefined,
   outcome: undefined
 };
-const onboardingCompletedSelector = (
+const onboardingCompletedReducer = (
   state: PaypalOnOnboardingCompletedState = initialState,
   action: Action
 ): PaypalOnOnboardingCompletedState => {
@@ -45,4 +45,4 @@ export const paypalOnboardingOutcomeCodeSelector = (
 ): PaypalOnOnboardingCompletedState["outcome"] =>
   state.wallet.onboarding.paypal.onboardingCompletion.outcome;
 
-export default onboardingCompletedSelector;
+export default onboardingCompletedReducer;
