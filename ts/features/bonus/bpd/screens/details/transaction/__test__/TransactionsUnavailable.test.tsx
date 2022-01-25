@@ -2,11 +2,16 @@ import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
+import { some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
 import BPD_ROUTES from "../../../../navigation/routes";
 import TransactionsUnavailable from "../TransactionsUnavailable";
+import { ToolEnum } from "../../../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../../../definitions/content/Config";
+import { BackendStatus } from "../../../../../../../../definitions/content/BackendStatus";
 
 describe("TransactionsUnavailable component", () => {
   const mockStore = configureMockStore();
@@ -23,7 +28,13 @@ describe("TransactionsUnavailable component", () => {
       authentication: {
         kind: "LoggedOutWithoutIdp",
         reason: "NOT_LOGGED_IN"
-      }
+      },
+      backendStatus: {
+        status: some({
+          config: { assistanceTool: { tool: ToolEnum.none } } as Config
+        } as BackendStatus)
+      },
+      profile: pot.some({ is_email_validated: true })
     });
   });
 

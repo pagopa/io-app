@@ -23,6 +23,8 @@
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <!-- Force removal of ACCESS_WIFI_STATE see https://pagopa.atlassian.net/browse/IA-557 -->
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" tools:node="remove" />
   <!-- Force removal of READ_PHONE_STATE due to react-native-device-info library see https://github.com/react-native-community/react-native-device-info/issues/955 -->
   <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
   <!-- Force removal of RECORD_AUDIO since the app doesn't need it see https://www.pivotaltracker.com/story/show/171897210 -->
@@ -107,6 +109,21 @@
 
     <!-- END Mixpanel -->
 
+    <!-- Zendesk activities style -->
+    <activity android:name="zendesk.support.guide.HelpCenterActivity"
+      android:theme="@style/ZendeskTheme" />
+
+    <activity android:name="zendesk.support.guide.ViewArticleActivity"
+      android:theme="@style/ZendeskTheme" />
+
+    <activity android:name="zendesk.support.request.RequestActivity"
+      android:theme="@style/ZendeskTheme" />
+
+    <activity android:name="zendesk.support.requestlist.RequestListActivity"
+      android:theme="@style/ZendeskTheme" />
+    <activity android:name="zendesk.messaging.MessagingActivity"
+      android:theme="@style/ZendeskTheme" />
+    <!-- END Zendesk -->
 
     <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:windowSoftInputMode="adjustResize">
       <intent-filter>

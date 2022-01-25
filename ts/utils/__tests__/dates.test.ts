@@ -1,8 +1,14 @@
-import { getMonth, getYear, subMonths } from "date-fns";
-import MockDate from "mockdate";
+import { getMonth, getYear } from "date-fns";
 import { left, right } from "fp-ts/lib/Either";
-import { formatDateAsShortFormat, getExpireStatus, isExpired } from "../dates";
-import I18n from "../../i18n";
+import MockDate from "mockdate";
+import { range } from "fp-ts/lib/Array";
+import I18n, { availableTranslations, setLocale } from "../../i18n";
+import {
+  formatDateAsShortFormat,
+  formatDateAsShortFormatUTC,
+  getExpireStatus,
+  isExpired
+} from "../dates";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -35,13 +41,20 @@ describe("getExpireStatus", () => {
     expect(isExpired("2", "04")).toEqual(right(true));
   });
 
-  it("should mark the date as expired since we're passing the last month", () => {
-    const now = new Date(2020, 1, 1);
+  it("shouldn't mark the date as expired when passing as argument the current month", () => {
+    // 01/01/2020
+    MockDate.set(new Date(2020, 0, 1));
+    expect(isExpired(1, 2020)).toEqual(right(false));
+    // 31/01/2020
+    MockDate.set(new Date(2020, 0, 31));
+    expect(isExpired(1, 2020)).toEqual(right(false));
+  });
+
+  it("should mark the date as expired when passing as argument the previous month", () => {
+    // 01/01/2020
+    const now = new Date(2020, 0, 1);
     MockDate.set(now);
-    const aMonthBefore = subMonths(now, 1);
-    expect(
-      isExpired(getMonth(aMonthBefore) + 1, getYear(aMonthBefore))
-    ).toEqual(right(true));
+    expect(isExpired(12, 2019)).toEqual(right(true));
   });
 
   it("should mark the card as valid, not expired", () => {
@@ -59,15 +72,29 @@ describe("getExpireStatus", () => {
 });
 
 describe("formatDateAsShortFormat", () => {
-  const toTest: ReadonlyArray<[Date, string]> = [
-    [new Date(1970, 0, 1), "01/01/1970"],
-    [new Date(2020, 10, 30), "30/11/2020"],
-    [new Date(1900, 5, 5), "05/06/1900"],
-    [new Date(1900, 13, 55), "27/03/1901"], // handle the overflow,
-    [new Date("not a date"), I18n.t("global.date.invalid")] // handle invalid date
-  ];
+  availableTranslations.forEach(locale => {
+    setLocale(locale);
+    const toTest: ReadonlyArray<[Date, string]> = [
+      [new Date(1970, 0, 1), "01/01/1970"],
+      [new Date(2020, 10, 30), "30/11/2020"],
+      [new Date(1900, 5, 5), "05/06/1900"],
+      [new Date(1900, 13, 55), "27/03/1901"], // handle the overflow,
+      [new Date("not a date"), I18n.t("global.date.invalid")] // handle invalid date
+    ];
+    toTest.forEach(tt => {
+      expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
+    });
+  });
+});
+
+describe("formatDateAsShortFormatUTC", () => {
+  const expected = "12/01/1983";
+  const toTest: ReadonlyArray<Date> = range(0, 23).map(
+    value =>
+      new Date(`1983-01-12T${value.toString().padStart(2, "0")}:00:00.000Z`)
+  );
 
   toTest.forEach(tt => {
-    expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
+    expect(formatDateAsShortFormatUTC(tt)).toEqual(expected);
   });
 });

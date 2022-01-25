@@ -13,7 +13,8 @@ export declare function markdown(message: string): void;
 const StoryEmoji: Record<GenericTicketType, string> = {
   feat: "🌟",
   fix: "🐞",
-  chore: "⚙️"
+  chore: "⚙️",
+  epic: "⚡"
 };
 
 /**
@@ -51,7 +52,6 @@ const renderTickets = (ticketList: ReadonlyArray<GenericTicket>) => {
       return `  * ${renderTicket(s)}${subtask}`;
     })
     .join("\n");
-
   markdown(`
 ## Affected stories
 ${ticketListToString}\n`);

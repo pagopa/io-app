@@ -11,6 +11,8 @@ import { Action } from "../actions/types";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { cgnMerchantsV2Enabled } from "../../config";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -60,10 +62,37 @@ export const bpdRemoteConfigSelector = createSelector(
 export const cgnMerchantVersionSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean | undefined =>
+    cgnMerchantsV2Enabled &&
     backendStatus
       .mapNullable(bs => bs.config)
-      .mapNullable(config => config.cgn_merchants_v2)
+      .mapNullable(config => config.cgn.merchants_v2)
       .toUndefined()
+);
+
+export const assistanceToolConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): ToolEnum | undefined =>
+    backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
+);
+
+/**
+ * return the remote config about paypal enabled/disabled
+ * if there is no data, false is the default value -> (paypal disabled)
+ */
+export const isPaypalEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.paypal.enabled).toUndefined() ?? false
+);
+
+/**
+ * return the remote config about CGN enabled/disabled
+ * if there is no data, false is the default value -> (CGN disabled)
+ */
+export const isCGNEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.cgn.enabled).toUndefined() ?? false
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times

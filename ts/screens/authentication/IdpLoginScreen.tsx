@@ -12,7 +12,7 @@ import {
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
-import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import { TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -43,6 +43,12 @@ import {
 } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { getUrlBasepath } from "../../utils/url";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../utils/supportAssistance";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type Props = NavigationStackScreenProps &
@@ -100,7 +106,8 @@ const styles = StyleSheet.create({
   },
   flex2: {
     flex: 2
-  }
+  },
+  webViewWrapper: { flex: 1 }
 });
 
 /**
@@ -114,6 +121,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
       requestState: pot.noneLoading
     };
   }
+
+  private choosenTool = assistanceToolRemoteConfig(
+    this.props.assistanceToolConfig
+  );
 
   get idp(): string {
     return this.props.loggedOutWithIdpAuth?.idp.id ?? "n/a";
@@ -147,8 +158,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
         `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
     );
 
-    instabugLog(logText, TypeLogs.ERROR, "login");
-    Instabug.appendTags([loginFailureTag]);
+    handleSendAssistanceLog(this.choosenTool, logText, TypeLogs.ERROR, "login");
+    if (this.choosenTool === ToolEnum.instabug) {
+      Instabug.appendTags([loginFailureTag]);
+    }
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
@@ -156,8 +169,15 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    instabugLog(`login success`, TypeLogs.DEBUG, "login");
-    Instabug.resetTags();
+    handleSendAssistanceLog(
+      this.choosenTool,
+      `login success`,
+      TypeLogs.DEBUG,
+      "login"
+    );
+    if (this.choosenTool === ToolEnum.instabug) {
+      Instabug.resetTags();
+    }
     this.props.dispatchLoginSuccess(token, this.idp);
   };
 
@@ -286,7 +306,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     if (!loggedOutWithIdpAuth) {
       // This condition will be true only temporarily (if the navigation occurs
-      // before the redux state is updated succesfully)
+      // before the redux state is updated successfully)
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
     const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.id);
@@ -300,19 +320,21 @@ class IdpLoginScreen extends React.Component<Props, State> {
         }`}
       >
         {!hasError && (
-          <WebView
-            androidCameraAccessDisabled={true}
-            androidMicrophoneAccessDisabled={true}
-            textZoom={100}
-            originWhitelist={originSchemasWhiteList}
-            source={{ uri: loginUri }}
-            onError={this.handleLoadingError}
-            javaScriptEnabled={true}
-            onNavigationStateChange={this.handleNavigationStateChange}
-            onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-          />
+          <View style={styles.webViewWrapper}>
+            <WebView
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              textZoom={100}
+              originWhitelist={originSchemasWhiteList}
+              source={{ uri: loginUri }}
+              onError={this.handleLoadingError}
+              javaScriptEnabled={true}
+              onNavigationStateChange={this.handleNavigationStateChange}
+              onShouldStartLoadWithRequest={this.handleShouldStartLoading}
+            />
+            {this.renderMask()}
+          </View>
         )}
-        {this.renderMask()}
       </BaseScreenComponent>
     );
   }
@@ -332,7 +354,8 @@ const mapStateToProps = (state: GlobalState) => {
     loggedInAuth: isLoggedIn(state.authentication)
       ? state.authentication
       : undefined,
-    selectedIdpTextData
+    selectedIdpTextData,
+    assistanceToolConfig: assistanceToolConfigSelector(state)
   };
 };
 

@@ -106,12 +106,15 @@ global:
     tomorrow: "domani"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    shortFormatWithTime: "%d/%m/%Y, %H:%M"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
     fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
+    timeFormat: "%H:%M"
+    timeFormatWithTimezone: "%H:%M:%S (%z)"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -388,8 +391,7 @@ profile:
             cta: "Perché?"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati e, ove possibile, li "
-              two: "pseudonimizziamo"
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati"
             cta: "Scopri di più"
           gdpr:
             description:
@@ -505,7 +507,7 @@ cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
   layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti un suono.
-  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
+  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
@@ -642,6 +644,8 @@ authentication:
         unknownCardTitle: Carta sconosciuta
         unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+    dataUsageConsent:
+      retryCTA: Entra
   spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
@@ -714,7 +718,7 @@ authentication:
       error_19: "Hai inserito troppe volte un nome utente o una password non corretti: riprova fra qualche minuto o contatta il tuo fornitore di identità SPID per cambiare le tue credenziali."
       error_20: "Per motivi di sicurezza IO richiede un login con un secondo fattore di autenticazione: contatta il tuo fornitore di identità SPID per capire come si usa."
       error_21: "È passato troppo tempo da quando hai iniziato l'accesso: per piacere riparti dall'inizio."
-      error_22: "Per usare IO è necessario consentire l'accesso ad alcuni dei tuoi dati: accedi nuovamente e dai il tuo consenso al passaggio di dati."
+      error_22: "Per usare IO, devi acconsentire all’invio di alcuni dati. Entra di nuovo e dai il tuo consenso."
       error_23: "La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, contatta il tuo fornitore di identità SPID."
       error_25: "Hai annullato l'operazione di login: puoi riprovare quando vuoi."
       error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
@@ -1038,14 +1042,23 @@ wallet:
         whatIsPspBottomSheet:
           title: "Cos’è il gestore della transazione?"
           body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
+      paypalAlreadyAdded:
+        alert:
+          title: "Hai già un account PayPal nel tuo Portafoglio"
+          message: "Se prosegui, il nuovo account sostituirà quello attuale."
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
-        primaryButton: "Vedi metodo"
+        primaryButton: "Continua"
       onBoardingCompletedWhilePayment:
         title: "Fatto!"
         body: "Ora puoi continuare con il pagamento."
         primaryButton: "Continua"
+      paymentCheckout:
+        transactionCost: "Costo della transazione"
+        pspHandler: "Gestita da {{pspName}}"
+        privacyDisclaimer: "Proseguendo dichiari di aver letto e compreso i"
+        privacyTerms: "Termini e condizioni d’uso e l’Informativa Privacy"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
@@ -1138,7 +1151,7 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
-  paymentMethodDesc: Carte di credito, debito, prepagate, PagoBANCOMAT, app
+  paymentMethodDesc: Carte di credito, debito, prepagate, PayPal, e altri
   walletLoadMessage: Carico i metodi di pagamento...
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
@@ -1346,7 +1359,7 @@ wallet:
         bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
         bottomSheetCTA: Scopri i metodi supportati
     bonus:
-      name: Sconto, bonus e altri servizi
+      name: Sconti, bonus e altre iniziative
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
     digital:
       name: App e strumenti di pagamento digitali
@@ -1422,7 +1435,7 @@ wallet:
   missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
   missingDataText:
-    body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online. Puoi però aggiungerla ai fini del Cashback, se la tua banca è supportata.
+    body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online.
     cta: Cerca le tue carte
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
@@ -1434,6 +1447,9 @@ wallet:
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci manualmente
     enroll_cta: Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.
+    readStorageDisclosure:
+      title: Consenti l'accesso alla galleria
+      message: Potrai caricare screenshot e avvisi di pagamento
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
       message: IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento
@@ -1505,13 +1521,16 @@ wallet:
       visualizeCard: Visualizza carta
     fallback:
       title: "Spiacenti, si è verificato un errore imprevisto"
-      description: "Non è stato addebitato alcun importo."
+      description: "Se il problema persiste, contatta l’assistenza."
     code1:
       title: "Spiacenti, si è verificato un errore imprevisto"
-      description: "Non è stato addebitato alcun importo."
+      description: "Se il problema persiste, contatta l’assistenza."
     code2:
       title: "Autorizzazione negata"
       description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
+    code3:
+      title: "I dati della carta non sono corretti"
+      description: "Elimina la carta dal tuo Portafoglio e prova ad aggiungerla di nuovo. Assicurati che i dati inseriti siano riportati esattamente come sulla carta."
     code4:
       title: "Spiacenti, la sessione è scaduta"
       description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
@@ -1522,7 +1541,16 @@ wallet:
       title: "L’operazione è stata annullata"
     code10:
       title: "Autorizzazione negata"
-      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+      description: "Probabilmente hai superato il massimale del tuo metodo. Verifica con la tua banca prima di riprovare."
+    code15:
+      title: "Abilita il metodo per effettuare pagamenti in app"
+      description: "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
+    code18:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Se il problema persiste, contatta l’assistenza."
+    code19:
+      title: "Autorizzazione negata"
+      description: "Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento."
     addCreditCard:
       success:
         title: "La tua carta è stata aggiunta con successo!"
@@ -1563,6 +1591,7 @@ messages:
     message:
       read: "Messaggio"
       unread: "Messaggio non letto"
+      archived: Archiviato
       description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
@@ -2551,6 +2580,11 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
+      bucket:
+        alert:
+          cta: Ho capito!
+        error:
+          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Offerte
         description: Descrizione
@@ -2575,8 +2609,9 @@ bonus:
         sport: sport
         health: salute e benessere
     cta:
-      activeBonus: Attiva la tua Carta Giovani
-      goToDetail: Visualizza la Carta Giovani
+      activeBonus: Richiedi la Carta
+      deactivateBonus: Disattiva la Carta
+      goToDetail: Visualizza la Carta
     detail:
       cta:
         buyers: Vedi agevolazioni
@@ -2584,13 +2619,13 @@ bonus:
         eyca:
           copy: Copia numero carta EYCA
           pending: Scopri di più su EYCA
-          bottomSheet: Vedi gli sconti EYCA
+          bottomSheet: Vedi le agevolazioni EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
         active: "La carta è attiva e può essere usata fino al {{date}}"
         warning: "Attenzione! "
-        revoked: "Questa carta è stata annullata per {{reason}}"
+        revoked: "Questa carta è stata revocata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
       ownership: Chi può usufruire degli sconti?
       status:
@@ -2601,18 +2636,18 @@ bonus:
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei 38 paesi europei aderenti al circuito."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
-          revoked: Annullata
+          revoked: Revocata
           expired: Scaduta
         date:
           activated: Attivata il
           expired: Scaduta il
-          revoked: Annullata il
+          revoked: Revocata il
         expiration:
-          cgn: Scadenza CGN
-          eyca: Scadenza EYCA
+          cgn: Scade il
+          eyca: Scade il
     activation:
       eyca:
         loading:
@@ -2628,21 +2663,27 @@ bonus:
         title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
         body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       ineligible:
-        title: "Siamo spiacenti. Non hai le caratteristiche per attivare la Carta Giovani Nazionale."
+        title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
         body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
       timeout:
         title: "Stiamo processando la tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
-        title: "La tua Carta Giovani Nazionale è già attiva!"
+        title: "La tua Carta Giovani Nazionale è attiva!"
         body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
       pending:
         title: "La tua Carta Giovani Nazionale è in fase di attivazione."
         body: "Riceverai un messaggio quando sarà attivata."
       success:
-        title: "Congratulazioni!"
-        body: "La tua Carta Giovani Nazionale è attiva"
+        title: "Fatto!"
+        body: "La tua Carta Giovani Nazionale è attiva."
+      deactivate:
+        toast: "La richiesta di disattivazione è avvenuta correttamente"
+        alert:
+          title: "Disattiva carta"
+          message: "Sei sicuro di voler disattivare la tua Carta Giovani Nazionale? Se confermi, perderai la possibilità di accedere alle agevolazioni previste dall’iniziativa e la carta scomparirà dal Portafoglio."
     otp:
+      error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
       screen:
         title: Usa codice sconto
         cta: Copia codice
@@ -2838,6 +2879,41 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
 
 features:
+  mvl:
+    title: "messaggio a valore legale"
+    loading:
+      title: "Sto caricando i dettagli del messaggio"
+      subtitle: "Attendi qualche secondo"
+    ko:
+      genericError:
+        title: "Si è verificato un errore nel recupero del messaggio"
+        subtitle: "Riprova per favore"
+    details:
+      hasAttachments: "contiene allegati"
+      attachments:
+        title: "Allegati"
+        toast:
+          success: "Download completato"
+          failure: "Si è verificato un errore durante il download dell'allegato"
+        bottomSheet:
+          title: "Fai attenzione agli allegati"
+          body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
+          checkBox: "OK, non mostrarmelo più"
+      body:
+        plain: "testo semplice"
+        html: "html"
+      metadata:
+        title: "il messaggio ha valore legale"
+        description: "Il giorno {{date}} alle ore {{time}} il messaggio \"{{subject}}\" ti è stato inviato da \"{{sender}}\""
+        messageId: "Identificativo messaggio:"
+        links:
+          copy: "Copia identificativo messaggio"
+          recipients: "Mostra elenco completo dei destinatari"
+          signature: "Mostra dettagli della firma"
+          certificates: "Mostra i certificati"
+          originalMessage: "Scarica il messaggio originale"
+          datiCert: "Scarica daticert.xml"
+          smime: "Scarica smime.p7s"
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
@@ -2867,7 +2943,7 @@ features:
         headerTitle: "Dettagli del certificato"
         save: "Salva i dettagli"
     revoked:
-      title: "Questo certificato \nnon è più valido"
+      title: "Questo certificato \nnon è valido"
     expired:
       title: "Questo certificato è scaduto"
     ko:
@@ -2895,19 +2971,45 @@ webView:
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
 support:
   helpCenter:
-    header: "IO ti aiuto"
+    header: "Assistenza"
     cta:
-      contactSupport: "Contatta l'assistenza"
-      seeReports: "Vedi segnalazioni in corso"
+      contactSupport: "Scrivici"
+      seeReports: "Vedi le tue richieste"
+    supportComponent:
+      title: "Hai bisogno d’aiuto?"
+      subtitle: "Per richiedere assistenza o suggerire un miglioramento, scrivici: ti risponderemo il prima possibile."
+      adviceMessage: "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un Ente, contatta quest’ultimo. Troverai i riferimenti all’interno del messaggio o nella scheda del servizio in questione."
+  panicMode:
+    title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
+    body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
   askPermissions:
-    header: "Contatta l'assistenza"
-    title: "Per continuare, abbiamo bisogno del tuo consenso"
+    nameSurname: "Nome e Cognome"
+    fiscalCode: "Codice fiscale"
+    emailAddress: "Indirizzo email"
+    deviceAndOS: "Dispositivo e sistema operativo"
+    ipAddress: "Indirizzo IP"
+    currentAppVersion: "Versione in uso dell'app"
+    identityProvider: "Identity Provider"
+    navigationData: "Dati di navigazione in app IO"
+    navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"
+    devicePerformance: "Performance del dispositivo"
+    devicePerformanceData: "Livello di memoria e batteria"
+    stock: "Dati dell’avviso di pagamento"
+    stockValue: "Incluso l’errore che hai appena ricevuto"
+    prominentDisclosure: "Accesso alla galleria del dispositivo"
+    prominentDisclosureData: "Per caricare foto e screenshot"
+    header: "Scrivici"
+    title: "Ci dai il tuo consenso?"
+    body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
+    listHeader: "Se dai il consenso, riceveremo questi dati:"
     cta:
       allow: "Consenti"
       denies: "Non consentire"
   chooseCategory:
-    header: "Contatta l'assistenza"
+    header: "Scrivici"
     title:
       category: "Seleziona un argomento"
-      subCategory: "Di cosa si tratta?"
+      subCategory: "Puoi darci più dettagli?"
+    subTitle:
+      category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 

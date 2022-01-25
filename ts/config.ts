@@ -66,18 +66,12 @@ export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
-// CGN Feature Flag
-export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
-
 // EU Covid Certificate feature flag
 export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";
 
 // SiciliaVola Feature Flag
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
-
-// Paypal configuration
-export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
 
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
@@ -88,6 +82,9 @@ export const usePaginatedMessages: boolean =
 
 // MVL messages
 export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
+
+// CGN new merchants features
+export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
@@ -139,6 +136,9 @@ export const localServicesWebUrl: string = t.string
   .getOrElse("https://io.italia.it");
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;
+
+// This is the maximum number supported by API via pagination regardless of the content.
+export const maximumItemsFromAPI: number = 100;
 
 export const testOverlayCaption: string | undefined =
   Config.TEST_OVERLAY_CAPTION;

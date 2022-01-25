@@ -109,6 +109,18 @@ export const baseRawBackendStatus: BackendStatus = {
         "en-EN": "possible slowness"
       }
     },
+    paypal: {
+      is_visible: true,
+      level: LevelEnum.warning,
+      badge: {
+        "it-IT": "warning message",
+        "en-EN": "possible slowness"
+      },
+      message: {
+        "it-IT": "warning message",
+        "en-EN": "possible slowness"
+      }
+    },
     satispay: {
       is_visible: false,
       level: LevelEnum.critical,
@@ -192,6 +204,13 @@ export const baseRawBackendStatus: BackendStatus = {
     cgn_merchants_v2: false,
     assistanceTool: {
       tool: ToolEnum.none
+    },
+    paypal: {
+      enabled: false
+    },
+    cgn: {
+      enabled: true,
+      merchants_v2: false
     }
   }
 };
@@ -212,6 +231,13 @@ export const baseBackendConfig: Config = {
   cgn_merchants_v2: true,
   assistanceTool: {
     tool: ToolEnum.none
+  },
+  paypal: {
+    enabled: false
+  },
+  cgn: {
+    enabled: true,
+    merchants_v2: false
   }
 };
 

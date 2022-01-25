@@ -1,13 +1,10 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { Content, H3, Text, View } from "native-base";
 import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
@@ -17,6 +14,7 @@ import {
 } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import OrganizationHeader from "../OrganizationHeader";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
@@ -29,7 +27,7 @@ type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
   serviceDetail?: ServicePublic;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: ServiceMetadata;
   onServiceLinkPress?: () => void;
 }>;
 
@@ -103,16 +101,9 @@ export default class MessageDetailComponent extends React.PureComponent<
     return paymentExpirationInfo(this.props.message);
   }
 
-  get service() {
+  get service(): Option<ServicePublic> {
     const { serviceDetail } = this.props;
-    return fromNullable(
-      serviceDetail ??
-        ({
-          organization_name: I18n.t("messages.errorLoading.senderInfo"),
-          department_name: I18n.t("messages.errorLoading.departmentInfo"),
-          service_name: I18n.t("messages.errorLoading.serviceInfo")
-        } as ServicePublic)
-    );
+    return fromNullable(serviceDetail);
   }
 
   get payment() {

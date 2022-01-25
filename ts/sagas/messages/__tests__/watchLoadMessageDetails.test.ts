@@ -3,6 +3,7 @@ import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
 
 import { loadMessageDetails as action } from "../../../store/actions/messages";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
 import {
   apiPayload,
@@ -12,7 +13,7 @@ import {
 
 const tryLoadMessageDetails = testTryLoadMessageDetails!;
 
-const id = paymentValidInvalidAfterDueDate.id;
+const id = paymentValidInvalidAfterDueDate.id as UIMessageId;
 
 describe("tryReloadAllMessages", () => {
   const getMessagesPayload = { id };

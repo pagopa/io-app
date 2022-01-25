@@ -1,3 +1,4 @@
+import { computedProp } from "../../../../ts/types/utils";
 import { initSeverityByType } from "./defaultValues";
 import { GroupBySeverity } from "./GroupBySeverity";
 
@@ -55,8 +56,8 @@ export const increaseSeverityAmount = (
   severity: keyof GroupBySeverity
 ): GroupByType => ({
   ...value,
-  [type]: {
+  ...computedProp(type, {
     ...value[type],
-    [severity]: value[type][severity] + 1
-  }
+    ...computedProp(severity, value[type][severity] + 1)
+  })
 });

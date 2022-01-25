@@ -32,6 +32,7 @@ import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { withKeyboard } from "../../utils/keyboard";
+import { isCgnEnrolledSelector } from "../../features/bonus/cgn/store/reducers/details";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -72,7 +73,9 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
 
   const handleContinuePress = () => {
     const hasActiveBonus =
-      props.bvActiveBonus || pot.getOrElse(props.bpdActiveBonus, false);
+      props.bvActiveBonus ||
+      pot.getOrElse(props.bpdActiveBonus, false) ||
+      props.cgnActiveBonus;
 
     if (hasActiveBonus) {
       Alert.alert(
@@ -228,6 +231,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 const mapStateToProps = (state: GlobalState) => {
   const bpdActiveBonus = bpdEnabledSelector(state);
   const bvActiveBonus = allBonusActiveSelector(state).length > 0;
+  const cgnActiveBonus = isCgnEnrolledSelector(state);
   const userDataProcessing = userDataProcessingSelector(state);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
@@ -236,6 +240,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     bvActiveBonus,
     bpdActiveBonus,
+    cgnActiveBonus,
     userDataProcessing,
     isLoading,
     isError

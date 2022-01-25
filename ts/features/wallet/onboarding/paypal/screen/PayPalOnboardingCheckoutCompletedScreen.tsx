@@ -57,6 +57,7 @@ const PayPalOnboardingCheckoutCompletedScreen = () =>
     }
     return (
       <OutcomeCodeMessageComponent
+        hideContextualHelp={true}
         outcomeCode={outcomeCode.value}
         successComponent={() => <PayPalOnboardingCompletedSuccessComponent />}
         onClose={() => dispatch(walletAddPaypalFailure())}

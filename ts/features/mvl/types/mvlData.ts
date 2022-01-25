@@ -1,36 +1,35 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ValidUrl } from "@pagopa/ts-commons/lib/url";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
-import { ContentType } from "../../../types/contentType";
+import {
+  UIMessageDetails,
+  WithUIMessageId
+} from "../../../store/reducers/entities/messages/types";
 import { Byte } from "../../../types/digitalInformationUnit";
-
-/**
- * The unique ID of a MVLId, used to avoid to pass wrong id as parameters
- */
-export type MvlId = string & IUnitTag<"MvlId">;
-
-export type WithMVLId<T> = T & {
-  id: MvlId;
-};
 
 /**
  * The content of the MVL with two possible representation
  */
 export type MvlBody = {
   html: string;
-  plain?: string;
+  plain: string;
 };
+
+export type MvlAttachmentId = string & IUnitTag<"MvlAttachmentId">;
+
+export type MvlId = string & IUnitTag<"MvlId">;
 
 /**
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
  */
 export type MvlAttachment = {
+  id: MvlAttachmentId;
   // a display name for the file
-  name: string;
-  // atm we have to distinguish only the pdf files from the others for a custom (future) view
-  contentType: Extract<ContentType, "application/pdf"> | "other";
+  displayName: string;
+  // a generic content type for a file
+  contentType: string;
   // size (in Byte) of the attachment, for display purpose
-  size: Byte;
+  size?: Byte;
   // The url that can be used to retrieve the resource
   resourceUrl: ValidUrl;
 };
@@ -40,6 +39,9 @@ export type MvlAttachment = {
  * TODO: Just an initial stub, should be completed and refined
  */
 export type MvlMetadata = {
+  id: MvlId;
+  subject: string;
+  timestamp: Date;
   sender: EmailAddress;
   receiver: EmailAddress;
   cc: ReadonlyArray<EmailAddress>;
@@ -52,11 +54,21 @@ export type MvlMetadata = {
 /**
  * Represent a MVL (Messaggio a valore legale - Legal message)
  */
-export type MvlData = WithMVLId<{
+export type MvlData = {
   // The body (content) that could be html (mandatory) or plain (optional)
   body: MvlBody;
   // The MVL could have some attachments with metadata and the url to download the resource
   attachments: ReadonlyArray<MvlAttachment>;
   // Some additional metadata that should be represented
   metadata: MvlMetadata;
+};
+
+/**
+ * A legal message composed by:
+ * - A classic message data
+ * - The additional legal message data
+ */
+export type Mvl = WithUIMessageId<{
+  message: UIMessageDetails;
+  legalMessage: MvlData;
 }>;

@@ -3,10 +3,12 @@
  */
 import { combineReducers } from "redux";
 import { Action } from "../../../actions/types";
-import organizationsAllReducer from "./organizationsAll";
-import { OrganizationsAllState } from "./organizationsAll";
-import { OrganizationNamesByFiscalCodeState } from "./organizationsByFiscalCodeReducer";
-import organizationsByFiscalCodeReducer from "./organizationsByFiscalCodeReducer";
+import organizationsAllReducer, {
+  OrganizationsAllState
+} from "./organizationsAll";
+import organizationsByFiscalCodeReducer, {
+  OrganizationNamesByFiscalCodeState
+} from "./organizationsByFiscalCodeReducer";
 
 // TODO: evaluate if organizations.all should be deleted or remodulated: it was introduced to
 // implement the selection of the user areas of interest (services sections) that now get the organizations

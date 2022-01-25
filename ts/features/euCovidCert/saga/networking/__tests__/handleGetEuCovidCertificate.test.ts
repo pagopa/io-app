@@ -2,7 +2,10 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { Certificate } from "../../../../../../definitions/eu_covid_cert/Certificate";
-import { handleGetEuCovidCertificate } from "../handleGetEuCovidCertificate";
+import {
+  convertHeaderInfo,
+  handleGetEuCovidCertificate
+} from "../handleGetEuCovidCertificate";
 import { appReducer } from "../../../../../store/reducers";
 import { euCovidCertificateGet } from "../../../store/actions";
 import {
@@ -24,17 +27,25 @@ import {
   StatusEnum as ExpiredStatus
 } from "../../../../../../definitions/eu_covid_cert/ExpiredCertificate";
 
+const header_info = {
+  title: "title",
+  subtitle: "sub title",
+  logo_id: "logo id"
+};
+
 const revokedCertificate: RevokedCertificate = {
   uvci: "revokedCertificateId",
   status: StatusEnum.revoked,
   info: "the revoked reason",
-  revoked_on: new Date()
+  revoked_on: new Date(),
+  header_info
 };
 
 const expiredCertificate: ExpiredCertificate = {
   uvci: "expiredCertificateId",
   status: ExpiredStatus.expired,
-  info: "the expired reason"
+  info: "the expired reason",
+  header_info
 };
 
 const validCertificate: ValidCertificate = {
@@ -45,7 +56,8 @@ const validCertificate: ValidCertificate = {
   qr_code: {
     mime_type: Mime_typeEnum["image/png"],
     content: "iVBOw"
-  }
+  },
+  header_info
 };
 
 const authCode = "123" as EUCovidCertificateAuthCode;
@@ -66,7 +78,8 @@ const cases: ReadonlyArray<
       value: {
         kind: "revoked",
         id: revokedCertificate.uvci as EUCovidCertificate["id"],
-        revokedOn: revokedCertificate.revoked_on
+        revokedOn: revokedCertificate.revoked_on,
+        headerData: convertHeaderInfo(header_info)
       },
       authCode
     })
@@ -78,7 +91,8 @@ const cases: ReadonlyArray<
       value: {
         kind: "expired",
         id: expiredCertificate.uvci as EUCovidCertificate["id"],
-        markdownInfo: expiredCertificate.info
+        markdownInfo: expiredCertificate.info,
+        headerData: convertHeaderInfo(header_info)
       },
       authCode
     })
@@ -95,7 +109,8 @@ const cases: ReadonlyArray<
           content: validCertificate.qr_code.content
         },
         markdownInfo: validCertificate.info,
-        markdownDetails: validCertificate.detail
+        markdownDetails: validCertificate.detail,
+        headerData: convertHeaderInfo(header_info)
       },
       authCode
     })

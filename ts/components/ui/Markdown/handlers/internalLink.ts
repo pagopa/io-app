@@ -4,12 +4,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
-import {
-  bpdEnabled,
-  cgnEnabled,
-  myPortalEnabled,
-  svEnabled
-} from "../../../../config";
+import { bpdEnabled, myPortalEnabled, svEnabled } from "../../../../config";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
@@ -41,7 +36,8 @@ const BPD_ROUTE_NAMES: ReadonlyArray<string> = [
 ];
 
 const CGN_ROUTE_NAMES: ReadonlyArray<string> = [
-  CGN_ROUTES.ACTIVATION.CTA_START_CGN
+  CGN_ROUTES.ACTIVATION.CTA_START_CGN,
+  CGN_ROUTES.DETAILS.DETAILS
 ];
 
 const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
@@ -54,7 +50,7 @@ const SV_ROUTE_NAMES: ReadonlyArray<string> = [
 const ALLOWED_ROUTE_NAMES = ROUTE_NAMES.concat(
   myPortalEnabled ? MY_PORTAL_ROUTES : [],
   bpdEnabled ? BPD_ROUTE_NAMES : [],
-  cgnEnabled ? CGN_ROUTE_NAMES : [],
+  CGN_ROUTE_NAMES,
   svEnabled ? SV_ROUTE_NAMES : []
 );
 

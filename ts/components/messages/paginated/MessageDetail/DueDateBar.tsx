@@ -4,8 +4,8 @@ import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 
 import I18n from "../../../../i18n";
+import { navigateToWalletHome } from "../../../../store/actions/navigation";
 import customVariables from "../../../../theme/variables";
-import variables from "../../../../theme/variables";
 import {
   format,
   formatDateAsDay,
@@ -26,7 +26,6 @@ type Props = {
   dueDate: Date;
   expirationInfo: MessagePaymentExpirationInfo;
   isPaid: boolean;
-  onGoToWallet: () => void;
 };
 
 type PaymentStatus = "expiring" | "expired" | "valid";
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   padded: {
-    paddingHorizontal: variables.contentPadding
+    paddingHorizontal: customVariables.contentPadding
   },
   messagePaidBg: {
     padding: 24,
@@ -162,8 +161,7 @@ const calculatePaymentStatus = (
 const DueDateBar: React.FunctionComponent<Props> = ({
   dueDate,
   expirationInfo,
-  isPaid,
-  onGoToWallet
+  isPaid
 }) => {
   if (isPaid) {
     return (
@@ -193,7 +191,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
             <TextContent
               status={paymentStatus}
               dueDate={dueDate}
-              onPaidPress={onGoToWallet}
+              onPaidPress={() => navigateToWalletHome()}
             />
           </Text>
         </>

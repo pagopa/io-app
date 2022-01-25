@@ -132,7 +132,7 @@ const reducer = (
     case getType(paymentOutcomeCode):
       const updateOutcome: PaymentHistory = {
         ...state[state.length - 1],
-        outcomeCode: action.payload.getOrElse("n/a")
+        outcomeCode: action.payload.outcome.getOrElse("n/a")
       };
       return replaceLastItem(state, updateOutcome);
     case getType(paymentRedirectionUrls):
@@ -144,7 +144,7 @@ const reducer = (
     case getType(paymentWebViewEnd):
       return replaceLastItem(state, {
         ...state[state.length - 1],
-        webViewCloseReason: action.payload
+        webViewCloseReason: action.payload.reason
       });
     case getType(differentProfileLoggedIn):
     case getType(clearCache): {

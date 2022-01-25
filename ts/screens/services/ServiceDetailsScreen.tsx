@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -14,7 +14,7 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
-import ServiceMetadata from "../../components/services/ServiceMetadata";
+import ServiceMetadataComponent from "../../components/services/ServiceMetadata";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -32,6 +32,10 @@ import customVariables from "../../theme/variables";
 import { getServiceCTA } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
+import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
+import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -130,73 +134,89 @@ const ServiceDetailsScreen = (props: Props) => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["services_detail"]}
     >
-      <Content>
-        <Grid>
-          <OrganizationHeader
-            serviceName={service.service_name}
-            organizationName={service.organization_name}
-            logoURLs={logosForService(service)}
-          />
-        </Grid>
-        <View spacer={true} small={true} />
+      <SafeAreaView style={IOStyles.flex}>
+        <Content style={IOStyles.flex}>
+          <Grid>
+            <OrganizationHeader
+              serviceName={service.service_name}
+              organizationName={service.organization_name}
+              logoURLs={logosForService(service)}
+            />
+          </Grid>
+          <View spacer={true} small={true} />
 
-        {metadata?.description && (
-          <>
-            <Markdown
-              animated={true}
-              onLoadEnd={onMarkdownEnd}
-              onError={onMarkdownEnd}
-            >
-              {metadata.description}
-            </Markdown>
-            <View spacer={true} large={true} />
-          </>
-        )}
+          {metadata?.description && (
+            <>
+              <Markdown
+                animated={true}
+                onLoadEnd={onMarkdownEnd}
+                onError={onMarkdownEnd}
+              >
+                {metadata.description}
+              </Markdown>
+              <View spacer={true} large={true} />
+            </>
+          )}
 
-        {canRenderItems && (
-          <>
-            {metadata && (
-              <>
-                <TosAndPrivacyBox
-                  tosUrl={metadata.tos_url}
-                  privacyUrl={metadata.privacy_url}
+          {canRenderItems && (
+            <>
+              {metadata && (
+                <>
+                  <TosAndPrivacyBox
+                    tosUrl={metadata.tos_url}
+                    privacyUrl={metadata.privacy_url}
+                  />
+                  <View spacer={true} large={true} />
+                </>
+              )}
+
+              <ContactPreferencesToggles
+                serviceId={service.service_id}
+                channels={service.available_notification_channels}
+                isSpecialService={SpecialServiceMetadata.is(metadata)}
+              />
+              <View spacer={true} large={true} />
+
+              <ServiceMetadataComponent
+                servicesMetadata={service.service_metadata}
+                organizationFiscalCode={service.organization_fiscal_code}
+                getItemOnPress={handleItemOnPress}
+                serviceId={service.service_id}
+                isDebugModeEnabled={props.isDebugModeEnabled}
+              />
+
+              <EdgeBorderComponent />
+
+              <View spacer={true} extralarge={true} />
+            </>
+          )}
+        </Content>
+
+        {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) && (
+          <FooterTopShadow>
+            {maybeCTA.isSome() && (
+              <View style={[styles.flexRow]}>
+                <ExtractedCTABar
+                  ctas={maybeCTA.value}
+                  xsmall={false}
+                  dispatch={props.dispatch}
+                  serviceMetadata={metadata}
+                  service={service}
                 />
-                <View spacer={true} large={true} />
+              </View>
+            )}
+            {SpecialServiceMetadata.is(metadata) && (
+              <>
+                <View spacer small />
+                <SpecialServicesCTA
+                  serviceId={props.serviceId}
+                  customSpecialFlow={metadata.custom_special_flow}
+                />
               </>
             )}
-
-            <ContactPreferencesToggles
-              serviceId={service.service_id}
-              channels={service.available_notification_channels}
-            />
-            <View spacer={true} large={true} />
-
-            <ServiceMetadata
-              servicesMetadata={service.service_metadata}
-              organizationFiscalCode={service.organization_fiscal_code}
-              getItemOnPress={handleItemOnPress}
-              serviceId={service.service_id}
-              isDebugModeEnabled={props.isDebugModeEnabled}
-            />
-
-            <EdgeBorderComponent />
-
-            <View spacer={true} extralarge={true} />
-          </>
+          </FooterTopShadow>
         )}
-      </Content>
-
-      {maybeCTA.isSome() && (
-        <View footer={true} style={styles.flexRow}>
-          <ExtractedCTABar
-            ctas={maybeCTA.value}
-            xsmall={false}
-            dispatch={props.dispatch}
-            serviceMetadata={metadata}
-            service={service}
-          />
-        </View>
-      )}
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };

@@ -23,13 +23,12 @@ import MessageDetail from "../MessageDetail";
 jest.useFakeTimers();
 
 const add8Days = (dueDate: Date) =>
-  new Date(dueDate.getTime() + 2000 * 60 * 60 * 24 * 8);
+  new Date(dueDate.getTime() + 1000 * 60 * 60 * 24 * 8);
 
 const defaultProps: React.ComponentProps<typeof MessageDetail> = {
   hasPaidBadge: false,
   message: toUIMessage(medicalPrescription),
   messageDetails: toUIMessageDetails(medicalPrescription),
-  navigateToWalletHome: jest.fn(),
   onServiceLinkPress: jest.fn(),
   service: toUIService(service_1),
   serviceMetadata: { phone: "+123333", email: "hola@vpn.com" } as any
@@ -51,9 +50,7 @@ describe("MessageDetail component", () => {
         ...paymentValidInvalidAfterDueDate,
         content: {
           ...paymentValidInvalidAfterDueDate.content,
-          due_date: add8Days(
-            new Date(paymentValidInvalidAfterDueDate.content.due_date!)
-          )
+          due_date: add8Days(new Date())
         }
       })
     };
@@ -114,9 +111,7 @@ describe("MessageDetail component", () => {
           content: {
             ...medicalPrescription.content,
             payment_data: paymentValidInvalidAfterDueDate.content.payment_data,
-            due_date: add8Days(
-              new Date(paymentValidInvalidAfterDueDate.content.due_date!)
-            )
+            due_date: add8Days(new Date())
           }
         })
       };

@@ -89,7 +89,7 @@ type AuthenticationStateWithIdp =
 export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 
 // Initially the user is logged out and hasn't selected an IDP
-const INITIAL_STATE: LoggedOutWithoutIdp = {
+export const INITIAL_STATE: LoggedOutWithoutIdp = {
   kind: "LoggedOutWithoutIdp",
   reason: "NOT_LOGGED_IN"
 };
@@ -142,6 +142,14 @@ export const sessionTokenSelector = (
   isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined;
+
+/**
+ * Return the authentication header required for IO Backend requests
+ */
+export const ioBackendAuthenticationHeaderSelector = createSelector(
+  sessionTokenSelector,
+  (token): { [key: string]: string } => ({ Authorization: `Bearer ${token}` })
+);
 
 export const sessionInfoSelector = (state: GlobalState) =>
   isLoggedInWithSessionInfo(state.authentication)

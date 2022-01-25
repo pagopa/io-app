@@ -7,10 +7,12 @@ import { GenericTicket, GenericTicketType } from "../../common/ticket/types";
 const storyTag = new Map<GenericTicketType, string>([
   ["feat", "feat"],
   ["fix", "fix"],
-  ["chore", "chore"]
+  ["chore", "chore"],
+  ["epic", "feat"]
 ]);
 
 const storyOrder = new Map<GenericTicketType, number>([
+  ["epic", 3],
   ["feat", 2],
   ["fix", 1],
   ["chore", 0]
@@ -38,7 +40,7 @@ const projectToScope = new Map<string, string>([
   ["2463683", "My Portal"],
   ["2477137", "Bonus Pagamenti Digitali"],
   ["IAC", "Bonus Pagamenti Digitali"],
-  ["2476636", "Carta Giovani Nazionale"],
+  ["IOACGN", "Carta Giovani Nazionale"],
   ["IASV", "Sicilia Vola"],
   ["IAGP", "EU Covid Certificate"],
   ["IARS", "Redesign Servizi"],

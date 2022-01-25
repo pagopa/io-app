@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 
 const CIE_PIN_LENGTH = 8;
 const FORGOT_PIN_PAGE_URL =
-  "https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/";
+  "https://www.cartaidentita.interno.gov.it/cittadini/smarrimento-pin-e-puk/";
 
 const getContextualHelp = () => ({
   title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
@@ -104,9 +104,14 @@ const CiePinScreen: React.FC<Props> = props => {
     320
   );
 
+  const handleAuthenticationOverlayOnClose = useCallback(() => {
+    setPin("");
+    setAuthUrlGenerated(undefined);
+    hideModal();
+  }, [setPin, setAuthUrlGenerated, hideModal]);
+
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      setPin("");
       navigate({
         routeName: ROUTES.CIE_CARD_READER_SCREEN,
         params: {
@@ -114,14 +119,15 @@ const CiePinScreen: React.FC<Props> = props => {
           authorizationUri: authUrlGenerated
         }
       });
-      hideModal();
+      handleAuthenticationOverlayOnClose();
     }
-  }, [authUrlGenerated, hideModal, navigate, pin]);
-
-  const handleAuthenticationOverlayOnClose = () => {
-    setPin("");
-    hideModal();
-  };
+  }, [
+    handleAuthenticationOverlayOnClose,
+    authUrlGenerated,
+    hideModal,
+    navigate,
+    pin
+  ]);
 
   const showModal = () => {
     props.requestNfcEnabledCheck();
