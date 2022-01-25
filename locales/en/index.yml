@@ -1181,7 +1181,6 @@ wallet:
     subtitle: "By adding the card to your Wallet, you will be able to make payments in the app and join the initiatives available on IO."
     infoTitle: "Use as favorite"
     info: "When you pay in-app, IO will automatically show this payment method"
-    save: Save
     notice: "In order to verify your card, we temporarily hold 0.02 €. Don't worry, we will return the amount to you as soon as possible."
     temporaryError: There was a problem while saving this card.
     temporarySubError: We have not received a response from the security systems. We apologize for the inconvenience.

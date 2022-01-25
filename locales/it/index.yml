@@ -1203,7 +1203,6 @@ wallet:
     subtitle: "Aggiungendo la carta al tuo Portafoglio, potrai effettuare pagamenti in app e aderire alle iniziative disponibili su IO."
     infoTitle: "Usa come metodo preferito"
     info: "Quando paghi in app, IO ti mostra in automatico questo metodo di pagamento"
-    save: Salva
     notice: "Per verificare la tua carta, tratteniamo temporaneamente € 0,02. Non preoccuparti: ti restituiremo l'importo al più presto."
     temporaryError: Si è verificato un errore nel salvataggio di questa carta
     temporarySubError: Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.
