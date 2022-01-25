@@ -245,7 +245,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       .getOrElse({});
 
     const noErrorContent = (
-      <>
+      <SafeAreaView style={IOStyles.flex}>
         <Content noPadded={true} style={styles.paddedLR}>
           <H1>{I18n.t("wallet.saveCard.title")}</H1>
           <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
@@ -332,7 +332,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
           />
         )}
-      </>
+      </SafeAreaView>
     );
     const error = this.props.error.isSome() || this.props.areWalletsInError;
     return (
