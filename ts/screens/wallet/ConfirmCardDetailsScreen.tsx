@@ -286,7 +286,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
               </H5>
             </View>
             <View hspacer={true} />
-            <View>
+            <View style={{ paddingTop: 7 }}>
               <Switch
                 value={this.state.setAsFavourite}
                 onValueChange={this.onSetFavouriteValueChange}
