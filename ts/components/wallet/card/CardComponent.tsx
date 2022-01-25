@@ -6,25 +6,27 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, Image } from "react-native";
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
+import { some } from "fp-ts/lib/Option";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import { CreditCard, Wallet } from "../../../types/pagopa";
+import { CreditCard, CreditCardType, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
 import { H5 } from "../../core/typography/H5";
 import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
+import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";
 import styles from "./CardComponent.style";
-import Logo from "./Logo";
+import Logo, { cardIcons } from "./Logo";
 import { CreditCardStyles } from "./style";
 
 interface BaseProps {
@@ -190,7 +192,27 @@ export default class CardComponent extends React.Component<Props> {
     if (type === "Preview") {
       return null;
     }
-    // Right icon, basically needed for the sole "Header" variant
+
+    // Extract the brand name from the credit card pan
+    const detectedBrand: SupportedBrand = CreditCardDetector.validate(
+      some(creditCard.pan)
+    );
+    /**
+     * Extract the brand logo from the brand name
+     * since the keys of the @link{cardIcons} are the @link{CreditCardType}
+     * we must manage the case with the different name but the same logo
+     */
+    const creditCardType = CreditCardType.decode(
+      detectedBrand.name.toUpperCase()
+    );
+    const logo = creditCardType.fold(
+      _ => (detectedBrand.name === "jcb15" ? cardIcons.JCB : cardIcons.UNKNOWN),
+      t => cardIcons[t]
+    );
+
+    const BASE_ICON_W = 48;
+    const BASE_ICON_H = 30;
+
     const getBodyIcon = () => {
       switch (type) {
         case "Picking":
@@ -198,8 +220,15 @@ export default class CardComponent extends React.Component<Props> {
         case "Full":
         case "Header":
           return (
-            <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
-              <Logo item={creditCard} />
+            <View style={{ alignSelf: "flex-end" }}>
+              <Image
+                source={logo}
+                style={{
+                  width: BASE_ICON_W,
+                  height: BASE_ICON_H,
+                  resizeMode: "contain"
+                }}
+              />
             </View>
           );
       }
