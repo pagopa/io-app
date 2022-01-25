@@ -70,18 +70,30 @@ describe("the ZendeskSupportComponent", () => {
   });
 
   describe("when the user press the zendesk open ticket button", () => {
+    const navigateToZendeskAskPermissionsSpy = jest.spyOn(
+      zendeskNavigation,
+      "navigateToZendeskAskPermissions"
+    );
+    const navigateToZendeskPanicModeSpy = jest.spyOn(
+      zendeskNavigation,
+      "navigateToZendeskPanicMode"
+    );
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
     it("if panic mode is false, should navigate to the ZendeskAskPermissions screen", () => {
-      const navigateToZendeskAskPermissionsSpy = jest.spyOn(
-        zendeskNavigation,
-        "navigateToZendeskAskPermissions"
-      );
       const store = createStore(appReducer, globalState as any);
       const component = renderComponent(store);
       const zendeskButton = component.getByTestId("contactSupportButton");
       fireEvent(zendeskButton, "onPress");
       expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
+      expect(navigateToZendeskPanicModeSpy).not.toBeCalled();
     });
     it("if panic mode is true, should navigate to the ZendeskAskPermissions screen", () => {
+      const navigateToZendeskAskPermissionsSpy = jest.spyOn(
+        zendeskNavigation,
+        "navigateToZendeskAskPermissions"
+      );
       const navigateToZendeskPanicModeSpy = jest.spyOn(
         zendeskNavigation,
         "navigateToZendeskPanicMode"
@@ -92,6 +104,7 @@ describe("the ZendeskSupportComponent", () => {
       const zendeskButton = component.getByTestId("contactSupportButton");
       fireEvent(zendeskButton, "onPress");
       expect(navigateToZendeskPanicModeSpy).toBeCalled();
+      expect(navigateToZendeskAskPermissionsSpy).not.toBeCalled();
     });
   });
   describe("when the user press the zendesk show tickets button", () => {
