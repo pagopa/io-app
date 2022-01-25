@@ -10,5 +10,5 @@ export const e2ePinChar = "2";
 type DetoxLaunchAppConfig = Parameters<typeof device.launchApp>[0];
 
 export const launchAppConfig: DetoxLaunchAppConfig = {
-  permissions: { notifications: "YES", camera: "YES" }
+  permissions: { notifications: "YES", camera: "YES", photos: "YES" }
 };
