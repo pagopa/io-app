@@ -1,6 +1,7 @@
 import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
+import { ReactTestInstance } from "react-test-renderer";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -13,7 +14,6 @@ import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCateg
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import * as mixpanel from "../../../../mixpanel";
 import ZendeskChooseSubCategory from "../ZendeskChooseSubCategory";
-import { ReactTestInstance } from "react-test-renderer";
 
 jest.useFakeTimers();
 
