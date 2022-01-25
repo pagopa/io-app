@@ -911,7 +911,7 @@ wallet:
     cobadge:
       title: "Search for your international circuit cards"
       description:
-        text1: "By adding all the Maestro, Mastercard, V&#8209Pay and Visa cards associated with you to your Wallet, you’ll be able to join the initiatives available on IO."
+        text1: "By adding all the Maestro, Mastercard, V-Pay and Visa cards associated with you to your Wallet, you’ll be able to join the initiatives available on IO."
         text3: "For further information, please read the "
         text4: privacy policy.
     bankName: Name of the bank
