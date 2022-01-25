@@ -430,9 +430,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       return Promise.all(
                         keys.map(key =>
                           AsyncStorage.getItem(key).then(value => {
-                            // if (/(features)|(euCovidCert)|(mvl)/.test(key)) {
                             console.log(`\tValue for ${key}\n\t\t`, value);
-                            // }
                           })
                         )
                       );
