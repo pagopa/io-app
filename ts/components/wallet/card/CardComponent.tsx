@@ -26,6 +26,7 @@ import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
+import { IOStyles } from "../../core/variables/IOStyles";
 
 interface BaseProps {
   wallet: Wallet;
@@ -208,7 +209,6 @@ export default class CardComponent extends React.Component<Props> {
           );
       }
     };
-
     const expirationDate = buildExpirationDate(creditCard);
     const isCardExpired = this.props.wallet.paymentMethod
       ? isPaymentMethodExpired(this.props.wallet.paymentMethod).getOrElse(false)
@@ -216,10 +216,7 @@ export default class CardComponent extends React.Component<Props> {
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>
-          <H5
-            color={isCardExpired ? "red" : "bluegreyDark"}
-            weight={"SemiBold"}
-          >
+          <H5 color={isCardExpired ? "red" : "bluegreyDark"} weight={"Regular"}>
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
           </H5>
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
