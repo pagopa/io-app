@@ -1,5 +1,5 @@
 import { View } from "native-base";
-import * as React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Svg from "react-native-svg";
 import Default from "../../../../../../../img/features/mvl/attachmentsIcon/default.svg";
@@ -15,6 +15,10 @@ import I18n from "../../../../../../i18n";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
 import { MvlAttachment, MvlData } from "../../../../types/mvlData";
+import { useIOSelector } from "../../../../../../store/hooks";
+import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
+import { handleDownloadResult } from "../../../../utils";
+import { ioBackendAuthenticationHeaderSelector } from "../../../../../../store/reducers/authentication";
 import { useDownloadAttachmentConfirmationBottomSheet } from "./DownloadAttachmentConfirmationBottomSheet";
 
 type Props = {
@@ -78,13 +82,24 @@ const AttachmentIcon = (props: {
  * @constructor
  */
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
+  const authHeader = useIOSelector(ioBackendAuthenticationHeaderSelector);
+  const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
   const { present } = useDownloadAttachmentConfirmationBottomSheet(
-    props.attachment
+    props.attachment,
+    authHeader,
+    { dontAskAgain: !showAlertForAttachments }
   );
 
+  const onPress = useCallback(() => {
+    if (showAlertForAttachments) {
+      void present();
+    } else {
+      void handleDownloadResult(props.attachment, authHeader);
+    }
+  }, [showAlertForAttachments, props.attachment, authHeader, present]);
+
   return (
-    // TODO: should present only if the user doesn't choose "don't ask again" https://pagopa.atlassian.net/browse/IAMVL-26
-    <TouchableOpacity style={styles.container} onPress={present}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.row}>
         <AttachmentIcon contentType={props.attachment.contentType} />
         <View style={styles.middleSection}>
