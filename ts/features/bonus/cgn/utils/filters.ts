@@ -7,14 +7,15 @@ import {
   ProductCategoryEnum
 } from "../../../../../definitions/cgn/merchants/ProductCategory";
 import Books from "../../../../../img/bonus/cgn/categories/books.svg";
-import Hotel from "../../../../../img/bonus/cgn/categories/hotel.svg";
-import Restaurant from "../../../../../img/bonus/cgn/categories/restaurant.svg";
-import Shopping from "../../../../../img/bonus/cgn/categories/shopping.svg";
 import Sport from "../../../../../img/bonus/cgn/categories/sport.svg";
-import Telefonia from "../../../../../img/bonus/cgn/categories/telefonia.svg";
 import Theater from "../../../../../img/bonus/cgn/categories/theater.svg";
 import Travel from "../../../../../img/bonus/cgn/categories/travel.svg";
 import Wellness from "../../../../../img/bonus/cgn/categories/wellness.svg";
+import Culture from "../../../../../img/bonus/cgn/categories/culture.svg";
+import Telco from "../../../../../img/bonus/cgn/categories/telephoneInternet.svg";
+import Bank from "../../../../../img/bonus/cgn/categories/financialServices.svg";
+import SustainableMobility from "../../../../../img/bonus/cgn/categories/sustainableMobility.svg";
+import Job from "../../../../../img/bonus/cgn/categories/job.svg";
 
 export type Category = {
   type: ProductCategory;
@@ -22,51 +23,72 @@ export type Category = {
   nameKey: TranslationKeys;
 };
 
-export const categories: Record<ProductCategory, Category> = {
-  [ProductCategoryEnum.entertainment]: {
+//   CultureAndEntertainment
+//   Learning
+//   Health
+//   Sports
+//   Home
+//   TelephonyAndInternet
+//   BankingServices
+//   Travelling
+//   SustainableMobility
+//   JobOffers
+
+export const categories: Record<string, Category> = {
+  CultureAndEntertainment: {
     type: ProductCategoryEnum.entertainment,
-    icon: Theater,
-    nameKey: "bonus.cgn.merchantDetail.categories.theater"
-  },
-  [ProductCategoryEnum.travelling]: {
-    type: ProductCategoryEnum.travelling,
-    icon: Travel,
-    nameKey: "bonus.cgn.merchantDetail.categories.travel"
-  },
-  [ProductCategoryEnum.foodDrink]: {
-    type: ProductCategoryEnum.foodDrink,
-    icon: Restaurant,
-    nameKey: "bonus.cgn.merchantDetail.categories.food"
-  },
-  [ProductCategoryEnum.services]: {
-    type: ProductCategoryEnum.services,
-    icon: Telefonia,
-    nameKey: "bonus.cgn.merchantDetail.categories.service"
-  },
-  [ProductCategoryEnum.learning]: {
-    type: ProductCategoryEnum.learning,
-    icon: Books,
-    nameKey: "bonus.cgn.merchantDetail.categories.book"
-  },
-  [ProductCategoryEnum.hotels]: {
-    type: ProductCategoryEnum.hotels,
-    icon: Hotel,
-    nameKey: "bonus.cgn.merchantDetail.categories.hotel"
-  },
-  [ProductCategoryEnum.sports]: {
-    type: ProductCategoryEnum.sports,
-    icon: Sport,
-    nameKey: "bonus.cgn.merchantDetail.categories.sport"
+    icon: Culture,
+    nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment"
   },
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
     icon: Wellness,
     nameKey: "bonus.cgn.merchantDetail.categories.health"
   },
-  [ProductCategoryEnum.shopping]: {
-    type: ProductCategoryEnum.shopping,
-    icon: Shopping,
-    nameKey: "bonus.cgn.merchantDetail.categories.shopping"
+  [ProductCategoryEnum.learning]: {
+    type: ProductCategoryEnum.learning,
+    icon: Books,
+    nameKey: "bonus.cgn.merchantDetail.categories.learning"
+  },
+  [ProductCategoryEnum.sports]: {
+    type: ProductCategoryEnum.sports,
+    icon: Sport,
+    nameKey: "bonus.cgn.merchantDetail.categories.sport"
+  },
+  Home: {
+    // FIXME replace with correct enum key
+    type: ProductCategoryEnum.entertainment,
+    icon: Theater,
+    nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment"
+  },
+  TelephonyAndInternet: {
+    // FIXME replace with correct enum key
+    type: ProductCategoryEnum.entertainment,
+    icon: Telco,
+    nameKey: "bonus.cgn.merchantDetail.categories.telco"
+  },
+  BankingServices: {
+    // FIXME replace with correct enum key
+    type: ProductCategoryEnum.entertainment,
+    icon: Bank,
+    nameKey: "bonus.cgn.merchantDetail.categories.finance"
+  },
+  [ProductCategoryEnum.travelling]: {
+    type: ProductCategoryEnum.travelling,
+    icon: Travel,
+    nameKey: "bonus.cgn.merchantDetail.categories.travel"
+  },
+  SustainableMobility: {
+    // FIXME replace with correct enum key
+    type: ProductCategoryEnum.travelling,
+    icon: SustainableMobility,
+    nameKey: "bonus.cgn.merchantDetail.categories.mobility"
+  },
+  JobOffers: {
+    // FIXME replace with correct enum key
+    type: ProductCategoryEnum.travelling,
+    icon: Job,
+    nameKey: "bonus.cgn.merchantDetail.categories.job"
   }
 };
 
