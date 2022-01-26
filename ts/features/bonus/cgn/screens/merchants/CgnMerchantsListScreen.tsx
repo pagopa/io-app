@@ -153,6 +153,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
               </Item>
             </View>
             <CgnMerchantsListView
+              onRefresh={initLoadingLists}
               merchantList={merchantList}
               onItemPress={onItemPress}
             />

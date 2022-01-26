@@ -12,6 +12,7 @@ import CgnMerchantListItem from "./CgnMerchantListItem";
 type Props = {
   merchantList: ReadonlyArray<OfflineMerchant | OnlineMerchant>;
   onItemPress: (id: Merchant["id"]) => void;
+  onRefresh: () => void;
 };
 
 // Component that renders the list of merchants as a FlatList
@@ -34,6 +35,7 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
         ItemSeparatorComponent={() => (
           <ItemSeparatorComponent noPadded={true} />
         )}
+        onRefresh={props.onRefresh}
         renderItem={renderListItem}
         keyExtractor={c => c.id}
         keyboardShouldPersistTaps={"handled"}
