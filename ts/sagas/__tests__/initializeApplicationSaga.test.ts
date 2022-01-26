@@ -27,6 +27,7 @@ import {
 } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
+import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -49,6 +50,8 @@ const profile: InitializedProfile = {
 describe("initializeApplicationSaga", () => {
   it("should dispatch startApplicationInitialization if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
       .next()
