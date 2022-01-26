@@ -26,8 +26,8 @@ SLACK_CHANNEL = "#io_dev_app_status"
 
 # a list of remote uris consumed by the app for content presentation
 remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/bonus_available_v2.json",
-                      "https://assets.cdn.io.italia.it/contextualhelp/data.json",
-                      "https://assets.cdn.io.italia.it/status/backend.json"]
+					  "https://assets.cdn.io.italia.it/contextualhelp/data.json",
+					  "https://assets.cdn.io.italia.it/status/backend.json"]
 
 
 class IOUrl(object):
@@ -72,7 +72,7 @@ def extract_uris(text, black_list_url={''}):
 	extractor = URLExtract()
 	urls = set(extractor.find_urls(text))
 	urls = list(map(lambda r: r.replace(")", "").replace("}", ""),
-	                filter(lambda r: r.startswith("http") or r.startswith("www"), urls)))
+					filter(lambda r: r.startswith("http") or r.startswith("www"), urls)))
 	urls_set = set(filter(lambda f: f not in black_list_url, urls))
 	return urls_set
 
@@ -210,14 +210,14 @@ run_test = len(argv) > 1 and argv[1] == "run_tests"
 # we have to ensure the init part is execute only the first time
 if not run_test and __name__ == '__main__':
 	files_black_list = {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts", "mvlMock.ts", "message.ts",
-	                    "supportAssistance.ts", "ZendeskAskPermissions.tsx"}
+						"supportAssistance.ts", "ZendeskAskPermissions.tsx"}
 
 	manager = Manager()
 	print("scanning local folders...")
 	all_uris = set()
 	urls_black_list = {
-    # 403 when this check runs (in the middle of the night)
-    "https://id.lepida.it/docs/manuale_utente.pdf",
+		# 403 when this check runs (in the middle of the night)
+		"https://id.lepida.it/docs/manuale_utente.pdf",
 		# still not available
 		"https://io.italia.it/carta-giovani-nazionale/informativa-beneficiari",
 		# still not available
@@ -226,7 +226,8 @@ if not run_test and __name__ == '__main__':
 		"https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection",
 		"https://assets.cdn.io.italia.it",
 		"https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
-		"https://www.trusttechnologies.it/contatti/#form"}
+		"https://www.trusttechnologies.it/contatti/#form",
+		"https://support.namirial.com/it/faq/faq-tsp/faq-tsp-spid"}
 	locales = (abspath(join(dirname(__file__), "../..", "locales")), set())
 	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), files_black_list)
 	for directory, black_list in [locales, ts_dir]:
