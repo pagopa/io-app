@@ -87,7 +87,8 @@ export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
 export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
 
 // Opt-in payments method
-export const optInPaymentMethods = Config.OPT_IN_PAYMENT_METHODS === "YES";
+export const optInPaymentMethodsEnabled =
+  Config.OPT_IN_PAYMENT_METHODS === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
