@@ -27,11 +27,11 @@ const generateAttachmentUrl = (
 /**
  * convert the remote legal message attachment into the relative local domain model
  * @param attachment
- * @param id
+ * @param messageId
  */
 const convertMvlAttachment = (
   attachment: Attachment,
-  id: string
+  messageId: UIMessageId
 ): MvlAttachment =>
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
@@ -39,7 +39,7 @@ const convertMvlAttachment = (
     displayName: attachment.name,
     contentType: attachment.content_type.toLowerCase(),
     resourceUrl: {
-      href: generateAttachmentUrl(id, attachment.id as MvlAttachmentId)
+      href: generateAttachmentUrl(messageId, attachment.id as MvlAttachmentId)
     }
   });
 
@@ -67,7 +67,7 @@ const convertMvlDetail = (
         plain: eml.plain_text_content
       },
       attachments: eml.attachments.map(attachment =>
-        convertMvlAttachment(attachment, certData.data.envelope_id)
+        convertMvlAttachment(attachment, id)
       ),
       metadata: {
         id: msgId as MvlId,
