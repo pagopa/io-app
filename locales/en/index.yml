@@ -302,6 +302,8 @@ profile:
     title: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    clearAsyncStorage: Clear AsyncStorage
+    dumpAsyncStorage: Dump AsyncStorage content to console
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
@@ -897,22 +899,21 @@ wallet:
     bancomat:
       title: "Search for your PagoBANCOMAT cards"
       description:
-        text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
+        text1: "By adding PagoBANCOMAT to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
       title: "Search for your BANCOMAT Pay accounts"
       description:
-        text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
+        text1: "By adding BANCOMAT Pay to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
     cobadge:
       title: "Search for your international circuit cards"
       description:
-        text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
-        text2: the banks participating in the service
+        text1: "By adding all the Maestro, Mastercard, V-Pay and Visa cards associated with you to your Wallet, you’ll be able to join the initiatives available on IO."
         text3: "For further information, please read the "
         text4: privacy policy.
     bankName: Name of the bank
@@ -1090,8 +1091,8 @@ wallet:
       headerTitle: "Add supermarket card"
       choosePrivativeIssuer:
         loading: "Loading settings\n\nPlease wait a few seconds"
-        title: "Choose your card brand"
-        body: "You can only add cards that allow you to pay in supermarkets."
+        title: "Choose the card brand"
+        body: "By adding the card to your Wallet, you’ll be able to join the initiatives available on IO."
         koDisabled:
           title: "This supermarket doesn't offer this feature yet"
           body: "We are working to allow you to add your card soon."

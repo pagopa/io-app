@@ -43,7 +43,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 18;
+const CURRENT_REDUX_STORE_VERSION = 19;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -271,7 +271,17 @@ const migrations: MigrationManifest = {
         ..._.omit(content, "servicesMetadata")
       }
     };
-  }
+  },
+  // Version 19
+  // add features.MVL section with default preferences
+  "19": (state: PersistedState) => ({
+    ...state,
+    features: {
+      mvl: {
+        preferences: { showAlertForAttachments: true }
+      }
+    }
+  })
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -281,8 +291,9 @@ const rootPersistConfig: PersistConfig = {
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv }),
-  // entities implement a persist reduce that avoids to persist messages. Other entities section will be persisted
-  blacklist: ["entities"],
+  // Entities and features implement a persisted reduce that avoids persisting messages.
+  // Other entities section will be persisted
+  blacklist: ["entities", "features"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
