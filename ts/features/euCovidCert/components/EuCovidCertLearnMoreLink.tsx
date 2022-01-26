@@ -9,6 +9,7 @@ const EuCovidCertLearnMoreLink = (): React.ReactElement => (
     accessibilityRole={"link"}
     accessibilityHint={I18n.t("global.accessibility.linkHint")}
     onPress={() => openWebUrl(euCovidCertificateUrl)}
+    testID="euCovidCertLearnMoreLink"
   >
     {I18n.t("features.euCovidCertificate.common.learnMore")}
   </Link>

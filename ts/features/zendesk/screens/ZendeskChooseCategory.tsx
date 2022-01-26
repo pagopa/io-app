@@ -87,6 +87,7 @@ const ZendeskChooseCategory = () => {
         }}
         first={listItem.index === 0}
         style={{ paddingRight: 0 }}
+        testID={category.value}
       >
         <View
           style={{

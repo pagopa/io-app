@@ -33,7 +33,7 @@ const bancomatPayLocales = () => ({
 const cobadgeLocales = () => ({
   title: I18n.t("wallet.searchAbi.cobadge.title"),
   text1: I18n.t("wallet.searchAbi.cobadge.description.text1"),
-  text2: I18n.t("wallet.searchAbi.cobadge.description.text2"),
+  text2: "",
   text3: I18n.t("wallet.searchAbi.cobadge.description.text3"),
   text4: I18n.t("wallet.searchAbi.cobadge.description.text4")
 });

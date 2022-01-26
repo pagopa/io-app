@@ -17,7 +17,12 @@ import { PublicSession } from "../../../../../definitions/backend/PublicSession"
 import { SpidLevelEnum } from "../../../../../definitions/backend/SpidLevel";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
-import { zendeskRequestTicketNumber } from "../../store/actions";
+import {
+  getZendeskConfig,
+  zendeskRequestTicketNumber
+} from "../../store/actions";
+import * as zendeskNavigation from "../../store/actions/navigation";
+import { Zendesk } from "../../../../../definitions/content/Zendesk";
 
 const mockPublicSession: PublicSession = {
   bpdToken: "bpdToken",
@@ -25,6 +30,9 @@ const mockPublicSession: PublicSession = {
   spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"],
   walletToken: "walletToken",
   zendeskToken: "zendeskToken"
+};
+const mockZendeskConfig: Zendesk = {
+  panicMode: true
 };
 jest.useFakeTimers();
 
@@ -62,7 +70,42 @@ describe("the ZendeskSupportComponent", () => {
   });
 
   describe("when the user press the zendesk open ticket button", () => {
-    it.todo("should call openTicket");
+    const navigateToZendeskAskPermissionsSpy = jest.spyOn(
+      zendeskNavigation,
+      "navigateToZendeskAskPermissions"
+    );
+    const navigateToZendeskPanicModeSpy = jest.spyOn(
+      zendeskNavigation,
+      "navigateToZendeskPanicMode"
+    );
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+    it("if panic mode is false, should navigate to the ZendeskAskPermissions screen", () => {
+      const store = createStore(appReducer, globalState as any);
+      const component = renderComponent(store);
+      const zendeskButton = component.getByTestId("contactSupportButton");
+      fireEvent(zendeskButton, "onPress");
+      expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
+      expect(navigateToZendeskPanicModeSpy).not.toBeCalled();
+    });
+    it("if panic mode is true, should navigate to the ZendeskAskPermissions screen", () => {
+      const navigateToZendeskAskPermissionsSpy = jest.spyOn(
+        zendeskNavigation,
+        "navigateToZendeskAskPermissions"
+      );
+      const navigateToZendeskPanicModeSpy = jest.spyOn(
+        zendeskNavigation,
+        "navigateToZendeskPanicMode"
+      );
+      const store = createStore(appReducer, globalState as any);
+      const component = renderComponent(store);
+      store.dispatch(getZendeskConfig.success(mockZendeskConfig));
+      const zendeskButton = component.getByTestId("contactSupportButton");
+      fireEvent(zendeskButton, "onPress");
+      expect(navigateToZendeskPanicModeSpy).toBeCalled();
+      expect(navigateToZendeskAskPermissionsSpy).not.toBeCalled();
+    });
   });
   describe("when the user press the zendesk show tickets button", () => {
     describe("if the user already open a ticket", () => {
