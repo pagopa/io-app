@@ -83,6 +83,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch sessionExpired if check session response is 401", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
       .call(initMixpanel)
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
@@ -108,6 +110,8 @@ describe("initializeApplicationSaga", () => {
 
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
       .next()
