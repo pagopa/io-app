@@ -146,7 +146,10 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -157,7 +160,9 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -197,9 +202,11 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -387,7 +394,10 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -400,6 +410,9 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -446,7 +459,9 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -486,9 +501,11 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -676,7 +693,10 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -689,6 +709,9 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -735,7 +758,9 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -775,9 +800,11 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -970,7 +997,10 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -983,6 +1013,9 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -1029,7 +1062,9 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -1069,9 +1104,11 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -1259,7 +1296,10 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -1272,6 +1312,9 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -1318,7 +1361,9 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -1358,9 +1403,11 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -1589,7 +1636,10 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -1602,6 +1652,9 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -1648,7 +1701,9 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -1688,9 +1743,11 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -1878,7 +1935,10 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -1891,6 +1951,9 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -1937,7 +2000,9 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -1977,9 +2042,11 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -2223,7 +2290,10 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -2236,6 +2306,9 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -2282,7 +2355,9 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -2322,9 +2397,11 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -2568,7 +2645,10 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -2581,6 +2661,9 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -2627,7 +2710,9 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -2667,9 +2752,11 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -2913,7 +3000,10 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -2926,6 +3016,9 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -2972,7 +3065,9 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -3012,9 +3107,11 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -3258,7 +3355,10 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -3271,6 +3371,9 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -3317,7 +3420,9 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -3357,9 +3462,11 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -3603,7 +3710,10 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -3616,6 +3726,9 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -3662,7 +3775,9 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -3702,9 +3817,11 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
@@ -3948,7 +4065,10 @@ exports[`MessageList Item component with all the flags set to false should match
           Object {},
           Object {
             "flex": 1,
+            "flexBasis": "100%",
             "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
             "minHeight": 24,
           },
         ]
@@ -3961,6 +4081,9 @@ exports[`MessageList Item component with all the flags set to false should match
             Object {
               "alignSelf": "flex-start",
               "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
               "paddingRight": 8,
               "paddingTop": 6.5,
             },
@@ -4007,7 +4130,9 @@ exports[`MessageList Item component with all the flags set to false should match
           Array [
             Object {},
             Object {
-              "width": "95%",
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
             },
           ]
         }
@@ -4047,9 +4172,11 @@ exports[`MessageList Item component with all the flags set to false should match
           Object {},
           Object {
             "alignItems": "flex-start",
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
             "justifyContent": "flex-end",
-            "width": 98,
           },
         ]
       }
