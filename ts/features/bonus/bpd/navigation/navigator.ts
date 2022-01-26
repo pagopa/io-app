@@ -12,6 +12,7 @@ import ErrorPaymentMethodsScreen from "../screens/onboarding/ErrorPaymentMethods
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
+import OptInPaymentMethodsCashbackUpdate from "../screens/optInPaymentMethods/OptInPaymentMethodsCashbackUpdate";
 import BPD_ROUTES from "./routes";
 
 export const BpdOnboardingNavigator = createStackNavigator(
@@ -74,6 +75,21 @@ export const BpdIBANNavigator = createStackNavigator(
   {
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen
+    }
+  },
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
+  }
+);
+
+export const OptInPaymentMethodNavigator = createStackNavigator(
+  {
+    [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE]: {
+      screen: OptInPaymentMethodsCashbackUpdate
     }
   },
   {

@@ -1,12 +1,17 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { bonusVacanzeEnabled, bpdEnabled } from "../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  optInPaymentMethodsEnabled
+} from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
 import {
   BpdDetailsNavigator,
   BpdIBANNavigator,
-  BpdOnboardingNavigator
+  BpdOnboardingNavigator,
+  OptInPaymentMethodNavigator
 } from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import IbanCTAEditScreen from "../features/bonus/bpd/screens/iban/IbanCTAEditScreen";
@@ -200,11 +205,20 @@ const paypalConfigMap = {
   }
 };
 
+const optInPaymentMethodsConfigMap = optInPaymentMethodsEnabled
+  ? {
+      [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
+        screen: OptInPaymentMethodNavigator
+      }
+    }
+  : {};
+
 const routeConfig = {
   ...baseRouteConfigMap,
   ...bonusVacanzeConfigMap,
   ...bpdConfigMap,
-  ...paypalConfigMap
+  ...paypalConfigMap,
+  ...optInPaymentMethodsConfigMap
 };
 
 /**
