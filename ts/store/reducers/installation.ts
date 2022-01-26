@@ -21,7 +21,7 @@ export type InstallationState = Readonly<{
 
 export const INSTALLATION_INITIAL_STATE: InstallationState = {
   isFirstRunAfterInstall: true,
-  // hold the last MAX_APP_VERSION_HISTORY_SIZE app versions, ASC ordered (the last one at the end of the array)
+  // hold the last MAX_APP_VERSION_HISTORY_SIZE app versions, ASC ordered (the last one at the end of the array is the latest added)
   appVersionHistory: []
 };
 

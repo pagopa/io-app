@@ -28,8 +28,8 @@ describe("installation reducer", () => {
     describe("given the action appVersionHistory", () => {
       it("should return the state updated", () => {
         expect(
-          reducer(undefined, appVersionHistory("versionX")).appVersionHistory
-        ).toEqual(["versionX"]);
+          reducer(undefined, appVersionHistory("1.0.0.0")).appVersionHistory
+        ).toEqual(["1.0.0.0"]);
       });
     });
 
@@ -39,27 +39,27 @@ describe("installation reducer", () => {
           undefined,
           previousInstallationDataDeleteSuccess()
         );
-        const state1 = reducer(state, appVersionHistory("versionX"));
+        const state1 = reducer(state, appVersionHistory("1.0.0.0"));
         expect(state1).toEqual({
           isFirstRunAfterInstall: false,
-          appVersionHistory: ["versionX"]
+          appVersionHistory: ["1.0.0.0"]
         });
       });
     });
 
     describe("given multiple appVersionHistory", () => {
       it("should return the state updated in the right order", () => {
-        const state = reducer(undefined, appVersionHistory("versionX"));
-        const state1 = reducer(state, appVersionHistory("versionY"));
-        expect(state1.appVersionHistory).toEqual(["versionX", "versionY"]);
+        const state = reducer(undefined, appVersionHistory("1.0.0.2"));
+        const state1 = reducer(state, appVersionHistory("1.0.0.1"));
+        expect(state1.appVersionHistory).toEqual(["1.0.0.1", "1.0.0.2"]);
       });
     });
 
     describe("given multiple appVersionHistory with the same version", () => {
       it("should return the state updated no duplicated version", () => {
-        const state = reducer(undefined, appVersionHistory("versionX"));
-        const state1 = reducer(state, appVersionHistory("versionX"));
-        expect(state1.appVersionHistory).toEqual(["versionX"]);
+        const state = reducer(undefined, appVersionHistory("1.0.0.1"));
+        const state1 = reducer(state, appVersionHistory("1.0.0.1"));
+        expect(state1.appVersionHistory).toEqual(["1.0.0.1"]);
       });
     });
 
@@ -72,7 +72,7 @@ describe("installation reducer", () => {
                 isFirstRunAfterInstall: false,
                 appVersionHistory: acc
               },
-              appVersionHistory(`version_${curr}`)
+              appVersionHistory(`1.0.0.${curr}`)
             ).appVersionHistory,
           []
         );
