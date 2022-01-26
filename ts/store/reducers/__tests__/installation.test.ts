@@ -49,8 +49,8 @@ describe("installation reducer", () => {
 
     describe("given multiple appVersionHistory", () => {
       it("should return the state updated in the right order", () => {
-        const state = reducer(undefined, appVersionHistory("1.0.0.2"));
-        const state1 = reducer(state, appVersionHistory("1.0.0.1"));
+        const state = reducer(undefined, appVersionHistory("1.0.0.1"));
+        const state1 = reducer(state, appVersionHistory("1.0.0.2"));
         expect(state1.appVersionHistory).toEqual(["1.0.0.1", "1.0.0.2"]);
       });
     });
