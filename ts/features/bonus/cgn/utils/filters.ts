@@ -23,17 +23,6 @@ export type Category = {
   nameKey: TranslationKeys;
 };
 
-//   CultureAndEntertainment
-//   Learning
-//   Health
-//   Sports
-//   Home
-//   TelephonyAndInternet
-//   BankingServices
-//   Travelling
-//   SustainableMobility
-//   JobOffers
-
 export const categories: Record<string, Category> = {
   CultureAndEntertainment: {
     type: ProductCategoryEnum.entertainment,
