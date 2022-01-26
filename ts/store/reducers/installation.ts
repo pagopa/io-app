@@ -4,32 +4,55 @@
  */
 import { getType } from "typesafe-actions";
 
-import { previousInstallationDataDeleteSuccess } from "../actions/installation";
+import { takeEnd } from "fp-ts/lib/Array";
+import {
+  appVersionHistory,
+  previousInstallationDataDeleteSuccess
+} from "../actions/installation";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
+export const MAX_APP_VERSION_HISTORY_SIZE = 10;
+
 export type InstallationState = Readonly<{
   isFirstRunAfterInstall: boolean;
+  appVersionHistory: Array<string>;
 }>;
 
-const INITIAL_STATE: InstallationState = {
-  isFirstRunAfterInstall: true
+export const INSTALLATION_INITIAL_STATE: InstallationState = {
+  isFirstRunAfterInstall: true,
+  // hold the last MAX_APP_VERSION_HISTORY_SIZE app versions, ASC ordered (the last one at the end of the array)
+  appVersionHistory: []
 };
 
 // Selectors
 export const isFirstRunAfterInstallSelector = (state: GlobalState): boolean =>
   state.installation.isFirstRunAfterInstall;
 
+export const appVersionHistorySelector = (
+  state: GlobalState
+): InstallationState["appVersionHistory"] =>
+  state.installation.appVersionHistory;
+
 const reducer = (
-  state: InstallationState = INITIAL_STATE,
+  state: InstallationState = INSTALLATION_INITIAL_STATE,
   action: Action
 ): InstallationState => {
   switch (action.type) {
     case getType(previousInstallationDataDeleteSuccess):
+      return { ...state, isFirstRunAfterInstall: false };
+    case getType(appVersionHistory):
+      // avoid duplicated elements
+      if (state.appVersionHistory.includes(action.payload)) {
+        return state;
+      }
       return {
-        isFirstRunAfterInstall: false
+        ...state,
+        appVersionHistory: takeEnd(MAX_APP_VERSION_HISTORY_SIZE, [
+          ...state.appVersionHistory,
+          action.payload
+        ])
       };
-
     default:
       return state;
   }
