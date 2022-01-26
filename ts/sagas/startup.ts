@@ -31,8 +31,7 @@ import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
   bpdEnabled,
-  euCovidCertificateEnabled,
-  mvlEnabled,
+  cgnEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   svEnabled,
@@ -43,8 +42,7 @@ import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonus
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
-import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
-import { watchMvlSaga } from "../features/mvl/saga";
+import { watchFeaturesSagas } from "../features/common/sagas/startup";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
@@ -366,15 +364,19 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
-  // Start watching for cgn actions
-  yield fork(watchBonusCgnSaga, sessionToken);
+  if (cgnEnabled) {
+    // Start watching for cgn actions
+    yield fork(watchBonusCgnSaga, sessionToken);
+  }
 
   if (svEnabled) {
     // Start watching for sv actions
     yield fork(watchBonusSvSaga, sessionToken);
   }
 
-  if (euCovidCertificateEnabled) {
+  yield fork(watchFeaturesSagas, sessionToken);
+
+  /*if (euCovidCertificateEnabled) {
     // Start watching for EU Covid Certificate actions
     yield fork(watchEUCovidCertificateSaga, sessionToken);
   }
@@ -382,7 +384,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (mvlEnabled) {
     // Start watching for MVL actions
     yield fork(watchMvlSaga, sessionToken);
-  }
+  }*/
 
   // Load the user metadata
   yield call(loadUserMetadata, backendClient.getUserMetadata, true);

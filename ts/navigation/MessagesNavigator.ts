@@ -5,15 +5,7 @@ import {
   NavigationStackProp
 } from "react-navigation-stack/src/types";
 
-import {
-  euCovidCertificateEnabled,
-  mvlEnabled,
-  usePaginatedMessages
-} from "../config";
-import EuCovidCertNavigator from "../features/euCovidCert/navigation/navigator";
-import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
-import MvlNavigator from "../features/mvl/navigation/navigator";
-import MVL_ROUTES from "../features/mvl/navigation/routes";
+import { usePaginatedMessages } from "../config";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
@@ -22,6 +14,7 @@ import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageD
 import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 
 import ROUTES from "./routes";
+import { featuresNavigators } from "../features/common/navigation/navigator";
 
 const baseMessageRouteConfig: NavigationRouteConfigMap<
   NavigationStackOptions,
@@ -44,35 +37,12 @@ const baseMessageRouteConfig: NavigationRouteConfigMap<
   }
 };
 
-const euCovidCertificateRouteConfig: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = euCovidCertificateEnabled
-  ? {
-      [EUCOVIDCERT_ROUTES.MAIN]: {
-        screen: EuCovidCertNavigator
-      }
-    }
-  : {};
-
-const mvlRouteConfig: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = mvlEnabled
-  ? {
-      [MVL_ROUTES.MAIN]: {
-        screen: MvlNavigator
-      }
-    }
-  : {};
-
 const messageRouteConfig: NavigationRouteConfigMap<
   NavigationStackOptions,
   NavigationStackProp<NavigationRoute, any>
 > = {
   ...baseMessageRouteConfig,
-  ...euCovidCertificateRouteConfig,
-  ...mvlRouteConfig
+  ...featuresNavigators
 };
 
 const MessagesNavigator = createStackNavigator(messageRouteConfig, {
