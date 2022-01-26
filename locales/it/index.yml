@@ -1510,8 +1510,8 @@ wallet:
       card:
         validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
-    title: "Vuoi eliminare questo metodo?"
-    body: "Questo metodo verrà rimosso. Eventuali funzioni collegate verranno disattivate entro 24h."
+    title: "Vuoi eliminare questo metodo di pagamento?"
+    body: "Rimuoveremo il metodo dal Portafoglio. Le eventuali iniziative a cui è collegato si disattiveranno entro 24 ore."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Iniziative disponibili"
@@ -1578,8 +1578,8 @@ cardComponent:
   actions: Azioni
   setFavorite: Imposta come preferita
   unsetFavorite: Rimuovi dai preferiti
-  deleteTitle: Vuoi eliminare questo metodo?
-  deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate verranno disattivate entro 24h.
+  deleteTitle: Vuoi eliminare questo metodo di pagamento?
+  deleteMsg: Rimuoveremo il metodo dal Portafoglio. Le eventuali iniziative a cui è collegato si disattiveranno entro 24 ore.
   deleteLoading: Eliminazione metodo in corso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo

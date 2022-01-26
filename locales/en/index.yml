@@ -1487,8 +1487,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this method?"
-    body: "This method will be removed. Any related feature will be disabled within 24 hours."
+    title: "Delete this payment method?"
+    body: "We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1554,7 +1554,7 @@ cardComponent:
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
-  deleteMsg: This payment method will be removed. Any related feature will be disabled within 24 hours.
+  deleteMsg: We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours.
   deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
