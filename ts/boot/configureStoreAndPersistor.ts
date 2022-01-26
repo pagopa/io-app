@@ -277,6 +277,15 @@ const migrations: MigrationManifest = {
     };
   },
   // Version 19
+  // add features.MVL section with default preferences
+  "19": (state: PersistedState) => ({
+    ...state,
+    features: {
+      mvl: {
+        preferences: { showAlertForAttachments: true }
+      }
+    }
+  })
   // add appVersionHistory to installation section
   "19": (state: PersistedState) => {
     const installation: InstallationState = (state as PersistedGlobalState)
@@ -298,8 +307,9 @@ const rootPersistConfig: PersistConfig = {
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv }),
-  // entities implement a persist reduce that avoids to persist messages. Other entities section will be persisted
-  blacklist: ["entities"],
+  // Entities and features implement a persisted reduce that avoids persisting messages.
+  // Other entities section will be persisted
+  blacklist: ["entities", "features"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
