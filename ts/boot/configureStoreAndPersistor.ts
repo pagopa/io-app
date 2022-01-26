@@ -286,7 +286,8 @@ const migrations: MigrationManifest = {
       }
     }
   }),
-  // add appVersionHistory to installation section
+  // Version 20
+  // add installation.appVersionHistory
   "20": (state: PersistedState) => {
     const installation: InstallationState = (state as PersistedGlobalState)
       .installation;
