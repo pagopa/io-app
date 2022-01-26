@@ -149,7 +149,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
 
-  // store the app version in the history if it's not present
+  // store the app version in the history, if the current version is not present
   yield call(checkAppHistoryVersionSaga);
   // check if mixpanel could be initialized
   yield call(initMixpanel);
