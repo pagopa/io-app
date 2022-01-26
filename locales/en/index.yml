@@ -2522,6 +2522,10 @@ bonus:
             active: "**The ranking changes every day.** You will receive a message when it will be published."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
+    optInPaymentMethods:
+      cashbackUpdate:
+        header: "News and updates"
+        title: "Cashback updates"
   cgn:
     accessibility:
       code: By pressing the item you will copy the code
