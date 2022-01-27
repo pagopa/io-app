@@ -72,13 +72,17 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       ))
     )}
     <View spacer />
-    <H3 accessible={true} accessibilityRole={"header"}>
-      {I18n.t("bonus.cgn.merchantDetail.title.description")}
-    </H3>
-    <H4 weight={"Regular"} testID={"discount-description"}>
-      {discount.description}
-    </H4>
-    <View spacer />
+    {discount.description && (
+      <>
+        <H3 accessible={true} accessibilityRole={"header"}>
+          {I18n.t("bonus.cgn.merchantDetail.title.description")}
+        </H3>
+        <H4 weight={"Regular"} testID={"discount-description"}>
+          {discount.description}
+        </H4>
+        <View spacer />
+      </>
+    )}
     <H3 accessible={true} accessibilityRole={"header"}>
       {I18n.t("bonus.cgn.merchantDetail.title.validity")}
     </H3>
