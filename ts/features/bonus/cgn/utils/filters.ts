@@ -6,9 +6,9 @@ import {
   ProductCategory,
   ProductCategoryEnum
 } from "../../../../../definitions/cgn/merchants/ProductCategory";
-import Books from "../../../../../img/bonus/cgn/categories/books.svg";
+import Learning from "../../../../../img/bonus/cgn/categories/learning.svg";
 import Sport from "../../../../../img/bonus/cgn/categories/sport.svg";
-import Theater from "../../../../../img/bonus/cgn/categories/theater.svg";
+import Home from "../../../../../img/bonus/cgn/categories/home.svg";
 import Travel from "../../../../../img/bonus/cgn/categories/travel.svg";
 import Wellness from "../../../../../img/bonus/cgn/categories/wellness.svg";
 import Culture from "../../../../../img/bonus/cgn/categories/culture.svg";
@@ -23,9 +23,9 @@ export type Category = {
   nameKey: TranslationKeys;
 };
 
-export const categories: Record<string, Category> = {
-  CultureAndEntertainment: {
-    type: ProductCategoryEnum.entertainment,
+export const categories: Record<ProductCategory, Category> = {
+  [ProductCategoryEnum.cultureAndEntertainment]: {
+    type: ProductCategoryEnum.cultureAndEntertainment,
     icon: Culture,
     nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment"
   },
@@ -36,7 +36,7 @@ export const categories: Record<string, Category> = {
   },
   [ProductCategoryEnum.learning]: {
     type: ProductCategoryEnum.learning,
-    icon: Books,
+    icon: Learning,
     nameKey: "bonus.cgn.merchantDetail.categories.learning"
   },
   [ProductCategoryEnum.sports]: {
@@ -44,21 +44,18 @@ export const categories: Record<string, Category> = {
     icon: Sport,
     nameKey: "bonus.cgn.merchantDetail.categories.sport"
   },
-  Home: {
-    // FIXME replace with correct enum key
-    type: ProductCategoryEnum.entertainment,
-    icon: Theater,
-    nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment"
+  [ProductCategoryEnum.home]: {
+    type: ProductCategoryEnum.home,
+    icon: Home,
+    nameKey: "bonus.cgn.merchantDetail.categories.home"
   },
-  TelephonyAndInternet: {
-    // FIXME replace with correct enum key
-    type: ProductCategoryEnum.entertainment,
+  [ProductCategoryEnum.telephonyAndInternet]: {
+    type: ProductCategoryEnum.telephonyAndInternet,
     icon: Telco,
     nameKey: "bonus.cgn.merchantDetail.categories.telco"
   },
-  BankingServices: {
-    // FIXME replace with correct enum key
-    type: ProductCategoryEnum.entertainment,
+  [ProductCategoryEnum.bankingServices]: {
+    type: ProductCategoryEnum.bankingServices,
     icon: Bank,
     nameKey: "bonus.cgn.merchantDetail.categories.finance"
   },
@@ -67,15 +64,13 @@ export const categories: Record<string, Category> = {
     icon: Travel,
     nameKey: "bonus.cgn.merchantDetail.categories.travel"
   },
-  SustainableMobility: {
-    // FIXME replace with correct enum key
-    type: ProductCategoryEnum.travelling,
+  [ProductCategoryEnum.sustainableMobility]: {
+    type: ProductCategoryEnum.sustainableMobility,
     icon: SustainableMobility,
     nameKey: "bonus.cgn.merchantDetail.categories.mobility"
   },
-  JobOffers: {
-    // FIXME replace with correct enum key
-    type: ProductCategoryEnum.travelling,
+  [ProductCategoryEnum.jobOffers]: {
+    type: ProductCategoryEnum.jobOffers,
     icon: Job,
     nameKey: "bonus.cgn.merchantDetail.categories.job"
   }
