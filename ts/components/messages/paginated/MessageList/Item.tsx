@@ -41,7 +41,10 @@ const styles = StyleSheet.create({
     flex: 0,
     paddingRight: 8,
     alignSelf: "flex-start",
-    paddingTop: 6.5
+    paddingTop: 6.5,
+    flexShrink: 0,
+    flexGrow: 0,
+    flexBasis: "auto"
   },
   serviceName: {
     flexDirection: "row"
@@ -57,10 +60,12 @@ const styles = StyleSheet.create({
     marginLeft: 7
   },
   icon: {
-    width: 98,
     alignItems: "flex-start",
     justifyContent: "flex-end",
-    flexDirection: "row"
+    flexDirection: "row",
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "auto"
   },
   text3Line: {
     flex: 1,
@@ -69,9 +74,16 @@ const styles = StyleSheet.create({
   text3Container: {
     flex: 1,
     flexDirection: "row",
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%",
     minHeight: 24
   },
-  text3SubContainer: { width: `95%` },
+  text3SubContainer: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%"
+  },
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
