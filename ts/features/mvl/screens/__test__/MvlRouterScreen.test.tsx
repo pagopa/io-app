@@ -48,7 +48,7 @@ describe("MvlRouterScreen behaviour", () => {
     it("Should set the message ID as read", () => {
       const { store } = renderWithDefaultStore();
       expect(store.getActions()).toContainEqual(
-        setMessageReadState(mvlMockId, true)
+        setMessageReadState(mvlMockId, true, "unknown")
       );
     });
 
@@ -147,7 +147,7 @@ describe("MvlRouterScreen behaviour", () => {
       const { store } = renderWithDefaultStore();
       store.dispatch(success);
       expect(store.getActions()).toContainEqual(
-        setMessageReadState(mvlMockId, true)
+        setMessageReadState(mvlMockId, true, "unknown")
       );
     });
   });
