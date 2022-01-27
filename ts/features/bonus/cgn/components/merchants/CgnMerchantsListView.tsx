@@ -13,6 +13,7 @@ type Props = {
   merchantList: ReadonlyArray<OfflineMerchant | OnlineMerchant>;
   onItemPress: (id: Merchant["id"]) => void;
   onRefresh: () => void;
+  refreshing: boolean;
 };
 
 // Component that renders the list of merchants as a FlatList
@@ -35,6 +36,7 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
         ItemSeparatorComponent={() => (
           <ItemSeparatorComponent noPadded={true} />
         )}
+        refreshing={props.refreshing}
         onRefresh={props.onRefresh}
         renderItem={renderListItem}
         keyExtractor={c => c.id}

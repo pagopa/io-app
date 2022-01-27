@@ -104,6 +104,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
             <CgnMerchantsListView
               // TODO replace with correct handler
               onRefresh={constNull}
+              refreshing={false}
               merchantList={props.merchants}
               onItemPress={onItemPress}
             />
