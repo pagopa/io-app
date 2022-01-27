@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   merchantImage: {
     width: "100%",
     height: 230,
-    resizeMode: "cover",
+    resizeMode: "contain",
     borderRadius: 12
   },
   spaced: { justifyContent: "space-between" },
