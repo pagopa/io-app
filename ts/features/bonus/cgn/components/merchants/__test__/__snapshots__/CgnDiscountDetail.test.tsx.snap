@@ -42,63 +42,6 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     weight="SemiBold"
     weightColorFactory={[Function]}
   >
-    Description
-  </Text>
-  <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 16,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "400",
-        },
-      ]
-    }
-    testID="discount-description"
-    weight="Regular"
-    weightColorFactory={[Function]}
-  />
-  <View
-    spacer={true}
-    style={Object {}}
-  />
-  <Text
-    accessibilityRole="header"
-    accessible={true}
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 18,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 18,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "600",
-        },
-      ]
-    }
-    weight="SemiBold"
-    weightColorFactory={[Function]}
-  >
     Validity
   </Text>
   <Text
@@ -236,63 +179,6 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
   }
   testID="discount-detail"
 >
-  <View
-    spacer={true}
-    style={Object {}}
-  />
-  <Text
-    accessibilityRole="header"
-    accessible={true}
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 18,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 18,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "600",
-        },
-      ]
-    }
-    weight="SemiBold"
-    weightColorFactory={[Function]}
-  >
-    Description
-  </Text>
-  <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 16,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "400",
-        },
-      ]
-    }
-    testID="discount-description"
-    weight="Regular"
-    weightColorFactory={[Function]}
-  />
   <View
     spacer={true}
     style={Object {}}
@@ -495,63 +381,6 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
     weight="SemiBold"
     weightColorFactory={[Function]}
   >
-    Description
-  </Text>
-  <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 16,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "400",
-        },
-      ]
-    }
-    testID="discount-description"
-    weight="Regular"
-    weightColorFactory={[Function]}
-  />
-  <View
-    spacer={true}
-    style={Object {}}
-  />
-  <Text
-    accessibilityRole="header"
-    accessible={true}
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 18,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 18,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "600",
-        },
-      ]
-    }
-    weight="SemiBold"
-    weightColorFactory={[Function]}
-  >
     Validity
   </Text>
   <Text
@@ -599,63 +428,6 @@ exports[`when rendering on match snapshot for static code 1`] = `
   }
   testID="discount-detail"
 >
-  <View
-    spacer={true}
-    style={Object {}}
-  />
-  <Text
-    accessibilityRole="header"
-    accessible={true}
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 18,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 18,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "600",
-        },
-      ]
-    }
-    weight="SemiBold"
-    weightColorFactory={[Function]}
-  >
-    Description
-  </Text>
-  <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 16,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "400",
-        },
-      ]
-    }
-    testID="discount-description"
-    weight="Regular"
-    weightColorFactory={[Function]}
-  />
   <View
     spacer={true}
     style={Object {}}
