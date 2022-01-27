@@ -64,6 +64,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
               styles.row,
               {
                 paddingRight: 8,
+                paddingBottom: 2,
                 marginRight: 8
               }
             ]}
