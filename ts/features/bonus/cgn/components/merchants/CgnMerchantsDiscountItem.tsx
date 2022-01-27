@@ -10,7 +10,6 @@ import { ShadowBox } from "../../../bpd/screens/details/components/summary/base/
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { getCategorySpecs } from "../../utils/filters";
 import I18n from "../../../../../i18n";
 import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
 import { Dispatch } from "../../../../../store/actions/types";
@@ -18,6 +17,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
+import { renderCategoryElement } from "./CgnMerchantListItem";
 
 type Props = {
   discount: Discount;
@@ -57,19 +57,51 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               </H4>
             </View>
             <View spacer xsmall />
-            {lookup(0, [...discount.productCategories]).fold(
-              undefined,
-              categoryKey =>
-                getCategorySpecs(categoryKey).fold(undefined, c => (
-                  <View style={styles.row}>
-                    {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
-                    <View hspacer small />
-                    <H5 weight={"SemiBold"} color={"bluegrey"}>
-                      {I18n.t(c.nameKey).toLocaleUpperCase()}
-                    </H5>
-                  </View>
-                ))
-            )}
+            {discount.productCategories.length > 2
+              ? lookup(0, [...discount.productCategories]).fold(
+                  undefined,
+                  c => (
+                    <>
+                      {renderCategoryElement(c)}
+                      <View
+                        hspacer
+                        small
+                        style={{
+                          borderRightColor: IOColors.bluegrey,
+                          borderRightWidth: 1
+                        }}
+                      />
+                      <View hspacer small />
+                      <H5 color={"bluegrey"} weight={"SemiBold"}>
+                        {I18n.t(
+                          "bonus.cgn.merchantDetail.categories.counting",
+                          {
+                            count: discount.productCategories.length - 1
+                          }
+                        ).toLocaleUpperCase()}
+                      </H5>
+                    </>
+                  )
+                )
+              : discount.productCategories.map(category => (
+                  <>
+                    {renderCategoryElement(category)}
+                    {discount.productCategories.indexOf(category) !==
+                      discount.productCategories.length - 1 && (
+                      <>
+                        <View
+                          hspacer
+                          small
+                          style={{
+                            borderRightColor: IOColors.bluegrey,
+                            borderRightWidth: 1
+                          }}
+                        />
+                        <View hspacer small />
+                      </>
+                    )}
+                  </>
+                ))}
           </View>
           {discount.discount && (
             <CgnDiscountValueBox value={discount.discount} small={true} />

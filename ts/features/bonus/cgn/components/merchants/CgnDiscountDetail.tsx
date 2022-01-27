@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import { lookup } from "fp-ts/lib/Array";
 import I18n from "../../../../../i18n";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -55,22 +54,32 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   merchantType,
   onLandingCtaPress
 }: Props) => (
-  <View style={styles.container} testID={"discount-detail"}>
-    {lookup(0, [...discount.productCategories]).fold(undefined, categoryKey =>
-      getCategorySpecs(categoryKey).fold(undefined, c => (
-        <View style={styles.row}>
-          {c.icon({
-            height: CATEGORY_ICON_SIZE,
-            width: CATEGORY_ICON_SIZE,
-            fill: IOColors.bluegrey
-          })}
-          <View hspacer small />
-          <H5 weight={"SemiBold"} color={"bluegrey"} testID={"category-name"}>
-            {I18n.t(c.nameKey).toLocaleUpperCase()}
-          </H5>
-        </View>
-      ))
-    )}
+  <View style={[styles.container, IOStyles.flex]} testID={"discount-detail"}>
+    <View style={[styles.row, IOStyles.flex, { flexWrap: "wrap" }]}>
+      {discount.productCategories.map(categoryKey =>
+        getCategorySpecs(categoryKey).fold(undefined, c => (
+          <View
+            style={[
+              styles.row,
+              {
+                paddingRight: 8,
+                marginRight: 8
+              }
+            ]}
+          >
+            {c.icon({
+              height: CATEGORY_ICON_SIZE,
+              width: CATEGORY_ICON_SIZE,
+              fill: IOColors.bluegrey
+            })}
+            <View hspacer small />
+            <H5 weight={"SemiBold"} color={"bluegrey"} testID={"category-name"}>
+              {I18n.t(c.nameKey).toLocaleUpperCase()}
+            </H5>
+          </View>
+        ))
+      )}
+    </View>
     <View spacer />
     {discount.description && (
       <>

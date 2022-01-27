@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     paddingVertical: 16
   }
 });
-const renderCategoryElement = (category: ProductCategory) =>
+
+export const renderCategoryElement = (category: ProductCategory) =>
   getCategorySpecs(category).fold(undefined, c => (
     <View style={[styles.row]}>
       {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}

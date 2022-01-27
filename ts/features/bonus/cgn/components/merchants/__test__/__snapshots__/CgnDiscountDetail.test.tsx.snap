@@ -8,10 +8,29 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       Object {
         "paddingTop": 16,
       },
+      Object {
+        "flex": 1,
+      },
     ]
   }
   testID="discount-detail"
 >
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexWrap": "wrap",
+        },
+      ]
+    }
+  />
   <View
     spacer={true}
     style={Object {}}
@@ -175,10 +194,29 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
       Object {
         "paddingTop": 16,
       },
+      Object {
+        "flex": 1,
+      },
     ]
   }
   testID="discount-detail"
 >
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexWrap": "wrap",
+        },
+      ]
+    }
+  />
   <View
     spacer={true}
     style={Object {}}
@@ -347,10 +385,29 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
       Object {
         "paddingTop": 16,
       },
+      Object {
+        "flex": 1,
+      },
     ]
   }
   testID="discount-detail"
 >
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexWrap": "wrap",
+        },
+      ]
+    }
+  />
   <View
     spacer={true}
     style={Object {}}
@@ -424,10 +481,29 @@ exports[`when rendering on match snapshot for static code 1`] = `
       Object {
         "paddingTop": 16,
       },
+      Object {
+        "flex": 1,
+      },
     ]
   }
   testID="discount-detail"
 >
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexWrap": "wrap",
+        },
+      ]
+    }
+  />
   <View
     spacer={true}
     style={Object {}}
