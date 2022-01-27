@@ -13,7 +13,6 @@ import Eye from "../../../../../../../img/icons/Eye.svg";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
 import { cgnBucketSelector } from "../../../store/reducers/bucket";
 import { cgnCodeFromBucket } from "../../../store/actions/bucket";
-import { addEvery } from "../../../../../../utils/strings";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { H3 } from "../../../../../../components/core/typography/H3";
@@ -154,7 +153,7 @@ const CgnBucketCodeContent = () => {
           {isCodeVisible &&
           isReady(bucketResponse) &&
           isDiscountBucketCodeResponseSuccess(bucketResponse.value)
-            ? addEvery(bucketResponse.value.value.code, " ", 3)
+            ? bucketResponse.value.value.code
             : "••••••••••"}
         </BaseTypography>
 

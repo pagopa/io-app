@@ -2573,15 +2573,16 @@ bonus:
         landingPage: Get the benefit
       categories:
         counting: and other {{count}}
-        theater: free time
-        travel: travels, transportation and mobility
-        food: restaurant and cooking
-        hotel: hotel
-        service: services
-        book: instruction
-        shopping: shopping
-        sport: sport
+        cultureAndEntertainment: culture and entertainment
         health: health and wellness
+        learning: education and learning
+        sport: sport
+        home: home
+        telco: telephony and internet
+        finance: financial services
+        travel: travels and transportation
+        mobility: sustainable transport
+        job: jobs and internships
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate your Card

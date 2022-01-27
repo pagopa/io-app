@@ -2601,15 +2601,16 @@ bonus:
         landingPage: Accedi all’agevolazione
       categories:
         counting: e altre {{count}}
-        theater: tempo libero
-        travel: viaggi, trasporti e mobilità
-        food: ristoranti e cucina
-        hotel: hotel
-        service: servizi
-        book: istruzione e formazione
-        shopping: shopping
-        sport: sport
+        cultureAndEntertainment: cultura e tempo libero
         health: salute e benessere
+        learning: istruzione e formazione
+        sport: sport
+        home: casa
+        telco: telefonia e internet
+        finance: servizi finanziari
+        travel: viaggi e trasporti
+        mobility: mobilità sostenibile
+        job: lavoro e tirocini
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva la Carta
