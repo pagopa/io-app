@@ -74,6 +74,7 @@ const ZendeskChooseSubCategory = () => {
         }}
         first={listItem.index === 0}
         style={{ paddingRight: 0 }}
+        testID={subCategory.value}
       >
         <View
           style={{

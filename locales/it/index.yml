@@ -302,6 +302,8 @@ profile:
     title: Profilo
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
+    clearAsyncStorage: Cancella contenuto di AsyncStorage
+    dumpAsyncStorage: Scarica contenuto di AsyncStorage
     contextualHelpTitle: Cosa puoi fare nel tuo Profilo
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Modalità sviluppatore attivata
@@ -644,6 +646,8 @@ authentication:
         unknownCardTitle: Carta sconosciuta
         unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+    dataUsageConsent:
+      retryCTA: Entra
   spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
@@ -716,7 +720,7 @@ authentication:
       error_19: "Hai inserito troppe volte un nome utente o una password non corretti: riprova fra qualche minuto o contatta il tuo fornitore di identità SPID per cambiare le tue credenziali."
       error_20: "Per motivi di sicurezza IO richiede un login con un secondo fattore di autenticazione: contatta il tuo fornitore di identità SPID per capire come si usa."
       error_21: "È passato troppo tempo da quando hai iniziato l'accesso: per piacere riparti dall'inizio."
-      error_22: "Per usare IO è necessario consentire l'accesso ad alcuni dei tuoi dati: accedi nuovamente e dai il tuo consenso al passaggio di dati."
+      error_22: "Per usare IO, devi acconsentire all’invio di alcuni dati. Entra di nuovo e dai il tuo consenso."
       error_23: "La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, contatta il tuo fornitore di identità SPID."
       error_25: "Hai annullato l'operazione di login: puoi riprovare quando vuoi."
       error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
@@ -913,22 +917,21 @@ wallet:
     bancomat:
       title: Ricerca delle tue carte PagoBANCOMAT
       description:
-        text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
+        text1: "Aggiungendo PagoBANCOMAT al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
         text2: informativa sul trattamento dei dati personali.
         text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
         text4: cercando fra quelle disponibili
     bpay:
       title: Ricerca dei tuoi account BANCOMAT Pay
       description:
-        text1: "IO cercherà tutti gli account BANCOMAT Pay associati a te.\nProseguendo accetti l'"
+        text1: "Aggiungendo BANCOMAT Pay al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
         text2: informativa sul trattamento dei dati personali.
         text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
         text4: cercando fra quelle disponibili
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
-        text1: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
-        text2: le banche aderenti al servizio
+        text1: "Aggiungendo al tuo Portafoglio tutte le carte Maestro, Mastercard, V-Pay e Visa a te associate, potrai aderire alle iniziative disponibili su IO."
         text3: "Per maggiori informazioni consulta l'"
         text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
@@ -1107,7 +1110,7 @@ wallet:
       choosePrivativeIssuer:
         loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
         title: "Scegli il marchio della tua carta"
-        body: "Puoi aggiungere soltanto carte che ti permettono di pagare nei supermercati."
+        body: "Aggiungendo la carta al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO."
         koDisabled:
           title: "Questo supermercato non offre ancora questa funzionalità"
           body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
