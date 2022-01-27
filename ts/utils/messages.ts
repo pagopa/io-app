@@ -51,7 +51,7 @@ export function messageNeedsDueDateCTA(
   return message.content.due_date !== undefined;
 }
 
-export function messageNeedsPaymentCTA(
+export function hasMessagePaymentData(
   message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return message.content.payment_data !== undefined;
@@ -63,7 +63,7 @@ export function messageNeedsCTABar(
   return (
     message.content.eu_covid_cert !== undefined || // eucovid data
     messageNeedsDueDateCTA(message) ||
-    messageNeedsPaymentCTA(message) ||
+    hasMessagePaymentData(message) ||
     getCTA(message).isSome()
   );
 }
