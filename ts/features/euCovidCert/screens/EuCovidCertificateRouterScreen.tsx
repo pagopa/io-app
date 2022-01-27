@@ -151,7 +151,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCertificate: (authCode: EUCovidCertificateAuthCode) =>
     dispatch(euCovidCertificateGet.request(authCode)),
   setMessageRead: (messageId: string) =>
-    dispatch(setMessageReadState(messageId, true))
+    dispatch(setMessageReadState(messageId, true, "unknown"))
 });
 
 const mapStateToProps = (state: GlobalState) => ({
