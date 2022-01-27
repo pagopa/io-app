@@ -59,6 +59,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       {discount.productCategories.map(categoryKey =>
         getCategorySpecs(categoryKey).fold(undefined, c => (
           <View
+            key={c.nameKey}
             style={[
               styles.row,
               {

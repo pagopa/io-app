@@ -27,6 +27,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: { justifyContent: "space-between", alignItems: "center" },
+  categories: { display: "flex", flexDirection: "row", flexWrap: "wrap" },
   row: {
     flexDirection: "row"
   },
@@ -57,38 +58,13 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               </H4>
             </View>
             <View spacer xsmall />
-            {discount.productCategories.length > 2
-              ? lookup(0, [...discount.productCategories]).fold(
-                  undefined,
-                  c => (
-                    <>
-                      {renderCategoryElement(c)}
-                      <View
-                        hspacer
-                        small
-                        style={{
-                          borderRightColor: IOColors.bluegrey,
-                          borderRightWidth: 1
-                        }}
-                      />
-                      <View hspacer small />
-                      <H5 color={"bluegrey"} weight={"SemiBold"}>
-                        {I18n.t(
-                          "bonus.cgn.merchantDetail.categories.counting",
-                          {
-                            count: discount.productCategories.length - 1
-                          }
-                        ).toLocaleUpperCase()}
-                      </H5>
-                    </>
-                  )
-                )
-              : discount.productCategories.map(category => (
-                  <>
-                    {renderCategoryElement(category)}
-                    {discount.productCategories.indexOf(category) !==
-                      discount.productCategories.length - 1 && (
+            <View style={[styles.categories, IOStyles.flex]}>
+              {discount.productCategories.length > 2
+                ? lookup(0, [...discount.productCategories]).fold(
+                    undefined,
+                    c => (
                       <>
+                        {renderCategoryElement(c)}
                         <View
                           hspacer
                           small
@@ -98,10 +74,37 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
                           }}
                         />
                         <View hspacer small />
+                        <H5 color={"bluegrey"} weight={"SemiBold"}>
+                          {I18n.t(
+                            "bonus.cgn.merchantDetail.categories.counting",
+                            {
+                              count: discount.productCategories.length - 1
+                            }
+                          ).toLocaleUpperCase()}
+                        </H5>
                       </>
-                    )}
-                  </>
-                ))}
+                    )
+                  )
+                : discount.productCategories.map((category, i) => (
+                    <View key={i} style={IOStyles.row}>
+                      {renderCategoryElement(category)}
+                      {discount.productCategories.indexOf(category) !==
+                        discount.productCategories.length - 1 && (
+                        <>
+                          <View
+                            hspacer
+                            small
+                            style={{
+                              borderRightColor: IOColors.bluegrey,
+                              borderRightWidth: 1
+                            }}
+                          />
+                          <View hspacer small />
+                        </>
+                      )}
+                    </View>
+                  ))}
+            </View>
           </View>
           {discount.discount && (
             <CgnDiscountValueBox value={discount.discount} small={true} />
