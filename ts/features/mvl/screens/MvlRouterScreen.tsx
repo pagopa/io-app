@@ -52,7 +52,7 @@ export const MvlRouterScreen = (
   const isRead = useIOSelector(state => isMessageRead(state, mvlId));
   useOnFirstRender(() => {
     if (!isRead) {
-      dispatch(setMessageReadState(mvlId, true));
+      dispatch(setMessageReadState(mvlId, true, "unknown"));
     }
     if (!pot.isSome(mvlPot)) {
       dispatch(mvlDetailsLoad.request(mvlId));
