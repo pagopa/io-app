@@ -97,6 +97,10 @@ const styles = StyleSheet.create({
   paddedLR: {
     paddingLeft: customVariables.contentPadding,
     paddingRight: customVariables.contentPadding
+  },
+  preferredMethodContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 });
 
@@ -266,18 +270,8 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
           </InfoBox>
           <View spacer large />
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between"
-            }}
-            testID={"test"}
-          >
-            <View
-              style={{
-                ...IOStyles.flex
-              }}
-            >
+          <View style={styles.preferredMethodContainer}>
+            <View style={IOStyles.flex}>
               <H4 weight={"SemiBold"} color={"bluegreyDark"}>
                 {I18n.t("wallet.saveCard.infoTitle")}
               </H4>
