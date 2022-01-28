@@ -590,7 +590,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             onWillBlur={this.onLostFocus}
           />
         )}
-        {bpdEnabled && <NewPaymentMethodAddedNotifier />}
+        <NewPaymentMethodAddedNotifier />
       </WalletLayout>
     );
   }
