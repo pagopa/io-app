@@ -205,10 +205,7 @@ export default class CardComponent extends React.Component<Props> {
     const creditCardType = CreditCardType.decode(
       detectedBrand.name.toUpperCase()
     );
-    const logo = creditCardType.fold(
-      _ => (detectedBrand.name === "jcb15" ? cardIcons.JCB : cardIcons.UNKNOWN),
-      t => cardIcons[t]
-    );
+    const logo = cardIcons[creditCardType.getOrElse("UNKNOWN")];
 
     const BASE_ICON_W = 48;
     const BASE_ICON_H = 30;
