@@ -294,19 +294,12 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             </View>
           </View>
         </Content>
-        {isInPayment ? (
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            leftButton={secondaryButtonProps}
-            rightButton={primaryButtonProps}
-          />
-        ) : (
-          <FooterWithButtons
-            type={"TwoButtonsInlineHalf"}
-            leftButton={secondaryButtonProps}
-            rightButton={primaryButtonProps}
-          />
-        )}
+
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+        />
 
         {/*
          * When the first step is finished (creditCardAddWallet === some) show the webview
