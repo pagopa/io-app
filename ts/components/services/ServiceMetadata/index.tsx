@@ -23,7 +23,7 @@ type Props = {
  * and `hint` it creates a custom label that contains all these
  * informations.
  */
-function generateAccessibilityLabel(
+export function genServiceMetadataAccessibilityLabel(
   field: string,
   value: string,
   hint: string
@@ -73,7 +73,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
           value={organizationFiscalCode}
           label={"serviceDetail.fiscalCode"}
           onPress={getItemOnPress(organizationFiscalCode, "COPY")}
-          accessibilityLabel={generateAccessibilityLabel(
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
             I18n.t("serviceDetail.fiscalCode"),
             organizationFiscalCode,
             I18n.t("clipboard.copyText")
@@ -85,7 +85,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
           value={address}
           label={"services.contactAddress"}
           onPress={getItemOnPress(address, "MAP")}
-          accessibilityLabel={generateAccessibilityLabel(
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
             I18n.t("services.contactAddress"),
             address,
             I18n.t("openMaps.openAddressOnMap")
@@ -97,7 +97,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
           value={phone}
           label={"global.media.phone"}
           onPress={getItemOnPress(`tel:${phone}`)}
-          accessibilityLabel={generateAccessibilityLabel(
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
             I18n.t("global.media.phone"),
             phone,
             I18n.t("messageDetails.call")
@@ -109,7 +109,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
           value={email}
           label={"global.media.email"}
           onPress={getItemOnPress(`mailto:${email}`)}
-          accessibilityLabel={generateAccessibilityLabel(
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
             I18n.t("global.media.email"),
             email,
             I18n.t("messageDetails.sendEmail")
@@ -121,7 +121,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
           value={pec}
           label={"global.media.pec"}
           onPress={getItemOnPress(`mailto:${pec}`)}
-          accessibilityLabel={generateAccessibilityLabel(
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
             I18n.t("global.media.pec"),
             pec,
             I18n.t("messageDetails.sendEmail")
@@ -133,7 +133,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
           value={serviceId}
           label={"global.id"}
           onPress={getItemOnPress(serviceId, "COPY")}
-          accessibilityLabel={generateAccessibilityLabel(
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
             I18n.t("global.id"),
             serviceId,
             I18n.t("clipboard.copyText")
