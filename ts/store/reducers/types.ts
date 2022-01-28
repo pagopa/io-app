@@ -1,7 +1,7 @@
 import { PersistPartial } from "redux-persist";
 
 import { BonusState } from "../../features/bonus/bonusVacanze/store/reducers";
-import { FeaturesState } from "../../features/common/store/reducers";
+import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
@@ -58,7 +58,7 @@ export type GlobalState = Readonly<{
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;
-  features: FeaturesState;
+  features: PersistedFeaturesState;
   internalRouteNavigation: InternalRouteNavigationState;
   crossSessions: CrossSessionsState;
   assistanceTools: AssistanceToolsState;
