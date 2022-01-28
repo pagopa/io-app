@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0-rc.0](https://github.com/pagopa/io-app/compare/2.1.0-rc.1...2.2.0-rc.0) (2022-01-27)
+
+
+### Features
+
+* [[IA-553](https://pagopa.atlassian.net/browse/IA-553)] Updated Wallet locales and fixed compilation errors ([#3692](https://github.com/pagopa/io-app/issues/3692)) ([06798f4](https://github.com/pagopa/io-app/commit/06798f4743794e22023533df6e823f67758a340b))
+* [[IA-633](https://pagopa.atlassian.net/browse/IA-633)] Allow back during SPID webview loading ([#3682](https://github.com/pagopa/io-app/issues/3682)) ([d7a2e83](https://github.com/pagopa/io-app/commit/d7a2e836c23b6dc696091ad36daf5dfb9b05b7ca))
+
+
+### Bug Fixes
+
+* [[IA-637](https://pagopa.atlassian.net/browse/IA-637)] Update PayPal logo [#3679](https://github.com/pagopa/io-app/issues/3679) ([891fd66](https://github.com/pagopa/io-app/commit/891fd6679767c22f43d2c833d9361c9dfdc31fc2))
+* [[IA-644](https://pagopa.atlassian.net/browse/IA-644)] Fixed messages title not flexible ([#3694](https://github.com/pagopa/io-app/issues/3694)) ([f422bb4](https://github.com/pagopa/io-app/commit/f422bb40eb0b3fed9adc93d8242f1841a94bb370))
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[IOACGN-32](https://pagopa.atlassian.net/browse/IOACGN-32)] Handles new ProductCategories for CGN ([#3699](https://github.com/pagopa/io-app/issues/3699)) ([94ee304](https://github.com/pagopa/io-app/commit/94ee304060a7fd086cec0d2465198d27ba6e4c99))
+* **deps:** bump nanoid from 3.1.16 to 3.2.0 ([#3684](https://github.com/pagopa/io-app/issues/3684)) ([b2f903a](https://github.com/pagopa/io-app/commit/b2f903a39b54793020d3dd0a1aa23f1756da77ce))
+* **deps-dev:** bump node-fetch from 2.6.0 to 2.6.7 ([#3704](https://github.com/pagopa/io-app/issues/3704)) ([35de44a](https://github.com/pagopa/io-app/commit/35de44af5a11f896184805b91fceb37df6cf1896))
+* [[IA-432](https://pagopa.atlassian.net/browse/IA-432)] Trace message read with message type ([#3689](https://github.com/pagopa/io-app/issues/3689)) ([5ca6ee1](https://github.com/pagopa/io-app/commit/5ca6ee1c5afda3d38f77ca2f61561a2c2eb124e5))
+* **Messaggi a valore legale:** [[IAMVL-26](https://pagopa.atlassian.net/browse/IAMVL-26)] Persist attachments preferences for MVL ([#3681](https://github.com/pagopa/io-app/issues/3681)) ([22189ef](https://github.com/pagopa/io-app/commit/22189ef6381784f5c1019e904a42cd486fbd2e73))
+* [[IA-619](https://pagopa.atlassian.net/browse/IA-619)] Improve CIE data usage consent screen ([#3640](https://github.com/pagopa/io-app/issues/3640)) ([c9e5e92](https://github.com/pagopa/io-app/commit/c9e5e928c433a3f80274d03abad4308b4c4410c1))
+* [[IA-634](https://pagopa.atlassian.net/browse/IA-634)] Add Zendesk tests ([#3674](https://github.com/pagopa/io-app/issues/3674)) ([3ee9034](https://github.com/pagopa/io-app/commit/3ee90343d23f611da3df8aa1fa6a5f10560f1fbb))
+* [[IA-635](https://pagopa.atlassian.net/browse/IA-635)] Added e2e tests for a valid green pass message ([#3686](https://github.com/pagopa/io-app/issues/3686)) ([b2fea97](https://github.com/pagopa/io-app/commit/b2fea97185bd016d5201844ca32cfaabe33abcba))
+* [[IA-636](https://pagopa.atlassian.net/browse/IA-636)] Added e2e tests for a revoked and expired green pass message  ([#3690](https://github.com/pagopa/io-app/issues/3690)) ([b6b8bc2](https://github.com/pagopa/io-app/commit/b6b8bc21089f1a9a3667afecd2682a65b74296de))
+* [[IA-639](https://pagopa.atlassian.net/browse/IA-639)] Test epic icon ([#3680](https://github.com/pagopa/io-app/issues/3680)) ([d8427ad](https://github.com/pagopa/io-app/commit/d8427adede80390490ccfe41acdcdd3abdb3f5ae))
+* Update check-urls([#3695](https://github.com/pagopa/io-app/issues/3695)) ([b29047f](https://github.com/pagopa/io-app/commit/b29047f31c7bdebb2ede1ff7ebe94a9574ac88da))
+* **Carta Giovani Nazionale:** [[IOACGN-31](https://pagopa.atlassian.net/browse/IOACGN-31)] Re-enables CGN remote FF [#3677](https://github.com/pagopa/io-app/issues/3677) ([a123cd4](https://github.com/pagopa/io-app/commit/a123cd4e51e8d470808dba09afbc315f6522cc4c))
+* [[IAI-110](https://pagopa.atlassian.net/browse/IAI-110)] Upgrade macOS resources on CircleCI ([#3678](https://github.com/pagopa/io-app/issues/3678)) ([683ae46](https://github.com/pagopa/io-app/commit/683ae46a1bf27f45646530b445f0d3dd219d98b0))
+
 ## [2.1.0-rc.1](https://github.com/pagopa/io-app/compare/2.1.0-rc.0...2.1.0-rc.1) (2022-01-20)
 
 

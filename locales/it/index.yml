@@ -982,7 +982,7 @@ wallet:
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
         warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
-        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata per aderire alle iniziative disponibili su IO. Contatta la tua banca."
     bPay:
       headerTitle: "Aggiungi BANCOMAT Pay"
       loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
@@ -1088,7 +1088,7 @@ wallet:
       add:
         screenTitle: "Vuoi aggiungere questa carta?"
         label: "Carta con circuito internazionale {{current}} di {{length}}"
-        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata per aderire alle iniziative disponibili su IO. Contatta la tua banca."
         warning1: "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica: "
         warning2: "se hai dubbi contatta la tua banca."
         loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
@@ -1139,7 +1139,7 @@ wallet:
       add:
         screenTitle: "Vuoi aggiungere questa carta?"
         loading: "Stiamo aggiungendo la tua carta\n\nAttendi qualche secondo..."
-        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta il tuo supermercato."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata per aderire alle iniziative disponibili su IO. Contatta il tuo supermercato."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1499,7 +1499,7 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
+        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te."
         addCta: "Aggiungi secondo circuito"
   satispay:
     details:
@@ -1512,8 +1512,8 @@ wallet:
       card:
         validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
-    title: "Vuoi eliminare questo metodo?"
-    body: "Questo metodo verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
+    title: "Vuoi eliminare questo metodo di pagamento?"
+    body: "Rimuoveremo il metodo dal Portafoglio. Le eventuali iniziative a cui è collegato si disattiveranno entro 24 ore."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Iniziative disponibili"
@@ -1580,8 +1580,8 @@ cardComponent:
   actions: Azioni
   setFavorite: Imposta come preferita
   unsetFavorite: Rimuovi dai preferiti
-  deleteTitle: Vuoi eliminare questo metodo?
-  deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
+  deleteTitle: Vuoi eliminare questo metodo di pagamento?
+  deleteMsg: Rimuoveremo il metodo dal Portafoglio. Le eventuali iniziative a cui è collegato si disattiveranno entro 24 ore.
   deleteLoading: Eliminazione metodo in corso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
@@ -2605,15 +2605,16 @@ bonus:
         landingPage: Accedi all’agevolazione
       categories:
         counting: e altre {{count}}
-        theater: tempo libero
-        travel: viaggi, trasporti e mobilità
-        food: ristoranti e cucina
-        hotel: hotel
-        service: servizi
-        book: istruzione e formazione
-        shopping: shopping
-        sport: sport
+        cultureAndEntertainment: cultura e tempo libero
         health: salute e benessere
+        learning: istruzione e formazione
+        sport: sport
+        home: casa
+        telco: telefonia e internet
+        finance: servizi finanziari
+        travel: viaggi e trasporti
+        mobility: mobilità sostenibile
+        job: lavoro e tirocini
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva la Carta
