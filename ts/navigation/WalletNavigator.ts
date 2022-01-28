@@ -2,7 +2,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import {
   bonusVacanzeEnabled,
   bpdEnabled,
-  optInPaymentMethodsEnabled
+  bpdOptInPaymentMethodsEnabled
 } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
@@ -205,7 +205,7 @@ const paypalConfigMap = {
   }
 };
 
-const optInPaymentMethodsConfigMap = optInPaymentMethodsEnabled
+const optInPaymentMethodsConfigMap = bpdOptInPaymentMethodsEnabled
   ? {
       [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
         screen: OptInPaymentMethodNavigator
