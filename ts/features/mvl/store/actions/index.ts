@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import {
   UIMessageId,
   WithUIMessageId
@@ -15,4 +19,14 @@ export const mvlDetailsLoad = createAsyncAction(
   "MVL_DETAILS_FAILURE"
 )<UIMessageId, Mvl, WithUIMessageId<NetworkError>>();
 
-export type MvlActions = ActionType<typeof mvlDetailsLoad>;
+/**
+ * Set whether to show a warning message about security when opening attachments.
+ * The preference will be persisted.
+ */
+export const mvlPreferencesSetWarningForAttachments = createStandardAction(
+  "MVL_PREFERENCES_SET_WARNING_FOR_ATTACHMENTS"
+)<boolean>();
+
+export type MvlActions = ActionType<
+  typeof mvlDetailsLoad | typeof mvlPreferencesSetWarningForAttachments
+>;

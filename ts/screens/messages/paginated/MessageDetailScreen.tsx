@@ -12,6 +12,7 @@ import BaseScreenComponent, {
 import I18n from "../../../i18n";
 import {
   loadMessageDetails,
+  MessageReadType,
   setMessageReadState
 } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
@@ -34,6 +35,7 @@ import { InferNavigationParams } from "../../../types/react";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import ServiceDetailsScreen from "../../services/ServiceDetailsScreen";
 import ErrorState from "../MessageDetailScreen/ErrorState";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -86,7 +88,11 @@ const MessageDetailScreen = ({
 }: Props) => {
   useOnFirstRender(() => {
     if (!isRead) {
-      setMessageReadState(message.id, true);
+      setMessageReadState(
+        message.id,
+        true,
+        message.category.tag === TagEnum.PAYMENT ? TagEnum.PAYMENT : "unknown"
+      );
     }
     if (
       pot.isError(messageDetails) ||
@@ -181,8 +187,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadServiceDetail.request(serviceId)),
   loadMessageDetails: (id: UIMessageId) =>
     dispatch(loadMessageDetails.request({ id })),
-  setMessageReadState: (messageId: string, isRead: boolean) =>
-    dispatch(setMessageReadState(messageId, isRead)),
+  setMessageReadState: (
+    messageId: string,
+    isRead: boolean,
+    messageType: MessageReadType
+  ) => dispatch(setMessageReadState(messageId, isRead, messageType)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => navigateToServiceDetailsScreen(params)

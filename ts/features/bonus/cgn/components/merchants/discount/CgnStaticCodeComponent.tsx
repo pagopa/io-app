@@ -6,7 +6,6 @@ import { StyleSheet } from "react-native";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
-import { addEvery } from "../../../../../../utils/strings";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import Eye from "../../../../../../../img/icons/Eye.svg";
@@ -73,9 +72,7 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
             font={"RobotoMono"}
             style={styles.codeText}
           >
-            {isCodeVisible && staticCode
-              ? addEvery(staticCode, " ", 3)
-              : "••••••••••"}
+            {isCodeVisible && staticCode ? staticCode : "••••••••••"}
           </BaseTypography>
 
           {isCodeVisible ? (
