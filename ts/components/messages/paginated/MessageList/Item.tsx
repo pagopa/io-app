@@ -117,7 +117,7 @@ enum ItemBadge {
  * Given various item states, return the corresponding
  * visible badge.
  */
-function getMaybeItemBadge({
+const getMaybeItemBadge = ({
   paid,
   archived,
   qrCode
@@ -125,7 +125,7 @@ function getMaybeItemBadge({
   paid: boolean;
   archived: boolean;
   qrCode: boolean;
-}): O.Option<ItemBadge> {
+}): O.Option<ItemBadge> => {
   if (paid) {
     return O.some(ItemBadge.Paid);
   }
@@ -139,13 +139,13 @@ function getMaybeItemBadge({
   }
 
   return O.none;
-}
+};
 
 /**
  * Given an `ItemBadge` generates the corresponding
  * React node to display.
  */
-function itemBadgeToTagOrIcon(itemBadge: ItemBadge): React.ReactNode {
+const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
   switch (itemBadge) {
     case ItemBadge.Paid:
       return (
@@ -170,13 +170,13 @@ function itemBadgeToTagOrIcon(itemBadge: ItemBadge): React.ReactNode {
         </View>
       );
   }
-}
+};
 
 /**
  * Given an `ItemBadge` generates the corresponding
  * accessibility state to assign.
  */
-function itemBadgeToAccessibilityLabel(itemBadge: ItemBadge): string {
+const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
   switch (itemBadge) {
     case ItemBadge.Paid:
       return I18n.t("messages.badge.paid");
@@ -187,7 +187,7 @@ function itemBadgeToAccessibilityLabel(itemBadge: ItemBadge): string {
     default:
       return "";
   }
-}
+};
 
 function getTopIcon(category: MessageCategory) {
   switch (category.tag) {
