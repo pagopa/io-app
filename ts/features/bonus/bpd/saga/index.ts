@@ -1,7 +1,11 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { bpdApiUrlPrefix, bpdTransactionsPaging } from "../../../../config";
+import {
+  bpdApiUrlPrefix,
+  bpdOptInPaymentMethodsEnabled,
+  bpdTransactionsPaging
+} from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
@@ -144,5 +148,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   yield takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
 
   // The user need to choice what to do with the payment methods added during the cashback
-  yield takeLatest(optInPaymentMethodsStart, optInPaymentMethodsHandler);
+  if (bpdOptInPaymentMethodsEnabled) {
+    yield takeLatest(optInPaymentMethodsStart, optInPaymentMethodsHandler);
+  }
 }
