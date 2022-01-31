@@ -103,9 +103,12 @@ Object {
 
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'installation' state 1`] = `
 Object {
+  "appVersionHistory": Array [],
   "isFirstRunAfterInstall": true,
 }
 `;
+
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'installation.appVersionHistory' state 1`] = `Array []`;
 
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'notifications' state 1`] = `
 Object {
