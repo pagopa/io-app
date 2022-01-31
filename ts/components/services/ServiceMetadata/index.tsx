@@ -7,6 +7,7 @@ import { ItemAction } from "../../../utils/url";
 import SectionHeader from ".././SectionHeader";
 import LinkRow from ".././LinkRow";
 import I18n from "../../../i18n";
+import { isTestEnv } from "../../../utils/environment";
 import InformationRow from "./InformationRow";
 
 type Props = {
@@ -23,13 +24,15 @@ type Props = {
  * and `hint` it creates a custom label that contains all these
  * informations.
  */
-export function genServiceMetadataAccessibilityLabel(
+const genServiceMetadataAccessibilityLabel = (
   field: string,
   value: string,
   hint: string
-) {
-  return `${field}: ${value}, ${hint}`;
-}
+) => `${field}: ${value}, ${hint}`;
+
+export const testableGenServiceMetadataAccessibilityLabel = isTestEnv
+  ? genServiceMetadataAccessibilityLabel
+  : undefined;
 
 /**
  * Renders a dedicated section with a service's metadata and the header.

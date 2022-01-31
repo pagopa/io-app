@@ -1,7 +1,7 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
-import { genServiceMetadataAccessibilityLabel } from "../";
+import { testableGenServiceMetadataAccessibilityLabel } from "../";
 import { TranslationKeys } from "../../../../../locales/locales";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { capitalize } from "../../../../utils/strings";
@@ -28,6 +28,9 @@ const defaultProps = {
   serviceId: "ABC123" as ServiceId,
   servicesMetadata: defaultServiceMetadata
 };
+
+const genServiceMetadataAccessibilityLabel =
+  testableGenServiceMetadataAccessibilityLabel!;
 
 describe("ServiceMetadata component", () => {
   beforeEach(() => {
