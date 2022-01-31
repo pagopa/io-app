@@ -18,8 +18,8 @@ const calculateBottomSheetHeight = (
   310 +
   (discount.description === undefined
     ? 0
-    : discount.description.length * 0.65) +
-  (discount.condition === undefined ? 0 : discount.condition.length * 0.65) +
+    : discount.description.length * 0.75) +
+  (discount.condition === undefined ? 0 : discount.condition.length * 0.75) +
   (merchantType === undefined ? -50 : 0);
 
 export const useCgnDiscountDetailBottomSheet = (
