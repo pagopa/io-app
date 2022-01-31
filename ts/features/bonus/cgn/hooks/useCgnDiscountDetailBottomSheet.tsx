@@ -15,8 +15,14 @@ export const useCgnDiscountDetailBottomSheet = (
   merchantType?: DiscountCodeType,
   landingPageHandler?: (url: string, referer: string) => void
 ) => {
+  const calculateBottomSheetHeight = (): number =>
+    510 +
+    (discount.description === undefined ? -100 : 0) +
+    (discount.condition === undefined ? -100 : 0) +
+    (merchantType === undefined ? -50 : 0);
+
   const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
-    440,
+    calculateBottomSheetHeight(),
     bottomSheetContent
   );
 
