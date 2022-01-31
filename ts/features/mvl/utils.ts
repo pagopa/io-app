@@ -50,7 +50,7 @@ export const handleDownloadResult = async (
     const { status } = result.info();
     if (status !== 200) {
       return Promise.reject(
-        new Error(`error ${status} fetching ${attachment.resourceUrl}`)
+        new Error(`error ${status} fetching ${attachment.resourceUrl.href}`)
       );
     }
     if (isIos) {
