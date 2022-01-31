@@ -7,7 +7,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../../components/core/typography/H1";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 
-const OptInPaymentMethodsCashbackUpdate = () => (
+const OptInPaymentMethodsCashbackUpdateScreen = () => (
   // The void customRightIcon and customGoBack are needed to have a centered header title
   <BaseScreenComponent
     showInstabugChat={false}
@@ -33,4 +33,4 @@ const OptInPaymentMethodsCashbackUpdate = () => (
   </BaseScreenComponent>
 );
 
-export default OptInPaymentMethodsCashbackUpdate;
+export default OptInPaymentMethodsCashbackUpdateScreen;
