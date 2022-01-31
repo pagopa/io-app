@@ -27,6 +27,7 @@ import {
 } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
+import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -49,6 +50,8 @@ const profile: InitializedProfile = {
 describe("initializeApplicationSaga", () => {
   it("should dispatch startApplicationInitialization if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
       .next()
@@ -80,6 +83,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch sessionExpired if check session response is 401", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
       .call(initMixpanel)
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
@@ -105,6 +110,8 @@ describe("initializeApplicationSaga", () => {
 
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
       .next()
