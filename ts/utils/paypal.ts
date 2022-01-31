@@ -12,7 +12,7 @@ export const getPaypalAccountEmail = (paypal: PayPalInfo): string =>
   I18n.t("wallet.onboarding.paypal.emailNotAvailable");
 
 /**
- * convert pspData into IOPayPalPsp
+ * convert pspData (another PM psp representation) into IOPayPalPsp
  * @param psp
  */
 export const convertPspData = (psp: PspData): IOPayPalPsp => ({

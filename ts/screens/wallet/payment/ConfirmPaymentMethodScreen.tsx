@@ -22,7 +22,8 @@ import I18n from "../../../i18n";
 import {
   navigateToPaymentOutcomeCode,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen
+  navigateToPaymentPickPspScreen,
+  navigateToPayPalUpdatePspForPayment
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -77,6 +78,7 @@ import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { PspData } from "../../../../definitions/pagopa/PspData";
+import { PayPalPspUpdateScreenNavigationParams } from "../../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -291,6 +293,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <>
               <View spacer={true} />
               <PayPalCheckoutPspComponent
+                onEditPress={() => {
+                  props.navigateToPayPalUpdatePspForPayment({
+                    idPayment,
+                    idWallet: wallet.idWallet
+                  });
+                }}
                 fee={fee as ImportoEuroCents}
                 pspName={props.paypalSelectedPsp?.ragioneSociale ?? "-"}
                 privacyUrl={props.paypalSelectedPsp?.privacyUrl}
@@ -440,6 +448,9 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(paymentOutcomeCode({ outcome: outComeCode, paymentMethodType })),
     navigateToOutComePaymentScreen: (fee: ImportoEuroCents) =>
       navigateToPaymentOutcomeCode({ fee }),
+    navigateToPayPalUpdatePspForPayment: (
+      params: PayPalPspUpdateScreenNavigationParams
+    ) => navigateToPayPalUpdatePspForPayment(params),
     loadTransactions: () =>
       dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
 

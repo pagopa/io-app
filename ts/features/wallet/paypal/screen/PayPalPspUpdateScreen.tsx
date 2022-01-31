@@ -3,6 +3,7 @@ import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { ListItem, View } from "native-base";
 import { useDispatch } from "react-redux";
 import { constNull } from "fp-ts/lib/function";
+import { NavigationInjectedProps } from "react-navigation";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import I18n from "../../../../i18n";
@@ -134,18 +135,26 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
     </ListItem>
   );
 };
-
+export type PayPalPspUpdateScreenNavigationParams = {
+  idPayment: string;
+  idWallet: number;
+};
+type Props = NavigationInjectedProps<PayPalPspUpdateScreenNavigationParams>;
 /**
  * This screen is where the user updates the PSP that will be used for the payment
  * Only 1 psp can be selected
  */
-const PayPalPspUpdateScreen = (): React.ReactElement | null => {
+const PayPalPspUpdateScreen: React.FunctionComponent<Props> = (
+  props: Props
+) => {
   const locales = getLocales();
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const pspList = useIOSelector(pspV2ListSelector);
+  const idPayment = props.navigation.getParam("idPayment");
+  const idWallet = props.navigation.getParam("idWallet");
   const searchPaypalPsp = () => {
-    dispatch(pspForPaymentV2.request({ idPayment: "a", idWallet: 1 }));
+    dispatch(pspForPaymentV2.request({ idPayment, idWallet }));
   };
   useEffect(searchPaypalPsp, [dispatch]);
 

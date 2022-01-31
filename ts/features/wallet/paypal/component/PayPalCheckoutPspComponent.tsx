@@ -30,6 +30,7 @@ type Props = {
   fee: ImportoEuroCents;
   pspName: string;
   privacyUrl?: string;
+  onEditPress: () => void;
 };
 
 /**
@@ -54,12 +55,22 @@ export const PayPalCheckoutPspComponent = (props: Props) => {
           </H3>
         </View>
         <View spacer={true} />
-        <H4>{formatNumberCentsToAmount(props.fee, true)}</H4>
-        <Label color={"bluegrey"} weight={"Regular"}>
-          {I18n.t("wallet.onboarding.paypal.paymentCheckout.pspHandler", {
-            pspName: props.pspName
-          })}
-        </Label>
+        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "column"
+            }}
+          >
+            <H4>{formatNumberCentsToAmount(props.fee, true)}</H4>
+            <Label color={"bluegrey"} weight={"Regular"}>
+              {I18n.t("wallet.onboarding.paypal.paymentCheckout.pspHandler", {
+                pspName: props.pspName
+              })}
+            </Label>
+          </View>
+          <Label onPress={props.onEditPress}>{"MODIFICA"}</Label>
+        </View>
       </ListItem>
       {privacyUrl && (
         <>

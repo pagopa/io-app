@@ -36,6 +36,7 @@ import {
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
 import PaymentOutcomeCodeMessage from "../../screens/wallet/payment/PaymentOutcomeCodeMessage";
+import { PayPalPspUpdateScreenNavigationParams } from "../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 
 /**
  * @deprecated
@@ -449,6 +450,19 @@ export const navigateToPayPalDetailScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_PAYPAL_DETAIL
   });
+
+/**
+ * @deprecated
+ */
+export const navigateToPayPalUpdatePspForPayment = (
+  params: PayPalPspUpdateScreenNavigationParams
+) =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP,
+      params
+    })
+  );
 
 /**
  * @deprecated

@@ -53,6 +53,7 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
 import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
+import PayPalPspUpdateScreen from "../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -76,6 +77,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_PAYPAL_DETAIL]: {
     screen: PaypalDetailScreen
+  },
+  [ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP]: {
+    screen: PayPalPspUpdateScreen
   },
   [ROUTES.WALLET_BPAY_DETAIL]: {
     screen: BPayDetailScreen
