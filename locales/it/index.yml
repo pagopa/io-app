@@ -1594,7 +1594,7 @@ messages:
       read: "Messaggio"
       unread: "Messaggio non letto"
       archived: Archiviato
-      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
