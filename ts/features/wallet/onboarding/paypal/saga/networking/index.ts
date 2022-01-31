@@ -30,16 +30,16 @@ const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
 
 /**
  * handle the request of searching for PayPal psp
- * @param sarchPsp
+ * @param searchPsp
  * @param sessionManager
  */
 export function* handlePaypalSearchPsp(
-  sarchPsp: PaymentManagerClient["searchPayPalPsp"],
+  searchPsp: PaymentManagerClient["searchPayPalPsp"],
   sessionManager: SessionManager<PaymentManagerToken>
 ) {
   try {
-    const searchPayPalPspRequest: SagaCallReturnType<typeof sarchPsp> =
-      yield call(sessionManager.withRefresh(sarchPsp));
+    const searchPayPalPspRequest: SagaCallReturnType<typeof searchPsp> =
+      yield call(sessionManager.withRefresh(searchPsp));
     if (searchPayPalPspRequest.isRight()) {
       if (searchPayPalPspRequest.value.status === 200) {
         yield put(

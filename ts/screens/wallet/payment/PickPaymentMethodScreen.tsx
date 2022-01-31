@@ -46,7 +46,7 @@ import { H4 } from "../../../components/core/typography/H4";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
-import { pspV2Selector } from "../../../store/reducers/wallet/payment";
+import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -183,7 +183,7 @@ const mapStateToProps = (state: GlobalState) => {
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
   const potPsps = state.wallet.payment.psps;
-  const pspV2 = pspV2Selector(state);
+  const pspV2 = pspV2ListSelector(state);
   const isLoading =
     pot.isLoading(potVisibleCreditCard) ||
     pot.isLoading(potPsps) ||

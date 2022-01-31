@@ -50,7 +50,8 @@ import {
   paymentStartPayloadSelector,
   PaymentStartWebViewPayload,
   pmSessionTokenSelector,
-  pspV2Selector
+  pspSelectedV2ListSelector,
+  pspV2ListSelector
 } from "../../../store/reducers/wallet/payment";
 import {
   getValueOrElse,
@@ -75,6 +76,7 @@ import CreditCardComponent from "../../../features/wallet/creditCard/component/C
 import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import { PspData } from "../../../../definitions/pagopa/PspData";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -185,7 +187,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   // each payment method has its own psp fee
   const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
   const fee: number | undefined = isPayingWithPaypal
-    ? props.payPalPsp?.fee
+    ? props.paypalSelectedPsp?.fee
     : maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
   const totalAmount =
@@ -290,8 +292,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <View spacer={true} />
               <PayPalCheckoutPspComponent
                 fee={fee as ImportoEuroCents}
-                pspName={props.payPalPsp?.ragioneSociale ?? "-"}
-                privacyUrl={props.payPalPsp?.privacyUrl}
+                pspName={props.paypalSelectedPsp?.ragioneSociale ?? "-"}
+                privacyUrl={props.paypalSelectedPsp?.privacyUrl}
               />
             </>
           )}
@@ -357,15 +359,16 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const pmSessionToken = pmSessionTokenSelector(state);
   const paymentStartPayload = paymentStartPayloadSelector(state);
-  const payPalPsp = getValueOrElse(pspV2Selector(state), []).find(
-    psp => psp.defaultPsp
-  );
+  // if there is no psp selected pick the default one from the list (if present)
+  const paypalSelectedPsp: PspData | undefined =
+    pspSelectedV2ListSelector(state) ||
+    getValueOrElse(pspV2ListSelector(state), []).find(psp => psp.defaultPsp);
   const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
     isReady(pmSessionToken) && paymentStartPayload
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
-    payPalPsp,
+    paypalSelectedPsp,
     getPaymentMethodById: (idWallet: number) =>
       paymentMethodByIdSelector(state, idWallet),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),

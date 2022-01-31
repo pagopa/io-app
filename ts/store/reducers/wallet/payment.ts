@@ -83,7 +83,11 @@ export type PaymentState = Readonly<{
   paymentStartPayload: PaymentStartPayload | undefined;
   // pm fresh session token (used inside paywebview)
   pmSessionToken: RemoteValue<PaymentManagerToken, Error>;
-  pspsV2: RemoteValue<ReadonlyArray<PspData>, Error>;
+  pspsV2: {
+    psps: RemoteValue<ReadonlyArray<PspData>, Error>;
+    // the psp selected for the payment
+    pspSelected: PspData | undefined;
+  };
 }>;
 
 /**
@@ -95,8 +99,26 @@ export const getPaymentIdFromGlobalState = (state: GlobalState) =>
 export const allPspsSelector = (state: GlobalState) =>
   state.wallet.payment.allPsps;
 
-export const pspV2Selector = (state: GlobalState): PaymentState["pspsV2"] =>
+const pspV2Selector = (state: GlobalState): PaymentState["pspsV2"] =>
   state.wallet.payment.pspsV2;
+
+/**
+ * return the list of pspV2
+ */
+export const pspV2ListSelector = createSelector(
+  pspV2Selector,
+  (pspsV2: PaymentState["pspsV2"]): PaymentState["pspsV2"]["psps"] =>
+    pspsV2.psps
+);
+
+/**
+ * return the selected psps in the pspV2 list
+ */
+export const pspSelectedV2ListSelector = createSelector(
+  pspV2Selector,
+  (pspsV2: PaymentState["pspsV2"]): PaymentState["pspsV2"]["pspSelected"] =>
+    pspsV2.pspSelected
+);
 
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();
@@ -140,7 +162,10 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   entrypointRoute: undefined,
   paymentStartPayload: undefined,
   pmSessionToken: remoteUndefined,
-  pspsV2: remoteUndefined
+  pspsV2: {
+    psps: remoteUndefined,
+    pspSelected: undefined
+  }
 };
 
 /**
@@ -326,17 +351,26 @@ const reducer = (
     case getType(pspForPaymentV2.request):
       return {
         ...state,
-        pspsV2: remoteLoading
+        pspsV2: {
+          ...state.pspsV2,
+          psps: remoteLoading
+        }
       };
     case getType(pspForPaymentV2.success):
       return {
         ...state,
-        pspsV2: remoteReady(action.payload)
+        pspsV2: {
+          ...state.pspsV2,
+          psps: remoteReady(action.payload)
+        }
       };
     case getType(pspForPaymentV2.failure):
       return {
         ...state,
-        pspsV2: remoteError(getError(action.payload))
+        pspsV2: {
+          ...state.pspsV2,
+          psps: remoteError(getError(action.payload))
+        }
       };
   }
   return state;
