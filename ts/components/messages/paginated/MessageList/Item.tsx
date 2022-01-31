@@ -107,11 +107,7 @@ const styles = StyleSheet.create({
 /**
  * The data structure representing a badge.
  */
-enum ItemBadge {
-  Paid,
-  Archived,
-  QrCode
-}
+type ItemBadge = "paid" | "archived" | "qrcode";
 
 /**
  * Given various item states, return the corresponding
@@ -127,15 +123,15 @@ const getMaybeItemBadge = ({
   qrCode: boolean;
 }): O.Option<ItemBadge> => {
   if (paid) {
-    return O.some(ItemBadge.Paid);
+    return O.some("paid");
   }
 
   if (archived) {
-    return O.some(ItemBadge.Archived);
+    return O.some("archived");
   }
 
   if (qrCode) {
-    return O.some(ItemBadge.QrCode);
+    return O.some("qrcode");
   }
 
   return O.none;
@@ -147,14 +143,14 @@ const getMaybeItemBadge = ({
  */
 const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
   switch (itemBadge) {
-    case ItemBadge.Paid:
+    case "paid":
       return (
         <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
           <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
         </Badge>
       );
 
-    case ItemBadge.Archived:
+    case "archived":
       return (
         <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
           <H5 color="bluegreyDark">
@@ -163,7 +159,7 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
         </Badge>
       );
 
-    case ItemBadge.QrCode:
+    case "qrcode":
       return (
         <View style={styles.qrContainer}>
           <IconFont name={"io-qr"} color={IOColors.blue} />
@@ -178,10 +174,10 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
  */
 const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
   switch (itemBadge) {
-    case ItemBadge.Paid:
+    case "paid":
       return I18n.t("messages.badge.paid");
 
-    case ItemBadge.Archived:
+    case "archived":
       return I18n.t("messages.accessibility.message.archived");
 
     default:
