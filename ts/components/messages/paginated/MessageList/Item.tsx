@@ -199,8 +199,8 @@ const announceMessage = (
     subject: message.title,
     receivedAt: convertReceivedDateToAccessible(message.createdAt),
     state: getMessageStateAccessibilityLabel({
-      paid: isPaid,
-      archived: isArchived
+      isPaid,
+      isArchived
     })
   });
 
