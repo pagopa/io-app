@@ -38,12 +38,16 @@ import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv } from "../utils/environment";
+import {
+  INSTALLATION_INITIAL_STATE,
+  InstallationState
+} from "../store/reducers/installation";
 import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 19;
+const CURRENT_REDUX_STORE_VERSION = 20;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -281,7 +285,20 @@ const migrations: MigrationManifest = {
         preferences: { showAlertForAttachments: true }
       }
     }
-  })
+  }),
+  // Version 20
+  // add installation.appVersionHistory
+  "20": (state: PersistedState) => {
+    const installation: InstallationState = (state as PersistedGlobalState)
+      .installation;
+    return {
+      ...state,
+      installation: {
+        ...installation,
+        appVersionHistory: INSTALLATION_INITIAL_STATE.appVersionHistory
+      }
+    };
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
