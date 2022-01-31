@@ -302,6 +302,8 @@ profile:
     title: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    clearAsyncStorage: Clear AsyncStorage
+    dumpAsyncStorage: Dump AsyncStorage content to console
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
@@ -962,7 +964,7 @@ wallet:
         bodyPlural: "We found {{number}} cards registered to you. Continue to add this card skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
         warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact the card issuer."
     bPay:
       headerTitle: "Add BANCOMAT Pay"
       loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
@@ -1068,7 +1070,7 @@ wallet:
       add:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact the card issuer."
         warning1: "In some cases, the displayed data might be different from the data printed on the physical card: "
         warning2: "if in doubt, contact your bank."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
@@ -1119,7 +1121,7 @@ wallet:
       add:
         screenTitle: "Do you want to add this card?"
         loading: "We are adding your card\n\nPlease hold on..."
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact your supermarket."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1474,7 +1476,7 @@ wallet:
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have more than one logo?"
-        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
+        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you."
         addCta: "Add second circuit"
   satispay:
     details:
@@ -1487,8 +1489,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this method?"
-    body: "This method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
+    title: "Delete this payment method?"
+    body: "We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1554,7 +1556,7 @@ cardComponent:
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
-  deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
+  deleteMsg: We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours.
   deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
@@ -2571,15 +2573,16 @@ bonus:
         landingPage: Get the benefit
       categories:
         counting: and other {{count}}
-        theater: free time
-        travel: travels, transportation and mobility
-        food: restaurant and cooking
-        hotel: hotel
-        service: services
-        book: instruction
-        shopping: shopping
-        sport: sport
+        cultureAndEntertainment: culture and entertainment
         health: health and wellness
+        learning: education and learning
+        sport: sport
+        home: home
+        telco: telephony and internet
+        finance: financial services
+        travel: travels and transportation
+        mobility: sustainable transport
+        job: jobs and internships
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate your Card

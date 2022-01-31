@@ -120,15 +120,15 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                 <H1>{merchantDetail.value.name}</H1>
                 <View spacer />
                 <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
-                <View spacer small />
                 <FlatList
                   data={merchantDetail.value.discounts}
                   renderItem={renderDiscountListItem}
                   keyExtractor={(item: Discount) => item.name}
                 />
+                <View spacer />
                 <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
                 <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
-                <View spacer large />
+                <View spacer />
                 {merchantDetail.value.addresses &&
                   merchantDetail.value.addresses.length > 0 && (
                     <>

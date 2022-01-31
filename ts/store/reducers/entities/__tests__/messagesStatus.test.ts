@@ -63,7 +63,10 @@ describe("messagesStatus reducer", () => {
 
   it("should return the loaded message with read state to true", () => {
     expect(
-      reducer(undefined, setMessageReadState(messageWithContent.id, true))
+      reducer(
+        undefined,
+        setMessageReadState(messageWithContent.id, true, "unknown")
+      )
     ).toEqual({
       [messageWithContent.id]: { ...EMPTY_MESSAGE_STATUS, isRead: true }
     });
@@ -71,7 +74,10 @@ describe("messagesStatus reducer", () => {
 
   it("should return the loaded message with read state to false", () => {
     expect(
-      reducer(undefined, setMessageReadState(messageWithContent.id, false))
+      reducer(
+        undefined,
+        setMessageReadState(messageWithContent.id, false, "unknown")
+      )
     ).toEqual({
       [messageWithContent.id]: { ...EMPTY_MESSAGE_STATUS, isRead: false }
     });
@@ -117,7 +123,7 @@ describe("messagesStatus reducer", () => {
         "3": EMPTY_MESSAGE_STATUS,
         "4": EMPTY_MESSAGE_STATUS
       },
-      setMessageReadState("4", true)
+      setMessageReadState("4", true, "unknown")
     );
     testLength(state, 4);
     const stateAfterRemove = reducer(state, removeMessages(["1", "2", "3"]));
