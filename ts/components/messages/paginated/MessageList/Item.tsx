@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge, Text, View } from "native-base";
-import * as O from "fp-ts/es6/Option";
+import * as O from "fp-ts/lib/Option";
 import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
