@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useMemo } from "react";
 import { Discount } from "../../../../../definitions/cgn/merchants/Discount";
 import { DiscountCodeType } from "../../../../../definitions/cgn/merchants/DiscountCodeType";
 import {
@@ -10,19 +11,29 @@ import {
   CgnDiscountDetailHeader
 } from "../components/merchants/CgnDiscountDetail";
 
+const calculateBottomSheetHeight = (
+  discount: Discount,
+  merchantType?: DiscountCodeType
+): number =>
+  310 +
+  (discount.description === undefined
+    ? 0
+    : discount.description.length * 0.65) +
+  (discount.condition === undefined ? 0 : discount.condition.length * 0.65) +
+  (merchantType === undefined ? -50 : 0);
+
 export const useCgnDiscountDetailBottomSheet = (
   discount: Discount,
   merchantType?: DiscountCodeType,
   landingPageHandler?: (url: string, referer: string) => void
 ) => {
-  const calculateBottomSheetHeight = (): number =>
-    510 +
-    (discount.description === undefined ? -100 : 0) +
-    (discount.condition === undefined ? -100 : 0) +
-    (merchantType === undefined ? -50 : 0);
+  const height = useMemo(
+    () => calculateBottomSheetHeight(discount, merchantType),
+    [discount, merchantType]
+  );
 
   const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
-    calculateBottomSheetHeight(),
+    height,
     bottomSheetContent
   );
 
