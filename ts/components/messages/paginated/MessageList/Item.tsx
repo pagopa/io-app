@@ -168,7 +168,28 @@ const UNKNOWN_SERVICE_DATA = {
   serviceName: I18n.t("messages.errorLoading.serviceInfo")
 };
 
-const announceMessage = (message: UIMessage, isRead: boolean): string =>
+function getMessageStateAccessibilityLabel({
+  isPaid,
+  isArchived
+}: {
+  isPaid: boolean;
+  isArchived: boolean;
+}): string {
+  if (isPaid) {
+    return I18n.t("messages.badge.paid");
+  } else if (isArchived) {
+    return I18n.t("messages.accessibility.message.archived");
+  } else {
+    return "";
+  }
+}
+
+const announceMessage = (
+  message: UIMessage,
+  isRead: boolean,
+  isPaid: boolean,
+  isArchived: boolean
+): string =>
   I18n.t("messages.accessibility.message.description", {
     newMessage: isRead
       ? I18n.t("messages.accessibility.message.read")
@@ -176,7 +197,11 @@ const announceMessage = (message: UIMessage, isRead: boolean): string =>
     organizationName: message.organizationName,
     serviceName: message.serviceName,
     subject: message.title,
-    receivedAt: convertReceivedDateToAccessible(message.createdAt)
+    receivedAt: convertReceivedDateToAccessible(message.createdAt),
+    state: getMessageStateAccessibilityLabel({
+      paid: isPaid,
+      archived: isArchived
+    })
   });
 
 /**
@@ -213,7 +238,13 @@ const MessageListItem = ({
       onLongPress={onLongPress}
       style={styles.verticalPad}
       accessible={true}
-      accessibilityLabel={announceMessage(message, isRead)}
+      accessibilityLabel={announceMessage(
+        message,
+        isRead,
+        hasPaidBadge,
+        isArchived
+      )}
+      accessibilityRole="button"
     >
       <View style={styles.titleRow}>
         <H5 numberOfLines={1}>{organizationName}</H5>
