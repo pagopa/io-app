@@ -2558,8 +2558,8 @@ bonus:
     merchantsList:
       online: Online
       places: Luoghi
-      navigationTitle: Visualizza esercenti
-      screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+      navigationTitle: Agevolazioni
+      screenTitle: Seleziona un operatore e scopri le agevolazioni
       cta:
         filter: Filtra
       filter:
@@ -2588,7 +2588,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Offerte
+        deals: Agevolazioni
         description: Descrizione
         services: Servizi
         addresses: Indirizzi
@@ -2597,7 +2597,7 @@ bonus:
         discountCode: Codice Sconto
         conditions: Condizioni
       cta:
-        label: Vai al sito dell'esercente
+        label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione
       categories:
         counting: e altre {{count}}
@@ -2617,7 +2617,7 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Vedi agevolazioni
+        buyers: Scopri le agevolazioni
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA

@@ -2530,12 +2530,12 @@ bonus:
     merchantsList:
       online: Online
       places: Places
-      navigationTitle: View merchants
-      screenTitle: Select the merchant where you want to buy something
+      navigationTitle: Benefits
+      screenTitle: Select the operator and discover the benefits
       cta:
         filter: Filter
       filter:
-        title: Filter merchants
+        title: Filter operators
         searchTitle: Find by name
         inputPlaceholder: Find store, theater or other
         addressTitle: Find by address
@@ -2560,7 +2560,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Discounts
+        deals: Benefits
         description: Description
         services: Services
         addresses: Addresses
@@ -2569,7 +2569,7 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to merchant website
+        label: Navigate to operator website
         landingPage: Get the benefit
       categories:
         counting: and other {{count}}
@@ -2589,7 +2589,7 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: See benefits
+        buyers: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
