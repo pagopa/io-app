@@ -112,6 +112,7 @@ class MessageListItem extends React.PureComponent<Props> {
           ...message,
           ...uiService
         })}
+        accessibilityRole="button"
         testID={`MessageListItem_${message.id}`}
       >
         {!hasPrescriptionData(message) && messageNeedsCTABar(message) && (
