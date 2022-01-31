@@ -4,7 +4,8 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
 <View
   accessibilityLabel="Message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -252,7 +253,8 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -551,7 +553,8 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -850,7 +853,8 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -1154,7 +1158,8 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -1494,7 +1499,8 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -1793,7 +1799,8 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Paid"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -2148,7 +2155,8 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Paid"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -2503,7 +2511,8 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Archived"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -2858,7 +2867,8 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Archived"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -3213,7 +3223,8 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Paid"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -3568,7 +3579,8 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Paid"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -3923,7 +3935,8 @@ exports[`MessageList Item component with all the flags set to false should match
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
