@@ -8,6 +8,10 @@ export const previousInstallationDataDeleteSuccess = createStandardAction(
   "PREV_INSTALLATION_DATA_DELETE_SUCCESS"
 )();
 
-export type InstallationActions = ActionType<
-  typeof previousInstallationDataDeleteSuccess
->;
+export const appVersionHistory = createStandardAction(
+  "INSTALLATION_APP_VERSION"
+)<string>();
+
+export type InstallationActions =
+  | ActionType<typeof previousInstallationDataDeleteSuccess>
+  | ActionType<typeof appVersionHistory>;

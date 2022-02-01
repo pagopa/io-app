@@ -655,7 +655,6 @@ wallet:
     title: Möchten Sie diese Karte speichern?
     infoTitle: Die Karte als bevorzugte Zahlungsmethode festlegen
     info: Diese Zahlungsmethode wird automatisch für die nächste Zahlung vorgeschlagen
-    save: Speichern
     notice: Zur Verifizierung der Karte wird eine Transaktion von wenigen Cent auf Ihrer Karte abgebucht.
     loadingAlert: Ihre Kartendaten werden überprüft...
   saveCardInPayment:
@@ -838,7 +837,7 @@ messages:
     message:
       read: "Mitteilung"
       unread: "Ungelesene Mitteilung"
-      description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "erhalten am"
       received_at: "erhalten um"
   contextualHelpTitle: Über diesen Abschnitt
