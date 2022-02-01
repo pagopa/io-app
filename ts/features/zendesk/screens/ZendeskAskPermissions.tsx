@@ -51,6 +51,7 @@ import {
   zendeskidentityProviderId
 } from "../../../utils/supportAssistance";
 import { mixpanelTrack } from "../../../mixpanel";
+import { appVersionHistorySelector } from "../../../store/reducers/installation";
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -72,6 +73,7 @@ type ItemProps = {
   deviceDescription: string;
   currentVersion: string;
   identityProvider: string;
+  versionsHistory: Array<string>;
 };
 
 const iconProps = { width: 24, height: 24 };
@@ -193,6 +195,7 @@ const ZendeskAskPermissions = (props: Props) => {
   const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
+  const versionsHistory = useIOSelector(appVersionHistorySelector);
 
   const itemsProps: ItemProps = {
     fiscalCode,
@@ -202,7 +205,8 @@ const ZendeskAskPermissions = (props: Props) => {
       isIos ? "iOS" : "Android"
     } · ${getSystemVersion()}`,
     currentVersion: getAppVersion(),
-    identityProvider
+    identityProvider,
+    versionsHistory
   };
 
   const assistanceWebFormLink =
