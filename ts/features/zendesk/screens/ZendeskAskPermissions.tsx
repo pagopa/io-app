@@ -45,6 +45,7 @@ import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   addTicketCustomField,
   addTicketTag,
+  appendLog,
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
@@ -144,13 +145,6 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     value: props.currentVersion,
     zendeskId: zendeskCurrentAppVersionId,
     testId: "appVersion"
-  },
-  {
-    icon: <InfoIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.appVersionsHistory"),
-    value: arrayToZendeskValue(props.versionsHistory),
-    zendeskId: zendeskCurrentAppVersionId,
-    testId: "appVersionsHistory"
   },
   {
     icon: <LoginIcon {...iconProps} />,
@@ -254,8 +248,12 @@ const ZendeskAskPermissions = (props: Props) => {
         addTicketCustomField(it.zendeskId, it.value);
       }
     });
+
     // Tag the ticket with the current app version
     addTicketTag(itemsProps.currentVersion);
+
+    // Append the app versions history to the logs
+    appendLog(`Versions history: ${arrayToZendeskValue(versionsHistory)}`);
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||

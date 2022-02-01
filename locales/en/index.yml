@@ -2968,7 +2968,6 @@ support:
     deviceAndOS: "Device and Operating System"
     ipAddress: "IP address"
     currentAppVersion: "Version of the app in use"
-    appVersionsHistory: "App versions history"
     identityProvider: "Identity Provider"
     navigationData: "In-app navigation data"
     navigationDataValue: "Such as the the last screen or message displayed in IO."
