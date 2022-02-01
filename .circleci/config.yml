@@ -432,10 +432,8 @@ jobs:
       - run:
           name: Install Detox and simulator's utils
           command: |
-            npm install -g ios-sim
             brew tap wix/brew
             brew install applesimutils
-            ios-sim showdevicetypes
 
       - run:
           name: Prepare build for Detox
