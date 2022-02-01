@@ -15,9 +15,10 @@ export const cardIcons: { [key in CreditCardType]: any } = {
   MAESTRO: require("../../../../img/wallet/cards-icons/maestro.png"),
   VISAELECTRON: require("../../../../img/wallet/cards-icons/visa-electron.png"),
   POSTEPAY: require("../../../../img/wallet/cards-icons/postepay.png"),
-  UNIONPAY: require("../../../../img/wallet/cards-icons/unknown.png"),
-  DISCOVER: require("../../../../img/wallet/cards-icons/unknown.png"),
-  JCB: require("../../../../img/wallet/cards-icons/unknown.png"),
+  UNIONPAY: require("../../../../img/wallet/cards-icons/unionpay.png"),
+  DISCOVER: require("../../../../img/wallet/cards-icons/discover.png"),
+  JCB: require("../../../../img/wallet/cards-icons/jcb.png"),
+  JCB15: require("../../../../img/wallet/cards-icons/jcb.png"),
   UNKNOWN: require("../../../../img/wallet/cards-icons/unknown.png")
 };
 
