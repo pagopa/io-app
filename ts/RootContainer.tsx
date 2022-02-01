@@ -24,6 +24,7 @@ import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { trackScreen } from "./store/middlewares/navigation";
+import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
@@ -144,7 +145,7 @@ class RootContainer extends React.PureComponent<Props> {
             trackScreen(prevState, currentState);
           }}
         />
-        {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
+        {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
         {!isStringNullyOrEmpty(testOverlayCaption) && (
           <BetaTestingOverlay
             title={`🛠️ TEST VERSION 🛠️`}
@@ -160,7 +161,8 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   preferredLanguage: preferredLanguageSelector(state),
-  deepLinkState: state.deepLink
+  deepLinkState: state.deepLink,
+  isDebugModeEnabled: isDebugModeEnabledSelector(state)
 });
 
 const mapDispatchToProps = {
