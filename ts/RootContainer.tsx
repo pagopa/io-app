@@ -130,7 +130,6 @@ class RootContainer extends React.PureComponent<Props> {
 
     return (
       <Root>
-        <StatusBar barStyle={"dark-content"} />
         {Platform.OS === "android" && <FlagSecureComponent />}
         <AppContainer
           ref={navigatorRef => {
