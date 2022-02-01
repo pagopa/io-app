@@ -10,7 +10,7 @@ import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
-import { shouldDisplayVersionInfoOverlay, testOverlayCaption } from "./config";
+import { testOverlayCaption } from "./config";
 
 import { setLocale } from "./i18n";
 import AppNavigator from "./navigation/AppNavigator";
