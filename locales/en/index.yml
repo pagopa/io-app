@@ -1180,11 +1180,11 @@ wallet:
     contextualHelpTitle: Save a card to IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Save the card
-    title: Do you want to save this card?
-    infoTitle: Set the card as favourite payment method
-    info: This payment method will be automatically proposed for the next payment
-    save: Save
-    notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
+    title: "Is everything correct?"
+    subtitle: "By adding the card to your Wallet, you will be able to make payments in the app and join the initiatives available on IO."
+    infoTitle: "Use as favorite"
+    info: "When you pay in-app, IO will automatically show this payment method"
+    notice: "In order to verify your card, we temporarily hold 0.02 €. Don't worry, we will return the amount to you as soon as possible."
     temporaryError: There was a problem while saving this card.
     temporarySubError: We have not received a response from the security systems. We apologize for the inconvenience.
     loadWalletsErrorTitle: Systems are taking longer than expected
@@ -1569,7 +1569,7 @@ messages:
       read: "Message"
       unread: "Unread message"
       archived: Archived
-      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "received on"
       received_at: "received at"
   contextualHelpTitle: About this section

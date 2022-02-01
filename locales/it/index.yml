@@ -1202,13 +1202,11 @@ wallet:
     contextualHelpTitle: Salva una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
-    title: Vuoi salvare questa carta?
-    infoTitle: Imposta la carta come metodo di pagamento preferito
-    info:
-      Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
-      pagamento
-    save: Salva
-    notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
+    title: "È tutto corretto?"
+    subtitle: "Aggiungendo la carta al tuo Portafoglio, potrai effettuare pagamenti in app e aderire alle iniziative disponibili su IO."
+    infoTitle: "Usa come metodo preferito"
+    info: "Quando paghi in app, IO ti mostra in automatico questo metodo di pagamento"
+    notice: "Per verificare la tua carta, tratteniamo temporaneamente € 0,02. Non preoccuparti: ti restituiremo l'importo al più presto."
     temporaryError: Si è verificato un errore nel salvataggio di questa carta
     temporarySubError: Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.
     loadWalletsErrorTitle: I sistemi stanno impiegando più tempo del previsto
@@ -1594,7 +1592,7 @@ messages:
       read: "Messaggio"
       unread: "Messaggio non letto"
       archived: Archiviato
-      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
