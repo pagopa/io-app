@@ -80,7 +80,6 @@ type ItemProps = {
   deviceDescription: string;
   currentVersion: string;
   identityProvider: string;
-  versionsHistory: Array<string>;
 };
 
 const iconProps = { width: 24, height: 24 };
@@ -212,8 +211,7 @@ const ZendeskAskPermissions = (props: Props) => {
       isIos ? "iOS" : "Android"
     } · ${getSystemVersion()}`,
     currentVersion: getAppVersion(),
-    identityProvider,
-    versionsHistory
+    identityProvider
   };
 
   const assistanceWebFormLink =
@@ -253,7 +251,7 @@ const ZendeskAskPermissions = (props: Props) => {
     addTicketTag(itemsProps.currentVersion);
 
     // Append the app versions history to the logs
-    appendLog(`Versions history: ${arrayToZendeskValue(versionsHistory)}`);
+    appendLog(`versionsHistory: ${arrayToZendeskValue(versionsHistory)}`);
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
