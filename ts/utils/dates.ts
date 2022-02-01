@@ -161,12 +161,13 @@ export const isExpired = (
 ): Either<Error, boolean> => {
   const maybeMonth = decodeCreditCardMonth(expireMonth);
   const maybeYear = decodeCreditCardYear(expireYear);
-
   return maybeYear
     .chain(year =>
       maybeMonth.map(month => {
         const now = new Date();
-        return year < now.getFullYear() || month < now.getMonth() + 1;
+        const nowYearMonth = new Date(now.getFullYear(), now.getMonth());
+        const cardExpirationDate = new Date(year, month - 1);
+        return nowYearMonth > cardExpirationDate;
       })
     )
     .mapLeft(_ => new Error("invalid input"));
