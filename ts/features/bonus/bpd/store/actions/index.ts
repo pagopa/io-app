@@ -5,6 +5,7 @@ import { BpdPaymentMethodActions } from "./paymentMethods";
 import { BpdPeriodsAction } from "./periods";
 import { BpdSelectPeriodAction } from "./selectedPeriod";
 import { BpdTransactionsAction } from "./transactions";
+import { OptInPaymentMethodsActions } from "./optInPaymentMethods";
 
 export type BpdActions =
   | BpdOnboardingActions
@@ -13,4 +14,5 @@ export type BpdActions =
   | BpdPaymentMethodActions
   | BpdPeriodsAction
   | BpdTransactionsAction
-  | BpdSelectPeriodAction;
+  | BpdSelectPeriodAction
+  | OptInPaymentMethodsActions;

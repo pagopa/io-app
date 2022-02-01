@@ -129,6 +129,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -148,6 +149,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
 
+  // store the app version in the history, if the current version is not present
+  yield call(checkAppHistoryVersionSaga);
   // check if mixpanel could be initialized
   yield call(initMixpanel);
   yield call(waitForNavigatorServiceInitialization);
