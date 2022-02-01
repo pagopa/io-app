@@ -13,6 +13,7 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
+  StatusBar,
   StyleSheet
 } from "react-native";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -299,6 +300,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           onWillBlur={this.handleWillBlur}
         />
         <SafeAreaView style={IOStyles.flex}>
+          <StatusBar barStyle={"dark-content"} backgroundColor={customVariables.colorWhite} />
           <ScrollView bounces={false}>
             {this.state.isFocused && this.state.permissionRationaleDisplayed && (
               <QRCodeScanner
