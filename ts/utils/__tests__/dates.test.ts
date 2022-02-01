@@ -53,6 +53,11 @@ describe("getExpireStatus", () => {
     MockDate.set(new Date(2022, 1, 1));
     // card: 2023-01
     expect(isExpired("1", "23")).toEqual(right(false));
+
+    // now: 2022-12-31
+    MockDate.set(new Date(2022, 11, 31));
+    // card: 2023-01
+    expect(isExpired("1", "23")).toEqual(right(false));
   });
 
   it("should mark the date as expired when passing as argument the previous month", () => {
