@@ -416,7 +416,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         style={styles.container}
       >
         <View style={styles.topScreenContainer}>
-          <FocusAwareStatusBar barStyle={"dark-content"} backgroundColor={customVariables.colorWhite} />
+          <FocusAwareStatusBar
+            barStyle={"dark-content"}
+            backgroundColor={customVariables.colorWhite}
+          />
           <TopScreenComponent
             accessibilityLabel={I18n.t("services.title")}
             headerTitle={I18n.t("services.title")}
