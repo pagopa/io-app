@@ -837,7 +837,7 @@ messages:
     message:
       read: "Mitteilung"
       unread: "Ungelesene Mitteilung"
-      description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "erhalten am"
       received_at: "erhalten um"
   contextualHelpTitle: Über diesen Abschnitt
