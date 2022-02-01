@@ -14,6 +14,7 @@ import LinearGradient from "react-native-linear-gradient";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -21,7 +22,6 @@ import {
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type Props = Readonly<{
   accessibilityLabel?: string;

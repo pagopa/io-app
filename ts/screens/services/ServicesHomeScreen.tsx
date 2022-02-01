@@ -99,8 +99,8 @@ import IconFont from "../../components/ui/IconFont";
 import { IOColors } from "../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { Label } from "../../components/core/typography/Label";
-import ServiceDetailsScreen from "./ServiceDetailsScreen";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
+import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationStackScreenProps;
 
