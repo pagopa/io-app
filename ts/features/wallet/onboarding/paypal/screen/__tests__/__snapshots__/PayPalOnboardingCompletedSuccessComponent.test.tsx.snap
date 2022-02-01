@@ -192,7 +192,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
               testID="infoScreenBody"
               weight="Regular"
             >
-              Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo.
+              Ora puoi continuare con il pagamento.
             </Text>
           </View>
           <View

@@ -2550,6 +2550,10 @@ bonus:
             active: "**La classifica cambia ogni giorno.** Riceverai un messaggio quando verrà consolidata."
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
+    optInPaymentMethods:
+      cashbackUpdate:
+        header: "Novità e aggiornamenti"
+        title: "Aggiornamenti sul Cashback"
   cgn:
     accessibility:
       code: Premendo l'elemento copierai il codice
