@@ -92,7 +92,6 @@ import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { Body } from "../../components/core/typography/Body";
 import { isCGNEnabledSelector } from "../../store/reducers/backendStatus";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -563,7 +562,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
-        <FocusAwareStatusBar barStyle={"light-content"} backgroundColor={customVariables.brandDarkGray} />
         {this.newMethodAdded ? (
           this.newMethodAddedContent
         ) : (

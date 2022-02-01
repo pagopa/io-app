@@ -48,7 +48,6 @@ import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { navigateToLogout } from "../../store/actions/navigation";
 import { getDeviceId } from "../../utils/device";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -538,7 +537,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["profile"]}
       >
-        <FocusAwareStatusBar barStyle={"light-content"} backgroundColor={customVariables.brandDarkGray} />
         {screenContent()}
       </DarkLayout>
     );

@@ -22,6 +22,7 @@ import {
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -118,6 +119,10 @@ export default class DarkLayout extends React.Component<Props> {
         faqCategories={this.props.faqCategories}
         titleColor={"white"}
       >
+        <FocusAwareStatusBar
+          backgroundColor={customVariables.brandDarkGray}
+          barStyle={"light-content"}
+        />
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}
