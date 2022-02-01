@@ -2526,6 +2526,8 @@ bonus:
       cashbackUpdate:
         header: "News and updates"
         title: "Cashback updates"
+        subtitle: "aasds"
+        body: !include bonus/bpd/optInPaymentMethods.md
   cgn:
     accessibility:
       code: By pressing the item you will copy the code
