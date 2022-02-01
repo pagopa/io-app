@@ -92,6 +92,7 @@ import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { Body } from "../../components/core/typography/Body";
 import { isCGNEnabledSelector } from "../../store/reducers/backendStatus";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -193,8 +194,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("keyFrom");
   }
 
-  private navListener?: NavigationEventSubscription;
-
   private handleBackPress = () => {
     const shouldPop =
       this.newMethodAdded && this.navigationKeyFrom !== undefined;
@@ -245,13 +244,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    }); // eslint-disable-line
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
 
     // Dispatch the action associated to the saga responsible to remind a user
@@ -261,9 +253,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -574,6 +563,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
+        <FocusAwareStatusBar barStyle={"light-content"} backgroundColor={customVariables.brandDarkGray} />
         {this.newMethodAdded ? (
           this.newMethodAddedContent
         ) : (

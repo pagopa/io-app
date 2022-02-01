@@ -48,6 +48,7 @@ import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { navigateToLogout } from "../../store/actions/navigation";
 import { getDeviceId } from "../../utils/device";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -106,8 +107,6 @@ const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
  * A screen to show all the options related to the user profile
  */
 class ProfileMainScreen extends React.PureComponent<Props, State> {
-  private navListener?: NavigationEventSubscription;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -116,20 +115,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
 
-  public componentDidMount() {
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    });
-  }
-
   public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
     // This ensures modals will be closed (if there are some opened)
     this.props.hideModal();
     if (this.idResetTap) {
@@ -552,6 +538,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["profile"]}
       >
+        <FocusAwareStatusBar barStyle={"light-content"} backgroundColor={customVariables.brandDarkGray} />
         {screenContent()}
       </DarkLayout>
     );

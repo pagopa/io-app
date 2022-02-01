@@ -101,6 +101,7 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { Label } from "../../components/core/typography/Label";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type OwnProps = NavigationStackScreenProps;
 
@@ -230,8 +231,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 class ServicesHomeScreen extends React.Component<Props, State> {
-  private navListener?: NavigationEventSubscription;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -291,14 +290,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     if (pot.isError(this.props.visibleServicesContentLoadState)) {
       this.props.refreshVisibleServices();
     }
-
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
-    }); // eslint-disable-line
   }
 
   private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -376,12 +367,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     });
   };
 
-  public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
-  }
-
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
       return undefined;
@@ -432,6 +417,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         style={styles.container}
       >
         <View style={styles.topScreenContainer}>
+          <FocusAwareStatusBar barStyle={"dark-content"} backgroundColor={customVariables.colorWhite} />
           <TopScreenComponent
             accessibilityLabel={I18n.t("services.title")}
             headerTitle={I18n.t("services.title")}
