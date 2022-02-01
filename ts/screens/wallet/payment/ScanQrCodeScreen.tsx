@@ -13,7 +13,6 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet
 } from "react-native";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -47,6 +46,7 @@ import { AsyncAlert } from "../../../utils/asyncAlert";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { isAndroid } from "../../../utils/platform";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -300,7 +300,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           onWillBlur={this.handleWillBlur}
         />
         <SafeAreaView style={IOStyles.flex}>
-          <StatusBar barStyle={"dark-content"} backgroundColor={customVariables.colorWhite} />
+          <FocusAwareStatusBar barStyle={"dark-content"} backgroundColor={customVariables.colorWhite} />
           <ScrollView bounces={false}>
             {this.state.isFocused && this.state.permissionRationaleDisplayed && (
               <QRCodeScanner

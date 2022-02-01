@@ -4,7 +4,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Body, Button, Container, Right, View } from "native-base";
 import * as React from "react";
-import { BackHandler, ScrollView, StatusBar, StyleSheet } from "react-native";
+import { BackHandler, ScrollView, StyleSheet } from "react-native";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";
@@ -13,6 +13,7 @@ import customVariables from "../theme/variables";
 import { useMaxBrightness } from "../utils/brightness";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
+import FocusAwareStatusBar from "./ui/FocusAwareStatusBar";
 
 export type Props = Readonly<{
   onCancel: () => void;
@@ -87,7 +88,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
           </Button>
         </Right>
       </AppHeader>
-      <StatusBar
+      <FocusAwareStatusBar
         backgroundColor={customVariables.brandDarkGray}
         barStyle={"light-content"}
       />
