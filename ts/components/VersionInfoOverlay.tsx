@@ -47,14 +47,10 @@ const styles = StyleSheet.create({
 
 const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const appVersion = getAppVersion();
-  const serverInfo = props.serverInfo;
-  const serverVersion = serverInfo ? serverInfo.version : "?";
 
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
-      <Text style={styles.versionText}>
-        {`app: ${appVersion}`} - {`backend: ${serverVersion}`}
-      </Text>
+      <Text style={styles.versionText}>{`app: ${appVersion}`}</Text>
       <Text style={styles.routeText}>{props.screenNameDebug}</Text>
     </View>
   );

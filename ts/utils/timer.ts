@@ -1,8 +1,11 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import BackgroundTimer from "react-native-background-timer";
 
+/**
+ * Return a promise that resolve after t milliseconds, even if the app is in background
+ * @param t
+ */
 export function startTimer(t: number): Promise<void> {
-  // eslint-disable-next-line
   return new Promise(resolve => {
     BackgroundTimer.setTimeout(resolve.bind(null), t);
   });
