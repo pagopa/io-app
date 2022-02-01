@@ -300,7 +300,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           onWillBlur={this.handleWillBlur}
         />
         <SafeAreaView style={IOStyles.flex}>
-          <FocusAwareStatusBar barStyle={"dark-content"} backgroundColor={customVariables.colorWhite} />
+          <FocusAwareStatusBar
+            barStyle={"dark-content"}
+            backgroundColor={customVariables.colorWhite}
+          />
           <ScrollView bounces={false}>
             {this.state.isFocused && this.state.permissionRationaleDisplayed && (
               <QRCodeScanner
