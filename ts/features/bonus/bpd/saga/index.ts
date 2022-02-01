@@ -1,7 +1,11 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { bpdApiUrlPrefix, bpdTransactionsPaging } from "../../../../config";
+import {
+  bpdApiUrlPrefix,
+  bpdOptInPaymentMethodsEnabled,
+  bpdTransactionsPaging
+} from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
@@ -23,6 +27,7 @@ import {
   bpdTransactionsLoadPage,
   bpdTransactionsLoadRequiredData
 } from "../store/actions/transactions";
+import { optInPaymentMethodsStart } from "../store/actions/optInPaymentMethods";
 import { deleteCitizen, getCitizenV2, putEnrollCitizenV2 } from "./networking";
 import { loadBpdData } from "./networking/loadBpdData";
 import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
@@ -39,6 +44,7 @@ import { handleTransactionsPage } from "./networking/winning-transactions/transa
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
+import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethodsHandler";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
@@ -140,4 +146,9 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
   // The user start the insertion / modification of the IBAN associated with bpd program
   yield takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
+
+  // The user need to choice what to do with the payment methods added during the cashback
+  if (bpdOptInPaymentMethodsEnabled) {
+    yield takeLatest(optInPaymentMethodsStart, optInPaymentMethodsHandler);
+  }
 }
