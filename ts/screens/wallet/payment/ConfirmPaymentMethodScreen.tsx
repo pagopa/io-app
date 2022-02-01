@@ -78,7 +78,7 @@ import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { PspData } from "../../../../definitions/pagopa/PspData";
-import { PayPalPspUpdateScreenNavigationParams } from "../../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -186,6 +186,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
+  const navigation = useNavigationContext();
   // each payment method has its own psp fee
   const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
   const fee: number | undefined = isPayingWithPaypal
@@ -238,6 +239,15 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         text: I18n.t("payment.abortWebView.cancel")
       }
     ]);
+  };
+
+  const handleOnEditPaypalPsp = () => {
+    navigation.navigate(
+      navigateToPayPalUpdatePspForPayment({
+        idPayment,
+        idWallet: wallet.idWallet
+      })
+    );
   };
 
   const formData = props.payStartWebviewPayload
@@ -293,12 +303,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <>
               <View spacer={true} />
               <PayPalCheckoutPspComponent
-                onEditPress={() => {
-                  props.navigateToPayPalUpdatePspForPayment({
-                    idPayment,
-                    idWallet: wallet.idWallet
-                  });
-                }}
+                onEditPress={handleOnEditPaypalPsp}
                 fee={fee as ImportoEuroCents}
                 pspName={props.paypalSelectedPsp?.ragioneSociale ?? "-"}
                 privacyUrl={props.paypalSelectedPsp?.privacyUrl}
@@ -448,9 +453,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(paymentOutcomeCode({ outcome: outComeCode, paymentMethodType })),
     navigateToOutComePaymentScreen: (fee: ImportoEuroCents) =>
       navigateToPaymentOutcomeCode({ fee }),
-    navigateToPayPalUpdatePspForPayment: (
-      params: PayPalPspUpdateScreenNavigationParams
-    ) => navigateToPayPalUpdatePspForPayment(params),
     loadTransactions: () =>
       dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
 

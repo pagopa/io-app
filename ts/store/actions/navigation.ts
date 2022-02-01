@@ -451,18 +451,13 @@ export const navigateToPayPalDetailScreen = () =>
     routeName: ROUTES.WALLET_PAYPAL_DETAIL
   });
 
-/**
- * @deprecated
- */
 export const navigateToPayPalUpdatePspForPayment = (
   params: PayPalPspUpdateScreenNavigationParams
 ) =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP,
-      params
-    })
-  );
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP,
+    params
+  });
 
 /**
  * @deprecated

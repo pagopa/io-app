@@ -15,7 +15,8 @@ import {
   paymentInitializeState,
   paymentVerifica,
   paymentWebViewEnd,
-  pspForPaymentV2
+  pspForPaymentV2,
+  pspSelectedForPaymentV2
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 import {
@@ -370,6 +371,14 @@ const reducer = (
         pspsV2: {
           ...state.pspsV2,
           psps: remoteError(getError(action.payload))
+        }
+      };
+    case getType(pspSelectedForPaymentV2):
+      return {
+        ...state,
+        pspsV2: {
+          ...state.pspsV2,
+          pspSelected: action.payload
         }
       };
   }

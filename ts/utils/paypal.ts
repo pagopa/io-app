@@ -3,6 +3,7 @@ import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 import I18n from "../i18n";
 import { PspData } from "../../definitions/pagopa/PspData";
 import { IOPayPalPsp } from "../features/wallet/onboarding/paypal/types";
+import { PayPalPsp } from "../../definitions/pagopa/PayPalPsp";
 import { getPayPalPspIconUrl } from "./paymentMethod";
 
 // return the email used in the paypal account. If it can't be found "n/a" will be returned
@@ -20,5 +21,14 @@ export const convertPspData = (psp: PspData): IOPayPalPsp => ({
   logoUrl: getPayPalPspIconUrl(psp.codiceAbi),
   name: psp.ragioneSociale,
   fee: psp.fee as NonNegativeNumber,
+  privacyUrl: psp.privacyUrl
+});
+
+// convert a paypal psp returned by the API into the app domain model
+export const convertPayPalPsp = (psp: PayPalPsp): IOPayPalPsp => ({
+  id: psp.idPsp,
+  logoUrl: getPayPalPspIconUrl(psp.codiceAbi),
+  name: psp.ragioneSociale,
+  fee: psp.maxFee as NonNegativeNumber,
   privacyUrl: psp.privacyUrl
 });

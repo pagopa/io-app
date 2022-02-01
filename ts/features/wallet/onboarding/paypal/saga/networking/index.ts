@@ -1,5 +1,4 @@
 import { call, put } from "redux-saga/effects";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { Option } from "fp-ts/lib/Option";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
@@ -14,19 +13,8 @@ import {
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
-import { PayPalPsp as NetworkPsp } from "../../../../../../../definitions/pagopa/PayPalPsp";
-import { IOPayPalPsp } from "../../types";
-import { getPayPalPspIconUrl } from "../../../../../../utils/paymentMethod";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-
-// convert a paypal psp returned by the API into the app domain model
-const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
-  id: psp.idPsp,
-  logoUrl: getPayPalPspIconUrl(psp.codiceAbi),
-  name: psp.ragioneSociale,
-  fee: psp.maxFee as NonNegativeNumber,
-  privacyUrl: psp.privacyUrl
-});
+import { convertPayPalPsp } from "../../../../../../utils/paypal";
 
 /**
  * handle the request of searching for PayPal psp
@@ -44,7 +32,7 @@ export function* handlePaypalSearchPsp(
       if (searchPayPalPspRequest.value.status === 200) {
         yield put(
           searchPaypalPsp.success(
-            searchPayPalPspRequest.value.value.data.map(convertNetworkPsp)
+            searchPayPalPspRequest.value.value.data.map(convertPayPalPsp)
           )
         );
         return;

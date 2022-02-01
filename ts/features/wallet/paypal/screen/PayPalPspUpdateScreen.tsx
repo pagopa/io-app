@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { ListItem, View } from "native-base";
 import { useDispatch } from "react-redux";
-import { constNull } from "fp-ts/lib/function";
 import { NavigationInjectedProps } from "react-navigation";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -27,7 +26,10 @@ import {
 } from "../../onboarding/paypal/components/PspRadioItem";
 import { useIOSelector } from "../../../../store/hooks";
 import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
-import { pspForPaymentV2 } from "../../../../store/actions/wallet/payment";
+import {
+  pspForPaymentV2,
+  pspSelectedForPaymentV2
+} from "../../../../store/actions/wallet/payment";
 import { convertPspData } from "../../../../utils/paypal";
 
 const styles = StyleSheet.create({
@@ -102,7 +104,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
       testID={`pspItemTestID_${psp.id}`}
       style={styles.pspListItem}
       accessibilityRole={"button"}
-      onPress={constNull}
+      onPress={props.onPress}
     >
       <View style={{ flex: 1 }}>
         {imgDimensions.fold<React.ReactNode>(
@@ -179,13 +181,19 @@ const PayPalPspUpdateScreen: React.FunctionComponent<Props> = (
                 rightColumnTitle={locales.rightColumnTitle}
               />
               <View spacer={true} small={true} />
-              {pspList.value.map(convertPspData).map(psp => (
-                <PspItem
-                  psp={psp}
-                  key={`paypal_psp:${psp.id}`}
-                  onPress={constNull}
-                />
-              ))}
+              {pspList.value.map(psp => {
+                const paypalPsp = convertPspData(psp);
+                return (
+                  <PspItem
+                    psp={paypalPsp}
+                    key={`paypal_psp:${paypalPsp.id}`}
+                    onPress={() => {
+                      dispatch(pspSelectedForPaymentV2(psp));
+                      goBack();
+                    }}
+                  />
+                );
+              })}
             </ScrollView>
           </View>
           <FooterWithButtons
