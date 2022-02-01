@@ -2996,6 +2996,7 @@ support:
     deviceAndOS: "Dispositivo e sistema operativo"
     ipAddress: "Indirizzo IP"
     currentAppVersion: "Versione in uso dell'app"
+    appVersionsHistory: "Storico versioni dell'app"
     identityProvider: "Identity Provider"
     navigationData: "Dati di navigazione in app IO"
     navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"

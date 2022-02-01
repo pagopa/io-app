@@ -54,6 +54,12 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { appVersionHistorySelector } from "../../../store/reducers/installation";
 
 /**
+ * Transform an array of string into a Zendesk
+ * value to display.
+ */
+const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
+
+/**
  * id is optional since some items should recognized since they can be removed from the whole list
  * i.e: items about profile || payment
  */
@@ -138,6 +144,13 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     value: props.currentVersion,
     zendeskId: zendeskCurrentAppVersionId,
     testId: "appVersion"
+  },
+  {
+    icon: <InfoIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.appVersionsHistory"),
+    value: arrayToZendeskValue(props.versionsHistory),
+    zendeskId: zendeskCurrentAppVersionId,
+    testId: "appVersionsHistory"
   },
   {
     icon: <LoginIcon {...iconProps} />,
