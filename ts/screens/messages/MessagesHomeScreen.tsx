@@ -42,7 +42,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";

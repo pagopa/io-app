@@ -19,10 +19,8 @@ import {
   DefaultReportAttachmentTypeConfiguration
 } from "../../../boot/configureInstabug";
 import { mixpanelTrack } from "../../../mixpanel";
-import customVariables from "../../../theme/variables";
 import { noAnalyticsRoutes } from "../../../utils/analytics";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import ContextualHelp, { RequestAssistancePayload } from "../../ContextualHelp";
 import { SearchType } from "../../search/SearchButton";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
@@ -72,10 +70,6 @@ export type Props = PropsWithChildren<
     ComponentProps<typeof BaseHeader> &
     Pick<ComponentProps<typeof ContextualHelp>, "faqCategories">
 >;
-
-const maybeDark = fromPredicate(
-  (isDark: boolean | undefined = undefined) => isDark === true
-);
 
 const ANDROID_OPEN_REPORT_DELAY = 50 as Millisecond;
 
@@ -155,24 +149,11 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
         });
       }
 
-      maybeDark(dark).map(_ =>
-        setStatusBarColorAndBackground(
-          "dark-content",
-          customVariables.colorWhite
-        )
-      );
-
       setIsHelpVisible(true);
       setMarkdownContentLoaded(!contextualHelpMarkdown);
     };
 
     const hideHelp = () => {
-      maybeDark(dark).map(_ =>
-        setStatusBarColorAndBackground(
-          "light-content",
-          customVariables.brandDarkGray
-        )
-      );
       setIsHelpVisible(false);
     };
 

@@ -89,7 +89,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { Body } from "../../components/core/typography/Body";
 import { isCGNEnabledSelector } from "../../store/reducers/backendStatus";
 

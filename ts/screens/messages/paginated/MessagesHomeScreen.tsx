@@ -19,9 +19,7 @@ import {
   searchTextSelector
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
-import customVariables from "../../../theme/variables";
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
-import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { allMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
@@ -60,15 +58,6 @@ const MessagesHomeScreen = ({
 
   useEffect(() => {
     reloadFirstPage();
-    const listener = navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
-    });
-    return () => {
-      listener.remove();
-    };
   }, []);
 
   return (
