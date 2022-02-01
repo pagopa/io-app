@@ -4,7 +4,6 @@ import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
 import {
   NavigationEvents,
-  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";

@@ -5,7 +5,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
-import { NavigationEventSubscription } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Millisecond } from "italia-ts-commons/lib/units";

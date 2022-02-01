@@ -1,4 +1,4 @@
-import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";

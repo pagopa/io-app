@@ -32,7 +32,6 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import { NavigationEventSubscription } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";

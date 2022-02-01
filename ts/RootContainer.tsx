@@ -1,6 +1,6 @@
 import { Root } from "native-base";
 import * as React from "react";
-import { AppState, Linking, Platform, StatusBar } from "react-native";
+import { AppState, Linking, Platform } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
