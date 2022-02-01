@@ -2556,6 +2556,9 @@ bonus:
         title: "Aggiornamenti sul Cashback"
         subtitle: "aasds"
         body: !include bonus/bpd/optInPaymentMethods.md
+      choice:
+        header: "Configura IO"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
   cgn:
     accessibility:
       code: Premendo l'elemento copierai il codice
