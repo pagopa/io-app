@@ -7,7 +7,6 @@ As of today, only IOS is supported via Detox.
 ### Requirements
 
 * [Wix AppleSimulatorUtils](https://github.com/wix/AppleSimulatorUtils)
-* [ios-sim](https://www.npmjs.com/package/ios-sim)
 * a running instance of [io-dev-api-server
 ](https://github.com/pagopa/io-dev-api-server) at `http://127.0.0.1:3000` (with the same config available at https://github.com/pagopa/io-app/blob/master/scripts/api-config.json)
 

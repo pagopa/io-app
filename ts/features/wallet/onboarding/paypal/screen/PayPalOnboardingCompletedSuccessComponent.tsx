@@ -7,7 +7,7 @@ import I18n from "../../../../../i18n";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { walletAddPaypalCompleted } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { isPaymentOngoingSelector } from "../../../../../store/reducers/wallet/payment";
+import { paypalOnboardingCompletedSelector } from "../store/reducers/onOboardingCompleted";
 
 const getLocales = (isPaymentOnGoing: boolean) => {
   if (isPaymentOnGoing) {
@@ -39,8 +39,10 @@ const getLocales = (isPaymentOnGoing: boolean) => {
  */
 const PayPalOnboardingCompletedSuccessComponent = () => {
   const dispatch = useIODispatch();
-  const isPaymentOnGoing = useIOSelector(isPaymentOngoingSelector);
-  const locales = getLocales(isPaymentOnGoing);
+  const onPaypalCompletion = useIOSelector(paypalOnboardingCompletedSelector);
+  // 'payment_method_details' means we want to check the added payment method detail
+  // in the payment flow we have to continue the payment
+  const locales = getLocales(onPaypalCompletion !== "payment_method_details");
   return (
     <>
       <InfoScreenComponent

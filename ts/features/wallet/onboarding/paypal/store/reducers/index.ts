@@ -2,14 +2,14 @@ import { combineReducers } from "redux";
 import { Action } from "../../../../../../store/actions/types";
 import searchPspReducer, { RemotePayPalPsp } from "./searchPsp";
 import selectedPspReducer, { PayPalSelectedPspState } from "./selectedPsp";
-import outcomeCodeReducer, {
-  PaypalOnboardingOutcomeCodeState
-} from "./outcomeCode";
+import onboardingCompletedReducer, {
+  PaypalOnOnboardingCompletedState
+} from "./onOboardingCompleted";
 
 export type OnboardPayPalState = {
   psp: RemotePayPalPsp;
   selectedPsp: PayPalSelectedPspState;
-  outcomeCode: PaypalOnboardingOutcomeCodeState;
+  onboardingCompletion: PaypalOnOnboardingCompletedState;
 };
 
 export const onboardingPaypalReducer = combineReducers<
@@ -20,5 +20,6 @@ export const onboardingPaypalReducer = combineReducers<
   psp: searchPspReducer,
   // the psp selected to handle payments with PayPal
   selectedPsp: selectedPspReducer,
-  outcomeCode: outcomeCodeReducer
+  // info about the onboarding completion
+  onboardingCompletion: onboardingCompletedReducer
 });
