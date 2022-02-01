@@ -14,6 +14,7 @@ import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStat
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
 import OptInPaymentMethodsCashbackUpdateScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsCashbackUpdateScreen";
 import BPD_ROUTES from "./routes";
+import OptInPaymentMethodsChoiceScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsChoiceScreen";
 
 export const BpdOnboardingNavigator = createStackNavigator(
   {
@@ -90,6 +91,9 @@ export const OptInPaymentMethodNavigator = createStackNavigator(
   {
     [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE]: {
       screen: OptInPaymentMethodsCashbackUpdateScreen
+    },
+    [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE]: {
+      screen: OptInPaymentMethodsChoiceScreen
     }
   },
   {
