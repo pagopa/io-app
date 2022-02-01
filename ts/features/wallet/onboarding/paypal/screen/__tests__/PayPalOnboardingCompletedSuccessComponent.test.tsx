@@ -6,7 +6,7 @@ import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import PayPalOnboardingCompletedSuccessComponent from "../PayPalOnboardingCompletedSuccessComponent";
 import I18n, { setLocale } from "../../../../../../i18n";
-import { paymentIdPolling } from "../../../../../../store/actions/wallet/payment";
+import { walletAddPaypalStart } from "../../store/actions";
 
 describe("PayPalOnboardingCompletedSuccessComponent", () => {
   beforeAll(() => {
@@ -33,7 +33,8 @@ describe("PayPalOnboardingCompletedSuccessComponent", () => {
 
   describe("when paypal is onboarded from the wallet section", () => {
     it(`then the texts shown should match the dedicated messages`, () => {
-      const { render } = renderComponent();
+      const { render, store } = renderComponent();
+      store.dispatch(walletAddPaypalStart("payment_method_details"));
       expect(
         render.component.queryByText(
           I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")
@@ -55,7 +56,7 @@ describe("PayPalOnboardingCompletedSuccessComponent", () => {
   describe("when paypal is onboarded during a payment", () => {
     it(`then the texts shown should match the dedicated messages`, () => {
       const { render, store } = renderComponent();
-      store.dispatch(paymentIdPolling.success("idPayment"));
+      store.dispatch(walletAddPaypalStart("back"));
       expect(
         render.component.queryByText(
           I18n.t(
