@@ -165,7 +165,7 @@ export const isExpired = (
     .chain(year =>
       maybeMonth.map(month => {
         const now = new Date();
-        const nowYearMonth = new Date(now.getFullYear(), now.getMonth()+1);
+        const nowYearMonth = new Date(now.getFullYear(), now.getMonth() + 1);
         const cardExpirationDate = new Date(year, month);
         return nowYearMonth > cardExpirationDate;
       })
