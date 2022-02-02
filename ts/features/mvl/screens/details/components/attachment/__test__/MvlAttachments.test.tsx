@@ -14,7 +14,6 @@ import {
   mvlMockPdfAttachment
 } from "../../../../../types/__mock__/mvlMock";
 import { MvlPreferences } from "../../../../../store/reducers/preferences";
-// import * as utilsModule from "../../../../../utils";
 import { MvlAttachments } from "../MvlAttachments";
 import { useDownloadAttachmentConfirmationBottomSheet } from "../DownloadAttachmentConfirmationBottomSheet";
 import * as platform from "../../../../../../../utils/platform";
@@ -33,11 +32,6 @@ jest.mock("../DownloadAttachmentConfirmationBottomSheet", () => ({
     ...args: Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
   ) => mockBottomSheetPresent(...args)
 }));
-
-// const spy_handleDownloadResult = jest.spyOn(
-//   utilsModule,
-//   "handleDownloadResult"
-// );
 
 describe("MvlAttachments", () => {
   jest.useFakeTimers();
