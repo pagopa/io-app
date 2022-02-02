@@ -1,5 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { call, Effect, put, select } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadMessageWithRelations } from "../../store/actions/messages";

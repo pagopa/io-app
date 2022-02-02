@@ -1,5 +1,6 @@
 import { NavigationActions } from "react-navigation";
-import { call, Effect, take } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
+import { call, take } from "typed-redux-saga";
 import {
   ActionCreator,
   ActionType,
@@ -9,7 +10,6 @@ import {
 } from "typesafe-actions";
 import NavigationService from "../../navigation/NavigationService";
 import { navigateToWorkunitGenericFailureScreen } from "../../store/actions/navigation";
-import { SagaCallReturnType } from "../../types/utils";
 
 /**
  * The data model needed to run the workunit
@@ -77,9 +77,9 @@ export function* withResetNavigationStack<T>(
  * @param g
  */
 export function* withFailureHandling<T>(
-  g: (...args: Array<any>) => Generator<Effect, T, SagaResult>
+  g: (...args: Array<any>) => Generator<Effect, SagaResult, T>
 ) {
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(g);
+  const res = yield* call(g);
   if (res === "failure") {
     yield* call(navigateToWorkunitGenericFailureScreen);
   }

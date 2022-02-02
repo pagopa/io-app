@@ -9,11 +9,11 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import _ from "lodash";
+import { Effect } from "redux-saga/effects";
 import { NavigationActions, StackActions } from "react-navigation";
 import {
   call,
   delay,
-  Effect,
   fork,
   put,
   select,
