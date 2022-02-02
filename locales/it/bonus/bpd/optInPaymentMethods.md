@@ -20,7 +20,7 @@
 </body>
 <ul style="list-style-type: square">
   <li>
-    <body style="vertical-align: top">
+    <body>
       <b>Se li mantieni</b>, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Non è una decisione definitiva: potrai eliminarli in qualsiasi momento.
       Il titolare del trattamento dei dati non sarà più il Ministero dell’Economia e delle Finanze, ma PagoPA S.p.A., in qualità di gestore dell'app IO : per maggiori informazioni, consulta l’Informativa privacy.
     </body>

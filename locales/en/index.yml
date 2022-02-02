@@ -2526,7 +2526,7 @@ bonus:
       cashbackUpdate:
         header: "News and updates"
         title: "Cashback updates"
-        subtitle: "aasds"
+        subtitle: "Ministero dell’Economia e delle Finanze"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: "Configura IO"
