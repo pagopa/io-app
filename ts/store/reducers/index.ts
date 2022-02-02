@@ -194,6 +194,9 @@ export function createRootReducer(
               // notifications must be kept
               notifications: {
                 ...state.notifications
+              },
+              payments: {
+                ...state.payments
               }
             } as GlobalState)
           : state;
