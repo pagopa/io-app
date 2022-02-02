@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useMemo } from "react";
+import { Dimensions } from "react-native";
 import { Discount } from "../../../../../definitions/cgn/merchants/Discount";
 import { DiscountCodeType } from "../../../../../definitions/cgn/merchants/DiscountCodeType";
 import {
@@ -11,16 +12,19 @@ import {
   CgnDiscountDetailHeader
 } from "../components/merchants/CgnDiscountDetail";
 
+const screenHeight = Dimensions.get("screen").height;
 const calculateBottomSheetHeight = (
   discount: Discount,
   merchantType?: DiscountCodeType
 ): number =>
-  310 +
-  (discount.description === undefined
-    ? 0
-    : discount.description.length * 0.75) +
-  (discount.condition === undefined ? 0 : discount.condition.length * 0.75) +
-  (merchantType === undefined ? -50 : 0);
+  Math.min(
+    310 +
+      ((discount.description?.length ?? 0) +
+        (discount.condition?.length ?? 0)) *
+        0.75 +
+      (merchantType ? 0 : -50),
+    screenHeight
+  );
 
 export const useCgnDiscountDetailBottomSheet = (
   discount: Discount,
