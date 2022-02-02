@@ -3,7 +3,6 @@
  */
 
 import { getType } from "typesafe-actions";
-import { ServerInfo } from "../../../definitions/backend/ServerInfo";
 import {
   backendInfoLoadFailure,
   backendInfoLoadSuccess
@@ -11,8 +10,20 @@ import {
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
+export type IOVersionInfo = {
+  min_app_version: IOVersionPerPlatform;
+  latest_released_app_version: IOVersionPerPlatform;
+  rollout_app_version: IOVersionPerPlatform;
+  min_app_version_pagopa?: IOVersionPerPlatform;
+};
+
+export type IOVersionPerPlatform = {
+  ios: string;
+  android: string;
+};
+
 export type BackendInfoState = Readonly<{
-  serverInfo?: ServerInfo;
+  serverInfo?: IOVersionInfo;
 }>;
 
 const initialBackendInfoState: BackendInfoState = {
