@@ -3,7 +3,7 @@
  */
 import { all, call } from "redux-saga/effects";
 
-import backendInfoSaga from "./backendInfo";
+import backendInfoSaga from "../common/versionInfo/saga/backendInfo";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import unreadInstabugMessagesSaga from "./instabug";
