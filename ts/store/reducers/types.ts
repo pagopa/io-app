@@ -2,9 +2,9 @@ import { PersistPartial } from "redux-persist";
 
 import { BonusState } from "../../features/bonus/bonusVacanze/store/reducers";
 import { PersistedFeaturesState } from "../../features/common/store/reducers";
+import { BackendInfoState } from "../../common/versionInfo/store/reducers/versionInfo";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
-import { BackendInfoState } from "./backendInfo";
 import { BackendStatusState } from "./backendStatus";
 import { BackoffErrorState } from "./backoffError";
 import { CieState } from "./cie";

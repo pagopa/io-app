@@ -6,9 +6,9 @@ import { getType } from "typesafe-actions";
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess
-} from "../../common/versionInfo/store/actions/versionInfo";
-import { Action } from "../actions/types";
-import { GlobalState } from "./types";
+} from "../actions/versionInfo";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 
 export type IOVersionInfo = {
   min_app_version: IOVersionPerPlatform;
@@ -30,7 +30,7 @@ const initialBackendInfoState: BackendInfoState = {
   serverInfo: undefined
 };
 
-export default function backendInfo(
+export default function versionInfo(
   state: BackendInfoState = initialBackendInfoState,
   action: Action
 ): BackendInfoState {

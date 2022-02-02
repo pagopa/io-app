@@ -14,7 +14,7 @@ import {
 } from "../../store/actions/navigation";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import { useIODispatch } from "../../store/hooks";
-import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
+import { serverInfoDataSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";

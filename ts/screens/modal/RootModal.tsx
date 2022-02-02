@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { mixpanelTrack } from "../../mixpanel";
-import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
+import { serverInfoDataSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
 import { isUpdateNeeded } from "../../utils/appVersion";

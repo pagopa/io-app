@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver from "semver";
-import { IOVersionInfo } from "../store/reducers/backendInfo";
+import { IOVersionInfo } from "../common/versionInfo/store/reducers/versionInfo";
 import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
 

@@ -15,12 +15,12 @@ import {
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
+import backendInfoReducer from "../../common/versionInfo/store/reducers/versionInfo";
 import appStateReducer from "./appState";
 import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as autenticationInitialState
 } from "./authentication";
-import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
 import backoffErrorReducer from "./backoffError";
 import cieReducer from "./cie";
