@@ -61,10 +61,17 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
 
   const { card, content, paymentMethod } = props;
-  const { present } = useRemovePaymentMethodBottomSheet({
-    icon: paymentMethod.icon,
-    caption: paymentMethod.caption
-  });
+  const { present, removePaymentMethodBottomSheet } =
+    useRemovePaymentMethodBottomSheet(
+      {
+        icon: paymentMethod.icon,
+        caption: paymentMethod.caption
+      },
+      () => {
+        props.deleteWallet(paymentMethod.idWallet);
+        setIsLoadingDelete(true);
+      }
+    );
 
   React.useEffect(() => {
     if (props.hasErrorDelete) {
@@ -94,16 +101,10 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
         <View spacer={true} />
         {content}
         <View spacer={true} large={true} />
-        <DeleteButton
-          onPress={() =>
-            present(() => {
-              props.deleteWallet(paymentMethod.idWallet);
-              setIsLoadingDelete(true);
-            })
-          }
-        />
+        <DeleteButton onPress={present} />
       </View>
       <View spacer={true} extralarge={true} />
+      {removePaymentMethodBottomSheet}
     </DarkLayout>
   );
 };

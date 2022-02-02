@@ -36,9 +36,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   NavigationInjectedProps<NavigationProps>;
 
-const OnboardingServicesPreferenceScreen = (
-  props: Props
-): React.ReactElement => {
+const OnboardingServicesPreferenceScreen = (props: Props): React.ReactElement => {
   const isFirstOnboarding = props.navigation.getParam("isFirstOnboarding");
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
   const mode =
@@ -80,13 +78,14 @@ const OnboardingServicesPreferenceScreen = (
       props.onServicePreferenceSelected(modeSelected);
     }
   };
-  const { present: confirmManualConfig } = useManualConfigBottomSheet();
+  const { present: confirmManualConfig } = useManualConfigBottomSheet(() =>
+    props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
+  );
+
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
     if (mode === ServicesPreferencesModeEnum.MANUAL) {
-      void confirmManualConfig(() =>
-        props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
-      );
+      confirmManualConfig();
       return;
     }
     setModeSelected(mode);
@@ -120,7 +119,7 @@ const OnboardingServicesPreferenceScreen = (
       </SafeAreaView>
     </BaseScreenComponent>
   );
-};
+};;
 
 const mapStateToProps = (state: GlobalState) => {
   const profile = profileSelector(state);

@@ -2,8 +2,8 @@ import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { IOStyles } from "../core/variables/IOStyles";
 import { TestID } from "../../types/WithTestID";
+import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = {
   children: React.ReactNode;
