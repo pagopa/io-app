@@ -21,7 +21,7 @@ const VERSION_INFO_RETRY_INTERVAL = 10 * 1000;
 function* versionInfoWatcher(): Generator<Effect, void, any> {
   const contentClient = ContentClient();
 
-  function getServerInfo(): Promise<
+  function getVersionInfo(): Promise<
     t.Validation<BasicResponseType<VersionInfo>>
   > {
     return new Promise((resolve, _) =>
@@ -33,8 +33,8 @@ function* versionInfoWatcher(): Generator<Effect, void, any> {
 
   while (true) {
     try {
-      const versionInfoResponse: SagaCallReturnType<typeof getServerInfo> =
-        yield call(getServerInfo);
+      const versionInfoResponse: SagaCallReturnType<typeof getVersionInfo> =
+        yield call(getVersionInfo);
       if (
         versionInfoResponse.isRight() &&
         versionInfoResponse.value.status === 200

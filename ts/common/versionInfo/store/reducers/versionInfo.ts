@@ -24,4 +24,5 @@ export const versionInfoReducer = (
 };
 
 // Selectors
-export const serverInfoDataSelector = (state: GlobalState) => state.versionInfo;
+export const versionInfoDataSelector = (state: GlobalState) =>
+  state.versionInfo;

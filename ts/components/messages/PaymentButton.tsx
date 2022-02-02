@@ -14,7 +14,7 @@ import {
 } from "../../store/actions/navigation";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import { useIODispatch } from "../../store/hooks";
-import { serverInfoDataSelector } from "../../common/versionInfo/store/reducers/versionInfo";
+import { versionInfoDataSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
@@ -97,7 +97,7 @@ const PaymentButton = ({
 const mapStateToProps = (state: GlobalState) => ({
   isEmailValidated: isProfileEmailValidatedSelector(state),
   isUpdatedNeededPagoPa: isUpdateNeeded(
-    serverInfoDataSelector(state),
+    versionInfoDataSelector(state),
     "min_app_version_pagopa"
   )
 });
