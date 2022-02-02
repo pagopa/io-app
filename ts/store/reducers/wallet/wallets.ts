@@ -215,6 +215,20 @@ export const getPagoPAMethodsSelector = createSelector(
     )
 );
 
+// return those payment methods that have BPD as enabled function
+export const getBpdAMethodsSelector = createSelector(
+  paymentMethodsSelector,
+  (
+    potPm: ReturnType<typeof paymentMethodsSelector>
+  ): ReadonlyArray<PaymentMethod> =>
+    pot.getOrElse(
+      pot.map(potPm, pms =>
+        pms.filter(pm => hasFunctionEnabled(pm, EnableableFunctionsEnum.BPD))
+      ),
+      []
+    )
+);
+
 export const rawCreditCardListSelector = createSelector(
   [paymentMethodsSelector],
   (
