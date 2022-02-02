@@ -24,17 +24,14 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
-  const { present: confirmOptOut, dismiss } = useConfirmOptOutBottomSheet();
+  const { present, bottomSheet, dismiss } = useConfirmOptOutBottomSheet(() => {
+    props.setMixpanelEnabled(false);
+  });
 
   useHardwareBackButton(() => {
     dismiss();
     return true;
   });
-
-  const optOutAction = () =>
-    confirmOptOut(() => {
-      props.setMixpanelEnabled(false);
-    });
 
   return (
     <BaseScreenComponent
@@ -54,7 +51,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps(
-            optOutAction,
+            present,
             I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
           )}
           rightButton={confirmButtonProps(
@@ -62,6 +59,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
             I18n.t("profile.main.privacy.shareData.screen.cta.shareData")
           )}
         />
+        {bottomSheet}
       </SafeAreaView>
     </BaseScreenComponent>
   );
