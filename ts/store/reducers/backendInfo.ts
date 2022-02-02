@@ -4,9 +4,9 @@
 
 import { getType } from "typesafe-actions";
 import {
-  backendInfoLoadFailure,
-  backendInfoLoadSuccess
-} from "../actions/backendInfo";
+  versionInfoLoadFailure,
+  versionInfoLoadSuccess
+} from "../../common/versionInfo/store/actions/backendInfo";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -35,13 +35,13 @@ export default function backendInfo(
   action: Action
 ): BackendInfoState {
   switch (action.type) {
-    case getType(backendInfoLoadSuccess):
+    case getType(versionInfoLoadSuccess):
       return {
         ...state,
         serverInfo: action.payload
       };
 
-    case getType(backendInfoLoadFailure):
+    case getType(versionInfoLoadFailure):
       return {
         ...state,
         serverInfo: undefined

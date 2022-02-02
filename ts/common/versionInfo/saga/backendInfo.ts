@@ -5,12 +5,12 @@ import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, fork, put } from "redux-saga/effects";
 import { VersionInfo } from "../../../../definitions/content/VersionInfo";
 import { ContentClient } from "../../../api/content";
-import {
-  backendInfoLoadFailure,
-  backendInfoLoadSuccess
-} from "../../../store/actions/backendInfo";
 import { SagaCallReturnType } from "../../../types/utils";
 import { startTimer } from "../../../utils/timer";
+import {
+  versionInfoLoadFailure,
+  versionInfoLoadSuccess
+} from "../store/actions/backendInfo";
 
 // load version info every hour
 const VERSION_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
@@ -39,7 +39,7 @@ function* versionInfoWatcher(): Generator<Effect, void, any> {
         versionInfoResponse.isRight() &&
         versionInfoResponse.value.status === 200
       ) {
-        yield put(backendInfoLoadSuccess(versionInfoResponse.value.value));
+        yield put(versionInfoLoadSuccess(versionInfoResponse.value.value));
         yield call(startTimer, VERSION_INFO_LOAD_INTERVAL);
       } else {
         const errorDescription = versionInfoResponse.fold(
@@ -47,12 +47,12 @@ function* versionInfoWatcher(): Generator<Effect, void, any> {
           ({ status }) => `response status ${status}`
         );
 
-        yield put(backendInfoLoadFailure(new Error(errorDescription)));
+        yield put(versionInfoLoadFailure(new Error(errorDescription)));
 
         yield call(startTimer, VERSION_INFO_RETRY_INTERVAL);
       }
     } catch (e) {
-      yield put(backendInfoLoadFailure(new Error(e)));
+      yield put(versionInfoLoadFailure(new Error(e)));
     }
   }
 }
