@@ -1,4 +1,5 @@
-import { call, Effect, put, takeLatest } from "typed-redux-saga";
+import { call, put, takeLatest } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";

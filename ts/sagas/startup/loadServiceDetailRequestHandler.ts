@@ -1,5 +1,6 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, fork, put, take, takeLatest } from "typed-redux-saga";
+import { call, fork, put, take, takeLatest } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { buffers, channel, Channel } from "redux-saga";
 import { Millisecond } from "italia-ts-commons/lib/units";

@@ -2,7 +2,8 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, fork, put, select, takeLatest } from "typed-redux-saga";
+import { call, fork, put, select, takeLatest } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { UserMetadata as BackendUserMetadata } from "../../../definitions/backend/UserMetadata";

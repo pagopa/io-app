@@ -1,4 +1,5 @@
-import { call, Effect, take } from "typed-redux-saga";
+import { call, take } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import {
   navigateToEmailInsertScreen,

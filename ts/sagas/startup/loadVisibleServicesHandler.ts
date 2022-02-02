@@ -1,5 +1,6 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import { loadVisibleServices } from "../../store/actions/services";

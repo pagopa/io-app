@@ -1,5 +1,6 @@
 import { ActionType } from "typesafe-actions";
-import { delay, Effect, put } from "typed-redux-saga";
+import { delay, put } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 import { svAcceptTos } from "../../store/actions/activation";
 
 /**

@@ -1,7 +1,8 @@
 /**
  * A saga to manage notifications
  */
-import { call, Effect, put, select } from "typed-redux-saga";
+import { call, put, select } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 
 import {
   removeScheduledNotificationAccessSpid,

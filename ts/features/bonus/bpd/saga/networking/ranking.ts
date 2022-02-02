@@ -1,7 +1,8 @@
 import * as A from "fp-ts/lib/Array";
 import { Either, fromOption, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
 import { CitizenRankingMilestoneResourceArray } from "../../../../../../definitions/bpd/citizen_v2/CitizenRankingMilestoneResourceArray";

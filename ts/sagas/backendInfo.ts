@@ -2,7 +2,8 @@ import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
-import { call, Effect, fork, put } from "typed-redux-saga";
+import { call, fork, put } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { BackendPublicClient } from "../api/backendPublic";
