@@ -91,7 +91,10 @@ import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { Body } from "../../components/core/typography/Body";
-import { isCGNEnabledSelector } from "../../store/reducers/backendStatus";
+import {
+  bpdRemoteConfigSelector,
+  isCGNEnabledSelector
+} from "../../store/reducers/backendStatus";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -394,7 +397,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             onBonusPress={this.props.navigateToBonusDetail}
           />
         )}
-        {bpdEnabled && <BpdCardsInWalletContainer />}
+
+        {/* When the opt_in_payment_methods FF is active hide the BpdCardsInWalletContainer component */}
+        {!this.props.bpdConfig?.opt_in_payment_methods && bpdEnabled && (
+          <BpdCardsInWalletContainer />
+        )}
         <CgnCardInWalletContainer />
       </View>
     );
@@ -590,7 +597,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             onWillBlur={this.onLostFocus}
           />
         )}
-        {bpdEnabled && <NewPaymentMethodAddedNotifier />}
+        <NewPaymentMethodAddedNotifier />
       </WalletLayout>
     );
   }
@@ -634,7 +641,8 @@ const mapStateToProps = (state: GlobalState) => {
     isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
     isCgnEnabled: isCGNEnabledSelector(state),
     bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
-    coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state)
+    coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
+    bpdConfig: bpdRemoteConfigSelector(state)
   };
 };
 
