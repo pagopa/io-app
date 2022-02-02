@@ -1,13 +1,10 @@
 import * as React from "react";
 import { View } from "native-base";
 import I18n from "../../../../../i18n";
-import {
-  bottomSheetContent,
-  useIOBottomSheetRaw
-} from "../../../../../utils/bottomSheet";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../components/core/typography/Label";
 import { H4 } from "../../../../../components/core/typography/H4";
+import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = {
   onPress: () => void;
@@ -46,21 +43,19 @@ const OtpNotWorking = (props: Props) => (
  * This will be also visualized inside a bottomsheet after an addition of a new bancomat
  */
 export default (onPress: () => void) => {
-  const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
-    380,
-    bottomSheetContent
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <OtpNotWorking
+      onPress={() => {
+        dismiss();
+        onPress();
+      }}
+    />,
+    I18n.t("bonus.cgn.otp.screen.link"),
+    380
   );
   return {
-    present: () =>
-      openBottomSheet(
-        <OtpNotWorking
-          onPress={() => {
-            dismiss();
-            onPress();
-          }}
-        />,
-        I18n.t("bonus.cgn.otp.screen.link")
-      ),
+    present,
+    bottomSheet,
     dismiss
   };
 };

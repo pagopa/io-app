@@ -60,7 +60,9 @@ const CgnOtpScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const readableTTL = getReadableTTL(props.otp);
 
-  const { present } = useOtpNotWorkingBottomSheet(props.navigateToMerchants);
+  const { present, bottomSheet } = useOtpNotWorkingBottomSheet(
+    props.navigateToMerchants
+  );
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading(props.otp)}>
@@ -113,6 +115,7 @@ const CgnOtpScreen: React.FunctionComponent<Props> = (props: Props) => {
               )}
             />
           )}
+          {bottomSheet}
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
