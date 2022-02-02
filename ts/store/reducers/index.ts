@@ -195,6 +195,7 @@ export function createRootReducer(
               notifications: {
                 ...state.notifications
               },
+              // payments must be kept
               payments: {
                 ...state.payments
               }
