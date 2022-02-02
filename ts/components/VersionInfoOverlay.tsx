@@ -57,7 +57,6 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  serverInfo: state.backendInfo.serverInfo,
   // We need to use the currentRouteDebugSelector because this component is outside the NavigationContext and otherwise
   // doesn't receive the updates about the new screens
   screenNameDebug: currentRouteSelector(state)
