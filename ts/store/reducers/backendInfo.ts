@@ -6,7 +6,7 @@ import { getType } from "typesafe-actions";
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess
-} from "../../common/versionInfo/store/actions/backendInfo";
+} from "../../common/versionInfo/store/actions/versionInfo";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 

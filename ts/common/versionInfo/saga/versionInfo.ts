@@ -10,7 +10,7 @@ import { startTimer } from "../../../utils/timer";
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess
-} from "../store/actions/backendInfo";
+} from "../store/actions/versionInfo";
 
 // load version info every hour
 const VERSION_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
@@ -57,6 +57,6 @@ function* versionInfoWatcher(): Generator<Effect, void, any> {
   }
 }
 
-export default function* root(): IterableIterator<Effect> {
+export default function* versionInfoSaga(): IterableIterator<Effect> {
   yield fork(versionInfoWatcher);
 }

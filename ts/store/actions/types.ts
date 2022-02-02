@@ -7,7 +7,7 @@ import {
   Store as ReduxStore,
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
-import { VersionInfoActions } from "../../common/versionInfo/store/actions/backendInfo";
+import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
