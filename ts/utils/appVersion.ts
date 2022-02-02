@@ -68,7 +68,7 @@ export const getAppVersion = () =>
  * @param section
  */
 export const isUpdateNeeded = (
-  versionInfo: IOVersionInfo | undefined,
+  versionInfo: IOVersionInfo | null,
   section: "min_app_version_pagopa" | "min_app_version"
 ) =>
   fromNullable(versionInfo)
