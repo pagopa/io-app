@@ -964,7 +964,7 @@ wallet:
         bodyPlural: "We found {{number}} cards registered to you. Continue to add this card skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
         warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact the card issuer."
     bPay:
       headerTitle: "Add BANCOMAT Pay"
       loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
@@ -1070,7 +1070,7 @@ wallet:
       add:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact the card issuer."
         warning1: "In some cases, the displayed data might be different from the data printed on the physical card: "
         warning2: "if in doubt, contact your bank."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
@@ -1121,7 +1121,7 @@ wallet:
       add:
         screenTitle: "Do you want to add this card?"
         loading: "We are adding your card\n\nPlease hold on..."
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact your supermarket."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1180,11 +1180,11 @@ wallet:
     contextualHelpTitle: Save a card to IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Save the card
-    title: Do you want to save this card?
-    infoTitle: Set the card as favourite payment method
-    info: This payment method will be automatically proposed for the next payment
-    save: Save
-    notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
+    title: "Is everything correct?"
+    subtitle: "By adding the card to your Wallet, you will be able to make payments in the app and join the initiatives available on IO."
+    infoTitle: "Use as favorite"
+    info: "When you pay in-app, IO will automatically show this payment method"
+    notice: "In order to verify your card, we temporarily hold 0.02 €. Don't worry, we will return the amount to you as soon as possible."
     temporaryError: There was a problem while saving this card.
     temporarySubError: We have not received a response from the security systems. We apologize for the inconvenience.
     loadWalletsErrorTitle: Systems are taking longer than expected
@@ -1476,7 +1476,7 @@ wallet:
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have more than one logo?"
-        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
+        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you."
         addCta: "Add second circuit"
   satispay:
     details:
@@ -1489,8 +1489,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this method?"
-    body: "This method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
+    title: "Delete this payment method?"
+    body: "We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1556,7 +1556,7 @@ cardComponent:
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
-  deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
+  deleteMsg: We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours.
   deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
@@ -1569,7 +1569,7 @@ messages:
       read: "Message"
       unread: "Unread message"
       archived: Archived
-      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "received on"
       received_at: "received at"
   contextualHelpTitle: About this section
@@ -2522,6 +2522,10 @@ bonus:
             active: "**The ranking changes every day.** You will receive a message when it will be published."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
+    optInPaymentMethods:
+      cashbackUpdate:
+        header: "News and updates"
+        title: "Cashback updates"
   cgn:
     accessibility:
       code: By pressing the item you will copy the code
