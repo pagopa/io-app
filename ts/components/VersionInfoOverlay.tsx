@@ -50,7 +50,7 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
-      <Text style={styles.versionText}>{`app: ${appVersion}`}</Text>
+      <Text style={styles.versionText}>{`v: ${appVersion}`}</Text>
       <Text style={styles.routeText}>{props.screenNameDebug}</Text>
     </View>
   );

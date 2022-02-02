@@ -74,10 +74,12 @@ export const isUpdateNeeded = (
   fromNullable(serverInfo)
     .map(si => {
       const minAppVersion = Platform.select({
-        default: "undefined",
-        ios: si[section]?.ios ?? "undefined",
-        android: si[section]?.android ?? "undefined"
+        ios: si[section]?.ios,
+        android: si[section]?.android
       });
-      return !isVersionAppSupported(minAppVersion, getAppVersion());
+      return !isVersionAppSupported(
+        minAppVersion ?? "undefined",
+        getAppVersion()
+      );
     })
     .getOrElse(false);
