@@ -86,7 +86,6 @@ export const useIOBottomSheet = (
 ) => {
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
-
   const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
 
   const bottomSheetProps = bottomSheetContent(
