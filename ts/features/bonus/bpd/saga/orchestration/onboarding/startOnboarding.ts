@@ -39,7 +39,7 @@ export function* getActivationStatus(): Generator<
   Either<Error, CitizenResource>,
   Either<Error, CitizenResource>
 > {
-  return yield call(() =>
+  return yield* call(() =>
     getAsyncResult(bpdLoadActivationStatus, undefined as void)
   );
 }
@@ -49,14 +49,14 @@ export function* isBpdEnabled(): Generator<
   Either<Error, boolean>,
   any
 > {
-  const remoteActive: ReturnType<typeof bpdEnabledSelector> = yield select(
+  const remoteActive: ReturnType<typeof bpdEnabledSelector> = yield* select(
     bpdEnabledSelector
   );
   if (pot.isSome(remoteActive)) {
     return right<Error, boolean>(remoteActive.value);
   } else {
     const activationStatus: SagaCallReturnType<typeof getActivationStatus> =
-      yield call(getActivationStatus);
+      yield* call(getActivationStatus);
     return activationStatus.map(citizen => citizen.enabled);
   }
 }
@@ -67,48 +67,48 @@ export function* isBpdEnabled(): Generator<
  */
 export function* bpdStartOnboardingWorker() {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield call(NavigationService.getCurrentRouteName);
+    yield* call(NavigationService.getCurrentRouteName);
 
   // go to the loading page (if I'm not on that screen)
   if (currentRoute !== undefined && !isLoadingScreen(currentRoute)) {
-    yield call(navigateToBpdOnboardingLoadActivationStatus);
+    yield* call(navigateToBpdOnboardingLoadActivationStatus);
   }
 
   // read if the bpd is active for the user
-  const isBpdActive: SagaCallReturnType<typeof isBpdEnabled> = yield call(
+  const isBpdActive: SagaCallReturnType<typeof isBpdEnabled> = yield* call(
     isBpdEnabled
   );
 
   if (isBpdActive.isRight()) {
     // Refresh the wallets to prevent that added cards are not visible
-    yield put(fetchWalletsRequest());
+    yield* put(fetchWalletsRequest());
 
-    yield call(navigateToBpdOnboardingInformationTos);
+    yield* call(navigateToBpdOnboardingInformationTos);
 
     // wait for the user that choose to continue
-    yield take(bpdUserActivate);
+    yield* take(bpdUserActivate);
 
     // Navigate to the Onboarding Declaration and wait for the action that complete the saga
-    yield call(navigateToBpdOnboardingDeclaration);
+    yield* call(navigateToBpdOnboardingDeclaration);
   }
 
   // The saga ends when the user accepts the declaration
-  yield take(bpdOnboardingAcceptDeclaration);
+  yield* take(bpdOnboardingAcceptDeclaration);
 }
 
 /**
  * This saga check if the bpd is active for the user and choose if start the onboarding or go directly to the bpd details
  */
 export function* handleBpdStartOnboardingSaga(): SagaIterator {
-  const { cancelAction } = yield race({
+  const { cancelAction } = yield* race({
     onboarding: call(bpdStartOnboardingWorker),
     cancelAction: take(bpdOnboardingCancel)
   });
   if (cancelAction) {
-    yield call(
+    yield* call(
       NavigationService.dispatchNavigationAction,
       StackActions.popToTop()
     );
-    yield call(navigateBack);
+    yield* call(navigateBack);
   }
 }

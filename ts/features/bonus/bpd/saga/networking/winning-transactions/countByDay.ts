@@ -33,7 +33,7 @@ export function* bpdLoadCountByDay(
 > {
   try {
     void mixpanelTrack(mixpanelActionRequest, { awardPeriodId });
-    const getCountByDayResults = yield call(getCountByDay, {
+    const getCountByDayResults = yield* call(getCountByDay, {
       awardPeriodId
     } as any);
     if (getCountByDayResults.isRight()) {
@@ -77,7 +77,7 @@ export function* handleCountByDay(
   action: ActionType<typeof bpdTransactionsLoadCountByDay.request>
 ) {
   // get the results
-  const result: SagaCallReturnType<typeof bpdLoadCountByDay> = yield call(
+  const result: SagaCallReturnType<typeof bpdLoadCountByDay> = yield* call(
     bpdLoadCountByDay,
     getCountByDay,
     action.payload
@@ -85,9 +85,9 @@ export function* handleCountByDay(
 
   // dispatch the related action
   if (result.isRight()) {
-    yield put(bpdTransactionsLoadCountByDay.success(result.value));
+    yield* put(bpdTransactionsLoadCountByDay.success(result.value));
   } else {
-    yield put(
+    yield* put(
       bpdTransactionsLoadCountByDay.failure({
         awardPeriodId: action.payload,
         error: result.value

@@ -28,21 +28,21 @@ export function* loadPeriodsWithInfo(
 ) {
   // Request the period list
   const maybePeriods: SagaCallReturnType<typeof bpdLoadPeriodsSaga> =
-    yield call(bpdLoadPeriodsSaga, bpdClient.awardPeriods);
+    yield* call(bpdLoadPeriodsSaga, bpdClient.awardPeriods);
 
   if (maybePeriods.isLeft()) {
     // Error while receiving the period list
-    yield put(bpdPeriodsAmountLoad.failure(maybePeriods.value));
+    yield* put(bpdPeriodsAmountLoad.failure(maybePeriods.value));
   } else {
     const periods = maybePeriods.value;
 
-    const rankings: Either<Error, ReadonlyArray<BpdRankingReady>> = yield call(
+    const rankings: Either<Error, ReadonlyArray<BpdRankingReady>> = yield* call(
       bpdTransactionsPaging ? bpdLoadRakingV2 : bpdLoadRaking,
       bpdTransactionsPaging ? bpdClient.getRankingV2 : bpdClient.getRanking
     );
 
     if (rankings.isLeft()) {
-      yield put(
+      yield* put(
         bpdPeriodsAmountLoad.failure(new Error("Error while loading rankings"))
       );
       return;
@@ -50,7 +50,7 @@ export function* loadPeriodsWithInfo(
 
     // request the amounts for all the required periods
     const amounts: ReadonlyArray<SagaCallReturnType<typeof bpdLoadAmountSaga>> =
-      yield all(
+      yield* all(
         periods
           // no need to request the inactive period, the amount and transaction number is always 0
           .filter(p => p.status !== "Inactive")
@@ -66,7 +66,7 @@ export function* loadPeriodsWithInfo(
     // Check if the required period amount are without error
     // With a single error, we can't display the periods list
     if (amounts.some(a => a.isLeft())) {
-      yield put(
+      yield* put(
         bpdPeriodsAmountLoad.failure(new Error("Error while loading amounts"))
       );
       return;
@@ -108,6 +108,6 @@ export function* loadPeriodsWithInfo(
           ]),
         []
       );
-    yield put(bpdPeriodsAmountLoad.success(periodsWithAmount));
+    yield* put(bpdPeriodsAmountLoad.success(periodsWithAmount));
   }
 }

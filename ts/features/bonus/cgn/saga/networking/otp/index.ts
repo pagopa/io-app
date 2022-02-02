@@ -11,12 +11,12 @@ export function* cgnGenerateOtp(
 ) {
   try {
     const generateOtpResult: SagaCallReturnType<typeof generateOtp> =
-      yield call(generateOtp, {});
+      yield* call(generateOtp, {});
     if (generateOtpResult.isRight()) {
       if (generateOtpResult.value.status === 200) {
-        yield put(cgnGenerateOtpAction.success(generateOtpResult.value.value));
+        yield* put(cgnGenerateOtpAction.success(generateOtpResult.value.value));
       } else {
-        yield put(
+        yield* put(
           cgnGenerateOtpAction.failure(
             getNetworkError(
               new Error(`response status ${generateOtpResult.value.status}`)
@@ -25,7 +25,7 @@ export function* cgnGenerateOtp(
         );
       }
     } else {
-      yield put(
+      yield* put(
         cgnGenerateOtpAction.failure(
           getNetworkError(
             new Error(readablePrivacyReport(generateOtpResult.value))
@@ -34,6 +34,6 @@ export function* cgnGenerateOtp(
       );
     }
   } catch (e) {
-    yield put(cgnGenerateOtpAction.failure(getNetworkError(e)));
+    yield* put(cgnGenerateOtpAction.failure(getNetworkError(e)));
   }
 }

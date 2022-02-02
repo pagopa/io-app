@@ -31,7 +31,7 @@ import { onboardingBPayAddedAccountSelector } from "../../store/reducers/addedBP
  * - The user choose back from the first screen {@link walletAddBPayBack}
  */
 function* bPayWorkUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: navigateToOnboardingBPaySearchStartScreen,
     startScreenName: WALLET_ONBOARDING_BPAY_ROUTES.START,
     complete: walletAddBPayCompleted,
@@ -47,8 +47,8 @@ function* bPayWorkUnit() {
 export function* addBPayToWalletAndActivateBpd() {
   const initialScreenName: ReturnType<
     typeof NavigationService.getCurrentRouteName
-  > = yield call(NavigationService.getCurrentRouteName);
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+  > = yield* call(NavigationService.getCurrentRouteName);
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
     withResetNavigationStack,
     bPayWorkUnit
   );
@@ -60,17 +60,17 @@ export function* addBPayToWalletAndActivateBpd() {
     // If the payment starts from "WALLET_ADD_DIGITAL_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
 
-    yield call(navigateToWalletHome);
+    yield* call(navigateToWalletHome);
   }
 
   if (res === "completed") {
     // refresh wallets list
-    yield put(fetchWalletsRequest());
+    yield* put(fetchWalletsRequest());
     // read the new added BPay
     const bPayAdded: ReturnType<typeof onboardingBPayAddedAccountSelector> =
-      yield select(onboardingBPayAddedAccountSelector);
+      yield* select(onboardingBPayAddedAccountSelector);
 
-    yield call(
+    yield* call(
       activateBpdOnNewPaymentMethods,
       bPayAdded,
       navigateToActivateBpdOnNewBPay

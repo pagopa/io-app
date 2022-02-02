@@ -24,7 +24,7 @@ export function* watchLoadMessageWithRelationsSaga(
   const messageId = messageWithRelationsLoadRequest.payload;
 
   try {
-    const messageOrError: SagaCallReturnType<typeof loadMessage> = yield call(
+    const messageOrError: SagaCallReturnType<typeof loadMessage> = yield* call(
       loadMessage,
       getMessage,
       messageId
@@ -35,11 +35,11 @@ export function* watchLoadMessageWithRelationsSaga(
     }
 
     const message = messageOrError.value;
-    yield put(loadMessageWithRelations.success());
+    yield* put(loadMessageWithRelations.success());
 
     const serviceById = serviceByIdSelector(message.sender_service_id);
 
-    const potService: ReturnType<typeof serviceById> = yield select(
+    const potService: ReturnType<typeof serviceById> = yield* select(
       serviceById
     );
 
@@ -49,9 +49,9 @@ export function* watchLoadMessageWithRelationsSaga(
       potService === undefined ||
       (!pot.isSome(potService) && !pot.isLoading(potService))
     ) {
-      yield put(loadServiceDetail.request(message.sender_service_id));
+      yield* put(loadServiceDetail.request(message.sender_service_id));
     }
   } catch (e) {
-    yield put(loadMessageWithRelations.failure(e));
+    yield* put(loadMessageWithRelations.failure(e));
   }
 }

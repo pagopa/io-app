@@ -42,13 +42,13 @@ export const cgnActivationSaga = (
     try {
       const startCgnActivationResult: SagaCallReturnType<
         typeof startCgnActivation
-      > = yield call(startCgnActivation, {});
+      > = yield* call(startCgnActivation, {});
 
       if (startCgnActivationResult.isRight()) {
         const status = startCgnActivationResult.value.status;
         // Status is 201 request has been created -> Start Polling
         if (status === 201) {
-          return yield call(handleCgnStatusPolling);
+          return yield* call(handleCgnStatusPolling);
         }
         // 202 -> still processing
         if (status === 202) {
@@ -84,7 +84,7 @@ export const handleCgnStatusPolling = (
     const startPollingTime = new Date().getTime();
     while (true) {
       const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> =
-        yield call(getCgnActivation, {});
+        yield* call(getCgnActivation, {});
       // blocking error -> stop polling
       if (cgnActivationResult.isLeft()) {
         throw cgnActivationResult.value;
@@ -116,7 +116,7 @@ export const handleCgnStatusPolling = (
         }
       }
       // sleep
-      yield call(startTimer, cgnResultPolling);
+      yield* call(startTimer, cgnResultPolling);
       // check if the time threshold was exceeded, if yes stop polling
       const now = new Date().getTime();
       if (now - startPollingTime >= pollingTimeThreshold) {

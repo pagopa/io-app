@@ -54,7 +54,7 @@ export function* patchCitizenIban(
   action: ActionType<typeof bpdUpsertIban.request>
 ) {
   try {
-    const profileState: ReturnType<typeof profileSelector> = yield select(
+    const profileState: ReturnType<typeof profileSelector> = yield* select(
       profileSelector
     );
     if (pot.isNone(profileState)) {
@@ -64,13 +64,13 @@ export function* patchCitizenIban(
     const iban: Iban = action.payload;
     const updatePaymentMethodResult: SagaCallReturnType<
       ReturnType<typeof updatePaymentMethod>
-    > = yield call(updatePaymentMethod(iban, profileState.value), {});
+    > = yield* call(updatePaymentMethod(iban, profileState.value), {});
     if (updatePaymentMethodResult.isRight()) {
       const statusCode = updatePaymentMethodResult.value.status;
       if (statusCode === 200 && updatePaymentMethodResult.value.value) {
         const validationStatus =
           updatePaymentMethodResult.value.value.validationStatus;
-        yield put(
+        yield* put(
           bpdUpsertIban.success(
             transformIbanOutCome(fromValidationToStatus(validationStatus), iban)
           )
@@ -79,7 +79,7 @@ export function* patchCitizenIban(
       }
       // iban not valid
       else if (statusCode === 400) {
-        yield put(
+        yield* put(
           bpdUpsertIban.success(
             transformIbanOutCome(IbanStatus.NOT_VALID, iban)
           )
@@ -93,6 +93,6 @@ export function* patchCitizenIban(
       throw new Error(readablePrivacyReport(updatePaymentMethodResult.value));
     }
   } catch (e) {
-    yield put(bpdUpsertIban.failure(e));
+    yield* put(bpdUpsertIban.failure(e));
   }
 }

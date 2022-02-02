@@ -6,7 +6,7 @@ import NavigationService from "../navigation/NavigationService";
 import { clearDeepLink, navigateToDeepLink } from "../store/actions/deepLink";
 
 export function* watchNavigateToDeepLinkSaga(): IterableIterator<Effect> {
-  yield takeLatest(
+  yield* takeLatest(
     getType(navigateToDeepLink),
     function* (
       action: ActionType<typeof navigateToDeepLink>,
@@ -23,7 +23,7 @@ export function* watchNavigateToDeepLinkSaga(): IterableIterator<Effect> {
             })
           : NavigationActions.navigate(action.payload);
 
-      yield all([
+      yield* all([
         call(NavigationService.dispatchNavigationAction, navigationAction),
         put(clearDeepLink())
       ]);

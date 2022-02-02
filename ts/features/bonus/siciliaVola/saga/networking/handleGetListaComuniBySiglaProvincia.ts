@@ -36,11 +36,11 @@ export function* handleGetListaComuniBySiglaProvincia(
 ) {
   try {
     const getListaComuniResult: SagaCallReturnType<typeof getListaComuni> =
-      yield call(getListaComuni, { siglaProvincia: action.payload });
+      yield* call(getListaComuni, { siglaProvincia: action.payload });
 
     if (getListaComuniResult.isRight()) {
       if (getListaComuniResult.value.status === 200) {
-        yield put(
+        yield* put(
           svGenerateVoucherAvailableMunicipality.success(
             convertSuccess(getListaComuniResult.value.value)
           )
@@ -48,7 +48,7 @@ export function* handleGetListaComuniBySiglaProvincia(
         return;
       }
       if (mapKinds[getListaComuniResult.value.status] !== undefined) {
-        yield put(
+        yield* put(
           svGenerateVoucherAvailableMunicipality.failure({
             ...getGenericError(
               new Error(mapKinds[getListaComuniResult.value.status])
@@ -58,13 +58,13 @@ export function* handleGetListaComuniBySiglaProvincia(
         return;
       }
     }
-    yield put(
+    yield* put(
       svGenerateVoucherAvailableMunicipality.failure({
         ...getGenericError(new Error("Generic Error"))
       })
     );
   } catch (e) {
-    yield put(
+    yield* put(
       svGenerateVoucherAvailableMunicipality.failure({ ...getNetworkError(e) })
     );
   }

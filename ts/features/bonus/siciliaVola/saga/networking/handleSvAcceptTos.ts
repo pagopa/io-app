@@ -10,6 +10,6 @@ export function* handleSvAccepTos(
   _: ActionType<typeof svAcceptTos.request>
 ): Generator<Effect, void> {
   // TODO: add networking logic
-  yield delay(500);
-  yield put(svAcceptTos.success(true));
+  yield* delay(500);
+  yield* put(svAcceptTos.success(true));
 }

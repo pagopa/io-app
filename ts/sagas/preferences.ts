@@ -11,6 +11,6 @@ export function* loadSystemPreferencesSaga(): Generator<
   void,
   SagaCallReturnType<typeof getLanguages>
 > {
-  const languages = yield call(getLanguages);
-  yield put(preferencesLanguagesLoadSuccess(languages));
+  const languages = yield* call(getLanguages);
+  yield* put(preferencesLanguagesLoadSuccess(languages));
 }

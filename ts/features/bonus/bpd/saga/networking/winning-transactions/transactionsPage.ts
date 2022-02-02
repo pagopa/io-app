@@ -36,7 +36,7 @@ export function* bpdLoadTransactionsPage(
 > {
   try {
     void mixpanelTrack(mixpanelActionRequest, { awardPeriodId, cursor });
-    const getTransactionsPageResults = yield call(getTransactionPage, {
+    const getTransactionsPageResults = yield* call(getTransactionPage, {
       awardPeriodId,
       nextCursor: cursor
     } as any);
@@ -84,20 +84,21 @@ export function* handleTransactionsPage(
   >["winningTransactionsV2"],
   action: ActionType<typeof bpdTransactionsLoadPage.request>
 ) {
-  yield call(waitBackoffError, bpdTransactionsLoadPage.failure);
+  yield* call(waitBackoffError, bpdTransactionsLoadPage.failure);
   // get the results
-  const result: SagaCallReturnType<typeof bpdLoadTransactionsPage> = yield call(
-    bpdLoadTransactionsPage,
-    getTransactionsPage,
-    action.payload.awardPeriodId,
-    action.payload.nextCursor
-  );
+  const result: SagaCallReturnType<typeof bpdLoadTransactionsPage> =
+    yield* call(
+      bpdLoadTransactionsPage,
+      getTransactionsPage,
+      action.payload.awardPeriodId,
+      action.payload.nextCursor
+    );
 
   // dispatch the related action
   if (result.isRight()) {
-    yield put(bpdTransactionsLoadPage.success(result.value));
+    yield* put(bpdTransactionsLoadPage.success(result.value));
   } else {
-    yield put(
+    yield* put(
       bpdTransactionsLoadPage.failure({
         awardPeriodId: action.payload.awardPeriodId,
         error: result.value

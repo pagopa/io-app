@@ -25,7 +25,7 @@ export function* loadMessage(
 > {
   // Load the messages already in the redux store
   const cachedMessage: ReturnType<ReturnType<typeof messageStateByIdSelector>> =
-    yield select(messageStateByIdSelector(meta.id));
+    yield* select(messageStateByIdSelector(meta.id));
 
   // If we already have the message in the store just return it
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
@@ -35,7 +35,7 @@ export function* loadMessage(
   }
   try {
     // Fetch the message from the Backend
-    const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield call(
+    const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield* call(
       fetchMessage,
       getMessage,
       meta
@@ -44,11 +44,11 @@ export function* loadMessage(
     if (maybeMessage.isLeft()) {
       throw maybeMessage.value;
     } else {
-      yield put(loadMessageAction.success(maybeMessage.value));
+      yield* put(loadMessageAction.success(maybeMessage.value));
     }
     return maybeMessage;
   } catch (error) {
-    yield put(
+    yield* put(
       loadMessageAction.failure({
         id: meta.id,
         error
@@ -70,7 +70,7 @@ function* fetchMessage(
   any
 > {
   try {
-    const response: SagaCallReturnType<typeof getMessage> = yield call(
+    const response: SagaCallReturnType<typeof getMessage> = yield* call(
       getMessage,
       { id: meta.id }
     );

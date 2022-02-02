@@ -73,14 +73,14 @@ export function* bpdLoadTransactionsSaga(
   try {
     const winningTransactionsResult: SagaCallReturnType<
       typeof winningTransactions
-    > = yield call(winningTransactions, { awardPeriodId } as any);
+    > = yield* call(winningTransactions, { awardPeriodId } as any);
     if (winningTransactionsResult.isRight()) {
       if (winningTransactionsResult.value.status === 200) {
         const transactions = convertTransactions(
           winningTransactionsResult.value.value,
           awardPeriodId
         );
-        yield put(bpdTransactionsLoad.success(transactions));
+        yield* put(bpdTransactionsLoad.success(transactions));
       } else {
         throw new Error(
           `response status ${winningTransactionsResult.value.status}`
@@ -90,7 +90,7 @@ export function* bpdLoadTransactionsSaga(
       throw new Error(readableReport(winningTransactionsResult.value));
     }
   } catch (e) {
-    yield put(
+    yield* put(
       bpdTransactionsLoad.failure({ error: getError(e), awardPeriodId })
     );
   }

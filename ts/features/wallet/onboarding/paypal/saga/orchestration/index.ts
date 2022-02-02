@@ -19,7 +19,7 @@ import { navigateToPayPalDetailScreen } from "../../../../../../store/actions/na
 
 // handle the flow of paypal onboarding
 function* paypalWorkOnboaringUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: () =>
       NavigationService.dispatchNavigationAction(
         NavigationActions.navigate({
@@ -37,7 +37,7 @@ function* paypalWorkOnboaringUnit() {
 export function* addPaypalToWallet(
   action: ActionType<typeof walletAddPaypalStart>
 ) {
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
     withResetNavigationStack,
     paypalWorkOnboaringUnit
   );
@@ -46,18 +46,18 @@ export function* addPaypalToWallet(
     switch (action.payload) {
       case "payment_method_details":
         // reset the stack to land in the wallet section
-        yield call(
+        yield* call(
           NavigationService.dispatchNavigationAction,
           StackActions.popToTop()
         );
-        yield call(
+        yield* call(
           NavigationService.dispatchNavigationAction,
           navigateToPayPalDetailScreen()
         );
         break;
       // if the destination is to return back, remove 1 screen from the stack
       case "back":
-        yield call(
+        yield* call(
           NavigationService.dispatchNavigationAction,
           StackActions.pop({ n: 1 })
         );

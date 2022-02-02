@@ -32,7 +32,7 @@ export function* fetchUserMetadata(
   SagaCallReturnType<typeof getUserMetadata>
 > {
   try {
-    const response = yield call(getUserMetadata, {});
+    const response = yield* call(getUserMetadata, {});
 
     // Can't decode response
     if (response.isLeft()) {
@@ -70,16 +70,16 @@ export function* loadUserMetadata(
   SagaCallReturnType<typeof fetchUserMetadata>
 > {
   if (setLoading) {
-    yield put(userMetadataLoad.request());
+    yield* put(userMetadataLoad.request());
   }
 
-  const backendUserMetadataOrError = yield call(
+  const backendUserMetadataOrError = yield* call(
     fetchUserMetadata,
     getUserMetadata
   );
 
   if (backendUserMetadataOrError.isLeft()) {
-    yield put(userMetadataLoad.failure(backendUserMetadataOrError.value));
+    yield* put(userMetadataLoad.failure(backendUserMetadataOrError.value));
     return none;
   }
 
@@ -89,11 +89,11 @@ export function* loadUserMetadata(
     backendUserMetadataToUserMetadata(backendUserMetadata);
 
   if (userMetadataOrError.isLeft()) {
-    yield put(userMetadataLoad.failure(userMetadataOrError.value));
+    yield* put(userMetadataLoad.failure(userMetadataOrError.value));
     return none;
   }
 
-  yield put(userMetadataLoad.success(userMetadataOrError.value));
+  yield* put(userMetadataLoad.success(userMetadataOrError.value));
 
   return some(userMetadataOrError.value);
 }
@@ -104,7 +104,7 @@ export function* loadUserMetadata(
 export function* watchLoadUserMetadata(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
 ) {
-  yield takeLatest(
+  yield* takeLatest(
     getType(userMetadataLoad.request),
     loadUserMetadataManager,
     getUserMetadata
@@ -117,7 +117,7 @@ export function* watchLoadUserMetadata(
 function* loadUserMetadataManager(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
 ) {
-  yield fork(loadUserMetadata, getUserMetadata);
+  yield* fork(loadUserMetadata, getUserMetadata);
 }
 
 /**
@@ -134,7 +134,7 @@ export function* postUserMetadata(
   SagaCallReturnType<typeof createOrUpdateUserMetadata>
 > {
   try {
-    const response = yield call(createOrUpdateUserMetadata, {
+    const response = yield* call(createOrUpdateUserMetadata, {
       userMetadata: backendUserMetadata
     });
 
@@ -168,11 +168,11 @@ export function* upsertUserMetadata(
   setLoading: boolean = false
 ): Generator<Effect, Option<UserMetadata>, any> {
   if (setLoading) {
-    yield put(userMetadataUpsert.request(userMetadata));
+    yield* put(userMetadataUpsert.request(userMetadata));
   }
 
   const currentUserMetadata: ReturnType<typeof userMetadataSelector> =
-    yield select(userMetadataSelector);
+    yield* select(userMetadataSelector);
 
   // The version of the new userMetadata must be one more
   // the old one.
@@ -182,7 +182,7 @@ export function* upsertUserMetadata(
   );
 
   if (userMetadata.version !== currentVersion + 1) {
-    yield put(
+    yield* put(
       userMetadataUpsert.failure(
         new Error(TypedI18n.t("userMetadata.errors.upsertVersion"))
       )
@@ -193,7 +193,7 @@ export function* upsertUserMetadata(
   // Call the saga that perform the API request.
   const updatedBackendUserMetadataOrError: SagaCallReturnType<
     typeof postUserMetadata
-  > = yield call(
+  > = yield* call(
     postUserMetadata,
     createOrUpdateUserMetadata,
     // Backend stores the metadata as a plain string
@@ -202,7 +202,7 @@ export function* upsertUserMetadata(
   );
 
   if (updatedBackendUserMetadataOrError.isLeft()) {
-    yield put(
+    yield* put(
       userMetadataUpsert.failure(updatedBackendUserMetadataOrError.value)
     );
     return none;
@@ -216,11 +216,11 @@ export function* upsertUserMetadata(
   );
 
   if (updatedUserMetadataOrError.isLeft()) {
-    yield put(userMetadataUpsert.failure(updatedUserMetadataOrError.value));
+    yield* put(userMetadataUpsert.failure(updatedUserMetadataOrError.value));
     return none;
   }
 
-  yield put(userMetadataUpsert.success(updatedUserMetadataOrError.value));
+  yield* put(userMetadataUpsert.success(updatedUserMetadataOrError.value));
   return some(updatedUserMetadataOrError.value);
 }
 
@@ -233,7 +233,7 @@ export function* upsertUserMetadataManager(
   >["createOrUpdateUserMetadata"],
   action: ActionType<typeof userMetadataUpsert.request>
 ) {
-  yield fork(upsertUserMetadata, createOrUpdateUserMetadata, action.payload);
+  yield* fork(upsertUserMetadata, createOrUpdateUserMetadata, action.payload);
 }
 
 /**
@@ -244,7 +244,7 @@ export function* watchUpserUserMetadata(
     typeof BackendClient
   >["createOrUpdateUserMetadata"]
 ) {
-  yield takeLatest(
+  yield* takeLatest(
     getType(userMetadataUpsert.request),
     upsertUserMetadataManager,
     createOrUpdateUserMetadata

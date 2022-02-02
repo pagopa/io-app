@@ -25,33 +25,33 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
 > {
   // Check if user device has biometric recognition feature by trying to
   // query data from TouchID library
-  const biometricsType = yield call(getBiometricsType);
+  const biometricsType = yield* call(getBiometricsType);
 
   if (isBiometricsValidType(biometricsType)) {
     // If biometric recognition is available, navigate to the Fingerprint
     // Screen and wait for the user to press "Continue". Otherwise the whole
     // step is bypassed
-    yield call(navigateToOnboardingFingerprintScreenAction, {
+    yield* call(navigateToOnboardingFingerprintScreenAction, {
       biometryType: biometricsType
     });
 
     // Wait for the user to press "Continue" button after having read the
     // informative text
-    yield take(fingerprintAcknowledge.request);
+    yield* take(fingerprintAcknowledge.request);
 
     // Receive the acknowledgement, then update system state that flags this
     // screen as "Read"
-    yield put(fingerprintAcknowledge.success());
+    yield* put(fingerprintAcknowledge.success());
 
     // Set Fingerprint usage system preferences to true if available and enrolled
-    yield put(
+    yield* put(
       preferenceFingerprintIsEnabledSaveSuccess({
         isFingerprintEnabled: true
       })
     );
   } else {
     // Set Fingerprint usage system preference to false otherwise
-    yield put(
+    yield* put(
       preferenceFingerprintIsEnabledSaveSuccess({
         isFingerprintEnabled: false
       })
@@ -72,12 +72,12 @@ export function* checkAcknowledgedFingerprintSaga(): Generator<
 > {
   // Query system state and check whether the user has already acknowledged biometric
   // recognition Screen. Consider that, like ToS, this should be displayed once.
-  const isFingerprintAcknowledged = yield select(
+  const isFingerprintAcknowledged = yield* select(
     isFingerprintAcknowledgedSelector
   );
 
   if (!isFingerprintAcknowledged) {
     // Navigate to the FingerprintScreen and wait for acknowledgment
-    yield call(onboardFingerprintIfAvailableSaga);
+    yield* call(onboardFingerprintIfAvailableSaga);
   }
 }

@@ -11,17 +11,17 @@ import { getPin } from "../../utils/keychain";
 export function* checkConfiguredPinSaga(): Generator<Effect, PinString, any> {
   // We check whether the user has already created a unlock code by trying to retrieve
   // it from the Keychain
-  const pinCode = yield call(getPin);
+  const pinCode = yield* call(getPin);
 
   if (pinCode.isSome()) {
     return pinCode.value;
   }
 
   // Go through the unlock code configuration screen
-  yield call(navigateToOnboardingPinScreenAction);
+  yield* call(navigateToOnboardingPinScreenAction);
 
   // and block until a unlock code is set
-  const resultAction: ActionType<typeof createPinSuccess> = yield take(
+  const resultAction: ActionType<typeof createPinSuccess> = yield* take(
     getType(createPinSuccess)
   );
 

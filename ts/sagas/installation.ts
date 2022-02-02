@@ -21,14 +21,14 @@ export function* previousInstallationDataDeleteSaga(): Generator<
 > {
   const isFirstRunAfterInstall: ReturnType<
     typeof isFirstRunAfterInstallSelector
-  > = yield select(isFirstRunAfterInstallSelector);
+  > = yield* select(isFirstRunAfterInstallSelector);
 
   if (isFirstRunAfterInstall) {
     // invalidate the session
-    yield put(sessionInvalid());
+    yield* put(sessionInvalid());
     // Remove all the notification already set
-    yield call(removeScheduledNotificationAccessSpid);
+    yield* call(removeScheduledNotificationAccessSpid);
     // Schedule a set of local notifications
-    yield call(scheduleLocalNotificationsAccessSpid);
+    yield* call(scheduleLocalNotificationsAccessSpid);
   }
 }

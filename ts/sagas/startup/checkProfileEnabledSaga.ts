@@ -11,7 +11,7 @@ import {
 } from "../../store/reducers/profile";
 
 function* enableProfileInboxWebhook() {
-  yield put(
+  yield* put(
     profileUpsert.request({
       is_inbox_enabled: true,
       is_webhook_enabled: true
@@ -33,7 +33,7 @@ export function* checkProfileEnabledSaga(
   // auto-update for those profiles that have been fallen in a buggy scenario
   // see https://www.pivotaltracker.com/story/show/174845929
   if (shouldEnableInbox) {
-    yield call(enableProfileInboxWebhook);
+    yield* call(enableProfileInboxWebhook);
   }
   if (
     tosNotAccepted &&
@@ -42,8 +42,8 @@ export function* checkProfileEnabledSaga(
       !profile.is_webhook_enabled)
   ) {
     // Upsert the user profile to enable inbox and webhook
-    yield call(enableProfileInboxWebhook);
-    const action = yield take([
+    yield* call(enableProfileInboxWebhook);
+    const action = yield* take([
       getType(profileUpsert.success),
       getType(profileUpsert.failure)
     ]);
@@ -51,11 +51,11 @@ export function* checkProfileEnabledSaga(
     if (action.type === getType(profileUpsert.failure)) {
       // Restart the initialization loop to let the user retry.
       // FIXME: show an error message
-      yield put(startApplicationInitialization());
+      yield* put(startApplicationInitialization());
     } else {
       // First time login
       if (isProfileFirstOnBoarding(profile)) {
-        yield put(profileFirstLogin());
+        yield* put(profileFirstLogin());
       }
     }
   }

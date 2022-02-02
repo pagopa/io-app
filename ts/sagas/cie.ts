@@ -13,19 +13,22 @@ import { startTimer } from "../utils/timer";
 
 export function* watchCieAuthenticationSaga(): SagaIterator {
   // Trigger a saga on nfcIsEnabled to check if NFC is enabled or not
-  yield takeLatest(nfcIsEnabled.request, checkNfcEnablementSaga);
+  yield* takeLatest(nfcIsEnabled.request, checkNfcEnablementSaga);
   // check if the device is compliant with CIE authentication
-  yield call(checkCieAvailabilitySaga, cieManager.isCIEAuthenticationSupported);
+  yield* call(
+    checkCieAvailabilitySaga,
+    cieManager.isCIEAuthenticationSupported
+  );
   // check if the device has the API Level compliant with CIE authentication
-  yield call(checkHasApiLevelSupportSaga, cieManager.hasApiLevelSupport);
+  yield* call(checkHasApiLevelSupportSaga, cieManager.hasApiLevelSupport);
   // check if the device has the NFC Feature to support CIE authentication
-  yield call(checkHasNfcFeatureSaga, cieManager.hasNFCFeature);
+  yield* call(checkHasNfcFeatureSaga, cieManager.hasNFCFeature);
 }
 
 // stop cie manager to listen nfc tags
 export function* stopCieManager(): SagaIterator {
   try {
-    yield call(cieManager.stopListeningNFC);
+    yield* call(cieManager.stopListeningNFC);
   } catch {
     // just ignore
   }
@@ -40,10 +43,10 @@ export function* checkHasApiLevelSupportSaga(
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof hasApiLevelSupported> =
-      yield call(hasApiLevelSupported);
-    yield put(hasApiLevelSupport.success(response));
+      yield* call(hasApiLevelSupported);
+    yield* put(hasApiLevelSupport.success(response));
   } catch (e) {
-    yield put(hasApiLevelSupport.failure(new Error(e)));
+    yield* put(hasApiLevelSupport.failure(new Error(e)));
   }
 }
 
@@ -56,10 +59,10 @@ export function* checkHasNfcFeatureSaga(
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof hasNfcFeatureSupported> =
-      yield call(hasNfcFeatureSupported);
-    yield put(hasNFCFeature.success(response));
+      yield* call(hasNfcFeatureSupported);
+    yield* put(hasNFCFeature.success(response));
   } catch (e) {
-    yield put(hasNFCFeature.failure(new Error(e)));
+    yield* put(hasNFCFeature.failure(new Error(e)));
   }
 }
 
@@ -72,10 +75,10 @@ export function* checkCieAvailabilitySaga(
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof isCIEAuthenticationSupported> =
-      yield call(isCIEAuthenticationSupported);
-    yield put(cieIsSupported.success(response));
+      yield* call(isCIEAuthenticationSupported);
+    yield* put(cieIsSupported.success(response));
   } catch (e) {
-    yield put(cieIsSupported.failure(new Error(e)));
+    yield* put(cieIsSupported.failure(new Error(e)));
   }
 }
 const CIE_NFC_STATUS_INTERVAL = 1500 as Millisecond;
@@ -86,17 +89,17 @@ export function* checkNfcEnablementSaga(): SagaIterator {
   try {
     while (true) {
       const isNfcEnabled: SagaCallReturnType<typeof cieManager.isNFCEnabled> =
-        yield call(cieManager.isNFCEnabled);
-      yield put(nfcIsEnabled.success(isNfcEnabled));
+        yield* call(cieManager.isNFCEnabled);
+      yield* put(nfcIsEnabled.success(isNfcEnabled));
       if (isNfcEnabled) {
         return;
       }
       // TODO find a way to break this loop: if the user leave the CIE authentication this loop
       // will continue, instead it has to be stopped
       // wait and check again
-      yield call(startTimer, CIE_NFC_STATUS_INTERVAL);
+      yield* call(startTimer, CIE_NFC_STATUS_INTERVAL);
     }
   } catch (e) {
-    yield put(nfcIsEnabled.failure(new Error(e))); // TODO: check e type
+    yield* put(nfcIsEnabled.failure(new Error(e))); // TODO: check e type
   }
 }

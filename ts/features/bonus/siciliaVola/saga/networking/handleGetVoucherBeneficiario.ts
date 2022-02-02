@@ -47,14 +47,14 @@ export function* handleGetVoucherBeneficiario(
   const elementsXPage = 10;
 
   try {
-    yield call(waitBackoffError, svVoucherListGet.failure);
+    yield* call(waitBackoffError, svVoucherListGet.failure);
     const { nextPage }: ReturnType<typeof svVouchersListUiSelector> =
-      yield select(svVouchersListUiSelector);
+      yield* select(svVouchersListUiSelector);
 
     // TODO: add MitVoucherToken
     const getVoucherBeneficiarioResult: SagaCallReturnType<
       typeof getVoucherBeneficiario
-    > = yield call(getVoucherBeneficiario, {
+    > = yield* call(getVoucherBeneficiario, {
       ...action.payload,
       pagination,
       pageNum: nextPage,
@@ -63,7 +63,7 @@ export function* handleGetVoucherBeneficiario(
 
     if (getVoucherBeneficiarioResult.isRight()) {
       if (getVoucherBeneficiarioResult.value.status === 200) {
-        yield put(
+        yield* put(
           svVoucherListGet.success(
             convertSuccess(getVoucherBeneficiarioResult.value.value)
           )
@@ -73,16 +73,16 @@ export function* handleGetVoucherBeneficiario(
 
       // TODO: manage error case and dispatch of last page when the swagger will be updated
       if (getVoucherBeneficiarioResult.value.status === 500) {
-        yield put(svVoucherListGet.success([]));
+        yield* put(svVoucherListGet.success([]));
         return;
       }
     }
-    yield put(
+    yield* put(
       svVoucherListGet.failure({
         ...getGenericError(new Error("Generic Error"))
       })
     );
   } catch (e) {
-    yield put(svVoucherListGet.failure({ ...getNetworkError(e) }));
+    yield* put(svVoucherListGet.failure({ ...getNetworkError(e) }));
   }
 }

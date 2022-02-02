@@ -45,18 +45,18 @@ export const isLoadingScreen = (screenName: string) =>
 
 export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield call(NavigationService.getCurrentRouteName);
+    yield* call(NavigationService.getCurrentRouteName);
   if (currentRoute !== undefined && !isLoadingScreen(currentRoute)) {
     // show the loading page for the CGN activation
-    yield call(navigateToCgnActivationLoading);
+    yield* call(navigateToCgnActivationLoading);
   }
 
-  const progress = yield call(cgnActivationSaga);
-  yield put(progress);
+  const progress = yield* call(cgnActivationSaga);
+  yield* put(progress);
 
   const nextNavigationStep = getNextNavigationStep(progress);
   if (nextNavigationStep !== navigateToCgnActivationLoading) {
-    yield call(nextNavigationStep);
+    yield* call(nextNavigationStep);
   }
 }
 
@@ -66,11 +66,11 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
 export function* handleCgnActivationSaga(
   cgnActivationSaga: CgnActivationType
 ): SagaIterator {
-  const { cancelAction } = yield race({
+  const { cancelAction } = yield* race({
     activation: call(cgnActivationWorker, cgnActivationSaga),
     cancelAction: take(cgnActivationCancel)
   });
   if (cancelAction) {
-    yield put(NavigationActions.back());
+    yield* put(NavigationActions.back());
   }
 }

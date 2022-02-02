@@ -49,7 +49,7 @@ function* waitIdentificationResult(): Generator<
   void | IdentificationResult,
   any
 > {
-  const resultAction: ResultAction = yield take([
+  const resultAction: ResultAction = yield* take([
     getType(identificationCancel),
     getType(identificationPinReset),
     getType(identificationForceLogout),
@@ -63,38 +63,38 @@ function* waitIdentificationResult(): Generator<
     case getType(identificationPinReset): {
       // If a payment is occurring, delete the active payment from pagoPA
       const paymentState: ReturnType<typeof paymentsCurrentStateSelector> =
-        yield select(paymentsCurrentStateSelector);
+        yield* select(paymentsCurrentStateSelector);
       if (paymentState.kind === "ACTIVATED") {
-        yield put(runDeleteActivePaymentSaga());
+        yield* put(runDeleteActivePaymentSaga());
         // we try to wait untinl the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
-        yield take([
+        yield* take([
           paymentDeletePayment.failure,
           paymentDeletePayment.success
         ]);
       }
 
       // Invalidate the session
-      yield put(sessionInvalid());
+      yield* put(sessionInvalid());
 
       // Delete the unlock code
       // eslint-disable-next-line
-      yield call(deletePin);
+      yield* call(deletePin);
 
       // Hide the identification screen
-      yield put(identificationReset());
+      yield* put(identificationReset());
 
       return IdentificationResult.pinreset;
     }
 
     case getType(identificationSuccess): {
       // if the identification has been successfully, check if the current session is still valid
-      yield put(checkCurrentSession.request());
+      yield* put(checkCurrentSession.request());
       return IdentificationResult.success;
     }
 
     case getType(identificationForceLogout): {
-      yield put(sessionInvalid());
-      yield put(identificationReset());
+      yield* put(sessionInvalid());
+      yield* put(identificationReset());
       return IdentificationResult.pinreset;
     }
 
@@ -117,7 +117,7 @@ export function* startAndReturnIdentificationResult(
   identificationSuccessData?: IdentificationSuccessData,
   shufflePad: boolean = false
 ): Iterator<Effect | SagaCallReturnType<typeof waitIdentificationResult>> {
-  yield put(
+  yield* put(
     identificationStart(
       pin,
       canResetPin,
@@ -129,7 +129,7 @@ export function* startAndReturnIdentificationResult(
     )
   );
 
-  return yield call(waitIdentificationResult);
+  return yield* call(waitIdentificationResult);
 }
 
 // Started by redux action
@@ -137,7 +137,7 @@ function* startAndHandleIdentificationResult(
   pin: PinString,
   identificationRequestAction: ActionType<typeof identificationRequest>
 ) {
-  yield put(
+  yield* put(
     identificationStart(
       pin,
       identificationRequestAction.payload.canResetPin,
@@ -148,42 +148,42 @@ function* startAndHandleIdentificationResult(
       identificationRequestAction.payload.shufflePad
     )
   );
-  const identificationResult = yield call(waitIdentificationResult);
+  const identificationResult = yield* call(waitIdentificationResult);
 
   if (identificationResult === IdentificationResult.pinreset) {
-    yield put(startApplicationInitialization());
+    yield* put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
     const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
-      yield select(pendingMessageStateSelector);
+      yield* select(pendingMessageStateSelector);
 
     // Check if there is a payment ongoing
     const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> =
-      yield select(isPaymentOngoingSelector);
+      yield* select(isPaymentOngoingSelector);
 
     if (!isPaymentOngoing && pendingMessageState) {
       // We have a pending notification message to handle
       const messageId = pendingMessageState.id;
 
       // Remove the pending message from the notification state
-      yield put(clearNotificationPendingMessage());
+      yield* put(clearNotificationPendingMessage());
 
       // Navigate to message router screen
-      yield call(navigateToMessageRouterScreen, { messageId });
+      yield* call(navigateToMessageRouterScreen, { messageId });
     }
   }
 }
 
 export function* watchIdentification(pin: PinString): IterableIterator<Effect> {
   // Watch for identification request
-  yield takeLatest(
+  yield* takeLatest(
     getType(identificationRequest),
     startAndHandleIdentificationResult,
     pin
   );
 
   // Watch for requests to update the unlock code.
-  yield takeLatest(getType(updatePin), function* () {
-    yield call(navigateToOnboardingPinScreenAction);
+  yield* takeLatest(getType(updatePin), function* () {
+    yield* call(navigateToOnboardingPinScreenAction);
   });
 }

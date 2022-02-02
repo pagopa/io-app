@@ -12,13 +12,13 @@ import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers
 export function* handleFirstVisibleServiceLoadSaga(): SagaIterator {
   const isFirstVisibleServiceLoadCompleted: ReturnType<
     typeof isFirstVisibleServiceLoadCompletedSelector
-  > = yield select(isFirstVisibleServiceLoadCompletedSelector);
+  > = yield* select(isFirstVisibleServiceLoadCompletedSelector);
   if (!isFirstVisibleServiceLoadCompleted) {
     const visibleServicesDetailsLoadState: ReturnType<
       typeof visibleServicesDetailLoadStateSelector
-    > = yield select(visibleServicesDetailLoadStateSelector);
+    > = yield* select(visibleServicesDetailLoadStateSelector);
     if (pot.isSome(visibleServicesDetailsLoadState)) {
-      yield put(firstServiceLoadSuccess());
+      yield* put(firstServiceLoadSuccess());
     }
   }
 }

@@ -27,7 +27,7 @@ export function* sendAddCobadgeMessageSaga() {
   const maybeBancomatListVisibleInWallet: pot.Pot<
     ReadonlyArray<BancomatPaymentMethod>,
     Error
-  > = yield select(bancomatListVisibleInWalletSelector);
+  > = yield* select(bancomatListVisibleInWalletSelector);
 
   const bancomatListVisibleInWallet = pot.getOrElse(
     maybeBancomatListVisibleInWallet,
@@ -35,17 +35,17 @@ export function* sendAddCobadgeMessageSaga() {
   );
 
   if (bancomatListVisibleInWallet.length === 0) {
-    yield put(sendAddCobadgeMessage(false));
+    yield* put(sendAddCobadgeMessage(false));
     return;
   }
 
   // Check if the abiConfiguration is Some
   // and if not request the abiConfiguration
-  if (!pot.isSome(yield select(coBadgeAbiConfigurationSelector))) {
-    yield put(loadCoBadgeAbiConfiguration.request());
+  if (!pot.isSome(yield* select(coBadgeAbiConfigurationSelector))) {
+    yield* put(loadCoBadgeAbiConfiguration.request());
 
     // Wait for the request results
-    const loadCoBadgeAbiRes = yield take([
+    const loadCoBadgeAbiRes = yield* take([
       getType(loadCoBadgeAbiConfiguration.success),
       getType(loadCoBadgeAbiConfiguration.failure)
     ]);
@@ -58,7 +58,7 @@ export function* sendAddCobadgeMessageSaga() {
   const maybeCoBadgeAbiConfiguration: pot.Pot<
     IndexedById<StatusEnum>,
     NetworkError
-  > = yield select(coBadgeAbiConfigurationSelector);
+  > = yield* select(coBadgeAbiConfigurationSelector);
 
   if (pot.isSome(maybeCoBadgeAbiConfiguration)) {
     const coBadgeAbiConfiguration = maybeCoBadgeAbiConfiguration.value;
@@ -67,7 +67,7 @@ export function* sendAddCobadgeMessageSaga() {
     const maybeCobadgeVisibleInWallet: pot.Pot<
       ReadonlyArray<CreditCardPaymentMethod>,
       Error
-    > = yield select(cobadgeListVisibleInWalletSelector);
+    > = yield* select(cobadgeListVisibleInWalletSelector);
 
     const cobadgeVisibleInWallet = pot.getOrElse(
       maybeCobadgeVisibleInWallet,
@@ -88,6 +88,6 @@ export function* sendAddCobadgeMessageSaga() {
         !cobadgeAbis.some(abi => abi === b.info.issuerAbiCode)
     );
 
-    yield put(sendAddCobadgeMessage(enabledAbis.length > 0));
+    yield* put(sendAddCobadgeMessage(enabledAbis.length > 0));
   }
 }

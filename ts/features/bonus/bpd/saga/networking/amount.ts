@@ -49,7 +49,7 @@ export function* bpdLoadAmountSaga(
   void mixpanelTrack(mixpanelActionRequest, { awardPeriodId });
   try {
     const totalCashbackResult: SagaCallReturnType<typeof totalCashback> =
-      yield call(totalCashback, { awardPeriodId } as any);
+      yield* call(totalCashback, { awardPeriodId } as any);
     if (totalCashbackResult.isRight()) {
       if (totalCashbackResult.value.status === 200) {
         void mixpanelTrack(mixpanelActionSuccess, { awardPeriodId });

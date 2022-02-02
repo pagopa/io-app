@@ -98,13 +98,13 @@ export function* handleGetEuCovidCertificate(
 ) {
   const authCode = action.payload;
 
-  const profile: ReturnType<typeof profileSelector> = yield select(
+  const profile: ReturnType<typeof profileSelector> = yield* select(
     profileSelector
   );
 
   try {
     const getCertificateResult: SagaCallReturnType<typeof getCertificate> =
-      yield call(getCertificate, {
+      yield* call(getCertificate, {
         getCertificateParams: {
           auth_code: authCode,
           preferred_languages: pot.getOrElse(
@@ -116,7 +116,7 @@ export function* handleGetEuCovidCertificate(
     if (getCertificateResult.isRight()) {
       if (getCertificateResult.value.status === 200) {
         // handled success
-        yield put(
+        yield* put(
           euCovidCertificateGet.success(
             convertSuccess(getCertificateResult.value.value, authCode)
           )
@@ -124,7 +124,7 @@ export function* handleGetEuCovidCertificate(
         return;
       }
       if (mapKinds[getCertificateResult.value.status] !== undefined) {
-        yield put(
+        yield* put(
           euCovidCertificateGet.success({
             kind: mapKinds[getCertificateResult.value.status],
             authCode
@@ -133,7 +133,7 @@ export function* handleGetEuCovidCertificate(
         return;
       }
       // not handled error codes
-      yield put(
+      yield* put(
         euCovidCertificateGet.failure({
           ...getGenericError(
             new Error(
@@ -145,7 +145,7 @@ export function* handleGetEuCovidCertificate(
       );
     } else {
       // cannot decode response
-      yield put(
+      yield* put(
         euCovidCertificateGet.failure({
           ...getGenericError(
             new Error(readablePrivacyReport(getCertificateResult.value))
@@ -155,7 +155,7 @@ export function* handleGetEuCovidCertificate(
       );
     }
   } catch (e) {
-    yield put(
+    yield* put(
       euCovidCertificateGet.failure({ ...getNetworkError(e), authCode })
     );
   }

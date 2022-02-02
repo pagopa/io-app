@@ -32,24 +32,24 @@ export function* checkAcceptedTosSaga(
       userProfile.accepted_tos_version < tosVersion) // accepted an older version of TOS
   ) {
     // Navigate to the TosScreen
-    yield call(navigateToTosScreen);
+    yield* call(navigateToTosScreen);
     // Wait the user accept the ToS
-    yield take(tosAccepted);
+    yield* take(tosAccepted);
 
     /**
      * The user profile is updated storing the last ToS version.
      * If the user logs in for the first time, the accepted tos version is stored once the profile in initialized
      */
     if (userProfile.has_profile) {
-      yield put(profileUpsert.request({ accepted_tos_version: tosVersion }));
-      const action = yield take([
+      yield* put(profileUpsert.request({ accepted_tos_version: tosVersion }));
+      const action = yield* take([
         getType(profileUpsert.success),
         getType(profileUpsert.failure)
       ]);
       // call checkAcceptedTosSaga until we don't receive profileUpsert.success
       // tos acceptance must be saved in IO backend
       if (action.type === getType(profileUpsert.failure)) {
-        yield call(checkAcceptedTosSaga, userProfile);
+        yield* call(checkAcceptedTosSaga, userProfile);
       }
     }
   }

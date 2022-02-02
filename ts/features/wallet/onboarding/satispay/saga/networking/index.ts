@@ -29,21 +29,21 @@ export function* handleSearchUserSatispay(
 
     const searchSatispayWithRefreshResult: SagaCallReturnType<
       typeof searchSatispayWithRefresh
-    > = yield call(searchSatispayWithRefresh);
+    > = yield* call(searchSatispayWithRefresh);
     if (searchSatispayWithRefreshResult.isRight()) {
       const statusCode = searchSatispayWithRefreshResult.value.status;
       if (statusCode === 200) {
         const value = searchSatispayWithRefreshResult.value.value;
         // even if the user doesn't own satispay the response is 200 but the payload is empty
         // FIXME 200 must always contain a non-empty payload
-        return yield put(
+        return yield* put(
           searchUserSatispay.success(_.isEmpty(value.data) ? null : value.data)
         );
       } else if (statusCode === 404) {
         // the user doesn't own any satispay
-        return yield put(searchUserSatispay.success(null));
+        return yield* put(searchUserSatispay.success(null));
       } else {
-        return yield put(
+        return yield* put(
           searchUserSatispay.failure({
             kind: "generic",
             value: new Error(
@@ -53,7 +53,7 @@ export function* handleSearchUserSatispay(
         );
       }
     } else {
-      return yield put(
+      return yield* put(
         searchUserSatispay.failure(
           getGenericError(
             new Error(
@@ -64,7 +64,7 @@ export function* handleSearchUserSatispay(
       );
     }
   } catch (e) {
-    return yield put(searchUserSatispay.failure(getNetworkError(e)));
+    return yield* put(searchUserSatispay.failure(getNetworkError(e)));
   }
 }
 
@@ -85,7 +85,7 @@ export function* handleAddUserSatispayToWallet(
 
     const addSatispayToWalletWithRefreshResult: SagaCallReturnType<
       typeof addSatispayToWalletWithRefresh
-    > = yield call(addSatispayToWalletWithRefresh);
+    > = yield* call(addSatispayToWalletWithRefresh);
     if (addSatispayToWalletWithRefreshResult.isRight()) {
       const statusCode = addSatispayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {
@@ -94,29 +94,29 @@ export function* handleAddUserSatispayToWallet(
         );
         if (newSatispay) {
           // satispay has been added to the user wallet
-          return yield put(addSatispayToWallet.success(newSatispay));
+          return yield* put(addSatispayToWallet.success(newSatispay));
         } else {
-          return yield put(
+          return yield* put(
             addSatispayToWallet.failure(
               new Error(`cannot transform in RawSatispayPaymentMethod`)
             )
           );
         }
       } else {
-        return yield put(
+        return yield* put(
           addSatispayToWallet.failure(
             new Error(`response status ${statusCode}`)
           )
         );
       }
     } else {
-      return yield put(
+      return yield* put(
         addSatispayToWallet.failure(
           new Error(readableReport(addSatispayToWalletWithRefreshResult.value))
         )
       );
     }
   } catch (e) {
-    return yield put(addSatispayToWallet.failure(getError(e)));
+    return yield* put(addSatispayToWallet.failure(getError(e)));
   }
 }

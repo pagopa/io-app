@@ -23,15 +23,15 @@ export function* loadTransactionsRequiredData(
   periodId: AwardPeriodId
 ): Generator<Effect, Either<BpdTransactionsError, true>, any> {
   // We check if there is a failure on the whole loadTransactionsRequiredData block
-  yield call(waitBackoffError, bpdTransactionsLoadRequiredData.failure);
+  yield* call(waitBackoffError, bpdTransactionsLoadRequiredData.failure);
 
   // First request the Milestone Pivot
-  yield put(bpdTransactionsLoadMilestone.request(periodId));
+  yield* put(bpdTransactionsLoadMilestone.request(periodId));
 
   const milestoneResponse: ActionType<
     | typeof bpdTransactionsLoadMilestone.success
     | typeof bpdTransactionsLoadMilestone.failure
-  > = yield take([
+  > = yield* take([
     getType(bpdTransactionsLoadMilestone.success),
     getType(bpdTransactionsLoadMilestone.failure)
   ]);
@@ -46,12 +46,12 @@ export function* loadTransactionsRequiredData(
   }
 
   // Request CountByDay
-  yield put(bpdTransactionsLoadCountByDay.request(periodId));
+  yield* put(bpdTransactionsLoadCountByDay.request(periodId));
 
   const countByDayResponse: ActionType<
     | typeof bpdTransactionsLoadCountByDay.success
     | typeof bpdTransactionsLoadCountByDay.failure
-  > = yield take([
+  > = yield* take([
     getType(bpdTransactionsLoadCountByDay.success),
     getType(bpdTransactionsLoadCountByDay.failure)
   ]);
@@ -65,12 +65,12 @@ export function* loadTransactionsRequiredData(
   }
 
   // Request first transaction page for the period
-  yield put(bpdTransactionsLoadPage.request({ awardPeriodId: periodId }));
+  yield* put(bpdTransactionsLoadPage.request({ awardPeriodId: periodId }));
 
   const firstPageResponse: ActionType<
     | typeof bpdTransactionsLoadPage.success
     | typeof bpdTransactionsLoadPage.failure
-  > = yield take([
+  > = yield* take([
     getType(bpdTransactionsLoadPage.success),
     getType(bpdTransactionsLoadPage.failure)
   ]);
@@ -92,11 +92,11 @@ export function* handleTransactionsLoadRequiredData(
 ) {
   // get the results
   const result: SagaCallReturnType<typeof loadTransactionsRequiredData> =
-    yield call(loadTransactionsRequiredData, action.payload);
+    yield* call(loadTransactionsRequiredData, action.payload);
 
   if (result.isRight()) {
-    yield put(bpdTransactionsLoadRequiredData.success(action.payload));
+    yield* put(bpdTransactionsLoadRequiredData.success(action.payload));
   } else {
-    yield put(bpdTransactionsLoadRequiredData.failure(result.value));
+    yield* put(bpdTransactionsLoadRequiredData.failure(result.value));
   }
 }

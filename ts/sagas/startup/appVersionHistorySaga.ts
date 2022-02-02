@@ -8,5 +8,5 @@ import { appVersionHistory } from "../../store/actions/installation";
  */
 export function* checkAppHistoryVersionSaga() {
   const currentVersion = getAppVersion();
-  yield put(appVersionHistory(currentVersion));
+  yield* put(appVersionHistory(currentVersion));
 }

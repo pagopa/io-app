@@ -16,10 +16,10 @@ export function* handleLoadBonusVacanzeFromId(
   try {
     const bonusVacanzeResponse: SagaCallReturnType<
       typeof getLatestBonusVacanzeFromId
-    > = yield call(getLatestBonusVacanzeFromId, { bonus_id: action.payload });
+    > = yield* call(getLatestBonusVacanzeFromId, { bonus_id: action.payload });
     if (bonusVacanzeResponse.isRight()) {
       if (bonusVacanzeResponse.value.status === 200) {
-        yield put(
+        yield* put(
           loadBonusVacanzeFromId.success(bonusVacanzeResponse.value.value)
         );
         return;
@@ -29,6 +29,8 @@ export function* handleLoadBonusVacanzeFromId(
       throw Error(readablePrivacyReport(bonusVacanzeResponse.value));
     }
   } catch (e) {
-    yield put(loadBonusVacanzeFromId.failure({ error: e, id: action.payload }));
+    yield* put(
+      loadBonusVacanzeFromId.failure({ error: e, id: action.payload })
+    );
   }
 }

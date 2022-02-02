@@ -25,34 +25,37 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   );
 
   // start polling bonus from id
-  yield takeLatest(startLoadBonusFromIdPolling, handleBonusFromIdPollingSaga);
+  yield* takeLatest(startLoadBonusFromIdPolling, handleBonusFromIdPollingSaga);
 
   // handle bonus vacanze eligibility
-  yield takeLatest(getType(checkBonusVacanzeEligibility.request), function* () {
-    yield put(
-      checkBonusVacanzeEligibility.failure(
-        new Error("bonus vacanze activation has been dismissed")
-      )
-    );
-  });
+  yield* takeLatest(
+    getType(checkBonusVacanzeEligibility.request),
+    function* () {
+      yield* put(
+        checkBonusVacanzeEligibility.failure(
+          new Error("bonus vacanze activation has been dismissed")
+        )
+      );
+    }
+  );
 
   // handle bonus vacanze from id loading
-  yield takeEvery(
+  yield* takeEvery(
     getType(loadBonusVacanzeFromId.request),
     handleLoadBonusVacanzeFromId,
     backendBonusVacanzeClient.getLatestBonusVacanzeFromId
   );
 
   // handle the all bonus activation loading request
-  yield takeLatest(
+  yield* takeLatest(
     getType(loadAllBonusActivations.request),
     handleLoadAllBonusActivations,
     backendBonusVacanzeClient.getAllBonusActivations
   );
 
   // handle bonus vacanze activation
-  yield takeEvery(getType(activateBonusVacanze.request), function* () {
-    yield put(
+  yield* takeEvery(getType(activateBonusVacanze.request), function* () {
+    yield* put(
       activateBonusVacanze.failure(
         new Error("bonus vacanze activation has been dismissed")
       )
@@ -60,7 +63,7 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   });
 
   // force bonus vacanze service activation when eligibility or activation starts
-  yield takeLatest(
+  yield* takeLatest(
     [
       getType(activateBonusVacanze.request),
       getType(checkBonusVacanzeEligibility.request)

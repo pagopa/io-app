@@ -17,7 +17,7 @@ export function* refreshStoredServices(
   visibleServices: PaginatedServiceTupleCollection["items"]
 ): SagaIterator {
   const storedServicesById: ReturnType<typeof servicesByIdSelector> =
-    yield select(servicesByIdSelector);
+    yield* select(servicesByIdSelector);
 
   const serviceDetailIdsToLoad = visibleServices
     .filter(service => {
@@ -37,6 +37,6 @@ export function* refreshStoredServices(
     })
     .map(_ => _.service_id);
   if (serviceDetailIdsToLoad.length > 0) {
-    yield put(loadServicesDetail(serviceDetailIdsToLoad));
+    yield* put(loadServicesDetail(serviceDetailIdsToLoad));
   }
 }

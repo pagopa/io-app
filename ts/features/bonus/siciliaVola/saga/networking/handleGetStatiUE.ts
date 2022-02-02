@@ -29,13 +29,13 @@ export function* handleGetStatiUE(
   _: ActionType<typeof svGenerateVoucherAvailableState.request>
 ) {
   try {
-    const getStatiUEResult: SagaCallReturnType<typeof getStatiUE> = yield call(
+    const getStatiUEResult: SagaCallReturnType<typeof getStatiUE> = yield* call(
       getStatiUE,
       {}
     );
     if (getStatiUEResult.isRight()) {
       if (getStatiUEResult.value.status === 200) {
-        yield put(
+        yield* put(
           svGenerateVoucherAvailableState.success(
             convertSuccess(getStatiUEResult.value.value)
           )
@@ -43,7 +43,7 @@ export function* handleGetStatiUE(
         return;
       }
       if (mapKinds[getStatiUEResult.value.status] !== undefined) {
-        yield put(
+        yield* put(
           svGenerateVoucherAvailableState.failure({
             ...getGenericError(
               new Error(mapKinds[getStatiUEResult.value.status])
@@ -53,13 +53,13 @@ export function* handleGetStatiUE(
         return;
       }
     }
-    yield put(
+    yield* put(
       svGenerateVoucherAvailableState.failure({
         ...getGenericError(new Error("Generic Error"))
       })
     );
   } catch (e) {
-    yield put(
+    yield* put(
       svGenerateVoucherAvailableState.failure({ ...getNetworkError(e) })
     );
   }

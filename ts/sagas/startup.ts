@@ -150,47 +150,47 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   //           every new installation.
 
   // store the app version in the history, if the current version is not present
-  yield call(checkAppHistoryVersionSaga);
+  yield* call(checkAppHistoryVersionSaga);
   // check if mixpanel could be initialized
-  yield call(initMixpanel);
-  yield call(waitForNavigatorServiceInitialization);
+  yield* call(initMixpanel);
+  yield* call(waitForNavigatorServiceInitialization);
 
-  yield call(previousInstallationDataDeleteSaga);
-  yield put(previousInstallationDataDeleteSuccess());
+  yield* call(previousInstallationDataDeleteSaga);
+  yield* put(previousInstallationDataDeleteSuccess());
 
   // listen for mixpanel enabling events
-  yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
+  yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
   if (zendeskEnabled) {
-    yield fork(watchZendeskSupportSaga);
+    yield* fork(watchZendeskSupportSaga);
   }
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
-    yield select(profileSelector);
+    yield* select(profileSelector);
 
   const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
     ? fromNullable(lastLoggedInProfileState.value.is_email_validated)
     : none;
 
   // Watch for profile changes
-  yield fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
+  yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
-  yield put(resetProfileState());
+  yield* put(resetProfileState());
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
-    yield select(sessionTokenSelector);
+    yield* select(sessionTokenSelector);
 
   // Unless we have a valid session token already, login until we have one.
   const sessionToken: SagaCallReturnType<typeof authenticationSaga> =
     previousSessionToken
       ? previousSessionToken
-      : yield call(authenticationSaga);
+      : yield* call(authenticationSaga);
 
   // Handles the expiration of the session token
-  yield fork(watchSessionExpiredSaga);
+  yield* fork(watchSessionExpiredSaga);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -199,18 +199,18 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   );
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
-    yield call(checkSession, backendClient.getSession);
+    yield* call(checkSession, backendClient.getSession);
   if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
-    yield put(sessionExpired());
+    yield* put(sessionExpired());
     return;
   }
 
   // Start the notification installation update as early as
   // possible to begin receiving push notifications
-  yield call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
@@ -223,44 +223,44 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   //        two steps.
   // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
-    yield select(sessionInfoSelector);
+    yield* select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
     // let's try to load the session information from the backend.
-    maybeSessionInformation = yield call(
+    maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
       backendClient.getSession
     );
     if (maybeSessionInformation.isNone()) {
       // we can't go further without session info, let's restart
       // the initialization process
-      yield put(startApplicationInitialization());
+      yield* put(startApplicationInitialization());
       return;
     }
   }
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
-  yield fork(
+  yield* fork(
     watchProfileUpsertRequestsSaga,
     backendClient.createOrUpdateProfile
   );
 
   // Start watching when profile is successfully loaded
-  yield fork(watchProfile, backendClient.startEmailValidationProcess);
+  yield* fork(watchProfile, backendClient.startEmailValidationProcess);
 
   // If we are here the user is logged in and the session info is
   // loaded and valid
 
   // Load the profile info
-  const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield call(
+  const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
     loadProfile,
     backendClient.getProfile
   );
 
   if (isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
-    yield delay(WAIT_INITIALIZE_SAGA);
-    yield put(startApplicationInitialization());
+    yield* delay(WAIT_INITIALIZE_SAGA);
+    yield* put(startApplicationInitialization());
     return;
   }
 
@@ -275,34 +275,34 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   ) {
     // Delete all data while keeping current session:
     // Delete the current unlock code from the Keychain
-    yield call(deletePin);
+    yield* call(deletePin);
     // Delete all onboarding data
-    yield put(clearOnboarding());
-    yield put(clearCache());
+    yield* put(clearOnboarding());
+    yield* put(clearCache());
   }
 
-  const maybeIdp: Option<SpidIdp> = yield select(idpSelector);
+  const maybeIdp: Option<SpidIdp> = yield* select(idpSelector);
 
   setInstabugProfileAttributes(maybeIdp);
 
   // Retrieve the configured unlock code from the keychain
-  const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
+  const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
 
   // eslint-disable-next-line functional/no-let
   let storedPin: PinString;
 
   // Start watching for requests of refresh the profile
-  yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+  yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
   // Start watching for requests about session and support token
-  yield fork(
+  yield* fork(
     watchCheckSessionSaga,
     backendClient.getSession,
     backendClient.getSupportToken
   );
 
   // Start watching for requests of abort the onboarding
-  const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
+  const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
@@ -310,24 +310,24 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // to pass through the onboarding process.
 
     // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
-    yield call(checkAcceptedTosSaga, userProfile);
+    yield* call(checkAcceptedTosSaga, userProfile);
 
     // check if the user expressed preference about mixpanel, if not ask for it
-    yield call(askMixpanelOptIn);
+    yield* call(askMixpanelOptIn);
 
-    storedPin = yield call(checkConfiguredPinSaga);
+    storedPin = yield* call(checkConfiguredPinSaga);
 
-    yield call(checkAcknowledgedFingerprintSaga);
+    yield* call(checkAcknowledgedFingerprintSaga);
 
-    yield call(checkAcknowledgedEmailSaga, userProfile);
+    yield* call(checkAcknowledgedEmailSaga, userProfile);
 
-    yield call(
+    yield* call(
       askServicesPreferencesModeOptin,
       isProfileFirstOnBoarding(userProfile)
     );
 
     // Stop the watchAbortOnboardingSaga
-    yield cancel(watchAbortOnboardingSagaTask);
+    yield* cancel(watchAbortOnboardingSagaTask);
   } else {
     storedPin = maybeStoredPin.value;
     if (!isSessionRefreshed) {
@@ -336,22 +336,22 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       // in this case we ask the user to identify using the unlock code.
       const identificationResult: SagaCallReturnType<
         typeof startAndReturnIdentificationResult
-      > = yield call(startAndReturnIdentificationResult, storedPin);
+      > = yield* call(startAndReturnIdentificationResult, storedPin);
       if (identificationResult === IdentificationResult.pinreset) {
         // If we are here the user had chosen to reset the unlock code
-        yield put(startApplicationInitialization());
+        yield* put(startApplicationInitialization());
         return;
       }
       // Ask to accept ToS if there is a new available version
-      yield call(checkAcceptedTosSaga, userProfile);
+      yield* call(checkAcceptedTosSaga, userProfile);
 
       // check if the user expressed preference about mixpanel, if not ask for it
-      yield call(askMixpanelOptIn);
+      yield* call(askMixpanelOptIn);
 
-      yield call(askServicesPreferencesModeOptin, false);
+      yield* call(askServicesPreferencesModeOptin, false);
 
       // Stop the watchAbortOnboardingSaga
-      yield cancel(watchAbortOnboardingSagaTask);
+      yield* cancel(watchAbortOnboardingSagaTask);
     }
   }
 
@@ -361,43 +361,43 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   if (bonusVacanzeEnabled) {
     // Start watching for requests about bonus
-    yield fork(watchBonusSaga, sessionToken);
+    yield* fork(watchBonusSaga, sessionToken);
   }
 
   if (bpdEnabled) {
     // Start watching for bpd actions
-    yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
+    yield* fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Start watching for cgn actions
-  yield fork(watchBonusCgnSaga, sessionToken);
+  yield* fork(watchBonusCgnSaga, sessionToken);
 
   if (svEnabled) {
     // Start watching for sv actions
-    yield fork(watchBonusSvSaga, sessionToken);
+    yield* fork(watchBonusSvSaga, sessionToken);
   }
 
   if (euCovidCertificateEnabled) {
     // Start watching for EU Covid Certificate actions
-    yield fork(watchEUCovidCertificateSaga, sessionToken);
+    yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
 
   if (mvlEnabled) {
     // Start watching for MVL actions
-    yield fork(watchMvlSaga, sessionToken);
+    yield* fork(watchMvlSaga, sessionToken);
   }
 
   // Load the user metadata
-  yield call(loadUserMetadata, backendClient.getUserMetadata, true);
+  yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
 
   // the wallet token is available,
   // proceed with starting the "watch wallet" saga
   const walletToken = maybeSessionInformation.value.walletToken;
 
   const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
-    yield select(isPagoPATestEnabledSelector);
+    yield* select(isPagoPATestEnabledSelector);
 
-  yield fork(
+  yield* fork(
     watchWalletSaga,
     sessionToken,
     walletToken,
@@ -405,17 +405,17 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   );
 
   // Check that profile is up to date (e.g. inbox enabled)
-  yield call(checkProfileEnabledSaga, userProfile);
+  yield* call(checkProfileEnabledSaga, userProfile);
 
   // Now we fork the tasks that will handle the async requests coming from the
   // UI of the application.
   // Note that the following sagas will be automatically cancelled each time
   // this parent saga gets restarted.
 
-  yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
-  yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
+  yield* fork(watchLoadUserMetadata, backendClient.getUserMetadata);
+  yield* fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
-  yield fork(
+  yield* fork(
     watchUserDataProcessingSaga,
     backendClient.getUserDataProcessingRequest,
     backendClient.postUserDataProcessingRequest,
@@ -425,7 +425,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (isSessionRefreshed) {
     // Only if the user are logging in check the account removal status and,
     // if is PENDING show an alert to notify him.
-    const checkUserDeletePendingTask: any = yield takeLatest(
+    const checkUserDeletePendingTask: any = yield* takeLatest(
       loadUserDataProcessing.success,
       function* (
         loadUserDataProcessingSuccess: ActionType<
@@ -463,67 +463,67 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
             ],
             { cancelable: false }
           );
-          const action: leftOrRight = yield take(alertChoiceChannel);
+          const action: leftOrRight = yield* take(alertChoiceChannel);
           if (action === "left") {
-            yield call(navigateToPrivacyScreen);
+            yield* call(navigateToPrivacyScreen);
           }
-          yield cancel(checkUserDeletePendingTask);
+          yield* cancel(checkUserDeletePendingTask);
         }
       }
     );
 
-    yield put(
+    yield* put(
       loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
     );
   }
   // Load visible services and service details from backend when requested
-  yield fork(watchLoadServicesSaga, backendClient);
+  yield* fork(watchLoadServicesSaga, backendClient);
 
   // Load all messages when requested
-  yield fork(watchLoadMessages, backendClient.getMessages);
+  yield* fork(watchLoadMessages, backendClient.getMessages);
 
   if (usePaginatedMessages) {
-    yield fork(watchLoadNextPageMessages, backendClient.getMessages);
-    yield fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-    yield fork(watchReloadAllMessages, backendClient.getMessages);
-    yield fork(watchLoadMessageDetails, backendClient.getMessage);
+    yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
+    yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+    yield* fork(watchReloadAllMessages, backendClient.getMessages);
+    yield* fork(watchLoadMessageDetails, backendClient.getMessage);
   }
 
   // Load a message when requested
-  yield fork(watchMessageLoadSaga, backendClient.getMessage);
+  yield* fork(watchMessageLoadSaga, backendClient.getMessage);
 
   // Load message and related entities (ex. the sender service)
-  yield takeEvery(
+  yield* takeEvery(
     getType(loadMessageWithRelations.request),
     watchLoadMessageWithRelationsSaga,
     backendClient.getMessage
   );
 
   // Watch for the app going to background/foreground
-  yield fork(watchApplicationActivitySaga);
+  yield* fork(watchApplicationActivitySaga);
 
   // Watch for requests to logout
-  yield spawn(watchLogoutSaga, backendClient.logout);
+  yield* spawn(watchLogoutSaga, backendClient.logout);
 
-  yield fork(watchIdentification, storedPin);
+  yield* fork(watchIdentification, storedPin);
 
   // Watch for checking the user email notifications preferences
-  yield fork(watchEmailNotificationPreferencesSaga);
+  yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
   const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
-    yield select(pendingMessageStateSelector);
+    yield* select(pendingMessageStateSelector);
 
   if (pendingMessageState) {
     // We have a pending notification message to handle
     const messageId = pendingMessageState.id;
 
     // Remove the pending message from the notification state
-    yield put(clearNotificationPendingMessage());
+    yield* put(clearNotificationPendingMessage());
     // Navigate to message router screen
-    yield call(navigateToMessageRouterScreen, { messageId });
+    yield* call(navigateToMessageRouterScreen, { messageId });
   } else {
-    yield call(navigateToMainNavigatorAction);
+    yield* call(navigateToMainNavigatorAction);
   }
 }
 
@@ -533,9 +533,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
  */
 function* waitForNavigatorServiceInitialization() {
   // eslint-disable-next-line functional/no-let
-  let navigator: ReturnType<typeof NavigationService.getNavigator> = yield call(
-    NavigationService.getNavigator
-  );
+  let navigator: ReturnType<typeof NavigationService.getNavigator> =
+    yield* call(NavigationService.getNavigator);
 
   // eslint-disable-next-line functional/no-let
   let timeoutLogged = false;
@@ -552,10 +551,10 @@ function* waitForNavigatorServiceInitialization() {
         TypeLogs.ERROR,
         "initializeApplicationSaga"
       );
-      yield call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
+      yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
     }
-    yield delay(navigatorPollingTime);
-    navigator = yield call(NavigationService.getNavigator);
+    yield* delay(navigatorPollingTime);
+    navigator = yield* call(NavigationService.getNavigator);
   }
 
   const initTime = performance.now() - startTime;
@@ -565,14 +564,14 @@ function* waitForNavigatorServiceInitialization() {
     TypeLogs.DEBUG,
     "initializeApplicationSaga"
   );
-  yield call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
+  yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
     elapsedTime: initTime
   });
 }
 
 export function* startupSaga(): IterableIterator<Effect> {
   // Wait until the IngressScreen gets mounted
-  yield takeLatest(
+  yield* takeLatest(
     getType(startApplicationInitialization),
     initializeApplicationSaga
   );

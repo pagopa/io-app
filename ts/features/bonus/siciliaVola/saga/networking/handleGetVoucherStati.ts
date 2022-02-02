@@ -19,21 +19,21 @@ export function* handleGetVoucheStati(
   __: ActionType<typeof svPossibleVoucherStateGet.request>
 ) {
   try {
-    yield call(waitBackoffError, svPossibleVoucherStateGet.failure);
+    yield* call(waitBackoffError, svPossibleVoucherStateGet.failure);
 
     // TODO: add MitVoucherToken
     const getStatiVoucherResult: SagaCallReturnType<typeof getStatiVoucher> =
-      yield call(getStatiVoucher, {});
+      yield* call(getStatiVoucher, {});
 
     if (getStatiVoucherResult.isRight()) {
       if (getStatiVoucherResult.value.status === 200) {
-        yield put(
+        yield* put(
           svPossibleVoucherStateGet.success(getStatiVoucherResult.value.value)
         );
         return;
       }
       if (mapKinds[getStatiVoucherResult.value.status] !== undefined) {
-        yield put(
+        yield* put(
           svPossibleVoucherStateGet.failure({
             ...getGenericError(
               new Error(mapKinds[getStatiVoucherResult.value.status])
@@ -43,12 +43,12 @@ export function* handleGetVoucheStati(
         return;
       }
     }
-    yield put(
+    yield* put(
       svPossibleVoucherStateGet.failure({
         ...getGenericError(new Error("Generic Error"))
       })
     );
   } catch (e) {
-    yield put(svPossibleVoucherStateGet.failure(getNetworkError(e)));
+    yield* put(svPossibleVoucherStateGet.failure(getNetworkError(e)));
   }
 }

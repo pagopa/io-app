@@ -60,7 +60,7 @@ export function* handleUpsertServicePreference(
   action: ActionType<typeof upsertServicePreference.request>
 ) {
   const currentPreferences: ReturnType<typeof servicePreferenceSelector> =
-    yield select(servicePreferenceSelector);
+    yield* select(servicePreferenceSelector);
 
   const updatingPreference = calculateUpdatingPreference(
     currentPreferences,
@@ -69,14 +69,14 @@ export function* handleUpsertServicePreference(
 
   try {
     const response: SagaCallReturnType<typeof upsertServicePreferences> =
-      yield call(upsertServicePreferences, {
+      yield* call(upsertServicePreferences, {
         service_id: action.payload.id,
         servicePreference: updatingPreference
       });
 
     if (response.isRight()) {
       if (response.value.status === 200) {
-        yield put(
+        yield* put(
           upsertServicePreference.success({
             id: action.payload.id,
             kind: "success",
@@ -92,7 +92,7 @@ export function* handleUpsertServicePreference(
       }
 
       if (mapKinds[response.value.status] !== undefined) {
-        yield put(
+        yield* put(
           upsertServicePreference.success({
             id: action.payload.id,
             kind: mapKinds[response.value.status]
@@ -101,7 +101,7 @@ export function* handleUpsertServicePreference(
         return;
       }
       // not handled error codes
-      yield put(
+      yield* put(
         upsertServicePreference.failure({
           id: action.payload.id,
           ...getGenericError(
@@ -112,14 +112,14 @@ export function* handleUpsertServicePreference(
       return;
     }
     // cannot decode response
-    yield put(
+    yield* put(
       upsertServicePreference.failure({
         id: action.payload.id,
         ...getGenericError(new Error(readablePrivacyReport(response.value)))
       })
     );
   } catch (e) {
-    yield put(
+    yield* put(
       upsertServicePreference.failure({
         id: action.payload.id,
         ...getNetworkError(e)

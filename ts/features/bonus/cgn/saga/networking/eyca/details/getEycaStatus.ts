@@ -29,9 +29,9 @@ export function* handleGetEycaStatus(
 ): Generator<Effect, void, any> {
   try {
     const eycaInformationResult: SagaCallReturnType<typeof getEycaStatus> =
-      yield call(getEycaStatus, {});
+      yield* call(getEycaStatus, {});
     if (eycaInformationResult.isLeft()) {
-      yield put(
+      yield* put(
         cgnEycaStatus.failure(
           getGenericError(
             new Error(readablePrivacyReport(eycaInformationResult.value))
@@ -42,7 +42,7 @@ export function* handleGetEycaStatus(
     }
 
     if (eycaInformationResult.value.status === 200) {
-      yield put(
+      yield* put(
         cgnEycaStatus.success({
           status: "FOUND",
           card: eycaInformationResult.value.value
@@ -60,8 +60,8 @@ export function* handleGetEycaStatus(
             new Error(`response status ${eycaInformationResult.value.status}`)
           )
         );
-    yield put(action);
+    yield* put(action);
   } catch (e) {
-    yield put(cgnEycaStatus.failure(getNetworkError(e)));
+    yield* put(cgnEycaStatus.failure(getNetworkError(e)));
   }
 }

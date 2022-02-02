@@ -16,36 +16,36 @@ import { watchTestLoginRequestSaga } from "../testLoginSaga";
  * a SessionToken gets produced.
  */
 export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
-  yield put(analyticsAuthenticationStarted());
+  yield* put(analyticsAuthenticationStarted());
 
   // Watch for the test login
-  const watchTestLogin = yield fork(watchTestLoginRequestSaga);
+  const watchTestLogin = yield* fork(watchTestLoginRequestSaga);
   // Watch for login by CIE
-  const watchCieAuthentication = yield fork(watchCieAuthenticationSaga);
+  const watchCieAuthentication = yield* fork(watchCieAuthenticationSaga);
 
   // Reset the navigation stack and navigate to the authentication screen
-  yield call(resetToAuthenticationRoute);
+  yield* call(resetToAuthenticationRoute);
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
-  const action: ActionType<typeof loginSuccess> = yield take(
+  const action: ActionType<typeof loginSuccess> = yield* take(
     getType(loginSuccess)
   );
 
-  yield cancel(watchCieAuthentication);
-  yield cancel(watchTestLogin);
+  yield* cancel(watchCieAuthentication);
+  yield* cancel(watchTestLogin);
 
   // stop cie manager from listening nfc
-  yield call(stopCieManager);
+  yield* call(stopCieManager);
 
   // User logged in successfully, remove all the scheduled local notifications
   // to remind the user to authenticate with spid
-  yield call(removeScheduledNotificationAccessSpid);
+  yield* call(removeScheduledNotificationAccessSpid);
 
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
   //        LOGIN_SUCCESS?
-  yield put(analyticsAuthenticationCompleted());
+  yield* put(analyticsAuthenticationCompleted());
 
   return action.payload.token;
 }

@@ -34,19 +34,19 @@ export function* handleSearchUserBPay(
 
     const searchBPayWithRefreshResult: SagaCallReturnType<
       typeof searchBPayWithRefresh
-    > = yield call(searchBPayWithRefresh);
+    > = yield* call(searchBPayWithRefresh);
     if (searchBPayWithRefreshResult.isRight()) {
       const statusCode = searchBPayWithRefreshResult.value.status;
       if (statusCode === 200) {
         const payload: RestBPayResponse =
           searchBPayWithRefreshResult.value.value;
         const bPayList = payload.data ?? [];
-        return yield put(searchUserBPay.success(bPayList));
+        return yield* put(searchUserBPay.success(bPayList));
       } else if (statusCode === 404) {
         // the user doesn't own any bpay
-        return yield put(searchUserBPay.success([]));
+        return yield* put(searchUserBPay.success([]));
       } else {
-        return yield put(
+        return yield* put(
           searchUserBPay.failure(
             getGenericError(
               new Error(
@@ -57,7 +57,7 @@ export function* handleSearchUserBPay(
         );
       }
     } else {
-      return yield put(
+      return yield* put(
         searchUserBPay.failure(
           getGenericError(
             new Error(readablePrivacyReport(searchBPayWithRefreshResult.value))
@@ -66,7 +66,7 @@ export function* handleSearchUserBPay(
       );
     }
   } catch (e) {
-    return yield put(searchUserBPay.failure(getNetworkError(e)));
+    return yield* put(searchUserBPay.failure(getNetworkError(e)));
   }
 }
 
@@ -85,7 +85,7 @@ export function* handleAddpayToWallet(
 
     const addBPayToWalletWithRefreshResult: SagaCallReturnType<
       typeof addBPayToWalletWithRefresh
-    > = yield call(addBPayToWalletWithRefresh);
+    > = yield* call(addBPayToWalletWithRefresh);
     if (addBPayToWalletWithRefreshResult.isRight()) {
       const statusCode = addBPayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {
@@ -100,9 +100,11 @@ export function* handleAddpayToWallet(
               .getOrElse(false)
           );
         if (maybeAddedBPay && maybeAddedBPay.isSome()) {
-          return yield put(addBpayToWalletAction.success(maybeAddedBPay.value));
+          return yield* put(
+            addBpayToWalletAction.success(maybeAddedBPay.value)
+          );
         } else {
-          return yield put(
+          return yield* put(
             addBpayToWalletAction.failure(
               getGenericError(
                 new Error(`cannot find added bpay in wallets list response`)
@@ -111,7 +113,7 @@ export function* handleAddpayToWallet(
           );
         }
       } else {
-        return yield put(
+        return yield* put(
           addBpayToWalletAction.failure(
             getGenericError(
               new Error(
@@ -122,7 +124,7 @@ export function* handleAddpayToWallet(
         );
       }
     } else {
-      return yield put(
+      return yield* put(
         addBpayToWalletAction.failure(
           getGenericError(
             new Error(
@@ -133,6 +135,6 @@ export function* handleAddpayToWallet(
       );
     }
   } catch (e) {
-    return yield put(addBpayToWalletAction.failure(getNetworkError(e)));
+    return yield* put(addBpayToWalletAction.failure(getNetworkError(e)));
   }
 }

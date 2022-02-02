@@ -17,7 +17,7 @@ export function* watchProfileEmailValidationChangedSaga(
   initialEmailValidated: Option<boolean>
 ): IterableIterator<Effect> {
   maybePreviousEmailValidated = initialEmailValidated;
-  yield takeEvery(getType(profileLoadSuccess), checkProfileEmailChanged);
+  yield* takeEvery(getType(profileLoadSuccess), checkProfileEmailChanged);
 }
 
 export const isProfileEmailValidatedChanged = (
@@ -37,7 +37,7 @@ function* checkProfileEmailChanged(
   );
 
   if (emailStateChanged) {
-    yield put(
+    yield* put(
       profileEmailValidationChanged(profileUpdate.is_email_validated || false)
     );
   }

@@ -18,9 +18,9 @@ export function* backendStatusSaga(
   getServicesStatus: ReturnType<typeof CdnBackendStatusClient>["getStatus"]
 ): Generator<Effect, boolean, SagaCallReturnType<typeof getServicesStatus>> {
   try {
-    const response = yield call(getServicesStatus, {});
+    const response = yield* call(getServicesStatus, {});
     if (response.isRight() && response.value.status === 200) {
-      yield put(backendStatusLoadSuccess(response.value.value));
+      yield* put(backendStatusLoadSuccess(response.value.value));
       return true;
     }
     return false;
@@ -40,21 +40,21 @@ export function* backendStatusWatcherLoop(
 ) {
   // check backend status periodically
   while (true) {
-    const response: SagaCallReturnType<typeof backendStatusSaga> = yield call(
+    const response: SagaCallReturnType<typeof backendStatusSaga> = yield* call(
       backendStatusSaga,
       getStatus
     );
     const currentState: ReturnType<typeof backendServicesStatusSelector> =
-      yield select(backendServicesStatusSelector);
+      yield* select(backendServicesStatusSelector);
 
     // if we have no information increase rate
     if (response === false) {
-      yield call(startTimer, BACKEND_SERVICES_STATUS_FAILURE_INTERVAL);
+      yield* call(startTimer, BACKEND_SERVICES_STATUS_FAILURE_INTERVAL);
       continue;
     }
     // if backend is off increase rate
     if (currentState.areSystemsDead) {
-      yield call(startTimer, BACKEND_SERVICES_STATUS_FAILURE_INTERVAL);
+      yield* call(startTimer, BACKEND_SERVICES_STATUS_FAILURE_INTERVAL);
       continue;
     }
     // if counter of dead > 0 but areSystem if false (must do other check to valid this information)
@@ -63,11 +63,11 @@ export function* backendStatusWatcherLoop(
       currentState.deadsCounter > 0 && currentState.areSystemsDead === false
         ? BACKEND_SERVICES_STATUS_FAILURE_INTERVAL
         : BACKEND_SERVICES_STATUS_LOAD_INTERVAL;
-    yield call(startTimer, sleepTime);
+    yield* call(startTimer, sleepTime);
   }
 }
 
 export default function* root(): IterableIterator<Effect> {
   const cdnBackendClient = CdnBackendStatusClient(contentRepoUrl);
-  yield fork(backendStatusWatcherLoop, cdnBackendClient.getStatus);
+  yield* fork(backendStatusWatcherLoop, cdnBackendClient.getStatus);
 }

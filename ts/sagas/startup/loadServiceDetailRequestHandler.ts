@@ -29,29 +29,31 @@ export function* loadServiceDetailRequestHandler(
   action: ActionType<typeof loadServiceDetail["request"]>
 ): Generator<Effect, void, SagaCallReturnType<typeof getService>> {
   try {
-    const response = yield call(getService, { service_id: action.payload });
+    const response = yield* call(getService, { service_id: action.payload });
 
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
     }
 
     if (response.value.status === 200) {
-      yield put(loadServiceDetail.success(response.value.value));
+      yield* put(loadServiceDetail.success(response.value.value));
 
       // If it is occurring during the first load of serivces,
       // mark the service as read (it will not display the badge on the list item)
-      yield call(handleServiceReadabilitySaga, action.payload);
+      yield* call(handleServiceReadabilitySaga, action.payload);
 
       // Update, if needed, the name of the organization that provides the service
-      yield call(handleOrganizationNameUpdateSaga, response.value.value);
+      yield* call(handleOrganizationNameUpdateSaga, response.value.value);
     } else {
       if (response.value.status === 404) {
-        yield put(loadServiceDetailNotFound(action.payload as ServiceId));
+        yield* put(loadServiceDetailNotFound(action.payload as ServiceId));
       }
       throw Error(`response status ${response.value.status}`);
     }
   } catch (error) {
-    yield put(loadServiceDetail.failure({ service_id: action.payload, error }));
+    yield* put(
+      loadServiceDetail.failure({ service_id: action.payload, error })
+    );
   }
 }
 
@@ -68,10 +70,10 @@ function* handleServiceLoadRequest(
 ) {
   // Infinite loop that wait and process loadServiceDetail requests from the channel
   while (true) {
-    const action: ActionType<typeof loadServiceDetail.request> = yield take(
+    const action: ActionType<typeof loadServiceDetail.request> = yield* take(
       requestsChannel
     );
-    yield call(loadServiceDetailRequestHandler, getService, action);
+    yield* call(loadServiceDetailRequestHandler, getService, action);
   }
 }
 
@@ -86,23 +88,23 @@ export function* watchServicesDetailLoadSaga(
   getService: ReturnType<typeof BackendClient>["getService"]
 ) {
   // start a saga to track services detail load stats
-  yield fork(watchLoadServicesDetailToTrack);
+  yield* fork(watchLoadServicesDetailToTrack);
 
   // Create the channel used for the communication with the handlers.
   const requestsChannel: Channel<ActionType<typeof loadServiceDetail.request>> =
-    yield call(channel, buffers.expanding());
+    yield* call(channel, buffers.expanding());
 
   // fork the handlers
   // eslint-disable-next-line
   for (let i = 0; i < totServiceFetchWorkers; i++) {
-    yield fork(handleServiceLoadRequest, requestsChannel, getService);
+    yield* fork(handleServiceLoadRequest, requestsChannel, getService);
   }
 
   while (true) {
     // Take the loadServicesDetail action and for each service id
     // put back a loadServiceDetail.request in the channel
     // to be processed by the handlers.
-    const action: ActionType<typeof loadServicesDetail> = yield take(
+    const action: ActionType<typeof loadServicesDetail> = yield* take(
       getType(loadServicesDetail)
     );
     action.payload.forEach((serviceId: string) =>
@@ -119,7 +121,7 @@ const calculateLoadingTime = (startTime: Millisecond): Millisecond =>
  * like amount of details to load and how much time they take
  */
 function* watchLoadServicesDetailToTrack() {
-  yield takeLatest(
+  yield* takeLatest(
     [loadServicesDetail, loadServiceDetail.success, applicationChangeState],
     action => {
       switch (action.type) {

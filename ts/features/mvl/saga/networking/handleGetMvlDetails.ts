@@ -102,10 +102,10 @@ export function* handleGetMvl(
   try {
     const getUserLegalMessageRequest: SagaCallReturnType<
       typeof getUserLegalMessage
-    > = yield call(getUserLegalMessage, { id: messageId });
+    > = yield* call(getUserLegalMessage, { id: messageId });
     if (getUserLegalMessageRequest.isRight()) {
       if (getUserLegalMessageRequest.value.status === 200) {
-        yield put(
+        yield* put(
           mvlDetailsLoad.success(
             convertMvlDetail(getUserLegalMessageRequest.value.value, messageId)
           )
@@ -113,7 +113,7 @@ export function* handleGetMvl(
         return;
       }
       // != 200
-      yield put(
+      yield* put(
         mvlDetailsLoad.failure({
           ...getGenericError(
             new Error(
@@ -124,7 +124,7 @@ export function* handleGetMvl(
         })
       );
     } else {
-      yield put(
+      yield* put(
         mvlDetailsLoad.failure({
           ...getGenericError(
             new Error(readablePrivacyReport(getUserLegalMessageRequest.value))
@@ -134,6 +134,8 @@ export function* handleGetMvl(
       );
     }
   } catch (e) {
-    yield put(mvlDetailsLoad.failure({ ...getNetworkError(e), id: messageId }));
+    yield* put(
+      mvlDetailsLoad.failure({ ...getNetworkError(e), id: messageId })
+    );
   }
 }

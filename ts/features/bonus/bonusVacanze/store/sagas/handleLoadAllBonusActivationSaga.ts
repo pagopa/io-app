@@ -17,14 +17,14 @@ export function* handleLoadAllBonusActivations(
   try {
     const allBonusActivationsResponse: SagaCallReturnType<
       typeof getAllBonusActivations
-    > = yield call(getAllBonusActivations, {});
+    > = yield* call(getAllBonusActivations, {});
     if (allBonusActivationsResponse.isRight()) {
       if (allBonusActivationsResponse.value.status === 200) {
         // for each bonus load details
         const items = allBonusActivationsResponse.value.value.items;
         const ids = items.map(i => i.id);
-        yield all(ids.map(id => put(loadBonusVacanzeFromId.request(id))));
-        yield put(loadAllBonusActivations.success(items));
+        yield* all(ids.map(id => put(loadBonusVacanzeFromId.request(id))));
+        yield* put(loadAllBonusActivations.success(items));
         return;
       }
       throw Error(
@@ -34,6 +34,6 @@ export function* handleLoadAllBonusActivations(
       throw Error(readablePrivacyReport(allBonusActivationsResponse.value));
     }
   } catch (e) {
-    yield put(loadAllBonusActivations.failure(e));
+    yield* put(loadAllBonusActivations.failure(e));
   }
 }

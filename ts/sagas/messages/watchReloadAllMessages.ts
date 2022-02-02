@@ -17,7 +17,7 @@ type LocalBeClient = ReturnType<typeof BackendClient>["getMessages"];
 export default function* watcher(
   getMessages: LocalBeClient
 ): Generator<Effect, void, SagaCallReturnType<typeof getMessages>> {
-  yield takeLatest(
+  yield* takeLatest(
     getType(reloadAllMessagesAction.request),
     tryReloadAllMessages(getMessages)
   );
@@ -28,7 +28,7 @@ function tryReloadAllMessages(getMessages: LocalBeClient) {
     action: LocalActionType
   ): Generator<Effect, void, SagaCallReturnType<typeof getMessages>> {
     try {
-      const response: SagaCallReturnType<typeof getMessages> = yield call(
+      const response: SagaCallReturnType<typeof getMessages> = yield* call(
         getMessages,
         {
           enrich_result_data: true,
@@ -46,9 +46,9 @@ function tryReloadAllMessages(getMessages: LocalBeClient) {
         error => reloadAllMessagesAction.failure(getError(error))
       );
 
-      yield put(nextAction);
+      yield* put(nextAction);
     } catch (error) {
-      yield put(reloadAllMessagesAction.failure(getError(error)));
+      yield* put(reloadAllMessagesAction.failure(getError(error)));
     }
   };
 }

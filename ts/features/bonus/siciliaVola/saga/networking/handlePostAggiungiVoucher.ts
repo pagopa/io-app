@@ -17,7 +17,7 @@ export function* handlePostAggiungiVoucher(
   _: ActionType<typeof svGenerateVoucherGeneratedVoucher.request>
 ): Generator<Effect, void> {
   // TODO: add networking logic
-  yield delay(500);
+  yield* delay(500);
   const stubVoucher = {
     id: 123456,
     beneficiary: "Mario Rossi",
@@ -38,7 +38,7 @@ export function* handlePostAggiungiVoucher(
     barCode:
       "iVBORw0KGgoAAAANSUhEUgAAAJYAAABQAQAAAADTy7HmAAAALElEQVR42mP4/zO/UMX1WWdJn15k9c6qdJH/fxhGxUbFRsVGxUbFRsUIiAEAxCE9PtkFIH0AAAAASUVORK5CYII="
   } as SvVoucher;
-  yield put(
+  yield* put(
     svGenerateVoucherGeneratedVoucher.success({
       kind: "success",
       value: stubVoucher

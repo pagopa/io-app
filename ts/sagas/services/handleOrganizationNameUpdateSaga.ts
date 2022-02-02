@@ -24,7 +24,7 @@ export function* handleOrganizationNameUpdateSaga(
 ): SagaIterator {
   // If the organization fiscal code is associated to different organization names,
   // it is considered valid the one declared for a visible service
-  const organizations: OrganizationNamesByFiscalCodeState = yield select(
+  const organizations: OrganizationNamesByFiscalCodeState = yield* select(
     organizationNamesByFiscalCodeSelector
   );
   if (organizations) {
@@ -33,10 +33,10 @@ export function* handleOrganizationNameUpdateSaga(
     // The organization is stored if the corresponding fiscal code has no maches among those stored
     const organization = organizations[fc];
     if (!organization) {
-      yield put(updateOrganizations(service));
+      yield* put(updateOrganizations(service));
       return;
     }
-    const visibleServices: VisibleServicesState = yield select(
+    const visibleServices: VisibleServicesState = yield* select(
       visibleServicesSelector
     );
     const isVisible =
@@ -46,7 +46,7 @@ export function* handleOrganizationNameUpdateSaga(
     // the organization name is updated only if the related service is visible
     // and the name has been updated
     if (isVisible && organization !== service.organization_name) {
-      yield put(updateOrganizations(service));
+      yield* put(updateOrganizations(service));
     }
   }
 }

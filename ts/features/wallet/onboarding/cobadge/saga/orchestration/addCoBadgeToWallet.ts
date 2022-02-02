@@ -31,7 +31,7 @@ import { onboardingCoBadgeAddedSelector } from "../../store/reducers/addedCoBadg
  * - The user chooses back from the first screen {@link walletAddCoBadgeBack}
  */
 function* coBadgeWorkUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: navigateToOnboardingCoBadgeSearchStartScreen,
     startScreenName: WALLET_ONBOARDING_COBADGE_ROUTES.START,
     complete: walletAddCoBadgeCompleted,
@@ -55,11 +55,11 @@ const returnToWalletRoutes = new Set([
 export function* addCoBadgeToWalletAndActivateBpd() {
   const initialScreenName: ReturnType<
     typeof NavigationService.getCurrentRouteName
-  > = yield call(NavigationService.getCurrentRouteName);
+  > = yield* call(NavigationService.getCurrentRouteName);
   const sagaExecution = () =>
     withFailureHandling(() => withResetNavigationStack(coBadgeWorkUnit));
 
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
     sagaExecution
   );
 
@@ -72,17 +72,17 @@ export function* addCoBadgeToWalletAndActivateBpd() {
     // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
 
-    yield call(navigateToWalletHome);
+    yield* call(navigateToWalletHome);
   }
 
   if (res === "completed") {
     // refresh wallets list
-    yield put(fetchWalletsRequest());
+    yield* put(fetchWalletsRequest());
     // read the new added co-badge cards
     const coBadgeAdded: ReturnType<typeof onboardingCoBadgeAddedSelector> =
-      yield select(onboardingCoBadgeAddedSelector);
+      yield* select(onboardingCoBadgeAddedSelector);
 
-    yield call(
+    yield* call(
       activateBpdOnNewPaymentMethods,
       coBadgeAdded,
       navigateToActivateBpdOnNewCoBadge

@@ -30,31 +30,31 @@ export function* handleGetStampaVoucher(
   const voucherFilename = "sicilia_vola";
 
   try {
-    yield call(waitBackoffError, svGetPdfVoucher.failure);
+    yield* call(waitBackoffError, svGetPdfVoucher.failure);
     const request = svSessionManager.withRefresh(
       getStampaVoucher({ codiceVoucher: action.payload })
     );
     const getStampaVoucherResult: SagaCallReturnType<typeof request> =
-      yield call(request);
+      yield* call(request);
 
     if (getStampaVoucherResult.isRight()) {
       if (getStampaVoucherResult.value.status === 200) {
         try {
-          yield call(
+          yield* call(
             RNFS.writeFile,
             `${fPath}/${voucherFilename}.pdf`,
             getStampaVoucherResult.value.value.data,
             "base64"
           );
-          yield put(svGetPdfVoucher.success(fPath));
+          yield* put(svGetPdfVoucher.success(fPath));
         } catch (e) {
-          yield put(svPossibleVoucherStateGet.failure(getNetworkError(e)));
+          yield* put(svPossibleVoucherStateGet.failure(getNetworkError(e)));
         }
 
         return;
       }
 
-      yield put(
+      yield* put(
         svGetPdfVoucher.failure(
           getGenericError(
             new Error(`response status ${getStampaVoucherResult.value.status}`)
@@ -63,12 +63,12 @@ export function* handleGetStampaVoucher(
       );
       return;
     }
-    yield put(
+    yield* put(
       svPossibleVoucherStateGet.failure(
         getGenericError(new Error(readableReport(getStampaVoucherResult.value)))
       )
     );
   } catch (e) {
-    yield put(svGetPdfVoucher.failure(getNetworkError(e)));
+    yield* put(svGetPdfVoucher.failure(getNetworkError(e)));
   }
 }

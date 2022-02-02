@@ -33,7 +33,7 @@ export function* updateInstallationSaga(
   // Get the notifications installation data from the store
   const notificationsInstallation: ReturnType<
     typeof notificationsInstallationSelector
-  > = yield select(notificationsInstallationSelector);
+  > = yield* select(notificationsInstallationSelector);
   // Check if the notification server token is available (non available on iOS simulator)
   if (notificationsInstallation.token === undefined) {
     return undefined;
@@ -49,7 +49,7 @@ export function* updateInstallationSaga(
   try {
     // Send the request to the backend
     const response: SagaCallReturnType<typeof createOrUpdateInstallation> =
-      yield call(createOrUpdateInstallation, {
+      yield* call(createOrUpdateInstallation, {
         installationID: notificationsInstallation.id,
         installation: {
           platform: notificationsPlatform,
@@ -63,19 +63,19 @@ export function* updateInstallationSaga(
       throw Error(readableReport(response.value));
     }
     if (response.value.status === 200) {
-      yield put(
+      yield* put(
         notificationsInstallationTokenRegistered(
           notificationsInstallation.token
         )
       );
     } else {
-      yield put(
+      yield* put(
         updateNotificationInstallationFailure(
           new Error(`response status code ${response.value.status}`)
         )
       );
     }
   } catch (error) {
-    yield put(updateNotificationInstallationFailure(error));
+    yield* put(updateNotificationInstallationFailure(error));
   }
 }

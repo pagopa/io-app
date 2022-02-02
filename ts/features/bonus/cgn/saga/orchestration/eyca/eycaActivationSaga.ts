@@ -34,22 +34,22 @@ export function* eycaActivationWorker(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ) {
-  yield call(navigateToEycaActivationLoading);
+  yield* call(navigateToEycaActivationLoading);
 
-  const eycaActivation: SagaCallReturnType<typeof getActivation> = yield call(
+  const eycaActivation: SagaCallReturnType<typeof getActivation> = yield* call(
     getActivation,
     getEycaActivation
   );
 
   if (eycaActivation.isRight()) {
     if (eycaActivation.value === "PROCESSING") {
-      yield call(handleEycaActivationSaga, getEycaActivation);
+      yield* call(handleEycaActivationSaga, getEycaActivation);
     } else {
       const startActivation: SagaCallReturnType<typeof handleStartActivation> =
-        yield call(handleStartActivation, startEycaActivation);
+        yield* call(handleStartActivation, startEycaActivation);
       // activation not handled error, stop
       if (startActivation.isLeft()) {
-        yield put(cgnEycaActivation.failure(startActivation.value));
+        yield* put(cgnEycaActivation.failure(startActivation.value));
         return;
       } else {
         // could be: ALREADY_ACTIVE, INELIGIBLE
@@ -58,20 +58,20 @@ export function* eycaActivationWorker(
             v => v === startActivation.value
           )
         ) {
-          yield put(cgnEycaActivation.success(startActivation.value));
-          yield call(navigateToCgnDetails);
+          yield* put(cgnEycaActivation.success(startActivation.value));
+          yield* call(navigateToCgnDetails);
           return;
         } else {
-          yield call(handleEycaActivationSaga, getEycaActivation);
+          yield* call(handleEycaActivationSaga, getEycaActivation);
         }
       }
     }
   }
 
   // Activation saga ended, request again the details
-  yield put(cgnEycaStatus.request());
+  yield* put(cgnEycaStatus.request());
 
-  yield call(navigateToCgnDetails);
+  yield* call(navigateToCgnDetails);
 }
 
 /**
@@ -81,7 +81,7 @@ export function* eycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ): SagaIterator {
-  const { cancelAction } = yield race({
+  const { cancelAction } = yield* race({
     activation: call(
       eycaActivationWorker,
       getEycaActivation,
@@ -90,6 +90,6 @@ export function* eycaActivationSaga(
     cancelAction: take(cgnEycaActivationCancel)
   });
   if (cancelAction) {
-    yield put(NavigationActions.back());
+    yield* put(NavigationActions.back());
   }
 }

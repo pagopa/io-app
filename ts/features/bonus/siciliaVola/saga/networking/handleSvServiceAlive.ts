@@ -10,6 +10,6 @@ export function* handleSvServiceAlive(
   _: ActionType<typeof svServiceAlive.request>
 ): Generator<Effect, void> {
   // TODO: add networking logic
-  yield delay(500);
-  yield put(svServiceAlive.success(true));
+  yield* delay(500);
+  yield* put(svServiceAlive.success(true));
 }

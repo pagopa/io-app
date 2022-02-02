@@ -37,11 +37,11 @@ function* handleTestLogin({
   }
   try {
     const testLoginResponse: SagaCallReturnType<typeof postTestLogin> =
-      yield call(postTestLogin, payload);
+      yield* call(postTestLogin, payload);
 
     if (testLoginResponse.isRight()) {
       if (testLoginResponse.value.status === 200) {
-        yield put(
+        yield* put(
           loginSuccess({
             token: testLoginResponse.value.value
               .token as string as SessionToken,
@@ -54,10 +54,10 @@ function* handleTestLogin({
     }
     throw new Error(readableReport(testLoginResponse.value));
   } catch (e) {
-    yield put(loginFailure({ error: e, idp: "testIdp" }));
+    yield* put(loginFailure({ error: e, idp: "testIdp" }));
   }
 }
 
 export function* watchTestLoginRequestSaga(): IterableIterator<Effect> {
-  yield takeLatest(getType(testLoginRequest), handleTestLogin);
+  yield* takeLatest(getType(testLoginRequest), handleTestLogin);
 }

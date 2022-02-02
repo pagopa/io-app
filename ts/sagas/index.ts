@@ -17,7 +17,7 @@ import {
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 export default function* root() {
-  yield all([
+  yield* all([
     call(startupSaga),
     call(backendStatusSaga),
     call(backendInfoSaga),

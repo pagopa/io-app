@@ -16,16 +16,16 @@ const POLLING_FREQ_TIMEOUT = 5000 as Millisecond;
  */
 export function* bonusFromIdWorker(bonusId: string): SagaIterator {
   while (true) {
-    yield put(loadBonusVacanzeFromId.request(bonusId));
-    const resultAction = yield take([
+    yield* put(loadBonusVacanzeFromId.request(bonusId));
+    const resultAction = yield* take([
       getType(loadBonusVacanzeFromId.success),
       getType(loadBonusVacanzeFromId.failure)
     ]);
 
     if (isActionOf(loadBonusVacanzeFromId.failure, resultAction)) {
-      yield put(cancelLoadBonusFromIdPolling());
+      yield* put(cancelLoadBonusFromIdPolling());
     }
-    yield delay(POLLING_FREQ_TIMEOUT);
+    yield* delay(POLLING_FREQ_TIMEOUT);
   }
 }
 /**
@@ -34,7 +34,7 @@ export function* bonusFromIdWorker(bonusId: string): SagaIterator {
 export function* handleBonusFromIdPollingSaga(
   action: ActionType<typeof startLoadBonusFromIdPolling>
 ): SagaIterator {
-  yield race({
+  yield* race({
     polling: call(bonusFromIdWorker, action.payload),
     cancelPolling: take(cancelLoadBonusFromIdPolling)
   });

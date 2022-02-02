@@ -21,7 +21,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   let lastState: ApplicationState = "active";
   // eslint-disable-next-line
   let identificationBackgroundTimer: Task | undefined;
-  yield takeEvery(
+  yield* takeEvery(
     getType(applicationChangeState),
     function* (action: ActionType<typeof applicationChangeState>) {
       // Listen for changes in application state
@@ -35,7 +35,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
 
         const currentRoute: ReturnType<
           typeof NavigationService.getCurrentRouteName
-        > = yield call(NavigationService.getCurrentRouteName);
+        > = yield* call(NavigationService.getCurrentRouteName);
         const isSecuredRoute =
           // eslint-disable-next-line sonarjs/no-empty-collection
           currentRoute && whiteList.indexOf(currentRoute) !== -1;
@@ -46,15 +46,15 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
            * screen being displayed for a while before the IdentificationScreen when the user
            * focuses again on the app
            */
-          yield put(identificationRequest());
+          yield* put(identificationRequest());
         }
         // Start the background timer
-        identificationBackgroundTimer = yield fork(function* () {
+        identificationBackgroundTimer = yield* fork(function* () {
           // Start and wait the timer to fire
-          yield call(startTimer, backgroundActivityTimeoutMillis);
+          yield* call(startTimer, backgroundActivityTimeoutMillis);
           identificationBackgroundTimer = undefined;
           // Timer fired we need to identify the user again
-          yield put(identificationRequest());
+          yield* put(identificationRequest());
         });
       } else if (
         identificationBackgroundTimer &&
@@ -62,10 +62,10 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         newApplicationState === "active"
       ) {
         // Cancel the background timer if running
-        yield cancel(identificationBackgroundTimer);
+        yield* cancel(identificationBackgroundTimer);
         identificationBackgroundTimer = undefined;
       }
-      yield fork(watchNotificationSaga, lastState, newApplicationState);
+      yield* fork(watchNotificationSaga, lastState, newApplicationState);
 
       // Update the last state
       lastState = newApplicationState;

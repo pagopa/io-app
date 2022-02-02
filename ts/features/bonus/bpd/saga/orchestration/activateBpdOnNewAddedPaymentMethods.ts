@@ -21,24 +21,24 @@ export function* activateBpdOnNewPaymentMethods(
 
   // No payment method with bpd capability added in the current workflow, return to wallet home
   if (!atLeastOnePaymentMethodWithBpdCapability) {
-    return yield call(navigateToWalletHome);
+    return yield* call(navigateToWalletHome);
   }
   const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> =
-    yield call(isBpdEnabled);
+    yield* call(isBpdEnabled);
 
   const bpdRemoteConfig: ReturnType<typeof bpdRemoteConfigSelector> =
-    yield select(bpdRemoteConfigSelector);
+    yield* select(bpdRemoteConfigSelector);
 
   // Error while reading the bpdEnabled, return to wallet
   if (isBpdEnabledResponse.isLeft()) {
-    yield call(navigateToWalletHome);
+    yield* call(navigateToWalletHome);
   } else {
     if (isBpdEnabledResponse.value && bpdRemoteConfig?.program_active) {
       // navigate to activate cashback on new payment methods if the user is onboarded to the program and is active
-      yield call(navigateToActivateNewMethods);
+      yield* call(navigateToActivateNewMethods);
     } else if (bpdRemoteConfig?.enroll_bpd_after_add_payment_method) {
       // navigate to "ask if you want to start bpd onboarding"
-      yield call(navigateToSuggestBpdActivation);
+      yield* call(navigateToSuggestBpdActivation);
     }
   }
 }

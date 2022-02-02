@@ -7,10 +7,10 @@ import { abortOnboarding } from "../../store/actions/onboarding";
 import { deletePin } from "../../utils/keychain";
 
 export function* watchAbortOnboardingSaga(): Iterator<Effect> {
-  yield take(getType(abortOnboarding));
-  yield call(deletePin);
+  yield* take(getType(abortOnboarding));
+  yield* call(deletePin);
   // invalidate the session
-  yield put(sessionInvalid());
+  yield* put(sessionInvalid());
   // initialize the app from scratch (forcing an onboarding flow)
-  yield put(startApplicationInitialization());
+  yield* put(startApplicationInitialization());
 }

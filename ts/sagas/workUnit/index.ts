@@ -41,10 +41,10 @@ export type SagaResult = "cancel" | "completed" | "back" | "failure";
  */
 function* ensureScreen(navigateTo: () => void, startScreen: string) {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield call(NavigationService.getCurrentRouteName);
+    yield* call(NavigationService.getCurrentRouteName);
 
   if (currentRoute !== undefined && currentRoute !== startScreen) {
-    yield call(navigateTo);
+    yield* call(navigateTo);
   }
 }
 
@@ -57,10 +57,10 @@ export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<Effect, T>
 ): Generator<Effect, T, any> {
   const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
-    yield call(NavigationService.getCurrentRoute);
-  const res: T = yield call(g);
+    yield* call(NavigationService.getCurrentRoute);
+  const res: T = yield* call(g);
   if (initialScreen?.routeName !== undefined) {
-    yield call(
+    yield* call(
       NavigationService.dispatchNavigationAction,
       NavigationActions.navigate({
         routeName: initialScreen.routeName,
@@ -79,9 +79,9 @@ export function* withResetNavigationStack<T>(
 export function* withFailureHandling<T>(
   g: (...args: Array<any>) => Generator<Effect, T, SagaResult>
 ) {
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(g);
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(g);
   if (res === "failure") {
-    yield call(navigateToWorkunitGenericFailureScreen);
+    yield* call(navigateToWorkunitGenericFailureScreen);
   }
   return res;
 }
@@ -99,9 +99,9 @@ export function* executeWorkUnit(
     typeof wu.cancel | typeof wu.complete | typeof wu.back | typeof wu.failure
   >
 > {
-  yield call(ensureScreen, wu.startScreenNavigation, wu.startScreenName);
+  yield* call(ensureScreen, wu.startScreenNavigation, wu.startScreenName);
 
-  const result = yield take([
+  const result = yield* take([
     getType(wu.complete),
     getType(wu.cancel),
     getType(wu.back),

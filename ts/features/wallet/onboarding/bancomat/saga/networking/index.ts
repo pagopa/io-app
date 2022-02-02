@@ -25,10 +25,10 @@ export function* handleLoadAbi(
 ) {
   try {
     const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbi> =
-      yield call(getAbi);
+      yield* call(getAbi);
     if (getAbiWithRefreshResult.isRight()) {
       if (getAbiWithRefreshResult.value.status === 200) {
-        yield put(loadAbi.success(getAbiWithRefreshResult.value.value));
+        yield* put(loadAbi.success(getAbiWithRefreshResult.value.value));
       } else {
         throw new Error(
           `response status ${getAbiWithRefreshResult.value.status}`
@@ -38,7 +38,7 @@ export function* handleLoadAbi(
       throw new Error(readablePrivacyReport(getAbiWithRefreshResult.value));
     }
   } catch (e) {
-    yield put(loadAbi.failure(e));
+    yield* put(loadAbi.failure(e));
   }
 }
 
@@ -55,11 +55,11 @@ export function* handleLoadPans(
 
     const getPansWithRefreshResult: SagaCallReturnType<
       typeof getPansWithRefresh
-    > = yield call(getPansWithRefresh);
+    > = yield* call(getPansWithRefresh);
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
         const response = getPansWithRefreshResult.value.value.data;
-        return yield put(
+        return yield* put(
           searchUserPans.success(
             fromNullable({
               cards: response?.data ?? [],
@@ -68,7 +68,7 @@ export function* handleLoadPans(
           )
         );
       } else {
-        return yield put(
+        return yield* put(
           searchUserPans.failure(
             getGenericError(
               new Error(
@@ -79,7 +79,7 @@ export function* handleLoadPans(
         );
       }
     } else {
-      return yield put(
+      return yield* put(
         searchUserPans.failure(
           getGenericError(
             new Error(readablePrivacyReport(getPansWithRefreshResult.value))
@@ -89,12 +89,12 @@ export function* handleLoadPans(
     }
   } catch (e) {
     if (e === "max-retries") {
-      return yield put(searchUserPans.failure({ kind: "timeout" }));
+      return yield* put(searchUserPans.failure({ kind: "timeout" }));
     }
     if (typeof e === "string") {
-      return yield put(searchUserPans.failure(getGenericError(new Error(e))));
+      return yield* put(searchUserPans.failure(getGenericError(new Error(e))));
     }
-    return yield put(searchUserPans.failure(getGenericError(e)));
+    return yield* put(searchUserPans.failure(getGenericError(e)));
   }
 }
 
@@ -111,7 +111,7 @@ export function* handleAddPan(
     );
     const addPansWithRefreshResult: SagaCallReturnType<
       typeof addPansWithRefresh
-    > = yield call(addPansWithRefresh);
+    > = yield* call(addPansWithRefresh);
     if (addPansWithRefreshResult.isRight()) {
       if (addPansWithRefreshResult.value.status === 200) {
         const wallets = (addPansWithRefreshResult.value.value.data ?? []).map(
@@ -129,7 +129,7 @@ export function* handleAddPan(
           maybeWallet.isSome() &&
           isRawBancomat(maybeWallet.value.paymentMethod)
         ) {
-          yield put(
+          yield* put(
             // success
             addBancomatToWallet.success(maybeWallet.value.paymentMethod)
           );
@@ -147,6 +147,6 @@ export function* handleAddPan(
       throw new Error(readablePrivacyReport(addPansWithRefreshResult.value));
     }
   } catch (e) {
-    yield put(addBancomatToWallet.failure(e));
+    yield* put(addBancomatToWallet.failure(e));
   }
 }

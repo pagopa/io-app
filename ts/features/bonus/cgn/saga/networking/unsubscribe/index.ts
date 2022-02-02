@@ -17,20 +17,20 @@ export function* cgnUnsubscriptionHandler(
   try {
     const unsubscriptionResult: SagaCallReturnType<
       typeof startCgnUnsubscription
-    > = yield call(startCgnUnsubscription, {});
+    > = yield* call(startCgnUnsubscription, {});
     if (unsubscriptionResult.isRight()) {
       if (
         unsubscriptionResult.value.status === 201 ||
         unsubscriptionResult.value.status === 202
       ) {
-        yield put(cgnUnsubscribe.success());
+        yield* put(cgnUnsubscribe.success());
         return;
       }
       throw new Error(
         `Response in status ${unsubscriptionResult.value.status}`
       );
     }
-    yield put(
+    yield* put(
       cgnUnsubscribe.failure(
         getGenericError(
           new Error(readablePrivacyReport(unsubscriptionResult.value))
@@ -38,6 +38,6 @@ export function* cgnUnsubscriptionHandler(
       )
     );
   } catch (e) {
-    yield put(cgnUnsubscribe.failure(getNetworkError(e)));
+    yield* put(cgnUnsubscribe.failure(getNetworkError(e)));
   }
 }

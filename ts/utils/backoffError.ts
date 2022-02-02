@@ -17,7 +17,7 @@ export function* getBackoffTime(
   Millisecond,
   (failure: FailureActions) => Millisecond
 > {
-  const computeDelay: ReturnType<typeof backOffWaitingTime> = yield select(
+  const computeDelay: ReturnType<typeof backOffWaitingTime> = yield* select(
     backOffWaitingTime
   );
   const delay = computeDelay(failure);
@@ -33,8 +33,8 @@ export function* getBackoffTime(
  * @param failure
  */
 export function* waitBackoffError(failure: FailureActions) {
-  const delayTime: Millisecond = yield call(getBackoffTime, failure);
+  const delayTime: Millisecond = yield* call(getBackoffTime, failure);
   if (delayTime > 0) {
-    yield delay(delayTime);
+    yield* delay(delayTime);
   }
 }

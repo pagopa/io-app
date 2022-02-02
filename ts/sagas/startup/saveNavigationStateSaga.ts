@@ -18,7 +18,7 @@ export function* saveNavigationStateSaga(): Generator<
   ReturnType<typeof NavigationService.getCurrentRoute>
 > {
   const currentScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
-    yield call(NavigationService.getCurrentRoute);
+    yield* call(NavigationService.getCurrentRoute);
 
   if (currentScreen) {
     const currentRoute = currentScreen.routes[
@@ -27,7 +27,7 @@ export function* saveNavigationStateSaga(): Generator<
     if (currentRoute.routes && currentRoute.routeName === ROUTES.MAIN) {
       // only save state when in Main navigator
       const mainSubRoute = currentRoute.routes[currentRoute.index];
-      yield put(
+      yield* put(
         setDeepLink({
           routeName: mainSubRoute.routeName,
           params: mainSubRoute.params,

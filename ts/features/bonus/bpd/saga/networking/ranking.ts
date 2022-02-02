@@ -46,7 +46,7 @@ export function* bpdLoadRaking(
 ): Generator<Effect, Either<Error, ReadonlyArray<BpdRankingReady>>, any> {
   try {
     void mixpanelTrack(mixpanelActionRequest);
-    const getRankingResult: SagaCallReturnType<typeof getRanking> = yield call(
+    const getRankingResult: SagaCallReturnType<typeof getRanking> = yield* call(
       getRanking,
       {} as any
     );
@@ -113,7 +113,7 @@ export function* bpdLoadRakingV2(
 ): Generator<Effect, Either<Error, ReadonlyArray<BpdRankingReady>>, any> {
   try {
     void mixpanelTrack(mixpanelActionRequest);
-    const getRankingResult: SagaCallReturnType<typeof getRanking> = yield call(
+    const getRankingResult: SagaCallReturnType<typeof getRanking> = yield* call(
       getRanking,
       {} as any
     );
@@ -158,7 +158,7 @@ export function* handleLoadMilestone(
   action: ActionType<typeof bpdTransactionsLoadMilestone.request>
 ) {
   // get the results
-  const result: SagaCallReturnType<typeof bpdLoadRakingV2> = yield call(
+  const result: SagaCallReturnType<typeof bpdLoadRakingV2> = yield* call(
     bpdLoadRakingV2,
     getRanking
   );
@@ -175,14 +175,14 @@ export function* handleLoadMilestone(
 
   // dispatch the related action
   if (extractMilestonePivot.isRight()) {
-    yield put(
+    yield* put(
       bpdTransactionsLoadMilestone.success({
         awardPeriodId: action.payload,
         result: extractMilestonePivot.value
       })
     );
   } else {
-    yield put(
+    yield* put(
       bpdTransactionsLoadMilestone.failure({
         awardPeriodId: action.payload,
         error: extractMilestonePivot.value

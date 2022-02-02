@@ -13,13 +13,13 @@ import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
 export function* watchZendeskSupportSaga() {
   const contentClient = ContentClient();
   // start zendesk support management
-  yield takeLatest(zendeskSupportStart, zendeskSupport);
+  yield* takeLatest(zendeskSupportStart, zendeskSupport);
 
-  yield takeLatest(
+  yield* takeLatest(
     getZendeskConfig.request,
     handleGetZendeskConfig,
     contentClient.getZendeskConfig
   );
 
-  yield takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
+  yield* takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
 }

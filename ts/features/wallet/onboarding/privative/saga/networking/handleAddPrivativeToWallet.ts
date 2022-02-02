@@ -33,7 +33,7 @@ export function* handleAddPrivativeToWallet(
   addAction: ActionType<typeof addPrivativeToWallet.request>
 ) {
   // get the results
-  const result: SagaCallReturnType<typeof addCobadgeToWallet> = yield call(
+  const result: SagaCallReturnType<typeof addCobadgeToWallet> = yield* call(
     addCobadgeToWallet,
     addCobadgeToWalletClient,
     sessionManager,
@@ -44,8 +44,8 @@ export function* handleAddPrivativeToWallet(
 
   // dispatch the related action
   if (eitherRawPrivative.isRight()) {
-    yield put(addPrivativeToWallet.success(eitherRawPrivative.value));
+    yield* put(addPrivativeToWallet.success(eitherRawPrivative.value));
   } else {
-    yield put(addPrivativeToWallet.failure(eitherRawPrivative.value));
+    yield* put(addPrivativeToWallet.failure(eitherRawPrivative.value));
   }
 }
