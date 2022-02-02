@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver from "semver";
-import { IOVersionInfo } from "../store/reducers/backendInfo";
+import { IOVersionInfo } from "../common/versionInfo/types/IOVersionInfo";
 import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
 
@@ -64,14 +64,14 @@ export const getAppVersion = () =>
 
 /**
  * return true if the app must be updated
- * @param serverInfo the backend info
+ * @param versionInfo the version info
  * @param section
  */
 export const isUpdateNeeded = (
-  serverInfo: IOVersionInfo | undefined,
+  versionInfo: IOVersionInfo | null,
   section: "min_app_version_pagopa" | "min_app_version"
 ) =>
-  fromNullable(serverInfo)
+  fromNullable(versionInfo)
     .map(si => {
       const minAppVersion = Platform.select({
         ios: si[section]?.ios,
