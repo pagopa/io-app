@@ -14,21 +14,20 @@ import {
 
 const screenHeight = Dimensions.get("screen").height;
 const calculateBottomSheetHeight = (
-    discount: Discount,
-    merchantType?: DiscountCodeType
-  ): number =>
-    Math.min(
-      310 +
+  discount: Discount,
+  merchantType?: DiscountCodeType
+): number =>
+  Math.min(
+    310 +
       (discount.description === undefined
         ? 0
         : discount.description.length * 0.75) +
-      (discount.condition === undefined ? 0 : discount.condition.length * 0.75) +
-      (merchantType === undefined ? -50 : 0)
-      ,
-      screenHeight
-    )
-;
-
+      (discount.condition === undefined
+        ? 0
+        : discount.condition.length * 0.75) +
+      (merchantType === undefined ? -50 : 0),
+    screenHeight
+  );
 export const useCgnDiscountDetailBottomSheet = (
   discount: Discount,
   merchantType?: DiscountCodeType,
