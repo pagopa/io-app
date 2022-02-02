@@ -2,8 +2,7 @@
  * Action types and action creator related to BackendInfo.
  */
 import { ActionType, createStandardAction } from "typesafe-actions";
-
-import { ServerInfo } from "../../../definitions/backend/ServerInfo";
+import { IOVersionInfo } from "../reducers/backendInfo";
 
 export const backendInfoLoadFailure = createStandardAction(
   "BACKEND_INFO_LOAD_FAILURE"
@@ -11,7 +10,7 @@ export const backendInfoLoadFailure = createStandardAction(
 
 export const backendInfoLoadSuccess = createStandardAction(
   "BACKEND_INFO_LOAD_SUCCESS"
-)<ServerInfo>();
+)<IOVersionInfo>();
 
 export type BackendInfoActions = ActionType<
   typeof backendInfoLoadFailure | typeof backendInfoLoadSuccess
