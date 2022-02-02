@@ -2,9 +2,10 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver from "semver";
-import { ServerInfo } from "../../definitions/backend/ServerInfo";
+import { IOVersionInfo } from "../store/reducers/backendInfo";
 import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
+
 export const storeUrl = Platform.select({
   ios: "itms-apps://itunes.apple.com/it/app/io/id1501681835",
   android: "market://details?id=it.pagopa.io.app",
@@ -64,18 +65,21 @@ export const getAppVersion = () =>
 /**
  * return true if the app must be updated
  * @param serverInfo the backend info
+ * @param section
  */
 export const isUpdateNeeded = (
-  serverInfo: ServerInfo | undefined,
+  serverInfo: IOVersionInfo | undefined,
   section: "min_app_version_pagopa" | "min_app_version"
 ) =>
   fromNullable(serverInfo)
     .map(si => {
       const minAppVersion = Platform.select({
-        default: "undefined",
-        ios: si[section].ios,
-        android: si[section].android
+        ios: si[section]?.ios,
+        android: si[section]?.android
       });
-      return !isVersionAppSupported(minAppVersion, getAppVersion());
+      return !isVersionAppSupported(
+        minAppVersion ?? "undefined",
+        getAppVersion()
+      );
     })
     .getOrElse(false);
