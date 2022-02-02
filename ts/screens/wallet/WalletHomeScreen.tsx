@@ -616,7 +616,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const isPagoPaVersionSupported = fromNullable(state.backendInfo.serverInfo)
+  const isPagoPaVersionSupported = fromNullable(state.versionInfo)
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 

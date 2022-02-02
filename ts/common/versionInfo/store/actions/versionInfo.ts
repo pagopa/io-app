@@ -1,6 +1,3 @@
-/**
- * Action types and action creator related to BackendInfo.
- */
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { IOVersionInfo } from "../../types/IOVersionInfo";
 
