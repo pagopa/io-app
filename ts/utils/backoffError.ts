@@ -1,5 +1,5 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { call, delay, select, SelectEffect } from "redux-saga/effects";
+import { call, delay, select, SelectEffect } from "typed-redux-saga";
 import {
   backOffWaitingTime,
   FailureActions

@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select } from "typed-redux-saga";
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
 import { loadServicesDetail } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";

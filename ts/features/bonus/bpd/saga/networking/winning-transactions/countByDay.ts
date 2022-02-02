@@ -1,6 +1,6 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put } from "redux-saga/effects";
+import { call, Effect, put } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../../types/utils";

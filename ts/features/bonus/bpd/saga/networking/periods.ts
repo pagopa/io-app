@@ -1,7 +1,7 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { fromNullable } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect } from "redux-saga/effects";
+import { call, Effect } from "typed-redux-saga";
 import { AwardPeriodResource } from "../../../../../../definitions/bpd/award_periods/AwardPeriodResource";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../types/utils";

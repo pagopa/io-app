@@ -1,4 +1,4 @@
-import { call } from "redux-saga/effects";
+import { call } from "typed-redux-saga";
 import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../../../navigation/NavigationService";
 import {

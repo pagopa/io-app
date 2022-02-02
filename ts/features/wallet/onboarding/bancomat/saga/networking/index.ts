@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";

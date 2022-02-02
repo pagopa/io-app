@@ -1,6 +1,6 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import _ from "lodash";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";

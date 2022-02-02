@@ -1,5 +1,5 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import {

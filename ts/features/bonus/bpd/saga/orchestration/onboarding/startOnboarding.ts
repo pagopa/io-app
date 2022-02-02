@@ -10,7 +10,7 @@ import {
   race,
   select,
   take
-} from "redux-saga/effects";
+} from "typed-redux-saga";
 import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { navigateBack } from "../../../../../../store/actions/navigation";

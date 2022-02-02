@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga";
 import { ApplicationState } from "../../store/actions/application";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";

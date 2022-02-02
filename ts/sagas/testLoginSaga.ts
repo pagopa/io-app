@@ -2,7 +2,7 @@ import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
-import { call, Effect, put, takeLatest } from "redux-saga/effects";
+import { call, Effect, put, takeLatest } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";

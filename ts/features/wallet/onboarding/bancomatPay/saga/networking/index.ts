@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { RestBPayResponse } from "../../../../../../../definitions/pagopa/walletv2/RestBPayResponse";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";

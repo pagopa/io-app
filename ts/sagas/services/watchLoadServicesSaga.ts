@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { fork, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { fork, put, takeEvery, takeLatest } from "typed-redux-saga";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {

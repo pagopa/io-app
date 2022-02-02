@@ -1,5 +1,5 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put, takeEvery } from "redux-saga/effects";
+import { call, Effect, put, takeEvery } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { startApplicationInitialization } from "../../store/actions/application";

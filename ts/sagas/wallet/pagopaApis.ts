@@ -1,6 +1,6 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { call, Effect, put, select, take } from "redux-saga/effects";
+import { call, Effect, put, select, take } from "typed-redux-saga";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 

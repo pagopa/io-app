@@ -1,6 +1,6 @@
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, put, race, take } from "redux-saga/effects";
+import { call, put, race, take } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/actions";

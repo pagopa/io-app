@@ -1,4 +1,4 @@
-import { Effect, put, takeLatest } from "redux-saga/effects";
+import { Effect, put, takeLatest } from "typed-redux-saga";
 import { getType } from "typesafe-actions";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionExpired } from "../../store/actions/authentication";

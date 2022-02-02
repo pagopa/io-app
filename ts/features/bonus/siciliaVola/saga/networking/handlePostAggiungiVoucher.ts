@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { delay, Effect, put } from "redux-saga/effects";
+import { delay, Effect, put } from "typed-redux-saga";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { svGenerateVoucherGeneratedVoucher } from "../../store/actions/voucherGeneration";

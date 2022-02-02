@@ -2,7 +2,7 @@
  * Load the user's privative card.
  */
 import { Either, left, right } from "fp-ts/lib/Either";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";

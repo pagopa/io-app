@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select } from "typed-redux-saga";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { profileUpsert } from "../../../../../store/actions/profile";
 import { profileSelector } from "../../../../../store/reducers/profile";

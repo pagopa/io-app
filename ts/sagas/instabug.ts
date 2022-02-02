@@ -1,12 +1,5 @@
 import { BugReporting, dismissType, Replies } from "instabug-reactnative";
-import {
-  call,
-  Effect,
-  fork,
-  put,
-  select,
-  takeLatest
-} from "redux-saga/effects";
+import { call, Effect, fork, put, select, takeLatest } from "typed-redux-saga";
 import { instabugReportClosed } from "../store/actions/debug";
 import {
   instabugUnreadMessagesLoaded,

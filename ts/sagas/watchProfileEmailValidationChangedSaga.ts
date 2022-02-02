@@ -1,5 +1,5 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import { Effect, put, takeEvery } from "redux-saga/effects";
+import { Effect, put, takeEvery } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 import { profileLoadSuccess } from "../store/actions/profile";
 import { profileEmailValidationChanged } from "../store/actions/profileEmailValidationChange";

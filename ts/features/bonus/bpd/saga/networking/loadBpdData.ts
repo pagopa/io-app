@@ -1,5 +1,5 @@
 import { select, take } from "redux-saga-test-plan/matchers";
-import { all, call, delay, put } from "redux-saga/effects";
+import { all, call, delay, put } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";

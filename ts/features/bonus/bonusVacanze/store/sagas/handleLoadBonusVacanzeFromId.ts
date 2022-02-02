@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { readablePrivacyReport } from "../../../../../utils/reporters";

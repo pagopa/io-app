@@ -1,5 +1,5 @@
 import { SagaIterator } from "@redux-saga/core";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import {
   bpdDeleteUserFromProgram,

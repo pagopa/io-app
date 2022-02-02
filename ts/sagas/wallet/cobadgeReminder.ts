@@ -1,4 +1,4 @@
-import { put, select, take } from "redux-saga/effects";
+import { put, select, take } from "typed-redux-saga";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType, isActionOf } from "typesafe-actions";
 import {

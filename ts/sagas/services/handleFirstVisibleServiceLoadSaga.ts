@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select } from "typed-redux-saga";
 import { firstServiceLoadSuccess } from "../../store/actions/services";
 import { visibleServicesDetailLoadStateSelector } from "../../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";

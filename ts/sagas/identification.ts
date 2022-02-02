@@ -1,11 +1,4 @@
-import {
-  call,
-  Effect,
-  put,
-  select,
-  take,
-  takeLatest
-} from "redux-saga/effects";
+import { call, Effect, put, select, take, takeLatest } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../store/actions/application";

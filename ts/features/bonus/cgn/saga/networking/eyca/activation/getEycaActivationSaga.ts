@@ -1,4 +1,4 @@
-import { call, Effect, put } from "redux-saga/effects";
+import { call, Effect, put } from "typed-redux-saga";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Either, left, right } from "fp-ts/lib/Either";
 import { SagaCallReturnType } from "../../../../../../../types/utils";

@@ -1,4 +1,4 @@
-import { put, select, take } from "redux-saga/effects";
+import { put, select, take } from "typed-redux-saga";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { paymentsLastDeletedSet } from "../store/actions/payments";
 import {

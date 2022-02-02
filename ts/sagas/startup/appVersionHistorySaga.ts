@@ -1,4 +1,4 @@
-import { put } from "redux-saga/effects";
+import { put } from "typed-redux-saga";
 import { getAppVersion } from "../../utils/appVersion";
 import { appVersionHistory } from "../../store/actions/installation";
 

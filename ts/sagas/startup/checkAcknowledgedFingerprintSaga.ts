@@ -1,4 +1,4 @@
-import { call, Effect, put, select, take } from "redux-saga/effects";
+import { call, Effect, put, select, take } from "typed-redux-saga";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";

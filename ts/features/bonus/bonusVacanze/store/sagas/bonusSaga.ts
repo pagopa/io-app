@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { put, takeEvery, takeLatest } from "redux-saga/effects";
+import { put, takeEvery, takeLatest } from "typed-redux-saga";
 import { getType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";

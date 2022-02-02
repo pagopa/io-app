@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
+import { call } from "typed-redux-saga";
 import NavigationService from "../../../../../navigation/NavigationService";
 import {
   executeWorkUnit,

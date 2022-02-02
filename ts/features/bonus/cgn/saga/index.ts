@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest } from "typed-redux-saga";
 import { getType } from "typesafe-actions";
 import {
   cgnActivationStart,

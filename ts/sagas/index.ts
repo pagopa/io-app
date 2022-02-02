@@ -1,7 +1,7 @@
 /**
  * The root saga that forks and includes all the other sagas.
  */
-import { all, call } from "redux-saga/effects";
+import { all, call } from "typed-redux-saga";
 
 import backendInfoSaga from "./backendInfo";
 import backendStatusSaga from "./backendStatus";

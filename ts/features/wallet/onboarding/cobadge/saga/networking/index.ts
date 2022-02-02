@@ -1,6 +1,6 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { select } from "redux-saga-test-plan/matchers";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";

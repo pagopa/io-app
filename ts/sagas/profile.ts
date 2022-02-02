@@ -11,7 +11,7 @@ import {
   select,
   take,
   takeLatest
-} from "redux-saga/effects";
+} from "typed-redux-saga";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";

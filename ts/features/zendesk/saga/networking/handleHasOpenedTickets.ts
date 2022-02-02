@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { SagaReturnType } from "@redux-saga/core/effects";
 import { zendeskRequestTicketNumber } from "../../store/actions";
 import { getError } from "../../../../utils/errors";

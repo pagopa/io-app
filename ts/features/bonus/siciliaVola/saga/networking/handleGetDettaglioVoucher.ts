@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { delay, Effect, put } from "redux-saga/effects";
+import { delay, Effect, put } from "typed-redux-saga";
 import { svVoucherDetailGet } from "../../store/actions/voucherList";
 import { SvVoucher } from "../../types/SvVoucher";
 import { SessionManager } from "../../../../../utils/SessionManager";

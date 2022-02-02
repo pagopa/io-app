@@ -1,6 +1,6 @@
 import { SagaIterator } from "@redux-saga/core";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { call, put, race, take, delay } from "redux-saga/effects";
+import { call, put, race, take, delay } from "typed-redux-saga";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import {
   cancelLoadBonusFromIdPolling,

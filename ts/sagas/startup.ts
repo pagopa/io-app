@@ -15,7 +15,7 @@ import {
   take,
   takeEvery,
   takeLatest
-} from "redux-saga/effects";
+} from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";

@@ -1,4 +1,4 @@
-import { put, PutEffect, take, TakeEffect } from "redux-saga/effects";
+import { put, PutEffect, take, TakeEffect } from "typed-redux-saga";
 import { AsyncActionCreator, getType, PayloadAction } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 

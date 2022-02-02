@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 import { BackendClient } from "../../../api/backend";

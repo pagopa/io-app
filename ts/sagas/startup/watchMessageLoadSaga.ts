@@ -1,5 +1,5 @@
 import { buffers, Channel, channel } from "redux-saga";
-import { call, fork, take } from "redux-saga/effects";
+import { call, fork, take } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { totMessageFetchWorkers } from "../../config";

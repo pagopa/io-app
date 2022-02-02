@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import * as pot from "italia-ts-commons/lib/pot";
 import { BackendBpdClient } from "../../api/backendBpdClient";

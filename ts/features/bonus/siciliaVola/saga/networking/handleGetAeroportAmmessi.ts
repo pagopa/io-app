@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { SagaCallReturnType } from "../../../../../types/utils";

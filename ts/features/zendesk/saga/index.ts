@@ -1,5 +1,5 @@
 // watch for all actions regarding Zendesk
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest } from "typed-redux-saga";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber,

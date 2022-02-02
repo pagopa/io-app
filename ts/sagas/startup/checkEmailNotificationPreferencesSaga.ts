@@ -9,7 +9,7 @@ import {
   select,
   take,
   takeEvery
-} from "redux-saga/effects";
+} from "typed-redux-saga";
 import { getType } from "typesafe-actions";
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";

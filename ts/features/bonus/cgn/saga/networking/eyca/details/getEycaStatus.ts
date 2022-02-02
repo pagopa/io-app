@@ -1,4 +1,4 @@
-import { call, Effect, put } from "redux-saga/effects";
+import { call, Effect, put } from "typed-redux-saga";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../../types/utils";
 import {

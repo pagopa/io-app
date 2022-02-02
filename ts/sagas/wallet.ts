@@ -20,7 +20,7 @@ import {
   take,
   takeEvery,
   takeLatest
-} from "redux-saga/effects";
+} from "typed-redux-saga";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 

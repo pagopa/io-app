@@ -1,4 +1,4 @@
-import { call, select } from "redux-saga/effects";
+import { call, select } from "typed-redux-saga";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";

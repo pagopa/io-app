@@ -1,4 +1,4 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
 import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
