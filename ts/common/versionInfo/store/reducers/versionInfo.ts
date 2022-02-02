@@ -3,24 +3,13 @@
  */
 
 import { getType } from "typesafe-actions";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { IOVersionInfo } from "../../types/IOVersionInfo";
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess
 } from "../actions/versionInfo";
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-
-export type IOVersionInfo = {
-  min_app_version: IOVersionPerPlatform;
-  latest_released_app_version: IOVersionPerPlatform;
-  rollout_app_version: IOVersionPerPlatform;
-  min_app_version_pagopa?: IOVersionPerPlatform;
-};
-
-export type IOVersionPerPlatform = {
-  ios: string;
-  android: string;
-};
 
 export type BackendInfoState = Readonly<{
   serverInfo?: IOVersionInfo;

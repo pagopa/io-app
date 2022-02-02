@@ -2,7 +2,7 @@
  * Action types and action creator related to BackendInfo.
  */
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { IOVersionInfo } from "../reducers/versionInfo";
+import { IOVersionInfo } from "../../types/IOVersionInfo";
 
 export const versionInfoLoadFailure = createStandardAction(
   "VERSION_INFO_LOAD_FAILURE"
