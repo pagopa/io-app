@@ -109,7 +109,9 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
           type={"SingleButton"}
           leftButton={confirmButtonProps(
             handleOnContinuePress,
-            I18n.t("global.buttons.continue")
+            I18n.t("global.buttons.continue"),
+            undefined,
+            "continueButton"
           )}
         />
       </SafeAreaView>
