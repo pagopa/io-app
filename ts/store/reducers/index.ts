@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
+import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
 import {
@@ -20,7 +21,6 @@ import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as autenticationInitialState
 } from "./authentication";
-import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
 import backoffErrorReducer from "./backoffError";
 import cieReducer from "./cie";
@@ -92,7 +92,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   backoffError: backoffErrorReducer,
   deepLink: deepLinkReducer,
   wallet: walletReducer,
-  backendInfo: backendInfoReducer,
+  versionInfo: versionInfoReducer,
   backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
   instabug: instabugUnreadMessagesReducer,

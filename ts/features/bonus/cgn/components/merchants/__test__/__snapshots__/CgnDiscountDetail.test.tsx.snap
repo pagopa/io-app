@@ -35,60 +35,6 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     spacer={true}
     style={Object {}}
   />
-  <Text
-    accessibilityRole="header"
-    accessible={true}
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 18,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 18,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "600",
-        },
-      ]
-    }
-    weight="SemiBold"
-    weightColorFactory={[Function]}
-  >
-    Validity
-  </Text>
-  <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 16,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "400",
-        },
-      ]
-    }
-    weight="Regular"
-    weightColorFactory={[Function]}
-  >
-    07/02/2022 - 20/02/2022
-  </Text>
   <View
     small={true}
     spacer={true}
@@ -183,44 +129,6 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     spacer={true}
     style={Object {}}
   />
-</View>
-`;
-
-exports[`when rendering on match snapshot for bucket discount 1`] = `
-<View
-  style={
-    Array [
-      Object {},
-      Object {
-        "paddingTop": 16,
-      },
-      Object {
-        "flex": 1,
-      },
-    ]
-  }
-  testID="discount-detail"
->
-  <View
-    style={
-      Array [
-        Object {},
-        Object {
-          "flexDirection": "row",
-        },
-        Object {
-          "flex": 1,
-        },
-        Object {
-          "flexWrap": "wrap",
-        },
-      ]
-    }
-  />
-  <View
-    spacer={true}
-    style={Object {}}
-  />
   <Text
     accessibilityRole="header"
     accessible={true}
@@ -275,6 +183,48 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
   >
     07/02/2022 - 20/02/2022
   </Text>
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+</View>
+`;
+
+exports[`when rendering on match snapshot for bucket discount 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "paddingTop": 16,
+      },
+      Object {
+        "flex": 1,
+      },
+    ]
+  }
+  testID="discount-detail"
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexWrap": "wrap",
+        },
+      ]
+    }
+  />
+  <View
+    spacer={true}
+    style={Object {}}
+  />
   <View
     small={true}
     spacer={true}
@@ -370,6 +320,64 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
       />
     </View>
   </View>
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+  <Text
+    accessibilityRole="header"
+    accessible={true}
+    color="bluegreyDark"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 18,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 18,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+    weightColorFactory={[Function]}
+  >
+    Validity
+  </Text>
+  <Text
+    color="bluegreyDark"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+    weightColorFactory={[Function]}
+  >
+    07/02/2022 - 20/02/2022
+  </Text>
   <View
     spacer={true}
     style={Object {}}
@@ -508,60 +516,6 @@ exports[`when rendering on match snapshot for static code 1`] = `
     spacer={true}
     style={Object {}}
   />
-  <Text
-    accessibilityRole="header"
-    accessible={true}
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 18,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 18,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "600",
-        },
-      ]
-    }
-    weight="SemiBold"
-    weightColorFactory={[Function]}
-  >
-    Validity
-  </Text>
-  <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-      }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 16,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "400",
-        },
-      ]
-    }
-    weight="Regular"
-    weightColorFactory={[Function]}
-  >
-    07/02/2022 - 20/02/2022
-  </Text>
   <View
     small={true}
     spacer={true}
@@ -648,6 +602,64 @@ exports[`when rendering on match snapshot for static code 1`] = `
       width={24}
     />
   </View>
+  <View
+    spacer={true}
+    style={Object {}}
+  />
+  <Text
+    accessibilityRole="header"
+    accessible={true}
+    color="bluegreyDark"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 18,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 18,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+    weightColorFactory={[Function]}
+  >
+    Validity
+  </Text>
+  <Text
+    color="bluegreyDark"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+    weightColorFactory={[Function]}
+  >
+    07/02/2022 - 20/02/2022
+  </Text>
   <View
     spacer={true}
     style={Object {}}

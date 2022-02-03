@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-community/async-storage";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
@@ -9,7 +10,6 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import AsyncStorage from "@react-native-community/async-storage";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
@@ -30,6 +30,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { navigateToLogout } from "../../store/actions/navigation";
 import { preferencesPagoPaTestEnvironmentSetEnabled } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -44,10 +45,9 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { navigateToLogout } from "../../store/actions/navigation";
-import { getDeviceId } from "../../utils/device";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -301,7 +301,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   private renderDeveloperSection() {
     const {
-      backendInfo,
       dispatchSessionExpired,
       isDebugModeEnabled,
       isPagoPATestEnabled,
@@ -352,15 +351,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         )}
         {isDebugModeEnabled && (
           <React.Fragment>
-            {backendInfo &&
-              this.debugListItem(
-                `${I18n.t("profile.main.backendVersion")} ${
-                  backendInfo.version
-                }`,
-                () => clipboardSetStringWithFeedback(backendInfo.version),
-                false
-              )}
-
             {isDevEnv &&
               sessionToken &&
               this.debugListItem(
@@ -559,7 +549,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  backendInfo: state.backendInfo.serverInfo,
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,

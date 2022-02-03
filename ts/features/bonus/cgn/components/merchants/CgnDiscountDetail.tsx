@@ -94,6 +94,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         <View spacer />
       </>
     )}
+    <CgnDiscountCodeComponent discount={discount} merchantType={merchantType} />
     <H3 accessible={true} accessibilityRole={"header"}>
       {I18n.t("bonus.cgn.merchantDetail.title.validity")}
     </H3>
@@ -104,7 +105,6 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       discount.endDate,
       I18n.t("global.dateFormats.shortFormat")
     )}`}</H4>
-    <CgnDiscountCodeComponent discount={discount} merchantType={merchantType} />
     <View spacer />
     {discount.condition && (
       <>
