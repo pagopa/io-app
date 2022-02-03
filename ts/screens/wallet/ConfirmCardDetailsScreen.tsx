@@ -5,10 +5,9 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { constNull } from "fp-ts/lib/function";
@@ -16,7 +15,6 @@ import { constNull } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import NoticeBox from "../../components/NoticeBox";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -62,6 +60,11 @@ import {
   isReady
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { getLookUpIdPO } from "../../utils/pmLookUpId";
+import { H1 } from "../../components/core/typography/H1";
+import { H4 } from "../../components/core/typography/H4";
+import { H5 } from "../../components/core/typography/H5";
+import { InfoBox } from "../../components/box/InfoBox";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type NavigationParams = Readonly<{
@@ -94,6 +97,10 @@ const styles = StyleSheet.create({
   paddedLR: {
     paddingLeft: customVariables.contentPadding,
     paddingRight: customVariables.contentPadding
+  },
+  preferredMethodContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 });
 
@@ -188,7 +195,8 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         ),
       title: isInPayment
         ? I18n.t("wallet.saveCardInPayment.save")
-        : I18n.t("wallet.saveCard.save")
+        : I18n.t("global.buttons.continue"),
+      testID: "saveOrContinueButton"
     };
 
     const secondaryButtonProps = {
@@ -242,8 +250,11 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       .getOrElse({});
 
     const noErrorContent = (
-      <>
+      <SafeAreaView style={IOStyles.flex}>
         <Content noPadded={true} style={styles.paddedLR}>
+          <H1>{I18n.t("wallet.saveCard.title")}</H1>
+          <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
+          <View spacer />
           <CardComponent
             wallet={wallet}
             type={"Full"}
@@ -252,43 +263,38 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             hideFavoriteIcon={true}
           />
           <View spacer={true} />
-          <NoticeBox
-            backgroundColor={customVariables.toastColor}
-            iconProps={{
-              name: "io-notice",
-              color: customVariables.brandDarkGray,
-              size: 24
-            }}
+          <InfoBox
+            alignedCentral={true}
+            iconSize={24}
+            iconColor={IOColors.bluegreyDark}
           >
-            <Text>{I18n.t("wallet.saveCard.notice")}</Text>
-          </NoticeBox>
-          <View spacer={true} />
-          <Grid>
-            <Col size={5}>
-              <Text bold={true}>{I18n.t("wallet.saveCard.infoTitle")}</Text>
-              <Text>{I18n.t("wallet.saveCard.info")}</Text>
-            </Col>
-            <Col size={1}>
+            <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
+          </InfoBox>
+          <View spacer large />
+          <View style={styles.preferredMethodContainer}>
+            <View style={IOStyles.flex}>
+              <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+                {I18n.t("wallet.saveCard.infoTitle")}
+              </H4>
+              <H5 weight={"Regular"} color={"bluegrey"}>
+                {I18n.t("wallet.saveCard.info")}
+              </H5>
+            </View>
+            <View hspacer={true} />
+            <View style={{ paddingTop: 7 }}>
               <Switch
                 value={this.state.setAsFavourite}
                 onValueChange={this.onSetFavouriteValueChange}
               />
-            </Col>
-          </Grid>
+            </View>
+          </View>
         </Content>
-        {isInPayment ? (
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            leftButton={secondaryButtonProps}
-            rightButton={primaryButtonProps}
-          />
-        ) : (
-          <FooterWithButtons
-            type={"TwoButtonsInlineHalf"}
-            leftButton={secondaryButtonProps}
-            rightButton={primaryButtonProps}
-          />
-        )}
+
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+        />
 
         {/*
          * When the first step is finished (creditCardAddWallet === some) show the webview
@@ -314,7 +320,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
           />
         )}
-      </>
+      </SafeAreaView>
     );
     const error = this.props.error.isSome() || this.props.areWalletsInError;
     return (

@@ -12,7 +12,7 @@ describe("the InformationRow component", () => {
           value={"via Roma"}
           label={"serviceDetail.fiscalCode"}
           onPress={constNull}
-          hint={"clipboard.copyText"}
+          accessibilityLabel="Label"
         />
       ).toJSON()
     ).toMatchSnapshot();

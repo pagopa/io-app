@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../components/box/InfoBox";
@@ -42,6 +42,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("profile.main.privacy.shareData.title")}
     >
       <SafeAreaView style={IOStyles.flex}>
+        <StatusBar backgroundColor={IOColors.white} barStyle={"dark-content"} />
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <ShareDataComponent />
           <View spacer={true} />

@@ -152,10 +152,13 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
               url => (
                 <FooterWithButtons
                   type={"SingleButton"}
-                  leftButton={confirmButtonProps(
-                    () => openWebUrl(url),
-                    I18n.t("bonus.cgn.merchantDetail.cta.label")
-                  )}
+                  leftButton={{
+                    ...confirmButtonProps(
+                      () => openWebUrl(url),
+                      I18n.t("bonus.cgn.merchantDetail.cta.label")
+                    ),
+                    bordered: true
+                  }}
                 />
               )
             )}
