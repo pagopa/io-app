@@ -53,7 +53,7 @@ const selectVersion = (
  * Since the getAppVersion cannot change during the app execution, we can avoid forwarding it from the outside
  * @param state
  */
-export const isAppUpdateNeededSelector = createSelector(
+export const isAppSupportedSelector = createSelector(
   [versionInfoDataSelector],
   (versionInfo): boolean =>
     selectVersion(versionInfo?.min_app_version)

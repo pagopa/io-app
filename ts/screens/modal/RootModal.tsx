@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import {
-  isAppUpdateNeededSelector,
+  isAppSupportedSelector,
   versionInfoDataSelector
 } from "../../common/versionInfo/store/reducers/versionInfo";
 import { mixpanelTrack } from "../../mixpanel";
@@ -25,7 +25,7 @@ export const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     return <SystemOffModal />;
   }
   // if the app is out of date, force a screen to update it
-  if (props.isAppUpdateNeeded) {
+  if (!props.isAppSupported) {
     void mixpanelTrack("UPDATE_APP_MODAL", {
       minVersioniOS: props.versionInfo?.min_app_version.ios,
       minVersionAndroid: props.versionInfo?.min_app_version.android
@@ -37,7 +37,7 @@ export const RootModal: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
-  isAppUpdateNeeded: isAppUpdateNeededSelector(state),
+  isAppSupported: isAppSupportedSelector(state),
   versionInfo: versionInfoDataSelector(state)
 });
 
