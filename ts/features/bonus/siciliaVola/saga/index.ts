@@ -1,4 +1,4 @@
-import { takeLatest } from "typed-redux-saga";
+import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
 import { none, some } from "fp-ts/lib/Option";

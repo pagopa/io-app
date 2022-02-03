@@ -1,4 +1,4 @@
-import { call, select, take } from "typed-redux-saga";
+import { call, select, take } from "typed-redux-saga/macro";
 import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import {

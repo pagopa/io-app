@@ -1,5 +1,5 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { call, put, take } from "typed-redux-saga";
+import { call, put, take } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../../../types/utils";

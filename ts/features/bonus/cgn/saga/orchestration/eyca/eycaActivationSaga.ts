@@ -1,6 +1,6 @@
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, put, race } from "typed-redux-saga";
+import { call, put, race } from "typed-redux-saga/macro";
 import { call as baseCall, take as baseTake } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { BackendCGN } from "../../../api/backendCgn";

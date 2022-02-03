@@ -1,4 +1,4 @@
-import { call } from "typed-redux-saga";
+import { call } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { Millisecond } from "italia-ts-commons/lib/units";

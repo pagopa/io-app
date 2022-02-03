@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { call, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga/macro";
 import { Platform } from "react-native";
 import RNFS from "react-native-fs";
 import { readableReport } from "italia-ts-commons/lib/reporters";

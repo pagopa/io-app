@@ -1,4 +1,4 @@
-import { call, put, take } from "typed-redux-saga";
+import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { Effect } from "redux-saga/effects";
 import { fromNullable } from "fp-ts/lib/Option";

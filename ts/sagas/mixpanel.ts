@@ -1,5 +1,5 @@
 import { NavigationActions } from "react-navigation";
-import { call, select, take } from "typed-redux-saga";
+import { call, select, take } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { initializeMixPanel, terminateMixpanel } from "../mixpanel";

@@ -1,4 +1,4 @@
-import { all, call, delay, put, take, select } from "typed-redux-saga";
+import { all, call, delay, put, take, select } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";

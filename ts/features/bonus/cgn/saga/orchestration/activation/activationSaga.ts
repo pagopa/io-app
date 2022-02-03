@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call } from "typed-redux-saga";
+import { call } from "typed-redux-saga/macro";
 import {
   executeWorkUnit,
   withResetNavigationStack

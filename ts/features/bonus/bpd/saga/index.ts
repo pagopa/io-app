@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { takeEvery, takeLatest } from "typed-redux-saga";
+import { takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import {
   bpdApiUrlPrefix,

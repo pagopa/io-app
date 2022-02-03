@@ -1,4 +1,4 @@
-import { all, call, put } from "typed-redux-saga";
+import { all, call, put } from "typed-redux-saga/macro";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";

@@ -1,5 +1,5 @@
 import { Effect } from "redux-saga/effects";
-import { call, cancel, fork, put, take } from "typed-redux-saga";
+import { call, cancel, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {

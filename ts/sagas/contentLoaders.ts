@@ -6,7 +6,7 @@ import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { SagaIterator } from "redux-saga";
-import { call, put, takeEvery, takeLatest } from "typed-redux-saga";
+import { call, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";

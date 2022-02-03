@@ -1,4 +1,4 @@
-import { put, take } from "typed-redux-saga";
+import { put, take } from "typed-redux-saga/macro";
 import { AsyncActionCreator, getType, PayloadAction } from "typesafe-actions";
 import { left, right } from "fp-ts/lib/Either";
 

@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { call, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga/macro";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { svGenerateVoucherAvailableState } from "../../store/actions/voucherGeneration";

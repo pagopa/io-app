@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "typed-redux-saga";
+import { put, select } from "typed-redux-saga/macro";
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
 import { removeServiceTuples } from "../../store/actions/services";
 import { messagesIdsByServiceIdSelector } from "../../store/reducers/entities/messages/messagesIdsByServiceId";

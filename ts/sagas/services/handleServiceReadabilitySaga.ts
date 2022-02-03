@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { put, select } from "typed-redux-saga";
+import { put, select } from "typed-redux-saga/macro";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { markServiceAsRead } from "../../store/actions/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";

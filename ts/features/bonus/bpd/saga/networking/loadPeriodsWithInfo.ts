@@ -1,6 +1,6 @@
 import { findFirst } from "fp-ts/lib/Array";
 import { Either, isRight, right } from "fp-ts/lib/Either";
-import { all, call, put } from "typed-redux-saga";
+import { all, call, put } from "typed-redux-saga/macro";
 import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";

@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { call, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga/macro";
 import { svVoucherRevocation } from "../../store/actions/voucherList";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";

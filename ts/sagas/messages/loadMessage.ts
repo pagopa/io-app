@@ -1,6 +1,6 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
-import { call, put, select } from "typed-redux-saga";
+import { call, put, select } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";

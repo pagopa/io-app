@@ -1,6 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 

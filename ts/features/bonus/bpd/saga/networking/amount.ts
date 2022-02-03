@@ -1,6 +1,6 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call } from "typed-redux-saga";
+import { call } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 import { TotalCashbackResource } from "../../../../../../definitions/bpd/winning_transactions/TotalCashbackResource";
 import { mixpanelTrack } from "../../../../../mixpanel";

@@ -1,6 +1,6 @@
 import { Task } from "redux-saga";
 import { Effect } from "redux-saga/effects";
-import { call, cancel, fork, put, takeEvery } from "typed-redux-saga";
+import { call, cancel, fork, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
 import NavigationService from "../../navigation/NavigationService";

@@ -216,6 +216,7 @@
     "@typescript-eslint/parser": "^5.9.1",
     "abortcontroller-polyfill": "1.7.3",
     "babel-jest": "^26.6.3",
+    "babel-plugin-macros": "^3.1.0",
     "babel-preset-react-native": "^4.0.1",
     "chalk": "^2.4.1",
     "danger": "^10.3.0",

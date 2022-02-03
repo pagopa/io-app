@@ -1,4 +1,4 @@
-import { put } from "typed-redux-saga";
+import { put } from "typed-redux-saga/macro";
 import { getAppVersion } from "../../utils/appVersion";
 import { appVersionHistory } from "../../store/actions/installation";
 

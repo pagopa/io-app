@@ -1,7 +1,7 @@
 import cieManager from "@pagopa/react-native-cie";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { call, put, takeLatest } from "typed-redux-saga";
+import { call, put, takeLatest } from "typed-redux-saga/macro";
 import {
   cieIsSupported,
   hasApiLevelSupport,

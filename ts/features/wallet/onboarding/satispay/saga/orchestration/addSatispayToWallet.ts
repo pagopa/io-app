@@ -1,4 +1,4 @@
-import { call, put, select } from "typed-redux-saga";
+import { call, put, select } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
 import {

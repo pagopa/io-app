@@ -1,4 +1,4 @@
-import { call } from "typed-redux-saga";
+import { call } from "typed-redux-saga/macro";
 import { NavigationActions } from "react-navigation";
 import { ActionType } from "typesafe-actions";
 import {

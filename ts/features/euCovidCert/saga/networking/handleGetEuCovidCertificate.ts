@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable } from "fp-ts/lib/Option";
-import { call, put, select } from "typed-redux-saga";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { Certificate } from "../../../../../definitions/eu_covid_cert/Certificate";
 import { mixpanelTrack } from "../../../../mixpanel";

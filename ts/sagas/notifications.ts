@@ -3,7 +3,7 @@
  */
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Platform } from "react-native";
-import { call, put, select } from "typed-redux-saga";
+import { call, put, select } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { BackendClient } from "../api/backend";

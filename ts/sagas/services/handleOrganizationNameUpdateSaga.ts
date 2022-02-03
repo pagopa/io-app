@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "typed-redux-saga";
+import { put, select } from "typed-redux-saga/macro";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { updateOrganizations } from "../../store/actions/organizations";
 import {

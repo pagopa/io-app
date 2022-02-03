@@ -1,4 +1,4 @@
-import { call, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga/macro";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { Option } from "fp-ts/lib/Option";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";

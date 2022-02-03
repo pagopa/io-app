@@ -1,5 +1,5 @@
 import { Effect } from "redux-saga/effects";
-import { put, takeLatest } from "typed-redux-saga";
+import { put, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionExpired } from "../../store/actions/authentication";

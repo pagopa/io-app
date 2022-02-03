@@ -1,4 +1,4 @@
-import { takeLatest } from "typed-redux-saga";
+import { takeLatest } from "typed-redux-saga/macro";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../types/pagopa";

@@ -2,7 +2,7 @@
  * this saga checks at regular intervals the backend status
  */
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { call, fork, put, select } from "typed-redux-saga";
+import { call, fork, put, select } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 import { CdnBackendStatusClient } from "../api/backendPublic";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";

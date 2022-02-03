@@ -2,7 +2,7 @@ import { Either, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { StackActions } from "react-navigation";
 import { Effect } from "redux-saga/effects";
-import { call, put, select, take, race } from "typed-redux-saga";
+import { call, put, select, take, race } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { navigateBack } from "../../../../../../store/actions/navigation";

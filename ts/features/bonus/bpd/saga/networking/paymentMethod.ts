@@ -1,4 +1,4 @@
-import { call, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { fromNullable } from "fp-ts/lib/Option";

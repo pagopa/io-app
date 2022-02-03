@@ -1,6 +1,6 @@
 import { NavigationActions } from "react-navigation";
 import { Effect } from "redux-saga/effects";
-import { call, take } from "typed-redux-saga";
+import { call, take } from "typed-redux-saga/macro";
 import {
   ActionCreator,
   ActionType,

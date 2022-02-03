@@ -1,6 +1,6 @@
 import { NavigationParams, NavigationStateRoute } from "react-navigation";
 import { Effect } from "redux-saga/effects";
-import { call, put } from "typed-redux-saga";
+import { call, put } from "typed-redux-saga/macro";
 import NavigationService from "../../navigation/NavigationService";
 
 import ROUTES from "../../navigation/routes";

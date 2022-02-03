@@ -1,7 +1,7 @@
 /**
  * A saga to manage notifications
  */
-import { call, put, select } from "typed-redux-saga";
+import { call, put, select } from "typed-redux-saga/macro";
 import { Effect } from "redux-saga/effects";
 
 import {
