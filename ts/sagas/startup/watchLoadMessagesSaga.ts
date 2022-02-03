@@ -5,7 +5,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Effect } from "redux-saga/effects";
+import { Effect, put as basePut } from "redux-saga/effects";
 import { all, call, put, select, takeLatest } from "typed-redux-saga";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
@@ -145,14 +145,22 @@ function* loadMessages(
         // We don't need to store the results because the LOAD_SERVICE_DETAIL_REQUEST is already dispatched by each `loadServiceDetail` action called.
         // We fetch services first because to show messages you need the related service info
         yield* all(
-          pendingServicesIds.map(id => put(loadServiceDetail.request(id)))
+          // Here we are not usint the `put` from typed-redux saga
+          // because it's going to clash with the default one from
+          // redux-saga in the unit tests.
+          pendingServicesIds.map(id => basePut(loadServiceDetail.request(id)))
         );
 
         // Fetch the messages detail in parallel
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
         // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
         // TODO: with the enrichment, we don't need to load each message anymore
-        yield* all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
+        yield* all(
+          // Here we are not usint the `put` from typed-redux saga
+          // because it's going to clash with the default one from
+          // redux-saga in the unit tests.
+          pendingMessages.map(_ => basePut(loadMessageAction.request(_)))
+        );
       }
     }
   } catch (error) {
