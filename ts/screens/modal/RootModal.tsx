@@ -27,7 +27,7 @@ export const RootModal: React.FunctionComponent<Props> = (props: Props) => {
   // if the app is out of date, force a screen to update it
   if (props.isAppUpdateNeeded) {
     void mixpanelTrack("UPDATE_APP_MODAL", {
-      minVersionOS: props.versionInfo?.min_app_version.ios,
+      minVersioniOS: props.versionInfo?.min_app_version.ios,
       minVersionAndroid: props.versionInfo?.min_app_version.android
     });
     return <UpdateAppModal />;
