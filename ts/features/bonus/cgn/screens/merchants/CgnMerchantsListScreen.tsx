@@ -145,7 +145,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
                   iconPosition={"right"}
                   inputProps={{
                     value: searchValue,
-                    autoFocus: true,
+                    autoFocus: false,
                     onChangeText: setSearchValue,
                     placeholder: I18n.t("global.buttons.search")
                   }}

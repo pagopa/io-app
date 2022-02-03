@@ -139,5 +139,7 @@
     </array>
     <key>method</key>
     <string>app-store</string>
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleLightContent</string>
   </dict>
 </plist>
