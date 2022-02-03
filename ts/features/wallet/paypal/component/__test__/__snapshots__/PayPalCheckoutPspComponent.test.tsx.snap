@@ -223,6 +223,7 @@ exports[`PayPalCheckoutPspComponent it should match the snapshot 1`] = `
               },
             ]
           }
+          testID="editLabelTestID"
           weight="Bold"
         >
           MODIFICA

@@ -65,7 +65,7 @@ export const PayPalCheckoutPspComponent = (props: Props) => {
               })}
             </Label>
           </View>
-          <Label onPress={props.onEditPress}>
+          <Label onPress={props.onEditPress} testID={"editLabelTestID"}>
             {I18n.t("global.buttons.edit").toUpperCase()}
           </Label>
         </View>

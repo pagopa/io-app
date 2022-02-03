@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { constNull } from "fp-ts/lib/function";
 import { PayPalCheckoutPspComponent } from "../PayPalCheckoutPspComponent";
@@ -23,6 +23,24 @@ describe("PayPalCheckoutPspComponent", () => {
       />
     );
     expect(component).toMatchSnapshot();
+  });
+
+  it(`edit label should be always pressable`, () => {
+    const pspName = "pspName123";
+    const mockEditLabelOnPress = jest.fn();
+    const component = render(
+      <PayPalCheckoutPspComponent
+        onEditPress={mockEditLabelOnPress}
+        fee={fee}
+        pspName={pspName}
+        privacyUrl={"https://io.italia.it"}
+      />
+    );
+    expect(component).not.toBeNull();
+    const editLabel = component.queryByTestId("editLabelTestID");
+    expect(editLabel).not.toBeNull();
+    fireEvent(editLabel!, "onPress");
+    expect(mockEditLabelOnPress).toHaveBeenCalledTimes(1);
   });
 
   describe("given a fee, pspName and privacy url", () => {
