@@ -108,17 +108,17 @@ const pspV2Selector = (state: GlobalState): PaymentState["pspsV2"] =>
  */
 export const pspV2ListSelector = createSelector(
   pspV2Selector,
-  (pspsV2: PaymentState["pspsV2"]): PaymentState["pspsV2"]["psps"] =>
-    pspsV2.psps
+  (
+    pspsV2: PaymentState["pspsV2"]
+  ): RemoteValue<ReadonlyArray<PspData>, Error> => pspsV2.psps
 );
 
 /**
- * return the selected psps in the pspV2 list
+ * return the selected psp
  */
 export const pspSelectedV2ListSelector = createSelector(
   pspV2Selector,
-  (pspsV2: PaymentState["pspsV2"]): PaymentState["pspsV2"]["pspSelected"] =>
-    pspsV2.pspSelected
+  (pspsV2: PaymentState["pspsV2"]): PspData | undefined => pspsV2.pspSelected
 );
 
 export const isPaymentOngoingSelector = (state: GlobalState) =>

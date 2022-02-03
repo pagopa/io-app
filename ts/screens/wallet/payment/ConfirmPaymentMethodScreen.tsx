@@ -241,6 +241,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ]);
   };
 
+  // show the screen where the user can pick the desired psp
   const handleOnEditPaypalPsp = () => {
     navigation.navigate(
       navigateToPayPalUpdatePspForPayment({
@@ -372,7 +373,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const pmSessionToken = pmSessionTokenSelector(state);
   const paymentStartPayload = paymentStartPayloadSelector(state);
-  // if there is no psp selected pick the default one from the list (if present)
+  // if there is no psp selected pick the default one from the list (if any)
   const paypalSelectedPsp: PspData | undefined =
     pspSelectedV2ListSelector(state) ||
     getValueOrElse(pspV2ListSelector(state), []).find(psp => psp.defaultPsp);

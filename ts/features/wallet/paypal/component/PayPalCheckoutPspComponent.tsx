@@ -13,7 +13,7 @@ import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 
 const styles = StyleSheet.create({
-  container: {
+  column: {
     flex: 1,
     flexDirection: "column"
   },
@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
   },
   pspHeader: {
     flexDirection: "row"
-  }
+  },
+  rowCentered: { flex: 1, flexDirection: "row", alignItems: "center" }
 });
 
 type Props = {
@@ -41,7 +42,7 @@ type Props = {
 export const PayPalCheckoutPspComponent = (props: Props) => {
   const { privacyUrl } = props;
   return (
-    <View style={styles.container}>
+    <View style={styles.column}>
       <ListItem style={styles.pspContainer}>
         <View style={styles.pspHeader}>
           <IconFont
@@ -55,13 +56,8 @@ export const PayPalCheckoutPspComponent = (props: Props) => {
           </H3>
         </View>
         <View spacer={true} />
-        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "column"
-            }}
-          >
+        <View style={styles.rowCentered}>
+          <View style={styles.column}>
             <H4>{formatNumberCentsToAmount(props.fee, true)}</H4>
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("wallet.onboarding.paypal.paymentCheckout.pspHandler", {
