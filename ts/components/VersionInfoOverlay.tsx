@@ -47,21 +47,16 @@ const styles = StyleSheet.create({
 
 const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const appVersion = getAppVersion();
-  const serverInfo = props.serverInfo;
-  const serverVersion = serverInfo ? serverInfo.version : "?";
 
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
-      <Text style={styles.versionText}>
-        {`app: ${appVersion}`} - {`backend: ${serverVersion}`}
-      </Text>
+      <Text style={styles.versionText}>{`v: ${appVersion}`}</Text>
       <Text style={styles.routeText}>{props.screenNameDebug}</Text>
     </View>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  serverInfo: state.backendInfo.serverInfo,
   // We need to use the currentRouteDebugSelector because this component is outside the NavigationContext and otherwise
   // doesn't receive the updates about the new screens
   screenNameDebug: currentRouteSelector(state)

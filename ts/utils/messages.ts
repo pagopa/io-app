@@ -33,7 +33,6 @@ import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
-import { getError } from "./errors";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -231,7 +230,6 @@ const extractCTA = (
         return FM<MessageCTA>(m).attributes;
       } catch (e) {
         void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
-          reason: getError(e).message,
           serviceId
         });
         return null;

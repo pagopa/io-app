@@ -34,6 +34,7 @@ import {
   getTransactionIUV
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -196,6 +197,10 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
         headerTitle={I18n.t("wallet.transactionDetails")}
         faqCategories={["wallet_transaction"]}
       >
+        <FocusAwareStatusBar
+          backgroundColor={customVariables.brandDarkGray}
+          barStyle={"light-content"}
+        />
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <SlidedContentComponent hasFlatBottom={true}>
           <PaymentSummaryComponent
