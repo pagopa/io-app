@@ -3,11 +3,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import {
-  NavigationEvents,
-  NavigationEventSubscription,
-  NavigationInjectedProps
-} from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -93,7 +89,11 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { Body } from "../../components/core/typography/Body";
+import {
+  bpdRemoteConfigSelector,
+  isCGNEnabledSelector
+} from "../../store/reducers/backendStatus";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -195,8 +195,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("keyFrom");
   }
 
-  private navListener?: NavigationEventSubscription;
-
   private handleBackPress = () => {
     const shouldPop =
       this.newMethodAdded && this.navigationKeyFrom !== undefined;
@@ -247,13 +245,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    }); // eslint-disable-line
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
 
     // Dispatch the action associated to the saga responsible to remind a user
@@ -263,9 +254,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
