@@ -15,6 +15,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
+import { SafeAreaView } from "react-native";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -239,11 +240,13 @@ class TransactionSummaryScreen extends React.Component<Props> {
           };
 
     return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={this.getSecondaryButtonProps()}
-        rightButton={primaryButtonProps}
-      />
+      <SafeAreaView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          leftButton={this.getSecondaryButtonProps()}
+          rightButton={primaryButtonProps}
+        />
+      </SafeAreaView>
     );
   }
 
