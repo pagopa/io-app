@@ -62,12 +62,15 @@ class MessageListItem extends React.PureComponent<Props> {
       ? I18n.t("messages.accessibility.message.read")
       : I18n.t("messages.accessibility.message.unread");
 
+    const state = this.paid ? I18n.t("messages.badge.paid") : "";
+
     return I18n.t("messages.accessibility.message.description", {
       newMessage,
       organizationName: message.organizationName,
       serviceName: message.serviceName,
       subject: message.content.subject,
-      receivedAt: convertReceivedDateToAccessible(message.created_at)
+      receivedAt: convertReceivedDateToAccessible(message.created_at),
+      state
     });
   };
 
@@ -109,6 +112,7 @@ class MessageListItem extends React.PureComponent<Props> {
           ...message,
           ...uiService
         })}
+        accessibilityRole="button"
         testID={`MessageListItem_${message.id}`}
       >
         {!hasPrescriptionData(message) && messageNeedsCTABar(message) && (

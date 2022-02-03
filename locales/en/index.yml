@@ -1180,11 +1180,11 @@ wallet:
     contextualHelpTitle: Save a card to IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Save the card
-    title: Do you want to save this card?
-    infoTitle: Set the card as favourite payment method
-    info: This payment method will be automatically proposed for the next payment
-    save: Save
-    notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
+    title: "Is everything correct?"
+    subtitle: "By adding the card to your Wallet, you will be able to make payments in the app and join the initiatives available on IO."
+    infoTitle: "Use as favorite"
+    info: "When you pay in-app, IO will automatically show this payment method"
+    notice: "In order to verify your card, we temporarily hold 0.02 €. Don't worry, we will return the amount to you as soon as possible."
     temporaryError: There was a problem while saving this card.
     temporarySubError: We have not received a response from the security systems. We apologize for the inconvenience.
     loadWalletsErrorTitle: Systems are taking longer than expected
@@ -1569,7 +1569,7 @@ messages:
       read: "Message"
       unread: "Unread message"
       archived: Archived
-      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "received on"
       received_at: "received at"
   contextualHelpTitle: About this section
@@ -2539,12 +2539,12 @@ bonus:
     merchantsList:
       online: Online
       places: Places
-      navigationTitle: View merchants
-      screenTitle: Select the merchant where you want to buy something
+      navigationTitle: Benefits
+      screenTitle: Select the operator and discover the benefits
       cta:
         filter: Filter
       filter:
-        title: Filter merchants
+        title: Filter operators
         searchTitle: Find by name
         inputPlaceholder: Find store, theater or other
         addressTitle: Find by address
@@ -2569,7 +2569,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Discounts
+        deals: Benefits
         description: Description
         services: Services
         addresses: Addresses
@@ -2578,7 +2578,7 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to merchant website
+        label: Navigate to operator website
         landingPage: Get the benefit
       categories:
         counting: and other {{count}}
@@ -2598,7 +2598,7 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: See benefits
+        buyers: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
@@ -2611,7 +2611,7 @@ bonus:
         warning: "Attention! "
         revoked: "This card has been revoked cause {{reason}}"
         expired: "This card expired on {{date}}"
-      ownership: Who can take advantage of discounts?
+      ownership: Who can take advantage of benefits?
       status:
         title: Carta Giovani Nazionale
         eyca: EYCA card
@@ -2619,7 +2619,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating operators, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active

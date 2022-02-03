@@ -1202,13 +1202,11 @@ wallet:
     contextualHelpTitle: Salva una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
-    title: Vuoi salvare questa carta?
-    infoTitle: Imposta la carta come metodo di pagamento preferito
-    info:
-      Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
-      pagamento
-    save: Salva
-    notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
+    title: "È tutto corretto?"
+    subtitle: "Aggiungendo la carta al tuo Portafoglio, potrai effettuare pagamenti in app e aderire alle iniziative disponibili su IO."
+    infoTitle: "Usa come metodo preferito"
+    info: "Quando paghi in app, IO ti mostra in automatico questo metodo di pagamento"
+    notice: "Per verificare la tua carta, tratteniamo temporaneamente € 0,02. Non preoccuparti: ti restituiremo l'importo al più presto."
     temporaryError: Si è verificato un errore nel salvataggio di questa carta
     temporarySubError: Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.
     loadWalletsErrorTitle: I sistemi stanno impiegando più tempo del previsto
@@ -1594,7 +1592,7 @@ messages:
       read: "Messaggio"
       unread: "Messaggio non letto"
       archived: Archiviato
-      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
@@ -2567,8 +2565,8 @@ bonus:
     merchantsList:
       online: Online
       places: Luoghi
-      navigationTitle: Visualizza esercenti
-      screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+      navigationTitle: Agevolazioni
+      screenTitle: Seleziona un operatore e scopri le agevolazioni
       cta:
         filter: Filtra
       filter:
@@ -2597,7 +2595,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Offerte
+        deals: Agevolazioni
         description: Descrizione
         services: Servizi
         addresses: Indirizzi
@@ -2606,7 +2604,7 @@ bonus:
         discountCode: Codice Sconto
         conditions: Condizioni
       cta:
-        label: Vai al sito dell'esercente
+        label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione
       categories:
         counting: e altre {{count}}
@@ -2626,7 +2624,7 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Vedi agevolazioni
+        buyers: Scopri le agevolazioni
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
@@ -2639,7 +2637,7 @@ bonus:
         warning: "Attenzione! "
         revoked: "Questa carta è stata revocata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
-      ownership: Chi può usufruire degli sconti?
+      ownership: Chi può usufruire delle agevolazioni?
       status:
         title: Carta Giovani Nazionale
         eyca: Carta EYCA
@@ -2648,7 +2646,7 @@ bonus:
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli operatori aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
           revoked: Revocata
