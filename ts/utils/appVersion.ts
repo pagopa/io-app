@@ -1,6 +1,9 @@
+import { Either, fromNullable } from "fp-ts/lib/Either";
+import { Errors } from "io-ts";
+import { PatternString } from "italia-ts-commons/lib/strings";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import semver from "semver";
+import semver, { SemVer } from "semver";
 import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
 
@@ -15,6 +18,11 @@ export const webStoreURL = Platform.select({
   default: ioWebSiteUrl
 });
 
+const VersionFormat = PatternString("^\\d+(.\\d+){0,3}$");
+
+const validateFormat = (value: string): Either<Errors, SemVer> =>
+  VersionFormat.decode(value).chain(v => fromNullable([])(semver.coerce(v)));
+
 /**
  * return true if appVersion >= minAppVersion
  * @param minAppVersion the min version supported
@@ -24,13 +32,18 @@ export const isVersionSupported = (
   minAppVersion: string,
   appVersion: string
 ): boolean => {
-  const minVersion = semver.coerce(minAppVersion);
-  const currentAppVersion = semver.coerce(appVersion);
-  // cant compare
-  if (!minVersion || !currentAppVersion) {
+  const minVersion = validateFormat(minAppVersion);
+  const currentAppVersion = validateFormat(appVersion);
+
+  // If the validation of one of the two version fails, we cannot say anything ad we continue to support the version
+  if (minVersion.isLeft() || currentAppVersion.isLeft()) {
     return true;
   }
-  const semSatisfies = semver.satisfies(minVersion, `<=${currentAppVersion}`);
+
+  const semSatisfies = semver.satisfies(
+    minVersion.value,
+    `<=${currentAppVersion.value}`
+  );
   const minAppVersionSplitted = minAppVersion.split(".");
   const currentAppVersionSplitted = appVersion.split(".");
   // since semantic version consider only major.minor.path
