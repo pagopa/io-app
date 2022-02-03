@@ -11,7 +11,6 @@ import {
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import { isPagoPaUpdateNeededSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
@@ -615,34 +614,29 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  const isPagoPaVersionSupported = !isPagoPaUpdateNeededSelector(state);
-
-  return {
-    periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
-    allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: supportedAvailableBonusSelector(state),
-    // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
-    //  available for display in the wallet, so the cards added with the APP or with the WISP.
-    //  But it leverage on the assumption that the meaning of pagoPA === true is the same of onboardingChannel !== "EXT"
-    potWallets: pagoPaCreditCardWalletV1Selector(state),
-    anyHistoryPayments: paymentsHistorySelector(state).length > 0,
-    anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
-    potTransactions: latestTransactionsSelector(state),
-    transactionsLoadedLength: getTransactionsLoadedLength(state),
-    areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
-    isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-    readTransactions: transactionsReadSelector(state),
-    isPagoPaVersionSupported,
-    bpdLoadState: bpdLastUpdateSelector(state),
-    cgnDetails: cgnDetailSelector(state),
-    isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
-    isCgnEnabled: isCGNEnabledSelector(state),
-    bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
-    coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-    bpdConfig: bpdRemoteConfigSelector(state)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
+  allActiveBonus: allBonusActiveSelector(state),
+  availableBonusesList: supportedAvailableBonusSelector(state),
+  // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
+  //  available for display in the wallet, so the cards added with the APP or with the WISP.
+  //  But it leverage on the assumption that the meaning of pagoPA === true is the same of onboardingChannel !== "EXT"
+  potWallets: pagoPaCreditCardWalletV1Selector(state),
+  anyHistoryPayments: paymentsHistorySelector(state).length > 0,
+  anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
+  potTransactions: latestTransactionsSelector(state),
+  transactionsLoadedLength: getTransactionsLoadedLength(state),
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  readTransactions: transactionsReadSelector(state),
+  bpdLoadState: bpdLastUpdateSelector(state),
+  cgnDetails: cgnDetailSelector(state),
+  isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
+  isCgnEnabled: isCGNEnabledSelector(state),
+  bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
+  coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
+  bpdConfig: bpdRemoteConfigSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),

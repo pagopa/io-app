@@ -57,8 +57,8 @@ export const isAppSupportedSelector = createSelector(
   [versionInfoDataSelector],
   (versionInfo): boolean =>
     selectVersion(versionInfo?.min_app_version)
-      .map(v => !isVersionSupported(v, getAppVersion()))
-      .getOrElse(false)
+      .map(v => isVersionSupported(v, getAppVersion()))
+      .getOrElse(true)
 );
 
 /**
@@ -67,10 +67,10 @@ export const isAppSupportedSelector = createSelector(
  * Since the getAppVersion cannot change during the app execution, we can avoid forwarding it from the outside
  * @param state
  */
-export const isPagoPaUpdateNeededSelector = createSelector(
+export const isAppPagoPaSupportedSelector = createSelector(
   [versionInfoDataSelector],
   (versionInfo): boolean =>
     selectVersion(versionInfo?.min_app_version_pagopa)
-      .map(v => !isVersionSupported(v, getAppVersion()))
-      .getOrElse(false)
+      .map(v => isVersionSupported(v, getAppVersion()))
+      .getOrElse(true)
 );

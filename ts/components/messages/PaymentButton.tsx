@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
-import { isPagoPaUpdateNeededSelector } from "../../common/versionInfo/store/reducers/versionInfo";
+import { isAppPagoPaSupportedSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 const PaymentButton = ({
   amount: paymentAmount,
   isEmailValidated,
-  isUpdatedNeededPagoPa,
+  isPagoPaSupported,
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHomeScreen,
   noticeNumber,
@@ -67,7 +67,7 @@ const PaymentButton = ({
 
     if (amount.isSome() && rptId.isSome()) {
       // TODO: optimize the management of the payment initialization
-      if (isEmailValidated && !isUpdatedNeededPagoPa) {
+      if (isEmailValidated && isPagoPaSupported) {
         dispatch(paymentInitializeState());
         navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
@@ -95,7 +95,7 @@ const PaymentButton = ({
 
 const mapStateToProps = (state: GlobalState) => ({
   isEmailValidated: isProfileEmailValidatedSelector(state),
-  isUpdatedNeededPagoPa: isPagoPaUpdateNeededSelector(state)
+  isPagoPaSupported: isAppPagoPaSupportedSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
