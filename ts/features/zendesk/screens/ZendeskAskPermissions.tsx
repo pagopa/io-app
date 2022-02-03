@@ -49,7 +49,8 @@ import {
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
-  zendeskidentityProviderId
+  zendeskidentityProviderId,
+  zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
 import { mixpanelTrack } from "../../../mixpanel";
 import { appVersionHistorySelector } from "../../../store/reducers/installation";
@@ -250,8 +251,11 @@ const ZendeskAskPermissions = (props: Props) => {
     // Tag the ticket with the current app version
     addTicketTag(itemsProps.currentVersion);
 
-    // Append the app versions history to the logs
-    appendLog(`versionsHistory: ${arrayToZendeskValue(versionsHistory)}`);
+    // Add the versions history to the relative Zendesk field
+    addTicketCustomField(
+      zendeskVersionsHistoryId,
+      arrayToZendeskValue(versionsHistory)
+    );
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
