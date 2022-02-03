@@ -45,7 +45,6 @@ import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   addTicketCustomField,
   addTicketTag,
-  appendLog,
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
