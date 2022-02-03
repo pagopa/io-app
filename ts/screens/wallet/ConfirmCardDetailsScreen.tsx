@@ -195,7 +195,8 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         ),
       title: isInPayment
         ? I18n.t("wallet.saveCardInPayment.save")
-        : I18n.t("global.buttons.continue")
+        : I18n.t("global.buttons.continue"),
+      testID: "saveOrContinueButton"
     };
 
     const secondaryButtonProps = {
