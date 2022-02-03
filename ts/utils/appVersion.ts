@@ -1,5 +1,4 @@
-import { Either, fromNullable } from "fp-ts/lib/Either";
-import { Errors } from "io-ts";
+import { Either, fromNullable, toError } from "fp-ts/lib/Either";
 import { PatternString } from "italia-ts-commons/lib/strings";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -20,8 +19,14 @@ export const webStoreURL = Platform.select({
 
 const VersionFormat = PatternString("^\\d+(.\\d+){0,3}$");
 
-const validateFormat = (value: string): Either<Errors, SemVer> =>
-  VersionFormat.decode(value).chain(v => fromNullable([])(semver.coerce(v)));
+const validateFormat = (value: string): Either<Error, SemVer> =>
+  VersionFormat.decode(value)
+    .mapLeft(toError)
+    .chain(v =>
+      fromNullable(new Error(`Cannot parse ${value} using semver.coerce`))(
+        semver.coerce(v)
+      )
+    );
 
 /**
  * return true if appVersion >= minAppVersion
@@ -35,7 +40,7 @@ export const isVersionSupported = (
   const minVersion = validateFormat(minAppVersion);
   const currentAppVersion = validateFormat(appVersion);
 
-  // If the validation of one of the two version fails, we cannot say anything ad we continue to support the version
+  // If the validation of one of the two versions fails, we cannot say anything ad we continue to support the version
   if (minVersion.isLeft() || currentAppVersion.isLeft()) {
     return true;
   }
