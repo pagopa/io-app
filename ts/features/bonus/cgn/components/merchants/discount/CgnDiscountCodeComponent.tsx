@@ -32,6 +32,7 @@ const CgnDiscountCodeComponent = ({ discount, merchantType }: Props) => {
     <>
       <View spacer small />
       {renderProperCodeVisualization(discount)}
+      <View spacer />
     </>
   );
 };

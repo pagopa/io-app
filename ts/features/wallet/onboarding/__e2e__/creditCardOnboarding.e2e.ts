@@ -58,10 +58,10 @@ describe("Credit Card onboarding", () => {
       await element(by.label("Done")).atIndex(0).tap();
       await element(by.text(I18n.t("global.buttons.continue"))).tap();
 
-      await waitFor(element(by.text(I18n.t("global.buttons.continue"))))
+      await waitFor(element(by.id("saveOrContinueButton")))
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
-      await element(by.text(I18n.t("global.buttons.continue"))).tap();
+      await element(by.id("saveOrContinueButton")).tap();
 
       // Wait for 3ds webview
       await waitFor(element(by.text(I18n.t("wallet.challenge3ds.description"))))
