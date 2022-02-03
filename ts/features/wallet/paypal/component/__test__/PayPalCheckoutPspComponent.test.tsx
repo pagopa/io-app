@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react-native";
 import React from "react";
+import { constNull } from "fp-ts/lib/function";
 import { PayPalCheckoutPspComponent } from "../PayPalCheckoutPspComponent";
 import { ImportoEuroCents } from "../../../../../../definitions/backend/ImportoEuroCents";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
@@ -15,6 +16,7 @@ describe("PayPalCheckoutPspComponent", () => {
   it(`it should match the snapshot`, () => {
     const component = render(
       <PayPalCheckoutPspComponent
+        onEditPress={constNull}
         fee={fee}
         pspName={"pspName"}
         privacyUrl={"https://io.italia.it"}
@@ -28,6 +30,7 @@ describe("PayPalCheckoutPspComponent", () => {
       const pspName = "pspName123";
       const component = render(
         <PayPalCheckoutPspComponent
+          onEditPress={constNull}
           fee={fee}
           pspName={pspName}
           privacyUrl={"https://io.italia.it"}
@@ -56,7 +59,11 @@ describe("PayPalCheckoutPspComponent", () => {
     it(`it should not shown the privacy link`, () => {
       const pspName = "pspName123";
       const component = render(
-        <PayPalCheckoutPspComponent fee={fee} pspName={pspName} />
+        <PayPalCheckoutPspComponent
+          fee={fee}
+          pspName={pspName}
+          onEditPress={constNull}
+        />
       );
       expect(component).not.toBeNull();
       expect(
