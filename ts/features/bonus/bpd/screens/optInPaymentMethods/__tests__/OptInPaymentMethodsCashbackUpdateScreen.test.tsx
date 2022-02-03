@@ -17,6 +17,7 @@ import {
   Wallet
 } from "../../../../../../types/pagopa";
 
+jest.useFakeTimers();
 const mockPaymentMethodWithBPD = {
   idWallet: 23216,
   paymentMethod: {
