@@ -55,12 +55,9 @@ export function* bpdIbanInsertionWorker() {
   yield* call(ensureMainScreen);
 
   // wait for the user iban insertion o cancellation
-  const nextAction: ActionType<
-    typeof bpdIbanInsertionCancel | typeof bpdIbanInsertionContinue
-  > = yield* take([
-    getType(bpdIbanInsertionCancel),
-    getType(bpdIbanInsertionContinue)
-  ]);
+  const nextAction = yield* take<
+    ActionType<typeof bpdIbanInsertionCancel | typeof bpdIbanInsertionContinue>
+  >([getType(bpdIbanInsertionCancel), getType(bpdIbanInsertionContinue)]);
   if (isActionOf(bpdIbanInsertionCancel, nextAction)) {
     yield* call(onboardingOngoing ? navigateToWalletHome : navigateBack);
   } else {

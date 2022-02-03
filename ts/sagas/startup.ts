@@ -7,7 +7,6 @@ import {
   call,
   cancel,
   delay,
-  Effect,
   fork,
   put,
   select,
@@ -17,7 +16,7 @@ import {
   takeLatest
 } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
-
+import { Effect } from "redux-saga/effects";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
@@ -334,9 +333,14 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       // The user was previously logged in, so no onboarding is needed
       // The session was valid so the user didn't event had to do a full login,
       // in this case we ask the user to identify using the unlock code.
-      const identificationResult: SagaCallReturnType<
+      // FIXME: This is an unsafe cast caused by a wrongly described type.
+      const identificationResult = (yield* call(
+        startAndReturnIdentificationResult,
+        storedPin
+      )) as unknown as SagaCallReturnType<
         typeof startAndReturnIdentificationResult
-      > = yield* call(startAndReturnIdentificationResult, storedPin);
+      >;
+
       if (identificationResult === IdentificationResult.pinreset) {
         // If we are here the user had chosen to reset the unlock code
         yield* put(startApplicationInitialization());

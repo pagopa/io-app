@@ -1,6 +1,5 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { select } from "redux-saga-test-plan/matchers";
-import { call, put } from "typed-redux-saga";
+import { call, put, select } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
@@ -40,9 +39,9 @@ export function* handleSearchUserCoBadge(
   searchAction: ActionType<typeof searchUserCoBadge.request>
 ) {
   // try to retrieve the searchRequestId for co-badge search
-  const onboardingCoBadgeSearchRequest: ReturnType<
-    typeof onboardingCoBadgeSearchRequestId
-  > = yield* select(onboardingCoBadgeSearchRequestId);
+  const onboardingCoBadgeSearchRequest = yield* select(
+    onboardingCoBadgeSearchRequestId
+  );
 
   // get the results
   const result = yield* call(

@@ -3,15 +3,8 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  all,
-  call,
-  Effect,
-  put,
-  select,
-  take,
-  takeLatest
-} from "typed-redux-saga";
+import { all, call, put, select, take, takeLatest } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";

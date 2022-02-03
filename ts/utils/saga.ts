@@ -13,13 +13,12 @@ export function* getAsyncResult<T, I>(
   action: AsyncActionCreator<[any, I], [any, T], [any, Error]>,
   requestInput: I
 ) {
-  yield put(action.request(requestInput));
+  yield* put(action.request(requestInput));
   const successType = getType(action.success);
   const failureType = getType(action.failure);
-  const result = yield take<PayloadAction<any, T> | PayloadAction<any, Error>>([
-    successType,
-    failureType
-  ]);
+  const result = yield* take<PayloadAction<any, T> | PayloadAction<any, Error>>(
+    [successType, failureType]
+  );
   if (result.type === successType) {
     return right<Error, T>(result.payload as T);
   }

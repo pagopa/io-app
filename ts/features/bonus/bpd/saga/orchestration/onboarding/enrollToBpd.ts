@@ -1,5 +1,4 @@
 import { NavigationActions } from "react-navigation";
-import { SagaIterator } from "redux-saga";
 import { call, put, race, take } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -44,11 +43,12 @@ function* enrollToBpdWorker() {
 /**
  * This saga enroll the user to the bpd
  */
-export function* handleBpdEnroll(): SagaIterator {
+export function* handleBpdEnroll() {
   const { cancelAction } = yield* race({
     enroll: call(enrollToBpdWorker),
     cancelAction: take(bpdOnboardingCancel)
   });
+
   if (cancelAction) {
     yield* put(NavigationActions.back());
   }

@@ -1,15 +1,8 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import {
-  cancel,
-  Effect,
-  fork,
-  put,
-  select,
-  take,
-  takeEvery
-} from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
+import { cancel, fork, put, select, take, takeEvery } from "typed-redux-saga";
 import { getType } from "typesafe-actions";
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";

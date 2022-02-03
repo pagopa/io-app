@@ -1,5 +1,4 @@
-import { select, take } from "redux-saga-test-plan/matchers";
-import { all, call, delay, put } from "typed-redux-saga";
+import { all, call, delay, put, take, select } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -52,10 +51,12 @@ export function* loadBpdData() {
   // First request the bpd activation status
   yield* put(bpdLoadActivationStatus.request());
 
-  const activationStatus: ActionType<
-    | typeof bpdLoadActivationStatus.success
-    | typeof bpdLoadActivationStatus.failure
-  > = yield* take([
+  const activationStatus = yield* take<
+    ActionType<
+      | typeof bpdLoadActivationStatus.success
+      | typeof bpdLoadActivationStatus.failure
+    >
+  >([
     getType(bpdLoadActivationStatus.success),
     getType(bpdLoadActivationStatus.failure)
   ]);
@@ -71,9 +72,12 @@ export function* loadBpdData() {
     // In case of success, request the periods, amounts and ranking foreach required period
     yield* put(bpdPeriodsAmountLoad.request());
 
-    const periods: ActionType<
-      typeof bpdPeriodsAmountLoad.success | typeof bpdPeriodsAmountLoad.failure
-    > = yield* take([
+    const periods = yield* take<
+      ActionType<
+        | typeof bpdPeriodsAmountLoad.success
+        | typeof bpdPeriodsAmountLoad.failure
+      >
+    >([
       getType(bpdPeriodsAmountLoad.success),
       getType(bpdPeriodsAmountLoad.failure)
     ]);

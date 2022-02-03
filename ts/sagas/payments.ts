@@ -20,9 +20,12 @@ export function* paymentsDeleteUncompletedSaga() {
 
     yield* put(paymentDeletePayment.request({ paymentId: idPayment }));
 
-    const resultAction: ActionType<
-      typeof paymentDeletePayment.success | typeof paymentDeletePayment.failure
-    > = yield* take([
+    const resultAction = yield* take<
+      ActionType<
+        | typeof paymentDeletePayment.success
+        | typeof paymentDeletePayment.failure
+      >
+    >([
       getType(paymentDeletePayment.success),
       getType(paymentDeletePayment.failure)
     ]);

@@ -22,7 +22,7 @@ export function* checkConfiguredPinSaga(): Generator<Effect, PinString, any> {
   yield* call(navigateToOnboardingPinScreenAction);
 
   // and block until a unlock code is set
-  const resultAction: ActionType<typeof createPinSuccess> = yield* take(
+  const resultAction = yield* take<ActionType<typeof createPinSuccess>>(
     getType(createPinSuccess)
   );
 

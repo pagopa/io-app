@@ -1,17 +1,9 @@
 import { Either, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { StackActions } from "react-navigation";
-import { SagaIterator } from "redux-saga";
-import {
-  call,
-  CallEffect,
-  Effect,
-  put,
-  race,
-  select,
-  take
-} from "typed-redux-saga";
-import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
+import { Effect } from "redux-saga/effects";
+import { call, put, select, take, race } from "typed-redux-saga";
+import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
@@ -34,14 +26,8 @@ import { bpdEnabledSelector } from "../../../store/reducers/details/activation";
 export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS;
 
-export function* getActivationStatus(): Generator<
-  CallEffect,
-  Either<Error, CitizenResource>,
-  Either<Error, CitizenResource>
-> {
-  return yield* call(() =>
-    getAsyncResult(bpdLoadActivationStatus, undefined as void)
-  );
+export function* getActivationStatus() {
+  return yield* call(() => getAsyncResult(bpdLoadActivationStatus, undefined));
 }
 
 export function* isBpdEnabled(): Generator<
@@ -55,8 +41,7 @@ export function* isBpdEnabled(): Generator<
   if (pot.isSome(remoteActive)) {
     return right<Error, boolean>(remoteActive.value);
   } else {
-    const activationStatus: SagaCallReturnType<typeof getActivationStatus> =
-      yield* call(getActivationStatus);
+    const activationStatus = yield* call(getActivationStatus);
     return activationStatus.map(citizen => citizen.enabled);
   }
 }
@@ -99,11 +84,13 @@ export function* bpdStartOnboardingWorker() {
 /**
  * This saga check if the bpd is active for the user and choose if start the onboarding or go directly to the bpd details
  */
-export function* handleBpdStartOnboardingSaga(): SagaIterator {
+export function* handleBpdStartOnboardingSaga() {
   const { cancelAction } = yield* race({
     onboarding: call(bpdStartOnboardingWorker),
-    cancelAction: take(bpdOnboardingCancel)
+    cancelAction:
+      take<ActionType<typeof bpdOnboardingCancel>>(bpdOnboardingCancel)
   });
+
   if (cancelAction) {
     yield* call(
       NavigationService.dispatchNavigationAction,

@@ -35,6 +35,13 @@ export type WorkUnit = {
 export type SagaResult = "cancel" | "completed" | "back" | "failure";
 
 /**
+ *
+ */
+export type WorkUnitHandler<T = unknown> = (
+  g: (...args: Array<any>) => Generator<Effect, SagaResult>
+) => Generator<Effect, SagaResult, T>;
+
+/**
  * Ensure that the `startScreen` is the current screen or navigate to `startScreen` using `navigateTo`
  * @param navigateTo
  * @param startScreen
@@ -55,7 +62,7 @@ function* ensureScreen(navigateTo: () => void, startScreen: string) {
  */
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<Effect, T>
-): Generator<Effect, T, any> {
+) {
   const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
     yield* call(NavigationService.getCurrentRoute);
   const res: T = yield* call(g);

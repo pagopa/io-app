@@ -1,9 +1,8 @@
 import { right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-import { put } from "typed-redux-saga";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
-
+import { put } from "redux-saga/effects";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {

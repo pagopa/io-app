@@ -5,7 +5,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { all, call, Effect, put, select, takeLatest } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
+import { all, call, put, select, takeLatest } from "typed-redux-saga";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";

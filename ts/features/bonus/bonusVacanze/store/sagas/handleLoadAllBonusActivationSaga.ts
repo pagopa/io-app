@@ -1,4 +1,3 @@
-import { SagaIterator } from "redux-saga";
 import { all, call, put } from "typed-redux-saga";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
@@ -13,7 +12,7 @@ export function* handleLoadAllBonusActivations(
   getAllBonusActivations: ReturnType<
     typeof BackendBonusVacanze
   >["getAllBonusActivations"]
-): SagaIterator {
+) {
   try {
     const allBonusActivationsResponse: SagaCallReturnType<
       typeof getAllBonusActivations

@@ -29,10 +29,12 @@ export function* loadTransactionsRequiredData(
   // First request the Milestone Pivot
   yield* put(bpdTransactionsLoadMilestone.request(periodId));
 
-  const milestoneResponse: ActionType<
-    | typeof bpdTransactionsLoadMilestone.success
-    | typeof bpdTransactionsLoadMilestone.failure
-  > = yield* take([
+  const milestoneResponse = yield* take<
+    ActionType<
+      | typeof bpdTransactionsLoadMilestone.success
+      | typeof bpdTransactionsLoadMilestone.failure
+    >
+  >([
     getType(bpdTransactionsLoadMilestone.success),
     getType(bpdTransactionsLoadMilestone.failure)
   ]);
@@ -49,13 +51,16 @@ export function* loadTransactionsRequiredData(
   // Request CountByDay
   yield* put(bpdTransactionsLoadCountByDay.request(periodId));
 
-  const countByDayResponse: ActionType<
-    | typeof bpdTransactionsLoadCountByDay.success
-    | typeof bpdTransactionsLoadCountByDay.failure
-  > = yield* take([
+  const countByDayResponse = yield* take<
+    ActionType<
+      | typeof bpdTransactionsLoadCountByDay.success
+      | typeof bpdTransactionsLoadCountByDay.failure
+    >
+  >([
     getType(bpdTransactionsLoadCountByDay.success),
     getType(bpdTransactionsLoadCountByDay.failure)
   ]);
+
   if (
     countByDayResponse.type === getType(bpdTransactionsLoadCountByDay.failure)
   ) {
@@ -68,10 +73,12 @@ export function* loadTransactionsRequiredData(
   // Request first transaction page for the period
   yield* put(bpdTransactionsLoadPage.request({ awardPeriodId: periodId }));
 
-  const firstPageResponse: ActionType<
-    | typeof bpdTransactionsLoadPage.success
-    | typeof bpdTransactionsLoadPage.failure
-  > = yield* take([
+  const firstPageResponse = yield* take<
+    ActionType<
+      | typeof bpdTransactionsLoadPage.success
+      | typeof bpdTransactionsLoadPage.failure
+    >
+  >([
     getType(bpdTransactionsLoadPage.success),
     getType(bpdTransactionsLoadPage.failure)
   ]);

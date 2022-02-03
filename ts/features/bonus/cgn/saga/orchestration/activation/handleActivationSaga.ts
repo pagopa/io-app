@@ -1,6 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
-import { SagaIterator } from "redux-saga";
 import { call, put, race, take } from "typed-redux-saga";
 import { ActionType, isActionOf } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -63,9 +62,7 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
 /**
  * This saga handles the CGN activation polling
  */
-export function* handleCgnActivationSaga(
-  cgnActivationSaga: CgnActivationType
-): SagaIterator {
+export function* handleCgnActivationSaga(cgnActivationSaga: CgnActivationType) {
   const { cancelAction } = yield* race({
     activation: call(cgnActivationWorker, cgnActivationSaga),
     cancelAction: take(cgnActivationCancel)

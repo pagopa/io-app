@@ -92,8 +92,10 @@ export function* watchServicesDetailLoadSaga(
   yield* fork(watchLoadServicesDetailToTrack);
 
   // Create the channel used for the communication with the handlers.
-  const requestsChannel: Channel<ActionType<typeof loadServiceDetail.request>> =
-    yield* call(channel, buffers.expanding());
+  const requestsChannel = (yield* call(
+    channel,
+    buffers.expanding()
+  )) as Channel<ActionType<typeof loadServiceDetail.request>>;
 
   // fork the handlers
   // eslint-disable-next-line
@@ -105,7 +107,7 @@ export function* watchServicesDetailLoadSaga(
     // Take the loadServicesDetail action and for each service id
     // put back a loadServiceDetail.request in the channel
     // to be processed by the handlers.
-    const action: ActionType<typeof loadServicesDetail> = yield* take(
+    const action = yield* take<ActionType<typeof loadServicesDetail>>(
       getType(loadServicesDetail)
     );
     action.payload.forEach((serviceId: string) =>

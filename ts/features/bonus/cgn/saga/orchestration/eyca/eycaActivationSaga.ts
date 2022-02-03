@@ -1,6 +1,7 @@
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, put, race, take } from "typed-redux-saga";
+import { call, put, race } from "typed-redux-saga";
+import { call as baseCall, take as baseTake } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { BackendCGN } from "../../../api/backendCgn";
 import {
@@ -81,14 +82,18 @@ export function* eycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ): SagaIterator {
+  // This is not using typed-redux-saga because
+  // there is a particular generator delegation which
+  // cannot use `yield*` to work.
   const { cancelAction } = yield* race({
-    activation: call(
+    activation: baseCall(
       eycaActivationWorker,
       getEycaActivation,
       startEycaActivation
     ),
-    cancelAction: take(cgnEycaActivationCancel)
+    cancelAction: baseTake(cgnEycaActivationCancel)
   });
+
   if (cancelAction) {
     yield* put(NavigationActions.back());
   }

@@ -33,7 +33,7 @@ export function* bonusFromIdWorker(bonusId: string): SagaIterator {
  */
 export function* handleBonusFromIdPollingSaga(
   action: ActionType<typeof startLoadBonusFromIdPolling>
-): SagaIterator {
+) {
   yield* race({
     polling: call(bonusFromIdWorker, action.payload),
     cancelPolling: take(cancelLoadBonusFromIdPolling)

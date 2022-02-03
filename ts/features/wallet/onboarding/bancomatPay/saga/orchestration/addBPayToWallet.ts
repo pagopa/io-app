@@ -3,11 +3,11 @@ import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
-  withResetNavigationStack
+  withResetNavigationStack,
+  WorkUnitHandler
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 
 import {
@@ -48,10 +48,11 @@ export function* addBPayToWalletAndActivateBpd() {
   const initialScreenName: ReturnType<
     typeof NavigationService.getCurrentRouteName
   > = yield* call(NavigationService.getCurrentRouteName);
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
+  const res = yield* call<WorkUnitHandler>(
     withResetNavigationStack,
     bPayWorkUnit
   );
+
   if (
     res !== "back" &&
     initialScreenName === ROUTES.WALLET_ADD_PAYMENT_METHOD

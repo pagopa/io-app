@@ -1,4 +1,5 @@
-import { call, cancel, Effect, fork, put, take } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
+import { call, cancel, fork, put, take } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {
@@ -28,7 +29,7 @@ export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
-  const action: ActionType<typeof loginSuccess> = yield* take(
+  const action = yield* take<ActionType<typeof loginSuccess>>(
     getType(loginSuccess)
   );
 

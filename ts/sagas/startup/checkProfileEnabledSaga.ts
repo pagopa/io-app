@@ -1,6 +1,6 @@
-import { call, put, take, Effect } from "typed-redux-saga";
+import { call, put, take } from "typed-redux-saga";
 import { ActionType, getType } from "typesafe-actions";
-
+import { Effect } from "redux-saga/effects";
 import { fromNullable } from "fp-ts/lib/Option";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
