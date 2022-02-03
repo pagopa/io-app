@@ -13,7 +13,7 @@ jest.mock("react-native-device-info", () => ({
     .mockReturnValueOnce("1.2.3.4"),
   getBuildNumber: () => 3
 }));
-import { getAppVersion, isVersionAppSupported } from "../appVersion";
+import { getAppVersion, isVersionSupported } from "../appVersion";
 
 describe("check if getVersion works properly", () => {
   it("should be 1.1.3", () => {
@@ -50,7 +50,7 @@ describe("check if app version is supported by backend version", () => {
     it(`appversion ${t.e2} compared with minSupportedVersion ${
       t.e1
     } should be ${t.e3 ? "" : "not "}supported`, () => {
-      expect(isVersionAppSupported(t.e1, t.e2)).toEqual(t.e3);
+      expect(isVersionSupported(t.e1, t.e2)).toEqual(t.e3);
     });
   });
 });

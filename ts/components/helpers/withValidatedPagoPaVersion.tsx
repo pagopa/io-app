@@ -1,8 +1,7 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import { connect } from "react-redux";
+import { isPagoPaUpdateNeededSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 import { GlobalState } from "../../store/reducers/types";
-import { isUpdateNeeded } from "../../utils/appVersion";
 import RemindUpdatePagoPaVersionOverlay from "../RemindUpdatePagoPaVersionOverlay";
 import BaseScreenComponent from "../screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../ui/LightModal";
@@ -35,14 +34,9 @@ const ConditionalView = withLightModalContext(
 
 export type Props = ReturnType<typeof mapStateToProps>;
 
-const mapStateToProps = (state: GlobalState) => {
-  const isPagoPaVersionSupported = fromNullable(state.versionInfo)
-    .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
-    .getOrElse(true);
-  return {
-    isPagoPaVersionSupported
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  isPagoPaVersionSupported: !isPagoPaUpdateNeededSelector(state)
+});
 
 export function withValidatedPagoPaVersion<P>(
   WrappedComponent: React.ComponentType<P>

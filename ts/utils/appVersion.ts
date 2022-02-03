@@ -1,8 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver from "semver";
-import { IOVersionInfo } from "../common/versionInfo/types/IOVersionInfo";
 import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
 
@@ -22,7 +20,7 @@ export const webStoreURL = Platform.select({
  * @param minAppVersion the min version supported
  * @param appVersion the version to be tested
  */
-export const isVersionAppSupported = (
+export const isVersionSupported = (
   minAppVersion: string,
   appVersion: string
 ): boolean => {
@@ -41,7 +39,7 @@ export const isVersionAppSupported = (
     minAppVersionSplitted.length === 4 &&
     currentAppVersionSplitted.length === 4
   ) {
-    // if can't decode one of the two fourth digit, we assume true (can't say nothing)
+    // if can't decode one of the two fourth digit, we assume true (can't say anything)
     const forthDigitSatisfies = NumberFromString.decode(
       minAppVersionSplitted[3]
     )
@@ -61,25 +59,3 @@ export const getAppVersion = () =>
     ios: DeviceInfo.getReadableVersion(),
     default: DeviceInfo.getVersion()
   });
-
-/**
- * return true if the app must be updated
- * @param versionInfo the version info
- * @param section
- */
-export const isUpdateNeeded = (
-  versionInfo: IOVersionInfo | null,
-  section: "min_app_version_pagopa" | "min_app_version"
-) =>
-  fromNullable(versionInfo)
-    .map(si => {
-      const minAppVersion = Platform.select({
-        ios: si[section]?.ios,
-        android: si[section]?.android
-      });
-      return !isVersionAppSupported(
-        minAppVersion ?? "undefined",
-        getAppVersion()
-      );
-    })
-    .getOrElse(false);

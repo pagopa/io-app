@@ -1,7 +1,15 @@
+import { fromNullable, Option } from "fp-ts/lib/Option";
+
+import { Platform } from "react-native";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { IOVersionInfo } from "../../types/IOVersionInfo";
+import {
+  getAppVersion,
+  isVersionSupported
+} from "../../../../utils/appVersion";
+import { IOVersionInfo, IOVersionPerPlatform } from "../../types/IOVersionInfo";
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess
@@ -23,6 +31,46 @@ export const versionInfoReducer = (
   }
 };
 
-// Selectors
 export const versionInfoDataSelector = (state: GlobalState) =>
   state.versionInfo;
+
+/**
+ * Pick the platform related app version, starting from IOVersionPerPlatform
+ * @param versionPerPlatform
+ */
+const selectVersion = (
+  versionPerPlatform: IOVersionPerPlatform | undefined
+): Option<string> =>
+  fromNullable(
+    Platform.select({
+      ios: versionPerPlatform?.ios,
+      android: versionPerPlatform?.android
+    })
+  );
+
+/**
+ * Return true if the app needs to be updated and the user cannot continue to use the app without an update
+ * Since the getAppVersion cannot change during the app execution, we can avoid forwarding it from the outside
+ * @param state
+ */
+export const isAppUpdateNeededSelector = createSelector(
+  [versionInfoDataSelector],
+  (versionInfo): boolean =>
+    selectVersion(versionInfo?.min_app_version)
+      .map(v => !isVersionSupported(v, getAppVersion()))
+      .getOrElse(false)
+);
+
+/**
+ * Return true if the app needs to be updated in order to use the wallet and payments.
+ * If true, the user cannot use the wallet and can't make payments
+ * Since the getAppVersion cannot change during the app execution, we can avoid forwarding it from the outside
+ * @param state
+ */
+export const isPagoPaUpdateNeededSelector = createSelector(
+  [versionInfoDataSelector],
+  (versionInfo): boolean =>
+    selectVersion(versionInfo?.min_app_version_pagopa)
+      .map(v => !isVersionSupported(v, getAppVersion()))
+      .getOrElse(false)
+);
