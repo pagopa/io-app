@@ -7,7 +7,7 @@ import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -83,28 +83,28 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
   };
 
 export const useChangeActivationConfirmationBottomSheet = (
-  representation: PaymentMethodRepresentation
+  representation: PaymentMethodRepresentation,
+  newVal: boolean,
+  onConfirm: () => void
 ) => {
-  const { present, dismiss } = useIOBottomSheetRaw(466);
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <BpdChangeActivationConfirmationScreen
+      onCancel={() => dismiss()}
+      onConfirm={() => {
+        dismiss();
+        onConfirm();
+      }}
+      type={newVal ? "Activation" : "Deactivation"}
+      representation={{
+        caption: representation.caption,
+        icon: representation.icon
+      }}
+    />,
+    newVal
+      ? I18n.t("bonus.bpd.details.paymentMethods.activate.title")
+      : I18n.t("bonus.bpd.details.paymentMethods.deactivate.title"),
+    466
+  );
 
-  const openModalBox = (newVal: boolean, onConfirm: () => void) =>
-    present(
-      <BpdChangeActivationConfirmationScreen
-        onCancel={dismiss}
-        onConfirm={() => {
-          dismiss();
-          onConfirm();
-        }}
-        type={newVal ? "Activation" : "Deactivation"}
-        representation={{
-          caption: representation.caption,
-          icon: representation.icon
-        }}
-      />,
-      newVal
-        ? I18n.t("bonus.bpd.details.paymentMethods.activate.title")
-        : I18n.t("bonus.bpd.details.paymentMethods.deactivate.title")
-    );
-
-  return { present: openModalBox, dismiss };
+  return { present, bottomSheet, dismiss };
 };

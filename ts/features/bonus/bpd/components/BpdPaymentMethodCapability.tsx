@@ -53,20 +53,29 @@ const InnerBpdPaymentMethodCapability = (
     props.bpdPotActivation
   );
 
-  const askConfirmation = useChangeActivationConfirmationBottomSheet({
+  const {
+    present: askConfirmation,
+    bottomSheet: changeActivationConfirmationBottomSheet
+  } = useChangeActivationConfirmationBottomSheet({
     caption: props.paymentMethod.caption,
     icon: props.paymentMethod.icon
-  }).present;
+  });
 
-  const showExplanation = useNotActivableInformationBottomSheet({
-    caption: props.paymentMethod.caption,
-    icon: props.paymentMethod.icon
-  }).present;
+  const {
+    present: showExplanation,
+    bottomSheet: notActivableInformationBottomSheet
+  } = useNotActivableInformationBottomSheet(
+    {
+      caption: props.paymentMethod.caption,
+      icon: props.paymentMethod.icon
+    },
+    "NotActivable"
+  );
 
   const bpdToggle = (
     <BpdToggle
       graphicalValue={graphicalState}
-      onPress={() => showExplanation("NotActivable")}
+      onPress={() => showExplanation()}
       onValueChanged={newVal =>
         handleValueChanged(props, () =>
           askConfirmation(newVal, () => props.updateValue(hash as HPan, newVal))
@@ -76,12 +85,16 @@ const InnerBpdPaymentMethodCapability = (
   );
 
   return (
-    <BasePaymentFeatureListItem
-      testID={"BpdPaymentMethodCapability"}
-      title={I18n.t("bonus.bpd.title")}
-      description={I18n.t("bonus.bpd.description")}
-      rightElement={bpdToggle}
-    />
+    <>
+      <BasePaymentFeatureListItem
+        testID={"BpdPaymentMethodCapability"}
+        title={I18n.t("bonus.bpd.title")}
+        description={I18n.t("bonus.bpd.description")}
+        rightElement={bpdToggle}
+      />
+      {changeActivationConfirmationBottomSheet}
+      {notActivableInformationBottomSheet}
+    </>
   );
 };
 
