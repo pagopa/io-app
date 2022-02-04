@@ -4,6 +4,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import _ from "lodash";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import {
+  CreditCard,
   isRawCreditCard,
   PatchedWalletV2ListResponse,
   RawPaymentMethod,
@@ -22,7 +23,8 @@ import {
   getPayablePaymentMethodsSelector,
   getWalletsById,
   pagoPaCreditCardWalletV1Selector,
-  satispayListSelector
+  satispayListSelector,
+  updatingFavouriteWalletSelector
 } from "../wallets";
 import { GlobalState } from "../../types";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
@@ -31,10 +33,19 @@ import { appReducer } from "../../index";
 import { applicationChangeState } from "../../../actions/application";
 import {
   fetchWalletsSuccess,
+  setFavouriteWalletFailure,
+  setFavouriteWalletRequest,
+  setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../../../actions/wallet/wallets";
 import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 import { deleteAllPaymentMethodsByFunction } from "../../../actions/wallet/delete";
+import { TypeEnum } from "../../../../../definitions/pagopa/Wallet";
+import {
+  CreditCardExpirationMonth,
+  CreditCardExpirationYear,
+  CreditCardPan
+} from "../../../../utils/input";
 
 describe("walletV2 selectors", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
@@ -328,6 +339,58 @@ describe("getPagoPAMethodsSelector", () => {
     expect(
       getPayablePaymentMethodsSelector(withWallets).length
     ).toBeGreaterThan(0);
+  });
+});
+
+describe("updatingFavouriteWalletSelector", () => {
+  it("when empty should return pot.none", () => {
+    const empty = appReducer(undefined, applicationChangeState("active"));
+    expect(updatingFavouriteWalletSelector(empty)).toEqual(pot.none);
+  });
+
+  it("when a favourite setting request is dispatch, should return pot.someLoading", () => {
+    const empty = appReducer(undefined, setFavouriteWalletRequest(99));
+    expect(updatingFavouriteWalletSelector(empty)).toEqual(pot.someLoading(99));
+  });
+
+  it("when a favourite setting request has been successfully, should return pot.some", () => {
+    const updatedWallet = {
+      idWallet: 99,
+      type: TypeEnum.CREDIT_CARD,
+      favourite: true,
+      creditCard: {
+        id: 3,
+        holder: "Gian Maria Rossi",
+        pan: "************0000" as CreditCardPan,
+        expireMonth: "09" as CreditCardExpirationMonth,
+        expireYear: "22" as CreditCardExpirationYear,
+        brandLogo:
+          "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_poste.png",
+        flag3dsVerified: false,
+        brand: "POSTEPAY",
+        onUs: false
+      } as CreditCard,
+      pspEditable: true,
+      isPspToIgnore: false,
+      saved: false,
+      registeredNexi: false
+    };
+    const empty = appReducer(
+      undefined,
+      setFavouriteWalletSuccess(updatedWallet as Wallet)
+    );
+    expect(updatingFavouriteWalletSelector(empty)).toEqual(pot.some(99));
+  });
+
+  it("when a favourite setting request has been failed, should return pot.someError", () => {
+    const empty = appReducer(undefined, setFavouriteWalletRequest(99));
+    const state = appReducer(
+      empty,
+      setFavouriteWalletFailure(new Error("setFavouriteWalletFailure error"))
+    );
+    expect(updatingFavouriteWalletSelector(state)).toEqual(
+      pot.someError(99, new Error("setFavouriteWalletFailure error"))
+    );
   });
 });
 
