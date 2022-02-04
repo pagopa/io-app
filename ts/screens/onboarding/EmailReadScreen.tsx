@@ -49,7 +49,7 @@ type Props = ReduxProps &
   NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
-  container: {
+  flex: {
     flex: 1
   },
   emailWithIcon: {
@@ -145,7 +145,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     };
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.flex}>
         <TopScreenComponent
           goBack={this.handleGoBack}
           headerTitle={I18n.t("profile.data.list.email")}
