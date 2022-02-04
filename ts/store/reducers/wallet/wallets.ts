@@ -57,6 +57,8 @@ import {
   fetchWalletsRequest,
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
+  setFavouriteWalletFailure,
+  setFavouriteWalletRequest,
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../../actions/wallet/wallets";
@@ -82,6 +84,7 @@ export type WalletsState = Readonly<{
     Pick<DeleteAllByFunctionSuccess, "deletedMethodsCount">,
     DeleteAllByFunctionError
   >;
+  updatingFavouriteWallet: pot.Pot<number | undefined, Error>;
 }>;
 
 export type PersistedWalletsState = WalletsState & PersistPartial;
@@ -89,7 +92,9 @@ export type PersistedWalletsState = WalletsState & PersistPartial;
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
   creditCardAddWallet: pot.none,
-  deleteAllByFunction: remoteUndefined
+  deleteAllByFunction: remoteUndefined,
+  // holds the state of updating a wallet as favourite
+  updatingFavouriteWallet: pot.none
 };
 
 // Selectors
@@ -103,6 +108,13 @@ const getWallets = createSelector(
   getWalletsById,
   (potWx): pot.Pot<ReadonlyArray<Wallet>, Error> =>
     pot.map(potWx, wx => values(wx).filter(isDefined))
+);
+
+// return the favourite wallet as a pot
+export const favouriteWalletSelector = createSelector(
+  getAllWallets,
+  (wallets: WalletsState): pot.Pot<number | undefined, Error> =>
+    wallets.updatingFavouriteWallet
 );
 
 // return a pot with the id of the favorite wallet. none otherwise
@@ -533,12 +545,24 @@ const reducer = (
     //
     // set favourite wallet
     //
-
+    case getType(setFavouriteWalletRequest):
+      return {
+        ...state,
+        updatingFavouriteWallet: pot.someLoading(action.payload)
+      };
+    case getType(setFavouriteWalletFailure):
+      return {
+        ...state,
+        updatingFavouriteWallet: pot.isSome(state.updatingFavouriteWallet)
+          ? pot.someError(state.updatingFavouriteWallet.value, action.payload)
+          : pot.noneError(action.payload)
+      };
     case getType(setFavouriteWalletSuccess):
       // On success, we update both the favourite wallet ID and the
       // corresponding Wallet in walletById.
       return {
         ...state,
+        updatingFavouriteWallet: pot.some(action.payload.idWallet),
         walletById: pot.map(state.walletById, walletsById =>
           _.keys(walletsById).reduce<IndexedById<Wallet>>(
             (acc, val) =>
