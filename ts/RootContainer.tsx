@@ -4,6 +4,7 @@ import { AppState, Linking, Platform, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
+import customVariables from "./theme/variables";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
@@ -131,7 +132,10 @@ class RootContainer extends React.PureComponent<Props> {
 
     return (
       <Root>
-        <StatusBar barStyle={"dark-content"} />
+        <StatusBar
+          barStyle={"dark-content"}
+          backgroundColor={customVariables.androidStatusBarColor}
+        />
         {Platform.OS === "android" && <FlagSecureComponent />}
         <AppContainer
           ref={navigatorRef => {
