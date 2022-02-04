@@ -48,9 +48,17 @@ import {
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
-  zendeskidentityProviderId
+  zendeskidentityProviderId,
+  zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
 import { mixpanelTrack } from "../../../mixpanel";
+import { appVersionHistorySelector } from "../../../store/reducers/installation";
+
+/**
+ * Transform an array of string into a Zendesk
+ * value to display.
+ */
+const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -193,6 +201,7 @@ const ZendeskAskPermissions = (props: Props) => {
   const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
+  const versionsHistory = useIOSelector(appVersionHistorySelector);
 
   const itemsProps: ItemProps = {
     fiscalCode,
@@ -237,8 +246,15 @@ const ZendeskAskPermissions = (props: Props) => {
         addTicketCustomField(it.zendeskId, it.value);
       }
     });
+
     // Tag the ticket with the current app version
     addTicketTag(itemsProps.currentVersion);
+
+    // Add the versions history to the relative Zendesk field
+    addTicketCustomField(
+      zendeskVersionsHistoryId,
+      arrayToZendeskValue(versionsHistory)
+    );
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
