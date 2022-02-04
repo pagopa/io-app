@@ -36,7 +36,10 @@ import {
   navigateToCgnMerchantsTabs
 } from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
-import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import {
+  useActionOnFocus,
+  useNavigationContext
+} from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { eycaDetailSelector } from "../store/reducers/eyca/details";
@@ -49,6 +52,7 @@ import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { isLoading } from "../../bpd/model/RemoteValue";
+import CGN_ROUTES from "../navigation/routes";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -61,6 +65,7 @@ const GRADIENT_END_COLOR = "#5C488F";
  */
 const CgnDetailScreen = (props: Props): React.ReactElement => {
   const [cardLoading, setCardLoading] = useState(true);
+  const navigation = useNavigationContext();
 
   const loadCGN = () => {
     props.loadCgnDetails();
@@ -159,7 +164,10 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                   leftButton={confirmButtonProps(
                     props.isMerchantV2Enabled
                       ? props.navigateToMerchantsTabs
-                      : props.navigateToMerchantsList,
+                      : () =>
+                          navigation.navigate(
+                            CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES
+                          ),
                     I18n.t("bonus.cgn.detail.cta.buyers")
                   )}
                 />
