@@ -33,11 +33,6 @@ jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn()
 }));
 
-// const mockedDeviceInfo = mocked("dev", true);
-// const mockedDeviceInfo2 = DeviceInfo.getVersion as jest.MockedFunction<
-//   typeof DeviceInfo.getVersion
-// >;
-
 describe("versionInfo selectors", () => {
   describe("When the store is in initial state", () => {
     it("isAppSupportedSelector should return true", () => {
@@ -80,6 +75,80 @@ describe("versionInfo selectors", () => {
     });
   });
   describe("When a versionInfoLoadSuccess is received", () => {
+    describe("And the payload doesn't have min_app_version_pagopa", () => {
+      it("isAppPagoPaSupportedSelector should return true", () => {
+        const globalState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.1");
+        jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.1");
+        const store = createStore(appReducer, globalState as any);
+        store.dispatch(versionInfoLoadSuccess(mockIoVersionInfo));
+        expect(
+          store.getState().versionInfo?.min_app_version_pagopa
+        ).toBeUndefined();
+        expect(isAppPagoPaSupportedSelector(store.getState())).toBe(true);
+      });
+    });
+
+    describe("Followed by a versionInfoLoadFailure is received", () => {
+      it("isAppSupportedSelector should return true", () => {
+        const globalState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.1");
+        jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.1");
+        const store = createStore(appReducer, globalState as any);
+        store.dispatch(
+          versionInfoLoadSuccess({
+            ...mockIoVersionInfo,
+            min_app_version: {
+              ios: "2.2.0.1",
+              android: "2.2.0.1"
+            }
+          })
+        );
+        expect(store.getState().versionInfo?.min_app_version).toStrictEqual({
+          ios: "2.2.0.1",
+          android: "2.2.0.1"
+        });
+        expect(isAppSupportedSelector(store.getState())).toBe(false);
+
+        store.dispatch(versionInfoLoadFailure(new Error()));
+        expect(isAppSupportedSelector(store.getState())).toBe(true);
+      });
+      it("isAppPagoPaSupportedSelector should return true", () => {
+        const globalState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.1");
+        jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.1");
+        const store = createStore(appReducer, globalState as any);
+        store.dispatch(
+          versionInfoLoadSuccess({
+            ...mockIoVersionInfo,
+            min_app_version_pagopa: {
+              ios: "2.2.0.1",
+              android: "2.2.0.1"
+            }
+          })
+        );
+        expect(
+          store.getState().versionInfo?.min_app_version_pagopa
+        ).toStrictEqual({
+          ios: "2.2.0.1",
+          android: "2.2.0.1"
+        });
+        expect(isAppPagoPaSupportedSelector(store.getState())).toBe(false);
+
+        store.dispatch(versionInfoLoadFailure(new Error()));
+        expect(isAppPagoPaSupportedSelector(store.getState())).toBe(true);
+      });
+    });
+
     [
       Tuple3("0.0.0", "6.5.4.3", true),
       Tuple3("1.0.0", "6.5.4.3", true),
@@ -109,37 +178,52 @@ describe("versionInfo selectors", () => {
       Tuple3("6.6.0", "6.5.4.3", false),
       Tuple3("6.5.5", "6.5.4.3", false),
       Tuple3("6.5.4.4", "6.5.4.3", false)
-    ].forEach(t =>
+    ].forEach(t => {
       it(`And min_app_version: ${t.e1}, appVersion: ${
         t.e2
       }, the app version should ${t.e3 ? "" : "not "}be supported`, () => {
-        testIsAppSupportedSelector(t.e1, t.e2, t.e3);
-      })
-    );
+        testIsAppSupportedSelector(t.e1, t.e2, t.e3, "min_app_version");
+      });
+      it(`And min_app_version: ${t.e1}, appVersion: ${
+        t.e2
+      }, the pagopa app version should ${
+        t.e3 ? "" : "not "
+      }be supported`, () => {
+        testIsAppSupportedSelector(t.e1, t.e2, t.e3, "min_app_version_pagopa");
+      });
+    });
   });
 });
 
 const testIsAppSupportedSelector = (
   minVersion: string,
   appVersion: string,
-  isSupported: boolean
+  isSupported: boolean,
+  key: Extract<
+    keyof IOVersionInfo,
+    "min_app_version" | "min_app_version_pagopa"
+  >
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  (DeviceInfo.getVersion as jest.Mock).mockReturnValue(appVersion);
-  (DeviceInfo.getReadableVersion as jest.Mock).mockReturnValue(appVersion);
+  jest.spyOn(DeviceInfo, "getVersion").mockReturnValue(appVersion);
+  jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue(appVersion);
   const store = createStore(appReducer, globalState as any);
   store.dispatch(
     versionInfoLoadSuccess({
       ...mockIoVersionInfo,
-      min_app_version: {
+      [key]: {
         ios: minVersion,
         android: minVersion
       }
     })
   );
-  expect(store.getState().versionInfo?.min_app_version).toStrictEqual({
+  expect(store.getState().versionInfo?.[key]).toStrictEqual({
     ios: minVersion,
     android: minVersion
   });
-  expect(isAppSupportedSelector(store.getState())).toBe(isSupported);
+  if (key === "min_app_version") {
+    expect(isAppSupportedSelector(store.getState())).toBe(isSupported);
+  } else {
+    expect(isAppPagoPaSupportedSelector(store.getState())).toBe(isSupported);
+  }
 };
