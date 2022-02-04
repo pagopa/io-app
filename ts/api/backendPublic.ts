@@ -8,16 +8,8 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
-import { ServerInfo } from "../../definitions/backend/ServerInfo";
-import { defaultRetryingFetch } from "../utils/fetch";
 import { BackendStatus } from "../../definitions/content/BackendStatus";
-
-type GetServerInfoT = IGetApiRequestType<
-  Record<string, unknown>,
-  never,
-  never,
-  BasicResponseType<ServerInfo>
->;
+import { defaultRetryingFetch } from "../utils/fetch";
 
 type PostTestLoginT = IPostApiRequestType<
   PasswordLogin,
@@ -67,15 +59,6 @@ export function BackendPublicClient(
     fetchApi
   };
 
-  const getServerInfoT: GetServerInfoT = {
-    method: "get",
-    // to avoid response caching
-    url: () => `/info?ms=${new Date().getTime()}`,
-    query: _ => ({}),
-    headers: () => ({}),
-    response_decoder: basicResponseDecoder(ServerInfo)
-  };
-
   const postLoginTestT: PostTestLoginT = {
     method: "post",
     url: () => `/test-login`,
@@ -86,7 +69,6 @@ export function BackendPublicClient(
   };
 
   return {
-    getServerInfo: createFetchRequestForApi(getServerInfoT, options),
     postTestLogin: createFetchRequestForApi(postLoginTestT, options)
   };
 }

@@ -53,6 +53,7 @@ export const CreditCardType = t.union([
   t.literal("DINERS"),
   t.literal("DISCOVER"),
   t.literal("JCB"),
+  t.literal("JCB15"),
   t.literal("POSTEPAY"),
   t.literal("UNKNOWN")
 ]);

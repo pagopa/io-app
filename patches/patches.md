@@ -38,6 +38,11 @@ Created on **30/07/2020**
 - Integrate the pr https://github.com/GeekyAnts/NativeBase/pull/3200 waiting the official release. (remove this patch after the release)
 - Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
 
+Updated on **03/02/2022**
+
+#### Reason:
+- Removed the StatusBar embedded in the Header component because it causes status bar 
+  glitches when using the component in a tabbed navigation ([PR](https://github.com/pagopa/io-app/pull/3717)).
 
 ### react-native-i18n+2.0.15
 Created on **05/08/2020**
