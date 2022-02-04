@@ -41,13 +41,18 @@ export const isVersionSupported = (
   const currentAppVersion = validateFormat(appVersion);
 
   // If the validation of one of the two versions fails, we cannot say anything ad we continue to support the version
-  if (minVersion.isLeft() || currentAppVersion.isLeft()) {
+  if (
+    minVersion.isLeft() ||
+    currentAppVersion.isLeft() ||
+    // If satisfies the semver check, the app is supported
+    semver.satisfies(minVersion.value, `<${currentAppVersion.value}`)
+  ) {
     return true;
   }
 
   const semSatisfies = semver.satisfies(
     minVersion.value,
-    `<=${currentAppVersion.value}`
+    `=${currentAppVersion.value}`
   );
   const minAppVersionSplitted = minAppVersion.split(".");
   const currentAppVersionSplitted = appVersion.split(".");
