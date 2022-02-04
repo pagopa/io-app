@@ -9,7 +9,7 @@ import I18n from "../../i18n";
 import { setFavouriteWalletRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  favouriteWalletSelector,
+  updatingFavouriteWalletSelector,
   getFavoriteWalletId
 } from "../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../types/pagopa";
@@ -34,10 +34,14 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const FavoritePaymentMethodSwitch = (props: Props) => {
   // check if we are setting this specific wallet
   const isTheSameWallet: boolean = pot.getOrElse(
-    pot.map(props.favoriteWallet, _ => _ === props.paymentMethod.idWallet),
+    pot.map(
+      props.updatingFavouriteWallet,
+      _ => _ === props.paymentMethod.idWallet
+    ),
     false
   );
-  const isLoading = pot.isLoading(props.favoriteWallet) && isTheSameWallet;
+  const isLoading =
+    pot.isLoading(props.updatingFavouriteWallet) && isTheSameWallet;
   const isFavorite = pot.map(
     props.favoriteWalletId,
     _ => _ === props.paymentMethod.idWallet
@@ -78,7 +82,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  favoriteWallet: favouriteWalletSelector(state),
+  updatingFavouriteWallet: updatingFavouriteWalletSelector(state),
   favoriteWalletId: getFavoriteWalletId(state)
 });
 

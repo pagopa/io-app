@@ -110,8 +110,8 @@ const getWallets = createSelector(
     pot.map(potWx, wx => values(wx).filter(isDefined))
 );
 
-// return the favourite wallet as a pot
-export const favouriteWalletSelector = createSelector(
+// return the wallet number that the user is setting as a favourite
+export const updatingFavouriteWalletSelector = createSelector(
   getAllWallets,
   (wallets: WalletsState): pot.Pot<number | undefined, Error> =>
     wallets.updatingFavouriteWallet
