@@ -1,7 +1,10 @@
 import DeviceInfo from "react-native-device-info";
 import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
-import { versionInfoLoadSuccess } from "../../../common/versionInfo/store/actions/versionInfo";
+import {
+  versionInfoLoadFailure,
+  versionInfoLoadSuccess
+} from "../../../common/versionInfo/store/actions/versionInfo";
 import { mockIoVersionInfo } from "../../../common/versionInfo/store/reducers/__mock__/ioVersionInfo";
 import { minAppVersionAppVersionTestCases } from "../../../common/versionInfo/store/reducers/__mock__/testVersion";
 import I18n from "../../../i18n";
@@ -18,6 +21,82 @@ jest.mock("react-native-device-info", () => ({
 }));
 
 describe("RootModal", () => {
+  describe("When the store is in initial state", () => {
+    it("Shouldn't render the UpdateAppModal", () => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
+      jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
+      const store = createStore(appReducer, globalState as any);
+      expect(store.getState().versionInfo).toStrictEqual(null);
+
+      const testComponent = renderScreenFakeNavRedux<
+        GlobalState,
+        NavigationParams
+      >(RootModal, ROUTES.INGRESS, {}, store);
+      expect(testComponent).not.toBeNull();
+
+      expect(testComponent.queryByText(I18n.t("titleUpdateApp"))).toBeNull();
+    });
+  });
+  describe("When a versionInfoLoadFailure is dispatched", () => {
+    it("Shouldn't render the UpdateAppModal", () => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
+      jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
+      const store = createStore(appReducer, globalState as any);
+      expect(store.getState().versionInfo).toStrictEqual(null);
+      store.dispatch(versionInfoLoadFailure(new Error()));
+
+      const testComponent = renderScreenFakeNavRedux<
+        GlobalState,
+        NavigationParams
+      >(RootModal, ROUTES.INGRESS, {}, store);
+      expect(testComponent).not.toBeNull();
+
+      expect(testComponent.queryByText(I18n.t("titleUpdateApp"))).toBeNull();
+    });
+    describe("And a success is received after retry with min_app_version > current_app_version", () => {
+      it("Should render the UpdateAppModal after the success", () => {
+        const globalState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
+        jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
+        const store = createStore(appReducer, globalState as any);
+        expect(store.getState().versionInfo).toStrictEqual(null);
+        store.dispatch(versionInfoLoadFailure(new Error()));
+
+        const testComponent = renderScreenFakeNavRedux<
+          GlobalState,
+          NavigationParams
+        >(RootModal, ROUTES.INGRESS, {}, store);
+        expect(testComponent).not.toBeNull();
+
+        expect(testComponent.queryByText(I18n.t("titleUpdateApp"))).toBeNull();
+
+        store.dispatch(
+          versionInfoLoadSuccess({
+            ...mockIoVersionInfo,
+            min_app_version: {
+              ios: "6.0.0.0",
+              android: "6.0.0.0"
+            }
+          })
+        );
+
+        expect(
+          testComponent.queryByText(I18n.t("titleUpdateApp"))
+        ).not.toBeNull();
+      });
+    });
+  });
   jest.useFakeTimers();
   minAppVersionAppVersionTestCases.forEach(t => {
     it(`When min_app_version: ${t.e1}, appVersion: ${t.e2}, RootModal should ${
