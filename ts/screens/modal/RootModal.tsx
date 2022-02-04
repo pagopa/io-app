@@ -19,7 +19,7 @@ type Props = ReturnType<typeof mapStateToProps>;
  * - UpdateAppModal -> when the backend is not compliant anymore with the app, this modal is shown to force an update
  * - IdentificationModal -> the default case. It renders itself only if an identification action is required
  */
-export const RootModal: React.FunctionComponent<Props> = (props: Props) => {
+const RootModal: React.FunctionComponent<Props> = (props: Props) => {
   // avoid app usage if backend systems are OFF
   if (props.isBackendServicesStatusOff) {
     return <SystemOffModal />;
