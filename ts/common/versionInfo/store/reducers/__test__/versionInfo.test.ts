@@ -80,24 +80,42 @@ describe("versionInfo selectors", () => {
     });
   });
   describe("When a versionInfoLoadSuccess is received", () => {
-    describe("And a min_app_version < current app version", () => {
-      [
-        Tuple3("1.0.0", "6.5.4.3", true),
-        Tuple3("1.100.0", "6.5.4.3", true),
-        Tuple3("1.100.1000", "6.5.4.3", true),
-        Tuple3("1.100.1000.10000", "6.5.4.3", true),
-        Tuple3("5.0.0", "6.5.4.3", true),
-        Tuple3("6.4.0", "6.5.4.3", true),
-        Tuple3("6.5.3", "6.5.4.3", true),
-        Tuple3("6.5.4.2", "6.5.4.3", true)
-      ].forEach(t =>
-        it(`min_app_version: ${t.e1}, appVersion: ${t.e2} should ${
-          t.e3 ? "" : "not "
-        }be supported`, () => {
-          testIsAppSupportedSelector(t.e1, t.e2, t.e3);
-        })
-      );
-    });
+    [
+      Tuple3("0.0.0", "6.5.4.3", true),
+      Tuple3("1.0.0", "6.5.4.3", true),
+      Tuple3("1.100.0", "6.5.4.3", true),
+      Tuple3("1.100.1000", "6.5.4.3", true),
+      Tuple3("1.1.1.10000", "6.5.4.3", true),
+      Tuple3("5.0.0", "6.5.4.3", true),
+      Tuple3("6.4.0", "6.5.4.3", true),
+      Tuple3("6.5.3", "6.5.4.3", true),
+      Tuple3("6.5.4.2", "6.5.4.3", true),
+
+      Tuple3("6.5.4.3", "700000.0.0", true),
+      Tuple3("6.5.4.3", "7.1.0", true),
+      Tuple3("6.5.4.3", "7.1.1", true),
+      Tuple3("6.5.4.3", "7.1.1.0", true),
+      Tuple3("6.5.4.3", "7.0.0", true),
+      Tuple3("6.5.4.3", "6.6.0", true),
+      Tuple3("6.5.4.3", "6.5.5", true),
+      Tuple3("6.5.4.3", "6.5.4.4", true),
+
+      Tuple3("6.5.4.3", "6.5.4.3", true),
+
+      Tuple3("7.0.0", "6.5.4.3", false),
+      Tuple3("7.4.0", "6.5.4.3", false),
+      Tuple3("7.5.5", "6.5.4.3", false),
+      Tuple3("7.5.4.4", "6.5.4.3", false),
+      Tuple3("6.6.0", "6.5.4.3", false),
+      Tuple3("6.5.5", "6.5.4.3", false),
+      Tuple3("6.5.4.4", "6.5.4.3", false)
+    ].forEach(t =>
+      it(`And min_app_version: ${t.e1}, appVersion: ${
+        t.e2
+      }, the app version should ${t.e3 ? "" : "not "}be supported`, () => {
+        testIsAppSupportedSelector(t.e1, t.e2, t.e3);
+      })
+    );
   });
 });
 

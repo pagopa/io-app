@@ -89,11 +89,6 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { Body } from "../../components/core/typography/Body";
-import {
-  bpdRemoteConfigSelector,
-  isCGNEnabledSelector
-} from "../../store/reducers/backendStatus";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
