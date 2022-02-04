@@ -20,27 +20,26 @@ import { H2 } from "../../../../../components/core/typography/H2";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
-  gridItem: {
-    margin: customVariables.gridGutter / 2,
-    padding: 30,
-    flex: 1
-  },
-  container: {
-    paddingHorizontal: customVariables.contentPadding / 2,
-    paddingVertical: 14,
-    marginBottom: 10,
+  body: {
     borderRadius: 8,
-    width: widthPercentageToDP("42.13%"),
     backgroundColor: "white",
-    shadowColor: "#00274e",
+    shadowColor: "#17324D",
     shadowOffset: {
       width: 0,
-      height: 5
+      height: 3
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 2,
-    marginRight: widthPercentageToDP("2.93%")
+    shadowOpacity: 0.2,
+    shadowRadius: 2.0,
+    elevation: 4,
+    flex: 1,
+    marginBottom: 10,
+    marginRight: widthPercentageToDP("2.93%"),
+    width: widthPercentageToDP("42.13%")
+  },
+  container: {
+    flexDirection: "column",
+    paddingHorizontal: customVariables.contentPadding / 2,
+    paddingVertical: 14
   }
 });
 
@@ -55,21 +54,19 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         colors={s.colors}
         useAngle={true}
         angle={57.23}
-        style={styles.container}
+        style={styles.body}
       >
-        <TouchableDefaultOpacity style={IOStyles.flex}>
-          <View style={IOStyles.row}>
-            <H2 color={"white"} style={{ textTransform: "capitalize" }}>
-              {I18n.t(s.nameKey)}
-            </H2>
+        <TouchableDefaultOpacity style={[IOStyles.flex, styles.container]}>
+          <View style={[IOStyles.flex, IOStyles.row]}>
+            <H2 color={"white"}>{I18n.t(s.nameKey)}</H2>
           </View>
-          <View
-            style={[
-              IOStyles.row,
-              { alignItems: "flex-end", alignSelf: "flex-end" }
-            ]}
-          >
-            {s.icon({ height: 22, width: 22, fill: IOColors.white })}
+          <View style={[{ alignItems: "flex-end" }]}>
+            {s.icon({
+              height: 32,
+              width: 32,
+              fill: IOColors.white,
+              style: { justifyContent: "flex-end" }
+            })}
           </View>
         </TouchableDefaultOpacity>
       </LinearGradient>
