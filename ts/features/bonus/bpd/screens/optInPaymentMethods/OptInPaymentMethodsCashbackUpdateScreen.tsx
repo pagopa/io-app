@@ -21,8 +21,14 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { navigateToOptInPaymentMethodsChoiceScreen } from "../../navigation/actions";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
-import { getBpdAMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
-import { optInPaymentMethodsCompleted } from "../../store/actions/optInPaymentMethods";
+import {
+  getBpdAMethodsSelector,
+  paymentMethodsSelector
+} from "../../../../../store/reducers/wallet/wallets";
+import {
+  optInPaymentMethodsCompleted,
+  optInPaymentMethodsFailure
+} from "../../store/actions/optInPaymentMethods";
 
 const styles = StyleSheet.create({
   logo: {
@@ -39,10 +45,16 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
   const navigation = useNavigationContext();
   const dispatch = useIODispatch();
   const bpdPaymentMethods = useIOSelector(getBpdAMethodsSelector);
+  const paymentMethods = useIOSelector(paymentMethodsSelector);
   const bpdInfo = useIOSelector(availableBonusTypesSelectorFromId(ID_BPD_TYPE));
   const bpdLogo: ImageSourcePropType = bpdInfo?.cover
     ? { uri: bpdInfo?.cover }
     : dafaultLogo;
+
+  // This screen should be shown only if the payment method are correctly loaded
+  if (paymentMethods.kind !== "PotSome") {
+    dispatch(optInPaymentMethodsFailure("error in the payment method loading"));
+  }
 
   const handleOnContinuePress = () => {
     if (bpdPaymentMethods.length > 0) {
