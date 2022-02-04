@@ -270,7 +270,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           </ButtonDefaultOpacity>
         )}
 
-        {/* if any right button is missing, add a hidden one in order to make the body centered on screen */}
+        {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
         {!customRightIcon &&
           !isSearchAvailable &&
           !onShowHelp &&
