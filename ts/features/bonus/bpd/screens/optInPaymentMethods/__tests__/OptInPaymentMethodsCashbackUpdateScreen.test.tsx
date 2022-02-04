@@ -10,7 +10,11 @@ import I18n from "../../../../../../i18n";
 import OptInPaymentMethodsCashbackUpdateScreen from "../OptInPaymentMethodsCashbackUpdateScreen";
 import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
 import * as navigationAction from "../../../navigation/actions";
-import { fetchWalletsSuccess } from "../../../../../../store/actions/wallet/wallets";
+import {
+  fetchWalletsFailure,
+  fetchWalletsRequest,
+  fetchWalletsSuccess
+} from "../../../../../../store/actions/wallet/wallets";
 import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 import {
   RawBancomatPaymentMethod,
@@ -36,12 +40,13 @@ const mockPaymentMethodWithoutBPD = {
 } as Wallet;
 describe("the OptInPaymentMethodsCashbackUpdateScreen screen", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  it("should show the title and the subtitle", () => {
+  it("if the payment methods are a pot of kind PotSome, should show the title and the subtitle", () => {
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
     );
     const component: RenderAPI = renderComponent(store);
+    store.dispatch(fetchWalletsSuccess([mockPaymentMethodWithoutBPD]));
     expect(
       component.getByText(
         I18n.t("bonus.bpd.optInPaymentMethods.cashbackUpdate.title")
@@ -54,7 +59,7 @@ describe("the OptInPaymentMethodsCashbackUpdateScreen screen", () => {
     ).toBeDefined();
   });
 
-  describe("when the button continue is pressed", () => {
+  describe("if the payment methods are a pot of kind PotSome, when the button continue is pressed", () => {
     afterEach(() => {
       jest.clearAllMocks();
     });
@@ -104,6 +109,38 @@ describe("the OptInPaymentMethodsCashbackUpdateScreen screen", () => {
       expect(navigateToOptInPaymentMethodsChoiceScreenSpy).toBeCalled();
       expect(optInPaymentMethodsCompletedSpy).not.toBeCalled();
     });
+  });
+
+  it("if the payment methods are not a pot of kind PotSome, should dispatch the optInPaymentMethodsFailure action", () => {
+    const optInPaymentMethodsFailureSpy = jest.spyOn(
+      optInPaymentMethodsActions,
+      "optInPaymentMethodsFailure"
+    );
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    renderComponent(store);
+
+    // PotNone case
+    expect(optInPaymentMethodsFailureSpy).toBeCalled();
+
+    // PotNoneLoading case
+    store.dispatch(fetchWalletsRequest());
+    expect(optInPaymentMethodsFailureSpy).toBeCalled();
+
+    // PotNoneError case
+    store.dispatch(fetchWalletsFailure(new Error("mockedError")));
+    expect(optInPaymentMethodsFailureSpy).toBeCalled();
+
+    // PotSomeError case
+    store.dispatch(fetchWalletsSuccess([mockPaymentMethodWithBPD]));
+    store.dispatch(fetchWalletsFailure(new Error("mockedError")));
+    expect(optInPaymentMethodsFailureSpy).toBeCalled();
+
+    // PotSomeLoading case
+    store.dispatch(fetchWalletsRequest());
+    expect(optInPaymentMethodsFailureSpy).toBeCalled();
   });
 });
 
