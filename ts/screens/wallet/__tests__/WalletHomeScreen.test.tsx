@@ -25,12 +25,12 @@ describe("WalletHomeScreen", () => {
     }, WalletHomeScreen should ${
       t.e3 ? "not " : ""
     }render UpdateAppModal`, () => {
-      testRootModal(t.e1, t.e2, t.e3);
+      testWalletHomeScreen(t.e1, t.e2, t.e3);
     });
   });
 });
 
-const testRootModal = (
+const testWalletHomeScreen = (
   minVersion: string,
   appVersion: string,
   isSupported: boolean
