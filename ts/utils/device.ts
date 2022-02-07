@@ -13,5 +13,5 @@ export const getModel = (): string => DeviceInfo.getModel();
 export const getSystemVersion = (): string => DeviceInfo.getSystemVersion();
 
 // true if at least one screen lock method is set
-export const isScreenLockEnabled = (): Promise<boolean> =>
+export const isScreenLockSet = (): Promise<boolean> =>
   DeviceInfo.isPinOrFingerprintSet();

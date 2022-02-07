@@ -7,7 +7,7 @@ import { isAndroid, isIos } from "./utils/platform";
 import {
   getDeviceId,
   getFontScale,
-  isScreenLockEnabled as isScreenLockEnabledFunc
+  isScreenLockSet as isScreenLockSetFunc
 } from "./utils/device";
 import { getBiometricsType } from "./utils/biometrics";
 
@@ -38,14 +38,14 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   }
   const fontScale = await getFontScale();
   const biometricTechnology = await getBiometricsType();
-  const isScreenLockEnabled = await isScreenLockEnabledFunc();
+  const isScreenLockSet = await isScreenLockSetFunc();
   await mp.registerSuperProperties({
     isScreenReaderEnabled: screenReaderEnabled,
     fontScale,
     appReadableVersion: getAppVersion(),
     colorScheme: Appearance.getColorScheme(),
     biometricTechnology,
-    isScreenLockEnabled
+    isScreenLockSet
   });
   // Identify the user using the device uniqueId
   await mp.identify(getDeviceId());
