@@ -33,7 +33,6 @@ type RouteIconMap = { [key in Routes]?: string };
 const ROUTE_ICON: RouteIconMap = {
   MESSAGES_NAVIGATOR: "io-messaggi",
   WALLET_HOME: "io-portafoglio",
-  DOCUMENTS_HOME: "io-documenti",
   SERVICES_NAVIGATOR: "io-servizi",
   PROFILE_NAVIGATOR: "io-profilo"
 };

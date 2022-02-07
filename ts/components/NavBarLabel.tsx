@@ -25,7 +25,6 @@ type RouteLabelMap = { [key in Routes]?: TranslationKeys };
 const ROUTE_LABEL: RouteLabelMap = {
   MESSAGES_NAVIGATOR: "global.navigator.messages",
   WALLET_HOME: "global.navigator.wallet",
-  DOCUMENTS_HOME: "global.navigator.documents",
   SERVICES_NAVIGATOR: "global.navigator.services",
   PROFILE_NAVIGATOR: "global.navigator.profile"
 };
