@@ -24,7 +24,7 @@ export const bpdUpdateOptInStatusMethod = createAsyncAction(
   "BPD_UPDATE_OPT_IN_STATUS_FAILURE"
 )<
   NonNullable<BpdActivationPayload["optInStatus"]>,
-  BpdActivationPayload,
+  NonNullable<BpdActivationPayload["optInStatus"]>,
   Error
 >();
 

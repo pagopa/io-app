@@ -33,7 +33,7 @@ import {
   deleteCitizen,
   getCitizenV2,
   putEnrollCitizenV2,
-  putOptInCitizenV2
+  putOptInStatusCitizenV2
 } from "./networking";
 import { loadBpdData } from "./networking/loadBpdData";
 import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
@@ -86,7 +86,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // update citizen optInStatus
   yield takeLatest(
     bpdUpdateOptInStatusMethod.request,
-    putOptInCitizenV2,
+    putOptInStatusCitizenV2,
     bpdBackendClient.enrollCitizenV2IO
   );
 

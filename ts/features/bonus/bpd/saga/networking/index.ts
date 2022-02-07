@@ -80,34 +80,26 @@ export function* putOptInStatusCitizenV2(
   action: ActionType<typeof bpdUpdateOptInStatusMethod.request>
 ) {
   try {
-    const enrollCitizenIOResult: SagaCallReturnType<typeof updateCitizenIO> =
+    const updateCitizenIOResult: SagaCallReturnType<typeof updateCitizenIO> =
       yield call(
         updateCitizenIO,
         // due to avoid required headers coming from code autogenerate
         // (note the required header will be injected automatically)
         { citizenOptInStatus: action.payload } as any
       );
-    if (enrollCitizenIOResult.isRight()) {
-      if (enrollCitizenIOResult.value.status === 200) {
-        const { enabled, payoffInstr, technicalAccount, optInStatus } =
-          enrollCitizenIOResult.value.value;
-        yield put(
-          bpdUpdateOptInStatusMethod.success({
-            enabled,
-            payoffInstr,
-            technicalAccount,
-            optInStatus
-          })
-        );
+    if (updateCitizenIOResult.isRight()) {
+      if (updateCitizenIOResult.value.status === 200) {
+        const { optInStatus } = updateCitizenIOResult.value.value;
+        yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
         return;
       } else {
         bpdUpdateOptInStatusMethod.failure(
-          new Error(`response status ${enrollCitizenIOResult.value.status}`)
+          new Error(`response status ${updateCitizenIOResult.value.status}`)
         );
       }
     } else {
       bpdUpdateOptInStatusMethod.failure(
-        new Error(readableReport(enrollCitizenIOResult.value))
+        new Error(readableReport(updateCitizenIOResult.value))
       );
     }
   } catch (e) {
