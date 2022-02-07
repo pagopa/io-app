@@ -216,7 +216,7 @@ export const getPagoPAMethodsSelector = createSelector(
 );
 
 // return those payment methods that have BPD as enabled function
-export const getBpdAMethodsSelector = createSelector(
+export const getBpdMethodsSelector = createSelector(
   paymentMethodsSelector,
   (
     potPm: ReturnType<typeof paymentMethodsSelector>

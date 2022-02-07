@@ -22,7 +22,7 @@ import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/But
 import { navigateToOptInPaymentMethodsChoiceScreen } from "../../navigation/actions";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import {
-  getBpdAMethodsSelector,
+  getBpdMethodsSelector,
   paymentMethodsSelector
 } from "../../../../../store/reducers/wallet/wallets";
 import {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 const OptInPaymentMethodsCashbackUpdateScreen = () => {
   const navigation = useNavigationContext();
   const dispatch = useIODispatch();
-  const bpdPaymentMethods = useIOSelector(getBpdAMethodsSelector);
+  const bpdPaymentMethods = useIOSelector(getBpdMethodsSelector);
   const paymentMethods = useIOSelector(paymentMethodsSelector);
   const bpdInfo = useIOSelector(availableBonusTypesSelectorFromId(ID_BPD_TYPE));
   const bpdLogo: ImageSourcePropType = bpdInfo?.cover
