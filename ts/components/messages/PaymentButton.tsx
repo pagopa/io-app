@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
-import { isAppPagoPaSupportedSelector } from "../../common/versionInfo/store/reducers/versionInfo";
+import { isPagoPaSupportedSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
@@ -95,7 +95,7 @@ const PaymentButton = ({
 
 const mapStateToProps = (state: GlobalState) => ({
   isEmailValidated: isProfileEmailValidatedSelector(state),
-  isPagoPaSupported: isAppPagoPaSupportedSelector(state)
+  isPagoPaSupported: isPagoPaSupportedSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

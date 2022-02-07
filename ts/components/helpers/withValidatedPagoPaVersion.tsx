@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { isAppPagoPaSupportedSelector } from "../../common/versionInfo/store/reducers/versionInfo";
+import { isPagoPaSupportedSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 import { GlobalState } from "../../store/reducers/types";
 import RemindUpdatePagoPaVersionOverlay from "../RemindUpdatePagoPaVersionOverlay";
 import BaseScreenComponent from "../screens/BaseScreenComponent";
@@ -35,7 +35,7 @@ const ConditionalView = withLightModalContext(
 export type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => ({
-  isPagoPaVersionSupported: isAppPagoPaSupportedSelector(state)
+  isPagoPaVersionSupported: isPagoPaSupportedSelector(state)
 });
 
 export function withValidatedPagoPaVersion<P>(

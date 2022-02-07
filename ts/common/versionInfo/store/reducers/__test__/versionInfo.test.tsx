@@ -10,7 +10,7 @@ import {
 import { mockIoVersionInfo } from "../__mock__/ioVersionInfo";
 import { minAppVersionAppVersionTestCases } from "../__mock__/testVersion";
 import {
-  isAppPagoPaSupportedSelector,
+  isPagoPaSupportedSelector,
   isAppSupportedSelector
 } from "../versionInfo";
 
@@ -35,7 +35,7 @@ describe("versionInfo selectors", () => {
         applicationChangeState("active")
       );
       expect(globalState.versionInfo).toBeNull();
-      expect(isAppPagoPaSupportedSelector(globalState)).toBe(true);
+      expect(isPagoPaSupportedSelector(globalState)).toBe(true);
     });
   });
   describe("When a versionInfoLoadFailure is received", () => {
@@ -57,7 +57,7 @@ describe("versionInfo selectors", () => {
       const store = createStore(appReducer, globalState as any);
       store.dispatch(versionInfoLoadFailure(new Error()));
       expect(store.getState().versionInfo).toBeNull();
-      expect(isAppPagoPaSupportedSelector(store.getState())).toBe(true);
+      expect(isPagoPaSupportedSelector(store.getState())).toBe(true);
     });
   });
   describe("When a versionInfoLoadSuccess is received", () => {
@@ -74,7 +74,7 @@ describe("versionInfo selectors", () => {
         expect(
           store.getState().versionInfo?.min_app_version_pagopa
         ).toBeUndefined();
-        expect(isAppPagoPaSupportedSelector(store.getState())).toBe(true);
+        expect(isPagoPaSupportedSelector(store.getState())).toBe(true);
       });
     });
 
@@ -128,10 +128,10 @@ describe("versionInfo selectors", () => {
           ios: "2.2.0.1",
           android: "2.2.0.1"
         });
-        expect(isAppPagoPaSupportedSelector(store.getState())).toBe(false);
+        expect(isPagoPaSupportedSelector(store.getState())).toBe(false);
 
         store.dispatch(versionInfoLoadFailure(new Error()));
-        expect(isAppPagoPaSupportedSelector(store.getState())).toBe(true);
+        expect(isPagoPaSupportedSelector(store.getState())).toBe(true);
       });
     });
 
@@ -181,6 +181,6 @@ const testIsAppSupportedSelector = (
   if (key === "min_app_version") {
     expect(isAppSupportedSelector(store.getState())).toBe(isSupported);
   } else {
-    expect(isAppPagoPaSupportedSelector(store.getState())).toBe(isSupported);
+    expect(isPagoPaSupportedSelector(store.getState())).toBe(isSupported);
   }
 };
