@@ -241,7 +241,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ]);
   };
 
-  // show the screen where the user can pick the desired psp
+  // navigate to the screen where the user can pick the desired psp
   const handleOnEditPaypalPsp = () => {
     navigation.navigate(
       navigateToPayPalUpdatePspForPayment({
