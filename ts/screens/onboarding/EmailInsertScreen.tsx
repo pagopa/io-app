@@ -297,9 +297,9 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
               </Form>
             </View>
           </Content>
-
-          {withKeyboard(this.renderFooterButtons())}
         </SafeAreaView>
+
+        {withKeyboard(this.renderFooterButtons())}
       </BaseScreenComponent>
     );
   }
