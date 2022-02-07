@@ -119,6 +119,15 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
 });
 
 /**
+ * Return the optInStatus value related to the bpd program
+ * @param state
+ */
+export const optInStatusSelector = (
+  state: GlobalState
+): pot.Pot<CitizenOptInStatusEnum, Error> =>
+  state.bonus.bpd.details.activation.optInStatus;
+
+/**
  * Return the enabled value related to the bpd program
  * @param state
  */
