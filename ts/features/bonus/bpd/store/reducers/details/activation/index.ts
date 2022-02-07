@@ -74,8 +74,9 @@ const optInStatusReducer = (
 ): pot.Pot<CitizenOptInStatusEnum, Error> => {
   switch (action.type) {
     case getType(bpdLoadActivationStatus.request):
-    case getType(bpdUpdateOptInStatusMethod.request):
       return pot.toLoading(state);
+    case getType(bpdUpdateOptInStatusMethod.request):
+      return pot.toUpdating(state, action.payload);
     case getType(bpdLoadActivationStatus.success):
       return action.payload.optInStatus
         ? pot.some(action.payload.optInStatus)
