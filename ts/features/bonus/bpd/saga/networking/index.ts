@@ -1,6 +1,7 @@
 import { SagaIterator } from "@redux-saga/core";
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { ActionType } from "typesafe-actions";
 import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
@@ -10,7 +11,6 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
-import { ActionType } from "typesafe-actions";
 import { getError } from "../../../../../utils/errors";
 
 export function* executeAndDispatchV2(

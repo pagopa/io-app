@@ -15,6 +15,9 @@ export const bpdEnrollUserToProgram = createAsyncAction(
   "BPD_ENROLL_FAILURE"
 )<void, BpdActivationPayload, Error>();
 
+/**
+ * update the optInStatus of an enrolled citizen
+ */
 export const bpdUpdateOptInMethod = createAsyncAction(
   "BPD_UPDATE_OPT_IN_REQUEST",
   "BPD_UPDATE_OPT_IN_SUCCESS",
@@ -92,4 +95,5 @@ export type BpdOnboardingActions =
   | ActionType<typeof bpdOnboardingCompleted>
   | ActionType<typeof bpdDeleteUserFromProgram>
   | ActionType<typeof bpdUnsubscribeCompleted>
-  | ActionType<typeof bpdUnsubscribeFailure>;
+  | ActionType<typeof bpdUnsubscribeFailure>
+  | ActionType<typeof bpdUpdateOptInMethod>;

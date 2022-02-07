@@ -90,6 +90,8 @@ import {
   bpdRemoteConfigSelector,
   isCGNEnabledSelector
 } from "../../store/reducers/backendStatus";
+import { bpdUpdateOptInMethod } from "../../features/bonus/bpd/store/actions/onboarding";
+import { CitizenOptInStatusEnum } from "../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -634,7 +636,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
-  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
+  navigateToPaymentScanQrCode: () =>
+    bpdUpdateOptInMethod.request(CitizenOptInStatusEnum.ACCEPTED),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
 

@@ -18,8 +18,10 @@ import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
   bpdUnsubscribeCompleted,
-  bpdUnsubscribeFailure
+  bpdUnsubscribeFailure,
+  bpdUpdateOptInMethod
 } from "../../../actions/onboarding";
+import { CitizenOptInStatusEnum } from "../../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 import paymentInstrumentReducer, {
   bpdUpsertIbanSelector,
   PayoffInstrumentType
@@ -33,6 +35,7 @@ export type BpdActivation = {
   payoffInstr: PayoffInstrumentType;
   unsubscription: RemoteValue<true, Error>;
   technicalAccount: RemoteValue<string | undefined, Error>;
+  optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>;
 };
 
 /**
@@ -58,6 +61,24 @@ const enabledReducer = (
       return pot.some(action.payload.enabled);
     case getType(bpdDeleteUserFromProgram.success):
       return pot.none;
+    case getType(bpdLoadActivationStatus.failure):
+    case getType(bpdEnrollUserToProgram.failure):
+      return pot.toError(state, action.payload);
+  }
+  return state;
+};
+
+const optInStatusReducer = (
+  state: pot.Pot<CitizenOptInStatusEnum, Error> = pot.none,
+  action: Action
+): pot.Pot<CitizenOptInStatusEnum, Error> => {
+  switch (action.type) {
+    case getType(bpdLoadActivationStatus.request):
+    case getType(bpdUpdateOptInMethod.request):
+      return pot.toLoading(state);
+    case getType(bpdLoadActivationStatus.success):
+    case getType(bpdUpdateOptInMethod.success):
+      return pot.some(action.payload.optInStatus);
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
       return pot.toError(state, action.payload);
@@ -93,7 +114,8 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,
   payoffInstr: paymentInstrumentReducer,
   unsubscription: unsubscriptionReducer,
-  technicalAccount: technicalAccountReducer
+  technicalAccount: technicalAccountReducer,
+  optInStatus: optInStatusReducer
 });
 
 /**

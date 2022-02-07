@@ -8,6 +8,7 @@ import {
 } from "../../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../../store/actions/periods";
 import { testableFunctions, loadBpdData } from "../loadBpdData";
+import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
 // TODO: tested only two base case, add more if needed
 describe("loadBpdData", () => {
@@ -27,7 +28,8 @@ describe("loadBpdData", () => {
       .next(
         bpdLoadActivationStatus.success({
           enabled: false,
-          payoffInstr: undefined
+          payoffInstr: undefined,
+          optInStatus: CitizenOptInStatusEnum.NOREQ
         })
       )
       .put(bpdAllData.success())
@@ -50,7 +52,8 @@ describe("loadBpdData", () => {
       .next(
         bpdLoadActivationStatus.success({
           enabled: true,
-          payoffInstr: undefined
+          payoffInstr: undefined,
+          optInStatus: CitizenOptInStatusEnum.NOREQ
         })
       )
       .put(bpdPeriodsAmountLoad.request())
