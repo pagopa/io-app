@@ -7,7 +7,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Keyboard, Platform, StyleSheet } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  Platform,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
 import { StackActions } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
@@ -232,69 +238,71 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   public render() {
     const isFromProfileSection = isOnboardingCompleted();
     return (
-      <BaseScreenComponent
-        goBack={this.handleGoBack}
-        headerTitle={
-          isFromProfileSection
-            ? I18n.t("profile.data.list.email")
-            : I18n.t("email.insert.header")
-        }
-        contextualHelpMarkdown={contextualHelpMarkdown}
-      >
-        <View style={styles.flex}>
-          <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
-            <H1
-              color={"bluegreyDark"}
-              weight={"Bold"}
-              style={[styles.horizontalPadding]}
-            >
-              {isFromProfileSection
-                ? I18n.t("email.edit.title")
-                : I18n.t("email.insert.title")}
-            </H1>
-            <View spacer={true} />
-            <View style={styles.horizontalPadding}>
-              <Text>
+      <SafeAreaView style={styles.flex}>
+        <BaseScreenComponent
+          goBack={this.handleGoBack}
+          headerTitle={
+            isFromProfileSection
+              ? I18n.t("profile.data.list.email")
+              : I18n.t("email.insert.header")
+          }
+          contextualHelpMarkdown={contextualHelpMarkdown}
+        >
+          <View style={styles.flex}>
+            <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
+              <H1
+                color={"bluegreyDark"}
+                weight={"Bold"}
+                style={[styles.horizontalPadding]}
+              >
                 {isFromProfileSection
-                  ? this.props.isEmailValidated
-                    ? I18n.t("email.edit.validated")
-                    : I18n.t("email.edit.subtitle")
-                  : I18n.t("email.insert.subtitle")}
-                {isFromProfileSection && (
-                  <Text style={styles.darkestGray}>
-                    {` ${this.props.optionEmail.getOrElse("")}`}
-                  </Text>
-                )}
-              </Text>
-            </View>
-            <View spacer={true} />
-            <View style={styles.horizontalPadding}>
-              <Form>
-                <LabelledItem
-                  label={
-                    isFromProfileSection
-                      ? I18n.t("email.edit.label")
-                      : I18n.t("email.insert.label")
-                  }
-                  icon="io-envelope"
-                  isValid={this.isValidEmail()}
-                  inputProps={{
-                    returnKeyType: "done",
-                    onSubmitEditing: this.continueOnPress,
-                    autoCapitalize: "none",
-                    keyboardType: "email-address",
-                    value: this.state.email.getOrElse(EMPTY_EMAIL),
-                    onChangeText: this.handleOnChangeEmailText
-                  }}
-                  iconStyle={styles.icon}
-                />
-              </Form>
-            </View>
-          </Content>
-        </View>
+                  ? I18n.t("email.edit.title")
+                  : I18n.t("email.insert.title")}
+              </H1>
+              <View spacer={true} />
+              <View style={styles.horizontalPadding}>
+                <Text>
+                  {isFromProfileSection
+                    ? this.props.isEmailValidated
+                      ? I18n.t("email.edit.validated")
+                      : I18n.t("email.edit.subtitle")
+                    : I18n.t("email.insert.subtitle")}
+                  {isFromProfileSection && (
+                    <Text style={styles.darkestGray}>
+                      {` ${this.props.optionEmail.getOrElse("")}`}
+                    </Text>
+                  )}
+                </Text>
+              </View>
+              <View spacer={true} />
+              <View style={styles.horizontalPadding}>
+                <Form>
+                  <LabelledItem
+                    label={
+                      isFromProfileSection
+                        ? I18n.t("email.edit.label")
+                        : I18n.t("email.insert.label")
+                    }
+                    icon="io-envelope"
+                    isValid={this.isValidEmail()}
+                    inputProps={{
+                      returnKeyType: "done",
+                      onSubmitEditing: this.continueOnPress,
+                      autoCapitalize: "none",
+                      keyboardType: "email-address",
+                      value: this.state.email.getOrElse(EMPTY_EMAIL),
+                      onChangeText: this.handleOnChangeEmailText
+                    }}
+                    iconStyle={styles.icon}
+                  />
+                </Form>
+              </View>
+            </Content>
+          </View>
 
-        {withKeyboard(this.renderFooterButtons())}
-      </BaseScreenComponent>
+          {withKeyboard(this.renderFooterButtons())}
+        </BaseScreenComponent>
+      </SafeAreaView>
     );
   }
 }
