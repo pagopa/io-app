@@ -48,6 +48,11 @@ const selectVersion = (
     })
   );
 
+const isSupported = (versionPerPlatform: IOVersionPerPlatform | undefined) =>
+  selectVersion(versionPerPlatform)
+    .map(v => isVersionSupported(v, getAppVersion()))
+    .getOrElse(true);
+
 /**
  * Return true if the app needs to be updated and the user cannot continue to use the app without an update
  * Since the getAppVersion cannot change during the app execution, we can avoid forwarding it from the outside
@@ -55,10 +60,7 @@ const selectVersion = (
  */
 export const isAppSupportedSelector = createSelector(
   [versionInfoDataSelector],
-  (versionInfo): boolean =>
-    selectVersion(versionInfo?.min_app_version)
-      .map(v => isVersionSupported(v, getAppVersion()))
-      .getOrElse(true)
+  (versionInfo): boolean => isSupported(versionInfo?.min_app_version)
 );
 
 /**
@@ -69,8 +71,5 @@ export const isAppSupportedSelector = createSelector(
  */
 export const isPagoPaSupportedSelector = createSelector(
   [versionInfoDataSelector],
-  (versionInfo): boolean =>
-    selectVersion(versionInfo?.min_app_version_pagopa)
-      .map(v => isVersionSupported(v, getAppVersion()))
-      .getOrElse(true)
+  (versionInfo): boolean => isSupported(versionInfo?.min_app_version_pagopa)
 );
