@@ -5,7 +5,7 @@ import { ActionType } from "typesafe-actions";
 import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
-  bpdUpdateOptInMethod
+  bpdUpdateOptInStatusMethod
 } from "../../store/actions/onboarding";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
@@ -70,9 +70,14 @@ export function* putEnrollCitizenV2(
   yield call(executeAndDispatchV2, enrollCitizenIO, bpdEnrollUserToProgram);
 }
 
-export function* putOptInCitizenV2(
+/**
+ * update the citizen OptInStatus
+ * @param updateCitizenIO
+ * @param action
+ */
+export function* putOptInStatusCitizenV2(
   updateCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenV2IO"],
-  action: ActionType<typeof bpdUpdateOptInMethod.request>
+  action: ActionType<typeof bpdUpdateOptInStatusMethod.request>
 ) {
   try {
     const enrollCitizenIOResult: SagaCallReturnType<typeof updateCitizenIO> =
@@ -87,7 +92,7 @@ export function* putOptInCitizenV2(
         const { enabled, payoffInstr, technicalAccount, optInStatus } =
           enrollCitizenIOResult.value.value;
         yield put(
-          bpdUpdateOptInMethod.success({
+          bpdUpdateOptInStatusMethod.success({
             enabled,
             payoffInstr,
             technicalAccount,
@@ -96,17 +101,17 @@ export function* putOptInCitizenV2(
         );
         return;
       } else {
-        bpdUpdateOptInMethod.failure(
+        bpdUpdateOptInStatusMethod.failure(
           new Error(`response status ${enrollCitizenIOResult.value.status}`)
         );
       }
     } else {
-      bpdUpdateOptInMethod.failure(
+      bpdUpdateOptInStatusMethod.failure(
         new Error(readableReport(enrollCitizenIOResult.value))
       );
     }
   } catch (e) {
-    yield put(bpdUpdateOptInMethod.failure(getError(e)));
+    yield put(bpdUpdateOptInStatusMethod.failure(getError(e)));
   }
 }
 

@@ -14,7 +14,7 @@ import {
   bpdEnrollUserToProgram,
   bpdOnboardingAcceptDeclaration,
   bpdOnboardingStart,
-  bpdUpdateOptInMethod
+  bpdUpdateOptInStatusMethod
 } from "../store/actions/onboarding";
 import {
   bpdPaymentMethodActivation,
@@ -85,7 +85,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
   // update citizen optInStatus
   yield takeLatest(
-    bpdUpdateOptInMethod.request,
+    bpdUpdateOptInStatusMethod.request,
     putOptInCitizenV2,
     bpdBackendClient.enrollCitizenV2IO
   );

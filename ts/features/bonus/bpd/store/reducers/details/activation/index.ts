@@ -19,7 +19,7 @@ import {
   bpdEnrollUserToProgram,
   bpdUnsubscribeCompleted,
   bpdUnsubscribeFailure,
-  bpdUpdateOptInMethod
+  bpdUpdateOptInStatusMethod
 } from "../../../actions/onboarding";
 import { CitizenOptInStatusEnum } from "../../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 import paymentInstrumentReducer, {
@@ -74,10 +74,10 @@ const optInStatusReducer = (
 ): pot.Pot<CitizenOptInStatusEnum, Error> => {
   switch (action.type) {
     case getType(bpdLoadActivationStatus.request):
-    case getType(bpdUpdateOptInMethod.request):
+    case getType(bpdUpdateOptInStatusMethod.request):
       return pot.toLoading(state);
     case getType(bpdLoadActivationStatus.success):
-    case getType(bpdUpdateOptInMethod.success):
+    case getType(bpdUpdateOptInStatusMethod.success):
       return action.payload.optInStatus
         ? pot.some(action.payload.optInStatus)
         : pot.none;
