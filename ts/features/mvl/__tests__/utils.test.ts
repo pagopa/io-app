@@ -52,7 +52,7 @@ describe("handleDownloadResult utility function", () => {
       await expect(
         handleDownloadResult(mvlMockPdfAttachment, header)
       ).rejects.toEqual(
-        new Error("error 500 fetching htts://www.invoicepdf.com/invoce.pdf")
+        new Error("error 500 fetching " + mvlMockPdfAttachment.resourceUrl.href)
       );
     });
   });

@@ -70,15 +70,17 @@ const DownloadAttachmentConfirmationBottomSheet = ({
   const [isLoading, setIsLoading] = useState<boolean>(withoutConfirmation);
   const [downloadError, setDownloadError] = useState<Error | null>(null);
 
-  const performDownload = useCallback(
-    () =>
-      onConfirm({ dontAskAgain }).catch((error: Error) => {
+  const performDownload = useCallback(() => {
+    setIsLoading(true);
+    onConfirm({ dontAskAgain })
+      .catch((error: Error) => {
         // TODO: log the error
         setDownloadError(error);
+      })
+      .finally(() => {
         setIsLoading(false);
-      }),
-    [dontAskAgain, onConfirm, setDownloadError]
-  );
+      });
+  }, [dontAskAgain, onConfirm, setDownloadError]);
 
   useEffect(() => {
     if (withoutConfirmation) {
@@ -127,7 +129,6 @@ const DownloadAttachmentConfirmationBottomSheet = ({
             }}
             rightButton={{
               ...confirmButtonProps(() => {
-                setIsLoading(true);
                 setDownloadError(null);
                 void performDownload();
               }, i18n.t("global.buttons.retry")),
@@ -164,7 +165,6 @@ const DownloadAttachmentConfirmationBottomSheet = ({
           }}
           rightButton={{
             ...confirmButtonProps(() => {
-              setIsLoading(true);
               void performDownload();
             }, i18n.t("global.buttons.continue")),
             onPressWithGestureHandler: true

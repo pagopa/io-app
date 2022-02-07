@@ -73,7 +73,7 @@ export const handleDownloadResult = async (
       return Promise.reject(e);
     }
     return Promise.reject(
-      new Error(`couldn't fetch ${attachment.resourceUrl}`)
+      new Error(`couldn't fetch ${attachment.resourceUrl.href}`)
     );
   }
 };
