@@ -86,7 +86,7 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
       >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <View style={styles.headerContainer}>
-            <View>
+            <View style={IOStyles.flex}>
               <H2>
                 {I18n.t("bonus.bpd.optInPaymentMethods.cashbackUpdate.title")}
               </H2>
