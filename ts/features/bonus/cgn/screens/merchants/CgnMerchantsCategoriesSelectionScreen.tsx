@@ -3,6 +3,7 @@ import {
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
+  ScrollView,
   StyleSheet
 } from "react-native";
 import { View } from "native-base";
@@ -18,6 +19,11 @@ import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { useIODispatch } from "../../../../../store/hooks";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import CGN_ROUTES from "../../navigation/routes";
+import { cgnSelectedCategory } from "../../store/actions/categories";
+import { H1 } from "../../../../../components/core/typography/H1";
 
 const styles = StyleSheet.create({
   body: {
@@ -44,9 +50,35 @@ const styles = StyleSheet.create({
 });
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
+  const dispatch = useIODispatch();
+  const navigation = useNavigationContext();
+
   const renderCategoryElement = (
-    info: ListRenderItemInfo<ProductCategoryEnum>
+    info: ListRenderItemInfo<ProductCategoryEnum | "All">
   ) => {
+    if (info.item === "All") {
+      return (
+        <LinearGradient
+          colors={["#C51C82", "#E28DC0"]}
+          useAngle={true}
+          angle={57.23}
+          style={styles.body}
+        >
+          <TouchableDefaultOpacity
+            style={[IOStyles.flex, styles.container]}
+            onPress={() =>
+              navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)
+            }
+          >
+            <View style={[IOStyles.flex, IOStyles.row]}>
+              <H2 color={"white"}>
+                {I18n.t("bonus.cgn.merchantDetail.categories.all")}
+              </H2>
+            </View>
+          </TouchableDefaultOpacity>
+        </LinearGradient>
+      );
+    }
     const specs = getCategorySpecs(info.item);
 
     return specs.fold(null, s => (
@@ -56,7 +88,13 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         angle={57.23}
         style={styles.body}
       >
-        <TouchableDefaultOpacity style={[IOStyles.flex, styles.container]}>
+        <TouchableDefaultOpacity
+          style={[IOStyles.flex, styles.container]}
+          onPress={() => {
+            dispatch(cgnSelectedCategory(s.type));
+            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY);
+          }}
+        >
           <View style={[IOStyles.flex, IOStyles.row]}>
             <H2 color={"white"}>{I18n.t(s.nameKey)}</H2>
           </View>
@@ -73,9 +111,10 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     ));
   };
 
-  const categoriesToArray = Object.entries(ProductCategoryEnum).map(
-    value => value[1]
-  );
+  const categoriesToArray: ReadonlyArray<ProductCategoryEnum | "All"> = [
+    ...Object.entries(ProductCategoryEnum).map(value => value[1]),
+    "All"
+  ];
 
   return (
     <BaseScreenComponent
@@ -84,14 +123,18 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <FlatList
-            data={categoriesToArray}
-            renderItem={renderCategoryElement}
-            numColumns={2}
-            keyExtractor={(item: ProductCategoryEnum) => item}
-          />
-        </View>
+        <ScrollView style={IOStyles.flex}>
+          <View style={IOStyles.horizontalContentPadding}>
+            <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
+            <View spacer large />
+            <FlatList
+              data={categoriesToArray}
+              renderItem={renderCategoryElement}
+              numColumns={2}
+              keyExtractor={(item: ProductCategoryEnum | "All") => item}
+            />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
   );

@@ -2538,6 +2538,8 @@ bonus:
       screenTitle: Select the operator and discover the benefits
       cta:
         filter: Filter
+      categoriesList:
+        title: Select a category and discover the benefits
       filter:
         title: Filter operators
         searchTitle: Find by name
@@ -2576,6 +2578,7 @@ bonus:
         label: Navigate to operator website
         landingPage: Get the benefit
       categories:
+        all: All the partners
         counting: and other {{count}}
         cultureAndEntertainment: Culture and Entertainment
         health: Health and Wellness

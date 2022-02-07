@@ -2564,6 +2564,8 @@ bonus:
       screenTitle: Seleziona un operatore e scopri le agevolazioni
       cta:
         filter: Filtra
+      categoriesList:
+        title: Seleziona una categoria e scopri le agevolazioni
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2602,6 +2604,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione
       categories:
+        all: Tutti i partner
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e Tempo Libero
         health: Salute e Benessere
