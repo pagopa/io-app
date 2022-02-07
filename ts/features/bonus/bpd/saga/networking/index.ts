@@ -10,7 +10,6 @@ import {
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
-import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 import { getError } from "../../../../../utils/errors";
 
 export function* executeAndDispatchV2(
@@ -45,8 +44,7 @@ export function* executeAndDispatchV2(
           action.success({
             enabled: false,
             payoffInstr: undefined,
-            technicalAccount: undefined,
-            optInStatus: CitizenOptInStatusEnum.NOREQ
+            technicalAccount: undefined
           })
         );
         return;

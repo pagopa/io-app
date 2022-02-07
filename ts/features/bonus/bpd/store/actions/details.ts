@@ -9,7 +9,7 @@ import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citize
 export type BpdActivationPayload = {
   enabled: boolean;
   payoffInstr: string | undefined;
-  optInStatus: CitizenOptInStatusEnum;
+  optInStatus?: CitizenOptInStatusEnum;
   technicalAccount?: string;
 };
 

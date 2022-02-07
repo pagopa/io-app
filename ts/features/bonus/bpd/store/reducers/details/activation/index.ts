@@ -78,7 +78,9 @@ const optInStatusReducer = (
       return pot.toLoading(state);
     case getType(bpdLoadActivationStatus.success):
     case getType(bpdUpdateOptInMethod.success):
-      return pot.some(action.payload.optInStatus);
+      return action.payload.optInStatus
+        ? pot.some(action.payload.optInStatus)
+        : pot.none;
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
       return pot.toError(state, action.payload);

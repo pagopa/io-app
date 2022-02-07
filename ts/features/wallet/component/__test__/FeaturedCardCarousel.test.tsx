@@ -16,7 +16,6 @@ import {
 } from "../../../bonus/bonusVacanze/utils/bonus";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
-import { CitizenOptInStatusEnum } from "../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
 jest.mock("react-native-share", () => jest.fn());
 describe("FeaturedCardCarousel", () => {
@@ -34,11 +33,7 @@ describe("FeaturedCardCarousel", () => {
     const mockStore = configureMockStore<GlobalState>();
     const withBpdEnabled: GlobalState = appReducer(
       undefined,
-      bpdLoadActivationStatus.success({
-        enabled: true,
-        payoffInstr: undefined,
-        optInStatus: CitizenOptInStatusEnum.NOREQ
-      })
+      bpdLoadActivationStatus.success({ enabled: true, payoffInstr: undefined })
     );
     const withBonusAvailable = appReducer(
       withBpdEnabled,
@@ -72,8 +67,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: true,
-        payoffInstr: undefined,
-        optInStatus: CitizenOptInStatusEnum.NOREQ
+        payoffInstr: undefined
       })
     );
     const withBonusAvailable = appReducer(
@@ -108,8 +102,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: false,
-        payoffInstr: undefined,
-        optInStatus: CitizenOptInStatusEnum.NOREQ
+        payoffInstr: undefined
       })
     );
     const withBonusAvailable = appReducer(
@@ -187,8 +180,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: false,
-        payoffInstr: undefined,
-        optInStatus: CitizenOptInStatusEnum.NOREQ
+        payoffInstr: undefined
       })
     );
     const bpdBonus = availableBonuses[1];
@@ -238,8 +230,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: true,
-        payoffInstr: undefined,
-        optInStatus: CitizenOptInStatusEnum.NOREQ
+        payoffInstr: undefined
       })
     );
     const bpdBonus = availableBonuses[1];
@@ -336,8 +327,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: true,
-        payoffInstr: undefined,
-        optInStatus: CitizenOptInStatusEnum.NOREQ
+        payoffInstr: undefined
       })
     );
     const bpdBonus = availableBonuses[1];
