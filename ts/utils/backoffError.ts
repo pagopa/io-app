@@ -1,11 +1,11 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, delay, select } from "typed-redux-saga/macro";
-import { SelectEffect } from "redux-saga/effects";
 import {
   backOffWaitingTime,
   FailureActions
 } from "../store/reducers/backoffError";
 import { mixpanelTrack } from "../mixpanel";
+import { ReduxSagaEffect } from "../types/utils";
 
 /**
  * return the backoff waiting time from the given failure action
@@ -14,7 +14,7 @@ import { mixpanelTrack } from "../mixpanel";
 export function* getBackoffTime(
   failure: FailureActions
 ): Generator<
-  SelectEffect,
+  ReduxSagaEffect,
   Millisecond,
   (failure: FailureActions) => Millisecond
 > {

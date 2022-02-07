@@ -1,15 +1,19 @@
 import { call, take } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
 import { createPinSuccess } from "../../store/actions/pinset";
 
 import { PinString } from "../../types/PinString";
+import { ReduxSagaEffect } from "../../types/utils";
 
 import { getPin } from "../../utils/keychain";
 
-export function* checkConfiguredPinSaga(): Generator<Effect, PinString, any> {
+export function* checkConfiguredPinSaga(): Generator<
+  ReduxSagaEffect,
+  PinString,
+  any
+> {
   // We check whether the user has already created a unlock code by trying to retrieve
   // it from the Keychain
   const pinCode = yield* call(getPin);

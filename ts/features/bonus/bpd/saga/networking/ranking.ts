@@ -2,14 +2,16 @@ import * as A from "fp-ts/lib/Array";
 import { Either, fromOption, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
 import { CitizenRankingMilestoneResourceArray } from "../../../../../../definitions/bpd/citizen_v2/CitizenRankingMilestoneResourceArray";
 import { MilestoneResource } from "../../../../../../definitions/bpd/citizen_v2/MilestoneResource";
 import { bpdTransactionsPaging } from "../../../../../config";
 import { mixpanelTrack } from "../../../../../mixpanel";
-import { SagaCallReturnType } from "../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../types/utils";
 import { getError } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { AwardPeriodId } from "../../store/actions/periods";
@@ -44,7 +46,11 @@ const convertRankingArray = (
  */
 export function* bpdLoadRaking(
   getRanking: ReturnType<typeof BackendBpdClient>["getRanking"]
-): Generator<Effect, Either<Error, ReadonlyArray<BpdRankingReady>>, any> {
+): Generator<
+  ReduxSagaEffect,
+  Either<Error, ReadonlyArray<BpdRankingReady>>,
+  any
+> {
   try {
     void mixpanelTrack(mixpanelActionRequest);
     const getRankingResult: SagaCallReturnType<typeof getRanking> = yield* call(
@@ -111,7 +117,11 @@ const extractPivot = (
  */
 export function* bpdLoadRakingV2(
   getRanking: ReturnType<typeof BackendBpdClient>["getRankingV2"]
-): Generator<Effect, Either<Error, ReadonlyArray<BpdRankingReady>>, any> {
+): Generator<
+  ReduxSagaEffect,
+  Either<Error, ReadonlyArray<BpdRankingReady>>,
+  any
+> {
   try {
     void mixpanelTrack(mixpanelActionRequest);
     const getRankingResult: SagaCallReturnType<typeof getRanking> = yield* call(

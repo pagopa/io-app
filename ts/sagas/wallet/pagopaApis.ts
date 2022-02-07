@@ -3,7 +3,6 @@ import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
-import { Effect } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { mixpanelTrack } from "../../mixpanel";
@@ -46,7 +45,7 @@ import {
 } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { PaymentManagerToken, Wallet } from "../../types/pagopa";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
@@ -71,7 +70,7 @@ import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/de
 export function* getWallets(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
-): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
+): Generator<ReduxSagaEffect, Either<Error, ReadonlyArray<Wallet>>, any> {
   return yield* call(getWalletsV2, pagoPaClient, pmSessionManager);
 }
 
@@ -80,7 +79,7 @@ export function* getWallets(
 export function* getWalletsV2(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
-): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
+): Generator<ReduxSagaEffect, Either<Error, ReadonlyArray<Wallet>>, any> {
   try {
     void mixpanelTrack("WALLETS_LOAD_REQUEST");
     const request = pmSessionManager.withRefresh(pagoPaClient.getWalletsV2);
@@ -128,7 +127,7 @@ export function* fetchTransactionsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionsRequest>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getTransactions(action.payload.start)
   );
@@ -160,7 +159,7 @@ export function* fetchTransactionRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionRequest>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getTransaction(action.payload)
   );
@@ -187,7 +186,7 @@ export function* fetchPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchPsp["request"]>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getPsp(action.payload.idPsp)
   );
@@ -231,7 +230,7 @@ export function* updatePaymentStatusSaga(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof updatePaymentStatus.request>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   const updatePayment = pagoPaClient.updatePaymentStatus(action.payload);
   const request = pmSessionManager.withRefresh(updatePayment);
   try {
@@ -274,7 +273,7 @@ export function* setFavouriteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof setFavouriteWalletRequest>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   const favouriteWalletId = action.payload;
   if (favouriteWalletId === undefined) {
     // FIXME: currently there is no way to unset a favourite wallet
@@ -383,7 +382,7 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof deleteAllPaymentMethodsByFunction>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   const deleteAllByFunctionApi = pagoPaClient.deleteAllPaymentMethodsByFunction(
     action.payload as string
   );
@@ -468,7 +467,7 @@ export function* deleteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof deleteWalletRequest>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   const deleteWalletApi = pagoPaClient.deleteWallet(action.payload.walletId);
   const deleteWalletWithRefresh = pmSessionManager.withRefresh(deleteWalletApi);
 
@@ -632,7 +631,7 @@ export function* paymentCheckRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentCheck["request"]>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
   //        idempotent, the 2nd time it will error!
@@ -693,7 +692,7 @@ export function* paymentDeletePaymentRequestHandler(
   action: ActionType<
     typeof paymentDeletePayment["request"] | typeof paymentCompletedFailure
   >
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
   try {

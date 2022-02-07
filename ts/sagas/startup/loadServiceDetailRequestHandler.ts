@@ -1,6 +1,5 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, fork, put, take, takeLatest } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { buffers, channel, Channel } from "redux-saga";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -10,7 +9,7 @@ import {
   loadServiceDetailNotFound,
   loadServicesDetail
 } from "../../store/actions/services";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { handleOrganizationNameUpdateSaga } from "../services/handleOrganizationNameUpdateSaga";
 import { handleServiceReadabilitySaga } from "../services/handleServiceReadabilitySaga";
 import { totServiceFetchWorkers } from "../../config";
@@ -23,12 +22,12 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
  *
  * @param {function} getService - The function that makes the Backend request
  * @param action
- * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
+ * @returns {IterableIterator<ReduxSagaEffect | Either<Error, ServicePublic>>}
  */
 export function* loadServiceDetailRequestHandler(
   getService: ReturnType<typeof BackendClient>["getService"],
   action: ActionType<typeof loadServiceDetail["request"]>
-): Generator<Effect, void, SagaCallReturnType<typeof getService>> {
+): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getService>> {
   try {
     const response = yield* call(getService, { service_id: action.payload });
 

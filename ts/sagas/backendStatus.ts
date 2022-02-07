@@ -3,11 +3,10 @@
  */
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, fork, put, select } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { CdnBackendStatusClient } from "../api/backendPublic";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendServicesStatusSelector } from "../store/reducers/backendStatus";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 import { contentRepoUrl } from "../config";
 
@@ -17,7 +16,11 @@ const BACKEND_SERVICES_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
 // Return true if it has information (200) false otherwise
 export function* backendStatusSaga(
   getServicesStatus: ReturnType<typeof CdnBackendStatusClient>["getStatus"]
-): Generator<Effect, boolean, SagaCallReturnType<typeof getServicesStatus>> {
+): Generator<
+  ReduxSagaEffect,
+  boolean,
+  SagaCallReturnType<typeof getServicesStatus>
+> {
   try {
     const response = yield* call(getServicesStatus, {});
     if (response.isRight() && response.value.status === 200) {
@@ -68,7 +71,7 @@ export function* backendStatusWatcherLoop(
   }
 }
 
-export default function* root(): IterableIterator<Effect> {
+export default function* root(): IterableIterator<ReduxSagaEffect> {
   const cdnBackendClient = CdnBackendStatusClient(contentRepoUrl);
   yield* fork(backendStatusWatcherLoop, cdnBackendClient.getStatus);
 }

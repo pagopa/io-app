@@ -182,6 +182,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
+    "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
     "@react-native-community/eslint-config": "^3.0.1",
     "@testing-library/jest-native": "^3.4.3",
     "@testing-library/react-native": "^7.1.0",

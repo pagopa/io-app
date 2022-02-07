@@ -1,4 +1,3 @@
-import { Effect } from "redux-saga/effects";
 import { call, cancel, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
@@ -9,6 +8,7 @@ import {
 import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SessionToken } from "../../types/SessionToken";
+import { ReduxSagaEffect } from "../../types/utils";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
 
@@ -16,7 +16,11 @@ import { watchTestLoginRequestSaga } from "../testLoginSaga";
  * A saga that makes the user go through the authentication process until
  * a SessionToken gets produced.
  */
-export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
+export function* authenticationSaga(): Generator<
+  ReduxSagaEffect,
+  SessionToken,
+  any
+> {
   yield* put(analyticsAuthenticationStarted());
 
   // Watch for the test login

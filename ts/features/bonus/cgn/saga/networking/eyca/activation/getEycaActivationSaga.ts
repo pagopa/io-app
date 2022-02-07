@@ -1,8 +1,10 @@
 import { call, put } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Either, left, right } from "fp-ts/lib/Either";
-import { SagaCallReturnType } from "../../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../../types/utils";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { startTimer } from "../../../../../../../utils/timer";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
@@ -33,7 +35,7 @@ const mapStatus: Map<number, StartEycaStatus> = new Map([
  */
 export function* handleStartActivation(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
-): Generator<Effect, Either<NetworkError, StartEycaStatus>, any> {
+): Generator<ReduxSagaEffect, Either<NetworkError, StartEycaStatus>, any> {
   try {
     const startEycaActivationResult: SagaCallReturnType<
       typeof startEycaActivation
@@ -62,7 +64,7 @@ export type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
  */
 export function* getActivation(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
-): Generator<Effect, Either<NetworkError, GetEycaStatus>, any> {
+): Generator<ReduxSagaEffect, Either<NetworkError, GetEycaStatus>, any> {
   try {
     const getEycaActivationResult: SagaCallReturnType<
       typeof getEycaActivation

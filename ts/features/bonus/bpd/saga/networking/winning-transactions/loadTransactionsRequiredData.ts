@@ -1,8 +1,10 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { call, put, take } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../types/utils";
 import { waitBackoffError } from "../../../../../../utils/backoffError";
 import { AwardPeriodId } from "../../../store/actions/periods";
 import {
@@ -22,7 +24,7 @@ import {
  */
 export function* loadTransactionsRequiredData(
   periodId: AwardPeriodId
-): Generator<Effect, Either<BpdTransactionsError, true>, any> {
+): Generator<ReduxSagaEffect, Either<BpdTransactionsError, true>, any> {
   // We check if there is a failure on the whole loadTransactionsRequiredData block
   yield* call(waitBackoffError, bpdTransactionsLoadRequiredData.failure);
 

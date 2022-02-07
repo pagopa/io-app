@@ -3,7 +3,6 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { UserMetadata as BackendUserMetadata } from "../../../definitions/backend/UserMetadata";
@@ -20,7 +19,7 @@ import {
   userMetadataSelector,
   userMetadataToBackendUserMetadata
 } from "../../store/reducers/userMetadata";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 
 /**
  * A saga to fetch user metadata from the Backend
@@ -28,7 +27,7 @@ import { SagaCallReturnType } from "../../types/utils";
 export function* fetchUserMetadata(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, BackendUserMetadata>,
   SagaCallReturnType<typeof getUserMetadata>
 > {
@@ -66,7 +65,7 @@ export function* loadUserMetadata(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"],
   setLoading: boolean = false
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Option<UserMetadata>,
   SagaCallReturnType<typeof fetchUserMetadata>
 > {
@@ -130,7 +129,7 @@ export function* postUserMetadata(
   >["createOrUpdateUserMetadata"],
   backendUserMetadata: BackendUserMetadata
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, BackendUserMetadata>,
   SagaCallReturnType<typeof createOrUpdateUserMetadata>
 > {
@@ -167,7 +166,7 @@ export function* upsertUserMetadata(
   >["createOrUpdateUserMetadata"],
   userMetadata: UserMetadata,
   setLoading: boolean = false
-): Generator<Effect, Option<UserMetadata>, any> {
+): Generator<ReduxSagaEffect, Option<UserMetadata>, any> {
   if (setLoading) {
     yield* put(userMetadataUpsert.request(userMetadata));
   }

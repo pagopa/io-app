@@ -2,21 +2,20 @@
  * A saga to manage notifications
  */
 import { call, put, select } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
-
 import {
   removeScheduledNotificationAccessSpid,
   scheduleLocalNotificationsAccessSpid
 } from "../boot/scheduleLocalNotifications";
 import { sessionInvalid } from "../store/actions/authentication";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
+import { ReduxSagaEffect } from "../types/utils";
 
 /**
  * This generator function removes user data from previous application
  * installation
  */
 export function* previousInstallationDataDeleteSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   boolean
 > {

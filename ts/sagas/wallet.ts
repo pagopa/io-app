@@ -9,7 +9,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import _ from "lodash";
-import { Effect } from "redux-saga/effects";
 import { NavigationActions, StackActions } from "react-navigation";
 import {
   call,
@@ -196,6 +195,7 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
+import { ReduxSagaEffect } from "../types/utils";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -579,7 +579,7 @@ export function* watchWalletSaga(
   sessionToken: SessionToken,
   walletToken: string,
   paymentManagerUrlPrefix: string
-): Generator<Effect, void, boolean> {
+): Generator<ReduxSagaEffect, void, boolean> {
   // Builds a backend client specifically for the pagopa-proxy endpoints that
   // need a fetch instance that doesn't retry requests and have longer timeout
   const pagopaNodoClient = BackendClient(
@@ -1013,13 +1013,13 @@ function* enableSessionManager(
 function* setWalletSessionEnabledSaga(
   sessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof setWalletSessionEnabled>
-): Iterator<Effect> {
+): Iterator<ReduxSagaEffect> {
   yield* call(enableSessionManager, action.payload, sessionManager);
 }
 /**
  * This saga checks what is the route whence a new payment is started
  */
-export function* watchPaymentInitializeSaga(): Iterator<Effect> {
+export function* watchPaymentInitializeSaga(): Iterator<ReduxSagaEffect> {
   yield* takeEvery(getType(paymentInitializeState), function* () {
     const currentRouteName = NavigationService.getCurrentRouteName();
     const currentRouteKey = NavigationService.getCurrentRouteKey();
@@ -1052,7 +1052,7 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
  * otherwise if the payment starts in scan qr code screen or in Manual data insertion screen
  * it makes one or two supplementary step backs (the correspondant step to wallet home from these screens)
  */
-export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
+export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
   yield* takeEvery(getType(backToEntrypointPayment), function* () {
     const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] =
       yield* select(_ => _.wallet.payment.entrypointRoute);

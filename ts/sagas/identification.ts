@@ -1,5 +1,4 @@
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../store/actions/application";
@@ -36,7 +35,7 @@ import { pendingMessageStateSelector } from "../store/reducers/notifications/pen
 import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
 import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
 
 type ResultAction =
@@ -46,7 +45,7 @@ type ResultAction =
   | ActionType<typeof identificationSuccess>;
 // Wait the identification and return the result
 function* waitIdentificationResult(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void | IdentificationResult,
   any
 > {
@@ -117,7 +116,9 @@ export function* startAndReturnIdentificationResult(
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData,
   shufflePad: boolean = false
-): Iterator<Effect | SagaCallReturnType<typeof waitIdentificationResult>> {
+): Iterator<
+  ReduxSagaEffect | SagaCallReturnType<typeof waitIdentificationResult>
+> {
   yield* put(
     identificationStart(
       pin,
@@ -175,7 +176,9 @@ function* startAndHandleIdentificationResult(
   }
 }
 
-export function* watchIdentification(pin: PinString): IterableIterator<Effect> {
+export function* watchIdentification(
+  pin: PinString
+): IterableIterator<ReduxSagaEffect> {
   // Watch for identification request
   yield* takeLatest(
     getType(identificationRequest),

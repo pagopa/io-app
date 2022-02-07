@@ -1,5 +1,4 @@
 import { call, take } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import {
   navigateToEmailInsertScreen,
@@ -11,6 +10,7 @@ import {
   isProfileEmailValidated,
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
+import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * Launch email saga that consists of:
@@ -21,7 +21,7 @@ import {
  */
 export function* checkAcknowledgedEmailSaga(
   userProfile: InitializedProfile
-): IterableIterator<Effect> {
+): IterableIterator<ReduxSagaEffect> {
   // Check if the profile has an email
   if (hasProfileEmail(userProfile)) {
     if (

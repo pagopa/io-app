@@ -3,8 +3,6 @@ import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, fork, put } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
-
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { BackendPublicClient } from "../api/backendPublic";
 import { setInstabugUserAttribute } from "../boot/configureInstabug";
@@ -13,7 +11,7 @@ import {
   backendInfoLoadFailure,
   backendInfoLoadSuccess
 } from "../store/actions/backendInfo";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 
 // load backend info every hour
@@ -23,7 +21,7 @@ const BACKEND_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
 const BACKEND_INFO_RETRY_INTERVAL = 10 * 1000;
 
 function* backendInfoWatcher(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   SagaCallReturnType<typeof getServerInfo>
 > {
@@ -70,6 +68,6 @@ function* backendInfoWatcher(): Generator<
   }
 }
 
-export default function* root(): IterableIterator<Effect> {
+export default function* root(): IterableIterator<ReduxSagaEffect> {
   yield* fork(backendInfoWatcher);
 }

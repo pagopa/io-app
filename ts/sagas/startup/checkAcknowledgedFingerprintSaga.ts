@@ -1,9 +1,9 @@
 import { call, put, select, take } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
+import { ReduxSagaEffect } from "../../types/utils";
 import {
   BiometricsType,
   getBiometricsType,
@@ -20,7 +20,7 @@ import {
  * supported/Others".
  */
 function* onboardFingerprintIfAvailableSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   BiometricsType
 > {
@@ -67,7 +67,7 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
  * at first launch of the app ONLY.
  */
 export function* checkAcknowledgedFingerprintSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   ReturnType<typeof isFingerprintAcknowledgedSelector>
 > {

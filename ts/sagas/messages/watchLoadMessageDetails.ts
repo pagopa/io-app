@@ -1,11 +1,10 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { BackendClient } from "../../api/backend";
 import { loadMessageDetails } from "../../store/actions/messages";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { getError } from "../../utils/errors";
 import { toUIMessageDetails } from "../../store/reducers/entities/messages/transformers";
 import { isTestEnv } from "../../utils/environment";
@@ -17,7 +16,7 @@ type LocalBeClient = ReturnType<typeof BackendClient>["getMessage"];
 
 export default function* watcher(
   getMessage: LocalBeClient
-): Generator<Effect, void, SagaCallReturnType<typeof getMessage>> {
+): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessage>> {
   yield* takeLatest(
     getType(loadMessageDetails.request),
     tryLoadMessageDetails(getMessage)
@@ -32,7 +31,7 @@ export default function* watcher(
 function tryLoadMessageDetails(getMessage: LocalBeClient) {
   return function* gen(
     action: LocalActionType
-  ): Generator<Effect, void, SagaCallReturnType<typeof getMessage>> {
+  ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessage>> {
     const id = action.payload.id;
     try {
       const response: SagaCallReturnType<typeof getMessage> = yield* call(

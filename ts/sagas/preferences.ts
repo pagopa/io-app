@@ -1,14 +1,13 @@
 import { getLanguages } from "react-native-i18n";
-import { Effect } from "redux-saga/effects";
 import { call, put } from "typed-redux-saga/macro";
 import { preferencesLanguagesLoadSuccess } from "../store/actions/preferences";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 
 /**
  * A saga that retrieves the system languages
  */
 export function* loadSystemPreferencesSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   SagaCallReturnType<typeof getLanguages>
 > {

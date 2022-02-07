@@ -1,5 +1,4 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Effect } from "redux-saga/effects";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
@@ -10,7 +9,7 @@ import {
   logoutSuccess
 } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { resetAssistanceData } from "../../utils/supportAssistance";
 
 /**
@@ -19,7 +18,7 @@ import { resetAssistanceData } from "../../utils/supportAssistance";
 // eslint-disable-next-line
 export function* watchLogoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"]
-): Iterator<Effect> {
+): Iterator<ReduxSagaEffect> {
   yield* takeEvery(
     getType(logoutRequest),
     function* (action: ActionType<typeof logoutRequest>) {

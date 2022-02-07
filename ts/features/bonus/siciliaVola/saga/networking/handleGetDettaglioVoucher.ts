@@ -1,10 +1,10 @@
 import { ActionType } from "typesafe-actions";
 import { delay, put } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { svVoucherDetailGet } from "../../store/actions/voucherList";
 import { SvVoucher } from "../../types/SvVoucher";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
+import { ReduxSagaEffect } from "../../../../../types/utils";
 
 /**
  * Handle the remote call to check if the service is alive
@@ -15,7 +15,7 @@ import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_t
 export function* handleGetDettaglioVoucher(
   __: SessionManager<MitVoucherToken>,
   _: ActionType<typeof svVoucherDetailGet.request>
-): Generator<Effect, void> {
+): Generator<ReduxSagaEffect, void> {
   // TODO: add networking logic
   yield* delay(500);
   const stubVoucher = {

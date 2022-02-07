@@ -1,11 +1,11 @@
 import { NavigationParams, NavigationStateRoute } from "react-navigation";
-import { Effect } from "redux-saga/effects";
 import { call, put } from "typed-redux-saga/macro";
 import NavigationService from "../../navigation/NavigationService";
 
 import ROUTES from "../../navigation/routes";
 
 import { setDeepLink } from "../../store/actions/deepLink";
+import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * Saves the navigation state in the deep link state so that when the app
@@ -14,7 +14,7 @@ import { setDeepLink } from "../../store/actions/deepLink";
  * Saving and restoring routes relies on the deep link mechanism.
  */
 export function* saveNavigationStateSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   ReturnType<typeof NavigationService.getCurrentRoute>
 > {

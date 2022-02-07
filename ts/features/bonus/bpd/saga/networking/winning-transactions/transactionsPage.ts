@@ -1,10 +1,12 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../types/utils";
 import { waitBackoffError } from "../../../../../../utils/backoffError";
 import { getError } from "../../../../../../utils/errors";
 import { BackendBpdClient } from "../../../api/backendBpdClient";
@@ -31,7 +33,7 @@ export function* bpdLoadTransactionsPage(
   awardPeriodId: AwardPeriodId,
   cursor?: number
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, BpdTransactionPageSuccessPayload>,
   SagaCallReturnType<typeof getTransactionPage>
 > {

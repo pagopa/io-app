@@ -11,7 +11,6 @@ import {
   take,
   takeLatest
 } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -39,7 +38,7 @@ import {
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import {
   fromLocaleToPreferredLanguage,
   fromPreferredLanguageToLocale,
@@ -63,7 +62,7 @@ import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Option<InitializedProfile>,
   SagaCallReturnType<typeof getProfile>
 > {
@@ -103,7 +102,7 @@ function* createOrUpdateProfileSaga(
     typeof BackendClient
   >["createOrUpdateProfile"],
   action: ActionType<typeof profileUpsert["request"]>
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   // Get the current Profile from the state
   const profileState: ReturnType<typeof profileSelector> = yield* select(
     profileSelector
@@ -236,7 +235,7 @@ export function* watchProfileUpsertRequestsSaga(
   createOrUpdateProfile: ReturnType<
     typeof BackendClient
   >["createOrUpdateProfile"]
-): Iterator<Effect> {
+): Iterator<ReduxSagaEffect> {
   yield* takeLatest(
     getType(profileUpsert.request),
     createOrUpdateProfileSaga,
@@ -249,7 +248,7 @@ export function* watchProfileUpsertRequestsSaga(
 // This function listens for Profile refresh requests and calls the needed saga.
 export function* watchProfileRefreshRequestsSaga(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): Iterator<Effect> {
+): Iterator<ReduxSagaEffect> {
   yield* takeLatest(getType(profileLoadRequest), loadProfile, getProfile);
 }
 
@@ -260,7 +259,7 @@ function* startEmailValidationProcessSaga(
     typeof BackendClient
   >["startEmailValidationProcess"]
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   SagaCallReturnType<typeof startEmailValidationProcess>
 > {
@@ -289,7 +288,7 @@ function* startEmailValidationProcessSaga(
 // check if the current device language matches the one saved in the profile
 function* checkPreferredLanguage(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
-): Generator<Effect, any, Option<Locales>> {
+): Generator<ReduxSagaEffect, any, Option<Locales>> {
   // check if the preferred_languages is up to date
   const preferredLanguages =
     profileLoadSuccessAction.payload.preferred_languages;
@@ -430,7 +429,7 @@ export function* watchProfile(
   startEmailValidationProcess: ReturnType<
     typeof BackendClient
   >["startEmailValidationProcess"]
-): Iterator<Effect> {
+): Iterator<ReduxSagaEffect> {
   // user requests to send again the email validation to profile email
   yield* takeLatest(
     getType(startEmailValidation.request),

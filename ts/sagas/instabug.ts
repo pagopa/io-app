@@ -1,12 +1,12 @@
 import { BugReporting, dismissType, Replies } from "instabug-reactnative";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { instabugReportClosed } from "../store/actions/debug";
 import {
   instabugUnreadMessagesLoaded,
   updateInstabugUnreadMessages
 } from "../store/actions/instabug";
 import { instabugLastOpenReportTypeSelector } from "../store/reducers/instabug/instabugUnreadMessages";
+import { ReduxSagaEffect } from "../types/utils";
 
 const loadInstabugUnreadMessages = () =>
   new Promise<number>(resolve => {
@@ -61,7 +61,7 @@ function* updateInstabugBadgeSaga(): Generator<any, void, number> {
   yield* put(instabugUnreadMessagesLoaded(repliesCount));
 }
 
-export default function* root(): IterableIterator<Effect> {
+export default function* root(): IterableIterator<ReduxSagaEffect> {
   // Update number of instabug unread messages
   yield* takeLatest(updateInstabugUnreadMessages, updateInstabugBadgeSaga);
   yield* fork(watchInstabugSaga);

@@ -16,7 +16,6 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { Effect } from "redux-saga/effects";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
@@ -75,7 +74,7 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import {
@@ -138,7 +137,11 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
  * Handles the application startup and the main application logic loop
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
-export function* initializeApplicationSaga(): Generator<Effect, void, any> {
+export function* initializeApplicationSaga(): Generator<
+  ReduxSagaEffect,
+  void,
+  any
+> {
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -573,7 +576,7 @@ function* waitForNavigatorServiceInitialization() {
   });
 }
 
-export function* startupSaga(): IterableIterator<Effect> {
+export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
   // Wait until the IngressScreen gets mounted
   yield* takeLatest(
     getType(startApplicationInitialization),

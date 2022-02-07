@@ -1,10 +1,9 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import { loadVisibleServices } from "../../store/actions/services";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { refreshStoredServices } from "../services/refreshStoredServices";
 import { removeUnusedStoredServices } from "../services/removeUnusedStoredServices";
 
@@ -13,11 +12,15 @@ import { removeUnusedStoredServices } from "../services/removeUnusedStoredServic
  *
  * @param {function} getService - The function that makes the Backend request
  * @param {string} id - The id of the service to load
- * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
+ * @returns {IterableIterator<ReduxSagaEffect | Either<Error, ServicePublic>>}
  */
 export function* loadVisibleServicesRequestHandler(
   getVisibleServices: ReturnType<typeof BackendClient>["getVisibleServices"]
-): Generator<Effect, void, SagaCallReturnType<typeof getVisibleServices>> {
+): Generator<
+  ReduxSagaEffect,
+  void,
+  SagaCallReturnType<typeof getVisibleServices>
+> {
   try {
     const response = yield* call(getVisibleServices, {});
     if (response.isLeft()) {

@@ -1,14 +1,12 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { call, put, select } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
-
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { BackendClient } from "../../api/backend";
 import { DEPRECATED_loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { isTestEnv } from "../../utils/environment";
 
@@ -20,7 +18,7 @@ export function* loadMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, CreatedMessageWithContentAndAttachments>,
   any
 > {
@@ -66,7 +64,7 @@ function* fetchMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, CreatedMessageWithContentAndAttachments>,
   any
 > {

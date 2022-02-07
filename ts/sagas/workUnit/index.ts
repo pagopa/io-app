@@ -1,5 +1,4 @@
 import { NavigationActions } from "react-navigation";
-import { Effect } from "redux-saga/effects";
 import { call, take } from "typed-redux-saga/macro";
 import {
   ActionCreator,
@@ -10,6 +9,7 @@ import {
 } from "typesafe-actions";
 import NavigationService from "../../navigation/NavigationService";
 import { navigateToWorkunitGenericFailureScreen } from "../../store/actions/navigation";
+import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * The data model needed to run the workunit
@@ -38,8 +38,8 @@ export type SagaResult = "cancel" | "completed" | "back" | "failure";
  *
  */
 export type WorkUnitHandler<T = unknown> = (
-  g: (...args: Array<any>) => Generator<Effect, SagaResult>
-) => Generator<Effect, SagaResult, T>;
+  g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult>
+) => Generator<ReduxSagaEffect, SagaResult, T>;
 
 /**
  * Ensure that the `startScreen` is the current screen or navigate to `startScreen` using `navigateTo`
@@ -61,7 +61,7 @@ function* ensureScreen(navigateTo: () => void, startScreen: string) {
  * @param g
  */
 export function* withResetNavigationStack<T>(
-  g: (...args: Array<any>) => Generator<Effect, T>
+  g: (...args: Array<any>) => Generator<ReduxSagaEffect, T>
 ) {
   const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
     yield* call(NavigationService.getCurrentRoute);
@@ -84,7 +84,7 @@ export function* withResetNavigationStack<T>(
  * @param g
  */
 export function* withFailureHandling<T>(
-  g: (...args: Array<any>) => Generator<Effect, SagaResult, T>
+  g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult, T>
 ) {
   const res = yield* call(g);
   if (res === "failure") {
@@ -100,7 +100,7 @@ export function* withFailureHandling<T>(
 export function* executeWorkUnit(
   wu: WorkUnit
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   SagaResult,
   ActionType<
     typeof wu.cancel | typeof wu.complete | typeof wu.back | typeof wu.failure

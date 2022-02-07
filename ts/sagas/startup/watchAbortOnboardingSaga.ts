@@ -1,12 +1,12 @@
-import { Effect } from "redux-saga/effects";
 import { call, put, take } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionInvalid } from "../../store/actions/authentication";
 import { abortOnboarding } from "../../store/actions/onboarding";
+import { ReduxSagaEffect } from "../../types/utils";
 import { deletePin } from "../../utils/keychain";
 
-export function* watchAbortOnboardingSaga(): Iterator<Effect> {
+export function* watchAbortOnboardingSaga(): Iterator<ReduxSagaEffect> {
   yield* take(getType(abortOnboarding));
   yield* call(deletePin);
   // invalidate the session

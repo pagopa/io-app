@@ -1,5 +1,4 @@
 import { Task } from "redux-saga";
-import { Effect } from "redux-saga/effects";
 import { call, cancel, fork, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
@@ -9,6 +8,7 @@ import {
   ApplicationState
 } from "../../store/actions/application";
 import { identificationRequest } from "../../store/actions/identification";
+import { ReduxSagaEffect } from "../../types/utils";
 import { startTimer } from "../../utils/timer";
 import { watchNotificationSaga } from "./watchNotificationSaga";
 
@@ -17,7 +17,7 @@ import { watchNotificationSaga } from "./watchNotificationSaga";
  * - if needed, force the user to identify
  * - if a notification is pressed, redirect to the related message
  */
-export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
+export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffect> {
   // eslint-disable-next-line
   let lastState: ApplicationState = "active";
   // eslint-disable-next-line

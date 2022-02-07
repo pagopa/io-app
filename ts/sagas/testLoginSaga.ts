@@ -3,7 +3,6 @@ import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
@@ -15,13 +14,13 @@ import {
   testLoginRequest
 } from "../store/actions/authentication";
 import { SessionToken } from "../types/SessionToken";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 
 // Started by redux action
 function* handleTestLogin({
   payload
 }: ActionType<typeof testLoginRequest>): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   SagaCallReturnType<typeof postTestLogin>
 > {
@@ -59,6 +58,6 @@ function* handleTestLogin({
   }
 }
 
-export function* watchTestLoginRequestSaga(): IterableIterator<Effect> {
+export function* watchTestLoginRequestSaga(): IterableIterator<ReduxSagaEffect> {
   yield* takeLatest(getType(testLoginRequest), handleTestLogin);
 }

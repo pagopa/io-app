@@ -1,6 +1,5 @@
 import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { Effect } from "redux-saga/effects";
 import { fromNullable } from "fp-ts/lib/Option";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
@@ -9,6 +8,7 @@ import {
   hasProfileEmail,
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
+import { ReduxSagaEffect } from "../../types/utils";
 
 function* enableProfileInboxWebhook() {
   yield* put(
@@ -22,7 +22,7 @@ function* enableProfileInboxWebhook() {
 export function* checkProfileEnabledSaga(
   profile: InitializedProfile
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   | ActionType<typeof profileUpsert["success"]>
   | ActionType<typeof profileUpsert["failure"]>

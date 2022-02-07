@@ -1,10 +1,9 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { BackendClient } from "../../api/backend";
 import { loadNextPageMessages as loadNextPageMessagesAction } from "../../store/actions/messages";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { isTestEnv } from "../../utils/environment";
@@ -17,7 +16,7 @@ type LocalBeClient = ReturnType<typeof BackendClient>["getMessages"];
 
 export default function* watcher(
   getMessages: LocalBeClient
-): Generator<Effect, void, SagaCallReturnType<typeof getMessages>> {
+): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
   yield* takeLatest(
     getType(loadNextPageMessagesAction.request),
     tryLoadNextPageMessages(getMessages)
@@ -27,7 +26,7 @@ export default function* watcher(
 function tryLoadNextPageMessages(getMessages: LocalBeClient) {
   return function* gen(
     action: LocalActionType
-  ): Generator<Effect, void, SagaCallReturnType<typeof getMessages>> {
+  ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
     try {
       const response: SagaCallReturnType<typeof getMessages> = yield* call(
         getMessages,

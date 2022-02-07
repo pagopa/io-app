@@ -2,7 +2,6 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-import { Effect } from "redux-saga/effects";
 import { TypeOfApiResponseStatus } from "italia-ts-commons/lib/requests";
 import { BackendClient } from "../../api/backend";
 import {
@@ -11,7 +10,7 @@ import {
   sessionExpired,
   sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { GetSessionStateT } from "../../../definitions/backend/requestTypes";
 
@@ -41,7 +40,7 @@ function* handleLoadSupportToken(
 export function* checkSession(
   getSessionValidity: ReturnType<typeof BackendClient>["getSession"]
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   TypeOfApiResponseStatus<GetSessionStateT> | undefined,
   any
 > {

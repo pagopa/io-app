@@ -1,13 +1,15 @@
 import { Either, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { StackActions } from "react-navigation";
-import { Effect } from "redux-saga/effects";
 import { call, put, select, take, race } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../types/utils";
 import { getAsyncResult } from "../../../../../../utils/saga";
 import {
   navigateToBpdOnboardingDeclaration,
@@ -31,7 +33,7 @@ export function* getActivationStatus() {
 }
 
 export function* isBpdEnabled(): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, boolean>,
   any
 > {

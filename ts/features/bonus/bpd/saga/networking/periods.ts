@@ -2,10 +2,12 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { fromNullable } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { AwardPeriodResource } from "../../../../../../definitions/bpd/award_periods/AwardPeriodResource";
 import { mixpanelTrack } from "../../../../../mixpanel";
-import { SagaCallReturnType } from "../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../types/utils";
 import { getError } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import {
@@ -48,7 +50,7 @@ const mixpanelActionFailure = "BPD_PERIODS_FAILURE";
 export function* bpdLoadPeriodsSaga(
   awardPeriods: ReturnType<typeof BackendBpdClient>["awardPeriods"]
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, ReadonlyArray<BpdPeriod>>,
   SagaCallReturnType<typeof awardPeriods>
 > {

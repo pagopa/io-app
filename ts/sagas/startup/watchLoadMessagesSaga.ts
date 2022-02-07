@@ -5,7 +5,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Effect, put as basePut } from "redux-saga/effects";
+/* eslint-disable-next-line */
+import { put as basePut } from "redux-saga/effects";
 import { all, call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
@@ -20,7 +21,7 @@ import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/m
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { messagesStatusSelector } from "../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
 import { isTestEnv } from "../../utils/environment";
 
@@ -32,7 +33,7 @@ import { isTestEnv } from "../../utils/environment";
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function* loadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
@@ -174,7 +175,7 @@ function* loadMessages(
  */
 export function* watchLoadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   yield* takeLatest(getType(loadMessagesAction.request), () =>
     loadMessages(getMessages)
   );

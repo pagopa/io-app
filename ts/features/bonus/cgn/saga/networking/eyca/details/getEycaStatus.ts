@@ -1,7 +1,9 @@
 import { call, put } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { BackendCGN } from "../../../../api/backendCgn";
-import { SagaCallReturnType } from "../../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../../types/utils";
 import {
   getGenericError,
   getNetworkError
@@ -27,7 +29,7 @@ const eycaStatusMap: Record<number, EycaDetailKOStatus> = {
  */
 export function* handleGetEycaStatus(
   getEycaStatus: ReturnType<typeof BackendCGN>["getEycaStatus"]
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   try {
     const eycaInformationResult: SagaCallReturnType<typeof getEycaStatus> =
       yield* call(getEycaStatus, {});

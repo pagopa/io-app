@@ -1,8 +1,10 @@
 import { call } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../types/utils";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnActivationStatus } from "../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
@@ -39,7 +41,11 @@ export const cgnActivationSaga = (
   startCgnActivation: ReturnType<typeof BackendCGN>["startCgnActivation"],
   handleCgnStatusPolling: CgnStatusPollingSaga
 ) =>
-  function* (): Generator<Effect, ActionType<typeof cgnActivationStatus>, any> {
+  function* (): Generator<
+    ReduxSagaEffect,
+    ActionType<typeof cgnActivationStatus>,
+    any
+  > {
     try {
       const startCgnActivationResult: SagaCallReturnType<
         typeof startCgnActivation
@@ -81,7 +87,11 @@ export const cgnActivationSaga = (
 export const handleCgnStatusPolling = (
   getCgnActivation: ReturnType<typeof BackendCGN>["getCgnActivation"]
 ) =>
-  function* (): Generator<Effect, ActionType<typeof cgnActivationStatus>, any> {
+  function* (): Generator<
+    ReduxSagaEffect,
+    ActionType<typeof cgnActivationStatus>,
+    any
+  > {
     const startPollingTime = new Date().getTime();
     while (true) {
       const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> =

@@ -20,7 +20,8 @@ module.exports = {
     "react-hooks",
     "import",
     "functional",
-    "sonarjs"
+    "sonarjs",
+    "@jambit/typed-redux-saga"
   ],
   rules: {
     "no-case-declarations": "off",
@@ -99,6 +100,14 @@ module.exports = {
       files: ["**/*.test.*"],
       rules: {
         "@typescript-eslint/no-non-null-assertion": "off"
+      }
+    },
+    {
+      files: ["./**/*.ts"],
+      excludedFiles: ["./**/*.test.ts"],
+      rules: {
+        "@jambit/typed-redux-saga/use-typed-effects": ["warn", "macro"],
+        "@jambit/typed-redux-saga/delegate-effects": "warn"
       }
     }
   ],

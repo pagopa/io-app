@@ -7,7 +7,6 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
@@ -18,7 +17,7 @@ import {
   loadIdps
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 const contentClient = ContentClient();
@@ -43,7 +42,7 @@ function* fetchMunicipalityMetadata(
   getMunicipality: ReturnType<typeof ContentClient>["getMunicipality"],
   codiceCatastale: CodiceCatastale
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, MunicipalityMedadata>,
   SagaCallReturnType<typeof getMunicipality>
 > {

@@ -2040,6 +2040,11 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
+"@jambit/eslint-plugin-typed-redux-saga@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@jambit/eslint-plugin-typed-redux-saga/-/eslint-plugin-typed-redux-saga-0.4.0.tgz#5c882a76f57f576c5d6a982deaf6f6e1ca0ce72e"
+  integrity sha512-toReLCgaBZ6N0gbq6QTKUCkDqGS4yi0RV16HPLJ9rz8H1TE78KwLHAGhW3XLqyVn+DbcuL7+89RkQse8T5oj8g==
+
 "@jest/console@^26.6.2":
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-26.6.2.tgz#4e04bc464014358b03ab4937805ee36a0aeb98f2"

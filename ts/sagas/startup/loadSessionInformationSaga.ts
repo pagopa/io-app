@@ -1,7 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 
 import {
@@ -10,7 +9,7 @@ import {
 } from "../../store/actions/authentication";
 
 import { BackendClient } from "../../api/backend";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 
 /**
  * Load session info from the Backend
@@ -22,7 +21,7 @@ import { SagaCallReturnType } from "../../types/utils";
 export function* loadSessionInformationSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Option<PublicSession>,
   SagaCallReturnType<typeof getSession>
 > {

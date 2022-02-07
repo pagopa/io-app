@@ -1,7 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { Effect } from "redux-saga/effects";
 import {
   cancel,
   fork,
@@ -21,13 +20,14 @@ import {
 } from "../../store/reducers/entities/services/visibleServices";
 import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { profileSelector, ProfileState } from "../../store/reducers/profile";
+import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * A saga to match at the first startup if the user has customized settings related to the
  * forwarding of notifications on the verified email within previous installations
  */
 export function* watchEmailNotificationPreferencesSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   any
 > {

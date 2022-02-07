@@ -1,12 +1,11 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Effect } from "redux-saga/effects";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { loadMessage } from "../messages/loadMessage";
 
 /**
@@ -20,7 +19,7 @@ export function* watchLoadMessageWithRelationsSaga(
   messageWithRelationsLoadRequest: ActionType<
     typeof loadMessageWithRelations["request"]
   >
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   // Extract the message id from the action payload
   const messageId = messageWithRelationsLoadRequest.payload;
 

@@ -1,10 +1,12 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call } from "typed-redux-saga/macro";
-import { Effect } from "redux-saga/effects";
 import { TotalCashbackResource } from "../../../../../../definitions/bpd/winning_transactions/TotalCashbackResource";
 import { mixpanelTrack } from "../../../../../mixpanel";
-import { SagaCallReturnType } from "../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../types/utils";
 import { getError } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { AwardPeriodId, WithAwardPeriodId } from "../../store/actions/periods";
@@ -43,7 +45,7 @@ export function* bpdLoadAmountSaga(
   totalCashback: ReturnType<typeof BackendBpdClient>["totalCashback"],
   awardPeriodId: AwardPeriodId
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<BpdAmountError, BpdAmount>,
   SagaCallReturnType<typeof totalCashback>
 > {
