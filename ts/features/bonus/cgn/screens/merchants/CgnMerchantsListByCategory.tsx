@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useMemo } from "react";
-import { SafeAreaView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { View } from "native-base";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -26,6 +25,8 @@ import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import CGN_ROUTES from "../../navigation/routes";
 import { getCategorySpecs } from "../../utils/filters";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { MerchantsAll } from "./CgnMerchantsListScreen";
 
 const CgnMerchantsListByCategory = () => {
@@ -97,28 +98,59 @@ const CgnMerchantsListByCategory = () => {
   return (
     <BaseScreenComponent
       goBack
-      headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
+      headerTitle={I18n.t(
+        fromNullable(categorySpecs).fold(
+          "bonus.cgn.merchantsList.navigationTitle",
+          cs => cs.nameKey
+        )
+      )}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        {categorySpecs && (
-          <LinearGradient
-            useAngle={true}
-            angle={57.23}
-            colors={categorySpecs.colors}
-          >
-            <View
-              style={[IOStyles.horizontalContentPadding, { height: 149 }]}
-            />
-          </LinearGradient>
-        )}
+      {categorySpecs && (
+        <LinearGradient
+          useAngle={true}
+          angle={57.23}
+          colors={categorySpecs.colors}
+          style={[
+            IOStyles.horizontalContentPadding,
+            {
+              paddingTop: 16,
+              paddingBottom: 32
+            }
+          ]}
+        >
+          <View style={[IOStyles.row, { alignItems: "center" }]}>
+            <H1 color={"white"} style={[IOStyles.flex, { paddingRight: 30 }]}>
+              {I18n.t(categorySpecs.nameKey)}
+            </H1>
+            {categorySpecs.icon({
+              width: 57,
+              height: 57,
+              fill: IOColors.white,
+              style: { justifyContent: "flex-end" }
+            })}
+          </View>
+        </LinearGradient>
+      )}
+      <View
+        style={[
+          IOStyles.flex,
+          {
+            paddingTop: 5,
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+            backgroundColor: IOColors.white,
+            top: -20
+          }
+        ]}
+      >
         <CgnMerchantsListView
           merchantList={merchantsAll}
           onItemPress={onItemPress}
           onRefresh={initLoadingLists}
           refreshing={isLoading(onlineMerchants) || isLoading(offlineMerchants)}
         />
-      </SafeAreaView>
+      </View>
     </BaseScreenComponent>
   );
 };
