@@ -7,7 +7,7 @@ import {
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import {
   NavigationInjectedProps,
   NavigationLeafRoute,
@@ -15,7 +15,6 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
-import { SafeAreaView } from "react-native";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
