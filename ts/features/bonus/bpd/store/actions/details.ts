@@ -1,4 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
+import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
 /**
  * This file contains all the action related to the bpd details like the activation status, value, etc.
@@ -8,6 +9,7 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 export type BpdActivationPayload = {
   enabled: boolean;
   payoffInstr: string | undefined;
+  optInStatus: CitizenOptInStatusEnum;
   technicalAccount?: string;
 };
 

@@ -15,6 +15,16 @@ export const bpdEnrollUserToProgram = createAsyncAction(
   "BPD_ENROLL_FAILURE"
 )<void, BpdActivationPayload, Error>();
 
+export const bpdUpdateOptInMethod = createAsyncAction(
+  "BPD_UPDATE_OPT_IN_REQUEST",
+  "BPD_UPDATE_OPT_IN_SUCCESS",
+  "BPD_UPDATE_OPT_IN_FAILURE"
+)<
+  NonNullable<BpdActivationPayload["optInStatus"]>,
+  BpdActivationPayload,
+  Error
+>();
+
 /**
  * Delete user from bpd program
  */
