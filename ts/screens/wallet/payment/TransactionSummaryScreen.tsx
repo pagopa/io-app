@@ -297,12 +297,12 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
 
     return (
-      <SafeAreaView style={styles.flex}>
-        <BaseScreenComponent
-          goBack={this.handleBackPress}
-          headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
-          dark={true}
-        >
+      <BaseScreenComponent
+        goBack={this.handleBackPress}
+        headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
+        dark={true}
+      >
+        <SafeAreaView style={styles.flex}>
           <SlidedContentComponent dark={true}>
             <PaymentSummaryComponent
               dark={true}
@@ -361,8 +361,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
             <View spacer={true} large={true} />
           </SlidedContentComponent>
           {this.getFooterButtons()}
-        </BaseScreenComponent>
-      </SafeAreaView>
+        </SafeAreaView>
+      </BaseScreenComponent>
     );
   }
 }

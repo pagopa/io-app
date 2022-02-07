@@ -293,14 +293,14 @@ const AddCardScreen: React.FC<Props> = props => {
   const accessibilityLabels = getAccessibilityLabels(creditCard);
 
   return (
-    <SafeAreaView style={styles.flex}>
-      <BaseScreenComponent
-        shouldAskForScreenshotWithInitialValue={false}
-        goBack={true}
-        headerTitle={I18n.t("wallet.addCardTitle")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_methods", "wallet_methods_security"]}
-      >
+    <BaseScreenComponent
+      shouldAskForScreenshotWithInitialValue={false}
+      goBack={true}
+      headerTitle={I18n.t("wallet.addCardTitle")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet_methods", "wallet_methods_security"]}
+    >
+      <SafeAreaView style={styles.flex}>
         <ScrollView
           bounces={false}
           style={styles.whiteBg}
@@ -455,8 +455,8 @@ const AddCardScreen: React.FC<Props> = props => {
             maybeCreditCardValidOrExpired(creditCard).toUndefined()
           )}
         />
-      </BaseScreenComponent>
-    </SafeAreaView>
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 };
 

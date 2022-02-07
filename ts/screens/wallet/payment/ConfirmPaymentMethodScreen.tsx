@@ -251,13 +251,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const ispaymentMethodCreditCard =
     paymentMethod !== undefined && isCreditCard(paymentMethod);
   return (
-    <SafeAreaView style={styles.flex}>
-      <BaseScreenComponent
-        goBack={props.onCancel}
-        headerTitle={I18n.t("wallet.ConfirmPayment.header")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["payment"]}
-      >
+    <BaseScreenComponent
+      goBack={props.onCancel}
+      headerTitle={I18n.t("wallet.ConfirmPayment.header")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["payment"]}
+    >
+      <SafeAreaView style={styles.flex}>
         <Content noPadded={true} bounces={false}>
           <PaymentBannerComponent
             currentAmount={verifica.importoSingoloVersamento}
@@ -360,8 +360,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
           />
         )}
-      </BaseScreenComponent>
-    </SafeAreaView>
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 };
 

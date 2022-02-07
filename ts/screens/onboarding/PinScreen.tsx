@@ -414,17 +414,17 @@ class PinScreen extends React.PureComponent<Props, State> {
     const { pinState } = this.state;
 
     return (
-      <SafeAreaView style={styles.flex}>
-        <BaseScreenComponent
-          goBack={this.handleGoBack}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          faqCategories={["onboarding_pin", "unlock"]}
-          headerTitle={I18n.t("onboarding.tos.headerTitle")}
-        >
+      <BaseScreenComponent
+        goBack={this.handleGoBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["onboarding_pin", "unlock"]}
+        headerTitle={I18n.t("onboarding.tos.headerTitle")}
+      >
+        <SafeAreaView style={styles.flex}>
           {this.renderContent(pinState)}
           {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
-        </BaseScreenComponent>
-      </SafeAreaView>
+        </SafeAreaView>
+      </BaseScreenComponent>
     );
   }
 
