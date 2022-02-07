@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { mixpanelTrack } from "../../mixpanel";
-import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
+import { versionInfoDataSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
 import { isUpdateNeeded } from "../../utils/appVersion";
@@ -23,14 +23,14 @@ export const RootModal: React.FunctionComponent<Props> = (props: Props) => {
   if (props.isBackendServicesStatusOff) {
     return <SystemOffModal />;
   }
-  const isAppOutOfDate = fromNullable(props.backendInfo)
+  const isAppOutOfDate = fromNullable(props.versionInfo)
     .map(bi => isUpdateNeeded(bi, "min_app_version"))
     .getOrElse(false);
   // if the app is out of date, force a screen to update it
   if (isAppOutOfDate) {
     void mixpanelTrack("UPDATE_APP_MODAL", {
-      minVersioniOS: props.backendInfo?.min_app_version.ios,
-      minVersionAndroid: props.backendInfo?.min_app_version.android
+      minVersioniOS: props.versionInfo?.min_app_version.ios,
+      minVersionAndroid: props.versionInfo?.min_app_version.android
     });
     return <UpdateAppModal />;
   }
@@ -39,7 +39,7 @@ export const RootModal: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
-  backendInfo: serverInfoDataSelector(state)
+  versionInfo: versionInfoDataSelector(state)
 });
 
 export default connect(mapStateToProps)(RootModal);

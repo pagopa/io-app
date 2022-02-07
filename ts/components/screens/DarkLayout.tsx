@@ -14,7 +14,7 @@ import LinearGradient from "react-native-linear-gradient";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -59,13 +59,6 @@ const styles = StyleSheet.create({
 });
 
 export default class DarkLayout extends React.Component<Props> {
-  public componentDidMount() {
-    setStatusBarColorAndBackground(
-      "light-content",
-      customVariables.brandDarkGray
-    );
-  }
-
   private screenContent() {
     const wrapper = (children: React.ReactNode) =>
       this.props.gradientHeader ? (
@@ -118,6 +111,10 @@ export default class DarkLayout extends React.Component<Props> {
         faqCategories={this.props.faqCategories}
         titleColor={"white"}
       >
+        <FocusAwareStatusBar
+          backgroundColor={customVariables.brandDarkGray}
+          barStyle={"light-content"}
+        />
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}

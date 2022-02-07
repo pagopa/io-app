@@ -55,7 +55,12 @@ type FooterProps = { onOpenAppStore: () => void };
 const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
   <View footer>
     <>
-      <Button block={true} primary={true} onPress={onOpenAppStore}>
+      <Button
+        block={true}
+        primary={true}
+        onPress={onOpenAppStore}
+        accessibilityRole={"button"}
+      >
         <Text>{I18n.t("btnUpdateApp")}</Text>
       </Button>
       <View spacer />
