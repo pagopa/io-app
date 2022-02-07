@@ -238,16 +238,16 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   public render() {
     const isFromProfileSection = isOnboardingCompleted();
     return (
-      <SafeAreaView style={styles.flex}>
-        <BaseScreenComponent
-          goBack={this.handleGoBack}
-          headerTitle={
-            isFromProfileSection
-              ? I18n.t("profile.data.list.email")
-              : I18n.t("email.insert.header")
-          }
-          contextualHelpMarkdown={contextualHelpMarkdown}
-        >
+      <BaseScreenComponent
+        goBack={this.handleGoBack}
+        headerTitle={
+          isFromProfileSection
+            ? I18n.t("profile.data.list.email")
+            : I18n.t("email.insert.header")
+        }
+        contextualHelpMarkdown={contextualHelpMarkdown}
+      >
+        <SafeAreaView style={styles.flex}>
           <View style={styles.flex}>
             <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
               <H1
@@ -301,8 +301,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           </View>
 
           {withKeyboard(this.renderFooterButtons())}
-        </BaseScreenComponent>
-      </SafeAreaView>
+        </SafeAreaView>
+      </BaseScreenComponent>
     );
   }
 }
