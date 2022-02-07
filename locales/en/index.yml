@@ -2882,8 +2882,8 @@ features:
             body: "Downloading the attachment"
           failing:
             title: "Attachment"
-            body: "Non sono riuscito a scaricare l'allegato"
-            details: "Per favore, controlla la tua connessione e riprova"
+            body: "An error occurred while downloading the attachment"
+            details: "Check your connection please and try again"
           checkBox: "OK, don't show me again"
       body:
         plain: "plain text"
