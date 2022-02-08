@@ -119,3 +119,9 @@ export const navigateToBpdTransactions = () =>
       routeName: BPD_ROUTES.TRANSACTIONS
     })
   );
+
+// Opt-in
+export const navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_DELETE_METHOD
+  });
