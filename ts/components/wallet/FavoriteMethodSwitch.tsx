@@ -33,7 +33,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const FavoritePaymentMethodSwitch = (props: Props) => {
   // check if we are setting this specific wallet
-  const isTheSameWallet: boolean = pot.getOrElse(
+  const isTheSameWallet: boolean = pot.getOrElseWithUpdating(
     pot.map(
       props.updatingFavouriteWallet,
       _ => _ === props.paymentMethod.idWallet
@@ -41,7 +41,9 @@ const FavoritePaymentMethodSwitch = (props: Props) => {
     false
   );
   const isLoading =
-    pot.isLoading(props.updatingFavouriteWallet) && isTheSameWallet;
+    (pot.isUpdating(props.updatingFavouriteWallet) ||
+      pot.isLoading(props.updatingFavouriteWallet)) &&
+    isTheSameWallet;
   const isFavorite = pot.map(
     props.favoriteWalletId,
     _ => _ === props.paymentMethod.idWallet

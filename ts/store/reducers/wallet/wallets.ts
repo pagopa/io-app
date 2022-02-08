@@ -548,7 +548,10 @@ const reducer = (
     case getType(setFavouriteWalletRequest):
       return {
         ...state,
-        updatingFavouriteWallet: pot.someLoading(action.payload)
+        updatingFavouriteWallet: pot.toUpdating(
+          state.updatingFavouriteWallet,
+          action.payload
+        )
       };
     case getType(setFavouriteWalletFailure):
       return {
