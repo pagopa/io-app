@@ -91,7 +91,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
  */
 const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
   <TouchableDefaultOpacity
-    style={styles.verticalPadding}
+    style={[IOStyles.horizontalContentPadding, styles.verticalPadding]}
     onPress={props.onPress}
   >
     <H2>{props.name}</H2>

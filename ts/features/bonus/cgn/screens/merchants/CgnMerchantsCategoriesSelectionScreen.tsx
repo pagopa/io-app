@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   FlatList,
   ListRenderItemInfo,
-  SafeAreaView,
   ScrollView,
   StyleSheet
 } from "react-native";
@@ -28,15 +27,6 @@ import { H1 } from "../../../../../components/core/typography/H1";
 const styles = StyleSheet.create({
   body: {
     borderRadius: 8,
-    backgroundColor: "white",
-    shadowColor: "#17324D",
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 2.0,
-    elevation: 4,
     flex: 1,
     marginBottom: 10,
     marginRight: widthPercentageToDP("2.93%"),
@@ -54,12 +44,12 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   const navigation = useNavigationContext();
 
   const renderCategoryElement = (
-    info: ListRenderItemInfo<ProductCategoryEnum | "All">
+    info: ListRenderItemInfo<ProductCategoryEnum | "All" | "Hidden">
   ) => {
     if (info.item === "All") {
       return (
         <LinearGradient
-          colors={["#C51C82", "#E28DC0"]}
+          colors={["#475A6D", "#E6E9F2"]}
           useAngle={true}
           angle={57.23}
           style={styles.body}
@@ -77,6 +67,13 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
             </View>
           </TouchableDefaultOpacity>
         </LinearGradient>
+      );
+    }
+    if (info.item === "Hidden") {
+      return (
+        <View style={[styles.body, { height: 122 }]}>
+          <View style={[IOStyles.flex, styles.container]} />
+        </View>
       );
     }
     const specs = getCategorySpecs(info.item);
@@ -111,9 +108,12 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     ));
   };
 
-  const categoriesToArray: ReadonlyArray<ProductCategoryEnum | "All"> = [
+  const categoriesToArray: ReadonlyArray<
+    ProductCategoryEnum | "All" | "Hidden"
+  > = [
+    "All",
     ...Object.entries(ProductCategoryEnum).map(value => value[1]),
-    "All"
+    "Hidden"
   ];
 
   return (
@@ -122,20 +122,20 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={IOStyles.flex}>
-          <View style={IOStyles.horizontalContentPadding}>
-            <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
-            <View spacer large />
-            <FlatList
-              data={categoriesToArray}
-              renderItem={renderCategoryElement}
-              numColumns={2}
-              keyExtractor={(item: ProductCategoryEnum | "All") => item}
-            />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <ScrollView style={IOStyles.flex}>
+        <View style={IOStyles.horizontalContentPadding}>
+          <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
+          <View spacer large />
+          <FlatList
+            data={categoriesToArray}
+            renderItem={renderCategoryElement}
+            numColumns={2}
+            keyExtractor={(item: ProductCategoryEnum | "All" | "Hidden") =>
+              item
+            }
+          />
+        </View>
+      </ScrollView>
     </BaseScreenComponent>
   );
 };

@@ -29,7 +29,7 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   return (
-    <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+    <View style={[IOStyles.flex]}>
       <FlatList
         scrollEnabled={true}
         data={props.merchantList}

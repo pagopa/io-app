@@ -2578,7 +2578,7 @@ bonus:
         label: Navigate to operator website
         landingPage: Get the benefit
       categories:
-        all: All the partners
+        all: All the operators
         counting: and other {{count}}
         cultureAndEntertainment: Culture and Entertainment
         health: Health and Wellness

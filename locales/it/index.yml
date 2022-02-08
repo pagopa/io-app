@@ -2604,7 +2604,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione
       categories:
-        all: Tutti i partner
+        all: Tutti gli operatori
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e Tempo Libero
         health: Salute e Benessere

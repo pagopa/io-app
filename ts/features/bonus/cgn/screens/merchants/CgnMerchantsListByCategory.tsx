@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useMemo } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { View } from "native-base";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -14,7 +15,11 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import I18n from "../../../../../i18n";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
-import { getValueOrElse, isLoading } from "../../../bpd/model/RemoteValue";
+import {
+  getValueOrElse,
+  isError,
+  isLoading
+} from "../../../bpd/model/RemoteValue";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import {
@@ -27,7 +32,18 @@ import CGN_ROUTES from "../../navigation/routes";
 import { getCategorySpecs } from "../../utils/filters";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import { MerchantsAll } from "./CgnMerchantsListScreen";
+
+const styles = StyleSheet.create({
+  listContainer: {
+    paddingTop: 5,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    backgroundColor: IOColors.white,
+    top: -20
+  }
+});
 
 const CgnMerchantsListByCategory = () => {
   const dispatch = useIODispatch();
@@ -45,25 +61,15 @@ const CgnMerchantsListByCategory = () => {
 
   const navigation = useNavigationContext();
 
+  const categoryFilter = currentCategory
+    ? {
+        productCategories: [currentCategory]
+      }
+    : {};
+
   const initLoadingLists = () => {
-    dispatch(
-      cgnOfflineMerchants.request(
-        currentCategory
-          ? {
-              productCategories: [currentCategory]
-            }
-          : {}
-      )
-    );
-    dispatch(
-      cgnOnlineMerchants.request(
-        currentCategory
-          ? {
-              productCategories: [currentCategory]
-            }
-          : {}
-      )
-    );
+    dispatch(cgnOfflineMerchants.request(categoryFilter));
+    dispatch(cgnOnlineMerchants.request(categoryFilter));
   };
 
   React.useEffect(initLoadingLists, [currentCategory]);
@@ -132,25 +138,22 @@ const CgnMerchantsListByCategory = () => {
           </View>
         </LinearGradient>
       )}
-      <View
-        style={[
-          IOStyles.flex,
-          {
-            paddingTop: 5,
-            borderTopLeftRadius: 25,
-            borderTopRightRadius: 25,
-            backgroundColor: IOColors.white,
-            top: -20
-          }
-        ]}
-      >
-        <CgnMerchantsListView
-          merchantList={merchantsAll}
-          onItemPress={onItemPress}
-          onRefresh={initLoadingLists}
-          refreshing={isLoading(onlineMerchants) || isLoading(offlineMerchants)}
-        />
-      </View>
+      {isError(onlineMerchants) && isError(offlineMerchants) ? (
+        <SafeAreaView style={IOStyles.flex}>
+          <GenericErrorComponent onRetry={initLoadingLists} />
+        </SafeAreaView>
+      ) : (
+        <View style={[IOStyles.flex, styles.listContainer]}>
+          <CgnMerchantsListView
+            merchantList={merchantsAll}
+            onItemPress={onItemPress}
+            onRefresh={initLoadingLists}
+            refreshing={
+              isLoading(onlineMerchants) || isLoading(offlineMerchants)
+            }
+          />
+        </View>
+      )}
     </BaseScreenComponent>
   );
 };
