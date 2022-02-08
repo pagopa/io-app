@@ -1,4 +1,4 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -65,6 +66,10 @@ import {
   fetchWalletsRequestWithExpBackoff,
   runSendAddCobadgeTrackSaga
 } from "../../store/actions/wallet/wallets";
+import {
+  bpdRemoteConfigSelector,
+  isCGNEnabledSelector
+} from "../../store/reducers/backendStatus";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -82,14 +87,8 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
-import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { Body } from "../../components/core/typography/Body";
-import {
-  bpdRemoteConfigSelector,
-  isCGNEnabledSelector
-} from "../../store/reducers/backendStatus";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -598,36 +597,29 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  const isPagoPaVersionSupported = fromNullable(state.versionInfo)
-    .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
-    .getOrElse(true);
-
-  return {
-    periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
-    allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: supportedAvailableBonusSelector(state),
-    // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
-    //  available for display in the wallet, so the cards added with the APP or with the WISP.
-    //  But it leverage on the assumption that the meaning of pagoPA === true is the same of onboardingChannel !== "EXT"
-    potWallets: pagoPaCreditCardWalletV1Selector(state),
-    anyHistoryPayments: paymentsHistorySelector(state).length > 0,
-    anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
-    potTransactions: latestTransactionsSelector(state),
-    transactionsLoadedLength: getTransactionsLoadedLength(state),
-    areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
-    isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-    readTransactions: transactionsReadSelector(state),
-    isPagoPaVersionSupported,
-    bpdLoadState: bpdLastUpdateSelector(state),
-    cgnDetails: cgnDetailSelector(state),
-    isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
-    isCgnEnabled: isCGNEnabledSelector(state),
-    bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
-    coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-    bpdConfig: bpdRemoteConfigSelector(state)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
+  allActiveBonus: allBonusActiveSelector(state),
+  availableBonusesList: supportedAvailableBonusSelector(state),
+  // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
+  //  available for display in the wallet, so the cards added with the APP or with the WISP.
+  //  But it leverage on the assumption that the meaning of pagoPA === true is the same of onboardingChannel !== "EXT"
+  potWallets: pagoPaCreditCardWalletV1Selector(state),
+  anyHistoryPayments: paymentsHistorySelector(state).length > 0,
+  anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
+  potTransactions: latestTransactionsSelector(state),
+  transactionsLoadedLength: getTransactionsLoadedLength(state),
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  readTransactions: transactionsReadSelector(state),
+  bpdLoadState: bpdLastUpdateSelector(state),
+  cgnDetails: cgnDetailSelector(state),
+  isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
+  isCgnEnabled: isCGNEnabledSelector(state),
+  bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
+  coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
+  bpdConfig: bpdRemoteConfigSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
