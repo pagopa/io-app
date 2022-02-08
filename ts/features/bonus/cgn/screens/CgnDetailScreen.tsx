@@ -1,54 +1,53 @@
-import React, { useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { connect } from "react-redux";
 import { View } from "native-base";
-import LinearGradient from "react-native-linear-gradient";
+import React, { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import { connect } from "react-redux";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
+import SectionStatusComponent from "../../../../components/SectionStatus";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
+import { navigateBack } from "../../../../store/actions/navigation";
+import { Dispatch } from "../../../../store/actions/types";
 import {
   cgnMerchantVersionSelector,
   isCGNEnabledSelector
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import { Dispatch } from "../../../../store/actions/types";
-import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import customVariables from "../../../../theme/variables";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
+import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
+import { isLoading } from "../../bpd/model/RemoteValue";
+import CgnCardComponent from "../components/detail/CgnCardComponent";
+import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
+import CgnStatusDetail from "../components/detail/CgnStatusDetail";
+import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
+import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
+import {
+  navigateToCgnMerchantsList,
+  navigateToCgnMerchantsTabs
+} from "../navigation/actions";
+import { cgnDetails } from "../store/actions/details";
+import { cgnEycaStatus } from "../store/actions/eyca/details";
+import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import {
   cgnDetailSelector,
   cgnDetailsInformationSelector,
   isCgnDetailsLoading
 } from "../store/reducers/details";
-import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
-import CgnStatusDetail from "../components/detail/CgnStatusDetail";
-import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
-import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
-import { cgnEycaStatus } from "../store/actions/eyca/details";
-import {
-  navigateToCgnDetailsOtp,
-  navigateToCgnMerchantsList,
-  navigateToCgnMerchantsTabs
-} from "../navigation/actions";
-import CgnCardComponent from "../components/detail/CgnCardComponent";
-import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
-import { cgnDetails } from "../store/actions/details";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { eycaDetailSelector } from "../store/reducers/eyca/details";
-import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
-import { navigateBack } from "../../../../store/actions/navigation";
-import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
-import { canEycaCardBeShown } from "../utils/eyca";
-import SectionStatusComponent from "../../../../components/SectionStatus";
-import { cgnUnsubscribe } from "../store/actions/unsubscribe";
-import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { isLoading } from "../../bpd/model/RemoteValue";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { canEycaCardBeShown } from "../utils/eyca";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -190,8 +189,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),
   navigateToMerchantsList: () => navigateToCgnMerchantsList(),
-  navigateToMerchantsTabs: () => navigateToCgnMerchantsTabs(),
-  navigateToOtp: () => navigateToCgnDetailsOtp()
+  navigateToMerchantsTabs: () => navigateToCgnMerchantsTabs()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
