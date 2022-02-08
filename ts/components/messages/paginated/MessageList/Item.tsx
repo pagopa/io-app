@@ -32,13 +32,10 @@ const styles = StyleSheet.create({
   },
   titleRow: {
     flex: 1,
+    justifyContent: "space-between",
     flexDirection: "row",
-    alignItems: "center"
-  },
-  organizationNameWrapper: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: "100%"
+    alignItems: "center",
+    paddingRight: 16
   },
   badgeContainer: {
     flex: 0,
@@ -53,9 +50,6 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   titleIconAndDate: {
-    flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: "auto",
     flexDirection: "row"
   },
   dateTime: {
@@ -281,9 +275,7 @@ const MessageListItem = ({
       accessibilityRole="button"
     >
       <View style={styles.titleRow}>
-        <View style={styles.organizationNameWrapper}>
-          <H5 numberOfLines={1}>{organizationName}</H5>
-        </View>
+        <H5 numberOfLines={1}>{organizationName}</H5>
         <View style={styles.titleIconAndDate}>
           {getTopIcon(category)}
           <Text numberOfLines={1} style={styles.dateTime}>
