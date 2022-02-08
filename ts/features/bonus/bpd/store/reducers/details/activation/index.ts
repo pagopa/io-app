@@ -18,8 +18,10 @@ import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
   bpdUnsubscribeCompleted,
-  bpdUnsubscribeFailure
+  bpdUnsubscribeFailure,
+  bpdUpdateOptInStatusMethod
 } from "../../../actions/onboarding";
+import { CitizenOptInStatusEnum } from "../../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 import paymentInstrumentReducer, {
   bpdUpsertIbanSelector,
   PayoffInstrumentType
@@ -33,6 +35,7 @@ export type BpdActivation = {
   payoffInstr: PayoffInstrumentType;
   unsubscription: RemoteValue<true, Error>;
   technicalAccount: RemoteValue<string | undefined, Error>;
+  optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>;
 };
 
 /**
@@ -58,6 +61,28 @@ const enabledReducer = (
       return pot.some(action.payload.enabled);
     case getType(bpdDeleteUserFromProgram.success):
       return pot.none;
+    case getType(bpdLoadActivationStatus.failure):
+    case getType(bpdEnrollUserToProgram.failure):
+      return pot.toError(state, action.payload);
+  }
+  return state;
+};
+
+const optInStatusReducer = (
+  state: pot.Pot<CitizenOptInStatusEnum, Error> = pot.none,
+  action: Action
+): pot.Pot<CitizenOptInStatusEnum, Error> => {
+  switch (action.type) {
+    case getType(bpdLoadActivationStatus.request):
+      return pot.toLoading(state);
+    case getType(bpdUpdateOptInStatusMethod.request):
+      return pot.toUpdating(state, action.payload);
+    case getType(bpdLoadActivationStatus.success):
+      return action.payload.optInStatus
+        ? pot.some(action.payload.optInStatus)
+        : pot.none;
+    case getType(bpdUpdateOptInStatusMethod.success):
+      return pot.some(action.payload);
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
       return pot.toError(state, action.payload);
@@ -93,8 +118,18 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,
   payoffInstr: paymentInstrumentReducer,
   unsubscription: unsubscriptionReducer,
-  technicalAccount: technicalAccountReducer
+  technicalAccount: technicalAccountReducer,
+  optInStatus: optInStatusReducer
 });
+
+/**
+ * Return the optInStatus value related to the bpd program
+ * @param state
+ */
+export const optInStatusSelector = (
+  state: GlobalState
+): pot.Pot<CitizenOptInStatusEnum, Error> =>
+  state.bonus.bpd.details.activation.optInStatus;
 
 /**
  * Return the enabled value related to the bpd program
