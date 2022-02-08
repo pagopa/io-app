@@ -1,8 +1,8 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { Either, fromNullable, toError } from "fp-ts/lib/Either";
+import { PatternString } from "italia-ts-commons/lib/strings";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import semver from "semver";
-import { IOVersionInfo } from "../common/versionInfo/types/IOVersionInfo";
+import semver, { SemVer } from "semver";
 import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
 
@@ -17,22 +17,43 @@ export const webStoreURL = Platform.select({
   default: ioWebSiteUrl
 });
 
+const VersionFormat = PatternString("^\\d+(.\\d+){0,3}$");
+
+const validateFormat = (value: string): Either<Error, SemVer> =>
+  VersionFormat.decode(value)
+    .mapLeft(toError)
+    .chain(v =>
+      fromNullable(new Error(`Cannot parse ${value} using semver.coerce`))(
+        semver.coerce(v)
+      )
+    );
+
 /**
  * return true if appVersion >= minAppVersion
  * @param minAppVersion the min version supported
  * @param appVersion the version to be tested
  */
-export const isVersionAppSupported = (
+export const isVersionSupported = (
   minAppVersion: string,
   appVersion: string
 ): boolean => {
-  const minVersion = semver.coerce(minAppVersion);
-  const currentAppVersion = semver.coerce(appVersion);
-  // cant compare
-  if (!minVersion || !currentAppVersion) {
+  const minVersion = validateFormat(minAppVersion);
+  const currentAppVersion = validateFormat(appVersion);
+
+  // If the validation of one of the two versions fails, we cannot say anything ad we continue to support the version
+  if (
+    minVersion.isLeft() ||
+    currentAppVersion.isLeft() ||
+    // If satisfies the semver check, the app is supported
+    semver.satisfies(minVersion.value, `<${currentAppVersion.value}`)
+  ) {
     return true;
   }
-  const semSatisfies = semver.satisfies(minVersion, `<=${currentAppVersion}`);
+
+  const semSatisfies = semver.satisfies(
+    minVersion.value,
+    `=${currentAppVersion.value}`
+  );
   const minAppVersionSplitted = minAppVersion.split(".");
   const currentAppVersionSplitted = appVersion.split(".");
   // since semantic version consider only major.minor.path
@@ -41,7 +62,7 @@ export const isVersionAppSupported = (
     minAppVersionSplitted.length === 4 &&
     currentAppVersionSplitted.length === 4
   ) {
-    // if can't decode one of the two fourth digit, we assume true (can't say nothing)
+    // if can't decode one of the two fourth digit, we assume true (can't say anything)
     const forthDigitSatisfies = NumberFromString.decode(
       minAppVersionSplitted[3]
     )
@@ -61,25 +82,3 @@ export const getAppVersion = () =>
     ios: DeviceInfo.getReadableVersion(),
     default: DeviceInfo.getVersion()
   });
-
-/**
- * return true if the app must be updated
- * @param versionInfo the version info
- * @param section
- */
-export const isUpdateNeeded = (
-  versionInfo: IOVersionInfo | null,
-  section: "min_app_version_pagopa" | "min_app_version"
-) =>
-  fromNullable(versionInfo)
-    .map(si => {
-      const minAppVersion = Platform.select({
-        ios: si[section]?.ios,
-        android: si[section]?.android
-      });
-      return !isVersionAppSupported(
-        minAppVersion ?? "undefined",
-        getAppVersion()
-      );
-    })
-    .getOrElse(false);
