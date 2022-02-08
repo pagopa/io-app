@@ -54,7 +54,6 @@ import { isLoading } from "../../bpd/model/RemoteValue";
 import CGN_ROUTES from "../navigation/routes";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 
-
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
