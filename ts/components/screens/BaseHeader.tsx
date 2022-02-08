@@ -238,11 +238,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     } = this.props;
 
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-    const hasInstabugChat =
-      !isSearchEnabled &&
-      showInstabugChat !== false &&
-      choosenTool === ToolEnum.instabug;
-
     return (
       <Right>
         {isSearchAvailable?.enabled && (
@@ -251,7 +246,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onSearchTap={isSearchAvailable.onSearchTap}
           />
         )}
-        {hasInstabugChat && <InstabugChatsComponent />}
+        {!isSearchEnabled &&
+          showInstabugChat !== false &&
+          choosenTool === ToolEnum.instabug && <InstabugChatsComponent />}
 
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
@@ -269,13 +266,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             )}
           </ButtonDefaultOpacity>
         )}
-
-        {/* if any right button is missing, add a hidden one in order to make the body centered on screen */}
-        {!customRightIcon &&
-          !isSearchAvailable &&
-          !onShowHelp &&
-          !hasInstabugChat && <ButtonDefaultOpacity transparent={true} />}
-
         {fromNullable(this.props.accessibilityEvents).fold(
           true,
           ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
