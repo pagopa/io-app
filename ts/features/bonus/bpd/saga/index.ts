@@ -50,7 +50,10 @@ import { handleTransactionsPage } from "./networking/winning-transactions/transa
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
-import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethodsHandler";
+import {
+  optInDeletionChoiceHandler,
+  optInPaymentMethodsHandler
+} from "./orchestration/optInPaymentMethodsHandler";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
@@ -162,8 +165,11 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // The user start the insertion / modification of the IBAN associated with bpd program
   yield takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
 
-  // The user need to choice what to do with the payment methods added during the cashback
   if (bpdOptInPaymentMethodsEnabled) {
+    // The user need to choice what to do with the payment methods added during the cashback
     yield takeLatest(optInPaymentMethodsStart, optInPaymentMethodsHandler);
+
+    // The user choice to delete all the payment method with the BPD capability
+    yield takeLatest(optInPaymentMethodsStart, optInDeletionChoiceHandler);
   }
 }
