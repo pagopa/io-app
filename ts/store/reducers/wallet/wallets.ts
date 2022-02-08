@@ -553,9 +553,10 @@ const reducer = (
     case getType(setFavouriteWalletFailure):
       return {
         ...state,
-        updatingFavouriteWallet: pot.isSome(state.updatingFavouriteWallet)
-          ? pot.someError(state.updatingFavouriteWallet.value, action.payload)
-          : pot.noneError(action.payload)
+        updatingFavouriteWallet: pot.toError(
+          state.updatingFavouriteWallet,
+          action.payload
+        )
       };
     case getType(setFavouriteWalletSuccess):
       // On success, we update both the favourite wallet ID and the
