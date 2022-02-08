@@ -12,7 +12,7 @@ import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SagaCallReturnType } from "../../types/utils";
 import { resetAssistanceData } from "../../utils/supportAssistance";
 
-function* logoutSaga(
+export function* logoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"],
   action: ActionType<typeof logoutRequest>
 ) {
