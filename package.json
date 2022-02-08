@@ -8,7 +8,7 @@
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v7.32.1-RELEASE/api_cgn.yaml",
   "io_cgn_merchants_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v7.32.1-RELEASE/api_cgn_operator_search.yaml",
   "io_bpd_citizen": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.6/bonus/specs/bpd/citizen.json",
-  "io_bpd_citizen_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/IAC-138-update-citizenv2/bonus/specs/bpd/citizen_v2.json",
+  "io_bpd_citizen_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.6/bonus/specs/bpd/citizen_v2.json",
   "io_bpd_payment": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.6/bonus/specs/bpd/payment.json",
   "io_bpd_award_periods": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.6/bonus/specs/bpd/award.json",
   "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.6/bonus/specs/bpd/winning_transactions.json",
