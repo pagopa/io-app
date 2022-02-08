@@ -68,13 +68,22 @@ export function* watchLogoutSaga(
   // in duplicated processes.
   while (true) {
     const cancellableAction: ActionType<
-      typeof logoutRequest | typeof logoutSuccess
-    > = yield take([getType(logoutRequest), getType(logoutSuccess)]);
+      typeof logoutRequest | typeof logoutSuccess | typeof logoutFailure
+    > = yield take([
+      getType(logoutRequest),
 
-    if (cancellableAction.type === "LOGOUT_REQUEST") {
+      // Since the logout in the user interface
+      // happens with both a success and a failure action
+      // this saga will be cancelled in both the cases.
+      getType(logoutSuccess),
+      getType(logoutFailure)
+    ]);
+
+    if (cancellableAction.type === getType(logoutRequest)) {
       yield fork(logoutSaga, logout, cancellableAction);
-    } else {
-      break;
+      continue;
     }
+
+    break;
   }
 }
