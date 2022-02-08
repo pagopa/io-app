@@ -350,7 +350,9 @@ describe("updatingFavouriteWalletSelector", () => {
 
   it("when a favourite setting request is dispatch, should return pot.someLoading", () => {
     const empty = appReducer(undefined, setFavouriteWalletRequest(99));
-    expect(updatingFavouriteWalletSelector(empty)).toEqual(pot.someLoading(99));
+    expect(updatingFavouriteWalletSelector(empty)).toEqual(
+      pot.noneUpdating(99)
+    );
   });
 
   it("when a favourite setting request has been successfully, should return pot.some", () => {
@@ -389,7 +391,7 @@ describe("updatingFavouriteWalletSelector", () => {
       setFavouriteWalletFailure(new Error("setFavouriteWalletFailure error"))
     );
     expect(updatingFavouriteWalletSelector(state)).toEqual(
-      pot.someError(99, new Error("setFavouriteWalletFailure error"))
+      pot.noneError(new Error("setFavouriteWalletFailure error"))
     );
   });
 });
