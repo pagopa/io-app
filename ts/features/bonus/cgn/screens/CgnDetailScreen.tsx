@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { View } from "native-base";
@@ -13,7 +13,6 @@ import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -53,6 +52,8 @@ import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { isLoading } from "../../bpd/model/RemoteValue";
 import CGN_ROUTES from "../navigation/routes";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -71,9 +72,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     props.loadCgnDetails();
     props.loadEycaDetails();
   };
-  useEffect(() => {
-    setStatusBarColorAndBackground("dark-content", HEADER_BACKGROUND_COLOR);
-  }, []);
 
   useActionOnFocus(loadCGN);
 
@@ -105,6 +103,10 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         contextualHelp={emptyContextualHelp}
       >
         <SafeAreaView style={IOStyles.flex}>
+          <FocusAwareStatusBar
+            backgroundColor={HEADER_BACKGROUND_COLOR}
+            barStyle={"light-content"}
+          />
           {pot.isError(props.potCgnDetails) ? ( // subText is a blank space to avoid default value when it is undefined
             <GenericErrorComponent
               subText={" "}
