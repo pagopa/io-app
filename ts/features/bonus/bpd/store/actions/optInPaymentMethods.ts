@@ -34,9 +34,17 @@ export const optInPaymentMethodsFailure = createStandardAction(
   "OPT_IN_PAYMENT_METHODS_FAILURE"
 )<string>();
 
+/**
+ * The workflow fails
+ */
+export const optInPaymentMethodsDeletionChoice = createStandardAction(
+  "OPT_IN_PAYMENT_METHODS_DELETION_CHOICE"
+)<void>();
+
 export type OptInPaymentMethodsActions =
   | ActionType<typeof optInPaymentMethodsStart>
   | ActionType<typeof optInPaymentMethodsCompleted>
   | ActionType<typeof optInPaymentMethodsCancel>
   | ActionType<typeof optInPaymentMethodsBack>
-  | ActionType<typeof optInPaymentMethodsFailure>;
+  | ActionType<typeof optInPaymentMethodsFailure>
+  | ActionType<typeof optInPaymentMethodsDeletionChoice>;
