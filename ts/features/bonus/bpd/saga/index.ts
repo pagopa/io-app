@@ -13,7 +13,8 @@ import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
   bpdOnboardingAcceptDeclaration,
-  bpdOnboardingStart
+  bpdOnboardingStart,
+  bpdUpdateOptInStatusMethod
 } from "../store/actions/onboarding";
 import {
   bpdPaymentMethodActivation,
@@ -28,7 +29,12 @@ import {
   bpdTransactionsLoadRequiredData
 } from "../store/actions/transactions";
 import { optInPaymentMethodsStart } from "../store/actions/optInPaymentMethods";
-import { deleteCitizen, getCitizenV2, putEnrollCitizenV2 } from "./networking";
+import {
+  deleteCitizen,
+  getCitizenV2,
+  putEnrollCitizenV2,
+  putOptInStatusCitizenV2
+} from "./networking";
 import { loadBpdData } from "./networking/loadBpdData";
 import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
@@ -75,6 +81,13 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdUpsertIban.request,
     patchCitizenIban,
     bpdBackendClient.updatePaymentMethod
+  );
+
+  // update citizen optInStatus
+  yield takeLatest(
+    bpdUpdateOptInStatusMethod.request,
+    putOptInStatusCitizenV2,
+    bpdBackendClient.enrollCitizenV2IO
   );
 
   // load bpd activation status for a specific payment method

@@ -8,7 +8,6 @@ import { H2 } from "../../../../../../components/core/typography/H2";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
 import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
     paddingLeft: 0,
     marginVertical: 20,
-    height: 60,
+    height: 80,
     backgroundColor: IOColors.white
   },
   row: {
@@ -44,11 +43,8 @@ const styles = StyleSheet.create({
   },
   middleSection: {
     flex: 1,
-    paddingLeft: 8
-  },
-  middleLayout: {
-    flex: 1,
-    justifyContent: "center"
+    paddingLeft: 8,
+    alignSelf: "center"
   }
 });
 
@@ -103,21 +99,19 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
       <View style={styles.row}>
         <AttachmentIcon contentType={props.attachment.contentType} />
         <View style={styles.middleSection}>
-          <View style={styles.middleLayout}>
-            <H3
-              color={"bluegrey"}
-              weight={"SemiBold"}
-              ellipsizeMode={"middle"}
-              numberOfLines={1}
-            >
-              {props.attachment.displayName}
-            </H3>
-            {props.attachment.size && (
-              <H5 color={"bluegrey"} weight={"Regular"} style={IOStyles.flex}>
-                {formatByte(props.attachment.size)}
-              </H5>
-            )}
-          </View>
+          <H3
+            color={"bluegrey"}
+            weight={"SemiBold"}
+            ellipsizeMode={"middle"}
+            numberOfLines={2}
+          >
+            {props.attachment.displayName}
+          </H3>
+          {typeof props.attachment.size !== "undefined" && (
+            <H5 color={"bluegrey"} weight={"Regular"}>
+              {formatByte(props.attachment.size)}
+            </H5>
+          )}
         </View>
         <IconFont
           name={"io-right"}
