@@ -2876,10 +2876,17 @@ features:
         title: "Attachments"
         toast:
           success: "Download complete"
-          failure: "An error occurred while downloading the attachment"
         bottomSheet:
-          title: "Pay attention to attachments"
-          body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
+          warning:
+            title: "Pay attention to attachments"
+            body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
+          loading:
+            title: "Attachment"
+            body: "Downloading the attachment"
+          failing:
+            title: "Attachment"
+            body: "An error occurred while downloading the attachment"
+            details: "Check your connection please and try again"
           checkBox: "OK, don't show me again"
       body:
         plain: "plain text"
