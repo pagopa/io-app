@@ -3566,6 +3566,12 @@
         },
         "notDeletedWallets": {
           "type": "integer"
+        },
+        "remainingWallets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WalletV2"
+          }
         }
       },
       "title": "DeletedWallets"
