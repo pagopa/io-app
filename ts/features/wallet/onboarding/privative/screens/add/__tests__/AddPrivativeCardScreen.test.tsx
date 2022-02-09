@@ -113,7 +113,7 @@ const getAddPrivativeCardScreen = () => {
 const renderAddPrivativeCardScreen = (store: Store<GlobalState, Action>) =>
   renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <AddPrivativeCardScreen />,
-    WALLET_ONBOARDING_PRIVATIVE_ROUTES.ADD_PRIVATIVE,
+    WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE,
     {},
     store
   );
