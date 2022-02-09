@@ -88,6 +88,10 @@ Array [
       width={24}
     />
   </View>,
+  <View
+    spacer={true}
+    style={Object {}}
+  />,
 ]
 `;
 

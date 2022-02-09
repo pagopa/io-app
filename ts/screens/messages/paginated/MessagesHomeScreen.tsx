@@ -19,9 +19,7 @@ import {
   searchTextSelector
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
-import customVariables from "../../../theme/variables";
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
-import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { allMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
@@ -30,6 +28,8 @@ import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import customVariables from "../../../theme/variables";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -60,15 +60,6 @@ const MessagesHomeScreen = ({
 
   useEffect(() => {
     reloadFirstPage();
-    const listener = navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
-    });
-    return () => {
-      listener.remove();
-    };
   }, []);
 
   return (
@@ -83,6 +74,10 @@ const MessagesHomeScreen = ({
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
+      <FocusAwareStatusBar
+        barStyle={"dark-content"}
+        backgroundColor={customVariables.colorWhite}
+      />
       <SectionStatusComponent
         sectionKey={"messages"}
         onSectionRef={v => {

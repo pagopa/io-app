@@ -7,6 +7,7 @@ import {
   Store as ReduxStore,
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
+import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
@@ -20,12 +21,11 @@ import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/a
 import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
 import { PrivativeActions } from "../../features/wallet/onboarding/privative/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
-import { GlobalState } from "../reducers/types";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
+import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
-import { BackendInfoActions } from "./backendInfo";
 import { BackendStatusActions } from "./backendStatus";
 import { CalendarEventsActions } from "./calendarEvents";
 import { CieAuthenticationActions } from "./cie";
@@ -61,7 +61,7 @@ export type Action =
   | AuthenticationActions
   | BackendStatusActions
   | CieAuthenticationActions
-  | BackendInfoActions
+  | VersionInfoActions
   | DeepLinkActions
   | MessagesActions
   | MixpanelActions

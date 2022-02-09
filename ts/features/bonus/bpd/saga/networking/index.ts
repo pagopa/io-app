@@ -1,13 +1,16 @@
 import { SagaIterator } from "@redux-saga/core";
 import { call, put } from "typed-redux-saga/macro";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { ActionType } from "typesafe-actions";
 import {
   bpdDeleteUserFromProgram,
-  bpdEnrollUserToProgram
+  bpdEnrollUserToProgram,
+  bpdUpdateOptInStatusMethod
 } from "../../store/actions/onboarding";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
+import { getError } from "../../../../../utils/errors";
 
 export function* executeAndDispatchV2(
   remoteCall:
@@ -25,13 +28,14 @@ export function* executeAndDispatchV2(
       );
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
-        const { enabled, payoffInstr, technicalAccount } =
+        const { enabled, payoffInstr, technicalAccount, optInStatus } =
           enrollCitizenIOResult.value.value;
         yield* put(
           action.success({
             enabled,
             payoffInstr,
-            technicalAccount
+            technicalAccount,
+            optInStatus
           })
         );
         return;
@@ -64,6 +68,43 @@ export function* putEnrollCitizenV2(
   enrollCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenV2IO"]
 ): SagaIterator {
   yield* call(executeAndDispatchV2, enrollCitizenIO, bpdEnrollUserToProgram);
+}
+
+/**
+ * update the citizen OptInStatus
+ * @param updateCitizenIO
+ * @param action
+ */
+export function* putOptInStatusCitizenV2(
+  updateCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenV2IO"],
+  action: ActionType<typeof bpdUpdateOptInStatusMethod.request>
+) {
+  try {
+    const updateCitizenIOResult: SagaCallReturnType<typeof updateCitizenIO> =
+      yield call(
+        updateCitizenIO,
+        // due to avoid required headers coming from code autogenerate
+        // (note the required header will be injected automatically)
+        { citizenOptInStatus: action.payload } as any
+      );
+    if (updateCitizenIOResult.isRight()) {
+      if (updateCitizenIOResult.value.status === 200) {
+        const { optInStatus } = updateCitizenIOResult.value.value;
+        yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
+        return;
+      } else {
+        bpdUpdateOptInStatusMethod.failure(
+          new Error(`response status ${updateCitizenIOResult.value.status}`)
+        );
+      }
+    } else {
+      bpdUpdateOptInStatusMethod.failure(
+        new Error(readableReport(updateCitizenIOResult.value))
+      );
+    }
+  } catch (e) {
+    yield put(bpdUpdateOptInStatusMethod.failure(getError(e)));
+  }
 }
 
 /**
