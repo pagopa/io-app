@@ -1,13 +1,9 @@
 import { Dimensions } from "react-native";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import { ListItem, View } from "native-base";
 import { PaymentMethodRepresentationComponent } from "../paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
-import {
-  getBPDMethodsSelector,
-  paymentMethodsSelector
-} from "../../../../../store/reducers/wallet/wallets";
+import { getBPDMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
 import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
 import { BottomSheetContent } from "../../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
@@ -16,8 +12,6 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { PaymentMethod } from "../../../../../types/pagopa";
 import { Label } from "../../../../../components/core/typography/Label";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
-import { hasFunctionEnabled } from "../../../../../utils/walletv2";
-import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 
 type Props = {
   onDeletePress: () => void;
