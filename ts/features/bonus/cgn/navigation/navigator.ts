@@ -1,22 +1,21 @@
 import { createStackNavigator } from "react-navigation-stack";
-import CgnInformationScreen from "../screens/activation/CgnInformationScreen";
+import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
+import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
 import CgnActivationPendingScreen from "../screens/activation/CgnActivationPendingScreen";
 import CgnActivationTimeoutScreen from "../screens/activation/CgnActivationTimeoutScreen";
-import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
-import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnAlreadyActiveScreen from "../screens/activation/CgnAlreadyActiveScreen";
+import CgnCTAStartActivationScreen from "../screens/activation/CgnCTAStartActivationScreen";
+import CgnInformationScreen from "../screens/activation/CgnInformationScreen";
 import CgnDetailScreen from "../screens/CgnDetailScreen";
 import EycaActivationLoading from "../screens/eyca/activation/EycaActivationLoading";
-import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
-import CgnOtpScreen from "../screens/CgnOtpScreen";
-import CgnCTAStartActivationScreen from "../screens/activation/CgnCTAStartActivationScreen";
-import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
-
 import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
 import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerchantsCategoriesSelectionScreen";
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
+import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
+import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
+
 import CGN_ROUTES from "./routes";
 
 export const CgnActivationNavigator = createStackNavigator(
@@ -77,9 +76,6 @@ export const CgnDetailsNavigator = createStackNavigator(
     },
     [CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW]: {
       screen: CgnMerchantLandingWebview
-    },
-    [CGN_ROUTES.DETAILS.DETAILS_OTP]: {
-      screen: CgnOtpScreen
     }
   },
   {
