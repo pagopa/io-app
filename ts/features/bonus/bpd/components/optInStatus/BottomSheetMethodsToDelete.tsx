@@ -72,7 +72,7 @@ type BottomSheetReturnType = {
 };
 
 /**
- * return an hook that exposes presentBottomSheet to imperative show a bottomsheet
+ * return an hook that exposes presentBottomSheet function to imperative show a bottomsheet
  * containing the list of those payment methods that have BPD as function enabled
  * @param props
  */
