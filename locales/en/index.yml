@@ -401,7 +401,7 @@ profile:
               two: "GDPR regulations."
             cta: "See our providers"
           additionalInformation:
-            description: "For more information, please read"
+            description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
           profileSettings: "You can change this choice anytime in Profile > Preferences"
           cta:
