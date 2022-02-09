@@ -378,7 +378,7 @@ profile:
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
       shareData:
-        title: "Configura IO"
+        title: "Privacy"
         listItem:
           title: "Condividi i dati di utilizzo"
           description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
@@ -816,6 +816,8 @@ onboarding:
         faceId: Face ID
         touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  shareData:
+    title: Configura IO
 forms:
   validators:
     required: Valore richiesto
