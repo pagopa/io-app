@@ -378,7 +378,7 @@ profile:
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
       shareData:
-        title: "Privacy"
+        title: "Configure IO"
         listItem:
           title: "Share usage data"
           description: "Help the IO team to monitor the functioning of the app"
