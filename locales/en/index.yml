@@ -2527,8 +2527,8 @@ bonus:
         header: "News and updates"
         title: "Cashback updates"
       deletePaymentMethodsBottomSheet:
-        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
-        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
+        title: "Do you really want to delete the following methods from the Wallet?"
+        subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
   cgn:
     accessibility:
       code: By pressing the item you will copy the code

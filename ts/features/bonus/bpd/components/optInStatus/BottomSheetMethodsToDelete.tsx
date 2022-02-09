@@ -18,8 +18,10 @@ type Props = {
   onCancelPress?: () => void;
   paymentMethods: ReadonlyArray<PaymentMethod>;
 };
+
 export const BottomSheetMethodsToDelete = (props: Props) => {
   const deleteProps: BlockButtonProps = {
+    testID: "deleteButtonTestID",
     style: {
       flex: 1,
       borderColor: IOColors.red
@@ -31,6 +33,7 @@ export const BottomSheetMethodsToDelete = (props: Props) => {
     title: I18n.t("global.buttons.delete")
   };
   const cancelProps: BlockButtonProps = {
+    testID: "cancelButtonTestID",
     bordered: true,
     onPressWithGestureHandler: true,
     onPress: props.onCancelPress,
@@ -38,6 +41,7 @@ export const BottomSheetMethodsToDelete = (props: Props) => {
   };
   return (
     <BottomSheetContent
+      testID={"BottomSheetMethodsToDeleteTestID"}
       footer={
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
@@ -53,7 +57,10 @@ export const BottomSheetMethodsToDelete = (props: Props) => {
       </Label>
       <View spacer={true} />
       {props.paymentMethods.map(pm => (
-        <ListItem key={`payment_method_${pm.idWallet}`}>
+        <ListItem
+          key={`payment_method_${pm.idWallet}`}
+          testID={`payment_method_${pm.idWallet}`}
+        >
           <PaymentMethodRepresentationComponent {...pm} />
         </ListItem>
       ))}
