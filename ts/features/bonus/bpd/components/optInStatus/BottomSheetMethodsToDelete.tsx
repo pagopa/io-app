@@ -2,34 +2,43 @@ import { Dimensions } from "react-native";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import * as pot from "italia-ts-commons/lib/pot";
-import { ListItem } from "native-base";
+import { ListItem, View } from "native-base";
 import { PaymentMethodRepresentationComponent } from "../paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
-import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
+import {
+  getBPDMethodsSelector,
+  paymentMethodsSelector
+} from "../../../../../store/reducers/wallet/wallets";
 import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
 import { BottomSheetContent } from "../../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { PaymentMethod } from "../../../../../types/pagopa";
+import { Label } from "../../../../../components/core/typography/Label";
+import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
+import { hasFunctionEnabled } from "../../../../../utils/walletv2";
+import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 
 type Props = {
   onDeletePress: () => void;
-  onCancelPress: () => void;
+  onCancelPress?: () => void;
   paymentMethods: ReadonlyArray<PaymentMethod>;
 };
 export const BottomSheetMethodsToDelete = (props: Props) => {
-  const deleteProps = {
+  const deleteProps: BlockButtonProps = {
     style: {
       flex: 1,
       borderColor: IOColors.red
     },
+    onPressWithGestureHandler: true,
     labelColor: IOColors.red,
     bordered: true,
     onPress: props.onDeletePress,
     title: I18n.t("global.buttons.delete")
   };
-  const cancelProps = {
+  const cancelProps: BlockButtonProps = {
     bordered: true,
+    onPressWithGestureHandler: true,
     onPress: props.onCancelPress,
     title: I18n.t("global.buttons.cancel")
   };
@@ -43,6 +52,12 @@ export const BottomSheetMethodsToDelete = (props: Props) => {
         />
       }
     >
+      <Label color={"bluegrey"} weight={"Regular"}>
+        {I18n.t(
+          "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.subtitle"
+        )}
+      </Label>
+      <View spacer={true} />
       {props.paymentMethods.map(pm => (
         <ListItem key={`payment_method_${pm.idWallet}`}>
           <PaymentMethodRepresentationComponent {...pm} />
@@ -52,14 +67,23 @@ export const BottomSheetMethodsToDelete = (props: Props) => {
   );
 };
 
+type BottomSheetReturnType = {
+  presentBottomSheet: () => void;
+};
+
+/**
+ * return an hook that exposes presentBottomSheet to imperative show a bottomsheet
+ * containing the list of those payment methods that have BPD as function enabled
+ * @param props
+ */
 export const useBottomSheetMethodsToDelete = (
   props: Omit<Props, "paymentMethods">
-) => {
-  const paymentMethods = pot.getOrElse(useSelector(paymentMethodsSelector), []);
+): BottomSheetReturnType => {
+  const paymentMethods = useSelector(getBPDMethodsSelector);
   const snapPoint = Math.min(
-    Dimensions.get("window").height * 0.6,
-    // footer + items
-    200 + paymentMethods.length * 58
+    Dimensions.get("window").height * 0.7,
+    // (subtitle + footer) + items
+    280 + paymentMethods.length * 58
   );
   const { present } = useIOBottomSheetRaw(snapPoint);
   return {
@@ -70,7 +94,9 @@ export const useBottomSheetMethodsToDelete = (
           onDeletePress={props.onDeletePress}
           onCancelPress={props.onCancelPress}
         />,
-        "test title"
+        I18n.t(
+          "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
+        )
       );
     }
   };
