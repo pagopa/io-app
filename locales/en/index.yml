@@ -389,16 +389,16 @@ profile:
             description:
               one: "IO collects only the information "
               two: "necessary "
-              three: "to monitor the performance of the services provided to you"
+              three: "to monitor the performance of the services provided to you."
             cta: "Why?"
           security:
             description:
-              one: "We take security measures to protect your data"
+              one: "We take security measures to protect your data."
             cta: "Learn more"
           gdpr:
             description:
               one: "The IO team works with other providers in accordance with "
-              two: "GDPR regulations"
+              two: "GDPR regulations."
             cta: "See our providers"
           additionalInformation:
             description: "For more information, please read"

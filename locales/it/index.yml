@@ -389,16 +389,16 @@ profile:
             description:
               one: "IO raccoglie solo le informazioni "
               two: "necessarie "
-              three: "per il funzionamento dei servizi offerti"
+              three: "per il funzionamento dei servizi offerti."
             cta: "Perché?"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati"
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati."
             cta: "Scopri di più"
           gdpr:
             description:
               one: "Il team di IO collabora con fornitori in conformità con le "
-              two: "norme previste dal GDPR"
+              two: "norme previste dal GDPR."
             cta: "Vedi elenco fornitori"
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
