@@ -518,3 +518,15 @@ export const PatchedWalletV2Response = t.intersection(
 );
 
 export type PatchedWalletV2Response = t.TypeOf<typeof PatchedWalletV2Response>;
+
+export const PatchedDeleteWalletResponse = t.interface({
+  data: t.interface({
+    deletedWallets: t.number,
+    notDeletedWallets: t.number,
+    remainingWallets: t.readonlyArray(PatchedWalletV2)
+  })
+});
+
+export type PatchedDeleteWalletResponse = t.TypeOf<
+  typeof PatchedDeleteWalletResponse
+>;
