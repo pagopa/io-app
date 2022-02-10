@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -76,11 +76,19 @@ type State = {
 };
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1
+  },
   header: {
     fontSize: 20,
     lineHeight: 22
   },
-  description: { lineHeight: 22 }
+  description: { lineHeight: 22 },
+  footerContainer: {
+    overflow: "hidden",
+    marginTop: -variables.footerShadowOffsetHeight,
+    paddingTop: variables.footerShadowOffsetHeight
+  }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -350,21 +358,24 @@ class PinScreen extends React.PureComponent<Props, State> {
   // The Footer of the Screen
   public renderFooter(pinState: PinState) {
     return (
-      <View footer={true}>
-        {this.renderContinueButton(pinState)}
+      <View style={styles.footerContainer}>
+        {/* the actual footer must be wrapped in this container in order to keep a white background below the safe area */}
+        <View footer={true}>
+          {this.renderContinueButton(pinState)}
 
-        {pinState.state !== "PinUnselected" && (
-          <React.Fragment>
-            <ButtonDefaultOpacity
-              block={true}
-              bordered={true}
-              onPress={() => this.onPinReset()}
-              // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
-            >
-              <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
-            </ButtonDefaultOpacity>
-          </React.Fragment>
-        )}
+          {pinState.state !== "PinUnselected" && (
+            <React.Fragment>
+              <ButtonDefaultOpacity
+                block={true}
+                bordered={true}
+                onPress={() => this.onPinReset()}
+                // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
+              >
+                <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
+              </ButtonDefaultOpacity>
+            </React.Fragment>
+          )}
+        </View>
       </View>
     );
   }
@@ -409,8 +420,10 @@ class PinScreen extends React.PureComponent<Props, State> {
         faqCategories={["onboarding_pin", "unlock"]}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
-        {this.renderContent(pinState)}
-        {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
+        <SafeAreaView style={styles.flex}>
+          {this.renderContent(pinState)}
+          {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }
