@@ -65,7 +65,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.newPaymentMethod.contextualHelpContent"
 };
 
-const getpaymentMethods = (
+const getPaymentMethods = (
   props: Props,
   options: {
     onlyPaymentMethodCanPay: boolean;
@@ -209,7 +209,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               <View spacer={true} />
               {/* since we're paying show only those method can pay with pagoPA */}
               <PaymentMethodsList
-                paymentMethods={getpaymentMethods(props, {
+                paymentMethods={getPaymentMethods(props, {
                   onlyPaymentMethodCanPay: true,
                   isPaymentOnGoing: inPayment.isSome(),
                   isPaypalEnabled: props.isPaypalEnabled
@@ -220,7 +220,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
         ) : (
           <Content noPadded={true} style={IOStyles.horizontalContentPadding}>
             <PaymentMethodsList
-              paymentMethods={getpaymentMethods(props, {
+              paymentMethods={getPaymentMethods(props, {
                 onlyPaymentMethodCanPay:
                   canAddOnlyPayablePaymentMethod === true,
                 isPaymentOnGoing: inPayment.isSome(),
