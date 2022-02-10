@@ -30,9 +30,6 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
-import { FooterSingleButton } from "../../features/bonus/bonusVacanze/components/markdown/FooterSingleButton";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 type Props = NavigationStackScreenProps &
   LightModalContextInterface &
@@ -261,6 +258,7 @@ class PinScreen extends React.PureComponent<Props, State> {
       <React.Fragment>
         <Text
           style={styles.header}
+          alignCenter={true}
           bold={true}
           dark={true}
           ref={this.headerRef}
@@ -271,7 +269,7 @@ class PinScreen extends React.PureComponent<Props, State> {
               : "onboarding.unlockCode.contentTitleConfirm"
           )}
         </Text>
-        <Text dark={true}>
+        <Text alignCenter={true} dark={true}>
           {I18n.t(
             pinState.state === "PinUnselected"
               ? "onboarding.unlockCode.contentSubtitle"
@@ -332,7 +330,7 @@ class PinScreen extends React.PureComponent<Props, State> {
   public renderDescription() {
     return (
       <Text alignCenter={true} style={styles.description}>
-        -
+        {I18n.t("onboarding.unlockCode.pinInfo")}
       </Text>
     );
   }
@@ -360,12 +358,25 @@ class PinScreen extends React.PureComponent<Props, State> {
   // The Footer of the Screen
   public renderFooter(pinState: PinState) {
     return (
-      <FooterWithButtons
-        type="SingleButton"
-        leftButton={{
-          ...confirmButtonProps(() => null, I18n.t("global.buttons.continue"))
-        }}
-      />
+      <View style={styles.footerContainer}>
+        {/* the actual footer must be wrapped in this container in order to keep a white background below the safe area */}
+        <View footer={true}>
+          {this.renderContinueButton(pinState)}
+
+          {pinState.state !== "PinUnselected" && (
+            <React.Fragment>
+              <ButtonDefaultOpacity
+                block={true}
+                bordered={true}
+                onPress={() => this.onPinReset()}
+                // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
+              >
+                <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
+              </ButtonDefaultOpacity>
+            </React.Fragment>
+          )}
+        </View>
+      </View>
     );
   }
 
@@ -407,11 +418,11 @@ class PinScreen extends React.PureComponent<Props, State> {
         goBack={this.handleGoBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["onboarding_pin", "unlock"]}
-        headerTitle={I18n.t("onboarding.unlockCode.headerTitle")}
+        headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
         <SafeAreaView style={styles.flex}>
           {this.renderContent(pinState)}
-          {this.renderFooter(pinState)}
+          {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
         </SafeAreaView>
       </BaseScreenComponent>
     );
