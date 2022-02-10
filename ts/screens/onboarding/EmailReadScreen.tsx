@@ -168,9 +168,11 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                   size={24}
                   style={styles.icon}
                 />
-                <Text style={styles.email}>
-                  {this.props.optionEmail.getOrElse("GIGI")}
-                </Text>
+                {this.props.optionEmail.isSome() && (
+                  <Text style={styles.email}>
+                    {this.props.optionEmail.value}
+                  </Text>
+                )}
               </View>
               <View style={styles.spacerLarge} />
               <Text>
