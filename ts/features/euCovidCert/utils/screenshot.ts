@@ -2,6 +2,7 @@ import { CaptureOptions, captureRef } from "react-native-view-shot";
 import { ReactInstance, RefObject } from "react";
 import { Dimensions } from "react-native";
 import { saveImageToGallery } from "../../../utils/share";
+import I18n from "../../../i18n";
 
 type CaptureScreenShotEvents = {
   onSuccess?: () => void; // invoked on success
@@ -10,9 +11,14 @@ type CaptureScreenShotEvents = {
   onNoPermissions?: () => void; // invoked in no given required permission
 };
 
-export const screenShotOption: CaptureOptions = {
+export type ScreenshotOptions = CaptureOptions & {
+  filename: string;
+};
+
+export const screenShotOption: ScreenshotOptions = {
   width: Dimensions.get("window").width,
-  format: "png"
+  format: "png",
+  filename: I18n.t("features.euCovidCertificate.common.title")
 };
 
 /**
