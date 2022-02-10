@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  ScrollView,
-  StyleSheet
-} from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import LinearGradient from "react-native-linear-gradient";
@@ -23,6 +18,7 @@ import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnSelectedCategory } from "../../store/actions/categories";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 
 const styles = StyleSheet.create({
   body: {
@@ -122,20 +118,18 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <ScrollView style={IOStyles.flex}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
-          <View spacer large />
-          <FlatList
-            data={categoriesToArray}
-            renderItem={renderCategoryElement}
-            numColumns={2}
-            keyExtractor={(item: ProductCategoryEnum | "All" | "Hidden") =>
-              item
-            }
-          />
-        </View>
-      </ScrollView>
+      <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+        <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
+        <View spacer large />
+        <FlatList
+          style={IOStyles.flex}
+          data={categoriesToArray}
+          renderItem={renderCategoryElement}
+          numColumns={2}
+          keyExtractor={(item: ProductCategoryEnum | "All" | "Hidden") => item}
+          ListFooterComponent={<EdgeBorderComponent />}
+        />
+      </View>
     </BaseScreenComponent>
   );
 };
