@@ -56,10 +56,11 @@ platform :android do
     )
 
     upload_to_play_store(
-      track: "alpha",
+      track: "internal",
       skip_upload_screenshots: true,
       skip_upload_images: true
     )
+    upload_to_play_store(track: "internal", track_promote_to: "alpha")
   end
 
   desc "Deploy a new version to the Google Play"
