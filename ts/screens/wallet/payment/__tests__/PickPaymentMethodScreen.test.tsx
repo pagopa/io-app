@@ -232,7 +232,7 @@ describe("PickPaymentMethodScreen", () => {
 const renderPickPaymentMethodScreen = (store: Store<GlobalState, Action>) =>
   renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     PickPaymentMethodScreen,
-    WALLET_ONBOARDING_PRIVATIVE_ROUTES.ADD_PRIVATIVE,
+    WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE,
     {
       rptId,
       initialAmount,
