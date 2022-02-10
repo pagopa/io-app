@@ -48,18 +48,19 @@ const styles = StyleSheet.create({
 const OnboardingPinConfirmationScreen: React.FC<Props> = ({ navigation }) => {
   const [pin, setPin] = React.useState<PinString | null>(null);
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
+  const handleGoBack = React.useCallback(
+    () => navigation.goBack(),
+    [navigation]
+  );
 
   const resetPin = () => setPin(null);
 
   const computedCancelButtonProps = React.useMemo(
     () => ({
       ...cancelButtonProps(() => null, I18n.t("global.buttons.back")),
-      onPress: () => navigation.goBack()
+      onPress: handleGoBack
     }),
-    [navigation]
+    [handleGoBack]
   );
 
   const computedConfirmButtonProps = React.useMemo(
