@@ -26,7 +26,6 @@ export function* executeAndDispatchV2(
         // (note the required header will be injected automatically)
         {} as any
       );
-    console.log(enrollCitizenIOResult);
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
         const { enabled, payoffInstr, technicalAccount, optInStatus } =
