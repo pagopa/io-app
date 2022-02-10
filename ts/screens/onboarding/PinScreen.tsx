@@ -30,6 +30,9 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
+import { FooterSingleButton } from "../../features/bonus/bonusVacanze/components/markdown/FooterSingleButton";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 type Props = NavigationStackScreenProps &
   LightModalContextInterface &
@@ -329,7 +332,7 @@ class PinScreen extends React.PureComponent<Props, State> {
   public renderDescription() {
     return (
       <Text alignCenter={true} style={styles.description}>
-        {I18n.t("onboarding.unlockCode.pinInfo")}
+        -
       </Text>
     );
   }
@@ -357,25 +360,12 @@ class PinScreen extends React.PureComponent<Props, State> {
   // The Footer of the Screen
   public renderFooter(pinState: PinState) {
     return (
-      <View style={styles.footerContainer}>
-        {/* the actual footer must be wrapped in this container in order to keep a white background below the safe area */}
-        <View footer={true}>
-          {this.renderContinueButton(pinState)}
-
-          {pinState.state !== "PinUnselected" && (
-            <React.Fragment>
-              <ButtonDefaultOpacity
-                block={true}
-                bordered={true}
-                onPress={() => this.onPinReset()}
-                // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
-              >
-                <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
-              </ButtonDefaultOpacity>
-            </React.Fragment>
-          )}
-        </View>
-      </View>
+      <FooterWithButtons
+        type="SingleButton"
+        leftButton={{
+          ...confirmButtonProps(() => null, I18n.t("global.buttons.continue"))
+        }}
+      />
     );
   }
 
@@ -421,7 +411,7 @@ class PinScreen extends React.PureComponent<Props, State> {
       >
         <SafeAreaView style={styles.flex}>
           {this.renderContent(pinState)}
-          {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
+          {this.renderFooter(pinState)}
         </SafeAreaView>
       </BaseScreenComponent>
     );
