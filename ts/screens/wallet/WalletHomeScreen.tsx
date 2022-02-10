@@ -1,17 +1,14 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import {
-  NavigationEvents,
-  NavigationEventSubscription,
-  NavigationInjectedProps
-} from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -27,7 +24,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -69,6 +66,10 @@ import {
   fetchWalletsRequestWithExpBackoff,
   runSendAddCobadgeTrackSaga
 } from "../../store/actions/wallet/wallets";
+import {
+  bpdRemoteConfigSelector,
+  isCGNEnabledSelector
+} from "../../store/reducers/backendStatus";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -85,13 +86,9 @@ import {
   pagoPaCreditCardWalletV1Selector
 } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
-import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
-import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { Body } from "../../components/core/typography/Body";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -113,10 +110,10 @@ const styles = StyleSheet.create({
   },
   addDescription: {
     lineHeight: 24,
-    fontSize: variables.fontSize1
+    fontSize: customVariables.fontSize1
   },
   white: {
-    color: variables.colorWhite
+    color: customVariables.colorWhite
   },
   container: {
     flex: 1,
@@ -133,26 +130,26 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   emptyListWrapper: {
-    padding: variables.contentPadding,
+    padding: customVariables.contentPadding,
     alignItems: "center"
   },
   emptyListContentTitle: {
-    paddingBottom: variables.contentPadding / 2
+    paddingBottom: customVariables.contentPadding / 2
   },
   bordercColorBrandGray: {
-    borderColor: variables.brandGray
+    borderColor: customVariables.brandGray
   },
   colorBrandGray: {
-    color: variables.brandGray
+    color: customVariables.brandGray
   },
   brandDarkGray: {
-    color: variables.brandDarkGray
+    color: customVariables.brandDarkGray
   },
   whiteBg: {
-    backgroundColor: variables.colorWhite
+    backgroundColor: customVariables.colorWhite
   },
   noBottomPadding: {
-    padding: variables.contentPadding,
+    padding: customVariables.contentPadding,
     paddingBottom: 0
   },
   center: {
@@ -193,8 +190,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("keyFrom");
   }
 
-  private navListener?: NavigationEventSubscription;
-
   private handleBackPress = () => {
     const shouldPop =
       this.newMethodAdded && this.navigationKeyFrom !== undefined;
@@ -229,7 +224,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   private loadBonusCgn = () => {
-    if (cgnEnabled) {
+    if (this.props.isCgnEnabled) {
       this.props.loadCgnData();
     }
   };
@@ -245,13 +240,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    }); // eslint-disable-line
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
 
     // Dispatch the action associated to the saga responsible to remind a user
@@ -261,9 +249,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -394,8 +379,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             onBonusPress={this.props.navigateToBonusDetail}
           />
         )}
-        {bpdEnabled && <BpdCardsInWalletContainer />}
-        {cgnEnabled && <CgnCardInWalletContainer />}
+
+        {/* When the opt_in_payment_methods FF is active hide the BpdCardsInWalletContainer component */}
+        {!this.props.bpdConfig?.opt_in_payment_methods && bpdEnabled && (
+          <BpdCardsInWalletContainer />
+        )}
+        <CgnCardInWalletContainer />
       </View>
     );
   }
@@ -578,7 +567,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           this.newMethodAddedContent
         ) : (
           <>
-            {(bpdEnabled || cgnEnabled) && <FeaturedCardCarousel />}
+            {(bpdEnabled || this.props.isCgnEnabled) && (
+              <FeaturedCardCarousel />
+            )}
             {transactionContent}
           </>
         )}
@@ -588,7 +579,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             onWillBlur={this.onLostFocus}
           />
         )}
-        {bpdEnabled && <NewPaymentMethodAddedNotifier />}
+        <NewPaymentMethodAddedNotifier />
       </WalletLayout>
     );
   }
@@ -600,40 +591,35 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       (bpdEnabled
         ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
         : 0) +
-      (cgnEnabled && this.props.isCgnInfoAvailable ? 88 : 0) +
+      (this.props.isCgnEnabled && this.props.isCgnInfoAvailable ? 88 : 0) +
       this.getCreditCards().length * 56
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  const isPagoPaVersionSupported = fromNullable(state.backendInfo.serverInfo)
-    .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
-    .getOrElse(true);
-
-  return {
-    periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
-    allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: supportedAvailableBonusSelector(state),
-    // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
-    //  available for display in the wallet, so the cards added with the APP or with the WISP.
-    //  But it leverage on the assumption that the meaning of pagoPA === true is the same of onboardingChannel !== "EXT"
-    potWallets: pagoPaCreditCardWalletV1Selector(state),
-    anyHistoryPayments: paymentsHistorySelector(state).length > 0,
-    anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
-    potTransactions: latestTransactionsSelector(state),
-    transactionsLoadedLength: getTransactionsLoadedLength(state),
-    areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
-    isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-    readTransactions: transactionsReadSelector(state),
-    isPagoPaVersionSupported,
-    bpdLoadState: bpdLastUpdateSelector(state),
-    cgnDetails: cgnDetailSelector(state),
-    isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
-    bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
-    coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
+  allActiveBonus: allBonusActiveSelector(state),
+  availableBonusesList: supportedAvailableBonusSelector(state),
+  // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
+  //  available for display in the wallet, so the cards added with the APP or with the WISP.
+  //  But it leverage on the assumption that the meaning of pagoPA === true is the same of onboardingChannel !== "EXT"
+  potWallets: pagoPaCreditCardWalletV1Selector(state),
+  anyHistoryPayments: paymentsHistorySelector(state).length > 0,
+  anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
+  potTransactions: latestTransactionsSelector(state),
+  transactionsLoadedLength: getTransactionsLoadedLength(state),
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  readTransactions: transactionsReadSelector(state),
+  bpdLoadState: bpdLastUpdateSelector(state),
+  cgnDetails: cgnDetailSelector(state),
+  isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
+  isCgnEnabled: isCGNEnabledSelector(state),
+  bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
+  coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
+  bpdConfig: bpdRemoteConfigSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),

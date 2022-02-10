@@ -302,6 +302,8 @@ profile:
     title: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    clearAsyncStorage: Clear AsyncStorage
+    dumpAsyncStorage: Dump AsyncStorage content to console
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
@@ -391,8 +393,7 @@ profile:
             cta: "Why?"
           security:
             description:
-              one: "We take security measures to protect your data and "
-              two: "pseudonymise it where possible"
+              one: "We take security measures to protect your data"
             cta: "Learn more"
           gdpr:
             description:
@@ -637,6 +638,8 @@ authentication:
         unknownCardTitle: Unknown card
         unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
         unknownCardHelpLink: What is the Electronic Identity Card?
+    dataUsageConsent:
+      retryCTA: Entra
   spid: SPID
   spid_information_request:
     headerTitle: Insert email address
@@ -703,7 +706,7 @@ authentication:
       error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
       error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
       error_21: "It's been too long since you started accessing: please start over again."
-      error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
+      error_22: "To use IO, you have to consent access to some data. Enter again and consent."
       error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
       error_25: "You have canceled the login operation: you can try again whenever you want."
       error_1001: "Access Denied: You are not of the minimum age required to use IO"
@@ -896,22 +899,21 @@ wallet:
     bancomat:
       title: "Search for your PagoBANCOMAT cards"
       description:
-        text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
+        text1: "By adding PagoBANCOMAT to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
       title: "Search for your BANCOMAT Pay accounts"
       description:
-        text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
+        text1: "By adding BANCOMAT Pay to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
     cobadge:
       title: "Search for your international circuit cards"
       description:
-        text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
-        text2: the banks participating in the service
+        text1: "By adding all the Maestro, Mastercard, V-Pay and Visa cards associated with you to your Wallet, you’ll be able to join the initiatives available on IO."
         text3: "For further information, please read the "
         text4: privacy policy.
     bankName: Name of the bank
@@ -962,7 +964,7 @@ wallet:
         bodyPlural: "We found {{number}} cards registered to you. Continue to add this card skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
         warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact the card issuer."
     bPay:
       headerTitle: "Add BANCOMAT Pay"
       loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
@@ -1068,7 +1070,7 @@ wallet:
       add:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact the card issuer."
         warning1: "In some cases, the displayed data might be different from the data printed on the physical card: "
         warning2: "if in doubt, contact your bank."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
@@ -1089,8 +1091,8 @@ wallet:
       headerTitle: "Add supermarket card"
       choosePrivativeIssuer:
         loading: "Loading settings\n\nPlease wait a few seconds"
-        title: "Choose your card brand"
-        body: "You can only add cards that allow you to pay in supermarkets."
+        title: "Choose the card brand"
+        body: "By adding the card to your Wallet, you’ll be able to join the initiatives available on IO."
         koDisabled:
           title: "This supermarket doesn't offer this feature yet"
           body: "We are working to allow you to add your card soon."
@@ -1119,7 +1121,7 @@ wallet:
       add:
         screenTitle: "Do you want to add this card?"
         loading: "We are adding your card\n\nPlease hold on..."
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact your supermarket."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1178,11 +1180,11 @@ wallet:
     contextualHelpTitle: Save a card to IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Save the card
-    title: Do you want to save this card?
-    infoTitle: Set the card as favourite payment method
-    info: This payment method will be automatically proposed for the next payment
-    save: Save
-    notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
+    title: "Is everything correct?"
+    subtitle: "By adding the card to your Wallet, you will be able to make payments in the app and join the initiatives available on IO."
+    infoTitle: "Use as favorite"
+    info: "When you pay in-app, IO will automatically show this payment method"
+    notice: "In order to verify your card, we temporarily hold 0.02 €. Don't worry, we will return the amount to you as soon as possible."
     temporaryError: There was a problem while saving this card.
     temporarySubError: We have not received a response from the security systems. We apologize for the inconvenience.
     loadWalletsErrorTitle: Systems are taking longer than expected
@@ -1413,7 +1415,7 @@ wallet:
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
-    body: If you can't find the security code, it's likely your card doesn't support online payments. However, you can add it for Cashback purposes, if your bank is supported.
+    body: If you can't find the security code, it's likely your card doesn't support online payments.
     cta: "Search your cards"
   chooseMethod: Select the desired method
   QRtoPay:
@@ -1474,7 +1476,7 @@ wallet:
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have more than one logo?"
-        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
+        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you."
         addCta: "Add second circuit"
   satispay:
     details:
@@ -1487,8 +1489,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this method?"
-    body: "This method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
+    title: "Delete this payment method?"
+    body: "We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1554,7 +1556,7 @@ cardComponent:
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
-  deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
+  deleteMsg: We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours.
   deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
@@ -1567,7 +1569,7 @@ messages:
       read: "Message"
       unread: "Unread message"
       archived: Archived
-      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "received on"
       received_at: "received at"
   contextualHelpTitle: About this section
@@ -2520,6 +2522,10 @@ bonus:
             active: "**The ranking changes every day.** You will receive a message when it will be published."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
+    optInPaymentMethods:
+      cashbackUpdate:
+        header: "News and updates"
+        title: "Cashback updates"
   cgn:
     accessibility:
       code: By pressing the item you will copy the code
@@ -2528,12 +2534,12 @@ bonus:
     merchantsList:
       online: Online
       places: Places
-      navigationTitle: View merchants
-      screenTitle: Select the merchant where you want to buy something
+      navigationTitle: Benefits
+      screenTitle: Select the operator and discover the benefits
       cta:
         filter: Filter
       filter:
-        title: Filter merchants
+        title: Filter operators
         searchTitle: Find by name
         inputPlaceholder: Find store, theater or other
         addressTitle: Find by address
@@ -2552,8 +2558,13 @@ bonus:
           byDistance: By proximity to your location
           byName: Alphabetical order
     merchantDetail:
+      bucket:
+        alert:
+          cta: I got it!
+        error:
+          noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Discounts
+        deals: Benefits
         description: Description
         services: Services
         addresses: Addresses
@@ -2562,25 +2573,27 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to merchant website
+        label: Navigate to operator website
         landingPage: Get the benefit
       categories:
         counting: and other {{count}}
-        theater: free time
-        travel: travels, transportation and mobility
-        food: restaurant and cooking
-        hotel: hotel
-        service: services
-        book: instruction
-        shopping: shopping
-        sport: sport
+        cultureAndEntertainment: culture and entertainment
         health: health and wellness
+        learning: education and learning
+        sport: sport
+        home: home
+        telco: telephony and internet
+        finance: financial services
+        travel: travels and transportation
+        mobility: sustainable transport
+        job: jobs and internships
     cta:
-      activeBonus: Request your CGN
+      activeBonus: Request your Card
+      deactivateBonus: Deactivate your Card
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: See benefits
+        buyers: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
@@ -2593,7 +2606,7 @@ bonus:
         warning: "Attention! "
         revoked: "This card has been revoked cause {{reason}}"
         expired: "This card expired on {{date}}"
-      ownership: Who can take advantage of discounts?
+      ownership: Who can take advantage of benefits?
       status:
         title: Carta Giovani Nazionale
         eyca: EYCA card
@@ -2601,7 +2614,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating operators, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
@@ -2643,7 +2656,13 @@ bonus:
       success:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
+      deactivate:
+        toast: "The request to deactivate the card has been successfully executed"
+        alert:
+          title: "Deactivate card"
+          message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
     otp:
+      error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       screen:
         title: Use discount code
         cta: Copy code
@@ -2854,10 +2873,17 @@ features:
         title: "Attachments"
         toast:
           success: "Download complete"
-          failure: "An error occurred while downloading the attachment"
         bottomSheet:
-          title: "Pay attention to attachments"
-          body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
+          warning:
+            title: "Pay attention to attachments"
+            body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
+          loading:
+            title: "Attachment"
+            body: "Downloading the attachment"
+          failing:
+            title: "Attachment"
+            body: "An error occurred while downloading the attachment"
+            details: "Check your connection please and try again"
           checkBox: "OK, don't show me again"
       body:
         plain: "plain text"
@@ -2903,7 +2929,7 @@ features:
         headerTitle: "Certificate Details"
         save: "Save details"
     revoked:
-      title: "This certificate is no longer valid"
+      title: "This certificate is not valid"
     expired:
       title: "This certificate has expired"
     ko:

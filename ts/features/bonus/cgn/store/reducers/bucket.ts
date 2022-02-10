@@ -9,10 +9,11 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../bpd/model/RemoteValue";
-import { cgnCodeFromBucket, DiscountBucketCode } from "../actions/bucket";
+import { cgnCodeFromBucket } from "../actions/bucket";
+import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 
 export type CgnBucketState = {
-  data: RemoteValue<DiscountBucketCode, NetworkError>;
+  data: RemoteValue<DiscountBucketCodeResponse, NetworkError>;
 };
 
 const INITIAL_STATE: CgnBucketState = {

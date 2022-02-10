@@ -1,11 +1,15 @@
 import * as React from "react";
+import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Alert } from "react-native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
-import { navigateBack } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import {
+  useActionOnFocus,
+  useNavigationContext
+} from "../../../../../utils/hooks/useOnFocus";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
 import {
@@ -15,6 +19,7 @@ import {
 } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
 import { cgnActivationStart } from "../../store/actions/activation";
+import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -23,7 +28,9 @@ const loadingCaption = () => I18n.t("global.remoteStates.loading");
 /**
  * this is a dummy screen reachable only from a message CTA
  */
-const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
+const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
+  const isFirstRender = useRef<boolean>(true);
+
   // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
@@ -31,9 +38,10 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
 
   React.useEffect(() => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
-    if (availableBonus.length > 0 && cgnBonus) {
-      navigateBack();
+    if (availableBonus.length > 0 && cgnBonus && isFirstRender.current) {
       startCgn();
+      // eslint-disable-next-line functional/immutable-data
+      isFirstRender.current = false;
     }
   }, [availableBonus, startCgn, cgnBonus]);
 
@@ -48,6 +56,23 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
   );
 };
 
+/**
+ * this is a dummy screen reachable only from a message CTA
+ */
+const CgnCTAStartOnboardingScreen = (props: Props) => {
+  const navigation = useNavigationContext();
+  if (!props.isCgnEnabled) {
+    Alert.alert(
+      I18n.t("bonus.cgn.name"),
+      I18n.t("bonus.state.completed.description")
+    );
+    navigation.goBack();
+    return null;
+  } else {
+    return <CgnCTAStartOnboardingComponent {...props} />;
+  }
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   startCgn: () => {
     dispatch(cgnActivationStart());
@@ -58,10 +83,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (globalState: GlobalState) => ({
   availableBonus: supportedAvailableBonusSelector(globalState),
   cgnBonus: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(globalState),
+  isCgnEnabled: isCGNEnabledSelector(globalState),
   hasError: isAvailableBonusErrorSelector(globalState)
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BpdCTAStartOnboardingScreen);
+)(CgnCTAStartOnboardingScreen);

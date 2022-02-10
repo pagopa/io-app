@@ -1,10 +1,11 @@
 import { PersistPartial } from "redux-persist";
+import { VersionInfoState } from "../../common/versionInfo/store/reducers/versionInfo";
 
 import { BonusState } from "../../features/bonus/bonusVacanze/store/reducers";
-import { FeaturesState } from "../../features/common/store/reducers";
+import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { AppState } from "./appState";
+import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
-import { BackendInfoState } from "./backendInfo";
 import { BackendStatusState } from "./backendStatus";
 import { BackoffErrorState } from "./backoffError";
 import { CieState } from "./cie";
@@ -29,14 +30,13 @@ import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
-import { AssistanceToolsState } from "./assistanceTools";
 
 export type GlobalState = Readonly<{
   appState: AppState;
   navigation: NavigationState;
   authentication: PersistedAuthenticationState;
   backendStatus: BackendStatusState;
-  backendInfo: BackendInfoState;
+  versionInfo: VersionInfoState;
   deepLink: DeepLinkState;
   entities: PersistedEntitiesState;
   instabug: InstabugUnreadMessagesState;
@@ -58,7 +58,7 @@ export type GlobalState = Readonly<{
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;
-  features: FeaturesState;
+  features: PersistedFeaturesState;
   internalRouteNavigation: InternalRouteNavigationState;
   crossSessions: CrossSessionsState;
   assistanceTools: AssistanceToolsState;

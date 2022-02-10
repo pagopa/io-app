@@ -33,6 +33,7 @@ import {
   openSupportTicket
 } from "../../../utils/supportAssistance";
 import { getFullLocale } from "../../../utils/locale";
+import { mixpanelTrack } from "../../../mixpanel";
 
 /**
  * this screen shows the categories for which the user can ask support with the assistance
@@ -80,11 +81,13 @@ const ZendeskChooseCategory = () => {
             navigation.navigate(navigateToZendeskChooseSubCategory());
           } else {
             openSupportTicket();
+            void mixpanelTrack("ZENDESK_OPEN_TICKET");
             zendeskWorkunitComplete();
           }
         }}
         first={listItem.index === 0}
         style={{ paddingRight: 0 }}
+        testID={category.value}
       >
         <View
           style={{

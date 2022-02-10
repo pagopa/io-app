@@ -19,6 +19,14 @@ type DFNSLocales = Record<Locales, DateFnsLocale>;
 
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
 
+// return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970) without considering the timezone
+export const formatDateAsShortFormatUTC = (date: Date): string =>
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(
+        new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
+        I18n.t("global.dateFormats.shortFormat")
+      );
 // return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
 export const formatDateAsShortFormat = (date: Date): string =>
   isNaN(date.getTime())
@@ -153,12 +161,13 @@ export const isExpired = (
 ): Either<Error, boolean> => {
   const maybeMonth = decodeCreditCardMonth(expireMonth);
   const maybeYear = decodeCreditCardYear(expireYear);
-
   return maybeYear
     .chain(year =>
       maybeMonth.map(month => {
         const now = new Date();
-        return year < now.getFullYear() || month < now.getMonth() + 1;
+        const nowYearMonth = new Date(now.getFullYear(), now.getMonth() + 1);
+        const cardExpirationDate = new Date(year, month);
+        return nowYearMonth > cardExpirationDate;
       })
     )
     .mapLeft(_ => new Error("invalid input"));

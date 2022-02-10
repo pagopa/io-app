@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "../../../../../../../i18n";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../store/reducers";
@@ -12,16 +13,36 @@ import {
   mvlMockOtherAttachment,
   mvlMockPdfAttachment
 } from "../../../../../types/__mock__/mvlMock";
+import { MvlPreferences } from "../../../../../store/reducers/preferences";
 import { MvlAttachments } from "../MvlAttachments";
+import { useDownloadAttachmentConfirmationBottomSheet } from "../DownloadAttachmentConfirmationBottomSheet";
+import * as platform from "../../../../../../../utils/platform";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
+jest.mock("../../../../../../../utils/platform");
+
+const mockBottomSheetPresent = jest.fn<
+  ReturnType<typeof useDownloadAttachmentConfirmationBottomSheet>,
+  Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
+>(_ => ({
+  present: jest.fn(),
+  dismiss: jest.fn()
+}));
+jest.mock("../DownloadAttachmentConfirmationBottomSheet", () => ({
+  useDownloadAttachmentConfirmationBottomSheet: (
+    ...args: Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
+  ) => mockBottomSheetPresent(...args)
 }));
 
 describe("MvlAttachments", () => {
   jest.useFakeTimers();
+
+  beforeEach(() => {
+    mockBottomSheetPresent.mockReset();
+    mockBottomSheetPresent.mockImplementation(_ => ({
+      present: jest.fn(),
+      dismiss: jest.fn()
+    }));
+  });
 
   describe("When there are no attachments", () => {
     it("Shouldn't be rendered", () => {
@@ -33,7 +54,7 @@ describe("MvlAttachments", () => {
     });
   });
 
-  describe("When there are at least one attachment", () => {
+  describe("When there is at least one attachment", () => {
     describe("And there are a pdf and another file as attachments", () => {
       it("Should render the title", () => {
         const res = renderComponent({
@@ -67,14 +88,67 @@ describe("MvlAttachments", () => {
         }
       });
     });
+
+    [
+      { showAlertForAttachments: true, isAndroid: false },
+      { showAlertForAttachments: true, isAndroid: true },
+      { showAlertForAttachments: false, isAndroid: false },
+      { showAlertForAttachments: false, isAndroid: true }
+    ].forEach(scenario => {
+      describe.only(`Given the scenario ${JSON.stringify(scenario)}`, () => {
+        const preferences = {
+          showAlertForAttachments: scenario.showAlertForAttachments
+        };
+        const props = { attachments: [mvlMockPdfAttachment] };
+
+        it("Should pass the correct options to `useDownloadAttachmentConfirmationBottomSheet`", () => {
+          (platform as any).test_setPlatform(
+            scenario.isAndroid ? "android" : "ios"
+          );
+          renderComponent(props, preferences);
+          expect(mockBottomSheetPresent).toHaveBeenNthCalledWith(
+            1,
+            mvlMockPdfAttachment,
+            { Authorization: "Bearer undefined" },
+            {
+              dontAskAgain: !scenario.showAlertForAttachments,
+              showToastOnSuccess: scenario.isAndroid
+            }
+          );
+        });
+
+        describe("when the user taps on the attachment", () => {
+          it("Should open the bottom sheet", async () => {
+            const mockPresent = jest.fn();
+            const mockDismiss = jest.fn();
+            mockBottomSheetPresent.mockImplementationOnce(_ => ({
+              present: mockPresent,
+              dismiss: mockDismiss
+            }));
+            const { getByText } = renderComponent(props, preferences);
+            const item = getByText(mvlMockPdfAttachment.displayName);
+            await fireEvent(item, "onPress");
+            expect(mockPresent).toHaveBeenCalled();
+            expect(mockDismiss).not.toHaveBeenCalled();
+          });
+        });
+      });
+    });
   });
 });
 
 const renderComponent = (
-  props: React.ComponentProps<typeof MvlAttachments>
+  props: React.ComponentProps<typeof MvlAttachments>,
+  mvlPreferences: MvlPreferences = { showAlertForAttachments: true }
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const store = createStore(appReducer, globalState as any);
+  const store = createStore(appReducer, {
+    ...globalState,
+    features: {
+      ...globalState.features,
+      mvl: { ...globalState.features.mvl, preferences: mvlPreferences }
+    }
+  } as any);
   return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <MvlAttachments {...props} />,
     MVL_ROUTES.DETAILS,

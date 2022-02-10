@@ -135,7 +135,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {isReady(props.onlineMerchants) && isReady(props.offlineMerchants) ? (
+        {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
           <>
             <View style={[IOStyles.horizontalContentPadding]}>
               <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
@@ -145,7 +145,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
                   iconPosition={"right"}
                   inputProps={{
                     value: searchValue,
-                    autoFocus: true,
+                    autoFocus: false,
                     onChangeText: setSearchValue,
                     placeholder: I18n.t("global.buttons.search")
                   }}
@@ -153,6 +153,11 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
               </Item>
             </View>
             <CgnMerchantsListView
+              refreshing={
+                isLoading(props.onlineMerchants) ||
+                isLoading(props.offlineMerchants)
+              }
+              onRefresh={initLoadingLists}
               merchantList={merchantList}
               onItemPress={onItemPress}
             />

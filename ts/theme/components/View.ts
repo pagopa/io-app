@@ -1,6 +1,5 @@
 import * as ReactNative from "react-native";
 import { Theme } from "../types";
-import variables from "../variables";
 import customVariables from "../variables";
 
 declare module "native-base" {
@@ -46,36 +45,36 @@ export default (): Theme => ({
       height: customVariables.spacerSmallHeight
     },
     ".large": {
-      height: variables.spacerLargeHeight
+      height: customVariables.spacerLargeHeight
     },
     ".extrasmall": {
-      height: variables.spacerExtrasmallHeight
+      height: customVariables.spacerExtrasmallHeight
     },
 
     ".extralarge": {
-      height: variables.spacerExtralargeHeight
+      height: customVariables.spacerExtralargeHeight
     },
 
-    height: variables.spacerHeight
+    height: customVariables.spacerHeight
   },
 
   // horizontal spacer
   ".hspacer": {
     ".small": {
-      width: variables.spacerSmallHeight
+      width: customVariables.spacerSmallHeight
     },
     ".large": {
-      width: variables.spacerLargeWidth
+      width: customVariables.spacerLargeWidth
     },
     ".extralarge": {
-      width: variables.spacerExtralargeWidth
+      width: customVariables.spacerExtralargeWidth
     },
-    width: variables.spacerWidth
+    width: customVariables.spacerWidth
   },
 
   ".modal": {
     flex: 1,
-    backgroundColor: variables.contentBackground
+    backgroundColor: customVariables.contentBackground
   },
 
   ".padded": {
@@ -83,25 +82,25 @@ export default (): Theme => ({
   },
 
   ".footer": {
-    backgroundColor: variables.footerBackground,
-    paddingBottom: variables.footerPaddingBottom,
-    paddingLeft: variables.footerPaddingLeft,
-    paddingRight: variables.footerPaddingRight,
-    paddingTop: variables.footerPaddingTop,
+    backgroundColor: customVariables.footerBackground,
+    paddingBottom: customVariables.footerPaddingBottom,
+    paddingLeft: customVariables.footerPaddingLeft,
+    paddingRight: customVariables.footerPaddingRight,
+    paddingTop: customVariables.footerPaddingTop,
     // iOS shadow
-    shadowColor: variables.footerShadowColor,
+    shadowColor: customVariables.footerShadowColor,
     shadowOffset: {
-      width: variables.footerShadowOffsetWidth,
-      height: variables.footerShadowOffsetHeight
+      width: customVariables.footerShadowOffsetWidth,
+      height: customVariables.footerShadowOffsetHeight
     },
-    shadowOpacity: variables.footerShadowOpacity,
-    shadowRadius: variables.footerShadowRadius,
+    shadowOpacity: customVariables.footerShadowOpacity,
+    shadowRadius: customVariables.footerShadowRadius,
     // Android shadow
-    elevation: variables.footerElevation
+    elevation: customVariables.footerElevation
   },
   ".content": {
-    padding: variables.contentPadding,
-    backgroundColor: variables.contentBackground,
+    padding: customVariables.contentPadding,
+    backgroundColor: customVariables.contentBackground,
     flex: 1
   },
   ".centerJustified": {

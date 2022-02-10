@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
-import { paypalOnboardingOutcomeCodeSelector } from "../store/reducers/outcomeCode";
+import { some } from "fp-ts/lib/Option";
 import WorkunitGenericFailure from "../../../../../components/error/WorkunitGenericFailure";
 import OutcomeCodeMessageComponent from "../../../../../components/wallet/OutcomeCodeMessageComponent";
 import { extractOutcomeCode } from "../../../../../store/reducers/wallet/outcomeCode";
@@ -10,6 +10,7 @@ import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { paypalOnboardingOutcomeCodeSelector } from "../store/reducers/onOboardingCompleted";
 import PayPalOnboardingCompletedSuccessComponent from "./PayPalOnboardingCompletedSuccessComponent";
 
 /**
@@ -34,10 +35,10 @@ const PayPalOnboardingCheckoutCompletedScreen = () =>
     }, [loadWallets]);
 
     // this should not happen (we can say nothing about the error)
-    if (paypalOutcomeCode.isNone()) {
+    if (paypalOutcomeCode === undefined) {
       return <WorkunitGenericFailure />;
     }
-    const outcomeCode = extractOutcomeCode(paypalOutcomeCode);
+    const outcomeCode = extractOutcomeCode(some(paypalOutcomeCode));
     // it should not never happen (the outcome code is not recognized as valid)
     if (outcomeCode.isNone()) {
       return <WorkunitGenericFailure />;

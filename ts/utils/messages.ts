@@ -33,7 +33,6 @@ import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
-import { getError } from "./errors";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -51,7 +50,7 @@ export function messageNeedsDueDateCTA(
   return message.content.due_date !== undefined;
 }
 
-export function messageNeedsPaymentCTA(
+export function hasMessagePaymentData(
   message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return message.content.payment_data !== undefined;
@@ -63,7 +62,7 @@ export function messageNeedsCTABar(
   return (
     message.content.eu_covid_cert !== undefined || // eucovid data
     messageNeedsDueDateCTA(message) ||
-    messageNeedsPaymentCTA(message) ||
+    hasMessagePaymentData(message) ||
     getCTA(message).isSome()
   );
 }
@@ -231,7 +230,6 @@ const extractCTA = (
         return FM<MessageCTA>(m).attributes;
       } catch (e) {
         void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
-          reason: getError(e).message,
           serviceId
         });
         return null;

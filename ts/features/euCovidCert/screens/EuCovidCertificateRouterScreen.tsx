@@ -61,12 +61,25 @@ const routeSuccessEuCovidResponse = (
 ): React.ReactElement => {
   switch (certificate.kind) {
     case "valid":
-      return <EuCovidCertValidScreen validCertificate={certificate} />;
+      return (
+        <EuCovidCertValidScreen
+          validCertificate={certificate}
+          headerData={certificate.headerData}
+        />
+      );
     case "revoked":
-      return <EuCovidCertRevokedScreen revokeInfo={certificate.markdownInfo} />;
+      return (
+        <EuCovidCertRevokedScreen
+          revokeInfo={certificate.markdownInfo}
+          headerData={certificate.headerData}
+        />
+      );
     case "expired":
       return (
-        <EuCovidCertExpiredScreen expiredInfo={certificate.markdownInfo} />
+        <EuCovidCertExpiredScreen
+          expiredInfo={certificate.markdownInfo}
+          headerData={certificate.headerData}
+        />
       );
   }
 };
@@ -138,7 +151,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCertificate: (authCode: EUCovidCertificateAuthCode) =>
     dispatch(euCovidCertificateGet.request(authCode)),
   setMessageRead: (messageId: string) =>
-    dispatch(setMessageReadState(messageId, true))
+    dispatch(setMessageReadState(messageId, true, "unknown"))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

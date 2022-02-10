@@ -197,13 +197,21 @@ export const baseRawBackendStatus: BackendStatus = {
   config: {
     bpd: {
       enroll_bpd_after_add_payment_method: false,
-      program_active: true
+      program_active: true,
+      opt_in_payment_methods: false
     },
     bpd_ranking: true,
     bpd_ranking_v2: true,
     cgn_merchants_v2: false,
     assistanceTool: {
       tool: ToolEnum.none
+    },
+    paypal: {
+      enabled: false
+    },
+    cgn: {
+      enabled: true,
+      merchants_v2: false
     }
   }
 };
@@ -217,13 +225,21 @@ export const baseBackendState: BackendStatusState = {
 export const baseBackendConfig: Config = {
   bpd: {
     enroll_bpd_after_add_payment_method: false,
-    program_active: true
+    program_active: true,
+    opt_in_payment_methods: false
   },
   bpd_ranking: true,
   bpd_ranking_v2: true,
   cgn_merchants_v2: true,
   assistanceTool: {
     tool: ToolEnum.none
+  },
+  paypal: {
+    enabled: false
+  },
+  cgn: {
+    enabled: true,
+    merchants_v2: false
   }
 };
 

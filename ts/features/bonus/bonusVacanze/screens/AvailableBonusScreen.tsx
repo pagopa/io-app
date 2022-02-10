@@ -20,17 +20,19 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { bpdEnabled, cgnEnabled } from "../../../../config";
+import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
-import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
+import {
+  bpdRemoteConfigSelector,
+  isCGNEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { showToast } from "../../../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import { actionWithAlert } from "../components/alert/ActionWithAlert";
@@ -116,7 +118,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       handlersMap.set(ID_BPD_TYPE, _ => bpdHandler());
     }
 
-    if (cgnEnabled) {
+    if (this.props.isCgnEnabled) {
       handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
     }
 
@@ -180,12 +182,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     );
   };
 
-  public componentDidMount() {
-    // since this is the first screen of the Bonus Navigation Stack, avoid to put
-    // logic inside this method because this screen will be mounted as soon the stack is created
-    setStatusBarColorAndBackground("dark-content", variables.colorWhite);
-  }
-
   public render() {
     const { availableBonusesList, isError } = this.props;
     const cancelButtonProps = {
@@ -241,7 +237,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isLoading: isAvailableBonusLoadingSelector(state),
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state)
+  bpdConfig: bpdRemoteConfigSelector(state),
+  isCgnEnabled: isCGNEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

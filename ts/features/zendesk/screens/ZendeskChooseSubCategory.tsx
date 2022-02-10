@@ -28,6 +28,7 @@ import {
 } from "../store/actions";
 import { getFullLocale } from "../../../utils/locale";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
+import { mixpanelTrack } from "../../../mixpanel";
 
 /**
  * this screen shows the sub-categories for which the user can ask support with the assistance
@@ -68,10 +69,12 @@ const ZendeskChooseSubCategory = () => {
           // Set sub-category as custom field
           addTicketCustomField(subCategoriesId, subCategory.value);
           openSupportTicket();
+          void mixpanelTrack("ZENDESK_OPEN_TICKET");
           zendeskWorkunitComplete();
         }}
         first={listItem.index === 0}
         style={{ paddingRight: 0 }}
+        testID={subCategory.value}
       >
         <View
           style={{

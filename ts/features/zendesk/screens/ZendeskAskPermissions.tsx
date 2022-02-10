@@ -44,11 +44,21 @@ import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   addTicketCustomField,
+  addTicketTag,
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
-  zendeskidentityProviderId
+  zendeskidentityProviderId,
+  zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
+import { mixpanelTrack } from "../../../mixpanel";
+import { appVersionHistorySelector } from "../../../store/reducers/installation";
+
+/**
+ * Transform an array of string into a Zendesk
+ * value to display.
+ */
+const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
 
 /**
  * id is optional since some items should recognized since they can be removed from the whole list
@@ -60,6 +70,7 @@ type Item = {
   title: string;
   value?: string;
   zendeskId?: string;
+  testId: string;
 };
 
 type ItemProps = {
@@ -78,68 +89,79 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     id: "profileNameSurname",
     icon: <NameSurnameIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.nameSurname"),
-    value: props.nameSurname
+    value: props.nameSurname,
+    testId: "profileNameSurname"
   },
   {
     id: "profileFiscalCode",
     icon: <FiscalCodeIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
-    value: props.fiscalCode
+    value: props.fiscalCode,
+    testId: "profileFiscalCode"
   },
   {
     id: "profileEmail",
     icon: <EmailIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.emailAddress"),
-    value: props.email
+    value: props.email,
+    testId: "profileEmail"
   },
   {
     id: "galleryProminentDisclosure",
     icon: <GalleryIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.prominentDisclosure"),
-    value: I18n.t("support.askPermissions.prominentDisclosureData")
+    value: I18n.t("support.askPermissions.prominentDisclosureData"),
+    testId: "galleryProminentDisclosure"
   },
   {
     id: "paymentIssues",
     icon: <StockIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.stock"),
-    value: I18n.t("support.askPermissions.stockValue")
+    value: I18n.t("support.askPermissions.stockValue"),
+    testId: "paymentIssues"
   },
   {
     icon: <DeviceIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.deviceAndOS"),
     value: props.deviceDescription,
-    zendeskId: zendeskDeviceAndOSId
+    zendeskId: zendeskDeviceAndOSId,
+    testId: "deviceAndOS"
   },
   {
     icon: <BatteryIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.devicePerformance"),
-    value: I18n.t("support.askPermissions.devicePerformanceData")
+    value: I18n.t("support.askPermissions.devicePerformanceData"),
+    testId: "devicePerformance"
   },
   {
     icon: <WebSiteIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.ipAddress")
+    title: I18n.t("support.askPermissions.ipAddress"),
+    testId: "ipAddress"
   },
   {
     icon: <InfoIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.currentAppVersion"),
     value: props.currentVersion,
-    zendeskId: zendeskCurrentAppVersionId
+    zendeskId: zendeskCurrentAppVersionId,
+    testId: "appVersion"
   },
   {
     icon: <LoginIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.identityProvider"),
     value: props.identityProvider,
-    zendeskId: zendeskidentityProviderId
+    zendeskId: zendeskidentityProviderId,
+    testId: "identityProvider"
   },
   {
     icon: <HistoryIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.navigationData"),
-    value: I18n.t("support.askPermissions.navigationDataValue")
+    value: I18n.t("support.askPermissions.navigationDataValue"),
+    testId: "navigationData"
   }
 ];
 
 const ItemComponent = (props: Item) => (
-  <ListItem>
+  <ListItem testID={props.testId}>
     <View
       style={{
         flex: 1,
@@ -171,7 +193,6 @@ const ZendeskAskPermissions = (props: Props) => {
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
-
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = useIOSelector(idpSelector)
@@ -180,6 +201,8 @@ const ZendeskAskPermissions = (props: Props) => {
   const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
+  const versionsHistory = useIOSelector(appVersionHistorySelector);
+
   const itemsProps: ItemProps = {
     fiscalCode,
     nameSurname,
@@ -212,6 +235,7 @@ const ZendeskAskPermissions = (props: Props) => {
 
   const handleOnCancel = () => {
     openWebUrl(assistanceWebFormLink);
+    void mixpanelTrack("ZENDESK_DENY_PERMISSIONS");
     workUnitCompleted();
   };
 
@@ -223,6 +247,15 @@ const ZendeskAskPermissions = (props: Props) => {
       }
     });
 
+    // Tag the ticket with the current app version
+    addTicketTag(itemsProps.currentVersion);
+
+    // Add the versions history to the relative Zendesk field
+    addTicketCustomField(
+      zendeskVersionsHistoryId,
+      arrayToZendeskValue(versionsHistory)
+    );
+
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
       Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
@@ -232,6 +265,7 @@ const ZendeskAskPermissions = (props: Props) => {
     // if is not possible to get the config, if the config has any category or if is an assistanceForPayment request open directly a ticket.
     if (canSkipCategoryChoice()) {
       openSupportTicket();
+      void mixpanelTrack("ZENDESK_OPEN_TICKET");
       workUnitCompleted();
     } else {
       navigation.navigate(navigateToZendeskChooseCategory());

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import { index } from "fp-ts/lib/Array";
+import { lookup } from "fp-ts/lib/Array";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     paddingVertical: 16
   }
 });
-const renderCategoryElement = (category: ProductCategory) =>
+
+export const renderCategoryElement = (category: ProductCategory) =>
   getCategorySpecs(category).fold(undefined, c => (
     <View style={[styles.row]}>
       {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
@@ -43,7 +44,7 @@ const renderCategoryElement = (category: ProductCategory) =>
 const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
   <View style={[styles.categories, IOStyles.flex]}>
     {categories.length > 2
-      ? index(0, [...categories]).fold(undefined, c => (
+      ? lookup(0, [...categories]).fold(undefined, c => (
           <>
             {renderCategoryElement(c)}
             <View
@@ -62,8 +63,8 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
             </H5>
           </>
         ))
-      : categories.map(category => (
-          <>
+      : categories.map((category, i) => (
+          <View key={i} style={[IOStyles.row, { paddingBottom: 2 }]}>
             {renderCategoryElement(category)}
             {categories.indexOf(category) !== categories.length - 1 && (
               <>
@@ -78,7 +79,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
                 <View hspacer small />
               </>
             )}
-          </>
+          </View>
         ))}
   </View>
 );

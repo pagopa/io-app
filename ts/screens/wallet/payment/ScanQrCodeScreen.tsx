@@ -16,7 +16,6 @@ import {
   StyleSheet
 } from "react-native";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
@@ -31,7 +30,6 @@ import BaseScreenComponent, {
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-
 import I18n from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
 import {
@@ -41,7 +39,6 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
@@ -49,6 +46,7 @@ import { AsyncAlert } from "../../../utils/asyncAlert";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { isAndroid } from "../../../utils/platform";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -67,12 +65,12 @@ const cameraTextOverlapping = 20;
 
 const styles = StyleSheet.create({
   padded: {
-    paddingRight: variables.contentPadding,
-    paddingLeft: variables.contentPadding
+    paddingRight: customVariables.contentPadding,
+    paddingLeft: customVariables.contentPadding
   },
 
   white: {
-    backgroundColor: variables.brandPrimaryInverted
+    backgroundColor: customVariables.brandPrimaryInverted
   },
 
   bottomText: {
@@ -80,7 +78,7 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    backgroundColor: variables.colorWhite,
+    backgroundColor: customVariables.colorWhite,
     marginTop: -cameraTextOverlapping,
     zIndex: 1
   },
@@ -97,8 +95,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     marginTop: -cameraTextOverlapping,
-    width: screenWidth - variables.contentPadding * 2,
-    backgroundColor: variables.colorWhite,
+    width: screenWidth - customVariables.contentPadding * 2,
+    backgroundColor: customVariables.colorWhite,
     zIndex: 999
   },
 
@@ -110,7 +108,7 @@ const styles = StyleSheet.create({
   },
 
   notAuthorizedContainer: {
-    padding: variables.contentPadding,
+    padding: customVariables.contentPadding,
     flex: 1,
     alignItems: "center",
     alignSelf: "stretch",
@@ -302,6 +300,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           onWillBlur={this.handleWillBlur}
         />
         <SafeAreaView style={IOStyles.flex}>
+          <FocusAwareStatusBar
+            barStyle={"dark-content"}
+            backgroundColor={customVariables.colorWhite}
+          />
           <ScrollView bounces={false}>
             {this.state.isFocused && this.state.permissionRationaleDisplayed && (
               <QRCodeScanner

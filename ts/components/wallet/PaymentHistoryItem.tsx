@@ -1,7 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { Platform } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import I18n from "../../i18n";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";

@@ -11,7 +11,6 @@ import {
   UIManager
 } from "react-native";
 import I18n from "../../../i18n";
-import themeVariables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { isAndroid } from "../../../utils/platform";
 import IconFont from "../../ui/IconFont";
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
   },
   internalHeader: {
     flex: 1,
-    paddingRight: themeVariables.contentPadding
+    paddingRight: customVariables.contentPadding
   }
 });
 

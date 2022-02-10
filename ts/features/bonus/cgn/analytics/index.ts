@@ -1,16 +1,15 @@
 import { getType } from "typesafe-actions";
-import { cgnEnabled } from "../../../../config";
 import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
 import {
-  cgnActivationComplete,
-  cgnActivationStart,
-  cgnActivationCancel,
   cgnActivationBack,
+  cgnActivationCancel,
+  cgnActivationComplete,
+  cgnActivationFailure,
+  cgnActivationStart,
   cgnActivationStatus,
-  cgnRequestActivation,
-  cgnActivationFailure
+  cgnRequestActivation
 } from "../store/actions/activation";
 import { cgnDetails } from "../store/actions/details";
 import {
@@ -20,6 +19,13 @@ import {
 } from "../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { cgnGenerateOtp } from "../store/actions/otp";
+import {
+  cgnOfflineMerchants,
+  cgnOnlineMerchants,
+  cgnSelectedMerchant
+} from "../store/actions/merchants";
+import { cgnCodeFromBucket } from "../store/actions/bucket";
+import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 
 const trackCgnAction =
   (mp: NonNullable<typeof mixpanel>) =>
@@ -33,13 +39,25 @@ const trackCgnAction =
       case getType(cgnActivationBack):
       case getType(cgnDetails.request):
       case getType(cgnDetails.success):
+      case getType(cgnOfflineMerchants.request): // Merchants Related Actions
+      case getType(cgnOnlineMerchants.request):
+      case getType(cgnSelectedMerchant.request):
+      case getType(cgnSelectedMerchant.success):
       case getType(cgnGenerateOtp.request): // OTP Related Actions
       case getType(cgnGenerateOtp.success):
+      case getType(cgnCodeFromBucket.request): // Bucket Related Actions
       case getType(cgnEycaActivation.request): // EYCA Related Actions
       case getType(cgnEycaActivationStatusRequest):
       case getType(cgnEycaActivationCancel):
       case getType(cgnEycaStatus.request):
+      case getType(cgnUnsubscribe.request):
+      case getType(cgnUnsubscribe.success):
         return mp.track(action.type);
+      case getType(cgnOfflineMerchants.success):
+      case getType(cgnOnlineMerchants.success):
+        return mp.track(action.type, { foundMerchants: action.payload.length });
+      case getType(cgnCodeFromBucket.success):
+        return mp.track(action.type, { status: action.payload.kind });
       case getType(cgnEycaStatus.success):
       case getType(cgnActivationStatus.success):
         return mp.track(action.type, { status: action.payload.status });
@@ -51,6 +69,11 @@ const trackCgnAction =
       case getType(cgnGenerateOtp.failure):
       case getType(cgnEycaActivation.failure):
       case getType(cgnEycaStatus.failure):
+      case getType(cgnOfflineMerchants.failure):
+      case getType(cgnOnlineMerchants.failure):
+      case getType(cgnSelectedMerchant.failure):
+      case getType(cgnCodeFromBucket.failure):
+      case getType(cgnUnsubscribe.failure):
         return mp.track(action.type, {
           reason: getNetworkErrorMessage(action.payload)
         });
@@ -62,6 +85,4 @@ const trackCgnAction =
     return Promise.resolve();
   };
 
-const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>
-  Promise.resolve();
-export default cgnEnabled ? trackCgnAction : emptyTracking;
+export default trackCgnAction;

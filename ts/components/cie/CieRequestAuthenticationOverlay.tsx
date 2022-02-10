@@ -34,8 +34,8 @@ const CIE_IDP_ID = "xx_servizicie";
  */
 const injectJs = `
   seconds = 0;
-  if(apriIosUL !== undefined){
-  apriIosUL();
+  if(typeof apriIosUL !== 'undefined' && apriIosUL !== null){
+    apriIosUL();
   }
 `;
 
@@ -47,7 +47,8 @@ type Props = {
 type InnerAction =
   | { kind: "foundAuthUrl"; authUrl: string }
   | { kind: "setError" }
-  | { kind: "retry" };
+  | { kind: "retry" }
+  | { kind: "reset" };
 
 type State = {
   authUrl: string | undefined;
@@ -63,6 +64,8 @@ const initState: State = {
 
 const reducer = (state: State, action: InnerAction): State => {
   switch (action.kind) {
+    case "reset":
+      return initState;
     case "foundAuthUrl":
       return { ...state, authUrl: action.authUrl };
     case "setError":
@@ -80,6 +83,8 @@ const CieWebView = (props: Props) => {
   useEffect(() => {
     if (authUrl !== undefined) {
       onSuccess(authUrl);
+      // reset the state when authUrl has been found
+      dispatch({ kind: "reset" });
     }
   }, [authUrl, onSuccess]);
 

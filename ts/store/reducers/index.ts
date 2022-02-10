@@ -5,8 +5,9 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
+import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
-import { featuresReducer } from "../../features/common/store/reducers";
+import { featuresPersistor } from "../../features/common/store/reducers";
 import {
   logoutFailure,
   logoutSuccess,
@@ -20,7 +21,6 @@ import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as autenticationInitialState
 } from "./authentication";
-import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
 import backoffErrorReducer from "./backoffError";
 import cieReducer from "./cie";
@@ -92,14 +92,13 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   backoffError: backoffErrorReducer,
   deepLink: deepLinkReducer,
   wallet: walletReducer,
-  backendInfo: backendInfoReducer,
+  versionInfo: versionInfoReducer,
   backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
   instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,
-  features: featuresReducer,
   internalRouteNavigation: internalRouteNavigationReducer,
   assistanceTools: assistanceToolsReducer,
   //
@@ -118,6 +117,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
     identificationPersistConfig,
     identificationReducer
   ),
+  features: featuresPersistor,
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
@@ -194,6 +194,10 @@ export function createRootReducer(
               // notifications must be kept
               notifications: {
                 ...state.notifications
+              },
+              // payments must be kept
+              payments: {
+                ...state.payments
               }
             } as GlobalState)
           : state;

@@ -61,7 +61,7 @@ const migrations: MigrationManifest = {
     } as PersistedEntitiesState)
 };
 
-// A custom configuration to avoid to persist messages section
+// A custom configuration to avoid persisting messages section
 export const entitiesPersistConfig: PersistConfig = {
   key: "entities",
   storage: AsyncStorage,

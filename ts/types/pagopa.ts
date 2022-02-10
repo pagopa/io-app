@@ -25,8 +25,6 @@ import { WalletListResponse as WalletListResponsePagoPA } from "../../definition
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
-import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-
 import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import {
@@ -35,7 +33,10 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
-import { TypeEnum as CreditCardTypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
+import {
+  TypeEnum as CreditCardTypeEnum,
+  CardInfo
+} from "../../definitions/pagopa/walletv2/CardInfo";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
 import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 
@@ -52,6 +53,7 @@ export const CreditCardType = t.union([
   t.literal("DINERS"),
   t.literal("DISCOVER"),
   t.literal("JCB"),
+  t.literal("JCB15"),
   t.literal("POSTEPAY"),
   t.literal("UNKNOWN")
 ]);
@@ -516,3 +518,19 @@ export const PatchedWalletV2Response = t.intersection(
 );
 
 export type PatchedWalletV2Response = t.TypeOf<typeof PatchedWalletV2Response>;
+
+/**
+ * The patched version of the DeleteWalletResponse is needed because remainingWallets is not of type
+ * PatchedWalletV2 but instead it's type is WalletV2.
+ */
+export const PatchedDeleteWalletResponse = t.interface({
+  data: t.interface({
+    deletedWallets: t.number,
+    notDeletedWallets: t.number,
+    remainingWallets: t.readonlyArray(PatchedWalletV2)
+  })
+});
+
+export type PatchedDeleteWalletResponse = t.TypeOf<
+  typeof PatchedDeleteWalletResponse
+>;

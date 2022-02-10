@@ -33,16 +33,29 @@ const styles = StyleSheet.create({
   verticalPad: {
     paddingVertical: customVariables.spacerHeight
   },
-  spaced: {
+  header: {
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center"
+  },
+  headerMain: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%"
+  },
+  headerSub: {
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "auto"
   },
   badgeContainer: {
     flex: 0,
     paddingRight: 8,
     alignSelf: "flex-start",
-    paddingTop: 6.5
+    paddingTop: 6.5,
+    flexShrink: 0,
+    flexGrow: 0,
+    flexBasis: "auto"
   },
   viewStyle: {
     flexDirection: "row"
@@ -52,10 +65,12 @@ const styles = StyleSheet.create({
     marginBottom: -4
   },
   icon: {
-    width: 90,
     alignItems: "flex-start",
     justifyContent: "flex-end",
-    flexDirection: "row"
+    flexDirection: "row",
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "auto"
   },
   text3Line: {
     flex: 1,
@@ -64,9 +79,16 @@ const styles = StyleSheet.create({
   text3Container: {
     flex: 1,
     flexDirection: "row",
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%",
     minHeight: 24
   },
-  text3SubContainer: { width: `95%` },
+  text3SubContainer: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%"
+  },
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
@@ -117,11 +139,16 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
         style={styles.verticalPad}
         {...this.props}
       >
-        <View style={styles.spaced}>
-          <H5>{this.props.text11}</H5>
-          <Text bold={true} style={styles.text12}>
-            {this.props.text12}
-          </Text>
+        <View style={styles.header}>
+          <View style={styles.headerMain}>
+            <H5>{this.props.text11}</H5>
+          </View>
+
+          <View style={styles.headerSub}>
+            <Text bold={true} style={styles.text12}>
+              {this.props.text12}
+            </Text>
+          </View>
         </View>
 
         <View style={styles.viewStyle}>

@@ -55,6 +55,9 @@ import { deletePin } from "../utils/keychain";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { mixpanelTrack } from "../mixpanel";
 import { readablePrivacyReport } from "../utils/reporters";
+import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
+import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
+import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -344,6 +347,21 @@ function* handleLoadBonusBeforeRemoveAccount() {
     // Load the bonus data and no wait because if there are some bonus
     // they will be loaded individually
     yield put(loadAllBonusActivations.request());
+  }
+
+  const cgnActive: ReturnType<typeof cgnDetailSelector> = yield select(
+    cgnDetailSelector
+  );
+
+  const isCgnEnabled: ReturnType<typeof isCGNEnabledSelector> = yield select(
+    isCGNEnabledSelector
+  );
+
+  if (pot.isNone(cgnActive) && isCgnEnabled) {
+    // Load the cgn data and wait for a response
+    yield put(cgnDetails.request());
+
+    yield take([cgnDetails.success, cgnDetails.failure]);
   }
 }
 

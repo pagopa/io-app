@@ -66,18 +66,12 @@ export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
-// CGN Feature Flag
-export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
-
 // EU Covid Certificate feature flag
 export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";
 
 // SiciliaVola Feature Flag
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
-
-// Paypal configuration
-export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
 
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
@@ -88,6 +82,13 @@ export const usePaginatedMessages: boolean =
 
 // MVL messages
 export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
+
+// CGN new merchants features
+export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
+
+// Opt-in payments method
+export const bpdOptInPaymentMethodsEnabled =
+  Config.BPD_OPT_IN_PAYMENT_METHODS === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
@@ -123,9 +124,6 @@ export const totMessageFetchWorkers = t.Integer.decode(
 export const totServiceFetchWorkers = t.Integer.decode(
   parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_SERVICE_FETCH_WORKERS);
-
-export const shouldDisplayVersionInfoOverlay =
-  Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
 
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";

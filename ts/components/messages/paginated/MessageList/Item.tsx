@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge, Text, View } from "native-base";
-
+import * as O from "fp-ts/lib/Option";
 import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
@@ -32,21 +32,30 @@ const styles = StyleSheet.create({
   },
   titleRow: {
     flex: 1,
-    justifyContent: "space-between",
     flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 16
+    alignItems: "center"
+  },
+  organizationNameWrapper: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%"
   },
   badgeContainer: {
     flex: 0,
     paddingRight: 8,
     alignSelf: "flex-start",
-    paddingTop: 6.5
+    paddingTop: 6.5,
+    flexShrink: 0,
+    flexGrow: 0,
+    flexBasis: "auto"
   },
   serviceName: {
     flexDirection: "row"
   },
   titleIconAndDate: {
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "auto",
     flexDirection: "row"
   },
   dateTime: {
@@ -57,10 +66,12 @@ const styles = StyleSheet.create({
     marginLeft: 7
   },
   icon: {
-    width: 98,
     alignItems: "flex-start",
     justifyContent: "flex-end",
-    flexDirection: "row"
+    flexDirection: "row",
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "auto"
   },
   text3Line: {
     flex: 1,
@@ -69,9 +80,16 @@ const styles = StyleSheet.create({
   text3Container: {
     flex: 1,
     flexDirection: "row",
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%",
     minHeight: 24
   },
-  text3SubContainer: { width: `95%` },
+  text3SubContainer: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%"
+  },
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
@@ -92,7 +110,16 @@ const styles = StyleSheet.create({
   }
 });
 
-function tagOrIcon({
+/**
+ * The data structure representing a badge.
+ */
+type ItemBadge = "paid" | "archived" | "qrcode";
+
+/**
+ * Given various item states, return the corresponding
+ * visible badge.
+ */
+const getMaybeItemBadge = ({
   paid,
   archived,
   qrCode
@@ -100,32 +127,69 @@ function tagOrIcon({
   paid: boolean;
   archived: boolean;
   qrCode: boolean;
-}) {
+}): O.Option<ItemBadge> => {
   if (paid) {
-    return (
-      <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
-        <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
-      </Badge>
-    );
+    return O.some("paid");
   }
+
   if (archived) {
-    return (
-      <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
-        <H5 color="bluegreyDark">
-          {I18n.t("messages.accessibility.message.archived")}
-        </H5>
-      </Badge>
-    );
+    return O.some("archived");
   }
+
   if (qrCode) {
-    return (
-      <View style={styles.qrContainer}>
-        <IconFont name={"io-qr"} color={IOColors.blue} />
-      </View>
-    );
+    return O.some("qrcode");
   }
-  return null;
-}
+
+  return O.none;
+};
+
+/**
+ * Given an `ItemBadge` generates the corresponding
+ * React node to display.
+ */
+const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
+  switch (itemBadge) {
+    case "paid":
+      return (
+        <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
+          <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
+        </Badge>
+      );
+
+    case "archived":
+      return (
+        <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
+          <H5 color="bluegreyDark">
+            {I18n.t("messages.accessibility.message.archived")}
+          </H5>
+        </Badge>
+      );
+
+    case "qrcode":
+      return (
+        <View style={styles.qrContainer}>
+          <IconFont name={"io-qr"} color={IOColors.blue} />
+        </View>
+      );
+  }
+};
+
+/**
+ * Given an `ItemBadge` generates the corresponding
+ * accessibility state to assign.
+ */
+const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
+  switch (itemBadge) {
+    case "paid":
+      return I18n.t("messages.badge.paid");
+
+    case "archived":
+      return I18n.t("messages.accessibility.message.archived");
+
+    default:
+      return "";
+  }
+};
 
 function getTopIcon(category: MessageCategory) {
   switch (category.tag) {
@@ -156,7 +220,11 @@ const UNKNOWN_SERVICE_DATA = {
   serviceName: I18n.t("messages.errorLoading.serviceInfo")
 };
 
-const announceMessage = (message: UIMessage, isRead: boolean): string =>
+const announceMessage = (
+  message: UIMessage,
+  isRead: boolean,
+  maybeItemBadge: O.Option<ItemBadge>
+): string =>
   I18n.t("messages.accessibility.message.description", {
     newMessage: isRead
       ? I18n.t("messages.accessibility.message.read")
@@ -164,7 +232,8 @@ const announceMessage = (message: UIMessage, isRead: boolean): string =>
     organizationName: message.organizationName,
     serviceName: message.serviceName,
     subject: message.title,
-    receivedAt: convertReceivedDateToAccessible(message.createdAt)
+    receivedAt: convertReceivedDateToAccessible(message.createdAt),
+    state: maybeItemBadge.map(itemBadgeToAccessibilityLabel).getOrElse("")
   });
 
 /**
@@ -194,6 +263,13 @@ const MessageListItem = ({
       ? "io-checkbox-on"
       : "io-checkbox-off"
     : "io-right";
+  const showQrCode = category?.tag === "EU_COVID_CERT";
+
+  const maybeItemBadge = getMaybeItemBadge({
+    paid: hasPaidBadge,
+    archived: isArchived,
+    qrCode: showQrCode
+  });
 
   return (
     <TouchableDefaultOpacity
@@ -201,10 +277,13 @@ const MessageListItem = ({
       onLongPress={onLongPress}
       style={styles.verticalPad}
       accessible={true}
-      accessibilityLabel={announceMessage(message, isRead)}
+      accessibilityLabel={announceMessage(message, isRead, maybeItemBadge)}
+      accessibilityRole="button"
     >
       <View style={styles.titleRow}>
-        <H5 numberOfLines={1}>{organizationName}</H5>
+        <View style={styles.organizationNameWrapper}>
+          <H5 numberOfLines={1}>{organizationName}</H5>
+        </View>
         <View style={styles.titleIconAndDate}>
           {getTopIcon(category)}
           <Text numberOfLines={1} style={styles.dateTime}>
@@ -231,11 +310,7 @@ const MessageListItem = ({
         </View>
 
         <View style={styles.icon}>
-          {tagOrIcon({
-            paid: hasPaidBadge,
-            archived: isArchived,
-            qrCode: category?.tag === "EU_COVID_CERT"
-          })}
+          {maybeItemBadge.map(itemBadgeToTagOrIcon).getOrElse(undefined)}
 
           <IconFont
             name={iconName}
