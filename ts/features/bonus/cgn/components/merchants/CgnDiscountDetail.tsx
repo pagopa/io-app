@@ -11,8 +11,12 @@ import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../utils/filters";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../components/core/typography/Label";
-import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import {
+  DiscountCodeType,
+  DiscountCodeTypeEnum
+} from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { openWebUrl } from "../../../../../utils/url";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 import CgnDiscountCodeComponent from "./discount/CgnDiscountCodeComponent";
 
@@ -125,6 +129,19 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
             discount.landingPageUrl as string,
             discount.landingPageReferrer as string
           );
+        }}
+        onPressWithGestureHandler={true}
+      >
+        <Label color={"white"}>
+          {I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
+        </Label>
+      </ButtonDefaultOpacity>
+    )}
+    {discount.discountUrl && merchantType !== DiscountCodeTypeEnum.landingpage && (
+      <ButtonDefaultOpacity
+        style={{ width: "100%" }}
+        onPress={() => {
+          openWebUrl(discount.discountUrl);
         }}
         onPressWithGestureHandler={true}
       >
