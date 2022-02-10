@@ -27,7 +27,7 @@ defaults_js: &defaults_js
 defaults_android: &defaults_android
   <<: *defaults
   docker:
-    - image: cimg/android:2022.1.1
+    - image: cimg/android:2022.01.1-node
   environment:
     TERM: "dumb"
     ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
@@ -477,9 +477,9 @@ workflows:
   build:
     jobs:
       - compile-typescript
-      - run-tests
-      - run-eslint
-      - run-prettier
+#      - run-tests
+#      - run-eslint
+#      - run-prettier
       - alpha-release-android:
           requires:
             - compile-typescript
