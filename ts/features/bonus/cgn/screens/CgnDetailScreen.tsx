@@ -22,13 +22,11 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { isLoading } from "../../bpd/model/RemoteValue";
-import CgnCardComponent from "../components/detail/CgnCardComponent";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
@@ -52,9 +50,7 @@ import {
 } from "../store/reducers/details";
 import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { isLoading } from "../../bpd/model/RemoteValue";
 import CGN_ROUTES from "../navigation/routes";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { canEycaCardBeShown } from "../utils/eyca";
 
 type Props = ReturnType<typeof mapStateToProps> &
