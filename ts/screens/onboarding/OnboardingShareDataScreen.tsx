@@ -18,7 +18,6 @@ import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { GlobalState } from "../../store/reducers/types";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
-import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { abortOnboarding } from "../../store/actions/onboarding";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
