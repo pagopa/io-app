@@ -14,7 +14,7 @@ import { NavigationEvents } from "react-navigation";
  */
 
 const FocusAwareStatusBar = (props: StatusBarProps) => {
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   return (
     <>
       <NavigationEvents
