@@ -1,6 +1,11 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet
+} from "react-native";
 import { View } from "native-base";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import LinearGradient from "react-native-linear-gradient";
@@ -134,16 +139,22 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
         <View spacer large />
-        <FlatList
-          style={IOStyles.flex}
-          data={categoriesToArray}
-          refreshing={isLoading(remoteCategories)}
-          onRefresh={loadCategories}
-          renderItem={renderCategoryElement}
-          numColumns={2}
-          keyExtractor={(item: ProductCategoryEnum | "All" | "Hidden") => item}
-          ListFooterComponent={<EdgeBorderComponent />}
-        />
+        {isLoading(remoteCategories) ? (
+          <ActivityIndicator animating={true} />
+        ) : (
+          <FlatList
+            style={IOStyles.flex}
+            data={categoriesToArray}
+            refreshing={isLoading(remoteCategories)}
+            onRefresh={loadCategories}
+            renderItem={renderCategoryElement}
+            numColumns={2}
+            keyExtractor={(item: ProductCategoryEnum | "All" | "Hidden") =>
+              item
+            }
+            ListFooterComponent={<EdgeBorderComponent />}
+          />
+        )}
       </View>
     </BaseScreenComponent>
   );
