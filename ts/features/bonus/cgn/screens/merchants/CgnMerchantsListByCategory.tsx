@@ -97,7 +97,7 @@ const CgnMerchantsListByCategory = () => {
 
   const onItemPress = (id: Merchant["id"]) => {
     navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
-      id
+      merchantID: id
     });
   };
 
