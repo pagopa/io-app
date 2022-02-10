@@ -15,12 +15,14 @@ type CaptureScreenshotEvents = {
 
 export type ScreenshotOptions = CaptureOptions & {
   filename: string;
+  album?: string;
 };
 
 export const screenshotOptions: ScreenshotOptions = {
   width: Dimensions.get("window").width,
   format: "png",
-  filename: I18n.t("features.euCovidCertificate.common.title")
+  filename: I18n.t("features.euCovidCertificate.common.title"),
+  album: "IO"
 };
 
 /**
@@ -38,7 +40,7 @@ export const captureScreenshot = <T>(
     .then(screenshotUri => {
       const imagePath = savePath(screenshotUri, options);
       void rename(screenshotUri, imagePath)
-        .then(imagePath => saveImageToGallery(imagePath).run())
+        .then(imagePath => saveImageToGallery(imagePath, options?.album).run())
         .then(maybeSaved => {
           maybeSaved.fold(
             () => onEvent?.onNoPermissions?.(),

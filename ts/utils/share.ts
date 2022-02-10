@@ -40,7 +40,10 @@ export const isShareEnabled = () =>
  * check if write external storage permission is granted, if yes try to save the given uri in the camera roll
  * @param uri
  */
-export const saveImageToGallery = (uri: string): TaskEither<Error, string> => {
+export const saveImageToGallery = (
+  uri: string,
+  album?: string
+): TaskEither<Error, string> => {
   const hasPermission = tryCatch(
     () =>
       requestIOAndroidPermission(
@@ -54,7 +57,7 @@ export const saveImageToGallery = (uri: string): TaskEither<Error, string> => {
     errorMsg => new Error(String(errorMsg))
   );
   const saveImage = tryCatch(
-    () => CameraRoll.save(uri, { type: "photo" }),
+    () => CameraRoll.save(uri, { type: "photo", album }),
     errorMsg => new Error(String(errorMsg))
   );
 
