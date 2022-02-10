@@ -105,7 +105,7 @@ jobs:
   run-tests:
     <<: *defaults_js
 
-    resource_class: large
+    resource_class: xlarge
 
     steps:
       - checkout
@@ -127,7 +127,7 @@ jobs:
       - store_test_results:
           path: ./tmp/reports/junit/
 
-    parallelism: 4
+    parallelism: 8
 
   # Runs ESlint checks on PR
   run-eslint:
