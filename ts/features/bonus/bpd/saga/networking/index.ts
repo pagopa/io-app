@@ -94,7 +94,7 @@ export function* putOptInStatusCitizenV2(
           yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
           return;
         } else {
-          // it should not never happen
+          // it should never happen
           bpdUpdateOptInStatusMethod.failure(
             new Error(`optInStatus is undefined`)
           );
