@@ -79,7 +79,7 @@ type BottomSheetReturnType = {
  * @param props
  */
 export const useBottomSheetMethodsToDelete = (
-  props: Omit<Props, "paymentMethods">
+  props: Pick<Props, "onDeletePress" | "onCancelPress">
 ): BottomSheetReturnType => {
   const paymentMethods = useSelector(getBPDMethodsSelector);
   const snapPoint = Math.min(
