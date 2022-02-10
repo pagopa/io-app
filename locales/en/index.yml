@@ -786,6 +786,16 @@ onboarding:
     confirmInvalid: The two pins do not match
     contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
+  pin:
+    headerTitle: Configura IO
+    title: Crea un codice di sblocco
+    subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
+    tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
+  confirmPin:
+    headerTitle: Configura IO
+    title: Ripeti di nuovo il codice
+    subTitle: In questo modo siamo sicuri che non hai commesso errori durante la digitazione.
+    tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app

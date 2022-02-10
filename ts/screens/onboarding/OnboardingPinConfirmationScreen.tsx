@@ -12,7 +12,6 @@ import { PinString } from "../../types/PinString";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { Label } from "../../components/core/typography/Label";
@@ -42,14 +41,13 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A screen that allows the user to set the unlock code.
+ * A screen that allows the user to confirm the unlock code.
  */
-const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
+const OnboardingPinConfirmationScreen: React.FC<Props> = ({ navigation }) => {
   const [pin, setPin] = React.useState<PinString | null>(null);
-  const onboardingAbortAlert = useOnboardingAbortAlert();
 
   const handleGoBack = () => {
-    onboardingAbortAlert.showAlert();
+    navigation.goBack();
   };
 
   const resetPin = () => setPin(null);
@@ -68,16 +66,16 @@ const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
       goBack={handleGoBack}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["onboarding_pin", "unlock"]}
-      headerTitle={I18n.t("onboarding.pin.headerTitle")}
+      headerTitle={I18n.t("onboarding.confirmPin.headerTitle")}
     >
       <SafeAreaView style={styles.flex}>
         <Content>
           <>
             <Text style={styles.header} bold={true} dark={true}>
-              {I18n.t("onboarding.pin.title")}
+              {I18n.t("onboarding.confirmPin.title")}
             </Text>
 
-            <Text dark={true}>{I18n.t("onboarding.pin.subTitle")}</Text>
+            <Text dark={true}>{I18n.t("onboarding.confirmPin.subTitle")}</Text>
           </>
 
           <View spacer large />
@@ -97,7 +95,7 @@ const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
           <>
             <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
               <Label color={"bluegrey"} weight={"Regular"}>
-                {I18n.t("onboarding.pin.tutorial")}
+                {I18n.t("onboarding.confirmPin.tutorial")}
               </Label>
             </InfoBox>
           </>
@@ -109,4 +107,4 @@ const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
   );
 };
 
-export default OnboardingPinScreen;
+export default OnboardingPinConfirmationScreen;
