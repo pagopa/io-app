@@ -6,7 +6,7 @@ import RNFS from "react-native-fs";
 import { saveImageToGallery } from "../../../utils/share";
 import I18n from "../../../i18n";
 
-type CaptureScreenShotEvents = {
+type CaptureScreenshotEvents = {
   onSuccess?: () => void; // invoked on success
   onError?: () => void; // invoked on error
   onEnd?: () => void; // always invoked onSuccess/onError
@@ -17,7 +17,7 @@ export type ScreenshotOptions = CaptureOptions & {
   filename: string;
 };
 
-export const screenShotOption: ScreenshotOptions = {
+export const screenshotOptions: ScreenshotOptions = {
   width: Dimensions.get("window").width,
   format: "png",
   filename: I18n.t("features.euCovidCertificate.common.title")
@@ -29,15 +29,15 @@ export const screenShotOption: ScreenshotOptions = {
  * @param options screenshot options
  * @param onEvent invoked events
  */
-export const captureScreenShoot = <T>(
+export const captureScreenshot = <T>(
   viewRef: number | ReactInstance | RefObject<T>,
   options?: ScreenshotOptions,
-  onEvent?: CaptureScreenShotEvents
+  onEvent?: CaptureScreenshotEvents
 ) =>
   void captureRef(viewRef, options)
-    .then(screenShotUri => {
-      const imagePath = savePath(screenShotUri, options);
-      void rename(screenShotUri, imagePath)
+    .then(screenshotUri => {
+      const imagePath = savePath(screenshotUri, options);
+      void rename(screenshotUri, imagePath)
         .then(imagePath => saveImageToGallery(imagePath).run())
         .then(maybeSaved => {
           maybeSaved.fold(
