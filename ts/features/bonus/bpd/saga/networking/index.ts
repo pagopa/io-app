@@ -26,6 +26,7 @@ export function* executeAndDispatchV2(
         // (note the required header will be injected automatically)
         {} as any
       );
+    console.log(enrollCitizenIOResult);
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
         const { enabled, payoffInstr, technicalAccount, optInStatus } =
@@ -89,9 +90,16 @@ export function* putOptInStatusCitizenV2(
       );
     if (updateCitizenIOResult.isRight()) {
       if (updateCitizenIOResult.value.status === 200) {
-        const { optInStatus } = updateCitizenIOResult.value.value;
-        yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
-        return;
+        if (updateCitizenIOResult.value.value.optInStatus) {
+          const { optInStatus } = updateCitizenIOResult.value.value;
+          yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
+          return;
+        } else {
+          // it should not never happen
+          bpdUpdateOptInStatusMethod.failure(
+            new Error(`optInStatus is undefined`)
+          );
+        }
       } else {
         bpdUpdateOptInStatusMethod.failure(
           new Error(`response status ${updateCitizenIOResult.value.status}`)
