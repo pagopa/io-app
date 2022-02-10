@@ -1,6 +1,8 @@
+import path from "path";
 import { CaptureOptions, captureRef } from "react-native-view-shot";
 import { ReactInstance, RefObject } from "react";
 import { Dimensions } from "react-native";
+import RNFS from "react-native-fs";
 import { saveImageToGallery } from "../../../utils/share";
 import I18n from "../../../i18n";
 
@@ -34,8 +36,9 @@ export const captureScreenShoot = <T>(
 ) =>
   void captureRef(viewRef, options)
     .then(screenShotUri => {
-      saveImageToGallery(`file://${screenShotUri}`)
-        .run()
+      const imagePath = savePath(screenShotUri, options);
+      void rename(screenShotUri, imagePath)
+        .then(imagePath => saveImageToGallery(imagePath).run())
         .then(maybeSaved => {
           maybeSaved.fold(
             () => onEvent?.onNoPermissions?.(),
@@ -46,3 +49,37 @@ export const captureScreenShoot = <T>(
     })
     .catch(onEvent?.onError)
     .finally(onEvent?.onEnd);
+
+/**
+ * Build the save path for the screenshot using the filename
+ * specified in the given options. If no options are provided
+ * the path returned is the same of the source.
+ * @param screenshotUri the path of the taken screenshot
+ * @param options screenshot options
+ */
+const savePath = (screenshotUri: string, options?: ScreenshotOptions): string =>
+  options
+    ? path.join(
+        RNFS.TemporaryDirectoryPath,
+        `${options.filename}${path.extname(screenshotUri)}`
+      )
+    : screenshotUri;
+
+/**
+ * Rename file source to destination, overwriting destination
+ * if it already exists.
+ * @param source the path of the file to rename
+ * @param destination the destination path
+ */
+const rename = (source: string, destination: string): Promise<string> => {
+  if (source === destination) {
+    return Promise.resolve(source);
+  }
+
+  // in iOS the move operation will fail if destination already exists,
+  // so we need to delete it first
+  return RNFS.exists(destination)
+    .then(exists => (exists ? RNFS.unlink(destination) : Promise.resolve()))
+    .then(_ => RNFS.moveFile(source, destination))
+    .then(_ => destination);
+};
