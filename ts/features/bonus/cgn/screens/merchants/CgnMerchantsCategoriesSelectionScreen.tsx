@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { widthPercentageToDP } from "react-native-responsive-screen";
@@ -13,12 +14,17 @@ import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import CGN_ROUTES from "../../navigation/routes";
-import { cgnSelectedCategory } from "../../store/actions/categories";
+import {
+  cgnCategories,
+  cgnSelectedCategory
+} from "../../store/actions/categories";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
+import { cgnCategoriesListSelector } from "../../store/reducers/categories";
+import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 
 const styles = StyleSheet.create({
   body: {
@@ -37,7 +43,14 @@ const styles = StyleSheet.create({
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const dispatch = useIODispatch();
+  const remoteCategories = useIOSelector(cgnCategoriesListSelector);
   const navigation = useNavigationContext();
+
+  const loadCategories = () => {
+    dispatch(cgnCategories.request());
+  };
+
+  useEffect(loadCategories, []);
 
   const renderCategoryElement = (
     info: ListRenderItemInfo<ProductCategoryEnum | "All" | "Hidden">
@@ -108,7 +121,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     ProductCategoryEnum | "All" | "Hidden"
   > = [
     "All",
-    ...Object.entries(ProductCategoryEnum).map(value => value[1]),
+    ...(isReady(remoteCategories) ? remoteCategories.value : []),
     "Hidden"
   ];
 
@@ -124,6 +137,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         <FlatList
           style={IOStyles.flex}
           data={categoriesToArray}
+          refreshing={isLoading(remoteCategories)}
+          onRefresh={loadCategories}
           renderItem={renderCategoryElement}
           numColumns={2}
           keyExtractor={(item: ProductCategoryEnum | "All" | "Hidden") => item}
