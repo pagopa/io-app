@@ -28,7 +28,10 @@ import {
   bpdTransactionsLoadPage,
   bpdTransactionsLoadRequiredData
 } from "../store/actions/transactions";
-import { optInPaymentMethodsStart } from "../store/actions/optInPaymentMethods";
+import {
+  optInPaymentMethodsDeletionChoice,
+  optInPaymentMethodsStart
+} from "../store/actions/optInPaymentMethods";
 import {
   deleteCitizen,
   getCitizenV2,
@@ -169,7 +172,10 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     // The user need to choice what to do with the payment methods added during the cashback
     yield takeLatest(optInPaymentMethodsStart, optInPaymentMethodsHandler);
 
-    // The user choice to delete all the payment method with the BPD capability
-    yield takeLatest(optInPaymentMethodsStart, optInDeletionChoiceHandler);
+    // The user choice to delete all the payment method with the BPD capability during the opt-in flow
+    yield takeLatest(
+      optInPaymentMethodsDeletionChoice,
+      optInDeletionChoiceHandler
+    );
   }
 }
