@@ -503,6 +503,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(watchApplicationActivitySaga);
 
   // Watch for requests to logout
+  // Since this saga is spawned and not forked
+  // it will handle its own cancelation logic.
   yield spawn(watchLogoutSaga, backendClient.logout);
 
   yield fork(watchIdentification, storedPin);

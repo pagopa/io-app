@@ -43,17 +43,6 @@ export const navigateToOnboardingCoBadgeSearchAvailable = () =>
  * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
  * and many helper methods specific to screens won't be available.
  */
-export const navigateToOnboardingCoBadgeAdd = () =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_COBADGE_ROUTES.ADD_COBADGE
-    })
-  );
-
-/**
- * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
- * and many helper methods specific to screens won't be available.
- */
 export const navigateToActivateBpdOnNewCoBadge = () =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({

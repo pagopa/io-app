@@ -1,28 +1,24 @@
-import { Platform } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
 import { fetchTimeout } from "../../config";
-import i18n from "../../i18n";
 import { ContentTypeValues } from "../../types/contentType";
-import { showToast } from "../../utils/showToast";
+import { isIos } from "../../utils/platform";
 import { MvlAttachment } from "./types/mvlData";
 
-const savePath =
-  Platform.OS === "ios"
-    ? RNFS.TemporaryDirectoryPath
-    : RNFS.DownloadDirectoryPath;
+const savePath = isIos
+  ? RNFS.TemporaryDirectoryPath
+  : RNFS.DownloadDirectoryPath;
 
 /**
  * Download an attachment.
  * On iOS download the file using a temporary file with path res.path()
  * On Android download the file using the native download handling
  *
- * TODO: If we want to provide a graphical feedback (eg: download progress) we should move this
- * in a saga and handle the result with a store section
+ * we should move this to a saga and handle the result with a store section
  * @param attachment
  * @param header
  */
-export const downloadAttachment = async (
+const downloadAttachment = async (
   attachment: MvlAttachment,
   header: { [key: string]: string }
 ) =>
@@ -33,23 +29,31 @@ export const downloadAttachment = async (
   }).fetch("GET", attachment.resourceUrl.href, header);
 
 /**
- * Handle the download of an attachment based on the platform
- * iOS: Display a preview if the contentType is "application/pdf", display OptionMenu otherwise
- * Android: Notify the download completed in the notification center and display a toast
+ * Handle the download of an attachment based on the platform.
+ * Reject with an Error if any error occurs.
+ *
+ * iOS: display a preview if the contentType is "application/pdf",
+ *      display OptionMenu otherwise.
+ *
+ * Android: Notify the download completed in the notification center
+ *          and display a toast.
+ *
  * @param attachment
  * @param header
  */
 export const handleDownloadResult = async (
   attachment: MvlAttachment,
   header: { [key: string]: string }
-) => {
+): Promise<void> => {
   try {
     const result = await downloadAttachment(attachment, header);
-    if (result.info().status !== 200) {
-      showToast(i18n.t("features.mvl.details.attachments.toast.failure"));
-      return;
+    const { status } = result.info();
+    if (status !== 200) {
+      return Promise.reject(
+        new Error(`error ${status} fetching ${attachment.resourceUrl.href}`)
+      );
     }
-    if (Platform.OS === "ios") {
+    if (isIos) {
       const fileHandler =
         attachment.contentType === ContentTypeValues.applicationPdf
           ? ReactNativeBlobUtil.ios.openDocument
@@ -63,12 +67,13 @@ export const handleDownloadResult = async (
         description: attachment.displayName,
         path: result.path()
       });
-      showToast(
-        i18n.t("features.mvl.details.attachments.toast.success"),
-        "success"
-      );
     }
   } catch (e) {
-    showToast(i18n.t("features.mvl.details.attachments.toast.failure"));
+    if (e instanceof Error) {
+      return Promise.reject(e);
+    }
+    return Promise.reject(
+      new Error(`couldn't fetch ${attachment.resourceUrl.href}`)
+    );
   }
 };
