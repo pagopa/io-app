@@ -50,6 +50,7 @@ export const BottomSheetMethodsToDelete = (props: Props) => {
         />
       }
     >
+      <View spacer={true} />
       <Label color={"bluegrey"} weight={"Regular"}>
         {I18n.t(
           "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.subtitle"
@@ -82,7 +83,7 @@ export const useBottomSheetMethodsToDelete = (
 ): BottomSheetReturnType => {
   const paymentMethods = useSelector(getBPDMethodsSelector);
   const snapPoint = Math.min(
-    Dimensions.get("window").height * 0.7,
+    Dimensions.get("window").height * 0.8,
     // (subtitle + footer) + items
     280 + paymentMethods.length * 58
   );
