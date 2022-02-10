@@ -30,7 +30,7 @@ defaults_android: &defaults_android
     - image: cimg/android:2022.01.1-node
   environment:
     TERM: "dumb"
-    ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
+    ANDROID_SDK_BUILD_TOOLS_REVISION: "29.0.3"
     ANDROID_SDK_BUILD_API_LEVEL: "30"
     ANDROID_GOOGLE_API_LEVEL: "23"
     # - REACT_NATIVE_MAX_WORKERS: 1
