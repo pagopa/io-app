@@ -302,6 +302,10 @@ jobs:
       - run:
           command: cd android && bundle exec fastlane alpha
 
+      # Promote internal to alpha
+     - run:
+          command: bundle exec fastlane promote_internal_to_alpha
+
       - store_artifacts:
           path: android/app/build/outputs/bundle
           destination: bundle
