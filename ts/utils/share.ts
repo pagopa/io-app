@@ -38,7 +38,8 @@ export const isShareEnabled = () =>
 
 /**
  * check if write external storage permission is granted, if yes try to save the given uri in the camera roll
- * @param uri
+ * @param uri the image to save
+ * @param album an optional album where to save the image
  */
 export const saveImageToGallery = (
   uri: string,
