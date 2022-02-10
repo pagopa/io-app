@@ -60,7 +60,6 @@ platform :android do
       skip_upload_screenshots: true,
       skip_upload_images: true
     )
-    upload_to_play_store(track: "internal", track_promote_to: "alpha")
   end
 
   desc "Promote the internal version to alpha"
