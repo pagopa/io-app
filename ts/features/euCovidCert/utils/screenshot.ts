@@ -58,6 +58,8 @@ export const captureScreenshot = <T>(
  * the path returned is the same of the source.
  * @param screenshotUri the path of the taken screenshot
  * @param options screenshot options
+ * @return a save path for the screenshot with the specified name
+ * (if no options are provided it returns the original path)
  */
 const savePath = (screenshotUri: string, options?: ScreenshotOptions): string =>
   options
@@ -72,6 +74,7 @@ const savePath = (screenshotUri: string, options?: ScreenshotOptions): string =>
  * if it already exists.
  * @param source the path of the file to rename
  * @param destination the destination path
+ * @return a Promise with the path of the renamed image
  */
 const rename = (source: string, destination: string): Promise<string> => {
   if (source === destination) {
