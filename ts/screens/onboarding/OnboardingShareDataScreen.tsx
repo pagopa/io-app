@@ -34,7 +34,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
     return false;
   });
 
-  const { present: confirmOptOut, dismiss } = useConfirmOptOutBottomSheet();
+  const { present: confirmOptOut } = useConfirmOptOutBottomSheet();
   const dispatch = useDispatch();
 
   const optOutAction = () =>
