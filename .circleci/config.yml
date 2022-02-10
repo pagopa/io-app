@@ -481,17 +481,14 @@ workflows:
   build:
     jobs:
       - compile-typescript
-#      - run-tests
-#      - run-eslint
-#      - run-prettier
-      - alpha-release-android:
-          requires:
-            - compile-typescript
+      - run-tests
+      - run-eslint
+      - run-prettier
 
-#      - run-danger:
-#          filters:
-#            branches:
-#              ignore: master
+      - run-danger:
+          filters:
+            branches:
+              ignore: master
 
       # TODO: Native Android e2e tests
       # TODO: Slack integration
