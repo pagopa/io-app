@@ -11,11 +11,13 @@ import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { Label } from "../../components/core/typography/Label";
-import ROUTES from "../../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -52,13 +54,21 @@ const OnboardingPinConfirmationScreen: React.FC<Props> = ({ navigation }) => {
 
   const resetPin = () => setPin(null);
 
-  const mainButtonProps = React.useMemo(
+  const computedCancelButtonProps = React.useMemo(
     () => ({
-      ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
-      disabled: pin === null,
-      onPress: () => navigation.navigate(ROUTES.ONBOARDING_PIN_CONFIRMATION)
+      ...cancelButtonProps(() => null, I18n.t("global.buttons.back")),
+      onPress: () => navigation.goBack()
     }),
-    [pin, navigation]
+    [navigation]
+  );
+
+  const computedConfirmButtonProps = React.useMemo(
+    () => ({
+      ...confirmButtonProps(() => null, I18n.t("global.buttons.confirm")),
+      disabled: pin === null,
+      onPress: () => null
+    }),
+    [pin]
   );
 
   return (
@@ -101,7 +111,11 @@ const OnboardingPinConfirmationScreen: React.FC<Props> = ({ navigation }) => {
           </>
         </Content>
 
-        <FooterWithButtons type="SingleButton" leftButton={mainButtonProps} />
+        <FooterWithButtons
+          type="TwoButtonsInlineHalf"
+          leftButton={computedCancelButtonProps}
+          rightButton={computedConfirmButtonProps}
+        />
       </SafeAreaView>
     </BaseScreenComponent>
   );
