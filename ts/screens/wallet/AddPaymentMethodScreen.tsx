@@ -49,7 +49,7 @@ type NavigationParams = Readonly<{
     verifica: PaymentRequestsGetResponse;
     idPayment: string;
   }>;
-  // if set it will be shown only those methods that can pay with pagoPA
+  // if set, only those methods that can pay with pagoPA will be shown
   showOnlyPayablePaymentMethods?: true;
   keyFrom?: string;
 }>;
