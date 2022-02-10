@@ -32,12 +32,6 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     lineHeight: 22
-  },
-  description: { lineHeight: 22 },
-  footerContainer: {
-    overflow: "hidden",
-    marginTop: -variables.footerShadowOffsetHeight,
-    paddingTop: variables.footerShadowOffsetHeight
   }
 });
 
