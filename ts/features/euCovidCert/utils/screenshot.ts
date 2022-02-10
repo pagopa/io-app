@@ -29,7 +29,7 @@ export const screenShotOption: ScreenshotOptions = {
  */
 export const captureScreenShoot = <T>(
   viewRef: number | ReactInstance | RefObject<T>,
-  options?: CaptureOptions,
+  options?: ScreenshotOptions,
   onEvent?: CaptureScreenShotEvents
 ) =>
   void captureRef(viewRef, options)
