@@ -275,7 +275,7 @@ jobs:
           command: |
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
-            gem install bundler:$BUNDLER_VERSION
+#            gem install bundler:$BUNDLER_VERSION
 
       # Install bundle dependencies
       - run:
@@ -484,10 +484,10 @@ workflows:
           requires:
             - compile-typescript
 
-      - run-danger:
-          filters:
-            branches:
-              ignore: master
+#      - run-danger:
+#          filters:
+#            branches:
+#              ignore: master
 
       # TODO: Native Android e2e tests
       # TODO: Slack integration
