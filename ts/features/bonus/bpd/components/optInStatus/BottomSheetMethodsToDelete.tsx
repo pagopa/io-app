@@ -12,6 +12,8 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { PaymentMethod } from "../../../../../types/pagopa";
 import { Label } from "../../../../../components/core/typography/Label";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
+import { H3 } from "../../../../../components/core/typography/H3";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 type Props = {
   onDeletePress: () => void;
@@ -50,7 +52,6 @@ export const BottomSheetMethodsToDelete = (props: Props) => {
         />
       }
     >
-      <View spacer={true} />
       <Label color={"bluegrey"} weight={"Regular"}>
         {I18n.t(
           "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.subtitle"
@@ -96,9 +97,14 @@ export const useBottomSheetMethodsToDelete = (
           onDeletePress={props.onDeletePress}
           onCancelPress={props.onCancelPress}
         />,
-        I18n.t(
-          "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
-        )
+        <View style={IOStyles.flex}>
+          <H3>
+            {I18n.t(
+              "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
+            )}
+          </H3>
+          <View spacer={true} />
+        </View>
       );
     }
   };
