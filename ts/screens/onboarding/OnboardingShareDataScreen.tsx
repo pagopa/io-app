@@ -25,15 +25,6 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
-  // This hook should be called **before** `useConfirmOptOutBottomSheet`
-  // due to the order of the events being binded. The current behaviour
-  // will show the "Go back" modal if the bottom sheet is not currently
-  // open. It will dismiss the bottom sheet otherwise.
-  useHardwareBackButton(() => {
-    handleGoBack();
-    return false;
-  });
-
   const { present: confirmOptOut } = useConfirmOptOutBottomSheet();
   const dispatch = useDispatch();
 
