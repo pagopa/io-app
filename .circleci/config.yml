@@ -303,7 +303,7 @@ jobs:
           command: cd android && bundle exec fastlane alpha
 
       # Promote internal to alpha
-     - run:
+      - run:
           command: bundle exec fastlane promote_internal_to_alpha
 
       - store_artifacts:
