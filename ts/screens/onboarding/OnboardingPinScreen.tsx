@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 /**
  * A screen that allows the user to set the unlock code.
  */
-const PinScreen: React.FC<Props> = ({ navigation }) => {
+const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const executeAbortOnboarding = () => {
@@ -113,4 +113,4 @@ const PinScreen: React.FC<Props> = ({ navigation }) => {
   );
 };
 
-export default PinScreen;
+export default OnboardingPinScreen;
