@@ -258,7 +258,6 @@ class PinScreen extends React.PureComponent<Props, State> {
       <React.Fragment>
         <Text
           style={styles.header}
-          alignCenter={true}
           bold={true}
           dark={true}
           ref={this.headerRef}
@@ -269,7 +268,7 @@ class PinScreen extends React.PureComponent<Props, State> {
               : "onboarding.unlockCode.contentTitleConfirm"
           )}
         </Text>
-        <Text alignCenter={true} dark={true}>
+        <Text dark={true}>
           {I18n.t(
             pinState.state === "PinUnselected"
               ? "onboarding.unlockCode.contentSubtitle"
@@ -418,7 +417,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         goBack={this.handleGoBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["onboarding_pin", "unlock"]}
-        headerTitle={I18n.t("onboarding.tos.headerTitle")}
+        headerTitle={I18n.t("onboarding.unlockCode.headerTitle")}
       >
         <SafeAreaView style={styles.flex}>
           {this.renderContent(pinState)}

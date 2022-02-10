@@ -793,9 +793,9 @@ onboarding:
       title: Attenzione
       message: Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare.
   unlockCode:
-    headerTitle: Attivazione
-    contentTitle: Scegli un codice di sblocco
-    contentSubtitle: inserisci un codice di 6 cifre
+    headerTitle: Configura IO
+    contentTitle: Crea un codice di sblocco
+    contentSubtitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
     contentTitleConfirm: Ripeti il codice di sblocco
     contentTitleConfirmSubtitle: inserisci di nuovo il codice di 6 cifre
     pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive. Potrai cambiarlo in ogni momento dopo l'autenticazione.
