@@ -7,7 +7,7 @@ import {
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import {
   NavigationInjectedProps,
   NavigationLeafRoute,
@@ -94,6 +94,9 @@ const styles = StyleSheet.create({
   },
   noticeIcon: {
     paddingLeft: 10
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -298,64 +301,66 @@ class TransactionSummaryScreen extends React.Component<Props> {
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
         dark={true}
       >
-        <SlidedContentComponent dark={true}>
-          <PaymentSummaryComponent
-            dark={true}
-            title={I18n.t("wallet.firstTransactionSummary.title")}
-            description={transactionDescription}
-            recipient={recipient.fold("-", r => r)}
-            image={require("../../../../img/wallet/icon-avviso-pagopa.png")}
-          />
+        <SafeAreaView style={styles.flex}>
+          <SlidedContentComponent dark={true}>
+            <PaymentSummaryComponent
+              dark={true}
+              title={I18n.t("wallet.firstTransactionSummary.title")}
+              description={transactionDescription}
+              recipient={recipient.fold("-", r => r)}
+              image={require("../../../../img/wallet/icon-avviso-pagopa.png")}
+            />
 
-          <View spacer={true} large={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+            <View spacer={true} large={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
 
-          {/** Amount to pay */}
-          <View style={styles.row}>
+            {/** Amount to pay */}
             <View style={styles.row}>
-              <Text style={[styles.title, styles.lighterGray]}>
-                {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
+              <View style={styles.row}>
+                <Text style={[styles.title, styles.lighterGray]}>
+                  {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
+                </Text>
+                {isAmountUpdated && (
+                  <IconFont
+                    style={styles.noticeIcon}
+                    name={"io-notice"}
+                    size={NOTICE_ICON_SIZE}
+                    color={customVariables.colorWhite}
+                  />
+                )}
+              </View>
+              <Text white={true} style={[styles.title]} bold={true}>
+                {currentAmount}
               </Text>
-              {isAmountUpdated && (
-                <IconFont
-                  style={styles.noticeIcon}
-                  name={"io-notice"}
-                  size={NOTICE_ICON_SIZE}
-                  color={customVariables.colorWhite}
-                />
-              )}
             </View>
-            <Text white={true} style={[styles.title]} bold={true}>
-              {currentAmount}
-            </Text>
-          </View>
 
-          {isAmountUpdated && (
-            <React.Fragment>
-              <View spacer={true} small={true} />
-              <Text style={styles.lighterGray}>
-                {I18n.t("wallet.firstTransactionSummary.updateInfo")}
-              </Text>
-            </React.Fragment>
-          )}
-          <View spacer={true} large={true} />
+            {isAmountUpdated && (
+              <React.Fragment>
+                <View spacer={true} small={true} />
+                <Text style={styles.lighterGray}>
+                  {I18n.t("wallet.firstTransactionSummary.updateInfo")}
+                </Text>
+              </React.Fragment>
+            )}
+            <View spacer={true} large={true} />
 
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
 
-          {standardRow(
-            I18n.t("wallet.firstTransactionSummary.entityCode"),
-            rptId.organizationFiscalCode
-          )}
-          <View spacer={true} small={true} />
-          {standardRow(
-            I18n.t("payment.noticeCode"),
-            PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
-          )}
-          <View spacer={true} large={true} />
-        </SlidedContentComponent>
-        {this.getFooterButtons()}
+            {standardRow(
+              I18n.t("wallet.firstTransactionSummary.entityCode"),
+              rptId.organizationFiscalCode
+            )}
+            <View spacer={true} small={true} />
+            {standardRow(
+              I18n.t("payment.noticeCode"),
+              PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
+            )}
+            <View spacer={true} large={true} />
+          </SlidedContentComponent>
+          {this.getFooterButtons()}
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }
