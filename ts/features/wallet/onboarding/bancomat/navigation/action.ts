@@ -38,16 +38,6 @@ export const navigateToOnboardingBancomatSearchAvailableUserBancomat = () =>
 /**
  * @deprecated
  */
-export const navigateToOnboardingBancomatAdd = () =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.ADD_BANCOMAT
-    })
-  );
-
-/**
- * @deprecated
- */
 export const navigateToSuggestBpdActivation = () =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
