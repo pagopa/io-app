@@ -48,7 +48,7 @@ const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
 
   const resetPin = () => setPin(null);
 
-  const mainButtonProps = React.useMemo(
+  const computedConfirmButtonProps = React.useMemo(
     () => ({
       ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
       disabled: pin === null,
@@ -97,7 +97,10 @@ const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
           </>
         </Content>
 
-        <FooterWithButtons type="SingleButton" leftButton={mainButtonProps} />
+        <FooterWithButtons
+          type="SingleButton"
+          leftButton={computedConfirmButtonProps}
+        />
       </SafeAreaView>
     </BaseScreenComponent>
   );
