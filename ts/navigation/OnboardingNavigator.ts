@@ -30,6 +30,9 @@ const navigator = createStackNavigator(
     [ROUTES.ONBOARDING_PIN]: {
       screen: PinScreen
     },
+    [ROUTES.ONBOARDING_PIN_CONFIRMATION]: {
+      screen: PinScreen
+    },
     [ROUTES.ONBOARDING_FINGERPRINT]: {
       screen: FingerprintScreen
     },
