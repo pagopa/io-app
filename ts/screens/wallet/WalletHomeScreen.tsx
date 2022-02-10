@@ -3,7 +3,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
+import { NavigationEvents } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -101,7 +102,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps<NavigationParams> &
+  NavigationStackScreenProps<NavigationParams> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({

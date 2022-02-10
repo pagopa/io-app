@@ -1,6 +1,6 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
 import React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 
 /**
  * A HOC to display the WrappedComponent when the check function is verified,
@@ -13,13 +13,13 @@ export function withConditionalView<P, T, C>(
 ) {
   /**
    * The component should inherit the navigation params of both the wrapped and
-   * the contition component to ensure the nagivigation can address the proper
-   * navigation paramaters
+   * the condition component to ensure the navigation can address the proper
+   * navigation parameters
    */
   type nullN = Record<string, unknown>;
-  type NP = P extends NavigationInjectedProps<infer N> ? N : nullN;
-  type NC = C extends NavigationInjectedProps<infer N> ? N : nullN;
-  type NN = NavigationInjectedProps<NP & NC>;
+  type NP = P extends NavigationStackScreenProps<infer N> ? N : nullN;
+  type NC = C extends NavigationStackScreenProps<infer N> ? N : nullN;
+  type NN = NavigationStackScreenProps<NP & NC>;
 
   class ConditionalView extends React.PureComponent<(P | C) & T & NN> {
     public render() {

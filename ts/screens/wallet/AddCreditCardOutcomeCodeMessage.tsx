@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import paymentCompleted from "../../../img/pictograms/payment-completed.png";
@@ -16,7 +16,7 @@ type NavigationParams = Readonly<{
   selectedWallet: Wallet;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<NavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

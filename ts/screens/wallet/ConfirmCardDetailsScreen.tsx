@@ -2,25 +2,44 @@
  * This screen presents a summary on the credit card after the user
  * inserted the data required to save a new card
  */
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { constNull } from "fp-ts/lib/function";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { constNull } from "fp-ts/lib/function";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
+import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
+import { InfoBox } from "../../components/box/InfoBox";
+import { H1 } from "../../components/core/typography/H1";
+import { H4 } from "../../components/core/typography/H4";
+import { H5 } from "../../components/core/typography/H5";
+import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Switch from "../../components/ui/Switch";
 import CardComponent from "../../components/wallet/card/CardComponent";
+import { PayWebViewModal } from "../../components/wallet/PayWebViewModal";
+import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
+import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
+
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import {
+  isLoading as isRemoteLoading,
+  isReady
+} from "../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../i18n";
 import {
   navigateToAddCreditCardOutcomeCode,
@@ -28,7 +47,7 @@ import {
   navigateToWalletHome
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { getLocalePrimaryWithFallback } from "../../utils/locale";
+import { addCreditCardOutcomeCode } from "../../store/actions/wallet/outcomeCode";
 import {
   addCreditCardWebViewEnd,
   AddCreditCardWebViewEndReason,
@@ -37,34 +56,15 @@ import {
   fetchWalletsRequestWithExpBackoff,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
+import { pmSessionTokenSelector } from "../../store/reducers/wallet/payment";
+import { getAllWallets } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
-import { showToast } from "../../utils/showToast";
-
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
-import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
-import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { PayWebViewModal } from "../../components/wallet/PayWebViewModal";
-import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { addCreditCardOutcomeCode } from "../../store/actions/wallet/outcomeCode";
-import { getAllWallets } from "../../store/reducers/wallet/wallets";
-import { pmSessionTokenSelector } from "../../store/reducers/wallet/payment";
-import {
-  isLoading as isRemoteLoading,
-  isReady
-} from "../../features/bonus/bpd/model/RemoteValue";
+import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getLookUpIdPO } from "../../utils/pmLookUpId";
-import { H1 } from "../../components/core/typography/H1";
-import { H4 } from "../../components/core/typography/H4";
-import { H5 } from "../../components/core/typography/H5";
-import { InfoBox } from "../../components/box/InfoBox";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { showToast } from "../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type NavigationParams = Readonly<{
@@ -82,7 +82,7 @@ type ReduxMergedProps = Readonly<{
   onRetry?: () => void;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -385,7 +385,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: NavigationInjectedProps<NavigationParams>
+  props: NavigationStackScreenProps<NavigationParams>
 ) => {
   const navigateToNextScreen = (maybeWallet: Option<Wallet>) => {
     const inPayment = props.navigation.getParam("inPayment");

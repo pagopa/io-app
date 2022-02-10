@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { setMessageReadState } from "../../../store/actions/messages";
@@ -12,8 +12,8 @@ import {
   euCovidCertificateShouldBeLoadedSelector
 } from "../store/reducers/byAuthCode";
 import {
-  EUCovidCertificateAuthCode,
-  EUCovidCertificate
+  EUCovidCertificate,
+  EUCovidCertificateAuthCode
 } from "../types/EUCovidCertificate";
 import { EUCovidCertificateResponse } from "../types/EUCovidCertificateResponse";
 import EuCovidCertExpiredScreen from "./EuCovidCertExpiredScreen";
@@ -33,7 +33,7 @@ type NavigationParams = Readonly<{
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationStackScreenProps<NavigationParams>;
 
 /**
  * Return the right screen based on the response value

@@ -8,7 +8,7 @@ import Instabug from "instabug-reactnative";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -77,7 +77,7 @@ type NavigationParams = {
   onCancel: () => void;
 };
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<NavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
