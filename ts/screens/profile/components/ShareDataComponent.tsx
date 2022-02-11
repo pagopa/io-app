@@ -48,41 +48,41 @@ export const ShareDataComponent = (): React.ReactElement => {
               "profile.main.privacy.shareData.screen.why.description.two"
             )}
           </Label>
-          {I18n.t(
+          {`${I18n.t(
             "profile.main.privacy.shareData.screen.why.description.three"
-          )}
+          )} `}
+          <Link onPress={whyBottomSheet.present} testID="why">
+            {I18n.t("profile.main.privacy.shareData.screen.why.cta")}
+          </Link>
         </Body>
-        <Link onPress={whyBottomSheet.present} testID="why">
-          {I18n.t("profile.main.privacy.shareData.screen.why.cta")}
-        </Link>
       </InfoBox>
       <View spacer={true} />
       <InfoBox iconName={"io-eye-off"}>
         <Body>
-          {I18n.t(
+          {`${I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
-          )}
+          )} `}
+          <Link
+            onPress={() => openWebUrl(shareDataSecurityMoreLink)}
+            testID="security"
+          >
+            {I18n.t("profile.main.privacy.shareData.screen.security.cta")}
+          </Link>
         </Body>
-        <Link
-          onPress={() => openWebUrl(shareDataSecurityMoreLink)}
-          testID="security"
-        >
-          {I18n.t("profile.main.privacy.shareData.screen.security.cta")}
-        </Link>
       </InfoBox>
       <View spacer={true} />
       <InfoBox iconName={"io-fornitori"}>
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
           <Label color={"bluegrey"}>
-            {I18n.t(
+            {`${I18n.t(
               "profile.main.privacy.shareData.screen.gdpr.description.two"
-            )}
+            )} `}
           </Label>
+          <Link onPress={() => openWebUrl(ioSuppliersUrl)} testID="gdpr">
+            {I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
+          </Link>
         </Body>
-        <Link onPress={() => openWebUrl(ioSuppliersUrl)} testID="gdpr">
-          {I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
-        </Link>
       </InfoBox>
       <View spacer={true} />
       <Body
