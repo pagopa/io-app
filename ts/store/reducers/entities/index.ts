@@ -15,6 +15,7 @@ import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import { isDevEnv } from "../../../utils/environment";
 import { PotTransform } from "../../transforms/potTransform";
+import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import messagesReducer, { MessagesState } from "./messages";
 import messagesStatusReducer, {
@@ -27,7 +28,6 @@ import {
   transactionsReadReducer
 } from "./readTransactions";
 import servicesReducer, { ServicesState } from "./services";
-import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 
 export type EntitiesState = Readonly<{
   messages: MessagesState;
