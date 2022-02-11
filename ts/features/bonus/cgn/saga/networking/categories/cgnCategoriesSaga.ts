@@ -2,7 +2,10 @@ import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { cgnCategories } from "../../../store/actions/categories";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getGenericError, getNetworkError } from "../../../../../../utils/errors";
+import {
+  getGenericError,
+  getNetworkError
+} from "../../../../../../utils/errors";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 
 // Saga aimed to call the API to retrieve the CGN benefits categories available
