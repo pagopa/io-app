@@ -10,17 +10,17 @@ import { CitizenOptInStatusEnum } from "../../../../../definitions/bpd/citizen_v
 const PatchedCitizenResourceR = t.interface({
   enabled: t.boolean,
 
-  fiscalCode: t.string,
-  optInStatus: enumType<CitizenOptInStatusEnum>(
-    CitizenOptInStatusEnum,
-    "optInStatus"
-  )
+  fiscalCode: t.string
 });
 
 // optional attributes
 const PatchedCitizenResourceO = t.partial({
   payoffInstr: t.string,
-  payoffInstrType: t.string
+  payoffInstrType: t.string,
+  optInStatus: enumType<CitizenOptInStatusEnum>(
+    CitizenOptInStatusEnum,
+    "optInStatus"
+  )
 });
 
 export const PatchedCitizenResource = t.intersection(
