@@ -2,6 +2,7 @@
 import { takeLatest } from "redux-saga/effects";
 import {
   getZendeskConfig,
+  zendeskGetTotalNewResponses,
   zendeskRequestTicketNumber,
   zendeskSupportStart
 } from "../store/actions";
@@ -9,6 +10,7 @@ import { ContentClient } from "../../../api/content";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
 import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
+import { handleGetTotalNewResponses } from "./networking/handleGetTotalNewResponses";
 
 export function* watchZendeskSupportSaga() {
   const contentClient = ContentClient();
@@ -22,4 +24,6 @@ export function* watchZendeskSupportSaga() {
   );
 
   yield takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
+
+  yield takeLatest(zendeskGetTotalNewResponses, handleGetTotalNewResponses);
 }
