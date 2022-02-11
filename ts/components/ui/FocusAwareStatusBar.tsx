@@ -1,6 +1,7 @@
 import * as React from "react";
+import { useState } from "react";
 import { StatusBar, StatusBarProps } from "react-native";
-import { withNavigationFocus } from "react-navigation";
+import { NavigationEvents } from "react-navigation";
 
 /**
  * FocusAwareStatusBar makes the status bar component aware of
@@ -11,8 +12,18 @@ import { withNavigationFocus } from "react-navigation";
  * config you set will be used (likely on the final tab of your
  * tab navigator, not what the user is seeing).
  */
-const FocusAwareStatusBar = withNavigationFocus<StatusBarProps>(
-  ({ isFocused, ...rest }) => (isFocused ? <StatusBar {...rest} /> : null)
-);
+
+const FocusAwareStatusBar = (props: StatusBarProps) => {
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  return (
+    <>
+      <NavigationEvents
+        onWillFocus={() => setIsFocused(true)}
+        onWillBlur={() => setIsFocused(false)}
+      />
+      {isFocused && <StatusBar {...props} />}
+    </>
+  );
+};
 
 export default FocusAwareStatusBar;

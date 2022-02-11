@@ -7,7 +7,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Keyboard, Platform, StyleSheet } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  Platform,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
 import { StackActions } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
@@ -241,7 +247,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <View style={styles.flex}>
+        <SafeAreaView style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
             <H1
               color={"bluegreyDark"}
@@ -291,9 +297,9 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
               </Form>
             </View>
           </Content>
-        </View>
 
-        {withKeyboard(this.renderFooterButtons())}
+          {withKeyboard(this.renderFooterButtons())}
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }

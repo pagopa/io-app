@@ -5,15 +5,15 @@ import { NavigationEvents, StackActions } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 
 import { connect } from "react-redux";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { LightModalContextInterface } from "../ui/LightModal";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import { acknowledgeOnEmailValidation } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { withLightModalContext } from "./withLightModalContext";
 import { withConditionalView } from "./withConditionalView";
 
 export type ModalProps = LightModalContextInterface &

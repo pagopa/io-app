@@ -49,8 +49,7 @@ import {
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
-  deleteWalletsByServiceUsingDELETEDefaultDecoder,
-  DeleteWalletsByServiceUsingDELETET,
+  deleteWalletsByServiceUsingDELETEDecoder,
   DeleteWalletUsingDELETET,
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
@@ -77,6 +76,7 @@ import {
 import {
   NullableWallet,
   PagoPAErrorResponse,
+  PatchedDeleteWalletResponse,
   PatchedWalletV2ListResponse,
   PatchedWalletV2Response,
   PaymentManagerToken,
@@ -609,12 +609,24 @@ const updatePaymentStatus: ChangePayOptionT = {
   response_decoder: changePayOptionDecoder(PatchedWalletV2Response)
 };
 
-const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
+export type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
+  { readonly Bearer: string; readonly service: string },
+  "Authorization",
+  never,
+  | r.IResponseType<200, PatchedDeleteWalletResponse>
+  | r.IResponseType<204, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+>;
+
+const deleteWallets: DeleteWalletsByServiceUsingDELETETExtra = {
   method: "delete",
   url: () => `/v2/wallet/delete-wallets`,
   query: ({ service }) => ({ service }),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: deleteWalletsByServiceUsingDELETEDefaultDecoder()
+  response_decoder: deleteWalletsByServiceUsingDELETEDecoder(
+    PatchedDeleteWalletResponse
+  )
 };
 
 const searchPayPalPsp: GetPaypalPspsUsingGETT = {
