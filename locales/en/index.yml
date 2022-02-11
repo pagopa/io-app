@@ -2582,6 +2582,7 @@ bonus:
       cta:
         label: Navigate to operator website
         landingPage: Get the benefit
+        discountUrl: Go to the benefit
       categories:
         counting: and other {{count}}
         cultureAndEntertainment: culture and entertainment

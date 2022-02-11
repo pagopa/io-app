@@ -2608,6 +2608,7 @@ bonus:
       cta:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione
+        discountUrl: Vai all’agevolazione
       categories:
         counting: e altre {{count}}
         cultureAndEntertainment: cultura e tempo libero
