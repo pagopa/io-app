@@ -18,14 +18,16 @@ const calculateBottomSheetHeight = (
   merchantType?: DiscountCodeType
 ): number =>
   Math.min(
-    310 +
+    300 +
+      discount.productCategories.length * 25 +
       (discount.description === undefined
         ? 0
         : discount.description.length * 0.75) +
       (discount.condition === undefined
         ? 0
         : discount.condition.length * 0.75) +
-      (merchantType === undefined ? -50 : 0),
+      (merchantType === undefined ? -50 : 0) +
+      (discount.discountUrl === 0 ? 0 : 60),
     screenHeight
   );
 export const useCgnDiscountDetailBottomSheet = (
