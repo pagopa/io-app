@@ -147,7 +147,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         bordered
       >
         <Label color={"blue"}>
-          {I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
+          {I18n.t("bonus.cgn.merchantDetail.cta.discountUrl")}
         </Label>
       </ButtonDefaultOpacity>
     )}
