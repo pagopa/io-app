@@ -14,6 +14,8 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import { isDevEnv } from "../../../utils/environment";
+import { PotTransform } from "../../transforms/potTransform";
+import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import messagesReducer, { MessagesState } from "./messages";
 import messagesStatusReducer, {
@@ -67,7 +69,8 @@ export const entitiesPersistConfig: PersistConfig = {
   storage: AsyncStorage,
   version: CURRENT_REDUX_ENTITIES_STORE_VERSION,
   blacklist: ["messages"],
-  migrate: createMigrate(migrations, { debug: isDevEnv })
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
+  transforms: [DateISO8601Transform, PotTransform]
 };
 
 const reducer = combineReducers<EntitiesState, Action>({
