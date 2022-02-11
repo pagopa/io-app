@@ -112,6 +112,8 @@ const ROUTES = {
   BACKGROUND: "BACKGROUND",
 
   WORKUNIT_GENERIC_FAILURE: "WORKUNIT_GENERIC_FAILURE"
-};
+} as const;
+
+// const testFunc = <T extends keyof typeof ROUTES>(v: T) => v;
 
 export default ROUTES;
