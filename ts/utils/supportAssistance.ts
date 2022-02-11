@@ -52,6 +52,7 @@ export const resetAssistanceData = ZendDesk.reset;
 export const addTicketCustomField = ZendDesk.addTicketCustomField;
 export const appendLog = ZendDesk.appendLog;
 export const hasOpenedTickets = ZendDesk.hasOpenedTickets;
+export const getTotalNewResponses = ZendDesk.getTotalNewResponses;
 export const addTicketTag = ZendDesk.addTicketTag;
 export const zendeskCategoryId = "1900004702053";
 export const zendeskBlockedPaymentRptIdId = "4414297346833";
