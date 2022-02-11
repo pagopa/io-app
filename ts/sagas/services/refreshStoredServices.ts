@@ -27,6 +27,8 @@ export function* refreshStoredServices(
         // The service detail:
         // - is not in the redux store
         storedService === undefined ||
+        // retry to load those services that are in error state
+        pot.isError(storedService) ||
         // - is in the redux store as PotNone and not loading
         pot.isNone(storedService) ||
         // - is in the redux store as PotSome, is not updating and is outdated
