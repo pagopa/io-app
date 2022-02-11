@@ -105,10 +105,12 @@ class MessageDetailData extends React.PureComponent<Props> {
 
         {this.data.service_name.isSome() && this.data.service_detail.isSome() && (
           <View style={styles.service}>
-            <Text>{`${I18n.t("messageDetails.service")} `}</Text>
-            <Link weight={"Bold"} onPress={this.props.goToServiceDetail}>
-              {this.data.service_detail.value.service_name}
-            </Link>
+            <Text>
+              {`${I18n.t("messageDetails.service")} `}
+              <Link weight={"Bold"} onPress={this.props.goToServiceDetail}>
+                {this.data.service_detail.value.service_name}
+              </Link>
+            </Text>
           </View>
         )}
         {this.hasEmailOrPhone && (

@@ -4,7 +4,11 @@ import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
 import { isAndroid, isIos } from "./utils/platform";
-import { getDeviceId, getFontScale } from "./utils/device";
+import {
+  getDeviceId,
+  getFontScale,
+  isScreenLockSet as isScreenLockSetFunc
+} from "./utils/device";
 import { getBiometricsType } from "./utils/biometrics";
 
 // eslint-disable-next-line
@@ -34,12 +38,14 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   }
   const fontScale = await getFontScale();
   const biometricTechnology = await getBiometricsType();
+  const isScreenLockSet = await isScreenLockSetFunc();
   await mp.registerSuperProperties({
     isScreenReaderEnabled: screenReaderEnabled,
     fontScale,
     appReadableVersion: getAppVersion(),
     colorScheme: Appearance.getColorScheme(),
-    biometricTechnology
+    biometricTechnology,
+    isScreenLockSet
   });
   // Identify the user using the device uniqueId
   await mp.identify(getDeviceId());
