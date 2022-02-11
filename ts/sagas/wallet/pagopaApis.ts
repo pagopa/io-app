@@ -392,18 +392,6 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
       typeof deleteAllByFunctionApiWithRefresh
     > = yield call(deleteAllByFunctionApiWithRefresh);
     if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
-      const notDeletedMethodsCount =
-        deleteResponse.value.value.data?.notDeletedWallets ?? -1;
-      // some error occurred while deletion
-      if (notDeletedMethodsCount !== 0) {
-        yield put(
-          deleteAllPaymentMethodsByFunction.failure({
-            error: Error("can't delete some methods"),
-            notDeletedMethodsCount
-          })
-        );
-        return;
-      }
       const deletedMethodsCount =
         deleteResponse.value.value.data?.deletedWallets ?? -1;
 

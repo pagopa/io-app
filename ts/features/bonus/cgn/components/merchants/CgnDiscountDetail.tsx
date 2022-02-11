@@ -144,9 +144,10 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
           openWebUrl(discount.discountUrl);
         }}
         onPressWithGestureHandler={true}
+        bordered
       >
-        <Label color={"white"}>
-          {I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
+        <Label color={"blue"}>
+          {I18n.t("bonus.cgn.merchantDetail.cta.discountUrl")}
         </Label>
       </ButtonDefaultOpacity>
     )}
