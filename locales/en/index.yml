@@ -2525,8 +2525,8 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "News and updates"
-        title: "Cashback updates"
-        subtitle: "Ministero dell’Economia e delle Finanze"
+        title: "Update on the Cashback initiative"
+        subtitle: "Ministry of Economy and Finance"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: "Configura IO"

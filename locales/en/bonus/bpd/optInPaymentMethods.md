@@ -1,33 +1,34 @@
 <H3>
-  Il Cashback è terminato
+  The Cashback initiative has ended
 </H3>
 <body>
-  La legge n.234 del 30 dicembre 2021 ha stabilito la fine del programma Cashback. Questo significa che non potrai più maturare nuovi rimborsi.
+  The law n.234 of 30/12/2021 has established the end of the Cashback initiative. This means that you won’t be able to earn cashback rewards anymore.
 </body>
 <H3>
-  Cosa succede ora?
+  What happens now?
 </H3>
 <body>
-  Le card del Cashback verranno rimosse dal Portafoglio. Per reclami e informazioni sui rimborsi, vai <a href="https://www.consap.it/">sul sito di CONSAP</a>, ente gestore della misura per conto del Ministero dell’Economia e delle Finanze.
+   The Cashback cards will be removed from the Wallet. 
+For complaints and information on refunds, go to the website of <a href="https://www.consap.it/">CONSAP</a>, the institution that manages the programme on behalf of the Ministry of Economy and Finance.
 <br><br>
-  Tutti i dati relativi alla tua partecipazione al programma verranno cancellati entro il 31 luglio 2022. Dopo quella data, i tuoi dati saranno conservati da PagoPA S.p.A solo se necessari per consentire la gestione di reclami o eventuali contenziosi ancora in corso.
+  All data relating to your participation in the program will be deleted by July 31, 2022. After that date, your data will be kept by PagoPA S.p.A only if they are necessary to manage complaints or litigations that are still ongoing.
 </body>
 <H3>
-  E i miei metodi di pagamento?
+  What about my payment methods?
 </H3>
 <body>
-  Puoi scegliere se mantenere o eliminare tutti i metodi di pagamento presenti nel Portafoglio.
+  Choose if you want to keep or remove all your payment methods in the Wallet.
 </body>
 <ul style="list-style-type: square">
   <li>
     <body>
-      <b>Se li mantieni</b>, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Non è una decisione definitiva: potrai eliminarli in qualsiasi momento.
-      Il titolare del trattamento dei dati non sarà più il Ministero dell’Economia e delle Finanze, ma PagoPA S.p.A., in qualità di gestore dell'app IO : per maggiori informazioni, consulta l’Informativa privacy.
+      <b>If you keep them</b>, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. It’s not a final decision: you can delete them at any time.
+      The data controller will no longer be the Ministry of Economy and Finance, but App IO. See the Privacy Policy for more information. 
     </body>
   </li>
   <li>
       <body>
-          <b>Se li elimini</b>, verranno rimossi in modo definitivo. Se vorrai aderire a iniziative future o usarli per altre funzionalità, dovrai aggiungerli di nuovo.
+          <b>If you delete them</b>, they will be removed permanently. To take part in future initiatives or use them for other features, you’ll have to add them again.
       </body>
   </li>
 </ul>
