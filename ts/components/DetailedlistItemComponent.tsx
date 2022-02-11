@@ -33,10 +33,20 @@ const styles = StyleSheet.create({
   verticalPad: {
     paddingVertical: customVariables.spacerHeight
   },
-  spaced: {
+  header: {
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center"
+  },
+  headerMain: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%"
+  },
+  headerSub: {
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "auto"
   },
   badgeContainer: {
     flex: 0,
@@ -129,11 +139,16 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
         style={styles.verticalPad}
         {...this.props}
       >
-        <View style={styles.spaced}>
-          <H5>{this.props.text11}</H5>
-          <Text bold={true} style={styles.text12}>
-            {this.props.text12}
-          </Text>
+        <View style={styles.header}>
+          <View style={styles.headerMain}>
+            <H5>{this.props.text11}</H5>
+          </View>
+
+          <View style={styles.headerSub}>
+            <Text bold={true} style={styles.text12}>
+              {this.props.text12}
+            </Text>
+          </View>
         </View>
 
         <View style={styles.viewStyle}>

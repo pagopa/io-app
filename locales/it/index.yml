@@ -389,16 +389,16 @@ profile:
             description:
               one: "IO raccoglie solo le informazioni "
               two: "necessarie "
-              three: "per il funzionamento dei servizi offerti"
+              three: "per il funzionamento dei servizi offerti."
             cta: "Perché?"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati"
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati."
             cta: "Scopri di più"
           gdpr:
             description:
               one: "Il team di IO collabora con fornitori in conformità con le "
-              two: "norme previste dal GDPR"
+              two: "norme previste dal GDPR."
             cta: "Vedi elenco fornitori"
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
@@ -816,6 +816,8 @@ onboarding:
         faceId: Face ID
         touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  shareData:
+    title: Configura IO
 forms:
   validators:
     required: Valore richiesto
@@ -2552,6 +2554,9 @@ bonus:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
         title: "Aggiornamenti sul Cashback"
+      deletePaymentMethodsBottomSheet:
+        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
+        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
   cgn:
     accessibility:
       code: Premendo l'elemento copierai il codice
@@ -2601,6 +2606,7 @@ bonus:
       cta:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione
+        discountUrl: Vai all’agevolazione
       categories:
         counting: e altre {{count}}
         cultureAndEntertainment: cultura e tempo libero
@@ -2899,10 +2905,17 @@ features:
         title: "Allegati"
         toast:
           success: "Download completato"
-          failure: "Si è verificato un errore durante il download dell'allegato"
         bottomSheet:
-          title: "Fai attenzione agli allegati"
-          body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
+          warning:
+            title: "Fai attenzione agli allegati"
+            body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
+          loading:
+            title: "Allegato"
+            body: "Sto scaricando l'allegato"
+          failing:
+            title: "Allegato"
+            body: "Non sono riuscito a scaricare l'allegato"
+            details: "Per favore, controlla la tua connessione e riprova"
           checkBox: "OK, non mostrarmelo più"
       body:
         plain: "testo semplice"

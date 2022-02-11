@@ -1,5 +1,5 @@
 import { View } from "native-base";
-import React, { useCallback } from "react";
+import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Svg from "react-native-svg";
 import Default from "../../../../../../../img/features/mvl/attachmentsIcon/default.svg";
@@ -13,10 +13,10 @@ import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
+import * as platform from "../../../../../../utils/platform";
 import { MvlAttachment, MvlData } from "../../../../types/mvlData";
 import { useIOSelector } from "../../../../../../store/hooks";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
-import { handleDownloadResult } from "../../../../utils";
 import { ioBackendAuthenticationHeaderSelector } from "../../../../../../store/reducers/authentication";
 import { useDownloadAttachmentConfirmationBottomSheet } from "./DownloadAttachmentConfirmationBottomSheet";
 
@@ -83,19 +83,14 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
   const { present } = useDownloadAttachmentConfirmationBottomSheet(
     props.attachment,
     authHeader,
-    { dontAskAgain: !showAlertForAttachments }
+    {
+      dontAskAgain: !showAlertForAttachments,
+      showToastOnSuccess: platform.isAndroid
+    }
   );
 
-  const onPress = useCallback(() => {
-    if (showAlertForAttachments) {
-      void present();
-    } else {
-      void handleDownloadResult(props.attachment, authHeader);
-    }
-  }, [showAlertForAttachments, props.attachment, authHeader, present]);
-
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={present}>
       <View style={styles.row}>
         <AttachmentIcon contentType={props.attachment.contentType} />
         <View style={styles.middleSection}>

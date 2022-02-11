@@ -107,7 +107,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class TosScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    // it start with loading webview
+    // it starts with loading webview
     this.state = { isLoading: true, hasError: false };
   }
 

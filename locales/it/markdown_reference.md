@@ -47,7 +47,7 @@ Link
 Esempio link interni
 
 [home preferenze](ioit://PREFERENCES_HOME),
-[elenco servizi](ioit://PREFERENCES_SERVICES),
+[elenco servizi](ioit://SERVICES_HOME),
 [profilo](ioit://PROFILE_MAIN),
 [portafoglio](ioit://WALLET_HOME),
 [privacy](ioit://PROFILE_PRIVACY_MAIN),
