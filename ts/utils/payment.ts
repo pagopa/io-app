@@ -223,8 +223,7 @@ const ecSet = new Set<DetailV2Keys>([
   "PAA_ID_DOMINIO_ERRATO",
   "PAA_ID_INTERMEDIARIO_ERRATO",
   "PAA_STAZIONE_INT_ERRATA",
-  "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO",
-  "PAA_SYSTEM_ERROR"
+  "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO"
 ]);
 
 const v2ErrorMacrosMap = new Map<MainErrorType, Set<DetailV2Keys>>([
