@@ -94,8 +94,10 @@ export function* putOptInStatusCitizenV2(
         yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
         return;
       } else {
-        bpdUpdateOptInStatusMethod.failure(
-          new Error(`response status ${updateCitizenIOResult.value.status}`)
+        yield put(
+          bpdUpdateOptInStatusMethod.failure(
+            new Error(`response status ${updateCitizenIOResult.value.status}`)
+          )
         );
       }
     } else {
