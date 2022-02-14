@@ -578,6 +578,11 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
      * `isWorking = true` state, but the rendered sections didn't
      * actually change, then we can disable the `isContinuosScrollEnabled`
      * in order to remove the loader in deadlock.
+     *
+     * FIXME: This fix _won't_ address the real problem in this section, which is
+     * in the function `onLoadMoreDataRequest` and in the fact that the `isWorking`
+     * state is not really switching from `true` to `false` due probably to
+     * an internal React debouncing.
      */
 
     const hasFinishedWorking = prevState.isWorking && !isWorking;
