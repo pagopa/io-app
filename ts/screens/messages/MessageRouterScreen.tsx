@@ -19,13 +19,15 @@ import {
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { GlobalState } from "../../store/reducers/types";
-import { InferNavigationParams } from "../../types/react";
 import { isStrictSome } from "../../utils/pot";
-import { MessageDetailScreen } from "./MessageDetailScreen";
+import { MessageDetailScreenNavigationParams } from "./MessageDetailScreen";
+
+export type MessageRouterScreenNavigationParams =
+  MessageDetailScreenNavigationParams;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<InferNavigationParams<typeof MessageDetailScreen>>;
+  NavigationStackScreenProps<MessageRouterScreenNavigationParams>;
 
 /**
  * In order to have the final CreatedMessageWithContentAndAttachments, these conditions should be verified:
