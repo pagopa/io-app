@@ -1,18 +1,11 @@
 import * as React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  Platform,
-  StyleSheet
-} from "react-native";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import { View } from "native-base";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { getCategorySpecs } from "../../utils/filters";
-import customVariables from "../../../../../theme/variables";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { useIODispatch } from "../../../../../store/hooks";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
@@ -23,25 +16,12 @@ import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorde
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 
-const styles = StyleSheet.create({
-  body: {
-    borderRadius: 8,
-    marginBottom: 10,
-    width: widthPercentageToDP("42.13%")
-  },
-  container: {
-    flexDirection: "column",
-    paddingHorizontal: customVariables.contentPadding / 2,
-    paddingVertical: 14
-  }
-});
-
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigationContext();
 
   const renderCategoryElement = (
-    info: ListRenderItemInfo<ProductCategoryEnum | "All" | "Hidden">
+    info: ListRenderItemInfo<ProductCategoryEnum | "All">
   ) => {
     if (info.item === "All") {
       return (
@@ -50,13 +30,6 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           colors={["#475A6D", "#E6E9F2"]}
           onPress={() => navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)}
         />
-      );
-    }
-    if (info.item === "Hidden") {
-      return (
-        <View style={[styles.body, { height: 122 }]}>
-          <View style={[IOStyles.flex, styles.container]} />
-        </View>
       );
     }
     const specs = getCategorySpecs(info.item);
@@ -87,12 +60,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     });
   };
 
-  const categoriesToArray: ReadonlyArray<
-    ProductCategoryEnum | "All" | "Hidden"
-  > = [
+  const categoriesToArray: ReadonlyArray<ProductCategoryEnum | "All"> = [
     "All",
-    ...Object.entries(ProductCategoryEnum).map(value => value[1]),
-    "Hidden"
+    ...Object.entries(ProductCategoryEnum).map(value => value[1])
   ];
 
   return (
