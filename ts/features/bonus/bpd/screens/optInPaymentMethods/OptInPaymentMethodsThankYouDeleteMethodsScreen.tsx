@@ -1,6 +1,7 @@
 import { SafeAreaView } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import * as pot from "italia-ts-commons/lib/pot";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ThankYouComponent from "../../components/optInPaymentMethods/ThankYouComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
@@ -17,10 +18,7 @@ import {
 import { showToast } from "../../../../../utils/showToast";
 import I18n from "../../../../../i18n";
 import { optInStatusSelector } from "../../store/reducers/details/activation";
-import * as pot from "italia-ts-commons/lib/pot";
-import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { RTron } from "../../../../../boot/configureStoreAndPersistor";
 
 const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
   const dispatch = useDispatch();
@@ -57,7 +55,7 @@ const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
     );
   }
 
-  // if one between deleteAllPaymentMethodsByFunctionStatus and optInStatus is on loading state show loading component
+  // if one between deleteAllPaymentMethodsByFunctionStatus and optInStatus is on loading (or undefined) state show loading component
   if (
     isUndefined(deleteAllPaymentMethodsByFunctionStatus) ||
     isLoading(deleteAllPaymentMethodsByFunctionStatus) ||
