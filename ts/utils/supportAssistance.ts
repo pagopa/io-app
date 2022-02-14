@@ -63,6 +63,9 @@ export const zendeskVersionsHistoryId = "4419641151505";
 export const zendeskPaymentCategoryValue = "pagamenti_pagopa";
 export const zendeskPaymentMethodCategoryValue = "metodo_di_pagamento";
 
+// Check if the user has new messages every 30 minutes (in milliseconds)
+export const getTotalNewResponsesRefreshRate = 60 * 30 * 1000;
+
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
