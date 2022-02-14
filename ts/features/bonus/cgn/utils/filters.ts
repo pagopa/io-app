@@ -117,3 +117,5 @@ export const orders: Record<string, OrderType> = {
     value: "alphabetical"
   }
 };
+
+export const CATEGORY_GRADIENT_ANGLE = 57.23;

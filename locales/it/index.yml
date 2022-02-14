@@ -2622,6 +2622,7 @@ bonus:
         travel: Viaggi e Trasporti
         mobility: Mobilità Sostenibile
         job: Lavoro e Tirocini
+        missing: Categoria mancante
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva la Carta
