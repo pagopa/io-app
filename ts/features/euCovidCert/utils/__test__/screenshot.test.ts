@@ -1,0 +1,54 @@
+import { right } from "fp-ts/lib/TaskEither";
+import { Task } from "fp-ts/lib/Task";
+import { captureScreenshot, screenshotOptions } from "../screenshot";
+import { saveImageToGallery } from "../../../../utils/share";
+
+const temporaryDirectory = "/tmp";
+const defaultScreenshotFilename = "screenshot";
+const defaultScreenshotExtension = "png";
+
+jest.mock("react-native-i18n", () => ({
+  t: jest.fn()
+}));
+
+jest.mock("react-native-view-shot", () => ({
+  captureRef: jest.fn(() =>
+    Promise.resolve(
+      `${defaultScreenshotFilename}.${defaultScreenshotExtension}`
+    )
+  )
+}));
+
+jest.mock("react-native-fs", () => ({
+  TemporaryDirectoryPath: temporaryDirectory,
+  exists: jest.fn(_ => Promise.resolve(true)),
+  unlink: jest.fn(_ => Promise.resolve()),
+  moveFile: jest.fn(_ => Promise.resolve())
+}));
+
+// the resolved value returned by saveImageToGallery doesn't matter for the testing purpose
+const mockSave = right(new Task(() => Promise.resolve("")));
+jest.mock("../../../../utils/share", () => ({
+  saveImageToGallery: jest.fn(_ => mockSave)
+}));
+
+describe("EuCovidCertificate screenshot", () => {
+  describe("given screenshotOptions", () => {
+    const givenFilename = "Covid 19 Green Pass";
+    const options = {
+      ...screenshotOptions,
+      filename: givenFilename
+    };
+    it("saves the certificate in the IO album with the given filename", done => {
+      captureScreenshot(1, options, {
+        onSuccess: () => {
+          expect(saveImageToGallery).toHaveBeenCalledWith(
+            `${temporaryDirectory}/${givenFilename}.${defaultScreenshotExtension}`,
+            "IO"
+          );
+          done();
+        }
+      });
+    });
+  });
+});
