@@ -29,7 +29,7 @@ import {
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import CGN_ROUTES from "../../navigation/routes";
-import { getCategorySpecs } from "../../utils/filters";
+import { CATEGORY_GRADIENT_ANGLE, getCategorySpecs } from "../../utils/filters";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
@@ -52,27 +52,32 @@ const CgnMerchantsListByCategory = () => {
   const offlineMerchants = useIOSelector(cgnOfflineMerchantsSelector);
 
   const categorySpecs = useMemo(
-    () =>
-      fromNullable(currentCategory).fold(undefined, cat =>
-        getCategorySpecs(cat).fold(undefined, c => c)
-      ),
+    () => fromNullable(currentCategory).chain(getCategorySpecs).toUndefined(),
     [currentCategory]
   );
 
   const navigation = useNavigationContext();
 
-  const categoryFilter = currentCategory
-    ? {
-        productCategories: [currentCategory]
-      }
-    : {};
+  const categoryFilter = useMemo(
+    () =>
+      currentCategory
+        ? {
+            productCategories: [currentCategory]
+          }
+        : {},
+    [currentCategory]
+  );
 
   const initLoadingLists = () => {
     dispatch(cgnOfflineMerchants.request(categoryFilter));
     dispatch(cgnOnlineMerchants.request(categoryFilter));
   };
 
-  React.useEffect(initLoadingLists, [currentCategory]);
+  React.useEffect(initLoadingLists, [
+    currentCategory,
+    categoryFilter,
+    dispatch
+  ]);
 
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
@@ -115,7 +120,7 @@ const CgnMerchantsListByCategory = () => {
       {categorySpecs && (
         <LinearGradient
           useAngle={true}
-          angle={57.23}
+          angle={CATEGORY_GRADIENT_ANGLE}
           colors={categorySpecs.colors}
           style={[
             IOStyles.horizontalContentPadding,

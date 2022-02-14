@@ -86,8 +86,8 @@ export const IORenderHtml = (props: Props): React.ReactElement => {
       {...props}
       systemFonts={allUsedFonts}
       contentWidth={width}
-      tagsStyles={tagsStyles}
-      renderersProps={renderersProps}
+      tagsStyles={{ ...tagsStyles, ...props.tagsStyles }}
+      renderersProps={{ ...renderersProps, ...props.renderersProps }}
     />
   );
 };
