@@ -2,13 +2,14 @@ import { right } from "fp-ts/lib/TaskEither";
 import { Task } from "fp-ts/lib/Task";
 import { captureScreenshot, screenshotOptions } from "../screenshot";
 import { saveImageToGallery } from "../../../../utils/share";
+import I18n from "../../../../i18n";
 
 const temporaryDirectory = "/tmp";
 const defaultScreenshotFilename = "screenshot";
 const defaultScreenshotExtension = "png";
 
 jest.mock("react-native-i18n", () => ({
-  t: jest.fn()
+  t: jest.fn(key => key)
 }));
 
 jest.mock("react-native-view-shot", () => ({
@@ -33,22 +34,36 @@ jest.mock("../../../../utils/share", () => ({
 }));
 
 describe("EuCovidCertificate screenshot", () => {
-  describe("given default screenshot options and a filename", () => {
+  describe("given filename and album", () => {
     const givenFilename = "Covid 19 Green Pass";
+    const givenAlbum = "IO";
     const options = {
       ...screenshotOptions,
-      filename: givenFilename
+      filename: givenFilename,
+      album: givenAlbum
     };
-    it("saves the certificate in the IO album with the given filename", done => {
+    it("saves the certificate in the given album with the given filename", done => {
       captureScreenshot(1, options, {
         onSuccess: () => {
           expect(saveImageToGallery).toHaveBeenCalledWith(
             `${temporaryDirectory}/${givenFilename}.${defaultScreenshotExtension}`,
-            "IO"
+            givenAlbum
           );
           done();
         }
       });
+    });
+  });
+
+  describe("given default screenshotOptions", () => {
+    const options = screenshotOptions;
+    it("filename and album are returned from locales", () => {
+      expect(options.filename).toEqual(
+        I18n.t("features.euCovidCertificate.common.title")
+      );
+      expect(options.album).toEqual(
+        I18n.t("features.euCovidCertificate.save.album")
+      );
     });
   });
 });

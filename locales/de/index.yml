@@ -1091,6 +1091,7 @@ instabug:
 features:
   euCovidCertificate:
     save:
+      album: "IO"
       noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfen Sie Ihre Geräteeinstellungen."
       ok: "Das Bild wurde auf Ihrem Smartphone gespeichert"
       bottomSheet:

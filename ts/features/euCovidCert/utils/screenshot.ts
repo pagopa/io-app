@@ -22,7 +22,7 @@ export const screenshotOptions: ScreenshotOptions = {
   width: Dimensions.get("window").width,
   format: "png",
   filename: I18n.t("features.euCovidCertificate.common.title"),
-  album: "IO"
+  album: I18n.t("features.euCovidCertificate.save.album")
 };
 
 /**
