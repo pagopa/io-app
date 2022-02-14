@@ -2574,6 +2574,8 @@ bonus:
       screenTitle: Seleziona un operatore e scopri le agevolazioni
       cta:
         filter: Filtra
+      categoriesList:
+        title: Seleziona una categoria e scopri le agevolazioni
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2613,17 +2615,18 @@ bonus:
         landingPage: Accedi all’agevolazione
         discountUrl: Vai all’agevolazione
       categories:
+        all: Tutti gli operatori
         counting: e altre {{count}}
-        cultureAndEntertainment: cultura e tempo libero
-        health: salute e benessere
-        learning: istruzione e formazione
-        sport: sport
-        home: casa
-        telco: telefonia e internet
-        finance: servizi finanziari
-        travel: viaggi e trasporti
-        mobility: mobilità sostenibile
-        job: lavoro e tirocini
+        cultureAndEntertainment: Cultura e Tempo Libero
+        health: Salute e Benessere
+        learning: Istruzione e Formazione
+        sport: Sport
+        home: Casa
+        telco: Telefonia e Internet
+        finance: Servizi Finanziari
+        travel: Viaggi e Trasporti
+        mobility: Mobilità Sostenibile
+        job: Lavoro e Tirocini
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva la Carta
