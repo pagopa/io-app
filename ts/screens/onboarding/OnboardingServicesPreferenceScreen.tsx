@@ -29,12 +29,12 @@ import { showToast } from "../../utils/showToast";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
 
-export type OnboardingServicesPreferenceScreenNavigationProps = {
+export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
 };
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps<OnboardingServicesPreferenceScreenNavigationProps>;
+  NavigationStackScreenProps<OnboardingServicesPreferenceScreenNavigationParams>;
 
 const OnboardingServicesPreferenceScreen = (
   props: Props
