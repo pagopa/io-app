@@ -574,7 +574,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
     /**
      * If this screen switched to `isWorking = false` from a
-     * `isWorking = true` state, but the sections didn't changed,
+     * `isWorking = true` state, but the sections didn't actually change,
      * then we can disable the `isContinuosScrollEnabled` in order
      * to remove the loader in deadlock.
      */
