@@ -33,7 +33,7 @@ jest.mock("../../../../utils/share", () => ({
 }));
 
 describe("EuCovidCertificate screenshot", () => {
-  describe("given screenshotOptions", () => {
+  describe("given default screenshot options and a filename", () => {
     const givenFilename = "Covid 19 Green Pass";
     const options = {
       ...screenshotOptions,
