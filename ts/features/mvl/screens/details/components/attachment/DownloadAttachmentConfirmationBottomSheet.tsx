@@ -14,6 +14,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { showToast } from "../../../../../../utils/showToast";
 import { MvlAttachment } from "../../../../types/mvlData";
 import { handleDownloadResult } from "../../../../utils";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
@@ -212,15 +213,25 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
         onCancel={dismiss}
         onConfirm={({ dontAskAgain }) => {
           dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
-          return handleDownloadResult(attachment, authHeader).then(path => {
+          return handleDownloadResult(
+            attachment,
+            authHeader,
+            (path, actionConfig) =>
+              showModal(
+                <PdfPreview
+                  path={path}
+                  onClose={hideModal}
+                  actionConfig={actionConfig}
+                />
+              )
+          ).then(() => {
             dismiss();
-            showModal(<PdfPreview path={path} onClose={hideModal} />);
-            // if (options.showToastOnSuccess) {
-            //   showToast(
-            //     i18n.t("features.mvl.details.attachments.toast.success"),
-            //     "success"
-            //   );
-            // }
+            if (options.showToastOnSuccess) {
+              showToast(
+                i18n.t("features.mvl.details.attachments.toast.success"),
+                "success"
+              );
+            }
           });
         }}
         initialPreferences={options}
