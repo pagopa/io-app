@@ -53,7 +53,7 @@ const OFFLINE_FIXED_BOUNDINGBOX = {
 
 const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 
-type MerchantsAll = OfflineMerchant | OnlineMerchant;
+export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props
