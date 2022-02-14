@@ -2548,6 +2548,8 @@ bonus:
       screenTitle: Select the operator and discover the benefits
       cta:
         filter: Filter
+      categoriesList:
+        title: Select a category and discover the benefits
       filter:
         title: Filter operators
         searchTitle: Find by name
@@ -2587,17 +2589,18 @@ bonus:
         landingPage: Get the benefit
         discountUrl: Go to the benefit
       categories:
+        all: All the operators
         counting: and other {{count}}
-        cultureAndEntertainment: culture and entertainment
-        health: health and wellness
-        learning: education and learning
-        sport: sport
-        home: home
-        telco: telephony and internet
-        finance: financial services
-        travel: travels and transportation
-        mobility: sustainable transport
-        job: jobs and internships
+        cultureAndEntertainment: Culture and Entertainment
+        health: Health and Wellness
+        learning: Education and Learning
+        sport: Sport
+        home: Home
+        telco: Telephony and Internet
+        finance: Financial Services
+        travel: Travels and Transportation
+        mobility: Sustainable Transport
+        job: Jobs and Internships
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate your Card
