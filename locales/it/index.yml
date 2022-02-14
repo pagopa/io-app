@@ -2554,6 +2554,9 @@ bonus:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
         title: "Aggiornamenti sul Cashback"
+      deletePaymentMethodsBottomSheet:
+        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
+        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
   cgn:
     accessibility:
       code: Premendo l'elemento copierai il codice
