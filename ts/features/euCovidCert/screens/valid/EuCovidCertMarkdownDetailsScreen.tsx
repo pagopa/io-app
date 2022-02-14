@@ -18,7 +18,7 @@ import {
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
-import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
+import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 
 type NavigationParams = Readonly<{
   markdownDetails: string;
@@ -61,7 +61,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
       setIsCapturingScreenShoot(false);
       return;
     }
-    captureScreenShoot(screenShotViewContainerRef, screenShotOption, {
+    captureScreenshot(screenShotViewContainerRef, screenshotOptions, {
       onSuccess: () =>
         showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
       onNoPermissions: () =>

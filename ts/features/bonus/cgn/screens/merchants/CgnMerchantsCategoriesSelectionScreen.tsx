@@ -17,7 +17,7 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
-import { isLoading } from "../../../bpd/model/RemoteValue";
+import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -36,7 +36,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     dispatch(cgnCategories.request());
   };
 
-  useEffect(loadCategories, []);
+  useEffect(loadCategories, [dispatch]);
 
   const renderCategoryElement = (
     info: ListRenderItemInfo<ProductCategoryEnum | "All">
@@ -80,7 +80,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const categoriesToArray: ReadonlyArray<ProductCategoryEnum | "All"> = [
     "All",
-    ...Object.entries(ProductCategoryEnum).map(value => value[1])
+    ...(isReady(remoteCategories) ? remoteCategories.value : [])
   ];
 
   return (
