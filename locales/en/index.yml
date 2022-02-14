@@ -2541,6 +2541,7 @@ bonus:
         retryAfterDeletion:
           title: "Sorry, an unexpected error has occurred"
           body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
+        toast: "Your choice was not saved. Try again later."
   cgn:
     accessibility:
       code: By pressing the item you will copy the code

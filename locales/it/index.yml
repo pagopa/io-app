@@ -2567,6 +2567,7 @@ bonus:
         retryAfterDeletion:
           title: "Spiacenti, si è verificato un errore imprevisto"
           body: "I tuoi metodi non sono stati eliminati. Riprova, oppure vai al Portafoglio ed eliminali manualmente."
+        toast: "La tua scelta non è stata salvata. Riprova più tardi."
 
   cgn:
     accessibility:

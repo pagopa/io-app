@@ -61,7 +61,7 @@ const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
 
   // if the opt-in choice fails complete the workunit and show an error toast to the user
   if (pot.isError(optInStatus)) {
-    showToast(I18n.t("msgErrorUpdateApp"));
+    showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
     dispatch(optInPaymentMethodsCompleted());
     return null;
   }
