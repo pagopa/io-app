@@ -113,11 +113,7 @@ const CgnMerchantsListByCategory = () => {
         fromNullable(categorySpecs).fold(
           "bonus.cgn.merchantsList.navigationTitle",
           cs => cs.nameKey
-        ),
-        {
-          defaultValue: I18n.t("bonus.cgn.merchantsList.navigationTitle")
-        }
-      )}
+        ))}
       contextualHelp={emptyContextualHelp}
     >
       {categorySpecs && (
@@ -135,11 +131,7 @@ const CgnMerchantsListByCategory = () => {
         >
           <View style={[IOStyles.row, { alignItems: "center" }]}>
             <H1 color={"white"} style={[IOStyles.flex, { paddingRight: 30 }]}>
-              {I18n.t(categorySpecs.nameKey, {
-                defaultValue: I18n.t(
-                  "bonus.cgn.merchantDetail.categories.missing"
-                )
-              })}
+              {I18n.t(categorySpecs.nameKey)}
             </H1>
             {categorySpecs.icon({
               width: 57,

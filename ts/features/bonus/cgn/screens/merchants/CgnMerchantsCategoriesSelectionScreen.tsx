@@ -75,9 +75,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
       return (
         <CgnMerchantCategoryItem
-          title={I18n.t(s.nameKey, {
-            defaultValue: I18n.t("bonus.cgn.merchantDetail.categories.missing")
-          })}
+          title={I18n.t(s.nameKey)}
           colors={s.colors}
           onPress={() => {
             dispatch(cgnSelectedCategory(s.type));

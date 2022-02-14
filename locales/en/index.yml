@@ -2596,7 +2596,6 @@ bonus:
         travel: Travels and Transportation
         mobility: Sustainable Transport
         job: Jobs and Internships
-        missing: Missing Category
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate your Card
