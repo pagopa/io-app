@@ -53,10 +53,8 @@ import { handleTransactionsPage } from "./networking/winning-transactions/transa
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
-import {
-  optInDeletionChoiceHandler,
-  optInPaymentMethodsHandler
-} from "./orchestration/optInPaymentMethods/optInPaymentMethodsHandler";
+import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethods/optInPaymentMethodsHandler";
+import { optInDeletionChoiceHandler } from "./orchestration/optInPaymentMethods/optInDeletionChoiceHandler";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {

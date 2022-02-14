@@ -1,8 +1,7 @@
-import { put } from "redux-saga/effects";
-import { take } from "redux-saga-test-plan/matchers";
+import { Effect, put, take } from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { deleteAllPaymentMethodsByFunction } from "../../../../../../store/actions/wallet/delete";
 import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
 import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
@@ -13,7 +12,7 @@ import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/cit
  * - store the user choice
  */
 
-export function* optInDeletionChoiceHandler() {
+export function* optInDeletionChoiceHandler(): Generator<Effect, void, any> {
   // Perform the payment methods deletion
   yield put(
     deleteAllPaymentMethodsByFunction.request(EnableableFunctionsEnum.BPD)
@@ -25,16 +24,15 @@ export function* optInDeletionChoiceHandler() {
     getType(deleteAllPaymentMethodsByFunction.success),
     getType(deleteAllPaymentMethodsByFunction.failure)
   ]);
-
   if (
     isActionOf(
-      deleteAllPaymentMethodsByFunction.failure,
+      deleteAllPaymentMethodsByFunction.success,
       deleteAllPaymentMethodsByFunctionStatus
     )
   ) {
-    return;
+    // If the payment methods deletion succeeded, perform the opt-in update
+    yield put(
+      bpdUpdateOptInStatusMethod.request(CitizenOptInStatusEnum.DENIED)
+    );
   }
-
-  // If the payment methods deletion succeeded, perform the opt-in update
-  yield put(bpdUpdateOptInStatusMethod.request(CitizenOptInStatusEnum.DENIED));
 }
