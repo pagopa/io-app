@@ -90,9 +90,16 @@ export function* putOptInStatusCitizenV2(
 
     if (updateCitizenIOResult.isRight()) {
       if (updateCitizenIOResult.value.status === 200) {
-        const { optInStatus } = updateCitizenIOResult.value.value;
-        yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
-        return;
+        if (updateCitizenIOResult.value.value.optInStatus) {
+          const { optInStatus } = updateCitizenIOResult.value.value;
+          yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
+          return;
+        } else {
+          // it should never happen
+          bpdUpdateOptInStatusMethod.failure(
+            new Error(`optInStatus is undefined`)
+          );
+        }
       } else {
         yield put(
           bpdUpdateOptInStatusMethod.failure(
