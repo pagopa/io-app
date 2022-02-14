@@ -1,8 +1,7 @@
 // watch for all actions regarding Zendesk
-import { takeLatest } from "redux-saga/effects";
+import { fork, takeLatest } from "redux-saga/effects";
 import {
   getZendeskConfig,
-  zendeskGetTotalNewResponses,
   zendeskRequestTicketNumber,
   zendeskSupportStart
 } from "../store/actions";
@@ -23,7 +22,7 @@ export function* watchZendeskSupportSaga() {
     contentClient.getZendeskConfig
   );
 
-  yield takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
+  yield fork(handleGetTotalNewResponses);
 
-  yield takeLatest(zendeskGetTotalNewResponses, handleGetTotalNewResponses);
+  yield takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
 }
