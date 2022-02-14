@@ -44,7 +44,7 @@ const downloadAttachment = async (
 export const handleDownloadResult = async (
   attachment: MvlAttachment,
   header: { [key: string]: string }
-): Promise<void> => {
+): Promise<string> => {
   try {
     const result = await downloadAttachment(attachment, header);
     const { status } = result.info();
@@ -53,21 +53,28 @@ export const handleDownloadResult = async (
         new Error(`error ${status} fetching ${attachment.resourceUrl.href}`)
       );
     }
-    if (isIos) {
-      const fileHandler =
-        attachment.contentType === ContentTypeValues.applicationPdf
-          ? ReactNativeBlobUtil.ios.openDocument
-          : ReactNativeBlobUtil.ios.presentOptionsMenu;
-      fileHandler(result.path());
-    } else {
-      await ReactNativeBlobUtil.android.addCompleteDownload({
-        mime: attachment.contentType,
-        title: attachment.displayName,
-        showNotification: true,
-        description: attachment.displayName,
-        path: result.path()
-      });
+    if (attachment.contentType === ContentTypeValues.applicationPdf) {
+      // TODO: instead of blob-utils, open a modal with react-native-pdf
+
+      return result.path();
     }
+    return "MAVAFFANCULO";
+
+    // if (isIos) {
+    //   const fileHandler =
+    //     attachment.contentType === ContentTypeValues.applicationPdf
+    //       ? ReactNativeBlobUtil.ios.openDocument
+    //       : ReactNativeBlobUtil.ios.presentOptionsMenu;
+    //   fileHandler(result.path());
+    // } else {
+    //   await ReactNativeBlobUtil.android.addCompleteDownload({
+    //     mime: attachment.contentType,
+    //     title: attachment.displayName,
+    //     showNotification: true,
+    //     description: attachment.displayName,
+    //     path: result.path()
+    //   });
+    // }
   } catch (e) {
     if (e instanceof Error) {
       return Promise.reject(e);

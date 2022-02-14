@@ -1,6 +1,7 @@
 import { View } from "native-base";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyleSheet, ActivityIndicator } from "react-native";
+
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -18,7 +19,8 @@ import { handleDownloadResult } from "../../../../utils";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
 import customVariables from "../../../../../../theme/variables";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { showToast } from "../../../../../../utils/showToast";
+import { LightModalContext } from "../../../../../../components/ui/LightModal";
+import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -202,6 +204,7 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
 ) => {
   const { present, dismiss } = useIOBottomSheetRaw(BOTTOM_SHEET_HEIGHT);
   const dispatch = useIODispatch();
+  const { showModal, hideModal } = useContext(LightModalContext);
 
   const openModalBox = () =>
     present(
@@ -209,14 +212,15 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
         onCancel={dismiss}
         onConfirm={({ dontAskAgain }) => {
           dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
-          return handleDownloadResult(attachment, authHeader).then(() => {
+          return handleDownloadResult(attachment, authHeader).then(path => {
             dismiss();
-            if (options.showToastOnSuccess) {
-              showToast(
-                i18n.t("features.mvl.details.attachments.toast.success"),
-                "success"
-              );
-            }
+            showModal(<PdfPreview path={path} onClose={hideModal} />);
+            // if (options.showToastOnSuccess) {
+            //   showToast(
+            //     i18n.t("features.mvl.details.attachments.toast.success"),
+            //     "success"
+            //   );
+            // }
           });
         }}
         initialPreferences={options}
