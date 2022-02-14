@@ -113,7 +113,8 @@ const CgnMerchantsListByCategory = () => {
         fromNullable(categorySpecs).fold(
           "bonus.cgn.merchantsList.navigationTitle",
           cs => cs.nameKey
-        ))}
+        )
+      )}
       contextualHelp={emptyContextualHelp}
     >
       {categorySpecs && (
