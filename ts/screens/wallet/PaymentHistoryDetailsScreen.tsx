@@ -55,13 +55,14 @@ import {
   zendeskPaymentCategoryValue
 } from "../../utils/supportAssistance";
 
-type NavigationParams = Readonly<{
+export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
-type Props = NavigationStackScreenProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type Props =
+  NavigationStackScreenProps<PaymentHistoryDetailsScreenNavigationParams> &
+    ReturnType<typeof mapStateToProps> &
+    ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   flex: {

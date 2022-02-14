@@ -8,13 +8,14 @@ import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import SatispayCard from "../SatispayCard";
 
-type NavigationParams = Readonly<{
+export type SatispayDetailScreenNavigationParams = Readonly<{
+  // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
   satispay: SatispayPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<NavigationParams>;
+  NavigationStackScreenProps<SatispayDetailScreenNavigationParams>;
 
 /**
  * Detail screen for a satispay

@@ -91,7 +91,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 
-type NavigationParams = Readonly<{
+export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
   keyFrom?: string;
 }>;
@@ -102,7 +102,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps<NavigationParams> &
+  NavigationStackScreenProps<WalletHomeNavigationParams> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({

@@ -29,12 +29,15 @@ import PaymentMethodOnboardingCoBadgeNavigator from "../features/wallet/onboardi
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../features/wallet/onboarding/cobadge/navigation/routes";
 import ActivateBpdOnNewCoBadgeScreen from "../features/wallet/onboarding/cobadge/screens/ActivateBpdOnNewCoBadgeScreen";
 import { ActivateBpdOnNewCreditCardScreen } from "../features/wallet/onboarding/common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
+import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
+import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
 import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboarding/privative/navigation/navigator";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
 import ActivateBpdOnNewPrivativeScreen from "../features/wallet/onboarding/privative/screens/ActivateBpdOnNewPrivativeScreen";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import ActivateBpdOnNewSatispayScreen from "../features/wallet/onboarding/satispay/screens/ActivateBpdOnNewSatispayScreen";
+import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
 import PrivativeDetailScreen from "../features/wallet/privative/screen/PrivativeDetailScreen";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
@@ -55,9 +58,6 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
-import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
-import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
-import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -221,10 +221,6 @@ const routeConfig = {
   ...optInPaymentMethodsConfigMap
 };
 
-/**
- * TODO: migrate WALLET_TRANSACTION_SUMMARY on a new navigator for screens which does not visualize the footer menu.
- *   @https://www.pivotaltracker.com/n/projects/2048617/stories/158221096
- */
 const WalletNavigator = createStackNavigator(routeConfig, {
   // Let each screen handle the header and navigation
   headerMode: "none",
