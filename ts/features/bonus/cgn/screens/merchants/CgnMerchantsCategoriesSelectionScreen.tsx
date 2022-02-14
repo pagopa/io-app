@@ -81,7 +81,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           data={categoriesToArray}
           renderItem={renderCategoryElement}
           numColumns={2}
-          keyExtractor={(item: ProductCategoryEnum | "All" | "Hidden") => item}
+          keyExtractor={(item: ProductCategoryEnum | "All") => item}
           ListFooterComponent={<EdgeBorderComponent />}
         />
       </View>
