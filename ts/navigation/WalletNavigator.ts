@@ -138,66 +138,62 @@ const baseRouteConfigMap = {
   }
 };
 
-const bonusVacanzeConfigMap = bonusVacanzeEnabled
-  ? {
-      [BONUSVACANZE_ROUTES.MAIN]: {
-        screen: BonusVacanzeNavigator
-      },
-      [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: {
-        screen: ActiveBonusScreen
-      }
-    }
-  : {};
+const bonusVacanzeConfigMap = {
+  [BONUSVACANZE_ROUTES.MAIN]: {
+    screen: BonusVacanzeNavigator
+  },
+  [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: {
+    screen: ActiveBonusScreen
+  }
+};
 
-const bpdConfigMap = bpdEnabled
-  ? {
-      [BPD_ROUTES.ONBOARDING.MAIN]: {
-        screen: BpdOnboardingNavigator
-      },
-      [BPD_ROUTES.IBAN_MAIN]: {
-        screen: BpdIBANNavigator
-      },
-      [BPD_ROUTES.DETAILS_MAIN]: {
-        screen: BpdDetailsNavigator
-      },
-      [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: {
-        screen: IbanCTAEditScreen
-      },
-      [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD]: {
-        screen: ActivateBpdOnNewCreditCardScreen
-      },
-      [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: {
-        screen: WalletAddBancomatNavigator
-      },
-      [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT]: {
-        screen: ActivateBpdOnNewBancomatScreen
-      },
-      [WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN]: {
-        screen: PaymentMethodOnboardingSatispayNavigator
-      },
-      [WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY]: {
-        screen: ActivateBpdOnNewSatispayScreen
-      },
-      [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: {
-        screen: PaymentMethodOnboardingBPayNavigator
-      },
-      [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: {
-        screen: ActivateBpdOnNewBPayScreen
-      },
-      [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: {
-        screen: PaymentMethodOnboardingCoBadgeNavigator
-      },
-      [WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW]: {
-        screen: ActivateBpdOnNewCoBadgeScreen
-      },
-      [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: {
-        screen: PaymentMethodOnboardingPrivativeNavigator
-      },
-      [WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW]: {
-        screen: ActivateBpdOnNewPrivativeScreen
-      }
-    }
-  : {};
+const bpdConfigMap = {
+  [BPD_ROUTES.ONBOARDING.MAIN]: {
+    screen: BpdOnboardingNavigator
+  },
+  [BPD_ROUTES.IBAN_MAIN]: {
+    screen: BpdIBANNavigator
+  },
+  [BPD_ROUTES.DETAILS_MAIN]: {
+    screen: BpdDetailsNavigator
+  },
+  [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: {
+    screen: IbanCTAEditScreen
+  },
+  [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD]: {
+    screen: ActivateBpdOnNewCreditCardScreen
+  },
+  [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: {
+    screen: WalletAddBancomatNavigator
+  },
+  [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT]: {
+    screen: ActivateBpdOnNewBancomatScreen
+  },
+  [WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN]: {
+    screen: PaymentMethodOnboardingSatispayNavigator
+  },
+  [WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY]: {
+    screen: ActivateBpdOnNewSatispayScreen
+  },
+  [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: {
+    screen: PaymentMethodOnboardingBPayNavigator
+  },
+  [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: {
+    screen: ActivateBpdOnNewBPayScreen
+  },
+  [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: {
+    screen: PaymentMethodOnboardingCoBadgeNavigator
+  },
+  [WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW]: {
+    screen: ActivateBpdOnNewCoBadgeScreen
+  },
+  [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: {
+    screen: PaymentMethodOnboardingPrivativeNavigator
+  },
+  [WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW]: {
+    screen: ActivateBpdOnNewPrivativeScreen
+  }
+};
 
 const paypalConfigMap = {
   [PAYPAL_ROUTES.ONBOARDING.MAIN]: {
@@ -205,20 +201,18 @@ const paypalConfigMap = {
   }
 };
 
-const optInPaymentMethodsConfigMap = bpdOptInPaymentMethodsEnabled
-  ? {
-      [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
-        screen: OptInPaymentMethodNavigator
-      }
-    }
-  : {};
+const optInPaymentMethodsConfigMap = {
+  [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
+    screen: OptInPaymentMethodNavigator
+  }
+};
 
 const routeConfig = {
   ...baseRouteConfigMap,
-  ...bonusVacanzeConfigMap,
-  ...bpdConfigMap,
+  ...(bonusVacanzeEnabled ? bonusVacanzeConfigMap : {}),
+  ...(bpdEnabled ? bpdConfigMap : {}),
   ...paypalConfigMap,
-  ...optInPaymentMethodsConfigMap
+  ...(bpdOptInPaymentMethodsEnabled ? optInPaymentMethodsConfigMap : {})
 };
 
 const WalletNavigator = createStackNavigator(routeConfig, {

@@ -1,7 +1,16 @@
+import BONUSVACANZE_ROUTES from "../../features/bonus/bonusVacanze/navigation/routes";
+import { ActiveBonusScreenNavigationParams } from "../../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
+import BPD_ROUTES from "../../features/bonus/bpd/navigation/routes";
 import { BancomatDetailScreenNavigationParams } from "../../features/wallet/bancomat/screen/BancomatDetailScreen";
 import { BPayDetailScreenNavigationParams } from "../../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import { CobadgeDetailScreenNavigationParams } from "../../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
+import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../features/wallet/onboarding/bancomat/navigation/routes";
+import WALLET_ONBOARDING_BPAY_ROUTES from "../../features/wallet/onboarding/bancomatPay/navigation/routes";
+import WALLET_ONBOARDING_COBADGE_ROUTES from "../../features/wallet/onboarding/cobadge/navigation/routes";
+import { ActivateBpdOnNewCreditCardScreenNavigationParams } from "../../features/wallet/onboarding/common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
+import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../features/wallet/onboarding/privative/navigation/routes";
+import WALLET_ONBOARDING_SATISPAY_ROUTES from "../../features/wallet/onboarding/satispay/navigation/routes";
 import { PrivativeDetailScreenNavigationParams } from "../../features/wallet/privative/screen/PrivativeDetailScreen";
 import { SatispayDetailScreenNavigationParams } from "../../features/wallet/satispay/screen/SatispayDetailScreen";
 import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
@@ -47,4 +56,14 @@ export type WalletParamsList = {
   [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL]: CreditCardOnboardingAttemptDetailScreenNavigationParams;
   [ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE]: AddCreditCardOutcomeCodeMessageNavigationParams;
   [ROUTES.PAYMENT_OUTCOMECODE_MESSAGE]: PaymentOutcomeCodeMessageNavigationParams;
+
+  [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: ActiveBonusScreenNavigationParams;
+
+  [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: undefined;
+  [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD]: ActivateBpdOnNewCreditCardScreenNavigationParams;
+  [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT]: undefined;
+  [WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY]: undefined;
+  [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: undefined;
+  [WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW]: undefined;
+  [WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW]: undefined;
 };
