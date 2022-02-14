@@ -56,7 +56,7 @@ import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOn
 import {
   optInDeletionChoiceHandler,
   optInPaymentMethodsHandler
-} from "./orchestration/optInPaymentMethodsHandler";
+} from "./orchestration/optInPaymentMethods/optInPaymentMethodsHandler";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {

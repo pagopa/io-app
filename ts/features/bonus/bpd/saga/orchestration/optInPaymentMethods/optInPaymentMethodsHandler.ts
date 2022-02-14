@@ -2,23 +2,23 @@ import { call, put } from "redux-saga/effects";
 import { NavigationActions } from "react-navigation";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { take } from "redux-saga-test-plan/matchers";
-import NavigationService from "../../../../../navigation/NavigationService";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import {
   optInPaymentMethodsBack,
   optInPaymentMethodsCancel,
   optInPaymentMethodsCompleted,
   optInPaymentMethodsFailure
-} from "../../store/actions/optInPaymentMethods";
+} from "../../../store/actions/optInPaymentMethods";
 import {
   executeWorkUnit,
   withFailureHandling,
   withResetNavigationStack
-} from "../../../../../sagas/workUnit";
-import BPD_ROUTES from "../../navigation/routes";
-import { deleteAllPaymentMethodsByFunction } from "../../../../../store/actions/wallet/delete";
-import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
-import { bpdUpdateOptInStatusMethod } from "../../store/actions/onboarding";
-import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
+} from "../../../../../../sagas/workUnit";
+import BPD_ROUTES from "../../../navigation/routes";
+import { deleteAllPaymentMethodsByFunction } from "../../../../../../store/actions/wallet/delete";
+import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
+import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
+import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
 function* optInPaymentMethodsWorkUnit() {
   return yield call(executeWorkUnit, {
