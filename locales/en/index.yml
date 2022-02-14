@@ -2914,6 +2914,10 @@ features:
             body: "An error occurred while downloading the attachment"
             details: "Check your connection please and try again"
           checkBox: "OK, don't show me again"
+        pdfPreview:
+          singleBtn: "Save, print, or share"
+          open: "Open"
+          save: "Save"
       body:
         plain: "plain text"
         html: "html"

@@ -9,6 +9,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import { isIos } from "../../../../../../utils/platform";
 
 const styles = StyleSheet.create({
   container: {
@@ -30,6 +31,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
+
+const renderFooter = () =>
+  isIos ? (
+    <FooterWithButtons
+      type={"SingleButton"}
+      leftButton={confirmButtonProps(() => {}, I18n.t("global.buttons.retry"))}
+    ></FooterWithButtons>
+  ) : (
+    <FooterWithButtons
+      type={"ThreeButtonsInLine"}
+      leftButton={confirmButtonProps(() => {}, I18n.t("global.buttons.share"))}
+      midButton={confirmButtonProps(() => {},
+      I18n.t("features.mvl.details.attachments.pdfPreview.save"))}
+      rightButton={confirmButtonProps(() => {},
+      I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+    ></FooterWithButtons>
+  );
 
 type Props = { path: string; onClose: () => void };
 
@@ -67,27 +85,16 @@ const PdfPreview = ({ path, onClose }: Props) => {
       <View style={styles.container}>
         <Pdf
           source={{ uri: path, cache: true }}
-          onLoadComplete={(numberOfPages, filePath) => {
-            console.log(`Number of pages: ${numberOfPages} - ${filePath}`);
-          }}
-          onPageChanged={(page, _numberOfPages) => {
-            console.log(`Current page: ${page}`);
-          }}
           onError={error => {
-            console.log(error);
-          }}
-          onPressLink={uri => {
-            console.log(`Link pressed: ${uri}`);
+            console.error(error);
           }}
           style={styles.pdf}
         />
       </View>
 
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={confirmButtonProps(() => {},
-        I18n.t("global.buttons.retry"))}
-      ></FooterWithButtons>
+      {renderFooter()}
+
+      <View spacer={true} />
     </>
   );
 };
