@@ -421,7 +421,6 @@ const mapDispatchToProps = (
         }
       );
     } else {
-      console.log("-----------------> navigateree");
       navigateToWalletHome({
         newMethodAdded: maybeWallet.isSome(),
         keyFrom: props.navigation.getParam("keyFrom")
