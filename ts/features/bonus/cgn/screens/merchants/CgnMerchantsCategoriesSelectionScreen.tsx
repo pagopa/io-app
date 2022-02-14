@@ -1,23 +1,26 @@
-import * as React from "react";
-import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import { View } from "native-base";
-import I18n from "../../../../../i18n";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import * as React from "react";
+import { useEffect } from "react";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { getCategorySpecs } from "../../utils/filters";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { useIODispatch } from "../../../../../store/hooks";
+import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
+import I18n from "../../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import { isLoading } from "../../../bpd/model/RemoteValue";
+import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnCategories,
   cgnSelectedCategory
 } from "../../store/actions/categories";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
-import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { cgnCategoriesListSelector } from "../../store/reducers/categories";
+import { getCategorySpecs } from "../../utils/filters";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const dispatch = useIODispatch();
