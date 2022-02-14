@@ -2527,7 +2527,12 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "News and updates"
-        title: "Cashback updates"
+        title: "Update on the Cashback initiative"
+        subtitle: "Ministry of Economy and Finance"
+        body: !include bonus/bpd/optInPaymentMethods.md
+      choice:
+        header: "Configura IO"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
       deletePaymentMethodsBottomSheet:
         title: "Do you really want to delete the following methods from the Wallet?"
         subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
