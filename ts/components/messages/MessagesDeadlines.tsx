@@ -532,10 +532,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     });
   }
 
-  public componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     const { messagesState } = this.props;
     const { messagesState: prevMessagesState } = prevProps;
-    const { maybeLastLoadedStartOfMonthTime } = this.state;
+    const { maybeLastLoadedStartOfMonthTime, isWorking, sections } = this.state;
 
     if (prevProps.currentTab !== this.props.currentTab) {
       this.props.resetSelection();
@@ -569,6 +569,22 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         isContinuosScrollEnabled,
         lastDeadlineId,
         nextDeadlineId
+      });
+    }
+
+    /**
+     * If this screen switched to `isWorking = false` from a
+     * `isWorking = true` state, but the sections didn't changed,
+     * then we can disable the `isContinuosScrollEnabled` in order
+     * to remove the loader in deadlock.
+     */
+
+    const hasFinishedWorking = isWorking !== prevState.isWorking && !isWorking;
+    const haveSectionsChanged = sections.length > prevState.sections.length;
+
+    if (hasFinishedWorking && haveSectionsChanged) {
+      this.setState({
+        isContinuosScrollEnabled: false
       });
     }
   }
