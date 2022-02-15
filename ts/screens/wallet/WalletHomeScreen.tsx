@@ -519,10 +519,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             anyHistoryPayments || anyCreditCardAttempts
           );
 
-    const footerContent =
-      pot.isSome(potWallets) && !this.newMethodAdded
-        ? this.footerButton(potWallets)
-        : undefined;
+    const footerContent = pot.isSome(potWallets)
+      ? this.footerButton(potWallets)
+      : undefined;
 
     return (
       <WalletLayout
