@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
+import { constNull } from "fp-ts/lib/function";
 import {
   cgnActivationStart,
   cgnRequestActivation
@@ -22,6 +23,7 @@ import {
 import { BackendCgnMerchants } from "../api/backendCgnMerchants";
 import { cgnCodeFromBucket } from "../store/actions/bucket";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import { cgnCategories } from "../store/actions/categories";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -40,6 +42,7 @@ import {
 } from "./networking/merchants/cgnMerchantsSaga";
 import { cgnBucketConsuption } from "./networking/bucket";
 import { cgnUnsubscriptionHandler } from "./networking/unsubscribe";
+import { cgnCategoriesSaga } from "./networking/categories/cgnCategoriesSaga";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -100,6 +103,13 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     getType(cgnUnsubscribe.request),
     cgnUnsubscriptionHandler,
     backendCGN.startCgnUnsubscription
+  );
+  // CGN Merchants categories
+  yield takeLatest(
+    getType(cgnCategories.request),
+    cgnCategoriesSaga,
+    // FIXME replace with proper API client once API is defined
+    constNull
   );
 
   // CGN Offline Merchants
