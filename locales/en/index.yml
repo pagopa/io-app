@@ -2527,7 +2527,12 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "News and updates"
-        title: "Cashback updates"
+        title: "Update on the Cashback initiative"
+        subtitle: "Ministry of Economy and Finance"
+        body: !include bonus/bpd/optInPaymentMethods.md
+      choice:
+        header: "Configura IO"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
       deletePaymentMethodsBottomSheet:
         title: "Do you really want to delete the following methods from the Wallet?"
         subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
@@ -2543,6 +2548,8 @@ bonus:
       screenTitle: Select the operator and discover the benefits
       cta:
         filter: Filter
+      categoriesList:
+        title: Select a category and discover the benefits
       filter:
         title: Filter operators
         searchTitle: Find by name
@@ -2582,17 +2589,18 @@ bonus:
         landingPage: Get the benefit
         discountUrl: Go to the benefit
       categories:
+        all: All the operators
         counting: and other {{count}}
-        cultureAndEntertainment: culture and entertainment
-        health: health and wellness
-        learning: education and learning
-        sport: sport
-        home: home
-        telco: telephony and internet
-        finance: financial services
-        travel: travels and transportation
-        mobility: sustainable transport
-        job: jobs and internships
+        cultureAndEntertainment: Culture and Entertainment
+        health: Health and Wellness
+        learning: Education and Learning
+        sport: Sport
+        home: Home
+        telco: Telephony and Internet
+        finance: Financial Services
+        travel: Travels and Transportation
+        mobility: Sustainable Transport
+        job: Jobs and Internships
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate your Card
@@ -2908,6 +2916,7 @@ features:
           smime: "Download smime.p7s"
   euCovidCertificate:
     save:
+      album: "IO"
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
       ok: "Image saved in your device gallery"
       bottomSheet:
