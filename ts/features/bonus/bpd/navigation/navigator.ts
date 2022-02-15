@@ -15,8 +15,8 @@ import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMeth
 import OptInPaymentMethodsCashbackUpdateScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsCashbackUpdateScreen";
 import OptInPaymentMethodsChoiceScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsChoiceScreen";
 import OptInPaymentMethodsThankYouDeleteMethodsScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsThankYouDeleteMethodsScreen";
-import BPD_ROUTES from "./routes";
 import OptInPaymentMethodsThankYouKeepMethodsScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsThankYouKeepMethodsScreen";
+import BPD_ROUTES from "./routes";
 
 export const BpdOnboardingNavigator = createStackNavigator(
   {
