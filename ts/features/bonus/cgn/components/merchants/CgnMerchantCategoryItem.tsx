@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
     width: widthPercentageToDP("42.13%"),
-    height: 121
+    minHeight: 121
   },
   container: {
     flexDirection: "column",
