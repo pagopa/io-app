@@ -6,8 +6,11 @@ export type AppParamsList = {
   // TODO: [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>
   // TODO: [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>
   // TODO: [ROUTES.MAIN]: NavigatorScreenParams<MainParamsList>
+  // TODO: [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>
+  // TODO: [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>
+  // TODO: [CGN_ROUTES.EYCA.ACTIVATION.MAIN]: NavigatorScreenParams<CgnEYCAActivationParamsList>
 
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
 
-  // TODO: [ZENDESK_ROUTES.HELP_CENTER]: NavigatorScreenParams<ZendeskParamsList>
+  // TODO: [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>
 };
