@@ -382,16 +382,8 @@ function* startOrResumeAddCreditCardSaga(
                       bpdRemoteConfig?.enroll_bpd_after_add_payment_method
                     ) {
                       yield call(navigateToSuggestBpdActivation);
-                    } else {
-                      yield call(waitAndNavigateToWalletHome);
                     }
-                    break;
                   }
-                }
-                if (action.payload.setAsFavorite) {
-                  yield put(
-                    setFavouriteWalletRequest(maybeAddedWallet.idWallet)
-                  );
                 }
                 // signal the completion
                 if (action.payload.onSuccess) {

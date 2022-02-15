@@ -13,8 +13,7 @@ import {
   fetchWalletsRequest,
   fetchWalletsSuccess,
   refreshPMTokenWhileAddCreditCard,
-  runStartOrResumeAddCreditCardSaga,
-  setFavouriteWalletRequest
+  runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import {
   lastPaymentOutcomeCodeSelector,
@@ -134,8 +133,6 @@ describe("startOrResumeAddCreditCardSaga", () => {
         payload: [{ idWallet: anIdWallet }]
       })
       .delay(testableWalletsSaga!.successScreenDelay)
-      .next()
-      .put(setFavouriteWalletRequest(anIdWallet))
       .next();
   });
 });
