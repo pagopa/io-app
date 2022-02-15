@@ -2916,6 +2916,7 @@ features:
           smime: "Download smime.p7s"
   euCovidCertificate:
     save:
+      album: "IO"
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
       ok: "Image saved in your device gallery"
       bottomSheet:
