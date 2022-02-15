@@ -1,6 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { DeepPartial } from "redux";
 import { Transaction } from "../../../../types/pagopa";
+import { ProfileState } from "../../profile";
 import { GlobalState } from "../../types";
 import { getSafeUnreadTransactionsNumSelector } from "../readTransactions";
 
@@ -25,10 +26,10 @@ describe("readTransaction", () => {
   describe("getSafeUnreadTransactionsNumSelector", () => {
     it("should return the correct unread transaction number", () => {
       const state: DeepPartial<GlobalState> = {
-        profile: pot.some<any>({
+        profile: pot.some({
           is_email_validated: true,
           email: "test@email.it"
-        }),
+        }) as DeepPartial<ProfileState>,
         ...transactionsState
       };
 
@@ -41,10 +42,10 @@ describe("readTransaction", () => {
 
     it("should return the 0 because the email is not validated", () => {
       const state: DeepPartial<GlobalState> = {
-        profile: pot.some<any>({
+        profile: pot.some({
           is_email_validated: false,
           email: "test@email.it"
-        }),
+        }) as DeepPartial<ProfileState>,
         ...transactionsState
       };
 
