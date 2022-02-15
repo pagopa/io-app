@@ -20,7 +20,10 @@ import {
   cgnSelectedCategory
 } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
-import { getCategorySpecs } from "../../utils/filters";
+import {
+  getCategorySpecs,
+  orderCategoriesByNameKey
+} from "../../utils/filters";
 import { showToast } from "../../../../../utils/showToast";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
@@ -87,7 +90,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const categoriesToArray: ReadonlyArray<ProductCategoryEnum | "All"> = [
     "All",
-    ...(pot.isSome(potCategories) ? potCategories.value : [])
+    ...(pot.isSome(potCategories)
+      ? orderCategoriesByNameKey(potCategories.value)
+      : [])
   ];
 
   return (
