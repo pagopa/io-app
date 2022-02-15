@@ -12,7 +12,9 @@ import {
   getOfflineMerchantsDefaultDecoder,
   GetOfflineMerchantsT,
   getOnlineMerchantsDefaultDecoder,
-  GetOnlineMerchantsT
+  GetOnlineMerchantsT,
+  getPublishedProductCategoriesDefaultDecoder,
+  GetPublishedProductCategoriesT
 } from "../../../../../definitions/cgn/merchants/requestTypes";
 import { tokenHeaderProducer, withBearerToken } from "../../../../utils/api";
 
@@ -54,6 +56,14 @@ const getDiscountBucketCode: GetDiscountBucketCodeT = {
   response_decoder: getDiscountBucketCodeDefaultDecoder()
 };
 
+const getPublishedCategories: GetPublishedProductCategoriesT = {
+  method: "get",
+  url: _ => `${BASE_URL}/published-product-categories`,
+  query: _ => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getPublishedProductCategoriesDefaultDecoder()
+};
+
 //
 // A specific backend client to handle cgn requests
 //
@@ -79,6 +89,9 @@ export function BackendCgnMerchants(
     getMerchant: withToken(createFetchRequestForApi(getMerchant, options)),
     getDiscountBucketCode: withToken(
       createFetchRequestForApi(getDiscountBucketCode, options)
+    ),
+    getPublishedCategories: withToken(
+      createFetchRequestForApi(getPublishedCategories, options)
     )
   };
 }

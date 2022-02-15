@@ -440,7 +440,6 @@ const mapDispatchToProps = (
           creditCard,
           setAsFavorite,
           onSuccess: addedWallet => {
-            showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
             navigateToNextScreen(some(addedWallet));
           },
           onFailure: error => {
