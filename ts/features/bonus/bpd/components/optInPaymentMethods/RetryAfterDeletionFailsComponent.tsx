@@ -21,7 +21,7 @@ const RetryAfterDeletionFailsComponent = () => {
   return (
     <SafeAreaView
       style={IOStyles.flex}
-      testID={"OptInPaymentMethodsThankYouDeleteMethodsScreen"}
+      testID={"RetryAfterDeletionFailsComponent"}
     >
       <InfoScreenComponent
         image={<Error width={120} height={120} />}

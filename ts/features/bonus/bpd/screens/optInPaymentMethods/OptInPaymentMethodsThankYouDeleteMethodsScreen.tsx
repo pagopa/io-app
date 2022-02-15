@@ -38,7 +38,6 @@ const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
     _ => true,
     _ => false
   );
-
   // if the payment methods deletion fails show the retry component
   if (isError(deleteAllPaymentMethodsByFunctionStatus)) {
     return <RetryAfterDeletionFailsComponent />;
@@ -55,6 +54,7 @@ const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
         isLoading={true}
         loadingCaption={I18n.t("global.remoteStates.loading")}
         onRetry={() => true}
+        testID={"loadingComponent"}
       />
     );
   }

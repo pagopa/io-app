@@ -12,10 +12,7 @@ import I18n from "../../../../../i18n";
 const ThankYouSuccessComponent = () => {
   const dispatch = useDispatch();
   return (
-    <SafeAreaView
-      style={IOStyles.flex}
-      testID={"OptInPaymentMethodsThankYouDeleteMethodsScreen"}
-    >
+    <SafeAreaView style={IOStyles.flex} testID={"ThankYouSuccessComponent"}>
       <InfoScreenComponent
         image={<Completed width={80} height={80} />}
         title={I18n.t(
