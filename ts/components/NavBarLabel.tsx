@@ -88,18 +88,12 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
     ? `${I18n.t("navigation.selected")}, `
     : "";
 
-  const computeUnreadMessages = (() => {
-    switch (routeName) {
-      case ROUTES.MESSAGES_NAVIGATOR:
-        return messagesUnread.length || undefined;
+  const unreadMessagesMap = {
+    [ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length,
+    [ROUTES.WALLET_HOME]: transactionsNumUnread
+  };
 
-      case ROUTES.WALLET_HOME:
-        return transactionsNumUnread || undefined;
-
-      default:
-        return undefined;
-    }
-  })();
+  const computeUnreadMessages = unreadMessagesMap[routeName] || undefined;
 
   const panelAccessibilityLabel = computeAccessibilityLabel(
     label,
