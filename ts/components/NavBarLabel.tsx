@@ -93,12 +93,12 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
     [ROUTES.WALLET_HOME]: transactionsNumUnread
   };
 
-  const computeUnreadMessages = unreadMessagesMap[routeName] || undefined;
+  const computedUnreadMessages = unreadMessagesMap[routeName] || undefined;
 
   const panelAccessibilityLabel = computeAccessibilityLabel(
     label,
     maybeOrder.getOrElse(0),
-    computeUnreadMessages
+    computedUnreadMessages
   );
 
   return (
