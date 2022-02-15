@@ -1,7 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { constNull } from "fp-ts/lib/function";
 import {
   cgnActivationStart,
   cgnRequestActivation
@@ -108,8 +107,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   yield takeLatest(
     getType(cgnCategories.request),
     cgnCategoriesSaga,
-    // FIXME replace with proper API client once API is defined
-    constNull
+    backendCgnMerchants.getPublishedCategories
   );
 
   // CGN Offline Merchants
