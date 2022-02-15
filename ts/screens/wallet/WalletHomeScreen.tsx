@@ -477,28 +477,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private newMethodAddedContent = (
-    <Content>
-      <IconFont
-        name={"io-close"}
-        style={styles.end}
-        onPress={this.handleBackPress}
-      />
-      <IconFont
-        name={"io-complete"}
-        size={120}
-        color={customVariables.brandHighlight}
-        style={styles.center}
-      />
-      <View spacer={true} />
-
-      <Text alignCenter={true}>{`${I18n.t("global.genericThanks")},`}</Text>
-      <Text alignCenter={true} bold={true}>
-        {I18n.t("wallet.newPaymentMethod.successful")}
-      </Text>
-    </Content>
-  );
-
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
       <ButtonDefaultOpacity
@@ -541,10 +519,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             anyHistoryPayments || anyCreditCardAttempts
           );
 
-    const footerContent =
-      pot.isSome(potWallets) && !this.newMethodAdded
-        ? this.footerButton(potWallets)
-        : undefined;
+    const footerContent = pot.isSome(potWallets)
+      ? this.footerButton(potWallets)
+      : undefined;
 
     return (
       <WalletLayout
@@ -563,16 +540,10 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
-        {this.newMethodAdded ? (
-          this.newMethodAddedContent
-        ) : (
-          <>
-            {(bpdEnabled || this.props.isCgnEnabled) && (
-              <FeaturedCardCarousel />
-            )}
-            {transactionContent}
-          </>
-        )}
+        <>
+          {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
+          {transactionContent}
+        </>
         {bonusVacanzeEnabled && (
           <NavigationEvents
             onWillFocus={this.onFocus}
