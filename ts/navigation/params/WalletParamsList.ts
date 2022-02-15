@@ -57,9 +57,19 @@ export type WalletParamsList = {
   [ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE]: AddCreditCardOutcomeCodeMessageNavigationParams;
   [ROUTES.PAYMENT_OUTCOMECODE_MESSAGE]: PaymentOutcomeCodeMessageNavigationParams;
 
+  // TODO: [ROUTES.MAIN]: NavigatorScreenParams<BonusVacanzeParamsList>
   [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: ActiveBonusScreenNavigationParams;
 
+  // TODO: [BPD_ROUTES.ONBOARDING.MAIN]: NavigatorScreenParams<BpdOnboardingParamsList>
+  // TODO: [BPD_ROUTES.DETAILS_MAIN.MAIN]: NavigatorScreenParams<BpdDetailsParamsList>
   [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: undefined;
+
+  // TODO: [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: NavigatorScreenParams<WalletAddBancomatParamsList>
+  // TODO: [WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingSatispayParamsList>
+  // TODO: [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingBPayParamsList>
+  // TODO: [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingCoBadgeParamsList>
+  // TODO: [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingPrivativeParamsList>
+
   [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD]: ActivateBpdOnNewCreditCardScreenNavigationParams;
   [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT]: undefined;
   [WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY]: undefined;
