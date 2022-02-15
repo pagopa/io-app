@@ -41,6 +41,7 @@ const OptInPaymentMethodsThankYouKeepMethodsScreen = () => {
         isLoading={true}
         loadingCaption={I18n.t("global.remoteStates.loading")}
         onRetry={() => true}
+        testID={"loadingComponent"}
       />
     );
   }
