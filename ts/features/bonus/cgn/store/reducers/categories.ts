@@ -6,6 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { cgnCategories, cgnSelectedCategory } from "../actions/categories";
 import { NetworkError } from "../../../../../utils/errors";
+import { orderCategoriesByNameKey } from "../../utils/filters";
 
 export type CgnCategoriesState = {
   selectedCategory: ProductCategoryEnum | undefined;
@@ -37,7 +38,7 @@ const reducer = (
     case getType(cgnCategories.success):
       return {
         ...state,
-        list: pot.some(action.payload)
+        list: pot.some(orderCategoriesByNameKey(action.payload))
       };
     case getType(cgnCategories.failure):
       return {
