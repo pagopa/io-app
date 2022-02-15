@@ -36,11 +36,15 @@ const RetryAfterDeletionFailsComponent = () => {
         type={"TwoButtonsInlineHalf"}
         leftButton={confirmButtonProps(
           () => dispatch(optInPaymentMethodsDeletionChoice()),
-          I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.retry")
+          I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.retry"),
+          undefined,
+          "retryButton"
         )}
         rightButton={cancelButtonProps(
           () => dispatch(optInPaymentMethodsCompleted()),
-          I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.goToWallet")
+          I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.goToWallet"),
+          undefined,
+          "goToWalletButton"
         )}
       />
     </SafeAreaView>
