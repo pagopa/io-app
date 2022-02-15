@@ -2,12 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  ListRenderItemInfo,
-  Platform
-} from "react-native";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -104,22 +99,18 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
         <View spacer large />
-        {pot.isLoading(potCategories) ? (
-          <ActivityIndicator animating={true} />
-        ) : (
-          <FlatList
-            showsVerticalScrollIndicator={Platform.OS !== "ios"}
-            columnWrapperStyle={{ justifyContent: "space-between" }}
-            style={IOStyles.flex}
-            data={categoriesToArray}
-            refreshing={pot.isLoading(potCategories)}
-            onRefresh={loadCategories}
-            renderItem={renderCategoryElement}
-            numColumns={2}
-            keyExtractor={(item: ProductCategoryEnum | "All") => item}
-            ListFooterComponent={<EdgeBorderComponent />}
-          />
-        )}
+        <FlatList
+          showsVerticalScrollIndicator={Platform.OS !== "ios"}
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          style={IOStyles.flex}
+          data={categoriesToArray}
+          refreshing={pot.isLoading(potCategories)}
+          onRefresh={loadCategories}
+          renderItem={renderCategoryElement}
+          numColumns={2}
+          keyExtractor={(item: ProductCategoryEnum | "All") => item}
+          ListFooterComponent={<EdgeBorderComponent />}
+        />
       </View>
     </BaseScreenComponent>
   );
