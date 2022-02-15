@@ -6,6 +6,7 @@ import { Locales, TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 import { messagesUnreadAndUnarchivedSelector } from "../store/reducers/entities/messages/messagesStatus";
+import { getSafeUnreadTransactionsNumSelector } from "../store/reducers/entities/readTransactions";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { makeFontStyleObject } from "../theme/fonts";
@@ -73,7 +74,13 @@ const computeAccessibilityLabel = (
  * @param props
  */
 const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
-  const { options, routeName, preferredLanguage, messagesUnread } = props;
+  const {
+    options,
+    routeName,
+    preferredLanguage,
+    messagesUnread,
+    transactionsNumUnread
+  } = props;
   const locale: Locales = preferredLanguage.fold(I18n.locale, l => l);
   const label = getLabel(routeName, locale);
   const maybeOrder = fromNullable(routeOrder.get(routeName as Routes));
@@ -81,8 +88,18 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
     ? `${I18n.t("navigation.selected")}, `
     : "";
 
-  const computeUnreadMessages =
-    routeName === ROUTES.MESSAGES_NAVIGATOR ? messagesUnread.length : undefined;
+  const computeUnreadMessages = (() => {
+    switch (routeName) {
+      case ROUTES.MESSAGES_NAVIGATOR:
+        return messagesUnread.length || undefined;
+
+      case ROUTES.WALLET_HOME:
+        return transactionsNumUnread || undefined;
+
+      default:
+        return undefined;
+    }
+  })();
 
   const panelAccessibilityLabel = computeAccessibilityLabel(
     label,
@@ -107,7 +124,8 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   preferredLanguage: preferredLanguageSelector(state),
-  messagesUnread: messagesUnreadAndUnarchivedSelector(state)
+  messagesUnread: messagesUnreadAndUnarchivedSelector(state),
+  transactionsNumUnread: getSafeUnreadTransactionsNumSelector(state)
 });
 
 export default connect(mapStateToProps)(NavBarLabel);
