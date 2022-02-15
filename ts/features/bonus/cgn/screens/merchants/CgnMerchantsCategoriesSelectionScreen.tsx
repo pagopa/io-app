@@ -1,6 +1,7 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -17,7 +18,6 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
-import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -26,10 +26,12 @@ import {
 } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
+import { showToast } from "../../../../../utils/showToast";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
+  const isFirstRender = useRef<boolean>(true);
   const dispatch = useIODispatch();
-  const remoteCategories = useIOSelector(cgnCategoriesListSelector);
+  const potCategories = useIOSelector(cgnCategoriesListSelector);
   const navigation = useNavigationContext();
 
   const loadCategories = () => {
@@ -37,6 +39,16 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   };
 
   useEffect(loadCategories, [dispatch]);
+
+  const isError = useMemo(() => pot.isError(potCategories), [potCategories]);
+
+  useEffect(() => {
+    if (!isFirstRender.current && isError) {
+      showToast(I18n.t("global.genericError"), "danger");
+    }
+    // eslint-disable-next-line functional/immutable-data
+    isFirstRender.current = false;
+  }, [isError]);
 
   const renderCategoryElement = (
     info: ListRenderItemInfo<ProductCategoryEnum | "All">
@@ -80,7 +92,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const categoriesToArray: ReadonlyArray<ProductCategoryEnum | "All"> = [
     "All",
-    ...(isReady(remoteCategories) ? remoteCategories.value : [])
+    ...(pot.isSome(potCategories) ? potCategories.value : [])
   ];
 
   return (
@@ -92,7 +104,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
         <View spacer large />
-        {isLoading(remoteCategories) ? (
+        {pot.isLoading(potCategories) ? (
           <ActivityIndicator animating={true} />
         ) : (
           <FlatList
@@ -100,7 +112,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
             columnWrapperStyle={{ justifyContent: "space-between" }}
             style={IOStyles.flex}
             data={categoriesToArray}
-            refreshing={isLoading(remoteCategories)}
+            refreshing={pot.isLoading(potCategories)}
             onRefresh={loadCategories}
             renderItem={renderCategoryElement}
             numColumns={2}
