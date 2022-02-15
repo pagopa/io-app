@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
   body: {
     borderRadius: 8,
     marginBottom: 10,
-    width: widthPercentageToDP("42.13%")
+    width: widthPercentageToDP("42.13%"),
+    minHeight: 121
   },
   container: {
     flexDirection: "column",
