@@ -504,7 +504,7 @@ navigation:
   messages: Messages
   profile: Profile
   accessibility: "Section {{section}}, panel, {{order}} of 4"
-  accessibilityWithBadge: "Section {{section}}, panel, {{order}} of 4, {{unread}} new"
+  accessibilityWithBadge: "Section {{section}}, panel, {{order}} of 4, {{unread}} unread"
   selected: Is selected
 cie:
   title: Touch the card

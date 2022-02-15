@@ -504,7 +504,7 @@ navigation:
   messages: Messaggi
   profile: Profilo
   accessibility: "Sezione {{section}}, pannello, {{order}} di 4"
-  accessibilityWithBadge: "Sezione {{section}}, pannello, {{order}} di 4, {{unread}} nuovi"
+  accessibilityWithBadge: "Sezione {{section}}, pannello, {{order}} di 4, {{unread}} non letti"
   selected: È selezionato
 cie:
   title: Appoggia la carta
