@@ -24,7 +24,9 @@ const ThankYouSuccessComponent = () => {
         type={"SingleButton"}
         leftButton={cancelButtonProps(
           () => dispatch(optInPaymentMethodsCompleted()),
-          I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.goToWallet")
+          I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.goToWallet"),
+          undefined,
+          "goToWalletButton"
         )}
       />
     </SafeAreaView>
