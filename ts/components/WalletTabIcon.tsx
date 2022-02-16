@@ -1,9 +1,6 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import { connect } from "react-redux";
-
-import { getUnreadTransactionsSelector } from "../store/reducers/entities/readTransactions";
-import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
+import { getSafeUnreadTransactionsNumSelector } from "../store/reducers/entities/readTransactions";
 import { GlobalState } from "../store/reducers/types";
 import TabIconComponent from "./ui/TabIconComponent";
 
@@ -29,17 +26,8 @@ class WalletTabIcon extends React.PureComponent<Props> {
   }
 }
 
-function mapStateToProps(state: GlobalState) {
-  const transactions = getUnreadTransactionsSelector(state);
-  const isEmailValidated = isProfileEmailValidatedSelector(state);
-  const unreadTransactions =
-    pot.isSome(transactions) && isEmailValidated
-      ? Object.keys(transactions.value).length
-      : 0;
-
-  return {
-    unreadTransactions
-  };
-}
+const mapStateToProps = (state: GlobalState) => ({
+  unreadTransactions: getSafeUnreadTransactionsNumSelector(state)
+});
 
 export default connect(mapStateToProps)(WalletTabIcon);

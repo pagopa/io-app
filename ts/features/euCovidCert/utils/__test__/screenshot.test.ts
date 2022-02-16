@@ -57,12 +57,9 @@ describe("EuCovidCertificate screenshot", () => {
 
   describe("given default screenshotOptions", () => {
     const options = screenshotOptions;
-    it("filename and album are returned from locales", () => {
+    it("filename is returned from locales", () => {
       expect(options.filename).toEqual(
         I18n.t("features.euCovidCertificate.common.title")
-      );
-      expect(options.album).toEqual(
-        I18n.t("features.euCovidCertificate.save.album")
       );
     });
   });

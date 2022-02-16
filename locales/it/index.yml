@@ -504,6 +504,7 @@ navigation:
   messages: Messaggi
   profile: Profilo
   accessibility: "Sezione {{section}}, pannello, {{order}} di 4"
+  accessibilityWithBadge: "Sezione {{section}}, {{unread}} nuovi elementi, pannello, {{order}} di 4"
   selected: È selezionato
 cie:
   title: Appoggia la carta
@@ -2563,6 +2564,8 @@ bonus:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
         subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
   cgn:
+    generic:
+      linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
@@ -2623,7 +2626,7 @@ bonus:
         sport: Sport
         home: Casa
         telco: Telefonia e Internet
-        finance: Servizi Finanziari
+        finance: Servizi Bancari e Finanziari
         travel: Viaggi e Trasporti
         mobility: Mobilità Sostenibile
         job: Lavoro e Tirocini
