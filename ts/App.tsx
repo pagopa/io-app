@@ -1,4 +1,5 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { NavigationContainer } from "@react-navigation/native";
 import { StyleProvider } from "native-base";
 import * as React from "react";
 import { MenuProvider } from "react-native-popup-menu";
@@ -20,17 +21,19 @@ export type AppDispatch = typeof store.dispatch;
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
 export const App: React.SFC<never> = () => (
-  <StyleProvider style={theme()}>
-    <Provider store={store}>
-      <PersistGate loading={undefined} persistor={persistor}>
-        <BottomSheetModalProvider>
-          <LightModalProvider>
-            <MenuProvider>
-              <RootContainer />
-            </MenuProvider>
-          </LightModalProvider>
-        </BottomSheetModalProvider>
-      </PersistGate>
-    </Provider>
-  </StyleProvider>
+  <NavigationContainer>
+    <StyleProvider style={theme()}>
+      <Provider store={store}>
+        <PersistGate loading={undefined} persistor={persistor}>
+          <BottomSheetModalProvider>
+            <LightModalProvider>
+              <MenuProvider>
+                <RootContainer />
+              </MenuProvider>
+            </LightModalProvider>
+          </BottomSheetModalProvider>
+        </PersistGate>
+      </Provider>
+    </StyleProvider>
+  </NavigationContainer>
 );
