@@ -8,5 +8,6 @@ export default {
   openTicket: jest.fn(),
   showTickets: jest.fn(),
   addTicketCustomField: jest.fn(),
-  addTicketTag: jest.fn()
+  addTicketTag: jest.fn(),
+  getTotalNewResponses: jest.fn()
 };
