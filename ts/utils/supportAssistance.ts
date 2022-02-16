@@ -1,5 +1,6 @@
 import ZendDesk from "io-react-native-zendesk";
 import { fromNullable } from "fp-ts/lib/Option";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
@@ -64,7 +65,9 @@ export const zendeskPaymentCategoryValue = "pagamenti_pagopa";
 export const zendeskPaymentMethodCategoryValue = "metodo_di_pagamento";
 
 // Check if the user has new messages every 30 minutes (in milliseconds)
-export const getTotalNewResponsesRefreshRate = 60 * 30 * 1000;
+export const getTotalNewResponsesRefreshRate: Millisecond = (30 *
+  60 *
+  1000) as Millisecond;
 
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
