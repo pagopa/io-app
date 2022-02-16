@@ -179,7 +179,11 @@ const ItemComponent = (props: Item) => (
   </ListItem>
 );
 
-type Props = NavigationStackScreenProps<{ assistanceForPayment: boolean }>;
+export type ZendeskAskPermissionsNavigationParams = {
+  assistanceForPayment: boolean;
+};
+
+type Props = NavigationStackScreenProps<ZendeskAskPermissionsNavigationParams>;
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor
