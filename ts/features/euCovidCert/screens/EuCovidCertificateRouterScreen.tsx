@@ -26,14 +26,14 @@ import EuCovidCertTemporarilyNotAvailableKoScreen from "./ko/EuCovidCertTemporar
 import EuCovidCertWrongFormatKoScreen from "./ko/EuCovidCertWrongFormatKoScreen";
 import EuCovidCertValidScreen from "./valid/EuCovidCertValidScreen";
 
-type NavigationParams = Readonly<{
+export type EuCovidCertificateRouterScreenNavigationParams = Readonly<{
   authCode: EUCovidCertificateAuthCode;
   messageId: string;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<NavigationParams>;
+  NavigationStackScreenProps<EuCovidCertificateRouterScreenNavigationParams>;
 
 /**
  * Return the right screen based on the response value
