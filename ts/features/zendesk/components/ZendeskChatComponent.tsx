@@ -13,6 +13,11 @@ import I18n from "../../../i18n";
 import IconFont from "../../../components/ui/IconFont";
 import CustomBadge from "../../../components/ui/CustomBadge";
 
+/**
+ * This component show the chat component and the badge with the Zendesk unread messages.
+ * This component is shown if the user has at least a message.
+ * @constructor
+ */
 const ZendeskChatComponent = () => {
   const ticketsNumber = useIOSelector(zendeskTicketNumberSelector);
   const maybeTotalNewResponse = useIOSelector(zendeskTotalNewResponseSelector);
