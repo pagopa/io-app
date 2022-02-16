@@ -17,6 +17,7 @@ import Telco from "../../../../../img/bonus/cgn/categories/telephoneInternet.svg
 import Bank from "../../../../../img/bonus/cgn/categories/financialServices.svg";
 import SustainableMobility from "../../../../../img/bonus/cgn/categories/sustainableMobility.svg";
 import Job from "../../../../../img/bonus/cgn/categories/job.svg";
+import I18n from "../../../../i18n";
 
 export type Category = {
   type: ProductCategory;
@@ -119,3 +120,22 @@ export const orders: Record<string, OrderType> = {
 };
 
 export const CATEGORY_GRADIENT_ANGLE = 57.23;
+
+export const orderCategoriesByNameKey = (
+  categories: ReadonlyArray<ProductCategoryEnum>
+): ReadonlyArray<ProductCategoryEnum> =>
+  [...categories].sort((c1, c2) => {
+    const c1Specs = getCategorySpecs(c1);
+    const c2Specs = getCategorySpecs(c2);
+    if (c1Specs.isNone() && c2Specs.isSome()) {
+      return 1;
+    } else if (c1Specs.isSome() && c2Specs.isNone()) {
+      return -1;
+    } else if (c1Specs.isSome() && c2Specs.isSome()) {
+      return I18n.t(c1Specs.value.nameKey)
+        .toLocaleLowerCase()
+        .localeCompare(I18n.t(c2Specs.value.nameKey).toLocaleLowerCase());
+    }
+
+    return 0;
+  });
