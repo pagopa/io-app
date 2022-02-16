@@ -295,7 +295,7 @@ PODS:
   - React-jsinspector (0.64.2)
   - react-native-background-timer (2.1.1):
     - React
-  - react-native-blob-util (0.13.18):
+  - react-native-blob-util (0.14.0):
     - React-Core
   - react-native-camera (3.44.3):
     - React-Core
@@ -414,7 +414,7 @@ PODS:
     - React-Core
   - RNDeviceInfo (8.3.3):
     - React-Core
-  - RNFS (2.16.6):
+  - RNFS (2.18.0):
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
@@ -430,8 +430,8 @@ PODS:
     - React-Core
   - RNSha256 (1.2.3):
     - React
-  - RNShare (3.7.0):
-    - React
+  - RNShare (7.3.5):
+    - React-Core
   - RNSVG (12.1.1):
     - React
   - RNVectorIcons (7.0.0):
@@ -794,7 +794,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
-  react-native-blob-util: 600972b1782380a5a7d5db61a3817ea32349dae9
+  react-native-blob-util: 180714990c4563645fa70e9202cd32e27656a6e6
   react-native-camera: b8cc03e2feec0c04403d0998e37cf519d8fd4c6f
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
   react-native-config: 387b1ea507bc50a2059e69149dac1342b9532f58
@@ -829,7 +829,7 @@ SPEC CHECKSUMS:
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: cc7de0772378f85d8f36ae439df20f05c590a651
-  RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
+  RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
@@ -837,7 +837,7 @@ SPEC CHECKSUMS:
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
-  RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491
+  RNShare: 730a2773b1e0007425f2f111dcf75208a919c902
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   RNZendeskChat: 99828624c05370ed8802a1de0572e573e852e00f
