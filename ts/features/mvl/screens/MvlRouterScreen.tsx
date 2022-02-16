@@ -13,7 +13,7 @@ import { MvlDetailsScreen } from "./details/MvlDetailsScreen";
 import { MvlGenericErrorScreen } from "./ko/MvlGenericErrorScreen";
 import { MvlLoadingScreen } from "./MvlLoadingScreen";
 
-type NavigationParams = Readonly<{
+export type MvlRouterScreenNavigationParams = Readonly<{
   id: UIMessageId;
 }>;
 
@@ -44,7 +44,7 @@ const renderByPot = (
  * @param props
  */
 export const MvlRouterScreen = (
-  props: NavigationStackScreenProps<NavigationParams>
+  props: NavigationStackScreenProps<MvlRouterScreenNavigationParams>
 ): React.ReactElement => {
   const mvlId = props.navigation.getParam("id");
   const mvlPot = useIOSelector(state => mvlFromIdSelector(state, mvlId));
