@@ -37,6 +37,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { showToast } from "../../../../../utils/showToast";
 
 type NavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -154,7 +155,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                   type={"SingleButton"}
                   leftButton={{
                     ...confirmButtonProps(
-                      () => openWebUrl(url),
+                      () =>
+                        openWebUrl(url, () =>
+                          showToast(I18n.t("bonus.cgn.generic.linkError"))
+                        ),
                       I18n.t("bonus.cgn.merchantDetail.cta.label")
                     ),
                     bordered: true

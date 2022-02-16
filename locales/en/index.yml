@@ -504,6 +504,7 @@ navigation:
   messages: Messages
   profile: Profile
   accessibility: "Section {{section}}, panel, {{order}} of 4"
+  accessibilityWithBadge: "Section {{section}}, {{unread}} new items, panel, {{order}} of 4"
   selected: Is selected
 cie:
   title: Touch the card
@@ -2548,6 +2549,8 @@ bonus:
           body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
         toast: "Your choice was not saved. Try again later."
   cgn:
+    generic:
+      linkError: "The site can't be reached at the moment. Please, try again later."
     accessibility:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
@@ -2608,7 +2611,7 @@ bonus:
         sport: Sport
         home: Home
         telco: Telephony and Internet
-        finance: Financial Services
+        finance: Banking and Financial Services
         travel: Travels and Transportation
         mobility: Sustainable Transport
         job: Jobs and Internships
