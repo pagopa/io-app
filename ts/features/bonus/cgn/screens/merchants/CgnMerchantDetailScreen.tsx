@@ -38,13 +38,13 @@ import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDisc
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 
-type NavigationParams = Readonly<{
+export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps<NavigationParams>;
+  NavigationStackScreenProps<CgnMerchantDetailScreenNavigationParams>;
 
 const styles = StyleSheet.create({
   merchantImage: {

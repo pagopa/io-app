@@ -6,12 +6,13 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import WebviewComponent from "../../../../../components/WebviewComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 
-type NavigationParams = Readonly<{
+export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
   landingPageUrl: string;
   landingPageReferrer: string;
 }>;
 
-type Props = NavigationStackScreenProps<NavigationParams>;
+type Props =
+  NavigationStackScreenProps<CgnMerchantLandingWebviewNavigationParams>;
 
 const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   props: Props
