@@ -29,7 +29,7 @@ import PaymentMethodOnboardingCoBadgeNavigator from "../features/wallet/onboardi
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../features/wallet/onboarding/cobadge/navigation/routes";
 import ActivateBpdOnNewCoBadgeScreen from "../features/wallet/onboarding/cobadge/screens/ActivateBpdOnNewCoBadgeScreen";
 import { ActivateBpdOnNewCreditCardScreen } from "../features/wallet/onboarding/common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
-import { paypalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
+import { PaymentMethodOnboardingPayPalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
 import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboarding/privative/navigation/navigator";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
@@ -197,7 +197,7 @@ const bpdConfigMap = {
 
 const paypalConfigMap = {
   [PAYPAL_ROUTES.ONBOARDING.MAIN]: {
-    screen: paypalOnboardingNavigator
+    screen: PaymentMethodOnboardingPayPalOnboardingNavigator
   }
 };
 
