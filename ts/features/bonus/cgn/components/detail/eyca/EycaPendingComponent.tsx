@@ -9,6 +9,7 @@ import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpac
 import { Label } from "../../../../../../components/core/typography/Label";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { openWebUrl } from "../../../../../../utils/url";
+import { showToast } from "../../../../../../utils/showToast";
 
 type Props = {
   openBottomSheet: () => void;
@@ -51,7 +52,11 @@ const EycaStatusDetailsComponent = (props: Props) => (
     <ButtonDefaultOpacity
       bordered
       style={{ width: "100%" }}
-      onPress={() => openWebUrl(EYCA_URL)}
+      onPress={() =>
+        openWebUrl(EYCA_URL, () =>
+          showToast(I18n.t("bonus.cgn.generic.linkError"))
+        )
+      }
       testID={"eyca-pending-button"}
     >
       <Label color={"blue"}>

@@ -36,21 +36,6 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const OFFLINE_FIXED_BOUNDINGBOX = {
-  userCoordinates: {
-    latitude: 41.827701462326985,
-    longitude: 12.66444625336996
-  },
-  boundingBox: {
-    coordinates: {
-      latitude: 34.845459548,
-      longitude: 6.5232427904
-    },
-    deltaLatitude: 6.9822419143,
-    deltaLongitude: 6.141203463
-  }
-};
-
 const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
@@ -184,8 +169,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestOnlineMerchants: () => dispatch(cgnOnlineMerchants.request({})),
-  requestOfflineMerchants: () =>
-    dispatch(cgnOfflineMerchants.request(OFFLINE_FIXED_BOUNDINGBOX)),
+  requestOfflineMerchants: () => dispatch(cgnOfflineMerchants.request({})),
   navigateToMerchantDetail: (id: Merchant["id"]) =>
     navigateToCgnMerchantDetail({ merchantID: id })
 });
