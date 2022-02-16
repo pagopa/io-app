@@ -61,8 +61,8 @@ const cases: ReadonlyArray<
       ProductCategoryEnum.cultureAndEntertainment
     ],
     [
-      ProductCategoryEnum.cultureAndEntertainment,
       ProductCategoryEnum.bankingServices,
+      ProductCategoryEnum.cultureAndEntertainment,
       ProductCategoryEnum.home
     ],
     "en"
