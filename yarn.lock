@@ -3135,14 +3135,6 @@
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-7.2.0.tgz#10ed45e95fa6f27e82099c09ef820def0b4c19fb"
   integrity sha512-4kErWFa0qit8qzPB6Nbp7kG9NiwDyKu5XxrNlrCIc1zoFxu48ABeofVvNCKv2RtlmFvCftibtykeysRZCeuT8A==
 
-"@types/react-native-share@^3.1.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@types/react-native-share/-/react-native-share-3.3.0.tgz#dc264315c28177e0262a13d5b957e0940cf715c4"
-  integrity sha512-qcmtUNOhIO0tlz7RVQR2FtWzFlblge8gsJED6dT16HdaHq+8ssm+onTVup7UYcE5DEvlmGXBuW2kZU41H+d3FA==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
-
 "@types/react-native-vector-icons@^4.6.3":
   version "4.6.4"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.4.tgz#83c2d88f0c2615a44b9059eb75c11f92702c1ee2"
@@ -12770,10 +12762,10 @@ react-native-barcode-builder@^2.0.0:
     "@react-native-community/art" "^1.2.0"
     jsbarcode "^3.8.0"
 
-react-native-blob-util@^0.13.18:
-  version "0.13.18"
-  resolved "https://registry.yarnpkg.com/react-native-blob-util/-/react-native-blob-util-0.13.18.tgz#7b924d55607bda380d6e9862b621ed1ac0c007ec"
-  integrity sha512-f9NyydQKMd24QiyW+LZmDg2rjCTi4GBff3UJzP1BDgEQ8aoHMs4MZmPs5erNH4E577qhEFp5v7HGzXVRQL8SnQ==
+react-native-blob-util@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-blob-util/-/react-native-blob-util-0.14.0.tgz#60c7e61b574bff8acc8c661f967aa350ceb2cf2f"
+  integrity sha512-cr2Tw5VdvUijreMdnBYmsBVQvxwiLWKe37UG8dPnPJ8sQ8rZJQo9IfpfPho+w/8fWrKqCJAoTSLpHI1ar059ew==
   dependencies:
     base-64 "0.1.0"
     glob "^7.1.6"
@@ -12861,10 +12853,10 @@ react-native-flipper@^0.34.0:
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.34.0.tgz#7df1f38ba5d97a9321125fe0fccbe47d99e6fa1d"
   integrity sha512-48wgm29HJTOlZ0DibBsvXueEOY0EPIVL0wWKbwRfgrk86+luSEuLW3aZC50oJa95zSFb9qYShTV/6dWqh4Jamg==
 
-react-native-fs@^2.16.6:
-  version "2.16.6"
-  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.16.6.tgz#2901789a43210a35a0ef0a098019bbef3af395fd"
-  integrity sha512-ZWOooD1AuFoAGY3HS2GY7Qx2LZo4oIg6AK0wbC68detxwvX75R/q9lRqThXNKP6vIo2VHWa0fYUo/SrLw80E8w==
+react-native-fs@^2.18.0:
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.18.0.tgz#987b99cc90518ef26663a8d60e62104694b41c21"
+  integrity sha512-9iQhkUNnN2JNED0in06JwZy88YEVyIGKWz4KLlQYxa5Y2U0U2AZh9FUHtA04oWj+xt2LlHh0LFPCzhmNsAsUDg==
   dependencies:
     base-64 "^0.1.0"
     utf8 "^3.0.0"
@@ -13044,10 +13036,10 @@ react-native-sha256@1.2.3:
   resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.2.3.tgz#59eaa2c260882ed1e4de94c88e0383726cddc40c"
   integrity sha512-3KQBrAKnB8BAhQuyIBg4p1vsCU6A4LPCTjdNDhFomIaCaDLswEyb4GZoyGWPooTPyKVGd8aCR4pd7/Js9o1ySQ==
 
-react-native-share@^3.3.2:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-3.7.0.tgz#5b5bcc87530ddaaabcb8b70a9366dce88a6f9495"
-  integrity sha512-MCTGiPcBfelrnX/7n82N5eQAl31F6xljqFK2CWbPDTSt7bbJUZH3Znvy8KYePLYqAr7HVrk621eanQN6vSFMzA==
+react-native-share@^7.3.5:
+  version "7.3.5"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-7.3.5.tgz#68b6076136ceac7cd5921bb84680fe46ed4383a3"
+  integrity sha512-5uulG2cQ2WfPSjZoEU/EGMycUFZEO99g3EqnKsO/7JNx5Tb465or35am4Kuezi4QU0YsOc3AqxzrW10UkI0+Ag==
 
 react-native-splash-screen@^3.2.0:
   version "3.2.0"
@@ -15644,10 +15636,10 @@ url-parse-lax@^1.0.0:
   dependencies:
     prepend-http "^1.0.1"
 
-url-parse@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.2.tgz#a4eff6fd5ff9fe6ab98ac1f79641819d13247cda"
-  integrity sha512-6bTUPERy1muxxYClbzoRo5qtQuyoGEbzbQvi0SW4/8U8UyVkAQhWFBlnigqJkRm4su4x1zDQfNbEzWkt+vchcg==
+url-parse@^1.5.6:
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.6.tgz#b2a41d5a233645f3c31204cc8be60e76a15230a2"
+  integrity sha512-xj3QdUJ1DttD1LeSfvJlU1eiF1RvBSBfUu8GplFGdUzSO28y5yUtEl7wb//PI4Af6qh0o/K8545vUmucRrfWsw==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
