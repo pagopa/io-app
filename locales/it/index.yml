@@ -2563,6 +2563,8 @@ bonus:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
         subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
   cgn:
+    generic:
+      linkError: "Non è stato possibile aprire la url al momento, riprova"
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
