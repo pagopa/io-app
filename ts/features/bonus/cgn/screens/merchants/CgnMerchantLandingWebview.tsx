@@ -1,13 +1,10 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { Body, Container, Right } from "native-base";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import WebviewComponent from "../../../../../components/WebviewComponent";
-import AppHeader from "../../../../../components/ui/AppHeader";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import IconFont from "../../../../../components/ui/IconFont";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
 type NavigationParams = Readonly<{
   landingPageUrl: string;
@@ -24,18 +21,12 @@ const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   const landingPageReferrer = props.navigation.getParam("landingPageReferrer");
 
   return (
-    <Container>
-      <AppHeader noLeft={true}>
-        <Body />
-        <Right>
-          <ButtonDefaultOpacity
-            onPress={() => navigation.goBack()}
-            transparent={true}
-          >
-            <IconFont name="io-close" />
-          </ButtonDefaultOpacity>
-        </Right>
-      </AppHeader>
+    <BaseScreenComponent
+      customRightIcon={{
+        iconName: "io-close",
+        onPress: () => navigation.goBack()
+      }}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <WebviewComponent
           source={{
@@ -46,7 +37,7 @@ const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
           }}
         />
       </SafeAreaView>
-    </Container>
+    </BaseScreenComponent>
   );
 };
 
