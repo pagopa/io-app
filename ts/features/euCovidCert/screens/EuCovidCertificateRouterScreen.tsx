@@ -84,9 +84,10 @@ const routeSuccessEuCovidResponse = (
   }
 };
 
-export const EUCovidContext = React.createContext<NavigationParams | null>(
-  null
-);
+export const EUCovidContext =
+  React.createContext<EuCovidCertificateRouterScreenNavigationParams | null>(
+    null
+  );
 
 /**
  * Router screen that triggers the first loading of the certificate (if not present in the store)
