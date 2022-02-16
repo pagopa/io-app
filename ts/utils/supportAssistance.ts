@@ -104,3 +104,14 @@ export const handleSendAssistanceLog = (
       appendLog(log);
   }
 };
+
+// Given a token return a valid configuration for Zendesk
+export const getIdentityByToken = (
+  token: string | undefined
+): JwtIdentity | AnonymousIdentity =>
+  fromNullable(token).fold(
+    {},
+    (zT: string): JwtIdentity | AnonymousIdentity => ({
+      token: zT
+    })
+  );

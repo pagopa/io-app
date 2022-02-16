@@ -1,11 +1,10 @@
 import { call, put, race, select, take } from "redux-saga/effects";
 import { delay, SagaReturnType } from "@redux-saga/core/effects";
-import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable, Option } from "fp-ts/lib/Option";
 import { getError } from "../../../../utils/errors";
 
 import {
   AnonymousIdentity,
+  getIdentityByToken,
   getTotalNewResponses,
   getTotalNewResponsesRefreshRate,
   initSupportAssistance,
@@ -16,11 +15,6 @@ import {
   zendeskDefaultJwtConfig
 } from "../../../../utils/supportAssistance";
 import { zendeskTokenSelector } from "../../../../store/reducers/authentication";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
-import {
-  profileSelector,
-  ProfileState
-} from "../../../../store/reducers/profile";
 import {
   logoutRequest,
   sessionExpired,
@@ -36,29 +30,14 @@ import {
 export function* handleGetTotalNewResponses() {
   while (true) {
     const zendeskToken: string | undefined = yield select(zendeskTokenSelector);
-    const profile: ProfileState = yield select(profileSelector);
-    const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
 
     const zendeskConfig: ZendeskAppConfig = zendeskToken
       ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
       : zendeskDefaultAnonymousConfig;
 
     yield call(initSupportAssistance, zendeskConfig);
-    const zendeskIdentity: JwtIdentity | AnonymousIdentity = fromNullable(
-      zendeskToken
-    )
-      .map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      }))
-      .alt(
-        maybeProfile.map(
-          (mP: InitializedProfile): AnonymousIdentity => ({
-            name: mP.name,
-            email: mP.email
-          })
-        )
-      )
-      .getOrElse({});
+    const zendeskIdentity: JwtIdentity | AnonymousIdentity =
+      getIdentityByToken(zendeskToken);
 
     yield call(setUserIdentity, zendeskIdentity);
 
