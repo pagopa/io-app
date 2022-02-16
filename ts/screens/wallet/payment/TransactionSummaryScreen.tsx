@@ -1,18 +1,15 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import {
-  NavigationInjectedProps,
-  NavigationLeafRoute,
-  StackActions
-} from "react-navigation";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { NavigationLeafRoute, StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -45,6 +42,7 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
@@ -52,6 +50,7 @@ import {
   getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
+import { isRawPayPal } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import {
@@ -64,18 +63,17 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import { isRawPayPal } from "../../../types/pagopa";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { dispatchPickPspOrConfirm } from "./common";
 
-export type NavigationParams = Readonly<{
+export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
   startRoute: NavigationLeafRoute | undefined;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionSummaryScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -94,6 +92,9 @@ const styles = StyleSheet.create({
   },
   noticeIcon: {
     paddingLeft: 10
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -298,64 +299,66 @@ class TransactionSummaryScreen extends React.Component<Props> {
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
         dark={true}
       >
-        <SlidedContentComponent dark={true}>
-          <PaymentSummaryComponent
-            dark={true}
-            title={I18n.t("wallet.firstTransactionSummary.title")}
-            description={transactionDescription}
-            recipient={recipient.fold("-", r => r)}
-            image={require("../../../../img/wallet/icon-avviso-pagopa.png")}
-          />
+        <SafeAreaView style={styles.flex}>
+          <SlidedContentComponent dark={true}>
+            <PaymentSummaryComponent
+              dark={true}
+              title={I18n.t("wallet.firstTransactionSummary.title")}
+              description={transactionDescription}
+              recipient={recipient.fold("-", r => r)}
+              image={require("../../../../img/wallet/icon-avviso-pagopa.png")}
+            />
 
-          <View spacer={true} large={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+            <View spacer={true} large={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
 
-          {/** Amount to pay */}
-          <View style={styles.row}>
+            {/** Amount to pay */}
             <View style={styles.row}>
-              <Text style={[styles.title, styles.lighterGray]}>
-                {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
+              <View style={styles.row}>
+                <Text style={[styles.title, styles.lighterGray]}>
+                  {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
+                </Text>
+                {isAmountUpdated && (
+                  <IconFont
+                    style={styles.noticeIcon}
+                    name={"io-notice"}
+                    size={NOTICE_ICON_SIZE}
+                    color={customVariables.colorWhite}
+                  />
+                )}
+              </View>
+              <Text white={true} style={[styles.title]} bold={true}>
+                {currentAmount}
               </Text>
-              {isAmountUpdated && (
-                <IconFont
-                  style={styles.noticeIcon}
-                  name={"io-notice"}
-                  size={NOTICE_ICON_SIZE}
-                  color={customVariables.colorWhite}
-                />
-              )}
             </View>
-            <Text white={true} style={[styles.title]} bold={true}>
-              {currentAmount}
-            </Text>
-          </View>
 
-          {isAmountUpdated && (
-            <React.Fragment>
-              <View spacer={true} small={true} />
-              <Text style={styles.lighterGray}>
-                {I18n.t("wallet.firstTransactionSummary.updateInfo")}
-              </Text>
-            </React.Fragment>
-          )}
-          <View spacer={true} large={true} />
+            {isAmountUpdated && (
+              <React.Fragment>
+                <View spacer={true} small={true} />
+                <Text style={styles.lighterGray}>
+                  {I18n.t("wallet.firstTransactionSummary.updateInfo")}
+                </Text>
+              </React.Fragment>
+            )}
+            <View spacer={true} large={true} />
 
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
 
-          {standardRow(
-            I18n.t("wallet.firstTransactionSummary.entityCode"),
-            rptId.organizationFiscalCode
-          )}
-          <View spacer={true} small={true} />
-          {standardRow(
-            I18n.t("payment.noticeCode"),
-            PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
-          )}
-          <View spacer={true} large={true} />
-        </SlidedContentComponent>
-        {this.getFooterButtons()}
+            {standardRow(
+              I18n.t("wallet.firstTransactionSummary.entityCode"),
+              rptId.organizationFiscalCode
+            )}
+            <View spacer={true} small={true} />
+            {standardRow(
+              I18n.t("payment.noticeCode"),
+              PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
+            )}
+            <View spacer={true} large={true} />
+          </SlidedContentComponent>
+          {this.getFooterButtons()}
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }

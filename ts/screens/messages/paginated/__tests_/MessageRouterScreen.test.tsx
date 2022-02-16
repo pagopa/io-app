@@ -1,27 +1,27 @@
-import React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationParams } from "react-navigation";
 import { none } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import React from "react";
+import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
+import { successLoadMessageDetails } from "../../../../__mocks__/message";
+import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
+import { maximumItemsFromAPI, pageSize } from "../../../../config";
+import I18n from "../../../../i18n";
 
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
-import { DetailsById } from "../../../../store/reducers/entities/messages/detailsById";
-import { successLoadMessageDetails } from "../../../../__mocks__/message";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../../store/actions/messages";
-import { maximumItemsFromAPI, pageSize } from "../../../../config";
-import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
+import { appReducer } from "../../../../store/reducers";
+import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
+import { DetailsById } from "../../../../store/reducers/entities/messages/detailsById";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
-import I18n from "../../../../i18n";
 
 jest.useFakeTimers();
 
@@ -146,8 +146,7 @@ describe("MessageRouterScreen", () => {
           });
           expect(mockNavDispatch).toHaveBeenCalledWith(
             navigateToPaginatedMessageDetailScreenAction({
-              message: targetMessage,
-              messageDetails: targetMessageDetails
+              message: targetMessage
             })
           );
         });
@@ -211,7 +210,13 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
   } as any;
 
   const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    () => <MessageRouterScreen navigation={navigation as any} />,
+    () => (
+      <MessageRouterScreen
+        navigation={navigation as any}
+        theme={"light"}
+        screenProps={undefined}
+      />
+    ),
     ROUTES.MESSAGE_ROUTER,
     { messageId },
     store

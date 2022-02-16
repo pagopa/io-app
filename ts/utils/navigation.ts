@@ -1,6 +1,5 @@
 // gets the current screen from navigation state
 
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import {
   NavigationLeafRoute,
   NavigationRoute,
@@ -59,20 +58,6 @@ export const getCurrentRoute = (
     return undefined;
   }
 };
-
-/**
- * This function returns the route name from a given NavigationRoute param
- * using recursion to navigate through the object until the leaf node
- */
-export function getRouteName(route: NavigationRoute): Option<string> {
-  if (route.index === undefined) {
-    return fromNullable(route.routeName);
-  }
-  if (route.index >= route.routes.length) {
-    return none;
-  }
-  return getRouteName(route.routes[route.index]);
-}
 
 /**
  * @deprecated

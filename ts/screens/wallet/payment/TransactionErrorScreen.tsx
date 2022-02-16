@@ -8,7 +8,7 @@ import Instabug from "instabug-reactnative";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -65,7 +65,7 @@ import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
-type NavigationParams = {
+export type TransactionErrorScreenNavigationParams = {
   error: Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
@@ -77,7 +77,8 @@ type NavigationParams = {
   onCancel: () => void;
 };
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionErrorScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -165,7 +166,7 @@ const ErrorCodeCopyComponent = ({
  * @param handleZendeskRequestAssistance
  */
 export const errorTransactionUIElements = (
-  maybeError: NavigationParams["error"],
+  maybeError: TransactionErrorScreenNavigationParams["error"],
   rptId: RptId,
   onCancel: () => void,
   choosenTool: ToolEnum,

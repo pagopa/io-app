@@ -1,17 +1,18 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import WebviewComponent from "../../../../../components/WebviewComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 
-type NavigationParams = Readonly<{
+export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
   landingPageUrl: string;
   landingPageReferrer: string;
 }>;
 
-type Props = NavigationInjectedProps<NavigationParams>;
+type Props =
+  NavigationStackScreenProps<CgnMerchantLandingWebviewNavigationParams>;
 
 const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   props: Props
