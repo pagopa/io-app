@@ -13,6 +13,7 @@ import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
 import {
   getZendeskConfig,
+  zendeskGetTotalNewResponses,
   zendeskRequestTicketNumber,
   zendeskSelectedCategory
 } from "../actions";
@@ -31,11 +32,13 @@ export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
   ticketNumber: RemoteValue<number, Error>;
+  totalNewResponses: RemoteValue<number, Error>;
 };
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: remoteUndefined
+  ticketNumber: remoteUndefined,
+  totalNewResponses: remoteUndefined
 };
 
 const reducer = (
@@ -78,6 +81,12 @@ const reducer = (
       return { ...state, ticketNumber: remoteReady(action.payload) };
     case getType(zendeskRequestTicketNumber.failure):
       return { ...state, ticketNumber: remoteError(action.payload) };
+    case getType(zendeskGetTotalNewResponses.request):
+      return { ...state, totalNewResponses: remoteLoading };
+    case getType(zendeskGetTotalNewResponses.success):
+      return { ...state, totalNewResponses: remoteReady(action.payload) };
+    case getType(zendeskGetTotalNewResponses.failure):
+      return { ...state, totalNewResponses: remoteError(action.payload) };
   }
   return state;
 };
@@ -97,6 +106,11 @@ export const zendeskTicketNumberSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.ticketNumber],
   (ticketNumber: RemoteValue<number, Error>): RemoteValue<number, Error> =>
     ticketNumber
+);
+export const zendeskTotalNewResponseSelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.totalNewResponses],
+  (newResponseNumber: RemoteValue<number, Error>): RemoteValue<number, Error> =>
+    newResponseNumber
 );
 
 export default reducer;
