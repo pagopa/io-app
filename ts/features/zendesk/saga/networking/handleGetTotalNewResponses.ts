@@ -1,8 +1,9 @@
-import { call, select } from "redux-saga/effects";
+import { call, put, race, select, take } from "redux-saga/effects";
 import { delay, SagaReturnType } from "@redux-saga/core/effects";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { getError } from "../../../../utils/errors";
+
 import {
   AnonymousIdentity,
   getTotalNewResponses,
@@ -14,38 +15,38 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../../utils/supportAssistance";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
 import { zendeskTokenSelector } from "../../../../store/reducers/authentication";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import {
   profileSelector,
   ProfileState
 } from "../../../../store/reducers/profile";
+import {
+  logoutRequest,
+  sessionExpired,
+  sessionInformationLoadSuccess,
+  sessionInvalid
+} from "../../../../store/actions/authentication";
+import {
+  zendeskGetTotalNewResponses,
+  zendeskRequestTicketNumber
+} from "../../store/actions";
 
 // retrieve the number of ticket opened by the user from the Zendesk SDK
 export function* handleGetTotalNewResponses() {
-  // eslint-disable-next-line functional/no-let
-  let zendeskToken: string | undefined;
-  // eslint-disable-next-line functional/no-let
-  let zendeskConfig: ZendeskAppConfig;
-  // eslint-disable-next-line functional/no-let
-  let zendeskIdentity: JwtIdentity | AnonymousIdentity;
-
-  // eslint-disable-next-line functional/no-let
-  let profile: ProfileState;
-  // eslint-disable-next-line functional/no-let
-  let maybeProfile: Option<InitializedProfile>;
   while (true) {
-    zendeskToken = yield select(zendeskTokenSelector);
-    profile = yield select(profileSelector);
-    maybeProfile = pot.toOption(profile);
+    const zendeskToken: string | undefined = yield select(zendeskTokenSelector);
+    const profile: ProfileState = yield select(profileSelector);
+    const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
 
-    zendeskConfig = zendeskToken
+    const zendeskConfig: ZendeskAppConfig = zendeskToken
       ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
       : zendeskDefaultAnonymousConfig;
 
-    initSupportAssistance(zendeskConfig);
-    zendeskIdentity = fromNullable(zendeskToken)
+    yield call(initSupportAssistance, zendeskConfig);
+    const zendeskIdentity: JwtIdentity | AnonymousIdentity = fromNullable(
+      zendeskToken
+    )
       .map((zT: string): JwtIdentity | AnonymousIdentity => ({
         token: zT
       }))
@@ -58,16 +59,29 @@ export function* handleGetTotalNewResponses() {
         )
       )
       .getOrElse({});
-    setUserIdentity(zendeskIdentity);
+
+    yield call(setUserIdentity, zendeskIdentity);
+
+    // Try to get the total messages of the user
+    yield put(zendeskRequestTicketNumber.request());
+
+    // Try to get the new messages of the user
     try {
       const response: SagaReturnType<typeof getTotalNewResponses> = yield call(
         getTotalNewResponses
       );
-      // yield put(zendeskRequestTicketNumber.success(response));
+      yield put(zendeskGetTotalNewResponses.success(response));
     } catch (e) {
-      // yield put(zendeskRequestTicketNumber.failure(getError(e)));
-      RTron.log(getError(e));
+      yield put(zendeskGetTotalNewResponses.failure(getError(e)));
     }
-    yield delay(getTotalNewResponsesRefreshRate);
+    yield race({
+      wait: delay(getTotalNewResponsesRefreshRate),
+      signals: take([
+        sessionInvalid,
+        sessionExpired,
+        logoutRequest,
+        sessionInformationLoadSuccess
+      ])
+    });
   }
 }

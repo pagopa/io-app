@@ -22,7 +22,7 @@ export function* watchZendeskSupportSaga() {
     contentClient.getZendeskConfig
   );
 
-  yield fork(handleGetTotalNewResponses);
-
   yield takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
+
+  yield fork(handleGetTotalNewResponses);
 }
