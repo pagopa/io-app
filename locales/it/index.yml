@@ -2564,7 +2564,7 @@ bonus:
         subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
   cgn:
     generic:
-      linkError: "Non è stato possibile aprire la url al momento, riprova"
+      linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
