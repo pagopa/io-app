@@ -36,6 +36,7 @@ const ZendeskChatComponent = () => {
       transparent={true}
       accessibilityLabel={I18n.t("global.accessibility.chat.description")}
       accessibilityHint={"accessibilityHint"}
+      testID={"ZendeskChatComponent"}
     >
       <IconFont name="io-chat" />
       {totalNewResponse > 0 && (
