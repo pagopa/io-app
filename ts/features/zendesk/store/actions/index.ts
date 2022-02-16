@@ -77,8 +77,9 @@ export const zendeskRequestTicketNumber = createAsyncAction(
 )<void, number, Error>();
 
 // user selected a category
-export const zendeskGetTotalNewResponses =
-  createStandardAction("ZENDESK_ASK_UPDATE")<void>();
+export const zendeskGetTotalNewResponses = createStandardAction(
+  "ZENDESK_GET_TOTAL_NEW_RESPONSES"
+)<void>();
 
 export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportStart>
