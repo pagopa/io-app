@@ -137,7 +137,7 @@ describe("the OptInPaymentMethodsThankYouDeleteMethodsScreen screen", () => {
       appReducer,
       globalState as any
     );
-    renderComponent(store);
+
     store.dispatch(
       deleteAllPaymentMethodsByFunction.success({
         wallets: [],
@@ -145,7 +145,7 @@ describe("the OptInPaymentMethodsThankYouDeleteMethodsScreen screen", () => {
       })
     );
     store.dispatch(bpdUpdateOptInStatusMethod.failure(new Error()));
-
+    renderComponent(store);
     expect(showToastSpy).toBeCalledTimes(1);
     expect(optInPaymentMethodsCompletedSpy).toBeCalledTimes(1);
   });

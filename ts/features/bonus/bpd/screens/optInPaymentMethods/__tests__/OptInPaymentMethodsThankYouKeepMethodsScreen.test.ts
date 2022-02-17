@@ -71,9 +71,9 @@ describe("the OptInPaymentMethodsThankYouKeepMethodsScreen screen", () => {
       appReducer,
       globalState as any
     );
-    renderComponent(store);
-    store.dispatch(bpdUpdateOptInStatusMethod.failure(new Error()));
 
+    store.dispatch(bpdUpdateOptInStatusMethod.failure(new Error()));
+    renderComponent(store);
     expect(showToastSpy).toBeCalledTimes(1);
     expect(optInPaymentMethodsCompletedSpy).toBeCalledTimes(1);
   });
