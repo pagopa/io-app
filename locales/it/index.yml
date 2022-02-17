@@ -2562,6 +2562,7 @@ bonus:
         header: "Configura IO"
         title: "Vuoi mantenere i tuoi metodi di pagamento?"
         subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        suggestedOption: Consigliato
         options:
           keepAll:
             title: Mantieni tutti i metodi nel Portafoglio 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { View, Text } from "native-base";
+import { View } from "native-base";
 import I18n from "../../../../../i18n";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -18,15 +18,29 @@ import {
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
 import { H4 } from "../../../../../components/core/typography/H4";
+import { Body } from "../../../../../components/core/typography/Body";
+import { PrimaryBadge } from "../../../../../components/core/Badge";
 
 type PaymentMethodsChoiceOptions =
   | "keepPaymentMethods"
   | "deletePaymentMethods";
 
-const generateOptionBody = (title: string, body: string) => (
+const generateOptionBody = (
+  title: string,
+  body: string,
+  showBadge?: boolean
+) => (
   <>
+    {showBadge ? (
+      <>
+        <PrimaryBadge>
+          {I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
+        </PrimaryBadge>
+        <View spacer xsmall />
+      </>
+    ) : undefined}
     <H4>{title}</H4>
-    <Text>{body}</Text>
+    <Body color="bluegrey">{body}</Body>
   </>
 );
 
@@ -37,7 +51,8 @@ const radioButtonListItems: ReadonlyArray<
     id: "keepPaymentMethods",
     body: generateOptionBody(
       I18n.t("bonus.bpd.optInPaymentMethods.choice.options.keepAll.title"),
-      I18n.t("bonus.bpd.optInPaymentMethods.choice.options.keepAll.body")
+      I18n.t("bonus.bpd.optInPaymentMethods.choice.options.keepAll.body"),
+      true
     )
   },
   {
@@ -96,7 +111,9 @@ const OptInPaymentMethodsChoiceScreen = () => {
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.bpd.optInPaymentMethods.choice.title")}</H1>
           <View spacer small />
-          <Text>{I18n.t("bonus.bpd.optInPaymentMethods.choice.subtitle")}</Text>
+          <Body color="bluegreyDark">
+            {I18n.t("bonus.bpd.optInPaymentMethods.choice.subtitle")}
+          </Body>
           <View spacer />
 
           <RadioButtonList<PaymentMethodsChoiceOptions>
