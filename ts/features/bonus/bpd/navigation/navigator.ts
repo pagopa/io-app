@@ -12,6 +12,7 @@ import ErrorPaymentMethodsScreen from "../screens/onboarding/ErrorPaymentMethods
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
+import OptInPaymentMethodsCardsSelectionScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsCardsSelectionScreen";
 import OptInPaymentMethodsCashbackUpdateScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsCashbackUpdateScreen";
 import OptInPaymentMethodsChoiceScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsChoiceScreen";
 import BPD_ROUTES from "./routes";
@@ -94,6 +95,9 @@ export const OptInPaymentMethodNavigator = createStackNavigator(
     },
     [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE]: {
       screen: OptInPaymentMethodsChoiceScreen
+    },
+    [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CARDS_SELECTION]: {
+      screen: OptInPaymentMethodsCardsSelectionScreen
     }
   },
   {
