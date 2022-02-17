@@ -8,6 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
+import { navigationRef } from "./navigation/NavigationService";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
 
@@ -21,7 +22,7 @@ export type AppDispatch = typeof store.dispatch;
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
 export const App: React.SFC<never> = () => (
-  <NavigationContainer>
+  <NavigationContainer ref={navigationRef}>
     <StyleProvider style={theme()}>
       <Provider store={store}>
         <PersistGate loading={undefined} persistor={persistor}>

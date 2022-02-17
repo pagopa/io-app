@@ -4,6 +4,7 @@
  * TODO: when 100% is reached, the animation end
  */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
@@ -14,9 +15,8 @@ import {
   StyleSheet,
   Vibration
 } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
+import { TypeLogs } from "../../../boot/configureInstabug";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
@@ -26,7 +26,17 @@ import { ScreenContentHeader } from "../../../components/screens/ScreenContentHe
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
+import { IOStackNavigationProps } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
+import {
+  cieAuthenticationError,
+  CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason
+} from "../../../store/actions/cie";
+import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
+import { ReduxProps } from "../../../store/actions/types";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
@@ -34,16 +44,7 @@ import {
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../../../utils/accessibility";
-import { TypeLogs } from "../../../boot/configureInstabug";
-import {
-  cieAuthenticationError,
-  CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason
-} from "../../../store/actions/cie";
-import { ReduxProps } from "../../../store/actions/types";
 import { isIos } from "../../../utils/platform";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -54,7 +55,10 @@ export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
 };
 
-type Props = NavigationStackScreenProps<CieCardReaderScreenNavigationParams> &
+type Props = IOStackNavigationProps<
+  AuthenticationParamsList,
+  "CIE_CARD_READER_SCREEN"
+> &
   ReduxProps &
   ReturnType<typeof mapStateToProps>;
 
@@ -77,8 +81,9 @@ type State = {
 type setErrorParameter = {
   eventReason: CieAuthenticationErrorReason;
   errorDescription?: string;
-  navigationRoute?: string;
-  navigationParams?: Record<string, unknown>;
+  // navigationRoute?: string;
+  // navigationParams?: Record<string, unknown>;
+  navigation?: () => void;
 };
 
 // A subset of Cie Events (errors) which is of interest to analytics
@@ -194,18 +199,17 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 
   get ciePin(): string {
-    return this.props.navigation.getParam("ciePin");
+    return this.props.route.params.ciePin;
   }
 
   get cieAuthorizationUri(): string {
-    return this.props.navigation.getParam("authorizationUri");
+    return this.props.route.params.authorizationUri;
   }
 
   private setError = ({
     eventReason,
     errorDescription,
-    navigationRoute,
-    navigationParams = {}
+    navigation
   }: setErrorParameter) => {
     const cieDescription =
       errorDescription ??
@@ -223,9 +227,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       },
       () => {
         Vibration.vibrate(VIBRATION);
-        if (navigationRoute !== undefined) {
-          this.props.navigation.navigate(navigationRoute, navigationParams);
-        }
+        navigation?.();
       }
     );
   };
@@ -265,7 +267,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "ON_CARD_PIN_LOCKED":
         this.setError({
           eventReason: event.event,
-          navigationRoute: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+          navigation: () =>
+            this.props.navigation.navigate(ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN)
         });
         break;
 
@@ -273,10 +276,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "ON_PIN_ERROR":
         this.setError({
           eventReason: event.event,
-          navigationRoute: ROUTES.CIE_WRONG_PIN_SCREEN,
-          navigationParams: {
-            remainingCount: event.attemptsLeft
-          }
+          navigation: () =>
+            this.props.navigation.navigate(ROUTES.CIE_WRONG_PIN_SCREEN, {
+              remainingCount: event.attemptsLeft
+            })
         });
         break;
 
@@ -285,7 +288,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "CERTIFICATE_REVOKED":
         this.setError({
           eventReason: event.event,
-          navigationRoute: ROUTES.CIE_EXPIRED_SCREEN
+          navigation: () =>
+            this.props.navigation.navigate(ROUTES.CIE_EXPIRED_SCREEN)
         });
         break;
 

@@ -2,7 +2,6 @@ import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
 import React, { ReactNode } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
@@ -24,6 +23,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
+import { IOStackNavigationProps } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
@@ -37,7 +37,6 @@ import {
 } from "../../../store/reducers/profile";
 import { getAppVersion } from "../../../utils/appVersion";
 import { getModel, getSystemVersion } from "../../../utils/device";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isIos } from "../../../utils/platform";
 import {
   addTicketCustomField,
@@ -50,8 +49,9 @@ import {
 } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { ZendeskParamsList } from "../navigation/params";
+import ZENDESK_ROUTES from "../navigation/routes";
 import { zendeskSupportCompleted } from "../store/actions";
-import { navigateToZendeskChooseCategory } from "../store/actions/navigation";
 import { zendeskConfigSelector } from "../store/reducers";
 
 /**
@@ -183,17 +183,17 @@ export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
 };
 
-type Props = NavigationStackScreenProps<ZendeskAskPermissionsNavigationParams>;
+type Props = IOStackNavigationProps<
+  ZendeskParamsList,
+  "ZENDESK_ASK_PERMISSIONS"
+>;
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor
  */
 const ZendeskAskPermissions = (props: Props) => {
-  const assistanceForPayment = props.navigation.getParam(
-    "assistanceForPayment"
-  );
+  const assistanceForPayment = props.route.params.assistanceForPayment;
 
-  const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
@@ -272,7 +272,7 @@ const ZendeskAskPermissions = (props: Props) => {
       void mixpanelTrack("ZENDESK_OPEN_TICKET");
       workUnitCompleted();
     } else {
-      navigation.navigate(navigateToZendeskChooseCategory());
+      props.navigation.navigate(ZENDESK_ROUTES.CHOOSE_CATEGORY);
     }
   };
   const cancelButtonProps = {

@@ -1,8 +1,8 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";

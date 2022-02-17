@@ -1,4 +1,5 @@
 /* eslint-disable functional/immutable-data */
+import { useNavigation } from "@react-navigation/native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -8,7 +9,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { fetchPaymentManagerLongTimeout } from "../../../../../../config";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
 import {
   bpdPaymentMethodActivation,
   BpdPaymentMethodActivation,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
  */
 const useInitialValue = (props: Props) => {
   const timerRetry = useRef<number | undefined>(undefined);
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   const isFocused = navigation.isFocused();
   const { bpdPotActivation, hPan, loadActualValue, hasBpdCapability } = props;
 

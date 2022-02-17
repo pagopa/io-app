@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from "@react-navigation/compat";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, take } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -50,6 +50,6 @@ export function* handleBpdEnroll(): SagaIterator {
     cancelAction: take(bpdOnboardingCancel)
   });
   if (cancelAction) {
-    yield put(NavigationActions.back());
+    yield call(NavigationActions.back);
   }
 }

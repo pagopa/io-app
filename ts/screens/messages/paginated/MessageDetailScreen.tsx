@@ -2,7 +2,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
 import MessageDetailComponent from "../../../components/messages/paginated/MessageDetail";

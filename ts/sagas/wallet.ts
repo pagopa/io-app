@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+import { NavigationActions, StackActions } from "@react-navigation/compat";
 /**
  * A saga that manages the Wallet.
  */
@@ -9,7 +10,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import _ from "lodash";
-import { NavigationActions, StackActions } from "react-navigation";
 import {
   call,
   delay,
@@ -74,6 +74,7 @@ import {
   searchUserCoBadge,
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
+import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
 import { handleAddPrivativeToWallet } from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
 import { handleSearchUserPrivative } from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
 import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
@@ -195,7 +196,6 @@ import {
   updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
 
 const successScreenDelay = 2000 as Millisecond;
 

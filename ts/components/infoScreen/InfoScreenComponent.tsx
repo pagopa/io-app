@@ -1,7 +1,7 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { Body } from "../core/typography/Body";

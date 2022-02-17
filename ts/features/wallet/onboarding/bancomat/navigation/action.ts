@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from "@react-navigation/compat";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { ActivateBpdOnNewCreditCardScreenNavigationParams } from "../../common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";

@@ -1,6 +1,6 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
-import { zendeskEnabled } from "../config";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
@@ -66,16 +66,17 @@ const zendeskMap = {
   }
 };
 
-const finalRouteConfig = zendeskEnabled
-  ? { ...configMap, ...cgnConfigMap, ...zendeskMap }
-  : { ...configMap, ...cgnConfigMap };
-
-const navigator = createStackNavigator(finalRouteConfig, {
-  // Let each screen handle the header and navigation
-  headerMode: "none",
-  defaultNavigationOptions: {
-    gesturesEnabled: false
+export const AppStack = createCompatNavigatorFactory(createStackNavigator)(
+  {
+    ...configMap,
+    ...cgnConfigMap,
+    ...zendeskMap
+  },
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
-});
-
-export default navigator;
+);

@@ -1,18 +1,18 @@
 /**
  * An handler for application internal links
  */
+import { NavigationActions } from "@react-navigation/compat";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
 import { bpdEnabled, myPortalEnabled, svEnabled } from "../../../../config";
-import NavigationService from "../../../../navigation/NavigationService";
-import ROUTES from "../../../../navigation/routes";
-import { Dispatch } from "../../../../store/actions/types";
-import { isTestEnv } from "../../../../utils/environment";
-import { addInternalRouteNavigation } from "../../../../store/actions/internalRouteNavigation";
 import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
+import { addInternalRouteNavigation } from "../../../../store/actions/internalRouteNavigation";
+import { Dispatch } from "../../../../store/actions/types";
+import { isTestEnv } from "../../../../utils/environment";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 const IO_INTERNAL_LINK_PROTOCOL = "ioit:";

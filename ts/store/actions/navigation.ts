@@ -1,8 +1,4 @@
-import {
-  NavigationActions,
-  NavigationBackActionPayload,
-  StackActions
-} from "react-navigation";
+import { NavigationActions, StackActions } from "@react-navigation/compat";
 import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
@@ -71,8 +67,8 @@ export const navigateToMainNavigatorAction = () =>
 /**
  * @deprecated
  */
-export const navigateBack = (options?: NavigationBackActionPayload) =>
-  NavigationService.dispatchNavigationAction(NavigationActions.back(options));
+export const navigateBack = () =>
+  NavigationService.dispatchNavigationAction(NavigationActions.back());
 
 /**
  * Authentication

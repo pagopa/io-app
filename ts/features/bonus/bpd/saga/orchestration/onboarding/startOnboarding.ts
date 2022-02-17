@@ -1,6 +1,6 @@
+import { StackActions } from "@react-navigation/compat";
 import { Either, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
-import { StackActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import {
   call,
