@@ -2562,6 +2562,7 @@ bonus:
         header: "Configura IO"
         title: "Vuoi mantenere i tuoi metodi di pagamento?"
         subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
         subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
