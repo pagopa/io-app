@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge } from "native-base";
-import { IOColors } from "./variables/IOColors";
-import { LabelSmall } from "./typography/LabelSmall";
+import { IOColors } from "./core/variables/IOColors";
+import { LabelSmall } from "./core/typography/LabelSmall";
 
 type BadgeCommonProps = {
   children: string;

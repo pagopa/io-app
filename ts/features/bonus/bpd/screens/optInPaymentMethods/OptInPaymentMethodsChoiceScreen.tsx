@@ -19,7 +19,7 @@ import {
 } from "../../../../../components/core/selection/RadioButtonList";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Body } from "../../../../../components/core/typography/Body";
-import { PrimaryBadge } from "../../../../../components/core/Badge";
+import { PrimaryBadge } from "../../../../../components/Badge";
 import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
 
 type PaymentMethodsChoiceOptions =
