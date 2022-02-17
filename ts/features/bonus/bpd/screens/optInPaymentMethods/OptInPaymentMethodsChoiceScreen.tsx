@@ -13,30 +13,62 @@ import {
   disablePrimaryButtonProps
 } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../../components/core/selection/RadioButtonList";
+import { H4 } from "../../../../../components/core/typography/H4";
 
 type PaymentMethodsChoiceOptions =
   | "keepPaymentMethods"
   | "deletePaymentMethods";
 
-const bottomButtons: {
-  [key in PaymentMethodsChoiceOptions]: BlockButtonProps;
-} = {
-  keepPaymentMethods: confirmButtonProps(
-    () => null,
-    I18n.t("global.buttons.continue"),
-    undefined,
-    "continueButton"
-  ),
+const generateOptionBody = (title: string, body: string) => (
+  <>
+    <H4>{title}</H4>
+    <Text>{body}</Text>
+  </>
+);
 
-  deletePaymentMethods: errorButtonProps(
-    () => null,
-    I18n.t("bonus.bpd.optInPaymentMethods.choice.deleteAllButton"),
-    undefined
-  )
-};
+const radioButtonListItems: ReadonlyArray<
+  RadioItem<PaymentMethodsChoiceOptions>
+> = [
+  {
+    id: "keepPaymentMethods",
+    body: generateOptionBody(
+      I18n.t("bonus.bpd.optInPaymentMethods.choice.options.keepAll.title"),
+      I18n.t("bonus.bpd.optInPaymentMethods.choice.options.keepAll.body")
+    )
+  },
+  {
+    id: "deletePaymentMethods",
+    body: generateOptionBody(
+      I18n.t("bonus.bpd.optInPaymentMethods.choice.options.deleteAll.title"),
+      I18n.t("bonus.bpd.optInPaymentMethods.choice.options.deleteAll.body")
+    )
+  }
+];
 
 const OptInPaymentMethodsChoiceScreen = () => {
-  const [selectedMethod] = useState<PaymentMethodsChoiceOptions | null>(null);
+  const [selectedMethod, setSelectedMethod] =
+    useState<PaymentMethodsChoiceOptions | null>(null);
+
+  const bottomButtons: {
+    [key in PaymentMethodsChoiceOptions]: BlockButtonProps;
+  } = {
+    keepPaymentMethods: confirmButtonProps(
+      () => null,
+      I18n.t("global.buttons.continue"),
+      undefined,
+      "continueButton"
+    ),
+
+    deletePaymentMethods: errorButtonProps(
+      () => null,
+      I18n.t("bonus.bpd.optInPaymentMethods.choice.deleteAllButton"),
+      undefined
+    )
+  };
 
   const computedBottomButtonProps =
     selectedMethod === null
@@ -66,6 +98,13 @@ const OptInPaymentMethodsChoiceScreen = () => {
           <View spacer small />
           <Text>{I18n.t("bonus.bpd.optInPaymentMethods.choice.subtitle")}</Text>
           <View spacer />
+
+          <RadioButtonList<PaymentMethodsChoiceOptions>
+            items={radioButtonListItems}
+            selectedItem={selectedMethod || undefined}
+            onPress={setSelectedMethod}
+            rightSideSelection
+          />
         </ScrollView>
         <FooterWithButtons
           type={"SingleButton"}
