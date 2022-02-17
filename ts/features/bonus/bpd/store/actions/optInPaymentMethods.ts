@@ -35,7 +35,7 @@ export const optInPaymentMethodsFailure = createStandardAction(
 )<string>();
 
 /**
- * The workflow fails
+ * Triggers the saga that deletes the user's payment methods and update the opt-in choice
  */
 export const optInPaymentMethodsDeletionChoice = createStandardAction(
   "OPT_IN_PAYMENT_METHODS_DELETION_CHOICE"
