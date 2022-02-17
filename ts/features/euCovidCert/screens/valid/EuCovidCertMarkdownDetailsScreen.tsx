@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -10,6 +9,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -18,6 +18,7 @@ import {
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
+import { EUCovidCertParamsList } from "../../navigation/params";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 
 export type EuCovidCertMarkdownDetailsScreenNavigationParams = Readonly<{
@@ -38,7 +39,10 @@ const showToastError = (error: string = I18n.t("global.genericError")) =>
   showToast(error);
 
 export const EuCovidCertMarkdownDetailsScreen = (
-  props: NavigationStackScreenProps<EuCovidCertMarkdownDetailsScreenNavigationParams>
+  props: IOStackNavigationRouteProps<
+    EUCovidCertParamsList,
+    "EUCOVIDCERT_MARKDOWN_DETAILS"
+  >
 ): React.ReactElement => {
   const [loadMarkdownComplete, setLoadMarkdownComplete] = useState(false);
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
@@ -107,7 +111,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
               extraBodyHeight={60}
               onLoadEnd={() => setLoadMarkdownComplete(true)}
             >
-              {props.navigation.getParam("markdownDetails")}
+              {props.route.params.markdownDetails}
             </MarkdownHandleCustomLink>
             {canShowButton && (
               <>
