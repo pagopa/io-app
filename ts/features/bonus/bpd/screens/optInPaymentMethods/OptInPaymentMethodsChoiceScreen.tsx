@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
+import { View, Text } from "native-base";
 import I18n from "../../../../../i18n";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -27,6 +27,7 @@ const OptInPaymentMethodsChoiceScreen = () => (
     >
       <ScrollView style={[IOStyles.horizontalContentPadding]}>
         <H1>{I18n.t("bonus.bpd.optInPaymentMethods.choice.title")}</H1>
+        <Text>{I18n.t("bonus.bpd.optInPaymentMethods.choice.subtitle")}</Text>
         <View spacer />
       </ScrollView>
     </SafeAreaView>
