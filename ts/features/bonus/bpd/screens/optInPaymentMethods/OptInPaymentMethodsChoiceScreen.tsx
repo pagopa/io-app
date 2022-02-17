@@ -9,8 +9,8 @@ import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   confirmButtonProps,
-  errorButtonProps,
-  disablePrimaryButtonProps
+  disablePrimaryButtonProps,
+  errorBorderedButtonProps
 } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import {
@@ -20,6 +20,7 @@ import {
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Body } from "../../../../../components/core/typography/Body";
 import { PrimaryBadge } from "../../../../../components/core/Badge";
+import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
 
 type PaymentMethodsChoiceOptions =
   | "keepPaymentMethods"
@@ -68,6 +69,11 @@ const OptInPaymentMethodsChoiceScreen = () => {
   const [selectedMethod, setSelectedMethod] =
     useState<PaymentMethodsChoiceOptions | null>(null);
 
+  const { presentBottomSheet } = useBottomSheetMethodsToDelete({
+    onDeletePress: () => null,
+    onCancelPress: () => null
+  });
+
   const bottomButtons: {
     [key in PaymentMethodsChoiceOptions]: BlockButtonProps;
   } = {
@@ -78,8 +84,8 @@ const OptInPaymentMethodsChoiceScreen = () => {
       "continueButton"
     ),
 
-    deletePaymentMethods: errorButtonProps(
-      () => null,
+    deletePaymentMethods: errorBorderedButtonProps(
+      presentBottomSheet,
       I18n.t("bonus.bpd.optInPaymentMethods.choice.deleteAllButton"),
       undefined
     )

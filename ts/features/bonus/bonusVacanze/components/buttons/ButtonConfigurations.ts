@@ -1,3 +1,4 @@
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import I18n from "../../../../../i18n";
 
@@ -54,6 +55,28 @@ export const errorButtonProps = (
   title: title ?? I18n.t("global.buttons.confirm"),
   iconName,
   onPress
+});
+
+/**
+ * Style for error props
+ * @param onPress
+ * @param title
+ */
+export const errorBorderedButtonProps = (
+  onPress: () => void,
+  title?: string,
+  iconName?: string
+): BlockButtonProps => ({
+  title: title ?? I18n.t("global.buttons.confirm"),
+  iconName,
+  onPress,
+  style: {
+    flex: 1,
+    borderColor: IOColors.red
+  },
+  onPressWithGestureHandler: true,
+  labelColor: IOColors.red,
+  bordered: true
 });
 
 /**
