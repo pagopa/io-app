@@ -21,6 +21,7 @@ import { H4 } from "../../../../../components/core/typography/H4";
 import { Body } from "../../../../../components/core/typography/Body";
 import { PrimaryBadge } from "../../../../../components/Badge";
 import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 
 type PaymentMethodsChoiceOptions =
   | "keepPaymentMethods"
@@ -41,7 +42,9 @@ const generateOptionBody = (
       </>
     ) : undefined}
     <H4>{title}</H4>
-    <Body color="bluegrey">{body}</Body>
+    <LabelSmall weight="Regular" color="bluegrey">
+      {body}
+    </LabelSmall>
   </>
 );
 
