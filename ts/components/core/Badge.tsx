@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge } from "native-base";
 import { IOColors } from "./variables/IOColors";
-import { H5 } from "./typography/H5";
+import { LabelSmall } from "./typography/LabelSmall";
 
 type BadgeCommonProps = {
   children: string;
@@ -21,6 +21,6 @@ const commonBadgeStyles = StyleSheet.create({
  */
 export const PrimaryBadge: React.FC<BadgeCommonProps> = ({ children }) => (
   <Badge style={[commonBadgeStyles.badge, { backgroundColor: IOColors.blue }]}>
-    <H5 color="white">{children}</H5>
+    <LabelSmall color="white">{children}</LabelSmall>
   </Badge>
 );
