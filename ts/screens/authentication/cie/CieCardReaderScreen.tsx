@@ -26,7 +26,7 @@ import { ScreenContentHeader } from "../../../components/screens/ScreenContentHe
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { IOStackNavigationProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import {
@@ -55,7 +55,7 @@ export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
 };
 
-type Props = IOStackNavigationProps<
+type Props = IOStackNavigationRouteProps<
   AuthenticationParamsList,
   "CIE_CARD_READER_SCREEN"
 > &

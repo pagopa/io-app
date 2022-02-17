@@ -23,7 +23,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
-import { IOStackNavigationProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
@@ -183,7 +183,7 @@ export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
 };
 
-type Props = IOStackNavigationProps<
+type Props = IOStackNavigationRouteProps<
   ZendeskParamsList,
   "ZENDESK_ASK_PERMISSIONS"
 >;

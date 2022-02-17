@@ -9,7 +9,9 @@
  * icon  |
  *       input
  */
-import { Item, View, Input as InputNativeBase } from "native-base";
+import { NavigationEvents } from "@react-navigation/compat";
+import color from "color";
+import { Input as InputNativeBase, Item, View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -19,15 +21,13 @@ import {
   TextInputFocusEventData,
   TextInputProps
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
-import color from "color";
 import { TextInputMaskProps } from "react-native-masked-text";
-
-import { isStringNullyOrEmpty } from "../../utils/strings";
-import { makeFontStyleObject } from "../core/fonts";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
+
+import { isStringNullyOrEmpty } from "../../utils/strings";
+import { makeFontStyleObject } from "../core/fonts";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
 import TextInputMask from "../ui/MaskedInput";
@@ -183,10 +183,7 @@ export const LabelledItem: React.FC<Props> = ({
           testID="Item"
         >
           {props.hasNavigationEvents && props.onPress && (
-            <NavigationEvents
-              onWillBlur={props.onPress}
-              testID="NavigationEvents"
-            />
+            <NavigationEvents onWillBlur={props.onPress} />
           )}
 
           {iconPosition === "left" && props.icon && (

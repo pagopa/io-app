@@ -1,10 +1,13 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import BPaySearchBankScreen from "../screens/search/BPaySearchBankScreen";
 import BPaySearchStartScreen from "../screens/search/BPaySearchStartScreen";
 import SearchAvailableUserBPayScreen from "../screens/searchBPay/SearchAvailableUserBPayScreen";
 import WALLET_ONBOARDING_BPAY_ROUTES from "./routes";
 
-const PaymentMethodOnboardingBPayNavigator = createStackNavigator(
+const PaymentMethodOnboardingBPayNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [WALLET_ONBOARDING_BPAY_ROUTES.START]: {
       screen: BPaySearchStartScreen

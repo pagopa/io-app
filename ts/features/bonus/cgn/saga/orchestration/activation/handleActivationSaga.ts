@@ -1,5 +1,5 @@
+import { NavigationActions } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
-import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, take } from "redux-saga/effects";
 import { ActionType, isActionOf } from "typesafe-actions";
@@ -71,6 +71,6 @@ export function* handleCgnActivationSaga(
     cancelAction: take(cgnActivationCancel)
   });
   if (cancelAction) {
-    yield put(NavigationActions.back());
+    yield call(NavigationActions.back);
   }
 }

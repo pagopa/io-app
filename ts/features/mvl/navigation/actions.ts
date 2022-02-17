@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from "@react-navigation/compat";
 import { MvlRouterScreenNavigationParams } from "../screens/MvlRouterScreen";
 import MVL_ROUTES from "./routes";
 

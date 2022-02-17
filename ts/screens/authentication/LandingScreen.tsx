@@ -32,7 +32,7 @@ import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import {
   AppParamsList,
-  IOStackNavigationProps
+  IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import {
@@ -54,7 +54,7 @@ import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 
-type Props = IOStackNavigationProps<AppParamsList, "INGRESS"> &
+type Props = IOStackNavigationRouteProps<AppParamsList, "INGRESS"> &
   LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

@@ -25,7 +25,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationProps } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
@@ -45,7 +45,7 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  IOStackNavigationProps<CgnDetailsParamsList, "CGN_MERCHANTS_DETAIL">;
+  IOStackNavigationRouteProps<CgnDetailsParamsList, "CGN_MERCHANTS_DETAIL">;
 
 const styles = StyleSheet.create({
   merchantImage: {

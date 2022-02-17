@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from "@react-navigation/compat";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, take } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -90,6 +90,6 @@ export function* eycaActivationSaga(
     cancelAction: take(cgnEycaActivationCancel)
   });
   if (cancelAction) {
-    yield put(NavigationActions.back());
+    yield call(NavigationActions.back);
   }
 }

@@ -1,11 +1,13 @@
+import { NavigationActions } from "@react-navigation/compat";
 import { call } from "redux-saga/effects";
-import { NavigationActions } from "react-navigation";
 import { ActionType } from "typesafe-actions";
+import NavigationService from "../../../../navigation/NavigationService";
 import {
   executeWorkUnit,
   withFailureHandling,
   withResetNavigationStack
 } from "../../../../sagas/workUnit";
+import ZENDESK_ROUTES from "../../navigation/routes";
 import {
   zendeskSupportBack,
   zendeskSupportCancel,
@@ -13,8 +15,6 @@ import {
   zendeskSupportFailure,
   zendeskSupportStart
 } from "../../store/actions";
-import ZENDESK_ROUTES from "../../navigation/routes";
-import NavigationService from "../../../../navigation/NavigationService";
 
 function* zendeskSupportWorkUnit(
   zendeskStart: ActionType<typeof zendeskSupportStart>

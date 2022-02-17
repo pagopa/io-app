@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from "@react-navigation/compat";
 import NavigationService from "../../../../../navigation/NavigationService";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
 

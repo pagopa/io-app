@@ -1,4 +1,5 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import PayPalOnboardingCheckoutCompletedScreen from "../screen/PayPalOnboardingCheckoutCompletedScreen";
 import PayPalOnboardingCheckoutScreen from "../screen/PayPalOnboardingCheckoutScreen";
 import PayPalPspSelectionScreen from "../screen/PayPalPspSelectionScreen";
@@ -6,7 +7,7 @@ import PayPalStartOnboardingScreen from "../screen/PayPalStartOnboardingScreen";
 import PAYPAL_ROUTES from "./routes";
 
 export const PaymentMethodOnboardingPayPalOnboardingNavigator =
-  createStackNavigator(
+  createCompatNavigatorFactory(createStackNavigator)(
     {
       [PAYPAL_ROUTES.ONBOARDING.START]: {
         screen: PayPalStartOnboardingScreen

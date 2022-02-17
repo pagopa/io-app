@@ -37,10 +37,15 @@ export type AppParamsList = {
  * Merge the navigation of the ParamList stack with AppParamsList, in order to allow
  * the navigation in the same stack and the global stack
  */
-export type IOStackNavigationProps<
+export type IOStackNavigationRouteProps<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = {
-  navigation: StackNavigationProp<AppParamsList & ParamList, RouteName>;
+  navigation: IOStackNavigationProp<ParamList, RouteName>;
   route: RouteProp<ParamList, RouteName>;
 };
+
+export type IOStackNavigationProp<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> = StackNavigationProp<AppParamsList & ParamList, RouteName>;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { IOStackNavigationProps } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
@@ -18,7 +18,7 @@ export type CreditCardDetailScreenNavigationParams = Readonly<{
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  IOStackNavigationProps<WalletParamsList, "WALLET_CREDIT_CARD_DETAIL">;
+  IOStackNavigationRouteProps<WalletParamsList, "WALLET_CREDIT_CARD_DETAIL">;
 
 /**
  * Detail screen for a credit card

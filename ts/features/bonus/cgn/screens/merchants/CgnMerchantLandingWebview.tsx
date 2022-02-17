@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import WebviewComponent from "../../../../../components/WebviewComponent";
-import { IOStackNavigationProps } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { CgnDetailsParamsList } from "../../navigation/params";
 
@@ -12,7 +12,7 @@ export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
   landingPageReferrer: string;
 }>;
 
-type Props = IOStackNavigationProps<
+type Props = IOStackNavigationRouteProps<
   CgnDetailsParamsList,
   "CGN_MERCHANTS_LANDING_WEBVIEW"
 >;

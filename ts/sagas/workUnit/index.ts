@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from "@react-navigation/compat";
 import { call, Effect, take } from "redux-saga/effects";
 import {
   ActionCreator,

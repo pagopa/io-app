@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from "@react-navigation/compat";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { CoBadgeChooseTypeNavigationProps } from "../screens/CoBadgeChooseType";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "./routes";

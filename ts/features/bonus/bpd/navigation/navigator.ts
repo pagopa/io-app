@@ -1,4 +1,5 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import { bpdTransactionsPaging } from "../../../../config";
 import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
 import BpdTransactionsScreen from "../screens/details/transaction/BpdTransactionsScreen";
@@ -16,7 +17,9 @@ import OptInPaymentMethodsCashbackUpdateScreen from "../screens/optInPaymentMeth
 import OptInPaymentMethodsChoiceScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsChoiceScreen";
 import BPD_ROUTES from "./routes";
 
-export const BpdOnboardingNavigator = createStackNavigator(
+export const BpdOnboardingNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS]: {
       screen: LoadBpdActivationStatus
@@ -52,7 +55,9 @@ export const BpdOnboardingNavigator = createStackNavigator(
   }
 );
 
-export const BpdDetailsNavigator = createStackNavigator(
+export const BpdDetailsNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [BPD_ROUTES.DETAILS]: {
       screen: BpdDetailsScreen
@@ -72,7 +77,9 @@ export const BpdDetailsNavigator = createStackNavigator(
   }
 );
 
-export const BpdIBANNavigator = createStackNavigator(
+export const BpdIBANNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen
@@ -87,7 +94,9 @@ export const BpdIBANNavigator = createStackNavigator(
   }
 );
 
-export const OptInPaymentMethodNavigator = createStackNavigator(
+export const OptInPaymentMethodNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE]: {
       screen: OptInPaymentMethodsCashbackUpdateScreen

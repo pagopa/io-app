@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from "@react-navigation/compat";
 import NavigationService from "../../../../navigation/NavigationService";
 import { ActiveBonusScreenNavigationParams } from "../screens/ActiveBonusScreen";
 import { BonusInformationScreenNavigationParams } from "../screens/BonusInformationScreen";

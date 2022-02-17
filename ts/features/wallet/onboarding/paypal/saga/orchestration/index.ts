@@ -1,12 +1,14 @@
+import { NavigationActions, StackActions } from "@react-navigation/compat";
 import { call } from "redux-saga/effects";
-import { NavigationActions, StackActions } from "react-navigation";
 import { ActionType } from "typesafe-actions";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
+import { navigateToPayPalDetailScreen } from "../../../../../../store/actions/navigation";
+import { SagaCallReturnType } from "../../../../../../types/utils";
 import PAYPAL_ROUTES from "../../navigation/routes";
-import NavigationService from "../../../../../../navigation/NavigationService";
 import {
   walletAddPaypalBack,
   walletAddPaypalCancel,
@@ -14,8 +16,6 @@ import {
   walletAddPaypalFailure,
   walletAddPaypalStart
 } from "../../store/actions";
-import { SagaCallReturnType } from "../../../../../../types/utils";
-import { navigateToPayPalDetailScreen } from "../../../../../../store/actions/navigation";
 
 // handle the flow of paypal onboarding
 function* paypalWorkOnboaringUnit() {
