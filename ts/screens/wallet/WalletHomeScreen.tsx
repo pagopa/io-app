@@ -184,11 +184,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   get newMethodAdded() {
-    return this.props.navigation.getParam("newMethodAdded");
+    return this.props.route.params.newMethodAdded;
   }
 
   get navigationKeyFrom() {
-    return this.props.navigation.getParam("keyFrom");
+    return this.props.route.params.keyFrom;
   }
 
   private handleBackPress = () => {

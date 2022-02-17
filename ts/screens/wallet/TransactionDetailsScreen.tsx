@@ -118,7 +118,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
   private handleBackPress = () => this.props.navigation.goBack();
 
   private handleWillFocus = () => {
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     // Fetch psp only if the store not contains this psp
     if (transaction.idPsp !== undefined && this.props.psp === undefined) {
       this.props.fetchPsp(transaction.idPsp);
@@ -126,7 +126,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
   };
 
   private getData = () => {
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
 
     // fee
@@ -179,7 +179,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const { psp } = this.props;
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     const data = this.getData();
 
     const standardRow = (label: string, value: string) => (
@@ -336,7 +336,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const transaction = ownProps.navigation.getParam("transaction");
+  const transaction = ownProps.route.params.transaction;
   const idPsp = String(transaction.idPsp);
 
   const maybePotPspState = fromNullable(pspStateByIdSelector(idPsp)(state));

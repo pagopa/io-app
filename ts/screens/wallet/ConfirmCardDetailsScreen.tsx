@@ -135,7 +135,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   };
 
   public render(): React.ReactNode {
-    const creditCard = this.props.navigation.getParam("creditCard");
+    const creditCard = this.props.route.params.creditCard;
     const isInPayment = this.props.navigation.getParam("inPayment").isSome();
 
     // WebView parameters
@@ -389,7 +389,7 @@ const mapDispatchToProps = (
   props: NavigationStackScreenProps<ConfirmCardDetailsScreenNavigationParams>
 ) => {
   const navigateToNextScreen = (maybeWallet: Option<Wallet>) => {
-    const inPayment = props.navigation.getParam("inPayment");
+    const inPayment = props.route.params.inPayment;
     if (inPayment.isSome()) {
       const { rptId, initialAmount, verifica, idPayment } = inPayment.value;
       dispatchPickPspOrConfirm(dispatch)(

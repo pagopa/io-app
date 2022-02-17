@@ -173,7 +173,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
        * in order to perform the right navigation actions if we are not in the wallet stack.
        * TODO: This is a temporary (and not scalable) solution, a complete refactoring of the payment workflow is strongly recommended
        */
-      const startRoute = this.props.navigation.getParam("startRoute");
+      const startRoute = this.props.route.params.startRoute;
       if (startRoute !== undefined) {
         // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
         if (startRoute.routeName === ROUTES.MESSAGE_DETAIL) {
@@ -256,7 +256,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
 
   public render(): React.ReactNode {
-    const rptId: RptId = this.props.navigation.getParam("rptId");
+    const rptId: RptId = this.props.route.params.rptId;
     // TODO: it should compare the current an d the initial amount BUT the initialAmount seems to be provided with an incorrect format https://www.pivotaltracker.com/story/show/172084929
     const isAmountUpdated = true;
 
@@ -443,9 +443,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const rptId = props.navigation.getParam("rptId");
-  const initialAmount = props.navigation.getParam("initialAmount");
-  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
+  const rptId = props.route.params.rptId;
+  const initialAmount = props.route.params.initialAmount;
+  const paymentStartOrigin = props.route.params.paymentStartOrigin;
   const isManualPaymentInsertion = paymentStartOrigin === "manual_insertion";
 
   const dispatchPaymentVerificaRequest = () =>

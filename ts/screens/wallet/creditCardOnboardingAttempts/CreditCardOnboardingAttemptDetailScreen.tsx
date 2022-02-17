@@ -78,7 +78,7 @@ const instabugTag = "credit-card-support";
  */
 const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const dispatch = useDispatch();
-  const attempt = props.navigation.getParam("attempt");
+  const attempt = props.route.params.attempt;
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const outcomeCodes = useIOSelector(outcomeCodesSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);

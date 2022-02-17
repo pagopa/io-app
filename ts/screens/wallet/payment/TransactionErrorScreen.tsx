@@ -345,9 +345,9 @@ export const errorTransactionUIElements = (
 };
 
 const TransactionErrorScreen = (props: Props) => {
-  const rptId = props.navigation.getParam("rptId");
-  const error = props.navigation.getParam("error");
-  const onCancel = props.navigation.getParam("onCancel");
+  const rptId = props.route.params.rptId;
+  const error = props.route.params.error;
+  const onCancel = props.route.params.onCancel;
   const { paymentsHistory } = props;
 
   const codiceAvviso = getCodiceAvviso(rptId);

@@ -2,6 +2,8 @@ import * as React from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { SatispayPaymentMethod } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
@@ -15,14 +17,14 @@ export type SatispayDetailScreenNavigationParams = Readonly<{
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<SatispayDetailScreenNavigationParams>;
+  IOStackNavigationRouteProps<WalletParamsList, "WALLET_SATISPAY_DETAIL">;
 
 /**
  * Detail screen for a satispay
  * @constructor
  */
 const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
-  const satispay: SatispayPaymentMethod = props.navigation.getParam("satispay");
+  const satispay: SatispayPaymentMethod = props.route.params.satispay;
   return (
     <BasePaymentMethodScreen
       paymentMethod={satispay}

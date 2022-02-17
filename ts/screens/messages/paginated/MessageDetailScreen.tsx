@@ -155,7 +155,7 @@ const MessageDetailScreen = ({
 };
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const message: UIMessage = ownProps.navigation.getParam("message");
+  const message: UIMessage = ownProps.route.params.message;
   const messageDetails = getDetailsByMessageId(state, message.id);
   const isRead = isMessageRead(state, message.id);
   const goBack = () => ownProps.navigation.goBack();

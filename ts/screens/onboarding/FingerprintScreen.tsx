@@ -79,7 +79,7 @@ class FingerprintScreen extends React.PureComponent<Props> {
     );
 
   public render() {
-    const biometryType = this.props.navigation.getParam("biometryType");
+    const biometryType = this.props.route.params.biometryType;
 
     return (
       <TopScreenComponent

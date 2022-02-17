@@ -231,7 +231,7 @@ const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
   );
-  const inPayment = props.navigation.getParam("inPayment");
+  const inPayment = props.route.params.inPayment;
 
   const { present, dismiss } = useIOBottomSheet(
     <>

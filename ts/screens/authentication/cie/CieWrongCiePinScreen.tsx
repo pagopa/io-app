@@ -27,7 +27,7 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
   };
 
   get ciePinRemainingCount() {
-    return this.props.navigation.getParam("remainingCount");
+    return this.props.route.params.remainingCount;
   }
 
   private renderFooterButtons = () => {

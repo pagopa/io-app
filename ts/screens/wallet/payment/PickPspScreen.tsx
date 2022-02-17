@@ -72,7 +72,7 @@ class PickPspScreen extends React.Component<Props> {
     const idWallet = this.props.navigation
       .getParam("wallet")
       .idWallet.toString();
-    const idPayment = this.props.navigation.getParam("idPayment");
+    const idPayment = this.props.route.params.idPayment;
     this.props.loadAllPsp(idWallet, idPayment);
   }
 

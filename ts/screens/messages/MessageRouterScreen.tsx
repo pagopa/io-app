@@ -42,7 +42,7 @@ const getLoadingState = (
   CreatedMessageWithContentAndAttachments | undefined,
   string | undefined
 > => {
-  const messageId = props.navigation.getParam("messageId");
+  const messageId = props.route.params.messageId;
   if (!isStrictSome(props.allMessages)) {
     void mixpanelTrack("MESSAGE_ROUTING_FAILURE", {
       reason: "all Messages is not some"

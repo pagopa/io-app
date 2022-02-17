@@ -139,7 +139,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   };
 
   private getData = () => {
-    const payment = this.props.navigation.getParam("payment");
+    const payment = this.props.route.params.payment;
     const codiceAvviso = getCodiceAvviso(payment.data);
     const paymentCheckout = isPaymentDoneSuccessfully(payment);
     const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);

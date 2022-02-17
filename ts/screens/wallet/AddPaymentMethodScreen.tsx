@@ -171,7 +171,7 @@ const getPaymentMethods = (
 const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const inPayment = props.navigation.getParam("inPayment");
+  const inPayment = props.route.params.inPayment;
   const canAddOnlyPayablePaymentMethod = props.navigation.getParam(
     "showOnlyPayablePaymentMethods"
   );

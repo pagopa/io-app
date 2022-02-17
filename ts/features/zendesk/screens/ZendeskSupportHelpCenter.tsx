@@ -156,12 +156,12 @@ const ZendeskSupportHelpCenter = (props: Props) => {
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
 
   // Navigation prop
-  const faqCategories = props.navigation.getParam("faqCategories");
-  const contextualHelp = props.navigation.getParam("contextualHelp");
+  const faqCategories = props.route.params.faqCategories;
+  const contextualHelp = props.route.params.contextualHelp;
   const contextualHelpMarkdown = props.navigation.getParam(
     "contextualHelpMarkdown"
   );
-  const startingRoute = props.navigation.getParam("startingRoute");
+  const startingRoute = props.route.params.startingRoute;
   const assistanceForPayment = props.navigation.getParam(
     "assistanceForPayment"
   );

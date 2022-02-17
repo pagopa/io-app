@@ -171,7 +171,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   reloadPage: () => dispatch(reloadAllMessages.request({ pageSize }))
 });
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const messageId = ownProps.navigation.getParam("messageId");
+  const messageId = ownProps.route.params.messageId;
   const maybeMessage = allPaginated.getById(state, messageId);
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
   const cursors = getCursors(state);
