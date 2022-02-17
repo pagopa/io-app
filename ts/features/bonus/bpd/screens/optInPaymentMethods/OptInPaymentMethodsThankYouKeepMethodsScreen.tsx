@@ -22,6 +22,14 @@ const OptInPaymentMethodsThankYouKeepMethodsScreen = () => {
     );
   }, [dispatch]);
 
+  useEffect(() => {
+    // if the opt-in choice fails complete the workunit and show an error toast to the user
+    if (pot.isError(optInStatus)) {
+      showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
+      dispatch(optInPaymentMethodsCompleted());
+    }
+  }, [optInStatus, dispatch]);
+
   const isOptInStatusLoading = pot.fold(
     optInStatus,
     () => true,
@@ -46,10 +54,7 @@ const OptInPaymentMethodsThankYouKeepMethodsScreen = () => {
     );
   }
 
-  // if the opt-in choice fails complete the workunit and show an error toast to the user
   if (pot.isError(optInStatus)) {
-    showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
-    dispatch(optInPaymentMethodsCompleted());
     return null;
   }
 

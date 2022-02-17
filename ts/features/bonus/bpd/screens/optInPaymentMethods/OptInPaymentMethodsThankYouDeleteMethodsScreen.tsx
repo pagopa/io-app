@@ -4,7 +4,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import ThankYouSuccessComponent from "../../components/optInPaymentMethods/ThankYouSuccessComponent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { deleteAllPaymentMethodsByFunctionSelector } from "../../../../../store/reducers/wallet/wallets";
-import { isError, isLoading, isUndefined } from "../../model/RemoteValue";
+import {
+  isError,
+  isLoading,
+  isReady,
+  isUndefined
+} from "../../model/RemoteValue";
 import {
   optInPaymentMethodsCompleted,
   optInPaymentMethodsDeletionChoice
@@ -26,6 +31,17 @@ const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
     // dispatch saga that delete payment methods and update opt-in field
     dispatch(optInPaymentMethodsDeletionChoice());
   }, [dispatch]);
+
+  useEffect(() => {
+    // if the opt-in choice fails complete the workunit and show an error toast to the user
+    if (
+      pot.isError(optInStatus) &&
+      isReady(deleteAllPaymentMethodsByFunctionStatus)
+    ) {
+      showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
+      dispatch(optInPaymentMethodsCompleted());
+    }
+  }, [optInStatus, deleteAllPaymentMethodsByFunctionStatus, dispatch]);
 
   const isOptInStatusLoading = pot.fold(
     optInStatus,
@@ -59,13 +75,9 @@ const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
     );
   }
 
-  // if the opt-in choice fails complete the workunit and show an error toast to the user
   if (pot.isError(optInStatus)) {
-    showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
-    dispatch(optInPaymentMethodsCompleted());
     return null;
   }
-
   // both the payment methods deletion and the opt-in update succeed, show the thank you page
   return <ThankYouSuccessComponent />;
 };
