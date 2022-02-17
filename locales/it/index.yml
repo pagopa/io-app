@@ -1825,6 +1825,7 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   fiscalCode: "C.F. Ente"
+  fiscalCodeAccessibility: "Codice fiscale Ente" 
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
