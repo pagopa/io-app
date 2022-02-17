@@ -1,4 +1,5 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import { myPortalEnabled, svEnabled } from "../config";
 
 import ServiceDetailsScreen from "../screens/services/ServiceDetailsScreen";
@@ -28,12 +29,15 @@ const routeConfig = myPortalEnabled
   ? { ...servicesRoutes, ...myPortalRoutes, ...svConfigMap }
   : { ...servicesRoutes, ...svConfigMap };
 
-const ServicesNavigator = createStackNavigator(routeConfig, {
-  // Let each screen handle the header and navigation
-  headerMode: "none",
-  defaultNavigationOptions: {
-    gesturesEnabled: false
+const ServicesNavigator = createCompatNavigatorFactory(createStackNavigator)(
+  routeConfig,
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
-});
+);
 
 export default ServicesNavigator;

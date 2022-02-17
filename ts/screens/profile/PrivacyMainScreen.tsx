@@ -9,15 +9,17 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, AlertButton } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -30,9 +32,11 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
-import ScreenContent from "../../components/screens/ScreenContent";
 
-type Props = NavigationStackScreenProps &
+type Props = IOStackNavigationRouteProps<
+  ProfileParamsList,
+  "PROFILE_PRIVACY_MAIN"
+> &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -83,9 +87,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
       // if user asks for download, navigate to a screen to inform about the process
       // there he/she can request to download his/her data
       if (choice === UserDataProcessingChoiceEnum.DOWNLOAD) {
-        this.props.navigation.navigate({
-          routeName: ROUTES.PROFILE_DOWNLOAD_DATA
-        });
+        this.props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
         return;
       }
     } else {
@@ -197,9 +199,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.privacyPolicy.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY, {
-                  isProfile: true
-                })
+                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY)
               }
               useExtendedSubTitle={true}
             />

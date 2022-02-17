@@ -6,14 +6,19 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, PermissionsAndroid } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import {
   navigateToCalendarPreferenceScreen,
   navigateToEmailForwardingPreferenceScreen,
@@ -40,13 +45,9 @@ import {
   getLocalePrimary,
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
-import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import ScreenContent from "../../components/screens/ScreenContent";
 import { requestIOAndroidPermission } from "../../utils/permission";
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

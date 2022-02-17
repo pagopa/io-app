@@ -1,4 +1,5 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   bonusVacanzeEnabled,
   bpdEnabled,
@@ -215,12 +216,15 @@ const routeConfig = {
   ...(bpdOptInPaymentMethodsEnabled ? optInPaymentMethodsConfigMap : {})
 };
 
-const WalletNavigator = createStackNavigator(routeConfig, {
-  // Let each screen handle the header and navigation
-  headerMode: "none",
-  defaultNavigationOptions: {
-    gesturesEnabled: false
+const WalletNavigator = createCompatNavigatorFactory(createStackNavigator)(
+  routeConfig,
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
-});
+);
 
 export default WalletNavigator;

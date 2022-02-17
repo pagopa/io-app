@@ -1,13 +1,9 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import { NavigationEvents } from "@react-navigation/compat";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
-import {
-  NavigationEvents,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -26,6 +22,8 @@ import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
@@ -47,9 +45,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = IOStackNavigationRouteProps<ProfileParamsList, "PROFILE_MAIN">;
 
 type Props = OwnProps &
   LightModalContextInterface &

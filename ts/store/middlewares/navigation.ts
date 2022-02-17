@@ -1,4 +1,4 @@
-import { NavigationState } from "react-navigation";
+import { NavigationState } from "@react-navigation/native";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import { mixpanelTrack } from "../../mixpanel";
 import { noAnalyticsRoutes } from "../../utils/analytics";
