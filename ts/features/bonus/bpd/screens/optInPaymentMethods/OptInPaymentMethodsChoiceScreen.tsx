@@ -38,14 +38,14 @@ const generateOptionBody = (
   showBadge?: boolean
 ) => (
   <>
-    {showBadge ? (
+    {showBadge && (
       <>
         <IOPrimaryBadge
           text={I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
         />
         <View spacer xsmall />
       </>
-    ) : undefined}
+    )}
     <H4>{title}</H4>
     <LabelSmall weight="Regular" color="bluegrey">
       {body}
