@@ -40,9 +40,9 @@ const generateOptionBody = (
   <>
     {showBadge ? (
       <>
-        <IOPrimaryBadge>
-          {I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
-        </IOPrimaryBadge>
+        <IOPrimaryBadge
+          text={I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
+        />
         <View spacer xsmall />
       </>
     ) : undefined}

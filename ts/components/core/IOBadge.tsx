@@ -5,7 +5,7 @@ import { IOColors } from "./variables/IOColors";
 import { LabelSmall } from "./typography/LabelSmall";
 
 type IOBadgeCommonProps = {
-  children: string;
+  text: string;
 };
 
 const commonBadgeStyles = StyleSheet.create({
@@ -19,8 +19,8 @@ const commonBadgeStyles = StyleSheet.create({
  * A badge component styled with the
  * IO primary color.
  */
-export const IOPrimaryBadge: React.FC<IOBadgeCommonProps> = ({ children }) => (
+export const IOPrimaryBadge = ({ text }: IOBadgeCommonProps) => (
   <Badge style={[commonBadgeStyles.badge, { backgroundColor: IOColors.blue }]}>
-    <LabelSmall color="white">{children}</LabelSmall>
+    <LabelSmall color="white">{text}</LabelSmall>
   </Badge>
 );
