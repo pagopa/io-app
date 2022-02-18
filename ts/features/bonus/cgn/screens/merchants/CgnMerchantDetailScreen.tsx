@@ -29,8 +29,6 @@ import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { showToast } from "../../../../../utils/showToast";
 
 type NavigationParams = Readonly<{
