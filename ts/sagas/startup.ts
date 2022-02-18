@@ -545,7 +545,7 @@ function* waitForNavigatorServiceInitialization() {
   const startTime = performance.now();
 
   // before continuing we must wait for the navigatorService to be ready
-  while (navigator === null || navigator === undefined) {
+  while (navigator.current === null) {
     const elapsedTime = performance.now() - startTime;
     if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
       timeoutLogged = true;

@@ -1,21 +1,25 @@
+import { createStackNavigator } from "@react-navigation/stack";
 import { Root } from "native-base";
 import * as React from "react";
 import { AppState, Linking, Platform, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
-import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
-import customVariables from "./theme/variables";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
+import workunitGenericFailure from "./components/error/WorkunitGenericFailure";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { testOverlayCaption } from "./config";
 
 import { setLocale } from "./i18n";
-import AppNavigator from "./navigation/AppNavigator";
-import NavigationService from "./navigation/NavigationService";
+import authenticationNavigator from "./navigation/AuthenticationNavigator";
+import mainNavigator from "./navigation/MainNavigator";
+import onboardingNavigator from "./navigation/OnboardingNavigator";
+import { AppParamsList } from "./navigation/params/AppParamsList";
+import ROUTES from "./navigation/routes";
+import IngressScreen from "./screens/ingress/IngressScreen";
 import RootModal from "./screens/modal/RootModal";
 import {
   applicationChangeState,
@@ -24,17 +28,16 @@ import {
 import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { trackScreen } from "./store/middlewares/navigation";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
+import customVariables from "./theme/variables";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
-import { getCurrentRouteName } from "./utils/navigation";
 import { isStringNullyOrEmpty } from "./utils/strings";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const AppContainer = createAppContainer(AppNavigator);
+const Stack = createStackNavigator<AppParamsList>();
 
 /**
  * The main container of the application with:
@@ -137,18 +140,35 @@ class RootContainer extends React.PureComponent<Props> {
           backgroundColor={customVariables.androidStatusBarColor}
         />
         {Platform.OS === "android" && <FlagSecureComponent />}
-        <AppContainer
-          ref={navigatorRef => {
-            NavigationService.setTopLevelNavigator(navigatorRef);
-          }}
-          onNavigationStateChange={(prevState, currentState) => {
-            NavigationService.setCurrentState(currentState);
-            this.props.setDebugCurrentRouteName(
-              getCurrentRouteName(currentState) ?? "Undefined"
-            );
-            trackScreen(prevState, currentState);
-          }}
-        />
+        {/* <AppStack */}
+        {/*  ref={navigatorRef => { */}
+        {/*    NavigationService.setTopLevelNavigator(navigatorRef); */}
+        {/*  }} */}
+        {/*  onNavigationStateChange={(prevState, currentState) => { */}
+        {/*    NavigationService.setCurrentState(currentState); */}
+        {/*    this.props.setDebugCurrentRouteName( */}
+        {/*      getCurrentRouteName(currentState) ?? "Undefined" */}
+        {/*    ); */}
+        {/*    trackScreen(prevState, currentState); */}
+        {/*  }} */}
+        {/* /> */}
+        <Stack.Navigator initialRouteName={"INGRESS"}>
+          <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
+          <Stack.Screen
+            name={ROUTES.AUTHENTICATION}
+            component={authenticationNavigator}
+          />
+          <Stack.Screen
+            name={ROUTES.ONBOARDING}
+            component={onboardingNavigator}
+          />
+          <Stack.Screen name={ROUTES.MAIN} component={mainNavigator} />
+          <Stack.Screen
+            name={ROUTES.WORKUNIT_GENERIC_FAILURE}
+            component={workunitGenericFailure}
+          />
+        </Stack.Navigator>
+
         {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
         {!isStringNullyOrEmpty(testOverlayCaption) && (
           <BetaTestingOverlay

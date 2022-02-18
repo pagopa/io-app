@@ -1,4 +1,5 @@
-import { NavigationActions, StackActions } from "@react-navigation/compat";
+import { NavigationActions } from "@react-navigation/compat";
+import { CommonActions } from "@react-navigation/native";
 import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
@@ -37,38 +38,51 @@ import {
  */
 export const resetToAuthenticationRoute = () =>
   NavigationService.dispatchNavigationAction(
-    StackActions.reset({
+    CommonActions.reset({
       index: 0,
-      key: null,
-      actions: [
-        NavigationActions.navigate({
-          routeName: ROUTES.AUTHENTICATION
-        })
-      ]
+      routes: [{ name: ROUTES.AUTHENTICATION }]
     })
   );
+
+//   StackActions.reset({
+//     index: 0,
+//     key: null,
+//     actions: [
+//       NavigationActions.navigate({
+//         routeName: ROUTES.AUTHENTICATION
+//       })
+//     ]
+//   })
+// );
 
 /**
  * @deprecated
  */
 export const navigateToMainNavigatorAction = () =>
   NavigationService.dispatchNavigationAction(
-    StackActions.reset({
-      key: "StackRouterRoot",
+    CommonActions.reset({
       index: 0,
-      actions: [
-        NavigationActions.navigate({
-          routeName: ROUTES.MAIN
-        })
-      ]
+      routes: [{ name: ROUTES.MAIN }]
     })
   );
+
+// NavigationService.dispatchNavigationAction(
+//     StackActions.reset({
+//       key: "StackRouterRoot",
+//       index: 0,
+//       actions: [
+//         NavigationActions.navigate({
+//           routeName: ROUTES.MAIN
+//         })
+//       ]
+//     })
+//   );
 
 /**
  * @deprecated
  */
 export const navigateBack = () =>
-  NavigationService.dispatchNavigationAction(NavigationActions.back());
+  NavigationService.dispatchNavigationAction(CommonActions.goBack());
 
 /**
  * Authentication
@@ -79,11 +93,11 @@ export const navigateBack = () =>
  */
 export const navigateToIdpSelectionScreenAction = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: ROUTES.AUTHENTICATION,
-      action: NavigationActions.navigate({
-        routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
-      })
+    CommonActions.navigate({
+      name: ROUTES.AUTHENTICATION,
+      params: {
+        name: ROUTES.AUTHENTICATION_IDP_SELECTION
+      }
     })
   );
 
@@ -92,9 +106,11 @@ export const navigateToIdpSelectionScreenAction = () =>
  */
 export const navigateToOnboardingPinScreenAction = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: ROUTES.ONBOARDING,
-      action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
+    CommonActions.navigate({
+      name: ROUTES.ONBOARDING,
+      params: {
+        name: ROUTES.ONBOARDING_PIN
+      }
     })
   );
 
@@ -116,9 +132,11 @@ export const navigateToOnboardingFingerprintScreenAction = (
  */
 export const navigateToTosScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: ROUTES.ONBOARDING,
-      action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
+    CommonActions.navigate({
+      name: ROUTES.ONBOARDING,
+      params: {
+        name: ROUTES.ONBOARDING_TOS
+      }
     })
   );
 
