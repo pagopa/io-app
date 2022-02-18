@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { View } from "native-base";
+import { useDispatch } from "react-redux";
 import I18n from "../../../../../i18n";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -22,6 +23,10 @@ import { Body } from "../../../../../components/core/typography/Body";
 import { PrimaryBadge } from "../../../../../components/Badge";
 import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import {
+  navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen,
+  navigateToOptInPaymentMethodsThankYouKeepMethodsScreen
+} from "../../navigation/actions";
 
 type PaymentMethodsChoiceOptions =
   | "keepPaymentMethods"
@@ -68,35 +73,44 @@ const radioButtonListItems: ReadonlyArray<
   }
 ];
 
+const disabledButtonProps = disablePrimaryButtonProps(
+  I18n.t("global.buttons.continue")
+);
+
 const OptInPaymentMethodsChoiceScreen = () => {
   const [selectedMethod, setSelectedMethod] =
     useState<PaymentMethodsChoiceOptions | null>(null);
+  const dispatch = useDispatch();
 
   const { presentBottomSheet } = useBottomSheetMethodsToDelete({
-    onDeletePress: () => null,
-    onCancelPress: () => null
+    onDeletePress: () =>
+      dispatch(navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen())
   });
 
   const bottomButtons: {
     [key in PaymentMethodsChoiceOptions]: BlockButtonProps;
-  } = {
-    keepPaymentMethods: confirmButtonProps(
-      () => null,
-      I18n.t("global.buttons.continue"),
-      undefined,
-      "continueButton"
-    ),
+  } = useMemo(
+    () => ({
+      keepPaymentMethods: confirmButtonProps(
+        () =>
+          dispatch(navigateToOptInPaymentMethodsThankYouKeepMethodsScreen()),
+        I18n.t("global.buttons.continue"),
+        undefined,
+        "continueButton"
+      ),
 
-    deletePaymentMethods: errorBorderedButtonProps(
-      presentBottomSheet,
-      I18n.t("bonus.bpd.optInPaymentMethods.choice.deleteAllButton"),
-      undefined
-    )
-  };
+      deletePaymentMethods: errorBorderedButtonProps(
+        presentBottomSheet,
+        I18n.t("bonus.bpd.optInPaymentMethods.choice.deleteAllButton"),
+        undefined
+      )
+    }),
+    [dispatch, presentBottomSheet]
+  );
 
   const computedBottomButtonProps =
     selectedMethod === null
-      ? disablePrimaryButtonProps(I18n.t("global.buttons.continue"))
+      ? disabledButtonProps
       : bottomButtons[selectedMethod];
 
   return (
