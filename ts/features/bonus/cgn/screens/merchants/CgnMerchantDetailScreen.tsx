@@ -30,6 +30,7 @@ import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { showToast } from "../../../../../utils/showToast";
 import { openWebUrl } from "../../../../../utils/url";
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
@@ -155,7 +156,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                   type={"SingleButton"}
                   leftButton={{
                     ...confirmButtonProps(
-                      () => openWebUrl(url),
+                      () =>
+                        openWebUrl(url, () =>
+                          showToast(I18n.t("bonus.cgn.generic.linkError"))
+                        ),
                       I18n.t("bonus.cgn.merchantDetail.cta.label")
                     ),
                     bordered: true
