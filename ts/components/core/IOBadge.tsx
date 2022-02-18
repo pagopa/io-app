@@ -16,7 +16,7 @@ const commonBadgeStyles = StyleSheet.create({
 });
 
 /**
- * A badge componet styled with the
+ * A badge component styled with the
  * IO primary color.
  */
 export const IOPrimaryBadge: React.FC<IOBadgeCommonProps> = ({ children }) => (
