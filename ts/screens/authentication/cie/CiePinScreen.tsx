@@ -14,7 +14,8 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { NavigationContext, NavigationInjectedProps } from "react-navigation";
+import { NavigationContext } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -45,7 +46,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   container: {

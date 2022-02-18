@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -14,7 +14,7 @@ type NavigationParams = Readonly<{
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationStackScreenProps<NavigationParams>;
 
 /**
  * Detail screen for a satispay

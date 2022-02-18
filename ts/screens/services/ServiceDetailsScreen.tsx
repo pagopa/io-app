@@ -1,12 +1,15 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
 import BaseScreenComponent, {
@@ -15,12 +18,16 @@ import BaseScreenComponent, {
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
 import ServiceMetadataComponent from "../../components/services/ServiceMetadata";
+import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
+import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 import I18n from "../../i18n";
+import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { contentSelector } from "../../store/reducers/content";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
+import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import {
   isEmailEnabledSelector,
   isInboxEnabledSelector,
@@ -32,19 +39,12 @@ import customVariables from "../../theme/variables";
 import { getServiceCTA } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
-import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
-import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { loadServiceDetail } from "../../store/actions/services";
-import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
