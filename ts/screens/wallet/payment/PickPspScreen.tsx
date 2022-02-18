@@ -3,7 +3,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { H3, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -21,6 +20,8 @@ import { PspComponent } from "../../../components/wallet/payment/PspComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
@@ -42,7 +43,10 @@ export type PickPspScreenNavigationParams = Readonly<{
   chooseToChange?: boolean;
 }>;
 
-type OwnProps = NavigationStackScreenProps<PickPspScreenNavigationParams>;
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_PICK_PSP"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -69,9 +73,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class PickPspScreen extends React.Component<Props> {
   public componentDidMount() {
     // load all psp in order to offer to the user the complete psps list
-    const idWallet = this.props.navigation
-      .getParam("wallet")
-      .idWallet.toString();
+    const idWallet = this.props.route.params.wallet.idWallet.toString();
     const idPayment = this.props.route.params.idPayment;
     this.props.loadAllPsp(idWallet, idPayment);
   }
@@ -106,8 +108,8 @@ class PickPspScreen extends React.Component<Props> {
             isLoading={this.props.isLoading}
             onRetry={() => {
               this.props.loadAllPsp(
-                this.props.navigation.getParam("wallet").idWallet.toString(),
-                this.props.navigation.getParam("idPayment")
+                this.props.route.params.wallet.idWallet.toString(),
+                this.props.route.params.idPayment
               );
             }}
             loadingCaption={I18n.t("wallet.pickPsp.loadingPsps")}
@@ -183,11 +185,11 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
     dispatchUpdatePspForWalletAndConfirm(dispatch)(
       idPsp,
-      props.navigation.getParam("wallet"),
-      props.navigation.getParam("rptId"),
-      props.navigation.getParam("initialAmount"),
-      props.navigation.getParam("verifica"),
-      props.navigation.getParam("idPayment"),
+      props.route.params.wallet,
+      props.route.params.rptId,
+      props.route.params.initialAmount,
+      props.route.params.verifica,
+      props.route.params.idPayment,
       psps,
       () =>
         showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")

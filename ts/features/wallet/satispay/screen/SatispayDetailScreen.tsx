@@ -1,5 +1,4 @@
 import * as React from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";

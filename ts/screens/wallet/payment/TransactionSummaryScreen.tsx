@@ -3,13 +3,12 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { StackActions } from "@react-navigation/compat";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { NavigationLeafRoute, StackActions } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -21,6 +20,8 @@ import IconFont from "../../../components/ui/IconFont";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import ROUTES from "../../../navigation/routes";
 import {
   navigateToPaymentManualDataInsertion,
@@ -69,11 +70,13 @@ export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
-  startRoute: NavigationLeafRoute | undefined;
+  startRoute: string | undefined;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<TransactionSummaryScreenNavigationParams>;
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_TRANSACTION_SUMMARY"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -133,8 +136,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
       // this is the case when the component is already mounted (eg. process more payments)
       // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
       pot.isNone(this.props.potVerifica) &&
-      this.props.navigation.getParam("rptId").paymentNoticeNumber !==
-        prevProps.navigation.getParam("rptId").paymentNoticeNumber
+      this.props.route.params.rptId.paymentNoticeNumber !==
+        prevProps.route.params.rptId.paymentNoticeNumber
     ) {
       this.props.dispatchPaymentVerificaRequest();
     }
@@ -176,7 +179,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
       const startRoute = this.props.route.params.startRoute;
       if (startRoute !== undefined) {
         // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
-        if (startRoute.routeName === ROUTES.MESSAGE_DETAIL) {
+        if (startRoute === ROUTES.MESSAGE_DETAIL) {
           this.props.navigation.dispatch(StackActions.popToTop());
         }
         this.props.navigation.navigate(startRoute);
@@ -540,7 +543,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     onDuplicatedPayment: () =>
       dispatch(
         paymentCompletedSuccess({
-          rptId: props.navigation.getParam("rptId"),
+          rptId: props.route.params.rptId,
           kind: "DUPLICATED"
         })
       )

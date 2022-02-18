@@ -8,7 +8,6 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { H1 } from "../../../components/core/typography/H1";
@@ -27,6 +26,8 @@ import {
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToWalletAddPaymentMethod
@@ -58,8 +59,10 @@ export type PickPaymentMethodScreenNavigationParams = Readonly<{
   idPayment: string;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<PickPaymentMethodScreenNavigationParams>;
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_PICK_PAYMENT_METHOD"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -220,10 +223,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   goBack: () => navigateBack(),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     dispatchPickPspOrConfirm(dispatch)(
-      props.navigation.getParam("rptId"),
-      props.navigation.getParam("initialAmount"),
-      props.navigation.getParam("verifica"),
-      props.navigation.getParam("idPayment"),
+      props.route.params.rptId,
+      props.route.params.initialAmount,
+      props.route.params.verifica,
+      props.route.params.idPayment,
       some(wallet),
       failureReason => {
         // selecting the payment method has failed, show a toast and stay in
@@ -244,10 +247,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToAddPaymentMethod: () =>
     navigateToWalletAddPaymentMethod({
       inPayment: some({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        idPayment: props.navigation.getParam("idPayment")
+        rptId: props.route.params.rptId,
+        initialAmount: props.route.params.initialAmount,
+        verifica: props.route.params.verifica,
+        idPayment: props.route.params.idPayment
       })
     })
 });

@@ -1,24 +1,27 @@
+import { NavigationEvents, StackActions } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
-import { NavigationEvents, StackActions } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 
 import { connect } from "react-redux";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
-import { LightModalContextInterface } from "../ui/LightModal";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import { acknowledgeOnEmailValidation } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { withLightModalContext } from "./withLightModalContext";
+import { LightModalContextInterface } from "../ui/LightModal";
 import { withConditionalView } from "./withConditionalView";
+import { withLightModalContext } from "./withLightModalContext";
 
 export type ModalProps = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps;
+  IOStackNavigationRouteProps<AppParamsList>;
 
 /*
   ModalRemindEmailValidationOverlay is the component that allows viewing the email reminder via light modal.
