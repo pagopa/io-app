@@ -9,23 +9,15 @@ import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   ID_BONUS_VACANZE_TYPE,
-  ID_BPD_TYPE,
-  ID_CGN_TYPE
+  mapBonusIdFeatureFlag
 } from "../../utils/bonus";
 import { loadAvailableBonuses } from "../actions/bonusVacanze";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../../../../config";
+
 import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 
 export type AvailableBonusTypesState = pot.Pot<BonusesAvailable, Error>;
 
 const INITIAL_STATE: AvailableBonusTypesState = pot.none;
-
-export const mapBonusIdFeatureFlag = () =>
-  new Map<number, boolean>([
-    [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
-    [ID_BPD_TYPE, bpdEnabled],
-    [ID_CGN_TYPE, true]
-  ]);
 
 const reducer = (
   state: AvailableBonusTypesState = INITIAL_STATE,

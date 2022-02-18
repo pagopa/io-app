@@ -1,11 +1,6 @@
-const { defaults: tsjPreset } = require("ts-jest/presets");
-
 module.exports = {
-  ...tsjPreset,
   preset: "react-native",
   transform: {
-    "^.+\\.ts?$": "ts-jest",
-    "^.+\\.tsx?$": "ts-jest",
     "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
   },
   transformIgnorePatterns: [
@@ -13,11 +8,6 @@ module.exports = {
   ],
   moduleNameMapper: {
     "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js"
-  },
-  globals: {
-    "ts-jest": {
-      babelConfig: true
-    }
   },
   setupFiles: ["./jestSetup.js"],
   globalSetup: "./jestGlobalSetup.js",
