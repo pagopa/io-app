@@ -6,6 +6,7 @@ import { useIOBottomSheet } from "../../../../../../utils/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
+import { showToast } from "../../../../../../utils/showToast";
 
 const EYCA_DISCOUNTS_URL = "https://www.eyca.org/discounts/it";
 
@@ -27,7 +28,11 @@ const EycaInformationComponent: React.FunctionComponent = () => {
           <ButtonDefaultOpacity
             style={{ width: "100%" }}
             bordered
-            onPress={() => openWebUrl(EYCA_DISCOUNTS_URL)}
+            onPress={() =>
+              openWebUrl(EYCA_DISCOUNTS_URL, () =>
+                showToast(I18n.t("bonus.cgn.generic.linkError"))
+              )
+            }
             onPressWithGestureHandler
           >
             <Label color={"blue"}>

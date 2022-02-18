@@ -1,12 +1,12 @@
 import { createStandardAction } from "typesafe-actions";
 import MockDate from "mockdate";
 import { range } from "fp-ts/lib/Array";
-import * as backoffError from "../backoffError";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import { appReducer } from "../index";
 import { applicationChangeState } from "../../actions/application";
 import { backOffWaitingTime } from "../backoffError";
+import * as backoffErrorConfig from "../backoffErrorConfig";
 
 describe("backoffError reducer", () => {
   it("should have a valid initial state", () => {
@@ -18,15 +18,17 @@ describe("backoffError reducer", () => {
     const aFailureAction = createStandardAction(failureActionType)<void>();
     const successActionType = "123test";
     const aSuccessAction = createStandardAction(successActionType)<void>();
+
     jest
-      .spyOn(backoffError, "failureActionTypes")
+      .spyOn(backoffErrorConfig, "failureActionTypes")
       .mockImplementation(() => [failureActionType]);
     jest
-      .spyOn(backoffError, "successActionTypes")
+      .spyOn(backoffErrorConfig, "successActionTypes")
       .mockImplementation(() => [successActionType]);
     jest
-      .spyOn(backoffError, "backoffConfig")
+      .spyOn(backoffErrorConfig, "backoffConfig")
       .mockImplementation(() => backoffConfig);
+
     // eslint-disable-next-line functional/no-let
     let state: GlobalState = appReducer(
       undefined,
