@@ -4,7 +4,6 @@ import { Content, Grid, View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -23,6 +22,8 @@ import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
 import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { ServicesParamsList } from "../../navigation/params/ServicesParamsList";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { contentSelector } from "../../store/reducers/content";
@@ -44,8 +45,10 @@ export type ServiceDetailsScreenNavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<ServiceDetailsScreenNavigationParams>;
+type OwnProps = IOStackNavigationRouteProps<
+  ServicesParamsList,
+  "SERVICE_DETAIL"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -223,7 +226,7 @@ const ServiceDetailsScreen = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
-  const serviceId = props.navigation.getParam("service").service_id;
+  const serviceId = props.route.params.service.service_id;
 
   return {
     serviceId,

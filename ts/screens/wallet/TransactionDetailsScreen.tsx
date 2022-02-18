@@ -1,10 +1,9 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
@@ -20,6 +19,8 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
@@ -42,8 +43,10 @@ export type TransactionDetailsScreenNavigationParams = Readonly<{
   transaction: Transaction;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<TransactionDetailsScreenNavigationParams>;
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_TRANSACTION_DETAILS"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -115,7 +118,10 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  private handleBackPress = () => this.props.navigation.goBack();
+  private handleBackPress = () => {
+    this.props.navigation.goBack();
+    return true;
+  };
 
   private handleWillFocus = () => {
     const transaction = this.props.route.params.transaction;

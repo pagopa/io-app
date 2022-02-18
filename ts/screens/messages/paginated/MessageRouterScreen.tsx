@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
@@ -18,6 +18,8 @@ import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/
 import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
 import I18n from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
@@ -40,15 +42,16 @@ import {
 } from "../../../store/reducers/entities/messages/types";
 import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../utils/pot";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
 };
 
-type OwnProps =
-  NavigationStackScreenProps<MessageRouterScreenPaginatedNavigationParams>;
+type OwnProps = IOStackNavigationRouteProps<
+  MessagesParamsList,
+  "MESSAGE_ROUTER_PAGINATED"
+>;
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -94,7 +97,7 @@ const MessageRouterScreen = ({
   maybeMessageDetails,
   messageId
 }: Props): React.ReactElement => {
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
   // (avoid displaying error at the first frame)
   const firstRendering = useRef(true);

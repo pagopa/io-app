@@ -10,6 +10,8 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import {
   loadMessageDetails,
   MessageReadType,
@@ -50,8 +52,10 @@ export type MessageDetailScreenPaginatedNavigationParams = {
   message: UIMessage;
 };
 
-type OwnProps =
-  NavigationStackScreenProps<MessageDetailScreenPaginatedNavigationParams>;
+type OwnProps = IOStackNavigationRouteProps<
+  MessagesParamsList,
+  "MESSAGE_DETAIL_PAGINATED"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

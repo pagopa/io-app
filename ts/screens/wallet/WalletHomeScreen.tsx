@@ -1,10 +1,9 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -51,6 +50,8 @@ import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedC
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToPaymentScanQrCode,
@@ -102,7 +103,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps<WalletHomeNavigationParams> &
+  IOStackNavigationRouteProps<WalletParamsList, "WALLET_HOME"> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
@@ -615,7 +616,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     validTo?: Date
   ) => navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }),
   navigateToBonusList: () => navigateToAvailableBonusScreen(),
-  navigateBack: (keyFrom?: string) => navigateBack({ key: keyFrom }),
+  // ⚠️ navigateBack({ key: keyFrom }),
+  navigateBack: (_?: string) => navigateBack(),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),

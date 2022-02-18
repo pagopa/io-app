@@ -2,7 +2,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { InfoBox } from "../../components/box/InfoBox";
@@ -14,6 +13,8 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { navigateToOnboardingServicePreferenceCompleteAction } from "../../store/actions/navigation";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
@@ -34,7 +35,10 @@ export type OnboardingServicesPreferenceScreenNavigationParams = {
 };
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps<OnboardingServicesPreferenceScreenNavigationParams>;
+  IOStackNavigationRouteProps<
+    OnboardingParamsList,
+    "ONBOARDING_SERVICES_PREFERENCE"
+  >;
 
 const OnboardingServicesPreferenceScreen = (
   props: Props

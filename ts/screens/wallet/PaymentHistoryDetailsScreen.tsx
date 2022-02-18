@@ -3,7 +3,6 @@ import Instabug from "instabug-reactnative";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -26,6 +25,8 @@ import {
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import { zendeskSupportStart } from "../../features/zendesk/store/actions";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
@@ -59,10 +60,12 @@ export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
-type Props =
-  NavigationStackScreenProps<PaymentHistoryDetailsScreenNavigationParams> &
-    ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps>;
+type Props = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_HISTORY_DETAIL_INFO"
+> &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   flex: {
@@ -106,7 +109,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private instabugLogAndOpenReport = () => {
     Instabug.appendTags([paymentInstabugTag]);
     instabugLog(
-      getPaymentHistoryDetails(this.props.navigation.getParam("payment")),
+      getPaymentHistoryDetails(this.props.route.params.payment),
       TypeLogs.INFO,
       paymentInstabugTag
     );
@@ -117,9 +120,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     // Set pagamenti_pagopa as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
     // Append the payment history details in the log
-    appendLog(
-      getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
-    );
+    appendLog(getPaymentHistoryDetails(this.props.route.params.payment));
 
     this.props.zendeskSupportWorkunitStart();
   };

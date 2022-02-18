@@ -1,7 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import {
@@ -22,6 +21,8 @@ import { getPanDescription } from "../../../components/wallet/creditCardOnboardi
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
@@ -42,8 +43,10 @@ export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;
 }>;
 
-type Props =
-  NavigationStackScreenProps<CreditCardOnboardingAttemptDetailScreenNavigationParams>;
+type Props = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL"
+>;
 
 const styles = StyleSheet.create({
   row: {

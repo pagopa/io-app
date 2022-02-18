@@ -17,7 +17,6 @@ import { Content, View } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -34,6 +33,8 @@ import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToWalletConfirmCardDetails
@@ -75,7 +76,10 @@ export type AddCardScreenNavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = NavigationStackScreenProps<AddCardScreenNavigationParams>;
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_ADD_CARD"
+>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -468,8 +472,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     navigateToWalletConfirmCardDetails({
       creditCard,
-      inPayment: props.navigation.getParam("inPayment"),
-      keyFrom: props.navigation.getParam("keyFrom")
+      inPayment: props.route.params.inPayment,
+      keyFrom: props.route.params.keyFrom
     })
 });
 
