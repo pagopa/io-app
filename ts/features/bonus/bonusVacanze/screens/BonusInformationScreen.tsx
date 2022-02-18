@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
@@ -14,7 +14,7 @@ type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<NavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

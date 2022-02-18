@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   StyleSheet
 } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -31,7 +31,7 @@ import { walletAddCoBadgeStart } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<CoBadgeChooseTypeNavigationProps>;
+  NavigationStackScreenProps<CoBadgeChooseTypeNavigationProps>;
 
 export type CoBadgeChooseTypeNavigationProps = {
   abi?: string;

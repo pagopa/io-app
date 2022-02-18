@@ -87,6 +87,7 @@ export function* putOptInStatusCitizenV2(
         // (note the required header will be injected automatically)
         { citizenOptInStatus: action.payload } as any
       );
+
     if (updateCitizenIOResult.isRight()) {
       if (updateCitizenIOResult.value.status === 200) {
         if (updateCitizenIOResult.value.value.optInStatus) {
@@ -100,13 +101,17 @@ export function* putOptInStatusCitizenV2(
           );
         }
       } else {
-        bpdUpdateOptInStatusMethod.failure(
-          new Error(`response status ${updateCitizenIOResult.value.status}`)
+        yield put(
+          bpdUpdateOptInStatusMethod.failure(
+            new Error(`response status ${updateCitizenIOResult.value.status}`)
+          )
         );
       }
     } else {
-      bpdUpdateOptInStatusMethod.failure(
-        new Error(readableReport(updateCitizenIOResult.value))
+      yield put(
+        bpdUpdateOptInStatusMethod.failure(
+          new Error(readableReport(updateCitizenIOResult.value))
+        )
       );
     }
   } catch (e) {

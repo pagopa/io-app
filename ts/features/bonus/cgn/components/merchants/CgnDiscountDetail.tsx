@@ -17,6 +17,7 @@ import {
 } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { openWebUrl } from "../../../../../utils/url";
+import { showToast } from "../../../../../utils/showToast";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 import CgnDiscountCodeComponent from "./discount/CgnDiscountCodeComponent";
 
@@ -141,7 +142,9 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       <ButtonDefaultOpacity
         style={{ width: "100%" }}
         onPress={() => {
-          openWebUrl(discount.discountUrl);
+          openWebUrl(discount.discountUrl, () =>
+            showToast(I18n.t("bonus.cgn.generic.linkError"))
+          );
         }}
         onPressWithGestureHandler={true}
         bordered

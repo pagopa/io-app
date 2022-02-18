@@ -6,6 +6,7 @@ import {
   deleteReadTransaction,
   readTransaction
 } from "../../actions/wallet/transactions";
+import { isProfileEmailValidatedSelector } from "../profile";
 import { GlobalState } from "../types";
 import { getTransactions } from "../wallet/transactions";
 
@@ -54,3 +55,16 @@ export const getUnreadTransactionsSelector = createSelector(
       txs.filter(_ => _ !== undefined && transactionsRead[_.id] === undefined)
     )
 );
+
+/**
+ * This selector returns the number of unread transaction
+ * only if the current user has the email validated.
+ */
+export const getSafeUnreadTransactionsNumSelector = (state: GlobalState) => {
+  const transactions = getUnreadTransactionsSelector(state);
+  const isEmailValidated = isProfileEmailValidatedSelector(state);
+
+  return pot.isSome(transactions) && isEmailValidated
+    ? Object.keys(transactions.value).length
+    : 0;
+};

@@ -1,21 +1,27 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { View, H3 } from "native-base";
+import { H3, View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet, SafeAreaView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { H5 } from "../../../components/core/typography/H5";
 import { H4 } from "../../../components/core/typography/H4";
+import { H5 } from "../../../components/core/typography/H5";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
+import { PspComponent } from "../../../components/wallet/payment/PspComponent";
+import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../i18n";
+import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
@@ -24,12 +30,6 @@ import customVariables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { navigateBack } from "../../../store/actions/navigation";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { PspComponent } from "../../../components/wallet/payment/PspComponent";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 type NavigationParams = Readonly<{
@@ -42,7 +42,7 @@ type NavigationParams = Readonly<{
   chooseToChange?: boolean;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
