@@ -72,28 +72,13 @@ export const handleDownloadResult = async (
         ReactNativeBlobUtil.ios.presentOptionsMenu(result.path());
       }
     } else {
-      if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        showPreview(path, {
-          _tag: "android",
-          open: () => {
-            throw new Error("not implemented");
-          },
-          save: () => {
-            throw new Error("not implemented");
-          },
-          share: () => {
-            throw new Error("not implemented");
-          }
-        });
-      } else {
-        await ReactNativeBlobUtil.android.addCompleteDownload({
-          mime: attachment.contentType,
-          title: attachment.displayName,
-          showNotification: true,
-          description: attachment.displayName,
-          path: result.path()
-        });
-      }
+      await ReactNativeBlobUtil.android.addCompleteDownload({
+        mime: attachment.contentType,
+        title: attachment.displayName,
+        showNotification: true,
+        description: attachment.displayName,
+        path: result.path()
+      });
     }
   } catch (e) {
     if (e instanceof Error) {

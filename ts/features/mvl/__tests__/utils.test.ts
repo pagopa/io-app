@@ -87,24 +87,28 @@ describe("handleDownloadResult utility function", () => {
         expect(mockShowPreview).not.toHaveBeenCalled();
       });
     });
-    describe("and the attachment is a PDF", () => {
-      it("should only call the Android utils", async () => {
-        await handleDownloadResult(
-          mvlMockPdfAttachment,
-          header,
-          mockShowPreview
-        );
-        expect(mockIosUtil).not.toHaveBeenCalled();
-        expect(mockAndroidUtil).not.toHaveBeenCalled();
-        expect(mockAndroidUtil).not.toHaveBeenCalled();
-        expect(mockShowPreview).toHaveBeenCalledWith(defaultPath, {
-          _tag: "android",
-          open: expect.any(Function),
-          share: expect.any(Function),
-          save: expect.any(Function)
-        });
-      });
-    });
+
+    // TODO:  this test will be useful once we implement Android support via
+    //        https://pagopa.atlassian.net/browse/IAMVL-67
+    //
+    // describe("and the attachment is a PDF", () => {
+    //   it("should only call the Android utils", async () => {
+    //     await handleDownloadResult(
+    //       mvlMockPdfAttachment,
+    //       header,
+    //       mockShowPreview
+    //     );
+    //     expect(mockIosUtil).not.toHaveBeenCalled();
+    //     expect(mockAndroidUtil).not.toHaveBeenCalled();
+    //     expect(mockAndroidUtil).not.toHaveBeenCalled();
+    //     expect(mockShowPreview).toHaveBeenCalledWith(defaultPath, {
+    //       _tag: "android",
+    //       open: expect.any(Function),
+    //       share: expect.any(Function),
+    //       save: expect.any(Function)
+    //     });
+    //   });
+    // });
   });
 
   describe("when is running on iOS", () => {
