@@ -504,6 +504,7 @@ navigation:
   messages: Messages
   profile: Profile
   accessibility: "Section {{section}}, panel, {{order}} of 4"
+  accessibilityWithBadge: "Section {{section}}, {{unread}} new items, panel, {{order}} of 4"
   selected: Is selected
 cie:
   title: Touch the card
@@ -1798,6 +1799,7 @@ services:
   emptyListMessage: There are no services available at this time, pull down to refresh
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
+  fiscalCodeAccessibility: "Organization's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -2536,7 +2538,20 @@ bonus:
       deletePaymentMethodsBottomSheet:
         title: "Do you really want to delete the following methods from the Wallet?"
         subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
+      thankYouPage:
+        cta:
+          goToWallet: "Go to Wallet"
+          retry: "Try again"
+        success:
+          title: "Done!"
+          body: "We’ve saved your choice."
+        retryAfterDeletion:
+          title: "Sorry, an unexpected error has occurred"
+          body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
+        toast: "Your choice was not saved. Try again later."
   cgn:
+    generic:
+      linkError: "The site can't be reached at the moment. Please, try again later."
     accessibility:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale

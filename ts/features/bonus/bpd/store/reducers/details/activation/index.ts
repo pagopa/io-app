@@ -22,6 +22,7 @@ import {
   bpdUpdateOptInStatusMethod
 } from "../../../actions/onboarding";
 import { CitizenOptInStatusEnum } from "../../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
+import { optInPaymentMethodsStart } from "../../../actions/optInPaymentMethods";
 import paymentInstrumentReducer, {
   bpdUpsertIbanSelector,
   PayoffInstrumentType
@@ -68,11 +69,14 @@ const enabledReducer = (
   return state;
 };
 
+const OPT_IN_INITIAL_STATE = pot.none;
 const optInStatusReducer = (
-  state: pot.Pot<CitizenOptInStatusEnum, Error> = pot.none,
+  state: pot.Pot<CitizenOptInStatusEnum, Error> = OPT_IN_INITIAL_STATE,
   action: Action
 ): pot.Pot<CitizenOptInStatusEnum, Error> => {
   switch (action.type) {
+    case getType(optInPaymentMethodsStart):
+      return OPT_IN_INITIAL_STATE;
     case getType(bpdLoadActivationStatus.request):
       return pot.toLoading(state);
     case getType(bpdUpdateOptInStatusMethod.request):
@@ -85,6 +89,7 @@ const optInStatusReducer = (
       return pot.some(action.payload);
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
+    case getType(bpdUpdateOptInStatusMethod.failure):
       return pot.toError(state, action.payload);
   }
   return state;
