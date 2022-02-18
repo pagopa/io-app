@@ -86,10 +86,12 @@ export const errorBorderedButtonProps = (
  */
 export const disablePrimaryButtonProps = (
   title?: string,
-  iconName?: string
+  iconName?: string,
+  testID?: string
 ): BlockButtonProps => ({
   primary: true,
   disabled: true,
   title: title ? title : I18n.t("global.buttons.confirm"),
-  iconName
+  iconName,
+  testID
 });

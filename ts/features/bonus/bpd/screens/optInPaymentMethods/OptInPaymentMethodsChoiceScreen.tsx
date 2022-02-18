@@ -74,7 +74,9 @@ const radioButtonListItems: ReadonlyArray<
 ];
 
 const disabledButtonProps = disablePrimaryButtonProps(
-  I18n.t("global.buttons.continue")
+  I18n.t("global.buttons.continue"),
+  undefined,
+  "disabledContinueButton"
 );
 
 const OptInPaymentMethodsChoiceScreen = () => {
