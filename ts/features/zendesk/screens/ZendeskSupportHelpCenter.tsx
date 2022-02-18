@@ -1,38 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationInjectedProps } from "react-navigation";
-import { constNull } from "fp-ts/lib/function";
-import I18n from "../../../i18n";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
+import { useDispatch } from "react-redux";
+import { ContextualHelpData } from "../../../components/ContextualHelp/ContextualHelpComponent";
+import { H3 } from "../../../components/core/typography/H3";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import FAQComponent from "../../../components/FAQComponent";
 import BaseScreenComponent, {
   ContextualHelpProps
 } from "../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import {
+  getContextualHelpConfig,
+  getContextualHelpData,
+  reloadContextualHelpDataThreshold
+} from "../../../components/screens/BaseScreenComponent/utils";
+import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import View from "../../../components/ui/TextWithIcon";
+import I18n from "../../../i18n";
+import { loadContextualHelpData } from "../../../store/actions/content";
+import { useIOSelector } from "../../../store/hooks";
+import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
+import themeVariables from "../../../theme/variables";
+import { getFAQsFromCategories } from "../../../utils/faq";
+import { isStringNullyOrEmpty } from "../../../utils/strings";
+import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
 import {
   getZendeskConfig,
   ZendeskStartPayload,
   zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
-import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
-import { ContextualHelpData } from "../../../components/ContextualHelp/ContextualHelpComponent";
-import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
-import { loadContextualHelpData } from "../../../store/actions/content";
-import { useIOSelector } from "../../../store/hooks";
-import { getFAQsFromCategories } from "../../../utils/faq";
-import ActivityIndicator from "../../../components/ui/ActivityIndicator";
-import themeVariables from "../../../theme/variables";
-import { isStringNullyOrEmpty } from "../../../utils/strings";
-import { H3 } from "../../../components/core/typography/H3";
-import FAQComponent from "../../../components/FAQComponent";
-import {
-  getContextualHelpConfig,
-  getContextualHelpData,
-  reloadContextualHelpDataThreshold
-} from "../../../components/screens/BaseScreenComponent/utils";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -144,7 +144,7 @@ const FaqManager = (props: FaqManagerProps) => {
   );
 };
 
-type Props = NavigationInjectedProps<ZendeskStartPayload>;
+type Props = NavigationStackScreenProps<ZendeskStartPayload>;
 /**
  * Ingress screen to access the Zendesk assistance tool
  * the user can choose to open a new ticket, follow previous conversations or read the faqs

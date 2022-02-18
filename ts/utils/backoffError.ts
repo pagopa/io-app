@@ -1,10 +1,8 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, delay, select } from "typed-redux-saga/macro";
-import {
-  backOffWaitingTime,
-  FailureActions
-} from "../store/reducers/backoffError";
+import { backOffWaitingTime } from "../store/reducers/backoffError";
 import { mixpanelTrack } from "../mixpanel";
+import { FailureActions } from "../store/reducers/backoffErrorConfig";
 import { ReduxSagaEffect } from "../types/utils";
 
 /**

@@ -9,17 +9,6 @@ import CGN_ROUTES from "./routes";
  * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
  * and many helper methods specific to screens won't be available.
  */
-export const navigateToCgnActivationLoadActivationStatus = () =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: CGN_ROUTES.ACTIVATION.LOAD_CHECK_ACTIVATION_STATUS
-    })
-  );
-
-/**
- * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
- * and many helper methods specific to screens won't be available.
- */
 export const navigateToCgnActivationInformationTos = () =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -114,17 +103,6 @@ export const navigateToCgnDetails = () =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
       routeName: CGN_ROUTES.DETAILS.DETAILS
-    })
-  );
-
-/**
- * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
- * and many helper methods specific to screens won't be available.
- */
-export const navigateToCgnDetailsOtp = () =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: CGN_ROUTES.DETAILS.DETAILS_OTP
     })
   );
 

@@ -395,46 +395,18 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
       typeof deleteAllByFunctionApiWithRefresh
     > = yield* call(deleteAllByFunctionApiWithRefresh);
     if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
-      const notDeletedMethodsCount =
-        deleteResponse.value.value.data?.notDeletedWallets ?? -1;
-      // some error occurred while deletion
-      if (notDeletedMethodsCount !== 0) {
-        yield* put(
-          deleteAllPaymentMethodsByFunction.failure({
-            error: Error("can't delete some methods"),
-            notDeletedMethodsCount
-          })
-        );
-        return;
-      }
       const deletedMethodsCount =
         deleteResponse.value.value.data?.deletedWallets ?? -1;
-      /**
-       * this API should do 2 things (but it doesn't):
-       * 1. delete payment methods
-       * 2. return the updated list of the payment methods
-       * ATM the app does both but this should be avoided, see https://pagopa.atlassian.net/browse/PM-150
-       * If one of these request fail, it's a failure
-       */
-      const maybeWallets: SagaCallReturnType<typeof getWallets> = yield* call(
-        getWallets,
-        pagoPaClient,
-        pmSessionManager
-      );
-      if (maybeWallets.isRight()) {
-        const successAction = deleteAllPaymentMethodsByFunction.success({
-          wallets: maybeWallets.value,
-          deletedMethodsCount
-        });
-        yield* put(successAction);
-      } else {
-        yield* put(
-          deleteAllPaymentMethodsByFunction.failure({
-            error: maybeWallets.value,
-            notDeletedMethodsCount
-          })
-        );
-      }
+
+      const remainingWallets = (
+        deleteResponse.value.value.data?.remainingWallets ?? []
+      ).map(convertWalletV2toWalletV1);
+
+      const successAction = deleteAllPaymentMethodsByFunction.success({
+        wallets: remainingWallets,
+        deletedMethodsCount
+      });
+      yield* put(successAction);
     } else {
       const error = Error(
         deleteResponse.fold(

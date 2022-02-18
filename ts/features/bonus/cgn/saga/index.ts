@@ -22,6 +22,7 @@ import {
 import { BackendCgnMerchants } from "../api/backendCgnMerchants";
 import { cgnCodeFromBucket } from "../store/actions/bucket";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import { cgnCategories } from "../store/actions/categories";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -40,6 +41,7 @@ import {
 } from "./networking/merchants/cgnMerchantsSaga";
 import { cgnBucketConsuption } from "./networking/bucket";
 import { cgnUnsubscriptionHandler } from "./networking/unsubscribe";
+import { cgnCategoriesSaga } from "./networking/categories/cgnCategoriesSaga";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -100,6 +102,12 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     getType(cgnUnsubscribe.request),
     cgnUnsubscriptionHandler,
     backendCGN.startCgnUnsubscription
+  );
+  // CGN Merchants categories
+  yield takeLatest(
+    getType(cgnCategories.request),
+    cgnCategoriesSaga,
+    backendCgnMerchants.getPublishedCategories
   );
 
   // CGN Offline Merchants

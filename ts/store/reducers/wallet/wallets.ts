@@ -73,6 +73,7 @@ import {
   DeleteAllByFunctionSuccess,
   deleteAllPaymentMethodsByFunction
 } from "../../actions/wallet/delete";
+import { optInPaymentMethodsStart } from "../../../features/bonus/bpd/store/actions/optInPaymentMethods";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -222,6 +223,20 @@ export const getPagoPAMethodsSelector = createSelector(
     pot.getOrElse(
       pot.map(potPm, pms =>
         pms.filter(pm => hasFunctionEnabled(pm, EnableableFunctionsEnum.pagoPA))
+      ),
+      []
+    )
+);
+
+// return those payment methods that have BPD as enabled function
+export const getBPDMethodsSelector = createSelector(
+  paymentMethodsSelector,
+  (
+    potPm: ReturnType<typeof paymentMethodsSelector>
+  ): ReadonlyArray<PaymentMethod> =>
+    pot.getOrElse(
+      pot.map(potPm, pms =>
+        pms.filter(pm => hasFunctionEnabled(pm, EnableableFunctionsEnum.BPD))
       ),
       []
     )
@@ -478,6 +493,12 @@ const reducer = (
     //
     // delete all payments method by function
     //
+    case getType(optInPaymentMethodsStart):
+      // Reset the state when the opt-in payment methods workunit starts
+      return {
+        ...state,
+        deleteAllByFunction: WALLETS_INITIAL_STATE.deleteAllByFunction
+      };
     case getType(deleteAllPaymentMethodsByFunction.request):
       return { ...state, deleteAllByFunction: remoteLoading };
     case getType(deleteAllPaymentMethodsByFunction.success):

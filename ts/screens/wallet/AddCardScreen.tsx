@@ -15,9 +15,9 @@ import {
 } from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import React, { useState } from "react";
-import { Keyboard, ScrollView, StyleSheet } from "react-native";
+import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -75,7 +75,7 @@ type NavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -108,6 +108,9 @@ const styles = StyleSheet.create({
   },
   whiteBg: {
     backgroundColor: variables.colorWhite
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -297,157 +300,162 @@ const AddCardScreen: React.FC<Props> = props => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["wallet_methods", "wallet_methods_security"]}
     >
-      <ScrollView
-        bounces={false}
-        style={styles.whiteBg}
-        keyboardShouldPersistTaps="handled"
-      >
-        <Content scrollEnabled={false}>
-          <LabelledItem
-            label={I18n.t("wallet.dummyCard.labels.holder.label")}
-            description={
-              isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
-                ? I18n.t("wallet.dummyCard.labels.holder.description.base")
-                : I18n.t("wallet.dummyCard.labels.holder.description.error")
-            }
-            icon="io-titolare"
-            isValid={
-              isNone(creditCard.holder)
-                ? undefined
-                : isValidCardHolder(creditCard.holder)
-            }
-            accessibilityLabel={accessibilityLabels.cardHolder}
-            inputProps={{
-              value: creditCard.holder.getOrElse(""),
-              placeholder: placeholders.placeholderHolder,
-              autoCapitalize: "words",
-              keyboardType: "default",
-              returnKeyType: "done",
-              onChangeText: (value: string) => updateState("holder", value)
-            }}
-            testID={"cardHolder"}
-          />
-
-          <View spacer={true} />
-
-          <LabelledItem
-            label={I18n.t("wallet.dummyCard.labels.pan")}
-            icon={detectedBrand.iconForm}
-            iconStyle={styles.creditCardForm}
-            isValid={isNone(creditCard.pan) ? undefined : isCardNumberValid}
-            inputMaskProps={{
-              value: creditCard.pan.getOrElse(""),
-              placeholder: placeholders.placeholderCard,
-              keyboardType: "numeric",
-              returnKeyType: "done",
-              maxLength: 23,
-              type: "custom",
-              options: {
-                mask: "9999 9999 9999 9999 999",
-                getRawValue: value1 => value1.replace(/ /g, "")
-              },
-              includeRawValueInChangeText: true,
-              onChangeText: (_, value) => {
-                if (value !== undefined) {
-                  updateState("pan", value);
-                }
+      <SafeAreaView style={styles.flex}>
+        <ScrollView
+          bounces={false}
+          style={styles.whiteBg}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Content scrollEnabled={false}>
+            <LabelledItem
+              label={I18n.t("wallet.dummyCard.labels.holder.label")}
+              description={
+                isNone(creditCard.holder) ||
+                isValidCardHolder(creditCard.holder)
+                  ? I18n.t("wallet.dummyCard.labels.holder.description.base")
+                  : I18n.t("wallet.dummyCard.labels.holder.description.error")
               }
-            }}
-            accessibilityLabel={accessibilityLabels.pan}
-            testID={"pan"}
-          />
+              icon="io-titolare"
+              isValid={
+                isNone(creditCard.holder)
+                  ? undefined
+                  : isValidCardHolder(creditCard.holder)
+              }
+              accessibilityLabel={accessibilityLabels.cardHolder}
+              inputProps={{
+                value: creditCard.holder.getOrElse(""),
+                placeholder: placeholders.placeholderHolder,
+                autoCapitalize: "words",
+                keyboardType: "default",
+                returnKeyType: "done",
+                onChangeText: (value: string) => updateState("holder", value)
+              }}
+              testID={"cardHolder"}
+            />
 
-          <View spacer={true} />
-          <Grid>
-            <Col>
-              <LabelledItem
-                label={I18n.t("wallet.dummyCard.labels.expirationDate")}
-                icon="io-calendario"
-                accessibilityLabel={accessibilityLabels.expirationDate}
-                isValid={maybeCreditCardValidOrExpired(
-                  creditCard
-                ).toUndefined()}
-                inputMaskProps={{
-                  value: creditCard.expirationDate.getOrElse(""),
-                  placeholder: placeholders.placeholderDate,
-                  keyboardType: "numeric",
-                  returnKeyType: "done",
-                  type: "custom",
-                  options: { mask: "99/99" },
-                  includeRawValueInChangeText: true,
-                  onChangeText: value => updateState("expirationDate", value)
-                }}
-                testID={"expirationDate"}
-              />
-            </Col>
-            <Col style={styles.verticalSpacing} />
-            <Col>
-              <LabelledItem
-                label={I18n.t(
-                  detectedBrand.cvvLength === 4
-                    ? "wallet.dummyCard.labels.securityCode4D"
-                    : "wallet.dummyCard.labels.securityCode"
-                )}
-                icon="io-lucchetto"
-                isValid={
-                  creditCard.securityCode.getOrElse("") ? isCvvValid : undefined
-                }
-                accessibilityLabel={
-                  detectedBrand.cvvLength === 4
-                    ? accessibilityLabels.securityCode4D
-                    : accessibilityLabels.securityCode3D
-                }
-                inputMaskProps={{
-                  value: creditCard.securityCode.getOrElse(""),
-                  placeholder: placeholders.placeholderSecureCode,
-                  returnKeyType: "done",
-                  maxLength: 4,
-                  type: "custom",
-                  options: { mask: "9999" },
-                  keyboardType: "numeric",
-                  secureTextEntry: true,
-                  includeRawValueInChangeText: true,
-                  onChangeText: value => updateState("securityCode", value)
-                }}
-                testID={"securityCode"}
-              />
-            </Col>
-          </Grid>
+            <View spacer={true} />
 
-          {!isSome(inPayment) && (
-            <>
-              <View spacer={true} />
-              <Link
-                accessibilityRole="link"
-                accessibilityLabel={I18n.t("wallet.missingDataCTA")}
-                onPress={present}
-              >
-                {I18n.t("wallet.missingDataCTA")}
-              </Link>
-            </>
+            <LabelledItem
+              label={I18n.t("wallet.dummyCard.labels.pan")}
+              icon={detectedBrand.iconForm}
+              iconStyle={styles.creditCardForm}
+              isValid={isNone(creditCard.pan) ? undefined : isCardNumberValid}
+              inputMaskProps={{
+                value: creditCard.pan.getOrElse(""),
+                placeholder: placeholders.placeholderCard,
+                keyboardType: "numeric",
+                returnKeyType: "done",
+                maxLength: 23,
+                type: "custom",
+                options: {
+                  mask: "9999 9999 9999 9999 999",
+                  getRawValue: value1 => value1.replace(/ /g, "")
+                },
+                includeRawValueInChangeText: true,
+                onChangeText: (_, value) => {
+                  if (value !== undefined) {
+                    updateState("pan", value);
+                  }
+                }
+              }}
+              accessibilityLabel={accessibilityLabels.pan}
+              testID={"pan"}
+            />
+
+            <View spacer={true} />
+            <Grid>
+              <Col>
+                <LabelledItem
+                  label={I18n.t("wallet.dummyCard.labels.expirationDate")}
+                  icon="io-calendario"
+                  accessibilityLabel={accessibilityLabels.expirationDate}
+                  isValid={maybeCreditCardValidOrExpired(
+                    creditCard
+                  ).toUndefined()}
+                  inputMaskProps={{
+                    value: creditCard.expirationDate.getOrElse(""),
+                    placeholder: placeholders.placeholderDate,
+                    keyboardType: "numeric",
+                    returnKeyType: "done",
+                    type: "custom",
+                    options: { mask: "99/99" },
+                    includeRawValueInChangeText: true,
+                    onChangeText: value => updateState("expirationDate", value)
+                  }}
+                  testID={"expirationDate"}
+                />
+              </Col>
+              <Col style={styles.verticalSpacing} />
+              <Col>
+                <LabelledItem
+                  label={I18n.t(
+                    detectedBrand.cvvLength === 4
+                      ? "wallet.dummyCard.labels.securityCode4D"
+                      : "wallet.dummyCard.labels.securityCode"
+                  )}
+                  icon="io-lucchetto"
+                  isValid={
+                    creditCard.securityCode.getOrElse("")
+                      ? isCvvValid
+                      : undefined
+                  }
+                  accessibilityLabel={
+                    detectedBrand.cvvLength === 4
+                      ? accessibilityLabels.securityCode4D
+                      : accessibilityLabels.securityCode3D
+                  }
+                  inputMaskProps={{
+                    value: creditCard.securityCode.getOrElse(""),
+                    placeholder: placeholders.placeholderSecureCode,
+                    returnKeyType: "done",
+                    maxLength: 4,
+                    type: "custom",
+                    options: { mask: "9999" },
+                    keyboardType: "numeric",
+                    secureTextEntry: true,
+                    includeRawValueInChangeText: true,
+                    onChangeText: value => updateState("securityCode", value)
+                  }}
+                  testID={"securityCode"}
+                />
+              </Col>
+            </Grid>
+
+            {!isSome(inPayment) && (
+              <>
+                <View spacer={true} />
+                <Link
+                  accessibilityRole="link"
+                  accessibilityLabel={I18n.t("wallet.missingDataCTA")}
+                  onPress={present}
+                >
+                  {I18n.t("wallet.missingDataCTA")}
+                </Link>
+              </>
+            )}
+            <View spacer />
+
+            <Link
+              accessibilityRole="link"
+              accessibilityLabel={I18n.t("wallet.openAcceptedCardsPageCTA")}
+              onPress={openSupportedCardsPage}
+            >
+              {I18n.t("wallet.openAcceptedCardsPageCTA")}
+            </Link>
+          </Content>
+        </ScrollView>
+        <SectionStatusComponent sectionKey={"credit_card"} />
+        <FooterWithButtons
+          type="TwoButtonsInlineHalf"
+          leftButton={secondaryButtonProps}
+          rightButton={usePrimaryButtonPropsFromState(
+            creditCard,
+            props.navigateToConfirmCardDetailsScreen,
+            isValidCardHolder(creditCard.holder),
+            maybeCreditCardValidOrExpired(creditCard).toUndefined()
           )}
-          <View spacer />
-
-          <Link
-            accessibilityRole="link"
-            accessibilityLabel={I18n.t("wallet.openAcceptedCardsPageCTA")}
-            onPress={openSupportedCardsPage}
-          >
-            {I18n.t("wallet.openAcceptedCardsPageCTA")}
-          </Link>
-        </Content>
-      </ScrollView>
-      <SectionStatusComponent sectionKey={"credit_card"} />
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        leftButton={secondaryButtonProps}
-        rightButton={usePrimaryButtonPropsFromState(
-          creditCard,
-          props.navigateToConfirmCardDetailsScreen,
-          isValidCardHolder(creditCard.holder),
-          maybeCreditCardValidOrExpired(creditCard).toUndefined()
-        )}
-      />
+        />
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };

@@ -4,6 +4,7 @@ import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
 import MessageDetailComponent from "../../../components/messages/paginated/MessageDetail";
 
 import BaseScreenComponent, {
@@ -31,11 +32,8 @@ import {
 } from "../../../store/reducers/entities/services/servicesById";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../store/reducers/types";
-import { InferNavigationParams } from "../../../types/react";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import ServiceDetailsScreen from "../../services/ServiceDetailsScreen";
 import ErrorState from "../MessageDetailScreen/ErrorState";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -191,10 +189,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     messageId: string,
     isRead: boolean,
     messageType: MessageReadType
-  ) => dispatch(setMessageReadState(messageId, isRead, messageType)),
-  navigateToServiceDetailsScreen: (
-    params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => navigateToServiceDetailsScreen(params)
+  ) => dispatch(setMessageReadState(messageId, isRead, messageType))
 });
 
 export default connect(

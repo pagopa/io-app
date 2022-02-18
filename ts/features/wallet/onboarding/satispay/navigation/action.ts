@@ -29,17 +29,6 @@ export const navigateToOnboardingSatispaySearchAvailableUserAccount = () =>
  * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
  * and many helper methods specific to screens won't be available.
  */
-export const navigateToOnboardingSatispayAdd = () =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_SATISPAY_ROUTES.ADD_SATISPAY
-    })
-  );
-
-/**
- * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
- * and many helper methods specific to screens won't be available.
- */
 export const navigateToSuggestBpdActivation = () =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({

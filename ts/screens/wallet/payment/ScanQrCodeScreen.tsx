@@ -1,6 +1,7 @@
 /**
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { head } from "fp-ts/lib/Array";
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
@@ -15,18 +16,19 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
+import { NavigationEvents } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -44,11 +46,10 @@ import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { decodePagoPaQrCode } from "../../../utils/payment";
-import { showToast } from "../../../utils/showToast";
 import { isAndroid } from "../../../utils/platform";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { showToast } from "../../../utils/showToast";
 
-type OwnProps = NavigationInjectedProps;
+type OwnProps = NavigationStackScreenProps;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 

@@ -3,10 +3,11 @@ import Instabug from "instabug-reactnative";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import {
   instabugLog,
   openInstabugQuestionReport,
@@ -23,9 +24,15 @@ import {
   PaymentSummaryComponent
 } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
+import { zendeskSupportStart } from "../../features/zendesk/store/actions";
 import I18n from "../../i18n";
+import { Dispatch } from "../../store/actions/types";
+import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { PaymentHistory } from "../../store/reducers/payments/history";
+import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
 import { GlobalState } from "../../store/reducers/types";
+import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
@@ -40,11 +47,6 @@ import {
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
-import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
-import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { Dispatch } from "../../store/actions/types";
-import { zendeskSupportStart } from "../../features/zendesk/store/actions";
 import {
   addTicketCustomField,
   appendLog,
@@ -52,14 +54,12 @@ import {
   zendeskCategoryId,
   zendeskPaymentCategoryValue
 } from "../../utils/supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
-import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
-type Props = NavigationInjectedProps<NavigationParams> &
+type Props = NavigationStackScreenProps<NavigationParams> &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
