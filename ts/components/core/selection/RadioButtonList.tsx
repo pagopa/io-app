@@ -100,11 +100,10 @@ export const RadioButtonList = <T,>(props: Props<T>) => (
       {props.items.map(item => (
         <View
           key={`radio_item_${item.id}`}
-          style={
-            props.rightSideSelection
-              ? [styles.item, styles.rightSideItem]
-              : [styles.item]
-          }
+          style={[
+            styles.item,
+            props.rightSideSelection && styles.rightSideItem
+          ]}
           testID={`pspItemTestID_${item.id}`}
         >
           <IconFont
@@ -114,11 +113,10 @@ export const RadioButtonList = <T,>(props: Props<T>) => (
             size={24}
             color={themeVariables.contentPrimaryBackground}
             onPress={() => props.onPress(item.id)}
-            style={
-              props.rightSideSelection
-                ? [styles.icon, styles.rightSideIcon]
-                : [styles.icon]
-            }
+            style={[
+              styles.icon,
+              props.rightSideSelection && styles.rightSideIcon
+            ]}
           />
           {getBody(item, () => props.onPress(item.id))}
         </View>
