@@ -5,7 +5,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { List, Text } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -16,6 +15,8 @@ import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
@@ -34,9 +35,10 @@ import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = IOStackNavigationRouteProps<
+  ProfileParamsList,
+  "PROFILE_PREFERENCES_EMAIL_FORWARDING"
+>;
 
 type State = {
   isCustomChannelEnabledChoice?: boolean;

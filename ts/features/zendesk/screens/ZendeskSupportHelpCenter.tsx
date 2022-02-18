@@ -43,6 +43,8 @@ type FaqManagerProps = Pick<
   contextualHelpConfig: ContextualHelpProps | undefined;
 };
 
+export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
+
 /**
  * This component must be used only here.
  * Make the {@link ZendeskSupportHelpCenter} compatible with {@link BaseScreenComponent} and substitute the {@link ContextualHelp}
@@ -162,13 +164,9 @@ const ZendeskSupportHelpCenter = (props: Props) => {
   // Navigation prop
   const faqCategories = props.route.params.faqCategories;
   const contextualHelp = props.route.params.contextualHelp;
-  const contextualHelpMarkdown = props.navigation.getParam(
-    "contextualHelpMarkdown"
-  );
+  const contextualHelpMarkdown = props.route.params.contextualHelpMarkdown;
   const startingRoute = props.route.params.startingRoute;
-  const assistanceForPayment = props.navigation.getParam(
-    "assistanceForPayment"
-  );
+  const assistanceForPayment = props.route.params.assistanceForPayment;
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
     !contextualHelpMarkdown

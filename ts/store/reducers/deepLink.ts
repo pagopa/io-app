@@ -2,14 +2,13 @@
  * A reducer for deep link
  */
 
-import { NavigationNavigateActionPayload } from "react-navigation";
 import { getType } from "typesafe-actions";
 
 import { clearDeepLink, setDeepLink } from "../actions/deepLink";
 import { Action } from "../actions/types";
 
 export type DeepLinkState = Readonly<{
-  deepLink: NavigationNavigateActionPayload | null;
+  deepLink: {} | null;
   immediate: boolean;
 }>;
 

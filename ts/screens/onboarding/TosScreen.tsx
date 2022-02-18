@@ -7,10 +7,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Image, StyleSheet, SafeAreaView } from "react-native";
+import { Alert, Image, SafeAreaView, StyleSheet } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import brokenLinkImage from "../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -20,6 +20,8 @@ import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { WebViewMessage } from "../../components/ui/Markdown/types";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import {
@@ -30,19 +32,18 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { isOnboardingCompleted } from "../../utils/navigation";
 import { showToast } from "../../utils/showToast";
+import { openWebUrl } from "../../utils/url";
 
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  OnboardingParamsList,
+  "ONBOARDING_TOS"
+>;
 
 type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
 type State = {
   isLoading: boolean;
   hasError: boolean;
 };
-
-import brokenLinkImage from "../../../img/broken-link.png";
-import { openWebUrl } from "../../utils/url";
 
 const styles = StyleSheet.create({
   alert: {

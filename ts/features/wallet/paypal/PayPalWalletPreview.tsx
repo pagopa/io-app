@@ -1,13 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import payPalCard from "../../../../img/wallet/cards-icons/paypal_card.png";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
-import { CardLogoPreview } from "../component/card/CardLogoPreview";
-import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { navigateToPayPalDetailScreen } from "../../../store/actions/navigation";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
+import { CardLogoPreview } from "../component/card/CardLogoPreview";
 
 type OwnProps = {
   paypal: PayPalPaymentMethod;
@@ -27,9 +27,9 @@ const getAccessibilityRepresentation = () => {
  * @constructor
  */
 const PayPalWalletPreview: React.FunctionComponent<Props> = props => {
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   const navigateToDetailScreen = () =>
-    navigation.navigate(navigateToPayPalDetailScreen());
+    navigation.dispatch(navigateToPayPalDetailScreen());
   return (
     <CardLogoPreview
       accessibilityLabel={getAccessibilityRepresentation()}

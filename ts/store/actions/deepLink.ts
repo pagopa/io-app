@@ -2,7 +2,6 @@
  * Action types and action creator related to the deep link handling.
  */
 
-import { NavigationNavigateActionPayload } from "react-navigation";
 import {
   ActionType,
   createAction,
@@ -17,10 +16,7 @@ import {
 export const setDeepLink = createAction(
   "SET_DEEPLINK",
   resolve =>
-    (
-      navigationPayload: NavigationNavigateActionPayload,
-      immediate: boolean = false
-    ) =>
+    (navigationPayload: {}, immediate: boolean = false) =>
       resolve({ navigationPayload, immediate })
 );
 
@@ -28,12 +24,8 @@ export const clearDeepLink = createStandardAction("CLEAR_DEEPLINK")();
 
 export const navigateToDeepLink = createAction(
   "NAVIGATE_TO_DEEPLINK",
-  resolve =>
-    (
-      navigationPayload: NavigationNavigateActionPayload,
-      prevRouteKey?: string
-    ) =>
-      resolve({ ...navigationPayload, key: prevRouteKey })
+  resolve => (navigationPayload: {}, prevRouteKey?: string) =>
+    resolve({ ...navigationPayload, key: prevRouteKey })
 );
 
 export type DeepLinkActions = ActionType<

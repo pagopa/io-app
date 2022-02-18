@@ -1,9 +1,10 @@
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import WebviewComponent from "../../../../../components/WebviewComponent";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { CgnDetailsParamsList } from "../../navigation/params";
 
 export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
@@ -19,7 +20,7 @@ type Props = IOStackNavigationRouteProps<
 const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   const landingPageUrl = props.route.params.landingPageUrl;
   const landingPageReferrer = props.route.params.landingPageReferrer;
 

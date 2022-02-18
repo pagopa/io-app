@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { useEffect, useState } from "react";
 
@@ -30,6 +29,3 @@ export const useActionOnFocus = (
     }
   }, [isFocused]);
 };
-
-// TODO: REMOVE
-export const useNavigationContext = () => constNull;

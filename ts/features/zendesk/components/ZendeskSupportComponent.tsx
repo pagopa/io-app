@@ -1,10 +1,21 @@
+import { useNavigation } from "@react-navigation/native";
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
-import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable, Option } from "fp-ts/lib/Option";
 import { useDispatch } from "react-redux";
-import { View } from "native-base";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import AdviceComponent from "../../../components/AdviceComponent";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { H3 } from "../../../components/core/typography/H3";
+import { H4 } from "../../../components/core/typography/H4";
+import { Label } from "../../../components/core/typography/Label";
+import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
+import { useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
+import { profileSelector } from "../../../store/reducers/profile";
 import {
   AnonymousIdentity,
   initSupportAssistance,
@@ -16,30 +27,19 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import { profileSelector } from "../../../store/reducers/profile";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { useIOSelector } from "../../../store/hooks";
-import {
-  navigateToZendeskAskPermissions,
-  navigateToZendeskPanicMode
-} from "../store/actions/navigation";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { getValueOrElse } from "../../bonus/bpd/model/RemoteValue";
 import {
   zendeskRequestTicketNumber,
   zendeskSupportCompleted
 } from "../store/actions";
-import I18n from "../../../i18n";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../components/core/typography/Label";
-import AdviceComponent from "../../../components/AdviceComponent";
-import { H4 } from "../../../components/core/typography/H4";
+import {
+  navigateToZendeskAskPermissions,
+  navigateToZendeskPanicMode
+} from "../store/actions/navigation";
 import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
 } from "../store/reducers";
-import { getValueOrElse } from "../../bonus/bpd/model/RemoteValue";
-import { H3 } from "../../../components/core/typography/H3";
-import { mixpanelTrack } from "../../../mixpanel";
 
 type Props = {
   assistanceForPayment: boolean;
@@ -57,7 +57,7 @@ const ZendeskSupportComponent = (props: Props) => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const profile = useIOSelector(profileSelector);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const ticketsNumber = useIOSelector(zendeskTicketNumberSelector);
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
@@ -109,9 +109,9 @@ const ZendeskSupportComponent = (props: Props) => {
   const handleContactSupportPress = () => {
     if (isPanicModeActive(zendeskRemoteConfig)) {
       // Go to panic mode screen
-      navigation.navigate(navigateToZendeskPanicMode());
+      navigation.dispatch(navigateToZendeskPanicMode());
     } else {
-      navigation.navigate(
+      navigation.dispatch(
         navigateToZendeskAskPermissions({ assistanceForPayment })
       );
     }

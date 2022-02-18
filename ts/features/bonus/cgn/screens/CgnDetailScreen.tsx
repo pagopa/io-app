@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { View } from "native-base";
 import React, { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -22,11 +23,13 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { isLoading } from "../../bpd/model/RemoteValue";
+import CgnCardComponent from "../components/detail/CgnCardComponent";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
@@ -35,11 +38,7 @@ import {
   navigateToCgnMerchantsList,
   navigateToCgnMerchantsTabs
 } from "../navigation/actions";
-import CgnCardComponent from "../components/detail/CgnCardComponent";
-import {
-  useActionOnFocus,
-  useNavigationContext
-} from "../../../../utils/hooks/useOnFocus";
+import CGN_ROUTES from "../navigation/routes";
 import { cgnDetails } from "../store/actions/details";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
@@ -50,7 +49,6 @@ import {
 } from "../store/reducers/details";
 import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import CGN_ROUTES from "../navigation/routes";
 import { canEycaCardBeShown } from "../utils/eyca";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -64,7 +62,7 @@ const GRADIENT_END_COLOR = "#5C488F";
  */
 const CgnDetailScreen = (props: Props): React.ReactElement => {
   const [cardLoading, setCardLoading] = useState(true);
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
 
   const loadCGN = () => {
     props.loadCgnDetails();

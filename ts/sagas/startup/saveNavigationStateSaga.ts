@@ -20,9 +20,7 @@ export function* saveNavigationStateSaga(): Generator<
     yield call(NavigationService.getCurrentRoute);
 
   if (currentScreen) {
-    const currentRoute = currentScreen.routes[
-      currentScreen.index
-    ] as NavigationStateRoute<NavigationParams>;
+    const currentRoute = currentScreen.routes[currentScreen.index];
     if (currentRoute.routes && currentRoute.routeName === ROUTES.MAIN) {
       // only save state when in Main navigator
       const mainSubRoute = currentRoute.routes[currentRoute.index];

@@ -1,40 +1,40 @@
+import { useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { View } from "native-base";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import I18n from "../../../../../i18n";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { Body } from "../../../../../components/core/typography/Body";
-import { Link } from "../../../../../components/core/typography/Link";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { Link } from "../../../../../components/core/typography/Link";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   getValueOrElse,
   isError,
   isReady
 } from "../../../../bonus/bpd/model/RemoteValue";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { PspRadioItem } from "../components/PspRadioItem";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
-import { IOPayPalPsp } from "../types";
 import {
   searchPaypalPsp as searchPaypalPspAction,
   walletAddPaypalBack,
   walletAddPaypalCancel,
   walletAddPaypalPspSelected
 } from "../store/actions";
-import { payPalPspSelector } from "../store/reducers/searchPsp";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToPayPalCheckout } from "../store/actions/navigation";
+import { payPalPspSelector } from "../store/reducers/searchPsp";
+import { IOPayPalPsp } from "../types";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -107,7 +107,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
   const dispatch = useDispatch();
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   const searchPaypalPsp = () => {
     dispatch(searchPaypalPspAction.request());
   };

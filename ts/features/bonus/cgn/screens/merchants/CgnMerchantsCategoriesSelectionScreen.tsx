@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
@@ -12,7 +13,7 @@ import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorde
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import { showToast } from "../../../../../utils/showToast";
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -21,13 +22,12 @@ import {
 } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { showToast } from "../../../../../utils/showToast";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const isFirstRender = useRef<boolean>(true);
   const dispatch = useIODispatch();
   const potCategories = useIOSelector(cgnCategoriesListSelector);
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
 
   const loadCategories = () => {
     dispatch(cgnCategories.request());

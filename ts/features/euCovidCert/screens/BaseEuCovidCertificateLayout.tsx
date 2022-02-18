@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useRef } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { View } from "native-base";
 import { heightPercentageToDP } from "react-native-responsive-screen";
+import { NavigationEvents } from "@react-navigation/compat";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { WithTestID } from "../../../types/WithTestID";
