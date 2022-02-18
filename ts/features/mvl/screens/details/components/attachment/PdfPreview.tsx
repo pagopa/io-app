@@ -46,11 +46,18 @@ const renderFooter = (actionConfig: ActionConfig) =>
   ) : (
     <FooterWithButtons
       type={"ThreeButtonsInLine"}
-      leftButton={confirmButtonProps(() => {}, I18n.t("global.buttons.share"))}
-      midButton={confirmButtonProps(() => {},
-      I18n.t("features.mvl.details.attachments.pdfPreview.save"))}
-      rightButton={confirmButtonProps(() => {},
-      I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      leftButton={confirmButtonProps(
+        actionConfig.share,
+        I18n.t("global.buttons.share")
+      )}
+      midButton={confirmButtonProps(
+        actionConfig.save,
+        I18n.t("features.mvl.details.attachments.pdfPreview.save")
+      )}
+      rightButton={confirmButtonProps(
+        actionConfig.open,
+        I18n.t("features.mvl.details.attachments.pdfPreview.open")
+      )}
     />
   );
 

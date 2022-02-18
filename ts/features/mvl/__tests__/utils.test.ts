@@ -1,7 +1,10 @@
 import ReactNativeBlobUtil from "react-native-blob-util";
 
 import * as platform from "../../../utils/platform";
-import { mvlMockPdfAttachment } from "../types/__mock__/mvlMock";
+import {
+  mvlMockOtherAttachment,
+  mvlMockPdfAttachment
+} from "../types/__mock__/mvlMock";
 import { handleDownloadResult } from "../utils";
 
 jest.mock("../../../utils/platform");
@@ -25,21 +28,24 @@ const mockAndroidUtil = jest.fn();
 const mockIosUtil = jest.fn();
 // eslint-disable-next-line functional/immutable-data
 (ReactNativeBlobUtil as any).ios = {
-  openDocument: mockIosUtil,
-  presentOptionsMenu: jest.fn()
+  openDocument: jest.fn(),
+  presentOptionsMenu: mockIosUtil
 };
 
 const header = { auth: "It's me again!" };
+
+const mockShowPreview = jest.fn();
 
 describe("handleDownloadResult utility function", () => {
   beforeEach(() => {
     mockAndroidUtil.mockReset();
     mockIosUtil.mockReset();
+    mockShowPreview.mockClear();
   });
 
   it("should resolve successfully with an empty Promise", async () => {
     await expect(
-      handleDownloadResult(mvlMockPdfAttachment, header)
+      handleDownloadResult(mvlMockPdfAttachment, header, mockShowPreview)
     ).resolves.toEqual(undefined);
   });
 
@@ -50,7 +56,7 @@ describe("handleDownloadResult utility function", () => {
     it("should reject with an Error instance", async () => {
       mockResponseStatus = 500;
       await expect(
-        handleDownloadResult(mvlMockPdfAttachment, header)
+        handleDownloadResult(mvlMockPdfAttachment, header, mockShowPreview)
       ).rejects.toEqual(
         new Error("error 500 fetching " + mvlMockPdfAttachment.resourceUrl.href)
       );
@@ -62,16 +68,41 @@ describe("handleDownloadResult utility function", () => {
       (platform as any).test_setPlatform("android");
     });
 
-    it("should call the Android utils", async () => {
-      await handleDownloadResult(mvlMockPdfAttachment, header);
-      expect(mockIosUtil).not.toHaveBeenCalled();
-      expect(mockAndroidUtil).toHaveBeenCalledTimes(1);
-      expect(mockAndroidUtil).toHaveBeenCalledWith({
-        mime: mvlMockPdfAttachment.contentType,
-        title: mvlMockPdfAttachment.displayName,
-        showNotification: true,
-        description: mvlMockPdfAttachment.displayName,
-        path: defaultPath
+    describe("and the attachment is not a PDF", () => {
+      it("should only call the Android utils", async () => {
+        await handleDownloadResult(
+          mvlMockOtherAttachment,
+          header,
+          mockShowPreview
+        );
+        expect(mockIosUtil).not.toHaveBeenCalled();
+        expect(mockAndroidUtil).toHaveBeenCalledTimes(1);
+        expect(mockAndroidUtil).toHaveBeenCalledWith({
+          mime: mvlMockOtherAttachment.contentType,
+          title: mvlMockOtherAttachment.displayName,
+          showNotification: true,
+          description: mvlMockOtherAttachment.displayName,
+          path: defaultPath
+        });
+        expect(mockShowPreview).not.toHaveBeenCalled();
+      });
+    });
+    describe("and the attachment is a PDF", () => {
+      it("should only call the Android utils", async () => {
+        await handleDownloadResult(
+          mvlMockPdfAttachment,
+          header,
+          mockShowPreview
+        );
+        expect(mockIosUtil).not.toHaveBeenCalled();
+        expect(mockAndroidUtil).not.toHaveBeenCalled();
+        expect(mockAndroidUtil).not.toHaveBeenCalled();
+        expect(mockShowPreview).toHaveBeenCalledWith(defaultPath, {
+          _tag: "android",
+          open: expect.any(Function),
+          share: expect.any(Function),
+          save: expect.any(Function)
+        });
       });
     });
   });
@@ -81,11 +112,35 @@ describe("handleDownloadResult utility function", () => {
       (platform as any).test_setPlatform("ios");
     });
 
-    it("should call the iOS utils", async () => {
-      await handleDownloadResult(mvlMockPdfAttachment, header);
-      expect(mockAndroidUtil).not.toHaveBeenCalled();
-      expect(mockIosUtil).toHaveBeenCalledTimes(1);
-      expect(mockIosUtil).toHaveBeenCalledWith(defaultPath);
+    describe("and the attachment is not a PDF", () => {
+      it("should only call the iOS utils", async () => {
+        await handleDownloadResult(
+          mvlMockOtherAttachment,
+          header,
+          mockShowPreview
+        );
+        expect(mockAndroidUtil).not.toHaveBeenCalled();
+        expect(mockIosUtil).toHaveBeenCalledTimes(1);
+        expect(mockIosUtil).toHaveBeenCalledWith(defaultPath);
+        expect(mockShowPreview).not.toHaveBeenCalled();
+      });
+    });
+
+    describe("and the attachment is a PDF", () => {
+      it("should only call the showPreview callback", async () => {
+        await handleDownloadResult(
+          mvlMockPdfAttachment,
+          header,
+          mockShowPreview
+        );
+        expect(mockAndroidUtil).not.toHaveBeenCalled();
+        expect(mockIosUtil).not.toHaveBeenCalled();
+        expect(mockIosUtil).not.toHaveBeenCalled();
+        expect(mockShowPreview).toHaveBeenCalledWith(defaultPath, {
+          _tag: "ios",
+          action: expect.any(Function)
+        });
+      });
     });
   });
 });

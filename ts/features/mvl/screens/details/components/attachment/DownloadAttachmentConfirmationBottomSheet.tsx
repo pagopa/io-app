@@ -14,13 +14,15 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { showToast } from "../../../../../../utils/showToast";
 import { MvlAttachment } from "../../../../types/mvlData";
 import { handleDownloadResult } from "../../../../utils";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
 import customVariables from "../../../../../../theme/variables";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { LightModalContext } from "../../../../../../components/ui/LightModal";
+import {
+  BottomTopAnimation,
+  LightModalContext
+} from "../../../../../../components/ui/LightModal";
 import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
@@ -205,7 +207,7 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
 ) => {
   const { present, dismiss } = useIOBottomSheetRaw(BOTTOM_SHEET_HEIGHT);
   const dispatch = useIODispatch();
-  const { showModal, hideModal } = useContext(LightModalContext);
+  const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
   const openModalBox = () =>
     present(
@@ -217,22 +219,15 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
             attachment,
             authHeader,
             (path, actionConfig) =>
-              showModal(
+              showAnimatedModal(
                 <PdfPreview
                   path={path}
                   onClose={hideModal}
                   actionConfig={actionConfig}
-                />
+                />,
+                BottomTopAnimation
               )
-          ).then(() => {
-            dismiss();
-            if (options.showToastOnSuccess) {
-              showToast(
-                i18n.t("features.mvl.details.attachments.toast.success"),
-                "success"
-              );
-            }
-          });
+          ).then(() => dismiss());
         }}
         initialPreferences={options}
         withoutConfirmation={options.dontAskAgain}
