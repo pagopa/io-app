@@ -1,7 +1,7 @@
 import { Content, Text } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -48,7 +48,7 @@ function getBiometryIconName(biometryType: BiometricsValidType): string {
   }
 }
 
-type Props = NavigationInjectedProps<NavigationParams> &
+type Props = NavigationStackScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {

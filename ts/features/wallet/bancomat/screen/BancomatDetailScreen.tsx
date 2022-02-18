@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -21,7 +21,7 @@ type NavigationParams = Readonly<{
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationStackScreenProps<NavigationParams>;
 
 /**
  * Start the cobadge onboarding, if the abi is defined

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import WebviewComponent from "../../../../../components/WebviewComponent";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
@@ -11,7 +11,7 @@ type NavigationParams = Readonly<{
   landingPageReferrer: string;
 }>;
 
-type Props = NavigationInjectedProps<NavigationParams>;
+type Props = NavigationStackScreenProps<NavigationParams>;
 
 const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   props: Props

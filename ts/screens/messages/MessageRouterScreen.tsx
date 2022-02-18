@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -25,7 +25,7 @@ import { MessageDetailScreen } from "./MessageDetailScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<InferNavigationParams<typeof MessageDetailScreen>>;
+  NavigationStackScreenProps<InferNavigationParams<typeof MessageDetailScreen>>;
 
 /**
  * In order to have the final CreatedMessageWithContentAndAttachments, these conditions should be verified:
