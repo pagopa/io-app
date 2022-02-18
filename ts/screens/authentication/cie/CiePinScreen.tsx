@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import React, {
@@ -14,8 +15,6 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { NavigationContext } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -32,6 +31,8 @@ import {
 } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
@@ -46,7 +47,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps;
+  IOStackNavigationRouteProps<AuthenticationParamsList, "CIE_PIN_SCREEN">;
 
 const styles = StyleSheet.create({
   container: {
@@ -74,7 +75,7 @@ const onOpenForgotPinPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
 
 const CiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
-  const { navigate } = useContext(NavigationContext);
+  const navigation = useNavigation();
   const [pin, setPin] = useState("");
   const continueButtonRef = useRef<FooterWithButtons>(null);
   const pinPadViewRef = useRef<View>(null);
@@ -113,12 +114,9 @@ const CiePinScreen: React.FC<Props> = props => {
 
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      navigate({
-        routeName: ROUTES.CIE_CARD_READER_SCREEN,
-        params: {
-          ciePin: pin,
-          authorizationUri: authUrlGenerated
-        }
+      navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
+        ciePin: pin,
+        authorizationUri: authUrlGenerated
       });
       handleAuthenticationOverlayOnClose();
     }
@@ -126,7 +124,7 @@ const CiePinScreen: React.FC<Props> = props => {
     handleAuthenticationOverlayOnClose,
     authUrlGenerated,
     hideModal,
-    navigate,
+    navigation,
     pin
   ]);
 

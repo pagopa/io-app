@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
-import { NavigationContext } from "react-navigation";
-import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import MessageList from "../../../components/messages/paginated/MessageList";
+import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
@@ -11,27 +12,27 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../../components/SectionStatus";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { pageSize } from "../../../config";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
+import ROUTES from "../../../navigation/routes";
 import { reloadAllMessages } from "../../../store/actions/messages";
 import { Dispatch } from "../../../store/actions/types";
+import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
+import { allMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
+import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
-import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
-import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { allMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
-import { pageSize } from "../../../config";
-import MessageList from "../../../components/messages/paginated/MessageList";
-import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
-import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 
-type Props = NavigationStackScreenProps &
+type Props = IOStackNavigationRouteProps<MessagesParamsList, "MESSAGES_HOME"> &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -50,12 +51,12 @@ const MessagesHomeScreen = ({
   reloadFirstPage,
   searchText
 }: Props) => {
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
 
   const navigateToMessageDetail = (message: UIMessage) => {
-    navigation.dispatch(
-      navigateToPaginatedMessageRouterAction({ messageId: message.id })
-    );
+    navigation.navigate(ROUTES.MESSAGE_ROUTER_PAGINATED, {
+      messageId: message.id
+    });
   };
 
   useEffect(() => {

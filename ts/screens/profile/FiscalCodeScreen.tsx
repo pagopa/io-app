@@ -3,7 +3,6 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { ReactElement, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H2 } from "../../components/core/typography/H2";
@@ -19,6 +18,8 @@ import {
   LightModalContextInterface
 } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
@@ -27,7 +28,7 @@ import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
 type Props = ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps &
+  IOStackNavigationRouteProps<ProfileParamsList, "PROFILE_FISCAL_CODE"> &
   ReturnType<typeof mapDispatchToProps> &
   LightModalContextInterface;
 

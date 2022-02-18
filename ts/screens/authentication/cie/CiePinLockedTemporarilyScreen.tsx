@@ -1,22 +1,27 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
+import { constNull } from "fp-ts/lib/function";
 import { Content } from "native-base";
 import * as React from "react";
 import { Linking, Platform } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { constNull } from "fp-ts/lib/function";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 
-type Props = NavigationStackScreenProps & ReduxProps;
+type Props = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "CIE_PIN_TEMP_LOCKED_SCREEN"
+> &
+  ReduxProps;
 
 type State = Readonly<{
   isLoadingCompleted: boolean;

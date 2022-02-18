@@ -4,15 +4,19 @@
 import { Col, Content, Grid, H1, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import variables from "../../theme/variables";
 
-type Props = NavigationStackScreenProps;
+type Props = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "AUTHENTICATION_SPID_INFORMATION"
+>;
 
 const styles = StyleSheet.create({
   value: {

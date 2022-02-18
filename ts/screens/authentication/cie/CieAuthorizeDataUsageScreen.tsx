@@ -4,14 +4,18 @@
 import { Content, H2, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import variables from "../../../theme/variables";
 
-type Props = NavigationStackScreenProps;
+type Props = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "CIE_AUTHORIZE_USAGE_SCREEN"
+>;
 
 type State = {
   isLoadingCompleted: boolean;

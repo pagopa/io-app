@@ -2,6 +2,7 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
+import { StackActions } from "@react-navigation/compat";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
@@ -14,9 +15,8 @@ import {
   SafeAreaView,
   StyleSheet
 } from "react-native";
-import { StackActions } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { H1 } from "../../components/core/typography/H1";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent, {
@@ -24,6 +24,8 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { navigateToEmailReadScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
@@ -39,16 +41,15 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { withKeyboard } from "../../utils/keyboard";
 import { isOnboardingCompleted } from "../../utils/navigation";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
-import { withKeyboard } from "../../utils/keyboard";
-import { H1 } from "../../components/core/typography/H1";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps;
+  IOStackNavigationRouteProps<OnboardingParamsList, "INSERT_EMAIL_SCREEN">;
 
 const styles = StyleSheet.create({
   flex: {
