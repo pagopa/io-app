@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationParams } from "react-navigation";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { createStore } from "redux";
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import OptInPaymentMethodsChoiceScreen from "../OptInPaymentMethodsChoiceScreen";
