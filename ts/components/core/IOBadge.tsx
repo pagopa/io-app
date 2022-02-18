@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge } from "native-base";
-import { IOColors } from "./core/variables/IOColors";
-import { LabelSmall } from "./core/typography/LabelSmall";
+import { IOColors } from "./variables/IOColors";
+import { LabelSmall } from "./typography/LabelSmall";
 
-type BadgeCommonProps = {
+type IOBadgeCommonProps = {
   children: string;
 };
 
@@ -19,7 +19,7 @@ const commonBadgeStyles = StyleSheet.create({
  * A badge componet styled with the
  * IO primary color.
  */
-export const PrimaryBadge: React.FC<BadgeCommonProps> = ({ children }) => (
+export const PrimaryIOBadge: React.FC<IOBadgeCommonProps> = ({ children }) => (
   <Badge style={[commonBadgeStyles.badge, { backgroundColor: IOColors.blue }]}>
     <LabelSmall color="white">{children}</LabelSmall>
   </Badge>
