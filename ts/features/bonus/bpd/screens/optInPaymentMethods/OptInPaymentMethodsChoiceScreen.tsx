@@ -19,7 +19,7 @@ import {
 } from "../../../../../components/core/selection/RadioButtonList";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Body } from "../../../../../components/core/typography/Body";
-import { PrimaryIOBadge } from "../../../../../components/core/IOBadge";
+import { IOPrimaryBadge } from "../../../../../components/core/IOBadge";
 import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import {
@@ -40,9 +40,9 @@ const generateOptionBody = (
   <>
     {showBadge ? (
       <>
-        <PrimaryIOBadge>
+        <IOPrimaryBadge>
           {I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
-        </PrimaryIOBadge>
+        </IOPrimaryBadge>
         <View spacer xsmall />
       </>
     ) : undefined}
