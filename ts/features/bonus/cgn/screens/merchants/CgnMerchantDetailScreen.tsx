@@ -29,14 +29,9 @@ import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { openWebUrl } from "../../../../../utils/url";
-import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
-import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
-import { cgnSelectedMerchant } from "../../store/actions/merchants";
-import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { showToast } from "../../../../../utils/showToast";
 
 type NavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -154,7 +149,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                   type={"SingleButton"}
                   leftButton={{
                     ...confirmButtonProps(
-                      () => openWebUrl(url),
+                      () =>
+                        openWebUrl(url, () =>
+                          showToast(I18n.t("bonus.cgn.generic.linkError"))
+                        ),
                       I18n.t("bonus.cgn.merchantDetail.cta.label")
                     ),
                     bordered: true

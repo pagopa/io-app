@@ -5,6 +5,7 @@ import { Dimensions } from "react-native";
 import RNFS from "react-native-fs";
 import { saveImageToGallery } from "../../../utils/share";
 import I18n from "../../../i18n";
+import { isIos } from "../../../utils/platform";
 
 type CaptureScreenshotEvents = {
   onSuccess?: () => void; // invoked on success
@@ -22,7 +23,7 @@ export const screenshotOptions: ScreenshotOptions = {
   width: Dimensions.get("window").width,
   format: "png",
   filename: I18n.t("features.euCovidCertificate.common.title"),
-  album: I18n.t("features.euCovidCertificate.save.album")
+  album: isIos ? I18n.t("features.euCovidCertificate.save.album") : undefined
 };
 
 /**
