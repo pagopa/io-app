@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { View } from "native-base";
-import { useDispatch } from "react-redux";
 import I18n from "../../../../../i18n";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -27,6 +26,7 @@ import {
   navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen,
   navigateToOptInPaymentMethodsThankYouKeepMethodsScreen
 } from "../../navigation/actions";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 
 type PaymentMethodsChoiceOptions =
   | "keepPaymentMethods"
@@ -80,11 +80,11 @@ const disabledButtonProps = disablePrimaryButtonProps(
 const OptInPaymentMethodsChoiceScreen = () => {
   const [selectedMethod, setSelectedMethod] =
     useState<PaymentMethodsChoiceOptions | null>(null);
-  const dispatch = useDispatch();
+  const { navigate } = useNavigationContext();
 
   const { presentBottomSheet } = useBottomSheetMethodsToDelete({
     onDeletePress: () =>
-      dispatch(navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen())
+      navigate(navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen())
   });
 
   const bottomButtons: {
@@ -93,7 +93,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
     () => ({
       keepPaymentMethods: confirmButtonProps(
         () =>
-          dispatch(navigateToOptInPaymentMethodsThankYouKeepMethodsScreen()),
+          navigate(navigateToOptInPaymentMethodsThankYouKeepMethodsScreen()),
         I18n.t("global.buttons.continue"),
         undefined,
         "continueButton"
@@ -105,7 +105,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
         undefined
       )
     }),
-    [dispatch, presentBottomSheet]
+    [navigate, presentBottomSheet]
   );
 
   const computedBottomButtonProps =
