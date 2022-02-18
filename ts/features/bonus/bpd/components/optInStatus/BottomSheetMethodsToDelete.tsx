@@ -89,12 +89,18 @@ export const useBottomSheetMethodsToDelete = (
     280 + paymentMethods.length * 58
   );
   const { present, dismiss } = useIOBottomSheetRaw(snapPoint);
+
+  const handleDelete = () => {
+    props.onDeletePress();
+    dismiss();
+  };
+
   return {
     presentBottomSheet: () => {
       void present(
         <BottomSheetMethodsToDelete
           paymentMethods={paymentMethods}
-          onDeletePress={props.onDeletePress}
+          onDeletePress={handleDelete}
           onCancelPress={dismiss}
         />,
         <View style={IOStyles.flex}>
