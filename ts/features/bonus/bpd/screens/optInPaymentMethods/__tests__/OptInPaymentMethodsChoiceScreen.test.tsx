@@ -34,7 +34,7 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
     expect(activeButton).toBeTruthy();
   });
 
-  it("should show the red button after selecting the `Delete all` option and a bottom sheet after pressing it", () => {
+  it("should show the red button after selecting the `Delete all` option and a bottom sheet after pressing it", async () => {
     const component = renderComponent();
 
     const secondOptionTitle = component.getByText(
@@ -56,15 +56,13 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
     // See: https://stackoverflow.com/a/51132058/9825478
     void Promise.resolve().then(() => jest.advanceTimersByTime(100));
 
-    return waitFor(() => {
-      const bottomSheet = component.getByText(
-        I18n.t(
-          "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
-        )
-      );
+    const bottomSheet = await component.findByText(
+      I18n.t(
+        "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
+      )
+    );
 
-      expect(bottomSheet).toBeTruthy();
-    });
+    expect(bottomSheet).toBeTruthy();
   });
 });
 
