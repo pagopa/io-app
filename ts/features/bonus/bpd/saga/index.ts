@@ -89,7 +89,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
   if (bpdOptInPaymentMethodsEnabled) {
     // update citizen optInStatus
-    yield takeLatest(
+    yield* takeLatest(
       bpdUpdateOptInStatusMethod.request,
       putOptInStatusCitizenV2,
       bpdBackendClient.enrollCitizenV2IO

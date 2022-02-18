@@ -104,7 +104,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     backendCGN.startCgnUnsubscription
   );
   // CGN Merchants categories
-  yield takeLatest(
+  yield* takeLatest(
     getType(cgnCategories.request),
     cgnCategoriesSaga,
     backendCgnMerchants.getPublishedCategories
