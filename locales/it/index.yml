@@ -1825,6 +1825,7 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   fiscalCode: "C.F. Ente"
+  fiscalCodeAccessibility: "Codice fiscale Ente" 
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
@@ -2563,6 +2564,18 @@ bonus:
       deletePaymentMethodsBottomSheet:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
         subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
+      thankYouPage:
+        cta:
+          goToWallet: "Vai al Portafoglio"
+          retry: "Riprova"
+        success:
+          title: "Fatto!"
+          body: "Abbiamo salvato la tua scelta"
+        retryAfterDeletion:
+          title: "Spiacenti, si è verificato un errore imprevisto"
+          body: "I tuoi metodi non sono stati eliminati. Riprova, oppure vai al Portafoglio ed eliminali manualmente."
+        toast: "La tua scelta non è stata salvata. Riprova più tardi."
+
   cgn:
     generic:
       linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
