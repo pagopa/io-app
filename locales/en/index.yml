@@ -2536,7 +2536,7 @@ bonus:
         header: Configure IO
         title: Do you want to keep your payment methods?
         subtitle: If you keep them, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments.
-        suggestedOption: Suggested
+        suggestedOption: Recommended
         options:
           keepAll:
             title: Keep all payment methods in the Wallet 
