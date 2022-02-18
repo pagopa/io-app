@@ -15,16 +15,10 @@ import { ActionConfig } from "../../../../utils";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // marginTop: 25,
-    // height: 300
     backgroundColor: "pink"
   },
   pdf: {
     flex: 1,
-    // width: Dimensions.get("window").width,
-    // height: Dimensions.get("window").height
     backgroundColor: customVariables.brandDarkGray
   },
   header: {
@@ -61,9 +55,14 @@ const renderFooter = (actionConfig: ActionConfig) =>
     />
   );
 
-type Props = { path: string; onClose: () => void; actionConfig: ActionConfig };
+type Props = {
+  path: string;
+  onClose: () => void;
+  onError: (error: unknown) => void;
+  actionConfig: ActionConfig;
+};
 
-const PdfPreview = ({ path, onClose, actionConfig }: Props) => (
+const PdfPreview = ({ path, onClose, actionConfig, onError }: Props) => (
   <>
     <AppHeader style={styles.header}>
       <Left>
@@ -96,9 +95,7 @@ const PdfPreview = ({ path, onClose, actionConfig }: Props) => (
     <View style={styles.container}>
       <Pdf
         source={{ uri: path, cache: true }}
-        onError={error => {
-          console.error(error);
-        }}
+        onError={onError}
         style={styles.pdf}
       />
     </View>

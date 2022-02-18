@@ -23,6 +23,7 @@ import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../../../../components/ui/LightModal";
+import { showToast } from "../../../../../../utils/showToast";
 import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
@@ -223,6 +224,14 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
                 <PdfPreview
                   path={path}
                   onClose={hideModal}
+                  onError={_error => {
+                    dismiss();
+                    showToast(
+                      i18n.t(
+                        "features.mvl.details.attachments.bottomSheet.failing.details"
+                      )
+                    );
+                  }}
                   actionConfig={actionConfig}
                 />,
                 BottomTopAnimation
