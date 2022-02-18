@@ -19,7 +19,7 @@ const commonBadgeStyles = StyleSheet.create({
  * A badge componet styled with the
  * IO primary color.
  */
-export const PrimaryIOBadge: React.FC<IOBadgeCommonProps> = ({ children }) => (
+export const IOPrimaryBadge: React.FC<IOBadgeCommonProps> = ({ children }) => (
   <Badge style={[commonBadgeStyles.badge, { backgroundColor: IOColors.blue }]}>
     <LabelSmall color="white">{children}</LabelSmall>
   </Badge>
