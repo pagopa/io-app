@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
   rightSideIcon: {
-    paddingRight: 0
+    paddingRight: 0,
+    paddingLeft: 20
   }
 });
 
