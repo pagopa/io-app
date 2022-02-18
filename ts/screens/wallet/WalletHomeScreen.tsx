@@ -38,7 +38,6 @@ import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/
 import { supportedAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
-import { optInPaymentMethodsStart } from "../../features/bonus/bpd/store/actions/optInPaymentMethods";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
 import { bpdLastUpdateSelector } from "../../features/bonus/bpd/store/reducers/details/lastUpdate";
 import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
@@ -238,8 +237,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (pot.isNone(this.props.potWallets)) {
       this.props.loadWallets();
     }
-
-    
 
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
@@ -623,8 +620,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
     dispatch(fetchTransactionsLoadComplete(transactions)),
-  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga()),
-  optInPaymentMethodsStartAction: () => dispatch(optInPaymentMethodsStart())
+  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga())
 });
 
 export default withValidatedPagoPaVersion(
