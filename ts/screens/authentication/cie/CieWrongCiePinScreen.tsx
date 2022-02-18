@@ -3,13 +3,14 @@
  */
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 
@@ -17,7 +18,10 @@ export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
 };
 
-type Props = NavigationStackScreenProps<CieWrongCiePinScreenNavigationParams> &
+type Props = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "CIE_WRONG_PIN_SCREEN"
+> &
   ReturnType<typeof mapDispatchToProps>;
 
 class CieWrongCiePinScreen extends React.PureComponent<Props> {

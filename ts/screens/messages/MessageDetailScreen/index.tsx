@@ -10,6 +10,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import {
   loadMessageWithRelations,
   MessageReadType,
@@ -35,7 +36,8 @@ export type MessageDetailScreenNavigationParams = {
   messageId: string;
 };
 
-type OwnProps = NavigationStackScreenProps<MessageDetailScreenNavigationParams>;
+type OwnProps =
+  IOStackNavigationRouteProps<MessageDetailScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

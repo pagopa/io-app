@@ -10,13 +10,13 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import {
   loginFailure,
   loginSuccess
@@ -41,9 +41,11 @@ type State = {
   isLoginSuccess?: boolean;
 };
 
-type Props = NavigationScreenProp<NavigationState> &
-  OwnProps &
-  NavigationStackScreenProps<CieConsentDataUsageScreenNavigationParams> &
+type Props = OwnProps &
+  IOStackNavigationRouteProps<
+    AuthenticationParamsList,
+    "CIE_CONSENT_DATA_USAGE"
+  > &
   ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (
