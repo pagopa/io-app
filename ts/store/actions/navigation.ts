@@ -93,11 +93,8 @@ export const navigateBack = () =>
  */
 export const navigateToIdpSelectionScreenAction = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate({
-      name: ROUTES.AUTHENTICATION,
-      params: {
-        name: ROUTES.AUTHENTICATION_IDP_SELECTION
-      }
+    CommonActions.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_IDP_SELECTION
     })
   );
 
@@ -106,11 +103,8 @@ export const navigateToIdpSelectionScreenAction = () =>
  */
 export const navigateToOnboardingPinScreenAction = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate({
-      name: ROUTES.ONBOARDING,
-      params: {
-        name: ROUTES.ONBOARDING_PIN
-      }
+    CommonActions.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_PIN
     })
   );
 
@@ -132,11 +126,8 @@ export const navigateToOnboardingFingerprintScreenAction = (
  */
 export const navigateToTosScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate({
-      name: ROUTES.ONBOARDING,
-      params: {
-        name: ROUTES.ONBOARDING_TOS
-      }
+    CommonActions.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_TOS
     })
   );
 
