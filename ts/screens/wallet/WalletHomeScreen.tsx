@@ -90,6 +90,13 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { optInPaymentMethodsShowChoice } from "../../features/bonus/bpd/store/actions/optInPaymentMethods";
+import { showOptInChoiceSelector } from "../../features/bonus/bpd/store/reducers/details/activation/ui";
+import {
+  isLoading,
+  isUndefined
+} from "../../features/bonus/bpd/model/RemoteValue";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -231,6 +238,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
+    // Starts the optInShouldShowChoiceHandler saga
+    this.props.runOptInShouldShowChoiceHandler();
+
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
@@ -239,6 +249,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       this.props.loadWallets();
     }
 
+    this.loadBonusBpd();
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
@@ -500,8 +511,23 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       potWallets,
       potTransactions,
       anyHistoryPayments,
-      anyCreditCardAttempts
+      anyCreditCardAttempts,
+      showOptInChoiceStatus
     } = this.props;
+
+    // Show the loading component until the optInShouldShowChoiceHandler ends
+    if (
+      isUndefined(showOptInChoiceStatus) ||
+      isLoading(showOptInChoiceStatus)
+    ) {
+      return (
+        <LoadingErrorComponent
+          isLoading={true}
+          loadingCaption={"loading"}
+          onRetry={() => true}
+        />
+      );
+    }
 
     const headerContent = (
       <>
@@ -590,7 +616,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isCgnEnabled: isCGNEnabledSelector(state),
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state)
+  bpdConfig: bpdRemoteConfigSelector(state),
+  showOptInChoiceStatus: showOptInChoiceSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -621,7 +648,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
     dispatch(fetchTransactionsLoadComplete(transactions)),
-  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga())
+  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga()),
+  runOptInShouldShowChoiceHandler: () =>
+    dispatch(optInPaymentMethodsShowChoice.request())
 });
 
 export default withValidatedPagoPaVersion(
