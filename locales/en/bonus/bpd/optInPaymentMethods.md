@@ -23,7 +23,7 @@ For complaints and information on refunds, go to the website of <a href="https:/
   <li>
     <body>
       <b>If you keep them</b>, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. It’s not a final decision: you can delete them at any time.
-      The data controller will no longer be the Ministry of Economy and Finance, but PagoPA S.p.A., the company in charge of managing the IO App. See the [Privacy Policy](https://io.italia.it/app-content/tos_privacy.html) for more information. 
+      The data controller will no longer be the Ministry of Economy and Finance, but PagoPA S.p.A., the company in charge of managing the IO app. See the [Privacy Policy](https://io.italia.it/app-content/tos_privacy.html) for more information. 
     </body>
   </li>
   <li>
