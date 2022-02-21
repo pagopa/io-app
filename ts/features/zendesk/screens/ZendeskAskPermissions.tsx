@@ -78,7 +78,6 @@ type ItemProps = {
   nameSurname: string;
   email: string;
   deviceDescription: string;
-  versionsHistory: string;
   identityProvider: string;
 };
 
@@ -142,7 +141,6 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     icon: <InfoIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.appVersionsHistory"),
     value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
-    zendeskId: zendeskVersionsHistoryId,
     testId: "appVersionsHistory"
   },
   {
@@ -211,7 +209,6 @@ const ZendeskAskPermissions = (props: Props) => {
     deviceDescription: `${getModel()} · ${
       isIos ? "iOS" : "Android"
     } · ${getSystemVersion()}`,
-    versionsHistory: arrayToZendeskValue(versionsHistory),
     identityProvider
   };
 
@@ -248,14 +245,20 @@ const ZendeskAskPermissions = (props: Props) => {
       }
     });
 
-    // Tag the ticket with the current app version
-    addTicketTag(currentVersion);
+    // Send the versions history
+    addTicketCustomField(
+      zendeskVersionsHistoryId,
+      arrayToZendeskValue(versionsHistory)
+    );
 
     // Even though the current app version field
     // has been replaced by the versions history,
     // we still send the old app version field for
     // backward compatibility.
     addTicketCustomField(zendeskCurrentAppVersionId, currentVersion);
+
+    // Tag the ticket with the current app version
+    addTicketTag(currentVersion);
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
