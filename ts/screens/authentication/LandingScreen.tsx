@@ -2,6 +2,7 @@
  * A screen where the user can choose to login with SPID or get more informations.
  * It includes a carousel with highlights on the app functionalities
  */
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import JailMonkey from "jail-monkey";
@@ -32,7 +33,7 @@ import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import {
   AppParamsList,
-  IOStackNavigationRouteProps
+  IOStackNavigationProp
 } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import {
@@ -54,8 +55,11 @@ import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 
-type Props = IOStackNavigationRouteProps<AppParamsList, "INGRESS"> &
-  LightModalContextInterface &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AppParamsList, "INGRESS">
+  >;
+} & LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -188,20 +192,20 @@ class LandingScreen extends React.PureComponent<Props, State> {
   };
 
   private navigateToMarkdown = () =>
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.MARKDOWN
+    this.props.navigation.navigate({
+      routeName: ROUTES.MARKDOWN
     });
 
   private navigateToIdpSelection = () =>
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+    this.props.navigation.navigate({
+      routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
     });
 
   private navigateToCiePinScreen = () => {
     if (this.isCieSupported()) {
       this.props.dispatchIdpCieSelected();
-      this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.CIE_PIN_SCREEN
+      this.props.navigation.navigate({
+        routeName: ROUTES.CIE_PIN_SCREEN
       });
     } else {
       this.openUnsupportedCIEModal();
@@ -209,8 +213,8 @@ class LandingScreen extends React.PureComponent<Props, State> {
   };
 
   private navigateToSpidCieInformationRequest = () =>
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: this.isCieSupported()
+    this.props.navigation.navigate({
+      routeName: this.isCieSupported()
         ? ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
         : ROUTES.AUTHENTICATION_SPID_INFORMATION
     });

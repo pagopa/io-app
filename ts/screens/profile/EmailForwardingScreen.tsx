@@ -2,6 +2,7 @@
  * A screens to express the preferences related to email forwarding.
  * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { List, Text } from "native-base";
 import * as React from "react";
@@ -15,7 +16,7 @@ import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -35,10 +36,14 @@ import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 
-type OwnProps = IOStackNavigationRouteProps<
-  ProfileParamsList,
-  "PROFILE_PREFERENCES_EMAIL_FORWARDING"
->;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<
+      ProfileParamsList,
+      "PROFILE_PREFERENCES_EMAIL_FORWARDING"
+    >
+  >;
+};
 
 type State = {
   isCustomChannelEnabledChoice?: boolean;

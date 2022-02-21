@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -28,7 +29,7 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import IconFont from "../../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
@@ -83,10 +84,11 @@ export type ActiveBonusScreenNavigationParams = Readonly<{
 const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "BONUS_ACTIVE_DETAIL_SCREEN"
->;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "BONUS_ACTIVE_DETAIL_SCREEN">
+  >;
+};
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -283,7 +285,7 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const bonusFromNav = props.route.params.bonus;
+  const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
   const screenShotRef = React.createRef<ViewShot>();
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
@@ -696,7 +698,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const bonusFromNav = ownProps.route.params.bonus;
+  const bonusFromNav = ownProps.navigation.getParam("bonus");
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
 
   return {

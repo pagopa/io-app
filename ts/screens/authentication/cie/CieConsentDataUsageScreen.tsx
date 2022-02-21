@@ -96,7 +96,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   }
 
   get cieAuthorizationUri(): string {
-    return this.props.route.params.cieConsentUri;
+    return this.props.navigation.getParam("cieConsentUri");
   }
 
   private handleWebViewError = () => {

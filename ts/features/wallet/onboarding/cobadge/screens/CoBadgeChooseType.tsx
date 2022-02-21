@@ -96,8 +96,10 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
  * @constructor
  */
 const CoBadgeChooseType = (props: Props): React.ReactElement => {
-  const abi = props.route.params.abi;
-  const legacyAddCreditCardBack = props.route.params.legacyAddCreditCardBack;
+  const abi = props.navigation.getParam("abi");
+  const legacyAddCreditCardBack = props.navigation.getParam(
+    "legacyAddCreditCardBack"
+  );
   const addCardPath: ReadonlyArray<IAddCardPath> = [
     {
       path: "enabled",

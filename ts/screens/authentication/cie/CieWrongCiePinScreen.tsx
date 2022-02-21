@@ -1,6 +1,7 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -9,7 +10,7 @@ import { ScreenContentHeader } from "../../../components/screens/ScreenContentHe
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
@@ -18,20 +19,20 @@ export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
 };
 
-type Props = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_WRONG_PIN_SCREEN"
-> &
-  ReturnType<typeof mapDispatchToProps>;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AuthenticationParamsList, "CIE_WRONG_PIN_SCREEN">
+  >;
+} & ReturnType<typeof mapDispatchToProps>;
 
 class CieWrongCiePinScreen extends React.PureComponent<Props> {
   // TODO: use redux to handle control?
   private navigateToCiePinScreen = async () => {
-    this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
+    this.props.navigation.navigate({ routeName: ROUTES.CIE_PIN_SCREEN });
   };
 
   get ciePinRemainingCount() {
-    return this.props.route.params.remainingCount;
+    return this.props.navigation.getParam("remainingCount");
   }
 
   private renderFooterButtons = () => {

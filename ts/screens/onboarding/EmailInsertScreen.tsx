@@ -2,7 +2,7 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
-import { StackActions } from "@react-navigation/compat";
+import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
@@ -24,7 +24,7 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { navigateToEmailReadScreen } from "../../store/actions/navigation";
 import {
@@ -48,8 +48,11 @@ import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IOStackNavigationRouteProps<OnboardingParamsList, "INSERT_EMAIL_SCREEN">;
+  ReturnType<typeof mapStateToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<OnboardingParamsList, "INSERT_EMAIL_SCREEN">
+    >;
+  };
 
 const styles = StyleSheet.create({
   flex: {

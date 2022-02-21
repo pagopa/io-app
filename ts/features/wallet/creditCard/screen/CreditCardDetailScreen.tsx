@@ -1,8 +1,9 @@
+import { CompatNavigationProp } from "@react-navigation/compat/src/types";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
@@ -17,8 +18,11 @@ export type CreditCardDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IOStackNavigationRouteProps<WalletParamsList, "WALLET_CREDIT_CARD_DETAIL">;
+  ReturnType<typeof mapStateToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<WalletParamsList, "WALLET_CREDIT_CARD_DETAIL">
+    >;
+  };
 
 /**
  * Detail screen for a credit card
@@ -26,7 +30,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   const paramCreditCard: CreditCardPaymentMethod =
-    props.route.params.creditCard;
+    props.navigation.getParam("creditCard");
   // We need to read the card from the store to receive the updates
   // TODO: to avoid this we need a store refactoring for the wallet section (all the component should receive the id and not the wallet, in order to update when needed)
   const storeCreditCard = props.creditCardById(paramCreditCard.idWallet);

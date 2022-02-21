@@ -3,7 +3,7 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { StackActions } from "@react-navigation/compat";
+import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
@@ -20,7 +20,7 @@ import IconFont from "../../../components/ui/IconFont";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import ROUTES from "../../../navigation/routes";
 import {
@@ -73,10 +73,11 @@ export type TransactionSummaryScreenNavigationParams = Readonly<{
   startRoute: string | undefined;
 }>;
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_TRANSACTION_SUMMARY"
->;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -136,8 +137,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
       // this is the case when the component is already mounted (eg. process more payments)
       // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
       pot.isNone(this.props.potVerifica) &&
-      this.props.route.params.rptId.paymentNoticeNumber !==
-        prevProps.route.params.rptId.paymentNoticeNumber
+      this.props.navigation.getParam("rptId").paymentNoticeNumber !==
+        prevProps.navigation.getParam("rptId").paymentNoticeNumber
     ) {
       this.props.dispatchPaymentVerificaRequest();
     }
@@ -176,13 +177,13 @@ class TransactionSummaryScreen extends React.Component<Props> {
        * in order to perform the right navigation actions if we are not in the wallet stack.
        * TODO: This is a temporary (and not scalable) solution, a complete refactoring of the payment workflow is strongly recommended
        */
-      const startRoute = this.props.route.params.startRoute;
+      const startRoute = this.props.navigation.getParam("startRoute");
       if (startRoute !== undefined) {
         // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
         if (startRoute === ROUTES.MESSAGE_DETAIL) {
           this.props.navigation.dispatch(StackActions.popToTop());
         }
-        this.props.navigation.navigate(startRoute);
+        this.props.navigation.navigate({ routeName: startRoute });
       } else {
         this.props.navigation.goBack();
       }
@@ -259,7 +260,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
 
   public render(): React.ReactNode {
-    const rptId: RptId = this.props.route.params.rptId;
+    const rptId: RptId = this.props.navigation.getParam("rptId");
     // TODO: it should compare the current an d the initial amount BUT the initialAmount seems to be provided with an incorrect format https://www.pivotaltracker.com/story/show/172084929
     const isAmountUpdated = true;
 
@@ -446,9 +447,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const rptId = props.route.params.rptId;
-  const initialAmount = props.route.params.initialAmount;
-  const paymentStartOrigin = props.route.params.paymentStartOrigin;
+  const rptId = props.navigation.getParam("rptId");
+  const initialAmount = props.navigation.getParam("initialAmount");
+  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
   const isManualPaymentInsertion = paymentStartOrigin === "manual_insertion";
 
   const dispatchPaymentVerificaRequest = () =>
@@ -543,7 +544,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     onDuplicatedPayment: () =>
       dispatch(
         paymentCompletedSuccess({
-          rptId: props.route.params.rptId,
+          rptId: props.navigation.getParam("rptId"),
           kind: "DUPLICATED"
         })
       )

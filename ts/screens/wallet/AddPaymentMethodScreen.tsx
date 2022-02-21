@@ -1,4 +1,5 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
@@ -31,7 +32,7 @@ import {
 import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
 import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -55,10 +56,11 @@ export type AddPaymentMethodScreenNavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "WALLET_ADD_PAYMENT_METHOD"
->;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "WALLET_ADD_PAYMENT_METHOD">
+  >;
+};
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -174,9 +176,10 @@ const getPaymentMethods = (
 const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const inPayment = props.route.params.inPayment;
-  const canAddOnlyPayablePaymentMethod =
-    props.route.params.showOnlyPayablePaymentMethods;
+  const inPayment = props.navigation.getParam("inPayment");
+  const canAddOnlyPayablePaymentMethod = props.navigation.getParam(
+    "showOnlyPayablePaymentMethods"
+  );
 
   const cancelButtonProps = {
     block: true,
@@ -251,8 +254,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToAddCreditCard: () =>
     navigateToWalletAddCreditCard({
-      inPayment: props.route.params.inPayment,
-      keyFrom: props.route.params.keyFrom
+      inPayment: props.navigation.getParam("inPayment"),
+      keyFrom: props.navigation.getParam("keyFrom")
     })
 });
 

@@ -4,6 +4,7 @@
  */
 
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import {
   fromEither,
   fromPredicate,
@@ -33,7 +34,7 @@ import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -76,10 +77,11 @@ export type AddCardScreenNavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "WALLET_ADD_CARD"
->;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "WALLET_ADD_CARD">
+  >;
+};
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -235,7 +237,7 @@ const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
   );
-  const inPayment = props.route.params.inPayment;
+  const inPayment = props.navigation.getParam("inPayment");
 
   const { present, dismiss } = useIOBottomSheet(
     <>
@@ -472,8 +474,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     navigateToWalletConfirmCardDetails({
       creditCard,
-      inPayment: props.route.params.inPayment,
-      keyFrom: props.route.params.keyFrom
+      inPayment: props.navigation.getParam("inPayment"),
+      keyFrom: props.navigation.getParam("keyFrom")
     })
 });
 

@@ -1,7 +1,8 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
@@ -15,15 +16,18 @@ export type BPayDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IOStackNavigationRouteProps<WalletParamsList, "WALLET_BPAY_DETAIL">;
+  ReturnType<typeof mapStateToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<WalletParamsList, "WALLET_BPAY_DETAIL">
+    >;
+  };
 
 /**
  * Detail screen for a Bancomat Pay
  * @constructor
  */
 const BPayDetailScreen: React.FunctionComponent<Props> = props => {
-  const bPay: BPayPaymentMethod = props.route.params.bPay;
+  const bPay: BPayPaymentMethod = props.navigation.getParam("bPay");
   return (
     <BasePaymentMethodScreen
       paymentMethod={bPay}

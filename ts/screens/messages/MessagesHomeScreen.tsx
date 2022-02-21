@@ -1,6 +1,7 @@
 /**
  * A screen that contains all the Tabs related to messages.
  */
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Tab, Tabs } from "native-base";
@@ -20,7 +21,7 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import SectionStatusComponent from "../../components/SectionStatus";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
 import {
   DEPRECATED_loadMessages as loadMessages,
@@ -46,8 +47,11 @@ import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 
-type Props = IOStackNavigationRouteProps<MessagesParamsList, "MESSAGES_HOME"> &
-  ReturnType<typeof mapStateToProps> &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MessagesParamsList, "MESSAGES_HOME">
+  >;
+} & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {

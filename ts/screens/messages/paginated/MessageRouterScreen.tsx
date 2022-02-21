@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { CompatNavigationProp } from "@react-navigation/compat/src/types";
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
 import { connect } from "react-redux";
@@ -18,7 +19,7 @@ import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/
 import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
 import I18n from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import {
   loadMessageDetails,
@@ -48,10 +49,11 @@ export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
 };
 
-type OwnProps = IOStackNavigationRouteProps<
-  MessagesParamsList,
-  "MESSAGE_ROUTER_PAGINATED"
->;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MessagesParamsList, "MESSAGE_ROUTER_PAGINATED">
+  >;
+};
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -174,7 +176,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   reloadPage: () => dispatch(reloadAllMessages.request({ pageSize }))
 });
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const messageId = ownProps.route.params.messageId;
+  const messageId = ownProps.navigation.getParam("messageId");
   const maybeMessage = allPaginated.getById(state, messageId);
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
   const cursors = getCursors(state);

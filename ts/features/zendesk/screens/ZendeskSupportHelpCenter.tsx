@@ -147,10 +147,11 @@ const FaqManager = (props: FaqManagerProps) => {
   );
 };
 
-type Props = IOStackNavigationRouteProps<
-  ZendeskParamsList,
-  "ZENDESK_HELP_CENTER"
->;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">
+  >;
+};
 /**
  * Ingress screen to access the Zendesk assistance tool
  * the user can choose to open a new ticket, follow previous conversations or read the faqs
@@ -162,11 +163,15 @@ const ZendeskSupportHelpCenter = (props: Props) => {
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
 
   // Navigation prop
-  const faqCategories = props.route.params.faqCategories;
-  const contextualHelp = props.route.params.contextualHelp;
-  const contextualHelpMarkdown = props.route.params.contextualHelpMarkdown;
-  const startingRoute = props.route.params.startingRoute;
-  const assistanceForPayment = props.route.params.assistanceForPayment;
+  const faqCategories = props.navigation.getParam("faqCategories");
+  const contextualHelp = props.navigation.getParam("contextualHelp");
+  const contextualHelpMarkdown = props.navigation.getParam(
+    "contextualHelpMarkdown"
+  );
+  const startingRoute = props.navigation.getParam("startingRoute");
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
     !contextualHelpMarkdown

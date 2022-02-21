@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -7,16 +8,16 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { openLink } from "../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 
-type Props = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_EXPIRED_SCREEN"
-> &
-  ReduxProps;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AuthenticationParamsList, "CIE_EXPIRED_SCREEN">
+  >;
+} & ReduxProps;
 const bookingUrl = I18n.t("cie.booking_url");
 const browseToLink = () => openLink(bookingUrl);
 

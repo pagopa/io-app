@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
@@ -25,7 +26,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
@@ -45,8 +46,11 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  IOStackNavigationRouteProps<CgnDetailsParamsList, "CGN_MERCHANTS_DETAIL">;
+  ReturnType<typeof mapDispatchToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_DETAIL">
+    >;
+  };
 
 const styles = StyleSheet.create({
   merchantImage: {
@@ -65,7 +69,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const { merchantDetail, requestMerchantDetail } = props;
-  const merchantID = props.route.params.merchantID;
+  const merchantID = props.navigation.getParam("merchantID");
   const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) =>
     isReady(merchantDetail) ? (
       <CgnMerchantDiscountItem

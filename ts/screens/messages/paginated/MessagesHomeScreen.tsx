@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import React, { useEffect } from "react";
@@ -15,7 +16,7 @@ import SectionStatusComponent from "../../../components/SectionStatus";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { pageSize } from "../../../config";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import ROUTES from "../../../navigation/routes";
 import { reloadAllMessages } from "../../../store/actions/messages";
@@ -32,8 +33,11 @@ import customVariables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 
-type Props = IOStackNavigationRouteProps<MessagesParamsList, "MESSAGES_HOME"> &
-  ReturnType<typeof mapStateToProps> &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MessagesParamsList, "MESSAGES_HOME">
+  >;
+} & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {

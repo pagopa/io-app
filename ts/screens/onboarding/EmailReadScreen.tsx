@@ -5,7 +5,7 @@
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
-import { StackActions } from "@react-navigation/compat";
+import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -24,7 +24,7 @@ import {
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import {
   navigateBack,
@@ -46,8 +46,11 @@ import { isOnboardingCompleted } from "../../utils/navigation";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  IOStackNavigationRouteProps<OnboardingParamsList, "READ_EMAIL_SCREEN">;
+  ReturnType<typeof mapDispatchToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<OnboardingParamsList, "READ_EMAIL_SCREEN">
+    >;
+  };
 
 const styles = StyleSheet.create({
   flex: {

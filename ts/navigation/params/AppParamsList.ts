@@ -35,7 +35,8 @@ export type AppParamsList = {
 
 /**
  * Merge the navigation of the ParamList stack with AppParamsList, in order to allow
- * the navigation in the same stack and the global stack
+ * the navigation in the same stack and the global stack.
+ * This should be used in the new react-navigation v5 navigator
  */
 export type IOStackNavigationRouteProps<
   ParamList extends ParamListBase,

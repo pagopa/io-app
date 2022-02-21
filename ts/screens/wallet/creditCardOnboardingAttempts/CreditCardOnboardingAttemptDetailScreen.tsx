@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -21,7 +22,7 @@ import { getPanDescription } from "../../../components/wallet/creditCardOnboardi
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
@@ -43,10 +44,14 @@ export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;
 }>;
 
-type Props = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL"
->;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<
+      WalletParamsList,
+      "CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL"
+    >
+  >;
+};
 
 const styles = StyleSheet.create({
   row: {
@@ -81,7 +86,7 @@ const instabugTag = "credit-card-support";
  */
 const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const dispatch = useDispatch();
-  const attempt = props.route.params.attempt;
+  const attempt = props.navigation.getParam("attempt");
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const outcomeCodes = useIOSelector(outcomeCodesSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);

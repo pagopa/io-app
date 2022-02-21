@@ -12,6 +12,7 @@ import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { testOverlayCaption } from "./config";
+import CreditCardDetailScreen from "./features/wallet/creditCard/screen/CreditCardDetailScreen";
 
 import { setLocale } from "./i18n";
 import authenticationNavigator from "./navigation/AuthenticationNavigator";
@@ -152,7 +153,7 @@ class RootContainer extends React.PureComponent<Props> {
         {/*    trackScreen(prevState, currentState); */}
         {/*  }} */}
         {/* /> */}
-        <Stack.Navigator initialRouteName={"INGRESS"}>
+        <Stack.Navigator initialRouteName={"INGRESS"} headerMode={"none"}>
           <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
           <Stack.Screen
             name={ROUTES.AUTHENTICATION}

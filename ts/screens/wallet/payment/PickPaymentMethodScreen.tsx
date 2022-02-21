@@ -2,6 +2,7 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
@@ -26,7 +27,7 @@ import {
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -59,10 +60,11 @@ export type PickPaymentMethodScreenNavigationParams = Readonly<{
   idPayment: string;
 }>;
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_PICK_PAYMENT_METHOD"
->;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_PICK_PAYMENT_METHOD">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -223,10 +225,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   goBack: () => navigateBack(),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     dispatchPickPspOrConfirm(dispatch)(
-      props.route.params.rptId,
-      props.route.params.initialAmount,
-      props.route.params.verifica,
-      props.route.params.idPayment,
+      props.navigation.getParam("rptId"),
+      props.navigation.getParam("initialAmount"),
+      props.navigation.getParam("verifica"),
+      props.navigation.getParam("idPayment"),
       some(wallet),
       failureReason => {
         // selecting the payment method has failed, show a toast and stay in
@@ -247,10 +249,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToAddPaymentMethod: () =>
     navigateToWalletAddPaymentMethod({
       inPayment: some({
-        rptId: props.route.params.rptId,
-        initialAmount: props.route.params.initialAmount,
-        verifica: props.route.params.verifica,
-        idPayment: props.route.params.idPayment
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
       })
     })
 });

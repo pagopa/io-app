@@ -1,4 +1,7 @@
-import { NavigationEvents } from "@react-navigation/compat";
+import {
+  CompatNavigationProp,
+  NavigationEvents
+} from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
@@ -50,7 +53,7 @@ import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedC
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -102,9 +105,11 @@ type State = {
 };
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  IOStackNavigationRouteProps<WalletParamsList, "WALLET_HOME"> &
-  LightModalContextInterface;
+  ReturnType<typeof mapDispatchToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<WalletParamsList, "WALLET_HOME">
+    >;
+  } & LightModalContextInterface;
 
 const styles = StyleSheet.create({
   inLineSpace: {
@@ -185,11 +190,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   get newMethodAdded() {
-    return this.props.route.params.newMethodAdded;
+    return this.props.navigation.getParam("newMethodAdded");
   }
 
   get navigationKeyFrom() {
-    return this.props.route.params.keyFrom;
+    return this.props.navigation.getParam("keyFrom");
   }
 
   private handleBackPress = () => {

@@ -1,4 +1,5 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
@@ -31,7 +32,7 @@ import CreditCardComponent from "../../../features/wallet/creditCard/component/C
 import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
 import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateToPaymentOutcomeCode,
@@ -86,10 +87,11 @@ export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   psps: ReadonlyArray<Psp>;
 }>;
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_CONFIRM_PAYMENT_METHOD"
->;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_CONFIRM_PAYMENT_METHOD">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -184,9 +186,10 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ? pagoPaApiUrlPrefixTest
     : pagoPaApiUrlPrefix;
 
-  const verifica: PaymentRequestsGetResponse = props.route.params.verifica;
-  const wallet: Wallet = props.route.params.wallet;
-  const idPayment: string = props.route.params.idPayment;
+  const verifica: PaymentRequestsGetResponse =
+    props.navigation.getParam("verifica");
+  const wallet: Wallet = props.navigation.getParam("wallet");
+  const idPayment: string = props.navigation.getParam("idPayment");
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
@@ -211,7 +214,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       )
     ) {
       // store the rptid of a payment done
-      props.dispatchPaymentCompleteSuccessfully(props.route.params.rptId);
+      props.dispatchPaymentCompleteSuccessfully(
+        props.navigation.getParam("rptId")
+      );
       // refresh transactions list
       props.loadTransactions();
     } else {
@@ -399,19 +404,19 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   return {
     pickPaymentMethod: () =>
       navigateToPaymentPickPaymentMethodScreen({
-        rptId: props.route.params.rptId,
-        initialAmount: props.route.params.initialAmount,
-        verifica: props.route.params.verifica,
-        idPayment: props.route.params.idPayment
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
       }),
     pickPsp: () =>
       navigateToPaymentPickPspScreen({
-        rptId: props.route.params.rptId,
-        initialAmount: props.route.params.initialAmount,
-        verifica: props.route.params.verifica,
-        idPayment: props.route.params.idPayment,
-        psps: props.route.params.psps,
-        wallet: props.route.params.wallet,
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment"),
+        psps: props.navigation.getParam("psps"),
+        wallet: props.navigation.getParam("wallet"),
         chooseToChange: true
       }),
     onCancel: () => {

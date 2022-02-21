@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
 import { Text, View } from "native-base";
@@ -25,7 +26,7 @@ import {
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import { zendeskSupportStart } from "../../features/zendesk/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
@@ -60,11 +61,11 @@ export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
-type Props = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_HISTORY_DETAIL_INFO"
-> &
-  ReturnType<typeof mapStateToProps> &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_HISTORY_DETAIL_INFO">
+  >;
+} & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
@@ -109,7 +110,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private instabugLogAndOpenReport = () => {
     Instabug.appendTags([paymentInstabugTag]);
     instabugLog(
-      getPaymentHistoryDetails(this.props.route.params.payment),
+      getPaymentHistoryDetails(this.props.navigation.getParam("payment")),
       TypeLogs.INFO,
       paymentInstabugTag
     );
@@ -120,7 +121,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     // Set pagamenti_pagopa as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
     // Append the payment history details in the log
-    appendLog(getPaymentHistoryDetails(this.props.route.params.payment));
+    appendLog(
+      getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
+    );
 
     this.props.zendeskSupportWorkunitStart();
   };
@@ -140,7 +143,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   };
 
   private getData = () => {
-    const payment = this.props.route.params.payment;
+    const payment = this.props.navigation.getParam("payment");
     const codiceAvviso = getCodiceAvviso(payment.data);
     const paymentCheckout = isPaymentDoneSuccessfully(payment);
     const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);

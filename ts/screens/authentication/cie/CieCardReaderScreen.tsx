@@ -4,6 +4,7 @@
  * TODO: when 100% is reached, the animation end
  */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -26,7 +27,7 @@ import { ScreenContentHeader } from "../../../components/screens/ScreenContentHe
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import {
@@ -55,11 +56,11 @@ export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
 };
 
-type Props = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_CARD_READER_SCREEN"
-> &
-  ReduxProps &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">
+  >;
+} & ReduxProps &
   ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
@@ -199,11 +200,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 
   get ciePin(): string {
-    return this.props.route.params.ciePin;
+    return this.props.navigation.getParam("ciePin");
   }
 
   get cieAuthorizationUri(): string {
-    return this.props.route.params.authorizationUri;
+    return this.props.navigation.getParam("authorizationUri");
   }
 
   private setError = ({
@@ -268,7 +269,9 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate(ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN)
+            this.props.navigation.navigate({
+              routeName: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+            })
         });
         break;
 
@@ -277,8 +280,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate(ROUTES.CIE_WRONG_PIN_SCREEN, {
-              remainingCount: event.attemptsLeft
+            this.props.navigation.navigate({
+              routeName: ROUTES.CIE_WRONG_PIN_SCREEN,
+              params: {
+                remainingCount: event.attemptsLeft
+              }
             })
         });
         break;
@@ -289,7 +295,9 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate(ROUTES.CIE_EXPIRED_SCREEN)
+            this.props.navigation.navigate({
+              routeName: ROUTES.CIE_EXPIRED_SCREEN
+            })
         });
         break;
 
@@ -370,8 +378,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       this.updateContent();
       setTimeout(
         async () => {
-          this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
-            cieConsentUri
+          this.props.navigation.navigate({
+            routeName: ROUTES.CIE_CONSENT_DATA_USAGE,
+            params: {
+              cieConsentUri
+            }
           });
           // if screen reader is enabled, give more time to read the success message
         },

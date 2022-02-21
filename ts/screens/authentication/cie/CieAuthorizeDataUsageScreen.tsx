@@ -1,6 +1,7 @@
 /**
  * A screen displayed while the backend manage the opening of the session for the CIE authentication
  */
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Content, H2, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
@@ -8,14 +9,18 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import variables from "../../../theme/variables";
 
-type Props = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_AUTHORIZE_USAGE_SCREEN"
->;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<
+      AuthenticationParamsList,
+      "CIE_AUTHORIZE_USAGE_SCREEN"
+    >
+  >;
+};
 
 type State = {
   isLoadingCompleted: boolean;

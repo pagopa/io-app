@@ -43,7 +43,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 const OnboardingServicesPreferenceScreen = (
   props: Props
 ): React.ReactElement => {
-  const isFirstOnboarding = props.route.params.isFirstOnboarding;
+  const isFirstOnboarding = props.navigation.getParam("isFirstOnboarding");
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
   const mode =
     !isFirstOnboarding &&
