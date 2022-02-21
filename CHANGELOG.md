@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0-rc.3](https://github.com/pagopa/io-app/compare/2.3.0-rc.2...2.3.0-rc.3) (2022-02-21)
+
+
+### Features
+
+* [[IA-336](https://pagopa.atlassian.net/browse/IA-336),[IA-380](https://pagopa.atlassian.net/browse/IA-380),[IA-381](https://pagopa.atlassian.net/browse/IA-381)] Fixed Android section header accessibility [#3772](https://github.com/pagopa/io-app/issues/3772) ([6f28361](https://github.com/pagopa/io-app/commit/6f283612572176b9f649455c22bea68961d91dfb))
+* [[IA-400](https://pagopa.atlassian.net/browse/IA-400)] The C.F. text will be read as Codice fiscale by the Voice Over ([#3771](https://github.com/pagopa/io-app/issues/3771)) ([9870935](https://github.com/pagopa/io-app/commit/98709359d9f103bd73b55d935729067d28e018ec))
+
+
+### Bug Fixes
+
+* [[IABT-1283](https://pagopa.atlassian.net/browse/IABT-1283)] Fixed deadline messages loader ([#3758](https://github.com/pagopa/io-app/issues/3758)) ([72b5bb8](https://github.com/pagopa/io-app/commit/72b5bb8e36bb1f3032da7f8c3e763fb940fc70a1))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-129](https://pagopa.atlassian.net/browse/IAC-129)] Implemented payment methods selection screen ([#3773](https://github.com/pagopa/io-app/issues/3773)) ([86d27fb](https://github.com/pagopa/io-app/commit/86d27fb80eed661947aead5a19821eba1ea58f34))
+* [[IAI-127](https://pagopa.atlassian.net/browse/IAI-127)] Removed `ts-jest` in favour of Babel ([#3742](https://github.com/pagopa/io-app/issues/3742)) ([5048304](https://github.com/pagopa/io-app/commit/5048304370a90ae34539326f034701f9989424ef))
+* [[IAI-128](https://pagopa.atlassian.net/browse/IAI-128)] Replace `NavigationInjectedProps` with `NavigationStackScreenProps` ([#3752](https://github.com/pagopa/io-app/issues/3752)) ([6e7ad4e](https://github.com/pagopa/io-app/commit/6e7ad4ef841cee655d38f27ebea5791f7ca819f5))
+* **Bonus Pagamenti Digitali:** [[IAC-131](https://pagopa.atlassian.net/browse/IAC-131)] Add thank you page and retry page ([#3763](https://github.com/pagopa/io-app/issues/3763)) ([0d1e337](https://github.com/pagopa/io-app/commit/0d1e3372ae3ec8dace4f7830234ad7e963cb561d))
+
 ## [2.3.0-rc.2](https://github.com/pagopa/io-app/compare/2.3.0-rc.1...2.3.0-rc.2) (2022-02-16)
 
 
