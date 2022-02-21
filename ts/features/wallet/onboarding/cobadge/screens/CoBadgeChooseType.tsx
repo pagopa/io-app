@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import { Content, ListItem, View } from "native-base";
 import * as React from "react";
@@ -19,7 +20,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import {
   navigateBack as legacyNavigateBack,
   navigateToWalletAddCreditCard
@@ -31,11 +32,14 @@ import { PaymentMethodOnboardingCoBadgeParamsList } from "../navigation/params";
 import { walletAddCoBadgeStart } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IOStackNavigationRouteProps<
-    PaymentMethodOnboardingCoBadgeParamsList,
-    "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE"
-  >;
+  ReturnType<typeof mapStateToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<
+        PaymentMethodOnboardingCoBadgeParamsList,
+        "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE"
+      >
+    >;
+  };
 
 export type CoBadgeChooseTypeNavigationProps = {
   abi?: string;
