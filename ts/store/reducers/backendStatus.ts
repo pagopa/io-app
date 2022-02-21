@@ -91,7 +91,8 @@ export const isPaypalEnabledSelector = createSelector(
  */
 export const isCGNEnabledSelector = createSelector(
   backendStatusSelector,
-  (_): boolean => true
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.cgn.enabled).toUndefined() ?? false
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
