@@ -81,7 +81,7 @@ export function* putOptInStatusCitizenV2(
 ) {
   try {
     const updateCitizenIOResult: SagaCallReturnType<typeof updateCitizenIO> =
-      yield call(
+      yield* call(
         updateCitizenIO,
         // due to avoid required headers coming from code autogenerate
         // (note the required header will be injected automatically)
@@ -92,7 +92,7 @@ export function* putOptInStatusCitizenV2(
       if (updateCitizenIOResult.value.status === 200) {
         if (updateCitizenIOResult.value.value.optInStatus) {
           const { optInStatus } = updateCitizenIOResult.value.value;
-          yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
+          yield* put(bpdUpdateOptInStatusMethod.success(optInStatus));
           return;
         } else {
           // it should never happen
@@ -101,21 +101,21 @@ export function* putOptInStatusCitizenV2(
           );
         }
       } else {
-        yield put(
+        yield* put(
           bpdUpdateOptInStatusMethod.failure(
             new Error(`response status ${updateCitizenIOResult.value.status}`)
           )
         );
       }
     } else {
-      yield put(
+      yield* put(
         bpdUpdateOptInStatusMethod.failure(
           new Error(readableReport(updateCitizenIOResult.value))
         )
       );
     }
   } catch (e) {
-    yield put(bpdUpdateOptInStatusMethod.failure(getError(e)));
+    yield* put(bpdUpdateOptInStatusMethod.failure(getError(e)));
   }
 }
 
