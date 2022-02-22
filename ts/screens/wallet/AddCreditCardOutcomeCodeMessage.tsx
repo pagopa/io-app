@@ -12,11 +12,12 @@ import { GlobalState } from "../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../store/reducers/wallet/outcomeCode";
 import { Wallet } from "../../types/pagopa";
 
-type NavigationParams = Readonly<{
+export type AddCreditCardOutcomeCodeMessageNavigationParams = Readonly<{
   selectedWallet: Wallet;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<AddCreditCardOutcomeCodeMessageNavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

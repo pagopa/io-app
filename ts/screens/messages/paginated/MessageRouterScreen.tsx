@@ -43,7 +43,12 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../utils/pot";
 
-type OwnProps = NavigationStackScreenProps<{ messageId: UIMessageId }>;
+export type MessageRouterScreenPaginatedNavigationParams = {
+  messageId: UIMessageId;
+};
+
+type OwnProps =
+  NavigationStackScreenProps<MessageRouterScreenPaginatedNavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
