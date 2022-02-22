@@ -8,13 +8,14 @@ import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import BPayCard from "../component/BPayCard";
 
-type NavigationParams = Readonly<{
+export type BPayDetailScreenNavigationParams = Readonly<{
+  // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
   bPay: BPayPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<NavigationParams>;
+  NavigationStackScreenProps<BPayDetailScreenNavigationParams>;
 
 /**
  * Detail screen for a Bancomat Pay
