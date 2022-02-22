@@ -17,6 +17,17 @@ import {
 } from "../../../store/reducers/details/activation";
 import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
+/**
+ * This saga manage the flow that checks if a user has already take a choice about the opt-in of the payment methods.
+ *
+ *  The saga follows this flow::
+ * - request the bpd data
+ * - check if the user participate or not in the cashback program
+ * - check if the user has already taken the opt-in payment methods choice
+ * - request the user's payment methods
+ * - check if the loading of the payment method succeed
+ * - if succeed start the saga
+ */
 export function* optInShouldShowChoiceHandler(): Generator<Effect, void, any> {
   // Load the information about the participation of the user to the bpd program
   yield put(bpdAllData.request());
@@ -24,7 +35,7 @@ export function* optInShouldShowChoiceHandler(): Generator<Effect, void, any> {
     typeof bpdAllData.success | typeof bpdAllData.failure
   > = yield take([getType(bpdAllData.success), getType(bpdAllData.failure)]);
 
-  // If the request fail report the error
+  // If the bpdAllData request fail report the error
   if (isActionOf(bpdAllData.failure, bpdAllDataResponse)) {
     yield put(
       optInPaymentMethodsShowChoice.failure(bpdAllDataResponse.payload)
