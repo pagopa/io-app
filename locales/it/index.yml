@@ -2951,6 +2951,11 @@ features:
             body: "Non sono riuscito a scaricare l'allegato"
             details: "Per favore, controlla la tua connessione e riprova"
           checkBox: "OK, non mostrarmelo più"
+        pdfPreview:
+          title: "Anteprima PDF"
+          singleBtn: "Salva, stampa o condividi"
+          open: "Apri"
+          save: "Salva"
       body:
         plain: "testo semplice"
         html: "html"
