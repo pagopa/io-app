@@ -13,15 +13,15 @@ import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 
-type NavigationParams = {
+export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
 };
 
-type Props = NavigationStackScreenProps<NavigationParams> &
+type Props = NavigationStackScreenProps<CieWrongCiePinScreenNavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 class CieWrongCiePinScreen extends React.PureComponent<Props> {
-  // TODO: usare redux per gestire il controllo?
+  // TODO: use redux to handle control?
   private navigateToCiePinScreen = async () => {
     this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
   };

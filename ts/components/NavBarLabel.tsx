@@ -88,7 +88,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
     ? `${I18n.t("navigation.selected")}, `
     : "";
 
-  const unreadMessagesMap = {
+  const unreadMessagesMap: Record<string, number> = {
     [ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length,
     [ROUTES.WALLET_HOME]: transactionsNumUnread
   };

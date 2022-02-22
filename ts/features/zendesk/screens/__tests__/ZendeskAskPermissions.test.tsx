@@ -70,6 +70,15 @@ describe("the ZendeskAskPermissions screen", () => {
     expect(component.getByTestId("ZendeskAskPermissions")).toBeDefined();
   });
 
+  it("should render the appVersionsHistory item", () => {
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    const component: RenderAPI = renderComponent(store, true);
+    expect(component.getByTestId("appVersionsHistory")).toBeDefined();
+  });
+
   it("should render the paymentIssues item if assistanceForPayment prop is true", () => {
     const store: Store<GlobalState> = createStore(
       appReducer,
