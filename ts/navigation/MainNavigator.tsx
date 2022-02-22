@@ -5,15 +5,11 @@
  * navigator with the appropriate icons
  */
 
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import deviceInfoModule from "react-native-device-info";
-import {
-  NavigationRoute,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
-import { createBottomTabNavigator } from "react-navigation-tabs";
 import MessagesTabIcon from "../components/MessagesTabIcon";
 import NavBarLabel from "../components/NavBarLabel";
 import ProfileTabIcon from "../components/ProfileTabIcon";
@@ -82,20 +78,20 @@ const TabFirstLevelRoutes: Array<string> = [
   ROUTES.PROFILE_MAIN
 ];
 
-const getTabBarVisibility = (
-  nav: NavigationScreenProp<NavigationRoute>
-): boolean => {
-  const state = nav.state as NavigationState;
-
-  const { routeName } = state.routes[state.index];
-
-  return TabFirstLevelRoutes.indexOf(routeName) !== -1;
-};
+// const getTabBarVisibility = (
+//   nav: NavigationScreenProp<NavigationRoute>
+// ): boolean => {
+//   const state = nav.state as NavigationState;
+//
+//   const { routeName } = state.routes[state.index];
+//
+//   return TabFirstLevelRoutes.indexOf(routeName) !== -1;
+// };
 
 /**
  * A navigator for all the screens used when the user is authenticated.
  */
-const navigation = createBottomTabNavigator(
+const navigation = createCompatNavigatorFactory(createBottomTabNavigator)(
   {
     [ROUTES.MESSAGES_NAVIGATOR]: {
       screen: MessageNavigator
@@ -111,58 +107,58 @@ const navigation = createBottomTabNavigator(
     }
   },
   {
-    defaultNavigationOptions: ({ navigation: nav }) => ({
-      tabBarVisible: getTabBarVisibility(nav),
-      tabBarLabel: (options: {
-        tintColor: string | null;
-        focused: boolean;
-      }) => {
-        const { routeName } = nav.state;
-        // adding `color` as a separate style property since it depends on tintColor
-        return <NavBarLabel options={options} routeName={routeName} />;
-      },
-      tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
-        const { routeName } = nav.state;
-        const iconName: string = getIcon(routeName);
-        if (routeName === ROUTES.MESSAGES_NAVIGATOR) {
-          return (
-            <MessagesTabIcon
-              color={options.tintColor === null ? undefined : options.tintColor}
-            />
-          );
-        }
-        if (iconName === ROUTE_ICON.WALLET_HOME) {
-          return (
-            <WalletTabIcon
-              color={options.tintColor === null ? undefined : options.tintColor}
-            />
-          );
-        }
-        if (iconName === ROUTE_ICON.PROFILE_NAVIGATOR) {
-          return (
-            <ProfileTabIcon
-              size={variables.iconSize3}
-              color={options.tintColor === null ? undefined : options.tintColor}
-            />
-          );
-        }
-        if (iconName === ROUTE_ICON.SERVICES_NAVIGATOR) {
-          return (
-            <ServiceTabIcon
-              color={options.tintColor === null ? undefined : options.tintColor}
-            />
-          );
-        } else {
-          return (
-            <IconFont
-              name={iconName}
-              size={variables.iconSize3}
-              color={options.tintColor === null ? undefined : options.tintColor}
-            />
-          );
-        }
-      }
-    }),
+    // defaultNavigationOptions: ({ navigation }) => ({
+    //   // tabBarVisible: getTabBarVisibility(nav),
+    //   tabBarLabel: (options: {
+    //     tintColor: string | null;
+    //     focused: boolean;
+    //   }) => {
+    //     const { routeName } = nav.state;
+    //     // adding `color` as a separate style property since it depends on tintColor
+    //     return <NavBarLabel options={options} routeName={routeName} />;
+    //   },
+    //   tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
+    //     const { routeName } = nav.state;
+    //     const iconName: string = getIcon(routeName);
+    //     if (routeName === ROUTES.MESSAGES_NAVIGATOR) {
+    //       return (
+    //         <MessagesTabIcon
+    //           color={options.tintColor === null ? undefined : options.tintColor}
+    //         />
+    //       );
+    //     }
+    //     if (iconName === ROUTE_ICON.WALLET_HOME) {
+    //       return (
+    //         <WalletTabIcon
+    //           color={options.tintColor === null ? undefined : options.tintColor}
+    //         />
+    //       );
+    //     }
+    //     if (iconName === ROUTE_ICON.PROFILE_NAVIGATOR) {
+    //       return (
+    //         <ProfileTabIcon
+    //           size={variables.iconSize3}
+    //           color={options.tintColor === null ? undefined : options.tintColor}
+    //         />
+    //       );
+    //     }
+    //     if (iconName === ROUTE_ICON.SERVICES_NAVIGATOR) {
+    //       return (
+    //         <ServiceTabIcon
+    //           color={options.tintColor === null ? undefined : options.tintColor}
+    //         />
+    //       );
+    //     } else {
+    //       return (
+    //         <IconFont
+    //           name={iconName}
+    //           size={variables.iconSize3}
+    //           color={options.tintColor === null ? undefined : options.tintColor}
+    //         />
+    //       );
+    //     }
+    //   }
+    // }),
     tabBarOptions: {
       /**
        * Add the hidden on keyboard show option when https://www.pivotaltracker.com/story/show/172715822

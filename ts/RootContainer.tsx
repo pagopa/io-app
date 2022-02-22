@@ -12,7 +12,8 @@ import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { testOverlayCaption } from "./config";
-import CreditCardDetailScreen from "./features/wallet/creditCard/screen/CreditCardDetailScreen";
+import { zendeskSupportNavigator } from "./features/zendesk/navigation/navigator";
+import ZENDESK_ROUTES from "./features/zendesk/navigation/routes";
 
 import { setLocale } from "./i18n";
 import authenticationNavigator from "./navigation/AuthenticationNavigator";
@@ -167,6 +168,10 @@ class RootContainer extends React.PureComponent<Props> {
           <Stack.Screen
             name={ROUTES.WORKUNIT_GENERIC_FAILURE}
             component={workunitGenericFailure}
+          />
+          <Stack.Screen
+            name={ZENDESK_ROUTES.MAIN}
+            component={zendeskSupportNavigator}
           />
         </Stack.Navigator>
 
