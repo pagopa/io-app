@@ -90,13 +90,18 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { optInPaymentMethodsShowChoice } from "../../features/bonus/bpd/store/actions/optInPaymentMethods";
-import { showOptInChoiceSelector } from "../../features/bonus/bpd/store/reducers/details/activation/ui";
 import {
+  ShowOptInChoice,
+  showOptInChoiceSelector
+} from "../../features/bonus/bpd/store/reducers/details/activation/ui";
+import {
+  isError,
   isLoading,
+  isReady,
   isUndefined
 } from "../../features/bonus/bpd/model/RemoteValue";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -237,9 +242,29 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  private hideLoadingModalOptInShouldShowChoice = (
+    showOptInChoiceStatus: ShowOptInChoice,
+    prevShowOptInChoiceStatus: ShowOptInChoice
+  ) => {
+    if (
+      showOptInChoiceStatus.kind !== prevShowOptInChoiceStatus.kind &&
+      (isReady(showOptInChoiceStatus) || isError(showOptInChoiceStatus)) &&
+      (isUndefined(prevShowOptInChoiceStatus) ||
+        isLoading(prevShowOptInChoiceStatus))
+    ) {
+      this.props.hideModal();
+    }
+  };
   public componentDidMount() {
     // Starts the optInShouldShowChoiceHandler saga
     this.props.runOptInShouldShowChoiceHandler();
+    this.props.showModal(
+      <LoadingSpinnerOverlay
+        isLoading={true}
+        loadingCaption={"loading"}
+        loadingOpacity={1}
+      />
+    );
 
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
@@ -306,6 +331,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (isBancomatListUpdated || isCobadgeListUpdated) {
       this.props.runSendAddCobadgeMessageSaga();
     }
+
+    this.hideLoadingModalOptInShouldShowChoice(
+      this.props.showOptInChoiceStatus,
+      prevProps.showOptInChoiceStatus
+    );
   }
 
   private cardHeader(isError: boolean = false) {
@@ -511,23 +541,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       potWallets,
       potTransactions,
       anyHistoryPayments,
-      anyCreditCardAttempts,
-      showOptInChoiceStatus
+      anyCreditCardAttempts
     } = this.props;
-
-    // Show the loading component until the optInShouldShowChoiceHandler ends
-    if (
-      isUndefined(showOptInChoiceStatus) ||
-      isLoading(showOptInChoiceStatus)
-    ) {
-      return (
-        <LoadingErrorComponent
-          isLoading={true}
-          loadingCaption={"loading"}
-          onRetry={() => true}
-        />
-      );
-    }
 
     const headerContent = (
       <>
