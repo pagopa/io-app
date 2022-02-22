@@ -11,7 +11,7 @@ import { Action } from "../../../../../../../store/actions/types";
 import { optInPaymentMethodsShowChoice } from "../../../actions/optInPaymentMethods";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 
-type ShowOptInChoice = RemoteValue<boolean, Error>;
+export type ShowOptInChoice = RemoteValue<boolean, Error>;
 export type BpdActivationUiState = {
   showOptInChoice: ShowOptInChoice;
 };
