@@ -79,7 +79,6 @@ type ItemProps = {
   nameSurname: string;
   email: string;
   deviceDescription: string;
-  currentVersion: string;
   identityProvider: string;
 };
 
@@ -141,10 +140,9 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   },
   {
     icon: <InfoIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.currentAppVersion"),
-    value: props.currentVersion,
-    zendeskId: zendeskCurrentAppVersionId,
-    testId: "appVersion"
+    title: I18n.t("support.askPermissions.appVersionsHistory"),
+    value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
+    testId: "appVersionsHistory"
   },
   {
     icon: <LoginIcon {...iconProps} />,
@@ -210,6 +208,7 @@ const ZendeskAskPermissions = (props: Props) => {
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
   const versionsHistory = useIOSelector(appVersionHistorySelector);
+  const currentVersion = getAppVersion();
 
   const itemsProps: ItemProps = {
     fiscalCode,
@@ -218,7 +217,6 @@ const ZendeskAskPermissions = (props: Props) => {
     deviceDescription: `${getModel()} · ${
       isIos ? "iOS" : "Android"
     } · ${getSystemVersion()}`,
-    currentVersion: getAppVersion(),
     identityProvider
   };
 
@@ -255,14 +253,20 @@ const ZendeskAskPermissions = (props: Props) => {
       }
     });
 
-    // Tag the ticket with the current app version
-    addTicketTag(itemsProps.currentVersion);
-
-    // Add the versions history to the relative Zendesk field
+    // Send the versions history
     addTicketCustomField(
       zendeskVersionsHistoryId,
       arrayToZendeskValue(versionsHistory)
     );
+
+    // Even though the current app version field
+    // has been replaced by the versions history,
+    // we still send the old app version field for
+    // backward compatibility.
+    addTicketCustomField(zendeskCurrentAppVersionId, currentVersion);
+
+    // Tag the ticket with the current app version
+    addTicketTag(currentVersion);
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||
