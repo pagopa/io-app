@@ -1,5 +1,6 @@
 import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
+
 import { fetchTimeout } from "../../config";
 import { ContentTypeValues } from "../../types/contentType";
 import { isIos } from "../../utils/platform";
@@ -28,6 +29,9 @@ const downloadAttachment = async (
     timeout: fetchTimeout
   }).fetch("GET", attachment.resourceUrl.href, header);
 
+export type PreviewActionConfig =
+  | { _tag: "ios"; action: () => void }
+  | { _tag: "android"; open: () => void; share: () => void; save: () => void };
 /**
  * Handle the download of an attachment based on the platform.
  * Reject with an Error if any error occurs.
@@ -40,10 +44,12 @@ const downloadAttachment = async (
  *
  * @param attachment
  * @param header
+ * @param showPreview
  */
 export const handleDownloadResult = async (
   attachment: MvlAttachment,
-  header: { [key: string]: string }
+  header: { [key: string]: string },
+  showPreview: (path: string, actionConfig: PreviewActionConfig) => void
 ): Promise<void> => {
   try {
     const result = await downloadAttachment(attachment, header);
@@ -53,12 +59,18 @@ export const handleDownloadResult = async (
         new Error(`error ${status} fetching ${attachment.resourceUrl.href}`)
       );
     }
+
+    const path = result.path();
+
     if (isIos) {
-      const fileHandler =
-        attachment.contentType === ContentTypeValues.applicationPdf
-          ? ReactNativeBlobUtil.ios.openDocument
-          : ReactNativeBlobUtil.ios.presentOptionsMenu;
-      fileHandler(result.path());
+      if (attachment.contentType === ContentTypeValues.applicationPdf) {
+        showPreview(path, {
+          _tag: "ios",
+          action: () => ReactNativeBlobUtil.ios.presentOptionsMenu(path)
+        });
+      } else {
+        ReactNativeBlobUtil.ios.presentOptionsMenu(result.path());
+      }
     } else {
       await ReactNativeBlobUtil.android.addCompleteDownload({
         mime: attachment.contentType,

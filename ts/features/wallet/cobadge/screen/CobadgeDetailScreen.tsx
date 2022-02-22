@@ -8,13 +8,14 @@ import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import CobadgeCard from "../component/CoBadgeCard";
 
-type NavigationParams = Readonly<{
+export type CobadgeDetailScreenNavigationParams = Readonly<{
+  // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
   cobadge: CreditCardPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<NavigationParams>;
+  NavigationStackScreenProps<CobadgeDetailScreenNavigationParams>;
 
 /**
  * Detail screen for a cobadge card

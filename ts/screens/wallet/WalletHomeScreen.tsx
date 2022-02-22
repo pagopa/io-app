@@ -103,7 +103,7 @@ import {
 } from "../../features/bonus/bpd/model/RemoteValue";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
-type NavigationParams = Readonly<{
+export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
   keyFrom?: string;
 }>;
@@ -114,7 +114,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps<NavigationParams> &
+  NavigationStackScreenProps<WalletHomeNavigationParams> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({

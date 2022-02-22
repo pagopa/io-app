@@ -20,6 +20,6 @@ const SV_ROUTES = {
     LIST: "SV_VOUCHER_LIST",
     DETAILS: "SV_VOUCHER_DETAILS"
   }
-};
+} as const;
 
 export default SV_ROUTES;

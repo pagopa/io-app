@@ -1,17 +1,17 @@
 import { createStackNavigator } from "react-navigation-stack";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
-
-import BackgroundScreen from "../screens/BackgroundScreen";
-import IngressScreen from "../screens/ingress/IngressScreen";
-import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
-import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
 import { zendeskEnabled } from "../config";
-import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
   CgnEYCAActivationNavigator
 } from "../features/bonus/cgn/navigation/navigator";
+import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
+import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
+
+import BackgroundScreen from "../screens/BackgroundScreen";
+import IngressScreen from "../screens/ingress/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -63,27 +63,22 @@ const cgnConfigMap = {
 };
 
 // The addition of the screen to the stack is only protected by local FF
-const zendeskMap = zendeskEnabled
-  ? {
-      [ZENDESK_ROUTES.MAIN]: {
-        screen: zendeskSupportNavigator
-      }
-    }
-  : {};
-
-const navigator = createStackNavigator(
-  {
-    ...configMap,
-    ...cgnConfigMap,
-    ...zendeskMap
-  },
-  {
-    // Let each screen handle the header and navigation
-    headerMode: "none",
-    defaultNavigationOptions: {
-      gesturesEnabled: false
-    }
+const zendeskMap = {
+  [ZENDESK_ROUTES.MAIN]: {
+    screen: zendeskSupportNavigator
   }
-);
+};
+
+const finalRouteConfig = zendeskEnabled
+  ? { ...configMap, ...cgnConfigMap, ...zendeskMap }
+  : { ...configMap, ...cgnConfigMap };
+
+const navigator = createStackNavigator(finalRouteConfig, {
+  // Let each screen handle the header and navigation
+  headerMode: "none",
+  defaultNavigationOptions: {
+    gesturesEnabled: false
+  }
+});
 
 export default navigator;

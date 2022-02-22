@@ -3,7 +3,7 @@ import { createStore, Store } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 
 import ConfirmPaymentMethodScreen, {
-  NavigationParams
+  ConfirmPaymentMethodScreenNavigationParams
 } from "../ConfirmPaymentMethodScreen";
 import {
   myRptId,
@@ -30,7 +30,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
   afterAll(() => jest.resetAllMocks());
   beforeEach(() => jest.useFakeTimers());
   const initState = reproduceSequence({} as GlobalState, appReducer, AuthSeq);
-  const params: NavigationParams = {
+  const params: ConfirmPaymentMethodScreenNavigationParams = {
     rptId: myRptId,
     initialAmount: myInitialAmount,
     verifica: myVerifiedData,
@@ -69,12 +69,10 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
 
     // Render with simplified but true navigation. Just two screen: the
     // screen under test and a fake screen to navigate without mocking
-    const MyObj = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      ToBeTested,
-      ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
-      params,
-      myStore
-    );
+    const MyObj = renderScreenFakeNavRedux<
+      GlobalState,
+      ConfirmPaymentMethodScreenNavigationParams
+    >(ToBeTested, ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD, params, myStore);
 
     // Link Why A Fee? Must be present
     const whyAFeeTouch = MyObj.getByTestId(/why-a-fee/i);
