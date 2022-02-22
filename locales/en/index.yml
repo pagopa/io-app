@@ -2925,6 +2925,7 @@ features:
             details: "Check your connection please and try again"
           checkBox: "OK, don't show me again"
         pdfPreview:
+          title: "PDF Preview"
           singleBtn: "Save, print, or share"
           open: "Open"
           save: "Save"

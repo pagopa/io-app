@@ -29,7 +29,7 @@ const downloadAttachment = async (
     timeout: fetchTimeout
   }).fetch("GET", attachment.resourceUrl.href, header);
 
-export type ActionConfig =
+export type PreviewActionConfig =
   | { _tag: "ios"; action: () => void }
   | { _tag: "android"; open: () => void; share: () => void; save: () => void };
 /**
@@ -49,7 +49,7 @@ export type ActionConfig =
 export const handleDownloadResult = async (
   attachment: MvlAttachment,
   header: { [key: string]: string },
-  showPreview: (path: string, actionConfig: ActionConfig) => void
+  showPreview: (path: string, actionConfig: PreviewActionConfig) => void
 ): Promise<void> => {
   try {
     const result = await downloadAttachment(attachment, header);

@@ -10,12 +10,12 @@ import I18n from "../../../../../../i18n";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
-import { ActionConfig } from "../../../../utils";
+import { PreviewActionConfig } from "../../../../utils";
+import i18n from "../../../../../../i18n";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "pink"
+    flex: 1
   },
   pdf: {
     flex: 1,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderFooter = (actionConfig: ActionConfig) =>
+const renderFooter = (actionConfig: PreviewActionConfig) =>
   // eslint-disable-next-line no-underscore-dangle
   actionConfig._tag === "ios" ? (
     <FooterWithButtons
@@ -59,7 +59,7 @@ type Props = {
   path: string;
   onClose: () => void;
   onError: (error: unknown) => void;
-  actionConfig: ActionConfig;
+  actionConfig: PreviewActionConfig;
 };
 
 const PdfPreview = ({ path, onClose, actionConfig, onError }: Props) => (
@@ -76,7 +76,9 @@ const PdfPreview = ({ path, onClose, actionConfig, onError }: Props) => (
           <IconFont name="io-back" color={customVariables.textColor} />
         </Button>
       </Left>
-      <Body color={"bluegreyDark"}>{"anteprima PDF"}</Body>
+      <Body color={"bluegreyDark"}>
+        {i18n.t("features.mvl.details.attachments.pdfPreview.title")}
+      </Body>
       <Right>
         <Button
           transparent={true}
