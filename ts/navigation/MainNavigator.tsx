@@ -16,6 +16,12 @@ import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
+import { usePaginatedMessages } from "../config";
+import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
+import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
+import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
+import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
+import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -93,17 +99,19 @@ const TabFirstLevelRoutes: Array<string> = [
  */
 const navigation = createCompatNavigatorFactory(createBottomTabNavigator)(
   {
-    [ROUTES.MESSAGES_NAVIGATOR]: {
-      screen: MessageNavigator
+    [ROUTES.MESSAGES_HOME]: {
+      screen: usePaginatedMessages
+        ? PaginatedMessagesHomeScreen
+        : MessagesHomeScreen
     },
     [ROUTES.WALLET_HOME]: {
-      screen: WalletNavigator
+      screen: WalletHomeScreen
     },
-    [ROUTES.SERVICES_NAVIGATOR]: {
-      screen: ServicesNavigator
+    [ROUTES.SERVICES_HOME]: {
+      screen: ServicesHomeScreen
     },
-    [ROUTES.PROFILE_NAVIGATOR]: {
-      screen: ProfileNavigator
+    [ROUTES.PROFILE_MAIN]: {
+      screen: ProfileMainScreen
     }
   },
   {

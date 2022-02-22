@@ -15,7 +15,11 @@ import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainParamsList } from "./MainParamsList";
+import { MessagesParamsList } from "./MessagesParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
+import { ProfileParamsList } from "./ProfileParamsList";
+import { ServicesParamsList } from "./ServicesParamsList";
+import { WalletParamsList } from "./WalletParamsList";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
@@ -23,6 +27,12 @@ export type AppParamsList = {
   [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
   [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>;
   [ROUTES.MAIN]: NavigatorScreenParams<MainParamsList>;
+
+  [ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
+  [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
+  [ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
+  [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
+
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
   [CGN_ROUTES.EYCA.ACTIVATION

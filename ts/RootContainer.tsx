@@ -1,4 +1,3 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import { Root } from "native-base";
 import * as React from "react";
 import { AppState, Linking, Platform, StatusBar } from "react-native";
@@ -7,21 +6,13 @@ import { connect } from "react-redux";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
-import workunitGenericFailure from "./components/error/WorkunitGenericFailure";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { testOverlayCaption } from "./config";
-import { zendeskSupportNavigator } from "./features/zendesk/navigation/navigator";
-import ZENDESK_ROUTES from "./features/zendesk/navigation/routes";
 
 import { setLocale } from "./i18n";
-import authenticationNavigator from "./navigation/AuthenticationNavigator";
-import mainNavigator from "./navigation/MainNavigator";
-import onboardingNavigator from "./navigation/OnboardingNavigator";
-import { AppParamsList } from "./navigation/params/AppParamsList";
-import ROUTES from "./navigation/routes";
-import IngressScreen from "./screens/ingress/IngressScreen";
+import { AppStackNavigator } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import {
   applicationChangeState,
@@ -38,8 +29,6 @@ import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 import { isStringNullyOrEmpty } from "./utils/strings";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
-
-const Stack = createStackNavigator<AppParamsList>();
 
 /**
  * The main container of the application with:
@@ -154,26 +143,7 @@ class RootContainer extends React.PureComponent<Props> {
         {/*    trackScreen(prevState, currentState); */}
         {/*  }} */}
         {/* /> */}
-        <Stack.Navigator initialRouteName={"INGRESS"} headerMode={"none"}>
-          <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
-          <Stack.Screen
-            name={ROUTES.AUTHENTICATION}
-            component={authenticationNavigator}
-          />
-          <Stack.Screen
-            name={ROUTES.ONBOARDING}
-            component={onboardingNavigator}
-          />
-          <Stack.Screen name={ROUTES.MAIN} component={mainNavigator} />
-          <Stack.Screen
-            name={ROUTES.WORKUNIT_GENERIC_FAILURE}
-            component={workunitGenericFailure}
-          />
-          <Stack.Screen
-            name={ZENDESK_ROUTES.MAIN}
-            component={zendeskSupportNavigator}
-          />
-        </Stack.Navigator>
+        <AppStackNavigator />
 
         {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
         {!isStringNullyOrEmpty(testOverlayCaption) && (

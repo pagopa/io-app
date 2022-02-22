@@ -131,7 +131,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
       onPress: () => {
         if (selectedPsp) {
           props.setPspSelected(selectedPsp);
-          navigation.navigate(navigateToPayPalCheckout());
+          navigation.dispatch(navigateToPayPalCheckout());
         }
       },
       title: I18n.t("global.buttons.continue")

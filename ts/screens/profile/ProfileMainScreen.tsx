@@ -26,7 +26,7 @@ import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
+import { MainParamsList } from "../../navigation/params/MainParamsList";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
@@ -50,7 +50,7 @@ import { isDevEnv } from "../../utils/environment";
 
 type OwnProps = {
   navigation: CompatNavigationProp<
-    IOStackNavigationProp<ProfileParamsList, "PROFILE_MAIN">
+    IOStackNavigationProp<MainParamsList, "PROFILE_MAIN">
   >;
 };
 

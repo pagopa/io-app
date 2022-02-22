@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -13,7 +14,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { navigateToOnboardingServicePreferenceCompleteAction } from "../../store/actions/navigation";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
@@ -34,11 +35,14 @@ export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
 };
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  IOStackNavigationRouteProps<
-    OnboardingParamsList,
-    "ONBOARDING_SERVICES_PREFERENCE"
-  >;
+  ReturnType<typeof mapDispatchToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<
+        OnboardingParamsList,
+        "ONBOARDING_SERVICES_PREFERENCE"
+      >
+    >;
+  };
 
 const OnboardingServicesPreferenceScreen = (
   props: Props

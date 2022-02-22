@@ -338,9 +338,9 @@ export const navigateToPrivacyScreen = () =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
       routeName: ROUTES.PROFILE_PRIVACY_MAIN,
-      action: NavigationActions.navigate({
+      params: {
         routeName: ROUTES.PROFILE_PRIVACY_MAIN
-      })
+      }
     })
   );
 
@@ -417,8 +417,8 @@ export const navigateToCreditCardDetailScreen = (
   params: CreditCardDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: ROUTES.WALLET_CREDIT_CARD_DETAIL,
+    CommonActions.navigate("WALLET_NAVIGATOR", {
+      screen: ROUTES.WALLET_CREDIT_CARD_DETAIL,
       params
     })
   );

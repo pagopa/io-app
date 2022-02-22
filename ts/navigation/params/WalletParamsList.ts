@@ -27,11 +27,9 @@ import { TransactionErrorScreenNavigationParams } from "../../screens/wallet/pay
 import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import { PaymentHistoryDetailsScreenNavigationParams } from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import { TransactionDetailsScreenNavigationParams } from "../../screens/wallet/TransactionDetailsScreen";
-import { WalletHomeNavigationParams } from "../../screens/wallet/WalletHomeScreen";
 import ROUTES from "../routes";
 
 export type WalletParamsList = {
-  [ROUTES.WALLET_HOME]: WalletHomeNavigationParams;
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: AddPaymentMethodScreenNavigationParams;
   [ROUTES.WALLET_TRANSACTION_DETAILS]: TransactionDetailsScreenNavigationParams;
   [ROUTES.WALLET_CREDIT_CARD_DETAIL]: CreditCardDetailScreenNavigationParams;

@@ -17,7 +17,7 @@ import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { pageSize } from "../../../config";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
+import { MainParamsList } from "../../../navigation/params/MainParamsList";
 import ROUTES from "../../../navigation/routes";
 import { reloadAllMessages } from "../../../store/actions/messages";
 import { Dispatch } from "../../../store/actions/types";
@@ -35,7 +35,7 @@ import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 
 type Props = {
   navigation: CompatNavigationProp<
-    IOStackNavigationProp<MessagesParamsList, "MESSAGES_HOME">
+    IOStackNavigationProp<MainParamsList, "MESSAGES_HOME">
   >;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

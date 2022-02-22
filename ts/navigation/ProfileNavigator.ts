@@ -13,7 +13,6 @@ import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlaygroun
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
-import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
 import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
 import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen";
@@ -29,9 +28,6 @@ import ROUTES from "./routes";
  */
 const ProfileNavigator = createCompatNavigatorFactory(createStackNavigator)(
   {
-    [ROUTES.PROFILE_MAIN]: {
-      screen: ProfileMainScreen
-    },
     [ROUTES.PROFILE_PRIVACY_MAIN]: {
       screen: PrivacyMainScreen
     },

@@ -1,4 +1,4 @@
-import { NavigationActions } from "@react-navigation/compat";
+import { CommonActions } from "@react-navigation/native";
 import { call } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../navigation/NavigationService";
@@ -22,8 +22,8 @@ function* zendeskSupportWorkUnit(
   return yield call(executeWorkUnit, {
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
-        NavigationActions.navigate({
-          routeName: ZENDESK_ROUTES.HELP_CENTER,
+        CommonActions.navigate(ZENDESK_ROUTES.MAIN, {
+          screen: ZENDESK_ROUTES.HELP_CENTER,
           params: zendeskStart.payload
         })
       );

@@ -52,7 +52,7 @@ const PayPalStartOnboardingScreen = (
 ): React.ReactElement | null => {
   const navigationContext = useNavigation();
   const navigateToSearchPsp = () =>
-    navigationContext.navigate(navigateToPaypalSearchPsp());
+    navigationContext.dispatch(navigateToPaypalSearchPsp());
 
   const cancelButtonProps = {
     testID: "cancelButtonId",

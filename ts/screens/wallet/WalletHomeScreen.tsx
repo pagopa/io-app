@@ -54,7 +54,7 @@ import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2P
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../navigation/params/WalletParamsList";
+import { MainParamsList } from "../../navigation/params/MainParamsList";
 import {
   navigateBack,
   navigateToPaymentScanQrCode,
@@ -107,7 +107,7 @@ type State = {
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> & {
     navigation: CompatNavigationProp<
-      IOStackNavigationProp<WalletParamsList, "WALLET_HOME">
+      IOStackNavigationProp<MainParamsList, "WALLET_HOME">
     >;
   } & LightModalContextInterface;
 

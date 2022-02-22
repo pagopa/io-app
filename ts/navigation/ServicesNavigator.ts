@@ -1,17 +1,13 @@
 import { createCompatNavigatorFactory } from "@react-navigation/compat";
 import { createStackNavigator } from "@react-navigation/stack";
 import { myPortalEnabled, svEnabled } from "../config";
+import SvNavigator from "../features/bonus/siciliaVola/navigation/navigator";
 
 import ServiceDetailsScreen from "../screens/services/ServiceDetailsScreen";
-import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import ServicesWebviewScreen from "../screens/services/ServicesWebviewScreen";
-import SvNavigator from "../features/bonus/siciliaVola/navigation/navigator";
 import ROUTES from "./routes";
 
 const servicesRoutes = {
-  [ROUTES.SERVICES_HOME]: {
-    screen: ServicesHomeScreen
-  },
   [ROUTES.SERVICE_DETAIL]: {
     screen: ServiceDetailsScreen
   }

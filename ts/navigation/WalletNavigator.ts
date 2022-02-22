@@ -58,13 +58,9 @@ import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSumma
 import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
-import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
-  [ROUTES.WALLET_HOME]: {
-    screen: WalletHomeScreen
-  },
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {
     screen: AddPaymentMethodScreen
   },

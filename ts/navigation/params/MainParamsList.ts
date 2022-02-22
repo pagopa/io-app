@@ -1,13 +1,9 @@
-import { NavigatorScreenParams } from "@react-navigation/native";
+import { WalletHomeNavigationParams } from "../../screens/wallet/WalletHomeScreen";
 import ROUTES from "../routes";
-import { MessagesParamsList } from "./MessagesParamsList";
-import { ProfileParamsList } from "./ProfileParamsList";
-import { ServicesParamsList } from "./ServicesParamsList";
-import { WalletParamsList } from "./WalletParamsList";
 
 export type MainParamsList = {
-  [ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
-  [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
-  [ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
-  [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
+  [ROUTES.MESSAGES_HOME]: undefined;
+  [ROUTES.WALLET_HOME]: WalletHomeNavigationParams;
+  [ROUTES.SERVICES_HOME]: undefined;
+  [ROUTES.PROFILE_MAIN]: undefined;
 };

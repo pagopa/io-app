@@ -1,7 +1,6 @@
 import ROUTES from "../routes";
 
 export type ProfileParamsList = {
-  [ROUTES.PROFILE_MAIN]: undefined;
   [ROUTES.PROFILE_PRIVACY_MAIN]: undefined;
   [ROUTES.PROFILE_PRIVACY]: undefined;
   [ROUTES.PROFILE_PRIVACY_SHARE_DATA]: undefined;

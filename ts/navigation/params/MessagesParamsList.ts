@@ -5,7 +5,6 @@ import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/mess
 import ROUTES from "../routes";
 
 export type MessagesParamsList = {
-  [ROUTES.MESSAGES_HOME]: undefined;
   [ROUTES.MESSAGE_ROUTER]: MessageRouterScreenNavigationParams;
   [ROUTES.MESSAGE_DETAIL]: MessageDetailScreenNavigationParams;
   [ROUTES.MESSAGE_ROUTER_PAGINATED]: MessageRouterScreenPaginatedNavigationParams;
