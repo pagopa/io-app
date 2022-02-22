@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 const CgnLandingPlayground = () => {
   const [navigationURI, setNavigationUri] = React.useState("https://");
   const [refererValue, setRefererValue] = React.useState("");
-  const [loadUri, setLoadUri] = React.useState("");
+  const [loadUri, setLoadUri] = React.useState("https://google.com");
   const [reloadKey, setReloadKey] = React.useState(0);
 
   const handleUriInput = (text: string) => {
