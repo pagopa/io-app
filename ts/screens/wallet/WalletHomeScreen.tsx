@@ -102,6 +102,7 @@ import {
   isUndefined
 } from "../../features/bonus/bpd/model/RemoteValue";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import i18n from "../../i18n";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -261,7 +262,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.props.showModal(
       <LoadingSpinnerOverlay
         isLoading={true}
-        loadingCaption={"loading"}
+        loadingCaption={i18n.t("global.remoteStates.loading")}
         loadingOpacity={1}
       />
     );
