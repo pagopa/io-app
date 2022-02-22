@@ -49,11 +49,12 @@ import {
 } from "../../../utils/paymentMethod";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
-type NavigationParams = {
+export type ManualDataInsertionScreenNavigationParams = {
   isInvalidAmount?: boolean;
 };
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<ManualDataInsertionScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &

@@ -1,6 +1,6 @@
 /**
  * A screen to display, by a webview, the consent to send user sensitive data
- * to backend and proceed with the onbording process
+ * to backend and proceed with the onboarding process
  */
 import { View } from "native-base";
 import * as React from "react";
@@ -27,7 +27,7 @@ import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
 import { IdpCIE } from "../LandingScreen";
 
-type NavigationParams = {
+export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
 };
 
@@ -43,7 +43,7 @@ type State = {
 
 type Props = NavigationScreenProp<NavigationState> &
   OwnProps &
-  NavigationStackScreenProps<NavigationParams> &
+  NavigationStackScreenProps<CieConsentDataUsageScreenNavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (

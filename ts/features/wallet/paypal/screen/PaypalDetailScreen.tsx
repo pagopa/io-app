@@ -11,12 +11,12 @@ import { paypalSelector } from "../../../../store/reducers/wallet/wallets";
 type Props = ReturnType<typeof mapStateToProps>;
 
 /**
- * Detail screen for a paypal payment method
+ * Detail screen for a PayPal payment method
  * @constructor
  */
 const PaypalDetailScreen: React.FunctionComponent<Props> = props => {
   const paypal = pot.toUndefined(props.paymentMethod);
-  // it should not never happen since this screen is shown from a navigation that starts from a paypal payment method
+  // this should never happen since this screen is shown from a navigation that starts from a PayPal payment method
   if (paypal === undefined) {
     return <WorkunitGenericFailure />;
   }
