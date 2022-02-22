@@ -17,6 +17,12 @@ type Props<T> = {
   head?: string;
   selectedItem?: T;
   onPress: (selected: T) => void;
+
+  /**
+   * This prop will align the radio buttons
+   * to the right and the label to the left.
+   */
+  rightSideSelection?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -30,6 +36,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10
   },
+  rightSideItem: {
+    flexDirection: "row-reverse"
+  },
   itemsContainer: {
     flex: 1,
     flexDirection: "column"
@@ -37,6 +46,10 @@ const styles = StyleSheet.create({
   icon: {
     paddingBottom: 15,
     paddingRight: 20
+  },
+  rightSideIcon: {
+    paddingRight: 0,
+    paddingLeft: 20
   }
 });
 
@@ -87,7 +100,10 @@ export const RadioButtonList = <T,>(props: Props<T>) => (
       {props.items.map(item => (
         <View
           key={`radio_item_${item.id}`}
-          style={styles.item}
+          style={[
+            styles.item,
+            props.rightSideSelection && styles.rightSideItem
+          ]}
           testID={`pspItemTestID_${item.id}`}
         >
           <IconFont
@@ -97,7 +113,10 @@ export const RadioButtonList = <T,>(props: Props<T>) => (
             size={24}
             color={themeVariables.contentPrimaryBackground}
             onPress={() => props.onPress(item.id)}
-            style={styles.icon}
+            style={[
+              styles.icon,
+              props.rightSideSelection && styles.rightSideIcon
+            ]}
           />
           {getBody(item, () => props.onPress(item.id))}
         </View>

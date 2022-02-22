@@ -80,7 +80,7 @@ type BottomSheetReturnType = {
  * @param props
  */
 export const useBottomSheetMethodsToDelete = (
-  props: Pick<Props, "onDeletePress" | "onCancelPress">
+  props: Pick<Props, "onDeletePress">
 ): BottomSheetReturnType => {
   const paymentMethods = useSelector(getBPDMethodsSelector);
   const snapPoint = Math.min(
@@ -88,14 +88,20 @@ export const useBottomSheetMethodsToDelete = (
     // (subtitle + footer) + items
     280 + paymentMethods.length * 58
   );
-  const { present } = useIOBottomSheetRaw(snapPoint);
+  const { present, dismiss } = useIOBottomSheetRaw(snapPoint);
+
+  const handleDelete = () => {
+    props.onDeletePress();
+    dismiss();
+  };
+
   return {
     presentBottomSheet: () => {
       void present(
         <BottomSheetMethodsToDelete
           paymentMethods={paymentMethods}
-          onDeletePress={props.onDeletePress}
-          onCancelPress={props.onCancelPress}
+          onDeletePress={handleDelete}
+          onCancelPress={dismiss}
         />,
         <View style={IOStyles.flex}>
           <H3>
