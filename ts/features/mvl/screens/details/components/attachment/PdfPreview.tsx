@@ -11,7 +11,6 @@ import IconFont from "../../../../../../components/ui/IconFont";
 import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import { PreviewActionConfig } from "../../../../utils";
-import i18n from "../../../../../../i18n";
 
 const styles = StyleSheet.create({
   container: {
@@ -77,7 +76,7 @@ const PdfPreview = ({ path, onClose, actionConfig, onError }: Props) => (
         </Button>
       </Left>
       <Body color={"bluegreyDark"}>
-        {i18n.t("features.mvl.details.attachments.pdfPreview.title")}
+        {I18n.t("features.mvl.details.attachments.pdfPreview.title")}
       </Body>
       <Right>
         <Button
