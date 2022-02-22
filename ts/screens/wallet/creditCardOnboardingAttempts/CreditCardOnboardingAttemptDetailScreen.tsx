@@ -38,11 +38,12 @@ import {
   zendeskPaymentMethodCategoryValue
 } from "../../../utils/supportAssistance";
 
-type NavigationParams = Readonly<{
+export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;
 }>;
 
-type Props = NavigationStackScreenProps<NavigationParams>;
+type Props =
+  NavigationStackScreenProps<CreditCardOnboardingAttemptDetailScreenNavigationParams>;
 
 const styles = StyleSheet.create({
   row: {
