@@ -1,5 +1,5 @@
+/* eslint-disable functional/immutable-data */
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { NavigationContainer } from "@react-navigation/native";
 import { StyleProvider } from "native-base";
 import * as React from "react";
 import { MenuProvider } from "react-native-popup-menu";
@@ -8,33 +8,29 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
-import { navigationRef } from "./navigation/NavigationService";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
 
-// Infer the `RootState` and `AppDispatch` types from the store itselfexport
+// Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 /**
  * Main component of the application
- *
- * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
+ * @constructor
  */
-export const App: React.SFC<never> = () => (
-  <NavigationContainer ref={navigationRef}>
-    <StyleProvider style={theme()}>
-      <Provider store={store}>
-        <PersistGate loading={undefined} persistor={persistor}>
-          <BottomSheetModalProvider>
-            <LightModalProvider>
-              <MenuProvider>
-                <RootContainer />
-              </MenuProvider>
-            </LightModalProvider>
-          </BottomSheetModalProvider>
-        </PersistGate>
-      </Provider>
-    </StyleProvider>
-  </NavigationContainer>
+export const App: React.FunctionComponent<never> = () => (
+  <StyleProvider style={theme()}>
+    <Provider store={store}>
+      <PersistGate loading={undefined} persistor={persistor}>
+        <BottomSheetModalProvider>
+          <LightModalProvider>
+            <MenuProvider>
+              <RootContainer />
+            </MenuProvider>
+          </LightModalProvider>
+        </BottomSheetModalProvider>
+      </PersistGate>
+    </Provider>
+  </StyleProvider>
 );

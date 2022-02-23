@@ -12,7 +12,7 @@ import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { testOverlayCaption } from "./config";
 
 import { setLocale } from "./i18n";
-import { AppStackNavigator } from "./navigation/AppStackNavigator";
+import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import {
   applicationChangeState,
@@ -131,19 +131,8 @@ class RootContainer extends React.PureComponent<Props> {
           backgroundColor={customVariables.androidStatusBarColor}
         />
         {Platform.OS === "android" && <FlagSecureComponent />}
-        {/* <AppStack */}
-        {/*  ref={navigatorRef => { */}
-        {/*    NavigationService.setTopLevelNavigator(navigatorRef); */}
-        {/*  }} */}
-        {/*  onNavigationStateChange={(prevState, currentState) => { */}
-        {/*    NavigationService.setCurrentState(currentState); */}
-        {/*    this.props.setDebugCurrentRouteName( */}
-        {/*      getCurrentRouteName(currentState) ?? "Undefined" */}
-        {/*    ); */}
-        {/*    trackScreen(prevState, currentState); */}
-        {/*  }} */}
-        {/* /> */}
-        <AppStackNavigator />
+
+        <IONavigationContainer />
 
         {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
         {!isStringNullyOrEmpty(testOverlayCaption) && (

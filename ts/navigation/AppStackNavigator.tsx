@@ -1,5 +1,8 @@
+/* eslint-disable functional/immutable-data */
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { useRef } from "react";
 import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import {
   CgnActivationNavigator,
@@ -10,9 +13,13 @@ import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import IngressScreen from "../screens/ingress/IngressScreen";
+import { setDebugCurrentRouteName } from "../store/actions/debug";
+import { useIODispatch } from "../store/hooks";
+import { trackScreen } from "../store/middlewares/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
 import mainNavigator from "./MainNavigator";
 import messagesNavigator from "./MessagesNavigator";
+import { navigationRef } from "./NavigationService";
 import onboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import profileNavigator from "./ProfileNavigator";
@@ -89,3 +96,32 @@ export const AppStackNavigator = () => (
     />
   </Stack.Navigator>
 );
+
+/**
+ * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
+ * @constructor
+ */
+export const IONavigationContainer = () => {
+  const routeNameRef = useRef<string>();
+  const dispatch = useIODispatch();
+  return (
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() =>
+        (routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name)
+      }
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
+
+        if (currentRouteName !== undefined) {
+          dispatch(setDebugCurrentRouteName(currentRouteName));
+          await trackScreen(previousRouteName, currentRouteName);
+        }
+        routeNameRef.current = currentRouteName;
+      }}
+    >
+      <AppStackNavigator />
+    </NavigationContainer>
+  );
+};

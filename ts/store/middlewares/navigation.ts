@@ -1,32 +1,23 @@
-import { NavigationState } from "@react-navigation/native";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import { mixpanelTrack } from "../../mixpanel";
 import { noAnalyticsRoutes } from "../../utils/analytics";
-import { getCurrentRouteName } from "../../utils/navigation";
 
-export const trackScreen = (
-  previousState: NavigationState,
-  currentState: NavigationState
+export const trackScreen = async (
+  previousScreen: string | undefined,
+  currentScreen: string
 ) => {
-  const previousScreenName = getCurrentRouteName(previousState);
-  const screenName = getCurrentRouteName(currentState);
-
-  if (
-    previousScreenName !== undefined &&
-    screenName !== undefined &&
-    previousScreenName !== screenName
-  ) {
-    setInstabugUserAttribute("activeScreen", screenName);
+  if (previousScreen !== currentScreen) {
+    setInstabugUserAttribute("activeScreen", currentScreen);
 
     // track only those events that are not included in the blacklist
-    if (!noAnalyticsRoutes.has(screenName)) {
-      void mixpanelTrack("SCREEN_CHANGE_V2", {
-        SCREEN_NAME: screenName
+    if (!noAnalyticsRoutes.has(currentScreen)) {
+      await mixpanelTrack("SCREEN_CHANGE_V2", {
+        SCREEN_NAME: currentScreen
       });
     }
-    // sent to 10-days retention project
-    void mixpanelTrack("SCREEN_CHANGE", {
-      SCREEN_NAME: screenName
+    // send to 10-days retention project
+    await mixpanelTrack("SCREEN_CHANGE", {
+      SCREEN_NAME: currentScreen
     });
   }
 };
