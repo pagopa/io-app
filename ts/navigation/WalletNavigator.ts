@@ -10,12 +10,12 @@ import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/route
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
 import {
   BpdDetailsNavigator,
-  BpdIBANNavigator,
   BpdOnboardingNavigator,
   OptInPaymentMethodNavigator
 } from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import IbanCTAEditScreen from "../features/bonus/bpd/screens/iban/IbanCTAEditScreen";
+import MainIbanScreen from "../features/bonus/bpd/screens/iban/MainIbanScreen";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
@@ -148,8 +148,8 @@ const bpdConfigMap = {
   [BPD_ROUTES.ONBOARDING.MAIN]: {
     screen: BpdOnboardingNavigator
   },
-  [BPD_ROUTES.IBAN_MAIN]: {
-    screen: BpdIBANNavigator
+  [BPD_ROUTES.IBAN]: {
+    screen: MainIbanScreen
   },
   [BPD_ROUTES.DETAILS_MAIN]: {
     screen: BpdDetailsNavigator

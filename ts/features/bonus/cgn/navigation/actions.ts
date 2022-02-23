@@ -1,4 +1,4 @@
-import { NavigationActions } from "@react-navigation/compat";
+import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../../navigation/NavigationService";
 import { CgnMerchantDetailScreenNavigationParams } from "../screens/merchants/CgnMerchantDetailScreen";
 import { CgnMerchantLandingWebviewNavigationParams } from "../screens/merchants/CgnMerchantLandingWebview";
@@ -10,8 +10,8 @@ import CGN_ROUTES from "./routes";
  */
 export const navigateToCgnActivationInformationTos = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
+    CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
+      screen: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
     })
   );
 
@@ -21,7 +21,7 @@ export const navigateToCgnActivationInformationTos = () =>
  */
 export const navigateToCgnActivationLoading = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
       routeName: CGN_ROUTES.ACTIVATION.LOADING
     })
   );
@@ -32,7 +32,7 @@ export const navigateToCgnActivationLoading = () =>
  */
 export const navigateToEycaActivationLoading = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.EYCA.ACTIVATION.MAIN, {
       routeName: CGN_ROUTES.EYCA.ACTIVATION.LOADING
     })
   );
@@ -43,7 +43,7 @@ export const navigateToEycaActivationLoading = () =>
  */
 export const navigateToCgnAlreadyActive = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
       routeName: CGN_ROUTES.ACTIVATION.EXISTS
     })
   );
@@ -54,7 +54,7 @@ export const navigateToCgnAlreadyActive = () =>
  */
 export const navigateToCgnActivationPending = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
       routeName: CGN_ROUTES.ACTIVATION.PENDING
     })
   );
@@ -65,7 +65,7 @@ export const navigateToCgnActivationPending = () =>
  */
 export const navigateToCgnActivationTimeout = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
       routeName: CGN_ROUTES.ACTIVATION.TIMEOUT
     })
   );
@@ -76,7 +76,7 @@ export const navigateToCgnActivationTimeout = () =>
  */
 export const navigateToCgnActivationIneligible = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
       routeName: CGN_ROUTES.ACTIVATION.INELIGIBLE
     })
   );
@@ -87,7 +87,7 @@ export const navigateToCgnActivationIneligible = () =>
  */
 export const navigateToCgnActivationCompleted = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
       routeName: CGN_ROUTES.ACTIVATION.COMPLETED
     })
   );
@@ -100,7 +100,7 @@ export const navigateToCgnActivationCompleted = () =>
  */
 export const navigateToCgnDetails = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
       routeName: CGN_ROUTES.DETAILS.DETAILS
     })
   );
@@ -112,7 +112,7 @@ export const navigateToCgnDetails = () =>
  */
 export const navigateToCgnMerchantsList = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
       routeName: CGN_ROUTES.DETAILS.MERCHANTS.LIST
     })
   );
@@ -123,7 +123,7 @@ export const navigateToCgnMerchantsList = () =>
  */
 export const navigateToCgnMerchantsTabs = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
       routeName: CGN_ROUTES.DETAILS.MERCHANTS.TABS
     })
   );
@@ -136,7 +136,7 @@ export const navigateToCgnMerchantDetail = (
   params: CgnMerchantDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
       routeName: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
       params
     })
@@ -150,7 +150,7 @@ export const navigateToCgnMerchantLandingWebview = (
   params: CgnMerchantLandingWebviewNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
+    CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
       routeName: CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW,
       params
     })
