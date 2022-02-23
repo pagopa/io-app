@@ -26,8 +26,8 @@ const CGN_ROUTES = {
       TABS: "CGN_MERCHANTS_TABS",
       DETAIL: "CGN_MERCHANTS_DETAIL",
       LANDING_WEBVIEW: "CGN_MERCHANTS_LANDING_WEBVIEW"
-    }
-  }
+    } as const
+  } as const
 } as const;
 
 export default CGN_ROUTES;

@@ -309,13 +309,23 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             <ListItemComponent
               title={"MyPortal Web Playground"}
               onPress={() =>
-                navigation.navigate({ routeName: ROUTES.WEB_PLAYGROUND })
+                navigation.navigate({
+                  routeName: ROUTES.PROFILE_NAVIGATOR,
+                  params: {
+                    screen: ROUTES.WEB_PLAYGROUND
+                  }
+                })
               }
             />
             <ListItemComponent
               title={"Markdown Playground"}
               onPress={() =>
-                navigation.navigate({ routeName: ROUTES.MARKDOWN_PLAYGROUND })
+                navigation.navigate({
+                  routeName: ROUTES.PROFILE_NAVIGATOR,
+                  params: {
+                    screen: ROUTES.MARKDOWN_PLAYGROUND
+                  }
+                })
               }
             />
           </>
@@ -324,7 +334,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         {/* Showroom */}
         <ListItemComponent
           title={I18n.t("profile.main.showroom")}
-          onPress={() => navigation.navigate({ routeName: ROUTES.SHOWROOM })}
+          onPress={() =>
+            navigation.navigate({
+              routeName: ROUTES.PROFILE_NAVIGATOR,
+              params: {
+                screen: ROUTES.SHOWROOM
+              }
+            })
+          }
           isFirstItem={true}
         />
 
@@ -452,7 +469,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             title={I18n.t("profile.main.data.title")}
             subTitle={I18n.t("profile.main.data.description")}
             onPress={() =>
-              navigation.navigate({ routeName: ROUTES.PROFILE_DATA })
+              navigation.navigate({
+                routeName: ROUTES.PROFILE_NAVIGATOR,
+                params: {
+                  screen: ROUTES.PROFILE_DATA
+                }
+              })
             }
             isFirstItem
           />
@@ -463,7 +485,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             subTitle={I18n.t("profile.main.preferences.description")}
             onPress={() =>
               navigation.navigate({
-                routeName: ROUTES.PROFILE_PREFERENCES_HOME
+                routeName: ROUTES.PROFILE_NAVIGATOR,
+                params: {
+                  screen: ROUTES.PROFILE_PREFERENCES_HOME
+                }
               })
             }
           />
@@ -473,7 +498,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             title={I18n.t("profile.main.security.title")}
             subTitle={I18n.t("profile.main.security.description")}
             onPress={() =>
-              navigation.navigate({ routeName: ROUTES.PROFILE_SECURITY })
+              navigation.navigate({
+                routeName: ROUTES.PROFILE_NAVIGATOR,
+                params: {
+                  screen: ROUTES.PROFILE_SECURITY
+                }
+              })
             }
           />
 
@@ -482,7 +512,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             title={I18n.t("profile.main.privacy.title")}
             subTitle={I18n.t("profile.main.privacy.description")}
             onPress={() =>
-              navigation.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
+              navigation.navigate({
+                routeName: ROUTES.PROFILE_NAVIGATOR,
+                params: {
+                  screen: ROUTES.PROFILE_PRIVACY_MAIN
+                }
+              })
             }
           />
 
@@ -534,7 +569,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             accessibilityRole={"button"}
             onPress={() =>
               this.props.navigation.navigate({
-                routeName: ROUTES.PROFILE_FISCAL_CODE
+                routeName: ROUTES.PROFILE_NAVIGATOR,
+                params: {
+                  screen: ROUTES.PROFILE_FISCAL_CODE
+                }
               })
             }
           >

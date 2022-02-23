@@ -30,7 +30,6 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import NavigationService from "../../../navigation/NavigationService";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
@@ -268,8 +267,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "manual_insertion",
-      startRoute: NavigationService.getCurrentRoute()?.key
+      paymentStartOrigin: "manual_insertion"
     });
   }
 });

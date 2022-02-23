@@ -14,6 +14,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
@@ -22,6 +23,7 @@ import {
   isLoading
 } from "../../../bpd/model/RemoteValue";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnOfflineMerchants,
@@ -56,7 +58,10 @@ const CgnMerchantsListByCategory = () => {
     [currentCategory]
   );
 
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
+    >();
 
   const categoryFilter = useMemo(
     () =>

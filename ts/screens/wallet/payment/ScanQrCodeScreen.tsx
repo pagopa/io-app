@@ -32,7 +32,6 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import NavigationService from "../../../navigation/NavigationService";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -396,8 +395,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "qrcode_scan",
-      startRoute: NavigationService.getCurrentRoute()
+      paymentStartOrigin: "qrcode_scan"
     });
   }
 });

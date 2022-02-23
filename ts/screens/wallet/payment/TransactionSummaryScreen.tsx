@@ -3,7 +3,7 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
@@ -22,7 +22,6 @@ import { SlidedContentComponent } from "../../../components/wallet/SlidedContent
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
-import ROUTES from "../../../navigation/routes";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
@@ -70,7 +69,6 @@ export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
-  startRoute: string | undefined;
 }>;
 
 type OwnProps = {
@@ -170,23 +168,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         }
       );
     } else {
-      /**
-       * Since the payment flow starts from the next screen, even though we are already
-       * in the payment flow, it is really difficult to make up for the static stack organization in a homogeneous way.
-       * The only solution that allows to avoid to heavily modify the existing logic is to distinguish based on the starting screen,
-       * in order to perform the right navigation actions if we are not in the wallet stack.
-       * TODO: This is a temporary (and not scalable) solution, a complete refactoring of the payment workflow is strongly recommended
-       */
-      const startRoute = this.props.navigation.getParam("startRoute");
-      if (startRoute !== undefined) {
-        // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
-        if (startRoute === ROUTES.MESSAGE_DETAIL) {
-          this.props.navigation.dispatch(StackActions.popToTop());
-        }
-        this.props.navigation.navigate({ routeName: startRoute });
-      } else {
-        this.props.navigation.goBack();
-      }
+      this.props.navigation.goBack();
     }
   };
 

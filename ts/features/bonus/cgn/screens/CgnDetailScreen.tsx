@@ -14,6 +14,7 @@ import SectionStatusComponent from "../../../../components/SectionStatus";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
 import {
@@ -38,6 +39,7 @@ import {
   navigateToCgnMerchantsList,
   navigateToCgnMerchantsTabs
 } from "../navigation/actions";
+import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
 import { cgnDetails } from "../store/actions/details";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
@@ -62,7 +64,8 @@ const GRADIENT_END_COLOR = "#5C488F";
  */
 const CgnDetailScreen = (props: Props): React.ReactElement => {
   const [cardLoading, setCardLoading] = useState(true);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
 
   const loadCGN = () => {
     props.loadCgnDetails();

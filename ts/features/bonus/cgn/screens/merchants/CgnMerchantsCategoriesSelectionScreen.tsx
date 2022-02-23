@@ -11,10 +11,12 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../../utils/showToast";
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
+import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnCategories,
@@ -27,7 +29,10 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   const isFirstRender = useRef<boolean>(true);
   const dispatch = useIODispatch();
   const potCategories = useIOSelector(cgnCategoriesListSelector);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
+    >();
 
   const loadCategories = () => {
     dispatch(cgnCategories.request());

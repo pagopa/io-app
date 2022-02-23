@@ -71,8 +71,7 @@ const PaymentButton = ({
         navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
           initialAmount: amount.value,
-          paymentStartOrigin: "message",
-          startRoute: NavigationService.getCurrentRoute()
+          paymentStartOrigin: "message"
         });
       } else {
         // Navigating to Wallet home, having the email address is not validated,
