@@ -30,6 +30,7 @@ import paymentInstrumentReducer, {
 import technicalAccountReducer, {
   bpdTechnicalAccountSelector
 } from "./technicalAccount";
+import { bpdActivationUiReducer, BpdActivationUiState } from "./ui";
 
 export type BpdActivation = {
   enabled: pot.Pot<boolean, Error>;
@@ -37,6 +38,7 @@ export type BpdActivation = {
   unsubscription: RemoteValue<true, Error>;
   technicalAccount: RemoteValue<string | undefined, Error>;
   optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>;
+  ui: BpdActivationUiState;
 };
 
 /**
@@ -124,7 +126,8 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   payoffInstr: paymentInstrumentReducer,
   unsubscription: unsubscriptionReducer,
   technicalAccount: technicalAccountReducer,
-  optInStatus: optInStatusReducer
+  optInStatus: optInStatusReducer,
+  ui: bpdActivationUiReducer
 });
 
 /**
