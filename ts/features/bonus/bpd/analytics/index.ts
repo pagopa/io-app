@@ -119,8 +119,9 @@ const trackAction =
       case getType(optInPaymentMethodsFailure):
       case getType(optInPaymentMethodsDeletionChoice):
       case getType(optInPaymentMethodsShowChoice.request):
-      case getType(optInPaymentMethodsShowChoice.success):
         return mp.track(action.type);
+      case getType(optInPaymentMethodsShowChoice.success):
+        return mp.track(action.type, { shouldShow: action.payload });
       case getType(optInPaymentMethodsShowChoice.failure):
       case getType(bpdUpdateOptInStatusMethod.failure):
         return mp.track(action.type, { reason: getError(action.payload) });
