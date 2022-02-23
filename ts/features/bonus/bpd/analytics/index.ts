@@ -98,7 +98,8 @@ const trackAction =
       case getType(bpdLoadActivationStatus.success):
         return mp.track(action.type, {
           enabled: action.payload.enabled,
-          hasTechnicalIban: action.payload.technicalAccount !== undefined
+          hasTechnicalIban: action.payload.technicalAccount !== undefined,
+          optInStatus: action.payload.optInStatus
         });
       case getType(bpdLoadActivationStatus.failure):
         return mp.track(action.type, { reason: action.payload.message });
