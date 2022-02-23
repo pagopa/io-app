@@ -25,7 +25,11 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  bpdOptInPaymentMethodsEnabled
+} from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -242,6 +246,10 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  private isOptInPaymentMethodsEnabled = () =>
+    this.props.bpdConfig?.opt_in_payment_methods &&
+    bpdOptInPaymentMethodsEnabled;
+
   private hideLoadingModalOptInShouldShowChoice = (
     showOptInChoiceStatus: ShowOptInChoice,
     prevShowOptInChoiceStatus: ShowOptInChoice
@@ -256,15 +264,17 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
   };
   public componentDidMount() {
-    // Starts the optInShouldShowChoiceHandler saga
-    this.props.runOptInShouldShowChoiceHandler();
-    this.props.showModal(
-      <LoadingSpinnerOverlay
-        isLoading={true}
-        loadingCaption={I18n.t("global.remoteStates.loading")}
-        loadingOpacity={1}
-      />
-    );
+    if (this.isOptInPaymentMethodsEnabled()) {
+      // Starts the optInShouldShowChoiceHandler saga
+      this.props.runOptInShouldShowChoiceHandler();
+      this.props.showModal(
+        <LoadingSpinnerOverlay
+          isLoading={true}
+          loadingCaption={I18n.t("global.remoteStates.loading")}
+          loadingOpacity={1}
+        />
+      );
+    }
 
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
@@ -332,10 +342,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       this.props.runSendAddCobadgeMessageSaga();
     }
 
-    this.hideLoadingModalOptInShouldShowChoice(
-      this.props.showOptInChoiceStatus,
-      prevProps.showOptInChoiceStatus
-    );
+    if (this.isOptInPaymentMethodsEnabled()) {
+      this.hideLoadingModalOptInShouldShowChoice(
+        this.props.showOptInChoiceStatus,
+        prevProps.showOptInChoiceStatus
+      );
+    }
   }
 
   private cardHeader(isError: boolean = false) {
