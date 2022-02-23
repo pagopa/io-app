@@ -5745,6 +5745,11 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+crypto-js@^3.2.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.3.0.tgz#846dd1cce2f68aacfa156c8578f926a609b7976b"
+  integrity sha512-DIT51nX0dCfKltpRiXV+/TVZq+Qq2NgF4644+K7Ttnla7zEzqc+kjJyiB96BHNyUTBxyjzRcZYpUdZa+QAqi6Q==
+
 crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
@@ -12978,6 +12983,13 @@ react-native-modal-datetime-picker@^10.2.0:
   integrity sha512-eMQb3EPqHx47WrlLPTrXvmLZDwGwGH//WTWiQBUvJ+6ehDeuTjIn8/v/ANv8wxCCrt4NeHem8FQY3Z5fa4fRgQ==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-pdf@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-6.4.0.tgz#e3aa583e3a2ccce0838dcc0ac5a29987774eea4f"
+  integrity sha512-pfrCvHg4dqAPzl2FtRmGGl/D2dHec4w8+wGAKv7L97wxz5oF/QNvQ6q0KdfXdFlIZ22sS+BOwsRMzbB2mHPs2w==
+  dependencies:
+    crypto-js "^3.2.0"
 
 react-native-permissions@^2.0.2:
   version "2.2.2"
