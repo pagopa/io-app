@@ -102,7 +102,6 @@ import {
   isUndefined
 } from "../../features/bonus/bpd/model/RemoteValue";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import i18n from "../../i18n";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
