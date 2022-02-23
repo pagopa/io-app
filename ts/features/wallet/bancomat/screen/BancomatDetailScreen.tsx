@@ -15,13 +15,14 @@ import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboardi
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import BancomatInformation from "./BancomatInformation";
 
-type NavigationParams = Readonly<{
+export type BancomatDetailScreenNavigationParams = Readonly<{
+  // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
   bancomat: BancomatPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<NavigationParams>;
+  NavigationStackScreenProps<BancomatDetailScreenNavigationParams>;
 
 /**
  * Start the cobadge onboarding, if the abi is defined

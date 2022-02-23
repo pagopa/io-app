@@ -47,11 +47,12 @@ const styles = StyleSheet.create({
   }
 });
 
-type MessageDetailScreenNavigationParams = {
+export type MessageDetailScreenPaginatedNavigationParams = {
   message: UIMessage;
 };
 
-type OwnProps = NavigationStackScreenProps<MessageDetailScreenNavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<MessageDetailScreenPaginatedNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

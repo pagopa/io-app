@@ -32,7 +32,7 @@ import { hasMessagePaymentData } from "../../../utils/messages";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
 import MessageDetails from "./MessageDetail";
 
-type MessageDetailScreenNavigationParams = {
+export type MessageDetailScreenNavigationParams = {
   messageId: string;
 };
 

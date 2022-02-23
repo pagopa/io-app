@@ -1,6 +1,7 @@
 import { View } from "native-base";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyleSheet, ActivityIndicator } from "react-native";
+
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -18,7 +19,12 @@ import { handleDownloadResult } from "../../../../utils";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
 import customVariables from "../../../../../../theme/variables";
 import { H4 } from "../../../../../../components/core/typography/H4";
+import {
+  BottomTopAnimation,
+  LightModalContext
+} from "../../../../../../components/ui/LightModal";
 import { showToast } from "../../../../../../utils/showToast";
+import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -202,6 +208,7 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
 ) => {
   const { present, dismiss } = useIOBottomSheetRaw(BOTTOM_SHEET_HEIGHT);
   const dispatch = useIODispatch();
+  const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
   const openModalBox = () =>
     present(
@@ -209,15 +216,27 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
         onCancel={dismiss}
         onConfirm={({ dontAskAgain }) => {
           dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
-          return handleDownloadResult(attachment, authHeader).then(() => {
-            dismiss();
-            if (options.showToastOnSuccess) {
-              showToast(
-                i18n.t("features.mvl.details.attachments.toast.success"),
-                "success"
-              );
-            }
-          });
+          return handleDownloadResult(
+            attachment,
+            authHeader,
+            (path, actionConfig) =>
+              showAnimatedModal(
+                <PdfPreview
+                  path={path}
+                  onClose={hideModal}
+                  onError={_error => {
+                    dismiss();
+                    showToast(
+                      i18n.t(
+                        "features.mvl.details.attachments.bottomSheet.failing.details"
+                      )
+                    );
+                  }}
+                  actionConfig={actionConfig}
+                />,
+                BottomTopAnimation
+              )
+          ).then(() => dismiss());
         }}
         initialPreferences={options}
         withoutConfirmation={options.dontAskAgain}

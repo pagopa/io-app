@@ -324,6 +324,8 @@ PODS:
   - react-native-mixpanel (1.2.0):
     - Mixpanel (~> 3.6.0)
     - React
+  - react-native-pdf (6.4.0):
+    - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
   - react-native-slider (3.0.3):
@@ -531,6 +533,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -675,6 +678,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
+  react-native-pdf:
+    :path: "../node_modules/react-native-pdf"
   react-native-screen-brightness:
     :path: "../node_modules/react-native-screen-brightness"
   react-native-slider:
@@ -758,7 +763,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: b30928116374479d80d407d74915cc3d0ff13635
+  FBReactNativeSpec: b248ec7241447bf23e94e6d576fa251c3e2e9fa6
   Flipper: d3da1aa199aad94455ae725e9f3aa43f3ec17021
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
   Flipper-Folly: 755929a4f851b2fb2c347d533a23f191b008554c
@@ -804,6 +809,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
+  react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865

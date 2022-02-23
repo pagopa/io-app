@@ -65,7 +65,7 @@ import {
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 
-type NavigationParams = Readonly<{
+export type AddCardScreenNavigationParams = Readonly<{
   inPayment: Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
@@ -75,7 +75,7 @@ type NavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<AddCardScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &

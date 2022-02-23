@@ -65,7 +65,7 @@ import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
-type NavigationParams = {
+export type TransactionErrorScreenNavigationParams = {
   error: Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
@@ -77,7 +77,8 @@ type NavigationParams = {
   onCancel: () => void;
 };
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionErrorScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -165,7 +166,7 @@ const ErrorCodeCopyComponent = ({
  * @param handleZendeskRequestAssistance
  */
 export const errorTransactionUIElements = (
-  maybeError: NavigationParams["error"],
+  maybeError: TransactionErrorScreenNavigationParams["error"],
   rptId: RptId,
   onCancel: () => void,
   choosenTool: ToolEnum,
