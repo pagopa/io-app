@@ -261,7 +261,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.props.showModal(
       <LoadingSpinnerOverlay
         isLoading={true}
-        loadingCaption={i18n.t("global.remoteStates.loading")}
+        loadingCaption={I18n.t("global.remoteStates.loading")}
         loadingOpacity={1}
       />
     );
