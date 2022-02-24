@@ -8,10 +8,9 @@
   What happens now?
 </H3>
 <body>
-   The Cashback cards will be removed from the Wallet. 
-For complaints and information on refunds, go to the website of <a href="https://www.consap.it/">CONSAP</a>, the institution that manages the programme on behalf of the Ministry of Economy and Finance.
+   The Cashback cards will be removed from the Wallet. The rewards earned in 2021 that haven’t been paid back remain valid, and will be refunded. For complaints and information on refunds, go to the website of <a href="https://www.consap.it/">CONSAP</a>, the institution that manages the programme on behalf of the Ministry of Economy and Finance.
 <br><br>
-  All data relating to your participation in the program will be deleted by July 31, 2022. After that date, your data will be kept by PagoPA S.p.A only if they are necessary to manage complaints or litigations that are still ongoing.
+  All data relating to your participation in the program will be deleted by July 31, 2022. After that date, your data will be kept by CONSAP S.p.A only if they are necessary to manage complaints or litigations that are still ongoing.
 </body>
 <H3>
   What about my payment methods?
