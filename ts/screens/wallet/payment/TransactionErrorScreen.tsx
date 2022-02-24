@@ -151,7 +151,9 @@ const ErrorCodeCopyComponent = ({
   error: keyof typeof Detail_v2Enum;
 }): React.ReactElement => (
   <View testID={"error-code-copy-component"}>
-    <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
+    <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+      {I18n.t("wallet.errors.assistanceLabel")}
+    </H4>
     <H4 weight={"Bold"} testID={"error-code"} style={{ textAlign: "center" }}>
       {error}
     </H4>
