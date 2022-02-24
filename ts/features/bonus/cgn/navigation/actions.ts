@@ -1,8 +1,7 @@
 import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../../navigation/NavigationService";
-import { InferNavigationParams } from "../../../../types/react";
-import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
-import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
+import { CgnMerchantDetailScreenNavigationParams } from "../screens/merchants/CgnMerchantDetailScreen";
+import { CgnMerchantLandingWebviewNavigationParams } from "../screens/merchants/CgnMerchantLandingWebview";
 import CGN_ROUTES from "./routes";
 
 /**
@@ -134,7 +133,7 @@ export const navigateToCgnMerchantsTabs = () =>
  * and many helper methods specific to screens won't be available.
  */
 export const navigateToCgnMerchantDetail = (
-  params: InferNavigationParams<typeof CgnMerchantDetailScreen>
+  params: CgnMerchantDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -148,7 +147,7 @@ export const navigateToCgnMerchantDetail = (
  * and many helper methods specific to screens won't be available.
  */
 export const navigateToCgnMerchantLandingWebview = (
-  params: InferNavigationParams<typeof CgnMerchantLandingWebview>
+  params: CgnMerchantLandingWebviewNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({

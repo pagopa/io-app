@@ -1,9 +1,8 @@
 import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../navigation/NavigationService";
-import { InferNavigationParams } from "../../../types/react";
-import EuCovidCertificateRouterScreen from "../screens/EuCovidCertificateRouterScreen";
-import { EuCovidCertMarkdownDetailsScreen } from "../screens/valid/EuCovidCertMarkdownDetailsScreen";
-import { EuCovidCertQrCodeFullScreen } from "../screens/valid/EuCovidCertQrCodeFullScreen";
+import { EuCovidCertificateRouterScreenNavigationParams } from "../screens/EuCovidCertificateRouterScreen";
+import { EuCovidCertMarkdownDetailsScreenNavigationParams } from "../screens/valid/EuCovidCertMarkdownDetailsScreen";
+import { EuCovidCertQrCodeFullScreenNavigationParams } from "../screens/valid/EuCovidCertQrCodeFullScreen";
 import EUCOVIDCERT_ROUTES from "./routes";
 
 /**
@@ -11,7 +10,7 @@ import EUCOVIDCERT_ROUTES from "./routes";
  * and many helper methods specific to screens won't be available.
  */
 export const navigateToEuCovidCertificateDetailScreen = (
-  params: InferNavigationParams<typeof EuCovidCertificateRouterScreen>
+  params: EuCovidCertificateRouterScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -25,7 +24,7 @@ export const navigateToEuCovidCertificateDetailScreen = (
  * and many helper methods specific to screens won't be available.
  */
 export const navigateToEuCovidCertificateQrCodeFullScreen = (
-  params: InferNavigationParams<typeof EuCovidCertQrCodeFullScreen>
+  params: EuCovidCertQrCodeFullScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -39,7 +38,7 @@ export const navigateToEuCovidCertificateQrCodeFullScreen = (
  * and many helper methods specific to screens won't be available.
  */
 export const navigateToEuCovidCertificateMarkdownDetailsScreen = (
-  params: InferNavigationParams<typeof EuCovidCertMarkdownDetailsScreen>
+  params: EuCovidCertMarkdownDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({

@@ -1,10 +1,9 @@
 import { NavigationActions } from "react-navigation";
 import ZENDESK_ROUTES from "../../navigation/routes";
-import { InferNavigationParams } from "../../../../types/react";
-import ZendeskAskPermissions from "../../screens/ZendeskAskPermissions";
+import { ZendeskAskPermissionsNavigationParams } from "../../screens/ZendeskAskPermissions";
 
 export const navigateToZendeskAskPermissions = (
-  params: InferNavigationParams<typeof ZendeskAskPermissions>
+  params: ZendeskAskPermissionsNavigationParams
 ) =>
   NavigationActions.navigate({
     routeName: ZENDESK_ROUTES.ASK_PERMISSIONS,
