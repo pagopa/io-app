@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.3.0-rc.3",
+  "version": "2.4.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.35.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.35.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.6/definitions.yml",
@@ -132,6 +132,7 @@
     "react-native-masked-text": "^1.13.0",
     "react-native-mixpanel": "1.2.0",
     "react-native-modal-datetime-picker": "^10.2.0",
+    "react-native-pdf": "^6.4.0",
     "react-native-popup-menu": "^0.15.11",
     "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^7.3.1",
@@ -173,7 +174,7 @@
     "tslib": "^1.9.3",
     "typesafe-actions": "4.4.2",
     "unist-util-visit": "^4.1.0",
-    "url-parse": "^1.5.6",
+    "url-parse": "^1.5.9",
     "uuid": "^8.3.2",
     "validator": "^13.7.0",
     "xss": "1.0.10"
