@@ -1,5 +1,10 @@
 // gets the current screen from navigation state
-import { NavigationState } from "@react-navigation/native";
+
+import {
+  NavigationLeafRoute,
+  NavigationRoute,
+  NavigationState
+} from "react-navigation";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 
@@ -7,7 +12,9 @@ import ROUTES from "../navigation/routes";
  * Assuming that each and every NavigationRoute will eventually lead
  * to a NavigationLeafRoute.
  */
-const findLeafRoute = (branchOrLeaf: any | undefined): any | undefined => {
+const findLeafRoute = (
+  branchOrLeaf: NavigationRoute | undefined
+): NavigationLeafRoute | undefined => {
   if (branchOrLeaf?.routes) {
     const { routes, index } = branchOrLeaf;
     return findLeafRoute(routes[index]);
@@ -42,7 +49,9 @@ export function getCurrentRouteKey(
   }
 }
 
-export const getCurrentRoute = (navState: NavigationState): any | undefined => {
+export const getCurrentRoute = (
+  navState: NavigationState
+): NavigationLeafRoute | undefined => {
   try {
     return findLeafRoute(navState.routes[navState.index]);
   } catch {

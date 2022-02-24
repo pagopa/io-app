@@ -1,4 +1,3 @@
-import { NavigationContext } from "@react-navigation/native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -9,28 +8,28 @@ import React, {
   ComponentProps,
   PropsWithChildren,
   ReactNode,
-  useContext,
   useEffect,
   useState
 } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { useDispatch } from "react-redux";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
 import {
   defaultAttachmentTypeConfiguration,
   DefaultReportAttachmentTypeConfiguration
 } from "../../../boot/configureInstabug";
-import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { mixpanelTrack } from "../../../mixpanel";
-import { useIOSelector } from "../../../store/hooks";
-import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { noAnalyticsRoutes } from "../../../utils/analytics";
-import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import ContextualHelp, { RequestAssistancePayload } from "../../ContextualHelp";
 import { SearchType } from "../../search/SearchButton";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
+import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import { useIOSelector } from "../../../store/hooks";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import {
   getContextualHelpConfig,
   handleOnContextualHelpDismissed,
@@ -109,19 +108,8 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     } = props;
 
     // We should check for undefined context because the BaseScreen is used also in the Modal layer, without the navigation context.
-    /**
-     *  We should check for undefined context because the BaseScreen is used also in the Modal layer, without the navigation context.
-     *  We cannot use the new useRoute because is used also in the Modal layer.
-     *
-     */
-    const navigation = useContext(NavigationContext);
-
-    console.log(
-      navigation?.getState().routes[navigation?.getState().routes.length - 1]
-    );
-
-    const currentScreenName = fromNullable(navigation)
-      .map(x => x.getState())
+    const currentScreenName = fromNullable(useNavigationContext())
+      .map(x => x.state.routeName)
       .getOrElse("n/a");
 
     const [isHelpVisible, setIsHelpVisible] = useState(false);

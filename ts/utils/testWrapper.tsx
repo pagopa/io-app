@@ -1,7 +1,10 @@
-import { createCompatNavigatorFactory } from "@react-navigation/compat";
-import { createStackNavigator } from "@react-navigation/stack";
 import { render, RenderOptions } from "@testing-library/react-native";
 import React, { ReactElement, useEffect } from "react";
+import { createAppContainer, NavigationNavigator } from "react-navigation";
+import {
+  createStackNavigator,
+  NavigationStackScreenProps
+} from "react-navigation-stack";
 import { Provider } from "react-redux";
 import { Store } from "redux";
 
@@ -50,16 +53,13 @@ export function renderScreenFakeNavRedux<S, NP>(
     [0]: fakeScreenFactory(route, params) // not sure if 0 is right
   };
 
-  const customNavigator = createCompatNavigatorFactory(createStackNavigator)(
-    customRouteConfigMap,
-    {
-      // Let each screen handle the header and navigation
-      headerMode: "none",
-      defaultNavigationOptions: {
-        gesturesEnabled: false
-      }
+  const customNavigator = createStackNavigator(customRouteConfigMap, {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
     }
-  );
+  });
 
   return renderNavContainerRedux(customNavigator, store, renderOptions);
 }
