@@ -10,7 +10,7 @@ import { isPagoPaSupportedSelector } from "../../common/versionInfo/store/reduce
 
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
-import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
+import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import {
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome
@@ -19,7 +19,6 @@ import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import { useIODispatch } from "../../store/hooks";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { InferNavigationParams } from "../../types/react";
 import {
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
@@ -101,7 +100,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   paymentInitializeState: () => dispatch(paymentInitializeState()),
   navigateToPaymentTransactionSummaryScreen: (
-    params: InferNavigationParams<typeof TransactionSummaryScreen>
+    params: TransactionSummaryScreenNavigationParams
   ) => navigateToPaymentTransactionSummaryScreen(params),
   navigateToWalletHomeScreen: () => navigateToWalletHome()
 });

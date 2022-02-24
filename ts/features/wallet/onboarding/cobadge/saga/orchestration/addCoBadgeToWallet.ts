@@ -44,7 +44,7 @@ function* coBadgeWorkUnit() {
 /**
  * When the workUnit start from one of these route, we should return to wallet home
  */
-const returnToWalletRoutes = new Set([
+const returnToWalletRoutes = new Set<string>([
   ROUTES.WALLET_ADD_CARD,
   WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE
 ]);

@@ -1,10 +1,9 @@
 import { NavigationActions } from "react-navigation";
-import { InferNavigationParams } from "../../../types/react";
-import { MvlRouterScreen } from "../screens/MvlRouterScreen";
+import { MvlRouterScreenNavigationParams } from "../screens/MvlRouterScreen";
 import MVL_ROUTES from "./routes";
 
 export const navigateToMvlDetailsScreen = (
-  params: InferNavigationParams<typeof MvlRouterScreen>
+  params: MvlRouterScreenNavigationParams
 ) =>
   NavigationActions.navigate({
     routeName: MVL_ROUTES.DETAILS,
