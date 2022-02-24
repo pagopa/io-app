@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0-rc.2](https://github.com/pagopa/io-app/compare/2.4.0-rc.1...2.4.0-rc.2) (2022-02-24)
+
+
+### Bug Fixes
+
+* [[IA-659](https://pagopa.atlassian.net/browse/IA-659)] Opt-out dark mode in iOS ([#3780](https://github.com/pagopa/io-app/issues/3780)) ([04039c9](https://github.com/pagopa/io-app/commit/04039c92d3c80f9bcb66c92a0669078e062cb13f))
+* [[IABT-1300](https://pagopa.atlassian.net/browse/IABT-1300)] Centered label text in TransactionErrorScreen ([#3782](https://github.com/pagopa/io-app/issues/3782)) ([89e0b6f](https://github.com/pagopa/io-app/commit/89e0b6fc1da292d754d192cf17d381f582cdb46e))
+* package.json & yarn.lock to reduce vulnerabilities ([#3779](https://github.com/pagopa/io-app/issues/3779)) ([4010f33](https://github.com/pagopa/io-app/commit/4010f332035953270c0f95dc815c4388c23b7a7d))
+
+
+### Chores
+
+* [[IA-677](https://pagopa.atlassian.net/browse/IA-677)] Copy changes after a final check with the legal dept ([#3787](https://github.com/pagopa/io-app/issues/3787)) ([0df943b](https://github.com/pagopa/io-app/commit/0df943b0d922dfa76f1b47123b5a5e82bb882a1b))
+* [[IAI-134](https://pagopa.atlassian.net/browse/IAI-134)] chore: [[IAI-133](https://pagopa.atlassian.net/browse/IAI-133)] Rework types for routes and navigation params (2/2 vertical functionalities routes) ([#3760](https://github.com/pagopa/io-app/issues/3760)) ([83c5703](https://github.com/pagopa/io-app/commit/83c5703f52589bdcb470751405e3c284c1da98ed))
+* Revert "Enable MVL, disable Android ([#3783](https://github.com/pagopa/io-app/issues/3783))" ([#3784](https://github.com/pagopa/io-app/issues/3784)) ([63e2bbc](https://github.com/pagopa/io-app/commit/63e2bbcfa60ee4cf31e199997082349237a77c3b))
+
 ## [2.4.0-rc.1](https://github.com/pagopa/io-app/compare/2.4.0-rc.0...2.4.0-rc.1) (2022-02-23)
 
 
