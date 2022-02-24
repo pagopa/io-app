@@ -73,7 +73,7 @@ type QRCodeContents = {
   [key: string]: string;
 };
 
-type NavigationParams = Readonly<{
+export type ActiveBonusScreenNavigationParams = Readonly<{
   bonus: BonusActivationWithQrCode;
   validFrom?: Date;
   validTo?: Date;
@@ -82,7 +82,7 @@ type NavigationParams = Readonly<{
 const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<ActiveBonusScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &

@@ -16,7 +16,7 @@ import { useMaxBrightness } from "../../../../utils/brightness";
 import { withBase64Uri } from "../../../../utils/image";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
-type NavigationParams = Readonly<{
+export type EuCovidCertQrCodeFullScreenNavigationParams = Readonly<{
   qrCodeContent: string;
 }>;
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 });
 
 export const EuCovidCertQrCodeFullScreen = (
-  props: NavigationStackScreenProps<NavigationParams>
+  props: NavigationStackScreenProps<EuCovidCertQrCodeFullScreenNavigationParams>
 ): React.ReactElement => {
   useMaxBrightness();
   return (

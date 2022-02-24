@@ -20,7 +20,7 @@ import {
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 
-type NavigationParams = Readonly<{
+export type EuCovidCertMarkdownDetailsScreenNavigationParams = Readonly<{
   markdownDetails: string;
 }>;
 
@@ -38,7 +38,7 @@ const showToastError = (error: string = I18n.t("global.genericError")) =>
   showToast(error);
 
 export const EuCovidCertMarkdownDetailsScreen = (
-  props: NavigationStackScreenProps<NavigationParams>
+  props: NavigationStackScreenProps<EuCovidCertMarkdownDetailsScreenNavigationParams>
 ): React.ReactElement => {
   const [loadMarkdownComplete, setLoadMarkdownComplete] = useState(false);
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
