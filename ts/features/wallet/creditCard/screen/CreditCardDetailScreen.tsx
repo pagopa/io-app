@@ -10,14 +10,14 @@ import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import CreditCardComponent from "../component/CreditCardComponent";
 
-type NavigationParams = Readonly<{
+export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
   creditCard: CreditCardPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<NavigationParams>;
+  NavigationStackScreenProps<CreditCardDetailScreenNavigationParams>;
 
 /**
  * Detail screen for a credit card

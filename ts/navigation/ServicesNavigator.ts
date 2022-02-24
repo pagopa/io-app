@@ -16,17 +16,17 @@ const servicesRoutes = {
   }
 };
 
-const myPortalRoutes = myPortalEnabled
-  ? {
-      [ROUTES.SERVICE_WEBVIEW]: {
-        screen: ServicesWebviewScreen
-      }
-    }
-  : {};
+const myPortalRoutes = {
+  [ROUTES.SERVICE_WEBVIEW]: {
+    screen: ServicesWebviewScreen
+  }
+};
 
 const svConfigMap = svEnabled ? SvNavigator : {};
 
-const routeConfig = { ...servicesRoutes, ...myPortalRoutes, ...svConfigMap };
+const routeConfig = myPortalEnabled
+  ? { ...servicesRoutes, ...myPortalRoutes, ...svConfigMap }
+  : { ...servicesRoutes, ...svConfigMap };
 
 const ServicesNavigator = createStackNavigator(routeConfig, {
   // Let each screen handle the header and navigation

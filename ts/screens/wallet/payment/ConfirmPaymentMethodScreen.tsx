@@ -76,7 +76,7 @@ import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 
-export type NavigationParams = Readonly<{
+export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
@@ -85,7 +85,8 @@ export type NavigationParams = Readonly<{
   psps: ReadonlyArray<Psp>;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<ConfirmPaymentMethodScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

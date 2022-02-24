@@ -51,14 +51,15 @@ import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 import { dispatchPickPspOrConfirm } from "./common";
 
-type NavigationParams = Readonly<{
+export type PickPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
   idPayment: string;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<PickPaymentMethodScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

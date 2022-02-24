@@ -49,12 +49,12 @@ import {
   handleSendAssistanceLog
 } from "../../../utils/supportAssistance";
 
-type NavigationParams = {
+export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
   authorizationUri: string;
 };
 
-type Props = NavigationStackScreenProps<NavigationParams> &
+type Props = NavigationStackScreenProps<CieCardReaderScreenNavigationParams> &
   ReduxProps &
   ReturnType<typeof mapStateToProps>;
 

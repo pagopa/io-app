@@ -15,7 +15,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import { BiometricsValidType } from "../../utils/biometrics";
 
-type NavigationParams = Readonly<{
+export type FingerprintScreenNavigationParams = Readonly<{
   biometryType: BiometricsValidType;
 }>;
 
@@ -48,7 +48,7 @@ function getBiometryIconName(biometryType: BiometricsValidType): string {
   }
 }
 
-type Props = NavigationStackScreenProps<NavigationParams> &
+type Props = NavigationStackScreenProps<FingerprintScreenNavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {

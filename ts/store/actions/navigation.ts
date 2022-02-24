@@ -198,7 +198,7 @@ export const navigateToPaginatedMessageDetailScreenAction = (
   params: InferNavigationParams<typeof PaginatedMessageDetailScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.MESSAGE_DETAIL,
+    routeName: ROUTES.MESSAGE_DETAIL_PAGINATED,
     params
   });
 
@@ -209,7 +209,7 @@ export const navigateToPaginatedMessageRouterAction = (
   params: InferNavigationParams<typeof PaginatedMessageRouter>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.MESSAGE_ROUTER,
+    routeName: ROUTES.MESSAGE_ROUTER_PAGINATED,
     params
   });
 
