@@ -146,7 +146,7 @@ function* loadMessages(
         // We don't need to store the results because the LOAD_SERVICE_DETAIL_REQUEST is already dispatched by each `loadServiceDetail` action called.
         // We fetch services first because to show messages you need the related service info
         yield* all(
-          // Here we are not usint the `put` from typed-redux saga
+          // Here we are not using the `put` from typed-redux saga
           // because it's going to clash with the default one from
           // redux-saga in the unit tests.
           pendingServicesIds.map(id => basePut(loadServiceDetail.request(id)))
@@ -157,7 +157,7 @@ function* loadMessages(
         // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
         // TODO: with the enrichment, we don't need to load each message anymore
         yield* all(
-          // Here we are not usint the `put` from typed-redux saga
+          // Here we are not using the `put` from typed-redux saga
           // because it's going to clash with the default one from
           // redux-saga in the unit tests.
           pendingMessages.map(_ => basePut(loadMessageAction.request(_)))
