@@ -6,12 +6,13 @@ import WebviewComponent from "../../../../../components/WebviewComponent";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
-type NavigationParams = Readonly<{
+export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
   landingPageUrl: string;
   landingPageReferrer: string;
 }>;
 
-type Props = NavigationStackScreenProps<NavigationParams>;
+type Props =
+  NavigationStackScreenProps<CgnMerchantLandingWebviewNavigationParams>;
 
 const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   props: Props

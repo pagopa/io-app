@@ -8,9 +8,9 @@
   Cosa succede ora?
 </H3>
 <body>
-  Le card del Cashback verranno rimosse dal Portafoglio. Per reclami e informazioni sui rimborsi, vai <a href="https://www.consap.it/">sul sito di CONSAP</a>, ente gestore della misura per conto del Ministero dell’Economia e delle Finanze.
+  Le card del Cashback verranno rimosse dal Portafoglio. Gli eventuali importi maturati nel 2021 e non ancora erogati restano validi, e verranno rimborsati. Per reclami e informazioni sui rimborsi, vai <a href="https://www.consap.it/">sul sito di CONSAP</a>, ente gestore della misura per conto del Ministero dell’Economia e delle Finanze.
 <br><br>
-  Tutti i dati relativi alla tua partecipazione al programma verranno cancellati entro il 31 luglio 2022. Dopo quella data, i tuoi dati saranno conservati da PagoPA S.p.A solo se necessari per consentire la gestione di reclami o eventuali contenziosi ancora in corso.
+  Tutti i dati relativi alla tua partecipazione al programma verranno cancellati entro il 31 luglio 2022. Dopo quella data, i tuoi dati saranno conservati da CONSAP S.p.A per conto del Ministero dell’Economia e delle finanze solo se necessari per consentire la gestione di reclami ancora in corso o eventuali contenziosi.
 </body>
 <H3>
   E i miei metodi di pagamento?

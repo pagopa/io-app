@@ -44,9 +44,6 @@ const configMap = {
   },
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: {
     screen: WorkunitGenericFailure
-  },
-  [ZENDESK_ROUTES.HELP_CENTER]: {
-    screen: zendeskSupportNavigator
   }
 };
 
