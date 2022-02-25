@@ -10,9 +10,10 @@ import customVariables from "../../theme/variables";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { H5 } from "../../components/core/typography/H5";
 import WebviewComponent from "../../components/WebviewComponent";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
-  textInput: { padding: 1, borderWidth: 1, height: 30 },
+  textInput: { padding: 1, borderWidth: 1, height: 30, color: IOColors.black },
   center: { alignItems: "center" },
   contentCenter: { justifyContent: "center" },
   row: {
@@ -34,14 +35,6 @@ const CgnLandingPlayground = () => {
   const [loadUri, setLoadUri] = React.useState("https://google.com");
   const [reloadKey, setReloadKey] = React.useState(0);
 
-  const handleUriInput = (text: string) => {
-    setNavigationUri(text);
-  };
-
-  const handleRefererInput = (text: string) => {
-    setRefererValue(text);
-  };
-
   return (
     <BaseScreenComponent goBack={true}>
       <SafeAreaView style={IOStyles.flex}>
@@ -50,14 +43,17 @@ const CgnLandingPlayground = () => {
             <H5>{"Link alla landing"}</H5>
             <TextInput
               style={styles.textInput}
-              onChangeText={handleUriInput}
+              onChangeText={setNavigationUri}
               value={navigationURI}
+              keyboardType="url"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
             <View spacer={true} />
             <H5>{"Referer"}</H5>
             <TextInput
               style={styles.textInput}
-              onChangeText={handleRefererInput}
+              onChangeText={setRefererValue}
               value={refererValue}
             />
           </View>
