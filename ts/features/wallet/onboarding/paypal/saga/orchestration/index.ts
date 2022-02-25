@@ -1,7 +1,9 @@
-import { NavigationActions, StackActions } from "@react-navigation/compat";
+import { StackActions } from "@react-navigation/compat";
+import { CommonActions } from "@react-navigation/native";
 import { call } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -22,8 +24,11 @@ function* paypalWorkOnboaringUnit() {
   return yield call(executeWorkUnit, {
     startScreenNavigation: () =>
       NavigationService.dispatchNavigationAction(
-        NavigationActions.navigate({
-          routeName: PAYPAL_ROUTES.ONBOARDING.START
+        CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+          screen: PAYPAL_ROUTES.ONBOARDING.MAIN,
+          params: {
+            screen: PAYPAL_ROUTES.ONBOARDING.START
+          }
         })
       ),
     startScreenName: PAYPAL_ROUTES.ONBOARDING.START,

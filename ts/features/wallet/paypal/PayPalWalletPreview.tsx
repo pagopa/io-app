@@ -4,7 +4,10 @@ import payPalCard from "../../../../img/wallet/cards-icons/paypal_card.png";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
-import { navigateToPayPalDetailScreen } from "../../../store/actions/navigation";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../navigation/params/AppParamsList";
 import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
 import { CardLogoPreview } from "../component/card/CardLogoPreview";
@@ -27,9 +30,7 @@ const getAccessibilityRepresentation = () => {
  * @constructor
  */
 const PayPalWalletPreview: React.FunctionComponent<Props> = props => {
-  const navigation = useNavigation();
-  const navigateToDetailScreen = () =>
-    navigation.dispatch(navigateToPayPalDetailScreen());
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   return (
     <CardLogoPreview
       accessibilityLabel={getAccessibilityRepresentation()}
@@ -39,7 +40,11 @@ const PayPalWalletPreview: React.FunctionComponent<Props> = props => {
         </Body>
       }
       image={payPalCard}
-      onPress={navigateToDetailScreen}
+      onPress={() =>
+        navigation.navigate("WALLET_NAVIGATOR", {
+          screen: "WALLET_PAYPAL_DETAIL"
+        })
+      }
     />
   );
 };
