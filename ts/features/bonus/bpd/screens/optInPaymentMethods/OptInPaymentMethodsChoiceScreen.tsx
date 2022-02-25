@@ -53,9 +53,9 @@ const generateOptionBody = (
   </>
 );
 
-const radioButtonListItems: ReadonlyArray<
+const radioButtonListItems: () => ReadonlyArray<
   RadioItem<PaymentMethodsChoiceOptions>
-> = [
+> = () => [
   {
     id: "keepPaymentMethods",
     body: generateOptionBody(
@@ -146,7 +146,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
           <View spacer />
 
           <RadioButtonList<PaymentMethodsChoiceOptions>
-            items={radioButtonListItems}
+            items={radioButtonListItems()}
             selectedItem={selectedMethod || undefined}
             onPress={setSelectedMethod}
             rightSideSelection
