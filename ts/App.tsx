@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { StyleProvider } from "native-base";
 import * as React from "react";
