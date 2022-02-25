@@ -106,7 +106,7 @@ module.exports = {
       files: ["./**/*.ts"],
       excludedFiles: ["./**/*.test.ts"],
       rules: {
-        "@jambit/typed-redux-saga/use-typed-effects": ["warn", "macro"],
+        "@jambit/typed-redux-saga/use-typed-effects": ["error", "macro"],
         "@jambit/typed-redux-saga/delegate-effects": "error"
       }
     }
