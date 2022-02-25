@@ -105,7 +105,7 @@ export function computedProp<K extends PropertyKey, V>(
  * This is a wrapper type for `Effect` used in the
  * code for backward compatibility. In the codebase
  * it should not be possible to import directly
- * from `redux-saga/effects` due to the strict tipization
+ * from `redux-saga/effects` due to the strict typing
  * provided by `typed-redux-saga`.
  */
 export type ReduxSagaEffect = Effect;
