@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
@@ -13,23 +12,23 @@ import React, {
 } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { useDispatch } from "react-redux";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
 import {
   defaultAttachmentTypeConfiguration,
   DefaultReportAttachmentTypeConfiguration
 } from "../../../boot/configureInstabug";
+import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { mixpanelTrack } from "../../../mixpanel";
+import { useIOSelector } from "../../../store/hooks";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { currentRouteSelector } from "../../../store/reducers/navigation";
 import { noAnalyticsRoutes } from "../../../utils/analytics";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
 import ContextualHelp, { RequestAssistancePayload } from "../../ContextualHelp";
 import { SearchType } from "../../search/SearchButton";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
-import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
-import { useIOSelector } from "../../../store/hooks";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
-import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import {
   getContextualHelpConfig,
   handleOnContextualHelpDismissed,
@@ -107,10 +106,13 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       titleColor
     } = props;
 
-    // We should check for undefined context because the BaseScreen is used also in the Modal layer, without the navigation context.
-    const currentScreenName = fromNullable(useNavigationContext())
-      .map(x => x.state.routeName)
-      .getOrElse("n/a");
+    /**
+     *  We have to use the deprecated currentRouteSelector because, at the moment, some BaseScreenComponent
+     *  are outside the navigation context.
+     *  TODO: Full usage of navigation header and modal, in order to have always the right context
+     *
+     */
+    const currentScreenName = useIOSelector(currentRouteSelector);
 
     const [isHelpVisible, setIsHelpVisible] = useState(false);
     // if the content is markdown we listen for load end event, otherwise the content is
