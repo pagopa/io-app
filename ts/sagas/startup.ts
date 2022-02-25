@@ -337,12 +337,9 @@ export function* initializeApplicationSaga(): Generator<
       // The session was valid so the user didn't event had to do a full login,
       // in this case we ask the user to identify using the unlock code.
       // FIXME: This is an unsafe cast caused by a wrongly described type.
-      const identificationResult = (yield* call(
-        startAndReturnIdentificationResult,
-        storedPin
-      )) as unknown as SagaCallReturnType<
+      const identificationResult: SagaCallReturnType<
         typeof startAndReturnIdentificationResult
-      >;
+      > = yield* call(startAndReturnIdentificationResult, storedPin);
 
       if (identificationResult === IdentificationResult.pinreset) {
         // If we are here the user had chosen to reset the unlock code

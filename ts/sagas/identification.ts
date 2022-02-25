@@ -116,8 +116,10 @@ export function* startAndReturnIdentificationResult(
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData,
   shufflePad: boolean = false
-): Iterator<
-  ReduxSagaEffect | SagaCallReturnType<typeof waitIdentificationResult>
+): Generator<
+  ReduxSagaEffect,
+  SagaCallReturnType<typeof waitIdentificationResult>,
+  never
 > {
   yield* put(
     identificationStart(
