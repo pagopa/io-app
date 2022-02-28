@@ -10,7 +10,7 @@ index 0000000..f09950f
 +*/
 +"alert"="alert";
 +"checkbox"="casella di controllo";
-+"combobox"="combo box";
++"combobox"="elenco a discesa";
 +"menu"="menu";
 +"menubar"="barra del menu";
 +"menuitem"="voce del menu";
