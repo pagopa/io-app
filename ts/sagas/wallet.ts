@@ -163,6 +163,7 @@ import {
   PaymentManagerToken
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
+import { ReduxSagaEffect } from "../types/utils";
 import { waitBackoffError } from "../utils/backoffError";
 import { isTestEnv } from "../utils/environment";
 
@@ -195,8 +196,6 @@ import {
   updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
-import { ReduxSagaEffect } from "../types/utils";
 
 const successScreenDelay = 2000 as Millisecond;
 

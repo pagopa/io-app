@@ -5,6 +5,7 @@ import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
+import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
@@ -21,10 +22,6 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
-import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
-import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
-import SecurityScreen from "../screens/profile/SecurityScreen";
-import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import ROUTES from "./routes";
 
 /**
