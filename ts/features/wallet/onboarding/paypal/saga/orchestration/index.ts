@@ -1,6 +1,6 @@
-import { call } from "typed-redux-saga/macro";
 import { StackActions } from "@react-navigation/compat";
 import { CommonActions } from "@react-navigation/native";
+import { call } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
@@ -10,7 +10,6 @@ import {
   WorkUnitHandler
 } from "../../../../../../sagas/workUnit";
 import { navigateToPayPalDetailScreen } from "../../../../../../store/actions/navigation";
-import { SagaCallReturnType } from "../../../../../../types/utils";
 import PAYPAL_ROUTES from "../../navigation/routes";
 import {
   walletAddPaypalBack,

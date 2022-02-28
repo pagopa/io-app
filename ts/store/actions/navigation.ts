@@ -342,7 +342,7 @@ export const navigateToPrivacyScreen = () =>
     CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PRIVACY_MAIN,
       params: {
-        routeName: ROUTES.PROFILE_PRIVACY_MAIN
+        screen: ROUTES.PROFILE_PRIVACY_MAIN
       }
     })
   );
@@ -454,7 +454,7 @@ export const navigateToSatispayDetailScreen = (
 
 export const navigateToPayPalDetailScreen = () =>
   CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-    routeName: ROUTES.WALLET_PAYPAL_DETAIL
+    screen: ROUTES.WALLET_PAYPAL_DETAIL
   });
 
 /**

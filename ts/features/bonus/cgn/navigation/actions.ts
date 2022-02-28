@@ -22,7 +22,7 @@ export const navigateToCgnActivationInformationTos = () =>
 export const navigateToCgnActivationLoading = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
-      routeName: CGN_ROUTES.ACTIVATION.LOADING
+      screen: CGN_ROUTES.ACTIVATION.LOADING
     })
   );
 
@@ -33,7 +33,7 @@ export const navigateToCgnActivationLoading = () =>
 export const navigateToEycaActivationLoading = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.EYCA.ACTIVATION.MAIN, {
-      routeName: CGN_ROUTES.EYCA.ACTIVATION.LOADING
+      screen: CGN_ROUTES.EYCA.ACTIVATION.LOADING
     })
   );
 
@@ -44,7 +44,7 @@ export const navigateToEycaActivationLoading = () =>
 export const navigateToCgnAlreadyActive = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
-      routeName: CGN_ROUTES.ACTIVATION.EXISTS
+      screen: CGN_ROUTES.ACTIVATION.EXISTS
     })
   );
 
@@ -55,7 +55,7 @@ export const navigateToCgnAlreadyActive = () =>
 export const navigateToCgnActivationPending = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
-      routeName: CGN_ROUTES.ACTIVATION.PENDING
+      screen: CGN_ROUTES.ACTIVATION.PENDING
     })
   );
 
@@ -66,7 +66,7 @@ export const navigateToCgnActivationPending = () =>
 export const navigateToCgnActivationTimeout = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
-      routeName: CGN_ROUTES.ACTIVATION.TIMEOUT
+      screen: CGN_ROUTES.ACTIVATION.TIMEOUT
     })
   );
 
@@ -77,7 +77,7 @@ export const navigateToCgnActivationTimeout = () =>
 export const navigateToCgnActivationIneligible = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
-      routeName: CGN_ROUTES.ACTIVATION.INELIGIBLE
+      screen: CGN_ROUTES.ACTIVATION.INELIGIBLE
     })
   );
 
@@ -88,7 +88,7 @@ export const navigateToCgnActivationIneligible = () =>
 export const navigateToCgnActivationCompleted = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.ACTIVATION.MAIN, {
-      routeName: CGN_ROUTES.ACTIVATION.COMPLETED
+      screen: CGN_ROUTES.ACTIVATION.COMPLETED
     })
   );
 
@@ -101,7 +101,7 @@ export const navigateToCgnActivationCompleted = () =>
 export const navigateToCgnDetails = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
-      routeName: CGN_ROUTES.DETAILS.DETAILS
+      screen: CGN_ROUTES.DETAILS.DETAILS
     })
   );
 
@@ -113,7 +113,7 @@ export const navigateToCgnDetails = () =>
 export const navigateToCgnMerchantsList = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
-      routeName: CGN_ROUTES.DETAILS.MERCHANTS.LIST
+      screen: CGN_ROUTES.DETAILS.MERCHANTS.LIST
     })
   );
 
@@ -124,7 +124,7 @@ export const navigateToCgnMerchantsList = () =>
 export const navigateToCgnMerchantsTabs = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
-      routeName: CGN_ROUTES.DETAILS.MERCHANTS.TABS
+      screen: CGN_ROUTES.DETAILS.MERCHANTS.TABS
     })
   );
 
@@ -137,7 +137,7 @@ export const navigateToCgnMerchantDetail = (
 ) =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
-      routeName: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
+      screen: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
       params
     })
   );
@@ -151,7 +151,7 @@ export const navigateToCgnMerchantLandingWebview = (
 ) =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
-      routeName: CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW,
+      screen: CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW,
       params
     })
   );
