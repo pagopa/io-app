@@ -27,7 +27,7 @@ index 0000000..f09950f
 +"checked"="selezionato";
 +"unchecked"="non selezionato";
 +"busy"="occupato";
-+"expanded"="expanded";
++"expanded"="espanso";
 +"collapsed"="collapsed";
 +"mixed"="misto";
 diff --git a/node_modules/react-native/scripts/react_native_pods.rb b/node_modules/react-native/scripts/react_native_pods.rb
