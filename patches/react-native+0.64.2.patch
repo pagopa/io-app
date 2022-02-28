@@ -9,7 +9,7 @@ index 0000000..f09950f
 +  React
 +*/
 +"alert"="alert";
-+"checkbox"="checkbox";
++"checkbox"="casella di controllo";
 +"combobox"="combo box";
 +"menu"="menu";
 +"menubar"="barra del menu";
