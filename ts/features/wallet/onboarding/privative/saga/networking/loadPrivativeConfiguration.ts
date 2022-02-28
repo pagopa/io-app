@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -18,10 +18,10 @@ export function* handleLoadPrivativeConfiguration(
   try {
     const getPrivativeServicesResult: SagaCallReturnType<
       typeof getPrivativeServices
-    > = yield call(getPrivativeServices);
+    > = yield* call(getPrivativeServices);
     if (getPrivativeServicesResult.isRight()) {
       if (getPrivativeServicesResult.value.status === 200) {
-        yield put(
+        yield* put(
           loadPrivativeIssuers.success(getPrivativeServicesResult.value.value)
         );
       } else {
@@ -33,6 +33,6 @@ export function* handleLoadPrivativeConfiguration(
       throw new Error(readablePrivacyReport(getPrivativeServicesResult.value));
     }
   } catch (e) {
-    yield put(loadPrivativeIssuers.failure(getNetworkError(e)));
+    yield* put(loadPrivativeIssuers.failure(getNetworkError(e)));
   }
 }

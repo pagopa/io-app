@@ -3,13 +3,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import {
   cancel,
-  Effect,
   fork,
   put,
   select,
   take,
   takeEvery
-} from "redux-saga/effects";
+} from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
@@ -21,19 +20,20 @@ import {
 } from "../../store/reducers/entities/services/visibleServices";
 import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { profileSelector, ProfileState } from "../../store/reducers/profile";
+import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * A saga to match at the first startup if the user has customized settings related to the
  * forwarding of notifications on the verified email within previous installations
  */
 export function* watchEmailNotificationPreferencesSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   any
 > {
   const isCustomEmailChannelEnabled: ReturnType<
     typeof isCustomEmailChannelEnabledSelector
-  > = yield select(isCustomEmailChannelEnabledSelector);
+  > = yield* select(isCustomEmailChannelEnabledSelector);
 
   // if we know about user choice do nothing
   if (pot.isSome(isCustomEmailChannelEnabled)) {
@@ -41,21 +41,21 @@ export function* watchEmailNotificationPreferencesSaga(): Generator<
   }
 
   // check if the user has any services with blocked email channel
-  const checkSaga = yield fork(checkEmailNotificationPreferencesSaga);
-  yield take(customEmailChannelSetEnabled);
-  yield cancel(checkSaga);
+  const checkSaga = yield* fork(checkEmailNotificationPreferencesSaga);
+  yield* take(customEmailChannelSetEnabled);
+  yield* cancel(checkSaga);
 }
 
 export function* checkEmailNotificationPreferencesSaga(): SagaIterator {
-  yield takeEvery(
+  yield* takeEvery(
     [getType(profileLoadSuccess), getType(loadVisibleServices.success)],
     emailNotificationPreferencesSaga
   );
 }
 
 export function* emailNotificationPreferencesSaga(): SagaIterator {
-  const potProfile: ProfileState = yield select(profileSelector);
-  const potVisibleServices: VisibleServicesState = yield select(
+  const potProfile: ProfileState = yield* select(profileSelector);
+  const potVisibleServices: VisibleServicesState = yield* select(
     visibleServicesSelector
   );
   /**
@@ -88,7 +88,7 @@ export function* emailNotificationPreferencesSaga(): SagaIterator {
   );
   // If the email notification for visible services are partially disabled
   // (only for some services), the customization is enabled
-  yield put(
+  yield* put(
     customEmailChannelSetEnabled(
       pot.getOrElse(potCustomEmailChannelEnabled, false)
     )

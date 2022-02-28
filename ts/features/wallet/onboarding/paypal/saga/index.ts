@@ -1,4 +1,4 @@
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest } from "typed-redux-saga/macro";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../types/pagopa";
@@ -16,7 +16,7 @@ export function* watchPaypalOnboardingSaga(
   sessionManager: SessionManager<PaymentManagerToken>
 ) {
   // search for paypal psp
-  yield takeLatest(
+  yield* takeLatest(
     searchPaypalPsp.request,
     handlePaypalSearchPsp,
     pmClient.searchPayPalPsp,
@@ -24,10 +24,10 @@ export function* watchPaypalOnboardingSaga(
   );
 
   // start paypal onboarding
-  yield takeLatest(walletAddPaypalStart, addPaypalToWallet);
+  yield* takeLatest(walletAddPaypalStart, addPaypalToWallet);
 
   // refresh PM token before checkout
-  yield takeLatest(
+  yield* takeLatest(
     walletAddPaypalRefreshPMToken.request,
     refreshPMToken,
     sessionManager

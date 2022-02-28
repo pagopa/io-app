@@ -1,18 +1,12 @@
 import { BugReporting, dismissType, Replies } from "instabug-reactnative";
-import {
-  call,
-  Effect,
-  fork,
-  put,
-  select,
-  takeLatest
-} from "redux-saga/effects";
+import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { instabugReportClosed } from "../store/actions/debug";
 import {
   instabugUnreadMessagesLoaded,
   updateInstabugUnreadMessages
 } from "../store/actions/instabug";
 import { instabugLastOpenReportTypeSelector } from "../store/reducers/instabug/instabugUnreadMessages";
+import { ReduxSagaEffect } from "../types/utils";
 
 const loadInstabugUnreadMessages = () =>
   new Promise<number>(resolve => {
@@ -42,33 +36,33 @@ function* watchIBSDKdismiss() {
       );
     });
   while (true) {
-    const ibHowDismissed = yield call(onDismissPromise);
+    const ibHowDismissed = yield* call(onDismissPromise);
     const type: ReturnType<typeof instabugLastOpenReportTypeSelector> =
-      yield select(instabugLastOpenReportTypeSelector);
+      yield* select(instabugLastOpenReportTypeSelector);
     if (type) {
-      yield put(instabugReportClosed({ type, how: ibHowDismissed }));
+      yield* put(instabugReportClosed({ type, how: ibHowDismissed }));
     }
-    yield put(updateInstabugUnreadMessages());
+    yield* put(updateInstabugUnreadMessages());
   }
 }
 
 function* watchInstabugSaga() {
-  yield call(updateInstabugBadgeSaga);
-  yield fork(watchIBSDKdismiss);
+  yield* call(updateInstabugBadgeSaga);
+  yield* fork(watchIBSDKdismiss);
 
   while (true) {
-    yield call(onNewReplyReceived);
-    yield call(updateInstabugBadgeSaga);
+    yield* call(onNewReplyReceived);
+    yield* call(updateInstabugBadgeSaga);
   }
 }
 
 function* updateInstabugBadgeSaga(): Generator<any, void, number> {
-  const repliesCount = yield call(loadInstabugUnreadMessages);
-  yield put(instabugUnreadMessagesLoaded(repliesCount));
+  const repliesCount = yield* call(loadInstabugUnreadMessages);
+  yield* put(instabugUnreadMessagesLoaded(repliesCount));
 }
 
-export default function* root(): IterableIterator<Effect> {
+export default function* root(): IterableIterator<ReduxSagaEffect> {
   // Update number of instabug unread messages
-  yield takeLatest(updateInstabugUnreadMessages, updateInstabugBadgeSaga);
-  yield fork(watchInstabugSaga);
+  yield* takeLatest(updateInstabugUnreadMessages, updateInstabugBadgeSaga);
+  yield* fork(watchInstabugSaga);
 }

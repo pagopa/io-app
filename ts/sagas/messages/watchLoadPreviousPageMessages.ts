@@ -1,9 +1,9 @@
-import { call, Effect, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
 import { BackendClient } from "../../api/backend";
 import { loadPreviousPageMessages as loadPreviousPageMessagesAction } from "../../store/actions/messages";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { isTestEnv } from "../../utils/environment";
@@ -18,8 +18,8 @@ type LocalBeClient = ReturnType<typeof BackendClient>["getMessages"];
 
 export default function* watcher(
   getMessages: LocalBeClient
-): Generator<Effect, void, SagaCallReturnType<typeof getMessages>> {
-  yield takeLatest(
+): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
+  yield* takeLatest(
     getType(loadPreviousPageMessagesAction.request),
     tryLoadPreviousPageMessages(getMessages)
   );
@@ -28,9 +28,9 @@ export default function* watcher(
 function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
   return function* gen(
     action: LocalActionType
-  ): Generator<Effect, void, SagaCallReturnType<typeof getMessages>> {
+  ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
     try {
-      const response: SagaCallReturnType<typeof getMessages> = yield call(
+      const response: SagaCallReturnType<typeof getMessages> = yield* call(
         getMessages,
         {
           enrich_result_data: true,
@@ -49,9 +49,9 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
         error => loadPreviousPageMessagesAction.failure(getError(error))
       );
 
-      yield put(nextAction);
+      yield* put(nextAction);
     } catch (error) {
-      yield put(loadPreviousPageMessagesAction.failure(error));
+      yield* put(loadPreviousPageMessagesAction.failure(error));
     }
   };
 }

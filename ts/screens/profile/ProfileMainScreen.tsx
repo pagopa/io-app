@@ -311,6 +311,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               title={"Markdown Playground"}
               onPress={() => navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)}
             />
+            <ListItemComponent
+              title={"CGN LandingPage Playground"}
+              onPress={() => navigation.navigate(ROUTES.CGN_LANDING_PLAYGROUND)}
+            />
           </>
         )}
 
