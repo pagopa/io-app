@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0-rc.3](https://github.com/pagopa/io-app/compare/2.4.0-rc.2...2.4.0-rc.3) (2022-02-28)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[IAC-142](https://pagopa.atlassian.net/browse/IAC-142)] Fix wrong translation in OptInPaymentMethodsChoiceScreen ([#3789](https://github.com/pagopa/io-app/issues/3789)) ([4f55071](https://github.com/pagopa/io-app/commit/4f55071a1285d1daf1bcc722313409ec3e82f5b0))
+* **Carta Giovani Nazionale:** [[IOACGN-61](https://pagopa.atlassian.net/browse/IOACGN-61)] Fixes the bug that prevents to send Referer header for CGN landing page Discount ([#3792](https://github.com/pagopa/io-app/issues/3792)) ([2b1d388](https://github.com/pagopa/io-app/commit/2b1d388d9a64a259538302a7c65a9e4f14f9b52a))
+
+
+### Chores
+
+* **deps:** bump urijs from 1.19.7 to 1.19.8 ([#3790](https://github.com/pagopa/io-app/issues/3790)) ([ab6d8ce](https://github.com/pagopa/io-app/commit/ab6d8cead908e8a7de8480513fcac2765002c383))
+* [[IAI-109](https://pagopa.atlassian.net/browse/IAI-109)] Added `redux-saga` effect types through `typed-redux-saga` ([#3730](https://github.com/pagopa/io-app/issues/3730)) ([21b5333](https://github.com/pagopa/io-app/commit/21b53330aa370a1bf6d313d41d359161d795e2db))
+* **Carta Giovani Nazionale:** [[IOACGN-60](https://pagopa.atlassian.net/browse/IOACGN-60)] Implements new CGN Landing page Playground for tests purposes ([#3781](https://github.com/pagopa/io-app/issues/3781)) ([88a344c](https://github.com/pagopa/io-app/commit/88a344c8f33da77567656b22b9b2a21a339472d9))
+
 ## [2.4.0-rc.2](https://github.com/pagopa/io-app/compare/2.4.0-rc.1...2.4.0-rc.2) (2022-02-24)
 
 
