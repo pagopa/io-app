@@ -29,7 +29,7 @@ index 0000000..f09950f
 +"busy"="occupato";
 +"expanded"="expanded";
 +"collapsed"="collapsed";
-+"mixed"="mixed";
++"mixed"="misto";
 diff --git a/node_modules/react-native/scripts/react_native_pods.rb b/node_modules/react-native/scripts/react_native_pods.rb
 index db9a34a..e95b882 100644
 --- a/node_modules/react-native/scripts/react_native_pods.rb
