@@ -14,7 +14,7 @@ index 0000000..f09950f
 +"menu"="menu";
 +"menubar"="barra del menu";
 +"menuitem"="voce del menu";
-+"progressbar"="progress bar";
++"progressbar"="barra di avanzamento";
 +"radio"="pulsante di scelta";
 +"radiogroup"="scelta multipla";
 +"scrollbar"="barra di scorrimento";
