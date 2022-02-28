@@ -1,7 +1,10 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { call, Effect, put, take } from "redux-saga/effects";
+import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../types/utils";
 import { waitBackoffError } from "../../../../../../utils/backoffError";
 import { AwardPeriodId } from "../../../store/actions/periods";
 import {
@@ -21,17 +24,19 @@ import {
  */
 export function* loadTransactionsRequiredData(
   periodId: AwardPeriodId
-): Generator<Effect, Either<BpdTransactionsError, true>, any> {
+): Generator<ReduxSagaEffect, Either<BpdTransactionsError, true>, any> {
   // We check if there is a failure on the whole loadTransactionsRequiredData block
-  yield call(waitBackoffError, bpdTransactionsLoadRequiredData.failure);
+  yield* call(waitBackoffError, bpdTransactionsLoadRequiredData.failure);
 
   // First request the Milestone Pivot
-  yield put(bpdTransactionsLoadMilestone.request(periodId));
+  yield* put(bpdTransactionsLoadMilestone.request(periodId));
 
-  const milestoneResponse: ActionType<
-    | typeof bpdTransactionsLoadMilestone.success
-    | typeof bpdTransactionsLoadMilestone.failure
-  > = yield take([
+  const milestoneResponse = yield* take<
+    ActionType<
+      | typeof bpdTransactionsLoadMilestone.success
+      | typeof bpdTransactionsLoadMilestone.failure
+    >
+  >([
     getType(bpdTransactionsLoadMilestone.success),
     getType(bpdTransactionsLoadMilestone.failure)
   ]);
@@ -46,15 +51,18 @@ export function* loadTransactionsRequiredData(
   }
 
   // Request CountByDay
-  yield put(bpdTransactionsLoadCountByDay.request(periodId));
+  yield* put(bpdTransactionsLoadCountByDay.request(periodId));
 
-  const countByDayResponse: ActionType<
-    | typeof bpdTransactionsLoadCountByDay.success
-    | typeof bpdTransactionsLoadCountByDay.failure
-  > = yield take([
+  const countByDayResponse = yield* take<
+    ActionType<
+      | typeof bpdTransactionsLoadCountByDay.success
+      | typeof bpdTransactionsLoadCountByDay.failure
+    >
+  >([
     getType(bpdTransactionsLoadCountByDay.success),
     getType(bpdTransactionsLoadCountByDay.failure)
   ]);
+
   if (
     countByDayResponse.type === getType(bpdTransactionsLoadCountByDay.failure)
   ) {
@@ -65,12 +73,14 @@ export function* loadTransactionsRequiredData(
   }
 
   // Request first transaction page for the period
-  yield put(bpdTransactionsLoadPage.request({ awardPeriodId: periodId }));
+  yield* put(bpdTransactionsLoadPage.request({ awardPeriodId: periodId }));
 
-  const firstPageResponse: ActionType<
-    | typeof bpdTransactionsLoadPage.success
-    | typeof bpdTransactionsLoadPage.failure
-  > = yield take([
+  const firstPageResponse = yield* take<
+    ActionType<
+      | typeof bpdTransactionsLoadPage.success
+      | typeof bpdTransactionsLoadPage.failure
+    >
+  >([
     getType(bpdTransactionsLoadPage.success),
     getType(bpdTransactionsLoadPage.failure)
   ]);
@@ -92,11 +102,11 @@ export function* handleTransactionsLoadRequiredData(
 ) {
   // get the results
   const result: SagaCallReturnType<typeof loadTransactionsRequiredData> =
-    yield call(loadTransactionsRequiredData, action.payload);
+    yield* call(loadTransactionsRequiredData, action.payload);
 
   if (result.isRight()) {
-    yield put(bpdTransactionsLoadRequiredData.success(action.payload));
+    yield* put(bpdTransactionsLoadRequiredData.success(action.payload));
   } else {
-    yield put(bpdTransactionsLoadRequiredData.failure(result.value));
+    yield* put(bpdTransactionsLoadRequiredData.failure(result.value));
   }
 }

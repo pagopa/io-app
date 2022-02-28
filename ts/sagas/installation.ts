@@ -1,34 +1,34 @@
 /**
  * A saga to manage notifications
  */
-import { call, Effect, put, select } from "redux-saga/effects";
-
+import { call, put, select } from "typed-redux-saga/macro";
 import {
   removeScheduledNotificationAccessSpid,
   scheduleLocalNotificationsAccessSpid
 } from "../boot/scheduleLocalNotifications";
 import { sessionInvalid } from "../store/actions/authentication";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
+import { ReduxSagaEffect } from "../types/utils";
 
 /**
  * This generator function removes user data from previous application
  * installation
  */
 export function* previousInstallationDataDeleteSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   boolean
 > {
   const isFirstRunAfterInstall: ReturnType<
     typeof isFirstRunAfterInstallSelector
-  > = yield select(isFirstRunAfterInstallSelector);
+  > = yield* select(isFirstRunAfterInstallSelector);
 
   if (isFirstRunAfterInstall) {
     // invalidate the session
-    yield put(sessionInvalid());
+    yield* put(sessionInvalid());
     // Remove all the notification already set
-    yield call(removeScheduledNotificationAccessSpid);
+    yield* call(removeScheduledNotificationAccessSpid);
     // Schedule a set of local notifications
-    yield call(scheduleLocalNotificationsAccessSpid);
+    yield* call(scheduleLocalNotificationsAccessSpid);
   }
 }

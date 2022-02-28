@@ -1,6 +1,6 @@
-import { NavigationActions } from "@react-navigation/compat";
-import { SagaIterator } from "redux-saga";
-import { call, put, race, take } from "redux-saga/effects";
+import { CommonActions } from "@react-navigation/native";
+import { call, put, race, take } from "typed-redux-saga/macro";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { BackendCGN } from "../../../api/backendCgn";
 import {
@@ -34,22 +34,22 @@ export function* eycaActivationWorker(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ) {
-  yield call(navigateToEycaActivationLoading);
+  yield* call(navigateToEycaActivationLoading);
 
-  const eycaActivation: SagaCallReturnType<typeof getActivation> = yield call(
+  const eycaActivation: SagaCallReturnType<typeof getActivation> = yield* call(
     getActivation,
     getEycaActivation
   );
 
   if (eycaActivation.isRight()) {
     if (eycaActivation.value === "PROCESSING") {
-      yield call(handleEycaActivationSaga, getEycaActivation);
+      yield* call(handleEycaActivationSaga, getEycaActivation);
     } else {
       const startActivation: SagaCallReturnType<typeof handleStartActivation> =
-        yield call(handleStartActivation, startEycaActivation);
+        yield* call(handleStartActivation, startEycaActivation);
       // activation not handled error, stop
       if (startActivation.isLeft()) {
-        yield put(cgnEycaActivation.failure(startActivation.value));
+        yield* put(cgnEycaActivation.failure(startActivation.value));
         return;
       } else {
         // could be: ALREADY_ACTIVE, INELIGIBLE
@@ -58,20 +58,20 @@ export function* eycaActivationWorker(
             v => v === startActivation.value
           )
         ) {
-          yield put(cgnEycaActivation.success(startActivation.value));
-          yield call(navigateToCgnDetails);
+          yield* put(cgnEycaActivation.success(startActivation.value));
+          yield* call(navigateToCgnDetails);
           return;
         } else {
-          yield call(handleEycaActivationSaga, getEycaActivation);
+          yield* call(handleEycaActivationSaga, getEycaActivation);
         }
       }
     }
   }
 
   // Activation saga ended, request again the details
-  yield put(cgnEycaStatus.request());
+  yield* put(cgnEycaStatus.request());
 
-  yield call(navigateToCgnDetails);
+  yield* call(navigateToCgnDetails);
 }
 
 /**
@@ -80,8 +80,11 @@ export function* eycaActivationWorker(
 export function* eycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
-): SagaIterator {
-  const { cancelAction } = yield race({
+) {
+  // This is not using typed-redux-saga because
+  // there is a particular generator delegation which
+  // cannot use `yield*` to work.
+  const { cancelAction } = yield* race({
     activation: call(
       eycaActivationWorker,
       getEycaActivation,
@@ -89,7 +92,11 @@ export function* eycaActivationSaga(
     ),
     cancelAction: take(cgnEycaActivationCancel)
   });
+
   if (cancelAction) {
-    yield call(NavigationActions.back);
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.goBack()
+    );
   }
 }

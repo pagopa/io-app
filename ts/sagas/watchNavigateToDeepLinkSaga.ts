@@ -1,12 +1,13 @@
+import { all, call, put, takeLatest } from "typed-redux-saga/macro";
 import { NavigationActions, StackActions } from "@react-navigation/compat";
-import { all, call, Effect, put, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import NavigationService from "../navigation/NavigationService";
 
 import { clearDeepLink, navigateToDeepLink } from "../store/actions/deepLink";
+import { ReduxSagaEffect } from "../types/utils";
 
-export function* watchNavigateToDeepLinkSaga(): IterableIterator<Effect> {
-  yield takeLatest(
+export function* watchNavigateToDeepLinkSaga(): IterableIterator<ReduxSagaEffect> {
+  yield* takeLatest(
     getType(navigateToDeepLink),
     function* (
       action: ActionType<typeof navigateToDeepLink>,
@@ -23,7 +24,7 @@ export function* watchNavigateToDeepLinkSaga(): IterableIterator<Effect> {
             })
           : NavigationActions.navigate(action.payload);
 
-      yield all([
+      yield* all([
         call(NavigationService.dispatchNavigationAction, navigationAction),
         put(clearDeepLink())
       ]);

@@ -1,5 +1,5 @@
+import { call } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
-import { call } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../navigation/NavigationService";
 import {
@@ -19,7 +19,7 @@ import {
 function* zendeskSupportWorkUnit(
   zendeskStart: ActionType<typeof zendeskSupportStart>
 ) {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
         CommonActions.navigate(ZENDESK_ROUTES.MAIN, {
@@ -39,7 +39,7 @@ function* zendeskSupportWorkUnit(
 export function* zendeskSupport(
   zendeskStart: ActionType<typeof zendeskSupportStart>
 ) {
-  yield call(withFailureHandling, () =>
+  yield* call(withFailureHandling, () =>
     withResetNavigationStack(() => zendeskSupportWorkUnit(zendeskStart))
   );
 }

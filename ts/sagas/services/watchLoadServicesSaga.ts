@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { fork, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { fork, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
@@ -26,43 +26,43 @@ import { handleUpsertServicePreference } from "./servicePreference/handleUpsertS
 export function* watchLoadServicesSaga(
   backendClient: ReturnType<typeof BackendClient>
 ): SagaIterator {
-  yield takeEvery(
+  yield* takeEvery(
     getType(loadVisibleServices.request),
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
   );
 
   // handle the single load service request
-  yield takeEvery(
+  yield* takeEvery(
     getType(loadServiceDetail.request),
     loadServiceDetailRequestHandler,
     backendClient.getService
   );
 
   // handle the load of service preference request
-  yield takeLatest(
+  yield* takeLatest(
     getType(loadServicePreference.request),
     handleGetServicePreference,
     backendClient.getServicePreference
   );
 
   // handle the upsert request for the current service
-  yield takeLatest(
+  yield* takeLatest(
     getType(upsertServicePreference.request),
     handleUpsertServicePreference,
     backendClient.upsertServicePreference
   );
 
   // start a watcher to handle the load of services details in a bunch (i.e when visible services are loaded)
-  yield fork(watchServicesDetailLoadSaga, backendClient.getService);
+  yield* fork(watchServicesDetailLoadSaga, backendClient.getService);
 
   // TODO: it could be implemented in a forked saga being canceled as soon as
   // isFirstServiceLoadCOmpleted is true (https://redux-saga.js.org/docs/advanced/TaskCancellation.html)
-  yield takeEvery(
+  yield* takeEvery(
     getType(loadServiceDetail.success),
     handleFirstVisibleServiceLoadSaga
   );
 
   // Load/refresh services content
-  yield put(loadVisibleServices.request());
+  yield* put(loadVisibleServices.request());
 }

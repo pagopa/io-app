@@ -1,5 +1,5 @@
 import { NavigationActions } from "@react-navigation/compat";
-import { call } from "redux-saga/effects";
+import { call } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import {
   executeWorkUnit,
@@ -15,7 +15,7 @@ import {
 } from "../../../store/actions/optInPaymentMethods";
 
 function* optInPaymentMethodsWorkUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
         NavigationActions.navigate({
@@ -32,7 +32,7 @@ function* optInPaymentMethodsWorkUnit() {
 }
 
 export function* optInPaymentMethodsHandler() {
-  yield call(withFailureHandling, () =>
+  yield* call(withFailureHandling, () =>
     withResetNavigationStack(optInPaymentMethodsWorkUnit)
   );
 }

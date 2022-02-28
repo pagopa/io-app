@@ -21,6 +21,10 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
+import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
+import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
+import SecurityScreen from "../screens/profile/SecurityScreen";
+import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import ROUTES from "./routes";
 
 /**
@@ -81,6 +85,9 @@ const ProfileNavigator = createCompatNavigatorFactory(createStackNavigator)(
     },
     [ROUTES.WEB_PLAYGROUND]: {
       screen: WebPlayground
+    },
+    [ROUTES.CGN_LANDING_PLAYGROUND]: {
+      screen: CgnLandingPlayground
     },
     [ROUTES.PROFILE_REMOVE_ACCOUNT_INFO]: {
       screen: RemoveAccountInfo

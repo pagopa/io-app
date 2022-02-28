@@ -174,6 +174,7 @@
     "semver": "^5.7.0",
     "sha.js": "^2.4.11",
     "tslib": "^1.9.3",
+    "typed-redux-saga": "^1.4.0",
     "typesafe-actions": "4.4.2",
     "unist-util-visit": "^4.1.0",
     "url-parse": "^1.5.9",
@@ -184,6 +185,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
+    "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
     "@react-native-community/eslint-config": "^3.0.1",
     "@testing-library/jest-native": "^3.4.3",
     "@testing-library/react-native": "^7.1.0",
@@ -217,6 +219,7 @@
     "@typescript-eslint/parser": "^5.9.1",
     "abortcontroller-polyfill": "1.7.3",
     "babel-jest": "^26.6.3",
+    "babel-plugin-macros": "^3.1.0",
     "babel-preset-react-native": "^4.0.1",
     "chalk": "^2.4.1",
     "danger": "^10.3.0",
