@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -56,10 +56,10 @@ export function* bpdLoadPaymentMethodActivationSaga(
   try {
     const findPaymentMethodResult: SagaCallReturnType<
       typeof findPaymentMethod
-    > = yield call(findPaymentMethod, { id: action.payload } as any);
+    > = yield* call(findPaymentMethod, { id: action.payload } as any);
     if (findPaymentMethodResult.isRight()) {
       if (findPaymentMethodResult.value.status === 200) {
-        yield put(
+        yield* put(
           bpdPaymentMethodActivation.success(
             convertNetworkPayload(findPaymentMethodResult.value.value)
           )
@@ -67,12 +67,12 @@ export function* bpdLoadPaymentMethodActivationSaga(
         return;
       } else if (findPaymentMethodResult.value.status === 409) {
         // conflict means not activable
-        yield put(
+        yield* put(
           bpdPaymentMethodActivation.success(whenConflict(action.payload))
         );
         return;
       } else if (findPaymentMethodResult.value.status === 404) {
-        yield put(
+        yield* put(
           bpdPaymentMethodActivation.success({
             hPan: action.payload,
             activationStatus: "inactive"
@@ -87,7 +87,7 @@ export function* bpdLoadPaymentMethodActivationSaga(
       throw new Error(readableReport(findPaymentMethodResult.value));
     }
   } catch (e) {
-    yield put(
+    yield* put(
       bpdPaymentMethodActivation.failure({
         hPan: action.payload,
         error: getError(e)
@@ -106,9 +106,9 @@ export function* bpdUpdatePaymentMethodActivationSaga(
   action: ActionType<typeof bpdUpdatePaymentMethodActivation.request>
 ) {
   if (action.payload.value) {
-    yield call(enrollPaymentMethod, enrollPayment, action);
+    yield* call(enrollPaymentMethod, enrollPayment, action);
   } else {
-    yield call(deletePaymentMethod, deletePayment, action);
+    yield* call(deletePaymentMethod, deletePayment, action);
   }
 }
 
@@ -119,11 +119,11 @@ function* enrollPaymentMethod(
   try {
     const enrollPaymentMethodResult: SagaCallReturnType<
       typeof enrollPaymentMethod
-    > = yield call(enrollPaymentMethod, { id: action.payload.hPan } as any);
+    > = yield* call(enrollPaymentMethod, { id: action.payload.hPan } as any);
     if (enrollPaymentMethodResult.isRight()) {
       if (enrollPaymentMethodResult.value.status === 200) {
         const responsePayload = enrollPaymentMethodResult.value.value;
-        yield put(
+        yield* put(
           bpdUpdatePaymentMethodActivation.success({
             hPan: action.payload.hPan,
             activationDate: responsePayload.activationDate,
@@ -132,7 +132,7 @@ function* enrollPaymentMethod(
         );
         return;
       } else if (enrollPaymentMethodResult.value.status === 409) {
-        yield put(
+        yield* put(
           bpdUpdatePaymentMethodActivation.success(
             whenConflict(action.payload.hPan)
           )
@@ -146,7 +146,7 @@ function* enrollPaymentMethod(
       throw new Error(readableReport(enrollPaymentMethodResult.value));
     }
   } catch (e) {
-    yield put(
+    yield* put(
       bpdUpdatePaymentMethodActivation.failure({
         hPan: action.payload.hPan,
         error: getError(e)
@@ -162,10 +162,10 @@ function* deletePaymentMethod(
   try {
     const deletePaymentMethodResult: SagaCallReturnType<
       typeof deletePaymentMethod
-    > = yield call(deletePaymentMethod, { id: action.payload.hPan } as any);
+    > = yield* call(deletePaymentMethod, { id: action.payload.hPan } as any);
     if (deletePaymentMethodResult.isRight()) {
       if (deletePaymentMethodResult.value.status === 204) {
-        yield put(
+        yield* put(
           bpdUpdatePaymentMethodActivation.success({
             hPan: action.payload.hPan,
             activationStatus: getPaymentStatus(action.payload.value)
@@ -180,7 +180,7 @@ function* deletePaymentMethod(
       throw new Error(readableReport(deletePaymentMethodResult.value));
     }
   } catch (e) {
-    yield put(
+    yield* put(
       bpdUpdatePaymentMethodActivation.failure({
         hPan: action.payload.hPan,
         error: getError(e)
