@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
+import { Animated, Platform, StyleSheet, View } from "react-native";
+import { Tab, Tabs } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
 
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
@@ -33,6 +35,8 @@ import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/n
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { makeFontStyleObject } from "../../../theme/fonts";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -42,6 +46,66 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "messages.contextualHelpTitle",
   body: "messages.contextualHelpContent"
 };
+
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    elevation: 0,
+    height: 40
+  },
+  tabBarUnderline: {
+    borderBottomColor: customVariables.tabUnderlineColor,
+    borderBottomWidth: customVariables.tabUnderlineHeight
+  },
+  tabBarUnderlineActive: {
+    height: customVariables.tabUnderlineHeight,
+    // borders do not overlap each other, but stack naturally
+    marginBottom: -customVariables.tabUnderlineHeight,
+    backgroundColor: customVariables.contentPrimaryBackground
+  },
+  activeTextStyle: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: Platform.OS === "android" ? 16 : undefined,
+    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    color: customVariables.brandPrimary
+  },
+  textStyle: {
+    color: customVariables.brandDarkGray
+  }
+});
+
+const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
+
+type AllTabsProps = {
+  navigateToMessageDetail: (message: UIMessage) => void;
+};
+
+const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
+  <View style={IOStyles.flex}>
+    <AnimatedTabs
+      tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+      tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+      // onScroll={handleOnTabsScroll}
+      // onChangeTab={handleOnChangeTab}
+      initialPage={0}
+    >
+      <Tab
+        activeTextStyle={styles.activeTextStyle}
+        textStyle={styles.textStyle}
+        heading={I18n.t("messages.tab.inbox")}
+      >
+        <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+      </Tab>
+
+      <Tab
+        activeTextStyle={styles.activeTextStyle}
+        textStyle={styles.textStyle}
+        heading={I18n.t("messages.tab.archive")}
+      >
+        <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+      </Tab>
+    </AnimatedTabs>
+  </View>
+);
 
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
@@ -99,7 +163,7 @@ const MessagesHomeScreen = ({
             title={I18n.t("messages.contentTitle")}
             iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
           />
-          <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+          <AllTabs navigateToMessageDetail={navigateToMessageDetail} />
         </React.Fragment>
       )}
 
