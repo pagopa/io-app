@@ -85,3 +85,9 @@ Created on **16/09/2021**
   to use the `notAuthorizedView` without displaying again the alert.
   ⚠️ The `QRCodeScanner` component, with this patch, doesn't use anymore the props permissionDialogTitle, permissionDialogMessage and
   buttonPositive.
+
+### react-native+0.64.2 (Localizable.strings)
+Created on **28/02/2022**
+
+#### Reason:
+- This patch is going to add a new `Localizable.strings` file inside the `[package]/React/AccessibilityResources/it.lproj` directory in order to translate various internal strings used for accessibility. At the moment there are no other ways to translate these strings even in newer React Native versions, thus this patch should be replicated for every new update.
