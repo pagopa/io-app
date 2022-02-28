@@ -16,7 +16,7 @@ index 0000000..f09950f
 +"menuitem"="menu item";
 +"progressbar"="progress bar";
 +"radio"="radio button";
-+"radiogroup"="radio group";
++"radiogroup"="scelta multipla";
 +"scrollbar"="scroll bar";
 +"spinbutton"="spin button";
 +"switch"="switch";
