@@ -1,7 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
-import { SagaIterator } from "redux-saga";
-import { call, put, race, take } from "redux-saga/effects";
+import { call, put, race, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import {
@@ -45,32 +44,30 @@ export const isLoadingScreen = (screenName: string) =>
 
 export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield call(NavigationService.getCurrentRouteName);
+    yield* call(NavigationService.getCurrentRouteName);
   if (currentRoute !== undefined && !isLoadingScreen(currentRoute)) {
     // show the loading page for the CGN activation
-    yield call(navigateToCgnActivationLoading);
+    yield* call(navigateToCgnActivationLoading);
   }
 
-  const progress = yield call(cgnActivationSaga);
-  yield put(progress);
+  const progress = yield* call(cgnActivationSaga);
+  yield* put(progress);
 
   const nextNavigationStep = getNextNavigationStep(progress);
   if (nextNavigationStep !== navigateToCgnActivationLoading) {
-    yield call(nextNavigationStep);
+    yield* call(nextNavigationStep);
   }
 }
 
 /**
  * This saga handles the CGN activation polling
  */
-export function* handleCgnActivationSaga(
-  cgnActivationSaga: CgnActivationType
-): SagaIterator {
-  const { cancelAction } = yield race({
+export function* handleCgnActivationSaga(cgnActivationSaga: CgnActivationType) {
+  const { cancelAction } = yield* race({
     activation: call(cgnActivationWorker, cgnActivationSaga),
     cancelAction: take(cgnActivationCancel)
   });
   if (cancelAction) {
-    yield put(NavigationActions.back());
+    yield* put(NavigationActions.back());
   }
 }

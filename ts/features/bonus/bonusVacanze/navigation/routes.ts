@@ -1,4 +1,4 @@
-const BONUSVACANZE_ROUTES: BonusVacanzeRouteType = {
+const BONUSVACANZE_ROUTES = {
   MAIN: "BONUSVACANZE_ROUTES_MAIN",
 
   BONUS_AVAILABLE_LIST: "BONUS_AVAILABLE_LIST",
@@ -25,32 +25,6 @@ const BONUSVACANZE_ROUTES: BonusVacanzeRouteType = {
     EXISTS: "BONUS_ACTIVATION_EXISTS",
     COMPLETED: "BONUS_ACTIVATION_COMPLETED"
   }
-};
-type Eligibility =
-  | "CHECK_LOADING"
-  | "ISEE_NOT_AVAILABLE"
-  | "ISEE_NOT_ELIGIBLE"
-  | "TIMEOUT"
-  | "PENDING"
-  | "UNDERAGE"
-  | "ELIGIBLE";
-
-type Activation =
-  | "LOADING"
-  | "TIMEOUT"
-  | "ELIGIBILITY_EXPIRED"
-  | "EXISTS"
-  | "COMPLETED";
-
-type BonusVacanzeRouteType = {
-  MAIN: string;
-  BONUS_AVAILABLE_LIST: string;
-  BONUS_CTA_ELIGILITY_START: string;
-  BONUS_REQUEST_INFORMATION: string;
-  BONUS_TOS_SCREEN: string;
-  BONUS_ACTIVE_DETAIL_SCREEN: string;
-  ELIGIBILITY: Record<Eligibility, string>;
-  ACTIVATION: Record<Activation, string>;
-};
+} as const;
 
 export default BONUSVACANZE_ROUTES;

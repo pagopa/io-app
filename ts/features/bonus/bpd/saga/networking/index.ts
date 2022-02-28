@@ -1,5 +1,5 @@
 import { SagaIterator } from "@redux-saga/core";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
 import {
@@ -20,7 +20,7 @@ export function* executeAndDispatchV2(
 ) {
   try {
     const enrollCitizenIOResult: SagaCallReturnType<typeof remoteCall> =
-      yield call(
+      yield* call(
         remoteCall,
         // due to avoid required headers coming from code autogenerate
         // (note the required header will be injected automatically)
@@ -30,7 +30,7 @@ export function* executeAndDispatchV2(
       if (enrollCitizenIOResult.value.status === 200) {
         const { enabled, payoffInstr, technicalAccount, optInStatus } =
           enrollCitizenIOResult.value.value;
-        yield put(
+        yield* put(
           action.success({
             enabled,
             payoffInstr,
@@ -40,7 +40,7 @@ export function* executeAndDispatchV2(
         );
         return;
       } else if (enrollCitizenIOResult.value.status === 404) {
-        yield put(
+        yield* put(
           action.success({
             enabled: false,
             payoffInstr: undefined,
@@ -54,20 +54,20 @@ export function* executeAndDispatchV2(
       throw new Error(readableReport(enrollCitizenIOResult.value));
     }
   } catch (e) {
-    yield put(action.failure(e));
+    yield* put(action.failure(e));
   }
 }
 
 export function* getCitizenV2(
   findCitizen: ReturnType<typeof BackendBpdClient>["findV2"]
 ): SagaIterator {
-  yield call(executeAndDispatchV2, findCitizen, bpdLoadActivationStatus);
+  yield* call(executeAndDispatchV2, findCitizen, bpdLoadActivationStatus);
 }
 
 export function* putEnrollCitizenV2(
   enrollCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenV2IO"]
 ): SagaIterator {
-  yield call(executeAndDispatchV2, enrollCitizenIO, bpdEnrollUserToProgram);
+  yield* call(executeAndDispatchV2, enrollCitizenIO, bpdEnrollUserToProgram);
 }
 
 /**
@@ -81,7 +81,7 @@ export function* putOptInStatusCitizenV2(
 ) {
   try {
     const updateCitizenIOResult: SagaCallReturnType<typeof updateCitizenIO> =
-      yield call(
+      yield* call(
         updateCitizenIO,
         // due to avoid required headers coming from code autogenerate
         // (note the required header will be injected automatically)
@@ -92,7 +92,7 @@ export function* putOptInStatusCitizenV2(
       if (updateCitizenIOResult.value.status === 200) {
         if (updateCitizenIOResult.value.value.optInStatus) {
           const { optInStatus } = updateCitizenIOResult.value.value;
-          yield put(bpdUpdateOptInStatusMethod.success(optInStatus));
+          yield* put(bpdUpdateOptInStatusMethod.success(optInStatus));
           return;
         } else {
           // it should never happen
@@ -101,21 +101,21 @@ export function* putOptInStatusCitizenV2(
           );
         }
       } else {
-        yield put(
+        yield* put(
           bpdUpdateOptInStatusMethod.failure(
             new Error(`response status ${updateCitizenIOResult.value.status}`)
           )
         );
       }
     } else {
-      yield put(
+      yield* put(
         bpdUpdateOptInStatusMethod.failure(
           new Error(readableReport(updateCitizenIOResult.value))
         )
       );
     }
   } catch (e) {
-    yield put(bpdUpdateOptInStatusMethod.failure(getError(e)));
+    yield* put(bpdUpdateOptInStatusMethod.failure(getError(e)));
   }
 }
 
@@ -127,10 +127,10 @@ export function* deleteCitizen(
 ): SagaIterator {
   try {
     const deleteCitizenIOResult: SagaCallReturnType<typeof deleteCitizenIO> =
-      yield call(deleteCitizenIO, {} as any);
+      yield* call(deleteCitizenIO, {} as any);
     if (deleteCitizenIOResult.isRight()) {
       if (deleteCitizenIOResult.value.status === 204) {
-        yield put(bpdDeleteUserFromProgram.success());
+        yield* put(bpdDeleteUserFromProgram.success());
         return;
       }
       throw new Error(`response status ${deleteCitizenIOResult.value.status}`);
@@ -138,6 +138,6 @@ export function* deleteCitizen(
       throw new Error(readableReport(deleteCitizenIOResult.value));
     }
   } catch (e) {
-    yield put(bpdDeleteUserFromProgram.failure(e));
+    yield* put(bpdDeleteUserFromProgram.failure(e));
   }
 }

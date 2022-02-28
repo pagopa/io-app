@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { cgnCategories } from "../../../store/actions/categories";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -17,9 +17,9 @@ export function* cgnCategoriesSaga(
   try {
     const publishedCategoriesResult: SagaCallReturnType<
       typeof getPublishedCategories
-    > = yield call(getPublishedCategories, {});
+    > = yield* call(getPublishedCategories, {});
     if (publishedCategoriesResult.isLeft()) {
-      yield put(
+      yield* put(
         cgnCategories.failure(
           getGenericError(
             new Error(readableReport(publishedCategoriesResult.value))
@@ -30,7 +30,7 @@ export function* cgnCategoriesSaga(
     }
 
     if (publishedCategoriesResult.value.status === 200) {
-      yield put(
+      yield* put(
         cgnCategories.success(publishedCategoriesResult.value.value.items)
       );
       return;
@@ -40,6 +40,6 @@ export function* cgnCategoriesSaga(
       `Response in status ${publishedCategoriesResult.value.status}`
     );
   } catch (e) {
-    yield put(cgnCategories.failure(getNetworkError(e)));
+    yield* put(cgnCategories.failure(getNetworkError(e)));
   }
 }

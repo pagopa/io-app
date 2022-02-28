@@ -10,4 +10,6 @@ export type MessagesParamsList = {
   [ROUTES.MESSAGE_DETAIL]: MessageDetailScreenNavigationParams;
   [ROUTES.MESSAGE_ROUTER_PAGINATED]: MessageRouterScreenPaginatedNavigationParams;
   [ROUTES.MESSAGE_DETAIL_PAGINATED]: MessageDetailScreenPaginatedNavigationParams;
+  // TODO: [EUCOVIDCERT_ROUTES.MAIN]: NavigatorScreenParams<EuCovidCertParamsList>
+  // TODO: [MVL_ROUTES.MAIN]: NavigatorScreenParams<MvlParamsList>
 };

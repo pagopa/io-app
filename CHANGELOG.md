@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0-rc.3](https://github.com/pagopa/io-app/compare/2.4.0-rc.2...2.4.0-rc.3) (2022-02-28)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[IAC-142](https://pagopa.atlassian.net/browse/IAC-142)] Fix wrong translation in OptInPaymentMethodsChoiceScreen ([#3789](https://github.com/pagopa/io-app/issues/3789)) ([4f55071](https://github.com/pagopa/io-app/commit/4f55071a1285d1daf1bcc722313409ec3e82f5b0))
+* **Carta Giovani Nazionale:** [[IOACGN-61](https://pagopa.atlassian.net/browse/IOACGN-61)] Fixes the bug that prevents to send Referer header for CGN landing page Discount ([#3792](https://github.com/pagopa/io-app/issues/3792)) ([2b1d388](https://github.com/pagopa/io-app/commit/2b1d388d9a64a259538302a7c65a9e4f14f9b52a))
+
+
+### Chores
+
+* **deps:** bump urijs from 1.19.7 to 1.19.8 ([#3790](https://github.com/pagopa/io-app/issues/3790)) ([ab6d8ce](https://github.com/pagopa/io-app/commit/ab6d8cead908e8a7de8480513fcac2765002c383))
+* [[IAI-109](https://pagopa.atlassian.net/browse/IAI-109)] Added `redux-saga` effect types through `typed-redux-saga` ([#3730](https://github.com/pagopa/io-app/issues/3730)) ([21b5333](https://github.com/pagopa/io-app/commit/21b53330aa370a1bf6d313d41d359161d795e2db))
+* **Carta Giovani Nazionale:** [[IOACGN-60](https://pagopa.atlassian.net/browse/IOACGN-60)] Implements new CGN Landing page Playground for tests purposes ([#3781](https://github.com/pagopa/io-app/issues/3781)) ([88a344c](https://github.com/pagopa/io-app/commit/88a344c8f33da77567656b22b9b2a21a339472d9))
+
+## [2.4.0-rc.2](https://github.com/pagopa/io-app/compare/2.4.0-rc.1...2.4.0-rc.2) (2022-02-24)
+
+
+### Bug Fixes
+
+* [[IA-659](https://pagopa.atlassian.net/browse/IA-659)] Opt-out dark mode in iOS ([#3780](https://github.com/pagopa/io-app/issues/3780)) ([04039c9](https://github.com/pagopa/io-app/commit/04039c92d3c80f9bcb66c92a0669078e062cb13f))
+* [[IABT-1300](https://pagopa.atlassian.net/browse/IABT-1300)] Centered label text in TransactionErrorScreen ([#3782](https://github.com/pagopa/io-app/issues/3782)) ([89e0b6f](https://github.com/pagopa/io-app/commit/89e0b6fc1da292d754d192cf17d381f582cdb46e))
+* package.json & yarn.lock to reduce vulnerabilities ([#3779](https://github.com/pagopa/io-app/issues/3779)) ([4010f33](https://github.com/pagopa/io-app/commit/4010f332035953270c0f95dc815c4388c23b7a7d))
+
+
+### Chores
+
+* [[IA-677](https://pagopa.atlassian.net/browse/IA-677)] Copy changes after a final check with the legal dept ([#3787](https://github.com/pagopa/io-app/issues/3787)) ([0df943b](https://github.com/pagopa/io-app/commit/0df943b0d922dfa76f1b47123b5a5e82bb882a1b))
+* [[IAI-134](https://pagopa.atlassian.net/browse/IAI-134)] chore: [[IAI-133](https://pagopa.atlassian.net/browse/IAI-133)] Rework types for routes and navigation params (2/2 vertical functionalities routes) ([#3760](https://github.com/pagopa/io-app/issues/3760)) ([83c5703](https://github.com/pagopa/io-app/commit/83c5703f52589bdcb470751405e3c284c1da98ed))
+* Revert "Enable MVL, disable Android ([#3783](https://github.com/pagopa/io-app/issues/3783))" ([#3784](https://github.com/pagopa/io-app/issues/3784)) ([63e2bbc](https://github.com/pagopa/io-app/commit/63e2bbcfa60ee4cf31e199997082349237a77c3b))
+
 ## [2.4.0-rc.1](https://github.com/pagopa/io-app/compare/2.4.0-rc.0...2.4.0-rc.1) (2022-02-23)
 
 

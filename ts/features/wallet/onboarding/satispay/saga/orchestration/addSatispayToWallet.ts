@@ -1,13 +1,13 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
-  withResetNavigationStack
+  withResetNavigationStack,
+  WorkUnitHandler
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 import {
   navigateToActivateBpdOnNewSatispay,
@@ -30,7 +30,7 @@ import { onboardingSatispayAddedResultSelector } from "../../store/reducers/adde
  * - The user choose back from the first screen {@link walletAddSatispayBack}
  */
 function* satispayWorkUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: navigateToOnboardingSatispayStart,
     startScreenName: WALLET_ONBOARDING_SATISPAY_ROUTES.START,
     complete: walletAddSatispayCompleted,
@@ -46,8 +46,8 @@ function* satispayWorkUnit() {
 export function* addSatispayToWalletAndActivateBpd() {
   const initialScreenName: ReturnType<
     typeof NavigationService.getCurrentRouteName
-  > = yield call(NavigationService.getCurrentRouteName);
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+  > = yield* call(NavigationService.getCurrentRouteName);
+  const res = yield* call<WorkUnitHandler>(
     withResetNavigationStack,
     satispayWorkUnit
   );
@@ -59,18 +59,18 @@ export function* addSatispayToWalletAndActivateBpd() {
     // integration with the legacy "Add a payment"
     // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit (hope soon!)
-    yield call(navigateToWalletHome);
+    yield* call(navigateToWalletHome);
   }
   if (res === "completed") {
     // refresh wallets list
-    yield put(fetchWalletsRequest());
+    yield* put(fetchWalletsRequest());
     // read the new added satispay
     const satispayAdded: ReturnType<
       typeof onboardingSatispayAddedResultSelector
-    > = yield select(onboardingSatispayAddedResultSelector);
+    > = yield* select(onboardingSatispayAddedResultSelector);
 
     if (satispayAdded) {
-      yield call(
+      yield* call(
         activateBpdOnNewPaymentMethods,
         [satispayAdded],
         navigateToActivateBpdOnNewSatispay

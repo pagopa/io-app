@@ -26,14 +26,14 @@ import EuCovidCertTemporarilyNotAvailableKoScreen from "./ko/EuCovidCertTemporar
 import EuCovidCertWrongFormatKoScreen from "./ko/EuCovidCertWrongFormatKoScreen";
 import EuCovidCertValidScreen from "./valid/EuCovidCertValidScreen";
 
-type NavigationParams = Readonly<{
+export type EuCovidCertificateRouterScreenNavigationParams = Readonly<{
   authCode: EUCovidCertificateAuthCode;
   messageId: string;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<NavigationParams>;
+  NavigationStackScreenProps<EuCovidCertificateRouterScreenNavigationParams>;
 
 /**
  * Return the right screen based on the response value
@@ -84,9 +84,10 @@ const routeSuccessEuCovidResponse = (
   }
 };
 
-export const EUCovidContext = React.createContext<NavigationParams | null>(
-  null
-);
+export const EUCovidContext =
+  React.createContext<EuCovidCertificateRouterScreenNavigationParams | null>(
+    null
+  );
 
 /**
  * Router screen that triggers the first loading of the certificate (if not present in the store)

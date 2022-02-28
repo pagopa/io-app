@@ -2,7 +2,7 @@ import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
-import { call, Effect, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
@@ -14,13 +14,13 @@ import {
   testLoginRequest
 } from "../store/actions/authentication";
 import { SessionToken } from "../types/SessionToken";
-import { SagaCallReturnType } from "../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 
 // Started by redux action
 function* handleTestLogin({
   payload
 }: ActionType<typeof testLoginRequest>): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   SagaCallReturnType<typeof postTestLogin>
 > {
@@ -37,11 +37,11 @@ function* handleTestLogin({
   }
   try {
     const testLoginResponse: SagaCallReturnType<typeof postTestLogin> =
-      yield call(postTestLogin, payload);
+      yield* call(postTestLogin, payload);
 
     if (testLoginResponse.isRight()) {
       if (testLoginResponse.value.status === 200) {
-        yield put(
+        yield* put(
           loginSuccess({
             token: testLoginResponse.value.value
               .token as string as SessionToken,
@@ -54,10 +54,10 @@ function* handleTestLogin({
     }
     throw new Error(readableReport(testLoginResponse.value));
   } catch (e) {
-    yield put(loginFailure({ error: e, idp: "testIdp" }));
+    yield* put(loginFailure({ error: e, idp: "testIdp" }));
   }
 }
 
-export function* watchTestLoginRequestSaga(): IterableIterator<Effect> {
-  yield takeLatest(getType(testLoginRequest), handleTestLogin);
+export function* watchTestLoginRequestSaga(): IterableIterator<ReduxSagaEffect> {
+  yield* takeLatest(getType(testLoginRequest), handleTestLogin);
 }
