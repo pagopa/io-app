@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { svVoucherRevocation } from "../../store/actions/voucherList";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
@@ -25,14 +25,14 @@ export function* handleVoucherRevocation(
       postAnnullaVoucher({ codiceVoucher: action.payload })
     );
     const postAnnullaVoucherResult: SagaCallReturnType<typeof request> =
-      yield call(request);
+      yield* call(request);
 
     if (postAnnullaVoucherResult.isRight()) {
       if (postAnnullaVoucherResult.value.status === 200) {
-        yield put(svVoucherRevocation.success());
+        yield* put(svVoucherRevocation.success());
         return;
       }
-      yield put(
+      yield* put(
         svVoucherRevocation.failure(
           getGenericError(
             new Error(
@@ -43,10 +43,10 @@ export function* handleVoucherRevocation(
       );
       return;
     }
-    yield put(
+    yield* put(
       svVoucherRevocation.failure(getGenericError(new Error("Generic Error")))
     );
   } catch (e) {
-    yield put(svVoucherRevocation.failure(getNetworkError(e)));
+    yield* put(svVoucherRevocation.failure(getNetworkError(e)));
   }
 }

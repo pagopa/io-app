@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
+import { call } from "typed-redux-saga/macro";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -22,7 +22,7 @@ import { navigateBack } from "../../../../../../store/actions/navigation";
 import ROUTES from "../../../../../../navigation/routes";
 
 function* cgnActivationWorkUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: navigateToCgnActivationInformationTos,
     startScreenName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS,
     complete: cgnActivationComplete,
@@ -37,20 +37,20 @@ function* cgnActivationWorkUnit() {
  */
 export function* handleCgnStartActivationSaga(): SagaIterator {
   const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
-    yield call(NavigationService.getCurrentRoute);
+    yield* call(NavigationService.getCurrentRoute);
 
   const sagaExecution = () => withResetNavigationStack(cgnActivationWorkUnit);
-  const result: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+  const result: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
     sagaExecution
   );
 
   if (initialScreen?.routeName === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
-    yield call(NavigationService.navigate, ROUTES.MESSAGES_HOME);
+    yield* call(NavigationService.navigate, ROUTES.MESSAGES_HOME);
   }
   if (result === "completed") {
     if (initialScreen?.routeName === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST) {
-      yield call(navigateBack);
+      yield* call(navigateBack);
     }
-    yield call(navigateToCgnDetails);
+    yield* call(navigateToCgnDetails);
   }
 }
