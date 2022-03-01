@@ -179,7 +179,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     );
 
     // Checks if the user has already see the opt-in payment method choice screens, and if not run the workunit
-    yield takeLatest(
+    yield* takeLatest(
       optInPaymentMethodsShowChoice.request,
       optInShouldShowChoiceHandler
     );
