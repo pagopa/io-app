@@ -87,7 +87,9 @@ const ZendeskChooseCategory = (props: Props) => {
           // Set category as custom field
           addTicketCustomField(categoriesId, category.value);
           if (hasSubCategories(category)) {
-            navigation.navigate(navigateToZendeskChooseSubCategory());
+            navigation.navigate(
+              navigateToZendeskChooseSubCategory({ assistanceForPayment })
+            );
           } else {
             navigation.navigate(
               navigateToZendeskAskPermissions({ assistanceForPayment })

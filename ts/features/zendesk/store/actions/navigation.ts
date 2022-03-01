@@ -1,6 +1,7 @@
 import { NavigationActions } from "react-navigation";
 import ZENDESK_ROUTES from "../../navigation/routes";
 import { ZendeskAskPermissionsNavigationParams } from "../../screens/ZendeskAskPermissions";
+import { ZendeskChooseSubCategoryNavigationParams } from "../../screens/ZendeskChooseSubCategory";
 
 export const navigateToZendeskAskPermissions = (
   params: ZendeskAskPermissionsNavigationParams
@@ -17,7 +18,10 @@ export const navigateToZendeskChooseCategory = () =>
   NavigationActions.navigate({
     routeName: ZENDESK_ROUTES.CHOOSE_CATEGORY
   });
-export const navigateToZendeskChooseSubCategory = () =>
+export const navigateToZendeskChooseSubCategory = (
+  params: ZendeskChooseSubCategoryNavigationParams
+) =>
   NavigationActions.navigate({
-    routeName: ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY
+    routeName: ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY,
+    params
   });
