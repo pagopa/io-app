@@ -9,6 +9,8 @@ import { ContentClient } from "../../../api/content";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
 import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
+import { identificationRequest } from "../../../store/actions/identification";
+import { dismissSupport } from "../../../utils/supportAssistance";
 
 export function* watchZendeskSupportSaga() {
   const contentClient = ContentClient();
@@ -22,4 +24,9 @@ export function* watchZendeskSupportSaga() {
   );
 
   yield takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
+  // close the Zendesk support UI when the identification is requested
+  // this is due since there is a modal clash (iOS only) see https://pagopa.atlassian.net/browse/IABT-1348?filter=10121
+  yield takeLatest(identificationRequest, () => {
+    dismissSupport();
+  });
 }
