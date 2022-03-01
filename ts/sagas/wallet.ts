@@ -311,7 +311,7 @@ function* startOrResumeAddCreditCardSaga(
         // store the pm session token
         yield* put(refreshPMTokenWhileAddCreditCard.success(pagoPaToken.value));
         // Wait until the outcome code from the webview is available
-        yield* take(getType(addCreditCardOutcomeCode));
+        yield* take(addCreditCardOutcomeCode);
 
         const maybeOutcomeCode: ReturnType<
           typeof lastPaymentOutcomeCodeSelector
@@ -1032,10 +1032,11 @@ export function* watchPaymentInitializeSaga(): Iterator<ReduxSagaEffect> {
    */
   yield* takeEvery(getType(paymentInitializeState), function* () {
     newLookUpId();
-    yield* take([
-      getType(paymentCompletedSuccess),
-      getType(runDeleteActivePaymentSaga)
-    ]);
+    yield* take<
+      ActionType<
+        typeof paymentCompletedSuccess | typeof runDeleteActivePaymentSaga
+      >
+    >([paymentCompletedSuccess, runDeleteActivePaymentSaga]);
     resetLookUpId();
   });
 }
