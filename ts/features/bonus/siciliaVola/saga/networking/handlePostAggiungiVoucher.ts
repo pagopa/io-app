@@ -1,10 +1,11 @@
 import { ActionType } from "typesafe-actions";
-import { delay, Effect, put } from "redux-saga/effects";
+import { delay, put } from "typed-redux-saga/macro";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { svGenerateVoucherGeneratedVoucher } from "../../store/actions/voucherGeneration";
 import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
 import { SvVoucher } from "../../types/SvVoucher";
+import { ReduxSagaEffect } from "../../../../../types/utils";
 
 /**
  * Handle the remote call to check if the service is alive
@@ -15,9 +16,9 @@ import { SvVoucher } from "../../types/SvVoucher";
 export function* handlePostAggiungiVoucher(
   __: SessionManager<MitVoucherToken>,
   _: ActionType<typeof svGenerateVoucherGeneratedVoucher.request>
-): Generator<Effect, void> {
+): Generator<ReduxSagaEffect, void> {
   // TODO: add networking logic
-  yield delay(500);
+  yield* delay(500);
   const stubVoucher = {
     id: 123456,
     beneficiary: "Mario Rossi",
@@ -38,7 +39,7 @@ export function* handlePostAggiungiVoucher(
     barCode:
       "iVBORw0KGgoAAAANSUhEUgAAAJYAAABQAQAAAADTy7HmAAAALElEQVR42mP4/zO/UMX1WWdJn15k9c6qdJH/fxhGxUbFRsVGxUbFRsUIiAEAxCE9PtkFIH0AAAAASUVORK5CYII="
   } as SvVoucher;
-  yield put(
+  yield* put(
     svGenerateVoucherGeneratedVoucher.success({
       kind: "success",
       value: stubVoucher

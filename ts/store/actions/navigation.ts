@@ -3,30 +3,31 @@ import {
   NavigationBackActionPayload,
   StackActions
 } from "react-navigation";
-import CreditCardDetailScreen from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
+import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
-import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
-import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
-import PaginatedMessageDetailScreen from "../../screens/messages/paginated/MessageDetailScreen";
-import PaginatedMessageRouter from "../../screens/messages/paginated/MessageRouterScreen";
-import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
-import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
-import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
-import AddCardScreen from "../../screens/wallet/AddCardScreen";
-import AddCreditCardOutcomeCodeMessage from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
-import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
-import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
-import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
-import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
-import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataInsertionScreen";
-import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
-import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
-import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
-import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
-import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
-import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
-import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
+import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
+import { MessageDetailScreenNavigationParams } from "../../screens/messages/MessageDetailScreen";
+import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageDetailScreen";
+import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageRouterScreen";
+import { FingerprintScreenNavigationParams } from "../../screens/onboarding/FingerprintScreen";
+import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
+import { ServiceDetailsScreenNavigationParams } from "../../screens/services/ServiceDetailsScreen";
+import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
+import { AddCreditCardOutcomeCodeMessageNavigationParams } from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
+import { AddPaymentMethodScreenNavigationParams } from "../../screens/wallet/AddPaymentMethodScreen";
+import { ConfirmCardDetailsScreenNavigationParams } from "../../screens/wallet/ConfirmCardDetailsScreen";
+import { CreditCardOnboardingAttemptDetailScreenNavigationParams } from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
+import { ConfirmPaymentMethodScreenNavigationParams } from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
+import { ManualDataInsertionScreenNavigationParams } from "../../screens/wallet/payment/ManualDataInsertionScreen";
+import { PaymentOutcomeCodeMessageNavigationParams } from "../../screens/wallet/payment/PaymentOutcomeCodeMessage";
+import { PickPaymentMethodScreenNavigationParams } from "../../screens/wallet/payment/PickPaymentMethodScreen";
+import { PickPspScreenNavigationParams } from "../../screens/wallet/payment/PickPspScreen";
+import { TransactionErrorScreenNavigationParams } from "../../screens/wallet/payment/TransactionErrorScreen";
+import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
+import { PaymentHistoryDetailsScreenNavigationParams } from "../../screens/wallet/PaymentHistoryDetailsScreen";
+import { TransactionDetailsScreenNavigationParams } from "../../screens/wallet/TransactionDetailsScreen";
+import { WalletHomeNavigationParams } from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
@@ -108,7 +109,7 @@ export const navigateToOnboardingPinScreenAction = () =>
  * @deprecated
  */
 export const navigateToOnboardingFingerprintScreenAction = (
-  params: InferNavigationParams<typeof FingerprintScreen>
+  params: FingerprintScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -142,7 +143,7 @@ export const navigateToOnboardingServicePreferenceCompleteAction = () =>
  * @deprecated
  */
 export const navigateToServicesPreferenceModeSelectionScreen = (
-  params: InferNavigationParams<typeof OnboardingServicesPreferenceScreen>
+  params: OnboardingServicesPreferenceScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -183,7 +184,7 @@ export const navigateToEmailInsertScreen = () =>
  * @deprecated
  */
 export const navigateToMessageDetailScreenAction = (
-  params: InferNavigationParams<typeof MessageDetailScreen>
+  params: MessageDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -196,10 +197,10 @@ export const navigateToMessageDetailScreenAction = (
  * Open the Message Detail screen supporting the new UIMessage type.
  */
 export const navigateToPaginatedMessageDetailScreenAction = (
-  params: InferNavigationParams<typeof PaginatedMessageDetailScreen>
+  params: MessageDetailScreenPaginatedNavigationParams
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.MESSAGE_DETAIL,
+    routeName: ROUTES.MESSAGE_DETAIL_PAGINATED,
     params
   });
 
@@ -207,10 +208,10 @@ export const navigateToPaginatedMessageDetailScreenAction = (
  * Open the Message Detail Router supporting the new UIMessage type.
  */
 export const navigateToPaginatedMessageRouterAction = (
-  params: InferNavigationParams<typeof PaginatedMessageRouter>
+  params: MessageRouterScreenPaginatedNavigationParams
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.MESSAGE_ROUTER,
+    routeName: ROUTES.MESSAGE_ROUTER_PAGINATED,
     params
   });
 
@@ -218,7 +219,7 @@ export const navigateToPaginatedMessageRouterAction = (
  * @deprecated
  */
 export const navigateToMessageRouterScreen = (
-  params: InferNavigationParams<typeof MessageDetailScreen>
+  params: MessageDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -245,7 +246,7 @@ export const navigateToServiceHomeScreen = () =>
  * @deprecated
  */
 export const navigateToServiceDetailsScreen = (
-  params: InferNavigationParams<typeof ServiceDetailsScreen>
+  params: ServiceDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -359,7 +360,7 @@ export const navigateToPrivacyShareData = () =>
  * @deprecated
  */
 export const navigateToPaymentTransactionSummaryScreen = (
-  params: InferNavigationParams<typeof TransactionSummaryScreen>
+  params: TransactionSummaryScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -372,7 +373,7 @@ export const navigateToPaymentTransactionSummaryScreen = (
  * @deprecated
  */
 export const navigateToPaymentTransactionErrorScreen = (
-  params: InferNavigationParams<typeof TransactionErrorScreen>
+  params: TransactionErrorScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -385,7 +386,7 @@ export const navigateToPaymentTransactionErrorScreen = (
  * @deprecated
  */
 export const navigateToPaymentPickPaymentMethodScreen = (
-  params: InferNavigationParams<typeof PickPaymentMethodScreen>
+  params: PickPaymentMethodScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -398,7 +399,7 @@ export const navigateToPaymentPickPaymentMethodScreen = (
  * @deprecated
  */
 export const navigateToTransactionDetailsScreen = (
-  params: InferNavigationParams<typeof TransactionDetailsScreen>
+  params: TransactionDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -411,7 +412,7 @@ export const navigateToTransactionDetailsScreen = (
  * @deprecated
  */
 export const navigateToCreditCardDetailScreen = (
-  params: InferNavigationParams<typeof CreditCardDetailScreen>
+  params: CreditCardDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -500,7 +501,7 @@ export const navigateToPrivativeDetailScreen = (
  * @deprecated
  */
 export const navigateToPaymentPickPspScreen = (
-  params: InferNavigationParams<typeof PickPspScreen>
+  params: PickPspScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -513,7 +514,7 @@ export const navigateToPaymentPickPspScreen = (
  * @deprecated
  */
 export const navigateToPaymentConfirmPaymentMethodScreen = (
-  params: InferNavigationParams<typeof ConfirmPaymentMethodScreen>
+  params: ConfirmPaymentMethodScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -526,7 +527,7 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
  * @deprecated
  */
 export const navigateToPaymentHistoryDetail = (
-  params: InferNavigationParams<typeof PaymentHistoryDetailsScreen>
+  params: PaymentHistoryDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -539,7 +540,7 @@ export const navigateToPaymentHistoryDetail = (
  * @deprecated
  */
 export const navigateToCreditCardOnboardingAttempt = (
-  params: InferNavigationParams<typeof CreditCardOnboardingAttemptDetailScreen>
+  params: CreditCardOnboardingAttemptDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -551,9 +552,7 @@ export const navigateToCreditCardOnboardingAttempt = (
 /**
  * @deprecated
  */
-export const navigateToWalletHome = (
-  params?: InferNavigationParams<typeof WalletHomeScreen>
-) =>
+export const navigateToWalletHome = (params?: WalletHomeNavigationParams) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
       routeName: ROUTES.WALLET_HOME,
@@ -565,7 +564,7 @@ export const navigateToWalletHome = (
  * @deprecated
  */
 export const navigateToWalletAddPaymentMethod = (
-  params: InferNavigationParams<typeof AddPaymentMethodScreen>
+  params: AddPaymentMethodScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -578,7 +577,7 @@ export const navigateToWalletAddPaymentMethod = (
  * @deprecated
  */
 export const navigateToWalletAddCreditCard = (
-  params: InferNavigationParams<typeof AddCardScreen>
+  params: AddCardScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -591,7 +590,7 @@ export const navigateToWalletAddCreditCard = (
  * @deprecated
  */
 export const navigateToWalletConfirmCardDetails = (
-  params: InferNavigationParams<typeof ConfirmCardDetailsScreen>
+  params: ConfirmCardDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -614,7 +613,7 @@ export const navigateToPaymentScanQrCode = () =>
  * @deprecated
  */
 export const navigateToPaymentManualDataInsertion = (
-  params?: InferNavigationParams<typeof ManualDataInsertionScreen>
+  params?: ManualDataInsertionScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -627,7 +626,7 @@ export const navigateToPaymentManualDataInsertion = (
  * @deprecated
  */
 export const navigateToAddCreditCardOutcomeCode = (
-  params: InferNavigationParams<typeof AddCreditCardOutcomeCodeMessage>
+  params: AddCreditCardOutcomeCodeMessageNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -640,7 +639,7 @@ export const navigateToAddCreditCardOutcomeCode = (
  * @deprecated
  */
 export const navigateToPaymentOutcomeCode = (
-  params: InferNavigationParams<typeof PaymentOutcomeCodeMessage>
+  params: PaymentOutcomeCodeMessageNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -677,7 +676,7 @@ export const navigateToCiePinScreen = () =>
  * @deprecated
  */
 export const navigateToCieCardReaderScreen = (
-  params?: InferNavigationParams<typeof CieCardReaderScreen>
+  params?: CieCardReaderScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({

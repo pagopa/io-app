@@ -119,3 +119,19 @@ export const navigateToBpdTransactions = () =>
       routeName: BPD_ROUTES.TRANSACTIONS
     })
   );
+
+// OPT-IN
+export const navigateToOptInPaymentMethodsChoiceScreen = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE
+  });
+
+export const navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_DELETE_METHOD
+  });
+
+export const navigateToOptInPaymentMethodsThankYouKeepMethodsScreen = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_KEEP_METHOD
+  });

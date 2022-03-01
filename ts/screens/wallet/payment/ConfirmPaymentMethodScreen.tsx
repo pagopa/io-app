@@ -1,15 +1,17 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import ContextualInfo from "../../../components/ContextualInfo";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import ContextualInfo from "../../../components/ContextualInfo";
+import { H4 } from "../../../components/core/typography/H4";
+import { Link } from "../../../components/core/typography/Link";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -18,6 +20,17 @@ import BaseScreenComponent, {
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
+import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
+import {
+  getValueOrElse,
+  isError,
+  isLoading,
+  isReady
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
+import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
+import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 import I18n from "../../../i18n";
 import {
   navigateToPaymentOutcomeCode,
@@ -26,6 +39,7 @@ import {
   navigateToPayPalUpdatePspForPayment
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
+import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
 import {
   abortRunningPayment,
   paymentCompletedFailure,
@@ -35,8 +49,20 @@ import {
   paymentWebViewEnd,
   PaymentWebViewEndReason
 } from "../../../store/actions/wallet/payment";
+import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/wallet/transactions";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../store/reducers/types";
+import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
+import {
+  paymentStartPayloadSelector,
+  PaymentStartWebViewPayload,
+  pmSessionTokenSelector,
+  pspV2Selector
+} from "../../../store/reducers/wallet/payment";
+import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
+import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import {
   isCreditCard,
   isRawPayPal,
@@ -44,43 +70,14 @@ import {
   Psp,
   Wallet
 } from "../../../types/pagopa";
-import { showToast } from "../../../utils/showToast";
-import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { PayloadForAction } from "../../../types/utils";
-import {
-  paymentStartPayloadSelector,
-  PaymentStartWebViewPayload,
-  pmSessionTokenSelector,
-  pspSelectedV2ListSelector,
-  pspV2ListSelector
-} from "../../../store/reducers/wallet/payment";
-import {
-  getValueOrElse,
-  isError,
-  isLoading,
-  isReady
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
-import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
-import { H4 } from "../../../components/core/typography/H4";
-import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
-import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
-import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/wallet/transactions";
-import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { getLookUpIdPO } from "../../../utils/pmLookUpId";
-import { Link } from "../../../components/core/typography/Link";
-import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
-import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
-import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
-import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
-import { PspData } from "../../../../definitions/pagopa/PspData";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { showToast } from "../../../utils/showToast";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 
-export type NavigationParams = Readonly<{
+export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
@@ -89,7 +86,8 @@ export type NavigationParams = Readonly<{
   psps: ReadonlyArray<Psp>;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<ConfirmPaymentMethodScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -123,7 +121,12 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   padded: { paddingHorizontal: customVariables.contentPadding },
-  flex: { flex: 1 }
+  flex: { flex: 1 },
+  footerContainer: {
+    overflow: "hidden",
+    marginTop: -customVariables.footerShadowOffsetHeight,
+    paddingTop: customVariables.footerShadowOffsetHeight
+  }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -267,6 +270,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["payment"]}
     >
+      <SafeAreaView style={styles.flex}>
+        <Content noPadded={true} bounces={false}>
+          <PaymentBannerComponent
+            currentAmount={verifica.importoSingoloVersamento}
+            paymentReason={paymentReason}
+            fee={fee as ImportoEuroCents}
+          />
       <Content noPadded={true} bounces={false}>
         <PaymentBannerComponent
           currentAmount={verifica.importoSingoloVersamento}

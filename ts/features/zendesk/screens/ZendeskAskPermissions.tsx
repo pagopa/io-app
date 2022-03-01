@@ -1,47 +1,44 @@
-import React, { ReactNode } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
+import React, { ReactNode } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
-import { NavigationInjectedProps } from "react-navigation";
-import I18n from "../../../i18n";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { H1 } from "../../../components/core/typography/H1";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import { navigateToZendeskChooseCategory } from "../store/actions/navigation";
-import { H4 } from "../../../components/core/typography/H4";
-import { H3 } from "../../../components/core/typography/H3";
-import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
-import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
-import WebSiteIcon from "../../../../img/assistance/website.svg";
-import InfoIcon from "../../../../img/assistance/info.svg";
-import DeviceIcon from "../../../../img/assistance/telefonia.svg";
-import LoginIcon from "../../../../img/assistance/login.svg";
-import HistoryIcon from "../../../../img/assistance/history.svg";
-import EmailIcon from "../../../../img/assistance/email.svg";
-import StockIcon from "../../../../img/assistance/giacenza.svg";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
+import EmailIcon from "../../../../img/assistance/email.svg";
+import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
 import GalleryIcon from "../../../../img/assistance/gallery.svg";
+import StockIcon from "../../../../img/assistance/giacenza.svg";
+import HistoryIcon from "../../../../img/assistance/history.svg";
+import InfoIcon from "../../../../img/assistance/info.svg";
+import LoginIcon from "../../../../img/assistance/login.svg";
+import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
+import DeviceIcon from "../../../../img/assistance/telefonia.svg";
+import WebSiteIcon from "../../../../img/assistance/website.svg";
+import { H1 } from "../../../components/core/typography/H1";
+import { H3 } from "../../../components/core/typography/H3";
+import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import { useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
   isLoggedIn
 } from "../../../store/reducers/authentication";
+import { appVersionHistorySelector } from "../../../store/reducers/installation";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
-import { getModel, getSystemVersion } from "../../../utils/device";
-import { isIos } from "../../../utils/platform";
 import { getAppVersion } from "../../../utils/appVersion";
-import { zendeskSupportCompleted } from "../store/actions";
-import { openWebUrl } from "../../../utils/url";
-import { zendeskConfigSelector } from "../store/reducers";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { getModel, getSystemVersion } from "../../../utils/device";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { isIos } from "../../../utils/platform";
 import {
   addTicketCustomField,
   addTicketTag,
@@ -51,8 +48,11 @@ import {
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
-import { mixpanelTrack } from "../../../mixpanel";
-import { appVersionHistorySelector } from "../../../store/reducers/installation";
+import { openWebUrl } from "../../../utils/url";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { zendeskSupportCompleted } from "../store/actions";
+import { navigateToZendeskChooseCategory } from "../store/actions/navigation";
+import { zendeskConfigSelector } from "../store/reducers";
 
 /**
  * Transform an array of string into a Zendesk
@@ -78,7 +78,6 @@ type ItemProps = {
   nameSurname: string;
   email: string;
   deviceDescription: string;
-  currentVersion: string;
   identityProvider: string;
 };
 
@@ -140,10 +139,9 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   },
   {
     icon: <InfoIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.currentAppVersion"),
-    value: props.currentVersion,
-    zendeskId: zendeskCurrentAppVersionId,
-    testId: "appVersion"
+    title: I18n.t("support.askPermissions.appVersionsHistory"),
+    value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
+    testId: "appVersionsHistory"
   },
   {
     icon: <LoginIcon {...iconProps} />,
@@ -179,7 +177,11 @@ const ItemComponent = (props: Item) => (
   </ListItem>
 );
 
-type Props = NavigationInjectedProps<{ assistanceForPayment: boolean }>;
+export type ZendeskAskPermissionsNavigationParams = {
+  assistanceForPayment: boolean;
+};
+
+type Props = NavigationStackScreenProps<ZendeskAskPermissionsNavigationParams>;
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor
@@ -202,6 +204,7 @@ const ZendeskAskPermissions = (props: Props) => {
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
   const versionsHistory = useIOSelector(appVersionHistorySelector);
+  const currentVersion = getAppVersion();
 
   const itemsProps: ItemProps = {
     fiscalCode,
@@ -210,7 +213,6 @@ const ZendeskAskPermissions = (props: Props) => {
     deviceDescription: `${getModel()} · ${
       isIos ? "iOS" : "Android"
     } · ${getSystemVersion()}`,
-    currentVersion: getAppVersion(),
     identityProvider
   };
 
@@ -247,14 +249,20 @@ const ZendeskAskPermissions = (props: Props) => {
       }
     });
 
-    // Tag the ticket with the current app version
-    addTicketTag(itemsProps.currentVersion);
-
-    // Add the versions history to the relative Zendesk field
+    // Send the versions history
     addTicketCustomField(
       zendeskVersionsHistoryId,
       arrayToZendeskValue(versionsHistory)
     );
+
+    // Even though the current app version field
+    // has been replaced by the versions history,
+    // we still send the old app version field for
+    // backward compatibility.
+    addTicketCustomField(zendeskCurrentAppVersionId, currentVersion);
+
+    // Tag the ticket with the current app version
+    addTicketTag(currentVersion);
 
     const canSkipCategoryChoice = (): boolean =>
       !isReady(zendeskConfig) ||

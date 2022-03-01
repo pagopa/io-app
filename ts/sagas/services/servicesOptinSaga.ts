@@ -1,4 +1,4 @@
-import { call, select, take } from "redux-saga/effects";
+import { call, select, take } from "typed-redux-saga/macro";
 import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import {
@@ -14,14 +14,14 @@ import {
 export function* askServicesPreferencesModeOptin(isFirstOnboarding: boolean) {
   const profileServicePreferenceMode: ReturnType<
     typeof profileServicePreferencesModeSelector
-  > = yield select(profileServicePreferencesModeSelector);
+  > = yield* select(profileServicePreferencesModeSelector);
   // if the user's preference is set, do nothing
   if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
     return;
   }
-  yield call(navigateToServicesPreferenceModeSelectionScreen, {
+  yield* call(navigateToServicesPreferenceModeSelectionScreen, {
     isFirstOnboarding
   });
   // wait until a choice is done by the user
-  yield take(servicesOptinCompleted);
+  yield* take(servicesOptinCompleted);
 }

@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ContentClient } from "../../../../api/content";
 import { SagaCallReturnType } from "../../../../types/utils";
@@ -12,12 +12,14 @@ export function* handleGetZendeskConfig(
   try {
     const getZendeskConfigResult: SagaCallReturnType<
       typeof getZendeskConfigClient
-    > = yield call(getZendeskConfigClient);
+    > = yield* call(getZendeskConfigClient);
     if (getZendeskConfigResult.isRight()) {
       if (getZendeskConfigResult.value.status === 200) {
-        yield put(getZendeskConfig.success(getZendeskConfigResult.value.value));
+        yield* put(
+          getZendeskConfig.success(getZendeskConfigResult.value.value)
+        );
       } else {
-        yield put(
+        yield* put(
           getZendeskConfig.failure(
             getGenericError(
               Error(`response status ${getZendeskConfigResult.value.status}`)
@@ -31,6 +33,6 @@ export function* handleGetZendeskConfig(
       );
     }
   } catch (e) {
-    yield put(getZendeskConfig.failure(getNetworkError(e)));
+    yield* put(getZendeskConfig.failure(getNetworkError(e)));
   }
 }

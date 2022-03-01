@@ -36,6 +36,7 @@ const handleTransactionsStatus = (
 /**
  * Display all the transactions for a specific period if available, in other case show a loading or an error screen.
  * First check the whole bpd status than if is some check the transactions status.
+ * TODO: Delete, replaced by BpdTransactionsRouterScreen
  * @deprecated
  * @constructor
  */

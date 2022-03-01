@@ -1,16 +1,16 @@
-import { call, put, take, Effect } from "redux-saga/effects";
+import { call, put, take } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-
 import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionInvalid } from "../../store/actions/authentication";
 import { abortOnboarding } from "../../store/actions/onboarding";
+import { ReduxSagaEffect } from "../../types/utils";
 import { deletePin } from "../../utils/keychain";
 
-export function* watchAbortOnboardingSaga(): Iterator<Effect> {
-  yield take(getType(abortOnboarding));
-  yield call(deletePin);
+export function* watchAbortOnboardingSaga(): Iterator<ReduxSagaEffect> {
+  yield* take(getType(abortOnboarding));
+  yield* call(deletePin);
   // invalidate the session
-  yield put(sessionInvalid());
+  yield* put(sessionInvalid());
   // initialize the app from scratch (forcing an onboarding flow)
-  yield put(startApplicationInitialization());
+  yield* put(startApplicationInitialization());
 }

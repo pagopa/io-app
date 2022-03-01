@@ -5,7 +5,7 @@ import { PaymentMethod } from "../../../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import ActivateBpdOnNewPaymentMethodScreen from "./ActivateBpdOnNewPaymentMethodScreen";
 
-type ActivateBpdOnNewCreditCardScreenNavigationParams = {
+export type ActivateBpdOnNewCreditCardScreenNavigationParams = {
   creditCards: ReadonlyArray<PaymentMethod>;
 };
 type Props =

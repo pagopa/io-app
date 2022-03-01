@@ -4,14 +4,14 @@
 import { Content, H2, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 
-type Props = NavigationInjectedProps;
+type Props = NavigationStackScreenProps;
 
 type State = {
   isLoadingCompleted: boolean;

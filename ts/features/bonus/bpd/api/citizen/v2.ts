@@ -38,7 +38,10 @@ export const citizenV2EnrollPUT: EnrollmentV2TTExtra = {
   method: "put",
   url: () => `/bpd/io/citizen/v2`,
   query: _ => ({}),
-  body: _ => "",
+  body: ({ citizenOptInStatus }) =>
+    JSON.stringify(
+      citizenOptInStatus ? { optInStatus: citizenOptInStatus } : {}
+    ),
   headers: composeHeaderProducers(bpdHeadersProducers(), ApiHeaderJson),
   response_decoder: enrollmentDecoder(PatchedCitizenV2Resource)
 };

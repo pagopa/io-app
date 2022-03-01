@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { Option } from "fp-ts/lib/Option";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
@@ -27,10 +27,10 @@ export function* handlePaypalSearchPsp(
 ) {
   try {
     const searchPayPalPspRequest: SagaCallReturnType<typeof searchPsp> =
-      yield call(sessionManager.withRefresh(searchPsp));
+      yield* call(sessionManager.withRefresh(searchPsp));
     if (searchPayPalPspRequest.isRight()) {
       if (searchPayPalPspRequest.value.status === 200) {
-        yield put(
+        yield* put(
           searchPaypalPsp.success(
             searchPayPalPspRequest.value.value.data.map(convertPayPalPsp)
           )
@@ -38,7 +38,7 @@ export function* handlePaypalSearchPsp(
         return;
       }
       // != 200
-      yield put(
+      yield* put(
         searchPaypalPsp.failure(
           getGenericError(
             new Error(`response status ${searchPayPalPspRequest.value.status}`)
@@ -46,7 +46,7 @@ export function* handlePaypalSearchPsp(
         )
       );
     } else {
-      yield put(
+      yield* put(
         searchPaypalPsp.failure(
           getGenericError(
             new Error(readablePrivacyReport(searchPayPalPspRequest.value))
@@ -55,7 +55,7 @@ export function* handlePaypalSearchPsp(
       );
     }
   } catch (e) {
-    yield put(searchPaypalPsp.failure(getNetworkError(e)));
+    yield* put(searchPaypalPsp.failure(getNetworkError(e)));
   }
 }
 
@@ -65,19 +65,19 @@ export function* refreshPMToken(
 ) {
   try {
     // If the request for the new token fails a new Error is raised
-    const pagoPaToken: Option<PaymentManagerToken> = yield call(
+    const pagoPaToken: Option<PaymentManagerToken> = yield* call(
       sessionManager.getNewToken
     );
     if (pagoPaToken.isSome()) {
-      yield put(walletAddPaypalRefreshPMToken.success(pagoPaToken.value));
+      yield* put(walletAddPaypalRefreshPMToken.success(pagoPaToken.value));
     } else {
-      yield put(
+      yield* put(
         walletAddPaypalRefreshPMToken.failure(
           new Error("cant load pm session token")
         )
       );
     }
   } catch (e) {
-    yield put(walletAddPaypalRefreshPMToken.failure(getError(e)));
+    yield* put(walletAddPaypalRefreshPMToken.failure(getError(e)));
   }
 }

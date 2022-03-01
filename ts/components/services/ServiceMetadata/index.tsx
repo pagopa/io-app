@@ -77,7 +77,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
           label={"serviceDetail.fiscalCode"}
           onPress={getItemOnPress(organizationFiscalCode, "COPY")}
           accessibilityLabel={genServiceMetadataAccessibilityLabel(
-            I18n.t("serviceDetail.fiscalCode"),
+            I18n.t("serviceDetail.fiscalCodeAccessibility"),
             organizationFiscalCode,
             I18n.t("clipboard.copyText")
           )}

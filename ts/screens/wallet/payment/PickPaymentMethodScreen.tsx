@@ -1,30 +1,41 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
  */
-import { some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
-
-import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
+import { NavigationStackScreenProps } from "react-navigation-stack";
+import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { H1 } from "../../../components/core/typography/H1";
+import { H4 } from "../../../components/core/typography/H4";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
+import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
 import {
   navigateBack,
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
+import { pspV2Selector } from "../../../store/reducers/wallet/payment";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
@@ -34,7 +45,6 @@ import {
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
-import { showToast } from "../../../utils/showToast";
 import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
 import {
   cancelButtonProps,
@@ -51,14 +61,15 @@ import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { dispatchPickPspOrConfirm } from "./common";
 
-type NavigationParams = Readonly<{
+export type PickPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
   idPayment: string;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<PickPaymentMethodScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
