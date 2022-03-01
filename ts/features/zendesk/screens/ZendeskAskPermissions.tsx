@@ -37,7 +37,6 @@ import {
 } from "../../../store/reducers/profile";
 import { getAppVersion } from "../../../utils/appVersion";
 import { getModel, getSystemVersion } from "../../../utils/device";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isIos } from "../../../utils/platform";
 import {
   addTicketCustomField,
@@ -49,10 +48,7 @@ import {
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import { zendeskSupportCompleted } from "../store/actions";
-import { navigateToZendeskChooseCategory } from "../store/actions/navigation";
-import { zendeskConfigSelector } from "../store/reducers";
 
 /**
  * Transform an array of string into a Zendesk
@@ -191,10 +187,8 @@ const ZendeskAskPermissions = (props: Props) => {
     "assistanceForPayment"
   );
 
-  const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
-  const zendeskConfig = useIOSelector(zendeskConfigSelector);
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = useIOSelector(idpSelector)
@@ -264,20 +258,9 @@ const ZendeskAskPermissions = (props: Props) => {
     // Tag the ticket with the current app version
     addTicketTag(currentVersion);
 
-    const canSkipCategoryChoice = (): boolean =>
-      !isReady(zendeskConfig) ||
-      Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
-        .length === 0 ||
-      assistanceForPayment;
-
-    // if is not possible to get the config, if the config has any category or if is an assistanceForPayment request open directly a ticket.
-    if (canSkipCategoryChoice()) {
-      openSupportTicket();
-      void mixpanelTrack("ZENDESK_OPEN_TICKET");
-      workUnitCompleted();
-    } else {
-      navigation.navigate(navigateToZendeskChooseCategory());
-    }
+    openSupportTicket();
+    void mixpanelTrack("ZENDESK_OPEN_TICKET");
+    workUnitCompleted();
   };
   const cancelButtonProps = {
     testID: "cancelButtonId",
