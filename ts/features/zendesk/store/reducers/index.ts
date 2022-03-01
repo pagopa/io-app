@@ -94,8 +94,15 @@ export const zendeskConfigSelector = createSelector(
 
 export const zendeskSelectedCategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
-  (zendeskConfig: ZendeskCategory | undefined): ZendeskCategory | undefined =>
-    zendeskConfig
+  (zendeskCategory: ZendeskCategory | undefined): ZendeskCategory | undefined =>
+    zendeskCategory
+);
+
+export const zendeskSelectedSubcategorySelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.selectedSubcategory],
+  (
+    zendeskSubcategory: ZendeskSubCategory | undefined
+  ): ZendeskSubCategory | undefined => zendeskSubcategory
 );
 
 export const zendeskTicketNumberSelector = createSelector(
