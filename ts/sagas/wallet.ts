@@ -250,10 +250,11 @@ function* startOrResumeAddCreditCardSaga(
           creditcard: creditCardWallet
         })
       );
-      const responseAction = yield* take([
-        getType(addWalletCreditCardSuccess),
-        getType(addWalletCreditCardFailure)
-      ]);
+      const responseAction = yield* take<
+        ActionType<
+          typeof addWalletCreditCardSuccess | typeof addWalletCreditCardFailure
+        >
+      >([addWalletCreditCardSuccess, addWalletCreditCardFailure]);
       if (isActionOf(addWalletCreditCardFailure, responseAction)) {
         // this step failed, exit the flow
         if (
@@ -326,10 +327,11 @@ function* startOrResumeAddCreditCardSaga(
 
             // Get all the wallets
             yield* put(fetchWalletsRequest());
-            const fetchWalletsResultAction = yield* take([
-              getType(fetchWalletsSuccess),
-              getType(fetchWalletsFailure)
-            ]);
+            const fetchWalletsResultAction = yield* take<
+              ActionType<
+                typeof fetchWalletsSuccess | typeof fetchWalletsFailure
+              >
+            >([fetchWalletsSuccess, fetchWalletsFailure]);
             if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
               const updatedWallets = fetchWalletsResultAction.payload;
               const maybeAddedWallet = updatedWallets.find(
@@ -471,10 +473,9 @@ function* startOrResumePaymentActivationSaga(
           verifica: action.payload.verifica
         })
       );
-      const responseAction = yield* take([
-        getType(paymentAttiva.success),
-        getType(paymentAttiva.failure)
-      ]);
+      const responseAction = yield* take<
+        ActionType<typeof paymentAttiva.success | typeof paymentAttiva.failure>
+      >([paymentAttiva.success, paymentAttiva.failure]);
       if (isActionOf(paymentAttiva.failure, responseAction)) {
         // this step failed, exit the flow
         return;
@@ -487,10 +488,11 @@ function* startOrResumePaymentActivationSaga(
     if (pot.isNone(paymentState.paymentId)) {
       // this step needs to be executed
       yield* put(paymentIdPolling.request(action.payload.verifica));
-      const responseAction = yield* take([
-        getType(paymentIdPolling.success),
-        getType(paymentIdPolling.failure)
-      ]);
+      const responseAction = yield* take<
+        ActionType<
+          typeof paymentIdPolling.success | typeof paymentIdPolling.failure
+        >
+      >([paymentIdPolling.success, paymentIdPolling.failure]);
       if (isActionOf(paymentIdPolling.failure, responseAction)) {
         // this step failed, exit the flow
         return;
@@ -503,10 +505,9 @@ function* startOrResumePaymentActivationSaga(
     if (pot.isNone(paymentState.check)) {
       // this step needs to be executed
       yield* put(paymentCheck.request(paymentState.paymentId.value));
-      const responseAction = yield* take([
-        getType(paymentCheck.success),
-        getType(paymentCheck.failure)
-      ]);
+      const responseAction = yield* take<
+        ActionType<typeof paymentCheck.success | typeof paymentCheck.failure>
+      >([paymentCheck.success, paymentCheck.failure]);
       if (isActionOf(paymentCheck.failure, responseAction)) {
         // this step failed, exit the flow
         return;
