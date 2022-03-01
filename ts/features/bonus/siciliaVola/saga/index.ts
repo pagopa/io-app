@@ -70,38 +70,38 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
 
   // SV Activation workflow
   yield* takeLatest(
-    getType(svGenerateVoucherStart),
+    svGenerateVoucherStart,
     handleSvVoucherGenerationStartActivationSaga
   );
 
   // SV get check if the service is alive
-  yield* takeLatest(getType(svServiceAlive.request), handleSvServiceAlive);
+  yield* takeLatest(svServiceAlive.request, handleSvServiceAlive);
 
   // SV get check if the user already accepted the ToS
   // TODO: pass svSessionManager in order to send the MitVoucherToken
-  yield* takeLatest(getType(svTosAccepted.request), handleSvTosAccepted);
+  yield* takeLatest(svTosAccepted.request, handleSvTosAccepted);
 
   // SV post the user tos acceptance
   // TODO: pass svSessionManager in order to send the MitVoucherToken
-  yield* takeLatest(getType(svAcceptTos.request), handleSvAccepTos);
+  yield* takeLatest(svAcceptTos.request, handleSvAccepTos);
 
   // SV get the list of UE state
   yield* takeLatest(
-    getType(svGenerateVoucherAvailableState.request),
+    svGenerateVoucherAvailableState.request,
     handleGetStatiUE,
     siciliaVolaClient.getStatiUE
   );
 
   // SV get the list municipalities given a province
   yield* takeLatest(
-    getType(svGenerateVoucherAvailableMunicipality.request),
+    svGenerateVoucherAvailableMunicipality.request,
     handleGetListaComuniBySiglaProvincia,
     siciliaVolaClient.getListaComuniBySiglaProvincia
   );
 
   // SV get the list of available destination given a region when the selected state is Italy
   yield* takeLatest(
-    getType(svGenerateVoucherAvailableDestination.request),
+    svGenerateVoucherAvailableDestination.request,
     handleGetAeroportiAmmessi,
     siciliaVolaClient.getAeroportiAmmessi,
     svSessionManager
@@ -109,14 +109,14 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
 
   // SV post the voucher request
   yield* takeLatest(
-    getType(svGenerateVoucherGeneratedVoucher.request),
+    svGenerateVoucherGeneratedVoucher.request,
     handlePostAggiungiVoucher,
     svSessionManager
   );
 
   // SV get the vouchers list already generated
   yield* takeLatest(
-    getType(svVoucherListGet.request),
+    svVoucherListGet.request,
     handleGetVoucherBeneficiario,
     siciliaVolaClient.getVoucherBeneficiario,
     svSessionManager
@@ -124,7 +124,7 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
 
   // SV get the list of the possible voucher state
   yield* takeLatest(
-    getType(svPossibleVoucherStateGet.request),
+    svPossibleVoucherStateGet.request,
     handleGetVoucheStati,
     siciliaVolaClient.getStatiVoucher,
     svSessionManager
@@ -133,7 +133,7 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // SV get the voucher details
   // TODO: pass the client when it will be created
   yield* takeLatest(
-    getType(svVoucherDetailGet.request),
+    svVoucherDetailGet.request,
     handleGetDettaglioVoucher,
     svSessionManager
   );
@@ -147,7 +147,7 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   );
 
   yield* takeLatest(
-    getType(svGetPdfVoucher.request),
+    svGetPdfVoucher.request,
     handleGetStampaVoucher,
     siciliaVolaClient.getStampaVoucher,
     svSessionManager

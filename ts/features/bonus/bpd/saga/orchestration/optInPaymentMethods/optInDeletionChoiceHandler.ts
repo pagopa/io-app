@@ -28,8 +28,8 @@ export function* optInDeletionChoiceHandler(): Generator<
       | typeof deleteAllPaymentMethodsByFunction.failure
     >
   >([
-    getType(deleteAllPaymentMethodsByFunction.success),
-    getType(deleteAllPaymentMethodsByFunction.failure)
+    deleteAllPaymentMethodsByFunction.success,
+    deleteAllPaymentMethodsByFunction.failure
   ]);
   if (
     isActionOf(

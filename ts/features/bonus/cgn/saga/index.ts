@@ -1,6 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
-import { getType } from "typesafe-actions";
 import {
   cgnActivationStart,
   cgnRequestActivation
@@ -50,7 +49,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
 
   // CGN Activation request with status polling
   yield* takeLatest(
-    getType(cgnRequestActivation),
+    cgnRequestActivation,
     handleCgnActivationSaga,
     cgnActivationSaga(
       backendCGN.startCgnActivation,
@@ -59,25 +58,25 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   );
 
   // CGN Activation workflow
-  yield* takeLatest(getType(cgnActivationStart), handleCgnStartActivationSaga);
+  yield* takeLatest(cgnActivationStart, handleCgnStartActivationSaga);
 
   // CGN Load details
   yield* takeLatest(
-    getType(cgnDetails.request),
+    cgnDetails.request,
     cgnGetInformationSaga,
     backendCGN.getCgnStatus
   );
 
   // Eyca get status
   yield* takeLatest(
-    getType(cgnEycaStatus.request),
+    cgnEycaStatus.request,
     handleGetEycaStatus,
     backendCGN.getEycaStatus
   );
 
   // Eyca Activation
   yield* takeLatest(
-    getType(cgnEycaActivation.request),
+    cgnEycaActivation.request,
     eycaActivationSaga,
     backendCGN.getEycaActivation,
     backendCGN.startEycaActivation
@@ -85,55 +84,55 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
 
   // Eyca Activation Status
   yield* takeLatest(
-    getType(cgnEycaActivationStatusRequest),
+    cgnEycaActivationStatusRequest,
     getEycaActivationStatusSaga,
     backendCGN.getEycaActivation
   );
 
   // CGN Otp generation
   yield* takeLatest(
-    getType(cgnGenerateOtpAction.request),
+    cgnGenerateOtpAction.request,
     cgnGenerateOtp,
     backendCGN.generateOtp
   );
 
   // CGN Unsubscription
   yield* takeLatest(
-    getType(cgnUnsubscribe.request),
+    cgnUnsubscribe.request,
     cgnUnsubscriptionHandler,
     backendCGN.startCgnUnsubscription
   );
   // CGN Merchants categories
   yield* takeLatest(
-    getType(cgnCategories.request),
+    cgnCategories.request,
     cgnCategoriesSaga,
     backendCgnMerchants.getPublishedCategories
   );
 
   // CGN Offline Merchants
   yield* takeLatest(
-    getType(cgnOfflineMerchants.request),
+    cgnOfflineMerchants.request,
     cgnOfflineMerchantsSaga,
     backendCgnMerchants.getOfflineMerchants
   );
 
   // CGN Online Merchants
   yield* takeLatest(
-    getType(cgnOnlineMerchants.request),
+    cgnOnlineMerchants.request,
     cgnOnlineMerchantsSaga,
     backendCgnMerchants.getOnlineMerchants
   );
 
   // CGN get selected Merchant detail
   yield* takeLatest(
-    getType(cgnSelectedMerchant.request),
+    cgnSelectedMerchant.request,
     cgnMerchantDetail,
     backendCgnMerchants.getMerchant
   );
 
   // CGN Bucket Code consuption
   yield* takeLatest(
-    getType(cgnCodeFromBucket.request),
+    cgnCodeFromBucket.request,
     cgnBucketConsuption,
     backendCgnMerchants.getDiscountBucketCode
   );
