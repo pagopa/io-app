@@ -14,9 +14,11 @@ import { Action } from "../../../../store/actions/types";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber,
-  zendeskSelectedCategory
+  zendeskSelectedCategory,
+  zendeskSelectedSubcategory
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
+import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 
 type ZendeskValue = {
   panicMode: boolean;
@@ -30,6 +32,7 @@ export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
 export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
+  selectedSubcategory?: ZendeskSubCategory;
   ticketNumber: RemoteValue<number, Error>;
 };
 
@@ -72,6 +75,8 @@ const reducer = (
       };
     case getType(zendeskSelectedCategory):
       return { ...state, selectedCategory: action.payload };
+    case getType(zendeskSelectedSubcategory):
+      return { ...state, selectedSubcategory: action.payload };
     case getType(zendeskRequestTicketNumber.request):
       return { ...state, ticketNumber: remoteLoading };
     case getType(zendeskRequestTicketNumber.success):
