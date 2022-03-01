@@ -23,10 +23,10 @@ export function* watchZendeskSupportSaga() {
     contentClient.getZendeskConfig
   );
 
-  yield takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
+  yield* takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
   // close the Zendesk support UI when the identification is requested
   // this is due since there is a modal clash (iOS only) see https://pagopa.atlassian.net/browse/IABT-1348?filter=10121
-  yield takeLatest(identificationRequest, () => {
+  yield* takeLatest(identificationRequest, () => {
     dismissSupport();
   });
   yield* takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
