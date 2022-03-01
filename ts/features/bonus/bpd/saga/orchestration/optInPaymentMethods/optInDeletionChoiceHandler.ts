@@ -1,5 +1,5 @@
 import { put, take } from "typed-redux-saga/macro";
-import { ActionType, isActionOf } from "typesafe-actions";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { deleteAllPaymentMethodsByFunction } from "../../../../../../store/actions/wallet/delete";
 import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
