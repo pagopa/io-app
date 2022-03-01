@@ -12,8 +12,6 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../../components/ContextualInfo";
 import { H4 } from "../../../components/core/typography/H4";
 import { Link } from "../../../components/core/typography/Link";
-import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
@@ -58,7 +56,8 @@ import {
   paymentStartPayloadSelector,
   PaymentStartWebViewPayload,
   pmSessionTokenSelector,
-  pspV2Selector
+  pspSelectedV2ListSelector,
+  pspV2ListSelector
 } from "../../../store/reducers/wallet/payment";
 import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
@@ -73,9 +72,12 @@ import {
 import { PayloadForAction } from "../../../types/utils";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
-import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 
 export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -254,12 +256,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     );
   };
 
-  const formData = props.payStartWebviewPayload
-    .map<Record<string, string | number>>(payload => ({
-      ...payload,
-      ...getLookUpIdPO()
-    }))
-    .getOrElse({});
+  const formData = {};
   const paymentMethod = props.getPaymentMethodById(wallet.idWallet);
   const ispaymentMethodCreditCard =
     paymentMethod !== undefined && isCreditCard(paymentMethod);
@@ -277,109 +274,103 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             paymentReason={paymentReason}
             fee={fee as ImportoEuroCents}
           />
-      <Content noPadded={true} bounces={false}>
-        <PaymentBannerComponent
-          currentAmount={verifica.importoSingoloVersamento}
-          paymentReason={paymentReason}
-          fee={fee as ImportoEuroCents}
-        />
-        <View style={styles.padded}>
-          <View spacer={true} />
-          <PaymentMethodCard
-            isPaypalEnabled={props.isPaypalEnabled}
-            paymentMethod={props.getPaymentMethodById(wallet.idWallet)}
-          />
-          {/* show the ability to change psp only when the payment method is a credit card */}
-          {!isPayingWithPaypal && (
-            <>
-              <View spacer={true} />
-              {maybePsp.isNone() ? (
-                <H4 weight={"Regular"}>{I18n.t("payment.noPsp")}</H4>
-              ) : (
-                <H4 weight={"Regular"}>
-                  {I18n.t("payment.currentPsp")}
-                  <H4>{` ${maybePsp.value.businessName}`}</H4>
-                </H4>
-              )}
-              <Link onPress={props.pickPsp} weight={"Bold"}>
-                {I18n.t("payment.changePsp")}
-              </Link>
-              <View spacer={true} large={true} />
-              <Link onPress={showHelp} testID="why-a-fee">
-                {I18n.t("wallet.whyAFee.title")}
-              </Link>
-            </>
-          )}
-          {isPayingWithPaypal && (
-            <>
-              <View spacer={true} />
-              <PayPalCheckoutPspComponent
-                onEditPress={handleOnEditPaypalPsp}
-                fee={fee as ImportoEuroCents}
-                pspName={props.paypalSelectedPsp?.ragioneSociale ?? "-"}
-                privacyUrl={props.paypalSelectedPsp?.privacyUrl}
-              />
-            </>
-          )}
-        </View>
-      </Content>
+          <View style={styles.padded}>
+            <View spacer={true} />
+            <PaymentMethodCard
+              isPaypalEnabled={props.isPaypalEnabled}
+              paymentMethod={props.getPaymentMethodById(wallet.idWallet)}
+            />
+            {/* show the ability to change psp only when the payment method is a credit card */}
+            {!isPayingWithPaypal && (
+              <>
+                <View spacer={true} />
+                {maybePsp.isNone() ? (
+                  <H4 weight={"Regular"}>{I18n.t("payment.noPsp")}</H4>
+                ) : (
+                  <H4 weight={"Regular"}>
+                    {I18n.t("payment.currentPsp")}
+                    <H4>{` ${maybePsp.value.businessName}`}</H4>
+                  </H4>
+                )}
+                <Link onPress={props.pickPsp} weight={"Bold"}>
+                  {I18n.t("payment.changePsp")}
+                </Link>
+                <View spacer={true} large={true} />
+                <Link onPress={showHelp} testID="why-a-fee">
+                  {I18n.t("wallet.whyAFee.title")}
+                </Link>
+              </>
+            )}
+            {isPayingWithPaypal && (
+              <>
+                <View spacer={true} />
+                <PayPalCheckoutPspComponent
+                  onEditPress={handleOnEditPaypalPsp}
+                  fee={fee as ImportoEuroCents}
+                  pspName={props.paypalSelectedPsp?.ragioneSociale ?? "-"}
+                  privacyUrl={props.paypalSelectedPsp?.privacyUrl}
+                />
+              </>
+            )}
+          </View>
+        </Content>
 
-      <View footer={true}>
-        <ButtonDefaultOpacity
-          block={true}
-          primary={true}
-          // a payment is running
-          disabled={props.payStartWebviewPayload.isSome()}
-          onPress={() =>
-            props.dispatchPaymentStart({
-              idWallet: wallet.idWallet,
-              idPayment,
-              language: getLocalePrimaryWithFallback()
-            })
-          }
-        >
-          <Text>{`${I18n.t(
-            "wallet.ConfirmPayment.goToPay"
-          )} ${formatNumberCentsToAmount(totalAmount, true)}`}</Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        <View style={styles.parent}>
+        <View footer={true}>
           <ButtonDefaultOpacity
-            style={styles.child}
             block={true}
-            cancel={true}
-            onPress={props.onCancel}
-            testID={"cancelPaymentButton"}
+            primary={true}
+            // a payment is running
+            disabled={props.payStartWebviewPayload.isSome()}
+            onPress={() =>
+              props.dispatchPaymentStart({
+                idWallet: wallet.idWallet,
+                idPayment,
+                language: getLocalePrimaryWithFallback()
+              })
+            }
           >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
+            <Text>{`${I18n.t(
+              "wallet.ConfirmPayment.goToPay"
+            )} ${formatNumberCentsToAmount(totalAmount, true)}`}</Text>
           </ButtonDefaultOpacity>
-          <View hspacer={true} />
-          <ButtonDefaultOpacity
-            style={styles.childTwice}
-            block={true}
-            bordered={true}
-            onPress={props.pickPaymentMethod}
-          >
-            <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
-          </ButtonDefaultOpacity>
+          <View spacer={true} />
+          <View style={styles.parent}>
+            <ButtonDefaultOpacity
+              style={styles.child}
+              block={true}
+              cancel={true}
+              onPress={props.onCancel}
+              testID={"cancelPaymentButton"}
+            >
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
+            </ButtonDefaultOpacity>
+            <View hspacer={true} />
+            <ButtonDefaultOpacity
+              style={styles.childTwice}
+              block={true}
+              bordered={true}
+              onPress={props.pickPaymentMethod}
+            >
+              <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
+            </ButtonDefaultOpacity>
+          </View>
         </View>
-      </View>
-      {props.payStartWebviewPayload.isSome() && (
-        <PayWebViewModal
-          postUri={urlPrefix + payUrlSuffix}
-          formData={formData}
-          showInfoHeader={ispaymentMethodCreditCard}
-          finishPathName={webViewExitPathName}
-          onFinish={handlePaymentOutcome}
-          outcomeQueryparamName={webViewOutcomeParamName}
-          onGoBack={handlePayWebviewGoBack}
-          modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
-        />
-      )}
+        {props.payStartWebviewPayload.isSome() && (
+          <PayWebViewModal
+            postUri={urlPrefix + payUrlSuffix}
+            formData={formData}
+            showInfoHeader={ispaymentMethodCreditCard}
+            finishPathName={webViewExitPathName}
+            onFinish={handlePaymentOutcome}
+            outcomeQueryparamName={webViewOutcomeParamName}
+            onGoBack={handlePayWebviewGoBack}
+            modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
+          />
+        )}
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };
-
 const mapStateToProps = (state: GlobalState) => {
   const pmSessionToken = pmSessionTokenSelector(state);
   const paymentStartPayload = paymentStartPayloadSelector(state);

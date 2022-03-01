@@ -11,31 +11,19 @@ import { ScrollView } from "react-native-gesture-handler";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { H1 } from "../../../components/core/typography/H1";
-import { H4 } from "../../../components/core/typography/H4";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
-import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
+
 import I18n from "../../../i18n";
 import {
   navigateBack,
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
-import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
-import { pspV2Selector } from "../../../store/reducers/wallet/payment";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
@@ -59,7 +47,9 @@ import PickAvailablePaymentMethodListItem from "../../../components/wallet/payme
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import { showToast } from "../../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./common";
+import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 
 export type PickPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;

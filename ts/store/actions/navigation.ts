@@ -35,8 +35,6 @@ import {
   PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
-import { InferNavigationParams } from "../../types/react";
-import PaymentOutcomeCodeMessage from "../../screens/wallet/payment/PaymentOutcomeCodeMessage";
 import { PayPalPspUpdateScreenNavigationParams } from "../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 
 /**
