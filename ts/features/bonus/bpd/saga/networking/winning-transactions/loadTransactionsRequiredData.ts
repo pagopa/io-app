@@ -37,8 +37,8 @@ export function* loadTransactionsRequiredData(
       | typeof bpdTransactionsLoadMilestone.failure
     >
   >([
-    bpdTransactionsLoadMilestone.success,
-    bpdTransactionsLoadMilestone.failure
+    getType(bpdTransactionsLoadMilestone.success),
+    getType(bpdTransactionsLoadMilestone.failure)
   ]);
 
   if (
@@ -59,8 +59,8 @@ export function* loadTransactionsRequiredData(
       | typeof bpdTransactionsLoadCountByDay.failure
     >
   >([
-    bpdTransactionsLoadCountByDay.success,
-    bpdTransactionsLoadCountByDay.failure
+    getType(bpdTransactionsLoadCountByDay.success),
+    getType(bpdTransactionsLoadCountByDay.failure)
   ]);
 
   if (
@@ -80,8 +80,10 @@ export function* loadTransactionsRequiredData(
       | typeof bpdTransactionsLoadPage.success
       | typeof bpdTransactionsLoadPage.failure
     >
-  >([bpdTransactionsLoadPage.success, bpdTransactionsLoadPage.failure]);
-
+  >([
+    getType(bpdTransactionsLoadPage.success),
+    getType(bpdTransactionsLoadPage.failure)
+  ]);
   if (firstPageResponse.type === getType(bpdTransactionsLoadPage.failure)) {
     return left({
       awardPeriodId: periodId,

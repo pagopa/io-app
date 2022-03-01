@@ -56,7 +56,10 @@ export function* loadBpdData() {
       | typeof bpdLoadActivationStatus.success
       | typeof bpdLoadActivationStatus.failure
     >
-  >([bpdLoadActivationStatus.success, bpdLoadActivationStatus.failure]);
+  >([
+    getType(bpdLoadActivationStatus.success),
+    getType(bpdLoadActivationStatus.failure)
+  ]);
 
   if (activationStatus.type === getType(bpdLoadActivationStatus.success)) {
     // if the user is not registered with bpd,
@@ -74,7 +77,10 @@ export function* loadBpdData() {
         | typeof bpdPeriodsAmountLoad.success
         | typeof bpdPeriodsAmountLoad.failure
       >
-    >([bpdPeriodsAmountLoad.success, bpdPeriodsAmountLoad.failure]);
+    >([
+      getType(bpdPeriodsAmountLoad.success),
+      getType(bpdPeriodsAmountLoad.failure)
+    ]);
 
     if (periods.type === getType(bpdPeriodsAmountLoad.success)) {
       // The load of all the required data for bpd is now completed with success

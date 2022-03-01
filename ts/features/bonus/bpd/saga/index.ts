@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "typed-redux-saga/macro";
+import { getType } from "typesafe-actions";
 import {
   bpdApiUrlPrefix,
   bpdOptInPaymentMethodsEnabled,
@@ -157,13 +158,13 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   }
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
-  yield* takeLatest(bpdOnboardingStart, handleBpdStartOnboardingSaga);
+  yield* takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);
 
   // The user accepts the declaration, enroll the user to the bpd program
-  yield* takeLatest(bpdOnboardingAcceptDeclaration, handleBpdEnroll);
+  yield* takeLatest(getType(bpdOnboardingAcceptDeclaration), handleBpdEnroll);
 
   // The user start the insertion / modification of the IBAN associated with bpd program
-  yield* takeLatest(bpdIbanInsertionStart, handleBpdIbanInsertion);
+  yield* takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
 
   if (bpdOptInPaymentMethodsEnabled) {
     // The user need to choice what to do with the payment methods added during the cashback
