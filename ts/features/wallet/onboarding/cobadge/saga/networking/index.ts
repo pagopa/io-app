@@ -1,6 +1,5 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { select } from "redux-saga-test-plan/matchers";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
@@ -40,12 +39,12 @@ export function* handleSearchUserCoBadge(
   searchAction: ActionType<typeof searchUserCoBadge.request>
 ) {
   // try to retrieve the searchRequestId for co-badge search
-  const onboardingCoBadgeSearchRequest: ReturnType<
-    typeof onboardingCoBadgeSearchRequestId
-  > = yield select(onboardingCoBadgeSearchRequestId);
+  const onboardingCoBadgeSearchRequest = yield* select(
+    onboardingCoBadgeSearchRequestId
+  );
 
   // get the results
-  const result = yield call(
+  const result = yield* call(
     searchUserCobadge,
     { abiCode: searchAction.payload },
     getCobadgePans,
@@ -56,9 +55,9 @@ export function* handleSearchUserCoBadge(
 
   // dispatch the related action
   if (result.isRight()) {
-    yield put(searchUserCoBadge.success(result.value));
+    yield* put(searchUserCoBadge.success(result.value));
   } else {
-    yield put(searchUserCoBadge.failure(result.value));
+    yield* put(searchUserCoBadge.failure(result.value));
   }
 }
 
@@ -84,7 +83,7 @@ export function* handleAddCoBadgeToWallet(
   action: ActionType<typeof addCoBadgeToWallet.request>
 ) {
   // get the results
-  const result: SagaCallReturnType<typeof addCobadgeToWallet> = yield call(
+  const result: SagaCallReturnType<typeof addCobadgeToWallet> = yield* call(
     addCobadgeToWallet,
     addCobadgeToWalletClient,
     sessionManager,
@@ -95,9 +94,9 @@ export function* handleAddCoBadgeToWallet(
 
   // dispatch the related action
   if (eitherRawCreditCard.isRight()) {
-    yield put(addCoBadgeToWallet.success(eitherRawCreditCard.value));
+    yield* put(addCoBadgeToWallet.success(eitherRawCreditCard.value));
   } else {
-    yield put(addCoBadgeToWallet.failure(eitherRawCreditCard.value));
+    yield* put(addCoBadgeToWallet.failure(eitherRawCreditCard.value));
   }
 }
 
@@ -111,10 +110,10 @@ export function* handleLoadCoBadgeConfiguration(
   try {
     const getCobadgeServicesResult: SagaCallReturnType<
       typeof getCobadgeServices
-    > = yield call(getCobadgeServices);
+    > = yield* call(getCobadgeServices);
     if (getCobadgeServicesResult.isRight()) {
       if (getCobadgeServicesResult.value.status === 200) {
-        yield put(
+        yield* put(
           loadCoBadgeAbiConfiguration.success(
             getCobadgeServicesResult.value.value
           )
@@ -128,6 +127,6 @@ export function* handleLoadCoBadgeConfiguration(
       throw new Error(readablePrivacyReport(getCobadgeServicesResult.value));
     }
   } catch (e) {
-    yield put(loadCoBadgeAbiConfiguration.failure(getNetworkError(e)));
+    yield* put(loadCoBadgeAbiConfiguration.failure(getNetworkError(e)));
   }
 }

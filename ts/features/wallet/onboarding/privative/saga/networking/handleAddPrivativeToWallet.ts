@@ -1,5 +1,5 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import {
@@ -33,7 +33,7 @@ export function* handleAddPrivativeToWallet(
   addAction: ActionType<typeof addPrivativeToWallet.request>
 ) {
   // get the results
-  const result: SagaCallReturnType<typeof addCobadgeToWallet> = yield call(
+  const result: SagaCallReturnType<typeof addCobadgeToWallet> = yield* call(
     addCobadgeToWallet,
     addCobadgeToWalletClient,
     sessionManager,
@@ -44,8 +44,8 @@ export function* handleAddPrivativeToWallet(
 
   // dispatch the related action
   if (eitherRawPrivative.isRight()) {
-    yield put(addPrivativeToWallet.success(eitherRawPrivative.value));
+    yield* put(addPrivativeToWallet.success(eitherRawPrivative.value));
   } else {
-    yield put(addPrivativeToWallet.failure(eitherRawPrivative.value));
+    yield* put(addPrivativeToWallet.failure(eitherRawPrivative.value));
   }
 }

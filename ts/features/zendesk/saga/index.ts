@@ -1,5 +1,5 @@
 // watch for all actions regarding Zendesk
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest } from "typed-redux-saga/macro";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber,
@@ -15,9 +15,9 @@ import { dismissSupport } from "../../../utils/supportAssistance";
 export function* watchZendeskSupportSaga() {
   const contentClient = ContentClient();
   // start zendesk support management
-  yield takeLatest(zendeskSupportStart, zendeskSupport);
+  yield* takeLatest(zendeskSupportStart, zendeskSupport);
 
-  yield takeLatest(
+  yield* takeLatest(
     getZendeskConfig.request,
     handleGetZendeskConfig,
     contentClient.getZendeskConfig
@@ -29,4 +29,5 @@ export function* watchZendeskSupportSaga() {
   yield takeLatest(identificationRequest, () => {
     dismissSupport();
   });
+  yield* takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
 }

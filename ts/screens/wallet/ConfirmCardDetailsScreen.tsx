@@ -67,7 +67,7 @@ import { getLookUpIdPO } from "../../utils/pmLookUpId";
 import { showToast } from "../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
-export type NavigationParams = Readonly<{
+export type ConfirmCardDetailsScreenNavigationParams = Readonly<{
   creditCard: CreditCard;
   inPayment: Option<{
     rptId: RptId;
@@ -82,7 +82,8 @@ type ReduxMergedProps = Readonly<{
   onRetry?: () => void;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<ConfirmCardDetailsScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -385,7 +386,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: NavigationStackScreenProps<NavigationParams>
+  props: NavigationStackScreenProps<ConfirmCardDetailsScreenNavigationParams>
 ) => {
   const navigateToNextScreen = (maybeWallet: Option<Wallet>) => {
     const inPayment = props.navigation.getParam("inPayment");

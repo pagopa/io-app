@@ -40,11 +40,12 @@ import { getServiceCTA } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
 
-type NavigationParams = Readonly<{
+export type ServiceDetailsScreenNavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<ServiceDetailsScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

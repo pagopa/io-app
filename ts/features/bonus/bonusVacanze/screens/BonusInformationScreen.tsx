@@ -10,11 +10,12 @@ import { GlobalState } from "../../../../store/reducers/types";
 import BonusInformationComponent from "../../common/components/BonusInformationComponent";
 import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
 
-type NavigationParams = Readonly<{
+export type BonusInformationScreenNavigationParams = Readonly<{
   bonusItem: BonusAvailable;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<BonusInformationScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

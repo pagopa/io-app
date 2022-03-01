@@ -1,8 +1,7 @@
 import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../../navigation/NavigationService";
-import { InferNavigationParams } from "../../../../types/react";
-import ActiveBonusScreen from "../screens/ActiveBonusScreen";
-import BonusInformationScreen from "../screens/BonusInformationScreen";
+import { ActiveBonusScreenNavigationParams } from "../screens/ActiveBonusScreen";
+import { BonusInformationScreenNavigationParams } from "../screens/BonusInformationScreen";
 import BONUSVACANZE_ROUTES from "./routes";
 
 /**
@@ -98,7 +97,7 @@ export const navigateToAvailableBonusScreen = () =>
  * and many helper methods specific to screens won't be available.
  */
 export const navigateToBonusRequestInformation = (
-  params?: InferNavigationParams<typeof BonusInformationScreen>
+  params?: BonusInformationScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -112,7 +111,7 @@ export const navigateToBonusRequestInformation = (
  * and many helper methods specific to screens won't be available.
  */
 export const navigateToBonusActiveDetailScreen = (
-  params?: InferNavigationParams<typeof ActiveBonusScreen>
+  params?: ActiveBonusScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
