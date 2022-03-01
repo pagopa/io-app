@@ -50,7 +50,8 @@ const reducer = (
       return {
         ...state,
         zendeskConfig: remoteLoading,
-        selectedCategory: undefined
+        selectedCategory: undefined,
+        selectedSubcategory: undefined
       };
     case getType(getZendeskConfig.success):
       return {
