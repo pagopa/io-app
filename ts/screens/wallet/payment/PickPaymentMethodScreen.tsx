@@ -48,8 +48,8 @@ import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { showToast } from "../../../utils/showToast";
-import { dispatchPickPspOrConfirm } from "./common";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
+import { dispatchPickPspOrConfirm } from "./common";
 
 export type PickPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
