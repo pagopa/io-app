@@ -6,11 +6,11 @@ import {
   zendeskSupportStart
 } from "../store/actions";
 import { ContentClient } from "../../../api/content";
+import { dismissSupport } from "../../../utils/supportAssistance";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
 import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
 import { identificationRequest } from "../../../store/actions/identification";
-import { dismissSupport } from "../../../utils/supportAssistance";
 
 export function* watchZendeskSupportSaga() {
   const contentClient = ContentClient();
