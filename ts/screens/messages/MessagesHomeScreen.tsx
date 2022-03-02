@@ -42,8 +42,10 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
-import { setAccessibilityFocus } from "../../utils/accessibility";
-import { isScreenReaderEnabled } from "../../utils/accessibility";
+import {
+  isScreenReaderEnabled,
+  setAccessibilityFocus
+} from "../../utils/accessibility";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type Props = NavigationStackScreenProps &
