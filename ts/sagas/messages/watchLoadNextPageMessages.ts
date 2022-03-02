@@ -27,13 +27,14 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
   return function* gen(
     action: LocalActionType
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
+    const { filter, pageSize, cursor } = action.payload;
     try {
       const response: SagaCallReturnType<typeof getMessages> = yield* call(
         getMessages,
         {
           enrich_result_data: true,
-          page_size: action.payload.pageSize,
-          maximum_id: action.payload.cursor
+          page_size: pageSize,
+          maximum_id: cursor
         }
       );
 
@@ -42,14 +43,16 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
         ({ items, next }: PaginatedPublicMessagesCollection) =>
           loadNextPageMessagesAction.success({
             messages: items.map(toUIMessage),
-            pagination: { next }
+            pagination: { next },
+            filter
           }),
-        error => loadNextPageMessagesAction.failure(getError(error))
+        error =>
+          loadNextPageMessagesAction.failure({ error: getError(error), filter })
       );
 
       yield* put(nextAction);
     } catch (error) {
-      yield* put(loadNextPageMessagesAction.failure(error));
+      yield* put(loadNextPageMessagesAction.failure({ error, filter }));
     }
   };
 }

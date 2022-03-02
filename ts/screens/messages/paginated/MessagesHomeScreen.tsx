@@ -27,7 +27,7 @@ import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../../utils/accessibility";
-import { allMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
+import { allInboxMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
 import { pageSize } from "../../../config";
 import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
@@ -37,6 +37,7 @@ import customVariables from "../../../theme/variables";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { makeFontStyleObject } from "../../../theme/fonts";
+import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -101,7 +102,7 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
         textStyle={styles.textStyle}
         heading={I18n.t("messages.tab.archive")}
       >
-        <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+        <MessagesArchive navigateToMessageDetail={navigateToMessageDetail} />
       </Tab>
     </AnimatedTabs>
   </View>
@@ -121,13 +122,16 @@ const MessagesHomeScreen = ({
 
   const navigateToMessageDetail = (message: UIMessage) => {
     navigation.dispatch(
-      navigateToPaginatedMessageRouterAction({ messageId: message.id })
+      navigateToPaginatedMessageRouterAction({
+        messageId: message.id,
+        isArchived: message.isArchived
+      })
     );
   };
 
   useEffect(() => {
     reloadFirstPage();
-  }, []);
+  }, [reloadFirstPage]);
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
@@ -194,16 +198,16 @@ const MessagesHomeScreen = ({
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  allMessages: allMessagesSelector(state),
+  allMessages: allInboxMessagesSelector(state),
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
   searchText: searchTextSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // used for the first rendering only
+  // used for the first rendering only, which is always without a filter
   reloadFirstPage: () => {
-    dispatch(reloadAllMessages.request({ pageSize }));
+    dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
   }
 });
 

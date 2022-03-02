@@ -45,6 +45,7 @@ import { isStrictSome } from "../../../utils/pot";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
+  isArchived: boolean;
 };
 
 type OwnProps =
@@ -84,6 +85,10 @@ const navigateToScreenHandler =
     }
   };
 
+/**
+ * Component for the message details.
+ * Handle routing based on message type and reload if necessary.
+ */
 const MessageRouterScreen = ({
   cancel,
   cursors,
@@ -156,27 +161,35 @@ const MessageRouterScreen = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => navigateBack(),
-  loadMessageDetails: (id: UIMessageId) => {
-    dispatch(loadMessageDetails.request({ id }));
-  },
-  loadPreviousPage: (cursor?: Cursor) =>
-    dispatch(
-      loadPreviousPageMessages.request({
-        cursor,
-        pageSize: maximumItemsFromAPI
-      })
-    ),
-  reloadPage: () => dispatch(reloadAllMessages.request({ pageSize }))
-});
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
+  const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
+  const filter = { getArchived: isArchived };
+
+  return {
+    cancel: () => navigateBack(),
+    loadMessageDetails: (id: UIMessageId) => {
+      dispatch(loadMessageDetails.request({ id }));
+    },
+    loadPreviousPage: (cursor?: Cursor) =>
+      dispatch(
+        loadPreviousPageMessages.request({
+          cursor,
+          pageSize: maximumItemsFromAPI,
+          filter
+        })
+      ),
+    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter }))
+  };
+};
+
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
+  const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
   const maybeMessage = allPaginated.getById(state, messageId);
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
-  const cursors = getCursors(state);
+  const { archive, data } = getCursors(state);
   return {
-    cursors,
+    cursors: isArchived ? archive : data,
     maybeMessage,
     maybeMessageDetails,
     messageId

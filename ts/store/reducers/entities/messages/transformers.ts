@@ -26,11 +26,18 @@ export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   const category: MessageCategory = enriched.category || {
     tag: TagEnum.GENERIC
   };
+  // TODO: remove once new API is merged on master
+  const { is_read, is_archived } = messageFromApi as unknown as {
+    is_read?: boolean;
+    is_archived?: boolean;
+  };
   return {
     id: messageFromApi.id as UIMessageId,
     fiscalCode: messageFromApi.fiscal_code,
     category,
     createdAt: new Date(messageFromApi.created_at),
+    isRead: Boolean(is_read),
+    isArchived: Boolean(is_archived),
     serviceId: messageFromApi.sender_service_id,
     serviceName: enriched.service_name,
     organizationName: enriched.organization_name,
@@ -106,12 +113,14 @@ export const toUIMessageDetails = (
 ): UIMessageDetails => {
   const { id, content } = messageFromApi;
   const dueDate = content.due_date ? new Date(content.due_date) : undefined;
+
   return {
     id: id as UIMessageId,
     prescriptionData: getPrescriptionData(content),
     attachments: getAttachments(content),
     markdown: content.markdown,
     dueDate,
+
     paymentData: getPaymentData(content),
     euCovidCertificate: getEUCovidCertificate(content),
     subject: content.subject,
