@@ -41,14 +41,22 @@ import { isIos } from "../../../utils/platform";
 import {
   addTicketCustomField,
   addTicketTag,
+  anonymousAssistanceAddress,
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
-import { openWebUrl } from "../../../utils/url";
-import { zendeskSupportCompleted } from "../store/actions";
+import { handleItemOnPress } from "../../../utils/url";
+import {
+  zendeskSupportCompleted,
+  zendeskSupportFailure
+} from "../store/actions";
+import {
+  zendeskSelectedCategorySelector,
+  zendeskSelectedSubcategorySelector
+} from "../store/reducers";
 
 /**
  * Transform an array of string into a Zendesk
@@ -198,6 +206,12 @@ const ZendeskAskPermissions = (props: Props) => {
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
   const versionsHistory = useIOSelector(appVersionHistorySelector);
+  const zendeskSelectedCategory = useIOSelector(
+    zendeskSelectedCategorySelector
+  );
+  const zendeskSelectedSubcategory = useIOSelector(
+    zendeskSelectedSubcategorySelector
+  );
   const currentVersion = getAppVersion();
 
   const itemsProps: ItemProps = {
@@ -210,8 +224,11 @@ const ZendeskAskPermissions = (props: Props) => {
     identityProvider
   };
 
-  const assistanceWebFormLink =
-    "https://io.assistenza.pagopa.it/hc/it-it/requests/new";
+  // It should never happens since it is selected in the previous screen
+  if (zendeskSelectedCategory === undefined) {
+    dispatch(zendeskSupportFailure("The category has not been selected"));
+    return null;
+  }
 
   const itemsToRemove: ReadonlyArray<string> = [
     // if user is not asking assistance for a payment, remove the related items from those ones shown
@@ -230,7 +247,12 @@ const ZendeskAskPermissions = (props: Props) => {
     .filter(it => it.value !== notAvailable);
 
   const handleOnCancel = () => {
-    openWebUrl(assistanceWebFormLink);
+    handleItemOnPress(
+      anonymousAssistanceAddress(
+        zendeskSelectedCategory.description["it-IT"],
+        zendeskSelectedSubcategory?.description["it-IT"]
+      )
+    )();
     void mixpanelTrack("ZENDESK_DENY_PERMISSIONS");
     workUnitCompleted();
   };

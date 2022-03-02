@@ -21,6 +21,12 @@ export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 // Id of the log customField
 const logId = "4413845142673";
 
+export const anonymousAssistanceAddress = (
+  category: string,
+  subcategory?: string
+): string =>
+  `mailto:io@assistenza.pagopa.it?subject=${category}:${subcategory}`;
+
 export const zendeskDefaultJwtConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
   appId: "4ed72c757f79ed15dfa46546dcb672fc86a0af949a119156",
