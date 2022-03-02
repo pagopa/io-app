@@ -18,13 +18,11 @@ import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { SessionToken } from "../../../../types/SessionToken";
 import { profileLoadSuccess } from "../../../../store/actions/profile";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
-import * as url from "../../../../utils/url";
 import * as mixpanel from "../../../../mixpanel";
 import * as zendeskAction from "../../store/actions";
-import { getZendeskConfig } from "../../store/actions";
+import * as url from "../../../../utils/url";
+import { zendeskSelectedCategory } from "../../store/actions";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
-import { Zendesk } from "../../../../../definitions/content/Zendesk";
-import * as navigationAction from "../../store/actions/navigation";
 
 jest.useFakeTimers();
 
@@ -35,19 +33,11 @@ const mockedIdp: SpidIdp = {
   profileUrl: "mockedProfileUrl"
 };
 
-const mockedZendeskConfig: Zendesk = {
-  panicMode: false,
-  zendeskCategories: {
-    id: "12345",
-    categories: [
-      {
-        value: "mockedValue",
-        description: {
-          "it-IT": "mock_description",
-          "en-EN": "mock_description"
-        }
-      }
-    ]
+const mockedZendeskCategory = {
+  value: "mockedValue",
+  description: {
+    "it-IT": "mock_description",
+    "en-EN": "mock_description"
   }
 };
 
@@ -61,11 +51,24 @@ describe("the ZendeskAskPermissions screen", () => {
   jest.spyOn(appVersion, "getAppVersion").mockReturnValue("mockedVersion");
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
+  it("should call the zendeskSupportFailure if the zendeskSelectedCategory is undefined", () => {
+    const zendeskSupportFailureSpy = jest.spyOn(
+      zendeskAction,
+      "zendeskSupportFailure"
+    );
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    renderComponent(store, true);
+    expect(zendeskSupportFailureSpy).toBeCalled();
+  });
   it("should render the screen container", () => {
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
     );
+    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
     const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("ZendeskAskPermissions")).toBeDefined();
   });
@@ -75,6 +78,7 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
+    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
     const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("appVersionsHistory")).toBeDefined();
   });
@@ -84,6 +88,7 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
+    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
     const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("paymentIssues")).toBeDefined();
   });
@@ -92,6 +97,7 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
+    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
     const component: RenderAPI = renderComponent(store, false);
     expect(component.queryByTestId("paymentIssues")).toBeNull();
   });
@@ -100,6 +106,7 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
+    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
     const component: RenderAPI = renderComponent(store, false);
     expect(component.queryByTestId("identityProvider")).toBeNull();
     expect(component.queryByTestId("profileFiscalCode")).toBeNull();
@@ -111,6 +118,7 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
+    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
     const component: RenderAPI = renderComponent(store, false);
     store.dispatch(idpSelected(mockedIdp));
     expect(component.queryByTestId("identityProvider")).not.toBeNull();
@@ -121,6 +129,7 @@ describe("the ZendeskAskPermissions screen", () => {
         appReducer,
         globalState as any
       );
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
       const component: RenderAPI = renderComponent(store, false);
       store.dispatch(idpSelected(mockedIdp));
       store.dispatch(
@@ -141,6 +150,7 @@ describe("the ZendeskAskPermissions screen", () => {
         appReducer,
         globalState as any
       );
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
       const component: RenderAPI = renderComponent(store, false);
       store.dispatch(idpSelected(mockedIdp));
       store.dispatch(
@@ -162,6 +172,7 @@ describe("the ZendeskAskPermissions screen", () => {
         appReducer,
         globalState as any
       );
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
       const component: RenderAPI = renderComponent(store, false);
       store.dispatch(idpSelected(mockedIdp));
       store.dispatch(
@@ -179,8 +190,10 @@ describe("the ZendeskAskPermissions screen", () => {
     });
   });
 
-  it("should call openWebUrl, mixpanelTrack and workUnitCompleted when the cancel button is pressed", () => {
-    const openWebUrlSpy = jest.spyOn(url, "openWebUrl");
+  it("should call handleItemOnPress, mixpanelTrack and workUnitCompleted when the cancel button is pressed", () => {
+    const handleItemOnPressSpy = jest
+      .spyOn(url, "handleItemOnPress")
+      .mockImplementation(() => jest.fn());
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "mixpanelTrack");
     const zendeskSupportCompletedSpy = jest.spyOn(
       zendeskAction,
@@ -190,10 +203,13 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
+    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
     const component: RenderAPI = renderComponent(store, false);
     const cancelButton = component.getByTestId("cancelButtonId");
     fireEvent(cancelButton, "onPress");
-    expect(openWebUrlSpy).toBeCalled();
+    expect(handleItemOnPressSpy).toBeCalledWith(
+      `mailto:io@assistenza.pagopa.it?subject=${mockedZendeskCategory.description["it-IT"]}`
+    );
     expect(mixpanelTrackSpy).toBeCalled();
     expect(zendeskSupportCompletedSpy).toBeCalled();
   });
@@ -201,66 +217,19 @@ describe("the ZendeskAskPermissions screen", () => {
   describe("when the continue button is pressed", () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "mixpanelTrack");
 
-    describe("should call the openSupportTicket, the mixpanelTrack and the workUnitCompleted functions", () => {
-      it("if the zendeskConfig is not ready", () => {
-        const store: Store<GlobalState> = createStore(
-          appReducer,
-          globalState as any
-        );
-        const component: RenderAPI = renderComponent(store, false);
-        store.dispatch(getZendeskConfig.request());
-        const continueButton: ReactTestInstance =
-          component.getByTestId("continueButtonId");
-        fireEvent(continueButton, "onPress");
-        expect(mixpanelTrackSpy).toBeCalled();
-        expect(MockZendesk.openTicket).toBeCalled();
-      });
-      it("if the assistanceForPayment prop is true", () => {
-        const store: Store<GlobalState> = createStore(
-          appReducer,
-          globalState as any
-        );
-        const component: RenderAPI = renderComponent(store, true);
-        store.dispatch(getZendeskConfig.success(mockedZendeskConfig));
-        const continueButton: ReactTestInstance =
-          component.getByTestId("continueButtonId");
-        fireEvent(continueButton, "onPress");
-        expect(mixpanelTrackSpy).toBeCalled();
-        expect(MockZendesk.openTicket).toBeCalled();
-      });
-      it("if the there are no category", () => {
-        const store: Store<GlobalState> = createStore(
-          appReducer,
-          globalState as any
-        );
-        const component: RenderAPI = renderComponent(store, false);
-        store.dispatch(
-          getZendeskConfig.success({ panicMode: mockedZendeskConfig.panicMode })
-        );
-        const continueButton: ReactTestInstance =
-          component.getByTestId("continueButtonId");
-        fireEvent(continueButton, "onPress");
-        expect(mixpanelTrackSpy).toBeCalled();
-        expect(MockZendesk.openTicket).toBeCalled();
-      });
-    });
-
-    it("should call the navigateToZendeskChooseCategory function if the assistanceForPayment is false, the ZendeskConfig is ready and there is at least a category", () => {
-      const navigateToZendeskChooseCategorySpy = jest.spyOn(
-        navigationAction,
-        "navigateToZendeskChooseCategory"
-      );
+    it("should call the openSupportTicket, the mixpanelTrack and the workUnitCompleted functions", () => {
       const store: Store<GlobalState> = createStore(
         appReducer,
         globalState as any
       );
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
       const component: RenderAPI = renderComponent(store, false);
-      store.dispatch(getZendeskConfig.success(mockedZendeskConfig));
 
       const continueButton: ReactTestInstance =
         component.getByTestId("continueButtonId");
       fireEvent(continueButton, "onPress");
-      expect(navigateToZendeskChooseCategorySpy).toBeCalled();
+      expect(mixpanelTrackSpy).toBeCalled();
+      expect(MockZendesk.openTicket).toBeCalled();
     });
   });
 });
