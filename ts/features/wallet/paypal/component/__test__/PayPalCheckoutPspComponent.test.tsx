@@ -1,7 +1,10 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { constNull } from "fp-ts/lib/function";
-import { PayPalCheckoutPspComponent } from "../PayPalCheckoutPspComponent";
+import {
+  editPspEnabled,
+  PayPalCheckoutPspComponent
+} from "../PayPalCheckoutPspComponent";
 import { ImportoEuroCents } from "../../../../../../definitions/backend/ImportoEuroCents";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 import I18n, { setLocale } from "../../../../../i18n";
@@ -38,9 +41,11 @@ describe("PayPalCheckoutPspComponent", () => {
     );
     expect(component).not.toBeNull();
     const editLabel = component.queryByTestId("editLabelTestID");
-    expect(editLabel).not.toBeNull();
-    fireEvent(editLabel!, "onPress");
-    expect(mockEditLabelOnPress).toHaveBeenCalledTimes(1);
+    if (editPspEnabled) {
+      expect(editLabel).not.toBeNull();
+      fireEvent(editLabel!, "onPress");
+      expect(mockEditLabelOnPress).toHaveBeenCalledTimes(1);
+    }
   });
 
   describe("given a fee, pspName and privacy url", () => {

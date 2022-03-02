@@ -34,9 +34,12 @@ type Props = {
   onEditPress: () => void;
 };
 
+// temporary feature flag since this feature is still WIP (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
+export const editPspEnabled = false;
 /**
  * this component shows the psp details (cost, name and privacy url) associated
  * to the current psp that is handling the payment addressed with Paypal
+ * It also shows an edit label to navigate to the psp list to pick a new one
  * @constructor
  */
 export const PayPalCheckoutPspComponent = (props: Props) => {
@@ -65,9 +68,11 @@ export const PayPalCheckoutPspComponent = (props: Props) => {
               })}
             </Label>
           </View>
-          <Label onPress={props.onEditPress} testID={"editLabelTestID"}>
-            {I18n.t("global.buttons.edit").toUpperCase()}
-          </Label>
+          {editPspEnabled && (
+            <Label onPress={props.onEditPress} testID={"editLabelTestID"}>
+              {I18n.t("global.buttons.edit").toUpperCase()}
+            </Label>
+          )}
         </View>
       </ListItem>
       {privacyUrl && (

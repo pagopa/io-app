@@ -199,35 +199,6 @@ exports[`PayPalCheckoutPspComponent it should match the snapshot 1`] = `
             Gestita da pspName
           </Text>
         </View>
-        <Text
-          color="blue"
-          defaultColor="blue"
-          defaultWeight="Bold"
-          font="TitilliumWeb"
-          fontStyle={
-            Object {
-              "fontSize": 16,
-            }
-          }
-          onPress={[Function]}
-          style={
-            Array [
-              Object {
-                "fontSize": 16,
-              },
-              Object {
-                "color": "#0073E6",
-                "fontFamily": "Titillium Web",
-                "fontStyle": "normal",
-                "fontWeight": "700",
-              },
-            ]
-          }
-          testID="editLabelTestID"
-          weight="Bold"
-        >
-          MODIFICA
-        </Text>
       </View>
     </View>
   </View>
