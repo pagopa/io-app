@@ -94,13 +94,13 @@ const OnboardingPinScreen: React.FC<Props> = () => {
     >
       <SafeAreaView style={styles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
-          <>
-            <H1>{I18n.t("onboarding.pin.title")}</H1>
+          <View spacer small />
 
-            <View spacer small />
+          <H1>{I18n.t("onboarding.pin.title")}</H1>
 
-            <Body>{I18n.t("onboarding.pin.subTitle")}</Body>
-          </>
+          <View spacer small />
+
+          <Body>{I18n.t("onboarding.pin.subTitle")}</Body>
 
           <View spacer extralarge />
 
@@ -113,6 +113,9 @@ const OnboardingPinScreen: React.FC<Props> = () => {
               maxLength: pinLength,
               onEndEditing: handlePinBlur
             }}
+            icon={!isPinValid ? "io-warning" : undefined}
+            iconColor={IOColors.red}
+            iconPosition="right"
             isValid={isPinValid ? undefined : false}
           />
 
@@ -127,6 +130,9 @@ const OnboardingPinScreen: React.FC<Props> = () => {
               maxLength: pinLength,
               onEndEditing: handlePinConfirmationBlur
             }}
+            icon={!isPinConfirmationValid ? "io-warning" : undefined}
+            iconColor={IOColors.red}
+            iconPosition="right"
             isValid={isPinConfirmationValid ? undefined : false}
           />
         </ScrollView>
