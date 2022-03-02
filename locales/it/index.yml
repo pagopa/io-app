@@ -806,7 +806,7 @@ onboarding:
     contextualHelpContent: !include onboarding/onboarding_pin.md
   pin:
     headerTitle: Configura IO
-    title: Crea un codice di sblocco
+    title: Codice di sblocco
     subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
     pinLabel: Crea codice di sblocco
     pinConfirmationLabel: Ripeti codice di sblocco

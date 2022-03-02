@@ -113,7 +113,7 @@ const OnboardingPinScreen: React.FC<Props> = () => {
               maxLength: pinLength,
               onEndEditing: handlePinBlur
             }}
-            isValid={isPinValid}
+            isValid={isPinValid ? undefined : false}
           />
 
           <View spacer extralarge />
@@ -127,7 +127,7 @@ const OnboardingPinScreen: React.FC<Props> = () => {
               maxLength: pinLength,
               onEndEditing: handlePinConfirmationBlur
             }}
-            isValid={isPinConfirmationValid}
+            isValid={isPinConfirmationValid ? undefined : false}
           />
         </ScrollView>
 
