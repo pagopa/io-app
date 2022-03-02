@@ -100,6 +100,7 @@ const InnerSectionStatus = (
         testID={"SectionStatusComponentPressable"}
       >
         <StatusContent
+          accessible={false}
           backgroundColor={backgroundColor}
           iconColor={IOColors[color]}
           iconName={iconName}
