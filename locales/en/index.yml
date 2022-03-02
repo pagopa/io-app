@@ -789,13 +789,10 @@ onboarding:
     contextualHelpContent: !include onboarding/onboarding_pin.md
   pin:
     headerTitle: Configura IO
-    title: Crea un codice di sblocco
+    title: Codice di sblocco
     subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
-    tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
-  confirmPin:
-    headerTitle: Configura IO
-    title: Ripeti di nuovo il codice
-    subTitle: In questo modo siamo sicuri che non hai commesso errori durante la digitazione.
+    pinLabel: Crea codice di sblocco
+    pinConfirmationLabel: Ripeti codice di sblocco
     tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
   alert:
     title: Do you really want to log out?

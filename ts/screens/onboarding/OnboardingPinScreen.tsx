@@ -1,14 +1,11 @@
-import { Content, Text, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View as BaseView } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
-import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
-import { PinString } from "../../types/PinString";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -16,6 +13,10 @@ import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAle
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { Label } from "../../components/core/typography/Label";
+import { H1 } from "../../components/core/typography/H1";
+import { Body } from "../../components/core/typography/Body";
+import { LabelledItem } from "../../components/LabelledItem";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -38,14 +39,13 @@ const styles = StyleSheet.create({
  * A screen that allows the user to set the unlock code.
  */
 const OnboardingPinScreen: React.FC<Props> = () => {
-  const [pin, setPin] = React.useState<PinString | null>(null);
+  const [pin, setPin] = React.useState("");
+  const [pinConfirmation, setPinConfirmation] = React.useState("");
   const onboardingAbortAlert = useOnboardingAbortAlert();
 
   const handleGoBack = () => {
     onboardingAbortAlert.showAlert();
   };
-
-  const resetPin = () => setPin(null);
 
   const computedConfirmButtonProps = React.useMemo(
     () => ({
@@ -66,40 +66,52 @@ const OnboardingPinScreen: React.FC<Props> = () => {
       <SafeAreaView style={styles.flex}>
         <Content>
           <>
-            <Text style={styles.header} bold={true} dark={true}>
-              {I18n.t("onboarding.pin.title")}
-            </Text>
+            <H1>{I18n.t("onboarding.pin.title")}</H1>
 
-            <Text dark={true}>{I18n.t("onboarding.pin.subTitle")}</Text>
+            <View spacer small />
+
+            <Body>{I18n.t("onboarding.pin.subTitle")}</Body>
           </>
 
-          <View spacer large />
+          <View spacer extralarge />
 
-          <>
-            <Pinpad
-              inactiveColor={variables.brandLightGray}
-              activeColor={variables.contentPrimaryBackground}
-              onFulfill={setPin}
-              onDeleteLastDigit={resetPin}
-              buttonType={"light"}
-            />
-          </>
+          <LabelledItem
+            label={I18n.t("onboarding.pin.pinLabel")}
+            inputProps={{
+              value: pin,
+              onChangeText: setPin,
+              keyboardType: "number-pad"
+            }}
+          />
 
-          <View spacer large />
+          <View spacer extralarge />
 
-          <>
+          <LabelledItem
+            label={I18n.t("onboarding.pin.pinConfirmationLabel")}
+            inputProps={{
+              value: pinConfirmation,
+              onChangeText: setPinConfirmation,
+              keyboardType: "number-pad"
+            }}
+          />
+        </Content>
+
+        <>
+          <BaseView style={IOStyles.horizontalContentPadding}>
             <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
               <Label color={"bluegrey"} weight={"Regular"}>
                 {I18n.t("onboarding.pin.tutorial")}
               </Label>
             </InfoBox>
-          </>
-        </Content>
+          </BaseView>
 
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={computedConfirmButtonProps}
-        />
+          <View spacer />
+
+          <FooterWithButtons
+            type="SingleButton"
+            leftButton={computedConfirmButtonProps}
+          />
+        </>
       </SafeAreaView>
     </BaseScreenComponent>
   );
