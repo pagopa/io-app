@@ -1,6 +1,11 @@
-import { Content, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, View as BaseView } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View as BaseView,
+  ScrollView
+} from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -17,6 +22,7 @@ import { H1 } from "../../components/core/typography/H1";
 import { Body } from "../../components/core/typography/Body";
 import { LabelledItem } from "../../components/LabelledItem";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { PIN_LENGTH } from "../../utils/constants";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -64,7 +70,7 @@ const OnboardingPinScreen: React.FC<Props> = () => {
       headerTitle={I18n.t("onboarding.pin.headerTitle")}
     >
       <SafeAreaView style={styles.flex}>
-        <Content>
+        <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
           <>
             <H1>{I18n.t("onboarding.pin.title")}</H1>
 
@@ -80,7 +86,8 @@ const OnboardingPinScreen: React.FC<Props> = () => {
             inputProps={{
               value: pin,
               onChangeText: setPin,
-              keyboardType: "number-pad"
+              keyboardType: "number-pad",
+              maxLength: PIN_LENGTH
             }}
           />
 
@@ -91,10 +98,11 @@ const OnboardingPinScreen: React.FC<Props> = () => {
             inputProps={{
               value: pinConfirmation,
               onChangeText: setPinConfirmation,
-              keyboardType: "number-pad"
+              keyboardType: "number-pad",
+              maxLength: PIN_LENGTH
             }}
           />
-        </Content>
+        </ScrollView>
 
         <>
           <BaseView style={IOStyles.horizontalContentPadding}>
