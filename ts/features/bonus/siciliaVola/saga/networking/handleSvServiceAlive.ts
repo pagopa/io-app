@@ -1,6 +1,7 @@
 import { ActionType } from "typesafe-actions";
-import { delay, Effect, put } from "redux-saga/effects";
+import { delay, put } from "typed-redux-saga/macro";
 import { svServiceAlive } from "../../store/actions/activation";
+import { ReduxSagaEffect } from "../../../../../types/utils";
 
 /**
  * Handle the remote call to check if the service is alive
@@ -8,8 +9,8 @@ import { svServiceAlive } from "../../store/actions/activation";
  */
 export function* handleSvServiceAlive(
   _: ActionType<typeof svServiceAlive.request>
-): Generator<Effect, void> {
+): Generator<ReduxSagaEffect, void> {
   // TODO: add networking logic
-  yield delay(500);
-  yield put(svServiceAlive.success(true));
+  yield* delay(500);
+  yield* put(svServiceAlive.success(true));
 }

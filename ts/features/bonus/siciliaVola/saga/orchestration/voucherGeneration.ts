@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
+import { call } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../navigation/NavigationService";
 import {
   executeWorkUnit,
@@ -27,7 +27,7 @@ import {
  * - The user chooses back from the first screen {@link svGenerateVoucherBack}
  */
 function* svVoucherGenerationWorkUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: navigateToSvCheckStatusRouterScreen,
     startScreenName: SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS,
     complete: svGenerateVoucherCompleted,
@@ -42,12 +42,12 @@ function* svVoucherGenerationWorkUnit() {
  */
 export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
   const initialRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield call(NavigationService.getCurrentRouteName);
+    yield* call(NavigationService.getCurrentRouteName);
 
   const sagaExecution = () =>
     withResetNavigationStack(svVoucherGenerationWorkUnit);
 
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
     sagaExecution
   );
 
@@ -55,10 +55,10 @@ export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
     // if the activation started from the CTA -> go back
     initialRoute === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
   ) {
-    yield call(navigateBack);
+    yield* call(navigateBack);
   }
 
   if (res === "failure") {
-    yield call(navigateToWorkunitGenericFailureScreen);
+    yield* call(navigateToWorkunitGenericFailureScreen);
   }
 }

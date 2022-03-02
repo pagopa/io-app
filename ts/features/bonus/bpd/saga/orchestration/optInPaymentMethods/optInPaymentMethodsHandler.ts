@@ -1,21 +1,21 @@
-import { call } from "redux-saga/effects";
+import { call } from "typed-redux-saga/macro";
 import { NavigationActions } from "react-navigation";
-import NavigationService from "../../../../../navigation/NavigationService";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import {
   optInPaymentMethodsBack,
   optInPaymentMethodsCancel,
   optInPaymentMethodsCompleted,
   optInPaymentMethodsFailure
-} from "../../store/actions/optInPaymentMethods";
+} from "../../../store/actions/optInPaymentMethods";
 import {
   executeWorkUnit,
   withFailureHandling,
   withResetNavigationStack
-} from "../../../../../sagas/workUnit";
-import BPD_ROUTES from "../../navigation/routes";
+} from "../../../../../../sagas/workUnit";
+import BPD_ROUTES from "../../../navigation/routes";
 
 function* optInPaymentMethodsWorkUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
         NavigationActions.navigate({
@@ -32,7 +32,7 @@ function* optInPaymentMethodsWorkUnit() {
 }
 
 export function* optInPaymentMethodsHandler() {
-  yield call(withFailureHandling, () =>
+  yield* call(withFailureHandling, () =>
     withResetNavigationStack(optInPaymentMethodsWorkUnit)
   );
 }

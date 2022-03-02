@@ -1,7 +1,7 @@
 import { left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
@@ -27,12 +27,12 @@ export function* loadUserDataProcessingSaga(
   const choice = action.payload;
   try {
     const response: SagaCallReturnType<typeof getUserDataProcessingRequest> =
-      yield call(getUserDataProcessingRequest, {
+      yield* call(getUserDataProcessingRequest, {
         userDataProcessingChoiceParam: choice
       });
     if (response.isRight()) {
       if (response.value.status === 404 || response.value.status === 200) {
-        yield put(
+        yield* put(
           loadUserDataProcessing.success({
             choice,
             value:
@@ -48,7 +48,7 @@ export function* loadUserDataProcessingSaga(
       throw new Error(readableReport(response.value));
     }
   } catch (e) {
-    yield put(
+    yield* put(
       loadUserDataProcessing.failure({
         choice,
         error: e
@@ -66,12 +66,12 @@ export function* upsertUserDataProcessingSaga(
   const choice = action.payload;
   try {
     const response: SagaCallReturnType<typeof postUserDataProcessingRequest> =
-      yield call(postUserDataProcessingRequest, {
+      yield* call(postUserDataProcessingRequest, {
         userDataProcessingChoiceRequest: { choice }
       });
 
     if (response.isRight() && response.value.status === 200) {
-      yield put(upsertUserDataProcessing.success(response.value.value));
+      yield* put(upsertUserDataProcessing.success(response.value.value));
       return right(response.value.value);
     } else {
       throw new Error(
@@ -79,7 +79,7 @@ export function* upsertUserDataProcessingSaga(
       );
     }
   } catch (e) {
-    yield put(
+    yield* put(
       upsertUserDataProcessing.failure({ choice, error: new Error(e) })
     );
     return left(e);
@@ -96,18 +96,18 @@ export function* deleteUserDataProcessingSaga(
 
   try {
     const response: SagaCallReturnType<typeof deleteUserDataProcessingRequest> =
-      yield call(deleteUserDataProcessingRequest, {
+      yield* call(deleteUserDataProcessingRequest, {
         userDataProcessingChoiceParam: choice
       });
     if (response.isRight()) {
       if (response.value.status === 202) {
-        yield put(
+        yield* put(
           deleteUserDataProcessing.success({
             choice
           })
         );
         // reload user data processing
-        yield put(
+        yield* put(
           loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
         );
       } else {
@@ -119,7 +119,7 @@ export function* deleteUserDataProcessingSaga(
       throw new Error(readableReport(response.value));
     }
   } catch (e) {
-    yield put(
+    yield* put(
       deleteUserDataProcessing.failure({
         choice,
         error: getError(e)
@@ -141,19 +141,19 @@ export function* watchUserDataProcessingSaga(
     typeof BackendClient
   >["deleteUserDataProcessingRequest"]
 ): SagaIterator {
-  yield takeEvery(
+  yield* takeEvery(
     loadUserDataProcessing.request,
     loadUserDataProcessingSaga,
     getUserDataProcessingRequest
   );
 
-  yield takeEvery(
+  yield* takeEvery(
     deleteUserDataProcessing.request,
     deleteUserDataProcessingSaga,
     deleteUserDataProcessingRequest
   );
 
-  yield takeEvery(
+  yield* takeEvery(
     upsertUserDataProcessing.request,
     upsertUserDataProcessingSaga,
     postUserDataProcessingRequest

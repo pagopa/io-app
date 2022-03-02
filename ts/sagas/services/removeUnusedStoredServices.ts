@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select } from "typed-redux-saga/macro";
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
 import { removeServiceTuples } from "../../store/actions/services";
 import { messagesIdsByServiceIdSelector } from "../../store/reducers/entities/messages/messagesIdsByServiceId";
@@ -24,11 +24,11 @@ export function* removeUnusedStoredServices(
     );
 
   const storedServicesById: ReturnType<typeof servicesByIdSelector> =
-    yield select(servicesByIdSelector);
+    yield* select(servicesByIdSelector);
 
   const messagesIdsByServiceId: ReturnType<
     typeof messagesIdsByServiceIdSelector
-  > = yield select(messagesIdsByServiceIdSelector);
+  > = yield* select(messagesIdsByServiceIdSelector);
 
   // Create an array of tuples containing:
   // - serviceId (to remove service from both the servicesById and the servicesMetadataById sections of the redux store)
@@ -62,5 +62,5 @@ export function* removeUnusedStoredServices(
   }, []);
 
   // Dispatch action to remove the services from the redux store
-  yield put(removeServiceTuples(serviceTuplesToRemove));
+  yield* put(removeServiceTuples(serviceTuplesToRemove));
 }

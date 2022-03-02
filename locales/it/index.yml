@@ -389,16 +389,16 @@ profile:
             description:
               one: "IO raccoglie solo le informazioni "
               two: "necessarie "
-              three: "per il funzionamento dei servizi offerti"
+              three: "per il funzionamento dei servizi offerti."
             cta: "Perché?"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati"
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati."
             cta: "Scopri di più"
           gdpr:
             description:
               one: "Il team di IO collabora con fornitori in conformità con le "
-              two: "norme previste dal GDPR"
+              two: "norme previste dal GDPR."
             cta: "Vedi elenco fornitori"
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
@@ -504,6 +504,7 @@ navigation:
   messages: Messaggi
   profile: Profilo
   accessibility: "Sezione {{section}}, pannello, {{order}} di 4"
+  accessibilityWithBadge: "Sezione {{section}}, {{unread}} nuovi elementi, pannello, {{order}} di 4"
   selected: È selezionato
 cie:
   title: Appoggia la carta
@@ -826,6 +827,8 @@ onboarding:
         faceId: Face ID
         touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  shareData:
+    title: Configura IO
 forms:
   validators:
     required: Valore richiesto
@@ -1832,6 +1835,7 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   fiscalCode: "C.F. Ente"
+  fiscalCodeAccessibility: "Codice fiscale Ente" 
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
@@ -2562,7 +2566,39 @@ bonus:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
         title: "Aggiornamenti sul Cashback"
+        subtitle: "Ministero dell’Economia e delle Finanze"
+        body: !include bonus/bpd/optInPaymentMethods.md
+      choice:
+        header: "Configura IO"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
+        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        suggestedOption: Consigliato
+        options:
+          keepAll:
+            title: Mantieni tutti i metodi nel Portafoglio 
+            body: Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento. 
+          deleteAll:
+            title: Elimina tutti i metodi dal Portafoglio
+            body: Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+        deleteAllButton: Elimina tutti i metodi
+      deletePaymentMethodsBottomSheet:
+        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
+        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
+      thankYouPage:
+        cta:
+          goToWallet: "Vai al Portafoglio"
+          retry: "Riprova"
+        success:
+          title: "Fatto!"
+          body: "Abbiamo salvato la tua scelta"
+        retryAfterDeletion:
+          title: "Spiacenti, si è verificato un errore imprevisto"
+          body: "I tuoi metodi non sono stati eliminati. Riprova, oppure vai al Portafoglio ed eliminali manualmente."
+        toast: "La tua scelta non è stata salvata. Riprova più tardi."
+
   cgn:
+    generic:
+      linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
@@ -2574,6 +2610,8 @@ bonus:
       screenTitle: Seleziona un operatore e scopri le agevolazioni
       cta:
         filter: Filtra
+      categoriesList:
+        title: Seleziona una categoria e scopri le agevolazioni
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2611,18 +2649,20 @@ bonus:
       cta:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione
+        discountUrl: Vai all’agevolazione
       categories:
+        all: Tutti gli operatori
         counting: e altre {{count}}
-        cultureAndEntertainment: cultura e tempo libero
-        health: salute e benessere
-        learning: istruzione e formazione
-        sport: sport
-        home: casa
-        telco: telefonia e internet
-        finance: servizi finanziari
-        travel: viaggi e trasporti
-        mobility: mobilità sostenibile
-        job: lavoro e tirocini
+        cultureAndEntertainment: Cultura e Tempo Libero
+        health: Salute e Benessere
+        learning: Istruzione e Formazione
+        sport: Sport
+        home: Casa
+        telco: Telefonia e Internet
+        finance: Servizi Bancari e Finanziari
+        travel: Viaggi e Trasporti
+        mobility: Mobilità Sostenibile
+        job: Lavoro e Tirocini
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva la Carta
@@ -2921,6 +2961,11 @@ features:
             body: "Non sono riuscito a scaricare l'allegato"
             details: "Per favore, controlla la tua connessione e riprova"
           checkBox: "OK, non mostrarmelo più"
+        pdfPreview:
+          title: "Anteprima PDF"
+          singleBtn: "Salva, stampa o condividi"
+          open: "Apri"
+          save: "Salva"
       body:
         plain: "testo semplice"
         html: "html"
@@ -2938,6 +2983,7 @@ features:
           smime: "Scarica smime.p7s"
   euCovidCertificate:
     save:
+      album: "IO"
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
       ok: "L'immagine è stata salvata nella galleria del tuo dispositivo"
       bottomSheet:
@@ -3010,7 +3056,8 @@ support:
     emailAddress: "Indirizzo email"
     deviceAndOS: "Dispositivo e sistema operativo"
     ipAddress: "Indirizzo IP"
-    currentAppVersion: "Versione in uso dell'app"
+    appVersionsHistory: "Storico versioni dell’app"
+    appVersionsHistoryValue: "Per capire se il problema dipende dall’ultimo aggiornamento"
     identityProvider: "Identity Provider"
     navigationData: "Dati di navigazione in app IO"
     navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"

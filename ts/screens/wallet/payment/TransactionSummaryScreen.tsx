@@ -1,18 +1,15 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import {
-  NavigationInjectedProps,
-  NavigationLeafRoute,
-  StackActions
-} from "react-navigation";
+import { NavigationLeafRoute, StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -45,6 +42,7 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
@@ -52,6 +50,7 @@ import {
   getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
+import { isRawPayPal } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import {
@@ -64,18 +63,17 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import { isRawPayPal } from "../../../types/pagopa";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { dispatchPickPspOrConfirm } from "./common";
 
-export type NavigationParams = Readonly<{
+export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
   startRoute: NavigationLeafRoute | undefined;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionSummaryScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

@@ -14,7 +14,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -23,7 +23,7 @@ import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 
-type Props = NavigationInjectedProps;
+type Props = NavigationStackScreenProps;
 
 type State = {
   currentTab: number;

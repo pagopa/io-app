@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select } from "typed-redux-saga/macro";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { profileUpsert } from "../../../../../store/actions/profile";
 import { profileSelector } from "../../../../../store/reducers/profile";
@@ -14,7 +14,7 @@ export function* handleForceBonusServiceActivation(
   // first: check if we have data about bonus type
   const bonusVacanze: ReturnType<
     ReturnType<typeof availableBonusTypesSelectorFromId>
-  > = yield select(availableBonusTypesSelectorFromId(bonusTypeId));
+  > = yield* select(availableBonusTypesSelectorFromId(bonusTypeId));
   // no data
   if (bonusVacanze === undefined) {
     return;
@@ -25,7 +25,7 @@ export function* handleForceBonusServiceActivation(
     return;
   }
   // retrieve profile from store
-  const profile: ReturnType<typeof profileSelector> = yield select(
+  const profile: ReturnType<typeof profileSelector> = yield* select(
     profileSelector
   );
   // compute the updated blacklist if the serviceId is in it, undefined if no updated is needed
@@ -50,7 +50,7 @@ export function* handleForceBonusServiceActivation(
   );
   if (newBlockedInboxOrChannel) {
     // update the profile
-    yield put(
+    yield* put(
       profileUpsert.request({
         blocked_inbox_or_channels: newBlockedInboxOrChannel
       })

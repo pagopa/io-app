@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { takeEvery, takeLatest } from "redux-saga/effects";
+import { takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import {
   bpdApiUrlPrefix,
@@ -28,7 +28,10 @@ import {
   bpdTransactionsLoadPage,
   bpdTransactionsLoadRequiredData
 } from "../store/actions/transactions";
-import { optInPaymentMethodsStart } from "../store/actions/optInPaymentMethods";
+import {
+  optInPaymentMethodsDeletionChoice,
+  optInPaymentMethodsStart
+} from "../store/actions/optInPaymentMethods";
 import {
   deleteCitizen,
   getCitizenV2,
@@ -50,34 +53,35 @@ import { handleTransactionsPage } from "./networking/winning-transactions/transa
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
-import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethodsHandler";
+import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethods/optInPaymentMethodsHandler";
+import { optInDeletionChoiceHandler } from "./orchestration/optInPaymentMethods/optInDeletionChoiceHandler";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   const bpdBackendClient = BackendBpdClient(bpdApiUrlPrefix, bpdBearerToken);
 
   // load citizen details
-  yield takeLatest(
+  yield* takeLatest(
     bpdLoadActivationStatus.request,
     getCitizenV2,
     bpdBackendClient.findV2
   );
   // enroll citizen to the bpd
-  yield takeLatest(
+  yield* takeLatest(
     bpdEnrollUserToProgram.request,
     putEnrollCitizenV2,
     bpdBackendClient.enrollCitizenV2IO
   );
 
   // delete citizen from the bpd
-  yield takeLatest(
+  yield* takeLatest(
     bpdDeleteUserFromProgram.request,
     deleteCitizen,
     bpdBackendClient.deleteCitizenIO
   );
 
   // upsert citizen iban
-  yield takeLatest(
+  yield* takeLatest(
     bpdUpsertIban.request,
     patchCitizenIban,
     bpdBackendClient.updatePaymentMethod
@@ -85,7 +89,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
   if (bpdOptInPaymentMethodsEnabled) {
     // update citizen optInStatus
-    yield takeLatest(
+    yield* takeLatest(
       bpdUpdateOptInStatusMethod.request,
       putOptInStatusCitizenV2,
       bpdBackendClient.enrollCitizenV2IO
@@ -93,14 +97,14 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   }
 
   // load bpd activation status for a specific payment method
-  yield takeEvery(
+  yield* takeEvery(
     bpdPaymentMethodActivation.request,
     bpdLoadPaymentMethodActivationSaga,
     bpdBackendClient.findPayment
   );
 
   // update bpd activation status for a specific payment method
-  yield takeEvery(
+  yield* takeEvery(
     bpdUpdatePaymentMethodActivation.request,
     bpdUpdatePaymentMethodActivationSaga,
     bpdBackendClient.enrollPayment,
@@ -108,17 +112,17 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   );
 
   // prefetch all the bpd data
-  yield takeEvery(bpdAllData.request, loadBpdData);
+  yield* takeEvery(bpdAllData.request, loadBpdData);
 
   // load bpd transactions for a period
-  yield takeEvery(
+  yield* takeEvery(
     bpdTransactionsLoad.request,
     bpdLoadTransactionsSaga,
     bpdBackendClient.winningTransactions
   );
 
   // Load bpd periods with amount
-  yield takeEvery(
+  yield* takeEvery(
     bpdPeriodsAmountLoad.request,
     loadPeriodsWithInfo,
     bpdBackendClient
@@ -126,44 +130,50 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
   if (bpdTransactionsPaging) {
     // Load count by day info for a period
-    yield takeEvery(
+    yield* takeEvery(
       bpdTransactionsLoadCountByDay.request,
       handleCountByDay,
       bpdBackendClient.winningTransactionsV2CountByDay
     );
 
     // Load the milestone (pivot) information for a period
-    yield takeEvery(
+    yield* takeEvery(
       bpdTransactionsLoadMilestone.request,
       handleLoadMilestone,
       bpdBackendClient.getRankingV2
     );
 
     // Load a transactions page for a period
-    yield takeEvery(
+    yield* takeEvery(
       bpdTransactionsLoadPage.request,
       handleTransactionsPage,
       bpdBackendClient.winningTransactionsV2
     );
 
     // Load all the required transactions data, for a period
-    yield takeEvery(
+    yield* takeEvery(
       bpdTransactionsLoadRequiredData.request,
       handleTransactionsLoadRequiredData
     );
   }
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
-  yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);
+  yield* takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);
 
   // The user accepts the declaration, enroll the user to the bpd program
-  yield takeLatest(getType(bpdOnboardingAcceptDeclaration), handleBpdEnroll);
+  yield* takeLatest(getType(bpdOnboardingAcceptDeclaration), handleBpdEnroll);
 
   // The user start the insertion / modification of the IBAN associated with bpd program
-  yield takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
+  yield* takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
 
-  // The user need to choice what to do with the payment methods added during the cashback
   if (bpdOptInPaymentMethodsEnabled) {
-    yield takeLatest(optInPaymentMethodsStart, optInPaymentMethodsHandler);
+    // The user need to choice what to do with the payment methods added during the cashback
+    yield* takeLatest(optInPaymentMethodsStart, optInPaymentMethodsHandler);
+
+    // The user choice to delete all the payment method with the BPD capability during the opt-in flow
+    yield* takeLatest(
+      optInPaymentMethodsDeletionChoice,
+      optInDeletionChoiceHandler
+    );
   }
 }

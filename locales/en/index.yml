@@ -389,19 +389,19 @@ profile:
             description:
               one: "IO collects only the information "
               two: "necessary "
-              three: "to monitor the performance of the services provided to you"
+              three: "to monitor the performance of the services provided to you."
             cta: "Why?"
           security:
             description:
-              one: "We take security measures to protect your data"
+              one: "We take security measures to protect your data."
             cta: "Learn more"
           gdpr:
             description:
               one: "The IO team works with other providers in accordance with "
-              two: "GDPR regulations"
+              two: "GDPR regulations."
             cta: "See our providers"
           additionalInformation:
-            description: "For more information, please read"
+            description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
           profileSettings: "You can change this choice anytime in Profile > Preferences"
           cta:
@@ -504,6 +504,7 @@ navigation:
   messages: Messages
   profile: Profile
   accessibility: "Section {{section}}, panel, {{order}} of 4"
+  accessibilityWithBadge: "Section {{section}}, {{unread}} new items, panel, {{order}} of 4"
   selected: Is selected
 cie:
   title: Touch the card
@@ -809,6 +810,8 @@ onboarding:
         faceId: Face ID
         touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  shareData:
+    title: "Configure IO"
 forms:
   validators:
     required: Required value
@@ -1806,6 +1809,7 @@ services:
   emptyListMessage: There are no services available at this time, pull down to refresh
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
+  fiscalCodeAccessibility: "Organization's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -2535,8 +2539,39 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "News and updates"
-        title: "Cashback updates"
+        title: "Update on the Cashback initiative"
+        subtitle: "Ministry of Economy and Finance"
+        body: !include bonus/bpd/optInPaymentMethods.md
+      choice:
+        header: Configure IO
+        title: Do you want to keep your payment methods?
+        subtitle: If you keep them, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments.
+        suggestedOption: Recommended
+        options:
+          keepAll:
+            title: Keep all payment methods in the Wallet 
+            body: If supported, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. You can change your method preferences or delete them at any time.
+          deleteAll:
+            title: Delete all payment methods from the Wallet
+            body: All methods added in the Wallet so far will be permanently deleted. You can add them again at any time, but you’ll have to enter back the method details and have it authorized.
+        deleteAllButton: Delete all methods
+      deletePaymentMethodsBottomSheet:
+        title: "Do you really want to delete the following methods from the Wallet?"
+        subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
+      thankYouPage:
+        cta:
+          goToWallet: "Go to Wallet"
+          retry: "Try again"
+        success:
+          title: "Done!"
+          body: "We’ve saved your choice."
+        retryAfterDeletion:
+          title: "Sorry, an unexpected error has occurred"
+          body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
+        toast: "Your choice was not saved. Try again later."
   cgn:
+    generic:
+      linkError: "The site can't be reached at the moment. Please, try again later."
     accessibility:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
@@ -2548,6 +2583,8 @@ bonus:
       screenTitle: Select the operator and discover the benefits
       cta:
         filter: Filter
+      categoriesList:
+        title: Select a category and discover the benefits
       filter:
         title: Filter operators
         searchTitle: Find by name
@@ -2585,18 +2622,20 @@ bonus:
       cta:
         label: Navigate to operator website
         landingPage: Get the benefit
+        discountUrl: Go to the benefit
       categories:
+        all: All the operators
         counting: and other {{count}}
-        cultureAndEntertainment: culture and entertainment
-        health: health and wellness
-        learning: education and learning
-        sport: sport
-        home: home
-        telco: telephony and internet
-        finance: financial services
-        travel: travels and transportation
-        mobility: sustainable transport
-        job: jobs and internships
+        cultureAndEntertainment: Culture and Entertainment
+        health: Health and Wellness
+        learning: Education and Learning
+        sport: Sport
+        home: Home
+        telco: Telephony and Internet
+        finance: Banking and Financial Services
+        travel: Travels and Transportation
+        mobility: Sustainable Transport
+        job: Jobs and Internships
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate your Card
@@ -2895,6 +2934,11 @@ features:
             body: "An error occurred while downloading the attachment"
             details: "Check your connection please and try again"
           checkBox: "OK, don't show me again"
+        pdfPreview:
+          title: "PDF Preview"
+          singleBtn: "Save, print, or share"
+          open: "Open"
+          save: "Save"
       body:
         plain: "plain text"
         html: "html"
@@ -2912,6 +2956,7 @@ features:
           smime: "Download smime.p7s"
   euCovidCertificate:
     save:
+      album: "IO"
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
       ok: "Image saved in your device gallery"
       bottomSheet:
@@ -2984,7 +3029,8 @@ support:
     emailAddress: "Email address"
     deviceAndOS: "Device and Operating System"
     ipAddress: "IP address"
-    currentAppVersion: "Version of the app in use"
+    appVersionsHistory: "App version history"
+    appVersionsHistoryValue: "To determine if the issue is due to the most recent update"
     identityProvider: "Identity Provider"
     navigationData: "In-app navigation data"
     navigationDataValue: "Such as the the last screen or message displayed in IO."
