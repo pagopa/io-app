@@ -1,14 +1,46 @@
+diff --git a/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings b/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings
+new file mode 100644
+index 0000000..f09950f
+--- /dev/null
++++ b/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings
+@@ -0,0 +1,26 @@
++/*
++  Localizable.strings
++  React
++*/
++"alert"="alert";
++"checkbox"="casella di controllo";
++"combobox"="elenco a discesa";
++"menu"="menu";
++"menubar"="barra del menu";
++"menuitem"="voce del menu";
++"progressbar"="barra di avanzamento";
++"radio"="pulsante di scelta";
++"radiogroup"="scelta multipla";
++"scrollbar"="barra di scorrimento";
++"spinbutton"="spin button";
++"switch"="switch";
++"tab"="tab description";
++"tablist"="tab list";
++"timer"="timer";
++"toolbar"="barra degli strumenti";
++"checked"="selezionato";
++"unchecked"="non selezionato";
++"busy"="occupato";
++"expanded"="espanso";
++"collapsed"="compresso";
++"mixed"="misto";
 diff --git a/node_modules/react-native/scripts/react_native_pods.rb b/node_modules/react-native/scripts/react_native_pods.rb
 index db9a34a..e95b882 100644
 --- a/node_modules/react-native/scripts/react_native_pods.rb
 +++ b/node_modules/react-native/scripts/react_native_pods.rb
 @@ -165,7 +165,7 @@ def use_react_native_codegen!(spec, options={})
    return if ENV['DISABLE_CODEGEN'] == '1'
-
+ 
    # The path to react-native (e.g. react_native_path)
 -  prefix = options[:path] ||= File.join(__dir__, "..")
 +  prefix = options[:path] ||= "../../node_modules/react-native"
-
+ 
    # The path to JavaScript files
    srcs_dir = options[:srcs_dir] ||= File.join(prefix, "Libraries")
 @@ -208,12 +208,12 @@ def use_react_native_codegen!(spec, options={})
@@ -20,9 +52,9 @@ index db9a34a..e95b882 100644
      :execution_position => :before_compile,
      :show_env_vars_in_log => true
    }
-
+ 
 -  spec.prepare_command = "#{mkdir_command} && touch #{generated_files.reduce() { |str, file| str + " " + file }}"
 +    spec.prepare_command = "cd ../.. && #{mkdir_command} && touch #{generated_files.reduce() { |str, file| str + " " + file }}"
  end
-
+ 
  # Local method for the Xcode 12.5 fix
