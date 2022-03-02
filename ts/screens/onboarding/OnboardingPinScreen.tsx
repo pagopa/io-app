@@ -16,7 +16,6 @@ import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAle
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { Label } from "../../components/core/typography/Label";
-import ROUTES from "../../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
 /**
  * A screen that allows the user to set the unlock code.
  */
-const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
+const OnboardingPinScreen: React.FC<Props> = () => {
   const [pin, setPin] = React.useState<PinString | null>(null);
   const onboardingAbortAlert = useOnboardingAbortAlert();
 
@@ -52,9 +51,9 @@ const OnboardingPinScreen: React.FC<Props> = ({ navigation }) => {
     () => ({
       ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
       disabled: pin === null,
-      onPress: () => navigation.navigate(ROUTES.ONBOARDING_PIN_CONFIRMATION)
+      onPress: () => null
     }),
-    [pin, navigation]
+    [pin]
   );
 
   return (

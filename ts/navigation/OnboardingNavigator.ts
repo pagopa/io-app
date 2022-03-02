@@ -8,7 +8,6 @@ import OnboardingPinScreen from "../screens/onboarding/OnboardingPinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
-import OnboardingPinConfirmationScreen from "../screens/onboarding/OnboardingPinConfirmationScreen";
 import ROUTES from "./routes";
 
 /**
@@ -30,9 +29,6 @@ const navigator = createStackNavigator(
     },
     [ROUTES.ONBOARDING_PIN]: {
       screen: OnboardingPinScreen
-    },
-    [ROUTES.ONBOARDING_PIN_CONFIRMATION]: {
-      screen: OnboardingPinConfirmationScreen
     },
     [ROUTES.ONBOARDING_FINGERPRINT]: {
       screen: FingerprintScreen
