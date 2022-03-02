@@ -15,7 +15,8 @@ import {
   getZendeskConfig,
   zendeskRequestTicketNumber,
   zendeskSelectedCategory,
-  zendeskSelectedSubcategory
+  zendeskSelectedSubcategory,
+  zendeskSupportStart
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
@@ -46,12 +47,17 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
+    case getType(zendeskSupportStart):
+      return {
+        ...state,
+        zendeskConfig: remoteUndefined,
+        selectedCategory: undefined,
+        selectedSubcategory: undefined
+      };
     case getType(getZendeskConfig.request):
       return {
         ...state,
-        zendeskConfig: remoteLoading,
-        selectedCategory: undefined,
-        selectedSubcategory: undefined
+        zendeskConfig: remoteLoading
       };
     case getType(getZendeskConfig.success):
       return {
