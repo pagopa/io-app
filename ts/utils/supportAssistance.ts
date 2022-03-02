@@ -63,7 +63,7 @@ export const zendeskPaymentCategory: ZendeskCategory = {
   value: "pagamenti_pagopa",
   description: { "it-IT": "Pagamento pagoPA", "en-EN": "pagoPA payment" }
 };
-export const zendeskPaymentMethodCategoryValue: ZendeskCategory = {
+export const zendeskPaymentMethodCategory: ZendeskCategory = {
   value: "metodo_di_pagamento",
   description: {
     "it-IT": "Metodo di pagamento",
