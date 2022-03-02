@@ -22,7 +22,7 @@ import { H1 } from "../../components/core/typography/H1";
 import { Body } from "../../components/core/typography/Body";
 import { LabelledItem } from "../../components/LabelledItem";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { PIN_LENGTH } from "../../utils/constants";
+import { PIN_LENGTH_SIX } from "../../utils/constants";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const pinLength = PIN_LENGTH_SIX;
+
 /**
  * A screen that allows the user to set the unlock code.
  */
@@ -53,13 +55,21 @@ const OnboardingPinScreen: React.FC<Props> = () => {
     onboardingAbortAlert.showAlert();
   };
 
+  const isPinConfirmationValid =
+    pinConfirmation.length < pinLength || pinConfirmation === pin;
+
+  const isFormValid =
+    pin.length === pinLength &&
+    pinConfirmation.length === pinLength &&
+    pinConfirmation === pin;
+
   const computedConfirmButtonProps = React.useMemo(
     () => ({
       ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
-      disabled: pin === null,
+      disabled: !isFormValid,
       onPress: () => null
     }),
-    [pin]
+    [isFormValid]
   );
 
   return (
@@ -87,7 +97,7 @@ const OnboardingPinScreen: React.FC<Props> = () => {
               value: pin,
               onChangeText: setPin,
               keyboardType: "number-pad",
-              maxLength: PIN_LENGTH
+              maxLength: pinLength
             }}
           />
 
@@ -99,8 +109,9 @@ const OnboardingPinScreen: React.FC<Props> = () => {
               value: pinConfirmation,
               onChangeText: setPinConfirmation,
               keyboardType: "number-pad",
-              maxLength: PIN_LENGTH
+              maxLength: pinLength
             }}
+            isValid={isPinConfirmationValid}
           />
         </ScrollView>
 
