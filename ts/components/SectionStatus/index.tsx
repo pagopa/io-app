@@ -100,6 +100,7 @@ const InnerSectionStatus = (
         testID={"SectionStatusComponentPressable"}
       >
         <StatusContent
+          // disable accessibility to prevent the override of the container
           accessible={false}
           backgroundColor={backgroundColor}
           iconColor={IOColors[color]}
