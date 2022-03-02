@@ -59,8 +59,17 @@ export const zendeskDeviceAndOSId = "4414316795921";
 export const zendeskidentityProviderId = "4414310934673";
 export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
-export const zendeskPaymentCategoryValue = "pagamenti_pagopa";
-export const zendeskPaymentMethodCategoryValue = "metodo_di_pagamento";
+export const zendeskPaymentCategory: ZendeskCategory = {
+  value: "pagamenti_pagopa",
+  description: { "it-IT": "Pagamento pagoPA", "en-EN": "pagoPA payment" }
+};
+export const zendeskPaymentMethodCategoryValue: ZendeskCategory = {
+  value: "metodo_di_pagamento",
+  description: {
+    "it-IT": "Metodo di pagamento",
+    "en-EN": "Payment method"
+  }
+};
 
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
