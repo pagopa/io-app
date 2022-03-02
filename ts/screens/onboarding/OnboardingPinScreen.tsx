@@ -48,15 +48,20 @@ const pinLength = PIN_LENGTH_SIX;
  */
 const OnboardingPinScreen: React.FC<Props> = () => {
   const [pin, setPin] = React.useState("");
+  const [isPinDirty, setIsPinDirty] = React.useState(false);
   const [pinConfirmation, setPinConfirmation] = React.useState("");
+  const [isPinConfirmationDirty, setIsPinConfirmationDirty] =
+    React.useState(false);
   const onboardingAbortAlert = useOnboardingAbortAlert();
 
   const handleGoBack = () => {
     onboardingAbortAlert.showAlert();
   };
 
+  const isPinValid = !isPinDirty || pin.length === pinLength;
+
   const isPinConfirmationValid =
-    pinConfirmation.length < pinLength || pinConfirmation === pin;
+    !isPinConfirmationDirty || pinConfirmation === pin;
 
   const isFormValid =
     pin.length === pinLength &&
@@ -71,6 +76,14 @@ const OnboardingPinScreen: React.FC<Props> = () => {
     }),
     [isFormValid]
   );
+
+  const handlePinBlur = React.useCallback(() => {
+    setIsPinDirty(true);
+  }, [setIsPinDirty]);
+
+  const handlePinConfirmationBlur = React.useCallback(() => {
+    setIsPinConfirmationDirty(true);
+  }, [setIsPinConfirmationDirty]);
 
   return (
     <BaseScreenComponent
@@ -97,8 +110,10 @@ const OnboardingPinScreen: React.FC<Props> = () => {
               value: pin,
               onChangeText: setPin,
               keyboardType: "number-pad",
-              maxLength: pinLength
+              maxLength: pinLength,
+              onEndEditing: handlePinBlur
             }}
+            isValid={isPinValid}
           />
 
           <View spacer extralarge />
@@ -109,7 +124,8 @@ const OnboardingPinScreen: React.FC<Props> = () => {
               value: pinConfirmation,
               onChangeText: setPinConfirmation,
               keyboardType: "number-pad",
-              maxLength: pinLength
+              maxLength: pinLength,
+              onEndEditing: handlePinConfirmationBlur
             }}
             isValid={isPinConfirmationValid}
           />
