@@ -14,7 +14,7 @@ import {
   getNetworkError
 } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { convertPayPalPsp } from "../../../../../../utils/paypal";
+import { convertPayPalPsp } from "../../store/transformers";
 
 /**
  * handle the request of searching for PayPal psp

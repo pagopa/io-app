@@ -30,7 +30,7 @@ import {
   pspForPaymentV2,
   pspSelectedForPaymentV2
 } from "../../../../store/actions/wallet/payment";
-import { convertPspData } from "../../../../utils/paypal";
+import { convertPspData } from "../../onboarding/paypal/store/transformers";
 
 const styles = StyleSheet.create({
   radioListHeaderRightColumn: {
