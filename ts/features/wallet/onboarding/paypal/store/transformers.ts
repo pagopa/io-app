@@ -1,7 +1,7 @@
+import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { PspData } from "../../../../../../definitions/pagopa/PspData";
 import { IOPayPalPsp } from "../types";
 import { getPayPalPspIconUrl } from "../../../../../utils/paymentMethod";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { PayPalPsp } from "../../../../../../definitions/pagopa/PayPalPsp";
 
 /**
