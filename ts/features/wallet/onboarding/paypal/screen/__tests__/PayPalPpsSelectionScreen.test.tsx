@@ -24,6 +24,17 @@ jest.mock("../../../../../../utils/bottomSheet", () => {
   };
 });
 
+jest.mock("../../../../../../utils/hooks/bottomSheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+  return {
+    __esModule: true,
+    BottomSheetScrollView: react.ScrollView,
+    TouchableWithoutFeedback: react.TouchableWithoutFeedback,
+    useIOBottomSheet: () => ({ present: mockPresentBottomSheet })
+  };
+});
+
 describe("PayPalPpsSelectionScreen", () => {
   jest.useFakeTimers();
   it(`screen should be defined when the psp list is ready`, () => {

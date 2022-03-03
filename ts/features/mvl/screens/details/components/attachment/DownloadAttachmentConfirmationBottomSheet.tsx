@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { StyleSheet, ActivityIndicator } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
@@ -9,7 +9,6 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import i18n from "../../../../../../i18n";
 import { useIODispatch } from "../../../../../../store/hooks";
-import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -24,6 +23,7 @@ import {
   LightModalContext
 } from "../../../../../../components/ui/LightModal";
 import { showToast } from "../../../../../../utils/showToast";
+import { useIOBottomSheet } from "../../../../../../utils/hooks/bottomSheet";
 import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
@@ -206,45 +206,44 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
   authHeader: { [key: string]: string },
   options: { dontAskAgain: boolean; showToastOnSuccess: boolean }
 ) => {
-  const { present, dismiss } = useIOBottomSheetRaw(BOTTOM_SHEET_HEIGHT);
   const dispatch = useIODispatch();
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
-  const openModalBox = () =>
-    present(
-      <DownloadAttachmentConfirmationBottomSheet
-        onCancel={dismiss}
-        onConfirm={({ dontAskAgain }) => {
-          dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
-          return handleDownloadResult(
-            attachment,
-            authHeader,
-            (path, actionConfig) =>
-              showAnimatedModal(
-                <PdfPreview
-                  path={path}
-                  onClose={hideModal}
-                  onError={_error => {
-                    dismiss();
-                    showToast(
-                      i18n.t(
-                        "features.mvl.details.attachments.bottomSheet.failing.details"
-                      )
-                    );
-                  }}
-                  actionConfig={actionConfig}
-                />,
-                BottomTopAnimation
-              )
-          ).then(() => dismiss());
-        }}
-        initialPreferences={options}
-        withoutConfirmation={options.dontAskAgain}
-      />,
-      options.dontAskAgain
-        ? i18n.t("features.mvl.details.attachments.bottomSheet.loading.title")
-        : i18n.t("features.mvl.details.attachments.bottomSheet.warning.title")
-    );
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <DownloadAttachmentConfirmationBottomSheet
+      onCancel={() => dismiss()}
+      onConfirm={({ dontAskAgain }) => {
+        dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
+        return handleDownloadResult(
+          attachment,
+          authHeader,
+          (path, actionConfig) =>
+            showAnimatedModal(
+              <PdfPreview
+                path={path}
+                onClose={hideModal}
+                onError={_error => {
+                  dismiss();
+                  showToast(
+                    i18n.t(
+                      "features.mvl.details.attachments.bottomSheet.failing.details"
+                    )
+                  );
+                }}
+                actionConfig={actionConfig}
+              />,
+              BottomTopAnimation
+            )
+        ).then(() => dismiss());
+      }}
+      initialPreferences={options}
+      withoutConfirmation={options.dontAskAgain}
+    />,
+    options.dontAskAgain
+      ? i18n.t("features.mvl.details.attachments.bottomSheet.loading.title")
+      : i18n.t("features.mvl.details.attachments.bottomSheet.warning.title"),
+    BOTTOM_SHEET_HEIGHT
+  );
 
-  return { present: openModalBox, dismiss };
+  return { present, bottomSheet, dismiss };
 };

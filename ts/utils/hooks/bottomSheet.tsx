@@ -52,27 +52,6 @@ export const bottomSheetContent = (
 };
 
 /**
- * Direct use of the bottomsheet in order to use a footer
- * @param content
- * @param title
- * @param snapPoint
- * @param onClose
- */
-export const bottomSheetRawConfig = (
-  content: React.ReactNode,
-  title: string | React.ReactNode,
-  snapPoint: number,
-  onClose: () => void
-): BottomSheetModalProps => ({
-  content,
-  config: {
-    snapPoints: [snapPoint],
-    backdropComponent: () => BlurredBackgroundComponent(onClose),
-    handleComponent: () => BottomSheetHeader({ title, onClose })
-  }
-});
-
-/**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
  * @param component
  * @param title
