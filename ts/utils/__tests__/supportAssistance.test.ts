@@ -46,6 +46,9 @@ describe("canShowHelp", () => {
 });
 
 describe("handleSendAssistanceLog", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it("if the assistanceTool is Instabug should call the instabugLog function", () => {
     const instabugLogSpy = jest
       .spyOn(configureInstabug, "instabugLog")
