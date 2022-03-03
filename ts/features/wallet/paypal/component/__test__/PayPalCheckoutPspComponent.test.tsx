@@ -1,10 +1,7 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import React from "react";
 import { constNull } from "fp-ts/lib/function";
-import {
-  editPspEnabled,
-  PayPalCheckoutPspComponent
-} from "../PayPalCheckoutPspComponent";
+import { PayPalCheckoutPspComponent } from "../PayPalCheckoutPspComponent";
 import { ImportoEuroCents } from "../../../../../../definitions/backend/ImportoEuroCents";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 import I18n, { setLocale } from "../../../../../i18n";
@@ -27,7 +24,8 @@ describe("PayPalCheckoutPspComponent", () => {
     );
     expect(component).toMatchSnapshot();
   });
-
+  /*
+  TODO uncomment this test when this task is completed https://pagopa.atlassian.net/browse/IA-684?filter=10121
   it(`edit label should be always pressable`, () => {
     const pspName = "pspName123";
     const mockEditLabelOnPress = jest.fn();
@@ -40,6 +38,7 @@ describe("PayPalCheckoutPspComponent", () => {
       />
     );
     expect(component).not.toBeNull();
+
     if (editPspEnabled) {
       const editLabel = component.queryByText(
         I18n.t("global.buttons.edit").toUpperCase()
@@ -49,6 +48,7 @@ describe("PayPalCheckoutPspComponent", () => {
       expect(mockEditLabelOnPress).toHaveBeenCalledTimes(1);
     }
   });
+   */
 
   describe("given a fee, pspName and privacy url", () => {
     it(`it should shown the data as expected`, () => {
