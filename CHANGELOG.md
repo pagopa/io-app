@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0-rc.0](https://github.com/pagopa/io-app/compare/2.4.0-rc.3...2.5.0-rc.0) (2022-03-03)
+
+
+### Bug Fixes
+
+* [[IA-308](https://pagopa.atlassian.net/browse/IA-308)] Status banner position in messages when the screen reader is OFF ([#3798](https://github.com/pagopa/io-app/issues/3798)) ([3519921](https://github.com/pagopa/io-app/commit/35199212c0f3968c7a29e7a6f19489f8891e8a1a))
+* [[IA-406](https://pagopa.atlassian.net/browse/IA-406)] Missing iOS accessibility internal translations ([#3791](https://github.com/pagopa/io-app/issues/3791)) ([1dbc41b](https://github.com/pagopa/io-app/commit/1dbc41b575b0aac4501edc4517c877f04267efb9))
+
+
+### Chores
+
+* Sync Podfile.lock ([#3797](https://github.com/pagopa/io-app/issues/3797)) ([f96bf83](https://github.com/pagopa/io-app/commit/f96bf83b2dd9aade4fd9e5cc019adce9e6864421))
+* **deps-dev:** bump plist from 3.0.1 to 3.0.4 ([#3796](https://github.com/pagopa/io-app/issues/3796)) ([211883f](https://github.com/pagopa/io-app/commit/211883f77d85e001a56088469d96b5c7816b3e6d))
+
 ## [2.4.0-rc.3](https://github.com/pagopa/io-app/compare/2.4.0-rc.2...2.4.0-rc.3) (2022-02-28)
 
 
