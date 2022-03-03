@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ApplicationState } from "../../store/actions/application";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
@@ -19,11 +19,11 @@ export function* watchNotificationSaga(
   if (lastState !== "active" && newState === "active") {
     // Check if there is a payment ongoing
     const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> =
-      yield select(isPaymentOngoingSelector);
+      yield* select(isPaymentOngoingSelector);
 
     // Check if we have a pending notification message
     const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
-      yield select(pendingMessageStateSelector);
+      yield* select(pendingMessageStateSelector);
 
     // We only navigate to the new message from a push if we're not in a
     // payment flow
@@ -32,10 +32,10 @@ export function* watchNotificationSaga(
       const messageId = pendingMessageState.id;
 
       // Remove the pending message from the notification state
-      yield put(clearNotificationPendingMessage());
+      yield* put(clearNotificationPendingMessage());
 
       // Navigate to message details screen
-      yield call(navigateToMessageRouterScreen, { messageId });
+      yield* call(navigateToMessageRouterScreen, { messageId });
     }
   }
 }

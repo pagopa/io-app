@@ -65,14 +65,15 @@ import {
 import { formatTextRecipient } from "../../../utils/strings";
 import { dispatchPickPspOrConfirm } from "./common";
 
-export type NavigationParams = Readonly<{
+export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
   startRoute: NavigationLeafRoute | undefined;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionSummaryScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

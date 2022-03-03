@@ -32,7 +32,7 @@ import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
-type NavigationParams = Readonly<{
+export type PickPspScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
@@ -42,7 +42,7 @@ type NavigationParams = Readonly<{
   chooseToChange?: boolean;
 }>;
 
-type OwnProps = NavigationStackScreenProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<PickPspScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

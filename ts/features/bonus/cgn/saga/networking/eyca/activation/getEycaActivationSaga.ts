@@ -1,7 +1,10 @@
-import { call, Effect, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Either, left, right } from "fp-ts/lib/Either";
-import { SagaCallReturnType } from "../../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../../types/utils";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { startTimer } from "../../../../../../../utils/timer";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
@@ -32,11 +35,11 @@ const mapStatus: Map<number, StartEycaStatus> = new Map([
  */
 export function* handleStartActivation(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
-): Generator<Effect, Either<NetworkError, StartEycaStatus>, any> {
+): Generator<ReduxSagaEffect, Either<NetworkError, StartEycaStatus>, any> {
   try {
     const startEycaActivationResult: SagaCallReturnType<
       typeof startEycaActivation
-    > = yield call(startEycaActivation, {});
+    > = yield* call(startEycaActivation, {});
     if (startEycaActivationResult.isRight()) {
       const status = startEycaActivationResult.value.status;
       const activationStatus = mapStatus.get(status);
@@ -61,11 +64,11 @@ export type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
  */
 export function* getActivation(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
-): Generator<Effect, Either<NetworkError, GetEycaStatus>, any> {
+): Generator<ReduxSagaEffect, Either<NetworkError, GetEycaStatus>, any> {
   try {
     const getEycaActivationResult: SagaCallReturnType<
       typeof getEycaActivation
-    > = yield call(getEycaActivation, {});
+    > = yield* call(getEycaActivation, {});
     if (getEycaActivationResult.isRight()) {
       if (getEycaActivationResult.value.status === 200) {
         const result = getEycaActivationResult.value.value;
@@ -115,34 +118,32 @@ export function* handleEycaActivationSaga(
 ) {
   const startPollingTime = new Date().getTime();
   while (true) {
-    const activationInfo: SagaCallReturnType<typeof getActivation> = yield call(
-      getActivation,
-      getEycaActivation
-    );
+    const activationInfo: SagaCallReturnType<typeof getActivation> =
+      yield* call(getActivation, getEycaActivation);
     if (activationInfo.isLeft()) {
-      yield put(cgnEycaActivation.failure(activationInfo.value));
+      yield* put(cgnEycaActivation.failure(activationInfo.value));
       return;
     }
     switch (activationInfo.value) {
       case "COMPLETED":
-        yield put(cgnEycaActivation.success("COMPLETED"));
+        yield* put(cgnEycaActivation.success("COMPLETED"));
         return;
       case "NOT_FOUND":
-        yield put(cgnEycaActivation.success("NOT_FOUND"));
+        yield* put(cgnEycaActivation.success("NOT_FOUND"));
         // ask for activation
         return;
       case "ERROR":
         // activation logic error
-        yield put(cgnEycaActivation.success("ERROR"));
+        yield* put(cgnEycaActivation.success("ERROR"));
         return;
     }
-    yield put(cgnEycaActivation.success("POLLING"));
+    yield* put(cgnEycaActivation.success("POLLING"));
     // sleep
-    yield call(startTimer, cgnResultPolling);
+    yield* call(startTimer, cgnResultPolling);
     const now = new Date().getTime();
     // stop polling if threshold is exceeded
     if (now - startPollingTime >= pollingTimeThreshold) {
-      yield put(cgnEycaActivation.success("POLLING_TIMEOUT"));
+      yield* put(cgnEycaActivation.success("POLLING_TIMEOUT"));
       return;
     }
   }

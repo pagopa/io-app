@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
@@ -15,12 +15,12 @@ export function* cgnBucketConsuption(
   try {
     const discountBucketCodeResult: SagaCallReturnType<
       typeof getDiscountBucketCode
-    > = yield call(getDiscountBucketCode, {
+    > = yield* call(getDiscountBucketCode, {
       discountId: cgnCodeFromBucketRequest.payload
     });
     if (discountBucketCodeResult.isRight()) {
       if (discountBucketCodeResult.value.status === 200) {
-        yield put(
+        yield* put(
           cgnCodeFromBucket.success({
             kind: "success",
             value: discountBucketCodeResult.value.value
@@ -29,14 +29,14 @@ export function* cgnBucketConsuption(
         return;
       }
       if (discountBucketCodeResult.value.status === 404) {
-        yield put(
+        yield* put(
           cgnCodeFromBucket.success({
             kind: "notFound"
           })
         );
         return;
       } else {
-        yield put(
+        yield* put(
           cgnCodeFromBucket.success({
             kind: "unhandled"
           })
@@ -47,6 +47,6 @@ export function* cgnBucketConsuption(
 
     throw new Error(readablePrivacyReport(discountBucketCodeResult.value));
   } catch (e) {
-    yield put(cgnCodeFromBucket.failure(getNetworkError(e)));
+    yield* put(cgnCodeFromBucket.failure(getNetworkError(e)));
   }
 }
