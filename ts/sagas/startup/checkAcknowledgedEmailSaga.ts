@@ -2,10 +2,6 @@ import { call, take } from "typed-redux-saga/macro";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
-import {
-  navigateToEmailInsertScreen,
-  navigateToEmailReadScreen
-} from "../../store/actions/navigation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
 import {
   hasProfileEmail,

@@ -9,7 +9,6 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { isPagoPaSupportedSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 
 import I18n from "../../i18n";
-import NavigationService from "../../navigation/NavigationService";
 import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import {
   navigateToPaymentTransactionSummaryScreen,
