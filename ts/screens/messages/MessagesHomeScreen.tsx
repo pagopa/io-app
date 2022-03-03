@@ -5,7 +5,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
-import { NavigationEventSubscription } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -42,9 +41,12 @@ import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
-import { setAccessibilityFocus } from "../../utils/accessibility";
+import {
+  isScreenReaderEnabled,
+  setAccessibilityFocus
+} from "../../utils/accessibility";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -52,6 +54,7 @@ type Props = NavigationStackScreenProps &
 
 type State = {
   currentTab: number;
+  isScreenReaderEnabled: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -97,11 +100,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen that contains all the Tabs related to messages.
  */
 class MessagesHomeScreen extends React.PureComponent<Props, State> {
-  private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
     super(props);
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      isScreenReaderEnabled: false
     };
   }
 
@@ -126,25 +129,23 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  public componentDidMount() {
+  public async componentDidMount() {
     this.onRefreshMessages();
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
-    }); // eslint-disable-line
-  }
-
-  public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
+    const srEnabled = await isScreenReaderEnabled();
+    this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
   public render() {
     const { isSearchEnabled } = this.props;
+
+    const statusComponent = (
+      <SectionStatusComponent
+        sectionKey={"messages"}
+        onSectionRef={v => {
+          setAccessibilityFocus(v, 100 as Millisecond);
+        }}
+      />
+    );
 
     return (
       <TopScreenComponent
@@ -159,12 +160,11 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
         isSearchAvailable={{ enabled: true, searchType: "Messages" }}
         appLogo={true}
       >
-        <SectionStatusComponent
-          sectionKey={"messages"}
-          onSectionRef={v => {
-            setAccessibilityFocus(v, 100 as Millisecond);
-          }}
+        <FocusAwareStatusBar
+          barStyle={"dark-content"}
+          backgroundColor={customVariables.colorWhite}
         />
+        {this.state.isScreenReaderEnabled && statusComponent}
         {!isSearchEnabled && (
           <React.Fragment>
             <AnimatedScreenContentHeader
@@ -176,6 +176,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           </React.Fragment>
         )}
         {isSearchEnabled && this.renderSearch()}
+        {!this.state.isScreenReaderEnabled && statusComponent}
       </TopScreenComponent>
     );
   }

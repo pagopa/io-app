@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation-stack";
-import AddBPayScreen from "../screens/add-account/AddBPayScreen";
 import BPaySearchBankScreen from "../screens/search/BPaySearchBankScreen";
 import BPaySearchStartScreen from "../screens/search/BPaySearchStartScreen";
 import SearchAvailableUserBPayScreen from "../screens/searchBPay/SearchAvailableUserBPayScreen";
@@ -15,9 +14,6 @@ const PaymentMethodOnboardingBPayNavigator = createStackNavigator(
     },
     [WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT]: {
       screen: SearchAvailableUserBPayScreen
-    },
-    [WALLET_ONBOARDING_BPAY_ROUTES.ADD_BPAY]: {
-      screen: AddBPayScreen
     }
   },
   {

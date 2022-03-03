@@ -61,17 +61,6 @@ export const navigateToOnboardingPrivativeSearchAvailable = () =>
  * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
  * and many helper methods specific to screens won't be available.
  */
-export const navigateToOnboardingPrivativeAdd = () =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.ADD_PRIVATIVE
-    })
-  );
-
-/**
- * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
- * and many helper methods specific to screens won't be available.
- */
 export const navigateToActivateBpdOnNewPrivative = () =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({

@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, put, select, take } from "redux-saga/effects";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import NavigationService from "../../../../../navigation/NavigationService";
@@ -37,10 +37,10 @@ export const isMainScreen = (screenName: string) =>
 
 function* ensureMainScreen() {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield call(NavigationService.getCurrentRouteName);
+    yield* call(NavigationService.getCurrentRouteName);
 
   if (currentRoute !== undefined && !isMainScreen(currentRoute)) {
-    yield call(navigateToBpdIbanInsertion);
+    yield* call(navigateToBpdIbanInsertion);
   }
 }
 
@@ -50,28 +50,25 @@ function* ensureMainScreen() {
  */
 export function* bpdIbanInsertionWorker() {
   const onboardingOngoing: ReturnType<typeof isBpdOnboardingOngoing> =
-    yield select(isBpdOnboardingOngoing);
+    yield* select(isBpdOnboardingOngoing);
   // ensure the first screen of the saga is the iban main screen.
-  yield call(ensureMainScreen);
+  yield* call(ensureMainScreen);
 
   // wait for the user iban insertion o cancellation
-  const nextAction: ActionType<
-    typeof bpdIbanInsertionCancel | typeof bpdIbanInsertionContinue
-  > = yield take([
-    getType(bpdIbanInsertionCancel),
-    getType(bpdIbanInsertionContinue)
-  ]);
+  const nextAction = yield* take<
+    ActionType<typeof bpdIbanInsertionCancel | typeof bpdIbanInsertionContinue>
+  >([getType(bpdIbanInsertionCancel), getType(bpdIbanInsertionContinue)]);
   if (isActionOf(bpdIbanInsertionCancel, nextAction)) {
-    yield call(onboardingOngoing ? navigateToWalletHome : navigateBack);
+    yield* call(onboardingOngoing ? navigateToWalletHome : navigateBack);
   } else {
     if (onboardingOngoing) {
       const paymentMethods: ReturnType<typeof paymentMethodsSelector> =
-        yield select(paymentMethodsSelector);
+        yield* select(paymentMethodsSelector);
 
       // Error while loading the wallet, display a message that informs the user about the error
       if (paymentMethods.kind === "PotNoneError") {
-        yield call(navigateToBpdOnboardingErrorPaymentMethods);
-        yield put(bpdOnboardingCompleted());
+        yield* call(navigateToBpdOnboardingErrorPaymentMethods);
+        yield* put(bpdOnboardingCompleted());
         return;
       }
 
@@ -84,10 +81,10 @@ export function* bpdIbanInsertionWorker() {
       const nextAction = hasAtLeastOnePaymentMethodWithBpd
         ? navigateToBpdOnboardingEnrollPaymentMethod
         : navigateToBpdOnboardingNoPaymentMethods;
-      yield call(nextAction);
-      yield put(bpdOnboardingCompleted());
+      yield* call(nextAction);
+      yield* put(bpdOnboardingCompleted());
     } else {
-      yield call(navigateBack);
+      yield* call(navigateBack);
     }
   }
 }
@@ -98,5 +95,5 @@ export function* bpdIbanInsertionWorker() {
  * instead of removing the call.
  */
 export function* handleBpdIbanInsertion(): SagaIterator {
-  yield call(bpdIbanInsertionWorker);
+  yield* call(bpdIbanInsertionWorker);
 }

@@ -4,7 +4,8 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
 <View
   accessibilityLabel="Message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -29,46 +30,60 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -252,7 +267,8 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -277,46 +293,60 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -551,7 +581,8 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -576,46 +607,60 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -850,7 +895,8 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -875,46 +921,60 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -1154,7 +1214,8 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -1179,46 +1240,60 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -1494,7 +1569,8 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -1519,46 +1595,60 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=false cat
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -1793,7 +1883,8 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Paid"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -1818,46 +1909,60 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -2148,7 +2253,8 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Paid"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -2173,46 +2279,60 @@ exports[`MessageList Item component when isArchived=false hasPaidBadge=true cate
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -2503,7 +2623,8 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Archived"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -2528,46 +2649,60 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -2858,7 +2993,8 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Archived"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -2883,46 +3019,60 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=false cate
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -3213,7 +3363,8 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Paid"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -3238,46 +3389,60 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -3568,7 +3733,8 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . Paid"
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -3593,46 +3759,60 @@ exports[`MessageList Item component when isArchived=true hasPaidBadge=true categ
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }
@@ -3923,7 +4103,8 @@ exports[`MessageList Item component with all the flags set to false should match
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  "
+  . "
+  accessibilityRole="button"
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -3948,46 +4129,60 @@ exports[`MessageList Item component with all the flags set to false should match
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "space-between",
-          "paddingRight": 16,
         },
       ]
     }
   >
-    <Text
-      color="bluegreyDark"
-      defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 14,
-        }
-      }
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Ċentru tas-Saħħa
-    </Text>
     <View
       style={
         Array [
           Object {},
           Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
             "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
           },
         ]
       }

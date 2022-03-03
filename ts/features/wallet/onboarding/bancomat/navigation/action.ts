@@ -1,7 +1,6 @@
 import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../../../navigation/NavigationService";
-import { InferNavigationParams } from "../../../../../types/react";
-import { ActivateBpdOnNewCreditCardScreen } from "../../common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
+import { ActivateBpdOnNewCreditCardScreenNavigationParams } from "../../common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
 /**
@@ -38,16 +37,6 @@ export const navigateToOnboardingBancomatSearchAvailableUserBancomat = () =>
 /**
  * @deprecated
  */
-export const navigateToOnboardingBancomatAdd = () =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.ADD_BANCOMAT
-    })
-  );
-
-/**
- * @deprecated
- */
 export const navigateToSuggestBpdActivation = () =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({
@@ -69,7 +58,7 @@ export const navigateToActivateBpdOnNewBancomat = () =>
  * @deprecated
  */
 export const navigateToActivateBpdOnNewCreditCard = (
-  params: InferNavigationParams<typeof ActivateBpdOnNewCreditCardScreen>
+  params: ActivateBpdOnNewCreditCardScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
     NavigationActions.navigate({

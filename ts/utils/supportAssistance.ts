@@ -58,6 +58,7 @@ export const zendeskBlockedPaymentRptIdId = "4414297346833";
 export const zendeskDeviceAndOSId = "4414316795921";
 export const zendeskidentityProviderId = "4414310934673";
 export const zendeskCurrentAppVersionId = "4414316660369";
+export const zendeskVersionsHistoryId = "4419641151505";
 export const zendeskPaymentCategoryValue = "pagamenti_pagopa";
 export const zendeskPaymentMethodCategoryValue = "metodo_di_pagamento";
 

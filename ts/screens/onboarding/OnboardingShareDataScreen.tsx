@@ -1,7 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
-import { connect } from "react-redux";
+import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
+import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Label } from "../../components/core/typography/Label";
@@ -18,27 +18,46 @@ import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { GlobalState } from "../../store/reducers/types";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
-import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { abortOnboarding } from "../../store/actions/onboarding";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
-  const { present, bottomSheet, dismiss } = useConfirmOptOutBottomSheet(() => {
+  const dispatch = useDispatch();
+  const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     props.setMixpanelEnabled(false);
   });
 
-  useHardwareBackButton(() => {
-    dismiss();
-    return true;
-  });
+  const executeAbortOnboarding = () => {
+    dispatch(abortOnboarding());
+  };
+
+  const handleGoBack = () => {
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: executeAbortOnboarding
+        }
+      ]
+    );
+  };
 
   return (
     <BaseScreenComponent
-      customGoBack={<View />}
-      headerTitle={I18n.t("profile.main.privacy.shareData.title")}
+      goBack={handleGoBack}
+      headerTitle={I18n.t("onboarding.shareData.title")}
     >
       <SafeAreaView style={IOStyles.flex}>
+        <StatusBar backgroundColor={IOColors.white} barStyle={"dark-content"} />
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <ShareDataComponent />
           <View spacer={true} />

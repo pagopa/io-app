@@ -1,4 +1,6 @@
 import * as t from "io-ts";
+import { enumType } from "italia-ts-commons/lib/types";
+import { CitizenOptInStatusEnum } from "../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
 /**
  * patched version of CitizenResource
@@ -14,8 +16,11 @@ const PatchedCitizenResourceR = t.interface({
 // optional attributes
 const PatchedCitizenResourceO = t.partial({
   payoffInstr: t.string,
-
-  payoffInstrType: t.string
+  payoffInstrType: t.string,
+  optInStatus: enumType<CitizenOptInStatusEnum>(
+    CitizenOptInStatusEnum,
+    "optInStatus"
+  )
 });
 
 export const PatchedCitizenResource = t.intersection(

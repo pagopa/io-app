@@ -54,7 +54,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
         <View style={[styles.row, styles.container]}>
           <View style={IOStyles.flex}>
             <View style={IOStyles.flex}>
-              <H4 weight={"SemiBold"} color={"blue"}>
+              <H4 weight={"Bold"} color={"blue"}>
                 {discount.name}
               </H4>
             </View>

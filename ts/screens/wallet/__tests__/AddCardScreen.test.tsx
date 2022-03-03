@@ -1,16 +1,15 @@
+import { fireEvent } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
-import AddCardScreen from "../AddCardScreen";
 import { isValidCardHolder } from "../../../utils/input";
-import { InferNavigationParams } from "../../../types/react";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import AddCardScreen, { AddCardScreenNavigationParams } from "../AddCardScreen";
 
 const mockPresentFn = jest.fn();
 jest.mock("../../../utils/bottomSheet", () => ({
@@ -141,7 +140,7 @@ describe("AddCardScreen", () => {
 });
 
 const getComponent = () => {
-  type NavigationParams = InferNavigationParams<typeof AddCardScreen>;
+  type NavigationParams = AddCardScreenNavigationParams;
   const params: NavigationParams = {
     inPayment: none
   } as NavigationParams;

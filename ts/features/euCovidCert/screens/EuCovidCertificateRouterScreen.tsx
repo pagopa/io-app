@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { setMessageReadState } from "../../../store/actions/messages";
@@ -12,8 +12,8 @@ import {
   euCovidCertificateShouldBeLoadedSelector
 } from "../store/reducers/byAuthCode";
 import {
-  EUCovidCertificateAuthCode,
-  EUCovidCertificate
+  EUCovidCertificate,
+  EUCovidCertificateAuthCode
 } from "../types/EUCovidCertificate";
 import { EUCovidCertificateResponse } from "../types/EUCovidCertificateResponse";
 import EuCovidCertExpiredScreen from "./EuCovidCertExpiredScreen";
@@ -26,14 +26,14 @@ import EuCovidCertTemporarilyNotAvailableKoScreen from "./ko/EuCovidCertTemporar
 import EuCovidCertWrongFormatKoScreen from "./ko/EuCovidCertWrongFormatKoScreen";
 import EuCovidCertValidScreen from "./valid/EuCovidCertValidScreen";
 
-type NavigationParams = Readonly<{
+export type EuCovidCertificateRouterScreenNavigationParams = Readonly<{
   authCode: EUCovidCertificateAuthCode;
   messageId: string;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationStackScreenProps<EuCovidCertificateRouterScreenNavigationParams>;
 
 /**
  * Return the right screen based on the response value
@@ -84,9 +84,10 @@ const routeSuccessEuCovidResponse = (
   }
 };
 
-export const EUCovidContext = React.createContext<NavigationParams | null>(
-  null
-);
+export const EUCovidContext =
+  React.createContext<EuCovidCertificateRouterScreenNavigationParams | null>(
+    null
+  );
 
 /**
  * Router screen that triggers the first loading of the certificate (if not present in the store)

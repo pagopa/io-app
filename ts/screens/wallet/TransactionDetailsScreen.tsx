@@ -3,7 +3,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
+import { NavigationEvents } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
@@ -14,6 +15,7 @@ import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
@@ -35,12 +37,13 @@ import {
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
-type NavigationParams = Readonly<{
+export type TransactionDetailsScreenNavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
   transaction: Transaction;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionDetailsScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -196,6 +199,10 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
         headerTitle={I18n.t("wallet.transactionDetails")}
         faqCategories={["wallet_transaction"]}
       >
+        <FocusAwareStatusBar
+          backgroundColor={customVariables.brandDarkGray}
+          barStyle={"light-content"}
+        />
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <SlidedContentComponent hasFlatBottom={true}>
           <PaymentSummaryComponent

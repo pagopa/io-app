@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -8,13 +8,14 @@ import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import BasePrivativeCard from "../component/card/BasePrivativeCard";
 
-type NavigationParams = Readonly<{
+export type PrivativeDetailScreenNavigationParams = Readonly<{
+  // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
   privative: PrivativePaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationStackScreenProps<PrivativeDetailScreenNavigationParams>;
 
 /**
  * Detail screen for a privative card

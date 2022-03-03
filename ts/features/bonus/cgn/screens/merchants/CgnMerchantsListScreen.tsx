@@ -36,24 +36,9 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const OFFLINE_FIXED_BOUNDINGBOX = {
-  userCoordinates: {
-    latitude: 41.827701462326985,
-    longitude: 12.66444625336996
-  },
-  boundingBox: {
-    coordinates: {
-      latitude: 34.845459548,
-      longitude: 6.5232427904
-    },
-    deltaLatitude: 6.9822419143,
-    deltaLongitude: 6.141203463
-  }
-};
-
 const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 
-type MerchantsAll = OfflineMerchant | OnlineMerchant;
+export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props
@@ -145,7 +130,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
                   iconPosition={"right"}
                   inputProps={{
                     value: searchValue,
-                    autoFocus: true,
+                    autoFocus: false,
                     onChangeText: setSearchValue,
                     placeholder: I18n.t("global.buttons.search")
                   }}
@@ -184,8 +169,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestOnlineMerchants: () => dispatch(cgnOnlineMerchants.request({})),
-  requestOfflineMerchants: () =>
-    dispatch(cgnOfflineMerchants.request(OFFLINE_FIXED_BOUNDINGBOX)),
+  requestOfflineMerchants: () => dispatch(cgnOfflineMerchants.request({})),
   navigateToMerchantDetail: (id: Merchant["id"]) =>
     navigateToCgnMerchantDetail({ merchantID: id })
 });

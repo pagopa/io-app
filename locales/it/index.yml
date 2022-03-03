@@ -389,16 +389,16 @@ profile:
             description:
               one: "IO raccoglie solo le informazioni "
               two: "necessarie "
-              three: "per il funzionamento dei servizi offerti"
+              three: "per il funzionamento dei servizi offerti."
             cta: "Perché?"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati"
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati."
             cta: "Scopri di più"
           gdpr:
             description:
               one: "Il team di IO collabora con fornitori in conformità con le "
-              two: "norme previste dal GDPR"
+              two: "norme previste dal GDPR."
             cta: "Vedi elenco fornitori"
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
@@ -504,6 +504,7 @@ navigation:
   messages: Messaggi
   profile: Profilo
   accessibility: "Sezione {{section}}, pannello, {{order}} di 4"
+  accessibilityWithBadge: "Sezione {{section}}, {{unread}} nuovi elementi, pannello, {{order}} di 4"
   selected: È selezionato
 cie:
   title: Appoggia la carta
@@ -816,6 +817,8 @@ onboarding:
         faceId: Face ID
         touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  shareData:
+    title: Configura IO
 forms:
   validators:
     required: Valore richiesto
@@ -1202,13 +1205,11 @@ wallet:
     contextualHelpTitle: Salva una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
-    title: Vuoi salvare questa carta?
-    infoTitle: Imposta la carta come metodo di pagamento preferito
-    info:
-      Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
-      pagamento
-    save: Salva
-    notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
+    title: "È tutto corretto?"
+    subtitle: "Aggiungendo la carta al tuo Portafoglio, potrai effettuare pagamenti in app e aderire alle iniziative disponibili su IO."
+    infoTitle: "Usa come metodo preferito"
+    info: "Quando paghi in app, IO ti mostra in automatico questo metodo di pagamento"
+    notice: "Per verificare la tua carta, tratteniamo temporaneamente € 0,02. Non preoccuparti: ti restituiremo l'importo al più presto."
     temporaryError: Si è verificato un errore nel salvataggio di questa carta
     temporarySubError: Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.
     loadWalletsErrorTitle: I sistemi stanno impiegando più tempo del previsto
@@ -1594,7 +1595,7 @@ messages:
       read: "Messaggio"
       unread: "Messaggio non letto"
       archived: Archiviato
-      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
@@ -1824,6 +1825,7 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   fiscalCode: "C.F. Ente"
+  fiscalCodeAccessibility: "Codice fiscale Ente" 
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
@@ -2554,7 +2556,39 @@ bonus:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
         title: "Aggiornamenti sul Cashback"
+        subtitle: "Ministero dell’Economia e delle Finanze"
+        body: !include bonus/bpd/optInPaymentMethods.md
+      choice:
+        header: "Configura IO"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
+        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        suggestedOption: Consigliato
+        options:
+          keepAll:
+            title: Mantieni tutti i metodi nel Portafoglio 
+            body: Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento. 
+          deleteAll:
+            title: Elimina tutti i metodi dal Portafoglio
+            body: Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+        deleteAllButton: Elimina tutti i metodi
+      deletePaymentMethodsBottomSheet:
+        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
+        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
+      thankYouPage:
+        cta:
+          goToWallet: "Vai al Portafoglio"
+          retry: "Riprova"
+        success:
+          title: "Fatto!"
+          body: "Abbiamo salvato la tua scelta"
+        retryAfterDeletion:
+          title: "Spiacenti, si è verificato un errore imprevisto"
+          body: "I tuoi metodi non sono stati eliminati. Riprova, oppure vai al Portafoglio ed eliminali manualmente."
+        toast: "La tua scelta non è stata salvata. Riprova più tardi."
+
   cgn:
+    generic:
+      linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
@@ -2562,10 +2596,12 @@ bonus:
     merchantsList:
       online: Online
       places: Luoghi
-      navigationTitle: Visualizza esercenti
-      screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+      navigationTitle: Agevolazioni
+      screenTitle: Seleziona un operatore e scopri le agevolazioni
       cta:
         filter: Filtra
+      categoriesList:
+        title: Seleziona una categoria e scopri le agevolazioni
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2592,7 +2628,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Offerte
+        deals: Agevolazioni
         description: Descrizione
         services: Servizi
         addresses: Indirizzi
@@ -2601,27 +2637,29 @@ bonus:
         discountCode: Codice Sconto
         conditions: Condizioni
       cta:
-        label: Vai al sito dell'esercente
+        label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione
+        discountUrl: Vai all’agevolazione
       categories:
+        all: Tutti gli operatori
         counting: e altre {{count}}
-        cultureAndEntertainment: cultura e tempo libero
-        health: salute e benessere
-        learning: istruzione e formazione
-        sport: sport
-        home: casa
-        telco: telefonia e internet
-        finance: servizi finanziari
-        travel: viaggi e trasporti
-        mobility: mobilità sostenibile
-        job: lavoro e tirocini
+        cultureAndEntertainment: Cultura e Tempo Libero
+        health: Salute e Benessere
+        learning: Istruzione e Formazione
+        sport: Sport
+        home: Casa
+        telco: Telefonia e Internet
+        finance: Servizi Bancari e Finanziari
+        travel: Viaggi e Trasporti
+        mobility: Mobilità Sostenibile
+        job: Lavoro e Tirocini
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva la Carta
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Vedi agevolazioni
+        buyers: Scopri le agevolazioni
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
@@ -2634,7 +2672,7 @@ bonus:
         warning: "Attenzione! "
         revoked: "Questa carta è stata revocata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
-      ownership: Chi può usufruire degli sconti?
+      ownership: Chi può usufruire delle agevolazioni?
       status:
         title: Carta Giovani Nazionale
         eyca: Carta EYCA
@@ -2643,7 +2681,7 @@ bonus:
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli operatori aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
           revoked: Revocata
@@ -2901,11 +2939,23 @@ features:
         title: "Allegati"
         toast:
           success: "Download completato"
-          failure: "Si è verificato un errore durante il download dell'allegato"
         bottomSheet:
-          title: "Fai attenzione agli allegati"
-          body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
+          warning:
+            title: "Fai attenzione agli allegati"
+            body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
+          loading:
+            title: "Allegato"
+            body: "Sto scaricando l'allegato"
+          failing:
+            title: "Allegato"
+            body: "Non sono riuscito a scaricare l'allegato"
+            details: "Per favore, controlla la tua connessione e riprova"
           checkBox: "OK, non mostrarmelo più"
+        pdfPreview:
+          title: "Anteprima PDF"
+          singleBtn: "Salva, stampa o condividi"
+          open: "Apri"
+          save: "Salva"
       body:
         plain: "testo semplice"
         html: "html"
@@ -2923,6 +2973,7 @@ features:
           smime: "Scarica smime.p7s"
   euCovidCertificate:
     save:
+      album: "IO"
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
       ok: "L'immagine è stata salvata nella galleria del tuo dispositivo"
       bottomSheet:
@@ -2995,7 +3046,8 @@ support:
     emailAddress: "Indirizzo email"
     deviceAndOS: "Dispositivo e sistema operativo"
     ipAddress: "Indirizzo IP"
-    currentAppVersion: "Versione in uso dell'app"
+    appVersionsHistory: "Storico versioni dell’app"
+    appVersionsHistoryValue: "Per capire se il problema dipende dall’ultimo aggiornamento"
     identityProvider: "Identity Provider"
     navigationData: "Dati di navigazione in app IO"
     navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"

@@ -19,17 +19,20 @@ import {
   searchTextSelector
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
-import customVariables from "../../../theme/variables";
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
-import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
+import {
+  setAccessibilityFocus,
+  useScreenReaderEnabled
+} from "../../../utils/accessibility";
 import { allMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
 import { pageSize } from "../../../config";
 import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import customVariables from "../../../theme/variables";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -60,16 +63,18 @@ const MessagesHomeScreen = ({
 
   useEffect(() => {
     reloadFirstPage();
-    const listener = navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
-    });
-    return () => {
-      listener.remove();
-    };
   }, []);
+
+  const isScreenReaderEnabled = useScreenReaderEnabled();
+
+  const statusComponent = (
+    <SectionStatusComponent
+      sectionKey={"messages"}
+      onSectionRef={v => {
+        setAccessibilityFocus(v, 100 as Millisecond);
+      }}
+    />
+  );
 
   return (
     <TopScreenComponent
@@ -83,12 +88,11 @@ const MessagesHomeScreen = ({
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
-      <SectionStatusComponent
-        sectionKey={"messages"}
-        onSectionRef={v => {
-          setAccessibilityFocus(v, 100 as Millisecond);
-        }}
+      <FocusAwareStatusBar
+        barStyle={"dark-content"}
+        backgroundColor={customVariables.colorWhite}
       />
+      {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
           <ScreenContentHeader
@@ -120,6 +124,7 @@ const MessagesHomeScreen = ({
           .getOrElse(
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
           )}
+      {!isScreenReaderEnabled && statusComponent}
     </TopScreenComponent>
   );
 };

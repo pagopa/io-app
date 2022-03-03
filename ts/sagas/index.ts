@@ -1,9 +1,8 @@
 /**
  * The root saga that forks and includes all the other sagas.
  */
-import { all, call } from "redux-saga/effects";
-
-import backendInfoSaga from "./backendInfo";
+import { all, call } from "typed-redux-saga/macro";
+import versionInfoSaga from "../common/versionInfo/saga/versionInfo";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import unreadInstabugMessagesSaga from "./instabug";
@@ -17,10 +16,10 @@ import {
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 export default function* root() {
-  yield all([
+  yield* all([
     call(startupSaga),
     call(backendStatusSaga),
-    call(backendInfoSaga),
+    call(versionInfoSaga),
     call(unreadInstabugMessagesSaga),
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),

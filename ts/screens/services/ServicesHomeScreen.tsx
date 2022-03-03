@@ -32,10 +32,12 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import { NavigationEventSubscription } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { Label } from "../../components/core/typography/Label";
+import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
@@ -43,8 +45,13 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
+import SectionStatusComponent from "../../components/SectionStatus";
+import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
+import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
@@ -85,22 +92,13 @@ import {
 } from "../../store/reducers/userMetadata";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { InferNavigationParams } from "../../types/react";
 import { HEADER_HEIGHT } from "../../utils/constants";
 import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import SectionStatusComponent from "../../components/SectionStatus";
-import LocalServicesWebView from "../../components/services/LocalServicesWebView";
-import IconFont from "../../components/ui/IconFont";
-import { IOColors } from "../../components/core/variables/IOColors";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import { Label } from "../../components/core/typography/Label";
-import ServiceDetailsScreen from "./ServiceDetailsScreen";
+import { ServiceDetailsScreenNavigationParams } from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationStackScreenProps;
 
@@ -230,8 +228,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 class ServicesHomeScreen extends React.Component<Props, State> {
-  private navListener?: NavigationEventSubscription;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -291,14 +287,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     if (pot.isError(this.props.visibleServicesContentLoadState)) {
       this.props.refreshVisibleServices();
     }
-
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
-    }); // eslint-disable-line
   }
 
   private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -376,12 +364,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     });
   };
 
-  public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
-  }
-
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
       return undefined;
@@ -432,6 +414,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         style={styles.container}
       >
         <View style={styles.topScreenContainer}>
+          <FocusAwareStatusBar
+            barStyle={"dark-content"}
+            backgroundColor={customVariables.colorWhite}
+          />
           <TopScreenComponent
             accessibilityLabel={I18n.t("services.title")}
             headerTitle={I18n.t("services.title")}
@@ -679,7 +665,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   navigateToServiceDetailsScreen: (
-    params: InferNavigationParams<typeof ServiceDetailsScreen>
+    params: ServiceDetailsScreenNavigationParams
   ) => navigateToServiceDetailsScreen(params),
   serviceDetailsLoad: (service: ServicePublic) =>
     dispatch(showServiceDetails(service))

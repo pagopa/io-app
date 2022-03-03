@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeLatest } from "redux-saga/effects";
+import { call, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { waitBackoffError } from "../../../utils/backoffError";
@@ -16,12 +16,12 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
   const mvlClient = BackendMvlClient(apiUrlPrefix, bearerToken);
 
   // handle the request for a new mvlDetailsLoad
-  yield takeLatest(
+  yield* takeLatest(
     mvlDetailsLoad.request,
     function* (action: ActionType<typeof mvlDetailsLoad.request>) {
       // wait backoff time if there were previous errors
-      yield call(waitBackoffError, mvlDetailsLoad.failure);
-      yield call(handleGetMvl, mvlClient.getUserLegalMessage, action);
+      yield* call(waitBackoffError, mvlDetailsLoad.failure);
+      yield* call(handleGetMvl, mvlClient.getUserLegalMessage, action);
     }
   );
 }

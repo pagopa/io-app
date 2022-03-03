@@ -53,6 +53,7 @@ export const CreditCardType = t.union([
   t.literal("DINERS"),
   t.literal("DISCOVER"),
   t.literal("JCB"),
+  t.literal("JCB15"),
   t.literal("POSTEPAY"),
   t.literal("UNKNOWN")
 ]);
@@ -517,3 +518,19 @@ export const PatchedWalletV2Response = t.intersection(
 );
 
 export type PatchedWalletV2Response = t.TypeOf<typeof PatchedWalletV2Response>;
+
+/**
+ * The patched version of the DeleteWalletResponse is needed because remainingWallets is not of type
+ * PatchedWalletV2 but instead it's type is WalletV2.
+ */
+export const PatchedDeleteWalletResponse = t.interface({
+  data: t.interface({
+    deletedWallets: t.number,
+    notDeletedWallets: t.number,
+    remainingWallets: t.readonlyArray(PatchedWalletV2)
+  })
+});
+
+export type PatchedDeleteWalletResponse = t.TypeOf<
+  typeof PatchedDeleteWalletResponse
+>;

@@ -8,17 +8,18 @@ import {
   createFetchRequestForApi,
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
+import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
+import { SpidIdps } from "../../definitions/content/SpidIdps";
+import { VersionInfo } from "../../definitions/content/VersionInfo";
+import { Zendesk } from "../../definitions/content/Zendesk";
 import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { PrivativeServices } from "../../definitions/pagopa/privative/configuration/PrivativeServices";
+import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
 import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
-import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
-import { SpidIdps } from "../../definitions/content/SpidIdps";
-import { Zendesk } from "../../definitions/content/Zendesk";
 
 type GetMunicipalityT = IGetApiRequestType<
   {
@@ -111,6 +112,20 @@ const getPrivativeServicesT: GetPrivativeServicesT = {
   response_decoder: basicResponseDecoder(PrivativeServices)
 };
 
+type GetVersionInfoT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<VersionInfo>
+>;
+const getVersionInfoT: GetVersionInfoT = {
+  method: "get",
+  url: () => "/status/versionInfo.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(VersionInfo)
+};
+
 type GetIdpsListT = IGetApiRequestType<
   void,
   never,
@@ -159,6 +174,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
       getPrivativeServicesT,
       options
     ),
+    getVersionInfo: createFetchRequestForApi(getVersionInfoT, options),
     getIdps: createFetchRequestForApi(getIdpsT, options),
     getZendeskConfig: createFetchRequestForApi(getZendeskConfigT, options)
   };

@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -35,11 +35,11 @@ export function* handleGetAeroportiAmmessi(
       getAeroportiAmmessi(action.payload)
     );
     const getAeroportiAmmessiResult: SagaCallReturnType<typeof request> =
-      yield call(request);
+      yield* call(request);
 
     if (getAeroportiAmmessiResult.isRight()) {
       if (getAeroportiAmmessiResult.value.status === 200) {
-        yield put(
+        yield* put(
           svGenerateVoucherAvailableDestination.success(
             convertSuccess(getAeroportiAmmessiResult.value.value)
           )
@@ -47,7 +47,7 @@ export function* handleGetAeroportiAmmessi(
         return;
       }
       if (mapKinds[getAeroportiAmmessiResult.value.status] !== undefined) {
-        yield put(
+        yield* put(
           svGenerateVoucherAvailableDestination.failure({
             ...getGenericError(
               new Error(mapKinds[getAeroportiAmmessiResult.value.status])
@@ -57,7 +57,7 @@ export function* handleGetAeroportiAmmessi(
         return;
       }
     }
-    yield put(
+    yield* put(
       svGenerateVoucherAvailableDestination.failure({
         ...getGenericError(
           new Error("Invalid payload from getAeroportiBeneficiarioResult")
@@ -65,7 +65,7 @@ export function* handleGetAeroportiAmmessi(
       })
     );
   } catch (e) {
-    yield put(
+    yield* put(
       svGenerateVoucherAvailableDestination.failure({ ...getNetworkError(e) })
     );
   }

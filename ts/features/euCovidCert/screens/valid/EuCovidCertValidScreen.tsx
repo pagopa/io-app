@@ -42,7 +42,7 @@ import {
   ValidCertificate,
   WithEUCovidCertificateHeaderData
 } from "../../types/EUCovidCertificate";
-import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
+import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
 import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
@@ -236,7 +236,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
       showToastError();
       return;
     }
-    captureScreenShoot(screenShotViewContainer, screenShotOption, {
+    captureScreenshot(screenShotViewContainer, screenshotOptions, {
       onSuccess: () =>
         showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
       onNoPermissions: () =>

@@ -11,8 +11,13 @@ import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../utils/filters";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../components/core/typography/Label";
-import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import {
+  DiscountCodeType,
+  DiscountCodeTypeEnum
+} from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { openWebUrl } from "../../../../../utils/url";
+import { showToast } from "../../../../../utils/showToast";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 import CgnDiscountCodeComponent from "./discount/CgnDiscountCodeComponent";
 
@@ -94,6 +99,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         <View spacer />
       </>
     )}
+    <CgnDiscountCodeComponent discount={discount} merchantType={merchantType} />
     <H3 accessible={true} accessibilityRole={"header"}>
       {I18n.t("bonus.cgn.merchantDetail.title.validity")}
     </H3>
@@ -104,7 +110,6 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       discount.endDate,
       I18n.t("global.dateFormats.shortFormat")
     )}`}</H4>
-    <CgnDiscountCodeComponent discount={discount} merchantType={merchantType} />
     <View spacer />
     {discount.condition && (
       <>
@@ -130,6 +135,22 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       >
         <Label color={"white"}>
           {I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
+        </Label>
+      </ButtonDefaultOpacity>
+    )}
+    {discount.discountUrl && merchantType !== DiscountCodeTypeEnum.landingpage && (
+      <ButtonDefaultOpacity
+        style={{ width: "100%" }}
+        onPress={() => {
+          openWebUrl(discount.discountUrl, () =>
+            showToast(I18n.t("bonus.cgn.generic.linkError"))
+          );
+        }}
+        onPressWithGestureHandler={true}
+        bordered
+      >
+        <Label color={"blue"}>
+          {I18n.t("bonus.cgn.merchantDetail.cta.discountUrl")}
         </Label>
       </ButtonDefaultOpacity>
     )}

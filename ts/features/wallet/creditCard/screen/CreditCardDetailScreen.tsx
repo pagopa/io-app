@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
@@ -10,14 +10,14 @@ import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import CreditCardComponent from "../component/CreditCardComponent";
 
-type NavigationParams = Readonly<{
+export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
   creditCard: CreditCardPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationStackScreenProps<CreditCardDetailScreenNavigationParams>;
 
 /**
  * Detail screen for a credit card

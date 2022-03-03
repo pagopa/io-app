@@ -14,26 +14,34 @@ import {
   mvlMockPdfAttachment
 } from "../../../../../types/__mock__/mvlMock";
 import { MvlPreferences } from "../../../../../store/reducers/preferences";
-import * as utilsModule from "../../../../../utils";
 import { MvlAttachments } from "../MvlAttachments";
+import { useDownloadAttachmentConfirmationBottomSheet } from "../DownloadAttachmentConfirmationBottomSheet";
+import * as platform from "../../../../../../../utils/platform";
 
-const mockBottomSheetPresent = jest.fn();
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: () => mockBottomSheetPresent()
-  })
+jest.mock("../../../../../../../utils/platform");
+
+const mockBottomSheetPresent = jest.fn<
+  ReturnType<typeof useDownloadAttachmentConfirmationBottomSheet>,
+  Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
+>(_ => ({
+  present: jest.fn(),
+  dismiss: jest.fn()
 }));
-
-const spy_handleDownloadResult = jest.spyOn(
-  utilsModule,
-  "handleDownloadResult"
-);
+jest.mock("../DownloadAttachmentConfirmationBottomSheet", () => ({
+  useDownloadAttachmentConfirmationBottomSheet: (
+    ...args: Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
+  ) => mockBottomSheetPresent(...args)
+}));
 
 describe("MvlAttachments", () => {
   jest.useFakeTimers();
 
   beforeEach(() => {
     mockBottomSheetPresent.mockReset();
+    mockBottomSheetPresent.mockImplementation(_ => ({
+      present: jest.fn(),
+      dismiss: jest.fn()
+    }));
   });
 
   describe("When there are no attachments", () => {
@@ -81,45 +89,48 @@ describe("MvlAttachments", () => {
       });
     });
 
-    describe("Given the preference `showAlertForAttachments: true`", () => {
-      const preferences: MvlPreferences = { showAlertForAttachments: true };
-      describe("And the user taps on the attachment", () => {
+    [
+      { showAlertForAttachments: true, isAndroid: false },
+      { showAlertForAttachments: true, isAndroid: true },
+      { showAlertForAttachments: false, isAndroid: false },
+      { showAlertForAttachments: false, isAndroid: true }
+    ].forEach(scenario => {
+      describe.only(`Given the scenario ${JSON.stringify(scenario)}`, () => {
+        const preferences = {
+          showAlertForAttachments: scenario.showAlertForAttachments
+        };
         const props = { attachments: [mvlMockPdfAttachment] };
-        it("Should open the bottom sheet", async () => {
-          const { getByText } = renderComponent(props, preferences);
-          const item = getByText(mvlMockPdfAttachment.displayName);
-          await fireEvent(item, "onPress");
-          expect(mockBottomSheetPresent).toHaveBeenCalled();
-        });
 
-        it("Should not call `handleDownloadResult`", async () => {
-          const { getByText } = renderComponent(props, preferences);
-          const item = getByText(mvlMockPdfAttachment.displayName);
-          await fireEvent(item, "onPress");
-          expect(spy_handleDownloadResult).not.toHaveBeenCalled();
-        });
-      });
-    });
-
-    describe("Given the preference `showAlertForAttachments: false`", () => {
-      const preferences: MvlPreferences = { showAlertForAttachments: false };
-      describe("And the user taps on the attachment", () => {
-        const props = { attachments: [mvlMockPdfAttachment] };
-        it("Should not open the bottom sheet", async () => {
-          const { getByText } = renderComponent(props, preferences);
-          const item = getByText(mvlMockPdfAttachment.displayName);
-          await fireEvent(item, "onPress");
-          expect(mockBottomSheetPresent).not.toHaveBeenCalled();
-        });
-        it("Should call `handleDownloadResult`", async () => {
-          const { getByText } = renderComponent(props, preferences);
-          const item = getByText(mvlMockPdfAttachment.displayName);
-          await fireEvent(item, "onPress");
-          expect(spy_handleDownloadResult).toHaveBeenNthCalledWith(
+        it("Should pass the correct options to `useDownloadAttachmentConfirmationBottomSheet`", () => {
+          (platform as any).test_setPlatform(
+            scenario.isAndroid ? "android" : "ios"
+          );
+          renderComponent(props, preferences);
+          expect(mockBottomSheetPresent).toHaveBeenNthCalledWith(
             1,
             mvlMockPdfAttachment,
-            { Authorization: "Bearer undefined" }
+            { Authorization: "Bearer undefined" },
+            {
+              dontAskAgain: !scenario.showAlertForAttachments,
+              showToastOnSuccess: scenario.isAndroid
+            }
           );
+        });
+
+        describe("when the user taps on the attachment", () => {
+          it("Should open the bottom sheet", async () => {
+            const mockPresent = jest.fn();
+            const mockDismiss = jest.fn();
+            mockBottomSheetPresent.mockImplementationOnce(_ => ({
+              present: mockPresent,
+              dismiss: mockDismiss
+            }));
+            const { getByText } = renderComponent(props, preferences);
+            const item = getByText(mvlMockPdfAttachment.displayName);
+            await fireEvent(item, "onPress");
+            expect(mockPresent).toHaveBeenCalled();
+            expect(mockDismiss).not.toHaveBeenCalled();
+          });
         });
       });
     });
