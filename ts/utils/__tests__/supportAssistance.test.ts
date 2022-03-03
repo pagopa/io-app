@@ -23,7 +23,7 @@ describe("anonymousAssistanceAddress", () => {
     const mockedSubcategory = "mockedSubcategory";
 
     expect(anonymousAssistanceAddress(mockedCategory, mockedSubcategory)).toBe(
-      `${mockedEmailLink}${mockedCategory}:${mockedSubcategory}`
+      `${mockedEmailLink}${mockedCategory}: ${mockedSubcategory}`
     );
   });
 });

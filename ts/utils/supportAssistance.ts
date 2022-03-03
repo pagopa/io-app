@@ -27,7 +27,7 @@ export const anonymousAssistanceAddress = (
 ): string =>
   `mailto:io@assistenza.pagopa.it?subject=${category}${fromNullable(
     subcategory
-  ).fold("", s => ":" + s)}`;
+  ).fold("", s => ": " + s)}`;
 
 export const zendeskDefaultJwtConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
