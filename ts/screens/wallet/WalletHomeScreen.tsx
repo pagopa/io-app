@@ -239,8 +239,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (pot.isNone(this.props.potWallets)) {
       this.props.loadWallets();
     }
-
-    this.loadBonusBpd();
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import I18n from "../../../../../i18n";
 import { bpdOptInPaymentMethodsEnabled } from "../../../../../config";
@@ -24,7 +23,10 @@ const BpdOptInPaymentMethodsContainer = () => {
     bpdRemoteConfig?.opt_in_payment_methods && bpdOptInPaymentMethodsEnabled;
 
   useEffect(() => {
-    if (isOptInPaymentMethodsEnabled) {
+    if (isOptInPaymentMethodsEnabled && !showOptInChecked) {
+      setShowOptInChecked(true);
+      // Starts the optInShouldShowChoiceHandler saga
+      dispatch(optInPaymentMethodsShowChoice.request());
       showModal(
         <LoadingSpinnerOverlay
           isLoading={true}
@@ -33,20 +35,13 @@ const BpdOptInPaymentMethodsContainer = () => {
         />
       );
     }
-  }, [isOptInPaymentMethodsEnabled, showModal]);
-
-  useEffect(() => {
-    if (
-      (isOptInPaymentMethodsEnabled &&
-        !showOptInChecked &&
-        pot.isSome(bpdLastUpdate)) ||
-      pot.isError(bpdLastUpdate)
-    ) {
-      setShowOptInChecked(true);
-      // Starts the optInShouldShowChoiceHandler saga
-      dispatch(optInPaymentMethodsShowChoice.request());
-    }
-  }, [isOptInPaymentMethodsEnabled, dispatch, showOptInChecked, bpdLastUpdate]);
+  }, [
+    isOptInPaymentMethodsEnabled,
+    dispatch,
+    showOptInChecked,
+    bpdLastUpdate,
+    showModal
+  ]);
 
   useEffect(() => {
     if (

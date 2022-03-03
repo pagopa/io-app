@@ -8,7 +8,7 @@ import {
 } from "../../../../store/actions/optInPaymentMethods";
 import { optInShouldShowChoiceHandler } from "../optInShouldShowChoiceHandler";
 import {
-  bpdEnabledSelector,
+  activationStatusSelector,
   optInStatusSelector
 } from "../../../../store/reducers/details/activation";
 import { CitizenOptInStatusEnum } from "../../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
@@ -17,6 +17,7 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../../store/actions/wallet/wallets";
+import { remoteReady, remoteUndefined } from "../../../../model/RemoteValue";
 
 describe("optInShouldShowChoiceHandler saga", () => {
   jest.useFakeTimers();
@@ -40,8 +41,8 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next()
       .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
       .next(bpdAllData.success())
-      .select(bpdEnabledSelector)
-      .next(pot.none)
+      .select(activationStatusSelector)
+      .next(remoteUndefined)
       .put(
         optInPaymentMethodsShowChoice.failure(
           new Error("The bpdEnabled value is not potSome")
@@ -58,8 +59,8 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next()
       .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
       .next(bpdAllData.success())
-      .select(bpdEnabledSelector)
-      .next(pot.some(false))
+      .select(activationStatusSelector)
+      .next(remoteReady("never"))
       .put(optInPaymentMethodsShowChoice.success(false))
       .next()
       .isDone();
@@ -72,8 +73,8 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next()
       .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
       .next(bpdAllData.success())
-      .select(bpdEnabledSelector)
-      .next(pot.some(true))
+      .select(activationStatusSelector)
+      .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
       .next(pot.none)
       .put(
@@ -92,8 +93,8 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next()
       .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
       .next(bpdAllData.success())
-      .select(bpdEnabledSelector)
-      .next(pot.some(true))
+      .select(activationStatusSelector)
+      .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
       .next(pot.some(CitizenOptInStatusEnum.DENIED))
       .put(optInPaymentMethodsShowChoice.success(false))
@@ -108,8 +109,8 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next()
       .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
       .next(bpdAllData.success())
-      .select(bpdEnabledSelector)
-      .next(pot.some(true))
+      .select(activationStatusSelector)
+      .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
       .next(pot.some(CitizenOptInStatusEnum.NOREQ))
       .put(fetchWalletsRequestWithExpBackoff())
@@ -128,8 +129,8 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next()
       .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
       .next(bpdAllData.success())
-      .select(bpdEnabledSelector)
-      .next(pot.some(true))
+      .select(activationStatusSelector)
+      .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
       .next(pot.some(CitizenOptInStatusEnum.NOREQ))
       .put(fetchWalletsRequestWithExpBackoff())
