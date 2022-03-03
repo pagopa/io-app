@@ -5,7 +5,7 @@ import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { InfoBox } from "../../../../components/box/InfoBox";
-import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../utils/hooks/bottomSheet";
 import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import Markdown from "../../../../components/ui/Markdown";
@@ -74,7 +74,7 @@ export const BottomSheetBpdTransactionsBody: React.FunctionComponent = () => {
 const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { present } = useIOBottomSheet(
+  const { present, bottomSheet } = useIOBottomSheet(
     <>
       <View spacer={true} large={true} />
       <InfoBox iconName={"io-calendar"} iconSize={32}>
@@ -148,6 +148,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
           "bonus.bpd.details.transaction.detail.summary.body.text5"
         )}${formatNumberAmount(props.totalAmount.totalCashback)} euro.`}</H4>
       </Body>
+      {bottomSheet}
     </>
   );
 };

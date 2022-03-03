@@ -37,7 +37,7 @@ import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { useIOBottomSheet } from "../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -88,7 +88,7 @@ const CiePinScreen: React.FC<Props> = props => {
     }
   }, [pin]);
 
-  const { present } = useIOBottomSheet(
+  const { present, bottomSheet } = useIOBottomSheet(
     <View>
       <Markdown avoidTextSelection>
         {I18n.t("bottomSheets.ciePin.content")}
@@ -198,6 +198,7 @@ const CiePinScreen: React.FC<Props> = props => {
           android: variables.contentPadding
         })}
       />
+      {bottomSheet}
     </TopScreenComponent>
   );
 };
