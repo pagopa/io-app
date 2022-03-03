@@ -6,7 +6,7 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../store/actions/wallet/wallets";
-import { ActivationStatus, bpdAllData } from "../../../store/actions/details";
+import { ActivationStatus } from "../../../store/actions/details";
 import {
   optInPaymentMethodsShowChoice,
   optInPaymentMethodsStart
@@ -22,8 +22,7 @@ import { remoteReady, RemoteValue } from "../../../model/RemoteValue";
 /**
  * This saga manage the flow that checks if a user has already take a choice about the opt-in of the payment methods.
  *
- *  The saga follows this flow::
- * - request the bpd data
+ *  The saga follows this flow:
  * - check if the user participate or not in the cashback program
  * - check if the user has already taken the opt-in payment methods choice
  * - request the user's payment methods
@@ -35,25 +34,11 @@ export function* optInShouldShowChoiceHandler(): Generator<
   void,
   any
 > {
-  // Load the information about the participation of the user to the bpd program
-  yield* put(bpdAllData.request());
-  const bpdAllDataResponse = yield* take<
-    ActionType<typeof bpdAllData.success | typeof bpdAllData.failure>
-  >([getType(bpdAllData.success), getType(bpdAllData.failure)]);
-
-  // If the bpdAllData request fail report the error
-  if (isActionOf(bpdAllData.failure, bpdAllDataResponse)) {
-    yield* put(
-      optInPaymentMethodsShowChoice.failure(bpdAllDataResponse.payload)
-    );
-    return;
-  }
-
   const activationStatus: RemoteValue<ActivationStatus, Error> = yield* select(
     activationStatusSelector
   );
 
-  // Safety check on field returned in @link{bpdEnabled} and managed by @{enabledReducer}
+  // Safety check on field returned in @link{activationStatus} and managed by @{activationStatusReducer}
   if (!remoteReady(activationStatus)) {
     yield* put(
       optInPaymentMethodsShowChoice.failure(
