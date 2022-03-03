@@ -98,7 +98,6 @@ export const zendeskConfigSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.zendeskConfig],
   (zendeskConfig: ZendeskConfig): ZendeskConfig => zendeskConfig
 );
-
 export const zendeskSelectedCategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
   (zendeskCategory: ZendeskCategory | undefined): ZendeskCategory | undefined =>
