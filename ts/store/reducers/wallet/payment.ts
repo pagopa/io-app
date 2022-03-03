@@ -354,7 +354,8 @@ const reducer = (
         ...state,
         pspsV2: {
           ...state.pspsV2,
-          psps: remoteLoading
+          psps: remoteLoading,
+          pspSelected: undefined
         }
       };
     case getType(pspForPaymentV2.success):
