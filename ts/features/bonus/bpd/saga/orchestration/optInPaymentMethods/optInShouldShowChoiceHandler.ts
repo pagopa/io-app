@@ -6,7 +6,7 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../store/actions/wallet/wallets";
-import { ActivationStatus } from "../../../store/actions/details";
+import { ActivationStatus, bpdAllData } from "../../../store/actions/details";
 import {
   optInPaymentMethodsShowChoice,
   optInPaymentMethodsStart
@@ -17,7 +17,7 @@ import {
 } from "../../../store/reducers/details/activation";
 import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 import { ReduxSagaEffect } from "../../../../../../types/utils";
-import { remoteReady, RemoteValue } from "../../../model/RemoteValue";
+import { isReady, RemoteValue } from "../../../model/RemoteValue";
 
 /**
  * This saga manage the flow that checks if a user has already take a choice about the opt-in of the payment methods.
@@ -34,12 +34,26 @@ export function* optInShouldShowChoiceHandler(): Generator<
   void,
   any
 > {
+  // Load the information about the participation of the user to the bpd program
+  yield* put(bpdAllData.request());
+  const bpdAllDataResponse = yield* take<
+    ActionType<typeof bpdAllData.success | typeof bpdAllData.failure>
+  >([getType(bpdAllData.success), getType(bpdAllData.failure)]);
+
+  // If the bpdAllData request fail report the error
+  if (isActionOf(bpdAllData.failure, bpdAllDataResponse)) {
+    yield* put(
+      optInPaymentMethodsShowChoice.failure(bpdAllDataResponse.payload)
+    );
+    return;
+  }
+
   const activationStatus: RemoteValue<ActivationStatus, Error> = yield* select(
     activationStatusSelector
   );
 
   // Safety check on field returned in @link{activationStatus} and managed by @{activationStatusReducer}
-  if (!remoteReady(activationStatus)) {
+  if (!isReady(activationStatus)) {
     yield* put(
       optInPaymentMethodsShowChoice.failure(
         new Error("The bpdEnabled value is not potSome")
