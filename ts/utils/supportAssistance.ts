@@ -78,11 +78,9 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
     "en-EN": "Payment method"
   }
 };
-
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
-
 // help can be shown only when remote FF is instabug or (zendesk + local FF + emailValidated)
 export const canShowHelp = (
   assistanceTool: ToolEnum,
@@ -98,7 +96,6 @@ export const canShowHelp = (
       return false;
   }
 };
-
 // Send a log based on
 export const handleSendAssistanceLog = (
   assistanceTool: ToolEnum,
