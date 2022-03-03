@@ -44,7 +44,10 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { setAccessibilityFocus } from "../../utils/accessibility";
+import {
+  isScreenReaderEnabled,
+  setAccessibilityFocus
+} from "../../utils/accessibility";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 
 type Props = {
@@ -56,6 +59,7 @@ type Props = {
 
 type State = {
   currentTab: number;
+  isScreenReaderEnabled: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -104,7 +108,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      isScreenReaderEnabled: false
     };
   }
 
@@ -129,12 +134,23 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  public componentDidMount() {
+  public async componentDidMount() {
     this.onRefreshMessages();
+    const srEnabled = await isScreenReaderEnabled();
+    this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
   public render() {
     const { isSearchEnabled } = this.props;
+
+    const statusComponent = (
+      <SectionStatusComponent
+        sectionKey={"messages"}
+        onSectionRef={v => {
+          setAccessibilityFocus(v, 100 as Millisecond);
+        }}
+      />
+    );
 
     return (
       <TopScreenComponent
@@ -153,12 +169,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           barStyle={"dark-content"}
           backgroundColor={customVariables.colorWhite}
         />
-        <SectionStatusComponent
-          sectionKey={"messages"}
-          onSectionRef={v => {
-            setAccessibilityFocus(v, 100 as Millisecond);
-          }}
-        />
+        {this.state.isScreenReaderEnabled && statusComponent}
         {!isSearchEnabled && (
           <React.Fragment>
             <AnimatedScreenContentHeader
@@ -170,6 +181,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           </React.Fragment>
         )}
         {isSearchEnabled && this.renderSearch()}
+        {!this.state.isScreenReaderEnabled && statusComponent}
       </TopScreenComponent>
     );
   }

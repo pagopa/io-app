@@ -30,7 +30,10 @@ import {
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
+import {
+  setAccessibilityFocus,
+  useScreenReaderEnabled
+} from "../../../utils/accessibility";
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 
 type Props = {
@@ -67,6 +70,17 @@ const MessagesHomeScreen = ({
     reloadFirstPage();
   }, []);
 
+  const isScreenReaderEnabled = useScreenReaderEnabled();
+
+  const statusComponent = (
+    <SectionStatusComponent
+      sectionKey={"messages"}
+      onSectionRef={v => {
+        setAccessibilityFocus(v, 100 as Millisecond);
+      }}
+    />
+  );
+
   return (
     <TopScreenComponent
       accessibilityEvents={{
@@ -83,12 +97,7 @@ const MessagesHomeScreen = ({
         barStyle={"dark-content"}
         backgroundColor={customVariables.colorWhite}
       />
-      <SectionStatusComponent
-        sectionKey={"messages"}
-        onSectionRef={v => {
-          setAccessibilityFocus(v, 100 as Millisecond);
-        }}
-      />
+      {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
           <ScreenContentHeader
@@ -120,6 +129,7 @@ const MessagesHomeScreen = ({
           .getOrElse(
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
           )}
+      {!isScreenReaderEnabled && statusComponent}
     </TopScreenComponent>
   );
 };
