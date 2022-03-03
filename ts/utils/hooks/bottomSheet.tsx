@@ -77,6 +77,7 @@ export const bottomSheetRawConfig = (
  * @param component
  * @param title
  * @param snapPoint
+ * @param footer
  */
 export const useIOBottomSheet = (
   component: React.ReactNode,
