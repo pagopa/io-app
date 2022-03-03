@@ -4,10 +4,10 @@ import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
-import OnboardingPinScreen from "../screens/onboarding/OnboardingPinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
+import PinScreen from "../screens/onboarding/PinScreen";
 import ROUTES from "./routes";
 
 /**
@@ -28,7 +28,7 @@ const navigator = createStackNavigator(
       screen: TosScreen
     },
     [ROUTES.ONBOARDING_PIN]: {
-      screen: OnboardingPinScreen
+      screen: PinScreen
     },
     [ROUTES.ONBOARDING_FINGERPRINT]: {
       screen: FingerprintScreen
