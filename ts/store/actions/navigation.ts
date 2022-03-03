@@ -161,25 +161,19 @@ export const navigateToServicesPreferenceModeSelectionScreen = (
  * @deprecated
  */
 export const navigateToEmailReadScreen = () => {
-  throw new Error("fix me");
+  NavigationService.dispatchNavigationAction(
+    CommonActions.navigate(ROUTES.READ_EMAIL_SCREEN)
+  );
 };
-// NavigationService.dispatchNavigationAction(
-//   NavigationActions.navigate({
-//     routeName: ROUTES.READ_EMAIL_SCREEN
-//   })
-// );
 
 /**
  * @deprecated
  */
 export const navigateToEmailInsertScreen = () => {
-  throw new Error("fix me");
+  NavigationService.dispatchNavigationAction(
+    CommonActions.navigate(ROUTES.INSERT_EMAIL_SCREEN)
+  );
 };
-// NavigationService.dispatchNavigationAction(
-//   NavigationActions.navigate({
-//     routeName: ROUTES.INSERT_EMAIL_SCREEN
-//   })
-// );
 
 /**
  * Message

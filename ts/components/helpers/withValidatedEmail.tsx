@@ -1,4 +1,4 @@
-import { NavigationEvents, StackActions } from "@react-navigation/compat";
+import { NavigationEvents } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
@@ -9,7 +9,6 @@ import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
-import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import { acknowledgeOnEmailValidation } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
@@ -48,14 +47,6 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
     this.props.dispatchAcknowledgeOnEmailValidation();
   };
 
-  private handleForcedClose = () => {
-    // due a known bug (see https://github.com/react-navigation/react-navigation/issues/4867)
-    // when the user is in onboarding phase and he asks to go to insert email screen
-    // the navigation is forced reset
-    this.props.navigation.dispatch(StackActions.popToTop());
-    navigateToEmailInsertScreen();
-  };
-
   public render() {
     return (
       <View>
@@ -63,15 +54,10 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
           onWillBlur={() => {
             this.hideModal();
           }}
-          onDidFocus={() => {
+          onWillFocus={() => {
             this.setState({ forceNavigationEvents: false });
             this.props.showModal(
-              <RemindEmailValidationOverlay
-                closeModalAndNavigateToEmailInsertScreen={
-                  this.handleForcedClose
-                }
-                onClose={this.hideModal}
-              />
+              <RemindEmailValidationOverlay onClose={this.hideModal} />
             );
           }}
         />
