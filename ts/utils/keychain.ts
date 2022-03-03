@@ -7,6 +7,7 @@
  */
 
 import { fromEither, none, Option } from "fp-ts/lib/Option";
+import * as TE from "fp-ts/lib/TaskEither";
 import * as Keychain from "react-native-keychain";
 
 import { PinString } from "../types/PinString";
@@ -60,4 +61,15 @@ export async function getPin(): Promise<Option<PinString>> {
   } else {
     return none;
   }
+}
+
+/**
+ * Saves the provided unlock code in the Keychain returning
+ * a `TaskEither` monad.
+ */
+export function safeSetPin(pin: PinString): TE.TaskEither<string, boolean> {
+  return TE.tryCatch(
+    () => setPin(pin),
+    e => `${e}`
+  );
 }

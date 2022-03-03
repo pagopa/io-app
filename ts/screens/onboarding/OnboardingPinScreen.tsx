@@ -7,6 +7,7 @@ import {
   ScrollView
 } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
+import { useDispatch, useSelector } from "react-redux";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -23,6 +24,15 @@ import { Body } from "../../components/core/typography/Body";
 import { LabelledItem } from "../../components/LabelledItem";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { PIN_LENGTH_SIX } from "../../utils/constants";
+import { safeSetPin } from "../../utils/keychain";
+import { PinString } from "../../types/PinString";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../utils/supportAssistance";
+import { TypeLogs } from "../../boot/configureInstabug";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { createPinSuccess } from "../../store/actions/pinset";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -42,6 +52,7 @@ const styles = StyleSheet.create({
 });
 
 const pinLength = PIN_LENGTH_SIX;
+const instabuglogTag = "pin-creation";
 
 /**
  * A screen that allows the user to set the unlock code.
@@ -53,6 +64,13 @@ const OnboardingPinScreen: React.FC<Props> = () => {
   const [isPinConfirmationDirty, setIsPinConfirmationDirty] =
     React.useState(false);
   const onboardingAbortAlert = useOnboardingAbortAlert();
+  const assistanceToolConfig = useSelector(assistanceToolConfigSelector);
+  const dispatch = useDispatch();
+
+  const assistanceTool = React.useMemo(
+    () => assistanceToolRemoteConfig(assistanceToolConfig),
+    [assistanceToolConfig]
+  );
 
   const handleGoBack = () => {
     onboardingAbortAlert.showAlert();
@@ -61,21 +79,12 @@ const OnboardingPinScreen: React.FC<Props> = () => {
   const isPinValid = !isPinDirty || pin.length === pinLength;
 
   const isPinConfirmationValid =
-    !isPinConfirmationDirty || pinConfirmation === pin;
+    !isPinConfirmationDirty || (pinConfirmation && pinConfirmation === pin);
 
   const isFormValid =
     pin.length === pinLength &&
     pinConfirmation.length === pinLength &&
     pinConfirmation === pin;
-
-  const computedConfirmButtonProps = React.useMemo(
-    () => ({
-      ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
-      disabled: !isFormValid,
-      onPress: () => null
-    }),
-    [isFormValid]
-  );
 
   const handlePinBlur = React.useCallback(() => {
     setIsPinDirty(true);
@@ -84,6 +93,49 @@ const OnboardingPinScreen: React.FC<Props> = () => {
   const handlePinConfirmationBlur = React.useCallback(() => {
     setIsPinConfirmationDirty(true);
   }, [setIsPinConfirmationDirty]);
+
+  const handleSubmit = React.useCallback(() => {
+    if (!isFormValid) {
+      return;
+    }
+
+    const typedPin = pin as PinString;
+
+    void safeSetPin(typedPin)
+      .fold(
+        error => {
+          handleSendAssistanceLog(
+            assistanceTool,
+            `setPin error ${error}`,
+            TypeLogs.DEBUG,
+            instabuglogTag
+          );
+
+          // TODO: Here we should show an error to the
+          // user probably.
+        },
+        () => {
+          handleSendAssistanceLog(
+            assistanceTool,
+            `createPinSuccess`,
+            TypeLogs.DEBUG,
+            instabuglogTag
+          );
+
+          dispatch(createPinSuccess(typedPin));
+        }
+      )
+      .run();
+  }, [pin, assistanceTool, isFormValid, dispatch]);
+
+  const computedConfirmButtonProps = React.useMemo(
+    () => ({
+      ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
+      disabled: !isFormValid,
+      onPress: handleSubmit
+    }),
+    [isFormValid, handleSubmit]
+  );
 
   return (
     <BaseScreenComponent
