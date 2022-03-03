@@ -6,9 +6,9 @@ import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
 import {
+  isProfileEmailValidatedSelector,
   profileEmailSelector,
-  profileNameSurnameSelector,
-  isProfileEmailValidatedSelector
+  profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
@@ -16,10 +16,18 @@ import ProfileDataScreen from "../ProfileDataScreen";
 import I18n from "../../../i18n";
 
 const mockPresentFn = jest.fn();
-jest.mock("../../../utils/bottomSheet", () => ({
-  __esModule: true,
-  useIOBottomSheet: () => ({ present: mockPresentFn })
-}));
+jest.mock("../../../../utils/hooks/bottomSheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+
+  return {
+    __esModule: true,
+    useIOBottomSheet: () => ({
+      present: mockPresentFn,
+      bottomSheet: react.View
+    })
+  };
+});
 
 describe("Test ProfileDataScreen", () => {
   jest.useFakeTimers();

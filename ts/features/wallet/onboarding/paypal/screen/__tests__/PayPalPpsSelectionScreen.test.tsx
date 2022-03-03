@@ -12,17 +12,6 @@ import { getNetworkError } from "../../../../../../utils/errors";
 import { pspList } from "../__mocks__/psp";
 
 const mockPresentBottomSheet = jest.fn();
-jest.mock("../../../../../../utils/bottomSheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const react = require("react-native");
-  return {
-    __esModule: true,
-    BottomSheetScrollView: react.ScrollView,
-    TouchableWithoutFeedback: react.TouchableWithoutFeedback,
-    useIOBottomSheetRaw: () => ({ present: mockPresentBottomSheet }),
-    useIOBottomSheet: () => ({ present: mockPresentBottomSheet })
-  };
-});
 
 jest.mock("../../../../../../utils/hooks/bottomSheet", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires

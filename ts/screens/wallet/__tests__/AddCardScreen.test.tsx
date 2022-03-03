@@ -12,10 +12,18 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import AddCardScreen, { AddCardScreenNavigationParams } from "../AddCardScreen";
 
 const mockPresentFn = jest.fn();
-jest.mock("../../../utils/bottomSheet", () => ({
-  __esModule: true,
-  useIOBottomSheet: () => ({ present: mockPresentFn })
-}));
+jest.mock("../../../../utils/hooks/bottomSheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+
+  return {
+    __esModule: true,
+    useIOBottomSheet: () => ({
+      present: mockPresentFn,
+      bottomSheet: react.View
+    })
+  };
+});
 
 jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
