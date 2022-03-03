@@ -109,7 +109,7 @@ const WalletHomeHeader = (props: Props) => {
     I18n.t("global.buttons.add"),
     315
   );
-  
+
   return (
     <View
       style={[

@@ -12,9 +12,9 @@ type Props = {
  * @param header
  * @param content
  */
-export const AccessibilityContent = ({header, content}: Props) => (
+export const AccessibilityContent = ({ header, content }: Props) => (
   <Modal>
-    <View spacer={true} extralarge={true}/>
+    <View spacer={true} extralarge={true} />
     {header}
     <View style={IOStyles.horizontalContentPadding}>{content}</View>
   </Modal>

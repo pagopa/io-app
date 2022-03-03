@@ -36,7 +36,9 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   NavigationStackScreenProps<OnboardingServicesPreferenceScreenNavigationParams>;
 
-const OnboardingServicesPreferenceScreen = (props: Props): React.ReactElement => {
+const OnboardingServicesPreferenceScreen = (
+  props: Props
+): React.ReactElement => {
   const isFirstOnboarding = props.navigation.getParam("isFirstOnboarding");
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
   const mode =
@@ -119,7 +121,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): React.ReactElement =>
       </SafeAreaView>
     </BaseScreenComponent>
   );
-};;
+};
 
 const mapStateToProps = (state: GlobalState) => {
   const profile = profileSelector(state);

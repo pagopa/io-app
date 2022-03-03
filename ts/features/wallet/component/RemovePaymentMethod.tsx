@@ -21,12 +21,12 @@ type Props = {
  * @constructor
  */
 const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
-    <View>
-      <View spacer={true} />
-      <PaymentMethodRepresentationComponent {...props.representation} />
-      <View spacer={true} />
-      <Body>{I18n.t("wallet.newRemove.body")}</Body>
-    </View>
+  <View>
+    <View spacer={true} />
+    <PaymentMethodRepresentationComponent {...props.representation} />
+    <View spacer={true} />
+    <Body>{I18n.t("wallet.newRemove.body")}</Body>
+  </View>
 );
 
 export const useRemovePaymentMethodBottomSheet = (

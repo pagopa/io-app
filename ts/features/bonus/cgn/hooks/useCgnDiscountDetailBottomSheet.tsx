@@ -32,7 +32,6 @@ export const useCgnDiscountDetailBottomSheet = (
   merchantType?: DiscountCodeType,
   landingPageHandler?: (url: string, referer: string) => void
 ) => {
-
   const height = useMemo(
     () => calculateBottomSheetHeight(discount, merchantType),
     [discount, merchantType]
