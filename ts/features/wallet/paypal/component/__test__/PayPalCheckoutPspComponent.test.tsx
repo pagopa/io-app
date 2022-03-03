@@ -40,8 +40,10 @@ describe("PayPalCheckoutPspComponent", () => {
       />
     );
     expect(component).not.toBeNull();
-    const editLabel = component.queryByTestId("editLabelTestID");
     if (editPspEnabled) {
+      const editLabel = component.queryByText(
+        I18n.t("global.buttons.edit").toUpperCase()
+      );
       expect(editLabel).not.toBeNull();
       fireEvent(editLabel!, "onPress");
       expect(mockEditLabelOnPress).toHaveBeenCalledTimes(1);
