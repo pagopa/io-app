@@ -17,7 +17,6 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
-import mainNavigator from "./MainNavigator";
 import messagesNavigator from "./MessagesNavigator";
 import { navigationRef } from "./NavigationService";
 import onboardingNavigator from "./OnboardingNavigator";
@@ -25,6 +24,7 @@ import { AppParamsList } from "./params/AppParamsList";
 import profileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import servicesNavigator from "./ServicesNavigator";
+import { MainTabNavigator } from "./TabNavigator";
 import walletNavigator from "./WalletNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
@@ -55,7 +55,7 @@ export const AppStackNavigator = () => (
       component={authenticationNavigator}
     />
     <Stack.Screen name={ROUTES.ONBOARDING} component={onboardingNavigator} />
-    <Stack.Screen name={ROUTES.MAIN} component={mainNavigator} />
+    <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 
     <Stack.Screen
       name={ROUTES.MESSAGES_NAVIGATOR}

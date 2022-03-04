@@ -22,7 +22,7 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { MainParamsList } from "../../navigation/params/MainParamsList";
+import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   DEPRECATED_loadMessages as loadMessages,
   setMessagesArchivedState
@@ -52,7 +52,7 @@ import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 
 type Props = {
   navigation: CompatNavigationProp<
-    IOStackNavigationProp<MainParamsList, "MESSAGES_HOME">
+    IOStackNavigationProp<MainTabParamsList, "MESSAGES_HOME">
   >;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

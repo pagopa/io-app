@@ -14,7 +14,7 @@ import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
-import { MainParamsList } from "./MainParamsList";
+import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
 import { ProfileParamsList } from "./ProfileParamsList";
@@ -26,7 +26,7 @@ export type AppParamsList = {
   [ROUTES.BACKGROUND]: undefined;
   [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
   [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>;
-  [ROUTES.MAIN]: NavigatorScreenParams<MainParamsList>;
+  [ROUTES.MAIN]: NavigatorScreenParams<MainTabParamsList>;
 
   [ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
