@@ -1,5 +1,4 @@
 import { testSaga } from "redux-saga-test-plan";
-import { getType } from "typesafe-actions";
 import {
   logoutFailure,
   logoutRequest,
@@ -9,11 +8,7 @@ import { watchLogoutSaga, logoutSaga } from "../watchLogoutSaga";
 
 const logout = jest.fn();
 
-const takeCancellableAction = [
-  getType(logoutRequest),
-  getType(logoutSuccess),
-  getType(logoutFailure)
-];
+const takeCancellableAction = [logoutRequest, logoutSuccess, logoutFailure];
 
 const logoutRequestAct = logoutRequest({ keepUserData: true });
 const logoutSuccessAct = logoutSuccess({ keepUserData: true });

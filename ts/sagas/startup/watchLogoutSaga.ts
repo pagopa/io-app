@@ -72,13 +72,13 @@ export function* watchLogoutSaga(
         typeof logoutRequest | typeof logoutSuccess | typeof logoutFailure
       >
     >([
-      getType(logoutRequest),
+      logoutRequest,
 
       // Since the logout in the user interface
       // happens with both a success and a failure action
       // this saga will be cancelled in both the cases.
-      getType(logoutSuccess),
-      getType(logoutFailure)
+      logoutSuccess,
+      logoutFailure
     ]);
 
     if (cancellableAction.type === getType(logoutRequest)) {

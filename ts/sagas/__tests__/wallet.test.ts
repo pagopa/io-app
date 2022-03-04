@@ -105,10 +105,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
         })
       )
       .next()
-      .take([
-        getType(addWalletCreditCardSuccess),
-        getType(addWalletCreditCardFailure)
-      ])
+      .take([addWalletCreditCardSuccess, addWalletCreditCardFailure])
       .next(getType(addWalletCreditCardSuccess))
       // Step 2
       .select(getAllWallets)
@@ -119,7 +116,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       .next(some(aNewPMToken))
       .put(refreshPMTokenWhileAddCreditCard.success(aNewPMToken))
       .next()
-      .take(getType(addCreditCardOutcomeCode))
+      .take(addCreditCardOutcomeCode)
       .next()
       .select(lastPaymentOutcomeCodeSelector)
       .next(anOutcomeCode)
@@ -127,7 +124,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       .next()
       .put(fetchWalletsRequest())
       .next()
-      .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
+      .take([fetchWalletsSuccess, fetchWalletsFailure])
       .next({
         type: getType(fetchWalletsSuccess),
         payload: [{ idWallet: anIdWallet }]
