@@ -1,8 +1,9 @@
 /* eslint-disable functional/immutable-data */
-import { NavigationContainer } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { useRef } from "react";
+import { IOColors } from "../components/core/variables/IOColors";
 import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import {
   CgnActivationNavigator,
@@ -97,6 +98,14 @@ export const AppStackNavigator = () => (
   </Stack.Navigator>
 );
 
+const IOTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: IOColors.white
+  }
+};
+
 /**
  * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
  * @constructor
@@ -106,6 +115,7 @@ export const IONavigationContainer = () => {
   const dispatch = useIODispatch();
   return (
     <NavigationContainer
+      theme={IOTheme}
       ref={navigationRef}
       onReady={() =>
         (routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name)
