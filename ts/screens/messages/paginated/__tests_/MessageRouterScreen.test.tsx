@@ -4,8 +4,10 @@ import React from "react";
 import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
-import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
-import { maximumItemsFromAPI, pageSize } from "../../../../config";
+import {
+  defaultRequestPayload,
+  successLoadNextPageMessagesPayload
+} from "../../../../__mocks__/messages";
 import I18n from "../../../../i18n";
 
 import ROUTES from "../../../../navigation/routes";
@@ -51,7 +53,7 @@ describe("MessageRouterScreen", () => {
     it("should dispatch `reloadPage`", () => {
       const { spyStoreDispatch } = renderComponent(id);
       expect(spyStoreDispatch).toHaveBeenCalledWith(
-        reloadAllMessages.request({ pageSize })
+        reloadAllMessages.request(defaultRequestPayload)
       );
     });
     it("should dispatch `loadMessageDetails`", () => {
@@ -88,7 +90,7 @@ describe("MessageRouterScreen", () => {
         const { spyStoreDispatch } = renderComponent(id, { allPaginated });
         expect(spyStoreDispatch).toHaveBeenCalledWith(
           loadPreviousPageMessages.request({
-            pageSize: maximumItemsFromAPI,
+            ...defaultRequestPayload,
             cursor: previousCursor
           })
         );

@@ -174,6 +174,10 @@ const MessageList = ({
   const [isFirstLoad, setIsFirstLoad] = useState(isIos);
 
   useEffect(() => {
+    reloadAll();
+  }, [reloadAll]);
+
+  useEffect(() => {
     if (error) {
       showToast(I18n.t("global.genericError"), "warning");
     }

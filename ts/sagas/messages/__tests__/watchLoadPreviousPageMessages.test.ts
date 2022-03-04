@@ -6,17 +6,17 @@ import { loadPreviousPageMessages as action } from "../../../store/actions/messa
 import { testTryLoadPreviousPageMessages } from "../watchLoadPreviousPageMessages";
 import {
   apiPayload,
+  defaultRequestPayload,
+  defaultRequestError,
   successLoadPreviousPageMessagesPayload
 } from "../../../__mocks__/messages";
 
 const tryLoadPreviousPageMessages = testTryLoadPreviousPageMessages!;
 
-const defaultPageSize = 8;
-
 describe("tryLoadPreviousPageMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
-    page_size: defaultPageSize,
+    page_size: 8,
     minimum_id: undefined
   };
 
@@ -27,7 +27,7 @@ describe("tryLoadPreviousPageMessages", () => {
       const getMessages = jest.fn();
       testSaga(
         tryLoadPreviousPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
@@ -43,12 +43,12 @@ describe("tryLoadPreviousPageMessages", () => {
       const getMessages = jest.fn();
       testSaga(
         tryLoadPreviousPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
         .next(right({ status: 500, value: { title: "Backend error" } }))
-        .put(action.failure(Error("Backend error")))
+        .put(action.failure(defaultRequestError))
         .next()
         .isDone();
     });
@@ -61,14 +61,12 @@ describe("tryLoadPreviousPageMessages", () => {
       };
       testSaga(
         tryLoadPreviousPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
         .next()
-        .put(
-          action.failure(TypeError("Cannot read property 'fold' of undefined"))
-        )
+        .put(action.failure(defaultRequestError))
         .next()
         .isDone();
     });

@@ -5,18 +5,18 @@ import { testSaga } from "redux-saga-test-plan";
 import { reloadAllMessages as action } from "../../../store/actions/messages";
 import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
 import {
+  defaultRequestPayload,
+  defaultRequestError,
   apiPayload,
   successReloadMessagesPayload
 } from "../../../__mocks__/messages";
 
 const tryReloadAllMessages = testTryLoadPreviousPageMessages!;
 
-const defaultPageSize = 8;
-
 describe("tryReloadAllMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
-    page_size: defaultPageSize
+    page_size: defaultRequestPayload.pageSize
   };
 
   describe("when the response is successful", () => {
@@ -26,7 +26,7 @@ describe("tryReloadAllMessages", () => {
       const getMessages = jest.fn();
       testSaga(
         tryReloadAllMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
@@ -42,12 +42,17 @@ describe("tryReloadAllMessages", () => {
       const getMessages = jest.fn();
       testSaga(
         tryReloadAllMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
-        .next(right({ status: 500, value: { title: "Backend error" } }))
-        .put(action.failure(Error("Backend error")))
+        .next(
+          right({
+            status: 500,
+            value: { title: defaultRequestError.error.message }
+          })
+        )
+        .put(action.failure(defaultRequestError))
         .next()
         .isDone();
     });
@@ -56,18 +61,16 @@ describe("tryReloadAllMessages", () => {
   describe("when the handler throws", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
       const getMessages = () => {
-        throw new Error("I made a boo-boo, sir!");
+        throw new Error(defaultRequestError.error.message);
       };
       testSaga(
         tryReloadAllMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
         .next()
-        .put(
-          action.failure(TypeError("Cannot read property 'fold' of undefined"))
-        )
+        .put(action.failure(defaultRequestError))
         .next()
         .isDone();
     });

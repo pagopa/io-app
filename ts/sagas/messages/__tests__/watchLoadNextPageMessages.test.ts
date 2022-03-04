@@ -6,17 +6,17 @@ import { loadNextPageMessages as action } from "../../../store/actions/messages"
 import { testTryLoadNextPageMessages } from "../watchLoadNextPageMessages";
 import {
   apiPayload,
+  defaultRequestError,
+  defaultRequestPayload,
   successLoadNextPageMessagesPayload
 } from "../../../__mocks__/messages";
 
 const tryLoadNextPageMessages = testTryLoadNextPageMessages!;
 
-const defaultPageSize = 8;
-
 describe("tryLoadNextPageMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
-    page_size: defaultPageSize,
+    page_size: defaultRequestPayload.pageSize,
     maximum_id: undefined
   };
 
@@ -27,7 +27,7 @@ describe("tryLoadNextPageMessages", () => {
       const getMessages = jest.fn();
       testSaga(
         tryLoadNextPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
@@ -43,12 +43,12 @@ describe("tryLoadNextPageMessages", () => {
       const getMessages = jest.fn();
       testSaga(
         tryLoadNextPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
         .next(right({ status: 500, value: { title: "Backend error" } }))
-        .put(action.failure(Error("Backend error")))
+        .put(action.failure(defaultRequestError))
         .next()
         .isDone();
     });
@@ -61,14 +61,12 @@ describe("tryLoadNextPageMessages", () => {
       };
       testSaga(
         tryLoadNextPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
         .next()
-        .put(
-          action.failure(TypeError("Cannot read property 'fold' of undefined"))
-        )
+        .put(action.failure(defaultRequestError))
         .next()
         .isDone();
     });

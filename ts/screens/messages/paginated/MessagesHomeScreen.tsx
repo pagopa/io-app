@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
@@ -14,8 +14,6 @@ import { MIN_CHARACTER_SEARCH_TEXT } from "../../../components/search/SearchButt
 import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../../components/SectionStatus";
 import I18n from "../../../i18n";
-import { reloadAllMessages } from "../../../store/actions/messages";
-import { Dispatch } from "../../../store/actions/types";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
@@ -27,8 +25,6 @@ import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../../utils/accessibility";
-import { allInboxMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
-import { pageSize } from "../../../config";
 import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
@@ -39,9 +35,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 
-type Props = NavigationStackScreenProps &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type Props = NavigationStackScreenProps & ReturnType<typeof mapStateToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "messages.contextualHelpTitle",
@@ -112,10 +106,8 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
  */
 const MessagesHomeScreen = ({
-  allMessages,
   isSearchEnabled,
   messageSectionStatusActive,
-  reloadFirstPage,
   searchText
 }: Props) => {
   const navigation = useContext(NavigationContext);
@@ -128,10 +120,6 @@ const MessagesHomeScreen = ({
       })
     );
   };
-
-  useEffect(() => {
-    reloadFirstPage();
-  }, [reloadFirstPage]);
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
@@ -178,10 +166,12 @@ const MessagesHomeScreen = ({
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
               <MessagesSearch
-                messages={allMessages}
+                messages={[]}
                 searchText={_}
                 renderSearchResults={results => (
+                  // TODO: filter may happen down the line
                   <MessageList
+                    filter={{ getArchived: false }}
                     filteredMessages={results}
                     onPressItem={navigateToMessageDetail}
                   />
@@ -198,17 +188,9 @@ const MessagesHomeScreen = ({
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  allMessages: allInboxMessagesSelector(state),
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
   searchText: searchTextSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // used for the first rendering only, which is always without a filter
-  reloadFirstPage: () => {
-    dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);
+export default connect(mapStateToProps, undefined)(MessagesHomeScreen);

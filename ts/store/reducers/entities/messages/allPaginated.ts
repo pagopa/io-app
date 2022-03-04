@@ -75,7 +75,6 @@ const reduceReloadAll = (
 ): AllPaginated => {
   switch (action.type) {
     case getType(reloadAllMessages.request): {
-      // TODO: send the fucking payload :lol:
       if (action.payload.filter.getArchived) {
         return {
           ...state,

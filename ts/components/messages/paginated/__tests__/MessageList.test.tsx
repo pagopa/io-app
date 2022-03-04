@@ -13,7 +13,10 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
 import I18n from "../../../../i18n";
-import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
+import {
+  defaultRequestPayload,
+  successReloadMessagesPayload
+} from "../../../../__mocks__/messages";
 
 jest.useFakeTimers();
 jest.mock("../../../../utils/showToast", () => ({
@@ -23,11 +26,12 @@ jest.mock("../../../../utils/showToast", () => ({
 const messages = successReloadMessagesPayload.messages;
 
 const ListEmptyComponent = () => <Text>{"empty"}</Text>;
+const filter = defaultRequestPayload.filter;
 
 describe("MessagesInbox component", () => {
   describe("when there are no messages", () => {
     it("should render the empty component", () => {
-      const { component } = renderComponent({ ListEmptyComponent });
+      const { component } = renderComponent({ ListEmptyComponent, filter });
       expect(component.getByText("empty")).toBeDefined();
     });
   });
@@ -35,7 +39,7 @@ describe("MessagesInbox component", () => {
   describe("when the messages state contains an error", () => {
     it("should render the error component", () => {
       const { component } = renderComponent(
-        { ListEmptyComponent },
+        { ListEmptyComponent, filter },
         { data: pot.noneError("paura, eh?") }
       );
       expect(
@@ -49,7 +53,7 @@ describe("MessagesInbox component", () => {
 
     it("should not render the empty component", () => {
       const { component } = renderComponent(
-        { ListEmptyComponent },
+        { ListEmptyComponent, filter },
         messagesState
       );
       expect(component.queryByText("empty")).toBeNull();
@@ -57,7 +61,7 @@ describe("MessagesInbox component", () => {
 
     it("should not render the error component", () => {
       const { component } = renderComponent(
-        { ListEmptyComponent },
+        { ListEmptyComponent, filter },
         messagesState
       );
       expect(
@@ -67,7 +71,7 @@ describe("MessagesInbox component", () => {
 
     it("should render the first message in the state", () => {
       const { component } = renderComponent(
-        { ListEmptyComponent },
+        { ListEmptyComponent, filter },
         messagesState
       );
       expect(component.queryByText(messages[0].title)).toBeDefined();

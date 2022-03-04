@@ -12,6 +12,16 @@ import {
 } from "../store/actions/messages";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 
+export const defaultRequestPayload = {
+  pageSize: 8,
+  filter: { getArchived: false }
+};
+
+export const defaultRequestError = {
+  error: new Error("нет войне"),
+  filter: defaultRequestPayload.filter
+};
+
 const timeToLive = 3600 as unknown as TimeToLiveSeconds;
 
 export const messageId_1 = "FAT00001" as UIMessageId;
@@ -83,6 +93,8 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     timeToLive,
     serviceName: service_1.service_name,
     organizationName: service_1.organization_name,
+    isRead: false,
+    isArchived: false,
     title: "Għandek flus?",
     raw: apiPayload.items[0] as any
   },
@@ -95,6 +107,8 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     timeToLive,
     serviceName: service_1.service_name,
     organizationName: service_1.organization_name,
+    isRead: false,
+    isArchived: false,
     title: "Analiżi tad-demm",
     raw: apiPayload.items[1] as any
   },
@@ -107,6 +121,8 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     timeToLive,
     serviceName: service_2.service_name,
     organizationName: service_2.organization_name,
+    isRead: false,
+    isArchived: false,
     title: "позвоните нам!",
     raw: apiPayload.items[2] as any
   }
@@ -117,7 +133,8 @@ export const successReloadMessagesPayload: ReloadMessagesPayload = {
   pagination: {
     previous: successPayloadMessages[0].id,
     next: successPayloadMessages[2].id
-  }
+  },
+  filter: defaultRequestPayload.filter
 };
 
 export const successLoadNextPageMessagesPayload: NextPageMessagesSuccessPayload =
@@ -125,7 +142,8 @@ export const successLoadNextPageMessagesPayload: NextPageMessagesSuccessPayload 
     messages: successPayloadMessages,
     pagination: {
       next: successPayloadMessages[2].id
-    }
+    },
+    filter: defaultRequestPayload.filter
   };
 
 export const successLoadPreviousPageMessagesPayload: PreviousPageMessagesSuccessPayload =
@@ -133,5 +151,6 @@ export const successLoadPreviousPageMessagesPayload: PreviousPageMessagesSuccess
     messages: successPayloadMessages,
     pagination: {
       previous: successPayloadMessages[0].id
-    }
+    },
+    filter: defaultRequestPayload.filter
   };
