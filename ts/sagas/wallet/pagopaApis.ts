@@ -1,7 +1,7 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { call, put, select, take } from "typed-redux-saga/macro";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
@@ -857,10 +857,9 @@ export function* getPspV2WithCallbacks(
   action: ActionType<typeof pspForPaymentV2WithCallbacks>
 ) {
   yield* put(pspForPaymentV2.request(action.payload));
-  const result = yield* take([
-    getType(pspForPaymentV2.success),
-    getType(pspForPaymentV2.failure)
-  ]);
+  const result = yield* take<
+    ActionType<typeof pspForPaymentV2.success | typeof pspForPaymentV2.failure>
+  >([pspForPaymentV2.success, pspForPaymentV2.failure]);
   if (isActionOf(pspForPaymentV2.failure, result)) {
     action.payload.onFailure();
   } else if (isActionOf(pspForPaymentV2.success, result)) {
