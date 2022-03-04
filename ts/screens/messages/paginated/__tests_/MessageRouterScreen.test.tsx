@@ -71,7 +71,7 @@ describe("MessageRouterScreen", () => {
   describe("when is already running, with a populated messages state", () => {
     const previousCursor = successLoadNextPageMessagesPayload.messages[0].id;
     const allPaginated = {
-      data: pot.some({
+      inbox: pot.some({
         page: successLoadNextPageMessagesPayload.messages,
         previous: previousCursor
       })
@@ -189,7 +189,7 @@ type InputState = {
 const renderComponent = (messageId: string, state: InputState = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = {
-    data: pot.none,
+    inbox: pot.none,
     lastRequest: none,
     ...state.allPaginated
   };

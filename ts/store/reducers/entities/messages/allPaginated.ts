@@ -21,10 +21,10 @@ type Collection = pot.Pot<
 >;
 
 /**
- * A list of messages and pagination data.
+ * A list of messages and pagination inbox.
  */
 export type AllPaginated = {
-  data: Collection;
+  inbox: Collection;
 
   archive: Collection;
 
@@ -33,7 +33,7 @@ export type AllPaginated = {
 };
 
 const INITIAL_STATE: AllPaginated = {
-  data: pot.none,
+  inbox: pot.none,
   archive: pot.none,
   lastRequest: none
 };
@@ -84,7 +84,7 @@ const reduceReloadAll = (
       }
       return {
         ...state,
-        data: pot.toLoading(state.data),
+        inbox: pot.toLoading(state.inbox),
         lastRequest: some("all")
       };
     }
@@ -103,7 +103,7 @@ const reduceReloadAll = (
       }
       return {
         ...state,
-        data: pot.some({
+        inbox: pot.some({
           page: action.payload.messages,
           previous: action.payload.pagination.previous,
           next: action.payload.pagination.next
@@ -121,7 +121,7 @@ const reduceReloadAll = (
       }
       return {
         ...state,
-        data: pot.toError(state.data, action.payload.error.message)
+        inbox: pot.toError(state.inbox, action.payload.error.message)
       };
 
     default:
@@ -144,7 +144,7 @@ const reduceLoadNextPage = (
       }
       return {
         ...state,
-        data: pot.toLoading(state.data),
+        inbox: pot.toLoading(state.inbox),
         lastRequest: some("next")
       };
 
@@ -175,18 +175,18 @@ const reduceLoadNextPage = (
         };
       }
 
-      return { ...state, data: getNextData(state.data), lastRequest: none };
+      return { ...state, inbox: getNextData(state.inbox), lastRequest: none };
 
     case getType(loadNextPageMessages.failure):
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.toError(state.data, action.payload.error.message)
+          archive: pot.toError(state.inbox, action.payload.error.message)
         };
       }
       return {
         ...state,
-        data: pot.toError(state.data, action.payload.error.message)
+        inbox: pot.toError(state.inbox, action.payload.error.message)
       };
 
     default:
@@ -209,7 +209,7 @@ const reduceLoadPreviousPage = (
       }
       return {
         ...state,
-        data: pot.toLoading(state.data),
+        inbox: pot.toLoading(state.inbox),
         lastRequest: some("previous")
       };
 
@@ -244,7 +244,7 @@ const reduceLoadPreviousPage = (
 
       return {
         ...state,
-        data: getNextData(state.data),
+        inbox: getNextData(state.inbox),
         lastRequest: none
       };
 
@@ -257,7 +257,7 @@ const reduceLoadPreviousPage = (
       }
       return {
         ...state,
-        data: pot.toError(state.data, action.payload.error.message)
+        inbox: pot.toError(state.inbox, action.payload.error.message)
       };
 
     default:
@@ -275,14 +275,14 @@ export const allPaginatedSelector = (state: GlobalState): AllPaginated =>
   state.entities.messages.allPaginated;
 
 /**
- * Return the data in the Inbox
+ * Return the inbox in the Inbox
  * @param state
  */
-export const allInboxSelector = (state: GlobalState): AllPaginated["data"] =>
-  state.entities.messages.allPaginated.data;
+export const allInboxSelector = (state: GlobalState): AllPaginated["inbox"] =>
+  state.entities.messages.allPaginated.inbox;
 
 /**
- * Return the data in the Inbox
+ * Return the inbox in the Inbox
  * @param state
  */
 export const allArchiveSelector = (
@@ -333,9 +333,11 @@ export const getById = createSelector(
  */
 export const isLoadingNextPage = createSelector(
   allPaginatedSelector,
-  ({ archive, data, lastRequest }) =>
+  ({ archive, inbox, lastRequest }) =>
     lastRequest
-      .map(_ => _ === "next" && (pot.isLoading(data) || pot.isLoading(archive)))
+      .map(
+        _ => _ === "next" && (pot.isLoading(inbox) || pot.isLoading(archive))
+      )
       .getOrElse(false)
 );
 
@@ -345,10 +347,11 @@ export const isLoadingNextPage = createSelector(
  */
 export const isLoadingPreviousPage = createSelector(
   allPaginatedSelector,
-  ({ archive, data, lastRequest }) =>
+  ({ archive, inbox, lastRequest }) =>
     lastRequest
       .map(
-        _ => _ === "previous" && (pot.isLoading(data) || pot.isLoading(archive))
+        _ =>
+          _ === "previous" && (pot.isLoading(inbox) || pot.isLoading(archive))
       )
       .getOrElse(false)
 );
@@ -360,17 +363,17 @@ export const isLoadingPreviousPage = createSelector(
  */
 export const isReloading = createSelector(
   allPaginatedSelector,
-  ({ archive, data, lastRequest }) =>
+  ({ archive, inbox, lastRequest }) =>
     lastRequest
-      .map(_ => _ === "all" && (pot.isLoading(data) || pot.isLoading(archive)))
+      .map(_ => _ === "all" && (pot.isLoading(inbox) || pot.isLoading(archive)))
       .getOrElse(false)
 );
 
 export const getCursors = createSelector(
   allPaginatedSelector,
-  ({ archive, data }) => ({
+  ({ archive, inbox }) => ({
     archive: pot.map(archive, ({ previous, next }) => ({ previous, next })),
-    data: pot.map(data, ({ previous, next }) => ({ previous, next }))
+    inbox: pot.map(inbox, ({ previous, next }) => ({ previous, next }))
   })
 );
 

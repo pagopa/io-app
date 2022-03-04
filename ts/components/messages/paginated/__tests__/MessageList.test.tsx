@@ -40,7 +40,7 @@ describe("MessagesInbox component", () => {
     it("should render the error component", () => {
       const { component } = renderComponent(
         { ListEmptyComponent, filter },
-        { data: pot.noneError("paura, eh?") }
+        { inbox: pot.noneError("paura, eh?") }
       );
       expect(
         component.getByText(I18n.t("messages.loadingErrorTitle"))
@@ -49,7 +49,7 @@ describe("MessagesInbox component", () => {
   });
 
   describe("when the messages state contains messages", () => {
-    const messagesState = { data: pot.some({ page: messages }) };
+    const messagesState = { inbox: pot.some({ page: messages }) };
 
     it("should not render the empty component", () => {
       const { component } = renderComponent(
@@ -84,7 +84,12 @@ const renderComponent = (
   paginatedState: Partial<AllPaginated> = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const allPaginated = { data: pot.none, lastRequest: none, ...paginatedState };
+  const allPaginated = {
+    archive: pot.none,
+    inbox: pot.none,
+    lastRequest: none,
+    ...paginatedState
+  };
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore({

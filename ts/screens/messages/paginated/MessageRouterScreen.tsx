@@ -187,9 +187,9 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
   const maybeMessage = allPaginated.getById(state, messageId);
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
-  const { archive, data } = getCursors(state);
+  const { archive, inbox } = getCursors(state);
   return {
-    cursors: isArchived ? archive : data,
+    cursors: isArchived ? archive : inbox,
     maybeMessage,
     maybeMessageDetails,
     messageId
