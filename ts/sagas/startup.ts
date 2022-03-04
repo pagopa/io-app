@@ -526,6 +526,8 @@ export function* initializeApplicationSaga(): Generator<
 
     // Remove the pending message from the notification state
     yield* put(clearNotificationPendingMessage());
+
+    yield* call(navigateToMainNavigatorAction);
     // Navigate to message router screen
     yield* call(navigateToMessageRouterScreen, { messageId });
   } else {
