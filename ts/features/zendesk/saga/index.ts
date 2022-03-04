@@ -29,5 +29,4 @@ export function* watchZendeskSupportSaga() {
   yield* takeLatest(identificationRequest, () => {
     dismissSupport();
   });
-  yield* takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
 }
