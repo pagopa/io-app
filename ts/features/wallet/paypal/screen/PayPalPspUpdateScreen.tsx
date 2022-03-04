@@ -2,31 +2,35 @@ import React, { useEffect } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { ListItem, View } from "native-base";
 import { useDispatch } from "react-redux";
-import { constNull } from "fp-ts/lib/function";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import I18n from "../../../../../i18n";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { Body } from "../../../../../components/core/typography/Body";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { isError, isReady } from "../../../../bonus/bpd/model/RemoteValue";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { IOPayPalPsp } from "../types";
-import { searchPaypalPsp as searchPaypalPspAction } from "../store/actions";
-import { payPalPspSelector } from "../store/reducers/searchPsp";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
-import customVariables from "../../../../../theme/variables";
-import IconFont from "../../../../../components/ui/IconFont";
-import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
-import { Label } from "../../../../../components/core/typography/Label";
-import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
+import { NavigationInjectedProps } from "react-navigation";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import I18n from "../../../../i18n";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { H1 } from "../../../../components/core/typography/H1";
+import { Body } from "../../../../components/core/typography/Body";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { isError, isReady } from "../../../bonus/bpd/model/RemoteValue";
+import { H4 } from "../../../../components/core/typography/H4";
+import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { IOPayPalPsp } from "../../onboarding/paypal/types";
+import { useNavigationContext } from "../../../../utils/hooks/useOnFocus";
+import customVariables from "../../../../theme/variables";
+import IconFont from "../../../../components/ui/IconFont";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { Label } from "../../../../components/core/typography/Label";
+import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,
   PSP_LOGO_MAX_WIDTH
-} from "../components/PspRadioItem";
-import { useIOSelector } from "../../../../../store/hooks";
+} from "../../onboarding/paypal/components/PspRadioItem";
+import { useIOSelector } from "../../../../store/hooks";
+import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
+import {
+  pspForPaymentV2,
+  pspSelectedForPaymentV2
+} from "../../../../store/actions/wallet/payment";
+import { convertPspData } from "../../onboarding/paypal/store/transformers";
 
 const styles = StyleSheet.create({
   radioListHeaderRightColumn: {
@@ -100,7 +104,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
       testID={`pspItemTestID_${psp.id}`}
       style={styles.pspListItem}
       accessibilityRole={"button"}
-      onPress={constNull}
+      onPress={props.onPress}
     >
       <View style={{ flex: 1 }}>
         {imgDimensions.fold<React.ReactNode>(
@@ -133,18 +137,26 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
     </ListItem>
   );
 };
-
+export type PayPalPspUpdateScreenNavigationParams = {
+  idPayment: string;
+  idWallet: number;
+};
+type Props = NavigationInjectedProps<PayPalPspUpdateScreenNavigationParams>;
 /**
  * This screen is where the user updates the PSP that will be used for the payment
  * Only 1 psp can be selected
  */
-const PayPalPspUpdateScreen = (): React.ReactElement | null => {
+const PayPalPspUpdateScreen: React.FunctionComponent<Props> = (
+  props: Props
+) => {
   const locales = getLocales();
   const navigation = useNavigationContext();
   const dispatch = useDispatch();
-  const pspList = useIOSelector(payPalPspSelector);
+  const pspList = useIOSelector(pspV2ListSelector);
+  const idPayment = props.navigation.getParam("idPayment");
+  const idWallet = props.navigation.getParam("idWallet");
   const searchPaypalPsp = () => {
-    dispatch(searchPaypalPspAction.request());
+    dispatch(pspForPaymentV2.request({ idPayment, idWallet }));
   };
   useEffect(searchPaypalPsp, [dispatch]);
 
@@ -169,14 +181,19 @@ const PayPalPspUpdateScreen = (): React.ReactElement | null => {
                 rightColumnTitle={locales.rightColumnTitle}
               />
               <View spacer={true} small={true} />
-              {pspList.value.map(psp => (
-                // TODO replace the on press with the effective handler see https://pagopa.atlassian.net/browse/IA-499
-                <PspItem
-                  psp={psp}
-                  key={`paypal_psp:${psp.id}`}
-                  onPress={constNull}
-                />
-              ))}
+              {pspList.value.map(psp => {
+                const paypalPsp = convertPspData(psp);
+                return (
+                  <PspItem
+                    psp={paypalPsp}
+                    key={`paypal_psp:${paypalPsp.id}`}
+                    onPress={() => {
+                      dispatch(pspSelectedForPaymentV2(psp));
+                      goBack();
+                    }}
+                  />
+                );
+              })}
             </ScrollView>
           </View>
           <FooterWithButtons
