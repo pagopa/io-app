@@ -138,7 +138,7 @@ const reduceLoadNextPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.toLoading(state.data),
+          archive: pot.toLoading(state.archive),
           lastRequest: some("next")
         };
       }
