@@ -43,10 +43,9 @@ export function* checkProfileEnabledSaga(
   ) {
     // Upsert the user profile to enable inbox and webhook
     yield* call(enableProfileInboxWebhook);
-    const action = yield* take([
-      getType(profileUpsert.success),
-      getType(profileUpsert.failure)
-    ]);
+    const action = yield* take<
+      ActionType<typeof profileUpsert.success | typeof profileUpsert.failure>
+    >([profileUpsert.success, profileUpsert.failure]);
     // We got an error
     if (action.type === getType(profileUpsert.failure)) {
       // Restart the initialization loop to let the user retry.

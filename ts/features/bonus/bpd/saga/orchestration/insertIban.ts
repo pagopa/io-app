@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import NavigationService from "../../../../../navigation/NavigationService";
 import {
@@ -57,7 +57,7 @@ export function* bpdIbanInsertionWorker() {
   // wait for the user iban insertion o cancellation
   const nextAction = yield* take<
     ActionType<typeof bpdIbanInsertionCancel | typeof bpdIbanInsertionContinue>
-  >([getType(bpdIbanInsertionCancel), getType(bpdIbanInsertionContinue)]);
+  >([bpdIbanInsertionCancel, bpdIbanInsertionContinue]);
   if (isActionOf(bpdIbanInsertionCancel, nextAction)) {
     yield* call(onboardingOngoing ? navigateToWalletHome : navigateBack);
   } else {

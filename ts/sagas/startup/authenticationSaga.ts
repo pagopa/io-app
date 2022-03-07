@@ -1,5 +1,4 @@
 import { call, cancel, fork, put, take } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {
   analyticsAuthenticationCompleted,
@@ -33,9 +32,7 @@ export function* authenticationSaga(): Generator<
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
-  const action = yield* take<ActionType<typeof loginSuccess>>(
-    getType(loginSuccess)
-  );
+  const action = yield* take(loginSuccess);
 
   yield* cancel(watchCieAuthentication);
   yield* cancel(watchTestLogin);
