@@ -1,23 +1,16 @@
 import WebView from "react-native-webview";
 import React, { useState } from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { View } from "native-base";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
-import {
-  APP_EVENT_HANDLER,
-  AVOID_ZOOM_JS,
-  closeInjectedScript
-} from "../../../utils/webview";
-import brokenLinkImage from "../../../../img/broken-link.png";
-import { Label } from "../../../components/core/typography/Label";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
 import { useIOSelector } from "../../../store/hooks";
+import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
 const styles = StyleSheet.create({
   loading: {
@@ -39,26 +32,13 @@ const styles = StyleSheet.create({
   }
 });
 
-const ErrorComponent = (props: { onRetry: () => void }) => {
-  const cancelButtonProps = {
-    block: true,
-    light: true,
-    bordered: true,
-    onPress: props.onRetry,
-    title: I18n.t("global.buttons.retry")
-  };
-  return (
-    <View style={styles.errorContainer}>
-      <View spacer={true} extralarge={true} />
-      <View spacer={true} extralarge={true} />
-      <Image source={brokenLinkImage} resizeMode="contain" />
-      <Label style={styles.errorTitle} weight={"Bold"}>
-        {I18n.t("authentication.errors.network.title")}
-      </Label>
-      <FooterWithButtons type={"SingleButton"} leftButton={cancelButtonProps} />
-    </View>
-  );
-};
+const ErrorComponent = (props: { onRetry: () => void }) => (
+  <LoadingErrorComponent
+    loadingCaption={""}
+    isLoading={false}
+    onRetry={props.onRetry}
+  />
+);
 
 // a loading component rendered during the webview loading states
 const renderLoading = () => (
@@ -71,12 +51,9 @@ const handleOnMessage = (_?: WebViewMessageEvent) => {
   // TODO decode and handle the messages coming from the web page https://pagopa.atlassian.net/browse/IA-692
 };
 
-const injectedJavascript = closeInjectedScript(
-  AVOID_ZOOM_JS + APP_EVENT_HANDLER
-);
+const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
 
 export const UAWebViewScreen = () => {
-  const navigation = useNavigationContext();
   const navigationParams = useIOSelector(internalRouteNavigationParamsSelector);
   const uri = navigationParams?.url;
   const ref = React.createRef<WebView>();
@@ -104,32 +81,32 @@ export const UAWebViewScreen = () => {
     return null;
   }
 
-  if (hasError) {
-    return errorComponent;
-  }
-
   return (
     <BaseScreenComponent
-      goBack={navigation.goBack}
+      goBack={true}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.uaDonations.webView.title")}
     >
-      <WebView
-        testID={"UAWebViewScreenTestID"}
-        ref={ref}
-        cacheEnabled={false}
-        textZoom={100}
-        source={{ uri }}
-        onLoadEnd={injectJS}
-        androidCameraAccessDisabled={true}
-        androidMicrophoneAccessDisabled={true}
-        onError={onError}
-        onHttpError={onError}
-        onMessage={handleOnMessage}
-        startInLoadingState={true}
-        renderLoading={renderLoading}
-        javaScriptEnabled={true}
-      />
+      {!hasError ? (
+        <WebView
+          testID={"UAWebViewScreenTestID"}
+          ref={ref}
+          cacheEnabled={false}
+          textZoom={100}
+          source={{ uri }}
+          onLoadEnd={injectJS}
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
+          onError={onError}
+          onHttpError={onError}
+          onMessage={handleOnMessage}
+          startInLoadingState={true}
+          renderLoading={renderLoading}
+          javaScriptEnabled={true}
+        />
+      ) : (
+        errorComponent
+      )}
     </BaseScreenComponent>
   );
 };

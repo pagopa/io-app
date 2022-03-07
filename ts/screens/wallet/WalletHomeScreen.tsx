@@ -90,6 +90,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import { handleInternalLink } from "../../components/ui/Markdown/handlers/internalLink";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -598,7 +599,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
-  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
+  navigateToPaymentScanQrCode: () => {
+    handleInternalLink(
+      dispatch,
+      "ioit://UADONATION_ROUTES_WEBVIEW?url=https://www.google.it"
+    );
+  },
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
 
