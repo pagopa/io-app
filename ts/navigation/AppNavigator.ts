@@ -1,6 +1,6 @@
 import { createStackNavigator } from "react-navigation-stack";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
-import { zendeskEnabled } from "../config";
+import { uaDonationsEnabled, zendeskEnabled } from "../config";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
@@ -12,6 +12,8 @@ import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
 import IngressScreen from "../screens/ingress/IngressScreen";
+import UADonationNavigator from "../features/uaDonations/navigation/navigator";
+import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -20,7 +22,8 @@ import ROUTES from "./routes";
 /**
  * The main stack of screens of the Application.
  */
-const configMap = {
+// eslint-disable-next-line functional/no-let
+let configMap = {
   [ROUTES.INGRESS]: {
     // This is the first screen that gets loaded by the app navigator
     // On component mount, the screen will dispatch an
@@ -58,19 +61,28 @@ const cgnConfigMap = {
     screen: CgnEYCAActivationNavigator
   }
 };
+configMap = { ...configMap, ...cgnConfigMap };
 
 // The addition of the screen to the stack is only protected by local FF
-const zendeskMap = {
-  [ZENDESK_ROUTES.MAIN]: {
-    screen: zendeskSupportNavigator
-  }
-};
+if (zendeskEnabled) {
+  const zendeskMap = {
+    [ZENDESK_ROUTES.MAIN]: {
+      screen: zendeskSupportNavigator
+    }
+  };
+  configMap = { ...configMap, ...zendeskMap };
+}
 
-const finalRouteConfig = zendeskEnabled
-  ? { ...configMap, ...cgnConfigMap, ...zendeskMap }
-  : { ...configMap, ...cgnConfigMap };
+if (uaDonationsEnabled) {
+  const uaConfigMap = {
+    [UADONATION_ROUTES.MAIN]: {
+      screen: UADonationNavigator
+    }
+  };
+  configMap = { ...configMap, ...uaConfigMap };
+}
 
-const navigator = createStackNavigator(finalRouteConfig, {
+const navigator = createStackNavigator(configMap, {
   // Let each screen handle the header and navigation
   headerMode: "none",
   defaultNavigationOptions: {
