@@ -46,7 +46,7 @@ const BaseDonationsBanner = (props: BaseProps): React.ReactElement => (
     accessible={true}
     accessibilityRole={"button"}
   >
-    <View style={styles.background}>
+    <View style={styles.background} testID={"UaDonationsBanner"}>
       <View style={styles.row}>
         <H5 color={"white"} weight={"Regular"} style={styles.text}>
           {props.text}
