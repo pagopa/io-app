@@ -39,7 +39,9 @@ jest.mock("@gorhom/bottom-sheet", () => {
   const react = require("react-native");
   return {
     __esModule: true,
+    BottomSheetScrollView: react.ScrollView,
     BottomSheetModal: react.Modal,
+    TouchableWithoutFeedback: react.TouchableWithoutFeedback,
     useBottomSheetModal: () => ({
       present: jest.fn(),
       dismissAll: jest.fn()

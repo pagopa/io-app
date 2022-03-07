@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { fireEvent } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
@@ -10,20 +11,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { isValidCardHolder } from "../../../utils/input";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import AddCardScreen, { AddCardScreenNavigationParams } from "../AddCardScreen";
-
-const mockPresentFn = jest.fn();
-jest.mock("../../../../utils/hooks/bottomSheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const react = require("react-native");
-
-  return {
-    __esModule: true,
-    useIOBottomSheet: () => ({
-      present: mockPresentFn,
-      bottomSheet: react.View
-    })
-  };
-});
 
 jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
@@ -156,7 +143,9 @@ const getComponent = () => {
   const ToBeTested: React.FunctionComponent<
     React.ComponentProps<typeof AddCardScreen>
   > = (props: React.ComponentProps<typeof AddCardScreen>) => (
-    <AddCardScreen {...props} />
+    <BottomSheetModalProvider>
+      <AddCardScreen {...props} />
+    </BottomSheetModalProvider>
   );
 
   const globalState = appReducer(undefined, applicationChangeState("active"));

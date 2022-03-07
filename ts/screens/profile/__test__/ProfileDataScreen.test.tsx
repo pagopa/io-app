@@ -15,20 +15,6 @@ import ROUTES from "../../../navigation/routes";
 import ProfileDataScreen from "../ProfileDataScreen";
 import I18n from "../../../i18n";
 
-const mockPresentFn = jest.fn();
-jest.mock("../../../../utils/hooks/bottomSheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const react = require("react-native");
-
-  return {
-    __esModule: true,
-    useIOBottomSheet: () => ({
-      present: mockPresentFn,
-      bottomSheet: react.View
-    })
-  };
-});
-
 describe("Test ProfileDataScreen", () => {
   jest.useFakeTimers();
   it("should be not null", () => {
