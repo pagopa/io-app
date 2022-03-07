@@ -9,7 +9,8 @@ jest.mock("@gorhom/bottom-sheet", () => {
   return {
     __esModule: true,
     BottomSheetScrollView: react.ScrollView,
-    TouchableWithoutFeedback: react.TouchableWithoutFeedback
+    TouchableWithoutFeedback: react.TouchableWithoutFeedback,
+    BottomSheetModal: react.Modal
   };
 });
 

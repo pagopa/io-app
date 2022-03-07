@@ -17,11 +17,18 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
+jest.mock("@gorhom/bottom-sheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+  return {
+    __esModule: true,
+    BottomSheetModal: react.Modal,
+    useBottomSheetModal: () => ({
+      present: jest.fn(),
+      dismissAll: jest.fn()
+    })
+  };
+});
 
 const eycaCardActive: EycaCard = {
   status: AcivatedStatus.ACTIVATED,

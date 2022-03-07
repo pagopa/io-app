@@ -12,11 +12,18 @@ import { mvlDetailsLoad } from "../../store/actions";
 import { mvlMock, mvlMockId } from "../../types/__mock__/mvlMock";
 import { MvlRouterScreen } from "../MvlRouterScreen";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
+jest.mock("@gorhom/bottom-sheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+  return {
+    __esModule: true,
+    BottomSheetModal: react.Modal,
+    useBottomSheetModal: () => ({
+      present: jest.fn(),
+      dismissAll: jest.fn()
+    })
+  };
+});
 
 describe("MvlRouterScreen behaviour", () => {
   jest.useFakeTimers();

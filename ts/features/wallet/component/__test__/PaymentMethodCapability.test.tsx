@@ -13,11 +13,18 @@ import { PaymentMethod } from "../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import PaymentMethodFeatures from "../features/PaymentMethodFeatures";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
+jest.mock("@gorhom/bottom-sheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+  return {
+    __esModule: true,
+    BottomSheetModal: react.Modal,
+    useBottomSheetModal: () => ({
+      present: jest.fn(),
+      dismissAll: jest.fn()
+    })
+  };
+});
 
 jest.mock("../../../../config", () => ({ bpdEnabled: true }));
 

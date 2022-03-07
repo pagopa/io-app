@@ -16,11 +16,18 @@ import {
   mockBpdState
 } from "./bpdSummaryComponent.test";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
+jest.mock("@gorhom/bottom-sheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+  return {
+    __esModule: true,
+    BottomSheetModal: react.Modal,
+    useBottomSheetModal: () => ({
+      present: jest.fn(),
+      dismissAll: jest.fn()
+    })
+  };
+});
 
 describe("Ranking ready vs not ready", () => {
   const mockStore = configureMockStore();

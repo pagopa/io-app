@@ -6,11 +6,18 @@ import { privacyUrl } from "../../../../../../config";
 import { IOPayPalPsp } from "../../types";
 
 const mockPresent = jest.fn();
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: mockPresent
-  })
-}));
+jest.mock("@gorhom/bottom-sheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+  return {
+    __esModule: true,
+    BottomSheetModal: react.Modal,
+    useBottomSheetModal: () => ({
+      present: mockPresent,
+      dismissAll: mockPresent
+    })
+  };
+});
 
 const payPalPsp: IOPayPalPsp = {
   id: "1",
