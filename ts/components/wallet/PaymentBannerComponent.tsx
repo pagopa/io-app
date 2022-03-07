@@ -29,8 +29,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const noFee = "-";
-
 /**
  * This component displays a summary on the transaction.
  * Used for the screens from the identification of the transaction to the end of the procedure.
@@ -53,16 +51,16 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
       </View>
       <View style={styles.row}>
         <Text white={true}>{I18n.t("wallet.ConfirmPayment.fee")}</Text>
-        <Text white={true}>
-          {props.fee ? formatNumberCentsToAmount(props.fee, true) : noFee}
+        <Text white={true} testID={"PaymentBannerComponentFee"}>
+          {formatNumberCentsToAmount(props.fee ?? 0, true)}
         </Text>
       </View>
       <View style={styles.row}>
         <Text white={true} bold={true}>
           {I18n.t("wallet.total")}
         </Text>
-        <Text white={true} bold={true}>
-          {props.fee ? formatNumberCentsToAmount(totalAmount, true) : noFee}
+        <Text white={true} bold={true} testID={"PaymentBannerComponentTotal"}>
+          {formatNumberCentsToAmount(totalAmount, true)}
         </Text>
       </View>
     </View>
