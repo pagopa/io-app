@@ -4,6 +4,7 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
@@ -52,14 +53,21 @@ const InnerBpdPaymentMethodCapability = (
   const graphicalState: GraphicalValue = calculateBpdToggleGraphicalState(
     props.bpdPotActivation
   );
+  const [toggleValue, setToggleValue] = useState<boolean>(
+    graphicalState.value === "active"
+  );
 
   const {
     present: askConfirmation,
     bottomSheet: changeActivationConfirmationBottomSheet
-  } = useChangeActivationConfirmationBottomSheet({
-    caption: props.paymentMethod.caption,
-    icon: props.paymentMethod.icon
-  });
+  } = useChangeActivationConfirmationBottomSheet(
+    {
+      caption: props.paymentMethod.caption,
+      icon: props.paymentMethod.icon
+    },
+    toggleValue,
+    () => props.updateValue(hash as HPan, toggleValue)
+  );
 
   const {
     present: showExplanation,
@@ -76,11 +84,10 @@ const InnerBpdPaymentMethodCapability = (
     <BpdToggle
       graphicalValue={graphicalState}
       onPress={() => showExplanation()}
-      onValueChanged={newVal =>
-        handleValueChanged(props, () =>
-          askConfirmation(newVal, () => props.updateValue(hash as HPan, newVal))
-        )
-      }
+      onValueChanged={newVal => {
+        setToggleValue(newVal);
+        handleValueChanged(props, askConfirmation);
+      }}
     />
   );
 
