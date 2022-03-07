@@ -12,6 +12,7 @@ import {
 import { connect } from "react-redux";
 
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
+import { UaDonationBanner } from "../../../../features/uaDonations/components/UaDonationBanner";
 import I18n from "../../../../i18n";
 import {
   loadNextPageMessages,
@@ -245,6 +246,7 @@ const MessageList = ({
       {isRefreshing && isFirstLoad && <Loader />}
 
       <AnimatedFlatList
+        ListHeaderComponent={<UaDonationBanner />}
         ItemSeparatorComponent={ItemSeparator}
         ListEmptyComponent={renderEmptyList({
           error,
