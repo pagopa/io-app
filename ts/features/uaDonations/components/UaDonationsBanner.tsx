@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   background: {
     backgroundColor: IOColors.blue,
     marginTop: 24,
-    // on iOS, we can fit the original design a little better
+    // on iOS, we can fit the original design with more precision
     marginHorizontal: Platform.OS === "ios" ? -8 : 0,
     padding: 16,
     borderRadius: 16
