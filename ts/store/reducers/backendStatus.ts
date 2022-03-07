@@ -13,6 +13,7 @@ import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { cgnMerchantsV2Enabled } from "../../config";
+import { DonationBanner } from "../../../definitions/content/DonationBanner";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -73,6 +74,25 @@ export const assistanceToolConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): ToolEnum | undefined =>
     backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
+);
+
+/**
+ * return the remote config about donation enabled/disabled
+ * if there is no data, false is the default value -> (donation disabled)
+ */
+export const isDonationEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.donation.enabled).toUndefined() ?? false
+);
+
+/**
+ * return the remote config about donation banner if available
+ */
+export const donationBannerConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): DonationBanner | undefined =>
+    backendStatus.map(bs => bs.config.donation.banner).toUndefined()
 );
 
 /**
