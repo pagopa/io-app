@@ -55,7 +55,7 @@ const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
 
 export const UAWebViewScreen = () => {
   const navigationParams = useIOSelector(internalRouteNavigationParamsSelector);
-  const uri = navigationParams?.url;
+  const uri = navigationParams?.urlToLoad;
   const ref = React.createRef<WebView>();
   const [hasError, setError] = useState(false);
   const errorComponent = (
