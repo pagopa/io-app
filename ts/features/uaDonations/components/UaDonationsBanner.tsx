@@ -63,10 +63,11 @@ const BaseDonationsBanner = (props: BaseProps): React.ReactElement => (
 );
 
 /**
- * Render a banner using a remote text and a heart icon.
+ * Render a banner using a remote text and a 💙 icon.
  * Tap on this banner generate a navigation to the donation screen.
  * This component is visible only if:
  * local feature flag === true && remote feature flag === true && remote banner visible === true
+ * && the locale text is not an empty string
  * @constructor
  */
 export const UaDonationsBanner = () => {
