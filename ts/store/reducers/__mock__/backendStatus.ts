@@ -212,6 +212,17 @@ export const baseRawBackendStatus: BackendStatus = {
     cgn: {
       enabled: true,
       merchants_v2: false
+    },
+    donation: {
+      enabled: false,
+      banner: {
+        visible: false,
+        description: {
+          "it-IT": "descrizione mock banner",
+          "en-EN": "mock banner description"
+        },
+        url: "mockbannerurl"
+      }
     }
   }
 };
@@ -240,6 +251,17 @@ export const baseBackendConfig: Config = {
   cgn: {
     enabled: true,
     merchants_v2: false
+  },
+  donation: {
+    enabled: false,
+    banner: {
+      visible: false,
+      description: {
+        "it-IT": "descrizione mock banner",
+        "en-EN": "mock banner description"
+      },
+      url: "mockbannerurl"
+    }
   }
 };
 
