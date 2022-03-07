@@ -290,7 +290,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent
         goBack={this.handleBackPress}
-        headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
         dark={true}
       >
         <SafeAreaView style={styles.flex}>
