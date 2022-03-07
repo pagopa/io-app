@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { View } from "native-base";
+import URLParse from "url-parse";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
@@ -11,7 +12,6 @@ import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
 import { useIOSelector } from "../../../store/hooks";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import URLParse from "url-parse";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 
 const styles = StyleSheet.create({
