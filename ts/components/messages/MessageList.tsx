@@ -17,7 +17,7 @@ import {
 import Placeholder from "rn-placeholder";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { UaDonationBanner } from "../../features/uaDonations/components/UaDonationBanner";
+import { UaDonationsBanner } from "../../features/uaDonations/components/UaDonationsBanner";
 import I18n from "../../i18n";
 import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
@@ -334,7 +334,7 @@ class MessageList extends React.Component<Props, State> {
           />
         )}
         <AnimatedFlatList
-          ListHeaderComponent={<UaDonationBanner />}
+          ListHeaderComponent={<UaDonationsBanner />}
           ref={this.flatListRef}
           style={styles.padded}
           scrollEnabled={true}
