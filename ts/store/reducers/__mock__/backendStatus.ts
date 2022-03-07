@@ -213,7 +213,7 @@ export const baseRawBackendStatus: BackendStatus = {
       enabled: true,
       merchants_v2: false
     },
-    donation: {
+    uaDonations: {
       enabled: false,
       banner: {
         visible: false,
@@ -252,7 +252,7 @@ export const baseBackendConfig: Config = {
     enabled: true,
     merchants_v2: false
   },
-  donation: {
+  uaDonations: {
     enabled: false,
     banner: {
       visible: false,
