@@ -260,6 +260,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentMethod = props.getPaymentMethodById(wallet.idWallet);
   const ispaymentMethodCreditCard =
     paymentMethod !== undefined && isCreditCard(paymentMethod);
+
+  const showFeeContextualHelp = typeof fee !== "undefined" && fee > 0;
+
   return (
     <BaseScreenComponent
       goBack={props.onCancel}
@@ -296,9 +299,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                   {I18n.t("payment.changePsp")}
                 </Link>
                 <View spacer={true} large={true} />
-                <Link onPress={showHelp} testID="why-a-fee">
-                  {I18n.t("wallet.whyAFee.title")}
-                </Link>
+
+                {showFeeContextualHelp && (
+                  <Link onPress={showHelp} testID="why-a-fee">
+                    {I18n.t("wallet.whyAFee.title")}
+                  </Link>
+                )}
               </>
             )}
             {isPayingWithPaypal && (
