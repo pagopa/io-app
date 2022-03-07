@@ -13,7 +13,7 @@ import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { cgnMerchantsV2Enabled } from "../../config";
-import { DonationBanner } from "../../../definitions/content/DonationBanner";
+import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -77,22 +77,23 @@ export const assistanceToolConfigSelector = createSelector(
 );
 
 /**
- * return the remote config about donation enabled/disabled
+ * return the remote config about Ukrainian donations enabled/disabled
  * if there is no data, false is the default value -> (donation disabled)
  */
-export const isDonationEnabledSelector = createSelector(
+export const isUaDonationsEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    backendStatus.map(bs => bs.config.donation.enabled).toUndefined() ?? false
+    backendStatus.map(bs => bs.config.uaDonations.enabled).toUndefined() ??
+    false
 );
 
 /**
- * return the remote config about donation banner if available
+ * return the remote config about Ukrainian donations banner if available
  */
-export const donationBannerConfigSelector = createSelector(
+export const uaDonationsBannerConfigSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): DonationBanner | undefined =>
-    backendStatus.map(bs => bs.config.donation.banner).toUndefined()
+  (backendStatus): UaDonationsBanner | undefined =>
+    backendStatus.map(bs => bs.config.uaDonations.banner).toUndefined()
 );
 
 /**
