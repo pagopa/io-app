@@ -6,13 +6,16 @@ import Heart from "../../../../img/features/uaDonations/heart.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { uaDonationsEnabled } from "../../../config";
+import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { uaDonationBannerSelector } from "../../../store/reducers/backendStatus";
+import { getFullLocale } from "../../../utils/locale";
 
 const styles = StyleSheet.create({
   background: {
     backgroundColor: IOColors.blue,
     marginTop: 24,
-    // on iOS we can fit the original design a little better
+    // on iOS, we can fit the original design a little better
     marginHorizontal: Platform.OS === "ios" ? -8 : 0,
     padding: 16,
     borderRadius: 16
@@ -30,10 +33,8 @@ type BaseProps = {
 };
 
 /**
- * Render a banner using a remote text and a heart icon.
- * Tap on this banner generate a navigation to the donation screen.
- * This component is visible only if:
- * local feature flag === true && remote feature flag === true && remote banner visible === true
+ * The base graphical component, take a text as input and dispatch onPress when pressed
+ * @param props
  * @constructor
  */
 const BaseDonationsBanner = (props: BaseProps): React.ReactElement => (
@@ -58,14 +59,34 @@ const BaseDonationsBanner = (props: BaseProps): React.ReactElement => (
   </TouchableWithoutFeedback>
 );
 
+/**
+ * Render a banner using a remote text and a heart icon.
+ * Tap on this banner generate a navigation to the donation screen.
+ * This component is visible only if:
+ * local feature flag === true && remote feature flag === true && remote banner visible === true
+ * @constructor
+ */
 export const UaDonationsBanner = () => {
-  const shouldRender = uaDonationsEnabled;
+  const locale = getFullLocale();
+  const dispatch = useIODispatch();
+  const uaDonationBannerData = useIOSelector(state =>
+    uaDonationBannerSelector(state, locale)
+  );
 
-  return shouldRender ? (
-    <BaseDonationsBanner
-      text={
-        "Con IO puoi fare una donazione alle organizzazioni umanitarie che assistono le vittime del conflitto in Ucraina"
-      }
-    />
-  ) : null;
+  return uaDonationBannerData
+    .map<React.ReactElement | null>(uaDonationData => (
+      // This is a false positive since we are using the Option.map and not the Array.map
+      // eslint-disable-next-line react/jsx-key
+      <BaseDonationsBanner
+        text={uaDonationData.description[locale]}
+        onPress={() =>
+          handleInternalLink(
+            dispatch,
+            // TODO: fix me with the right path
+            `ioit://UA_DONATION_SCREEN?urlToLoad=${uaDonationData.url}`
+          )
+        }
+      />
+    ))
+    .getOrElse(null);
 };
