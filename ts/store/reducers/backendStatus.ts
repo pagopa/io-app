@@ -128,7 +128,7 @@ const filterBannerVisible = (
  * Return `some(UaDonationsBanner)` if all the enabled / visible conditions are met.
  * Return `none` otherwise
  */
-export const uaDonationBannerSelector = createSelector(
+export const uaDonationsBannerSelector = createSelector(
   [
     backendStatusSelector,
     (_: GlobalState, locale: LocalizedMessageKeys) => locale

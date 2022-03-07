@@ -9,7 +9,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
 import { mixpanelTrack } from "../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { uaDonationBannerSelector } from "../../../store/reducers/backendStatus";
+import { uaDonationsBannerSelector } from "../../../store/reducers/backendStatus";
 import { getFullLocale } from "../../../utils/locale";
 
 const styles = StyleSheet.create({
@@ -72,22 +72,22 @@ const BaseDonationsBanner = (props: BaseProps): React.ReactElement => (
 export const UaDonationsBanner = () => {
   const locale = getFullLocale();
   const dispatch = useIODispatch();
-  const uaDonationBannerData = useIOSelector(state =>
-    uaDonationBannerSelector(state, locale)
+  const uaDonationsBannerData = useIOSelector(state =>
+    uaDonationsBannerSelector(state, locale)
   );
 
-  return uaDonationBannerData
-    .map<React.ReactElement | null>(uaDonationData => (
+  return uaDonationsBannerData
+    .map<React.ReactElement | null>(uaDonationsData => (
       // This is a false positive since we are using the Option.map and not the Array.map
       // eslint-disable-next-line react/jsx-key
       <BaseDonationsBanner
-        text={uaDonationData.description[locale]}
+        text={uaDonationsData.description[locale]}
         onPress={() => {
           void mixpanelTrack("UADONATIONS_BANNER_TAP");
           handleInternalLink(
             dispatch,
             // TODO: fix me with the right path
-            `ioit://UADONATIONS_ROUTES_WEBVIEW?urlToLoad=${uaDonationData.url}`
+            `ioit://UADONATIONS_ROUTES_WEBVIEW?urlToLoad=${uaDonationsData.url}`
           );
         }}
       />
