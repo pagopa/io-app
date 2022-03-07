@@ -40,13 +40,10 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     psps: [myPsp]
   };
 
-  it("Should fire showModal by pressing the Why-A-Fee Touchable", async () => {
-    // Store with the true appReducer
-    const myStore: Store<GlobalState> = createStore(
-      appReducer,
-      initState as any
-    );
+  // Store with the true appReducer
+  const myStore: Store<GlobalState> = createStore(appReducer, initState as any);
 
+  it("Should fire showModal by pressing the Why-A-Fee Touchable", async () => {
     // Spy on showModa
     const mySpy = jest.fn();
 
@@ -99,15 +96,6 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       }
     };
 
-    // Store with the true appReducer
-    const myStore: Store<GlobalState> = createStore(
-      appReducer,
-      initState as any
-    );
-
-    // Spy on showModa
-    const mySpy = jest.fn();
-
     const ToBeTested: React.FunctionComponent<
       React.ComponentProps<typeof ConfirmPaymentMethodScreen>
       // eslint-disable-next-line
@@ -115,7 +103,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       <LightModalContext.Provider
         value={{
           component: null,
-          showModal: mySpy,
+          showModal: jest.fn(),
           showAnimatedModal: jest.fn(),
           showModalFadeInAnimation: jest.fn(),
           hideModal: jest.fn(),
