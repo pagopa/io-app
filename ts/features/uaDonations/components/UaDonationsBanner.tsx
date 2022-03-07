@@ -7,6 +7,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
+import { mixpanelTrack } from "../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { uaDonationBannerSelector } from "../../../store/reducers/backendStatus";
 import { getFullLocale } from "../../../utils/locale";
@@ -26,6 +27,8 @@ const styles = StyleSheet.create({
     paddingRight: 16
   }
 });
+
+const iconSize = 48;
 
 type BaseProps = {
   text: string;
@@ -49,8 +52,8 @@ const BaseDonationsBanner = (props: BaseProps): React.ReactElement => (
           {props.text}
         </H5>
         <Heart
-          width={50}
-          height={50}
+          width={iconSize}
+          height={iconSize}
           fill={IOColors.white}
           style={IOStyles.flex}
         />
@@ -79,13 +82,14 @@ export const UaDonationsBanner = () => {
       // eslint-disable-next-line react/jsx-key
       <BaseDonationsBanner
         text={uaDonationData.description[locale]}
-        onPress={() =>
+        onPress={() => {
+          void mixpanelTrack("UADONATIONS_BANNER_TAP");
           handleInternalLink(
             dispatch,
             // TODO: fix me with the right path
-            `ioit://UA_DONATION_SCREEN?urlToLoad=${uaDonationData.url}`
-          )
-        }
+            `ioit://UADONATIONS_ROUTES_WEBVIEW?urlToLoad=${uaDonationData.url}`
+          );
+        }}
       />
     ))
     .getOrElse(null);
