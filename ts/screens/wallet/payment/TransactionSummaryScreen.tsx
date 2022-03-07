@@ -252,8 +252,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const rptId: RptId = this.props.navigation.getParam("rptId");
-    // TODO: it should compare the current an d the initial amount BUT the initialAmount seems to be provided with an incorrect format https://www.pivotaltracker.com/story/show/172084929
-    const isAmountUpdated = true;
 
     const { potVerifica } = this.props;
 
@@ -323,14 +321,12 @@ class TransactionSummaryScreen extends React.Component<Props> {
               </Text>
             </View>
 
-            {isAmountUpdated && (
-              <React.Fragment>
-                <View spacer={true} small={true} />
-                <Text style={styles.lighterGray}>
-                  {I18n.t("wallet.firstTransactionSummary.updateInfo")}
-                </Text>
-              </React.Fragment>
-            )}
+            <React.Fragment>
+              <View spacer={true} small={true} />
+              <Text style={styles.lighterGray}>
+                {I18n.t("wallet.firstTransactionSummary.updateInfo")}
+              </Text>
+            </React.Fragment>
             <View spacer={true} large={true} />
 
             <ItemSeparatorComponent noPadded={true} />
