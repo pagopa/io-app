@@ -1343,7 +1343,7 @@ wallet:
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi un metodo
-  continue: Paga questo avviso
+  continue: Paga
   backToPayments: Torna ai pagamenti
   methods:
     comingSoon: in arrivo
