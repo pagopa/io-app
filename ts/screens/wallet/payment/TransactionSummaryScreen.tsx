@@ -17,7 +17,6 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
@@ -90,15 +89,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20
   },
-  noticeIcon: {
-    paddingLeft: 10
-  },
   flex: {
     flex: 1
   }
 });
-
-const NOTICE_ICON_SIZE = 24;
 
 /**
  * This screen shows the transaction details once the payment has been verified
@@ -306,7 +300,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
               title={I18n.t("wallet.firstTransactionSummary.title")}
               description={transactionDescription}
               recipient={recipient.fold("-", r => r)}
-              image={require("../../../../img/wallet/icon-avviso-pagopa.png")}
             />
 
             <View spacer={true} large={true} />
@@ -319,14 +312,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
                 <Text style={[styles.title, styles.lighterGray]}>
                   {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
                 </Text>
-                {isAmountUpdated && (
-                  <IconFont
-                    style={styles.noticeIcon}
-                    name={"io-notice"}
-                    size={NOTICE_ICON_SIZE}
-                    color={customVariables.colorWhite}
-                  />
-                )}
               </View>
               <Text white={true} style={[styles.title]} bold={true}>
                 {currentAmount}
