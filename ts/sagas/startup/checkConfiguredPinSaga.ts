@@ -1,5 +1,4 @@
 import { call, take } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
 
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
 import { createPinSuccess } from "../../store/actions/pinset";
@@ -26,9 +25,7 @@ export function* checkConfiguredPinSaga(): Generator<
   yield* call(navigateToOnboardingPinScreenAction);
 
   // and block until a unlock code is set
-  const resultAction = yield* take<ActionType<typeof createPinSuccess>>(
-    getType(createPinSuccess)
-  );
+  const resultAction = yield* take(createPinSuccess);
 
   return resultAction.payload;
 }
