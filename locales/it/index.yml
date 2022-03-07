@@ -1280,7 +1280,7 @@ wallet:
           bottomSheetDescription: "Il circuito di questa carta consente di pagare nei punti vendita fisici, ma non online. Se la tua carta è abilitata ai pagamenti online, aggiungila al tuo Portafoglio come 'carta di debito o di credito'."
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
-    title: Avviso di pagamento
+    title: Pagamento
     amount: Importo pagamento
     total: Totale pagato
     expireDate: Scadenza
