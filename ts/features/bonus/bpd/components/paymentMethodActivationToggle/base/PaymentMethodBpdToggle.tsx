@@ -18,7 +18,10 @@ import {
 } from "../../../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
 import { useChangeActivationConfirmationBottomSheet } from "../bottomsheet/BpdChangeActivationConfirmationScreen";
-import { NotActivableType, useNotActivableInformationBottomSheet } from "../bottomsheet/BpdNotActivableInformation";
+import {
+  NotActivableType,
+  useNotActivableInformationBottomSheet
+} from "../bottomsheet/BpdNotActivableInformation";
 import { BpdToggle } from "./BpdToggle";
 import { PaymentMethodRepresentationComponent } from "./PaymentMethodRepresentationComponent";
 
