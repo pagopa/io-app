@@ -13,6 +13,7 @@ import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { cgnMerchantsV2Enabled } from "../../config";
+import { DonationConfig } from "../../../definitions/content/DonationConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -73,6 +74,12 @@ export const assistanceToolConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): ToolEnum | undefined =>
     backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
+);
+
+export const donationConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): DonationConfig | undefined =>
+    backendStatus.map(bs => bs.config.donation).toUndefined()
 );
 
 /**
