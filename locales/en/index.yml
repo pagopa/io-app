@@ -2996,8 +2996,8 @@ features:
         subtitle: "Details to receive support:"
         cta: "Get support"
   uaDonations:
-    webView:
-      title: Donation
+    webViewScreen:
+      headerTitle: Donation
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

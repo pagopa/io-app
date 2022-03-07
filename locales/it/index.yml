@@ -3023,8 +3023,8 @@ features:
         subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
   uaDonations:
-    webView:
-      title: Donazione
+    webViewScreen:
+      headerTitle: Donazione
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

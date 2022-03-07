@@ -85,7 +85,7 @@ export const UAWebViewScreen = () => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("features.uaDonations.webView.title")}
+      headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}
     >
       {!hasError ? (
         <WebView
