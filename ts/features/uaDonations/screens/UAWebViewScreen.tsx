@@ -11,6 +11,8 @@ import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
 import { useIOSelector } from "../../../store/hooks";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import URLParse from "url-parse";
+import { isStringNullyOrEmpty } from "../../../utils/strings";
 
 const styles = StyleSheet.create({
   loading: {
@@ -82,6 +84,12 @@ export const UAWebViewScreen = () => {
   };
 
   if (uri === undefined) {
+    // TODO show an alert to inform the failure scenario https://pagopa.atlassian.net/browse/IA-706
+    return null;
+  }
+  const urlParsed = new URLParse(uri);
+  // url malformed
+  if (isStringNullyOrEmpty(urlParsed.host)) {
     // TODO show an alert to inform the failure scenario https://pagopa.atlassian.net/browse/IA-706
     return null;
   }
