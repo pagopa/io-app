@@ -62,6 +62,7 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
@@ -291,7 +292,12 @@ class TransactionSummaryScreen extends React.Component<Props> {
       <BaseScreenComponent
         goBack={this.handleBackPress}
         dark={true}
+        headerBackgroundColor={customVariables.milderGray}
       >
+        <FocusAwareStatusBar
+          backgroundColor={customVariables.milderGray}
+          barStyle={"light-content"}
+        />
         <SafeAreaView style={styles.flex}>
           <SlidedContentComponent dark={true}>
             <PaymentSummaryComponent
