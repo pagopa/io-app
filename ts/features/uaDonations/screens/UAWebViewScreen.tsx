@@ -53,6 +53,11 @@ const handleOnMessage = (_?: WebViewMessageEvent) => {
 
 const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
 
+/**
+ * this screen embeds a webview that loads a uri url retrieved from internalRouteNavigation store section (urlToLoad)
+ * it handles also the messages sent from the web page to trigger the payment flow
+ * @constructor
+ */
 export const UAWebViewScreen = () => {
   const navigationParams = useIOSelector(internalRouteNavigationParamsSelector);
   const uri = navigationParams?.urlToLoad;
