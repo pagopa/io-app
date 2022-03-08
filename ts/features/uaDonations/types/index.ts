@@ -1,10 +1,6 @@
 import * as t from "io-ts";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import {
-  AmountInEuroCents,
-  PaymentNoticeNumberFromString
-} from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { Amount } from "../../../types/pagopa";
+import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
 export const WebUrlMessage = t.interface({
   kind: t.literal("webUrl"),
