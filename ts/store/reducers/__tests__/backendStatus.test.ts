@@ -1,16 +1,18 @@
 import { none, some } from "fp-ts/lib/Option";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { baseRawBackendStatus } from "../__mock__/backendStatus";
 import {
   areSystemsDeadReducer,
   BackendStatusState,
   bpdRankingEnabledSelector,
-  uaDonationsBannerConfigSelector,
   isUaDonationsEnabledSelector,
-  sectionStatusSelector
+  sectionStatusSelector,
+  uaDonationsBannerConfigSelector
 } from "../backendStatus";
 import { GlobalState } from "../types";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { baseRawBackendStatus } from "../__mock__/backendStatus";
-import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+
+jest.mock("../../../config", () => ({ uaDonationsEnabled: true }));
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
