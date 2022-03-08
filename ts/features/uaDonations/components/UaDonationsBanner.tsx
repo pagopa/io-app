@@ -76,10 +76,9 @@ export const UaDonationsBanner = () => {
     uaDonationsBannerSelector(state, locale)
   );
 
-  return uaDonationsBannerData
-    .map<React.ReactElement | null>(uaDonationsData => (
-      // This is a false positive since we are using the Option.map and not the Array.map
-      // eslint-disable-next-line react/jsx-key
+  return uaDonationsBannerData.fold<React.ReactElement | null>(
+    null,
+    uaDonationsData => (
       <BaseDonationsBanner
         text={uaDonationsData.description[locale]}
         onPress={() => {
@@ -90,6 +89,6 @@ export const UaDonationsBanner = () => {
           );
         }}
       />
-    ))
-    .getOrElse(null);
+    )
+  );
 };
