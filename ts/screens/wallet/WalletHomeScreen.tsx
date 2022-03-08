@@ -25,7 +25,11 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  bpdOptInPaymentMethodsEnabled
+} from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -238,6 +242,15 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     if (pot.isNone(this.props.potWallets)) {
       this.props.loadWallets();
+    }
+
+    // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
+    // load the bonus information on Wallet mount
+    if (
+      !this.props.bpdConfig?.opt_in_payment_methods ||
+      !bpdOptInPaymentMethodsEnabled
+    ) {
+      this.loadBonusBpd();
     }
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
