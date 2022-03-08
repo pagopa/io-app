@@ -1,4 +1,5 @@
 import ROUTES from "../routes";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
@@ -11,6 +12,6 @@ export type AppParamsList = {
   // TODO: [CGN_ROUTES.EYCA.ACTIVATION.MAIN]: NavigatorScreenParams<CgnEYCAActivationParamsList>
 
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
-
   // TODO: [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>
+  [UADONATION_ROUTES.WEBVIEW]: undefined;
 };
