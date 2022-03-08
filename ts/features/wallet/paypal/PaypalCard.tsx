@@ -15,6 +15,7 @@ import variables from "../../../theme/variables";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
+import I18n from "../../../i18n";
 
 type Props = {
   paypal: PayPalPaymentMethod;
@@ -60,7 +61,12 @@ const PaypalCard: React.FunctionComponent<Props> = (props: Props) => (
         {getPaypalAccountEmail(props.paypal.info)}
       </Body>
     }
-    bottomRightCorner={<BrandImage image={paypalLogoMin} />}
+    bottomRightCorner={
+      <BrandImage
+        label={I18n.t("wallet.accessibility.cardBadge.paypal")}
+        image={paypalLogoMin}
+      />
+    }
   />
 );
 

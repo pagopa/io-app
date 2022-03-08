@@ -75,6 +75,8 @@ const renderLoyaltyLogo = (
         style={imageStyle}
         key={"loyaltyLogo"}
         testID={"loyaltyLogo"}
+        accessibilityLabel={I18n.t("wallet.accessibility.cardBadge.privative")}
+        accessible
       />
     );
   });

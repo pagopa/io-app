@@ -3,6 +3,7 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
 type Props = {
   image: ImageSourcePropType;
+  label?: string;
 };
 
 const styles = StyleSheet.create({
@@ -23,5 +24,7 @@ export const BrandImage = (props: Props): React.ReactElement => (
     style={styles.cardLogo}
     testID={"cardImage"}
     resizeMode="contain"
+    accessibilityLabel={props.label}
+    accessible={typeof props.label !== "undefined"}
   />
 );

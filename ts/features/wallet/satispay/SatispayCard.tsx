@@ -7,6 +7,7 @@ import satispayLogoMin from "../../../../img/wallet/cards-icons/satispay.png";
 import { Body } from "../../../components/core/typography/Body";
 import { GlobalState } from "../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import I18n from "../../../i18n";
 import { BrandImage } from "../component/card/BrandImage";
 
 type Props = ReturnType<typeof mapStateToProps>;
@@ -27,7 +28,12 @@ const SatispayCard: React.FunctionComponent<Props> = (props: Props) => (
     bottomLeftCorner={
       <Body>{(props.nameSurname ?? "").toLocaleUpperCase()}</Body>
     }
-    bottomRightCorner={<BrandImage image={satispayLogoMin} />}
+    bottomRightCorner={
+      <BrandImage
+        label={I18n.t("wallet.accessibility.cardBadge.satispay")}
+        image={satispayLogoMin}
+      />
+    }
   />
 );
 
