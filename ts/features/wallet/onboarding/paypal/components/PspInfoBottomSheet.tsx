@@ -100,7 +100,7 @@ const ItemLayout = (props: { icon: JSX.Element; description: ReactNode }) => (
 export const PspInfoBottomSheetContent = (props: Props) => (
   <View testID={"PspInfoBottomSheetContentTestID"}>
     {getItem(props).map((item, idx) => (
-      <ItemLayout {...item} key={`info_row_${idx}`}/>
+      <ItemLayout {...item} key={`info_row_${idx}`} />
     ))}
   </View>
 );

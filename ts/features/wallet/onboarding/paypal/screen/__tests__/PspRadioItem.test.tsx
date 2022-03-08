@@ -58,5 +58,4 @@ describe("PspRadioItem", () => {
     const pspLogo = component.queryByTestId("pspNameLogoID");
     expect(pspName === null && pspLogo === null).toBeFalsy();
   });
-
 });
