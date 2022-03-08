@@ -2994,6 +2994,9 @@ features:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
         cta: "Get support"
+  uaDonations:
+    webViewScreen:
+      headerTitle: Donation
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -3021,6 +3021,9 @@ features:
         title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
         subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
+  uaDonations:
+    webViewScreen:
+      headerTitle: Donazione
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
