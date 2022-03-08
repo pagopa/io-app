@@ -207,9 +207,7 @@ describe("the ZendeskAskPermissions screen", () => {
     const component: RenderAPI = renderComponent(store, false);
     const cancelButton = component.getByTestId("cancelButtonId");
     fireEvent(cancelButton, "onPress");
-    expect(handleItemOnPressSpy).toBeCalledWith(
-      `mailto:io@assistenza.pagopa.it?subject=${mockedZendeskCategory.description["it-IT"]}`
-    );
+    expect(handleItemOnPressSpy).toBeCalled();
     expect(mixpanelTrackSpy).toBeCalled();
     expect(zendeskSupportCompletedSpy).toBeCalled();
   });

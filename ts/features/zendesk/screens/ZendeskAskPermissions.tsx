@@ -1,7 +1,7 @@
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
 import React, { ReactNode } from "react";
-import { Linking, SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
@@ -59,6 +59,7 @@ import {
 } from "../store/reducers";
 import { getFullLocale } from "../../../utils/locale";
 import { showToast } from "../../../utils/showToast";
+import { handleItemOnPress } from "../../../utils/url";
 
 /**
  * Transform an array of string into a Zendesk
@@ -250,21 +251,22 @@ const ZendeskAskPermissions = (props: Props) => {
 
   const locale = getFullLocale();
   const handleOnCancel = () => {
-    Linking.openURL(
+    handleItemOnPress(
       anonymousAssistanceAddressWithSubject(
         zendeskSelectedCategory.description[locale],
         zendeskSelectedSubcategory?.description[locale]
-      )
-    )
-      .then(constNull)
-      .catch(() => {
+      ),
+      undefined,
+      constNull,
+      () => {
         showToast(
           I18n.t("support.askPermissions.toast.emailClientNotFound", {
             emailAddress: anonymousAssistanceAddress
           }),
           "warning"
         );
-      });
+      }
+    );
     void mixpanelTrack("ZENDESK_DENY_PERMISSIONS");
     workUnitCompleted();
   };
