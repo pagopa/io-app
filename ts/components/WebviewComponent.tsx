@@ -1,6 +1,6 @@
 import * as React from "react";
-import WebView from "react-native-webview";
 import { useState } from "react";
+import WebView from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import GenericErrorComponent from "./screens/GenericErrorComponent";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
@@ -33,6 +33,7 @@ const WebviewComponent = (props: Props) => {
           <WebView
             androidCameraAccessDisabled={true}
             androidMicrophoneAccessDisabled={true}
+            allowsInlineMediaPlayback={true}
             style={IOStyles.flex}
             ref={ref}
             onLoadEnd={() => setLoading(false)}
