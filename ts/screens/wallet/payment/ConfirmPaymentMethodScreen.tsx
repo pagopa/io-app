@@ -321,44 +321,47 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           </View>
         </Content>
 
-        <View footer={true}>
-          <ButtonDefaultOpacity
-            block={true}
-            primary={true}
-            // a payment is running
-            disabled={props.payStartWebviewPayload.isSome()}
-            onPress={() =>
-              props.dispatchPaymentStart({
-                idWallet: wallet.idWallet,
-                idPayment,
-                language: getLocalePrimaryWithFallback()
-              })
-            }
-          >
-            <Text>{`${I18n.t(
-              "wallet.ConfirmPayment.goToPay"
-            )} ${formatNumberCentsToAmount(totalAmount, true)}`}</Text>
-          </ButtonDefaultOpacity>
-          <View spacer={true} />
-          <View style={styles.parent}>
+        <View style={styles.footerContainer}>
+          {/* the actual footer must be wrapped in this container in order to keep a white background below the safe area */}
+          <View footer={true}>
             <ButtonDefaultOpacity
-              style={styles.child}
               block={true}
-              cancel={true}
-              onPress={props.onCancel}
-              testID={"cancelPaymentButton"}
+              primary={true}
+              // a payment is running
+              disabled={props.payStartWebviewPayload.isSome()}
+              onPress={() =>
+                props.dispatchPaymentStart({
+                  idWallet: wallet.idWallet,
+                  idPayment,
+                  language: getLocalePrimaryWithFallback()
+                })
+              }
             >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
+              <Text>{`${I18n.t(
+                "wallet.ConfirmPayment.goToPay"
+              )} ${formatNumberCentsToAmount(totalAmount, true)}`}</Text>
             </ButtonDefaultOpacity>
-            <View hspacer={true} />
-            <ButtonDefaultOpacity
-              style={styles.childTwice}
-              block={true}
-              bordered={true}
-              onPress={props.pickPaymentMethod}
-            >
-              <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
-            </ButtonDefaultOpacity>
+            <View spacer={true} />
+            <View style={styles.parent}>
+              <ButtonDefaultOpacity
+                style={styles.child}
+                block={true}
+                cancel={true}
+                onPress={props.onCancel}
+                testID={"cancelPaymentButton"}
+              >
+                <Text>{I18n.t("global.buttons.cancel")}</Text>
+              </ButtonDefaultOpacity>
+              <View hspacer={true} />
+              <ButtonDefaultOpacity
+                style={styles.childTwice}
+                block={true}
+                bordered={true}
+                onPress={props.pickPaymentMethod}
+              >
+                <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
+              </ButtonDefaultOpacity>
+            </View>
           </View>
         </View>
         {props.payStartWebviewPayload.isSome() && (
