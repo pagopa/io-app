@@ -49,11 +49,11 @@ function* waitIdentificationResult(): Generator<
   void | IdentificationResult,
   any
 > {
-  const resultAction: ResultAction = yield* take([
-    getType(identificationCancel),
-    getType(identificationPinReset),
-    getType(identificationForceLogout),
-    getType(identificationSuccess)
+  const resultAction = yield* take<ResultAction>([
+    identificationCancel,
+    identificationPinReset,
+    identificationForceLogout,
+    identificationSuccess
   ]);
 
   switch (resultAction.type) {

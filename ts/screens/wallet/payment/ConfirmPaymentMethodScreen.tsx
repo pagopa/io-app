@@ -12,8 +12,6 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../../components/ContextualInfo";
 import { H4 } from "../../../components/core/typography/H4";
 import { Link } from "../../../components/core/typography/Link";
-import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
@@ -35,7 +33,8 @@ import I18n from "../../../i18n";
 import {
   navigateToPaymentOutcomeCode,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen
+  navigateToPaymentPickPspScreen,
+  navigateToPayPalUpdatePspForPayment
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
@@ -57,7 +56,8 @@ import {
   paymentStartPayloadSelector,
   PaymentStartWebViewPayload,
   pmSessionTokenSelector,
-  pspV2Selector
+  pspSelectedV2ListSelector,
+  pspV2ListSelector
 } from "../../../store/reducers/wallet/payment";
 import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
@@ -72,9 +72,12 @@ import {
 import { PayloadForAction } from "../../../types/utils";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
-import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 
 export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -188,10 +191,11 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
+  const navigation = useNavigationContext();
   // each payment method has its own psp fee
   const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
   const fee: number | undefined = isPayingWithPaypal
-    ? props.payPalPsp?.fee
+    ? props.paypalSelectedPsp?.fee
     : maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
   const totalAmount =
@@ -242,15 +246,23 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ]);
   };
 
-  const formData = props.payStartWebviewPayload
-    .map<Record<string, string | number>>(payload => ({
-      ...payload,
-      ...getLookUpIdPO()
-    }))
-    .getOrElse({});
+  // navigate to the screen where the user can pick the desired psp
+  const handleOnEditPaypalPsp = () => {
+    navigation.navigate(
+      navigateToPayPalUpdatePspForPayment({
+        idPayment,
+        idWallet: wallet.idWallet
+      })
+    );
+  };
+
+  const formData = {};
   const paymentMethod = props.getPaymentMethodById(wallet.idWallet);
   const ispaymentMethodCreditCard =
     paymentMethod !== undefined && isCreditCard(paymentMethod);
+
+  const showFeeContextualHelp = typeof fee !== "undefined" && fee > 0;
+
   return (
     <BaseScreenComponent
       goBack={props.onCancel}
@@ -287,18 +299,22 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                   {I18n.t("payment.changePsp")}
                 </Link>
                 <View spacer={true} large={true} />
-                <Link onPress={showHelp} testID="why-a-fee">
-                  {I18n.t("wallet.whyAFee.title")}
-                </Link>
+
+                {showFeeContextualHelp && (
+                  <Link onPress={showHelp} testID="why-a-fee">
+                    {I18n.t("wallet.whyAFee.title")}
+                  </Link>
+                )}
               </>
             )}
             {isPayingWithPaypal && (
               <>
                 <View spacer={true} />
                 <PayPalCheckoutPspComponent
+                  onEditPress={handleOnEditPaypalPsp}
                   fee={fee as ImportoEuroCents}
-                  pspName={props.payPalPsp?.ragioneSociale ?? "-"}
-                  privacyUrl={props.payPalPsp?.privacyUrl}
+                  pspName={props.paypalSelectedPsp?.ragioneSociale ?? "-"}
+                  privacyUrl={props.paypalSelectedPsp?.privacyUrl}
                 />
               </>
             )}
@@ -348,7 +364,6 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             </View>
           </View>
         </View>
-
         {props.payStartWebviewPayload.isSome() && (
           <PayWebViewModal
             postUri={urlPrefix + payUrlSuffix}
@@ -365,19 +380,19 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     </BaseScreenComponent>
   );
 };
-
 const mapStateToProps = (state: GlobalState) => {
   const pmSessionToken = pmSessionTokenSelector(state);
   const paymentStartPayload = paymentStartPayloadSelector(state);
-  const payPalPsp = getValueOrElse(pspV2Selector(state), []).find(
-    psp => psp.defaultPsp
-  );
+  // if there is no psp selected pick the default one from the list (if any)
+  const paypalSelectedPsp: PspData | undefined =
+    pspSelectedV2ListSelector(state) ||
+    getValueOrElse(pspV2ListSelector(state), []).find(psp => psp.defaultPsp);
   const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
     isReady(pmSessionToken) && paymentStartPayload
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
-    payPalPsp,
+    paypalSelectedPsp,
     getPaymentMethodById: (idWallet: number) =>
       paymentMethodByIdSelector(state, idWallet),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),

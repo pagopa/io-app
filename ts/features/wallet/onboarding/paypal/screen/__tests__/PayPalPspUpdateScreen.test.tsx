@@ -5,17 +5,38 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import I18n from "../../../../../../i18n";
-import { searchPaypalPsp } from "../../store/actions";
 import { getNetworkError } from "../../../../../../utils/errors";
-import { pspList } from "../__mocks__/psp";
-import PayPalPspUpdateScreen from "../PayPalPspUpdateScreen";
+import PayPalPspUpdateScreen from "../../../../paypal/screen/PayPalPspUpdateScreen";
+import { PspData } from "../../../../../../../definitions/pagopa/PspData";
+import { pspForPaymentV2 } from "../../../../../../store/actions/wallet/payment";
+
+const pspList: ReadonlyArray<PspData> = [
+  {
+    codiceAbi: "0001",
+    defaultPsp: true,
+    fee: 100,
+    idPsp: "1",
+    onboard: true,
+    privacyUrl: "https://io.italia.it",
+    ragioneSociale: "PayTipper"
+  },
+  {
+    codiceAbi: "0002",
+    defaultPsp: true,
+    fee: 120,
+    idPsp: "2",
+    onboard: true,
+    privacyUrl: "https://io.italia.it",
+    ragioneSociale: "PayTipper2"
+  }
+];
 
 describe("PayPalPspUpdateScreen", () => {
   jest.useFakeTimers();
   describe("when the psp list is ready", () => {
     it(`then content should be displayed`, () => {
       const render = renderComponent();
-      render.store.dispatch(searchPaypalPsp.success(pspList));
+      render.store.dispatch(pspForPaymentV2.success(pspList));
       expect(
         render.component.queryByTestId("PayPalPspUpdateScreen")
       ).not.toBeNull();
@@ -23,7 +44,7 @@ describe("PayPalPspUpdateScreen", () => {
 
     it(`then the footer button should be defined`, () => {
       const render = renderComponent();
-      render.store.dispatch(searchPaypalPsp.success(pspList));
+      render.store.dispatch(pspForPaymentV2.success(pspList));
       expect(
         render.component.queryByText(I18n.t("global.buttons.cancel"))
       ).not.toBeNull();
@@ -31,10 +52,10 @@ describe("PayPalPspUpdateScreen", () => {
 
     it("then psp items shown should match those one in the store", () => {
       const render = renderComponent();
-      render.store.dispatch(searchPaypalPsp.success(pspList));
+      render.store.dispatch(pspForPaymentV2.success(pspList));
       pspList.forEach(psp => {
         expect(
-          render.component.queryByTestId(`pspItemTestID_${psp.id}`)
+          render.component.queryByTestId(`pspItemTestID_${psp.idPsp}`)
         ).not.toBeNull();
       });
     });
@@ -43,7 +64,9 @@ describe("PayPalPspUpdateScreen", () => {
   describe("when the psp list is loading", () => {
     it("then a loading should be shown", () => {
       const render = renderComponent();
-      render.store.dispatch(searchPaypalPsp.request());
+      render.store.dispatch(
+        pspForPaymentV2.request({ idPayment: "x", idWallet: 1 })
+      );
       expect(
         render.component.queryByTestId(`PayPalPpsUpdateScreenLoadingError`)
       ).not.toBeNull();
@@ -54,7 +77,7 @@ describe("PayPalPspUpdateScreen", () => {
     it("then the error content and retry button should be shown", () => {
       const render = renderComponent();
       render.store.dispatch(
-        searchPaypalPsp.failure(getNetworkError(new Error("test")))
+        pspForPaymentV2.failure(getNetworkError(new Error("test")))
       );
       expect(
         render.component.queryByTestId(`LoadingErrorComponentError`)

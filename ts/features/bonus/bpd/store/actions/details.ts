@@ -5,9 +5,11 @@ import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citize
  * This file contains all the action related to the bpd details like the activation status, value, etc.
  */
 
+export type ActivationStatus = "never" | "unsubscribed" | "subscribed";
 // TODO change payload for loadBpdActivationStatus with this one
 export type BpdActivationPayload = {
   enabled: boolean;
+  activationStatus: ActivationStatus;
   payoffInstr: string | undefined;
   optInStatus?: CitizenOptInStatusEnum;
   technicalAccount?: string;

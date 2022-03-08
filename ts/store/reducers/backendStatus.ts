@@ -5,14 +5,18 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { BpdConfig } from "../../../definitions/content/BpdConfig";
-import { backendStatusLoadSuccess } from "../actions/backendStatus";
-import { Action } from "../actions/types";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { BpdConfig } from "../../../definitions/content/BpdConfig";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
-import { cgnMerchantsV2Enabled } from "../../config";
+import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
+import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
+import { cgnMerchantsV2Enabled, uaDonationsEnabled } from "../../config";
+import { LocalizedMessageKeys } from "../../i18n";
+import { isStringNullyOrEmpty } from "../../utils/strings";
+import { backendStatusLoadSuccess } from "../actions/backendStatus";
+import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -73,6 +77,66 @@ export const assistanceToolConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): ToolEnum | undefined =>
     backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
+);
+
+/**
+ * return the remote config about Ukrainian donations enabled/disabled
+ * if there is no data, false is the default value -> (donation disabled)
+ */
+export const isUaDonationsEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    (uaDonationsEnabled &&
+      backendStatus.map(bs => bs.config.uaDonations.enabled).toUndefined()) ??
+    false
+);
+
+/**
+ * return the remote config about Ukrainian donations banner if available
+ */
+export const uaDonationsBannerConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): UaDonationsBanner | undefined =>
+    backendStatus.map(bs => bs.config.uaDonations.banner).toUndefined()
+);
+
+/**
+ * Transform a UaDonationsConfig to `some(UaDonationsBanner)` if all the required conditions are met:
+ * - local feature flag === true
+ * - remote feature flag === true
+ * - banner visible === true
+ * - The description in the current locale is not an empty string
+ *
+ * Return `none` otherwise.
+ * @param uaConfig
+ * @param locale
+ */
+const filterBannerVisible = (
+  uaConfig: UaDonationsConfig,
+  locale: LocalizedMessageKeys
+): Option<UaDonationsBanner> =>
+  uaDonationsEnabled &&
+  uaConfig.enabled &&
+  uaConfig.banner.visible &&
+  !isStringNullyOrEmpty(uaConfig.banner.description[locale])
+    ? some(uaConfig.banner)
+    : none;
+
+/**
+ * The donation data is an information that we can or we cannot render, based on some conditions.
+ * We represent this information using an {@link Option} in order to avoid chaining multiple boolean condition at component level
+ * Return `some(UaDonationsBanner)` if all the enabled / visible conditions are met.
+ * Return `none` otherwise
+ */
+export const uaDonationsBannerSelector = createSelector(
+  [
+    backendStatusSelector,
+    (_: GlobalState, locale: LocalizedMessageKeys) => locale
+  ],
+  (backendStatus, locale): Option<UaDonationsBanner> =>
+    backendStatus.chain(bs =>
+      filterBannerVisible(bs.config.uaDonations, locale)
+    )
 );
 
 /**

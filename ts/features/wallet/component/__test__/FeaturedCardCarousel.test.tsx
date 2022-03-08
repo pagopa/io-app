@@ -31,7 +31,11 @@ describe("FeaturedCardCarousel", () => {
     const mockStore = configureMockStore<GlobalState>();
     const withBpdEnabled: GlobalState = appReducer(
       undefined,
-      bpdLoadActivationStatus.success({ enabled: true, payoffInstr: undefined })
+      bpdLoadActivationStatus.success({
+        enabled: true,
+        activationStatus: "subscribed",
+        payoffInstr: undefined
+      })
     );
     const withBonusAvailable = appReducer(
       withBpdEnabled,
@@ -63,6 +67,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: true,
+        activationStatus: "subscribed",
         payoffInstr: undefined
       })
     );
@@ -96,6 +101,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: false,
+        activationStatus: "never",
         payoffInstr: undefined
       })
     );
@@ -170,6 +176,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: false,
+        activationStatus: "never",
         payoffInstr: undefined
       })
     );
@@ -218,6 +225,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: true,
+        activationStatus: "subscribed",
         payoffInstr: undefined
       })
     );
@@ -311,6 +319,7 @@ describe("FeaturedCardCarousel", () => {
       undefined,
       bpdLoadActivationStatus.success({
         enabled: true,
+        activationStatus: "subscribed",
         payoffInstr: undefined
       })
     );
