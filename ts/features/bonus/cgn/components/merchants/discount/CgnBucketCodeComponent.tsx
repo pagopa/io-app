@@ -118,10 +118,6 @@ const CgnBucketCodeContent = () => {
   if (isReady(bucketResponse) && bucketResponse.value.kind === "notFound") {
     return (
       <>
-        <H3 accessible={true} accessibilityRole={"header"}>
-          {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
-        </H3>
-        <View spacer small />
         <InfoBox
           iconColor={IOColors.aqua}
           iconName={"io-error"}
