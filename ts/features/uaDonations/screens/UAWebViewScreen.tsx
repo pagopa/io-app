@@ -4,15 +4,20 @@ import { StyleSheet } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { View } from "native-base";
 import URLParse from "url-parse";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
+import { UADonationWebViewMessage } from "../types";
+import { openWebUrl } from "../../../utils/url";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 
 const styles = StyleSheet.create({
   loading: {
@@ -49,8 +54,47 @@ const renderLoading = () => (
   </View>
 );
 
-const handleOnMessage = (_?: WebViewMessageEvent) => {
-  // TODO decode and handle the messages coming from the web page https://pagopa.atlassian.net/browse/IA-692
+/**
+ * parse the messages coming from the webview
+ * if some messages are recognized as valid, it handles the relative action
+ * @param event
+ * @param onPaymentPayload
+ */
+const handleOnMessage = (
+  event: WebViewMessageEvent,
+  onPaymentPayload: (rptID: RptId, amount: AmountInEuroCents) => void
+) => {
+  const maybeMessage = UADonationWebViewMessage.decode(
+    JSON.parse(event.nativeEvent.data)
+  );
+  if (maybeMessage.isLeft()) {
+    // TODO trace decoding errors https://pagopa.atlassian.net/browse/IA-701
+    return;
+  }
+  switch (maybeMessage.value.kind) {
+    case "webUrl":
+      openWebUrl(maybeMessage.value.payload, () => {
+        // TODO trace open web url errors https://pagopa.atlassian.net/browse/IA-701
+      });
+      break;
+    case "payment":
+      const { nav, cf, amount } = maybeMessage.value.payload;
+      const maybeRptId = RptId.decode({
+        paymentNoticeNumber: nav,
+        organizationFiscalCode: cf
+      });
+      const maybeAmount = AmountInEuroCents.decode(amount.toString());
+      if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
+        // TODO trace decoding errors https://pagopa.atlassian.net/browse/IA-701
+        return;
+      }
+      onPaymentPayload(maybeRptId.value, maybeAmount.value);
+      break;
+    case "error":
+      // const error = maybeMessage.value.payload;
+      // TODO trace web page errors https://pagopa.atlassian.net/browse/IA-701
+      break;
+  }
 };
 
 const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
@@ -62,6 +106,7 @@ const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
  */
 export const UAWebViewScreen = () => {
   const navigationParams = useIOSelector(internalRouteNavigationParamsSelector);
+  const dispatch = useIODispatch();
   const uri = navigationParams?.urlToLoad;
   const ref = React.createRef<WebView>();
   const [hasError, setError] = useState(false);
@@ -73,6 +118,19 @@ export const UAWebViewScreen = () => {
       }}
     />
   );
+
+  const startDonationPayment = (
+    rptId: RptId,
+    initialAmount: AmountInEuroCents
+  ) => {
+    dispatch(paymentInitializeState());
+    navigateToPaymentTransactionSummaryScreen({
+      rptId,
+      initialAmount,
+      paymentStartOrigin: "donation",
+      startRoute: undefined
+    });
+  };
 
   // inject JS to avoid the user can zoom the web page content
   const injectJS = () => {
@@ -112,7 +170,7 @@ export const UAWebViewScreen = () => {
           androidMicrophoneAccessDisabled={true}
           onError={onError}
           onHttpError={onError}
-          onMessage={handleOnMessage}
+          onMessage={e => handleOnMessage(e, startDonationPayment)}
           startInLoadingState={true}
           renderLoading={renderLoading}
           javaScriptEnabled={true}
