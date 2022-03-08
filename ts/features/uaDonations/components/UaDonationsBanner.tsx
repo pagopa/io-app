@@ -10,6 +10,7 @@ import { handleInternalLink } from "../../../components/ui/Markdown/handlers/int
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { uaDonationsBannerSelector } from "../../../store/reducers/backendStatus";
 import { getFullLocale } from "../../../utils/locale";
+import UADONATION_ROUTES from "../navigation/routes";
 
 const styles = StyleSheet.create({
   background: {
