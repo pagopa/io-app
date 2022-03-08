@@ -76,19 +76,16 @@ export const UaDonationsBanner = () => {
     uaDonationsBannerSelector(state, locale)
   );
 
-  return uaDonationsBannerData.fold<React.ReactElement | null>(
-    null,
-    uaDonationsData => (
-      <BaseDonationsBanner
-        text={uaDonationsData.description[locale]}
-        onPress={() => {
-          handleInternalLink(
-            dispatch,
-            // TODO: fix me with the right path
-            `ioit://UADONATIONS_ROUTES_WEBVIEW?urlToLoad=${uaDonationsData.url}`
-          );
-        }}
-      />
-    )
-  );
+  return uaDonationsBannerData.fold(null, uaDonationsData => (
+    <BaseDonationsBanner
+      text={uaDonationsData.description[locale]}
+      onPress={() => {
+        handleInternalLink(
+          dispatch,
+          // TODO: fix me with the right path
+          `ioit://UADONATIONS_ROUTES_WEBVIEW?urlToLoad=${uaDonationsData.url}`
+        );
+      }}
+    />
+  ));
 };
