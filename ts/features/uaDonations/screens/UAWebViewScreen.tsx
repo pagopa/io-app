@@ -118,7 +118,7 @@ export const UAWebViewScreen = () => {
       }}
     />
   );
-
+  // trigger the payment flow within the given data
   const startDonationPayment = (
     rptId: RptId,
     initialAmount: AmountInEuroCents
