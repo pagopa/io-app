@@ -15,6 +15,7 @@ import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { BlurredPan } from "../../component/card/BlurredPan";
+import { BrandImage } from "../../component/card/BrandImage";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
@@ -24,6 +25,8 @@ type Props = {
   abi: Abi;
   brandLogo: ImageSourcePropType;
   blocked?: boolean;
+  brand?: string;
+  bankName?: string;
 };
 
 const styles = StyleSheet.create({
@@ -135,9 +138,13 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
         </>
       }
       bottomRightCorner={
-        <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
-          <Image style={styles.brandLogo} source={props.brandLogo} />
-        </View>
+        <BrandImage
+          label={I18n.t("wallet.accessibility.cardBadge.coBadge", {
+            brand: props.brand,
+            bankName: props.bankName
+          })}
+          image={props.brandLogo}
+        />
       }
     />
   );

@@ -24,6 +24,8 @@ const CoBadgeCard: React.FunctionComponent<Props> = props => {
       ).toUndefined()}
       brandLogo={brandLogo}
       caption={props.enhancedCoBadge.caption}
+      brand={props.enhancedCoBadge.info.brand}
+      bankName={props.enhancedCoBadge.abiInfo?.name}
     />
   );
 };
