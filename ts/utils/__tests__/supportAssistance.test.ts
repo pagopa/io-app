@@ -1,5 +1,5 @@
 import {
-  anonymousAssistanceAddress,
+  anonymousAssistanceAddressWithSubject,
   canShowHelp,
   handleSendAssistanceLog
 } from "../supportAssistance";
@@ -13,7 +13,7 @@ describe("anonymousAssistanceAddress", () => {
     const mockedEmailLink = "mailto:io@assistenza.pagopa.it?subject=";
     const mockedCategory = "mockedCategory";
 
-    expect(anonymousAssistanceAddress(mockedCategory)).toBe(
+    expect(anonymousAssistanceAddressWithSubject(mockedCategory)).toBe(
       mockedEmailLink + mockedCategory
     );
   });
@@ -22,9 +22,9 @@ describe("anonymousAssistanceAddress", () => {
     const mockedCategory = "mockedCategory";
     const mockedSubcategory = "mockedSubcategory";
 
-    expect(anonymousAssistanceAddress(mockedCategory, mockedSubcategory)).toBe(
-      `${mockedEmailLink}${mockedCategory}: ${mockedSubcategory}`
-    );
+    expect(
+      anonymousAssistanceAddressWithSubject(mockedCategory, mockedSubcategory)
+    ).toBe(`${mockedEmailLink}${mockedCategory}: ${mockedSubcategory}`);
   });
 });
 

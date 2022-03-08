@@ -21,11 +21,13 @@ export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 // Id of the log customField
 const logId = "4413845142673";
 
-export const anonymousAssistanceAddress = (
+export const anonymousAssistanceAddress = "io@assistenza.pagopa.it";
+
+export const anonymousAssistanceAddressWithSubject = (
   category: string,
   subcategory?: string
 ): string =>
-  `mailto:io@assistenza.pagopa.it?subject=${category}${fromNullable(
+  `mailto:${anonymousAssistanceAddress}?subject=${category}${fromNullable(
     subcategory
   ).fold("", s => ": " + s)}`;
 

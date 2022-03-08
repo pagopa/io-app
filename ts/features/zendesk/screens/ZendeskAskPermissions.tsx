@@ -1,7 +1,7 @@
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
 import React, { ReactNode } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { Linking, SafeAreaView, ScrollView } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
@@ -42,13 +42,13 @@ import {
   addTicketCustomField,
   addTicketTag,
   anonymousAssistanceAddress,
+  anonymousAssistanceAddressWithSubject,
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
-import { handleItemOnPress } from "../../../utils/url";
 import {
   zendeskSupportCompleted,
   zendeskSupportFailure
@@ -58,6 +58,7 @@ import {
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
 import { getFullLocale } from "../../../utils/locale";
+import { showToast } from "../../../utils/showToast";
 
 /**
  * Transform an array of string into a Zendesk
@@ -249,12 +250,21 @@ const ZendeskAskPermissions = (props: Props) => {
 
   const locale = getFullLocale();
   const handleOnCancel = () => {
-    handleItemOnPress(
-      anonymousAssistanceAddress(
+    Linking.openURL(
+      anonymousAssistanceAddressWithSubject(
         zendeskSelectedCategory.description[locale],
         zendeskSelectedSubcategory?.description[locale]
       )
-    )();
+    )
+      .then(constNull)
+      .catch(() => {
+        showToast(
+          I18n.t("support.askPermissions.toast.emailClientNotFound", {
+            emailAddress: anonymousAssistanceAddress
+          }),
+          "warning"
+        );
+      });
     void mixpanelTrack("ZENDESK_DENY_PERMISSIONS");
     workUnitCompleted();
   };
