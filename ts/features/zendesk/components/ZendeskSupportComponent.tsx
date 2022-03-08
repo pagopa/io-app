@@ -117,15 +117,10 @@ const ZendeskSupportComponent = (props: Props) => {
       return;
     }
 
-    if (canSkipCategoryChoice) {
-      navigation.navigate(
-        navigateToZendeskAskPermissions({ assistanceForPayment })
-      );
-    } else {
-      navigation.navigate(
-        navigateToZendeskChooseCategory({ assistanceForPayment })
-      );
-    }
+    const navigationAction = canSkipCategoryChoice
+      ? navigateToZendeskAskPermissions
+      : navigateToZendeskChooseCategory;
+    navigation.navigate(navigationAction({ assistanceForPayment }));
   };
 
   // If the user opened at least at ticket show the "Show tickets" button
