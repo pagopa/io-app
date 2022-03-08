@@ -13,7 +13,10 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../model/RemoteValue";
-import { bpdLoadActivationStatus } from "../../../actions/details";
+import {
+  ActivationStatus,
+  bpdLoadActivationStatus
+} from "../../../actions/details";
 import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
@@ -30,13 +33,16 @@ import paymentInstrumentReducer, {
 import technicalAccountReducer, {
   bpdTechnicalAccountSelector
 } from "./technicalAccount";
+import { bpdActivationUiReducer, BpdActivationUiState } from "./ui";
 
 export type BpdActivation = {
   enabled: pot.Pot<boolean, Error>;
+  activationStatus: RemoteValue<ActivationStatus, Error>;
   payoffInstr: PayoffInstrumentType;
   unsubscription: RemoteValue<true, Error>;
   technicalAccount: RemoteValue<string | undefined, Error>;
   optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>;
+  ui: BpdActivationUiState;
 };
 
 /**
@@ -119,12 +125,34 @@ const unsubscriptionReducer = (
   return state;
 };
 
+const activationStatusReducer = (
+  state: RemoteValue<ActivationStatus, Error> = remoteUndefined,
+  action: Action
+): RemoteValue<ActivationStatus, Error> => {
+  switch (action.type) {
+    case getType(bpdLoadActivationStatus.request):
+    case getType(bpdEnrollUserToProgram.request):
+      return remoteLoading;
+    case getType(bpdLoadActivationStatus.success):
+    case getType(bpdEnrollUserToProgram.success):
+      return remoteReady(action.payload.activationStatus);
+    case getType(bpdDeleteUserFromProgram.success):
+      return remoteUndefined;
+    case getType(bpdLoadActivationStatus.failure):
+    case getType(bpdEnrollUserToProgram.failure):
+      return remoteError(action.payload);
+  }
+  return state;
+};
+
 const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,
+  activationStatus: activationStatusReducer,
   payoffInstr: paymentInstrumentReducer,
   unsubscription: unsubscriptionReducer,
   technicalAccount: technicalAccountReducer,
-  optInStatus: optInStatusReducer
+  optInStatus: optInStatusReducer,
+  ui: bpdActivationUiReducer
 });
 
 /**
@@ -143,6 +171,15 @@ export const optInStatusSelector = (
 export const bpdEnabledSelector = (
   state: GlobalState
 ): pot.Pot<boolean, Error> => state.bonus.bpd.details.activation.enabled;
+
+/**
+ * Return the enabled value related to the bpd activation status
+ * @param state
+ */
+export const activationStatusSelector = (
+  state: GlobalState
+): RemoteValue<ActivationStatus, Error> =>
+  state.bonus.bpd.details.activation.activationStatus;
 
 /**
  * Return the Iban that the user has entered to receive the cashback amount
