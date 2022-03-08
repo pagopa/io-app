@@ -11,6 +11,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { TestID } from "../../../../../types/WithTestID";
 import { IOPayPalPsp } from "../types";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 
 export const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
@@ -53,9 +54,9 @@ export const PspRadioItem = (
     PSP_LOGO_MAX_HEIGHT,
     psp.logoUrl
   );
+
   const { present, bottomSheet, dismiss } = useIOBottomSheet(
     <PspInfoBottomSheetContent
-      onButtonPress={() => dismiss()}
       pspFee={psp.fee}
       pspName={psp.name}
       pspPrivacyUrl={psp.privacyUrl}
@@ -63,7 +64,21 @@ export const PspRadioItem = (
     I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
       pspName: psp.name
     }),
-    Math.min(420, Dimensions.get("window").height)
+    Math.min(420, Dimensions.get("window").height),
+    () => (
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={{
+          testID: "continueButtonId",
+          bordered: false,
+          onPressWithGestureHandler: true,
+          onPress: () => dismiss(),
+          title: I18n.t(
+            "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
+          )
+        }}
+      />
+    )
   );
 
   return (

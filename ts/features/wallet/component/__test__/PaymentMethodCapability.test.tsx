@@ -13,16 +13,23 @@ import { PaymentMethod } from "../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import PaymentMethodFeatures from "../features/PaymentMethodFeatures";
 
+const mockPresent = jest.fn();
 jest.mock("@gorhom/bottom-sheet", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const react = require("react-native");
+  const rn = require("react-native");
+
   return {
     __esModule: true,
-    BottomSheetModal: react.Modal,
+    BottomSheetModal: rn.Modal,
+    BottomSheetScrollView: rn.ScrollView,
+    TouchableWithoutFeedback: rn.TouchableWithoutFeedback,
     useBottomSheetModal: () => ({
-      present: jest.fn(),
-      dismissAll: jest.fn()
-    })
+      dismissAll: mockPresent
+    }),
+    namedExport: {
+      ...require("react-native-reanimated/mock"),
+      ...jest.requireActual("@gorhom/bottom-sheet")
+    }
   };
 });
 

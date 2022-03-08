@@ -1,13 +1,10 @@
 import * as React from "react";
+import { ReactNode } from "react";
 import { StyleSheet } from "react-native";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { View } from "native-base";
-import { ReactNode } from "react";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import I18n from "../../../../../i18n";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
-import { BottomSheetContent } from "../../../../../components/bottomSheet/BottomSheetContent";
 import MoneyDownIcon from "../../../../../../img/wallet/payment-methods/paypal/money_down.svg";
 import LabelIcon from "../../../../../../img/wallet/payment-methods/paypal/label.svg";
 import EditIcon from "../../../../../../img/wallet/payment-methods/paypal/edit.svg";
@@ -31,7 +28,6 @@ type Props = {
   pspName: string;
   pspFee: NonNegativeNumber;
   pspPrivacyUrl: string;
-  onButtonPress: () => void;
 };
 
 const iconSize = 24;
@@ -101,27 +97,10 @@ const ItemLayout = (props: { icon: JSX.Element; description: ReactNode }) => (
  * @param props
  * @constructor
  */
-export const PspInfoBottomSheetContent = (props: Props) => {
-  const continueButtonProps: BlockButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    onPressWithGestureHandler: true,
-    onPress: props.onButtonPress,
-    title: I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle")
-  };
-  return (
-    <BottomSheetContent
-      testID={"PspInfoBottomSheetContentTestID"}
-      footer={
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps}
-        />
-      }
-    >
-      {getItem(props).map((item, idx) => (
-        <ItemLayout {...item} key={`info_row_${idx}`} />
-      ))}
-    </BottomSheetContent>
-  );
-};
+export const PspInfoBottomSheetContent = (props: Props) => (
+  <View testID={"PspInfoBottomSheetContentTestID"}>
+    {getItem(props).map((item, idx) => (
+      <ItemLayout {...item} key={`info_row_${idx}`}/>
+    ))}
+  </View>
+);
