@@ -12,8 +12,8 @@ import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
 import IngressScreen from "../screens/ingress/IngressScreen";
-import UADonationNavigator from "../features/uaDonations/navigation/navigator";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
+import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -75,8 +75,8 @@ if (zendeskEnabled) {
 
 if (uaDonationsEnabled) {
   const uaConfigMap = {
-    [UADONATION_ROUTES.MAIN]: {
-      screen: UADonationNavigator
+    [UADONATION_ROUTES.WEBVIEW]: {
+      screen: UAWebViewScreen
     }
   };
   configMap = { ...configMap, ...uaConfigMap };
