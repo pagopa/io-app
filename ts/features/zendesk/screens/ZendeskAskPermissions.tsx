@@ -57,6 +57,7 @@ import {
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
+import { getFullLocale } from "../../../utils/locale";
 
 /**
  * Transform an array of string into a Zendesk
@@ -246,11 +247,12 @@ const ZendeskAskPermissions = (props: Props) => {
     // remove these item whose have no value associated
     .filter(it => it.value !== notAvailable);
 
+  const locale = getFullLocale();
   const handleOnCancel = () => {
     handleItemOnPress(
       anonymousAssistanceAddress(
-        zendeskSelectedCategory.description["it-IT"],
-        zendeskSelectedSubcategory?.description["it-IT"]
+        zendeskSelectedCategory.description[locale],
+        zendeskSelectedSubcategory?.description[locale]
       )
     )();
     void mixpanelTrack("ZENDESK_DENY_PERMISSIONS");
