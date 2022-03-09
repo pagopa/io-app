@@ -26,9 +26,6 @@ const paymentMethodPreview = (
     case "Satispay":
       return <SatispayWalletPreview key={pm.idWallet} satispay={pm} />;
     case "PayPal":
-      if (!config.isPaypalEnabled) {
-        return null;
-      }
       return <PayPalWalletPreview key={pm.idWallet} paypal={pm} />;
     case "Bancomat":
       return <BancomatWalletPreview key={pm.idWallet} bancomat={pm} />;
