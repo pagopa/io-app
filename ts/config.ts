@@ -91,7 +91,7 @@ export const bpdOptInPaymentMethodsEnabled =
   Config.BPD_OPT_IN_PAYMENT_METHODS === "YES";
 
 // Ukraine donation
-export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
+export const uaDonationsEnabled = true;
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;

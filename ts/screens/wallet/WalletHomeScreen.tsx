@@ -25,11 +25,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import {
-  bonusVacanzeEnabled,
-  bpdEnabled,
-  bpdOptInPaymentMethodsEnabled
-} from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -94,7 +90,8 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
+import { handleInternalLink } from "../../components/ui/Markdown/handlers/internalLink";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -244,14 +241,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       this.props.loadWallets();
     }
 
-    // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
-    // load the bonus information on Wallet mount
-    if (
-      !this.props.bpdConfig?.opt_in_payment_methods ||
-      !bpdOptInPaymentMethodsEnabled
-    ) {
-      this.loadBonusBpd();
-    }
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
@@ -554,7 +543,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
-        <BpdOptInPaymentMethodsContainer />
         <>
           {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
           {transactionContent}
@@ -612,7 +600,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
-  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
+  navigateToPaymentScanQrCode: () => {
+    handleInternalLink(
+      dispatch,
+      `ioit://${UADONATION_ROUTES.WEBVIEW}?urlToLoad= `
+    );
+  },
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
 
