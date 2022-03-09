@@ -235,36 +235,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  private isOptInPaymentMethodsEnabled = () =>
-    this.props.bpdConfig?.opt_in_payment_methods &&
-    bpdOptInPaymentMethodsEnabled;
-
-  private hideLoadingModalOptInShouldShowChoice = (
-    showOptInChoiceStatus: ShowOptInChoice,
-    prevShowOptInChoiceStatus: ShowOptInChoice
-  ) => {
-    if (
-      showOptInChoiceStatus.kind !== prevShowOptInChoiceStatus.kind &&
-      (isReady(showOptInChoiceStatus) || isError(showOptInChoiceStatus)) &&
-      (isUndefined(prevShowOptInChoiceStatus) ||
-        isLoading(prevShowOptInChoiceStatus))
-    ) {
-      this.props.hideModal();
-    }
-  };
   public componentDidMount() {
-    if (this.isOptInPaymentMethodsEnabled()) {
-      // Starts the optInShouldShowChoiceHandler saga
-      this.props.runOptInShouldShowChoiceHandler();
-      this.props.showModal(
-        <LoadingSpinnerOverlay
-          isLoading={true}
-          loadingCaption={I18n.t("global.remoteStates.loading")}
-          loadingOpacity={1}
-        />
-      );
-    }
-
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
@@ -336,13 +307,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     if (isBancomatListUpdated || isCobadgeListUpdated) {
       this.props.runSendAddCobadgeMessageSaga();
-    }
-
-    if (this.isOptInPaymentMethodsEnabled()) {
-      this.hideLoadingModalOptInShouldShowChoice(
-        this.props.showOptInChoiceStatus,
-        prevProps.showOptInChoiceStatus
-      );
     }
   }
 
@@ -640,8 +604,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isCgnEnabled: isCGNEnabledSelector(state),
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state),
-  showOptInChoiceStatus: showOptInChoiceSelector(state)
+  bpdConfig: bpdRemoteConfigSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -672,9 +635,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
     dispatch(fetchTransactionsLoadComplete(transactions)),
-  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga()),
-  runOptInShouldShowChoiceHandler: () =>
-    dispatch(optInPaymentMethodsShowChoice.request())
+  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga())
 });
 
 export default withValidatedPagoPaVersion(
