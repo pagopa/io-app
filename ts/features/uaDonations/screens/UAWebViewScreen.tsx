@@ -107,15 +107,16 @@ const handleOnMessage = (
       });
       const maybeAmount = AmountInEuroCents.decode(amount.toString());
       if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
+       const reason = readableReport(
+          maybeRptId.isLeft() ? maybeRptId.value : maybeAmount.value
+        );
         void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_ERROR", {
-          reason: maybeRptId.isLeft()
-            ? "Error decoding RptId"
-            : "Error deconding amount"
+          reason
         });
         handleError();
         return;
       }
-      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_SUCCESS", {
+      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DATA_SUCCESS", {
         organizationFiscalCode: maybeRptId.value.organizationFiscalCode,
         amount: maybeAmount.value
       });
