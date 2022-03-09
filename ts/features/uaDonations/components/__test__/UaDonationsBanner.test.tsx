@@ -31,8 +31,19 @@ describe("UaDonationsBanner", () => {
   });
 
   describe("When a backendStatusLoadSuccess is received", () => {
-    describe("And uaDonations.enabled === false, uaDonations.banner.visible === false", () => {
-      it("Should not render the UaDonationsBanner", () => {
+    describe.each`
+      uaDonationsEnabled | uaDonationsBannerVisible | uaDonationsBannerDescription
+      ${false}           | ${false}                 | ${baseRawBackendStatus.config.uaDonations.banner.description}
+      ${true}            | ${false}                 | ${baseRawBackendStatus.config.uaDonations.banner.description}
+      ${false}           | ${true}                  | ${baseRawBackendStatus.config.uaDonations.banner.description}
+      ${true}            | ${true}                  | ${{ "it-IT": "", "en-EN": "" }}
+    `(
+      "And uaDonations.enabled === $uaDonationsEnabled, uaDonations.banner.visible === $uaDonationsBannerVisible and uaDonations.banner.description === $uaDonationsBannerDescription",
+      ({
+        uaDonationsEnabled,
+        uaDonationsBannerVisible,
+        uaDonationsBannerDescription
+      }) => {
         const globalState = appReducer(
           undefined,
           applicationChangeState("active")
@@ -45,79 +56,26 @@ describe("UaDonationsBanner", () => {
               ...baseRawBackendStatus.config,
               uaDonations: {
                 ...baseRawBackendStatus.config.uaDonations,
-                enabled: false,
+                enabled: uaDonationsEnabled,
                 banner: {
                   ...baseRawBackendStatus.config.uaDonations.banner,
-                  visible: false
+                  visible: uaDonationsBannerVisible,
+                  description: uaDonationsBannerDescription
                 }
               }
             }
           })
         );
+        it("Should not render the UaDonationsBanner", () => {
+          const result = renderComponent(store);
 
-        const result = renderComponent(store);
+          expect(
+            result.component.queryByTestId("UaDonationsBanner")
+          ).toBeNull();
+        });
+      }
+    );
 
-        expect(result.component.queryByTestId("UaDonationsBanner")).toBeNull();
-      });
-    });
-    describe("And uaDonations.enabled === true, uaDonations.banner.visible === false", () => {
-      it("Should not render the UaDonationsBanner", () => {
-        const globalState = appReducer(
-          undefined,
-          applicationChangeState("active")
-        );
-        const store = createStore(appReducer, globalState as any);
-        store.dispatch(
-          backendStatusLoadSuccess({
-            ...baseRawBackendStatus,
-            config: {
-              ...baseRawBackendStatus.config,
-              uaDonations: {
-                ...baseRawBackendStatus.config.uaDonations,
-                enabled: true,
-                banner: {
-                  ...baseRawBackendStatus.config.uaDonations.banner,
-                  visible: false
-                }
-              }
-            }
-          })
-        );
-
-        const result = renderComponent(store);
-
-        expect(result.component.queryByTestId("UaDonationsBanner")).toBeNull();
-      });
-    });
-    describe("And uaDonations.enabled === false, uaDonations.banner.visible === true", () => {
-      it("Should not render the UaDonationsBanner", () => {
-        const globalState = appReducer(
-          undefined,
-          applicationChangeState("active")
-        );
-        const store = createStore(appReducer, globalState as any);
-        store.dispatch(
-          backendStatusLoadSuccess({
-            ...baseRawBackendStatus,
-            config: {
-              ...baseRawBackendStatus.config,
-              uaDonations: {
-                ...baseRawBackendStatus.config.uaDonations,
-                enabled: false,
-                banner: {
-                  ...baseRawBackendStatus.config.uaDonations.banner,
-                  visible: true
-                }
-              }
-            }
-          })
-        );
-
-        const result = renderComponent(store);
-
-        expect(result.component.queryByTestId("UaDonationsBanner")).toBeNull();
-      });
-    });
     describe("And uaDonations.enabled === true, uaDonations.banner.visible === true", () => {
       it("Should render the UaDonationsBanner", () => {
         const globalState = appReducer(
@@ -174,39 +132,6 @@ describe("UaDonationsBanner", () => {
         );
 
         expect(result.component.getByText("textUpdate")).not.toBeNull();
-      });
-    });
-    describe('And uaDonations.enabled === true, uaDonations.banner.visible === true, uaDonations.banner.description[locale] ==="" ', () => {
-      it("Should not render the UaDonationsBanner", () => {
-        const globalState = appReducer(
-          undefined,
-          applicationChangeState("active")
-        );
-        const store = createStore(appReducer, globalState as any);
-        store.dispatch(
-          backendStatusLoadSuccess({
-            ...baseRawBackendStatus,
-            config: {
-              ...baseRawBackendStatus.config,
-              uaDonations: {
-                ...baseRawBackendStatus.config.uaDonations,
-                enabled: true,
-                banner: {
-                  ...baseRawBackendStatus.config.uaDonations.banner,
-                  visible: true,
-                  description: {
-                    "it-IT": "",
-                    "en-EN": ""
-                  }
-                }
-              }
-            }
-          })
-        );
-
-        const result = renderComponent(store);
-
-        expect(result.component.queryByTestId("UaDonationsBanner")).toBeNull();
       });
     });
   });
