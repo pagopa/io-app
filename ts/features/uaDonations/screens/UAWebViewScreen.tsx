@@ -219,7 +219,7 @@ export const UAWebViewScreen = () => {
       headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {uri && (
+        {errorType === undefined && uri && (
           <WebView
             testID={"UAWebViewScreenTestID"}
             ref={ref}
