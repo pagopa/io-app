@@ -23,6 +23,7 @@ describe("loadBpdData", () => {
       .next(
         bpdLoadActivationStatus.success({
           enabled: false,
+          activationStatus: "never",
           payoffInstr: undefined
         })
       )
@@ -43,6 +44,7 @@ describe("loadBpdData", () => {
       .next(
         bpdLoadActivationStatus.success({
           enabled: true,
+          activationStatus: "subscribed",
           payoffInstr: undefined
         })
       )
