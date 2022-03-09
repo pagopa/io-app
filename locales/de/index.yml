@@ -696,7 +696,6 @@ wallet:
     noPspsAvailable: Diese Zahlungsmethode kann nicht verwendet werden
     contextualHelpTitle: Auswahl der Zahlungsmethode
   firstTransactionSummary:
-    header: Zusammenfassung der Transaktionsmitteilungen
     title: Transaktionshinweis
     amount: Transaktionsbetrag
     total: Insgesamt bezahlt

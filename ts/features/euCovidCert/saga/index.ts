@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeLatest } from "redux-saga/effects";
+import { call, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { euCovidCertificateGet } from "../store/actions";
 import { BackendEuCovidCertClient } from "../api/backendEuCovidCert";
@@ -18,12 +18,12 @@ export function* watchEUCovidCertificateSaga(
   const euCovidCertClient = BackendEuCovidCertClient(apiUrlPrefix, bearerToken);
 
   // handle the request of getting eu covid cert
-  yield takeLatest(
+  yield* takeLatest(
     euCovidCertificateGet.request,
     function* (action: ActionType<typeof euCovidCertificateGet.request>) {
       // wait backoff time if there were previous errors
-      yield call(waitBackoffError, euCovidCertificateGet.failure);
-      yield call(
+      yield* call(waitBackoffError, euCovidCertificateGet.failure);
+      yield* call(
         handleGetEuCovidCertificate,
         euCovidCertClient.getCertificate,
         action

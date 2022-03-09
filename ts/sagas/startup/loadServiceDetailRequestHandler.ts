@@ -1,5 +1,5 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, fork, put, take, takeLatest } from "redux-saga/effects";
+import { call, fork, put, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { buffers, channel, Channel } from "redux-saga";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -9,7 +9,7 @@ import {
   loadServiceDetailNotFound,
   loadServicesDetail
 } from "../../store/actions/services";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { handleOrganizationNameUpdateSaga } from "../services/handleOrganizationNameUpdateSaga";
 import { handleServiceReadabilitySaga } from "../services/handleServiceReadabilitySaga";
 import { totServiceFetchWorkers } from "../../config";
@@ -22,36 +22,38 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
  *
  * @param {function} getService - The function that makes the Backend request
  * @param action
- * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
+ * @returns {IterableIterator<ReduxSagaEffect | Either<Error, ServicePublic>>}
  */
 export function* loadServiceDetailRequestHandler(
   getService: ReturnType<typeof BackendClient>["getService"],
   action: ActionType<typeof loadServiceDetail["request"]>
-): Generator<Effect, void, SagaCallReturnType<typeof getService>> {
+): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getService>> {
   try {
-    const response = yield call(getService, { service_id: action.payload });
+    const response = yield* call(getService, { service_id: action.payload });
 
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
     }
 
     if (response.value.status === 200) {
-      yield put(loadServiceDetail.success(response.value.value));
+      yield* put(loadServiceDetail.success(response.value.value));
 
       // If it is occurring during the first load of serivces,
       // mark the service as read (it will not display the badge on the list item)
-      yield call(handleServiceReadabilitySaga, action.payload);
+      yield* call(handleServiceReadabilitySaga, action.payload);
 
       // Update, if needed, the name of the organization that provides the service
-      yield call(handleOrganizationNameUpdateSaga, response.value.value);
+      yield* call(handleOrganizationNameUpdateSaga, response.value.value);
     } else {
       if (response.value.status === 404) {
-        yield put(loadServiceDetailNotFound(action.payload as ServiceId));
+        yield* put(loadServiceDetailNotFound(action.payload as ServiceId));
       }
       throw Error(`response status ${response.value.status}`);
     }
   } catch (error) {
-    yield put(loadServiceDetail.failure({ service_id: action.payload, error }));
+    yield* put(
+      loadServiceDetail.failure({ service_id: action.payload, error })
+    );
   }
 }
 
@@ -68,10 +70,10 @@ function* handleServiceLoadRequest(
 ) {
   // Infinite loop that wait and process loadServiceDetail requests from the channel
   while (true) {
-    const action: ActionType<typeof loadServiceDetail.request> = yield take(
+    const action: ActionType<typeof loadServiceDetail.request> = yield* take(
       requestsChannel
     );
-    yield call(loadServiceDetailRequestHandler, getService, action);
+    yield* call(loadServiceDetailRequestHandler, getService, action);
   }
 }
 
@@ -86,25 +88,26 @@ export function* watchServicesDetailLoadSaga(
   getService: ReturnType<typeof BackendClient>["getService"]
 ) {
   // start a saga to track services detail load stats
-  yield fork(watchLoadServicesDetailToTrack);
+  yield* fork(watchLoadServicesDetailToTrack);
 
   // Create the channel used for the communication with the handlers.
-  const requestsChannel: Channel<ActionType<typeof loadServiceDetail.request>> =
-    yield call(channel, buffers.expanding());
+  const requestsChannel = (yield* call(
+    channel,
+    buffers.expanding()
+  )) as Channel<ActionType<typeof loadServiceDetail.request>>;
 
   // fork the handlers
   // eslint-disable-next-line
   for (let i = 0; i < totServiceFetchWorkers; i++) {
-    yield fork(handleServiceLoadRequest, requestsChannel, getService);
+    yield* fork(handleServiceLoadRequest, requestsChannel, getService);
   }
 
   while (true) {
     // Take the loadServicesDetail action and for each service id
     // put back a loadServiceDetail.request in the channel
     // to be processed by the handlers.
-    const action: ActionType<typeof loadServicesDetail> = yield take(
-      getType(loadServicesDetail)
-    );
+    const action = yield* take(loadServicesDetail);
+
     action.payload.forEach((serviceId: string) =>
       requestsChannel.put(loadServiceDetail.request(serviceId))
     );
@@ -119,7 +122,7 @@ const calculateLoadingTime = (startTime: Millisecond): Millisecond =>
  * like amount of details to load and how much time they take
  */
 function* watchLoadServicesDetailToTrack() {
-  yield takeLatest(
+  yield* takeLatest(
     [loadServicesDetail, loadServiceDetail.success, applicationChangeState],
     action => {
       switch (action.type) {

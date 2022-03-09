@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BackendCGN } from "../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -10,9 +10,9 @@ export function* cgnGetInformationSaga(
 ) {
   try {
     const cgnInformationResult: SagaCallReturnType<typeof getCgnStatus> =
-      yield call(getCgnStatus, {});
+      yield* call(getCgnStatus, {});
     if (cgnInformationResult.isLeft()) {
-      yield put(
+      yield* put(
         cgnDetails.failure({
           kind: "generic",
           value: new Error(readableReport(cgnInformationResult.value))
@@ -22,9 +22,9 @@ export function* cgnGetInformationSaga(
       cgnInformationResult.isRight() &&
       cgnInformationResult.value.status === 200
     ) {
-      yield put(cgnDetails.success(cgnInformationResult.value.value));
+      yield* put(cgnDetails.success(cgnInformationResult.value.value));
     } else {
-      yield put(
+      yield* put(
         cgnDetails.failure({
           kind: "generic",
           value: new Error(
@@ -34,6 +34,6 @@ export function* cgnGetInformationSaga(
       );
     }
   } catch (e) {
-    yield put(cgnDetails.failure(getNetworkError(e)));
+    yield* put(cgnDetails.failure(getNetworkError(e)));
   }
 }

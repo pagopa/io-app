@@ -122,59 +122,84 @@ exports[`PayPalCheckoutPspComponent it should match the snapshot 1`] = `
         spacer={true}
         style={Object {}}
       />
-      <Text
-        color="bluegreyDark"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 16,
-          }
-        }
+      <View
         style={
           Array [
+            Object {},
             Object {
-              "fontSize": 16,
-            },
-            Object {
-              "color": "#17324D",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "700",
+              "alignItems": "center",
+              "flex": 1,
+              "flexDirection": "row",
             },
           ]
         }
-        weight="Bold"
-        weightColorFactory={[Function]}
       >
-        € 1,23
-      </Text>
-      <Text
-        color="bluegrey"
-        defaultColor="blue"
-        defaultWeight="Bold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 16,
+        <View
+          style={
+            Array [
+              Object {},
+              Object {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+            ]
           }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 16,
-            },
-            Object {
-              "color": "#475A6D",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        Gestita da pspName
-      </Text>
+        >
+          <Text
+            color="bluegreyDark"
+            font="TitilliumWeb"
+            fontStyle={
+              Object {
+                "fontSize": 16,
+              }
+            }
+            style={
+              Array [
+                Object {
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "#17324D",
+                  "fontFamily": "Titillium Web",
+                  "fontStyle": "normal",
+                  "fontWeight": "700",
+                },
+              ]
+            }
+            weight="Bold"
+            weightColorFactory={[Function]}
+          >
+            € 1,23
+          </Text>
+          <Text
+            color="bluegrey"
+            defaultColor="blue"
+            defaultWeight="Bold"
+            font="TitilliumWeb"
+            fontStyle={
+              Object {
+                "fontSize": 16,
+              }
+            }
+            style={
+              Array [
+                Object {
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "#475A6D",
+                  "fontFamily": "Titillium Web",
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                },
+              ]
+            }
+            weight="Regular"
+          >
+            Gestita da pspName
+          </Text>
+        </View>
+      </View>
     </View>
   </View>
   <View

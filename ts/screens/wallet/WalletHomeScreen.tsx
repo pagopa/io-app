@@ -94,18 +94,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { optInPaymentMethodsShowChoice } from "../../features/bonus/bpd/store/actions/optInPaymentMethods";
-import {
-  ShowOptInChoice,
-  showOptInChoiceSelector
-} from "../../features/bonus/bpd/store/reducers/details/activation/ui";
-import {
-  isError,
-  isLoading,
-  isReady,
-  isUndefined
-} from "../../features/bonus/bpd/model/RemoteValue";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -284,7 +273,14 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       this.props.loadWallets();
     }
 
-    this.loadBonusBpd();
+    // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
+    // load the bonus information on Wallet mount
+    if (
+      !this.props.bpdConfig?.opt_in_payment_methods ||
+      !bpdOptInPaymentMethodsEnabled
+    ) {
+      this.loadBonusBpd();
+    }
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
@@ -594,6 +590,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
+        <BpdOptInPaymentMethodsContainer />
         <>
           {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
           {transactionContent}

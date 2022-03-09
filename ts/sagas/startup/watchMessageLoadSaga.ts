@@ -1,6 +1,6 @@
 import { buffers, Channel, channel } from "redux-saga";
-import { call, fork, take } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import { call, fork, take } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { totMessageFetchWorkers } from "../../config";
 import { DEPRECATED_loadMessage as loadMessageAction } from "../../store/actions/messages";
@@ -17,19 +17,21 @@ export function* watchMessageLoadSaga(
 ) {
   // Create the channel used for the communication with the handlers.
   // The channel has a buffer with initial size of 10 requests.
-  const requestsChannel: Channel<ActionType<typeof loadMessageAction.request>> =
-    yield call(channel, buffers.expanding());
+  const requestsChannel = (yield* call(
+    channel,
+    buffers.expanding()
+  )) as Channel<ActionType<typeof loadMessageAction.request>>;
 
   // Start the handlers
   // eslint-disable-next-line functional/no-let
   for (let i = 0; i < totMessageFetchWorkers; i++) {
-    yield fork(handleMessageLoadRequest, requestsChannel, getMessage);
+    yield* fork(handleMessageLoadRequest, requestsChannel, getMessage);
   }
 
   while (true) {
     // Take the loadMessage request action and put back in the channel
     // to be processed by the handlers.
-    const action = yield take(getType(loadMessageAction.request));
+    const action = yield* take(loadMessageAction.request);
     requestsChannel.put(action);
   }
 }
@@ -47,10 +49,10 @@ function* handleMessageLoadRequest(
 ) {
   // Infinite loop that wait and process loadMessage requests from the channel
   while (true) {
-    const action: ActionType<typeof loadMessageAction.request> = yield take(
+    const action: ActionType<typeof loadMessageAction.request> = yield* take(
       requestsChannel
     );
 
-    yield call(loadMessage, getMessage, action.payload);
+    yield* call(loadMessage, getMessage, action.payload);
   }
 }

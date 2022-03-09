@@ -1,9 +1,12 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put } from "redux-saga/effects";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../types/utils";
 import { getError } from "../../../../../../utils/errors";
 import { BackendBpdClient } from "../../../api/backendBpdClient";
 import { AwardPeriodId } from "../../../store/actions/periods";
@@ -27,13 +30,13 @@ export function* bpdLoadCountByDay(
   >["winningTransactionsV2CountByDay"],
   awardPeriodId: AwardPeriodId
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, TrxCountByDayResource>,
   SagaCallReturnType<typeof getCountByDay>
 > {
   try {
     void mixpanelTrack(mixpanelActionRequest, { awardPeriodId });
-    const getCountByDayResults = yield call(getCountByDay, {
+    const getCountByDayResults = yield* call(getCountByDay, {
       awardPeriodId
     } as any);
     if (getCountByDayResults.isRight()) {
@@ -77,7 +80,7 @@ export function* handleCountByDay(
   action: ActionType<typeof bpdTransactionsLoadCountByDay.request>
 ) {
   // get the results
-  const result: SagaCallReturnType<typeof bpdLoadCountByDay> = yield call(
+  const result: SagaCallReturnType<typeof bpdLoadCountByDay> = yield* call(
     bpdLoadCountByDay,
     getCountByDay,
     action.payload
@@ -85,9 +88,9 @@ export function* handleCountByDay(
 
   // dispatch the related action
   if (result.isRight()) {
-    yield put(bpdTransactionsLoadCountByDay.success(result.value));
+    yield* put(bpdTransactionsLoadCountByDay.success(result.value));
   } else {
-    yield put(
+    yield* put(
       bpdTransactionsLoadCountByDay.failure({
         awardPeriodId: action.payload,
         error: result.value
