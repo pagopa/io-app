@@ -26,6 +26,7 @@ type Props = {
   isExpired?: boolean;
   user: string;
   blocked?: boolean;
+  accessibilityLabel?: string;
 };
 
 const styles = StyleSheet.create({
@@ -118,7 +119,11 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <>
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
-      <View style={styles.cardBox}>
+      <View
+        style={styles.cardBox}
+        accessibilityLabel={props.accessibilityLabel}
+        accessible={typeof props.accessibilityLabel !== "undefined"}
+      >
         <View>
           <View
             style={{

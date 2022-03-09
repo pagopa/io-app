@@ -5,6 +5,7 @@ import { profileNameSurnameSelector } from "../../../../../store/reducers/profil
 import { GlobalState } from "../../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../../types/pagopa";
 import { isPaymentMethodExpired } from "../../../../../utils/paymentMethod";
+import I18n from "../../../../../i18n";
 import BaseBancomatCard from "./BaseBancomatCard";
 
 type OwnProps = { enhancedBancomat: BancomatPaymentMethod };
@@ -26,12 +27,31 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
 };
 
 /**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = (
+  enhancedBancomat: BancomatPaymentMethod
+) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomat", {
+    bankName: enhancedBancomat.caption
+  });
+
+  const validity = `${I18n.t("cardComponent.validUntil")} ${getExpireDate(
+    enhancedBancomat.info.expireYear,
+    enhancedBancomat.info.expireMonth
+  )}`;
+
+  return `${cardRepresentation}, ${validity}`;
+};
+
+/**
  * Render a bancomat already added to the wallet
  * @param props
  * @constructor
  */
 const BancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
+    accessibilityLabel={getAccessibilityRepresentation(props.enhancedBancomat)}
     abi={props.enhancedBancomat.abiInfo ?? {}}
     isExpired={isPaymentMethodExpired(props.enhancedBancomat).getOrElse(false)}
     expiringDate={getExpireDate(
