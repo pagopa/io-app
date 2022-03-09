@@ -142,7 +142,7 @@ export const UAWebViewScreen = () => {
   };
 
   if (uri === undefined) {
-    // TODO show an alert to inform the failure scenario https://pagopa.atlassian.net/browse/IA-706
+    // TODO show an error component to inform the failure scenario https://pagopa.atlassian.net/browse/IA-706
     return null;
   }
   const urlParsed = new URLParse(uri);
