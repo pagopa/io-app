@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
  * Generate the accessibility label for the card.
  */
 const getAccessibilityRepresentation = (
-  creditCard: CreditCardPaymentMethod
+  creditCard: CreditCardPaymentMethod,
+  holder?: string
 ) => {
   const cardRepresentation = I18n.t("wallet.accessibility.folded.creditCard", {
     brand: creditCard.info.brand,
@@ -51,7 +52,12 @@ const getAccessibilityRepresentation = (
     creditCard.info
   )}`;
 
-  return `${cardRepresentation}, ${validity}`;
+  const computedHolder =
+    typeof holder !== "undefined"
+      ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${holder}`
+      : "";
+
+  return `${cardRepresentation}, ${validity}${computedHolder}`;
 };
 
 /**
@@ -95,7 +101,10 @@ const CreditCardComponent = (props: Props): React.ReactElement => {
   return (
     <BaseCardComponent
       testID={props.testID}
-      accessibilityLabel={getAccessibilityRepresentation(props.creditCard)}
+      accessibilityLabel={getAccessibilityRepresentation(
+        props.creditCard,
+        props.creditCard?.info?.holder
+      )}
       topLeftCorner={topLeft(props.creditCard, favorite)}
       bottomLeftCorner={
         <Body>{props.creditCard?.info?.holder?.toUpperCase() ?? ""}</Body>

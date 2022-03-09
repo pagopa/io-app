@@ -34,14 +34,23 @@ const BASE_IMG_H = 40;
 /**
  * Generate the accessibility label for the card.
  */
-const getAccessibilityRepresentation = (bankName: string, phone?: string) => {
+const getAccessibilityRepresentation = (
+  bankName: string,
+  holder?: string,
+  phone?: string
+) => {
   const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomatPay", {
     bankName
   });
 
+  const computedHolder =
+    typeof holder !== "undefined"
+      ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${holder}`
+      : "";
+
   const computedPhone = typeof phone !== "undefined" ? `, ${phone}` : "";
 
-  return `${cardRepresentation}${computedPhone}`;
+  return `${cardRepresentation}${computedHolder}${computedPhone}`;
 };
 
 const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
@@ -59,6 +68,7 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
     <BaseCardComponent
       accessibilityLabel={getAccessibilityRepresentation(
         props.bankName,
+        props.nameSurname,
         props.phone
       )}
       topLeftCorner={

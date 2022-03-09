@@ -23,15 +23,20 @@ const styles = StyleSheet.create({
 /**
  * Generate the accessibility label for the card.
  */
-const getAccessibilityRepresentation = () => {
+const getAccessibilityRepresentation = (holder?: string) => {
   const satispay = I18n.t("wallet.onboarding.satispay.name");
 
-  return `${satispay}`;
+  const computedHolder =
+    typeof holder !== "undefined"
+      ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${holder}`
+      : "";
+
+  return `${satispay}${computedHolder}`;
 };
 
 const SatispayCard: React.FunctionComponent<Props> = (props: Props) => (
   <BaseCardComponent
-    accessibilityLabel={getAccessibilityRepresentation()}
+    accessibilityLabel={getAccessibilityRepresentation(props.nameSurname)}
     topLeftCorner={
       <Image source={satispayLogoExt} style={styles.satispayLogoExt} />
     }

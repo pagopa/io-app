@@ -30,7 +30,8 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
  * Generate the accessibility label for the card.
  */
 const getAccessibilityRepresentation = (
-  enhancedBancomat: BancomatPaymentMethod
+  enhancedBancomat: BancomatPaymentMethod,
+  holder?: string
 ) => {
   const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomat", {
     bankName: enhancedBancomat.caption
@@ -41,7 +42,12 @@ const getAccessibilityRepresentation = (
     enhancedBancomat.info.expireMonth
   )}`;
 
-  return `${cardRepresentation}, ${validity}`;
+  const computedHolder =
+    typeof holder !== "undefined"
+      ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${holder}`
+      : "";
+
+  return `${cardRepresentation}, ${validity}${computedHolder}`;
 };
 
 /**
@@ -51,7 +57,10 @@ const getAccessibilityRepresentation = (
  */
 const BancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
-    accessibilityLabel={getAccessibilityRepresentation(props.enhancedBancomat)}
+    accessibilityLabel={getAccessibilityRepresentation(
+      props.enhancedBancomat,
+      props.nameSurname
+    )}
     abi={props.enhancedBancomat.abiInfo ?? {}}
     isExpired={isPaymentMethodExpired(props.enhancedBancomat).getOrElse(false)}
     expiringDate={getExpireDate(
