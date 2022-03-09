@@ -182,11 +182,8 @@ export const UAWebViewScreen = () => {
     setErrorType("webview");
   };
 
-  const getErrorComponent = () => {
-    if (errorType === undefined) {
-      return null;
-    }
-    switch (errorType) {
+  const getErrorComponent = (error: NonNullable<typeof errorType>) => {
+    switch (error) {
       case "webview":
         return (
           <ErrorComponent
@@ -222,7 +219,7 @@ export const UAWebViewScreen = () => {
       headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {errorType === undefined && uri ? (
+        {uri && (
           <WebView
             testID={"UAWebViewScreenTestID"}
             ref={ref}
@@ -239,9 +236,8 @@ export const UAWebViewScreen = () => {
             renderLoading={renderLoading}
             javaScriptEnabled={true}
           />
-        ) : (
-          getErrorComponent()
         )}
+        {errorType && getErrorComponent(errorType)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
