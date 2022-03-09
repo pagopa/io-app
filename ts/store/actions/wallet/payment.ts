@@ -38,7 +38,11 @@ import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
  * and make sure you understand it _before_ working on it.
  */
 
-export type PaymentStartOrigin = "message" | "qrcode_scan" | "manual_insertion";
+export type PaymentStartOrigin =
+  | "message"
+  | "qrcode_scan"
+  | "manual_insertion"
+  | "donation";
 
 /**
  * Resets the payment state before starting a new payment
