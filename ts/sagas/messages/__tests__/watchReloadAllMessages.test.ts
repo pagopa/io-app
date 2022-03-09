@@ -16,7 +16,8 @@ const tryReloadAllMessages = testTryLoadPreviousPageMessages!;
 describe("tryReloadAllMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
-    page_size: defaultRequestPayload.pageSize
+    page_size: defaultRequestPayload.pageSize,
+    get_archived: defaultRequestPayload.filter.getArchived
   };
 
   describe("when the response is successful", () => {
@@ -70,7 +71,12 @@ describe("tryReloadAllMessages", () => {
         .next()
         .call(getMessages, getMessagesPayload)
         .next()
-        .put(action.failure(defaultRequestError))
+        .put(
+          action.failure({
+            error: new TypeError("Cannot read property 'fold' of undefined"),
+            filter: defaultRequestPayload.filter
+          })
+        )
         .next()
         .isDone();
     });

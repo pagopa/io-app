@@ -7,7 +7,6 @@ import { testTryLoadPreviousPageMessages } from "../watchLoadPreviousPageMessage
 import {
   apiPayload,
   defaultRequestPayload,
-  defaultRequestError,
   successLoadPreviousPageMessagesPayload
 } from "../../../__mocks__/messages";
 
@@ -17,7 +16,8 @@ describe("tryLoadPreviousPageMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
     page_size: 8,
-    minimum_id: undefined
+    minimum_id: undefined,
+    get_archived: defaultRequestPayload.filter.getArchived
   };
 
   describe("when the response is successful", () => {
@@ -48,7 +48,12 @@ describe("tryLoadPreviousPageMessages", () => {
         .next()
         .call(getMessages, getMessagesPayload)
         .next(right({ status: 500, value: { title: "Backend error" } }))
-        .put(action.failure(defaultRequestError))
+        .put(
+          action.failure({
+            error: new Error("Backend error"),
+            filter: defaultRequestPayload.filter
+          })
+        )
         .next()
         .isDone();
     });
@@ -66,7 +71,12 @@ describe("tryLoadPreviousPageMessages", () => {
         .next()
         .call(getMessages, getMessagesPayload)
         .next()
-        .put(action.failure(defaultRequestError))
+        .put(
+          action.failure({
+            error: new TypeError("Cannot read property 'fold' of undefined"),
+            filter: defaultRequestPayload.filter
+          })
+        )
         .next()
         .isDone();
     });
