@@ -1,4 +1,3 @@
-import { none, Option } from "fp-ts/lib/Option";
 import { BugReporting, Replies } from "instabug-reactnative";
 import * as React from "react";
 import { View } from "react-native";
