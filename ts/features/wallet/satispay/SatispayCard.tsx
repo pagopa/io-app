@@ -7,6 +7,7 @@ import satispayLogoMin from "../../../../img/wallet/cards-icons/satispay.png";
 import { Body } from "../../../components/core/typography/Body";
 import { GlobalState } from "../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import I18n from "../../../i18n";
 import { BrandImage } from "../component/card/BrandImage";
 
 type Props = ReturnType<typeof mapStateToProps>;
@@ -19,8 +20,18 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = () => {
+  const satispay = I18n.t("wallet.onboarding.satispay.name");
+
+  return `${satispay}`;
+};
+
 const SatispayCard: React.FunctionComponent<Props> = (props: Props) => (
   <BaseCardComponent
+    accessibilityLabel={getAccessibilityRepresentation()}
     topLeftCorner={
       <Image source={satispayLogoExt} style={styles.satispayLogoExt} />
     }
