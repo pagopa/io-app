@@ -1,21 +1,18 @@
 import WebView from "react-native-webview";
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { View } from "native-base";
 import URLParse from "url-parse";
-import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
-import URLParse from "url-parse";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import { openWebUrl } from "../../../utils/url";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { showToast } from "../../../utils/showToast";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -25,6 +22,11 @@ import dataErrorImage from "../../../../img/pictograms/doubt.png";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { BlockButtonProps } from "../../../components/ui/BlockButtons";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { UADonationWebViewMessage } from "../types";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
+import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
 
 const styles = StyleSheet.create({
   loading: {
@@ -219,26 +221,28 @@ export const UAWebViewScreen = () => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}
     >
-      {errorType === undefined && uri ? (
-        <WebView
-          testID={"UAWebViewScreenTestID"}
-          ref={ref}
-          cacheEnabled={false}
-          textZoom={100}
-          source={{ uri }}
-          onLoadEnd={injectJS}
-          androidCameraAccessDisabled={true}
-          androidMicrophoneAccessDisabled={true}
-          onError={onError}
-          onHttpError={onError}
-          onMessage={e => handleOnMessage(e, startDonationPayment)}
-          startInLoadingState={true}
-          renderLoading={renderLoading}
-          javaScriptEnabled={true}
-        />
-      ) : (
-        getErrorComponent()
-      )}
+      <SafeAreaView style={IOStyles.flex}>
+        {errorType === undefined && uri ? (
+          <WebView
+            testID={"UAWebViewScreenTestID"}
+            ref={ref}
+            cacheEnabled={false}
+            textZoom={100}
+            source={{ uri }}
+            onLoadEnd={injectJS}
+            androidCameraAccessDisabled={true}
+            androidMicrophoneAccessDisabled={true}
+            onError={onError}
+            onHttpError={onError}
+            onMessage={e => handleOnMessage(e, startDonationPayment)}
+            startInLoadingState={true}
+            renderLoading={renderLoading}
+            javaScriptEnabled={true}
+          />
+        ) : (
+          getErrorComponent()
+        )}
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };
