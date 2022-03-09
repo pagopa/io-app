@@ -107,9 +107,9 @@ const handleOnMessage = (
       });
       const maybeAmount = AmountInEuroCents.decode(amount.toString());
       if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
-       const reason = maybeRptId.isLeft()
-         ? maybeRptId.value
-         : maybeAmount.value;
+        const reason = maybeRptId.isLeft()
+          ? maybeRptId.value
+          : maybeAmount.value;
         void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_ERROR", {
           reason
         });
