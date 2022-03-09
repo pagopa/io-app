@@ -9,6 +9,7 @@ type Props = {
   topLeftCorner: React.ReactNode;
   bottomLeftCorner: React.ReactNode;
   bottomRightCorner: React.ReactNode;
+  accessibilityLabel?: string;
 } & TestID;
 
 const styles = StyleSheet.create({
@@ -62,7 +63,12 @@ const styles = StyleSheet.create({
 const BaseCardComponent: React.FunctionComponent<Props> = (props: Props) => (
   <>
     {Platform.OS === "android" && <View style={styles.shadowBox} />}
-    <View style={styles.cardBox} testID={props.testID}>
+    <View
+      style={styles.cardBox}
+      testID={props.testID}
+      accessibilityLabel={props.accessibilityLabel}
+      accessible={typeof props.accessibilityLabel !== "undefined"}
+    >
       <View>{props.topLeftCorner}</View>
       <View style={styles.bottomRow}>
         {props.bottomLeftCorner}

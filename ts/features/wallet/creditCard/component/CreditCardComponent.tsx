@@ -37,6 +37,24 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = (
+  creditCard: CreditCardPaymentMethod
+) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.creditCard", {
+    brand: creditCard.info.brand,
+    blurredNumber: creditCard.info.blurredNumber
+  });
+
+  const validity = `${I18n.t("cardComponent.validUntil")} ${buildExpirationDate(
+    creditCard.info
+  )}`;
+
+  return `${cardRepresentation}, ${validity}`;
+};
+
+/**
  * Add a row; on the left the blurred pan + expire date, on the right the favourite star icon
  * @param creditCard
  * @param favorite
@@ -77,6 +95,7 @@ const CreditCardComponent = (props: Props): React.ReactElement => {
   return (
     <BaseCardComponent
       testID={props.testID}
+      accessibilityLabel={getAccessibilityRepresentation(props.creditCard)}
       topLeftCorner={topLeft(props.creditCard, favorite)}
       bottomLeftCorner={
         <Body>{props.creditCard?.info?.holder?.toUpperCase() ?? ""}</Body>
