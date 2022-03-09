@@ -3024,6 +3024,9 @@ features:
   uaDonations:
     webViewScreen:
       headerTitle: Donazione
+      errors:
+        data:
+          buttonTitle: Torna indietro
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

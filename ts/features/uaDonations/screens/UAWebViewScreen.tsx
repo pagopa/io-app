@@ -1,5 +1,5 @@
 import WebView from "react-native-webview";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { View } from "native-base";
@@ -13,13 +13,19 @@ import I18n from "../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import { UADonationWebViewMessage } from "../types";
 import { openWebUrl } from "../../../utils/url";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { showToast } from "../../../utils/showToast";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import genericErrorImage from "../../../../img/wallet/errors/generic-error-icon.png";
+import dataErrorImage from "../../../../img/pictograms/doubt.png";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { BlockButtonProps } from "../../../components/ui/BlockButtons";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 
 const styles = StyleSheet.create({
   loading: {
@@ -41,13 +47,25 @@ const styles = StyleSheet.create({
   }
 });
 
-const ErrorComponent = (props: { onRetry: () => void }) => (
-  <LoadingErrorComponent
-    loadingCaption={""}
-    isLoading={false}
-    onRetry={props.onRetry}
-  />
-);
+type ErrorComponentProps = {
+  onRetry: () => void;
+  errorText: string;
+  buttonTitle: string;
+  image: React.ReactNode;
+};
+const ErrorComponent: React.FunctionComponent<ErrorComponentProps> = props => {
+  const buttonProps: BlockButtonProps = {
+    primary: true,
+    title: props.buttonTitle,
+    onPress: props.onRetry
+  };
+  return (
+    <>
+      <InfoScreenComponent image={props.image} title={props.errorText} />
+      <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
+    </>
+  );
+};
 
 // a loading component rendered during the webview loading states
 const renderLoading = () => (
@@ -117,18 +135,29 @@ const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
  */
 export const UAWebViewScreen = () => {
   const navigationParams = useIOSelector(internalRouteNavigationParamsSelector);
+  const navigation = useNavigationContext();
   const dispatch = useIODispatch();
   const uri = navigationParams?.urlToLoad;
   const ref = React.createRef<WebView>();
-  const [hasError, setError] = useState(false);
-  const errorComponent = (
-    <ErrorComponent
-      onRetry={() => {
-        ref.current?.reload();
-        setError(false);
-      }}
-    />
-  );
+  /**
+   * errors type
+   * - webview: errors coming from the webpage
+   * - data: unexpected data from navigation params
+   */
+  const [errorType, setErrorType] = useState<"webview" | "data" | undefined>();
+
+  useEffect(() => {
+    if (uri === undefined) {
+      setErrorType("data");
+    } else {
+      const urlParsed = new URLParse(uri);
+      // url malformed
+      if (isStringNullyOrEmpty(urlParsed.host)) {
+        setErrorType("data");
+      }
+    }
+  }, [uri]);
+
   // trigger the payment flow within the given data
   const startDonationPayment = (
     rptId: RptId,
@@ -149,19 +178,41 @@ export const UAWebViewScreen = () => {
   };
 
   const onError = () => {
-    setError(true);
+    setErrorType("webview");
   };
 
-  if (uri === undefined) {
-    // TODO show an error component to inform the failure scenario https://pagopa.atlassian.net/browse/IA-706
-    return null;
-  }
-  const urlParsed = new URLParse(uri);
-  // url malformed
-  if (isStringNullyOrEmpty(urlParsed.host)) {
-    // TODO show an alert to inform the failure scenario https://pagopa.atlassian.net/browse/IA-706
-    return null;
-  }
+  const getErrorComponent = () => {
+    if (errorType === undefined) {
+      return null;
+    }
+    switch (errorType) {
+      case "webview":
+        return (
+          <ErrorComponent
+            image={renderInfoRasterImage(genericErrorImage)}
+            errorText={I18n.t("wallet.errors.GENERIC_ERROR")}
+            buttonTitle={I18n.t("global.buttons.retry")}
+            onRetry={() => {
+              ref.current?.reload();
+              setErrorType(undefined);
+            }}
+          />
+        );
+      case "data":
+        return (
+          <ErrorComponent
+            image={renderInfoRasterImage(dataErrorImage)}
+            buttonTitle={I18n.t(
+              "features.uaDonations.webViewScreen.errors.data.buttonTitle"
+            )}
+            errorText={I18n.t("wallet.errors.GENERIC_ERROR")}
+            onRetry={() => {
+              navigation.goBack(null);
+            }}
+          />
+        );
+    }
+  };
 
   return (
     <BaseScreenComponent
@@ -169,7 +220,7 @@ export const UAWebViewScreen = () => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}
     >
-      {!hasError ? (
+      {errorType === undefined && uri ? (
         <WebView
           testID={"UAWebViewScreenTestID"}
           ref={ref}
@@ -187,7 +238,7 @@ export const UAWebViewScreen = () => {
           javaScriptEnabled={true}
         />
       ) : (
-        errorComponent
+        getErrorComponent()
       )}
     </BaseScreenComponent>
   );
