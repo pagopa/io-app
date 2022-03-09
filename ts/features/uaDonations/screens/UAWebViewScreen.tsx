@@ -5,6 +5,7 @@ import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { View } from "native-base";
 import URLParse from "url-parse";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
@@ -18,6 +19,7 @@ import { UADonationWebViewMessage } from "../types";
 import { openWebUrl } from "../../../utils/url";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
+import { showToast } from "../../../utils/showToast";
 
 const styles = StyleSheet.create({
   loading: {
@@ -55,6 +57,16 @@ const renderLoading = () => (
 );
 
 /**
+ * show a toast to inform about the occurred error
+ * and trace it
+ * @param _
+ */
+const handleError = (_: string) => {
+  // TODO trace errors https://pagopa.atlassian.net/browse/IA-701
+  showToast(I18n.t("global.genericError"));
+};
+
+/**
  * parse the messages coming from the webview
  * if some messages are recognized as valid, it handles the relative action
  * @param event
@@ -68,13 +80,14 @@ const handleOnMessage = (
     JSON.parse(event.nativeEvent.data)
   );
   if (maybeMessage.isLeft()) {
-    // TODO trace decoding errors https://pagopa.atlassian.net/browse/IA-701
+    handleError("decoding error: " + readableReport(maybeMessage.value));
     return;
   }
   switch (maybeMessage.value.kind) {
     case "webUrl":
-      openWebUrl(maybeMessage.value.payload, () => {
-        // TODO trace open web url errors https://pagopa.atlassian.net/browse/IA-701
+      const webUrl = maybeMessage.value.payload;
+      openWebUrl(webUrl, () => {
+        handleError("webUrl error: " + webUrl);
       });
       break;
     case "payment":
@@ -85,14 +98,12 @@ const handleOnMessage = (
       });
       const maybeAmount = AmountInEuroCents.decode(amount.toString());
       if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
-        // TODO trace decoding errors https://pagopa.atlassian.net/browse/IA-701
         return;
       }
       onPaymentPayload(maybeRptId.value, maybeAmount.value);
       break;
     case "error":
-      // const error = maybeMessage.value.payload;
-      // TODO trace web page errors https://pagopa.atlassian.net/browse/IA-701
+      handleError("web page error: " + maybeMessage.value.payload);
       break;
   }
 };
