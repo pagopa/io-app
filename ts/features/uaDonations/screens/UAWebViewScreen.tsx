@@ -76,7 +76,7 @@ const handleOnMessage = (
     JSON.parse(event.nativeEvent.data)
   );
   if (maybeMessage.isLeft()) {
-    void mixpanelTrack("UA_WEBVIEW_DECODE_ERROR", {
+    void mixpanelTrack("UADONATIONS_WEBVIEW_DECODE_ERROR", {
       reason: `decoding error: ${readableReport(maybeMessage.value)}`
     });
     handleError();
@@ -85,11 +85,11 @@ const handleOnMessage = (
   switch (maybeMessage.value.kind) {
     case "webUrl":
       const webUrl = maybeMessage.value.payload;
-      void mixpanelTrack("UA_WEBVIEW_OPEN_WEBURL_REQUEST", {
+      void mixpanelTrack("UADONATIONS_WEBVIEW_OPEN_WEBURL_REQUEST", {
         url: webUrl
       });
       openWebUrl(webUrl, () => {
-        void mixpanelTrack("UA_WEBVIEW_OPEN_WEBURL_REQUEST", {
+        void mixpanelTrack("UADONATIONS_WEBVIEW_OPEN_WEBURL_ERROR", {
           url: maybeMessage.value.payload
         });
         handleError();
@@ -97,7 +97,7 @@ const handleOnMessage = (
       break;
     case "payment":
       const { nav, cf, amount } = maybeMessage.value.payload;
-      void mixpanelTrack("UA_WEBVIEW_PAYMENT_REQUEST", {
+      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_REQUEST", {
         organizationFiscalCode: cf,
         amount
       });
@@ -107,7 +107,7 @@ const handleOnMessage = (
       });
       const maybeAmount = AmountInEuroCents.decode(amount.toString());
       if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
-        void mixpanelTrack("UA_WEBVIEW_PAYMENT_DECODE_ERROR", {
+        void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_ERROR", {
           reason: maybeRptId.isLeft()
             ? "Error decoding RptId"
             : "Error deconding amount"
@@ -115,7 +115,7 @@ const handleOnMessage = (
         handleError();
         return;
       }
-      void mixpanelTrack("UA_WEBVIEW_PAYMENT_SUCCESS", {
+      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_SUCCESS", {
         organizationFiscalCode: maybeRptId.value.organizationFiscalCode,
         amount: maybeAmount.value
       });
@@ -123,7 +123,7 @@ const handleOnMessage = (
       break;
     case "error":
       const error = maybeMessage.value.payload;
-      void mixpanelTrack("UA_WEBVIEW_REPORT_ERROR", {
+      void mixpanelTrack("UADONATIONS_WEBVIEW_REPORT_ERROR", {
         reason: error
       });
       handleError();
