@@ -139,22 +139,15 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
             <H5
               color={props.isExpired ? "red" : "bluegreyDark"}
               weight={"SemiBold"}
-            >
-              {`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
-                props.expiringDate,
-                I18n.t("global.dateFormats.numericMonthYear")
-              )}`}
-            </H5>
+            >{`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
+              props.expiringDate,
+              I18n.t("global.dateFormats.numericMonthYear")
+            )}`}</H5>
           )}
         </View>
         <View style={styles.bottomRow}>
           <Body>{props.user.toLocaleUpperCase()}</Body>
-          <BrandImage
-            label={I18n.t("wallet.accessibility.cardBadge.bancomat", {
-              bankName: props.abi.name
-            })}
-            image={pagoBancomatLogo}
-          />
+          <BrandImage image={pagoBancomatLogo} />
         </View>
       </View>
     </>

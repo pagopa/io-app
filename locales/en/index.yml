@@ -940,14 +940,6 @@ wallet:
         read: Transaction
         unread: Unread transaction
       label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
-    cardBadge:
-      creditCard: "{{brand}} card"
-      bancomat: "{{bankName}} BANCOMAT"
-      coBadge: "{{brand}} Card, {{bankName}}"
-      bancomatPay: "{{bankName}} BANCOMATPay"
-      privative: "Loyalty card"
-      satispay: "Satispay"
-      paypal: "PayPal"
   onboarding:
     bancomat:
       headerTitle: "Add PagoBANCOMAT card"

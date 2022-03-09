@@ -11,8 +11,6 @@ import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImage
 import { H3 } from "../../../../components/core/typography/H3";
 import IconFont from "../../../../components/ui/IconFont";
 import { H4 } from "../../../../components/core/typography/H4";
-import { BrandImage } from "../../component/card/BrandImage";
-import I18n from "../../../../i18n";
 
 type Props = {
   phone?: string;
@@ -80,12 +78,9 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
         </View>
       }
       bottomRightCorner={
-        <BrandImage
-          label={I18n.t("wallet.accessibility.cardBadge.bancomatPay", {
-            bankName: props.bankName
-          })}
-          image={bancomatLogoMin}
-        />
+        <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
+          <Image style={styles.bpayLogo} source={bancomatLogoMin} />
+        </View>
       }
     />
   );

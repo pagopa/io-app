@@ -82,12 +82,7 @@ const CreditCardComponent = (props: Props): React.ReactElement => {
         <Body>{props.creditCard?.info?.holder?.toUpperCase() ?? ""}</Body>
       }
       bottomRightCorner={
-        <BrandImage
-          label={I18n.t("wallet.accessibility.cardBadge.creditCard", {
-            brand: props.creditCard.info.brand
-          })}
-          image={getCardIconFromBrandLogo(props.creditCard.info)}
-        />
+        <BrandImage image={getCardIconFromBrandLogo(props.creditCard.info)} />
       }
     />
   );
