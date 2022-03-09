@@ -20,6 +20,7 @@ import { openWebUrl } from "../../../utils/url";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { showToast } from "../../../utils/showToast";
+import { mixpanelTrack } from "../../../mixpanel";
 
 const styles = StyleSheet.create({
   loading: {
@@ -58,13 +59,8 @@ const renderLoading = () => (
 
 /**
  * show a toast to inform about the occurred error
- * and trace it
- * @param _
  */
-const handleError = (_: string) => {
-  // TODO trace errors https://pagopa.atlassian.net/browse/IA-701
-  showToast(I18n.t("global.genericError"));
-};
+const handleError = () => showToast(I18n.t("global.genericError"));
 
 /**
  * parse the messages coming from the webview
@@ -80,30 +76,57 @@ const handleOnMessage = (
     JSON.parse(event.nativeEvent.data)
   );
   if (maybeMessage.isLeft()) {
-    handleError("decoding error: " + readableReport(maybeMessage.value));
+    void mixpanelTrack("UA_WEBVIEW_DECODE_ERROR", {
+      reason: `decoding error: ${readableReport(maybeMessage.value)}`
+    });
+    handleError();
     return;
   }
   switch (maybeMessage.value.kind) {
     case "webUrl":
       const webUrl = maybeMessage.value.payload;
+      void mixpanelTrack("UA_WEBVIEW_OPEN_WEBURL_REQUEST", {
+        url: webUrl
+      });
       openWebUrl(webUrl, () => {
-        handleError("webUrl error: " + webUrl);
+        void mixpanelTrack("UA_WEBVIEW_OPEN_WEBURL_REQUEST", {
+          url: maybeMessage.value.payload
+        });
+        handleError();
       });
       break;
     case "payment":
       const { nav, cf, amount } = maybeMessage.value.payload;
+      void mixpanelTrack("UA_WEBVIEW_PAYMENT_REQUEST", {
+        organizationFiscalCode: cf,
+        amount
+      });
       const maybeRptId = RptId.decode({
         paymentNoticeNumber: nav,
         organizationFiscalCode: cf
       });
       const maybeAmount = AmountInEuroCents.decode(amount.toString());
       if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
+        void mixpanelTrack("UA_WEBVIEW_PAYMENT_DECODE_ERROR", {
+          reason: maybeRptId.isLeft()
+            ? "Error decoding RptId"
+            : "Error deconding amount"
+        });
+        handleError();
         return;
       }
+      void mixpanelTrack("UA_WEBVIEW_PAYMENT_SUCCESS", {
+        organizationFiscalCode: maybeRptId.value.organizationFiscalCode,
+        amount: maybeAmount.value
+      });
       onPaymentPayload(maybeRptId.value, maybeAmount.value);
       break;
     case "error":
-      handleError("web page error: " + maybeMessage.value.payload);
+      const error = maybeMessage.value.payload;
+      void mixpanelTrack("UA_WEBVIEW_REPORT_ERROR", {
+        reason: error
+      });
+      handleError();
       break;
   }
 };

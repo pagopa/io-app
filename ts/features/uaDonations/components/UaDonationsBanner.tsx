@@ -7,6 +7,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
+import { mixpanelTrack } from "../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { uaDonationsBannerSelector } from "../../../store/reducers/backendStatus";
 import { getFullLocale } from "../../../utils/locale";
@@ -81,6 +82,7 @@ export const UaDonationsBanner = () => {
     <BaseDonationsBanner
       text={uaDonationsData.description[locale]}
       onPress={() => {
+        void mixpanelTrack("UA_START_DONATION_BANNER");
         handleInternalLink(
           dispatch,
           `ioit://${UADONATION_ROUTES.WEBVIEW}?urlToLoad=${uaDonationsData.url}`
