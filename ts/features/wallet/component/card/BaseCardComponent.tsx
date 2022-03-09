@@ -67,7 +67,7 @@ const BaseCardComponent: React.FunctionComponent<Props> = (props: Props) => (
       style={styles.cardBox}
       testID={props.testID}
       accessibilityLabel={props.accessibilityLabel}
-      accessible={typeof props.accessibilityLabel !== "undefined"}
+      accessible={props.accessibilityLabel !== undefined}
     >
       <View>{props.topLeftCorner}</View>
       <View style={styles.bottomRow}>

@@ -52,7 +52,7 @@ const getAccessibilityRepresentation = (
   )}`;
 
   const computedHolder =
-    typeof creditCard.info?.holder !== "undefined"
+    creditCard.info?.holder !== undefined
       ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${
           creditCard.info.holder
         }`

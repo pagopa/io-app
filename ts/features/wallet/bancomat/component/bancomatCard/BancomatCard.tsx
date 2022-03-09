@@ -40,7 +40,7 @@ const getAccessibilityRepresentation = (
   });
 
   const computedValidity =
-    typeof expiringDate !== "undefined"
+    expiringDate !== undefined
       ? `, ${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
           expiringDate,
           I18n.t("global.dateFormats.numericMonthYear")
@@ -48,7 +48,7 @@ const getAccessibilityRepresentation = (
       : "";
 
   const computedHolder =
-    typeof holder !== "undefined"
+    holder !== undefined
       ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${holder}`
       : "";
 

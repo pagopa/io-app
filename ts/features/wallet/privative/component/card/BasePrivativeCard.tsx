@@ -126,7 +126,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <BaseCardComponent
       accessibilityLabel={
-        typeof props.blurredNumber !== "undefined"
+        props.blurredNumber !== undefined
           ? getAccessibilityRepresentation(props.blurredNumber)
           : undefined
       }

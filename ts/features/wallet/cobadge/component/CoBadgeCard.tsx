@@ -24,7 +24,7 @@ const getAccessibilityRepresentation = (
   });
 
   const computedValidity =
-    typeof expiringDate !== "undefined"
+    expiringDate !== undefined
       ? `, ${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
           expiringDate,
           I18n.t("global.dateFormats.numericMonthYear")

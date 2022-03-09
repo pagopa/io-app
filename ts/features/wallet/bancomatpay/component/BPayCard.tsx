@@ -44,11 +44,11 @@ const getAccessibilityRepresentation = (
   });
 
   const computedHolder =
-    typeof holder !== "undefined"
+    holder !== undefined
       ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${holder}`
       : "";
 
-  const computedPhone = typeof phone !== "undefined" ? `, ${phone}` : "";
+  const computedPhone = phone !== undefined ? `, ${phone}` : "";
 
   return `${cardRepresentation}${computedHolder}${computedPhone}`;
 };

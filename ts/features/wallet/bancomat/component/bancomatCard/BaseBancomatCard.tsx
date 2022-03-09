@@ -122,7 +122,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
       <View
         style={styles.cardBox}
         accessibilityLabel={props.accessibilityLabel}
-        accessible={typeof props.accessibilityLabel !== "undefined"}
+        accessible={props.accessibilityLabel !== undefined}
       >
         <View>
           <View
