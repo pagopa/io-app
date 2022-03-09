@@ -56,6 +56,17 @@ const fallbackLoyaltyLogo: React.ReactElement = (
   />
 );
 
+/**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = (blurredNumber: string) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.privative", {
+    blurredNumber
+  });
+
+  return `${cardRepresentation}`;
+};
+
 const BASE_IMG_W = 100;
 const BASE_IMG_H = 30;
 
@@ -113,6 +124,11 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <BaseCardComponent
+      accessibilityLabel={
+        typeof props.caption !== "undefined"
+          ? getAccessibilityRepresentation(props.caption)
+          : undefined
+      }
       topLeftCorner={
         <>
           <View style={styles.topLeftContainer}>
