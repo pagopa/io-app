@@ -81,6 +81,34 @@ const BASE_IMG_W = 160;
 const BASE_IMG_H = 40;
 
 /**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = (
+  bankName: string,
+  expiringDate?: Date,
+  holder?: string
+) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomat", {
+    bankName
+  });
+
+  const computedValidity =
+    expiringDate !== undefined
+      ? `, ${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
+          expiringDate,
+          I18n.t("global.dateFormats.numericMonthYear")
+        )}`
+      : "";
+
+  const computedHolder =
+    holder !== undefined
+      ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${holder}`
+      : "";
+
+  return `${cardRepresentation}${computedValidity}${computedHolder}`;
+};
+
+/**
  * Render the image (if available) or the bank name (if available)
  * or the generic bancomat string (final fallback).
  * @param abi
@@ -121,8 +149,12 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
       <View
         style={styles.cardBox}
-        accessibilityLabel={props.accessibilityLabel}
-        accessible={props.accessibilityLabel !== undefined}
+        accessibilityLabel={getAccessibilityRepresentation(
+          props.abi.name ?? "",
+          props.expiringDate,
+          props.user
+        )}
+        accessible
       >
         <View>
           <View

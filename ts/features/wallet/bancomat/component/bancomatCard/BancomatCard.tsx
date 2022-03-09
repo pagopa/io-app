@@ -5,8 +5,6 @@ import { profileNameSurnameSelector } from "../../../../../store/reducers/profil
 import { GlobalState } from "../../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../../types/pagopa";
 import { isPaymentMethodExpired } from "../../../../../utils/paymentMethod";
-import I18n from "../../../../../i18n";
-import { localeDateFormat } from "../../../../../utils/locale";
 import BaseBancomatCard from "./BaseBancomatCard";
 
 type OwnProps = { enhancedBancomat: BancomatPaymentMethod };
@@ -28,60 +26,21 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
 };
 
 /**
- * Generate the accessibility label for the card.
- */
-const getAccessibilityRepresentation = (
-  bankName: string,
-  expiringDate?: Date,
-  holder?: string
-) => {
-  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomat", {
-    bankName
-  });
-
-  const computedValidity =
-    expiringDate !== undefined
-      ? `, ${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
-          expiringDate,
-          I18n.t("global.dateFormats.numericMonthYear")
-        )}}`
-      : "";
-
-  const computedHolder =
-    holder !== undefined
-      ? `, ${I18n.t("wallet.accessibility.cardHolder")} ${holder}`
-      : "";
-
-  return `${cardRepresentation}${computedValidity}${computedHolder}`;
-};
-
-/**
  * Render a bancomat already added to the wallet
  * @param props
  * @constructor
  */
-const BancomatCard: React.FunctionComponent<Props> = props => {
-  const expiringDate = getExpireDate(
-    props.enhancedBancomat.info.expireYear,
-    props.enhancedBancomat.info.expireMonth
-  );
-
-  return (
-    <BaseBancomatCard
-      accessibilityLabel={getAccessibilityRepresentation(
-        props.enhancedBancomat.caption,
-        expiringDate,
-        props.nameSurname
-      )}
-      abi={props.enhancedBancomat.abiInfo ?? {}}
-      isExpired={isPaymentMethodExpired(props.enhancedBancomat).getOrElse(
-        false
-      )}
-      expiringDate={expiringDate}
-      user={props.nameSurname ?? ""}
-    />
-  );
-};
+const BancomatCard: React.FunctionComponent<Props> = props => (
+  <BaseBancomatCard
+    abi={props.enhancedBancomat.abiInfo ?? {}}
+    isExpired={isPaymentMethodExpired(props.enhancedBancomat).getOrElse(false)}
+    expiringDate={getExpireDate(
+      props.enhancedBancomat.info.expireYear,
+      props.enhancedBancomat.info.expireMonth
+    )}
+    user={props.nameSurname ?? ""}
+  />
+);
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
