@@ -24,6 +24,7 @@ type Props = {
   abi: Abi;
   brandLogo: ImageSourcePropType;
   blocked?: boolean;
+  accessibilityLabel?: string;
 };
 
 const styles = StyleSheet.create({
@@ -70,6 +71,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
   );
   return (
     <BaseCardComponent
+      accessibilityLabel={props.accessibilityLabel}
       topLeftCorner={
         <>
           <View
