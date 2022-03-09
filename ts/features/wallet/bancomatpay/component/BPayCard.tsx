@@ -11,6 +11,7 @@ import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImage
 import { H3 } from "../../../../components/core/typography/H3";
 import IconFont from "../../../../components/ui/IconFont";
 import { H4 } from "../../../../components/core/typography/H4";
+import I18n from "../../../../i18n";
 
 type Props = {
   phone?: string;
@@ -30,6 +31,19 @@ const styles = StyleSheet.create({
 const BASE_IMG_W = 160;
 const BASE_IMG_H = 40;
 
+/**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = (bankName: string, phone?: string) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomatPay", {
+    bankName
+  });
+
+  const computedPhone = typeof phone !== "undefined" ? `, ${phone}` : "";
+
+  return `${cardRepresentation}${computedPhone}`;
+};
+
 const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
   const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
 
@@ -43,6 +57,10 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
   );
   return (
     <BaseCardComponent
+      accessibilityLabel={getAccessibilityRepresentation(
+        props.bankName,
+        props.phone
+      )}
       topLeftCorner={
         props.abiLogo && imageStyle ? (
           <Image
