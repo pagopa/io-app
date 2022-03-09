@@ -21,6 +21,7 @@ import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useIm
 type Props = {
   loyaltyLogo?: ImageSourcePropType;
   caption?: string;
+  blurredNumber?: string;
   gdoLogo?: ImageURISource;
   blocked?: boolean;
 };
@@ -125,8 +126,8 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <BaseCardComponent
       accessibilityLabel={
-        typeof props.caption !== "undefined"
-          ? getAccessibilityRepresentation(props.caption)
+        typeof props.blurredNumber !== "undefined"
+          ? getAccessibilityRepresentation(props.blurredNumber)
           : undefined
       }
       topLeftCorner={
