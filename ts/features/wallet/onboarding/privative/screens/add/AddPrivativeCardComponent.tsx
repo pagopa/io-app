@@ -82,6 +82,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
               gdoLogo={gdoLogo}
               caption={caption}
               blocked={isCoBadgeOrPrivativeBlocked(props.paymentInstrument)}
+              blurredNumber={props.paymentInstrument.panPartialNumber}
             />
             <View spacer={true} large={true} />
             {isBlocked && (
