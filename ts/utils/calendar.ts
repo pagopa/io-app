@@ -2,6 +2,7 @@ import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { Task } from "fp-ts/lib/Task";
 import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import { Platform } from "react-native";
 import { TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
@@ -28,17 +29,28 @@ type CalendarAuthorization = { authorized: boolean; asked: boolean };
 export async function checkAndRequestPermission(): Promise<CalendarAuthorization> {
   try {
     const status = await RNCalendarEvents.checkPermissions();
-    // If the user already selected to deny permission just return false
-    if (status === "denied") {
-      return { authorized: false, asked: false };
+    switch (status) {
+      case "authorized":
+        // the app is authorized to access the service
+        return { authorized: true, asked: false };
+      case "restricted":
+        // the app is not authorized to access the service
+        // (e.g. parental control in iOS)
+        return { authorized: false, asked: false };
+      case "denied":
+        // the user explicitly denied access to the service for the app
+        if (Platform.OS === "ios") {
+          return { authorized: false, asked: false };
+        }
+        // but in Android we can ask again
+        // (i.e. shouldShowRequestPermissionRationale returns true)
+        break;
+      case "undetermined":
+        // the user has not yet made a choice
+        break;
     }
 
-    // If the permission is already granted return true
-    if (status === "authorized") {
-      return { authorized: true, asked: false };
-    }
-
-    // In other cases ask the authorization
+    // we can ask the authorization
     const newStatus = await RNCalendarEvents.requestPermissions();
     return { authorized: newStatus === "authorized", asked: true };
   } catch {
