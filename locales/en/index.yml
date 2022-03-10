@@ -935,6 +935,7 @@ wallet:
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
+    cardHolder: Card holder
     transactionListItem:
       payment:
         read: Transaction
