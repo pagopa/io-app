@@ -787,7 +787,7 @@ onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
-    headerTitle: Attivazione
+    headerTitle: Configura IO
     accept: Accetta
     error: Errore nel caricamento
     alert:
