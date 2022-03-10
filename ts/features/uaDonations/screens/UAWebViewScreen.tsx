@@ -1,25 +1,26 @@
-import WebView from "react-native-webview";
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
-import { View } from "native-base";
-import URLParse from "url-parse";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { View } from "native-base";
+import React, { useState } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import WebView from "react-native-webview";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+import URLParse from "url-parse";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
-import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
-import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { isStringNullyOrEmpty } from "../../../utils/strings";
-import { UADonationWebViewMessage } from "../types";
-import { openWebUrl } from "../../../utils/url";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { showToast } from "../../../utils/showToast";
+import { isStringNullyOrEmpty } from "../../../utils/strings";
+import { openWebUrl } from "../../../utils/url";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
+import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { UADonationWebViewMessage } from "../types";
 
 const styles = StyleSheet.create({
   loading: {
@@ -169,26 +170,28 @@ export const UAWebViewScreen = () => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}
     >
-      {!hasError ? (
-        <WebView
-          testID={"UAWebViewScreenTestID"}
-          ref={ref}
-          cacheEnabled={false}
-          textZoom={100}
-          source={{ uri }}
-          onLoadEnd={injectJS}
-          androidCameraAccessDisabled={true}
-          androidMicrophoneAccessDisabled={true}
-          onError={onError}
-          onHttpError={onError}
-          onMessage={e => handleOnMessage(e, startDonationPayment)}
-          startInLoadingState={true}
-          renderLoading={renderLoading}
-          javaScriptEnabled={true}
-        />
-      ) : (
-        errorComponent
-      )}
+      <SafeAreaView style={IOStyles.flex}>
+        {!hasError ? (
+          <WebView
+            testID={"UAWebViewScreenTestID"}
+            ref={ref}
+            cacheEnabled={false}
+            textZoom={100}
+            source={{ uri }}
+            onLoadEnd={injectJS}
+            androidCameraAccessDisabled={true}
+            androidMicrophoneAccessDisabled={true}
+            onError={onError}
+            onHttpError={onError}
+            onMessage={e => handleOnMessage(e, startDonationPayment)}
+            startInLoadingState={true}
+            renderLoading={renderLoading}
+            javaScriptEnabled={true}
+          />
+        ) : (
+          errorComponent
+        )}
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };
