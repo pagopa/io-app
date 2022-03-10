@@ -48,6 +48,10 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
       case "undetermined":
         // the user has not yet made a choice
         break;
+      default:
+        // let's try to request permissions as a fallback
+        // if a new unhandled case arises
+        break;
     }
 
     // we can ask the authorization
