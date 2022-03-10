@@ -953,6 +953,7 @@ wallet:
       bankNotAvailable: "nome banca non disponibile"
     addElement: Aggiungi elemento al portafoglio
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
+    cardHolder: Intestatario carta
     transactionListItem:
       payment:
         read: Transazione

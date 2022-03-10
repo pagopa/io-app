@@ -15,6 +15,7 @@ import variables from "../../../theme/variables";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
+import I18n from "../../../i18n";
 
 type Props = {
   paypal: PayPalPaymentMethod;
@@ -36,6 +37,15 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = (email: string) => {
+  const paypal = I18n.t("wallet.onboarding.paypal.name");
+
+  return `${paypal}, ${email}`;
+};
+
 const topLeft = (isFavourite: boolean) => (
   <View style={styles.row}>
     <View style={IOStyles.flex}>
@@ -47,22 +57,27 @@ const topLeft = (isFavourite: boolean) => (
   </View>
 );
 
-const PaypalCard: React.FunctionComponent<Props> = (props: Props) => (
-  <BaseCardComponent
-    topLeftCorner={topLeft(
-      pot.getOrElse(
-        pot.map(props.favoriteWalletId, id => props.paypal.idWallet === id),
-        false
-      )
-    )}
-    bottomLeftCorner={
-      <Body style={styles.bottomLeftStyle} numberOfLines={1}>
-        {getPaypalAccountEmail(props.paypal.info)}
-      </Body>
-    }
-    bottomRightCorner={<BrandImage image={paypalLogoMin} />}
-  />
-);
+const PaypalCard: React.FunctionComponent<Props> = (props: Props) => {
+  const emailAccount = getPaypalAccountEmail(props.paypal.info);
+
+  return (
+    <BaseCardComponent
+      accessibilityLabel={getAccessibilityRepresentation(emailAccount)}
+      topLeftCorner={topLeft(
+        pot.getOrElse(
+          pot.map(props.favoriteWalletId, id => props.paypal.idWallet === id),
+          false
+        )
+      )}
+      bottomLeftCorner={
+        <Body style={styles.bottomLeftStyle} numberOfLines={1}>
+          {emailAccount}
+        </Body>
+      }
+      bottomRightCorner={<BrandImage image={paypalLogoMin} />}
+    />
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   favoriteWalletId: getFavoriteWalletId(state)
