@@ -788,6 +788,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configura IO
+    contentTitle: Informativa Privacy e Termini e Condizioni d’uso
     accept: Accetta
     error: Errore nel caricamento
     alert:
