@@ -9,10 +9,13 @@ import { connect } from "react-redux";
 
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PspData } from "../../../../definitions/pagopa/PspData";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../../components/ContextualInfo";
 import { H4 } from "../../../components/core/typography/H4";
 import { Link } from "../../../components/core/typography/Link";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
@@ -33,11 +36,11 @@ import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
+import ROUTES from "../../../navigation/routes";
 import {
   navigateToPaymentOutcomeCode,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen,
-  navigateToPayPalUpdatePspForPayment
+  navigateToPaymentPickPspScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
@@ -77,9 +80,6 @@ import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { PspData } from "../../../../definitions/pagopa/PspData";
-import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 
 export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -196,7 +196,10 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<WalletParamsList, "PAYMENT_CONFIRM_PAYMENT_METHOD">
+    >();
   // each payment method has its own psp fee
   const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
   const fee: number | undefined = isPayingWithPaypal
@@ -253,17 +256,15 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   // navigate to the screen where the user can pick the desired psp
   const handleOnEditPaypalPsp = () => {
-    navigation.navigate(
-      navigateToPayPalUpdatePspForPayment({
-        idPayment,
-        idWallet: wallet.idWallet
-      })
-    );
+    navigation.navigate(ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP, {
+      idWallet: wallet.idWallet,
+      idPayment
+    });
   };
 
   const formData = {};
   const paymentMethod = props.getPaymentMethodById(wallet.idWallet);
-  const ispaymentMethodCreditCard =
+  const isPaymentMethodCreditCard =
     paymentMethod !== undefined && isCreditCard(paymentMethod);
 
   const showFeeContextualHelp = typeof fee !== "undefined" && fee > 0;
@@ -373,7 +374,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           <PayWebViewModal
             postUri={urlPrefix + payUrlSuffix}
             formData={formData}
-            showInfoHeader={ispaymentMethodCreditCard}
+            showInfoHeader={isPaymentMethodCreditCard}
             finishPathName={webViewExitPathName}
             onFinish={handlePaymentOutcome}
             outcomeQueryparamName={webViewOutcomeParamName}
