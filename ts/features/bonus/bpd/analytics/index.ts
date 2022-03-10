@@ -10,6 +10,7 @@ import {
   bpdOnboardingCompleted,
   bpdOnboardingStart,
   bpdUnsubscribeCompleted,
+  bpdUpdateOptInStatusMethod,
   bpdUserActivate
 } from "../store/actions/onboarding";
 import {
@@ -29,6 +30,14 @@ import {
   bpdPaymentMethodActivation,
   bpdUpdatePaymentMethodActivation
 } from "../store/actions/paymentMethods";
+import {
+  optInPaymentMethodsCompleted,
+  optInPaymentMethodsDeletionChoice,
+  optInPaymentMethodsFailure,
+  optInPaymentMethodsShowChoice,
+  optInPaymentMethodsStart
+} from "../store/actions/optInPaymentMethods";
+import { getError } from "../../../../utils/errors";
 
 const trackAction =
   (mp: NonNullable<typeof mixpanel>) =>
@@ -89,7 +98,8 @@ const trackAction =
       case getType(bpdLoadActivationStatus.success):
         return mp.track(action.type, {
           enabled: action.payload.enabled,
-          hasTechnicalIban: action.payload.technicalAccount !== undefined
+          hasTechnicalIban: action.payload.technicalAccount !== undefined,
+          optInStatus: action.payload.optInStatus
         });
       case getType(bpdLoadActivationStatus.failure):
         return mp.track(action.type, { reason: action.payload.message });
@@ -102,6 +112,22 @@ const trackAction =
       case getType(bpdPaymentMethodActivation.failure):
       case getType(bpdUpdatePaymentMethodActivation.failure):
         return mp.track(action.type);
+
+      // Opt-in payment methods
+      case getType(optInPaymentMethodsStart):
+      case getType(optInPaymentMethodsCompleted):
+      case getType(optInPaymentMethodsFailure):
+      case getType(optInPaymentMethodsDeletionChoice):
+      case getType(optInPaymentMethodsShowChoice.request):
+        return mp.track(action.type);
+      case getType(optInPaymentMethodsShowChoice.success):
+        return mp.track(action.type, { shouldShow: action.payload });
+      case getType(optInPaymentMethodsShowChoice.failure):
+      case getType(bpdUpdateOptInStatusMethod.failure):
+        return mp.track(action.type, { reason: getError(action.payload) });
+      case getType(bpdUpdateOptInStatusMethod.request):
+      case getType(bpdUpdateOptInStatusMethod.success):
+        return mp.track(action.type, { status: action.payload });
     }
     return Promise.resolve();
   };
