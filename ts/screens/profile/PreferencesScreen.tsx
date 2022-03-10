@@ -42,7 +42,8 @@ import {
 } from "../../utils/locale";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import ScreenContent from "../../components/screens/ScreenContent";
-import { requestIOAndroidPermission } from "../../utils/permission";
+import { checkIOAndroidPermission } from "../../utils/permission";
+import { AsyncAlert } from "../../utils/asyncAlert";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -93,14 +94,21 @@ class PreferencesScreen extends React.Component<Props> {
   }
 
   private checkPermissionThenGoCalendar = async () => {
-    await requestIOAndroidPermission(
-      PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR,
-      {
-        title: I18n.t("permissionRationale.calendar.title"),
-        message: I18n.t("permissionRationale.calendar.message"),
-        buttonPositive: I18n.t("global.buttons.choose")
-      }
+    const hasPermission = await checkIOAndroidPermission(
+      PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR
     );
+    if (!hasPermission) {
+      await AsyncAlert(
+        I18n.t("permissionRationale.calendar.title"),
+        I18n.t("permissionRationale.calendar.message"),
+        [
+          {
+            text: I18n.t("global.buttons.choose")
+          }
+        ],
+        { cancelable: true }
+      );
+    }
 
     void checkAndRequestPermission()
       .then(calendarPermission => {
