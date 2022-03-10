@@ -35,14 +35,15 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
         return { authorized: true, asked: false };
       case "restricted":
         // the app is not authorized to access the service
-        // (e.g. parental control in iOS)
+        // (e.g. parental control on iOS or when the user
+        // denies definitely on Android)
         return { authorized: false, asked: false };
       case "denied":
         // the user explicitly denied access to the service for the app
         if (Platform.OS === "ios") {
           return { authorized: false, asked: false };
         }
-        // but in Android we can ask again
+        // but in Android we can ask for it again
         // (i.e. shouldShowRequestPermissionRationale returns true)
         break;
       case "undetermined":
@@ -54,7 +55,7 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
         break;
     }
 
-    // we can ask the authorization
+    // if not returned yet, we can ask for the authorization
     const newStatus = await RNCalendarEvents.requestPermissions();
     return { authorized: newStatus === "authorized", asked: true };
   } catch {
