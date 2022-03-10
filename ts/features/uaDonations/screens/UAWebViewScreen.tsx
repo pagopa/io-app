@@ -5,6 +5,7 @@ import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { View } from "native-base";
 import URLParse from "url-parse";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
@@ -12,7 +13,7 @@ import I18n from "../../../i18n";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
-import { openWebUrl } from "../../../utils/url";
+import { isHttp, openWebUrl } from "../../../utils/url";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { showToast } from "../../../utils/showToast";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -23,7 +24,6 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { BlockButtonProps } from "../../../components/ui/BlockButtons";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { UADonationWebViewMessage } from "../types";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
@@ -143,7 +143,7 @@ export const UAWebViewScreen = () => {
   /**
    * errors type
    * - webview: errors coming from the webpage
-   * - data: unexpected data from navigation params
+   * - data: unexpected data from navigation params (empty or malformed)
    */
   const [errorType, setErrorType] = useState<"webview" | "data" | undefined>();
 
@@ -153,7 +153,7 @@ export const UAWebViewScreen = () => {
     } else {
       const urlParsed = new URLParse(uri);
       // url malformed
-      if (isStringNullyOrEmpty(urlParsed.host)) {
+      if (isStringNullyOrEmpty(urlParsed.host) || !isHttp(urlParsed.origin)) {
         setErrorType("data");
       }
     }
