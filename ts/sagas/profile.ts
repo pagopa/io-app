@@ -373,10 +373,12 @@ function* handleRemoveAccount() {
     upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
   );
   // wait for response (success/failure)
-  const upsertUserDataProcessingResponse = yield* take([
-    upsertUserDataProcessing.success,
-    upsertUserDataProcessing.failure
-  ]);
+  const upsertUserDataProcessingResponse = yield* take<
+    ActionType<
+      | typeof upsertUserDataProcessing.success
+      | typeof upsertUserDataProcessing.failure
+    >
+  >([upsertUserDataProcessing.success, upsertUserDataProcessing.failure]);
 
   // if success go to remove account success screen
   if (

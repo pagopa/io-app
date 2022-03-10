@@ -3,7 +3,6 @@ import { call, take } from "typed-redux-saga/macro";
 import {
   ActionCreator,
   ActionType,
-  getType,
   isActionOf,
   TypeConstant
 } from "typesafe-actions";
@@ -105,12 +104,11 @@ export function* executeWorkUnit(
 > {
   yield* call(ensureScreen, wu.startScreenNavigation, wu.startScreenName);
 
-  const result = yield* take([
-    getType(wu.complete),
-    getType(wu.cancel),
-    getType(wu.back),
-    getType(wu.failure)
-  ]);
+  const result = yield* take<
+    ActionType<
+      typeof wu.cancel | typeof wu.complete | typeof wu.back | typeof wu.failure
+    >
+  >([wu.complete, wu.cancel, wu.back, wu.failure]);
 
   if (isActionOf(wu.complete, result)) {
     return "completed";

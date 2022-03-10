@@ -38,7 +38,11 @@ import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
  * and make sure you understand it _before_ working on it.
  */
 
-export type PaymentStartOrigin = "message" | "qrcode_scan" | "manual_insertion";
+export type PaymentStartOrigin =
+  | "message"
+  | "qrcode_scan"
+  | "manual_insertion"
+  | "donation";
 
 /**
  * Resets the payment state before starting a new payment
@@ -282,6 +286,13 @@ export const runStartOrResumePaymentActivationSaga = createStandardAction(
 )<RunStartOrResumePaymentActivationSagaPayload>();
 
 /**
+ * the psp selected for the payment
+ */
+export const pspSelectedForPaymentV2 = createStandardAction(
+  "PAYMENT_PSP_V2_SELECTED"
+)<PspData>();
+
+/**
  * get the list of psp that can handle the payment with the given paymentMethod
  */
 export const pspForPaymentV2 = createAsyncAction(
@@ -332,4 +343,5 @@ export type PaymentActions =
   | ActionType<typeof paymentRedirectionUrls>
   | ActionType<typeof runStartOrResumePaymentActivationSaga>
   | ActionType<typeof pspForPaymentV2>
+  | ActionType<typeof pspSelectedForPaymentV2>
   | ActionType<typeof pspForPaymentV2WithCallbacks>;

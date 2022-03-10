@@ -39,6 +39,7 @@ import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboard
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import ActivateBpdOnNewSatispayScreen from "../features/wallet/onboarding/satispay/screens/ActivateBpdOnNewSatispayScreen";
 import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
+import PayPalPspUpdateScreen from "../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 import PrivativeDetailScreen from "../features/wallet/privative/screen/PrivativeDetailScreen";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
@@ -78,6 +79,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_PAYPAL_DETAIL]: {
     screen: PaypalDetailScreen
+  },
+  [ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP]: {
+    screen: PayPalPspUpdateScreen
   },
   [ROUTES.WALLET_BPAY_DETAIL]: {
     screen: BPayDetailScreen

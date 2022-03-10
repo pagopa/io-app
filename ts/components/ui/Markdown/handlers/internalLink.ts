@@ -4,10 +4,16 @@
 import { CommonActions, NavigationAction } from "@react-navigation/native";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import URLParse from "url-parse";
-import { bpdEnabled, myPortalEnabled, svEnabled } from "../../../../config";
+import {
+  bpdEnabled,
+  myPortalEnabled,
+  svEnabled,
+  uaDonationsEnabled
+} from "../../../../config";
 import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
+import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { addInternalRouteNavigation } from "../../../../store/actions/internalRouteNavigation";
@@ -112,6 +118,10 @@ const myPortalRoutesToNavigationAction: Record<string, NavigationAction> = {
   })
 };
 
+const uaDonationsRoutesToNavigationAction: Record<string, NavigationAction> = {
+  [UADONATION_ROUTES.WEBVIEW]: CommonActions.navigate(UADONATION_ROUTES.WEBVIEW)
+};
+
 const svRoutesToNavigationAction: Record<string, NavigationAction> = {
   [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]: CommonActions.navigate(
     ROUTES.SERVICES_NAVIGATOR,
@@ -133,7 +143,8 @@ const allowedRoutes = {
   ...legacyRoutesToNavigationAction,
   ...(myPortalEnabled ? myPortalRoutesToNavigationAction : {}),
   ...(bpdEnabled ? bpdRoutesToNavigationAction : {}),
-  ...(svEnabled ? svRoutesToNavigationAction : {})
+  ...(svEnabled ? svRoutesToNavigationAction : {}),
+  ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationAction : {})
 };
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv

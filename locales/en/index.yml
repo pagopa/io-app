@@ -935,6 +935,7 @@ wallet:
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
+    cardHolder: Card holder
     transactionListItem:
       payment:
         read: Transaction
@@ -1257,8 +1258,7 @@ wallet:
           bottomSheetTitle: "Why can't I pay with this card?"
           bottomSheetDescription: "This circuit allows you to pay in physical stores, but not online. If your card is enabled for online purchases, add it to your Wallet as a 'debit or credit card'."
   firstTransactionSummary:
-    header: Transaction notice summary
-    title: Transaction notice
+    title: Payment information
     amount: Transaction amount
     total: Total paid
     expireDate: Expire date
@@ -1277,8 +1277,8 @@ wallet:
     updatedAmount: Updated amount
     updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
     loadingMessage:
-      activation: I'm alerting the entity, wait a few seconds...
-      verification: I am checking the status and the amount of your notice...
+      activation: We are contacting the entity, wait a few seconds
+      verification: We are verifying your payment information
       generic: I am finishing the verification operations of your notice, wait a few seconds...
       wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
@@ -1323,7 +1323,7 @@ wallet:
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add a method
-  continue: Pay this notice
+  continue: Go to payment
   backToPayments: Back to payments
   methods:
     comingSoon: upcoming
@@ -2995,6 +2995,9 @@ features:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
         cta: "Get support"
+  uaDonations:
+    webViewScreen:
+      headerTitle: Donation
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

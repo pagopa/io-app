@@ -11,21 +11,12 @@ import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { H1 } from "../../../components/core/typography/H1";
-import { H4 } from "../../../components/core/typography/H4";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
-import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
+
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -34,10 +25,7 @@ import {
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
-import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
-import { pspV2Selector } from "../../../store/reducers/wallet/payment";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
@@ -48,8 +36,20 @@ import {
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
 import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { H1 } from "../../../components/core/typography/H1";
+import { H4 } from "../../../components/core/typography/H4";
+import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
+import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
+import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
+import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { showToast } from "../../../utils/showToast";
-
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 import { dispatchPickPspOrConfirm } from "./common";
 
@@ -189,7 +189,7 @@ const mapStateToProps = (state: GlobalState) => {
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
   const potPsps = state.wallet.payment.psps;
-  const pspV2 = pspV2Selector(state);
+  const pspV2 = pspV2ListSelector(state);
   const isLoading =
     pot.isLoading(potVisibleCreditCard) ||
     pot.isLoading(potPsps) ||

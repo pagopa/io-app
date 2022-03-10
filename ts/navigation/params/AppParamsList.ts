@@ -10,6 +10,7 @@ import {
   CgnEYCAActivationParamsList
 } from "../../features/bonus/cgn/navigation/params";
 import CGN_ROUTES from "../../features/bonus/cgn/navigation/routes";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
@@ -39,8 +40,8 @@ export type AppParamsList = {
     .MAIN]: NavigatorScreenParams<CgnEYCAActivationParamsList>;
 
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
-
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
+  [UADONATION_ROUTES.WEBVIEW]: undefined;
 };
 
 /**

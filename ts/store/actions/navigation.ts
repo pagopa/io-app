@@ -31,6 +31,7 @@ import {
   PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
+import { PayPalPspUpdateScreenNavigationParams } from "../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 
 /**
  * @deprecated
@@ -449,6 +450,14 @@ export const navigateToSatispayDetailScreen = (
 export const navigateToPayPalDetailScreen = () =>
   CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
     screen: ROUTES.WALLET_PAYPAL_DETAIL
+  });
+
+export const navigateToPayPalUpdatePspForPayment = (
+  params: PayPalPspUpdateScreenNavigationParams
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP,
+    params
   });
 
 /**

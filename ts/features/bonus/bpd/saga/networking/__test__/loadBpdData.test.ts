@@ -1,5 +1,4 @@
 import { testSaga } from "redux-saga-test-plan";
-import { getType } from "typesafe-actions";
 import { abiSelector } from "../../../../../wallet/onboarding/store/abi";
 import { remoteReady } from "../../../model/RemoteValue";
 import {
@@ -20,13 +19,11 @@ describe("loadBpdData", () => {
       .next()
       .put(bpdLoadActivationStatus.request())
       .next()
-      .take([
-        getType(bpdLoadActivationStatus.success),
-        getType(bpdLoadActivationStatus.failure)
-      ])
+      .take([bpdLoadActivationStatus.success, bpdLoadActivationStatus.failure])
       .next(
         bpdLoadActivationStatus.success({
           enabled: false,
+          activationStatus: "never",
           payoffInstr: undefined
         })
       )
@@ -43,22 +40,17 @@ describe("loadBpdData", () => {
       .next()
       .put(bpdLoadActivationStatus.request())
       .next()
-      .take([
-        getType(bpdLoadActivationStatus.success),
-        getType(bpdLoadActivationStatus.failure)
-      ])
+      .take([bpdLoadActivationStatus.success, bpdLoadActivationStatus.failure])
       .next(
         bpdLoadActivationStatus.success({
           enabled: true,
+          activationStatus: "subscribed",
           payoffInstr: undefined
         })
       )
       .put(bpdPeriodsAmountLoad.request())
       .next()
-      .take([
-        getType(bpdPeriodsAmountLoad.success),
-        getType(bpdPeriodsAmountLoad.failure)
-      ])
+      .take([bpdPeriodsAmountLoad.success, bpdPeriodsAmountLoad.failure])
       .next(bpdPeriodsAmountLoad.success([]))
       .put(bpdAllData.success())
       .next()

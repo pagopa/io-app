@@ -37,6 +37,7 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
           loyaltyLogo={privative.icon}
           caption={privative.caption}
           gdoLogo={privative.gdoLogo}
+          blurredNumber={privative.info.blurredNumber}
         />
       }
       content={<PaymentMethodFeatures paymentMethod={privative} />}

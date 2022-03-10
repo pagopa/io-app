@@ -25,6 +25,7 @@ import { PaymentMethodOnboardingPrivativeParamsList } from "../../features/walle
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../features/wallet/onboarding/privative/navigation/routes";
 import { PaymentMethodOnboardingSatispayParamsList } from "../../features/wallet/onboarding/satispay/navigation/params";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../../features/wallet/onboarding/satispay/navigation/routes";
+import { PayPalPspUpdateScreenNavigationParams } from "../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 import { PrivativeDetailScreenNavigationParams } from "../../features/wallet/privative/screen/PrivativeDetailScreen";
 import { SatispayDetailScreenNavigationParams } from "../../features/wallet/satispay/screen/SatispayDetailScreen";
 import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
@@ -50,6 +51,7 @@ export type WalletParamsList = {
   [ROUTES.WALLET_BANCOMAT_DETAIL]: BancomatDetailScreenNavigationParams;
   [ROUTES.WALLET_SATISPAY_DETAIL]: SatispayDetailScreenNavigationParams;
   [ROUTES.WALLET_PAYPAL_DETAIL]: undefined;
+  [ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP]: PayPalPspUpdateScreenNavigationParams;
   [ROUTES.WALLET_BPAY_DETAIL]: BPayDetailScreenNavigationParams;
   [ROUTES.WALLET_COBADGE_DETAIL]: CobadgeDetailScreenNavigationParams;
   [ROUTES.WALLET_PRIVATIVE_DETAIL]: PrivativeDetailScreenNavigationParams;

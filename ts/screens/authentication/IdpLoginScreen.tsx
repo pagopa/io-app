@@ -327,6 +327,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         {!hasError && (
           <View style={styles.webViewWrapper}>
             <WebView
+              cacheEnabled={false}
               androidCameraAccessDisabled={true}
               androidMicrophoneAccessDisabled={true}
               textZoom={100}

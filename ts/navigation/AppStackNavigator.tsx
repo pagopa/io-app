@@ -11,6 +11,8 @@ import {
   CgnEYCAActivationNavigator
 } from "../features/bonus/cgn/navigation/navigator";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
+import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import IngressScreen from "../screens/ingress/IngressScreen";
@@ -94,6 +96,10 @@ export const AppStackNavigator = () => (
     <Stack.Screen
       name={ZENDESK_ROUTES.MAIN}
       component={zendeskSupportNavigator}
+    />
+    <Stack.Screen
+      name={UADONATION_ROUTES.WEBVIEW}
+      component={UAWebViewScreen}
     />
   </Stack.Navigator>
 );

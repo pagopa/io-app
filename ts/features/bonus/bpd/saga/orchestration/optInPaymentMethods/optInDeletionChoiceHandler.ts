@@ -1,5 +1,5 @@
 import { put, take } from "typed-redux-saga/macro";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { deleteAllPaymentMethodsByFunction } from "../../../../../../store/actions/wallet/delete";
 import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
@@ -28,8 +28,8 @@ export function* optInDeletionChoiceHandler(): Generator<
       | typeof deleteAllPaymentMethodsByFunction.failure
     >
   >([
-    getType(deleteAllPaymentMethodsByFunction.success),
-    getType(deleteAllPaymentMethodsByFunction.failure)
+    deleteAllPaymentMethodsByFunction.success,
+    deleteAllPaymentMethodsByFunction.failure
   ]);
   if (
     isActionOf(

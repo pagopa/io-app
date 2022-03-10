@@ -18,6 +18,7 @@ import {
 } from "../store/actions/onboarding";
 import {
   optInPaymentMethodsDeletionChoice,
+  optInPaymentMethodsShowChoice,
   optInPaymentMethodsStart
 } from "../store/actions/optInPaymentMethods";
 import {
@@ -55,6 +56,7 @@ import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
 import { optInDeletionChoiceHandler } from "./orchestration/optInPaymentMethods/optInDeletionChoiceHandler";
 import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethods/optInPaymentMethodsHandler";
+import { optInShouldShowChoiceHandler } from "./orchestration/optInPaymentMethods/optInShouldShowChoiceHandler";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
@@ -174,6 +176,12 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     yield* takeLatest(
       optInPaymentMethodsDeletionChoice,
       optInDeletionChoiceHandler
+    );
+
+    // Checks if the user has already see the opt-in payment method choice screens, and if not run the workunit
+    yield* takeLatest(
+      optInPaymentMethodsShowChoice.request,
+      optInShouldShowChoiceHandler
     );
   }
 }

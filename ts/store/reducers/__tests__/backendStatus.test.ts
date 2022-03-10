@@ -1,14 +1,18 @@
 import { none, some } from "fp-ts/lib/Option";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { baseRawBackendStatus } from "../__mock__/backendStatus";
 import {
   areSystemsDeadReducer,
   BackendStatusState,
   bpdRankingEnabledSelector,
-  sectionStatusSelector
+  isUaDonationsEnabledSelector,
+  sectionStatusSelector,
+  uaDonationsBannerConfigSelector
 } from "../backendStatus";
 import { GlobalState } from "../types";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { baseRawBackendStatus } from "../__mock__/backendStatus";
-import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+
+jest.mock("../../../config", () => ({ uaDonationsEnabled: true }));
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
@@ -262,5 +266,53 @@ describe("test selectors", () => {
     } as any as GlobalState;
     const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
     expect(bpd_ranking).toBeFalsy();
+  });
+
+  describe("donation selectors", () => {
+    it("isUaDonationsEnabledSelector should return false if bs.config.donation.enabled is undefined", () => {
+      const donationFeatureFlag = isUaDonationsEnabledSelector(noneStore);
+      expect(donationFeatureFlag).toBeFalsy();
+    });
+    it("isUaDonationsEnabledSelector should return the value of bs.config.donation.enabled if is defined", () => {
+      const someFalsyStoreConfig = {
+        backendStatus: {
+          status: some({
+            ...status,
+            config: {
+              ...status.config,
+              uaDonations: { ...status.config.uaDonations, enabled: false }
+            }
+          })
+        }
+      } as any as GlobalState;
+      const falsyConfig = isUaDonationsEnabledSelector(someFalsyStoreConfig);
+      expect(falsyConfig).toBeFalsy();
+      const someTruthyStoreConfig = {
+        backendStatus: {
+          status: some({
+            ...status,
+            config: {
+              ...status.config,
+              uaDonations: { ...status.config.uaDonations, enabled: true }
+            }
+          })
+        }
+      } as any as GlobalState;
+      const truthyConfig = isUaDonationsEnabledSelector(someTruthyStoreConfig);
+      expect(truthyConfig).toBeTruthy();
+    });
+    it("uaDonationsBannerConfigSelector should return undefined if bs.config.donation.banner is undefined", () => {
+      const bannerConfig = uaDonationsBannerConfigSelector(noneStore);
+      expect(bannerConfig).toBeUndefined();
+    });
+    it("uaDonationsBannerConfigSelector should return the banner config if bs.config.donation.banner is defined", () => {
+      const someStoreConfig = {
+        backendStatus: {
+          status: some(status)
+        }
+      } as any as GlobalState;
+      const bannerConfig = uaDonationsBannerConfigSelector(someStoreConfig);
+      expect(bannerConfig).toEqual(status.config.uaDonations.banner);
+    });
   });
 });
