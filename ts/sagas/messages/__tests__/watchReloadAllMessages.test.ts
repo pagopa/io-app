@@ -1,6 +1,7 @@
 import { right } from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
+import util from "util";
 
 import { reloadAllMessages as action } from "../../../store/actions/messages";
 import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
@@ -10,6 +11,8 @@ import {
   apiPayload,
   successReloadMessagesPayload
 } from "../../../__mocks__/messages";
+
+util.inspect.defaultOptions.depth = null;
 
 const tryReloadAllMessages = testTryLoadPreviousPageMessages!;
 

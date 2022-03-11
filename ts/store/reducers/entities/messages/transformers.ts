@@ -2,6 +2,7 @@ import { PublicMessage } from "../../../../../definitions/backend/PublicMessage"
 import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
@@ -26,11 +27,7 @@ export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
   const category: MessageCategory = enriched.category || {
     tag: TagEnum.GENERIC
   };
-  // TODO: remove once new API is merged on master
-  const { is_read, is_archived } = messageFromApi as unknown as {
-    is_read?: boolean;
-    is_archived?: boolean;
-  };
+  const { is_read, is_archived } = messageFromApi as MessageStatusAttributes;
   return {
     id: messageFromApi.id as UIMessageId,
     fiscalCode: messageFromApi.fiscal_code,
