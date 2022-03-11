@@ -802,6 +802,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: "Configure IO"
+  thankYouPage:
+    title: Configuration completed!
+    body: Ora puoi iniziare ad utilizzare IO
 forms:
   validators:
     required: Required value
