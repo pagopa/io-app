@@ -21,6 +21,16 @@ export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 // Id of the log customField
 const logId = "4413845142673";
 
+export const anonymousAssistanceAddress = "io@assistenza.pagopa.it";
+
+export const anonymousAssistanceAddressWithSubject = (
+  category: string,
+  subcategory?: string
+): string =>
+  `mailto:${anonymousAssistanceAddress}?subject=${category}${fromNullable(
+    subcategory
+  ).fold("", s => ": " + s)}`;
+
 export const zendeskDefaultJwtConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
   appId: "4ed72c757f79ed15dfa46546dcb672fc86a0af949a119156",
@@ -64,13 +74,20 @@ export const zendeskDeviceAndOSId = "4414316795921";
 export const zendeskidentityProviderId = "4414310934673";
 export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
-export const zendeskPaymentCategoryValue = "pagamenti_pagopa";
-export const zendeskPaymentMethodCategoryValue = "metodo_di_pagamento";
-
+export const zendeskPaymentCategory: ZendeskCategory = {
+  value: "pagamenti_pagopa",
+  description: { "it-IT": "Pagamento pagoPA", "en-EN": "pagoPA payment" }
+};
+export const zendeskPaymentMethodCategory: ZendeskCategory = {
+  value: "metodo_di_pagamento",
+  description: {
+    "it-IT": "Metodo di pagamento",
+    "en-EN": "Payment method"
+  }
+};
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
-
 // help can be shown only when remote FF is instabug or (zendesk + local FF + emailValidated)
 export const canShowHelp = (
   assistanceTool: ToolEnum,
@@ -86,7 +103,6 @@ export const canShowHelp = (
       return false;
   }
 };
-
 // Send a log based on
 export const handleSendAssistanceLog = (
   assistanceTool: ToolEnum,
