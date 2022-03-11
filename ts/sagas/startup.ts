@@ -128,6 +128,7 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
+import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -327,6 +328,9 @@ export function* initializeApplicationSaga(): Generator<
       askServicesPreferencesModeOptin,
       isProfileFirstOnBoarding(userProfile)
     );
+
+    // Show the thank-you screen for the onboarding
+    yield* call(completeOnboardingSaga);
 
     // Stop the watchAbortOnboardingSaga
     yield* cancel(watchAbortOnboardingSagaTask);
