@@ -28,6 +28,8 @@ export const servicesOptinCompleted = createStandardAction(
   "SERVICES_OPTIN_COMPLETED"
 )();
 
+export const completeOnboarding = createStandardAction("COMPLETE_ONBOARDING")();
+
 type OnboardingActionTypes =
   | typeof tosAccepted
   | typeof fingerprintAcknowledge
@@ -35,6 +37,7 @@ type OnboardingActionTypes =
   | typeof emailAcknowledged
   | typeof abortOnboarding
   | typeof clearOnboarding
-  | typeof servicesOptinCompleted;
+  | typeof servicesOptinCompleted
+  | typeof completeOnboarding;
 
 export type OnboardingActions = ActionType<OnboardingActionTypes>;
