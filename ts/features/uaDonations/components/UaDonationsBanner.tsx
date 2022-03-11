@@ -82,7 +82,7 @@ export const UaDonationsBanner = () => {
     <BaseDonationsBanner
       text={uaDonationsData.description[locale]}
       onPress={() => {
-        void mixpanelTrack("UADONATIONS_BANNER_TAP");
+        void mixpanelTrack("UADONATIONS_BANNER_HANDLER_SUCCESS");
         handleInternalLink(
           dispatch,
           `ioit://${UADONATION_ROUTES.WEBVIEW}?urlToLoad=${uaDonationsData.url}`
