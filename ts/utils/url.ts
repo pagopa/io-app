@@ -67,7 +67,7 @@ export function handleItemOnPress(
   }
 }
 
-const isHttp = (url: string): boolean => {
+export const isHttp = (url: string): boolean => {
   const urlLower = url.trim().toLocaleLowerCase();
   return urlLower.match(/http(s)?:\/\//gm) !== null;
 };

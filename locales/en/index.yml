@@ -2998,6 +2998,9 @@ features:
   uaDonations:
     webViewScreen:
       headerTitle: Donation
+      errors:
+        data:
+          buttonTitle: Go back
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
