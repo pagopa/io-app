@@ -12,8 +12,8 @@ import { zendeskSelectedCategory } from "../../store/actions";
 import { ZendeskSubCategories } from "../../../../../definitions/content/ZendeskSubCategories";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
-import * as mixpanel from "../../../../mixpanel";
 import ZendeskChooseSubCategory from "../ZendeskChooseSubCategory";
+import * as navigationAction from "../../store/actions/navigation";
 
 jest.useFakeTimers();
 
@@ -91,11 +91,10 @@ describe("the ZendeskChooseSubCategory screen", () => {
         )
       ).toBeDefined();
     });
-    it("should call the addTicketCustomField, the openSupportTicket, the mixpanelTrack and the zendeskWorkunitComplete functions when is pressed", () => {
-      const mixpanelTrackSpy = jest.spyOn(mixpanel, "mixpanelTrack");
-      const zendeskWorkunitCompletedSpy = jest.spyOn(
-        zendeskAction,
-        "zendeskSupportCompleted"
+    it("should call the addTicketCustomField and the navigateToZendeskAskPermissions functions when is pressed", () => {
+      const navigateToZendeskAskPermissionsSpy = jest.spyOn(
+        navigationAction,
+        "navigateToZendeskAskPermissions"
       );
       const store: Store<GlobalState> = createStore(
         appReducer,
@@ -108,9 +107,7 @@ describe("the ZendeskChooseSubCategory screen", () => {
       );
       fireEvent(subCategoryItem, "onPress");
       expect(MockZendesk.addTicketCustomField).toBeCalled();
-      expect(MockZendesk.openTicket).toBeCalled();
-      expect(mixpanelTrackSpy).toBeCalled();
-      expect(zendeskWorkunitCompletedSpy).toBeCalled();
+      expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
     });
   });
 });

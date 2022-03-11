@@ -21,6 +21,7 @@ import { InitializedProfile } from "../../../../definitions/backend/InitializedP
 import { useIOSelector } from "../../../store/hooks";
 import {
   navigateToZendeskAskPermissions,
+  navigateToZendeskChooseCategory,
   navigateToZendeskPanicMode
 } from "../store/actions/navigation";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
@@ -37,7 +38,7 @@ import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
 } from "../store/reducers";
-import { getValueOrElse } from "../../bonus/bpd/model/RemoteValue";
+import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
 import { H3 } from "../../../components/core/typography/H3";
 import { mixpanelTrack } from "../../../mixpanel";
 
@@ -107,14 +108,19 @@ const ZendeskSupportComponent = (props: Props) => {
   }, [dispatch, zendeskConfig, zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
+    const canSkipCategoryChoice: boolean =
+      !isReady(zendeskRemoteConfig) || assistanceForPayment;
+
     if (isPanicModeActive(zendeskRemoteConfig)) {
       // Go to panic mode screen
       navigation.navigate(navigateToZendeskPanicMode());
-    } else {
-      navigation.navigate(
-        navigateToZendeskAskPermissions({ assistanceForPayment })
-      );
+      return;
     }
+
+    const navigationAction = canSkipCategoryChoice
+      ? navigateToZendeskAskPermissions
+      : navigateToZendeskChooseCategory;
+    navigation.navigate(navigationAction({ assistanceForPayment }));
   };
 
   // If the user opened at least at ticket show the "Show tickets" button
