@@ -5,7 +5,12 @@ import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { View } from "native-base";
 import URLParse from "url-parse";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  PaymentNoticeNumber,
+  PaymentNoticeNumberFromString,
+  RptId
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
