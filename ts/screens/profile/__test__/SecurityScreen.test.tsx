@@ -1,6 +1,6 @@
 import React from "react";
 import configureMockStore from "redux-mock-store";
-import { NavigationParams } from "react-navigation";
+
 import { fireEvent } from "@testing-library/react-native";
 import SecurityScreen from "../SecurityScreen";
 import I18n from "../../../i18n";
@@ -74,7 +74,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       () => <SecurityScreen />,
       ROUTES.PROFILE_SECURITY,
       {},

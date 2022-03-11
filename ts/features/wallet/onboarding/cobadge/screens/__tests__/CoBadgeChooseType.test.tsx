@@ -1,6 +1,6 @@
+import { NavigationActions } from "@react-navigation/compat";
 import { fireEvent } from "@testing-library/react-native";
 import { none } from "fp-ts/lib/Option";
-import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
@@ -74,7 +74,7 @@ const getComponent = (abi?: string, legacyAddCreditCardBack?: number) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       CoBadgeChooseType,
       ROUTES.WALLET_BPAY_DETAIL,
       { abi, legacyAddCreditCardBack },

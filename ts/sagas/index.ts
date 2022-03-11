@@ -13,7 +13,6 @@ import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
 } from "./wallet";
-import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 export default function* root() {
   yield* all([
@@ -21,7 +20,6 @@ export default function* root() {
     call(backendStatusSaga),
     call(versionInfoSaga),
     call(unreadInstabugMessagesSaga),
-    call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
     call(watchContentSaga),
     call(watchPaymentInitializeSaga),

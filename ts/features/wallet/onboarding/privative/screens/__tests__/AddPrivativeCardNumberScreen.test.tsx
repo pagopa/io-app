@@ -1,6 +1,6 @@
+import { NavigationActions } from "@react-navigation/compat";
 import { fireEvent } from "@testing-library/react-native";
 import * as React from "react";
-import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../i18n";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -107,7 +107,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       () => <AddPrivativeCardNumberScreen />,
       WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER,
       {},

@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationParams } from "react-navigation";
 import { Text } from "react-native";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
@@ -118,7 +117,7 @@ function renderComponent(
   props: React.ComponentProps<typeof ContextualHelpComponent>
 ) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     () => <ContextualHelpComponent {...props} />,
     ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
     {},

@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
@@ -188,7 +187,7 @@ describe("the ZendeskChooseCategory screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     ZendeskChooseCategory,
     ROUTES.MAIN,
     {},

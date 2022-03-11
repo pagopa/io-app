@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "../../../../../../../i18n";
@@ -149,7 +149,7 @@ const renderComponent = (
       mvl: { ...globalState.features.mvl, preferences: mvlPreferences }
     }
   } as any);
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     () => <MvlAttachments {...props} />,
     MVL_ROUTES.DETAILS,
     {},

@@ -139,8 +139,7 @@ export const UAWebViewScreen = () => {
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "donation",
-      startRoute: undefined
+      paymentStartOrigin: "donation"
     });
   };
 

@@ -1,7 +1,7 @@
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
-import { NavigationParams } from "react-navigation";
+
 import configureMockStore from "redux-mock-store";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
 import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
@@ -209,14 +209,8 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
     getParam: (key: string) => navParams[key]
   } as any;
 
-  const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    () => (
-      <MessageRouterScreen
-        navigation={navigation as any}
-        theme={"light"}
-        screenProps={undefined}
-      />
-    ),
+  const component = renderScreenFakeNavRedux<GlobalState>(
+    () => <MessageRouterScreen navigation={navigation as any} />,
     ROUTES.MESSAGE_ROUTER,
     { messageId },
     store

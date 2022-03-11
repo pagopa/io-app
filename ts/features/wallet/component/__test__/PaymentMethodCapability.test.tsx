@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { createStore } from "redux";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import ROUTES from "../../../../navigation/routes";
@@ -74,7 +74,7 @@ describe("Test for PaymentMethodCapabilities", () => {
 const renderComponent = (state: GlobalState, paymentMethod: PaymentMethod) => {
   const store = createStore(appReducer, state as any);
 
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     () => <PaymentMethodFeatures paymentMethod={paymentMethod} />,
     ROUTES.WALLET_BANCOMAT_DETAIL,
     {},

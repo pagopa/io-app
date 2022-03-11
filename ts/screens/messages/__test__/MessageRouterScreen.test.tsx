@@ -1,3 +1,4 @@
+import { NavigationActions } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   FiscalCode,
@@ -5,7 +6,6 @@ import {
   NonEmptyString,
   WithinRangeString
 } from "italia-ts-commons/lib/strings";
-import { NavigationActions, NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
@@ -348,7 +348,7 @@ const renderComponentMockStore = (state: GlobalState) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       MessageRouterScreen,
       ROUTES.MESSAGE_ROUTER,
       { messageId: "messageId" },
@@ -362,7 +362,7 @@ const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       MessageRouterScreen,
       ROUTES.MESSAGE_ROUTER,
       { messageId: "messageId" },

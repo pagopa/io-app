@@ -1,6 +1,6 @@
 import { Root } from "native-base";
 import * as React from "react";
-import { AppState, Linking, Platform, StatusBar } from "react-native";
+import { AppState, Platform, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import { initialiseInstabug } from "./boot/configureInstabug";
@@ -19,13 +19,11 @@ import {
   ApplicationState
 } from "./store/actions/application";
 import { setDebugCurrentRouteName } from "./store/actions/debug";
-import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
-import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 import { isStringNullyOrEmpty } from "./utils/strings";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -46,31 +44,11 @@ class RootContainer extends React.PureComponent<Props> {
     configurePushNotifications();
   }
 
-  private handleOpenUrlEvent = (event: { url: string }): void =>
-    this.navigateToUrlHandler(event.url);
-
   private handleApplicationActivity = (activity: ApplicationState) =>
     this.props.applicationChangeState(activity);
 
-  private navigateToUrlHandler = (url: string | null) => {
-    if (!url) {
-      return;
-    }
-    const action = getNavigateActionFromDeepLink(url);
-    // immediately navigate to the resolved action
-    this.props.setDeepLink(action, true);
-  };
-
   public componentDidMount() {
     initialiseInstabug();
-
-    if (Platform.OS === "android") {
-      Linking.getInitialURL()
-        .then(this.navigateToUrlHandler)
-        .catch(console.error); // eslint-disable-line no-console
-    } else {
-      Linking.addEventListener("url", this.handleOpenUrlEvent);
-    }
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
     AppState.addEventListener("change", this.handleApplicationActivity);
@@ -90,30 +68,10 @@ class RootContainer extends React.PureComponent<Props> {
     });
 
   public componentWillUnmount() {
-    if (Platform.OS === "ios") {
-      Linking.removeEventListener("url", this.handleOpenUrlEvent);
-    }
-
     AppState.removeEventListener("change", this.handleApplicationActivity);
   }
 
   public componentDidUpdate() {
-    // FIXME: the logic here is a bit weird: there is an event handler
-    //        (navigateToUrlHandler) that will dispatch a redux action for
-    //        setting a "deep link" in the redux state - in turn, the update
-    //        of the redux state triggers an update of the RootComponent that
-    //        dispatches a navigate action from componentDidUpdate - can't we
-    //        just listen for SET_DEEPLINK from a saga and dispatch the
-    //        navigate action from there?
-    // FIXME: how does this logic interacts with the logic that handles the deep
-    //        link in the startup saga?
-    const {
-      deepLinkState: { deepLink, immediate }
-    } = this.props;
-
-    if (immediate && deepLink) {
-      this.props.navigateToDeepLink(deepLink);
-    }
     this.updateLocale();
   }
 
@@ -150,14 +108,11 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   preferredLanguage: preferredLanguageSelector(state),
-  deepLinkState: state.deepLink,
   isDebugModeEnabled: isDebugModeEnabledSelector(state)
 });
 
 const mapDispatchToProps = {
   applicationChangeState,
-  setDeepLink,
-  navigateToDeepLink,
   navigateBack,
   setDebugCurrentRouteName
 };

@@ -1,6 +1,6 @@
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import * as React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { Action, createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import {
@@ -169,7 +169,7 @@ const getSearchPrivativeCardScreen = () => {
 };
 
 const renderSearchPrivativeCardScreen = (store: Store<GlobalState, Action>) =>
-  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  renderScreenFakeNavRedux<GlobalState>(
     () => <SearchPrivativeCardScreen />,
     WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE,
     {},

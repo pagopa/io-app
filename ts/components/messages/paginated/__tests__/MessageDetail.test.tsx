@@ -1,23 +1,22 @@
 import React from "react";
 import configureMockStore from "redux-mock-store";
-import { NavigationParams } from "react-navigation";
-
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
 import {
   medicalPrescription,
   paymentValidInvalidAfterDueDate
 } from "../../../../__mocks__/message";
+import { service_1 } from "../../../../__mocks__/messages";
+import I18n from "../../../../i18n";
+import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../../store/actions/application";
+
+import { appReducer } from "../../../../store/reducers";
 import {
   toUIMessage,
   toUIMessageDetails
 } from "../../../../store/reducers/entities/messages/transformers";
-import { service_1 } from "../../../../__mocks__/messages";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
-import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import MessageDetail from "../MessageDetail";
 
 jest.useFakeTimers();
@@ -131,7 +130,7 @@ const renderComponent = (props: React.ComponentProps<typeof MessageDetail>) => {
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       () => <MessageDetail {...props} />,
       ROUTES.MESSAGES_HOME,
       {},

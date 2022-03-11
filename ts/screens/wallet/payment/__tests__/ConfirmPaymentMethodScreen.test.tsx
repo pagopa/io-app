@@ -67,10 +67,12 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
 
     // Render with simplified but true navigation. Just two screen: the
     // screen under test and a fake screen to navigate without mocking
-    const MyObj = renderScreenFakeNavRedux<
-      GlobalState,
-      ConfirmPaymentMethodScreenNavigationParams
-    >(ToBeTested, ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD, params, myStore);
+    const MyObj = renderScreenFakeNavRedux<GlobalState>(
+      ToBeTested,
+      ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
+      params,
+      myStore
+    );
 
     // Link Why A Fee? Must be present
     const whyAFeeTouch = MyObj.getByTestId(/why-a-fee/i);
@@ -117,10 +119,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
 
     // Render with simplified but true navigation. Just two screen: the
     // screen under test and a fake screen to navigate without mocking
-    const MyObj = renderScreenFakeNavRedux<
-      GlobalState,
-      ConfirmPaymentMethodScreenNavigationParams
-    >(
+    const MyObj = renderScreenFakeNavRedux<GlobalState>(
       ToBeTested,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       paramsWithoutFees,

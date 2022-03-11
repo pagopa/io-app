@@ -1,6 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { View } from "native-base";
 import * as React from "react";
 import { useRef } from "react";
 import { IOColors } from "../components/core/variables/IOColors";
@@ -19,6 +20,7 @@ import IngressScreen from "../screens/ingress/IngressScreen";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
+import { isTestEnv } from "../utils/environment";
 import authenticationNavigator from "./AuthenticationNavigator";
 import messagesNavigator from "./MessagesNavigator";
 import { navigationRef } from "./NavigationService";
@@ -112,13 +114,10 @@ const IOTheme = {
   }
 };
 
-/**
- * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
- * @constructor
- */
-export const IONavigationContainer = () => {
+const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const routeNameRef = useRef<string>();
   const dispatch = useIODispatch();
+
   return (
     <NavigationContainer
       theme={IOTheme}
@@ -137,7 +136,21 @@ export const IONavigationContainer = () => {
         routeNameRef.current = currentRouteName;
       }}
     >
-      <AppStackNavigator />
+      {props.children}
     </NavigationContainer>
   );
 };
+
+/**
+ * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
+ * @constructor
+ */
+export const IONavigationContainer = () => (
+  <InnerNavigationContainer>
+    <AppStackNavigator />
+  </InnerNavigationContainer>
+);
+
+export const TestInnerNavigationContainer = isTestEnv
+  ? InnerNavigationContainer
+  : View;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { some } from "fp-ts/lib/Option";
@@ -66,7 +66,7 @@ describe("TransactionsUnavailable component", () => {
   });
 });
 const getComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  renderScreenFakeNavRedux<GlobalState>(
     () => <TransactionsUnavailable />,
     BPD_ROUTES.TRANSACTIONS,
     {},

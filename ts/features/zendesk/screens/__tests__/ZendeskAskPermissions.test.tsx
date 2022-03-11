@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
@@ -269,7 +268,7 @@ function renderComponent(
   store: Store<GlobalState>,
   assistanceForPayment: boolean
 ) {
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     ZendeskAskPermissions,
     ROUTES.MAIN,
     { assistanceForPayment },

@@ -1,8 +1,9 @@
+import { NavigationActions } from "@react-navigation/compat";
+import { NavigationAction } from "@react-navigation/native";
 import { render, fireEvent } from "@testing-library/react-native";
 import * as React from "react";
 import { Store } from "redux";
 import { Provider } from "react-redux";
-import { NavigationAction, NavigationActions } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { none, some } from "fp-ts/lib/Option";
 import NavigationService from "../../../../../navigation/NavigationService";

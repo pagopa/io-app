@@ -7,6 +7,7 @@ import { NativeModules } from "react-native";
 import mockAsyncStorage from "@react-native-community/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
+import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 
 NativeModules.RNGestureHandlerModule = {
   attachGestureHandler: jest.fn(),
@@ -66,3 +67,5 @@ jest.mock("rehype-stringify", jest.fn());
 jest.mock("rehype-format", jest.fn());
 jest.mock("unist-util-visit", jest.fn());
 jest.mock("hastscript", jest.fn());
+
+jest.mock("react-native-device-info", () => mockRNDeviceInfo);

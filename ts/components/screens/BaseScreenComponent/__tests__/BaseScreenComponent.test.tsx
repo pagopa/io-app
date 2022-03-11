@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationParams } from "react-navigation";
 import { fireEvent } from "@testing-library/react-native";
 
 import configureMockStore from "redux-mock-store";
@@ -145,7 +144,7 @@ describe("BaseScreenComponent", () => {
 
 function renderComponent(props = defaultProps, store: Store<GlobalState>) {
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       () => <BaseScreenComponent {...props} ref={undefined} />,
       ROUTES.MESSAGES_HOME,
       {},

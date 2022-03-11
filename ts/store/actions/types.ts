@@ -32,7 +32,6 @@ import { CieAuthenticationActions } from "./cie";
 import { ContentActions } from "./content";
 import { CrossSessionsActions } from "./crossSessions";
 import { DebugActions } from "./debug";
-import { DeepLinkActions } from "./deepLink";
 import { IdentificationActions } from "./identification";
 import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
@@ -62,7 +61,6 @@ export type Action =
   | BackendStatusActions
   | CieAuthenticationActions
   | VersionInfoActions
-  | DeepLinkActions
   | MessagesActions
   | MixpanelActions
   | NotificationsActions

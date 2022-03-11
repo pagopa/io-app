@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../store/reducers";
@@ -122,7 +121,7 @@ describe("the ZendeskSupportComponent", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     ZendeskSupportComponent,
     ROUTES.MAIN,
     {},

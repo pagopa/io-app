@@ -1,13 +1,11 @@
+import { createStackNavigator } from "@react-navigation/stack";
 import { render, RenderOptions } from "@testing-library/react-native";
-import React, { ReactElement, useEffect } from "react";
-import { createAppContainer, NavigationNavigator } from "react-navigation";
-import {
-  createStackNavigator,
-  NavigationStackScreenProps
-} from "react-navigation-stack";
+import React from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
+import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";
 
+/*
 // Creates a simple wrapper for the render method which encloses the element to render in a store provider
 export function renderWithRedux<S>(
   ui: ReactElement,
@@ -39,14 +37,33 @@ export function fakeScreenFactory<NP>(route: string, params: NP) {
     return <></>;
   };
 }
+*/
 
-export function renderScreenFakeNavRedux<S, NP>(
+export function renderScreenFakeNavRedux<S>(
   screen: React.ComponentType<any>, // I need any to avoid passing navigation
   route: string,
-  params: NP,
+  params: Record<string, any>,
   store: Store<S>,
   renderOptions: RenderOptions = {}
 ) {
+  const Stack = createStackNavigator();
+  const component = (
+    <Provider store={store}>
+      <TestInnerNavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name={route}
+            component={screen}
+            initialParams={params}
+          />
+        </Stack.Navigator>
+      </TestInnerNavigationContainer>
+    </Provider>
+  );
+
+  return render(component, renderOptions);
+
+  /*
   const customRouteConfigMap = {
     [route]: screen,
     // fakeScreen is needed to inject params in navigation route
@@ -62,4 +79,5 @@ export function renderScreenFakeNavRedux<S, NP>(
   });
 
   return renderNavContainerRedux(customNavigator, store, renderOptions);
+  */
 }

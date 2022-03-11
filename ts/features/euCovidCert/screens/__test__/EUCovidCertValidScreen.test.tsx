@@ -1,6 +1,6 @@
+import { NavigationAction } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import * as React from "react";
-import { NavigationAction, NavigationParams } from "react-navigation";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../i18n";
@@ -127,7 +127,7 @@ describe("Test EUCovidCertificateValidScreen", () => {
 });
 
 const renderComponent = (store: Store, validCertificate: ValidCertificate) => ({
-  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  component: renderScreenFakeNavRedux<GlobalState>(
     () => (
       <EuCovidCertValidScreen
         validCertificate={validCertificate}

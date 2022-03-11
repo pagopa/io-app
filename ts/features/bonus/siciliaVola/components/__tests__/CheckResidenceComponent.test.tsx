@@ -1,5 +1,5 @@
+import { NavigationActions } from "@react-navigation/compat";
 import { fireEvent } from "@testing-library/react-native";
-import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../i18n";
 import NavigationService from "../../../../../navigation/NavigationService";
@@ -100,7 +100,7 @@ function renderComponent() {
   const mockStore = configureMockStore<GlobalState>();
   const store = mockStore(globalState);
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       CheckResidenceComponent,
       ROUTES.MAIN,
       {},
