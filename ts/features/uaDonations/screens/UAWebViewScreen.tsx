@@ -121,7 +121,7 @@ const handleOnMessage = (
       break;
     case "payment":
       const { nav, cf, amount } = maybeMessage.value.payload;
-      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_REQUEST", {
+      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_REQUEST", {
         organizationFiscalCode: cf,
         paymentNoticeNumber: PaymentNoticeNumberFromString.encode(nav),
         amount
