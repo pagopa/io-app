@@ -8,6 +8,7 @@ import PinScreen from "../screens/onboarding/PinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
+import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
 import ROUTES from "./routes";
 
 /**
@@ -38,6 +39,9 @@ const navigator = createStackNavigator(
     },
     [ROUTES.READ_EMAIL_SCREEN]: {
       screen: EmailReadScreen
+    },
+    [ROUTES.ONBOARDING_COMPLETED]: {
+      screen: OnboardingCompletedScreen
     }
   },
   {
