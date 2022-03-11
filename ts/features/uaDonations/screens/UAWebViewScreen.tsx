@@ -100,7 +100,7 @@ const handleOnMessage = (
       const { nav, cf, amount } = maybeMessage.value.payload;
       void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_REQUEST", {
         organizationFiscalCode: cf,
-        paymentNoticeNumber: nav,
+        paymentNoticeNumber: PaymentNoticeNumberFromString.encode(nav),
         amount
       });
       const maybeRptId = RptId.decode({
@@ -118,9 +118,11 @@ const handleOnMessage = (
         handleError();
         return;
       }
-      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DATA_SUCCESS", {
+      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_SUCCESS", {
         organizationFiscalCode: maybeRptId.value.organizationFiscalCode,
-        paymentNoticeNumber: nav,
+        paymentNoticeNumber: PaymentNoticeNumber.encode(
+          maybeRptId.value.paymentNoticeNumber
+        ),
         amount: maybeAmount.value
       });
       onPaymentPayload(maybeRptId.value, maybeAmount.value);
