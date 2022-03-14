@@ -192,6 +192,30 @@ export const baseRawBackendStatus: BackendStatus = {
         "it-IT": "aggiornamento richiesto",
         "en-EN": "update required"
       }
+    },
+    cgn: {
+      is_visible: true,
+      level: LevelEnum.normal,
+      web_url: {
+        "it-IT": "",
+        "en-EN": ""
+      },
+      message: {
+        "it-IT": "aggiornamento richiesto",
+        "en-EN": "update required"
+      }
+    },
+    fims: {
+      is_visible: true,
+      level: LevelEnum.normal,
+      web_url: {
+        "it-IT": "",
+        "en-EN": ""
+      },
+      message: {
+        "it-IT": "aggiornamento richiesto",
+        "en-EN": "update required"
+      }
     }
   },
   config: {
@@ -223,6 +247,9 @@ export const baseRawBackendStatus: BackendStatus = {
         },
         url: "mockbannerurl"
       }
+    },
+    fims: {
+      enabled: false
     }
   }
 };
@@ -262,6 +289,9 @@ export const baseBackendConfig: Config = {
       },
       url: "mockbannerurl"
     }
+  },
+  fims: {
+    enabled: false
   }
 };
 
