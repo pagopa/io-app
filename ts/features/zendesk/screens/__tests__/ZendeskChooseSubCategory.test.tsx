@@ -12,9 +12,21 @@ import { ZendeskSubCategories } from "../../../../../definitions/content/Zendesk
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import ZendeskChooseSubCategory from "../ZendeskChooseSubCategory";
-import * as navigationAction from "../../store/actions/navigation";
 
 jest.useFakeTimers();
+
+const mockedNavigation = jest.fn();
+
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: mockedNavigation,
+      dispatch: jest.fn()
+    })
+  };
+});
 
 const mockedCategory: ZendeskCategory = {
   value: "mockedValue",
@@ -77,6 +89,9 @@ describe("the ZendeskChooseSubCategory screen", () => {
   });
 
   describe("if the selected category is defined and has at least a subcategory", () => {
+    beforeEach(() => {
+      mockedNavigation.mockClear();
+    });
     it("should render the subcategory", () => {
       const store: Store<GlobalState> = createStore(
         appReducer,
@@ -91,10 +106,6 @@ describe("the ZendeskChooseSubCategory screen", () => {
       ).toBeDefined();
     });
     it("should call the addTicketCustomField and the navigateToZendeskAskPermissions functions when is pressed", () => {
-      const navigateToZendeskAskPermissionsSpy = jest.spyOn(
-        navigationAction,
-        "navigateToZendeskAskPermissions"
-      );
       const store: Store<GlobalState> = createStore(
         appReducer,
         globalState as any
@@ -106,7 +117,11 @@ describe("the ZendeskChooseSubCategory screen", () => {
       );
       fireEvent(subCategoryItem, "onPress");
       expect(MockZendesk.addTicketCustomField).toBeCalled();
-      expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
+      expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
+        params: { assistanceForPayment: undefined },
+        screen: "ZENDESK_ASK_PERMISSIONS"
+      });
+      // expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
     });
   });
 });

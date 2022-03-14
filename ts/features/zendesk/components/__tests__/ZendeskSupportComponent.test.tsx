@@ -86,20 +86,7 @@ describe("the ZendeskSupportComponent", () => {
   });
 
   describe("when the user press the zendesk open ticket button", () => {
-    // const navigateToZendeskAskPermissionsSpy = jest.spyOn(
-    //   zendeskNavigation,
-    //   "navigateToZendeskAskPermissions"
-    // );
-    // const navigateToZendeskPanicModeSpy = jest.spyOn(
-    //   zendeskNavigation,
-    //   "navigateToZendeskPanicMode"
-    // );
-    // const navigateToZendeskChooseCategorySpy = jest.spyOn(
-    //   zendeskNavigation,
-    //   "navigateToZendeskChooseCategory"
-    // );
     beforeEach(() => {
-      // Alternatively, set "clearMocks" in your Jest config to "true"
       mockedNavigation.mockClear();
     });
     describe("if panic mode is false", () => {
