@@ -24,9 +24,6 @@ import { reproduceSequence } from "../../../../utils/tests";
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
 
-// Be sure that navigation is unmocked
-jest.unmock("react-navigation");
-
 describe("Integration Tests With Actual Store and Simplified Navigation", () => {
   afterAll(() => jest.resetAllMocks());
   beforeEach(() => jest.useFakeTimers());

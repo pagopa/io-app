@@ -17,7 +17,6 @@ import {
   fetchWalletsRequest
 } from "../../../store/actions/wallet/wallets";
 
-jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));

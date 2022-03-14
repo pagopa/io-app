@@ -17,7 +17,6 @@ jest.mock("../../../utils/bottomSheet", () => ({
   useIOBottomSheet: () => ({ present: mockPresentFn })
 }));
 
-jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));

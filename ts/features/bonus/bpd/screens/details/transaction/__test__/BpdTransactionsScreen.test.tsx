@@ -19,8 +19,6 @@ import * as lastUpdateReducer from "../../../../store/reducers/details/lastUpdat
 import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
 import BpdTransactionsScreen from "../BpdTransactionsScreen";
 
-// Be sure that navigation is unmocked
-jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
