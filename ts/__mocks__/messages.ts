@@ -101,8 +101,6 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     timeToLive,
     serviceName: service_1.service_name,
     organizationName: service_1.organization_name,
-    isRead: false,
-    isArchived: false,
     title: "Għandek flus?",
     raw: apiPayload.items[0] as any
   },
@@ -111,14 +109,12 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     fiscalCode: apiPayload.items[1].fiscal_code as FiscalCode,
     category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:34.541Z"),
-    isArchived: false,
     isRead: false,
+    isArchived: false,
     serviceId: serviceId_1,
     timeToLive,
     serviceName: service_1.service_name,
     organizationName: service_1.organization_name,
-    isRead: false,
-    isArchived: false,
     title: "Analiżi tad-demm",
     raw: apiPayload.items[1] as any
   },
@@ -133,8 +129,6 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     timeToLive,
     serviceName: service_2.service_name,
     organizationName: service_2.organization_name,
-    isRead: false,
-    isArchived: false,
     title: "позвоните нам!",
     raw: apiPayload.items[2] as any
   }
