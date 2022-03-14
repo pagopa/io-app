@@ -22,6 +22,7 @@ import {
 } from "../../store/actions";
 import * as zendeskNavigation from "../../store/actions/navigation";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
+import { getNetworkError } from "../../../../utils/errors";
 
 const mockPublicSession: PublicSession = {
   bpdToken: "bpdToken",
@@ -31,6 +32,9 @@ const mockPublicSession: PublicSession = {
   zendeskToken: "zendeskToken"
 };
 const mockZendeskConfig: Zendesk = {
+  panicMode: false
+};
+const mockZendeskPanicModeConfig: Zendesk = {
   panicMode: true
 };
 jest.useFakeTimers();
@@ -39,12 +43,12 @@ describe("the ZendeskSupportComponent", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   it("should render the zendesk open ticket button", () => {
     const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store);
+    const component = renderComponent(store, false);
     expect(component.getByTestId("contactSupportButton")).toBeDefined();
   });
   it("should render the zendesk show tickets button, if the user already open a ticket", () => {
     const store = createStore(appReducer, globalState as any);
-    const component = renderComponent(store);
+    const component = renderComponent(store, false);
     store.dispatch(zendeskRequestTicketNumber.success(1));
     expect(component.getByTestId("showTicketsButton")).toBeDefined();
   });
@@ -60,7 +64,7 @@ describe("the ZendeskSupportComponent", () => {
     describe("and the zendeskToken is defined", () => {
       store.dispatch(sessionInformationLoadSuccess(mockPublicSession));
       it("should call setUserIdentity with the zendeskToken", () => {
-        renderComponent(store);
+        renderComponent(store, false);
         expect(MockZendesk.setUserIdentity).toBeCalledWith({
           token: mockPublicSession.zendeskToken
         });
@@ -77,17 +81,56 @@ describe("the ZendeskSupportComponent", () => {
       zendeskNavigation,
       "navigateToZendeskPanicMode"
     );
+    const navigateToZendeskChooseCategorySpy = jest.spyOn(
+      zendeskNavigation,
+      "navigateToZendeskChooseCategory"
+    );
     afterEach(() => {
       jest.clearAllMocks();
     });
-    it("if panic mode is false, should navigate to the ZendeskAskPermissions screen", () => {
-      const store = createStore(appReducer, globalState as any);
-      const component = renderComponent(store);
-      const zendeskButton = component.getByTestId("contactSupportButton");
-      fireEvent(zendeskButton, "onPress");
-      expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
-      expect(navigateToZendeskPanicModeSpy).not.toBeCalled();
+    describe("if panic mode is false", () => {
+      it("if the assistanceForPayment is true should navigate to the ZendeskAskPermissions screen", () => {
+        const store = createStore(appReducer, globalState as any);
+        const component = renderComponent(store, true);
+        const zendeskButton = component.getByTestId("contactSupportButton");
+        fireEvent(zendeskButton, "onPress");
+        expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
+        expect(navigateToZendeskPanicModeSpy).not.toBeCalled();
+        expect(navigateToZendeskChooseCategorySpy).not.toBeCalled();
+      });
+      it("if the zendeskRemoteConfig is not remoteReady should navigate to the ZendeskAskPermissions screen", () => {
+        const store = createStore(appReducer, globalState as any);
+        const component = renderComponent(store, false);
+        const zendeskButton = component.getByTestId("contactSupportButton");
+        fireEvent(zendeskButton, "onPress");
+        expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
+        expect(navigateToZendeskPanicModeSpy).not.toBeCalled();
+        expect(navigateToZendeskChooseCategorySpy).not.toBeCalled();
+        store.dispatch(getZendeskConfig.request());
+        fireEvent(zendeskButton, "onPress");
+        expect(navigateToZendeskAskPermissionsSpy).toBeCalledTimes(2);
+        expect(navigateToZendeskPanicModeSpy).not.toBeCalled();
+        expect(navigateToZendeskChooseCategorySpy).not.toBeCalled();
+        store.dispatch(
+          getZendeskConfig.failure(getNetworkError("mockedError"))
+        );
+        fireEvent(zendeskButton, "onPress");
+        expect(navigateToZendeskAskPermissionsSpy).toBeCalledTimes(3);
+        expect(navigateToZendeskPanicModeSpy).not.toBeCalled();
+        expect(navigateToZendeskChooseCategorySpy).not.toBeCalled();
+      });
+      it("if the assistanceForPayment is false and the zendeskRemoteConfig is remoteReady should navigate to the navigateToZendeskChooseCategory screen", () => {
+        const store = createStore(appReducer, globalState as any);
+        const component = renderComponent(store, false);
+        store.dispatch(getZendeskConfig.success(mockZendeskConfig));
+        const zendeskButton = component.getByTestId("contactSupportButton");
+        fireEvent(zendeskButton, "onPress");
+        expect(navigateToZendeskChooseCategorySpy).toBeCalled();
+        expect(navigateToZendeskAskPermissionsSpy).not.toBeCalled();
+        expect(navigateToZendeskPanicModeSpy).not.toBeCalled();
+      });
     });
+
     it("if panic mode is true, should navigate to the ZendeskAskPermissions screen", () => {
       const navigateToZendeskAskPermissionsSpy = jest.spyOn(
         zendeskNavigation,
@@ -98,19 +141,20 @@ describe("the ZendeskSupportComponent", () => {
         "navigateToZendeskPanicMode"
       );
       const store = createStore(appReducer, globalState as any);
-      const component = renderComponent(store);
-      store.dispatch(getZendeskConfig.success(mockZendeskConfig));
+      const component = renderComponent(store, false);
+      store.dispatch(getZendeskConfig.success(mockZendeskPanicModeConfig));
       const zendeskButton = component.getByTestId("contactSupportButton");
       fireEvent(zendeskButton, "onPress");
       expect(navigateToZendeskPanicModeSpy).toBeCalled();
       expect(navigateToZendeskAskPermissionsSpy).not.toBeCalled();
+      expect(navigateToZendeskChooseCategorySpy).not.toBeCalled();
     });
   });
   describe("when the user press the zendesk show tickets button", () => {
     describe("if the user already open a ticket", () => {
       it("should call showTickets", () => {
         const store = createStore(appReducer, globalState as any);
-        const component = renderComponent(store);
+        const component = renderComponent(store, false);
         store.dispatch(zendeskRequestTicketNumber.success(1));
         const zendeskButton = component.getByTestId("showTicketsButton");
         fireEvent(zendeskButton, "onPress");
@@ -120,11 +164,14 @@ describe("the ZendeskSupportComponent", () => {
   });
 });
 
-function renderComponent(store: Store<GlobalState>) {
+function renderComponent(
+  store: Store<GlobalState>,
+  assistanceForPayment: boolean
+) {
   return renderScreenFakeNavRedux<GlobalState>(
     ZendeskSupportComponent,
     ROUTES.MAIN,
-    {},
+    { assistanceForPayment },
     store
   );
 }

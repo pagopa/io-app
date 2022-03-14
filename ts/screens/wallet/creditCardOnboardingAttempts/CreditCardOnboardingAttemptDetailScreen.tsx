@@ -20,7 +20,10 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import IconFont from "../../../components/ui/IconFont";
 import { getPanDescription } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
-import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -37,7 +40,7 @@ import {
   appendLog,
   assistanceToolRemoteConfig,
   zendeskCategoryId,
-  zendeskPaymentMethodCategoryValue
+  zendeskPaymentMethodCategory
 } from "../../../utils/supportAssistance";
 
 export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
@@ -98,12 +101,13 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   };
   const zendeskAssistanceLogAndStart = () => {
     // Set metodo_di_pagamento as category
-    addTicketCustomField(zendeskCategoryId, zendeskPaymentMethodCategoryValue);
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentMethodCategory.value);
     // Append the attempt in the log
     appendLog(JSON.stringify(attempt));
     dispatch(
       zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
     );
+    dispatch(zendeskSelectedCategory(zendeskPaymentMethodCategory));
   };
 
   const handleAskAssistance = () => {

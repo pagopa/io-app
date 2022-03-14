@@ -38,22 +38,30 @@ import {
 } from "../../../store/reducers/profile";
 import { getAppVersion } from "../../../utils/appVersion";
 import { getModel, getSystemVersion } from "../../../utils/device";
+import { getFullLocale } from "../../../utils/locale";
 import { isIos } from "../../../utils/platform";
+import { showToast } from "../../../utils/showToast";
 import {
   addTicketCustomField,
   addTicketTag,
+  anonymousAssistanceAddress,
+  anonymousAssistanceAddressWithSubject,
   openSupportTicket,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
-import { openWebUrl } from "../../../utils/url";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { handleItemOnPress } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
-import ZENDESK_ROUTES from "../navigation/routes";
-import { zendeskSupportCompleted } from "../store/actions";
-import { zendeskConfigSelector } from "../store/reducers";
+import {
+  zendeskSupportCompleted,
+  zendeskSupportFailure
+} from "../store/actions";
+import {
+  zendeskSelectedCategorySelector,
+  zendeskSelectedSubcategorySelector
+} from "../store/reducers";
 
 /**
  * Transform an array of string into a Zendesk
@@ -198,7 +206,6 @@ const ZendeskAskPermissions = (props: Props) => {
 
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
-  const zendeskConfig = useIOSelector(zendeskConfigSelector);
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = useIOSelector(idpSelector)
@@ -208,6 +215,12 @@ const ZendeskAskPermissions = (props: Props) => {
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
   const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
   const versionsHistory = useIOSelector(appVersionHistorySelector);
+  const zendeskSelectedCategory = useIOSelector(
+    zendeskSelectedCategorySelector
+  );
+  const zendeskSelectedSubcategory = useIOSelector(
+    zendeskSelectedSubcategorySelector
+  );
   const currentVersion = getAppVersion();
 
   const itemsProps: ItemProps = {
@@ -220,8 +233,11 @@ const ZendeskAskPermissions = (props: Props) => {
     identityProvider
   };
 
-  const assistanceWebFormLink =
-    "https://io.assistenza.pagopa.it/hc/it-it/requests/new";
+  // It should never happens since it is selected in the previous screen
+  if (zendeskSelectedCategory === undefined) {
+    dispatch(zendeskSupportFailure("The category has not been selected"));
+    return null;
+  }
 
   const itemsToRemove: ReadonlyArray<string> = [
     // if user is not asking assistance for a payment, remove the related items from those ones shown
@@ -239,8 +255,24 @@ const ZendeskAskPermissions = (props: Props) => {
     // remove these item whose have no value associated
     .filter(it => it.value !== notAvailable);
 
+  const locale = getFullLocale();
   const handleOnCancel = () => {
-    openWebUrl(assistanceWebFormLink);
+    handleItemOnPress(
+      anonymousAssistanceAddressWithSubject(
+        zendeskSelectedCategory.description[locale],
+        zendeskSelectedSubcategory?.description[locale]
+      ),
+      undefined,
+      constNull,
+      () => {
+        showToast(
+          I18n.t("support.askPermissions.toast.emailClientNotFound", {
+            emailAddress: anonymousAssistanceAddress
+          }),
+          "warning"
+        );
+      }
+    );
     void mixpanelTrack("ZENDESK_DENY_PERMISSIONS");
     workUnitCompleted();
   };
@@ -268,22 +300,9 @@ const ZendeskAskPermissions = (props: Props) => {
     // Tag the ticket with the current app version
     addTicketTag(currentVersion);
 
-    const canSkipCategoryChoice = (): boolean =>
-      !isReady(zendeskConfig) ||
-      Object.keys(zendeskConfig.value.zendeskCategories?.categories ?? {})
-        .length === 0 ||
-      assistanceForPayment;
-
-    // if is not possible to get the config, if the config has any category or if is an assistanceForPayment request open directly a ticket.
-    if (canSkipCategoryChoice()) {
-      openSupportTicket();
-      void mixpanelTrack("ZENDESK_OPEN_TICKET");
-      workUnitCompleted();
-    } else {
-      props.navigation.navigate({
-        routeName: ZENDESK_ROUTES.CHOOSE_CATEGORY
-      });
-    }
+    openSupportTicket();
+    void mixpanelTrack("ZENDESK_OPEN_TICKET");
+    workUnitCompleted();
   };
   const cancelButtonProps = {
     testID: "cancelButtonId",

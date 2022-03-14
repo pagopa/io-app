@@ -1,15 +1,32 @@
-import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  PaymentNoticeNumber,
+  PaymentNoticeNumberFromString,
+  RptId
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { useNavigation } from "@react-navigation/native";
 import { View } from "native-base";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
+import dataErrorImage from "../../../../img/pictograms/doubt.png";
+import genericErrorImage from "../../../../img/wallet/errors/generic-error-icon.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { BlockButtonProps } from "../../../components/ui/BlockButtons";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../navigation/params/AppParamsList";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -17,9 +34,8 @@ import { internalRouteNavigationParamsSelector } from "../../../store/reducers/i
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { showToast } from "../../../utils/showToast";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
-import { openWebUrl } from "../../../utils/url";
+import { isHttp, openWebUrl } from "../../../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
-import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { UADonationWebViewMessage } from "../types";
 
 const styles = StyleSheet.create({
@@ -42,13 +58,25 @@ const styles = StyleSheet.create({
   }
 });
 
-const ErrorComponent = (props: { onRetry: () => void }) => (
-  <LoadingErrorComponent
-    loadingCaption={""}
-    isLoading={false}
-    onRetry={props.onRetry}
-  />
-);
+type ErrorComponentProps = {
+  onRetry: () => void;
+  errorText: string;
+  buttonTitle: string;
+  image: React.ReactNode;
+};
+const ErrorComponent: React.FunctionComponent<ErrorComponentProps> = props => {
+  const buttonProps: BlockButtonProps = {
+    primary: true,
+    title: props.buttonTitle,
+    onPress: props.onRetry
+  };
+  return (
+    <>
+      <InfoScreenComponent image={props.image} title={props.errorText} />
+      <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
+    </>
+  );
+};
 
 // a loading component rendered during the webview loading states
 const renderLoading = () => (
@@ -59,13 +87,8 @@ const renderLoading = () => (
 
 /**
  * show a toast to inform about the occurred error
- * and trace it
- * @param _
  */
-const handleError = (_: string) => {
-  // TODO trace errors https://pagopa.atlassian.net/browse/IA-701
-  showToast(I18n.t("global.genericError"));
-};
+const handleError = () => showToast(I18n.t("global.genericError"));
 
 /**
  * parse the messages coming from the webview
@@ -81,30 +104,62 @@ const handleOnMessage = (
     JSON.parse(event.nativeEvent.data)
   );
   if (maybeMessage.isLeft()) {
-    handleError("decoding error: " + readableReport(maybeMessage.value));
+    void mixpanelTrack("UADONATIONS_WEBVIEW_DECODE_ERROR", {
+      reason: `decoding error: ${readableReport(maybeMessage.value)}`
+    });
+    handleError();
     return;
   }
   switch (maybeMessage.value.kind) {
     case "webUrl":
       const webUrl = maybeMessage.value.payload;
+      void mixpanelTrack("UADONATIONS_WEBVIEW_OPEN_WEBURL_REQUEST", {
+        url: webUrl
+      });
       openWebUrl(webUrl, () => {
-        handleError("webUrl error: " + webUrl);
+        void mixpanelTrack("UADONATIONS_WEBVIEW_OPEN_WEBURL_ERROR", {
+          url: maybeMessage.value.payload
+        });
+        handleError();
       });
       break;
     case "payment":
       const { nav, cf, amount } = maybeMessage.value.payload;
+      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_REQUEST", {
+        organizationFiscalCode: cf,
+        paymentNoticeNumber: PaymentNoticeNumberFromString.encode(nav),
+        amount
+      });
       const maybeRptId = RptId.decode({
         paymentNoticeNumber: nav,
         organizationFiscalCode: cf
       });
       const maybeAmount = AmountInEuroCents.decode(amount.toString());
       if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
+        const reason = maybeRptId.isLeft()
+          ? maybeRptId.value
+          : maybeAmount.value;
+        void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_ERROR", {
+          reason
+        });
+        handleError();
         return;
       }
+      void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_SUCCESS", {
+        organizationFiscalCode: maybeRptId.value.organizationFiscalCode,
+        paymentNoticeNumber: PaymentNoticeNumber.encode(
+          maybeRptId.value.paymentNoticeNumber
+        ),
+        amount: maybeAmount.value
+      });
       onPaymentPayload(maybeRptId.value, maybeAmount.value);
       break;
     case "error":
-      handleError("web page error: " + maybeMessage.value.payload);
+      const error = maybeMessage.value.payload;
+      void mixpanelTrack("UADONATIONS_WEBVIEW_REPORT_ERROR", {
+        reason: error
+      });
+      handleError();
       break;
   }
 };
@@ -118,18 +173,29 @@ const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
  */
 export const UAWebViewScreen = () => {
   const navigationParams = useIOSelector(internalRouteNavigationParamsSelector);
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const uri = navigationParams?.urlToLoad;
   const ref = React.createRef<WebView>();
-  const [hasError, setError] = useState(false);
-  const errorComponent = (
-    <ErrorComponent
-      onRetry={() => {
-        ref.current?.reload();
-        setError(false);
-      }}
-    />
-  );
+  /**
+   * errors type
+   * - webview: errors coming from the webpage
+   * - data: unexpected data from navigation params (empty or malformed)
+   */
+  const [errorType, setErrorType] = useState<"webview" | "data" | undefined>();
+
+  useEffect(() => {
+    if (uri === undefined) {
+      setErrorType("data");
+    } else {
+      const urlParsed = new URLParse(uri);
+      // url malformed
+      if (isStringNullyOrEmpty(urlParsed.host) || !isHttp(urlParsed.origin)) {
+        setErrorType("data");
+      }
+    }
+  }, [uri]);
+
   // trigger the payment flow within the given data
   const startDonationPayment = (
     rptId: RptId,
@@ -149,19 +215,38 @@ export const UAWebViewScreen = () => {
   };
 
   const onError = () => {
-    setError(true);
+    setErrorType("webview");
   };
 
-  if (uri === undefined) {
-    // TODO show an error component to inform the failure scenario https://pagopa.atlassian.net/browse/IA-706
-    return null;
-  }
-  const urlParsed = new URLParse(uri);
-  // url malformed
-  if (isStringNullyOrEmpty(urlParsed.host)) {
-    // TODO show an alert to inform the failure scenario https://pagopa.atlassian.net/browse/IA-706
-    return null;
-  }
+  const getErrorComponent = (error: NonNullable<typeof errorType>) => {
+    switch (error) {
+      case "webview":
+        return (
+          <ErrorComponent
+            image={renderInfoRasterImage(genericErrorImage)}
+            errorText={I18n.t("wallet.errors.GENERIC_ERROR")}
+            buttonTitle={I18n.t("global.buttons.retry")}
+            onRetry={() => {
+              ref.current?.reload();
+              setErrorType(undefined);
+            }}
+          />
+        );
+      case "data":
+        return (
+          <ErrorComponent
+            image={renderInfoRasterImage(dataErrorImage)}
+            buttonTitle={I18n.t(
+              "features.uaDonations.webViewScreen.errors.data.buttonTitle"
+            )}
+            errorText={I18n.t("wallet.errors.GENERIC_ERROR")}
+            onRetry={() => {
+              navigation.goBack();
+            }}
+          />
+        );
+    }
+  };
 
   return (
     <BaseScreenComponent
@@ -170,7 +255,7 @@ export const UAWebViewScreen = () => {
       headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {!hasError ? (
+        {errorType === undefined && uri && (
           <WebView
             testID={"UAWebViewScreenTestID"}
             ref={ref}
@@ -187,9 +272,8 @@ export const UAWebViewScreen = () => {
             renderLoading={renderLoading}
             javaScriptEnabled={true}
           />
-        ) : (
-          errorComponent
         )}
+        {errorType && getErrorComponent(errorType)}
       </SafeAreaView>
     </BaseScreenComponent>
   );

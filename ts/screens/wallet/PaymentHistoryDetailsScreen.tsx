@@ -24,7 +24,10 @@ import {
   PaymentSummaryComponent
 } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
-import { zendeskSupportStart } from "../../features/zendesk/store/actions";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../features/zendesk/store/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
@@ -54,8 +57,9 @@ import {
   appendLog,
   assistanceToolRemoteConfig,
   zendeskCategoryId,
-  zendeskPaymentCategoryValue
+  zendeskPaymentCategory
 } from "../../utils/supportAssistance";
+import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -119,13 +123,14 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private zendeskAssistanceLogAndStart = () => {
     // Set pagamenti_pagopa as category
-    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
     // Append the payment history details in the log
     appendLog(
       getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
     );
 
     this.props.zendeskSupportWorkunitStart();
+    this.props.zendeskSelectedCategory(zendeskPaymentCategory);
   };
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
@@ -389,7 +394,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   zendeskSupportWorkunitStart: () =>
     dispatch(
       zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
-    )
+    ),
+  zendeskSelectedCategory: (category: ZendeskCategory) =>
+    dispatch(zendeskSelectedCategory(category))
 });
 
 export default connect(

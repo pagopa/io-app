@@ -14,6 +14,7 @@ import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import {
   instabugLog,
   openInstabugQuestionReport,
@@ -31,7 +32,10 @@ import {
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -64,7 +68,7 @@ import {
   assistanceToolRemoteConfig,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategoryValue
+  zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
 
 export type TransactionErrorScreenNavigationParams = {
@@ -127,7 +131,8 @@ const requestZendeskAssistanceForPaymentFailure = (
   payment?: PaymentHistory
 ) => {
   // Set pagamenti_pagopa as category
-  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+
   // Add rptId custom field
   addTicketCustomField(
     zendeskBlockedPaymentRptIdId,
@@ -372,7 +377,10 @@ const TransactionErrorScreen = (props: Props) => {
     rptId,
     onCancel,
     choosenTool,
-    props.zendeskSupportWorkunitStart,
+    () => {
+      props.zendeskSupportWorkunitStart();
+      props.zendeskSelectedCategory(zendeskPaymentCategory);
+    },
     props.canShowHelp,
     paymentHistory
   );
@@ -410,7 +418,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   zendeskSupportWorkunitStart: () =>
     dispatch(
       zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
-    )
+    ),
+  zendeskSelectedCategory: (category: ZendeskCategory) =>
+    dispatch(zendeskSelectedCategory(category))
 });
 
 export default connect(

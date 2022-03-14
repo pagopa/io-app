@@ -13,6 +13,10 @@ import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import { profileSelector } from "../../../store/reducers/profile";
@@ -27,15 +31,11 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import { getValueOrElse } from "../../bonus/bpd/model/RemoteValue";
+import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   zendeskRequestTicketNumber,
   zendeskSupportCompleted
 } from "../store/actions";
-import {
-  navigateToZendeskAskPermissions,
-  navigateToZendeskPanicMode
-} from "../store/actions/navigation";
 import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
@@ -57,7 +57,7 @@ const ZendeskSupportComponent = (props: Props) => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const profile = useIOSelector(profileSelector);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
-  const navigation = useNavigation();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useDispatch();
   const ticketsNumber = useIOSelector(zendeskTicketNumberSelector);
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
@@ -107,13 +107,27 @@ const ZendeskSupportComponent = (props: Props) => {
   }, [dispatch, zendeskConfig, zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
+    const canSkipCategoryChoice: boolean =
+      !isReady(zendeskRemoteConfig) || assistanceForPayment;
+
     if (isPanicModeActive(zendeskRemoteConfig)) {
       // Go to panic mode screen
-      navigation.dispatch(navigateToZendeskPanicMode());
+      navigation.navigate("ZENDESK_MAIN", {
+        screen: "ZENDESK_PANIC_MODE"
+      });
+      return;
+    }
+
+    if (canSkipCategoryChoice) {
+      navigation.navigate("ZENDESK_MAIN", {
+        screen: "ZENDESK_ASK_PERMISSIONS",
+        params: { assistanceForPayment }
+      });
     } else {
-      navigation.dispatch(
-        navigateToZendeskAskPermissions({ assistanceForPayment })
-      );
+      navigation.navigate("ZENDESK_MAIN", {
+        screen: "ZENDESK_CHOOSE_CATEGORY",
+        params: { assistanceForPayment }
+      });
     }
   };
 

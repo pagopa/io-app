@@ -770,7 +770,8 @@ onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
-    headerTitle: Activation
+    headerTitle: Configure IO
+    contentTitle: Privacy Policy and Terms of Service
     accept: Accept
     error: Loading error
     alert:
@@ -2539,7 +2540,7 @@ bonus:
         suggestedOption: Recommended
         options:
           keepAll:
-            title: Keep all payment methods in the Wallet 
+            title: Keep all payment methods in the Wallet
             body: If supported, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. You can change your method preferences or delete them at any time.
           deleteAll:
             title: Delete all payment methods from the Wallet
@@ -2998,6 +2999,9 @@ features:
   uaDonations:
     webViewScreen:
       headerTitle: Donation
+      errors:
+        data:
+          buttonTitle: Go back
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3040,6 +3044,8 @@ support:
     cta:
       allow: "Agree"
       denies: "Deny"
+    toast:
+      emailClientNotFound: "To get support write us: {{emailAddress}}"
   chooseCategory:
     header: "Write us"
     title:

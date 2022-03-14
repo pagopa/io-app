@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
 import { ListItem } from "native-base";
 import React from "react";
@@ -16,7 +17,6 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import IconFont from "../../../components/ui/IconFont";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { toArray } from "../../../store/helpers/indexer";
 import { useIOSelector } from "../../../store/hooks";
@@ -24,32 +24,42 @@ import customVariables from "../../../theme/variables";
 import { getFullLocale } from "../../../utils/locale";
 import {
   addTicketCustomField,
-  hasSubCategories,
-  openSupportTicket
+  hasSubCategories
 } from "../../../utils/supportAssistance";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
   zendeskSelectedCategory,
-  zendeskSupportCompleted,
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskConfigSelector } from "../store/reducers";
 
+export type ZendeskChooseCategoryNavigationParams = {
+  assistanceForPayment: boolean;
+};
+
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_CATEGORY">
+  >;
+};
+
 /**
  * this screen shows the categories for which the user can ask support with the assistance
  */
-const ZendeskChooseCategory = () => {
+const ZendeskChooseCategory = (props: Props) => {
   const dispatch = useDispatch();
   const navigation =
     useNavigation<
       IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_CATEGORY">
     >();
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
   const selectedCategory = (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category));
-  const zendeskWorkunitComplete = () => dispatch(zendeskSupportCompleted());
   const zendeskWorkUnitFailure = (reason: string) =>
     dispatch(zendeskSupportFailure(reason));
 
@@ -83,11 +93,13 @@ const ZendeskChooseCategory = () => {
           // Set category as custom field
           addTicketCustomField(categoriesId, category.value);
           if (hasSubCategories(category)) {
-            navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY);
+            navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
+              assistanceForPayment
+            });
           } else {
-            openSupportTicket();
-            void mixpanelTrack("ZENDESK_OPEN_TICKET");
-            zendeskWorkunitComplete();
+            navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
+              assistanceForPayment
+            });
           }
         }}
         first={listItem.index === 0}

@@ -1,3 +1,6 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
+import { ListItem } from "native-base";
 import React from "react";
 import {
   FlatList,
@@ -6,38 +9,52 @@ import {
   ScrollView
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { ListItem } from "native-base";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { H1 } from "../../../components/core/typography/H1";
+import { H4 } from "../../../components/core/typography/H4";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import IconFont from "../../../components/ui/IconFont";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { zendeskSelectedCategorySelector } from "../store/reducers";
-import { H4 } from "../../../components/core/typography/H4";
 import customVariables from "../../../theme/variables";
-import IconFont from "../../../components/ui/IconFont";
+import { getFullLocale } from "../../../utils/locale";
 import {
   addTicketCustomField,
-  hasSubCategories,
-  openSupportTicket
+  hasSubCategories
 } from "../../../utils/supportAssistance";
+import { ZendeskParamsList } from "../navigation/params";
 import {
-  zendeskSupportCompleted,
+  zendeskSelectedSubcategory,
   zendeskSupportFailure
 } from "../store/actions";
-import { getFullLocale } from "../../../utils/locale";
-import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
-import { mixpanelTrack } from "../../../mixpanel";
+import { zendeskSelectedCategorySelector } from "../store/reducers";
+
+export type ZendeskChooseSubCategoryNavigationParams = {
+  assistanceForPayment: boolean;
+};
+
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_SUB_CATEGORY">
+  >;
+};
 
 /**
  * this screen shows the sub-categories for which the user can ask support with the assistance
  * see {@link ZendeskChooseCategory} to check the previous category screen
  */
-const ZendeskChooseSubCategory = () => {
+const ZendeskChooseSubCategory = (props: Props) => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useDispatch();
-  const zendeskWorkunitComplete = () => dispatch(zendeskSupportCompleted());
+  const navigation = useNavigation<IOStackNavigationProp<ZendeskParamsList>>();
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
+  const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
+    dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
     dispatch(zendeskSupportFailure(reason));
 
@@ -66,11 +83,12 @@ const ZendeskChooseSubCategory = () => {
     return (
       <ListItem
         onPress={() => {
+          selectedSubcategory(subCategory);
           // Set sub-category as custom field
           addTicketCustomField(subCategoriesId, subCategory.value);
-          openSupportTicket();
-          void mixpanelTrack("ZENDESK_OPEN_TICKET");
-          zendeskWorkunitComplete();
+          navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
+            assistanceForPayment
+          });
         }}
         first={listItem.index === 0}
         style={{ paddingRight: 0 }}

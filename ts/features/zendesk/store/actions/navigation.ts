@@ -13,11 +13,18 @@ export const navigateToZendeskPanicMode = () =>
   NavigationActions.navigate({
     routeName: ZENDESK_ROUTES.PANIC_MODE
   });
-// export const navigateToZendeskChooseCategory = () =>
+
+// export const navigateToZendeskChooseCategory = (
+//   params: ZendeskChooseCategoryNavigationParams
+// ) =>
 //   NavigationActions.navigate({
-//     routeName: ZENDESK_ROUTES.CHOOSE_CATEGORY
+//     routeName: ZENDESK_ROUTES.CHOOSE_CATEGORY,
+//     params
 //   });
-// export const navigateToZendeskChooseSubCategory = () =>
+// export const navigateToZendeskChooseSubCategory = (
+//   params: ZendeskChooseSubCategoryNavigationParams
+// ) =>
 //   NavigationActions.navigate({
-//     routeName: ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY
+//     routeName: ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY,
+//     params
 //   });

@@ -14,9 +14,12 @@ import { Action } from "../../../../store/actions/types";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber,
-  zendeskSelectedCategory
+  zendeskSelectedCategory,
+  zendeskSelectedSubcategory,
+  zendeskSupportStart
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
+import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 
 type ZendeskValue = {
   panicMode: boolean;
@@ -30,6 +33,7 @@ export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
 export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
+  selectedSubcategory?: ZendeskSubCategory;
   ticketNumber: RemoteValue<number, Error>;
 };
 
@@ -43,11 +47,17 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
+    case getType(zendeskSupportStart):
+      return {
+        ...state,
+        zendeskConfig: remoteUndefined,
+        selectedCategory: undefined,
+        selectedSubcategory: undefined
+      };
     case getType(getZendeskConfig.request):
       return {
         ...state,
-        zendeskConfig: remoteLoading,
-        selectedCategory: undefined
+        zendeskConfig: remoteLoading
       };
     case getType(getZendeskConfig.success):
       return {
@@ -72,6 +82,8 @@ const reducer = (
       };
     case getType(zendeskSelectedCategory):
       return { ...state, selectedCategory: action.payload };
+    case getType(zendeskSelectedSubcategory):
+      return { ...state, selectedSubcategory: action.payload };
     case getType(zendeskRequestTicketNumber.request):
       return { ...state, ticketNumber: remoteLoading };
     case getType(zendeskRequestTicketNumber.success):
@@ -86,11 +98,17 @@ export const zendeskConfigSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.zendeskConfig],
   (zendeskConfig: ZendeskConfig): ZendeskConfig => zendeskConfig
 );
-
 export const zendeskSelectedCategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
-  (zendeskConfig: ZendeskCategory | undefined): ZendeskCategory | undefined =>
-    zendeskConfig
+  (zendeskCategory: ZendeskCategory | undefined): ZendeskCategory | undefined =>
+    zendeskCategory
+);
+
+export const zendeskSelectedSubcategorySelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.selectedSubcategory],
+  (
+    zendeskSubcategory: ZendeskSubCategory | undefined
+  ): ZendeskSubCategory | undefined => zendeskSubcategory
 );
 
 export const zendeskTicketNumberSelector = createSelector(
