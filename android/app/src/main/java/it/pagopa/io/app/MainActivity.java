@@ -47,11 +47,4 @@ public class MainActivity extends ReactActivity {
             }
         };
     }
-
-
-    private void showAlertDialog(String title, String message) {
-        new AlertDialog.Builder(MainActivity.this).setTitle(title).setMessage(message)
-                .setPositiveButton(getString(android.R.string.ok), (dialog, which) -> finish()).setCancelable(false)
-                .show();
-    }
 }
