@@ -1,27 +1,32 @@
-import { Content, Form, Text, View } from "native-base";
-import * as React from "react";
-import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
-import { Either, isRight } from "fp-ts/lib/Either";
-import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { Either, isRight } from "fp-ts/lib/Either";
+import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
+import { Content, Form, Text, View } from "native-base";
+import * as React from "react";
+import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { NavigationEvents } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
+import { connect } from "react-redux";
+import { H1 } from "../../../components/core/typography/H1";
+import { Link } from "../../../components/core/typography/Link";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
+import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
-import { LabelledItem } from "../../../components/LabelledItem";
+import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
 import {
@@ -32,27 +37,24 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import variables from "../../../theme/variables";
-import { Link } from "../../../components/core/typography/Link";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getPagoPAMethodsSelector,
   getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
+import variables from "../../../theme/variables";
 import {
   alertNoActivePayablePaymentMethods,
   alertNoPayablePaymentMethods
 } from "../../../utils/paymentMethod";
-import { H1 } from "../../../components/core/typography/H1";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
-type NavigationParams = {
+export type ManualDataInsertionScreenNavigationParams = {
   isInvalidAmount?: boolean;
 };
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<ManualDataInsertionScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &

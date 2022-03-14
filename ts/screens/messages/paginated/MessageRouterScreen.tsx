@@ -1,8 +1,10 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useCallback, useEffect, useRef } from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 import {
   euCovidCertificateEnabled,
@@ -13,7 +15,9 @@ import {
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/EUCovidCertificate";
+import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
 import I18n from "../../../i18n";
+import NavigationService from "../../../navigation/NavigationService";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
@@ -23,27 +27,28 @@ import {
   navigateBack,
   navigateToPaginatedMessageDetailScreenAction
 } from "../../../store/actions/navigation";
-import { GlobalState } from "../../../store/reducers/types";
-import { isStrictSome } from "../../../utils/pot";
-import {
-  UIMessage,
-  UIMessageDetails,
-  UIMessageId
-} from "../../../store/reducers/entities/messages/types";
-import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import * as allPaginated from "../../../store/reducers/entities/messages/allPaginated";
 import {
   Cursor,
   getCursors
 } from "../../../store/reducers/entities/messages/allPaginated";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
-import NavigationService from "../../../navigation/NavigationService";
-import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
+import {
+  UIMessage,
+  UIMessageDetails,
+  UIMessageId
+} from "../../../store/reducers/entities/messages/types";
+import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { isStrictSome } from "../../../utils/pot";
 
-type OwnProps = NavigationInjectedProps<{ messageId: UIMessageId }>;
+export type MessageRouterScreenPaginatedNavigationParams = {
+  messageId: UIMessageId;
+};
+
+type OwnProps =
+  NavigationStackScreenProps<MessageRouterScreenPaginatedNavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -73,8 +78,7 @@ const navigateToScreenHandler =
       navigateBack();
       dispatch(
         navigateToPaginatedMessageDetailScreenAction({
-          message,
-          messageDetails
+          message
         })
       );
     }

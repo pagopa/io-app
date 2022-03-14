@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select } from "typed-redux-saga/macro";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { markServiceAsRead } from "../../store/actions/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
@@ -12,9 +12,9 @@ import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers
 export function* handleServiceReadabilitySaga(serviceId: string): SagaIterator {
   const isFirstVisibleServiceLoadCompleted: ReturnType<
     typeof isFirstVisibleServiceLoadCompletedSelector
-  > = yield select(isFirstVisibleServiceLoadCompletedSelector);
+  > = yield* select(isFirstVisibleServiceLoadCompletedSelector);
 
   if (!isFirstVisibleServiceLoadCompleted) {
-    yield put(markServiceAsRead(serviceId as ServiceId));
+    yield* put(markServiceAsRead(serviceId as ServiceId));
   }
 }

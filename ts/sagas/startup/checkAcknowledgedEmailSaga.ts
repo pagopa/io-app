@@ -1,4 +1,4 @@
-import { call, Effect, take } from "redux-saga/effects";
+import { call, take } from "typed-redux-saga/macro";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import {
   navigateToEmailInsertScreen,
@@ -10,6 +10,7 @@ import {
   isProfileEmailValidated,
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
+import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * Launch email saga that consists of:
@@ -20,7 +21,7 @@ import {
  */
 export function* checkAcknowledgedEmailSaga(
   userProfile: InitializedProfile
-): IterableIterator<Effect> {
+): IterableIterator<ReduxSagaEffect> {
   // Check if the profile has an email
   if (hasProfileEmail(userProfile)) {
     if (
@@ -32,7 +33,7 @@ export function* checkAcknowledgedEmailSaga(
       // OR
       // An email exists on the user's profile but it is not validated, the conditional
       // view shows the component that reminds to validate the email address or allows the navigation to edit it.
-      yield call(navigateToEmailReadScreen);
+      yield* call(navigateToEmailReadScreen);
     } else {
       // we can go on, no need to wait
       return;
@@ -42,10 +43,10 @@ export function* checkAcknowledgedEmailSaga(
     // EmailInsertScreen knows if the user comes from onboarding or not
     // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
     // to validate it
-    yield call(navigateToEmailInsertScreen);
+    yield* call(navigateToEmailInsertScreen);
   }
 
   // Wait for the user to press "Continue" button after having checked out
   // his own email
-  yield take(emailAcknowledged);
+  yield* take(emailAcknowledged);
 }

@@ -1,4 +1,4 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
 import {
@@ -31,7 +31,7 @@ import { onboardingPrivativeAddedSelector } from "../../store/reducers/addedPriv
  * - The user chooses back from the first screen {@link walletAddCoBadgeBack}
  */
 function* privativeWorkUnit() {
-  return yield call(executeWorkUnit, {
+  return yield* call(executeWorkUnit, {
     startScreenNavigation: navigateToOnboardingPrivativeChooseIssuerScreen,
     startScreenName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER,
     complete: walletAddPrivativeCompleted,
@@ -47,11 +47,11 @@ function* privativeWorkUnit() {
 export function* addPrivativeToWalletAndActivateBpd() {
   const initialScreenName: ReturnType<
     typeof NavigationService.getCurrentRouteName
-  > = yield call(NavigationService.getCurrentRouteName);
+  > = yield* call(NavigationService.getCurrentRouteName);
   const sagaExecution = () =>
     withFailureHandling(() => withResetNavigationStack(privativeWorkUnit));
 
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
     sagaExecution
   );
 
@@ -63,18 +63,18 @@ export function* addPrivativeToWalletAndActivateBpd() {
     // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit.
 
-    yield call(navigateToWalletHome);
+    yield* call(navigateToWalletHome);
   }
 
   if (res === "completed") {
     // refresh wallets list
-    yield put(fetchWalletsRequest());
+    yield* put(fetchWalletsRequest());
     // read the new added privative card
     const privativeAdded: ReturnType<typeof onboardingPrivativeAddedSelector> =
-      yield select(onboardingPrivativeAddedSelector);
+      yield* select(onboardingPrivativeAddedSelector);
 
     if (privativeAdded) {
-      yield call(
+      yield* call(
         activateBpdOnNewPaymentMethods,
         [privativeAdded],
         navigateToActivateBpdOnNewPrivative

@@ -1,7 +1,10 @@
-import { call, Effect } from "redux-saga/effects";
+import { call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../../types/utils";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnActivationStatus } from "../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
@@ -38,17 +41,21 @@ export const cgnActivationSaga = (
   startCgnActivation: ReturnType<typeof BackendCGN>["startCgnActivation"],
   handleCgnStatusPolling: CgnStatusPollingSaga
 ) =>
-  function* (): Generator<Effect, ActionType<typeof cgnActivationStatus>, any> {
+  function* (): Generator<
+    ReduxSagaEffect,
+    ActionType<typeof cgnActivationStatus>,
+    any
+  > {
     try {
       const startCgnActivationResult: SagaCallReturnType<
         typeof startCgnActivation
-      > = yield call(startCgnActivation, {});
+      > = yield* call(startCgnActivation, {});
 
       if (startCgnActivationResult.isRight()) {
         const status = startCgnActivationResult.value.status;
         // Status is 201 request has been created -> Start Polling
         if (status === 201) {
-          return yield call(handleCgnStatusPolling);
+          return yield* call(handleCgnStatusPolling);
         }
         // 202 -> still processing
         if (status === 202) {
@@ -80,11 +87,15 @@ export const cgnActivationSaga = (
 export const handleCgnStatusPolling = (
   getCgnActivation: ReturnType<typeof BackendCGN>["getCgnActivation"]
 ) =>
-  function* (): Generator<Effect, ActionType<typeof cgnActivationStatus>, any> {
+  function* (): Generator<
+    ReduxSagaEffect,
+    ActionType<typeof cgnActivationStatus>,
+    any
+  > {
     const startPollingTime = new Date().getTime();
     while (true) {
       const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> =
-        yield call(getCgnActivation, {});
+        yield* call(getCgnActivation, {});
       // blocking error -> stop polling
       if (cgnActivationResult.isLeft()) {
         throw cgnActivationResult.value;
@@ -116,7 +127,7 @@ export const handleCgnStatusPolling = (
         }
       }
       // sleep
-      yield call(startTimer, cgnResultPolling);
+      yield* call(startTimer, cgnResultPolling);
       // check if the time threshold was exceeded, if yes stop polling
       const now = new Date().getTime();
       if (now - startPollingTime >= pollingTimeThreshold) {

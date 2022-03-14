@@ -2,7 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -20,7 +20,7 @@ import {
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 
-type NavigationParams = Readonly<{
+export type EuCovidCertMarkdownDetailsScreenNavigationParams = Readonly<{
   markdownDetails: string;
 }>;
 
@@ -38,7 +38,7 @@ const showToastError = (error: string = I18n.t("global.genericError")) =>
   showToast(error);
 
 export const EuCovidCertMarkdownDetailsScreen = (
-  props: NavigationInjectedProps<NavigationParams>
+  props: NavigationStackScreenProps<EuCovidCertMarkdownDetailsScreenNavigationParams>
 ): React.ReactElement => {
   const [loadMarkdownComplete, setLoadMarkdownComplete] = useState(false);
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);

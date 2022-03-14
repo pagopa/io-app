@@ -17,7 +17,7 @@ import { Content, View } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -65,7 +65,7 @@ import {
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 
-type NavigationParams = Readonly<{
+export type AddCardScreenNavigationParams = Readonly<{
   inPayment: Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
@@ -75,7 +75,7 @@ type NavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<AddCardScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &

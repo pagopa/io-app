@@ -8,7 +8,7 @@ import Instabug from "instabug-reactnative";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -59,13 +59,17 @@ import {
   assistanceToolRemoteConfig,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategoryValue
+  zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 
-type NavigationParams = {
+export type TransactionErrorScreenNavigationParams = {
   error: Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
@@ -77,7 +81,8 @@ type NavigationParams = {
   onCancel: () => void;
 };
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionErrorScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -121,7 +126,8 @@ const requestZendeskAssistanceForPaymentFailure = (
   payment?: PaymentHistory
 ) => {
   // Set pagamenti_pagopa as category
-  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+
   // Add rptId custom field
   addTicketCustomField(
     zendeskBlockedPaymentRptIdId,
@@ -145,7 +151,9 @@ const ErrorCodeCopyComponent = ({
   error: keyof typeof Detail_v2Enum;
 }): React.ReactElement => (
   <View testID={"error-code-copy-component"}>
-    <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
+    <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+      {I18n.t("wallet.errors.assistanceLabel")}
+    </H4>
     <H4 weight={"Bold"} testID={"error-code"} style={{ textAlign: "center" }}>
       {error}
     </H4>
@@ -165,7 +173,7 @@ const ErrorCodeCopyComponent = ({
  * @param handleZendeskRequestAssistance
  */
 export const errorTransactionUIElements = (
-  maybeError: NavigationParams["error"],
+  maybeError: TransactionErrorScreenNavigationParams["error"],
   rptId: RptId,
   onCancel: () => void,
   choosenTool: ToolEnum,
@@ -364,7 +372,10 @@ const TransactionErrorScreen = (props: Props) => {
     rptId,
     onCancel,
     choosenTool,
-    props.zendeskSupportWorkunitStart,
+    () => {
+      props.zendeskSupportWorkunitStart();
+      props.zendeskSelectedCategory(zendeskPaymentCategory);
+    },
     props.canShowHelp,
     paymentHistory
   );
@@ -402,7 +413,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   zendeskSupportWorkunitStart: () =>
     dispatch(
       zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
-    )
+    ),
+  zendeskSelectedCategory: (category: ZendeskCategory) =>
+    dispatch(zendeskSelectedCategory(category))
 });
 
 export default connect(

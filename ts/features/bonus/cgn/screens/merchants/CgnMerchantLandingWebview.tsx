@@ -1,17 +1,18 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import WebviewComponent from "../../../../../components/WebviewComponent";
 import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
-type NavigationParams = Readonly<{
+export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
   landingPageUrl: string;
   landingPageReferrer: string;
 }>;
 
-type Props = NavigationInjectedProps<NavigationParams>;
+type Props =
+  NavigationStackScreenProps<CgnMerchantLandingWebviewNavigationParams>;
 
 const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   props: Props
@@ -32,7 +33,8 @@ const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
           source={{
             uri: landingPageUrl as string,
             headers: {
-              referer: landingPageReferrer
+              referer: landingPageReferrer,
+              "X-PagoPa-CGN-Referer": landingPageReferrer
             }
           }}
         />

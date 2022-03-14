@@ -1,18 +1,15 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import {
-  NavigationInjectedProps,
-  NavigationLeafRoute,
-  StackActions
-} from "react-navigation";
+import { NavigationLeafRoute, StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -20,7 +17,6 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
@@ -45,6 +41,7 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
@@ -52,6 +49,7 @@ import {
   getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
+import { isRawPayPal } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import {
@@ -64,18 +62,18 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import { isRawPayPal } from "../../../types/pagopa";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { dispatchPickPspOrConfirm } from "./common";
 
-export type NavigationParams = Readonly<{
+export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
   startRoute: NavigationLeafRoute | undefined;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionSummaryScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -92,15 +90,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20
   },
-  noticeIcon: {
-    paddingLeft: 10
-  },
   flex: {
     flex: 1
   }
 });
-
-const NOTICE_ICON_SIZE = 24;
 
 /**
  * This screen shows the transaction details once the payment has been verified
@@ -259,8 +252,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const rptId: RptId = this.props.navigation.getParam("rptId");
-    // TODO: it should compare the current an d the initial amount BUT the initialAmount seems to be provided with an incorrect format https://www.pivotaltracker.com/story/show/172084929
-    const isAmountUpdated = true;
 
     const { potVerifica } = this.props;
 
@@ -298,9 +289,13 @@ class TransactionSummaryScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent
         goBack={this.handleBackPress}
-        headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
         dark={true}
+        headerBackgroundColor={customVariables.milderGray}
       >
+        <FocusAwareStatusBar
+          backgroundColor={customVariables.milderGray}
+          barStyle={"light-content"}
+        />
         <SafeAreaView style={styles.flex}>
           <SlidedContentComponent dark={true}>
             <PaymentSummaryComponent
@@ -308,7 +303,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
               title={I18n.t("wallet.firstTransactionSummary.title")}
               description={transactionDescription}
               recipient={recipient.fold("-", r => r)}
-              image={require("../../../../img/wallet/icon-avviso-pagopa.png")}
             />
 
             <View spacer={true} large={true} />
@@ -321,28 +315,18 @@ class TransactionSummaryScreen extends React.Component<Props> {
                 <Text style={[styles.title, styles.lighterGray]}>
                   {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
                 </Text>
-                {isAmountUpdated && (
-                  <IconFont
-                    style={styles.noticeIcon}
-                    name={"io-notice"}
-                    size={NOTICE_ICON_SIZE}
-                    color={customVariables.colorWhite}
-                  />
-                )}
               </View>
               <Text white={true} style={[styles.title]} bold={true}>
                 {currentAmount}
               </Text>
             </View>
 
-            {isAmountUpdated && (
-              <React.Fragment>
-                <View spacer={true} small={true} />
-                <Text style={styles.lighterGray}>
-                  {I18n.t("wallet.firstTransactionSummary.updateInfo")}
-                </Text>
-              </React.Fragment>
-            )}
+            <React.Fragment>
+              <View spacer={true} small={true} />
+              <Text style={styles.lighterGray}>
+                {I18n.t("wallet.firstTransactionSummary.updateInfo")}
+              </Text>
+            </React.Fragment>
             <View spacer={true} large={true} />
 
             <ItemSeparatorComponent noPadded={true} />

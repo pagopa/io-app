@@ -770,7 +770,8 @@ onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
-    headerTitle: Activation
+    headerTitle: Configure IO
+    contentTitle: Privacy Policy and Terms of Service
     accept: Accept
     error: Loading error
     alert:
@@ -935,6 +936,7 @@ wallet:
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
+    cardHolder: Card holder
     transactionListItem:
       payment:
         read: Transaction
@@ -1257,8 +1259,7 @@ wallet:
           bottomSheetTitle: "Why can't I pay with this card?"
           bottomSheetDescription: "This circuit allows you to pay in physical stores, but not online. If your card is enabled for online purchases, add it to your Wallet as a 'debit or credit card'."
   firstTransactionSummary:
-    header: Transaction notice summary
-    title: Transaction notice
+    title: Payment information
     amount: Transaction amount
     total: Total paid
     expireDate: Expire date
@@ -1277,8 +1278,8 @@ wallet:
     updatedAmount: Updated amount
     updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
     loadingMessage:
-      activation: I'm alerting the entity, wait a few seconds...
-      verification: I am checking the status and the amount of your notice...
+      activation: We are contacting the entity, wait a few seconds
+      verification: We are verifying your payment information
       generic: I am finishing the verification operations of your notice, wait a few seconds...
       wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
@@ -1323,7 +1324,7 @@ wallet:
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add a method
-  continue: Pay this notice
+  continue: Go to payment
   backToPayments: Back to payments
   methods:
     comingSoon: upcoming
@@ -1799,6 +1800,7 @@ services:
   emptyListMessage: There are no services available at this time, pull down to refresh
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
+  fiscalCodeAccessibility: "Organization's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -2532,11 +2534,32 @@ bonus:
         subtitle: "Ministry of Economy and Finance"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
-        header: "Configura IO"
-        title: "Vuoi mantenere i tuoi metodi di pagamento?"
+        header: Configure IO
+        title: Do you want to keep your payment methods?
+        subtitle: If you keep them, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments.
+        suggestedOption: Recommended
+        options:
+          keepAll:
+            title: Keep all payment methods in the Wallet
+            body: If supported, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. You can change your method preferences or delete them at any time.
+          deleteAll:
+            title: Delete all payment methods from the Wallet
+            body: All methods added in the Wallet so far will be permanently deleted. You can add them again at any time, but you’ll have to enter back the method details and have it authorized.
+        deleteAllButton: Delete all methods
       deletePaymentMethodsBottomSheet:
         title: "Do you really want to delete the following methods from the Wallet?"
         subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
+      thankYouPage:
+        cta:
+          goToWallet: "Go to Wallet"
+          retry: "Try again"
+        success:
+          title: "Done!"
+          body: "We’ve saved your choice."
+        retryAfterDeletion:
+          title: "Sorry, an unexpected error has occurred"
+          body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
+        toast: "Your choice was not saved. Try again later."
   cgn:
     generic:
       linkError: "The site can't be reached at the moment. Please, try again later."
@@ -2902,6 +2925,11 @@ features:
             body: "An error occurred while downloading the attachment"
             details: "Check your connection please and try again"
           checkBox: "OK, don't show me again"
+        pdfPreview:
+          title: "PDF Preview"
+          singleBtn: "Save, print, or share"
+          open: "Open"
+          save: "Save"
       body:
         plain: "plain text"
         html: "html"
@@ -2968,6 +2996,12 @@ features:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
         cta: "Get support"
+  uaDonations:
+    webViewScreen:
+      headerTitle: Donation
+      errors:
+        data:
+          buttonTitle: Go back
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -2992,7 +3026,8 @@ support:
     emailAddress: "Email address"
     deviceAndOS: "Device and Operating System"
     ipAddress: "IP address"
-    currentAppVersion: "Version of the app in use"
+    appVersionsHistory: "App version history"
+    appVersionsHistoryValue: "To determine if the issue is due to the most recent update"
     identityProvider: "Identity Provider"
     navigationData: "In-app navigation data"
     navigationDataValue: "Such as the the last screen or message displayed in IO."
@@ -3009,6 +3044,8 @@ support:
     cta:
       allow: "Agree"
       denies: "Deny"
+    toast:
+      emailClientNotFound: "To get support write us: {{emailAddress}}"
   chooseCategory:
     header: "Write us"
     title:

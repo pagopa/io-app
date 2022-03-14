@@ -13,7 +13,10 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../model/RemoteValue";
-import { bpdLoadActivationStatus } from "../../../actions/details";
+import {
+  ActivationStatus,
+  bpdLoadActivationStatus
+} from "../../../actions/details";
 import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
@@ -22,6 +25,7 @@ import {
   bpdUpdateOptInStatusMethod
 } from "../../../actions/onboarding";
 import { CitizenOptInStatusEnum } from "../../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
+import { optInPaymentMethodsStart } from "../../../actions/optInPaymentMethods";
 import paymentInstrumentReducer, {
   bpdUpsertIbanSelector,
   PayoffInstrumentType
@@ -29,13 +33,16 @@ import paymentInstrumentReducer, {
 import technicalAccountReducer, {
   bpdTechnicalAccountSelector
 } from "./technicalAccount";
+import { bpdActivationUiReducer, BpdActivationUiState } from "./ui";
 
 export type BpdActivation = {
   enabled: pot.Pot<boolean, Error>;
+  activationStatus: RemoteValue<ActivationStatus, Error>;
   payoffInstr: PayoffInstrumentType;
   unsubscription: RemoteValue<true, Error>;
   technicalAccount: RemoteValue<string | undefined, Error>;
   optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>;
+  ui: BpdActivationUiState;
 };
 
 /**
@@ -68,11 +75,14 @@ const enabledReducer = (
   return state;
 };
 
+const OPT_IN_INITIAL_STATE = pot.none;
 const optInStatusReducer = (
-  state: pot.Pot<CitizenOptInStatusEnum, Error> = pot.none,
+  state: pot.Pot<CitizenOptInStatusEnum, Error> = OPT_IN_INITIAL_STATE,
   action: Action
 ): pot.Pot<CitizenOptInStatusEnum, Error> => {
   switch (action.type) {
+    case getType(optInPaymentMethodsStart):
+      return OPT_IN_INITIAL_STATE;
     case getType(bpdLoadActivationStatus.request):
       return pot.toLoading(state);
     case getType(bpdUpdateOptInStatusMethod.request):
@@ -85,6 +95,7 @@ const optInStatusReducer = (
       return pot.some(action.payload);
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
+    case getType(bpdUpdateOptInStatusMethod.failure):
       return pot.toError(state, action.payload);
   }
   return state;
@@ -114,12 +125,34 @@ const unsubscriptionReducer = (
   return state;
 };
 
+const activationStatusReducer = (
+  state: RemoteValue<ActivationStatus, Error> = remoteUndefined,
+  action: Action
+): RemoteValue<ActivationStatus, Error> => {
+  switch (action.type) {
+    case getType(bpdLoadActivationStatus.request):
+    case getType(bpdEnrollUserToProgram.request):
+      return remoteLoading;
+    case getType(bpdLoadActivationStatus.success):
+    case getType(bpdEnrollUserToProgram.success):
+      return remoteReady(action.payload.activationStatus);
+    case getType(bpdDeleteUserFromProgram.success):
+      return remoteUndefined;
+    case getType(bpdLoadActivationStatus.failure):
+    case getType(bpdEnrollUserToProgram.failure):
+      return remoteError(action.payload);
+  }
+  return state;
+};
+
 const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,
+  activationStatus: activationStatusReducer,
   payoffInstr: paymentInstrumentReducer,
   unsubscription: unsubscriptionReducer,
   technicalAccount: technicalAccountReducer,
-  optInStatus: optInStatusReducer
+  optInStatus: optInStatusReducer,
+  ui: bpdActivationUiReducer
 });
 
 /**
@@ -138,6 +171,15 @@ export const optInStatusSelector = (
 export const bpdEnabledSelector = (
   state: GlobalState
 ): pot.Pot<boolean, Error> => state.bonus.bpd.details.activation.enabled;
+
+/**
+ * Return the enabled value related to the bpd activation status
+ * @param state
+ */
+export const activationStatusSelector = (
+  state: GlobalState
+): RemoteValue<ActivationStatus, Error> =>
+  state.bonus.bpd.details.activation.activationStatus;
 
 /**
  * Return the Iban that the user has entered to receive the cashback amount

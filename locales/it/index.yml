@@ -787,7 +787,8 @@ onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
-    headerTitle: Attivazione
+    headerTitle: Configura IO
+    contentTitle: Informativa Privacy e Termini e Condizioni d’uso
     accept: Accetta
     error: Errore nel caricamento
     alert:
@@ -953,6 +954,7 @@ wallet:
       bankNotAvailable: "nome banca non disponibile"
     addElement: Aggiungi elemento al portafoglio
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
+    cardHolder: Intestatario carta
     transactionListItem:
       payment:
         read: Transazione
@@ -1279,8 +1281,7 @@ wallet:
           bottomSheetTitle: "Perché non posso pagare con questa carta?"
           bottomSheetDescription: "Il circuito di questa carta consente di pagare nei punti vendita fisici, ma non online. Se la tua carta è abilitata ai pagamenti online, aggiungila al tuo Portafoglio come 'carta di debito o di credito'."
   firstTransactionSummary:
-    header: Riepilogo avviso di Pagamento
-    title: Avviso di pagamento
+    title: Dati del pagamento
     amount: Importo pagamento
     total: Totale pagato
     expireDate: Scadenza
@@ -1301,8 +1302,8 @@ wallet:
       pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     loadingMessage:
-      activation: Sto avvisando l'ente creditore, attendi qualche secondo...
-      verification: Sto verificando lo stato e l'importo del tuo avviso...
+      activation: Stiamo contattando l'ente, attendi qualche secondo
+      verification: Stiamo verificando i dati del tuo pagamento
       generic: Sto terminando le operazioni di verifica del tuo avviso, attendi qualche secondo...
       wallet: Sto verificando se esistono metodi di pagamento salvati...
     contextualHelpTitle: Riepilogo della transazione
@@ -1343,7 +1344,7 @@ wallet:
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi un metodo
-  continue: Paga questo avviso
+  continue: Vai al pagamento
   backToPayments: Torna ai pagamenti
   methods:
     comingSoon: in arrivo
@@ -1825,6 +1826,7 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   fiscalCode: "C.F. Ente"
+  fiscalCodeAccessibility: "Codice fiscale Ente"
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
@@ -2560,9 +2562,31 @@ bonus:
       choice:
         header: "Configura IO"
         title: "Vuoi mantenere i tuoi metodi di pagamento?"
+        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        suggestedOption: Consigliato
+        options:
+          keepAll:
+            title: Mantieni tutti i metodi nel Portafoglio
+            body: Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento.
+          deleteAll:
+            title: Elimina tutti i metodi dal Portafoglio
+            body: Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+        deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
         subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
+      thankYouPage:
+        cta:
+          goToWallet: "Vai al Portafoglio"
+          retry: "Riprova"
+        success:
+          title: "Fatto!"
+          body: "Abbiamo salvato la tua scelta"
+        retryAfterDeletion:
+          title: "Spiacenti, si è verificato un errore imprevisto"
+          body: "I tuoi metodi non sono stati eliminati. Riprova, oppure vai al Portafoglio ed eliminali manualmente."
+        toast: "La tua scelta non è stata salvata. Riprova più tardi."
+
   cgn:
     generic:
       linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
@@ -2928,6 +2952,11 @@ features:
             body: "Non sono riuscito a scaricare l'allegato"
             details: "Per favore, controlla la tua connessione e riprova"
           checkBox: "OK, non mostrarmelo più"
+        pdfPreview:
+          title: "Anteprima PDF"
+          singleBtn: "Salva, stampa o condividi"
+          open: "Apri"
+          save: "Salva"
       body:
         plain: "testo semplice"
         html: "html"
@@ -2994,6 +3023,12 @@ features:
         title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
         subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
+  uaDonations:
+    webViewScreen:
+      headerTitle: Donazione
+      errors:
+        data:
+          buttonTitle: Torna indietro
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3018,7 +3053,8 @@ support:
     emailAddress: "Indirizzo email"
     deviceAndOS: "Dispositivo e sistema operativo"
     ipAddress: "Indirizzo IP"
-    currentAppVersion: "Versione in uso dell'app"
+    appVersionsHistory: "Storico versioni dell’app"
+    appVersionsHistoryValue: "Per capire se il problema dipende dall’ultimo aggiornamento"
     identityProvider: "Identity Provider"
     navigationData: "Dati di navigazione in app IO"
     navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"
@@ -3035,6 +3071,8 @@ support:
     cta:
       allow: "Consenti"
       denies: "Non consentire"
+    toast:
+      emailClientNotFound: "Per ricevere assistenza scrivici a: {{emailAddress}}"
   chooseCategory:
     header: "Scrivici"
     title:

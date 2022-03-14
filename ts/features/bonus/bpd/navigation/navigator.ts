@@ -14,6 +14,8 @@ import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStat
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
 import OptInPaymentMethodsCashbackUpdateScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsCashbackUpdateScreen";
 import OptInPaymentMethodsChoiceScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsChoiceScreen";
+import OptInPaymentMethodsThankYouDeleteMethodsScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsThankYouDeleteMethodsScreen";
+import OptInPaymentMethodsThankYouKeepMethodsScreen from "../screens/optInPaymentMethods/OptInPaymentMethodsThankYouKeepMethodsScreen";
 import BPD_ROUTES from "./routes";
 
 export const BpdOnboardingNavigator = createStackNavigator(
@@ -94,6 +96,12 @@ export const OptInPaymentMethodNavigator = createStackNavigator(
     },
     [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE]: {
       screen: OptInPaymentMethodsChoiceScreen
+    },
+    [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_DELETE_METHOD]: {
+      screen: OptInPaymentMethodsThankYouDeleteMethodsScreen
+    },
+    [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_KEEP_METHOD]: {
+      screen: OptInPaymentMethodsThankYouKeepMethodsScreen
     }
   },
   {
