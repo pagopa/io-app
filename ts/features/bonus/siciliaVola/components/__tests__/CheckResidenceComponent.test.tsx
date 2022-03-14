@@ -1,4 +1,4 @@
-import { NavigationActions } from "@react-navigation/compat";
+import { CommonActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../i18n";
@@ -60,8 +60,8 @@ describe("the CheckResidenceComponent", () => {
       fireEvent(continueButton, "onPress");
 
       expect(spy).toHaveBeenCalledWith(
-        NavigationActions.navigate({
-          routeName: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
+        CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
         })
       );
     });
@@ -79,8 +79,8 @@ describe("the CheckResidenceComponent", () => {
     );
     fireEvent(continueButton, "onPress");
     expect(spy).toHaveBeenCalledWith(
-      NavigationActions.navigate({
-        routeName: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
+      CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+        screen: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
       })
     );
   });

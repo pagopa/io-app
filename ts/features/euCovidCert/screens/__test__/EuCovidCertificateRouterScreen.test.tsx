@@ -36,12 +36,12 @@ describe("Test EuCovidCertificateRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
+    const render = renderComponent(store);
+
     navigateToEuCovidCertificateDetailScreen({
       authCode,
       messageId: "messageId"
     });
-
-    const render = renderComponent(store);
 
     expect(
       render.component.queryByTestId("EuCovidCertLoadingScreen")

@@ -48,7 +48,7 @@ export const renderScreenFakeNavRedux = <S,>(
   renderOptions: RenderOptions = {}
 ) => {
   const customRouteConfigMap = {
-    [route]: screen
+    [route]: { screen, params }
   };
 
   const customNavigator = createCompatNavigatorFactory(createStackNavigator)(
