@@ -23,7 +23,7 @@ import { trackScreen } from "../store/middlewares/navigation";
 import { isTestEnv } from "../utils/environment";
 import authenticationNavigator from "./AuthenticationNavigator";
 import messagesNavigator from "./MessagesNavigator";
-import { navigationRef } from "./NavigationService";
+import NavigationService, { navigationRef } from "./NavigationService";
 import onboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import profileNavigator from "./ProfileNavigator";
@@ -122,9 +122,10 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
     <NavigationContainer
       theme={IOTheme}
       ref={navigationRef}
-      onReady={() =>
-        (routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name)
-      }
+      onReady={() => {
+        NavigationService.setNavigationReady();
+        routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
+      }}
       onStateChange={async () => {
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;

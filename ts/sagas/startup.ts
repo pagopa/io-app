@@ -100,6 +100,7 @@ import {
 } from "./profile";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
+import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
@@ -127,7 +128,6 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -541,8 +541,9 @@ export function* initializeApplicationSaga(): Generator<
  */
 function* waitForNavigatorServiceInitialization() {
   // eslint-disable-next-line functional/no-let
-  let navigator: ReturnType<typeof NavigationService.getNavigator> =
-    yield* call(NavigationService.getNavigator);
+  let isNavigatorReady: ReturnType<
+    typeof NavigationService.getIsNavigationReady
+  > = yield* call(NavigationService.getIsNavigationReady);
 
   // eslint-disable-next-line functional/no-let
   let timeoutLogged = false;
@@ -550,7 +551,7 @@ function* waitForNavigatorServiceInitialization() {
   const startTime = performance.now();
 
   // before continuing we must wait for the navigatorService to be ready
-  while (navigator.current === null) {
+  while (!isNavigatorReady) {
     const elapsedTime = performance.now() - startTime;
     if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
       timeoutLogged = true;
@@ -562,7 +563,7 @@ function* waitForNavigatorServiceInitialization() {
       yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
     }
     yield* delay(navigatorPollingTime);
-    navigator = yield* call(NavigationService.getNavigator);
+    isNavigatorReady = yield* call(NavigationService.getIsNavigationReady);
   }
 
   const initTime = performance.now() - startTime;

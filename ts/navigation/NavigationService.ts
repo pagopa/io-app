@@ -8,13 +8,23 @@ import { instabugLog, TypeLogs } from "../boot/configureInstabug";
 import { mixpanelTrack } from "../mixpanel";
 
 export const navigationRef = React.createRef<NavigationContainerRef>();
+// eslint-disable-next-line functional/no-let
+let isNavigationReady: boolean = false;
+
+export const setNavigationReady = () => {
+  // eslint-disable-next-line functional/immutable-data
+  isNavigationReady = true;
+};
+
+export const getIsNavigationReady = () =>
+  isNavigationReady && navigationRef.current !== null;
 
 const withLogging =
   <A extends Array<unknown>, R>(f: (...a: A) => R) =>
   (...args: A): R => {
-    if (navigationRef.current === null) {
+    if (navigationRef.current === null || !isNavigationReady) {
       instabugLog(
-        `call to NavigationService.${f.name} but navigator is ${navigator}`,
+        `call to NavigationService.${f.name} but navigator is ${navigator} and isNavigationReady: ${isNavigationReady}`,
         TypeLogs.ERROR,
         "NavigationService"
       );
@@ -43,9 +53,9 @@ const getNavigator = (): React.RefObject<NavigationContainerRef> =>
 
 // NavigationParams
 const navigate = (routeName: string, params?: any) => {
-  navigationRef.current?.navigate(routeName, params);
-
-  // ?.dispatch(NavigationActions.navigate({ routeName, params }));
+  if (isNavigationReady) {
+    navigationRef.current?.navigate(routeName, params);
+  }
 };
 
 const dispatchNavigationAction = (action: NavigationAction) => {
@@ -76,5 +86,7 @@ export default {
   getCurrentRouteName,
   getCurrentRouteKey,
   getCurrentRoute,
-  getCurrentState
+  getCurrentState,
+  getIsNavigationReady,
+  setNavigationReady
 };
