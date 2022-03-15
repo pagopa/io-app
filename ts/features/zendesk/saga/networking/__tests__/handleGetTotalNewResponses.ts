@@ -10,7 +10,7 @@ import {
 } from "../../../store/actions";
 import {
   AnonymousIdentity,
-  getTotalNewResponsesRefreshRate,
+  unreadTicketsCountRefreshRate,
   initSupportAssistance,
   JwtIdentity,
   ZendeskAppConfig,
@@ -65,7 +65,7 @@ describe("totalNewResponsesFunction saga", () => {
           .put(zendeskGetTotalNewResponses.success(5))
           .next()
           .race({
-            wait: delay(getTotalNewResponsesRefreshRate),
+            wait: delay(unreadTicketsCountRefreshRate),
             signals: take([
               sessionInvalid,
               sessionExpired,

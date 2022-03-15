@@ -10,6 +10,7 @@ import {
 import { ZendeskState } from "../index";
 import {
   getZendeskConfig,
+  zendeskGetTotalNewResponses,
   zendeskRequestTicketNumber,
   zendeskSelectedCategory,
   zendeskSelectedSubcategory,
@@ -23,7 +24,8 @@ import { ZendeskSubCategory } from "../../../../../../definitions/content/Zendes
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: remoteUndefined
+  ticketNumber: remoteUndefined,
+  totalNewResponses: remoteUndefined
 };
 
 const mockCategory: ZendeskCategory = {
@@ -56,7 +58,7 @@ const genericError = new Error("generic error");
 const networkError = getTimeoutError();
 
 describe("Zendesk reducer", () => {
-  it("Initial state should contain zendeskConfig and ticketNumber as remoteUndefined", () => {
+  it("Initial state should contain zendeskConfig, ticketNumber and totalNewResponses as remoteUndefined", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.assistanceTools.zendesk).toStrictEqual(INITIAL_STATE);
   });
@@ -68,7 +70,7 @@ describe("Zendesk reducer", () => {
       store.getState().assistanceTools.zendesk.selectedCategory
     ).toStrictEqual(mockCategory);
   });
-  it("selectedSubcategory should contain the category if zendeskSelectedSubcategory is dispatched", () => {
+  it("selectedSubcategory should contain the subcategory if zendeskSelectedSubcategory is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(zendeskSelectedSubcategory(mockSubcategory));
@@ -100,6 +102,31 @@ describe("Zendesk reducer", () => {
     expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
       remoteReady(mockTicketNumber)
     );
+  });
+  it("totalNewResponses should be remoteLoading if zendeskGetTotalNewResponses.request is dispatched", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(zendeskGetTotalNewResponses.request());
+    expect(
+      store.getState().assistanceTools.zendesk.totalNewResponses
+    ).toStrictEqual(remoteLoading);
+  });
+  it("totalNewResponses should be remoteError if zendeskGetTotalNewResponses.failure is dispatched", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(zendeskGetTotalNewResponses.failure(genericError));
+    expect(
+      store.getState().assistanceTools.zendesk.totalNewResponses
+    ).toStrictEqual(remoteError(genericError));
+  });
+  it("ticketNumber should be remoteReady if zendeskGetTotalNewResponses.success is dispatched", () => {
+    const mockTotalNewResponses = 1;
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(zendeskGetTotalNewResponses.success(mockTotalNewResponses));
+    expect(
+      store.getState().assistanceTools.zendesk.totalNewResponses
+    ).toStrictEqual(remoteReady(mockTotalNewResponses));
   });
   it("zendeskConfig should be remoteUndefined, selectedCategory and selectedSubcategory undefined if zendeskSupportStart is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
