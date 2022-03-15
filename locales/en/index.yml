@@ -770,7 +770,8 @@ onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
-    headerTitle: Activation
+    headerTitle: Configure IO
+    contentTitle: Privacy Policy and Terms of Service
     accept: Accept
     error: Loading error
     alert:
@@ -2681,8 +2682,8 @@ bonus:
         title: "The Carta Giovani Nazionale service is not available at the moment."
         body: "We apologize for the issue.\nWe invite you to retry again later."
       ineligible:
-        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
-        body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."
+        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionale."
+        body: "The Carta Giovani Nazionale is available only to Italian and European citizens residing in Italy, aged 18 to 35."
       timeout:
         title: "We're processing your request."
         body: "We will send you an in-app message when your Carta Giovani will be activated."
