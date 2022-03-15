@@ -1,14 +1,19 @@
+import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 
 import {
   NonNegativeInteger,
   NonNegativeNumber
 } from "italia-ts-commons/lib/numbers";
+import { View } from "react-native";
 import { tosVersion } from "../../../config";
+import { applicationChangeState } from "../../../store/actions/application";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
+import { appReducer } from "../../../store/reducers";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
 import mockedProfile from "../../../__mocks__/initializedProfile";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 
 describe("checkAcceptedTosSaga", () => {
@@ -39,6 +44,12 @@ describe("checkAcceptedTosSaga", () => {
     ...oldOnboardedProfile,
     accepted_tos_version: tosVersion
   };
+
+  beforeEach(() => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+  });
 
   describe("when a profile is first time onboarded", () => {
     it("should be true", () => {
