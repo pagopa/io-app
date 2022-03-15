@@ -88,8 +88,12 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
   }
 };
 // Check if the user has new messages every 30 minutes (in milliseconds)
-export const getTotalNewResponsesRefreshRate: Millisecond = (30 *
+export const unreadTicketsCountRefreshRate: Millisecond = (30 *
   60 *
+  1000) as Millisecond;
+
+// Check if the user has new messages every 2 seconds (in milliseconds) while the support is open
+export const unreadTicketsCountRefreshRateWhileSupportIsOpen: Millisecond = (2 *
   1000) as Millisecond;
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
