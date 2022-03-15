@@ -79,6 +79,9 @@ import { PspData } from "../../../../definitions/pagopa/PspData";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { getLookUpIdPO } from "../../../utils/pmLookUpId";
+import { H1 } from "../../../components/core/typography/H1";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -98,6 +101,13 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
+  totalContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: IOColors.greyLight
+  },
+
   child: {
     flex: 1,
     alignContent: "center"
@@ -278,11 +288,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     >
       <SafeAreaView style={styles.flex}>
         <Content noPadded={true} bounces={false}>
-          <PaymentBannerComponent
-            currentAmount={verifica.importoSingoloVersamento}
-            paymentReason={paymentReason}
-            fee={fee as ImportoEuroCents}
-          />
+          <View style={IOStyles.horizontalContentPadding}>
+            <View style={styles.totalContainer}>
+              <H1>Totale</H1>
+              <H1>{formatNumberCentsToAmount(totalAmount, true)}</H1>
+            </View>
+          </View>
+
           <View style={styles.padded}>
             <View spacer={true} />
             <PaymentMethodCard
