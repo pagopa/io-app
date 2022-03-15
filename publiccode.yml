@@ -27,7 +27,6 @@ legal:
   license: EUPL-1.2
   mainCopyrightOwner: PagoPA S.p.A.
   repoOwner: https://www.pagopa.it/
-  authorsFile: AUTHORS.md
 intendedAudience:
   scope:
     - government
