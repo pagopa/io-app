@@ -142,9 +142,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    * Handles valid pagoPA QR codes
    */
   private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
-    this.setState({
-      scanningState: "VALID"
-    });
     this.props.runPaymentTransactionSummarySaga(data.e1, data.e2);
   };
 
