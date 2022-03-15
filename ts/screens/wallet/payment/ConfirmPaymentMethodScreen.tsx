@@ -25,9 +25,8 @@ import {
   isLoading,
   isReady
 } from "../../../features/bonus/bpd/model/RemoteValue";
-import CreditCardComponent from "../../../features/wallet/creditCard/component/CreditCardComponent";
 import { PayPalCheckoutPspComponent } from "../../../features/wallet/paypal/component/PayPalCheckoutPspComponent";
-import PaypalCard from "../../../features/wallet/paypal/PaypalCard";
+import paypalLogoMin from "../../../../img/wallet/cards-icons/paypal_card.png";
 import I18n from "../../../i18n";
 import {
   navigateToPaymentOutcomeCode,
@@ -84,6 +83,8 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import IconFont from "../../../components/ui/IconFont";
 import { H3 } from "../../../components/core/typography/H3";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
+import { BrandImage } from "../../../features/wallet/component/card/BrandImage";
+import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 
 export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -109,9 +110,35 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: IOColors.greyLight
   },
-  infoRow: {
+  iconRow: {
     flexDirection: "row",
     alignItems: "center"
+  },
+  iconRowText: { marginLeft: 12 },
+  selectionBox: {
+    borderWidth: 1,
+    borderColor: IOColors.bluegreyLight,
+    borderRadius: 8,
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  selectionBoxIcon: {
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "auto"
+  },
+  selectionBoxContent: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "100%",
+    paddingLeft: 24
+  },
+  selectionBoxTrail: {
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "auto",
+    paddingLeft: 24
   },
 
   child: {
@@ -157,17 +184,22 @@ const payUrlSuffix = "/v3/webview/transactions/pay";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 
-const PaymentMethodCard = (props: {
+const PaymentMethodLogo = (props: {
   paymentMethod: PaymentMethod | undefined;
   isPaypalEnabled: boolean;
 }) => {
   const { paymentMethod } = props;
   switch (paymentMethod?.kind) {
     case "CreditCard":
-      return <CreditCardComponent creditCard={paymentMethod} />;
+      return (
+        <BrandImage
+          image={getCardIconFromBrandLogo(paymentMethod.info)}
+          scale={0.7}
+        />
+      );
     case "PayPal":
       if (props.isPaypalEnabled) {
-        return <PaypalCard paypal={paymentMethod} />;
+        return <BrandImage image={paypalLogoMin} scale={0.7} />;
       }
       return null;
     // those methods can't pay
@@ -295,6 +327,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       <SafeAreaView style={styles.flex}>
         <Content noPadded={true} bounces={false}>
           <View style={IOStyles.horizontalContentPadding}>
+            <View spacer />
+
             <View style={styles.totalContainer}>
               <H1>Totale</H1>
               <H1>{formatNumberCentsToAmount(totalAmount, true)}</H1>
@@ -302,7 +336,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <View spacer large />
 
-            <View style={styles.infoRow}>
+            <View style={styles.iconRow}>
               <IconFont
                 name="io-info"
                 style={{
@@ -310,7 +344,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                 }}
               />
 
-              <H3 style={{ marginLeft: 12 }}>Dati del pagamento</H3>
+              <H3 color="bluegrey" style={styles.iconRowText}>
+                Dati del pagamento
+              </H3>
             </View>
 
             <View spacer large />
@@ -319,16 +355,54 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               {paymentReason}
             </H4>
             <LabelSmall color="bluegrey" weight="Regular">
-              {formatNumberCentsToAmount(verifica.importoSingoloVersamento)}
+              {formatNumberCentsToAmount(
+                verifica.importoSingoloVersamento,
+                true
+              )}
             </LabelSmall>
+
+            <View spacer large />
+
+            <View style={styles.iconRow}>
+              <IconFont
+                name="io-carta"
+                style={{
+                  color: IOColors.bluegrey
+                }}
+              />
+
+              <H3 color="bluegrey" style={styles.iconRowText}>
+                Paga con
+              </H3>
+            </View>
+
+            <View spacer />
+
+            <View style={styles.selectionBox}>
+              <View style={styles.selectionBoxIcon}>
+                <PaymentMethodLogo
+                  isPaypalEnabled={props.isPaypalEnabled}
+                  paymentMethod={paymentMethod}
+                />
+              </View>
+
+              <View style={styles.selectionBoxContent}>
+                <H4>{paymentMethod?.caption}</H4>
+                <LabelSmall color="bluegrey" weight="Regular">
+                  Mario Rossi · 05/26
+                </LabelSmall>
+              </View>
+
+              <View style={styles.selectionBoxTrail}>
+                <H4 color="blue" weight="SemiBold">
+                  Modifica
+                </H4>
+              </View>
+            </View>
           </View>
 
           <View style={styles.padded}>
             <View spacer={true} />
-            <PaymentMethodCard
-              isPaypalEnabled={props.isPaypalEnabled}
-              paymentMethod={props.getPaymentMethodById(wallet.idWallet)}
-            />
             {/* show the ability to change psp only when the payment method is a credit card */}
             {!isPayingWithPaypal && (
               <>
