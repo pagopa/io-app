@@ -1,17 +1,27 @@
+import { View } from "react-native";
+import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
+import mockedProfile from "../../../__mocks__/initializedProfile";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { applicationChangeState } from "../../../store/actions/application";
 
-import {
-  navigateToEmailInsertScreen,
-  navigateToEmailReadScreen
-} from "../../../store/actions/navigation";
+import { navigateToEmailReadScreen } from "../../../store/actions/navigation";
 import {
   emailAcknowledged,
   emailInsert
 } from "../../../store/actions/onboarding";
-import mockedProfile from "../../../__mocks__/initializedProfile";
+import { appReducer } from "../../../store/reducers";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 
 describe("checkAcceptedTosSaga", () => {
+  beforeEach(() => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+  });
+
   describe("when user has an email and it is validated", () => {
     it("should do nothing", () =>
       expectSaga(checkAcknowledgedEmailSaga, mockedProfile)
@@ -29,7 +39,9 @@ describe("checkAcceptedTosSaga", () => {
         checkAcknowledgedEmailSaga,
         profileEmailValidatedFirstOnboarding
       )
-        .call(navigateToEmailReadScreen)
+        .call(NavigationService.navigate, ROUTES.ONBOARDING, {
+          screen: ROUTES.READ_EMAIL_SCREEN
+        })
         .run());
   });
 
@@ -42,7 +54,9 @@ describe("checkAcceptedTosSaga", () => {
       expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
         // read screen is wrapped in a HOC where if email is validate show ReadScreen
         // otherwise a screen that remembers to validate it
-        .call(navigateToEmailReadScreen)
+        .call(NavigationService.navigate, ROUTES.ONBOARDING, {
+          screen: ROUTES.READ_EMAIL_SCREEN
+        })
         .dispatch(emailAcknowledged())
         .run());
   });
@@ -53,11 +67,20 @@ describe("checkAcceptedTosSaga", () => {
       is_email_validated: false,
       email: undefined
     };
-    it("should prompt the screen to insert it", () =>
-      expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
-        .call(navigateToEmailInsertScreen) // go to email insert screen
+    it("should prompt the screen to insert it", async () => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const store = createStore(appReducer, globalState as any);
+      renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+      await expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
+        .call(NavigationService.navigate, ROUTES.ONBOARDING, {
+          screen: ROUTES.INSERT_EMAIL_SCREEN
+        }) // go to email insert screen
         .dispatch(emailInsert()) // dispatch email insert
         .dispatch(emailAcknowledged()) // press continue
-        .run());
+        .run();
+    });
   });
 });
