@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { useIOSelector } from "../../../store/hooks";
 import {
   zendeskTicketNumberSelector,
@@ -12,6 +13,7 @@ import { showSupportTickets } from "../../../utils/supportAssistance";
 import I18n from "../../../i18n";
 import IconFont from "../../../components/ui/IconFont";
 import CustomBadge from "../../../components/ui/CustomBadge";
+import { zendeskSupportOpened } from "../store/actions";
 
 /**
  * This component show the chat component and the badge with the Zendesk unread messages.
@@ -19,6 +21,7 @@ import CustomBadge from "../../../components/ui/CustomBadge";
  * @constructor
  */
 const ZendeskChatComponent = () => {
+  const dispatch = useDispatch();
   const ticketsNumber = useIOSelector(zendeskTicketNumberSelector);
   const maybeTotalNewResponse = useIOSelector(zendeskTotalNewResponseSelector);
 
@@ -31,6 +34,7 @@ const ZendeskChatComponent = () => {
     <ButtonDefaultOpacity
       onPress={() => {
         void mixpanelTrack("ZENDESK_SHOW_TICKETS_FROM_CHAT");
+        dispatch(zendeskSupportOpened());
         showSupportTickets();
       }}
       transparent={true}

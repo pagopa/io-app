@@ -27,7 +27,8 @@ import {
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import {
   zendeskRequestTicketNumber,
-  zendeskSupportCompleted
+  zendeskSupportCompleted,
+  zendeskSupportOpened
 } from "../store/actions";
 import I18n from "../../../i18n";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -158,6 +159,7 @@ const ZendeskSupportComponent = (props: Props) => {
             onPress={() => {
               void mixpanelTrack("ZENDESK_SHOW_TICKETS");
               showSupportTickets();
+              dispatch(zendeskSupportOpened());
               workUnitCompleted();
             }}
             style={{
