@@ -17,7 +17,6 @@ import BaseScreenComponent, {
 } from "../../../components/screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
-import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
 import {
@@ -82,6 +81,9 @@ import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { H1 } from "../../../components/core/typography/H1";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import IconFont from "../../../components/ui/IconFont";
+import { H3 } from "../../../components/core/typography/H3";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 
 export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -106,6 +108,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderBottomWidth: 1,
     borderBottomColor: IOColors.greyLight
+  },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center"
   },
 
   child: {
@@ -293,6 +299,28 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <H1>Totale</H1>
               <H1>{formatNumberCentsToAmount(totalAmount, true)}</H1>
             </View>
+
+            <View spacer large />
+
+            <View style={styles.infoRow}>
+              <IconFont
+                name="io-info"
+                style={{
+                  color: IOColors.bluegrey
+                }}
+              />
+
+              <H3 style={{ marginLeft: 12 }}>Dati del pagamento</H3>
+            </View>
+
+            <View spacer large />
+
+            <H4 weight="SemiBold" color="bluegreyDark" numberOfLines={1}>
+              {paymentReason}
+            </H4>
+            <LabelSmall color="bluegrey" weight="Regular">
+              {formatNumberCentsToAmount(verifica.importoSingoloVersamento)}
+            </LabelSmall>
           </View>
 
           <View style={styles.padded}>
