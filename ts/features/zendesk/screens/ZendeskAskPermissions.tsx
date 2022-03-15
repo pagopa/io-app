@@ -266,7 +266,7 @@ const ZendeskAskPermissions = (props: Props) => {
           "warning"
         );
       }
-    );
+    )();
     void mixpanelTrack("ZENDESK_DENY_PERMISSIONS");
     workUnitCompleted();
   };
