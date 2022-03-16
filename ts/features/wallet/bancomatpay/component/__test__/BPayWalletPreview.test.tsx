@@ -1,13 +1,13 @@
-import { NavigationActions } from "@react-navigation/compat";
-import { fireEvent, render } from "@testing-library/react-native";
+import { CommonActions } from "@react-navigation/native";
+import { fireEvent } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
-import { Provider } from "react-redux";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { BPayPaymentMethod } from "../../../../../types/pagopa";
+import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import BPayWalletPreview from "../BPayWalletPreview";
 
@@ -91,8 +91,8 @@ describe("BPayWalletPreview component", () => {
     if (cardComponent) {
       fireEvent.press(cardComponent);
       expect(spy).toHaveBeenCalledWith(
-        NavigationActions.navigate({
-          routeName: ROUTES.WALLET_BPAY_DETAIL,
+        CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+          screen: ROUTES.WALLET_BPAY_DETAIL,
           params: { bPay: aBPay }
         })
       );
@@ -101,8 +101,9 @@ describe("BPayWalletPreview component", () => {
 });
 
 const getComponent = (bPay: BPayPaymentMethod, store: Store<unknown>) =>
-  render(
-    <Provider store={store}>
-      <BPayWalletPreview bPay={bPay} />
-    </Provider>
+  renderScreenFakeNavRedux(
+    () => <BPayWalletPreview bPay={bPay} />,
+    "WALLET_HOME",
+    {},
+    store
   );
