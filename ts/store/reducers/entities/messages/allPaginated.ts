@@ -15,27 +15,30 @@ import { UIMessage } from "./types";
 
 export type Cursor = string;
 
-type Collection = pot.Pot<
-  { page: ReadonlyArray<UIMessage>; previous?: Cursor; next?: Cursor },
-  string
->;
+type Collection = {
+  data: pot.Pot<
+    {
+      page: ReadonlyArray<UIMessage>;
+      previous?: Cursor;
+      next?: Cursor;
+    },
+    string
+  >;
+  /** persist the last action type occurred */
+  lastRequest: Option<"previous" | "next" | "all">;
+};
 
 /**
  * A list of messages and pagination inbox.
  */
 export type AllPaginated = {
   inbox: Collection;
-
   archive: Collection;
-
-  /** persist the last action type occurred */
-  lastRequest: Option<"previous" | "next" | "all">;
 };
 
 const INITIAL_STATE: AllPaginated = {
-  inbox: pot.none,
-  archive: pot.none,
-  lastRequest: none
+  inbox: { data: pot.none, lastRequest: none },
+  archive: { data: pot.none, lastRequest: none }
 };
 
 /**
@@ -78,14 +81,18 @@ const reduceReloadAll = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.toLoading(state.archive),
-          lastRequest: some("all")
+          archive: {
+            data: pot.toLoading(state.archive.data),
+            lastRequest: some("all")
+          }
         };
       }
       return {
         ...state,
-        inbox: pot.toLoading(state.inbox),
-        lastRequest: some("all")
+        inbox: {
+          data: pot.toLoading(state.inbox.data),
+          lastRequest: some("all")
+        }
       };
     }
 
@@ -93,22 +100,26 @@ const reduceReloadAll = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.some({
+          archive: {
+            data: pot.some({
+              page: action.payload.messages,
+              previous: action.payload.pagination.previous,
+              next: action.payload.pagination.next
+            }),
+            lastRequest: none
+          }
+        };
+      }
+      return {
+        ...state,
+        inbox: {
+          data: pot.some({
             page: action.payload.messages,
             previous: action.payload.pagination.previous,
             next: action.payload.pagination.next
           }),
           lastRequest: none
-        };
-      }
-      return {
-        ...state,
-        inbox: pot.some({
-          page: action.payload.messages,
-          previous: action.payload.pagination.previous,
-          next: action.payload.pagination.next
-        }),
-        lastRequest: none
+        }
       };
     }
 
@@ -116,12 +127,18 @@ const reduceReloadAll = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.toError(state.archive, action.payload.error.message)
+          archive: {
+            data: pot.toError(state.archive.data, action.payload.error.message),
+            lastRequest: state.archive.lastRequest
+          }
         };
       }
       return {
         ...state,
-        inbox: pot.toError(state.inbox, action.payload.error.message)
+        inbox: {
+          data: pot.toError(state.inbox.data, action.payload.error.message),
+          lastRequest: state.inbox.lastRequest
+        }
       };
 
     default:
@@ -138,21 +155,25 @@ const reduceLoadNextPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.toLoading(state.archive),
-          lastRequest: some("next")
+          archive: {
+            data: pot.toLoading(state.archive.data),
+            lastRequest: some("next")
+          }
         };
       }
       return {
         ...state,
-        inbox: pot.toLoading(state.inbox),
-        lastRequest: some("next")
+        inbox: {
+          data: pot.toLoading(state.inbox.data),
+          lastRequest: some("next")
+        }
       };
 
     case getType(loadNextPageMessages.success):
       // we store the previous item only if the list was empty
       const getNextData = (current: Collection) =>
         pot
-          .toOption(current)
+          .toOption(current.data)
           .map(previousState =>
             pot.some({
               ...previousState,
@@ -170,23 +191,31 @@ const reduceLoadNextPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: getNextData(state.archive),
-          lastRequest: none
+          archive: { data: getNextData(state.archive), lastRequest: none }
         };
       }
 
-      return { ...state, inbox: getNextData(state.inbox), lastRequest: none };
+      return {
+        ...state,
+        inbox: { data: getNextData(state.inbox), lastRequest: none }
+      };
 
     case getType(loadNextPageMessages.failure):
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.toError(state.inbox, action.payload.error.message)
+          archive: {
+            data: pot.toError(state.inbox.data, action.payload.error.message),
+            lastRequest: state.archive.lastRequest
+          }
         };
       }
       return {
         ...state,
-        inbox: pot.toError(state.inbox, action.payload.error.message)
+        inbox: {
+          data: pot.toError(state.inbox.data, action.payload.error.message),
+          lastRequest: state.inbox.lastRequest
+        }
       };
 
     default:
@@ -203,20 +232,24 @@ const reduceLoadPreviousPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.toLoading(state.archive),
-          lastRequest: some("previous")
+          archive: {
+            data: pot.toLoading(state.archive.data),
+            lastRequest: some("previous")
+          }
         };
       }
       return {
         ...state,
-        inbox: pot.toLoading(state.inbox),
-        lastRequest: some("previous")
+        inbox: {
+          data: pot.toLoading(state.inbox.data),
+          lastRequest: some("previous")
+        }
       };
 
     case getType(loadPreviousPageMessages.success):
       const getNextData = (current: Collection) =>
         pot
-          .toOption(current)
+          .toOption(current.data)
           .map(previousState =>
             pot.some({
               ...previousState,
@@ -237,27 +270,31 @@ const reduceLoadPreviousPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: getNextData(state.archive),
-          lastRequest: none
+          archive: { data: getNextData(state.archive), lastRequest: none }
         };
       }
 
       return {
         ...state,
-        inbox: getNextData(state.inbox),
-        lastRequest: none
+        inbox: { data: getNextData(state.inbox), lastRequest: none }
       };
 
     case getType(loadPreviousPageMessages.failure):
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: pot.toError(state.archive, action.payload.error.message)
+          archive: {
+            data: pot.toError(state.archive.data, action.payload.error.message),
+            lastRequest: state.archive.lastRequest
+          }
         };
       }
       return {
         ...state,
-        inbox: pot.toError(state.inbox, action.payload.error.message)
+        inbox: {
+          data: pot.toError(state.inbox.data, action.payload.error.message),
+          lastRequest: state.inbox.lastRequest
+        }
       };
 
     default:
@@ -278,8 +315,10 @@ export const allPaginatedSelector = (state: GlobalState): AllPaginated =>
  * Return the inbox in the Inbox
  * @param state
  */
-export const allInboxSelector = (state: GlobalState): AllPaginated["inbox"] =>
-  state.entities.messages.allPaginated.inbox;
+export const allInboxSelector = (
+  state: GlobalState
+): AllPaginated["inbox"]["data"] =>
+  state.entities.messages.allPaginated.inbox.data;
 
 /**
  * Return the inbox in the Inbox
@@ -287,7 +326,8 @@ export const allInboxSelector = (state: GlobalState): AllPaginated["inbox"] =>
  */
 export const allArchiveSelector = (
   state: GlobalState
-): AllPaginated["archive"] => state.entities.messages.allPaginated.archive;
+): AllPaginated["archive"]["data"] =>
+  state.entities.messages.allPaginated.archive.data;
 
 /**
  * Return the list of Inbox messages currently available.
@@ -328,52 +368,87 @@ export const getById = createSelector(
 );
 
 /**
- * True if the state is loading and the last request is for a next page.
+ * True if the inbox state is loading and the last request is for a next page.
  * @param state
  */
-export const isLoadingNextPage = createSelector(
+export const isLoadingInboxNextPage = createSelector(
   allPaginatedSelector,
-  ({ archive, inbox, lastRequest }) =>
-    lastRequest
-      .map(
-        _ => _ === "next" && (pot.isLoading(inbox) || pot.isLoading(archive))
-      )
+  ({ inbox }) =>
+    inbox.lastRequest
+      .map(_ => _ === "next" && pot.isLoading(inbox.data))
       .getOrElse(false)
 );
 
 /**
- * True if the state is loading and the last request is for a previous page.
+ * True if the inbox state is loading and the last request is for a previous page.
  * @param state
  */
-export const isLoadingPreviousPage = createSelector(
+export const isLoadingInboxPreviousPage = createSelector(
   allPaginatedSelector,
-  ({ archive, inbox, lastRequest }) =>
-    lastRequest
-      .map(
-        _ =>
-          _ === "previous" && (pot.isLoading(inbox) || pot.isLoading(archive))
-      )
+  ({ inbox }) =>
+    inbox.lastRequest
+      .map(_ => _ === "previous" && pot.isLoading(inbox.data))
       .getOrElse(false)
 );
 
 /**
- * True if the state is loading and the last request is for all the messages
+ * True if the inbox state is loading and the last request is for all the messages
  * resulting in a complete reset.
  * @param state
  */
-export const isReloading = createSelector(
+export const isReloadingInbox = createSelector(
   allPaginatedSelector,
-  ({ archive, inbox, lastRequest }) =>
-    lastRequest
-      .map(_ => _ === "all" && (pot.isLoading(inbox) || pot.isLoading(archive)))
+  ({ inbox }) =>
+    inbox.lastRequest
+      .map(_ => _ === "all" && pot.isLoading(inbox.data))
+      .getOrElse(false)
+);
+
+/**
+ * True if the archive state is loading and the last request is for all the messages
+ * resulting in a complete reset.
+ * @param state
+ */
+export const isReloadingArchive = createSelector(
+  allPaginatedSelector,
+  ({ archive }) =>
+    archive.lastRequest
+      .map(_ => _ === "all" && pot.isLoading(archive.data))
+      .getOrElse(false)
+);
+
+/**
+ * True if the archive state is loading and the last request is for a next page.
+ * @param state
+ */
+export const isLoadingArchiveNextPage = createSelector(
+  allPaginatedSelector,
+  ({ archive }) =>
+    archive.lastRequest
+      .map(_ => _ === "next" && pot.isLoading(archive.data))
+      .getOrElse(false)
+);
+
+/**
+ * True if the archive state is loading and the last request is for a previous page.
+ * @param state
+ */
+export const isLoadingArchivePreviousPage = createSelector(
+  allPaginatedSelector,
+  ({ archive }) =>
+    archive.lastRequest
+      .map(_ => _ === "previous" && pot.isLoading(archive.data))
       .getOrElse(false)
 );
 
 export const getCursors = createSelector(
   allPaginatedSelector,
   ({ archive, inbox }) => ({
-    archive: pot.map(archive, ({ previous, next }) => ({ previous, next })),
-    inbox: pot.map(inbox, ({ previous, next }) => ({ previous, next }))
+    archive: pot.map(archive.data, ({ previous, next }) => ({
+      previous,
+      next
+    })),
+    inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next }))
   })
 );
 

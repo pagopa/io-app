@@ -16,9 +16,11 @@ import {
 } from "../../../../actions/messages";
 import { GlobalState } from "../../../types";
 import reducer, {
-  isLoadingPreviousPage,
-  isLoadingNextPage,
-  AllPaginated
+  isLoadingArchivePreviousPage,
+  isLoadingArchiveNextPage,
+  isLoadingInboxPreviousPage,
+  AllPaginated,
+  isLoadingInboxNextPage
 } from "../allPaginated";
 
 describe("allPaginated reducer", () => {
@@ -32,15 +34,15 @@ describe("allPaginated reducer", () => {
         filter
       });
       it("should reset only the Archive state to loading", () => {
-        expect(pot.isLoading(reducer(undefined, actionRequest).inbox)).toBe(
-          false
-        );
-        expect(pot.isLoading(reducer(undefined, actionRequest).archive)).toBe(
-          true
-        );
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
+        ).toBe(false);
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).archive.data)
+        ).toBe(true);
       });
-      it("should set the lastRequest to 'all'", () => {
-        expect(reducer(undefined, actionRequest).lastRequest).toEqual(
+      it("should set the Archive lastRequest to 'all'", () => {
+        expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
           some("all")
         );
       });
@@ -55,8 +57,8 @@ describe("allPaginated reducer", () => {
         });
 
         it("should reset only the Archive state to the payload's content", () => {
-          expect(reducer(initialState, action).inbox).toEqual(pot.none);
-          expect(reducer(initialState, action).archive).toEqual(
+          expect(reducer(initialState, action).inbox.data).toEqual(pot.none);
+          expect(reducer(initialState, action).archive.data).toEqual(
             pot.some({
               page: successReloadMessagesPayload.messages,
               next: successReloadMessagesPayload.pagination.next,
@@ -64,8 +66,10 @@ describe("allPaginated reducer", () => {
             })
           );
         });
-        it("should set the lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).lastRequest).toEqual(none);
+        it("should set the Archive lastRequest to 'none'", () => {
+          expect(reducer(initialState, action).archive.lastRequest).toEqual(
+            none
+          );
         });
       });
     });
@@ -79,16 +83,16 @@ describe("allPaginated reducer", () => {
         filter
       });
       it("should reset only the Inbox state to loading", () => {
-        expect(pot.isLoading(reducer(undefined, actionRequest).inbox)).toBe(
-          true
-        );
-        expect(pot.isLoading(reducer(undefined, actionRequest).archive)).toBe(
-          false
-        );
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
+        ).toBe(true);
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).archive.data)
+        ).toBe(false);
       });
       // eslint-disable-next-line sonarjs/no-identical-functions
-      it("should set the lastRequest to 'all'", () => {
-        expect(reducer(undefined, actionRequest).lastRequest).toEqual(
+      it("should set the Inbox lastRequest to 'all'", () => {
+        expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           some("all")
         );
       });
@@ -103,17 +107,17 @@ describe("allPaginated reducer", () => {
         });
 
         it("should reset only the Inbox state to the payload's content", () => {
-          expect(reducer(initialState, action).inbox).toEqual(
+          expect(reducer(initialState, action).inbox.data).toEqual(
             pot.some({
               page: successReloadMessagesPayload.messages,
               next: successReloadMessagesPayload.pagination.next,
               previous: successReloadMessagesPayload.pagination.previous
             })
           );
-          expect(reducer(initialState, action).archive).toEqual(pot.none);
+          expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
-        it("should set the lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).lastRequest).toEqual(none);
+        it("should set the Inbox lastRequest to 'none'", () => {
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
         });
       });
     });
@@ -131,15 +135,15 @@ describe("allPaginated reducer", () => {
 
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should reset only the Archive state to loading", () => {
-        expect(pot.isLoading(reducer(undefined, actionRequest).inbox)).toBe(
-          false
-        );
-        expect(pot.isLoading(reducer(undefined, actionRequest).archive)).toBe(
-          true
-        );
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
+        ).toBe(false);
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).archive.data)
+        ).toBe(true);
       });
-      it("should set the lastRequest to `next'", () => {
-        expect(reducer(undefined, actionRequest).lastRequest).toEqual(
+      it("should set the Archive lastRequest to `next'", () => {
+        expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
           some("next")
         );
       });
@@ -155,7 +159,7 @@ describe("allPaginated reducer", () => {
 
         it("should append the payload's content to the existing Archive page", () => {
           const intermediateState = reducer(initialState, action);
-          expect(intermediateState.archive).toEqual(
+          expect(intermediateState.archive.data).toEqual(
             pot.some({
               page: successLoadNextPageMessagesPayload.messages,
               next: successLoadNextPageMessagesPayload.pagination.next
@@ -163,7 +167,7 @@ describe("allPaginated reducer", () => {
           );
           // testing for concatenation
           const finalState = reducer(intermediateState, action);
-          expect(finalState.archive).toEqual(
+          expect(finalState.archive.data).toEqual(
             pot.some({
               page: successLoadNextPageMessagesPayload.messages.concat(
                 successLoadNextPageMessagesPayload.messages
@@ -171,10 +175,13 @@ describe("allPaginated reducer", () => {
               next: successLoadNextPageMessagesPayload.pagination.next
             })
           );
-          expect(reducer(initialState, action).inbox).toEqual(pot.none);
+          expect(reducer(initialState, action).inbox.data).toEqual(pot.none);
         });
-        it("should set the lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).lastRequest).toEqual(none);
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        it("should set the Archive lastRequest to 'none'", () => {
+          expect(reducer(initialState, action).archive.lastRequest).toEqual(
+            none
+          );
         });
       });
     });
@@ -190,16 +197,16 @@ describe("allPaginated reducer", () => {
 
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should reset only the Inbox state to loading", () => {
-        expect(pot.isLoading(reducer(undefined, actionRequest).inbox)).toBe(
-          true
-        );
-        expect(pot.isLoading(reducer(undefined, actionRequest).archive)).toBe(
-          false
-        );
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
+        ).toBe(true);
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).archive.data)
+        ).toBe(false);
       });
       // eslint-disable-next-line sonarjs/no-identical-functions
-      it("should set the lastRequest to `next'", () => {
-        expect(reducer(undefined, actionRequest).lastRequest).toEqual(
+      it("should set the Inbox lastRequest to `next'", () => {
+        expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           some("next")
         );
       });
@@ -215,7 +222,7 @@ describe("allPaginated reducer", () => {
 
         it("should append the payload's content to the existing Inbox page", () => {
           const intermediateState = reducer(initialState, action);
-          expect(intermediateState.inbox).toEqual(
+          expect(intermediateState.inbox.data).toEqual(
             pot.some({
               page: successLoadNextPageMessagesPayload.messages,
               next: successLoadNextPageMessagesPayload.pagination.next
@@ -223,7 +230,7 @@ describe("allPaginated reducer", () => {
           );
           // testing for concatenation
           const finalState = reducer(intermediateState, action);
-          expect(finalState.inbox).toEqual(
+          expect(finalState.inbox.data).toEqual(
             pot.some({
               page: successLoadNextPageMessagesPayload.messages.concat(
                 successLoadNextPageMessagesPayload.messages
@@ -231,10 +238,10 @@ describe("allPaginated reducer", () => {
               next: successLoadNextPageMessagesPayload.pagination.next
             })
           );
-          expect(reducer(initialState, action).archive).toEqual(pot.none);
+          expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
-        it("should set the lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).lastRequest).toEqual(none);
+        it("should set the Inbox lastRequest to 'none'", () => {
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
         });
       });
     });
@@ -252,15 +259,15 @@ describe("allPaginated reducer", () => {
 
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should reset only the Archive state to loading", () => {
-        expect(pot.isLoading(reducer(undefined, actionRequest).inbox)).toBe(
-          false
-        );
-        expect(pot.isLoading(reducer(undefined, actionRequest).archive)).toBe(
-          true
-        );
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
+        ).toBe(false);
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).archive.data)
+        ).toBe(true);
       });
-      it("should set the lastRequest to `next'", () => {
-        expect(reducer(undefined, actionRequest).lastRequest).toEqual(
+      it("should set the Archive lastRequest to `next'", () => {
+        expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
           some("previous")
         );
       });
@@ -276,7 +283,7 @@ describe("allPaginated reducer", () => {
 
         it("should prepend the payload's content to the existing Archive page", () => {
           const intermediateState = reducer(initialState, action);
-          expect(intermediateState.archive).toEqual(
+          expect(intermediateState.archive.data).toEqual(
             pot.some({
               page: successLoadPreviousPageMessagesPayload.messages,
               previous:
@@ -285,7 +292,7 @@ describe("allPaginated reducer", () => {
           );
           const finalState = reducer(intermediateState, action);
           // testing for prepend
-          expect(finalState.archive).toEqual(
+          expect(finalState.archive.data).toEqual(
             pot.some({
               page: successLoadPreviousPageMessagesPayload.messages.concat(
                 successLoadPreviousPageMessagesPayload.messages
@@ -294,7 +301,7 @@ describe("allPaginated reducer", () => {
                 successLoadPreviousPageMessagesPayload.pagination.previous
             })
           );
-          expect(finalState.inbox).toEqual(pot.none);
+          expect(finalState.inbox.data).toEqual(pot.none);
         });
 
         describe("with an empty response", () => {
@@ -311,8 +318,8 @@ describe("allPaginated reducer", () => {
               intermediateState,
               actionWithEmptyPagination
             );
-            expect(finalState.inbox).toEqual(pot.none);
-            expect(finalState.archive).toEqual(
+            expect(finalState.inbox.data).toEqual(pot.none);
+            expect(finalState.archive.data).toEqual(
               pot.some({
                 page: successLoadPreviousPageMessagesPayload.messages,
                 previous:
@@ -322,8 +329,11 @@ describe("allPaginated reducer", () => {
           });
         });
 
-        it("should set the lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).lastRequest).toEqual(none);
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        it("should set the Archive lastRequest to 'none'", () => {
+          expect(reducer(initialState, action).archive.lastRequest).toEqual(
+            none
+          );
         });
       });
     });
@@ -339,16 +349,16 @@ describe("allPaginated reducer", () => {
 
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should reset only the Inbox state to loading", () => {
-        expect(pot.isLoading(reducer(undefined, actionRequest).inbox)).toBe(
-          true
-        );
-        expect(pot.isLoading(reducer(undefined, actionRequest).archive)).toBe(
-          false
-        );
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
+        ).toBe(true);
+        expect(
+          pot.isLoading(reducer(undefined, actionRequest).archive.data)
+        ).toBe(false);
       });
       // eslint-disable-next-line sonarjs/no-identical-functions
-      it("should set the lastRequest to `next'", () => {
-        expect(reducer(undefined, actionRequest).lastRequest).toEqual(
+      it("should set the Inbox lastRequest to `next'", () => {
+        expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           some("previous")
         );
       });
@@ -364,7 +374,7 @@ describe("allPaginated reducer", () => {
 
         it("should prepend the payload's content to the existing page Inbox", () => {
           const intermediateState = reducer(initialState, action);
-          expect(intermediateState.inbox).toEqual(
+          expect(intermediateState.inbox.data).toEqual(
             pot.some({
               page: successLoadPreviousPageMessagesPayload.messages,
               previous:
@@ -373,7 +383,7 @@ describe("allPaginated reducer", () => {
           );
           const finalState = reducer(intermediateState, action);
           // testing for prepend
-          expect(finalState.inbox).toEqual(
+          expect(finalState.inbox.data).toEqual(
             pot.some({
               page: successLoadPreviousPageMessagesPayload.messages.concat(
                 successLoadPreviousPageMessagesPayload.messages
@@ -382,7 +392,7 @@ describe("allPaginated reducer", () => {
                 successLoadPreviousPageMessagesPayload.pagination.previous
             })
           );
-          expect(finalState.archive).toEqual(pot.none);
+          expect(finalState.archive.data).toEqual(pot.none);
         });
 
         describe("with an empty response", () => {
@@ -399,19 +409,19 @@ describe("allPaginated reducer", () => {
               intermediateState,
               actionWithEmptyPagination
             );
-            expect(finalState.inbox).toEqual(
+            expect(finalState.inbox.data).toEqual(
               pot.some({
                 page: successLoadPreviousPageMessagesPayload.messages,
                 previous:
                   successLoadPreviousPageMessagesPayload.pagination.previous
               })
             );
-            expect(finalState.archive).toEqual(pot.none);
+            expect(finalState.archive.data).toEqual(pot.none);
           });
         });
 
-        it("should set the lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).lastRequest).toEqual(none);
+        it("should set the Inbox lastRequest to 'none'", () => {
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
         });
       });
     });
@@ -419,13 +429,15 @@ describe("allPaginated reducer", () => {
 
   describe("when loadPreviousPageMessages and loadNextPageMessages success actions follow each other", () => {
     const initialState: AllPaginated = {
-      archive: pot.none,
-      inbox: pot.some({
-        page: [],
-        previous: "abcde",
-        next: "12345"
-      }),
-      lastRequest: none
+      archive: { data: pot.none, lastRequest: none },
+      inbox: {
+        data: pot.some({
+          page: [],
+          previous: "abcde",
+          next: "12345"
+        }),
+        lastRequest: none
+      }
     };
 
     it("the loadNext should not affect the existing `previous` cursor", () => {
@@ -433,7 +445,7 @@ describe("allPaginated reducer", () => {
         successLoadNextPageMessagesPayload
       );
 
-      expect(reducer(initialState, action).inbox).toEqual(
+      expect(reducer(initialState, action).inbox.data).toEqual(
         pot.some({
           page: successLoadNextPageMessagesPayload.messages,
           previous: "abcde",
@@ -447,7 +459,7 @@ describe("allPaginated reducer", () => {
         successLoadPreviousPageMessagesPayload
       );
 
-      expect(reducer(initialState, action).inbox).toEqual(
+      expect(reducer(initialState, action).inbox.data).toEqual(
         pot.some({
           page: successLoadPreviousPageMessagesPayload.messages,
           previous: successLoadPreviousPageMessagesPayload.pagination.previous,
@@ -478,13 +490,15 @@ describe("allPaginated reducer", () => {
     .forEach(({ initialState, action }) => {
       const expectedState = pot.noneError(defaultRequestError.error.message);
       describe(`when a ${action.type} failure is sent`, () => {
-        it(`preserves the existing lastRequest: ${initialState.lastRequest}`, () => {
-          expect(reducer(initialState, action).lastRequest).toEqual(
-            initialState.lastRequest
+        it(`preserves the existing lastRequest: ${initialState.inbox.lastRequest}`, () => {
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
+            initialState.inbox.lastRequest
           );
         });
         it("returns the error", () => {
-          expect(reducer(initialState, action).inbox).toEqual(expectedState);
+          expect(reducer(initialState, action).inbox.data).toEqual(
+            expectedState
+          );
         });
       });
     });
@@ -501,61 +515,95 @@ describe("isLoadingPreviousPage selector", () => {
     // pots say loading but there is no last request
     {
       archive: pot.noneLoading,
-      data: pot.noneLoading,
+      inbox: pot.noneLoading,
       lastRequest: none,
-      expected: false
+      expectedArchive: false,
+      expectedInbox: false
     },
     // pots say none and there is no last request
     {
       archive: pot.none,
-      data: pot.none,
+      inbox: pot.none,
       lastRequest: none,
-      expected: false
+      expectedArchive: false,
+      expectedInbox: false
     },
     // pots say loading and it was a previous page
     {
       archive: pot.noneLoading,
-      data: pot.noneLoading,
+      inbox: pot.noneLoading,
       lastRequest: some("previous"),
-      expected: true
+      expectedArchive: true,
+      expectedInbox: true
     },
     // pots say different things and it was a previous page
     {
       archive: pot.noneLoading,
-      data: pot.none,
+      inbox: pot.none,
       lastRequest: some("previous"),
-      expected: true
+      expectedArchive: true,
+      expectedInbox: false
     },
     // pots say loading and it was something else
     {
       archive: pot.noneLoading,
-      data: pot.noneLoading,
+      inbox: pot.noneLoading,
       lastRequest: some("next"),
-      expected: false
+      expectedArchive: false,
+      expectedInbox: false
     },
     {
       archive: pot.noneLoading,
-      data: pot.noneLoading,
+      inbox: pot.noneLoading,
       lastRequest: some("all"),
-      expected: false
+      expectedArchive: false,
+      expectedInbox: false
     }
-  ].forEach(({ archive, data, lastRequest, expected }) => {
-    describe(`given { archive: ${archive.kind}, inbox: ${
-      data.kind
-    }, lastRequest: ${lastRequest.toString()} `, () => {
-      it(`should return ${expected}`, () => {
-        expect(
-          isLoadingPreviousPage(
-            toGlobalState({
-              archive,
-              inbox: data,
-              lastRequest: lastRequest as AllPaginated["lastRequest"]
-            })
-          )
-        ).toBe(expected);
+  ].forEach(
+    ({ archive, inbox, lastRequest, expectedArchive, expectedInbox }) => {
+      describe(`given { archive: ${archive.kind}, inbox: ${
+        inbox.kind
+      }, lastRequest: ${lastRequest.toString()} `, () => {
+        it(`should return ${expectedInbox} for inbox`, () => {
+          expect(
+            isLoadingInboxPreviousPage(
+              toGlobalState({
+                archive: {
+                  data: archive,
+                  lastRequest:
+                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                },
+                inbox: {
+                  data: inbox,
+                  lastRequest:
+                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                }
+              })
+            )
+          ).toBe(expectedInbox);
+        });
+
+        it(`should return ${expectedArchive} for archive`, () => {
+          expect(
+            isLoadingArchivePreviousPage(
+              toGlobalState({
+                archive: {
+                  data: archive,
+                  lastRequest:
+                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                },
+                inbox: {
+                  data: inbox,
+                  lastRequest:
+                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                }
+              })
+            )
+          ).toBe(expectedArchive);
+        });
       });
-    });
-  });
+    }
+  );
 });
 
 describe("isLoadingNextPage selector", () => {
@@ -563,59 +611,93 @@ describe("isLoadingNextPage selector", () => {
     // pots say loading but there is no last request
     {
       archive: pot.noneLoading,
-      data: pot.noneLoading,
+      inbox: pot.noneLoading,
       lastRequest: none,
-      expected: false
+      expectedArchive: false,
+      expectedInbox: false
     },
     // pots say none and there is no last request
     {
       archive: pot.none,
-      data: pot.none,
+      inbox: pot.none,
       lastRequest: none,
-      expected: false
+      expectedArchive: false,
+      expectedInbox: false
     },
     // pots say loading and it was a next page
     {
       archive: pot.noneLoading,
-      data: pot.noneLoading,
+      inbox: pot.noneLoading,
       lastRequest: some("next"),
-      expected: true
+      expectedArchive: true,
+      expectedInbox: true
     },
     // pots say different things and it was a next page
     {
       archive: pot.noneLoading,
-      data: pot.none,
+      inbox: pot.none,
       lastRequest: some("next"),
-      expected: true
+      expectedArchive: true,
+      expectedInbox: false
     },
     // pots say loading and it was something else
     {
       archive: pot.noneLoading,
-      data: pot.noneLoading,
+      inbox: pot.noneLoading,
       lastRequest: some("previous"),
-      expected: false
+      expectedArchive: false,
+      expectedInbox: false
     },
     {
       archive: pot.noneLoading,
-      data: pot.noneLoading,
+      inbox: pot.noneLoading,
       lastRequest: some("all"),
-      expected: false
+      expectedArchive: false,
+      expectedInbox: false
     }
-  ].forEach(({ archive, data, lastRequest, expected }) => {
-    describe(`given { archive: ${archive.kind}, inbox: ${
-      data.kind
-    }, lastRequest: ${lastRequest.toString()} `, () => {
-      it(`should return ${expected}`, () => {
-        expect(
-          isLoadingNextPage(
-            toGlobalState({
-              archive,
-              inbox: data,
-              lastRequest: lastRequest as AllPaginated["lastRequest"]
-            })
-          )
-        ).toBe(expected);
+  ].forEach(
+    ({ archive, inbox, lastRequest, expectedArchive, expectedInbox }) => {
+      describe(`given { archive: ${archive.kind}, inbox: ${
+        inbox.kind
+      }, lastRequest: ${lastRequest.toString()} `, () => {
+        it(`should return ${expectedInbox} for inbox`, () => {
+          expect(
+            isLoadingInboxNextPage(
+              toGlobalState({
+                archive: {
+                  data: archive,
+                  lastRequest:
+                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                },
+                inbox: {
+                  data: inbox,
+                  lastRequest:
+                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                }
+              })
+            )
+          ).toBe(expectedInbox);
+        });
+
+        it(`should return ${expectedArchive} for archive`, () => {
+          expect(
+            isLoadingArchiveNextPage(
+              toGlobalState({
+                archive: {
+                  data: archive,
+                  lastRequest:
+                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                },
+                inbox: {
+                  data: inbox,
+                  lastRequest:
+                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                }
+              })
+            )
+          ).toBe(expectedArchive);
+        });
       });
-    });
-  });
+    }
+  );
 });

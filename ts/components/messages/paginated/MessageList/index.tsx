@@ -25,9 +25,12 @@ import {
   allArchiveSelector,
   allInboxSelector,
   Cursor,
-  isLoadingNextPage,
-  isLoadingPreviousPage,
-  isReloading
+  isLoadingArchiveNextPage,
+  isLoadingArchivePreviousPage,
+  isReloadingArchive,
+  isLoadingInboxNextPage,
+  isLoadingInboxPreviousPage,
+  isReloadingInbox
 } from "../../../../store/reducers/entities/messages/allPaginated";
 import { MessageState } from "../../../../store/reducers/entities/messages/messagesById";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
@@ -317,9 +320,15 @@ const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
     error,
     hasPaidBadge: (category: UIMessage["category"]) =>
       isNoticePaid(state, category),
-    isLoadingMore: isLoadingNextPage(state),
-    isRefreshing: isLoadingPreviousPage(state),
-    isReloadingAll: isReloading(state),
+    isLoadingMore: isArchive
+      ? isLoadingArchiveNextPage(state)
+      : isLoadingInboxNextPage(state),
+    isRefreshing: isArchive
+      ? isLoadingArchivePreviousPage(state)
+      : isLoadingInboxPreviousPage(state),
+    isReloadingAll: isArchive
+      ? isReloadingArchive(state)
+      : isReloadingInbox(state),
     nextCursor,
     previousCursor
   };
