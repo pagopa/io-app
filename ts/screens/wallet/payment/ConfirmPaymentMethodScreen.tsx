@@ -1,6 +1,6 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import { ActionSheet, Content, Text, View } from "native-base";
+import { ActionSheet, Content, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -13,10 +13,8 @@ import { connect } from "react-redux";
 
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../../components/ContextualInfo";
 import { H4 } from "../../../components/core/typography/H4";
-import { Link } from "../../../components/core/typography/Link";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
@@ -76,7 +74,10 @@ import { PayloadForAction } from "../../../types/utils";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
-import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import {
+  formatNumberCentsToAmount,
+  buildExpirationDate
+} from "../../../utils/stringBuilder";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { PspData } from "../../../../definitions/pagopa/PspData";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
@@ -196,7 +197,10 @@ const PaymentMethodLogo = (props: {
   isPaypalEnabled: boolean;
 }) => {
   const { paymentMethod } = props;
+
   switch (paymentMethod?.kind) {
+    case "Bancomat":
+    case "Privative":
     case "CreditCard":
       return (
         <BrandImage
@@ -204,17 +208,53 @@ const PaymentMethodLogo = (props: {
           scale={0.7}
         />
       );
+
     case "PayPal":
-      if (props.isPaypalEnabled) {
-        return <BrandImage image={paypalLogoMin} scale={0.7} />;
-      }
+      return props.isPaypalEnabled ? (
+        <BrandImage image={paypalLogoMin} scale={0.7} />
+      ) : null;
+
+    default:
       return null;
-    // those methods can't pay
-    case "Satispay":
+  }
+};
+
+const getPaymentMethodSubject = (
+  paymentMethod: PaymentMethod,
+  isPaypalEnabled: boolean
+): string | null => {
+  switch (paymentMethod.kind) {
     case "Bancomat":
-    case "BPay":
     case "Privative":
-    case undefined:
+    case "CreditCard":
+      return paymentMethod.info.holder ?? null;
+
+    case "PayPal":
+      return isPaypalEnabled
+        ? paymentMethod.info.pspInfo[0]?.email ?? null
+        : null;
+
+    default:
+      return null;
+  }
+};
+
+const getPaymentMethodExpiration = (
+  paymentMethod: PaymentMethod,
+  isPaypalEnabled: boolean
+): string | null => {
+  switch (paymentMethod.kind) {
+    case "Bancomat":
+    case "Privative":
+    case "CreditCard":
+      return buildExpirationDate(paymentMethod.info);
+
+    case "PayPal":
+      return isPaypalEnabled
+        ? paymentMethod.info.pspInfo[0]?.email ?? null
+        : null;
+
+    default:
       return null;
   }
 };
@@ -231,8 +271,8 @@ const SelectionBox = (props: {
       {props.logo && <View style={styles.selectionBoxIcon}>{props.logo}</View>}
 
       <View style={styles.selectionBoxContent}>
-        <H4>{props.mainText}</H4>
-        <LabelSmall color="bluegrey" weight="Regular">
+        <H4 numberOfLines={1}>{props.mainText}</H4>
+        <LabelSmall numberOfLines={1} color="bluegrey" weight="Regular">
           {props.subText}
         </LabelSmall>
       </View>
@@ -265,6 +305,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       />
     );
   };
+
   const urlPrefix = props.isPagoPATestEnabled
     ? pagoPaApiUrlPrefixTest
     : pagoPaApiUrlPrefix;
@@ -360,6 +401,14 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const formattedTotal = formatNumberCentsToAmount(totalAmount, true);
   const formattedFees = formatNumberCentsToAmount(fee ?? 0, true);
 
+  const paymentMethodSubject = paymentMethod
+    ? getPaymentMethodSubject(paymentMethod, props.isPaypalEnabled)
+    : null;
+
+  const paymentMethodExpiration = paymentMethod
+    ? getPaymentMethodExpiration(paymentMethod, props.isPaypalEnabled)
+    : null;
+
   return (
     <BaseScreenComponent
       goBack={props.onCancel}
@@ -373,7 +422,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View spacer />
 
             <View style={styles.totalContainer}>
-              <H1>Totale</H1>
+              <H1>{I18n.t("wallet.ConfirmPayment.total")}</H1>
               <H1>{formattedTotal}</H1>
             </View>
 
@@ -388,7 +437,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               />
 
               <H3 color="bluegrey" style={styles.iconRowText}>
-                Dati del pagamento
+                {I18n.t("wallet.ConfirmPayment.paymentInformations")}
               </H3>
             </View>
 
@@ -412,7 +461,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               />
 
               <H3 color="bluegrey" style={styles.iconRowText}>
-                Paga con
+                {I18n.t("wallet.ConfirmPayment.payWith")}
               </H3>
             </View>
 
@@ -426,8 +475,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                 />
               }
               mainText={paymentMethod?.caption ?? ""}
-              subText="Mario Rossi · 05/26"
-              ctaText="Modifica"
+              subText={`${paymentMethodSubject} · ${paymentMethodExpiration}`}
+              ctaText={I18n.t("wallet.ConfirmPayment.edit")}
+              onPress={props.pickPaymentMethod}
             />
 
             <View spacer large />
@@ -441,7 +491,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               />
 
               <H3 color="bluegrey" style={styles.iconRowText}>
-                Costi di transazione
+                {I18n.t("wallet.ConfirmPayment.transactionCosts")}
               </H3>
             </View>
 
@@ -452,10 +502,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               subText={maybePsp
                 .map(
                   ({ businessName }) =>
-                    `${I18n.t("payment.currentPsp")} ${businessName}`
+                    `${I18n.t(
+                      "wallet.ConfirmPayment.providedBy"
+                    )} ${businessName}`
                 )
                 .getOrElse(I18n.t("payment.noPsp"))}
-              ctaText="Modifica"
+              ctaText={I18n.t("wallet.ConfirmPayment.edit")}
               onPress={props.pickPsp}
             />
           </View>
@@ -498,7 +550,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                 idPayment,
                 language: getLocalePrimaryWithFallback()
               }),
-            `Paga ${formattedTotal}`,
+            `${I18n.t("wallet.ConfirmPayment.pay")} ${formattedTotal}`,
             undefined,
             undefined,
             props.payStartWebviewPayload.isSome()

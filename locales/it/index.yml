@@ -1239,17 +1239,14 @@ wallet:
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
-    header: Conferma pagamento
-    cancelPayment: Annulla l'operazione
-    goToPay: Paga
-    askConfirm: Confermi il pagamento?
-    partialAmount: Importo dovuto
-    fee: Costi di transazione
-    why: Perché?
-    info: "Dopo questo passaggio non sarà più possibile annullare"
-    info2: Stai utilizzando il tuo metodo di pagamento preferito.
-    changeMethod: Cambia metodo di pagamento
-    change: Cambia metodo
+    header: Riepilogo del pagamento
+    total: Totale
+    paymentInformations: Dati del pagamento
+    payWith: Paga con
+    transactionCosts: Costi della transazione
+    edit: Modifica
+    providedBy: Gestita da
+    pay: Paga
     identificationMessage: "Conferma l'operazione inserendo il tuo codice di sblocco"
     transactionSuccess: il pagamento è stato completato!
     transactionFailure: Si è verificato un errore durante il pagamento, riprova!

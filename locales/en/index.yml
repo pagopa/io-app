@@ -1217,17 +1217,14 @@ wallet:
     contextualHelpTitle: Select a provider
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
-    header: Confirm transaction
-    cancelPayment: Cancel the transaction
-    goToPay: Pay
-    askConfirm: Want to proceed with the transaction?
-    partialAmount: Amount to pay
-    fee: Fee
-    why: Why?
-    info: 'After this step it will not be possible to come back.'
-    info2: You are using your favourite payment method.
-    changeMethod: Change the payment method
-    change: Change method
+    header: Checkout
+    total: Total
+    paymentInformations: Payment informations
+    payWith: Pay with
+    transactionCosts: Transaction costs
+    edit: Edit
+    providedBy: Provided by
+    pay: Pay
     identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: the payment has been completed!
     transactionFailure: There was an error with the payment, please retry!

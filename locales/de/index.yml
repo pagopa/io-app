@@ -667,17 +667,14 @@ wallet:
     onUpdateWalletPspFailure: Vorgang ist fehlgeschlagen, bitte erneut versuchen
     contextualHelpTitle: Wählen Sie einen Provider
   ConfirmPayment:
-    header: Transaktion bestätigen
-    cancelPayment: Transaktion abbrechen
-    goToPay: Bezahlen
-    askConfirm: Möchten Sie mit der Aktion fortfahren?
-    partialAmount: Zu zahlender Betrag
-    fee: Gebühr
-    why: Warum?
-    info: 'Nach diesem Schritt wird es nicht mehr möglich sein, zurückzukehren.'
-    info2: Sie verwenden Ihre bevorzugte Zahlungsmethode.
-    changeMethod: Ändern Sie die Zahlungsmethode
-    change: Methode wechseln
+    header: Checkout
+    total: Total
+    paymentInformations: Payment informations
+    payWith: Pay with
+    transactionCosts: Transaction costs
+    edit: Edit
+    providedBy: Provided by
+    pay: Pay
     identificationMessage: Bestätigen Sie die Transaktion mit Ihrem Freischaltcode
     transactionSuccess: die Zahlung wurde abgeschlossen!
     transactionFailure: Es gab einen Fehler mit der Zahlung, bitte versuchen Sie es erneut!
