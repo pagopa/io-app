@@ -23,7 +23,8 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       navigate: mockedNavigation,
-      dispatch: jest.fn()
+      dispatch: jest.fn(),
+      addListener: () => jest.fn()
     })
   };
 });
@@ -117,11 +118,9 @@ describe("the ZendeskChooseSubCategory screen", () => {
       );
       fireEvent(subCategoryItem, "onPress");
       expect(MockZendesk.addTicketCustomField).toBeCalled();
-      expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
-        params: { assistanceForPayment: undefined },
-        screen: "ZENDESK_ASK_PERMISSIONS"
+      expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_ASK_PERMISSIONS", {
+        assistanceForPayment: undefined
       });
-      // expect(navigateToZendeskAskPermissionsSpy).toBeCalled();
     });
   });
 });

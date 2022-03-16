@@ -11,6 +11,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ZENDESK_ROUTES from "../../navigation/routes";
 import * as zendeskAction from "../../store/actions";
 import { getZendeskConfig } from "../../store/actions";
 import ZendeskChooseCategory from "../ZendeskChooseCategory";
@@ -24,6 +25,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: () => jest.fn(),
       navigate: mockedNavigation,
       dispatch: jest.fn()
     })
@@ -172,10 +174,12 @@ describe("the ZendeskChooseCategory screen", () => {
       fireEvent(categoryItem, "onPress");
       expect(MockZendesk.addTicketCustomField).toBeCalled();
       expect(mockedNavigation).toHaveBeenCalledTimes(1);
-      expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
-        params: { assistanceForPayment: undefined },
-        screen: "ZENDESK_ASK_PERMISSIONS"
-      });
+      expect(mockedNavigation).toHaveBeenCalledWith(
+        "ZENDESK_CHOOSE_SUB_CATEGORY",
+        {
+          assistanceForPayment: undefined
+        }
+      );
     });
     it("should call the navigateToZendeskAskPermissions action when press the category if it has not sub-categories", () => {
       const store: Store<GlobalState> = createStore(
@@ -189,10 +193,12 @@ describe("the ZendeskChooseCategory screen", () => {
       );
       fireEvent(categoryItem, "onPress");
       expect(mockedNavigation).toHaveBeenCalledTimes(1);
-      expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
-        params: { assistanceForPayment: undefined },
-        screen: "ZENDESK_ASK_PERMISSIONS"
-      });
+      expect(mockedNavigation).toHaveBeenCalledWith(
+        ZENDESK_ROUTES.ASK_PERMISSIONS,
+        {
+          assistanceForPayment: undefined
+        }
+      );
     });
   });
 });
