@@ -90,6 +90,8 @@ import { H3 } from "../../../components/core/typography/H3";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { BrandImage } from "../../../features/wallet/component/card/BrandImage";
 import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { confirmButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -351,6 +353,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   const showFeeContextualHelp = typeof fee !== "undefined" && fee > 0;
 
+  const formattedSingleAmount = formatNumberCentsToAmount(
+    verifica.importoSingoloVersamento,
+    true
+  );
+  const formattedTotal = formatNumberCentsToAmount(totalAmount, true);
+  const formattedFees = formatNumberCentsToAmount(fee ?? 0, true);
+
   return (
     <BaseScreenComponent
       goBack={props.onCancel}
@@ -365,7 +374,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <View style={styles.totalContainer}>
               <H1>Totale</H1>
-              <H1>{formatNumberCentsToAmount(totalAmount, true)}</H1>
+              <H1>{formattedTotal}</H1>
             </View>
 
             <View spacer large />
@@ -389,10 +398,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               {paymentReason}
             </H4>
             <LabelSmall color="bluegrey" weight="Regular">
-              {formatNumberCentsToAmount(
-                verifica.importoSingoloVersamento,
-                true
-              )}
+              {formattedSingleAmount}
             </LabelSmall>
 
             <View spacer large />
@@ -442,7 +448,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View spacer />
 
             <SelectionBox
-              mainText={formatNumberCentsToAmount(fee ?? 0, true)}
+              mainText={formattedFees}
               subText={maybePsp
                 .map(
                   ({ businessName }) =>
@@ -470,49 +476,6 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           </View>
         </Content>
 
-        <View style={styles.footerContainer}>
-          {/* the actual footer must be wrapped in this container in order to keep a white background below the safe area */}
-          <View footer={true}>
-            <ButtonDefaultOpacity
-              block={true}
-              primary={true}
-              // a payment is running
-              disabled={props.payStartWebviewPayload.isSome()}
-              onPress={() =>
-                props.dispatchPaymentStart({
-                  idWallet: wallet.idWallet,
-                  idPayment,
-                  language: getLocalePrimaryWithFallback()
-                })
-              }
-            >
-              <Text>{`${I18n.t(
-                "wallet.ConfirmPayment.goToPay"
-              )} ${formatNumberCentsToAmount(totalAmount, true)}`}</Text>
-            </ButtonDefaultOpacity>
-            <View spacer={true} />
-            <View style={styles.parent}>
-              <ButtonDefaultOpacity
-                style={styles.child}
-                block={true}
-                cancel={true}
-                onPress={props.onCancel}
-                testID={"cancelPaymentButton"}
-              >
-                <Text>{I18n.t("global.buttons.cancel")}</Text>
-              </ButtonDefaultOpacity>
-              <View hspacer={true} />
-              <ButtonDefaultOpacity
-                style={styles.childTwice}
-                block={true}
-                bordered={true}
-                onPress={props.pickPaymentMethod}
-              >
-                <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
-              </ButtonDefaultOpacity>
-            </View>
-          </View>
-        </View>
         {props.payStartWebviewPayload.isSome() && (
           <PayWebViewModal
             postUri={urlPrefix + payUrlSuffix}
@@ -525,6 +488,22 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
           />
         )}
+
+        <FooterWithButtons
+          type="SingleButton"
+          leftButton={confirmButtonProps(
+            () =>
+              props.dispatchPaymentStart({
+                idWallet: wallet.idWallet,
+                idPayment,
+                language: getLocalePrimaryWithFallback()
+              }),
+            `Paga ${formattedTotal}`,
+            undefined,
+            undefined,
+            props.payStartWebviewPayload.isSome()
+          )}
+        />
       </SafeAreaView>
     </BaseScreenComponent>
   );
