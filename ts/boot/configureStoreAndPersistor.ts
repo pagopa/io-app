@@ -43,6 +43,7 @@ import {
   InstallationState
 } from "../store/reducers/installation";
 import { configureReactotron } from "./configureRectotron";
+import migrateToPagination from "./migrateToPagination";
 
 /**
  * Redux persist will migrate the store to the current version
@@ -399,6 +400,16 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
 
   // Run the main saga
   sagaMiddleware.run(rootSaga);
+
+  // Handle migration of non-paginated messages
+  migrateToPagination(store, _ => Promise.resolve())
+    .run()
+    .then(() => {
+      // TODO: migration is done, hide migration message and fetch messages
+    })
+    .catch(() => {
+      // TODO: migration failed, we should probably restart it?
+    });
 
   return { store, persistor };
 }
