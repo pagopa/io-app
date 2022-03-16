@@ -2,7 +2,12 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
@@ -126,13 +131,13 @@ const styles = StyleSheet.create({
   selectionBoxIcon: {
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: "auto"
+    flexBasis: "auto",
+    paddingRight: 24
   },
   selectionBoxContent: {
     flexGrow: 1,
     flexShrink: 1,
-    flexBasis: "100%",
-    paddingLeft: 24
+    flexBasis: "100%"
   },
   selectionBoxTrail: {
     flexGrow: 0,
@@ -211,6 +216,35 @@ const PaymentMethodLogo = (props: {
       return null;
   }
 };
+
+const SelectionBox = (props: {
+  logo?: React.ReactNode;
+  mainText: string;
+  subText: string;
+  ctaText?: string;
+  onPress?: () => void;
+}) => (
+  <TouchableOpacity onPress={props.onPress}>
+    <View style={styles.selectionBox}>
+      {props.logo && <View style={styles.selectionBoxIcon}>{props.logo}</View>}
+
+      <View style={styles.selectionBoxContent}>
+        <H4>{props.mainText}</H4>
+        <LabelSmall color="bluegrey" weight="Regular">
+          {props.subText}
+        </LabelSmall>
+      </View>
+
+      {props.ctaText && (
+        <View style={styles.selectionBoxTrail}>
+          <H4 color="blue" weight="SemiBold">
+            {props.ctaText}
+          </H4>
+        </View>
+      )}
+    </View>
+  </TouchableOpacity>
+);
 
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
@@ -325,7 +359,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       faqCategories={["payment"]}
     >
       <SafeAreaView style={styles.flex}>
-        <Content noPadded={true} bounces={false}>
+        <Content noPadded={true}>
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer />
 
@@ -349,7 +383,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               </H3>
             </View>
 
-            <View spacer large />
+            <View spacer />
 
             <H4 weight="SemiBold" color="bluegreyDark" numberOfLines={1}>
               {paymentReason}
@@ -378,55 +412,50 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <View spacer />
 
-            <View style={styles.selectionBox}>
-              <View style={styles.selectionBoxIcon}>
+            <SelectionBox
+              logo={
                 <PaymentMethodLogo
                   isPaypalEnabled={props.isPaypalEnabled}
                   paymentMethod={paymentMethod}
                 />
-              </View>
+              }
+              mainText={paymentMethod?.caption ?? ""}
+              subText="Mario Rossi · 05/26"
+              ctaText="Modifica"
+            />
 
-              <View style={styles.selectionBoxContent}>
-                <H4>{paymentMethod?.caption}</H4>
-                <LabelSmall color="bluegrey" weight="Regular">
-                  Mario Rossi · 05/26
-                </LabelSmall>
-              </View>
+            <View spacer large />
 
-              <View style={styles.selectionBoxTrail}>
-                <H4 color="blue" weight="SemiBold">
-                  Modifica
-                </H4>
-              </View>
+            <View style={styles.iconRow}>
+              <IconFont
+                name="io-tag"
+                style={{
+                  color: IOColors.bluegrey
+                }}
+              />
+
+              <H3 color="bluegrey" style={styles.iconRowText}>
+                Costi di transazione
+              </H3>
             </View>
+
+            <View spacer />
+
+            <SelectionBox
+              mainText={formatNumberCentsToAmount(fee ?? 0, true)}
+              subText={maybePsp
+                .map(
+                  ({ businessName }) =>
+                    `${I18n.t("payment.currentPsp")} ${businessName}`
+                )
+                .getOrElse(I18n.t("payment.noPsp"))}
+              ctaText="Modifica"
+              onPress={props.pickPsp}
+            />
           </View>
 
           <View style={styles.padded}>
             <View spacer={true} />
-            {/* show the ability to change psp only when the payment method is a credit card */}
-            {!isPayingWithPaypal && (
-              <>
-                <View spacer={true} />
-                {maybePsp.isNone() ? (
-                  <H4 weight={"Regular"}>{I18n.t("payment.noPsp")}</H4>
-                ) : (
-                  <H4 weight={"Regular"}>
-                    {I18n.t("payment.currentPsp")}
-                    <H4>{` ${maybePsp.value.businessName}`}</H4>
-                  </H4>
-                )}
-                <Link onPress={props.pickPsp} weight={"Bold"}>
-                  {I18n.t("payment.changePsp")}
-                </Link>
-                <View spacer={true} large={true} />
-
-                {showFeeContextualHelp && (
-                  <Link onPress={showHelp} testID="why-a-fee">
-                    {I18n.t("wallet.whyAFee.title")}
-                  </Link>
-                )}
-              </>
-            )}
             {isPayingWithPaypal && (
               <>
                 <View spacer={true} />
