@@ -803,8 +803,8 @@ onboarding:
   shareData:
     title: "Configure IO"
   thankYouPage:
-    title: Configuration completed!
-    body: Ora puoi iniziare ad utilizzare IO
+    title: Setup completed!
+    body: Now you can start using IO
 forms:
   validators:
     required: Required value

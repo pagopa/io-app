@@ -821,7 +821,7 @@ onboarding:
     title: Configura IO
   thankYouPage:
     title: Configurazione terminata!
-    body: Ora puoi iniziare ad utilizzare IO
+    body: Ora puoi iniziare a usare IO
 forms:
   validators:
     required: Valore richiesto
