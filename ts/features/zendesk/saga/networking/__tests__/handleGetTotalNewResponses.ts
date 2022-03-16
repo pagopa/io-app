@@ -1,81 +1,34 @@
 import { testSaga } from "redux-saga-test-plan";
-import { take } from "redux-saga/effects";
-import { delay } from "@redux-saga/core/effects";
+import { delay, take } from "typed-redux-saga/macro";
 import { testTotalNewResponsesFunction } from "../handleGetTotalNewResponses";
-import MockZendesk from "../../../../../__mocks__/io-react-native-zendesk";
-import { zendeskTokenSelector } from "../../../../../store/reducers/authentication";
-import {
-  zendeskGetTotalNewResponses,
-  zendeskRequestTicketNumber
-} from "../../../store/actions";
-import {
-  AnonymousIdentity,
-  unreadTicketsCountRefreshRate,
-  initSupportAssistance,
-  JwtIdentity,
-  ZendeskAppConfig,
-  zendeskDefaultAnonymousConfig,
-  zendeskDefaultJwtConfig
-} from "../../../../../utils/supportAssistance";
 import {
   logoutRequest,
   sessionExpired,
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../../../../../store/actions/authentication";
+import { unreadTicketsCountRefreshRate } from "../../../../../utils/supportAssistance";
 
-const mockedAnonymousIdentity: AnonymousIdentity = {};
-const mockedZendeskToken = "mockedToken";
-const configurations: ReadonlyArray<
-  [
-    zendeskToken: string | undefined,
-    zendeskConfig: ZendeskAppConfig,
-    zendeskIdentity: JwtIdentity | AnonymousIdentity
-  ]
-> = [
-  [undefined, zendeskDefaultAnonymousConfig, mockedAnonymousIdentity],
-  [
-    mockedZendeskToken,
-    { ...zendeskDefaultJwtConfig, token: mockedZendeskToken },
-    {
-      token: mockedZendeskToken
+jest.useFakeTimers();
+
+describe("setupZendesk", () => {
+  it("", () => {
+    if (testTotalNewResponsesFunction) {
+      testSaga(testTotalNewResponsesFunction.refreshUnreadTicketsCount)
+        .next()
+        .call(testTotalNewResponsesFunction.getUnreadTicketsCount)
+        .next()
+        .call(testTotalNewResponsesFunction.getTicketsCount)
+        .next()
+        .race({
+          wait: delay(unreadTicketsCountRefreshRate),
+          signals: take([
+            sessionInvalid,
+            sessionExpired,
+            logoutRequest,
+            sessionInformationLoadSuccess
+          ])
+        });
     }
-  ]
-];
-
-describe("totalNewResponsesFunction saga", () => {
-  jest.useFakeTimers();
-
-  test.each(configurations)(
-    "If the zendeskToken is %p, the zendeskConfig is %p and the zendeskIdentity is %p, the saga should put the zendeskGetTotalNewResponses.success action",
-    (zendeskToken, zendeskConfig, zendeskIdentity) => {
-      if (testTotalNewResponsesFunction) {
-        testSaga(testTotalNewResponsesFunction)
-          .next()
-          .select(zendeskTokenSelector)
-          .next(zendeskToken)
-          .call(initSupportAssistance, zendeskConfig)
-          .next()
-          .call(MockZendesk.setUserIdentity, zendeskIdentity)
-          .next()
-          .put(zendeskRequestTicketNumber.request())
-          .next()
-          .call(MockZendesk.getTotalNewResponses)
-          .next(5)
-          .put(zendeskGetTotalNewResponses.success(5))
-          .next()
-          .race({
-            wait: delay(unreadTicketsCountRefreshRate),
-            signals: take([
-              sessionInvalid,
-              sessionExpired,
-              logoutRequest,
-              sessionInformationLoadSuccess
-            ])
-          })
-          .next()
-          .isDone();
-      }
-    }
-  );
+  });
 });
