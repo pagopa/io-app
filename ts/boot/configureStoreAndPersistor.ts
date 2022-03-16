@@ -403,12 +403,15 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
 
   // Handle migration of non-paginated messages
   migrateToPagination(store, _ => Promise.resolve())
-    .run()
-    .then(() => {
-      // TODO: migration is done, hide migration message and fetch messages
+    .then(migrationResult => {
+      if (migrationResult.failed.length < 1) {
+        // TODO: migration is done, hide migration message and fetch messages
+      } else {
+        // TODO: migration failed for some messages, we should probably restart it?
+      }
     })
     .catch(() => {
-      // TODO: migration failed, we should probably restart it?
+      // TODO: migration went south for some horrible reason.
     });
 
   return { store, persistor };
