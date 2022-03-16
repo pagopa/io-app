@@ -3,10 +3,6 @@ import { isString } from "lodash";
 import React from "react";
 import { LabelledItem, Props } from "../index";
 
-jest.mock("react-navigation", () => ({
-  NavigationEvents: "mockNavigationEvents"
-}));
-
 const textInputProps = {
   inputProps: { value: "value" }
 } as Props;

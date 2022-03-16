@@ -1,17 +1,17 @@
-import configureMockStore from "redux-mock-store";
-import { render, fireEvent } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import * as React from "react";
+import { fireEvent } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
-import SectionStatusComponent from "../index";
-import I18n, { setLocale } from "../../../i18n";
-import { openWebUrl } from "../../../utils/url";
-import { IOColors } from "../../core/variables/IOColors";
+import * as React from "react";
+import configureMockStore from "redux-mock-store";
 import {
   LevelEnum,
   SectionStatus
 } from "../../../../definitions/content/SectionStatus";
+import I18n, { setLocale } from "../../../i18n";
 import { SectionStatusKey } from "../../../store/reducers/backendStatus";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { openWebUrl } from "../../../utils/url";
+import { IOColors } from "../../core/variables/IOColors";
+import SectionStatusComponent from "../index";
 
 jest.mock("../../../utils/url");
 
@@ -186,12 +186,9 @@ const getComponent = (
   sectionKey: SectionStatusKey,
   store?: ReturnType<typeof mockStore>
 ) =>
-  render(
-    <Provider
-      store={
-        store || mockStore(mockSectionStatusState("messages", sectionStatus))
-      }
-    >
-      <SectionStatusComponent sectionKey={sectionKey} />
-    </Provider>
+  renderScreenFakeNavRedux(
+    () => <SectionStatusComponent sectionKey={sectionKey} />,
+    "DUMMY",
+    {},
+    store || mockStore(mockSectionStatusState("messages", sectionStatus))
   );

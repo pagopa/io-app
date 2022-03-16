@@ -30,6 +30,13 @@ const enrollAfterAddFalse: BpdConfig = {
 
 describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
   jest.useFakeTimers();
+
+  beforeEach(() => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+  });
+
   it("With default state and no payment methods, should navigate to wallet home", async () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);

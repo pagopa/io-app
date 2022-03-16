@@ -24,7 +24,7 @@ const withLogging =
   (...args: A): R => {
     if (navigationRef.current === null || !isNavigationReady) {
       instabugLog(
-        `call to NavigationService.${f.name} but navigator is ${navigator} and isNavigationReady: ${isNavigationReady}`,
+        `call to NavigationService.${f.name} but navigator is ${navigationRef.current} and isNavigationReady: ${isNavigationReady}`,
         TypeLogs.ERROR,
         "NavigationService"
       );
@@ -35,18 +35,6 @@ const withLogging =
     return f(...args);
   };
 
-// NavigationContainerComponent
-const setTopLevelNavigator = (navigatorRef: any | null | undefined) => {
-  // TODO: remove when the bug is confirmed as solved
-  instabugLog(
-    `Initialize setTopLevelNavigator with argument ${
-      navigator !== null && navigator !== undefined
-    }`,
-    TypeLogs.DEBUG,
-    "NavigationService"
-  );
-  navigator = navigatorRef;
-};
 // NavigationContainerComponent
 const getNavigator = (): React.RefObject<NavigationContainerRef> =>
   navigationRef;
@@ -81,7 +69,6 @@ const getCurrentState = () => navigationRef?.current?.getState();
 export default {
   navigate: withLogging(navigate),
   getNavigator,
-  setTopLevelNavigator,
   dispatchNavigationAction: withLogging(dispatchNavigationAction),
   getCurrentRouteName,
   getCurrentRouteKey,
