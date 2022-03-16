@@ -1247,6 +1247,9 @@ wallet:
     edit: Modifica
     providedBy: Gestita da
     pay: Paga
+    cancelPayment: Annulla l'operazione
+    goToPay: Paga
+    fee: Costi di transazione
     identificationMessage: "Conferma l'operazione inserendo il tuo codice di sblocco"
     transactionSuccess: il pagamento è stato completato!
     transactionFailure: Si è verificato un errore durante il pagamento, riprova!

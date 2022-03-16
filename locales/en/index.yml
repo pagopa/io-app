@@ -1225,6 +1225,9 @@ wallet:
     edit: Edit
     providedBy: Provided by
     pay: Pay
+    cancelPayment: Cancel the transaction
+    goToPay: Pay
+    fee: Fee
     identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: the payment has been completed!
     transactionFailure: There was an error with the payment, please retry!

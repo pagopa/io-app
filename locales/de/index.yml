@@ -675,6 +675,9 @@ wallet:
     edit: Edit
     providedBy: Provided by
     pay: Pay
+    cancelPayment: Transaktion abbrechen
+    goToPay: Bezahlen
+    fee: Gebühr
     identificationMessage: Bestätigen Sie die Transaktion mit Ihrem Freischaltcode
     transactionSuccess: die Zahlung wurde abgeschlossen!
     transactionFailure: Es gab einen Fehler mit der Zahlung, bitte versuchen Sie es erneut!
