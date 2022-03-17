@@ -227,7 +227,8 @@ if not run_test and __name__ == '__main__':
 		"https://assets.cdn.io.italia.it",
 		"https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
 		"https://www.trusttechnologies.it/contatti/#form",
-		"https://support.namirial.com/it/faq/faq-tsp/faq-tsp-spid"}
+		"https://support.namirial.com/it/faq/faq-tsp/faq-tsp-spid",
+		"https://paytipper.com/wp-content/uploads/2021/02/logo.png"}
 	locales = (abspath(join(dirname(__file__), "../..", "locales")), set())
 	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), files_black_list)
 	for directory, black_list in [locales, ts_dir]:

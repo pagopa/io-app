@@ -12,6 +12,16 @@ import {
 } from "../store/actions/messages";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 
+export const defaultRequestPayload = {
+  pageSize: 8,
+  filter: { getArchived: false }
+};
+
+export const defaultRequestError = {
+  error: new Error("нет войне"),
+  filter: defaultRequestPayload.filter
+};
+
 const timeToLive = 3600 as unknown as TimeToLiveSeconds;
 
 export const messageId_1 = "FAT00001" as UIMessageId;
@@ -42,6 +52,8 @@ export const apiPayload = {
       id: messageId_1,
       fiscal_code: "TAMMRA80A41H501I",
       created_at: "2021-10-18T16:00:35.541Z",
+      is_archived: false,
+      is_read: true,
       sender_service_id: serviceId_1,
       time_to_live: 3600,
       service_name: service_1.service_name,
@@ -52,6 +64,8 @@ export const apiPayload = {
       id: messageId_2,
       fiscal_code: "TAMMRA80A41H501I",
       created_at: "2021-10-18T16:00:34.541Z",
+      is_archived: false,
+      is_read: false,
       sender_service_id: serviceId_1,
       time_to_live: 3600,
       service_name: service_1.service_name,
@@ -62,6 +76,8 @@ export const apiPayload = {
       id: messageId_3,
       fiscal_code: "TAMMRA80A41H501I",
       created_at: "2021-10-18T16:00:30.541Z",
+      is_archived: true,
+      is_read: true,
       sender_service_id: serviceId_2,
       time_to_live: 3600,
       service_name: "alert",
@@ -79,6 +95,8 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     fiscalCode: apiPayload.items[0].fiscal_code as FiscalCode,
     category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:35.541Z"),
+    isArchived: false,
+    isRead: true,
     serviceId: serviceId_1,
     timeToLive,
     serviceName: service_1.service_name,
@@ -91,6 +109,8 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     fiscalCode: apiPayload.items[1].fiscal_code as FiscalCode,
     category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:34.541Z"),
+    isRead: false,
+    isArchived: false,
     serviceId: serviceId_1,
     timeToLive,
     serviceName: service_1.service_name,
@@ -103,6 +123,8 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     fiscalCode: apiPayload.items[2].fiscal_code as FiscalCode,
     category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:30.541Z"),
+    isArchived: true,
+    isRead: true,
     serviceId: serviceId_2,
     timeToLive,
     serviceName: service_2.service_name,
@@ -117,7 +139,8 @@ export const successReloadMessagesPayload: ReloadMessagesPayload = {
   pagination: {
     previous: successPayloadMessages[0].id,
     next: successPayloadMessages[2].id
-  }
+  },
+  filter: defaultRequestPayload.filter
 };
 
 export const successLoadNextPageMessagesPayload: NextPageMessagesSuccessPayload =
@@ -125,7 +148,8 @@ export const successLoadNextPageMessagesPayload: NextPageMessagesSuccessPayload 
     messages: successPayloadMessages,
     pagination: {
       next: successPayloadMessages[2].id
-    }
+    },
+    filter: defaultRequestPayload.filter
   };
 
 export const successLoadPreviousPageMessagesPayload: PreviousPageMessagesSuccessPayload =
@@ -133,5 +157,6 @@ export const successLoadPreviousPageMessagesPayload: PreviousPageMessagesSuccess
     messages: successPayloadMessages,
     pagination: {
       previous: successPayloadMessages[0].id
-    }
+    },
+    filter: defaultRequestPayload.filter
   };
