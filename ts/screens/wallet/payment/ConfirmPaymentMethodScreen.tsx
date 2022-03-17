@@ -399,6 +399,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     paymentMethod,
     props.isPaypalEnabled
   );
+
   const paymentMethodExpiration = getPaymentMethodExpiration(paymentMethod);
 
   // It should be possible to change PSP only when the user
@@ -406,8 +407,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   // enabled.
   const canChangePsp = !isPayingWithPaypal || editPaypalPspEnabled;
 
+  // The privacy url needed when paying
+  // using PayPal.
   const privacyUrl = props.paypalSelectedPsp?.privacyUrl;
 
+  // Retrieve the PSP name checking if the user is
+  // paying using PayPal or another method. The PSP
+  // could always be `undefined`.
   const maybePspName = fromNullable(
     isPayingWithPaypal
       ? props.paypalSelectedPsp?.ragioneSociale
