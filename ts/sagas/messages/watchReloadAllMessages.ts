@@ -27,12 +27,14 @@ function tryReloadAllMessages(getMessages: LocalBeClient) {
   return function* gen(
     action: LocalActionType
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
+    const { filter, pageSize } = action.payload;
     try {
       const response: SagaCallReturnType<typeof getMessages> = yield* call(
         getMessages,
         {
           enrich_result_data: true,
-          page_size: action.payload.pageSize
+          page_size: pageSize,
+          get_archived: filter.getArchived
         }
       );
 
@@ -41,14 +43,24 @@ function tryReloadAllMessages(getMessages: LocalBeClient) {
         ({ items, next, prev }: PaginatedPublicMessagesCollection) =>
           reloadAllMessagesAction.success({
             messages: items.map(toUIMessage),
-            pagination: { previous: prev, next }
+            pagination: { previous: prev, next },
+            filter
           }),
-        error => reloadAllMessagesAction.failure(getError(error))
+        error =>
+          reloadAllMessagesAction.failure({
+            error: getError(error),
+            filter
+          })
       );
 
       yield* put(nextAction);
     } catch (error) {
-      yield* put(reloadAllMessagesAction.failure(getError(error)));
+      yield* put(
+        reloadAllMessagesAction.failure({
+          error: getError(error),
+          filter
+        })
+      );
     }
   };
 }
