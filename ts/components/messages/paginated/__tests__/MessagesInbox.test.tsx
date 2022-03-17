@@ -34,7 +34,7 @@ describe("MessagesInbox component", () => {
 
 const renderComponent = (props: React.ComponentProps<typeof MessagesInbox>) => {
   const paginatedState: Partial<AllPaginated> = {
-    inbox: pot.some({ page: messages })
+    inbox: { data: pot.some({ page: messages }), lastRequest: none }
   };
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = { data: pot.none, lastRequest: none, ...paginatedState };
