@@ -1,5 +1,4 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useContext } from "react";
 import { Alert } from "react-native";
@@ -20,6 +19,7 @@ import {
 import { getRemoteLocale } from "../../../utils/messages";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { LightModalContext } from "../../../components/ui/LightModal";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import SuccessContent from "./SuccessContent";
 import ErrorContent from "./ErrorContent";
 import WebviewErrorComponent from "./WebviewErrorComponent";
@@ -34,7 +34,7 @@ const injectedJavascript = closeInjectedScript(
   AVOID_ZOOM_JS + APP_EVENT_HANDLER
 );
 
-const FimsWebView: React.FunctionComponent<Props> = (props: Props) => {
+const FimsWebView = (props: Props) => {
   const [loading, setLoading] = React.useState(false);
   const [hasError, setHasError] = React.useState(false);
   const { showModal, hideModal } = useContext(LightModalContext);
@@ -125,10 +125,16 @@ const FimsWebView: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   return (
-    <LoadingSpinnerOverlay isLoading={loading}>
-      {!hasError && (
-        <View style={{ flex: 1 }}>
+    <>
+      {hasError ? (
+        <WebviewErrorComponent
+          handleReload={handleReload}
+          onWebviewClose={props.onWebviewClose}
+        />
+      ) : (
+        <LoadingSpinnerOverlay isLoading={loading}>
           <WebView
+            style={IOStyles.flex}
             androidCameraAccessDisabled={true}
             androidMicrophoneAccessDisabled={true}
             ref={ref}
@@ -141,15 +147,9 @@ const FimsWebView: React.FunctionComponent<Props> = (props: Props) => {
             onLoadStart={() => setLoading(true)}
             sharedCookiesEnabled={true}
           />
-        </View>
+        </LoadingSpinnerOverlay>
       )}
-      {hasError && (
-        <WebviewErrorComponent
-          handleReload={handleReload}
-          onWebviewClose={props.onWebviewClose}
-        />
-      )}
-    </LoadingSpinnerOverlay>
+    </>
   );
 };
 

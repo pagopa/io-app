@@ -4,12 +4,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
-import {
-  bpdEnabled,
-  myPortalEnabled,
-  svEnabled,
-  uaDonationsEnabled
-} from "../../../../config";
+import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled, uaDonationsEnabled } from "../../../../config";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
@@ -19,6 +14,7 @@ import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
 import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
+import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
@@ -57,12 +53,17 @@ const UA_DONATION_ROUTES: ReadonlyArray<string> = uaDonationsEnabled
   ? [UADONATION_ROUTES.WEBVIEW]
   : [];
 
+const FIMS_INTERNAL_ROUTES: ReadonlyArray<string> = fimsEnabled
+  ? [FIMS_ROUTES.WEBVIEW]
+  : [];
+
 const ALLOWED_ROUTE_NAMES = ROUTE_NAMES.concat(
   myPortalEnabled ? MY_PORTAL_ROUTES : [],
   bpdEnabled ? BPD_ROUTE_NAMES : [],
   CGN_ROUTE_NAMES,
   svEnabled ? SV_ROUTE_NAMES : [],
-  UA_DONATION_ROUTES
+  UA_DONATION_ROUTES,
+  FIMS_INTERNAL_ROUTES
 );
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv

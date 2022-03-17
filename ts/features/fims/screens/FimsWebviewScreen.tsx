@@ -1,19 +1,19 @@
 import * as React from "react";
-import { useCallback } from "react";
 import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { Alert, SafeAreaView } from "react-native";
 import URLParse from "url-parse";
 import { fromNullable } from "fp-ts/lib/Option";
+import { Content } from "native-base";
 import FimsWebView from "../components/FimsWebView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
 import { resetInternalRouteNavigation } from "../../../store/actions/internalRouteNavigation";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import I18n from "../../../i18n";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
 import { FimsWebviewParams } from "../types/FimsWebviewParams";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
 
 const FimsWebviewScreen = () => {
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
@@ -25,10 +25,13 @@ const FimsWebviewScreen = () => {
     useIOSelector(internalRouteNavigationParamsSelector)
   );
   const maybeSessionToken = fromNullable(useIOSelector(sessionTokenSelector));
-  const goBackAndResetInternalNavigationInfo = useCallback(() => {
+
+  const goBack = () => navigation.goBack();
+
+  const goBackAndResetInternalNavigationInfo = () => {
     dispatch(resetInternalRouteNavigation());
-    navigation.goBack();
-  }, [dispatch, navigation]);
+    goBack();
+  };
 
   const clearCookie = () => {
     CookieManager.clearAll().catch(_ => setCookieError(true));
@@ -78,12 +81,14 @@ const FimsWebviewScreen = () => {
   return (
     <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={IOStyles.flex}>
-        {!cookieError && isCookieAvailable && maybeParams.isRight() && (
-          <FimsWebView
-            onWebviewClose={handleGoBack}
-            uri={maybeParams.value.url}
-          />
-        )}
+        <Content contentContainerStyle={IOStyles.flex}>
+          {!cookieError && isCookieAvailable && maybeParams.isRight() && (
+            <FimsWebView
+              onWebviewClose={handleGoBack}
+              uri={maybeParams.value.url}
+            />
+          )}
+        </Content>
       </SafeAreaView>
     </BaseScreenComponent>
   );

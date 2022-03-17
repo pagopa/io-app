@@ -2,7 +2,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import FimsWebviewScreen from "../screens/FimsWebviewScreen";
 import FIMS_ROUTES from "./routes";
 
-const FimsNavigator = createStackNavigator(
+export const FimsNavigator = createStackNavigator(
   {
     [FIMS_ROUTES.WEBVIEW]: {
       screen: FimsWebviewScreen
@@ -16,5 +16,3 @@ const FimsNavigator = createStackNavigator(
     }
   }
 );
-
-export default FimsNavigator;

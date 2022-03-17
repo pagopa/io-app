@@ -5,7 +5,7 @@ import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body as BodyText } from "../../../components/core/typography/Body";
-import brokenLinkImage from "*.png";
+import brokenLinkImage from "../../../../img/broken-link.png";
 
 const styles = StyleSheet.create({
   errorContainer: {
