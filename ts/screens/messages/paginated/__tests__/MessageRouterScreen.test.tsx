@@ -1,6 +1,5 @@
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-
 import configureMockStore from "redux-mock-store";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
 import {
@@ -28,7 +27,11 @@ jest.useFakeTimers();
 
 const mockNavDispatch = jest.fn();
 
-jest.mock("../../../../config", () => ({ euCovidCertificateEnabled: true }));
+jest.mock("../../../../config", () => ({
+  euCovidCertificateEnabled: true,
+  pageSize: 8,
+  maximumItemsFromAPI: 8
+}));
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -205,8 +208,8 @@ type InputState = {
 const renderComponent = (messageId: string, state: InputState = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = {
-    inbox: pot.none,
-    lastRequest: none,
+    inbox: { data: pot.none, lastRequest: none },
+    archive: { data: pot.none, lastRequest: none },
     ...state.allPaginated
   };
   const detailsById = state.detailsById ?? {};
@@ -221,7 +224,7 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
   } as GlobalState);
   const spyStoreDispatch = spyOn(store, "dispatch");
 
-  const component = renderScreenFakeNavRedux<GlobalState>(
+  const component = renderScreenFakeNavRedux(
     MessageRouterScreen,
     ROUTES.MESSAGE_ROUTER,
     { messageId },
