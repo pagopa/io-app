@@ -44,19 +44,21 @@ const NotificationPayload = t.partial({
 
 /**
  * Decide how to refresh the messages based on pagination.
+ * It only reloads Inbox since Archive is never changed server-side.
  */
 function handleMessageReload() {
-  const cursors = getCursors(store.getState());
+  const { inbox: cursors } = getCursors(store.getState());
   if (pot.isNone(cursors)) {
     // nothing in the collection, refresh
-    store.dispatch(reloadAllMessages.request({ pageSize }));
+    store.dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
   } else if (pot.isSome(cursors)) {
     // something in the collection, get the maximum amount of new ones only,
     // assuming that the message will be there
     store.dispatch(
       loadPreviousPageMessages.request({
         cursor: cursors.value.previous,
-        pageSize: maximumItemsFromAPI
+        pageSize: maximumItemsFromAPI,
+        filter: {}
       })
     );
   }

@@ -13,7 +13,10 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
 import I18n from "../../../../i18n";
-import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
+import {
+  defaultRequestPayload,
+  successReloadMessagesPayload
+} from "../../../../__mocks__/messages";
 
 jest.useFakeTimers();
 jest.mock("../../../../utils/showToast", () => ({
@@ -23,11 +26,12 @@ jest.mock("../../../../utils/showToast", () => ({
 const messages = successReloadMessagesPayload.messages;
 
 const ListEmptyComponent = () => <Text>{"empty"}</Text>;
+const filter = defaultRequestPayload.filter;
 
 describe("MessagesInbox component", () => {
   describe("when there are no messages", () => {
     it("should render the empty component", () => {
-      const { component } = renderComponent({ ListEmptyComponent });
+      const { component } = renderComponent({ ListEmptyComponent, filter });
       expect(component.getByText("empty")).toBeDefined();
     });
   });
@@ -35,8 +39,8 @@ describe("MessagesInbox component", () => {
   describe("when the messages state contains an error", () => {
     it("should render the error component", () => {
       const { component } = renderComponent(
-        { ListEmptyComponent },
-        { data: pot.noneError("paura, eh?") }
+        { ListEmptyComponent, filter },
+        { inbox: { data: pot.noneError("paura, eh?"), lastRequest: none } }
       );
       expect(
         component.getByText(I18n.t("messages.loadingErrorTitle"))
@@ -45,11 +49,13 @@ describe("MessagesInbox component", () => {
   });
 
   describe("when the messages state contains messages", () => {
-    const messagesState = { data: pot.some({ page: messages }) };
+    const messagesState = {
+      inbox: { data: pot.some({ page: messages }), lastRequest: none }
+    };
 
     it("should not render the empty component", () => {
       const { component } = renderComponent(
-        { ListEmptyComponent },
+        { ListEmptyComponent, filter },
         messagesState
       );
       expect(component.queryByText("empty")).toBeNull();
@@ -57,7 +63,7 @@ describe("MessagesInbox component", () => {
 
     it("should not render the error component", () => {
       const { component } = renderComponent(
-        { ListEmptyComponent },
+        { ListEmptyComponent, filter },
         messagesState
       );
       expect(
@@ -67,7 +73,7 @@ describe("MessagesInbox component", () => {
 
     it("should render the first message in the state", () => {
       const { component } = renderComponent(
-        { ListEmptyComponent },
+        { ListEmptyComponent, filter },
         messagesState
       );
       expect(component.queryByText(messages[0].title)).toBeDefined();
@@ -80,7 +86,11 @@ const renderComponent = (
   paginatedState: Partial<AllPaginated> = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const allPaginated = { data: pot.none, lastRequest: none, ...paginatedState };
+  const allPaginated = {
+    archive: { data: pot.none, lastRequest: none },
+    inbox: { data: pot.none, lastRequest: none },
+    ...paginatedState
+  };
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore({
