@@ -404,7 +404,7 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
 
   // Handle migration of non-paginated messages
   if (usePaginatedMessages) {
-    migrateToPagination(store, _ => Promise.resolve())
+    migrateToPagination(store, _ => Promise.reject("not implemented"))
       .then(migrationResult => {
         // eslint-disable-next-line sonarjs/no-all-duplicated-branches
         if (migrationResult.failed.length < 1) {
