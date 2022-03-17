@@ -42,6 +42,7 @@ import {
   INSTALLATION_INITIAL_STATE,
   InstallationState
 } from "../store/reducers/installation";
+import { usePaginatedMessages } from "../config";
 import { configureReactotron } from "./configureRectotron";
 import migrateToPagination from "./migrateToPagination";
 
@@ -402,17 +403,20 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   sagaMiddleware.run(rootSaga);
 
   // Handle migration of non-paginated messages
-  migrateToPagination(store, _ => Promise.resolve())
-    .then(migrationResult => {
-      if (migrationResult.failed.length < 1) {
-        // TODO: migration is done, hide migration message and fetch messages
-      } else {
-        // TODO: migration failed for some messages, we should probably restart it?
-      }
-    })
-    .catch(() => {
-      // TODO: migration went south for some horrible reason.
-    });
+  if (usePaginatedMessages) {
+    migrateToPagination(store, _ => Promise.resolve())
+      .then(migrationResult => {
+        // eslint-disable-next-line sonarjs/no-all-duplicated-branches
+        if (migrationResult.failed.length < 1) {
+          // TODO: migration is done, hide migration message and fetch messages
+        } else {
+          // TODO: migration failed for some messages, we should probably restart it?
+        }
+      })
+      .catch(() => {
+        // TODO: migration went south for some horrible reason.
+      });
+  }
 
   return { store, persistor };
 }
