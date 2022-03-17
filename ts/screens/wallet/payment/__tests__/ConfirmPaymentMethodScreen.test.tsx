@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore, Store } from "redux";
 import ConfirmPaymentMethodScreen, {
   ConfirmPaymentMethodScreenNavigationParams
@@ -9,15 +8,19 @@ import {
   myVerifiedData,
   myWallet,
   myPsp,
-  AuthSeq,
-  myValidAmount
+  AuthSeq
 } from "../../../../utils/testFaker";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { appReducer } from "../../../../store/reducers/";
 import ROUTES from "../../../../navigation/routes";
-import { LightModalContext } from "../../../../components/ui/LightModal";
 import { GlobalState } from "../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../utils/tests";
+import {
+  formatNumberCentsToAmount,
+  buildExpirationDate
+} from "../../../../utils/stringBuilder";
+import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import I18n from "../../../../i18n";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
@@ -25,10 +28,39 @@ jest.mock("react-native-share", () => jest.fn());
 // Be sure that navigation is unmocked
 jest.unmock("react-navigation");
 
+// Mock the internal payment method
+const creditCardPaymentMethod = {
+  kind: "CreditCard",
+  info: {
+    type: "CRD",
+    holder: "holder",
+    expireMonth: "03",
+    expireYear: "2022"
+  },
+  caption: "caption"
+} as CreditCardPaymentMethod;
+
+jest.mock("../../../../store/reducers/wallet/wallets.ts", () => {
+  const actualModule = jest.requireActual(
+    "../../../../store/reducers/wallet/wallets.ts"
+  );
+
+  return {
+    __esModule: true,
+    ...actualModule,
+
+    paymentMethodByIdSelector: jest
+      .fn()
+      .mockReturnValue(creditCardPaymentMethod)
+  };
+});
+
 describe("Integration Tests With Actual Store and Simplified Navigation", () => {
   afterAll(() => jest.resetAllMocks());
   beforeEach(() => jest.useFakeTimers());
+
   const initState = reproduceSequence({} as GlobalState, appReducer, AuthSeq);
+
   const params: ConfirmPaymentMethodScreenNavigationParams = {
     rptId: myRptId,
     initialAmount: myInitialAmount,
@@ -41,53 +73,43 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
   // Store with the true appReducer
   const myStore: Store<GlobalState> = createStore(appReducer, initState as any);
 
-  it("should NOT display the transactions costs contextual help since they are zero", () => {
-    const paramsWithoutFees: ConfirmPaymentMethodScreenNavigationParams = {
-      ...params,
-      wallet: {
-        ...myWallet,
-        psp: {
-          ...myPsp,
-          fixedCost: {
-            ...myValidAmount,
-            amount: 0
-          }
-        }
-      }
-    };
-
-    const ToBeTested: React.FunctionComponent<
-      React.ComponentProps<typeof ConfirmPaymentMethodScreen>
-      // eslint-disable-next-line
-    > = (props: React.ComponentProps<typeof ConfirmPaymentMethodScreen>) => (
-      <LightModalContext.Provider
-        value={{
-          component: null,
-          showModal: jest.fn(),
-          showAnimatedModal: jest.fn(),
-          showModalFadeInAnimation: jest.fn(),
-          hideModal: jest.fn(),
-          onHiddenModal: jest.fn(),
-          setOnHiddenModal: jest.fn()
-        }}
-      >
-        <ConfirmPaymentMethodScreen {...props} />
-      </LightModalContext.Provider>
-    );
-
-    // Render with simplified but true navigation. Just two screen: the
-    // screen under test and a fake screen to navigate without mocking
-    const MyObj = renderScreenFakeNavRedux<
+  it("should display all the informations correctly", () => {
+    const rendered = renderScreenFakeNavRedux<
       GlobalState,
       ConfirmPaymentMethodScreenNavigationParams
     >(
-      ToBeTested,
+      ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
-      paramsWithoutFees,
+      params,
       myStore
     );
 
-    const whyAFeeTouch = MyObj.queryByTestId(/why-a-fee/i);
-    expect(whyAFeeTouch).toBeFalsy();
+    // Should display the payment reason
+    rendered.getByText(params.verifica.causaleVersamento);
+
+    // Should display the payment amount
+    rendered.getByText(
+      formatNumberCentsToAmount(params.verifica.importoSingoloVersamento, true)
+    );
+
+    // Should display the payment method
+    rendered.getByText(creditCardPaymentMethod.caption);
+
+    rendered.getByText(
+      `${creditCardPaymentMethod.info.holder} · ${buildExpirationDate(
+        creditCardPaymentMethod.info
+      )}`
+    );
+
+    // Should render the PSP with the fees
+    rendered.getByText(
+      formatNumberCentsToAmount(params.wallet.psp?.fixedCost.amount ?? -1, true)
+    );
+
+    rendered.getByText(
+      `${I18n.t("wallet.ConfirmPayment.providedBy")} ${
+        params.wallet.psp?.businessName
+      }`
+    );
   });
 });
