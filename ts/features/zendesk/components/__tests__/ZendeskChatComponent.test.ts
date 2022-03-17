@@ -12,6 +12,7 @@ import {
   zendeskRequestTicketNumber
 } from "../../store/actions";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
+import * as zendeskAction from "../../store/actions";
 
 jest.useFakeTimers();
 describe("the ThankYouSuccessComponent screen", () => {
@@ -37,7 +38,11 @@ describe("the ThankYouSuccessComponent screen", () => {
 
       expect(component.queryByTestId("ZendeskChatComponent")).toBeDefined();
     });
-    it("Should call the showSupportTickets when the ZendeskChatComponent is pressed", () => {
+    it("Should call the showSupportTickets function and dispatch the zendeskSupportOpened action when the ZendeskChatComponent is pressed", () => {
+      const zendeskSupportOpenedSpy = jest.spyOn(
+        zendeskAction,
+        "zendeskSupportOpened"
+      );
       const store: Store<GlobalState> = createStore(
         appReducer,
         globalState as any
@@ -48,6 +53,7 @@ describe("the ThankYouSuccessComponent screen", () => {
       fireEvent.press(component.getByTestId("ZendeskChatComponent"));
 
       expect(MockZendesk.showTickets).toBeCalled();
+      expect(zendeskSupportOpenedSpy).toBeCalled();
     });
     it("Should show the badge with the new messages if there is at least one new message", () => {
       const store: Store<GlobalState> = createStore(
