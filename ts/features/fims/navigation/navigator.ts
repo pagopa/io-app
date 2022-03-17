@@ -1,11 +1,11 @@
-import { constNull } from "fp-ts/lib/function";
 import { createStackNavigator } from "react-navigation-stack";
+import FimsWebviewScreen from "../screens/FimsWebviewScreen";
 import FIMS_ROUTES from "./routes";
 
 const FimsNavigator = createStackNavigator(
   {
     [FIMS_ROUTES.WEBVIEW]: {
-      screen: constNull
+      screen: FimsWebviewScreen
     }
   },
   {
