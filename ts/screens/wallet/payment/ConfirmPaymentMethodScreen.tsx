@@ -230,6 +230,23 @@ const getPaymentMethodExpiration = (
   }
 };
 
+const getPaymentMethodCaption = (
+  paymentMethod: PaymentMethod | undefined
+): string | null => {
+  switch (paymentMethod?.kind) {
+    case "Bancomat":
+    case "Privative":
+    case "CreditCard":
+      return paymentMethod.caption;
+
+    case "PayPal":
+      return "PayPal";
+
+    default:
+      return null;
+  }
+};
+
 const SelectionBox = (props: {
   logo?: React.ReactNode;
   mainText: string;
@@ -375,6 +392,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   const paymentMethodExpiration = getPaymentMethodExpiration(paymentMethod);
 
+  const paymentMethodCaption = getPaymentMethodCaption(paymentMethod) ?? "";
+
   // It should be possible to change PSP only when the user
   // is not paying using PayPal or the relative flag is
   // enabled.
@@ -392,6 +411,10 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       ? props.paypalSelectedPsp?.ragioneSociale
       : wallet.psp?.businessName
   );
+
+  const formattedSubject =
+    `${paymentMethodSubject}` +
+    (!isPayingWithPaypal ? ` · ${paymentMethodExpiration}` : "");
 
   return (
     <BaseScreenComponent
@@ -458,11 +481,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                   paymentMethod={paymentMethod}
                 />
               }
-              mainText={paymentMethod?.caption ?? ""}
-              subText={
-                `${paymentMethodSubject} ` +
-                (!isPayingWithPaypal ? `· ${paymentMethodExpiration}` : "")
-              }
+              mainText={paymentMethodCaption}
+              subText={formattedSubject}
               ctaText={I18n.t("wallet.ConfirmPayment.edit")}
               onPress={props.pickPaymentMethod}
             />
