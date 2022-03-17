@@ -52,8 +52,10 @@ function* setupZendesk() {
     : zendeskDefaultAnonymousConfig;
 
   yield* call(initSupportAssistance, zendeskConfig);
-  const zendeskIdentity: JwtIdentity | AnonymousIdentity =
-    getIdentityByToken(zendeskToken);
+  const zendeskIdentity: JwtIdentity | AnonymousIdentity = yield* call(
+    getIdentityByToken,
+    zendeskToken
+  );
 
   yield* call(setUserIdentity, zendeskIdentity);
 }
@@ -76,25 +78,26 @@ function* getUnreadTicketsCount() {
   }
 }
 
+// a predicate that return true if the given action is different from all
+// these ones defined in the array
+const stoppersPredicate = (action: Action): boolean =>
+  [
+    zendeskGetTotalNewResponses.request,
+    zendeskGetTotalNewResponses.success,
+    zendeskGetTotalNewResponses.failure,
+    zendeskRequestTicketNumber.request,
+    zendeskRequestTicketNumber.failure,
+    zendeskRequestTicketNumber.success,
+    backendStatusLoadSuccess,
+    versionInfoLoadFailure,
+    versionInfoLoadSuccess
+  ].every(skipAction => !isActionOf(skipAction, action));
+
 /**
  * when the zendesk is opened it starts to check the number of unread tickets cyclically
  * it stops when the user makes some changes inside the app (ex. SCREEN_CHANGE)
  */
 function* refreshUnreadTicketsCountWhileSupportIsOpen() {
-  // a predicate that return true if the given action is different from all
-  // these ones defined in the array
-  const stoppersPredicate = (action: Action) =>
-    [
-      zendeskGetTotalNewResponses.request,
-      zendeskGetTotalNewResponses.success,
-      zendeskGetTotalNewResponses.failure,
-      zendeskRequestTicketNumber.request,
-      zendeskRequestTicketNumber.failure,
-      zendeskRequestTicketNumber.success,
-      backendStatusLoadSuccess,
-      versionInfoLoadFailure,
-      versionInfoLoadSuccess
-    ].every(skipAction => !isActionOf(skipAction, action));
   while (true) {
     yield* take(zendeskSupportOpened);
     while (true) {
@@ -103,7 +106,6 @@ function* refreshUnreadTicketsCountWhileSupportIsOpen() {
         wait: delay(unreadTicketsCountRefreshRateWhileSupportIsOpen),
         stoppers: take(stoppersPredicate)
       });
-
       if (stoppers) {
         break;
       }
@@ -143,6 +145,10 @@ export const testTotalNewResponsesFunction = isTestEnv
   ? {
       refreshUnreadTicketsCount,
       getUnreadTicketsCount,
-      getTicketsCount
+      getTicketsCount,
+      setupZendesk,
+      handleGetTotalNewResponses,
+      refreshUnreadTicketsCountWhileSupportIsOpen,
+      stoppersPredicate
     }
   : undefined;
