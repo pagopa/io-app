@@ -29,7 +29,11 @@ jest.useFakeTimers();
 
 const mockNavDispatch = jest.fn();
 
-jest.mock("../../../../config", () => ({ euCovidCertificateEnabled: true }));
+jest.mock("../../../../config", () => ({
+  euCovidCertificateEnabled: true,
+  pageSize: 8,
+  maximumItemsFromAPI: 8
+}));
 jest.mock("../../../../utils/hooks/useOnFocus", () => ({
   useNavigationContext: () => ({
     dispatch: mockNavDispatch,
