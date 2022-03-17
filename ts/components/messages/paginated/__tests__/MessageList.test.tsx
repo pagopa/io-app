@@ -40,7 +40,7 @@ describe("MessagesInbox component", () => {
     it("should render the error component", () => {
       const { component } = renderComponent(
         { ListEmptyComponent, filter },
-        { inbox: pot.noneError("paura, eh?") }
+        { inbox: { data: pot.noneError("paura, eh?"), lastRequest: none } }
       );
       expect(
         component.getByText(I18n.t("messages.loadingErrorTitle"))
@@ -49,7 +49,9 @@ describe("MessagesInbox component", () => {
   });
 
   describe("when the messages state contains messages", () => {
-    const messagesState = { inbox: pot.some({ page: messages }) };
+    const messagesState = {
+      inbox: { data: pot.some({ page: messages }), lastRequest: none }
+    };
 
     it("should not render the empty component", () => {
       const { component } = renderComponent(
@@ -85,9 +87,8 @@ const renderComponent = (
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = {
-    archive: pot.none,
-    inbox: pot.none,
-    lastRequest: none,
+    archive: { data: pot.none, lastRequest: none },
+    inbox: { data: pot.none, lastRequest: none },
     ...paginatedState
   };
 

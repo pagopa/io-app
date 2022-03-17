@@ -71,10 +71,13 @@ describe("MessageRouterScreen", () => {
   describe("when is already running, with a populated messages state", () => {
     const previousCursor = successLoadNextPageMessagesPayload.messages[0].id;
     const allPaginated = {
-      inbox: pot.some({
-        page: successLoadNextPageMessagesPayload.messages,
-        previous: previousCursor
-      })
+      inbox: {
+        data: pot.some({
+          page: successLoadNextPageMessagesPayload.messages,
+          previous: previousCursor
+        }),
+        lastRequest: none
+      }
     };
 
     describe("and the desired message is not in the page", () => {
