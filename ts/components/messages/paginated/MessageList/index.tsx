@@ -15,17 +15,22 @@ import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { UaDonationsBanner } from "../../../../features/uaDonations/components/UaDonationsBanner";
 import I18n from "../../../../i18n";
 import {
+  Filter,
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../../store/actions/messages";
 import { Dispatch } from "../../../../store/actions/types";
 import {
-  allPaginatedMessagesSelector,
+  allArchiveSelector,
+  allInboxSelector,
   Cursor,
-  isLoadingNextPage,
-  isLoadingPreviousPage,
-  isReloading
+  isLoadingArchiveNextPage,
+  isLoadingArchivePreviousPage,
+  isReloadingArchive,
+  isLoadingInboxNextPage,
+  isLoadingInboxPreviousPage,
+  isReloadingInbox
 } from "../../../../store/reducers/entities/messages/allPaginated";
 import { MessageState } from "../../../../store/reducers/entities/messages/messagesById";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
 type OwnProps = {
   ListEmptyComponent?: EmptyComponent;
 
-  /** This list is used instead of the messages from the store */
+  /** @deprecated This list is used instead of the messages from the store */
   filteredMessages?: ReadonlyArray<UIMessage>;
 
   onLongPressItem?: (id: string) => void;
@@ -91,6 +96,8 @@ type OwnProps = {
 
   /** An optional list of messages to mark as selected */
   selectedMessageIds?: ReadonlySet<string>;
+
+  filter: Filter;
 };
 
 const Loader = () => (
@@ -128,6 +135,7 @@ type Props = OwnProps &
  *
  * By default renders all the available Messages in the store, but this behavior can be overruled
  * via the optional parameter `filteredMessages`.
+ * Please note that once we filter on the BE the `filteredMessages` parameter will be removed.
  *
  * @param ListEmptyComponent
  * @param animated
@@ -167,6 +175,10 @@ const MessageList = ({
     useState<Option<number>>(none);
 
   const [isFirstLoad, setIsFirstLoad] = useState(isIos);
+
+  useEffect(() => {
+    reloadAll();
+  }, [reloadAll]);
 
   useEffect(() => {
     if (error) {
@@ -283,8 +295,11 @@ const MessageList = ({
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
-  const paginatedState = allPaginatedMessagesSelector(state);
+const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
+  const isArchive = filter.getArchived;
+  const paginatedState = isArchive
+    ? allArchiveSelector(state)
+    : allInboxSelector(state);
   const error = pot.isError(paginatedState) ? paginatedState.error : undefined;
   const { allMessages, nextCursor, previousCursor } = pot.getOrElse(
     pot.map(paginatedState, ps => ({
@@ -305,24 +320,30 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     hasPaidBadge: (category: UIMessage["category"]) =>
       isNoticePaid(state, category),
-    isLoadingMore: isLoadingNextPage(state),
-    isRefreshing: isLoadingPreviousPage(state),
-    isReloadingAll: isReloading(state),
+    isLoadingMore: isArchive
+      ? isLoadingArchiveNextPage(state)
+      : isLoadingInboxNextPage(state),
+    isRefreshing: isArchive
+      ? isLoadingArchivePreviousPage(state)
+      : isLoadingInboxPreviousPage(state),
+    isReloadingAll: isArchive
+      ? isReloadingArchive(state)
+      : isReloadingInbox(state),
     nextCursor,
     previousCursor
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch, { filter }: OwnProps) => ({
   /**
    * Perform a complete refresh of the page, discarding the existing state.
    */
   reloadAll: () => {
-    dispatch(reloadAllMessages.request({ pageSize }));
+    dispatch(reloadAllMessages.request({ pageSize, filter }));
   },
 
   loadNextPage: (cursor: Cursor) => {
-    dispatch(loadNextPageMessages.request({ pageSize, cursor }));
+    dispatch(loadNextPageMessages.request({ pageSize, cursor, filter }));
   },
 
   /**
@@ -333,7 +354,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       loadPreviousPageMessages.request({
         pageSize: maximumItemsFromAPI,
-        cursor
+        cursor,
+        filter
       })
     );
   }
