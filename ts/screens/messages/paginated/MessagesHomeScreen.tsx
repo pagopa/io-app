@@ -1,9 +1,13 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import React, { useEffect } from "react";
+import { Tab, Tabs } from "native-base";
+import React from "react";
+import { Animated, Platform, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import MessageList from "../../../components/messages/paginated/MessageList";
+import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
@@ -14,21 +18,18 @@ import { MIN_CHARACTER_SEARCH_TEXT } from "../../../components/search/SearchButt
 import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../../components/SectionStatus";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import { pageSize } from "../../../config";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import ROUTES from "../../../navigation/routes";
-import { reloadAllMessages } from "../../../store/actions/messages";
-import { Dispatch } from "../../../store/actions/types";
 import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
-import { allMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
+import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
 import {
   setAccessibilityFocus,
@@ -40,35 +41,89 @@ type Props = {
   navigation: CompatNavigationProp<
     IOStackNavigationProp<MainTabParamsList, "MESSAGES_HOME">
   >;
-} & ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+} & ReturnType<typeof mapStateToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "messages.contextualHelpTitle",
   body: "messages.contextualHelpContent"
 };
 
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    elevation: 0,
+    height: 40
+  },
+  tabBarUnderline: {
+    borderBottomColor: customVariables.tabUnderlineColor,
+    borderBottomWidth: customVariables.tabUnderlineHeight
+  },
+  tabBarUnderlineActive: {
+    height: customVariables.tabUnderlineHeight,
+    // borders do not overlap each other, but stack naturally
+    marginBottom: -customVariables.tabUnderlineHeight,
+    backgroundColor: customVariables.contentPrimaryBackground
+  },
+  activeTextStyle: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: Platform.OS === "android" ? 16 : undefined,
+    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    color: customVariables.brandPrimary
+  },
+  textStyle: {
+    color: customVariables.brandDarkGray
+  }
+});
+
+const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
+
+type AllTabsProps = {
+  navigateToMessageDetail: (message: UIMessage) => void;
+};
+
+const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
+  <View style={IOStyles.flex}>
+    <AnimatedTabs
+      tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+      tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+      // onScroll={handleOnTabsScroll}
+      // onChangeTab={handleOnChangeTab}
+      initialPage={0}
+    >
+      <Tab
+        activeTextStyle={styles.activeTextStyle}
+        textStyle={styles.textStyle}
+        heading={I18n.t("messages.tab.inbox")}
+      >
+        <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+      </Tab>
+
+      <Tab
+        activeTextStyle={styles.activeTextStyle}
+        textStyle={styles.textStyle}
+        heading={I18n.t("messages.tab.archive")}
+      >
+        <MessagesArchive navigateToMessageDetail={navigateToMessageDetail} />
+      </Tab>
+    </AnimatedTabs>
+  </View>
+);
+
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
  */
 const MessagesHomeScreen = ({
-  allMessages,
   isSearchEnabled,
   messageSectionStatusActive,
-  reloadFirstPage,
   searchText
 }: Props) => {
   const navigation = useNavigation();
 
   const navigateToMessageDetail = (message: UIMessage) => {
     navigation.navigate(ROUTES.MESSAGE_ROUTER_PAGINATED, {
-      messageId: message.id
+      messageId: message.id,
+      isArchived: message.isArchived
     });
   };
-
-  useEffect(() => {
-    reloadFirstPage();
-  }, []);
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
@@ -104,7 +159,7 @@ const MessagesHomeScreen = ({
             title={I18n.t("messages.contentTitle")}
             iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
           />
-          <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+          <AllTabs navigateToMessageDetail={navigateToMessageDetail} />
         </React.Fragment>
       )}
 
@@ -115,10 +170,12 @@ const MessagesHomeScreen = ({
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
               <MessagesSearch
-                messages={allMessages}
+                messages={[]}
                 searchText={_}
                 renderSearchResults={results => (
+                  // TODO: filter may happen down the line
                   <MessageList
+                    filter={{ getArchived: false }}
                     filteredMessages={results}
                     onPressItem={navigateToMessageDetail}
                   />
@@ -135,17 +192,9 @@ const MessagesHomeScreen = ({
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  allMessages: allMessagesSelector(state),
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
   searchText: searchTextSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // used for the first rendering only
-  reloadFirstPage: () => {
-    dispatch(reloadAllMessages.request({ pageSize }));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);
+export default connect(mapStateToProps, undefined)(MessagesHomeScreen);

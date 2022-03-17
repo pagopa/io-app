@@ -3,8 +3,10 @@ import * as pot from "italia-ts-commons/lib/pot";
 
 import configureMockStore from "redux-mock-store";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
-import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
-import { maximumItemsFromAPI, pageSize } from "../../../../config";
+import {
+  defaultRequestPayload,
+  successLoadNextPageMessagesPayload
+} from "../../../../__mocks__/messages";
 import I18n from "../../../../i18n";
 
 import ROUTES from "../../../../navigation/routes";
@@ -64,7 +66,7 @@ describe("MessageRouterScreen", () => {
     it("should dispatch `reloadPage`", () => {
       const { spyStoreDispatch } = renderComponent(id);
       expect(spyStoreDispatch).toHaveBeenCalledWith(
-        reloadAllMessages.request({ pageSize })
+        reloadAllMessages.request(defaultRequestPayload)
       );
     });
     it("should dispatch `loadMessageDetails`", () => {
@@ -82,10 +84,13 @@ describe("MessageRouterScreen", () => {
   describe("when is already running, with a populated messages state", () => {
     const previousCursor = successLoadNextPageMessagesPayload.messages[0].id;
     const allPaginated = {
-      data: pot.some({
-        page: successLoadNextPageMessagesPayload.messages,
-        previous: previousCursor
-      })
+      inbox: {
+        data: pot.some({
+          page: successLoadNextPageMessagesPayload.messages,
+          previous: previousCursor
+        }),
+        lastRequest: none
+      }
     };
 
     describe("and the desired message is not in the page", () => {
@@ -101,7 +106,7 @@ describe("MessageRouterScreen", () => {
         const { spyStoreDispatch } = renderComponent(id, { allPaginated });
         expect(spyStoreDispatch).toHaveBeenCalledWith(
           loadPreviousPageMessages.request({
-            pageSize: maximumItemsFromAPI,
+            ...defaultRequestPayload,
             cursor: previousCursor
           })
         );
@@ -200,7 +205,7 @@ type InputState = {
 const renderComponent = (messageId: string, state: InputState = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = {
-    data: pot.none,
+    inbox: pot.none,
     lastRequest: none,
     ...state.allPaginated
   };
