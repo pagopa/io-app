@@ -6,40 +6,14 @@ import { Provider } from "react-redux";
 import { Store } from "redux";
 import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";
 
-/*
-// Creates a simple wrapper for the render method which encloses the element to render in a store provider
-export function renderWithRedux<S>(
-  ui: ReactElement,
-  store: Store<S>,
-  renderOptions: RenderOptions
-) {
-  function Wrapper({ children }: any) {
-    return <Provider store={store}>{children}</Provider>;
-  }
-  return render(ui, { wrapper: Wrapper, ...renderOptions });
-}
-
-export // If the screen to render and test is reachable via a navigator, create an app and render it
-function renderNavContainerRedux<S>(
-  navContainer: NavigationNavigator<any, any>,
-  store: Store<S>,
-  renderOptions: RenderOptions
-) {
-  const App = createAppContainer(navContainer);
-  return renderWithRedux(<App />, store, renderOptions);
-}
-
-export function fakeScreenFactory<NP>(route: string, params: NP) {
-  // The fake screen fires a navigation to the screen under test when mounted, so as to avoid mocking navigation route parmeters.
-  return ({ navigation }: NavigationStackScreenProps) => {
-    useEffect(() => {
-      navigation.navigate(route, params);
-    });
-    return <></>;
-  };
-}
-*/
-
+/**
+ * This should be used to test component that requires a compat navigation context (inside a compat navigator)
+ * @param screen
+ * @param route
+ * @param params
+ * @param store
+ * @param renderOptions
+ */
 export const renderScreenFakeNavRedux = <S,>(
   screen: React.ComponentType<any>, // I need any to avoid passing navigation
   route: string,
@@ -80,6 +54,14 @@ export const renderScreenFakeNavRedux = <S,>(
   return render(component, renderOptions);
 };
 
+/**
+ * This should be used to test component in a new navigator
+ * @param screen
+ * @param route
+ * @param params
+ * @param store
+ * @param renderOptions
+ */
 export const renderScreenWithNavigationStoreContext = <S,>(
   screen: React.ComponentType<any>, // I need any to avoid passing navigation
   route: string,
@@ -103,22 +85,4 @@ export const renderScreenWithNavigationStoreContext = <S,>(
   );
 
   return render(component, renderOptions);
-
-  /*
-    const customRouteConfigMap = {
-      [route]: screen,
-      // fakeScreen is needed to inject params in navigation route
-      [0]: fakeScreenFactory(route, params) // not sure if 0 is right
-    };
-
-    const customNavigator = createStackNavigator(customRouteConfigMap, {
-      // Let each screen handle the header and navigation
-      headerMode: "none",
-      defaultNavigationOptions: {
-        gesturesEnabled: false
-      }
-    });
-
-    return renderNavContainerRedux(customNavigator, store, renderOptions);
-    */
 };
