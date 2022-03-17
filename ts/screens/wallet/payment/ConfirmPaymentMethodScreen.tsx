@@ -58,7 +58,6 @@ import {
   pspV2ListSelector
 } from "../../../store/reducers/wallet/payment";
 import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
-import customVariables from "../../../theme/variables";
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import {
   isCreditCard,
@@ -122,11 +121,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: IOColors.greyLight
   },
+
   iconRow: {
     flexDirection: "row",
     alignItems: "center"
   },
+
   iconRowText: { marginLeft: 12 },
+
   selectionBox: {
     borderWidth: 1,
     borderColor: IOColors.bluegreyLight,
@@ -135,17 +137,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
+
   selectionBoxIcon: {
     flexGrow: 0,
     flexShrink: 0,
     flexBasis: "auto",
     paddingRight: 24
   },
+
   selectionBoxContent: {
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: "100%"
   },
+
   selectionBoxTrail: {
     flexGrow: 0,
     flexShrink: 0,
@@ -153,38 +158,7 @@ const styles = StyleSheet.create({
     paddingLeft: 24
   },
 
-  child: {
-    flex: 1,
-    alignContent: "center"
-  },
-  childTwice: {
-    flex: 2,
-    alignContent: "center"
-  },
-  parent: {
-    flexDirection: "row"
-  },
-  paddedLR: {
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding
-  },
-  textRight: {
-    textAlign: "right"
-  },
-  divider: {
-    borderTopWidth: 1,
-    borderTopColor: customVariables.brandGray
-  },
-  textCenter: {
-    textAlign: "center"
-  },
-  padded: { paddingHorizontal: customVariables.contentPadding },
-  flex: { flex: 1 },
-  footerContainer: {
-    overflow: "hidden",
-    marginTop: -customVariables.footerShadowOffsetHeight,
-    paddingTop: customVariables.footerShadowOffsetHeight
-  }
+  flex: { flex: 1 }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
