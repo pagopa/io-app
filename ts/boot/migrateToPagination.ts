@@ -44,24 +44,19 @@ export default async function init(
     }
   );
 
-  return Promise.allSettled(requests).then(results => {
+  return Promise.all(requests).then(results => {
     const migrationResult: MigrationResult = { failed: [], succeeded: [] };
     results.forEach(fulfilled => {
-      if (fulfilled.status === "fulfilled") {
-        fulfilled.value.fold(
-          failure => {
-            // eslint-disable-next-line functional/immutable-data
-            migrationResult.failed.push(failure);
-          },
-          id => {
-            // eslint-disable-next-line functional/immutable-data
-            migrationResult.succeeded.push(id);
-          }
-        );
-      } else {
-        // Such an error shouldn't occur and must be tracked via telemetry
-        // The message will anyway remain in the store to be updated again
-      }
+      fulfilled.fold(
+        failure => {
+          // eslint-disable-next-line functional/immutable-data
+          migrationResult.failed.push(failure);
+        },
+        id => {
+          // eslint-disable-next-line functional/immutable-data
+          migrationResult.succeeded.push(id);
+        }
+      );
     });
     store.dispatch(removeMessages(migrationResult.succeeded));
     return migrationResult;

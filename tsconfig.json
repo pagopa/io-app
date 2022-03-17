@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
-    "lib": ["es6", "dom", "es2020"],
+    "lib": ["es6", "dom"],
     "jsx": "react",
     "noEmit": true,
     "moduleResolution": "node",

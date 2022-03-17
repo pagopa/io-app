@@ -408,7 +408,7 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
       .then(migrationResult => {
         // eslint-disable-next-line sonarjs/no-all-duplicated-branches
         if (migrationResult.failed.length < 1) {
-          // TODO: migration is done, hide migration message and fetch messages
+          // TODO: migration is done, fetch messages
         } else {
           // TODO: migration failed for some messages, we should probably restart it?
         }
