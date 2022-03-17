@@ -22,14 +22,14 @@ type Props = {
 };
 
 /**
- * Container for the message inbox.
+ * Container for the message archive.
  * It looks redundant at the moment but will be used later on once we bring back
  * states and filtering in the Messages.
  *
  * @param navigateToMessageDetail
  * @constructor
  */
-const MessagesInbox = ({ navigateToMessageDetail }: Props) => {
+const MessagesArchive = ({ navigateToMessageDetail }: Props) => {
   const ListEmptyComponent = () => (
     <EmptyListComponent
       image={require("../../../../img/messages/empty-message-list-icon.png")}
@@ -42,7 +42,7 @@ const MessagesInbox = ({ navigateToMessageDetail }: Props) => {
     <View style={styles.listWrapper}>
       <View style={styles.listContainer}>
         <MessageList
-          filter={{ getArchived: false }}
+          filter={{ getArchived: true }}
           onPressItem={navigateToMessageDetail}
           ListEmptyComponent={ListEmptyComponent}
         />
@@ -51,4 +51,4 @@ const MessagesInbox = ({ navigateToMessageDetail }: Props) => {
   );
 };
 
-export default MessagesInbox;
+export default MessagesArchive;
