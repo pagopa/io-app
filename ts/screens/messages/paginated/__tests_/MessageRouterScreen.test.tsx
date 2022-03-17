@@ -192,8 +192,8 @@ type InputState = {
 const renderComponent = (messageId: string, state: InputState = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = {
-    inbox: pot.none,
-    lastRequest: none,
+    inbox: { data: pot.none, lastRequest: none },
+    archive: { data: pot.none, lastRequest: none },
     ...state.allPaginated
   };
   const detailsById = state.detailsById ?? {};
