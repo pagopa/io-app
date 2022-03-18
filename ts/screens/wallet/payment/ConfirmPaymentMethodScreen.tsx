@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
-  iconRowText: { marginLeft: 12 },
+  iconRowText: { marginLeft: 8 },
 
   flex: { flex: 1 }
 });
@@ -381,6 +381,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View style={styles.iconRow}>
               <IconFont
                 name="io-info"
+                size={20}
                 style={{
                   color: IOColors.bluegrey
                 }}
@@ -403,7 +404,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View spacer large />
 
             <View style={styles.iconRow}>
-              <CardIcon width={24} height={24} />
+              <CardIcon width={20} height={20} />
 
               <H3 color="bluegrey" style={styles.iconRowText}>
                 {I18n.t("wallet.ConfirmPayment.payWith")}
@@ -428,7 +429,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View spacer large />
 
             <View style={styles.iconRow}>
-              <TagIcon width={24} height={24} />
+              <TagIcon width={20} height={20} />
 
               <H3 color="bluegrey" style={styles.iconRowText}>
                 {I18n.t("wallet.ConfirmPayment.transactionCosts")}
