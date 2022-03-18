@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback } from "react";
 import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { Alert, SafeAreaView } from "react-native";
 import URLParse from "url-parse";
@@ -21,30 +22,33 @@ const FimsWebviewScreen = () => {
   const navigation = useNavigationContext();
 
   const dispatch = useIODispatch();
+
   const maybeParams = FimsWebviewParams.decode(
     useIOSelector(internalRouteNavigationParamsSelector)
   );
   const maybeSessionToken = fromNullable(useIOSelector(sessionTokenSelector));
 
-  const goBack = () => navigation.goBack();
-
-  const goBackAndResetInternalNavigationInfo = () => {
+  const goBackAndResetInternalNavigationInfo = useCallback(() => {
+    navigation.goBack(null);
     dispatch(resetInternalRouteNavigation());
-    goBack();
-  };
+  }, [navigation, dispatch]);
 
   const clearCookie = () => {
     CookieManager.clearAll().catch(_ => setCookieError(true));
   };
 
   const handleGoBack = () => {
-    clearCookie();
     goBackAndResetInternalNavigationInfo();
+    clearCookie();
   };
 
   React.useEffect(() => {
     // if params can't be decoded or the service has not a valid token name in its metadata (token is none)
     // show an alert and go back
+    if (!navigation.isFocused()) {
+      return;
+    }
+
     if (maybeParams.isLeft() || maybeSessionToken.isNone()) {
       Alert.alert(
         I18n.t("global.genericAlert"),
@@ -76,7 +80,12 @@ const FimsWebviewScreen = () => {
       .catch(_ => setCookieError(true));
 
     return clearCookie;
-  }, [maybeParams, maybeSessionToken, goBackAndResetInternalNavigationInfo]);
+  }, [
+    goBackAndResetInternalNavigationInfo,
+    maybeParams,
+    maybeSessionToken,
+    navigation
+  ]);
 
   return (
     <BaseScreenComponent goBack={handleGoBack}>
