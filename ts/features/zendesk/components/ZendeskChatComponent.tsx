@@ -16,7 +16,7 @@ import CustomBadge from "../../../components/ui/CustomBadge";
 import { zendeskSupportOpened } from "../store/actions";
 
 /**
- * This component show the chat component and the badge with the Zendesk unread messages.
+ * This component shows the chat component and the badge with the Zendesk unread messages counter.
  * This component is shown if the user has at least a message.
  * @constructor
  */
