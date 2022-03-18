@@ -64,10 +64,7 @@ import { PayloadForAction } from "../../../types/utils";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
-import {
-  formatNumberCentsToAmount,
-  buildExpirationDate
-} from "../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { PspData } from "../../../../definitions/pagopa/PspData";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
