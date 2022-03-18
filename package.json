@@ -118,7 +118,7 @@
     "react-native-device-info": "^8.3.3",
     "react-native-exception-handler": "^2.10.8",
     "react-native-fingerprint-scanner": "^6.0.0",
-    "react-native-flag-secure-android": "git://github.com/pagopa/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795",
+    "react-native-flag-secure-android": "^1.0.3",
     "react-native-flipper": "^0.103.0",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^1.8.0",
