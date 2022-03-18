@@ -19,6 +19,8 @@ NativeModules.RNGestureHandlerModule = {
   Directions: {}
 };
 
+jest.useFakeTimers();
+
 jest.mock("@react-native-community/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", jest.fn());
 jest.mock("react-native-permissions", jest.fn());
