@@ -1,4 +1,4 @@
-// watch for all actions regarding Zendes
+// watch for all actions regarding Zendesk
 import { takeLatest, fork } from "typed-redux-saga/macro";
 import {
   getZendeskConfig,
