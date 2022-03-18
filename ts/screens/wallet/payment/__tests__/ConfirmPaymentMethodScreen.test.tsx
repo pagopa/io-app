@@ -186,7 +186,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     // );
 
     // Should display the payment method
-    rendered.getByText(`PayPal`);
+    rendered.getByText(I18n.t("wallet.onboarding.paypal.name"));
 
     rendered.getByText(`${paypalEmail}`);
 

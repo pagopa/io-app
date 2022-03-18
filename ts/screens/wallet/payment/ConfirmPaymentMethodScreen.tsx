@@ -240,7 +240,7 @@ const getPaymentMethodCaption = (
       return paymentMethod.caption;
 
     case "PayPal":
-      return "PayPal";
+      return I18n.t("wallet.onboarding.paypal.name");
 
     default:
       return null;
