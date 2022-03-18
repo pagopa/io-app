@@ -91,6 +91,8 @@ import { confirmButtonProps } from "../../../features/bonus/bonusVacanze/compone
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
 import { openWebUrl } from "../../../utils/url";
+import TagIcon from "../../../../img/wallet/tag.svg";
+import CardIcon from "../../../../img/wallet/card.svg";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -460,12 +462,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View spacer large />
 
             <View style={styles.iconRow}>
-              <IconFont
-                name="io-carta"
-                style={{
-                  color: IOColors.bluegrey
-                }}
-              />
+              <CardIcon width={24} height={24} />
 
               <H3 color="bluegrey" style={styles.iconRowText}>
                 {I18n.t("wallet.ConfirmPayment.payWith")}
@@ -490,12 +487,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View spacer large />
 
             <View style={styles.iconRow}>
-              <IconFont
-                name="io-tag"
-                style={{
-                  color: IOColors.bluegrey
-                }}
-              />
+              <TagIcon width={24} height={24} />
 
               <H3 color="bluegrey" style={styles.iconRowText}>
                 {I18n.t("wallet.ConfirmPayment.transactionCosts")}
