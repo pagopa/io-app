@@ -19,6 +19,7 @@ import {
 
 import { App } from "./ts/App";
 import { mixpanel } from "./ts/mixpanel";
+import { name as appName } from "./app.json";
 
 const errorHandler = (e, isFatal) => {
   if (isFatal) {
@@ -68,4 +69,4 @@ Text.defaultProps.allowFontScaling = false;
 TextInput.defaultProps = TextInput.defaultProps || {};
 TextInput.defaultProps.allowFontScaling = false;
 
-AppRegistry.registerComponent("ItaliaApp", () => App);
+AppRegistry.registerComponent(appName, () => App);
