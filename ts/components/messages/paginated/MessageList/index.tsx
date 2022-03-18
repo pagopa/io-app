@@ -303,7 +303,7 @@ const MessageList = ({
 };
 
 const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
-  const isArchive = filter.getArchived;
+  const isArchive = filter.getArchived === true;
   const paginatedState = isArchive
     ? allArchiveSelector(state)
     : allInboxSelector(state);

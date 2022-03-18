@@ -177,7 +177,7 @@ const MessagesHomeScreen = ({
                 renderSearchResults={results => (
                   // TODO: filter may happen down the line
                   <MessageList
-                    filter={{ getArchived: false }}
+                    filter={{}}
                     filteredMessages={results}
                     onPressItem={navigateToMessageDetail}
                   />
