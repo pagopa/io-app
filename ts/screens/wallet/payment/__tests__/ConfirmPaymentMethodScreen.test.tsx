@@ -15,10 +15,7 @@ import { appReducer } from "../../../../store/reducers/";
 import ROUTES from "../../../../navigation/routes";
 import { GlobalState } from "../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../utils/tests";
-import {
-  formatNumberCentsToAmount,
-  buildExpirationDate
-} from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import {
   CreditCardPaymentMethod,
   PayPalPaymentMethod
@@ -27,6 +24,7 @@ import I18n from "../../../../i18n";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { isPaypalEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
@@ -144,8 +142,11 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     rendered.getByText(creditCardPaymentMethod.caption);
 
     rendered.getByText(
-      `${creditCardPaymentMethod.info.holder} · ${buildExpirationDate(
-        creditCardPaymentMethod.info
+      `${
+        creditCardPaymentMethod.info.holder
+      } · ${getTranslatedShortNumericMonthYear(
+        creditCardPaymentMethod.info.expireYear,
+        creditCardPaymentMethod.info.expireMonth
       )}`
     );
 
