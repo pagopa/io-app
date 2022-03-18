@@ -64,19 +64,6 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
 }
 
 /**
- * Checks whether the app is authorized to read/write to system calendars.
- */
-export async function checkCalendarPermission() {
-  try {
-    const status = await RNCalendarEvents.checkPermissions();
-    // If the permission is already granted return true
-    return status === "authorized";
-  } catch {
-    return false;
-  }
-}
-
-/**
  * This Type has been introduced after this story https://www.pivotaltracker.com/story/show/172079415
  * to solve the bug on some android devices (mostly the one running MIUI) naming their local calendar
  * with camel case notation this is a common situation as figured on a related reddit post
