@@ -6,6 +6,7 @@ import { Animated, Platform, StyleSheet, View } from "react-native";
 import { Tab, Tabs } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
 
+import { createSelector } from "reselect";
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -34,6 +35,10 @@ import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
+import {
+  allArchiveMessagesSelector,
+  allInboxMessagesSelector
+} from "../../../store/reducers/entities/messages/allPaginated";
 
 type Props = NavigationStackScreenProps & ReturnType<typeof mapStateToProps>;
 
@@ -108,7 +113,8 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
 const MessagesHomeScreen = ({
   isSearchEnabled,
   messageSectionStatusActive,
-  searchText
+  searchText,
+  searchMessages
 }: Props) => {
   const navigation = useContext(NavigationContext);
 
@@ -166,7 +172,7 @@ const MessagesHomeScreen = ({
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
               <MessagesSearch
-                messages={[]}
+                messages={searchMessages}
                 searchText={_}
                 renderSearchResults={results => (
                   // TODO: filter may happen down the line
@@ -190,7 +196,11 @@ const MessagesHomeScreen = ({
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
-  searchText: searchTextSelector(state)
+  searchText: searchTextSelector(state),
+  searchMessages: createSelector(
+    [allInboxMessagesSelector, allArchiveMessagesSelector],
+    (inbox, archive) => inbox.concat(archive)
+  )(state)
 });
 
 export default connect(mapStateToProps, undefined)(MessagesHomeScreen);
