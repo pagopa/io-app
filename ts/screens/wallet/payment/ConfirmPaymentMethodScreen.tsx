@@ -2,12 +2,7 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { ActionSheet, Content, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
@@ -93,6 +88,7 @@ import { Link } from "../../../components/core/typography/Link";
 import { openWebUrl } from "../../../utils/url";
 import TagIcon from "../../../../img/wallet/tag.svg";
 import CardIcon from "../../../../img/wallet/card.svg";
+import { SelectionBox } from "../../../components/wallet/SelectionBox";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -129,35 +125,6 @@ const styles = StyleSheet.create({
   },
 
   iconRowText: { marginLeft: 12 },
-
-  selectionBox: {
-    borderWidth: 1,
-    borderColor: IOColors.bluegreyLight,
-    borderRadius: 8,
-    padding: 16,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-
-  selectionBoxIcon: {
-    flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: "auto",
-    paddingRight: 24
-  },
-
-  selectionBoxContent: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: "100%"
-  },
-
-  selectionBoxTrail: {
-    flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: "auto",
-    paddingLeft: 24
-  },
 
   flex: { flex: 1 }
 });
@@ -248,35 +215,6 @@ const getPaymentMethodCaption = (
       return null;
   }
 };
-
-const SelectionBox = (props: {
-  logo?: React.ReactNode;
-  mainText: string;
-  subText: string;
-  ctaText?: string;
-  onPress?: () => void;
-}) => (
-  <TouchableOpacity disabled={!props.onPress} onPress={props.onPress}>
-    <View style={styles.selectionBox}>
-      {props.logo && <View style={styles.selectionBoxIcon}>{props.logo}</View>}
-
-      <View style={styles.selectionBoxContent}>
-        <H4 numberOfLines={1}>{props.mainText}</H4>
-        <LabelSmall numberOfLines={1} color="bluegrey" weight="Regular">
-          {props.subText}
-        </LabelSmall>
-      </View>
-
-      {props.ctaText && (
-        <View style={styles.selectionBoxTrail}>
-          <H4 color="blue" weight="SemiBold">
-            {props.ctaText}
-          </H4>
-        </View>
-      )}
-    </View>
-  </TouchableOpacity>
-);
 
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
