@@ -34,26 +34,12 @@ import walletNavigator from "./WalletNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
-// type Test = keyof AppParamsList;
-//
-// const routes: Record<Test, ComponentClass<any> | FunctionComponent<any>> = {
-//   INGRESS: IngressScreen,
-//   AUTHENTICATION: authenticationNavigator,
-//   ONBOARDING: onboardingNavigator,
-//   MAIN: mainNavigator,
-//   MESSAGES_NAVIGATOR: messagesNavigator,
-//   WALLET_NAVIGATOR: walletNavigator,
-//   SERVICES_NAVIGATOR: servicesNavigator,
-//   PROFILE_NAVIGATOR: profileNavigator,
-//   CGN_ACTIVATION_MAIN: CgnActivationNavigator,
-//   CGN_DETAILS_MAIN: CgnDetailsNavigator,
-//   CGN_EYCA_MAIN: CgnEYCAActivationNavigator,
-//   WORKUNIT_GENERIC_FAILURE: workunitGenericFailure,
-//   ZENDESK_MAIN: zendeskSupportNavigator
-// };
-
 export const AppStackNavigator = () => (
-  <Stack.Navigator initialRouteName={"INGRESS"} headerMode={"none"}>
+  <Stack.Navigator
+    initialRouteName={"INGRESS"}
+    headerMode={"none"}
+    screenOptions={{ gestureEnabled: false }}
+  >
     <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
     <Stack.Screen
       name={ROUTES.AUTHENTICATION}
