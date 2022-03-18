@@ -118,6 +118,23 @@ export const reloadAllMessages = createAsyncAction(
   MessagesFailurePayload
 >();
 
+export type UpsertMessageStatusAttributesPayload = {
+  id: string;
+  update:
+    | { tag: "archiving"; isArchiving: boolean }
+    | { tag: "reading" }
+    | { tag: "bulk"; isArchiving: boolean };
+};
+export const upsertMessageStatusAttributes = createAsyncAction(
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_REQUEST",
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_SUCCESS",
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_FAILURE"
+)<
+  UpsertMessageStatusAttributesPayload,
+  UpsertMessageStatusAttributesPayload,
+  { error: Error; payload: UpsertMessageStatusAttributesPayload }
+>();
+
 /**
  *  @deprecated Please use actions with pagination instead
  */
@@ -155,4 +172,5 @@ export type MessagesActions =
   | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
   | ActionType<typeof setMessageReadState>
+  | ActionType<typeof upsertMessageStatusAttributes>
   | ActionType<typeof setMessagesArchivedState>;
