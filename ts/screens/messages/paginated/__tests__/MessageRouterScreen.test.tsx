@@ -29,7 +29,11 @@ jest.useFakeTimers();
 
 const mockNavDispatch = jest.fn();
 
-jest.mock("../../../../config", () => ({ euCovidCertificateEnabled: true }));
+jest.mock("../../../../config", () => ({
+  euCovidCertificateEnabled: true,
+  pageSize: 8,
+  maximumItemsFromAPI: 8
+}));
 jest.mock("../../../../utils/hooks/useOnFocus", () => ({
   useNavigationContext: () => ({
     dispatch: mockNavDispatch,
@@ -192,8 +196,8 @@ type InputState = {
 const renderComponent = (messageId: string, state: InputState = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = {
-    inbox: pot.none,
-    lastRequest: none,
+    inbox: { data: pot.none, lastRequest: none },
+    archive: { data: pot.none, lastRequest: none },
     ...state.allPaginated
   };
   const detailsById = state.detailsById ?? {};
