@@ -7,7 +7,7 @@ import ZendeskChatComponent from "../features/zendesk/components/ZendeskChatComp
 import InstabugChatsComponent from "./InstabugChatsComponent";
 
 /**
- * This component render the right Chat tool based on the selected assistance tool
+ * This component renders the right Chat tool based on the remote configured assistance tool
  * @constructor
  */
 const ChatsComponent = () => {
