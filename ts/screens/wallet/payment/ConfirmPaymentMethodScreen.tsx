@@ -89,6 +89,7 @@ import { openWebUrl } from "../../../utils/url";
 import TagIcon from "../../../../img/wallet/tag.svg";
 import CardIcon from "../../../../img/wallet/card.svg";
 import { SelectionBox } from "../../../components/wallet/SelectionBox";
+import { getTranslatedShortNumericMonthYear } from "../../../utils/dates";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -192,7 +193,12 @@ const getPaymentMethodExpiration = (
     case "Bancomat":
     case "Privative":
     case "CreditCard":
-      return buildExpirationDate(paymentMethod.info);
+      return (
+        getTranslatedShortNumericMonthYear(
+          paymentMethod.info.expireYear,
+          paymentMethod.info.expireMonth
+        ) ?? null
+      );
 
     default:
       return null;
