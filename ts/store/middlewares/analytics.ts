@@ -1,7 +1,6 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
-import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
   loadAllBonusActivations,
   loadAvailableBonuses
@@ -248,9 +247,6 @@ const trackAction =
         });
       }
       case getType(setMessageReadState): {
-        if (action.payload.read === true) {
-          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
-        }
         return mp.track(action.type, action.payload);
       }
 
