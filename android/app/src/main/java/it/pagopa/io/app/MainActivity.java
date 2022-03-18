@@ -14,15 +14,13 @@ import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
 
-    private Boolean isRootedDeviceFlag = null;
-
     /**
      * Returns the name of the main component registered from JavaScript. This is
      * used to schedule rendering of the component.
      */
     @Override
     protected String getMainComponentName() {
-        return "ItaliaApp";
+        return "IO";
     }
 
     // see
@@ -46,12 +44,5 @@ public class MainActivity extends ReactActivity {
                 return new RNGestureHandlerEnabledRootView(MainActivity.this);
             }
         };
-    }
-
-
-    private void showAlertDialog(String title, String message) {
-        new AlertDialog.Builder(MainActivity.this).setTitle(title).setMessage(message)
-                .setPositiveButton(getString(android.R.string.ok), (dialog, which) -> finish()).setCancelable(false)
-                .show();
     }
 }
