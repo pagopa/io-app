@@ -1,10 +1,9 @@
 import * as React from "react";
 import { useCallback } from "react";
 import CookieManager, { Cookie } from "@react-native-community/cookies";
-import { Alert, SafeAreaView } from "react-native";
+import { Alert, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
 import { fromNullable } from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import FimsWebView from "../components/FimsWebView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
@@ -90,14 +89,14 @@ const FimsWebviewScreen = () => {
   return (
     <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={IOStyles.flex}>
-        <Content contentContainerStyle={IOStyles.flex}>
+        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
           {!cookieError && isCookieAvailable && maybeParams.isRight() && (
             <FimsWebView
               onWebviewClose={handleGoBack}
               uri={maybeParams.value.url}
             />
           )}
-        </Content>
+        </View>
       </SafeAreaView>
     </BaseScreenComponent>
   );
