@@ -49,6 +49,7 @@ describe("checkAcceptedTosSaga", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+    jest.useRealTimers();
   });
 
   describe("when a profile is first time onboarded", () => {

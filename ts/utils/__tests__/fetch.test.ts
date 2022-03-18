@@ -16,7 +16,10 @@ const TEST_PATH = "/transient-error";
 
 describe("defaultRetryingFetch function", () => {
   // Mock server is restarted per each test
-  beforeEach(() => mockServer.start());
+  beforeEach(async () => {
+    jest.useRealTimers();
+    await mockServer.start();
+  });
   afterEach(() => mockServer.stop());
 
   describe(`when 429 code is returned`, () => {
@@ -46,7 +49,10 @@ describe("defaultRetryingFetch function", () => {
 
 describe("constantPollingFetch function", () => {
   // Mock server is restarted per each test
-  beforeEach(() => mockServer.start());
+  beforeEach(async () => {
+    jest.useRealTimers();
+    await mockServer.start();
+  });
   afterEach(() => mockServer.stop());
 
   const MAX_POLLING_RETRIES = 10;

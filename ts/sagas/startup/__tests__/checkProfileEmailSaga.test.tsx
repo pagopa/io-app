@@ -20,6 +20,7 @@ describe("checkAcceptedTosSaga", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+    jest.useRealTimers();
   });
 
   describe("when user has an email and it is validated", () => {
@@ -34,15 +35,16 @@ describe("checkAcceptedTosSaga", () => {
       ...mockedProfile,
       version: 0
     };
-    it("should show email read screen", () =>
-      expectSaga(
+    it("should show email read screen", async () => {
+      await expectSaga(
         checkAcknowledgedEmailSaga,
         profileEmailValidatedFirstOnboarding
       )
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
           screen: ROUTES.READ_EMAIL_SCREEN
         })
-        .run());
+        .run();
+    });
   });
 
   describe("when user has an email and it not is validated", () => {
