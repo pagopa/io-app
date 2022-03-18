@@ -43,7 +43,6 @@ import {
 } from "../../../../common/versionInfo/store/actions/versionInfo";
 import { backendStatusLoadSuccess } from "../../../../store/actions/backendStatus";
 import { Action } from "../../../../store/actions/types";
-import { SagaCallReturnType } from "../../../../types/utils";
 
 function* setupZendesk() {
   const zendeskToken: string | undefined = yield* select(zendeskTokenSelector);
@@ -71,8 +70,7 @@ function* getUnreadTicketsCount() {
   yield* call(setupZendesk);
   // Try to get the new messages of the user
   try {
-    const response: SagaCallReturnType<typeof getTotalNewResponses> =
-      yield* call(getTotalNewResponses);
+    const response = yield* call(getTotalNewResponses);
     yield* put(zendeskGetTotalNewResponses.success(response));
   } catch (e) {
     yield* put(zendeskGetTotalNewResponses.failure(getError(e)));
