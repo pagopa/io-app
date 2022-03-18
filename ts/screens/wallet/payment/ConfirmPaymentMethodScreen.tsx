@@ -254,7 +254,7 @@ const SelectionBox = (props: {
   ctaText?: string;
   onPress?: () => void;
 }) => (
-  <TouchableOpacity onPress={props.onPress}>
+  <TouchableOpacity disabled={!props.onPress} onPress={props.onPress}>
     <View style={styles.selectionBox}>
       {props.logo && <View style={styles.selectionBoxIcon}>{props.logo}</View>}
 
