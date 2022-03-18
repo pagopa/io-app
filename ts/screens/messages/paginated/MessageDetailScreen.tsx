@@ -14,7 +14,7 @@ import I18n from "../../../i18n";
 import {
   loadMessageDetails,
   MessageReadType,
-  setMessageReadState
+  upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
@@ -89,7 +89,6 @@ const MessageDetailScreen = ({
     if (!isRead) {
       setMessageReadState(
         message.id,
-        true,
         message.category.tag === TagEnum.PAYMENT ? TagEnum.PAYMENT : "unknown"
       );
     }
@@ -186,11 +185,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadServiceDetail.request(serviceId)),
   loadMessageDetails: (id: UIMessageId) =>
     dispatch(loadMessageDetails.request({ id })),
-  setMessageReadState: (
-    messageId: string,
-    isRead: boolean,
-    messageType: MessageReadType
-  ) => dispatch(setMessageReadState(messageId, isRead, messageType))
+  setMessageReadState: (messageId: string, messageType: MessageReadType) =>
+    dispatch(
+      upsertMessageStatusAttributes.request({
+        id: messageId,
+        update: { tag: "reading" },
+        messageType
+      })
+    )
 });
 
 export default connect(

@@ -51,7 +51,8 @@ import {
   DEPRECATED_loadMessage,
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
-  setMessageReadState
+  DEPRECATED_setMessageReadState,
+  upsertMessageStatusAttributes
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
@@ -247,13 +248,16 @@ const trackAction =
           messagesIdsToRemoveFromCache: action.payload
         });
       }
-      case getType(setMessageReadState): {
+      case getType(DEPRECATED_setMessageReadState): {
         if (action.payload.read === true) {
           setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
         }
         return mp.track(action.type, action.payload);
       }
-
+      case getType(upsertMessageStatusAttributes.success): {
+        // TODO: update to keep the current metrics
+        break;
+      }
       // instabug
       case getType(instabugReportClosed):
       case getType(instabugReportOpened):

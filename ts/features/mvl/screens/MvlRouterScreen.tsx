@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
-import { setMessageReadState } from "../../../store/actions/messages";
+import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
@@ -52,7 +52,7 @@ export const MvlRouterScreen = (
   const isRead = useIOSelector(state => isMessageRead(state, mvlId));
   useOnFirstRender(() => {
     if (!isRead) {
-      dispatch(setMessageReadState(mvlId, true, "unknown"));
+      dispatch(DEPRECATED_setMessageReadState(mvlId, true, "unknown"));
     }
     if (!pot.isSome(mvlPot)) {
       dispatch(mvlDetailsLoad.request(mvlId));

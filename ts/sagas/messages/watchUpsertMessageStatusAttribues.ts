@@ -42,7 +42,7 @@ function validatePayload(
     case "archiving":
       return {
         change_type: "archiving",
-        is_archived: payload.update.isArchiving
+        is_archived: payload.update.isArchived
       } as MessageStatusArchivingChange;
     case "reading":
       return {
@@ -53,7 +53,7 @@ function validatePayload(
       return {
         change_type: "bulk",
         is_read: true,
-        is_archived: payload.update.isArchiving
+        is_archived: payload.update.isArchived
       } as MessageStatusBulkChange;
     default:
       throw new TypeError("invalid payload");

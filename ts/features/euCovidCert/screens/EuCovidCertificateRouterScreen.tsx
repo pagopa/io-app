@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { setMessageReadState } from "../../../store/actions/messages";
+import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
 import { GlobalState } from "../../../store/reducers/types";
 import { euCovidCertificateGet } from "../store/actions";
 import {
@@ -152,7 +152,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCertificate: (authCode: EUCovidCertificateAuthCode) =>
     dispatch(euCovidCertificateGet.request(authCode)),
   setMessageRead: (messageId: string) =>
-    dispatch(setMessageReadState(messageId, true, "unknown"))
+    dispatch(DEPRECATED_setMessageReadState(messageId, true, "unknown"))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

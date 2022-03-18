@@ -16,7 +16,8 @@ describe("tryUpsertMessageStatusAttributes", () => {
 
   const actionPayload: UpsertMessageStatusAttributesPayload = {
     id: "A",
-    update: { tag: "bulk", isArchiving: true }
+    update: { tag: "bulk", isArchived: true },
+    messageType: "unknown"
   };
 
   const callPayload = {
