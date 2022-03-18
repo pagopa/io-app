@@ -25,6 +25,7 @@ import {
 } from "../../../../types/pagopa";
 import I18n from "../../../../i18n";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
+import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { isPaypalEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 // Mock react native share
@@ -43,6 +44,19 @@ jest.mock("../../../../store/reducers/wallet/wallets", () => {
     __esModule: true,
     ...actualModule,
     paymentMethodByIdSelector: jest.fn()
+  };
+});
+
+// Mock payment
+jest.mock("../../../../store/reducers/wallet/payment", () => {
+  const actualModule = jest.requireActual(
+    "../../../../store/reducers/wallet/payment"
+  );
+
+  return {
+    __esModule: true,
+    ...actualModule,
+    pspSelectedV2ListSelector: jest.fn()
   };
 });
 
@@ -155,11 +169,29 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
   });
 
   it("should display all the informations correctly for a `PayPal` payment method", () => {
+    const paypalPspFee = 2;
+    const paypalPspName = "name";
+    const paypalPrivacyUrl = "https://host.com";
+
     (paymentMethodByIdSelector as unknown as jest.Mock).mockReturnValue(
       payPalPaymentMethod
     );
 
     (isPaypalEnabledSelector as unknown as jest.Mock).mockReturnValue(true);
+
+    (pspSelectedV2ListSelector as unknown as jest.Mock).mockReturnValue({
+      fee: paypalPspFee,
+      ragioneSociale: paypalPspName,
+      privacyUrl: paypalPrivacyUrl
+    });
+
+    const paypalParams = {
+      ...params,
+      wallet: {
+        ...params.wallet,
+        paymentMethod: payPalPaymentMethod as PayPalPaymentMethod
+      }
+    };
 
     const rendered = renderScreenFakeNavRedux<
       GlobalState,
@@ -167,23 +199,20 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     >(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
-      {
-        ...params,
-        wallet: {
-          ...params.wallet,
-          paymentMethod: payPalPaymentMethod as PayPalPaymentMethod
-        }
-      },
+      paypalParams,
       myStore
     );
 
     // Should display the payment reason
-    rendered.getByText(params.verifica.causaleVersamento);
+    rendered.getByText(paypalParams.verifica.causaleVersamento);
 
     // Should display the payment amount
-    // rendered.getByText(
-    //  formatNumberCentsToAmount(params.verifica.importoSingoloVersamento, true)
-    // );
+    rendered.getByText(
+      formatNumberCentsToAmount(
+        paypalParams.verifica.importoSingoloVersamento,
+        true
+      )
+    );
 
     // Should display the payment method
     rendered.getByText(I18n.t("wallet.onboarding.paypal.name"));
@@ -191,15 +220,20 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     rendered.getByText(`${paypalEmail}`);
 
     // Should render the PSP with the fees
-    // rendered.getByText(
-    //   formatNumberCentsToAmount(params.wallet.psp?.fixedCost.amount ?? -1, true)
-    // );
+    rendered.getByText(formatNumberCentsToAmount(paypalPspFee, true));
 
-    // rendered.getByText(
-    //  `${I18n.t("wallet.ConfirmPayment.providedBy")} ${
-    //    params.wallet.psp?.businessName
-    //  }`
-    // );
+    rendered.getByText(
+      `${I18n.t("wallet.ConfirmPayment.providedBy")} ${paypalPspName}`
+    );
+
+    // Should render the privacy url for PayPal
+    rendered.getByText(
+      I18n.t("wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer")
+    );
+
+    rendered.getByText(
+      I18n.t("wallet.onboarding.paypal.paymentCheckout.privacyTerms")
+    );
 
     // It should retrieve one `Edit` text, only
     // the one for the payment method.
