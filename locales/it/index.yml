@@ -1243,7 +1243,7 @@ wallet:
     total: Totale
     paymentInformations: Dati del pagamento
     payWith: Paga con
-    transactionCosts: Costi della transazione
+    transactionCosts: Costo della transazione
     edit: Modifica
     providedBy: Gestita da
     pay: Paga
