@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import * as pot from "italia-ts-commons/lib/pot";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
@@ -24,7 +25,7 @@ import { ZendeskSubCategory } from "../../../../../../definitions/content/Zendes
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: remoteUndefined,
+  ticketNumber: pot.none,
   totalNewResponses: remoteUndefined
 };
 
@@ -82,26 +83,26 @@ describe("Zendesk reducer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(zendeskRequestTicketNumber.request());
-    expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
-      remoteLoading
-    );
+    expect(
+      pot.isLoading(store.getState().assistanceTools.zendesk.ticketNumber)
+    ).toBeTruthy();
   });
   it("ticketNumber should be remoteError if zendeskRequestTicketNumber.failure is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(zendeskRequestTicketNumber.failure(genericError));
-    expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
-      remoteError(genericError)
-    );
+    expect(
+      pot.isError(store.getState().assistanceTools.zendesk.ticketNumber)
+    ).toBeTruthy();
   });
   it("ticketNumber should be remoteReady if zendeskRequestTicketNumber.success is dispatched", () => {
     const mockTicketNumber = 1;
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(zendeskRequestTicketNumber.success(mockTicketNumber));
-    expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
-      remoteReady(mockTicketNumber)
-    );
+    expect(
+      pot.isSome(store.getState().assistanceTools.zendesk.ticketNumber)
+    ).toBeTruthy();
   });
   it("totalNewResponses should be remoteLoading if zendeskGetTotalNewResponses.request is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -119,7 +120,7 @@ describe("Zendesk reducer", () => {
       store.getState().assistanceTools.zendesk.totalNewResponses
     ).toStrictEqual(remoteError(genericError));
   });
-  it("ticketNumber should be remoteReady if zendeskGetTotalNewResponses.success is dispatched", () => {
+  it("totalNewResponses should be pot.Some if zendeskGetTotalNewResponses.success is dispatched", () => {
     const mockTotalNewResponses = 1;
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);

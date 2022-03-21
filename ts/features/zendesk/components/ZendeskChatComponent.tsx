@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import * as React from "react";
 import { useDispatch } from "react-redux";
+import * as pot from "italia-ts-commons/lib/pot";
 import { useIOSelector } from "../../../store/hooks";
 import {
   zendeskTicketNumberSelector,
@@ -27,7 +28,7 @@ const ZendeskChatComponent = () => {
 
   const totalNewResponse = getValueOrElse(maybeTotalNewResponse, 0);
 
-  if (getValueOrElse(ticketsNumber, 0) <= 0) {
+  if (pot.getOrElse(ticketsNumber, 0) <= 0) {
     return null;
   }
   return (
