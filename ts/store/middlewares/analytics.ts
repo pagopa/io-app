@@ -255,7 +255,12 @@ const trackAction =
         return mp.track(action.type, action.payload);
       }
       case getType(upsertMessageStatusAttributes.success): {
-        // TODO: update to keep metrics consistent
+        if (
+          action.payload.update.tag === "bulk" ||
+          action.payload.update.tag === "reading"
+        ) {
+          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
+        }
         break;
       }
       // instabug
