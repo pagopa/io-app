@@ -25,7 +25,6 @@ import {
 } from "../../../../utils/supportAssistance";
 import { zendeskTokenSelector } from "../../../../store/reducers/authentication";
 import {
-  loginSuccess,
   logoutRequest,
   sessionExpired,
   sessionInformationLoadSuccess,
@@ -125,7 +124,6 @@ function* refreshUnreadTicketsCount() {
     yield* race({
       wait: delay(unreadTicketsCountRefreshRate),
       signals: take([
-        loginSuccess,
         sessionInvalid,
         sessionExpired,
         logoutRequest,
