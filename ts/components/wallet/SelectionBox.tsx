@@ -44,6 +44,12 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * A bordered and rounded box made up by three columns:
+ * - The first one containing an icon
+ * - The second one with a title and a subtitle
+ * - The third one containing a CTA
+ */
 export const SelectionBox = (props: Props) => (
   <TouchableOpacity
     disabled={!props.onPress}
