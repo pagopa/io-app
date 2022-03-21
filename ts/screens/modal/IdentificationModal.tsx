@@ -253,11 +253,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     // Added to solve the issue https://www.pivotaltracker.com/story/show/173217033
     if (prevProps.isFingerprintEnabled !== this.props.isFingerprintEnabled) {
-      this.setState({
+      this.setState((_, props) => ({
         biometryAuthAvailable: fromNullable(
-          this.props.isFingerprintEnabled
+          props.isFingerprintEnabled
         ).getOrElse(false)
-      });
+      }));
     }
 
     const previousAttempts = prevProps.identificationFailState.fold(

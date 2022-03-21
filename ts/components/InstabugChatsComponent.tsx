@@ -1,4 +1,3 @@
-import { none, Option } from "fp-ts/lib/Option";
 import { BugReporting, Replies } from "instabug-reactnative";
 import * as React from "react";
 import { View } from "react-native";
@@ -22,7 +21,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  instabugReportType: Option<BugReporting.reportType>;
   hasChats: boolean;
   isMounted: boolean;
 };
@@ -35,7 +33,6 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      instabugReportType: none,
       hasChats: false,
       isMounted: false
     };

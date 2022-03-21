@@ -188,6 +188,7 @@ export function BackendClient(
       readonly page_size?: number;
       readonly maximum_id?: string;
       readonly minimum_id?: string;
+      readonly get_archived?: boolean;
       readonly Bearer: string;
     },
     "Authorization",
@@ -204,13 +205,20 @@ export function BackendClient(
     method: "get",
     url: _ => "/api/v1/messages",
     query: params => {
-      const { maximum_id, enrich_result_data, minimum_id, page_size } = params;
+      const {
+        maximum_id,
+        enrich_result_data,
+        minimum_id,
+        page_size,
+        get_archived
+      } = params;
       return _.pickBy(
         {
           maximum_id,
           enrich_result_data,
           minimum_id,
-          page_size
+          page_size,
+          get_archived
         },
         v => !_.isUndefined(v)
       );
