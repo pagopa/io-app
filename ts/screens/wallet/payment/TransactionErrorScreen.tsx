@@ -59,11 +59,15 @@ import {
   assistanceToolRemoteConfig,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategoryValue
+  zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 
 export type TransactionErrorScreenNavigationParams = {
   error: Option<
@@ -122,7 +126,8 @@ const requestZendeskAssistanceForPaymentFailure = (
   payment?: PaymentHistory
 ) => {
   // Set pagamenti_pagopa as category
-  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+
   // Add rptId custom field
   addTicketCustomField(
     zendeskBlockedPaymentRptIdId,
@@ -367,7 +372,10 @@ const TransactionErrorScreen = (props: Props) => {
     rptId,
     onCancel,
     choosenTool,
-    props.zendeskSupportWorkunitStart,
+    () => {
+      props.zendeskSupportWorkunitStart();
+      props.zendeskSelectedCategory(zendeskPaymentCategory);
+    },
     props.canShowHelp,
     paymentHistory
   );
@@ -405,7 +413,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   zendeskSupportWorkunitStart: () =>
     dispatch(
       zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
-    )
+    ),
+  zendeskSelectedCategory: (category: ZendeskCategory) =>
+    dispatch(zendeskSelectedCategory(category))
 });
 
 export default connect(
