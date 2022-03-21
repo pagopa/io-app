@@ -5,6 +5,7 @@ import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
+import { usePaginatedMessages } from "../../../config";
 import { GlobalState } from "../../../store/reducers/types";
 import { euCovidCertificateGet } from "../store/actions";
 import {
@@ -105,8 +106,10 @@ const EuCovidCertificateRouterScreen = (
 
   useEffect(() => {
     if (firstLoading.current) {
-      // At the first rendering, set the message to read
-      setMessageRead(messageId);
+      if (!usePaginatedMessages) {
+        // TODO: remove once we publish pagination
+        setMessageRead(messageId);
+      }
       // check if a load is required
       if (shouldBeLoaded(authCode)) {
         loadCertificate(authCode);

@@ -12,8 +12,8 @@ import { MessageStatusChange } from "../../../definitions/backend/MessageStatusC
 import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
 import { MessageStatusReadingChange } from "../../../definitions/backend/MessageStatusReadingChange";
 import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
-import { handleResponse } from "./utils";
 import { isTestEnv } from "../../utils/environment";
+import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<
   typeof upsertMessageStatusAttributes["request"]

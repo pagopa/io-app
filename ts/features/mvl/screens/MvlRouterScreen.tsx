@@ -6,6 +6,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { usePaginatedMessages } from "../../../config";
 import { mvlDetailsLoad } from "../store/actions";
 import { mvlFromIdSelector } from "../store/reducers/byId";
 import { Mvl } from "../types/mvlData";
@@ -51,7 +52,8 @@ export const MvlRouterScreen = (
   const dispatch = useIODispatch();
   const isRead = useIOSelector(state => isMessageRead(state, mvlId));
   useOnFirstRender(() => {
-    if (!isRead) {
+    if (!isRead && !usePaginatedMessages) {
+      // TODO: remove once we publish pagination
       dispatch(DEPRECATED_setMessageReadState(mvlId, true, "unknown"));
     }
     if (!pot.isSome(mvlPot)) {

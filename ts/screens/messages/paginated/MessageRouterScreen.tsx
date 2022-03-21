@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { TagEnum as TagEnumPayment } from "../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -21,7 +22,9 @@ import NavigationService from "../../../navigation/NavigationService";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
-  reloadAllMessages
+  MessageReadType,
+  reloadAllMessages,
+  upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
 import {
   navigateBack,
@@ -42,6 +45,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../utils/pot";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -97,7 +101,8 @@ const MessageRouterScreen = ({
   reloadPage,
   maybeMessage,
   maybeMessageDetails,
-  messageId
+  messageId,
+  setMessageReadState
 }: Props): React.ReactElement => {
   const navigation = useNavigationContext();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
@@ -124,6 +129,17 @@ const MessageRouterScreen = ({
     loadPreviousPage,
     reloadPage
   ]);
+
+  useOnFirstRender(() => {
+    if (maybeMessage !== undefined && !maybeMessage.isRead) {
+      setMessageReadState(
+        maybeMessage.id,
+        maybeMessage.category.tag === TagEnumPayment.PAYMENT
+          ? TagEnumPayment.PAYMENT
+          : "unknown"
+      );
+    }
+  });
 
   useEffect(() => {
     // message in the list and its details loaded: green light
@@ -178,7 +194,15 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
           filter
         })
       ),
-    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter }))
+    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter })),
+    setMessageReadState: (messageId: string, messageType: MessageReadType) =>
+      dispatch(
+        upsertMessageStatusAttributes.request({
+          id: messageId,
+          update: { tag: "reading" },
+          messageType
+        })
+      )
   };
 };
 

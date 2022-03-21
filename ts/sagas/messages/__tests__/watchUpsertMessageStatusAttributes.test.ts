@@ -1,7 +1,6 @@
 import { right } from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
-import util from "util";
 
 import {
   upsertMessageStatusAttributes as action,
@@ -12,8 +11,6 @@ import { testTryUpsertMessageStatusAttributes } from "../watchUpsertMessageStatu
 const tryUpsertMessageStatusAttributes = testTryUpsertMessageStatusAttributes!;
 
 describe("tryUpsertMessageStatusAttributes", () => {
-  util.inspect.defaultOptions.depth = null;
-
   const actionPayload: UpsertMessageStatusAttributesPayload = {
     id: "A",
     update: { tag: "bulk", isArchived: true },

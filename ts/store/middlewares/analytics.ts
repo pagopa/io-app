@@ -255,7 +255,7 @@ const trackAction =
         return mp.track(action.type, action.payload);
       }
       case getType(upsertMessageStatusAttributes.success): {
-        // TODO: update to keep the current metrics
+        // TODO: update to keep metrics consistent
         break;
       }
       // instabug
