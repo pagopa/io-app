@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction, createStandardAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
