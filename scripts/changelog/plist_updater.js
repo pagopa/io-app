@@ -18,10 +18,10 @@
 const plist = require("plist");
 const versionModule = require("./version_utility.js");
 
-module.exports.readVersion = function(contents) {
+module.exports.readVersion = function (contents) {
   const infoObj = plist.parse(contents);
 
-  if (!"CFBundleShortVersionString" in infoObj) {
+  if (!("CFBundleShortVersionString" in infoObj)) {
     console.log(
       "Field CFBundleShortVersionString not defined; can't read the current plist version"
     );
@@ -30,9 +30,9 @@ module.exports.readVersion = function(contents) {
   return infoObj.CFBundleShortVersionString;
 };
 
-module.exports.writeVersion = function(contents, version) {
+module.exports.writeVersion = function (contents, version) {
   const infoObj = plist.parse(contents);
-  if (!"CFBundleShortVersionString" in infoObj) {
+  if (!("CFBundleShortVersionString" in infoObj)) {
     console.log(
       "Field CFBundleShortVersionString not defined; can't read the current plist version"
     );
