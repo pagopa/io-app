@@ -10,11 +10,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
-import {
-  loadMessageDetails,
-  MessageReadType,
-  upsertMessageStatusAttributes
-} from "../../../store/actions/messages";
+import { loadMessageDetails } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
@@ -172,15 +168,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
   loadMessageDetails: (id: UIMessageId) =>
-    dispatch(loadMessageDetails.request({ id })),
-  setMessageReadState: (messageId: string, messageType: MessageReadType) =>
-    dispatch(
-      upsertMessageStatusAttributes.request({
-        id: messageId,
-        update: { tag: "reading" },
-        messageType
-      })
-    )
+    dispatch(loadMessageDetails.request({ id }))
 });
 
 export default connect(
