@@ -291,6 +291,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const formattedTotal = formatNumberCentsToAmount(totalAmount, true);
   const formattedFees = formatNumberCentsToAmount(fee ?? 0, true);
 
+  // Retrieve all the informations needed by the
+  // user interface based on the payment method
+  // selected by the user.
   const paymentMethodInfo = getPaymentMethodInfo(
     paymentMethod,
     props.isPaypalEnabled
