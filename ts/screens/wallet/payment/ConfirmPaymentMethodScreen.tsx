@@ -136,86 +136,49 @@ const payUrlSuffix = "/v3/webview/transactions/pay";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 
-const PaymentMethodLogo = (props: {
-  paymentMethod: PaymentMethod | undefined;
-  isPaypalEnabled: boolean;
-}) => {
-  const { paymentMethod } = props;
-
-  switch (paymentMethod?.kind) {
-    case "Bancomat":
-    case "Privative":
-    case "CreditCard":
-      return (
-        <BrandImage
-          image={getCardIconFromBrandLogo(paymentMethod.info)}
-          scale={0.7}
-        />
-      );
-
-    case "PayPal":
-      return props.isPaypalEnabled ? (
-        <BrandImage image={paypalLogoMin} scale={0.7} />
-      ) : null;
-
-    default:
-      return null;
-  }
-};
-
-const getPaymentMethodSubject = (
+const getPaymentMethodInfo = (
   paymentMethod: PaymentMethod | undefined,
   isPaypalEnabled: boolean
-): string | null => {
+): Option<{
+  logo: JSX.Element;
+  subject: string;
+  expiration: string;
+  caption: string;
+}> => {
   switch (paymentMethod?.kind) {
     case "Bancomat":
     case "Privative":
     case "CreditCard":
-      return paymentMethod.info.holder ?? null;
+      return some({
+        logo: (
+          <BrandImage
+            image={getCardIconFromBrandLogo(paymentMethod.info)}
+            scale={0.7}
+          />
+        ),
+        subject: paymentMethod.info.holder ?? "",
+        expiration:
+          getTranslatedShortNumericMonthYear(
+            paymentMethod.info.expireYear,
+            paymentMethod.info.expireMonth
+          ) ?? "",
+        caption: paymentMethod.caption ?? ""
+      });
 
     case "PayPal":
-      return isPaypalEnabled
-        ? paymentMethod.info.pspInfo[0]?.email ?? null
-        : null;
+      if (isPaypalEnabled) {
+        return some({
+          logo: <BrandImage image={paypalLogoMin} scale={0.7} />,
+          subject: paymentMethod.info.pspInfo[0]?.email ?? "",
+          expiration: "",
+          caption: I18n.t("wallet.onboarding.paypal.name")
+        });
+      } else {
+        return none;
+      }
 
     default:
-      return null;
-  }
-};
-
-const getPaymentMethodExpiration = (
-  paymentMethod: PaymentMethod | undefined
-): string | null => {
-  switch (paymentMethod?.kind) {
-    case "Bancomat":
-    case "Privative":
-    case "CreditCard":
-      return (
-        getTranslatedShortNumericMonthYear(
-          paymentMethod.info.expireYear,
-          paymentMethod.info.expireMonth
-        ) ?? null
-      );
-
-    default:
-      return null;
-  }
-};
-
-const getPaymentMethodCaption = (
-  paymentMethod: PaymentMethod | undefined
-): string | null => {
-  switch (paymentMethod?.kind) {
-    case "Bancomat":
-    case "Privative":
-    case "CreditCard":
-      return paymentMethod.caption;
-
-    case "PayPal":
-      return I18n.t("wallet.onboarding.paypal.name");
-
-    default:
-      return null;
+      return none;
   }
 };
 
@@ -328,14 +291,26 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const formattedTotal = formatNumberCentsToAmount(totalAmount, true);
   const formattedFees = formatNumberCentsToAmount(fee ?? 0, true);
 
-  const paymentMethodSubject = getPaymentMethodSubject(
+  const paymentMethodInfo = getPaymentMethodInfo(
     paymentMethod,
     props.isPaypalEnabled
   );
 
-  const paymentMethodExpiration = getPaymentMethodExpiration(paymentMethod);
+  const paymentMethodSubject = paymentMethodInfo
+    .map(({ subject }) => subject)
+    .toNullable();
 
-  const paymentMethodCaption = getPaymentMethodCaption(paymentMethod) ?? "";
+  const paymentMethodExpiration = paymentMethodInfo
+    .map(({ expiration }) => expiration)
+    .toNullable();
+
+  const paymentMethodCaption = paymentMethodInfo
+    .map(({ caption }) => caption)
+    .toNullable();
+
+  const paymentMethodLogo = paymentMethodInfo
+    .map(({ logo }) => logo)
+    .toNullable();
 
   // It should be possible to change PSP only when the user
   // is not paying using PayPal or the relative flag is
@@ -414,13 +389,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View spacer />
 
             <SelectionBox
-              logo={
-                <PaymentMethodLogo
-                  isPaypalEnabled={props.isPaypalEnabled}
-                  paymentMethod={paymentMethod}
-                />
-              }
-              mainText={paymentMethodCaption}
+              logo={paymentMethodLogo}
+              mainText={paymentMethodCaption ?? ""}
               subText={formattedSubject}
               ctaText={I18n.t("wallet.ConfirmPayment.edit")}
               onPress={props.pickPaymentMethod}
