@@ -1236,6 +1236,9 @@ wallet:
     confirmCancelPayment: Cancel this payment
     confirmContinuePayment: Continue with the payment
     cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
+    accessibility:
+      edit: "tocca per modificare"
+      transactionCosts: "{{cost}}, transazione gestita da {{psp}}"
   payWith:
     noWallets:
       title: No payment methods found

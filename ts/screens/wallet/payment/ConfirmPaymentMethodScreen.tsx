@@ -144,10 +144,9 @@ const getPaymentMethodInfo = (
   subject: string;
   expiration: string;
   caption: string;
+  accessibilityLabel: string;
 }> => {
   switch (paymentMethod?.kind) {
-    case "Bancomat":
-    case "Privative":
     case "CreditCard":
       return some({
         logo: (
@@ -162,16 +161,25 @@ const getPaymentMethodInfo = (
             paymentMethod.info.expireYear,
             paymentMethod.info.expireMonth
           ) ?? "",
-        caption: paymentMethod.caption ?? ""
+        caption: paymentMethod.caption ?? "",
+        accessibilityLabel: I18n.t("wallet.accessibility.folded.creditCard", {
+          brand: paymentMethod.info.brand,
+          blurredNumber: paymentMethod.info.blurredNumber
+        })
       });
 
     case "PayPal":
       if (isPaypalEnabled) {
+        const paypalEmail = paymentMethod.info.pspInfo[0]?.email ?? "";
+
         return some({
           logo: <BrandImage image={paypalLogoMin} scale={0.7} />,
-          subject: paymentMethod.info.pspInfo[0]?.email ?? "",
+          subject: paypalEmail,
           expiration: "",
-          caption: I18n.t("wallet.onboarding.paypal.name")
+          caption: I18n.t("wallet.onboarding.paypal.name"),
+          accessibilityLabel: `${I18n.t(
+            "wallet.onboarding.paypal.name"
+          )}, ${paypalEmail}`
         });
       } else {
         return none;
@@ -315,6 +323,10 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     .map(({ logo }) => logo)
     .getOrElse(<View />);
 
+  const paymentMethodA11yLabel = paymentMethodInfo
+    .map(({ accessibilityLabel }) => accessibilityLabel)
+    .getOrElse("");
+
   // It should be possible to change PSP only when the user
   // is not paying using PayPal or the relative flag is
   // enabled.
@@ -327,11 +339,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   // Retrieve the PSP name checking if the user is
   // paying using PayPal or another method. The PSP
   // could always be `undefined`.
-  const maybePspName = fromNullable(
+  const pspName = fromNullable(
     isPayingWithPaypal
       ? props.paypalSelectedPsp?.ragioneSociale
       : wallet.psp?.businessName
-  );
+  )
+    .map(name => `${I18n.t("wallet.ConfirmPayment.providedBy")} ${name}`)
+    .getOrElse(I18n.t("payment.noPsp"));
 
   return (
     <BaseScreenComponent
@@ -345,7 +359,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer />
 
-            <View style={styles.totalContainer}>
+            <View
+              style={styles.totalContainer}
+              accessibilityRole="header"
+              accessibilityLabel={`Totale ${formattedTotal}`}
+              accessible
+            >
               <H1>{I18n.t("wallet.ConfirmPayment.total")}</H1>
               <H1>{formattedTotal}</H1>
             </View>
@@ -361,26 +380,40 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                 }}
               />
 
-              <H3 color="bluegrey" style={styles.iconRowText}>
+              <H3
+                color="bluegrey"
+                style={styles.iconRowText}
+                accessibilityRole="header"
+              >
                 {I18n.t("wallet.ConfirmPayment.paymentInformations")}
               </H3>
             </View>
 
             <View spacer />
 
-            <H4 weight="SemiBold" color="bluegreyDark" numberOfLines={1}>
-              {paymentReason}
-            </H4>
-            <LabelSmall color="bluegrey" weight="Regular">
-              {formattedSingleAmount}
-            </LabelSmall>
+            <View
+              accessibilityLabel={`${paymentReason}, ${formattedSingleAmount}`}
+              accessible
+            >
+              <H4 weight="SemiBold" color="bluegreyDark" numberOfLines={1}>
+                {paymentReason}
+              </H4>
+
+              <LabelSmall color="bluegrey" weight="Regular">
+                {formattedSingleAmount}
+              </LabelSmall>
+            </View>
 
             <View spacer large />
 
             <View style={styles.iconRow}>
               <CardIcon width={20} height={20} />
 
-              <H3 color="bluegrey" style={styles.iconRowText}>
+              <H3
+                color="bluegrey"
+                style={styles.iconRowText}
+                accessibilityRole="header"
+              >
                 {I18n.t("wallet.ConfirmPayment.payWith")}
               </H3>
             </View>
@@ -396,6 +429,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               }
               ctaText={I18n.t("wallet.ConfirmPayment.edit")}
               onPress={props.pickPaymentMethod}
+              accessibilityLabel={`${paymentMethodA11yLabel}, ${I18n.t(
+                "wallet.ConfirmPayment.accessibility.edit"
+              )}`}
             />
 
             <View spacer large />
@@ -403,7 +439,11 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View style={styles.iconRow}>
               <TagIcon width={20} height={20} />
 
-              <H3 color="bluegrey" style={styles.iconRowText}>
+              <H3
+                color="bluegrey"
+                style={styles.iconRowText}
+                accessibilityRole="header"
+              >
                 {I18n.t("wallet.ConfirmPayment.transactionCosts")}
               </H3>
             </View>
@@ -412,16 +452,18 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <SelectionBox
               mainText={formattedFees}
-              subText={maybePspName
-                .map(
-                  name =>
-                    `${I18n.t("wallet.ConfirmPayment.providedBy")} ${name}`
-                )
-                .getOrElse(I18n.t("payment.noPsp"))}
+              subText={pspName}
               ctaText={
                 canChangePsp ? I18n.t("wallet.ConfirmPayment.edit") : undefined
               }
               onPress={canChangePsp ? handleChangePsp : undefined}
+              accessibilityLabel={`${I18n.t(
+                "wallet.ConfirmPayment.accessibility.transactionCosts",
+                {
+                  cost: formattedFees,
+                  psp: pspName
+                }
+              )}, ${I18n.t("wallet.ConfirmPayment.accessibility.edit")}`}
             />
 
             {isPayingWithPaypal && privacyUrl && (

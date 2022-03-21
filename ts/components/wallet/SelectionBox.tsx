@@ -10,6 +10,7 @@ type Props = {
   subText: string;
   ctaText?: string;
   onPress?: () => void;
+  accessibilityLabel?: string;
 };
 
 const styles = StyleSheet.create({
@@ -44,7 +45,12 @@ const styles = StyleSheet.create({
 });
 
 export const SelectionBox = (props: Props) => (
-  <TouchableOpacity disabled={!props.onPress} onPress={props.onPress}>
+  <TouchableOpacity
+    disabled={!props.onPress}
+    onPress={props.onPress}
+    accessibilityLabel={props.accessibilityLabel}
+    accessible={props.accessibilityLabel !== undefined}
+  >
     <View style={styles.selectionBox}>
       {props.logo && <View style={styles.selectionBoxIcon}>{props.logo}</View>}
 
