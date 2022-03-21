@@ -77,7 +77,7 @@ async function addTasksUrls() {
 
 async function replacePivotalStories(content) {
   // identify the pattern [#XXXXX](url) for markdown link
-  const pivotalTagRegex = /\[(#\d+)\]\(([a-zA-z:\/\.\d-@:%._\+~#=]+)\)/g;
+  const pivotalTagRegex = /\[(#\d+)\]\(([a-zA-z/\d\-@:%._+~#=]+)\)/g;
 
   // check for all the matches if is a pivotal story and update the url
   return await replaceAsync(content, pivotalTagRegex, replacePivotalUrl);
