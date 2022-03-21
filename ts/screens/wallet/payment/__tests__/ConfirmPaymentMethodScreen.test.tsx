@@ -90,7 +90,8 @@ const payPalPaymentMethod = {
   info: {
     pspInfo: [
       {
-        email: paypalEmail
+        email: paypalEmail,
+        default: true
       }
     ]
   },
