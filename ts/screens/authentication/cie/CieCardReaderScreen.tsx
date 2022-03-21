@@ -325,20 +325,20 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       case ReadingState.error:
         this.setState(
-          getTextForState(ReadingState.error, this.state.errorMessage),
+          state => getTextForState(ReadingState.error, state.errorMessage),
           this.announceUpdate
         );
         break;
       case ReadingState.completed:
         this.setState(
-          {
+          state => ({
             title: I18n.t("global.buttons.ok2"),
             subtitle: I18n.t("authentication.cie.card.cieCardValid"),
             // duplicate message so screen reader can read the updated message
-            content: this.state.isScreenReaderEnabled
+            content: state.isScreenReaderEnabled
               ? I18n.t("authentication.cie.card.cieCardValid")
               : undefined
-          },
+          }),
           this.announceUpdate
         );
         break;
