@@ -41,6 +41,7 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
+import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
@@ -106,6 +107,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
     if (pot.isNone(this.props.potVerifica)) {
       // on component mount, fetch the payment summary if we haven't already
       this.props.dispatchPaymentVerificaRequest();
+    }
+    if (!pot.isSome(this.props.walletById)) {
+      this.props.loadWallets();
     }
   }
 
@@ -410,7 +414,8 @@ const mapStateToProps = (state: GlobalState) => {
     paymentId,
     maybeFavoriteWallet,
     hasPayableMethods,
-    hasPagoPaMethods
+    hasPagoPaMethods,
+    walletById
   };
 };
 
@@ -490,6 +495,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     });
 
   return {
+    loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     navigateToWalletHome: () => navigateToWalletHome(),
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
