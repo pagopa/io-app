@@ -87,6 +87,7 @@ import TagIcon from "../../../../img/wallet/tag.svg";
 import CardIcon from "../../../../img/wallet/card.svg";
 import { SelectionBox } from "../../../components/wallet/SelectionBox";
 import { getTranslatedShortNumericMonthYear } from "../../../utils/dates";
+import { getPaypalAccountEmail } from "../../../utils/paypal";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -170,7 +171,7 @@ const getPaymentMethodInfo = (
 
     case "PayPal":
       if (isPaypalEnabled) {
-        const paypalEmail = paymentMethod.info.pspInfo[0]?.email ?? "";
+        const paypalEmail = getPaypalAccountEmail(paymentMethod.info);
 
         return some({
           logo: <BrandImage image={paypalLogoMin} scale={0.7} />,
