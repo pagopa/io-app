@@ -43,17 +43,6 @@ export const resetToAuthenticationRoute = () =>
     })
   );
 
-//   StackActions.reset({
-//     index: 0,
-//     key: null,
-//     actions: [
-//       NavigationActions.navigate({
-//         routeName: ROUTES.AUTHENTICATION
-//       })
-//     ]
-//   })
-// );
-
 /**
  * @deprecated
  */
@@ -64,18 +53,6 @@ export const navigateToMainNavigatorAction = () =>
       routes: [{ name: ROUTES.MAIN }]
     })
   );
-
-// NavigationService.dispatchNavigationAction(
-//     StackActions.reset({
-//       key: "StackRouterRoot",
-//       index: 0,
-//       actions: [
-//         NavigationActions.navigate({
-//           routeName: ROUTES.MAIN
-//         })
-//       ]
-//     })
-//   );
 
 /**
  * @deprecated
