@@ -5,9 +5,8 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce, shuffle } from "lodash";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
@@ -42,7 +41,6 @@ interface State {
   isDisabled: boolean;
   pinLength: number;
   pinPadValues: ReadonlyArray<string>;
-  scalableDimension?: ViewStyle;
 }
 
 const styles = StyleSheet.create({
@@ -56,8 +54,6 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
-
-const screenWidth = Dimensions.get("window").width;
 
 const SMALL_ICON_WIDTH = 17;
 const ICON_WIDTH = 48;
@@ -209,8 +205,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       value: "",
       isDisabled: false,
       pinLength: PIN_LENGTH,
-      pinPadValues: range(0, 9).map(s => s.toString()),
-      scalableDimension: undefined
+      pinPadValues: range(0, 9).map(s => s.toString())
     };
   }
 
@@ -226,18 +221,8 @@ class Pinpad extends React.PureComponent<Props, State> {
     const newPinPadValue =
       this.props.shufflePad !== true ? pinPadValues : shuffle(pinPadValues);
 
-    const scalableDimension: ViewStyle = {
-      width:
-        (screenWidth -
-          customVariables.spacerWidth * (pinLength - 1) -
-          customVariables.contentPadding * 2 -
-          INPUT_MARGIN * 2) /
-        pinLength
-    };
-
     this.setState({
       pinLength,
-      scalableDimension,
       pinPadValues: newPinPadValue
     });
   }
