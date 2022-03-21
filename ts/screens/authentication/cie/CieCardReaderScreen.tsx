@@ -82,8 +82,6 @@ type State = {
 type setErrorParameter = {
   eventReason: CieAuthenticationErrorReason;
   errorDescription?: string;
-  // navigationRoute?: string;
-  // navigationParams?: Record<string, unknown>;
   navigation?: () => void;
 };
 
