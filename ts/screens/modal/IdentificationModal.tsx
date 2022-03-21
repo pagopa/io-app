@@ -496,6 +496,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           accessibilityEvents={{ avoidNavigationEventsUsage: true }}
           accessibilityLabel={I18n.t("identification.title")}
           primary={!isValidatingTask}
+          showInstabugChat={choosenTool === ToolEnum.instabug}
           contextualHelpMarkdown={
             choosenTool === ToolEnum.instabug
               ? contextualHelpMarkdown
