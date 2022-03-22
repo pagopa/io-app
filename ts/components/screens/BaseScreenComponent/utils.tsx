@@ -1,68 +1,16 @@
-import { BugReporting } from "instabug-reactnative";
-
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React from "react";
-import {
-  DefaultReportAttachmentTypeConfiguration,
-  TypeLogs,
-  instabugLog,
-  openInstabugQuestionReport,
-  openInstabugReplies,
-  setInstabugDeviceIdAttribute,
-  setInstabugSupportTokenAttribute
-} from "../../../boot/configureInstabug";
 import { handleItemOnPress } from "../../../utils/url";
 import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../../ui/Markdown/handlers/link";
-import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
-import { RequestAssistancePayload } from "../../ContextualHelp";
 import { ScreenCHData } from "../../../../definitions/content/ScreenCHData";
 import { ContextualHelpData } from "../../ContextualHelp/ContextualHelpComponent";
 import Markdown from "../../ui/Markdown";
 import I18n from "../../../i18n";
 import { ContextualHelpProps, ContextualHelpPropsMarkdown } from "./index";
-
-/**
- * Run side-effects from the Instabug library based on the type of support.
- */
-export function handleOnContextualHelpDismissed(
-  payload: RequestAssistancePayload,
-  attachmentConfig: DefaultReportAttachmentTypeConfiguration
-): void {
-  const maybeSupportToken = getValueOrElse(payload.supportToken, undefined);
-  const { supportType } = payload;
-
-  switch (supportType) {
-    case BugReporting.reportType.bug: {
-      // Store/remove and log the support token only if is a new assistance request.
-      // log on instabug the support token
-      if (maybeSupportToken) {
-        instabugLog(
-          JSON.stringify(maybeSupportToken),
-          TypeLogs.INFO,
-          "support-token"
-        );
-      }
-      // set or remove the properties
-      setInstabugSupportTokenAttribute(maybeSupportToken);
-      setInstabugDeviceIdAttribute(payload.deviceUniqueId);
-
-      openInstabugQuestionReport(attachmentConfig);
-      return;
-    }
-
-    case BugReporting.reportType.question: {
-      openInstabugReplies();
-      return;
-    }
-
-    default:
-      return;
-  }
-}
 
 export const handleOnLinkClicked = (hideHelp: () => void) => (url: string) => {
   // manage links with IO_INTERNAL_LINK_PREFIX as prefix
