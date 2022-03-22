@@ -39,7 +39,7 @@ const MessagesSearch = ({
       )
     )
     // sorted from newest to oldest
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    .sort((a, b) => b.id.localeCompare(a.id, "en"));
 
   return searchResults.length > 0 ? (
     <View style={styles.listWrapper}>{renderSearchResults(searchResults)}</View>
