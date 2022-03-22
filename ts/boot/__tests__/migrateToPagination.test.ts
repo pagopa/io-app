@@ -47,7 +47,7 @@ describe("migrateToPagination module", function () {
         A: { isRead: true, isArchived: true },
         B: { isRead: true, isArchived: false },
         C: { isRead: false, isArchived: true },
-        D: { isRead: false, isArchived: false }
+        D: { isRead: false, isArchived: false } // doesn't require migration
       };
       const store = makeStore(statuses);
       const result = await migrateToPagination(store, mockUpsert);
@@ -55,7 +55,7 @@ describe("migrateToPagination module", function () {
       expect(mockUpsert).toHaveBeenCalledWith("A", statuses.A);
       expect(mockUpsert).toHaveBeenCalledWith("B", statuses.B);
       expect(mockUpsert).toHaveBeenCalledWith("C", statuses.C);
-      expect(mockUpsert).toHaveBeenCalledWith("D", statuses.D);
+      expect(mockUpsert).toHaveBeenCalledTimes(3);
       expect(store.dispatch).toHaveBeenCalledWith(
         removeMessages(Object.keys(statuses))
       );
@@ -67,7 +67,7 @@ describe("migrateToPagination module", function () {
           A: { isRead: true, isArchived: true },
           B: { isRead: true, isArchived: false },
           C: { isRead: false, isArchived: true },
-          D: { isRead: false, isArchived: false }
+          D: { isRead: false, isArchived: false } // doesn't require migration
         };
         const store = makeStore(statuses);
         const result = await migrateToPagination(
@@ -85,7 +85,7 @@ describe("migrateToPagination module", function () {
         expect(mockUpsert).toHaveBeenCalledWith("A", statuses.A);
         expect(mockUpsert).toHaveBeenCalledWith("B", statuses.B);
         expect(mockUpsert).toHaveBeenCalledWith("C", statuses.C);
-        expect(mockUpsert).toHaveBeenCalledWith("D", statuses.D);
+        expect(mockUpsert).toHaveBeenCalledTimes(3);
         expect(store.dispatch).toHaveBeenCalledWith(
           removeMessages(["A", "C", "D"])
         );

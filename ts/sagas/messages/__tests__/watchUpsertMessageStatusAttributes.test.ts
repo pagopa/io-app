@@ -13,8 +13,7 @@ const tryUpsertMessageStatusAttributes = testTryUpsertMessageStatusAttributes!;
 describe("tryUpsertMessageStatusAttributes", () => {
   const actionPayload: UpsertMessageStatusAttributesPayload = {
     id: "A",
-    update: { tag: "bulk", isArchived: true },
-    messageType: "unknown"
+    update: { tag: "bulk", isArchived: true }
   };
 
   const callPayload = {

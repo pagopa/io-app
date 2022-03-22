@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { TagEnum as TagEnumPayment } from "../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -22,7 +21,6 @@ import NavigationService from "../../../navigation/NavigationService";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
-  MessageReadType,
   reloadAllMessages,
   upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
@@ -132,12 +130,7 @@ const MessageRouterScreen = ({
 
   useOnFirstRender(() => {
     if (maybeMessage !== undefined && !maybeMessage.isRead) {
-      setMessageReadState(
-        maybeMessage.id,
-        maybeMessage.category.tag === TagEnumPayment.PAYMENT
-          ? TagEnumPayment.PAYMENT
-          : "unknown"
-      );
+      setMessageReadState(maybeMessage.id);
     }
   });
 
@@ -195,12 +188,11 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
         })
       ),
     reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter })),
-    setMessageReadState: (messageId: string, messageType: MessageReadType) =>
+    setMessageReadState: (messageId: string) =>
       dispatch(
         upsertMessageStatusAttributes.request({
           id: messageId,
-          update: { tag: "reading" },
-          messageType
+          update: { tag: "reading" }
         })
       )
   };

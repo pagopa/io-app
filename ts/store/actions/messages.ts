@@ -118,16 +118,12 @@ export const reloadAllMessages = createAsyncAction(
   MessagesFailurePayload
 >();
 
-export type MessageReadType =
-  | Extract<MessageCategory["tag"], TagEnum.PAYMENT>
-  | "unknown";
 export type UpsertMessageStatusAttributesPayload = {
   id: string;
   update:
     | { tag: "archiving"; isArchived: boolean }
     | { tag: "reading" }
     | { tag: "bulk"; isArchived: boolean };
-  messageType: MessageReadType;
 };
 export const upsertMessageStatusAttributes = createAsyncAction(
   "UPSERT_MESSAGE_STATUS_ATTRIBUTES_REQUEST",
@@ -151,6 +147,9 @@ export const DEPRECATED_loadMessages = createAsyncAction(
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
+export type MessageReadType =
+  | Extract<MessageCategory["tag"], TagEnum.PAYMENT>
+  | "unknown";
 /**
  *  @deprecated Please use actions with pagination instead
  */
