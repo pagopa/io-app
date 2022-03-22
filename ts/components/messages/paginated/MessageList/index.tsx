@@ -184,7 +184,7 @@ const MessageList = ({
     () => {
       reloadAll();
     },
-    () => shouldUseLoad
+    () => shouldUseLoad && messages.length === 0
   );
 
   useEffect(() => {
