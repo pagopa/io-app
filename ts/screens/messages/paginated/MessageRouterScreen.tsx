@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { TagEnum as TagEnumPayment } from "../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
