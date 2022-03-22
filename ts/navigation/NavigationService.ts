@@ -6,7 +6,6 @@ import {
   NavigationParams,
   NavigationState
 } from "react-navigation";
-import { instabugLog, TypeLogs } from "../boot/configureInstabug";
 import { mixpanelTrack } from "../mixpanel";
 import {
   getCurrentRoute as utilsGetCurrentRoute,
@@ -23,11 +22,6 @@ const withLogging =
   <A extends Array<unknown>, R>(f: (...a: A) => R) =>
   (...args: A): R => {
     if (navigator === null || navigator === undefined) {
-      instabugLog(
-        `call to NavigationService.${f.name} but navigator is ${navigator}`,
-        TypeLogs.ERROR,
-        "NavigationService"
-      );
       void mixpanelTrack("NAVIGATION_SERVICE_NAVIGATOR_UNDEFINED", {
         method: f.name
       });
@@ -39,13 +33,6 @@ const setTopLevelNavigator = (
   navigatorRef: NavigationContainerComponent | null | undefined
 ) => {
   // TODO: remove when the bug is confirmed as solved
-  instabugLog(
-    `Initialize setTopLevelNavigator with argument ${
-      navigator !== null && navigator !== undefined
-    }`,
-    TypeLogs.DEBUG,
-    "NavigationService"
-  );
   navigator = navigatorRef;
 };
 

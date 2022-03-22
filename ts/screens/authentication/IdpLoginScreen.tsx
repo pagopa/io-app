@@ -12,7 +12,6 @@ import {
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
-import { TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -158,7 +157,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
     );
 
-    handleSendAssistanceLog(this.choosenTool, logText, TypeLogs.ERROR, "login");
+    handleSendAssistanceLog(this.choosenTool, logText);
     if (this.choosenTool === ToolEnum.instabug) {
       Instabug.appendTags([loginFailureTag]);
     }
@@ -169,12 +168,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    handleSendAssistanceLog(
-      this.choosenTool,
-      `login success`,
-      TypeLogs.DEBUG,
-      "login"
-    );
+    handleSendAssistanceLog(this.choosenTool, `login success`);
     if (this.choosenTool === ToolEnum.instabug) {
       Instabug.resetTags();
     }
