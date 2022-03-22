@@ -1,8 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import {
-  CompatNavigationProp,
-  NavigationEvents
-} from "@react-navigation/compat";
+import { NavigationEvents } from "@react-navigation/compat";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
@@ -25,7 +22,7 @@ import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
@@ -48,13 +45,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MainTabParamsList, "PROFILE_MAIN">
-  >;
-};
-
-type Props = OwnProps &
+type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -309,33 +300,24 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             <ListItemComponent
               title={"MyPortal Web Playground"}
               onPress={() =>
-                navigation.navigate({
-                  routeName: ROUTES.PROFILE_NAVIGATOR,
-                  params: {
-                    screen: ROUTES.WEB_PLAYGROUND
-                  }
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.WEB_PLAYGROUND
                 })
               }
             />
             <ListItemComponent
               title={"Markdown Playground"}
               onPress={() =>
-                navigation.navigate({
-                  routeName: ROUTES.PROFILE_NAVIGATOR,
-                  params: {
-                    screen: ROUTES.MARKDOWN_PLAYGROUND
-                  }
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.MARKDOWN_PLAYGROUND
                 })
               }
             />
             <ListItemComponent
               title={"CGN LandingPage Playground"}
               onPress={() =>
-                navigation.navigate({
-                  routeName: ROUTES.PROFILE_NAVIGATOR,
-                  params: {
-                    screen: ROUTES.CGN_LANDING_PLAYGROUND
-                  }
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.CGN_LANDING_PLAYGROUND
                 })
               }
             />
@@ -346,11 +328,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         <ListItemComponent
           title={I18n.t("profile.main.showroom")}
           onPress={() =>
-            navigation.navigate({
-              routeName: ROUTES.PROFILE_NAVIGATOR,
-              params: {
-                screen: ROUTES.SHOWROOM
-              }
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.SHOWROOM
             })
           }
           isFirstItem={true}
@@ -480,11 +459,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             title={I18n.t("profile.main.data.title")}
             subTitle={I18n.t("profile.main.data.description")}
             onPress={() =>
-              navigation.navigate({
-                routeName: ROUTES.PROFILE_NAVIGATOR,
-                params: {
-                  screen: ROUTES.PROFILE_DATA
-                }
+              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                screen: ROUTES.PROFILE_DATA
               })
             }
             isFirstItem
@@ -495,11 +471,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             title={I18n.t("profile.main.preferences.title")}
             subTitle={I18n.t("profile.main.preferences.description")}
             onPress={() =>
-              navigation.navigate({
-                routeName: ROUTES.PROFILE_NAVIGATOR,
-                params: {
-                  screen: ROUTES.PROFILE_PREFERENCES_HOME
-                }
+              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                screen: ROUTES.PROFILE_PREFERENCES_HOME
               })
             }
           />
@@ -509,11 +482,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             title={I18n.t("profile.main.security.title")}
             subTitle={I18n.t("profile.main.security.description")}
             onPress={() =>
-              navigation.navigate({
-                routeName: ROUTES.PROFILE_NAVIGATOR,
-                params: {
-                  screen: ROUTES.PROFILE_SECURITY
-                }
+              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                screen: ROUTES.PROFILE_SECURITY
               })
             }
           />
@@ -523,11 +493,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             title={I18n.t("profile.main.privacy.title")}
             subTitle={I18n.t("profile.main.privacy.description")}
             onPress={() =>
-              navigation.navigate({
-                routeName: ROUTES.PROFILE_NAVIGATOR,
-                params: {
-                  screen: ROUTES.PROFILE_PRIVACY_MAIN
-                }
+              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                screen: ROUTES.PROFILE_PRIVACY_MAIN
               })
             }
           />
@@ -579,11 +546,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           <TouchableDefaultOpacity
             accessibilityRole={"button"}
             onPress={() =>
-              this.props.navigation.navigate({
-                routeName: ROUTES.PROFILE_NAVIGATOR,
-                params: {
-                  screen: ROUTES.PROFILE_FISCAL_CODE
-                }
+              this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                screen: ROUTES.PROFILE_FISCAL_CODE
               })
             }
           >
