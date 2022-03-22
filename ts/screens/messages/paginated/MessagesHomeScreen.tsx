@@ -175,7 +175,6 @@ const MessagesHomeScreen = ({
                 messages={searchMessages}
                 searchText={_}
                 renderSearchResults={results => (
-                  // TODO: filter may happen down the line
                   <MessageList
                     filter={{}}
                     filteredMessages={results}
