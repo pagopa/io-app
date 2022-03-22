@@ -5,11 +5,12 @@ import { Tab, Tabs } from "native-base";
 import React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
+
+import { createSelector } from "reselect";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
-
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -23,6 +24,10 @@ import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList"
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import ROUTES from "../../../navigation/routes";
 import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
+import {
+  allArchiveMessagesSelector,
+  allInboxMessagesSelector
+} from "../../../store/reducers/entities/messages/allPaginated";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import {
   isSearchMessagesEnabledSelector,
@@ -114,7 +119,8 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
 const MessagesHomeScreen = ({
   isSearchEnabled,
   messageSectionStatusActive,
-  searchText
+  searchText,
+  searchMessages
 }: Props) => {
   const navigation = useNavigation();
 
@@ -170,12 +176,11 @@ const MessagesHomeScreen = ({
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
               <MessagesSearch
-                messages={[]}
+                messages={searchMessages}
                 searchText={_}
                 renderSearchResults={results => (
-                  // TODO: filter may happen down the line
                   <MessageList
-                    filter={{ getArchived: false }}
+                    filter={{}}
                     filteredMessages={results}
                     onPressItem={navigateToMessageDetail}
                   />
@@ -194,7 +199,11 @@ const MessagesHomeScreen = ({
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
-  searchText: searchTextSelector(state)
+  searchText: searchTextSelector(state),
+  searchMessages: createSelector(
+    [allInboxMessagesSelector, allArchiveMessagesSelector],
+    (inbox, archive) => inbox.concat(archive)
+  )(state)
 });
 
 export default connect(mapStateToProps, undefined)(MessagesHomeScreen);
