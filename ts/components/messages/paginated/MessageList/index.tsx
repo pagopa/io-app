@@ -42,6 +42,7 @@ import { showToast } from "../../../../utils/showToast";
 import { isIos } from "../../../../utils/platform";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import { isNoticePaid } from "../../../../store/reducers/entities/payments";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   AnimatedFlatList,
   EmptyComponent,
@@ -165,6 +166,9 @@ const MessageList = ({
   previousCursor,
   reloadAll
 }: Props) => {
+  // when filteredMessage is defined, this component is used
+  // in search, so loading data on demand should be prevented
+  const shouldUseLoad = filteredMessages === undefined;
   const messages = filteredMessages ?? allMessages;
 
   const flatListRef: React.RefObject<FlatList> = useRef(null);
@@ -174,9 +178,12 @@ const MessageList = ({
 
   const [isFirstLoad, setIsFirstLoad] = useState(isIos);
 
-  useEffect(() => {
-    reloadAll();
-  }, [reloadAll]);
+  useOnFirstRender(
+    () => {
+      reloadAll();
+    },
+    () => shouldUseLoad && messages.length === 0
+  );
 
   useEffect(() => {
     if (error) {
@@ -211,12 +218,12 @@ const MessageList = ({
   };
 
   const onEndReached = () => {
-    if (nextCursor && !isLoadingMore) {
+    if (shouldUseLoad && nextCursor && !isLoadingMore) {
       loadNextPage(nextCursor);
     }
   };
 
-  const refreshControl = (
+  const refreshControl = shouldUseLoad ? (
     <RefreshControl
       refreshing={isRefreshing}
       onRefresh={() => {
@@ -234,7 +241,7 @@ const MessageList = ({
         }
       }}
     />
-  );
+  ) : undefined;
 
   const renderListFooter = () => {
     if (isLoadingMore || isReloadingAll) {
