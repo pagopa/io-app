@@ -24,9 +24,9 @@ export const defaultRequestError = {
 
 const timeToLive = 3600 as unknown as TimeToLiveSeconds;
 
-export const messageId_1 = "FAT00001" as UIMessageId;
+export const messageId_1 = "PMT00003" as UIMessageId;
 export const messageId_2 = "PMT00002" as UIMessageId;
-export const messageId_3 = "PMT00003" as UIMessageId;
+export const messageId_3 = "FAT00001" as UIMessageId;
 export const serviceId_1 = "service_one" as ServiceId;
 export const serviceId_2 = "service_two" as ServiceId;
 
