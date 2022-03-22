@@ -354,6 +354,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       headerTitle={I18n.t("wallet.ConfirmPayment.header")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["payment"]}
+      backButtonTestID="cancelPaymentButton"
     >
       <SafeAreaView style={styles.flex}>
         <Content noPadded={true}>
