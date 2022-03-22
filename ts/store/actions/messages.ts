@@ -119,9 +119,6 @@ export const reloadAllMessages = createAsyncAction(
   MessagesFailurePayload
 >();
 
-export type MessageReadType =
-  | Extract<MessageCategory["tag"], TagEnum.PAYMENT>
-  | "unknown";
 export type UpsertMessageStatusAttributesPayload = {
   id: string;
   update:
