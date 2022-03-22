@@ -31,6 +31,7 @@ const allowedScope = new Map<string, string>([
   ["accessibility", "Accessibility"],
   ["bpd", "Bonus Pagamenti Digitali"],
   ["cgn", "Carta Giovani Nazionale"],
+  ["fims", "Federated Identity Management System"],
   ["myportal", "MyPortal"]
 ]);
 
@@ -45,7 +46,8 @@ const projectToScope = new Map<string, string>([
   ["IAGP", "EU Covid Certificate"],
   ["IARS", "Redesign Servizi"],
   ["ASZ", "Zendesk"],
-  ["IAMVL", "Messaggi a valore legale"]
+  ["IAMVL", "Messaggi a valore legale"],
+  ["IAFIMS", "Federated Identity Management System"]
 ]);
 
 const cleanChangelogRegex =
