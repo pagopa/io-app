@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0-rc.3](https://github.com/pagopa/io-app/compare/2.5.0-rc.2...2.5.0-rc.3) (2022-03-15)
+
+
+### Bug Fixes
+
+* [[IA-733](https://pagopa.atlassian.net/browse/IA-733)] The email client is not open when the user denies consent to share information [#3837](https://github.com/pagopa/io-app/issues/3837) ([7705668](https://github.com/pagopa/io-app/commit/77056686d5a0a76adf7621e4a2aae2ba074888a7))
+
+
+### Chores
+
+* [[IA-142](https://pagopa.atlassian.net/browse/IA-142)] Update ToS screen during onboarding ([#3826](https://github.com/pagopa/io-app/issues/3826)) ([ca6cac7](https://github.com/pagopa/io-app/commit/ca6cac7290fd222a69e163fd3fb75652fdc033ff))
+* [[IA-730](https://pagopa.atlassian.net/browse/IA-730)] Copy update CGN ([#3830](https://github.com/pagopa/io-app/issues/3830)) ([0339629](https://github.com/pagopa/io-app/commit/0339629133fe8324b6f4657bae2f5119dc364751))
+* add publiccode.yml validation in CI ([#3831](https://github.com/pagopa/io-app/issues/3831)) ([803e382](https://github.com/pagopa/io-app/commit/803e38230073e6db044fe3e7df0cc488750cc95c))
+
 ## [2.5.0-rc.2](https://github.com/pagopa/io-app/compare/2.5.0-rc.1...2.5.0-rc.2) (2022-03-11)
 
 
