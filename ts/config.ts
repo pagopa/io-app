@@ -93,6 +93,9 @@ export const bpdOptInPaymentMethodsEnabled =
 // Ukraine donation
 export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
 
+// FIMS (Federated Identity Management System) Feature Flag
+export const fimsEnabled = Config.FIMS_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 
