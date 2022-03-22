@@ -79,7 +79,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
       <React.Fragment>
         {this.props.avoidNavigationEvents !== true && (
           <NavigationEvents
-            onDidFocus={() => setAccessibilityFocus(this.elementRef)}
+            onWillFocus={() => setAccessibilityFocus(this.elementRef)}
           />
         )}
         <Content

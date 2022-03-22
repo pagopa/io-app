@@ -32,7 +32,7 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
       contextualHelp={emptyContextualHelp}
       shouldAskForScreenshotWithInitialValue={false}
     >
-      <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
+      <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
         testID={"BaseEuCovidCertificateLayout"}

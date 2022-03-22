@@ -57,7 +57,7 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
 
   return (
     <View style={styles.main} testID="InfoScreenComponent">
-      <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
+      <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
       <View spacer={true} large={true} />
       <H2

@@ -93,7 +93,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
  * A HOC to display the WrappedComponent when the email is validated, otherwise the RemindEmailValidationOverlay will be displayed
  *
  * TODO: fix workaround introduced to solve bug on navigation during the onboarding (https://github.com/react-navigation/react-navigation/issues/4867)
- *       If the didFocus and the blur related events are not fired, at forward navigation the hideModal is dispatched manually
+ *       If the willFocus and the blur related events are not fired, at forward navigation the hideModal is dispatched manually
  */
 export function withValidatedEmail<P>(
   WrappedComponent: React.ComponentType<P>

@@ -279,7 +279,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         {fromNullable(this.props.accessibilityEvents).fold(
           true,
           ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
-        ) && <NavigationEvents onDidFocus={this.handleFocus} />}
+        ) && <NavigationEvents onWillFocus={this.handleFocus} />}
       </Right>
     );
   };
