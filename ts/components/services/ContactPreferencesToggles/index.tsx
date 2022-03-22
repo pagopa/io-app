@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -70,9 +70,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
     [serviceId, loadServicePreference]
   );
 
-  const nav = useNavigation();
-
-  const isFocused = nav?.isFocused();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     loadPreferences();
