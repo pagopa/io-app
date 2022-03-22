@@ -667,14 +667,6 @@ wallet:
     onUpdateWalletPspFailure: Vorgang ist fehlgeschlagen, bitte erneut versuchen
     contextualHelpTitle: Wählen Sie einen Provider
   ConfirmPayment:
-    header: Checkout
-    total: Total
-    paymentInformations: Payment informations
-    payWith: Pay with
-    transactionCosts: Transaction costs
-    edit: Edit
-    providedBy: Provided by
-    pay: Pay
     cancelPayment: Transaktion abbrechen
     fee: Gebühr
     identificationMessage: Bestätigen Sie die Transaktion mit Ihrem Freischaltcode
