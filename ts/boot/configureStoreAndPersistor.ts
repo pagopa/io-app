@@ -43,8 +43,19 @@ import {
   InstallationState
 } from "../store/reducers/installation";
 import { usePaginatedMessages } from "../config";
+import { messagesStatusSelector } from "../store/reducers/entities/messages/messagesStatus";
+import {
+  DEPRECATED_setMessageReadState,
+  DEPRECATED_setMessagesArchivedState,
+  migrateToPaginatedMessages
+} from "../store/actions/messages";
 import { configureReactotron } from "./configureRectotron";
-import migrateToPagination from "./migrateToPagination";
+import {
+  allArchiveMessagesSelector,
+  allArchiveSelector,
+  allInboxMessagesSelector,
+  allInboxSelector
+} from "../store/reducers/entities/messages/allPaginated";
 
 /**
  * Redux persist will migrate the store to the current version
@@ -401,22 +412,6 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
 
   // Run the main saga
   sagaMiddleware.run(rootSaga);
-
-  // Handle migration of non-paginated messages
-  if (usePaginatedMessages) {
-    migrateToPagination(store, _ => Promise.reject("not implemented"))
-      .then(migrationResult => {
-        // eslint-disable-next-line sonarjs/no-all-duplicated-branches
-        if (migrationResult.failed.length < 1) {
-          // TODO: migration is done, fetch messages
-        } else {
-          // TODO: migration failed for some messages, we should probably restart it?
-        }
-      })
-      .catch(() => {
-        // TODO: migration went south for some horrible reason.
-      });
-  }
 
   return { store, persistor };
 }

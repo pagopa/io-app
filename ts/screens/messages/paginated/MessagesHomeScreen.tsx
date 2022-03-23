@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
@@ -37,8 +37,22 @@ import { makeFontStyleObject } from "../../../theme/fonts";
 import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 import {
   allArchiveMessagesSelector,
-  allInboxMessagesSelector
+  allInboxMessagesSelector,
+  allPaginatedSelector,
+  MigrationStatus
 } from "../../../store/reducers/entities/messages/allPaginated";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import _ from "lodash";
+import {
+  DEPRECATED_setMessageReadState,
+  DEPRECATED_setMessagesArchivedState,
+  migrateToPaginatedMessages
+} from "../../../store/actions/messages";
+import {
+  MessagesStatus,
+  messagesStatusSelector
+} from "../../../store/reducers/entities/messages/messagesStatus";
+import { H2 } from "../../../components/core/typography/H2";
 
 type Props = NavigationStackScreenProps & ReturnType<typeof mapStateToProps>;
 
@@ -107,16 +121,76 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
   </View>
 );
 
+const MigratingMessage = ({ status }: { status: MigrationStatus }) => (
+  <TopScreenComponent
+    accessibilityLabel={I18n.t("messages.contentTitle")}
+    contextualHelpMarkdown={contextualHelpMarkdown}
+    faqCategories={["messages"]}
+    headerTitle={I18n.t("messages.contentTitle")}
+    isSearchAvailable={{ enabled: true, searchType: "Messages" }}
+    appLogo={true}
+  >
+    <FocusAwareStatusBar
+      barStyle={"dark-content"}
+      backgroundColor={customVariables.colorWhite}
+    />
+    {status.fold(
+      <View>
+        <H2>updating stuff</H2>
+      </View>,
+      ongoing => {
+        // eslint-disable-next-line no-underscore-dangle
+        switch (ongoing._tag) {
+          case "failed":
+            return <H2>Migrato un bel cazzo</H2>;
+          case "succeeded":
+            return <H2>Migrato con successo!</H2>;
+          case "started":
+            return <H2>Stiamo migrando, coglione</H2>;
+          default:
+            return <H2>the famous WTF moment</H2>;
+        }
+      }
+    )}
+  </TopScreenComponent>
+);
+
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
  */
 const MessagesHomeScreen = ({
   isSearchEnabled,
   messageSectionStatusActive,
+  searchMessages,
   searchText,
-  searchMessages
+
+  // migration
+  inbox,
+  messagesStatus,
+  migrateMessages,
+  migrationStatus
 }: Props) => {
   const navigation = useContext(NavigationContext);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     _.shuffle(inbox)
+  //       .slice(0, inbox.length)
+  //       .forEach(message => {
+  //         console.log(message.id);
+  //         dispatch(DEPRECATED_setMessageReadState(message.id, true, "unknown"));
+  //         dispatch(DEPRECATED_setMessagesArchivedState([message.id], true));
+  //       });
+  //   }, 5000);
+  // }, [inbox]);
+
+  const needsMigration = Object.keys(messagesStatus).length > 0;
+
+  useOnFirstRender(() => {
+    if (needsMigration) {
+      migrateMessages(messagesStatus);
+    }
+  });
 
   const navigateToMessageDetail = (message: UIMessage) => {
     navigation.dispatch(
@@ -161,7 +235,11 @@ const MessagesHomeScreen = ({
             title={I18n.t("messages.contentTitle")}
             iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
           />
-          <AllTabs navigateToMessageDetail={navigateToMessageDetail} />
+          {needsMigration ? (
+            <MigratingMessage status={migrationStatus} />
+          ) : (
+            <AllTabs navigateToMessageDetail={navigateToMessageDetail} />
+          )}
         </React.Fragment>
       )}
 
@@ -199,7 +277,16 @@ const mapStateToProps = (state: GlobalState) => ({
   searchMessages: createSelector(
     [allInboxMessagesSelector, allArchiveMessagesSelector],
     (inbox, archive) => inbox.concat(archive)
-  )(state)
+  )(state),
+
+  // TEMP
+  inbox: allInboxMessagesSelector(state),
+  messagesStatus: messagesStatusSelector(state),
+  migrationStatus: allPaginatedSelector(state).migration
 });
 
-export default connect(mapStateToProps, undefined)(MessagesHomeScreen);
+export default connect(mapStateToProps, dispatch => ({
+  migrateMessages: (messageStatus: MessagesStatus) => {
+    dispatch(migrateToPaginatedMessages.request(messageStatus));
+  }
+}))(MessagesHomeScreen);

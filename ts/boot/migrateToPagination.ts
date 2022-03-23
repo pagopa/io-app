@@ -1,11 +1,7 @@
 import * as Either from "fp-ts/lib/Either";
 
-import {
-  messagesStatusSelector,
-  MessageStatus
-} from "../store/reducers/entities/messages/messagesStatus";
-import { Store } from "../store/actions/types";
-import { removeMessages } from "../store/actions/messages";
+import { MessageStatus } from "../store/reducers/entities/messages/messagesStatus";
+import { readablePrivacyReport } from "../utils/reporters";
 
 type Failure = {
   error: unknown;
@@ -18,33 +14,31 @@ type MigrationResult = {
 };
 
 export default async function init(
-  store: Store,
-  upsert: (id: string, messageStatus: MessageStatus) => Promise<void>
+  messageAttributes: Array<{
+    id: string;
+    isRead: boolean;
+    isArchived: boolean;
+  }>,
+  upsert: (id: string, messageStatus: MessageStatus) => Promise<unknown>
 ): Promise<MigrationResult> {
-  const data = messagesStatusSelector(store.getState());
-  const allIds = Object.keys(data);
-  if (allIds.length < 1) {
-    return { failed: [], succeeded: [] };
-  }
-  // TODO: dispatch to show the loader
-
-  const requests: Array<Promise<Either.Either<Failure, string>>> = allIds.map(
-    async id => {
-      const messageStatus = data[id];
+  const requests: Array<Promise<Either.Either<Failure, string>>> =
+    messageAttributes.map(async ({ id, isArchived, isRead }) => {
       // we only migrate non-default updates
-      const needsMigration = messageStatus?.isRead || messageStatus?.isArchived;
-      if (messageStatus && needsMigration) {
+      const needsMigration = isRead || isArchived;
+      if (needsMigration) {
         try {
-          await upsert(id, messageStatus);
+          await upsert(id, { isArchived, isRead });
           return Either.right<Failure, string>(id);
         } catch (error) {
-          return Either.left<Failure, string>({ error, messageId: id });
+          return Either.left<Failure, string>({
+            error: readablePrivacyReport(error),
+            messageId: id
+          });
         }
       } else {
         return Either.right<Failure, string>(id);
       }
-    }
-  );
+    });
 
   return Promise.all(requests).then(results => {
     const migrationResult: MigrationResult = { failed: [], succeeded: [] };
@@ -60,7 +54,7 @@ export default async function init(
         }
       );
     });
-    store.dispatch(removeMessages(migrationResult.succeeded));
+    // store.dispatch(removeMessages(migrationResult.succeeded));
     return migrationResult;
   });
 
