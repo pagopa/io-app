@@ -486,7 +486,7 @@ workflows:
   version: 2
   build:
     jobs:
-#      - compile-typescript
+      - compile-typescript
 #      - run-tests
 #      - run-eslint
 #      - run-prettier
@@ -499,8 +499,8 @@ workflows:
       # TODO: Native Android e2e tests
       # TODO: Slack integration
       - run-e2e-test-IOS:
-#          requires:
-#            - compile-typescript
+          requires:
+            - compile-typescript
 #          filters:
 #            branches:
 #              only: master
