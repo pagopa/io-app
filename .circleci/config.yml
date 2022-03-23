@@ -410,6 +410,9 @@ jobs:
       - run:
           name: Configure Bundler
           command: |
+            brew uninstall node yarn
+            nvm install 14.17.4
+            npm install -g yarn
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
@@ -441,9 +444,7 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: |
-            unset PREFIX
-            RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release EXCLUDED_ARCHS=arm64
+          command: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release EXCLUDED_ARCHS=arm64
 
       - run:
           name: Run E2E tests with io-dev-api server
