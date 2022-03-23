@@ -76,7 +76,7 @@ const reducer = (
       };
     }
     case getType(removeMessages):
-      const idsToRemove = action.payload;
+      const idsToRemove = []; // action.payload;
       return Object.keys(state).reduce<MessagesStatus>(
         (acc: MessagesStatus, curr: string) => {
           if (idsToRemove.indexOf(curr) !== -1) {

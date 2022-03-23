@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
@@ -117,6 +117,40 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
       </Tab>
     </AnimatedTabs>
   </View>
+);
+
+const MigratingMessage = ({ status }: { status: MigrationStatus }) => (
+  <TopScreenComponent
+    accessibilityLabel={I18n.t("messages.contentTitle")}
+    contextualHelpMarkdown={contextualHelpMarkdown}
+    faqCategories={["messages"]}
+    headerTitle={I18n.t("messages.contentTitle")}
+    isSearchAvailable={{ enabled: true, searchType: "Messages" }}
+    appLogo={true}
+  >
+    <FocusAwareStatusBar
+      barStyle={"dark-content"}
+      backgroundColor={customVariables.colorWhite}
+    />
+    {status.fold(
+      <View>
+        <H2>updating stuff</H2>
+      </View>,
+      ongoing => {
+        // eslint-disable-next-line no-underscore-dangle
+        switch (ongoing._tag) {
+          case "failed":
+            return <H2>Migrato un bel cazzo</H2>;
+          case "succeeded":
+            return <H2>Migrato con successo!</H2>;
+          case "started":
+            return <H2>Stiamo migrando, coglione</H2>;
+          default:
+            return <H2>the famous WTF moment</H2>;
+        }
+      }
+    )}
+  </TopScreenComponent>
 );
 
 /**
