@@ -1,5 +1,6 @@
 import ZendDesk from "io-react-native-zendesk";
 import { fromNullable } from "fp-ts/lib/Option";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
@@ -61,6 +62,7 @@ export const resetAssistanceData = ZendDesk.reset;
 export const addTicketCustomField = ZendDesk.addTicketCustomField;
 export const appendLog = ZendDesk.appendLog;
 export const hasOpenedTickets = ZendDesk.hasOpenedTickets;
+export const getTotalNewResponses = ZendDesk.getTotalNewResponses;
 export const addTicketTag = ZendDesk.addTicketTag;
 /**
  * Only iOS: close the current Zendesk UI (ticket creation or tickets list)
@@ -84,6 +86,14 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
     "en-EN": "Payment method"
   }
 };
+// Check if the user has new messages every 30 minutes (in milliseconds)
+export const unreadTicketsCountRefreshRate: Millisecond = (30 *
+  60 *
+  1000) as Millisecond;
+
+// Check if the user has new messages every 2 seconds (in milliseconds) while the support is open
+export const unreadTicketsCountRefreshRateWhileSupportIsOpen: Millisecond = (2 *
+  1000) as Millisecond;
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
@@ -112,3 +122,14 @@ export const handleSendAssistanceLog = (
       appendLog(log);
   }
 };
+
+// Given a token return a valid configuration for Zendesk
+export const getIdentityByToken = (
+  token: string | undefined
+): JwtIdentity | AnonymousIdentity =>
+  fromNullable(token).fold(
+    {},
+    (zT: string): JwtIdentity | AnonymousIdentity => ({
+      token: zT
+    })
+  );

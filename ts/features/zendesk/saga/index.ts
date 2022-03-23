@@ -1,5 +1,5 @@
 // watch for all actions regarding Zendesk
-import { takeLatest } from "typed-redux-saga/macro";
+import { takeLatest, fork } from "typed-redux-saga/macro";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber,
@@ -11,6 +11,7 @@ import { identificationRequest } from "../../../store/actions/identification";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
 import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
+import { handleGetTotalNewResponses } from "./networking/handleGetTotalNewResponses";
 
 export function* watchZendeskSupportSaga() {
   const contentClient = ContentClient();
@@ -29,4 +30,5 @@ export function* watchZendeskSupportSaga() {
   yield* takeLatest(identificationRequest, () => {
     dismissSupport();
   });
+  yield* fork(handleGetTotalNewResponses);
 }

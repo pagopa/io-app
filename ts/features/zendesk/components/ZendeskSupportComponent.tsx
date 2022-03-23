@@ -27,7 +27,8 @@ import {
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import {
   zendeskRequestTicketNumber,
-  zendeskSupportCompleted
+  zendeskSupportCompleted,
+  zendeskSupportOpened
 } from "../store/actions";
 import I18n from "../../../i18n";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -38,7 +39,7 @@ import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
 } from "../store/reducers";
-import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import { H3 } from "../../../components/core/typography/H3";
 import { mixpanelTrack } from "../../../mixpanel";
 
@@ -125,7 +126,7 @@ const ZendeskSupportComponent = (props: Props) => {
 
   // If the user opened at least at ticket show the "Show tickets" button
   const showAlreadyOpenedTicketButton: boolean =
-    getValueOrElse(ticketsNumber, 0) > 0;
+    pot.getOrElse(ticketsNumber, 0) > 0;
 
   return (
     <>
@@ -158,6 +159,7 @@ const ZendeskSupportComponent = (props: Props) => {
             onPress={() => {
               void mixpanelTrack("ZENDESK_SHOW_TICKETS");
               showSupportTickets();
+              dispatch(zendeskSupportOpened());
               workUnitCompleted();
             }}
             style={{

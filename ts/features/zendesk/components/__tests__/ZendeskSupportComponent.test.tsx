@@ -24,6 +24,7 @@ import {
 import * as zendeskNavigation from "../../store/actions/navigation";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import { getNetworkError } from "../../../../utils/errors";
+import * as zendeskAction from "../../store/actions";
 
 const mockPublicSession: PublicSession = {
   bpdToken: "bpdToken",
@@ -72,7 +73,6 @@ describe("the ZendeskSupportComponent", () => {
       });
     });
   });
-
   describe("when the user press the zendesk open ticket button", () => {
     const navigateToZendeskAskPermissionsSpy = jest.spyOn(
       zendeskNavigation,
@@ -153,13 +153,18 @@ describe("the ZendeskSupportComponent", () => {
   });
   describe("when the user press the zendesk show tickets button", () => {
     describe("if the user already open a ticket", () => {
-      it("should call showTickets", () => {
+      it("should call showTickets function and dispatch the zendeskSupportOpened action", () => {
+        const zendeskSupportOpenedSpy = jest.spyOn(
+          zendeskAction,
+          "zendeskSupportOpened"
+        );
         const store = createStore(appReducer, globalState as any);
         const component = renderComponent(store, false);
         store.dispatch(zendeskRequestTicketNumber.success(1));
         const zendeskButton = component.getByTestId("showTicketsButton");
         fireEvent(zendeskButton, "onPress");
         expect(MockZendesk.showTickets).toBeCalledWith();
+        expect(zendeskSupportOpenedSpy).toBeCalled();
       });
     });
   });

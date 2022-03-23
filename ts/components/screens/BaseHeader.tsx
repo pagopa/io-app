@@ -17,14 +17,12 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
-import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import I18n from "../../i18n";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { assistanceToolRemoteConfig } from "../../utils/supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import ChatsComponent from "../ChatsComponent";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -233,15 +231,10 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       onShowHelp,
       isSearchAvailable,
       showInstabugChat,
-      customRightIcon,
-      assistanceToolConfig
+      customRightIcon
     } = this.props;
 
-    const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-    const hasInstabugChat =
-      !isSearchEnabled &&
-      showInstabugChat !== false &&
-      choosenTool === ToolEnum.instabug;
+    const shouldShowChat = !isSearchEnabled && showInstabugChat !== false;
 
     return (
       <Right>
@@ -251,7 +244,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onSearchTap={isSearchAvailable.onSearchTap}
           />
         )}
-        {hasInstabugChat && <InstabugChatsComponent />}
+        {shouldShowChat && <ChatsComponent />}
 
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
@@ -274,7 +267,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         {!customRightIcon &&
           !isSearchAvailable &&
           !onShowHelp &&
-          !hasInstabugChat && <ButtonDefaultOpacity transparent={true} />}
+          !shouldShowChat && <ButtonDefaultOpacity transparent={true} />}
 
         {fromNullable(this.props.accessibilityEvents).fold(
           true,

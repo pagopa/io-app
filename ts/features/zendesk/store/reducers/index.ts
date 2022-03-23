@@ -1,5 +1,6 @@
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
+import * as pot from "italia-ts-commons/lib/pot";
 import { IndexedById, toIndexed } from "../../../../store/helpers/indexer";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import {
@@ -13,6 +14,7 @@ import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
 import {
   getZendeskConfig,
+  zendeskGetTotalNewResponses,
   zendeskRequestTicketNumber,
   zendeskSelectedCategory,
   zendeskSelectedSubcategory,
@@ -34,12 +36,14 @@ export type ZendeskState = {
   zendeskConfig: ZendeskConfig;
   selectedCategory?: ZendeskCategory;
   selectedSubcategory?: ZendeskSubCategory;
-  ticketNumber: RemoteValue<number, Error>;
+  ticketNumber: pot.Pot<number, Error>;
+  totalNewResponses: RemoteValue<number, Error>;
 };
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: remoteUndefined
+  ticketNumber: pot.none,
+  totalNewResponses: remoteUndefined
 };
 
 const reducer = (
@@ -85,11 +89,20 @@ const reducer = (
     case getType(zendeskSelectedSubcategory):
       return { ...state, selectedSubcategory: action.payload };
     case getType(zendeskRequestTicketNumber.request):
-      return { ...state, ticketNumber: remoteLoading };
+      return { ...state, ticketNumber: pot.toLoading(state.ticketNumber) };
     case getType(zendeskRequestTicketNumber.success):
-      return { ...state, ticketNumber: remoteReady(action.payload) };
+      return { ...state, ticketNumber: pot.some(action.payload) };
     case getType(zendeskRequestTicketNumber.failure):
-      return { ...state, ticketNumber: remoteError(action.payload) };
+      return {
+        ...state,
+        ticketNumber: pot.toError(state.ticketNumber, action.payload)
+      };
+    case getType(zendeskGetTotalNewResponses.request):
+      return { ...state, totalNewResponses: remoteLoading };
+    case getType(zendeskGetTotalNewResponses.success):
+      return { ...state, totalNewResponses: remoteReady(action.payload) };
+    case getType(zendeskGetTotalNewResponses.failure):
+      return { ...state, totalNewResponses: remoteError(action.payload) };
   }
   return state;
 };
@@ -113,8 +126,12 @@ export const zendeskSelectedSubcategorySelector = createSelector(
 
 export const zendeskTicketNumberSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.ticketNumber],
-  (ticketNumber: RemoteValue<number, Error>): RemoteValue<number, Error> =>
-    ticketNumber
+  (ticketNumber: pot.Pot<number, Error>): pot.Pot<number, Error> => ticketNumber
+);
+export const zendeskTotalNewResponseSelector = createSelector(
+  [(state: GlobalState) => state.assistanceTools.zendesk.totalNewResponses],
+  (newResponseNumber: RemoteValue<number, Error>): RemoteValue<number, Error> =>
+    newResponseNumber
 );
 
 export default reducer;
