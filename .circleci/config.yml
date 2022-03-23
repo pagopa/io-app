@@ -441,9 +441,7 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: |
-            which node
-            RN_SRC_EXT=e2e.ts NODE_BINARY=path yarn detox build -c ios.sim.release
+          command: RN_SRC_EXT=e2e.ts NODE_BINARY=$(which node) yarn detox build -c ios.sim.release
 
       - run:
           name: Run E2E tests with io-dev-api server
