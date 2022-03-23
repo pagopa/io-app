@@ -94,6 +94,7 @@ function tryMigration(putMessages: LocalBeClient) {
 
       yield* put(removeMessages(succeeded.concat(bogus)));
 
+      console.log("failed ", failed);
       if (failed.length === 0) {
         yield* put(migrateToPaginatedMessages.success(succeeded.length));
       } else {
