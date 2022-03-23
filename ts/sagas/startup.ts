@@ -86,6 +86,7 @@ import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
 import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
 import watchReloadAllMessages from "./messages/watchReloadAllMessages";
+import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStatusAttribues";
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
@@ -491,6 +492,10 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
     yield* fork(watchReloadAllMessages, backendClient.getMessages);
     yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+    yield* fork(
+      watchUpsertMessageStatusAttribues,
+      backendClient.upsertMessageStatusAttributes
+    );
   }
 
   // Load a message when requested
