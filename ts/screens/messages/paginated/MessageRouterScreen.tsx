@@ -21,7 +21,8 @@ import NavigationService from "../../../navigation/NavigationService";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
-  reloadAllMessages
+  reloadAllMessages,
+  upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
 import {
   navigateBack,
@@ -42,6 +43,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../utils/pot";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -97,7 +99,8 @@ const MessageRouterScreen = ({
   reloadPage,
   maybeMessage,
   maybeMessageDetails,
-  messageId
+  messageId,
+  setMessageReadState
 }: Props): React.ReactElement => {
   const navigation = useNavigationContext();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
@@ -124,6 +127,12 @@ const MessageRouterScreen = ({
     loadPreviousPage,
     reloadPage
   ]);
+
+  useOnFirstRender(() => {
+    if (maybeMessage !== undefined && !maybeMessage.isRead) {
+      setMessageReadState(maybeMessage.id);
+    }
+  });
 
   useEffect(() => {
     // message in the list and its details loaded: green light
@@ -178,7 +187,14 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
           filter
         })
       ),
-    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter }))
+    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter })),
+    setMessageReadState: (messageId: string) =>
+      dispatch(
+        upsertMessageStatusAttributes.request({
+          id: messageId,
+          update: { tag: "reading" }
+        })
+      )
   };
 };
 
