@@ -410,8 +410,11 @@ jobs:
       - run: 
           name: Setting up the Node environment
           command: |
+            brew uninstall node yarn
             nvm install 14.17.4 && nvm alias default 14.17.4
-            ln -s $(which node) /usr/local/bin/node
+            npm install -g yarn
+            echo 'export NODE_BINARY=$(which node)' >> $BASH_ENV
+            source $BASH_ENV
 
       - run:
           name: Configure Bundler
