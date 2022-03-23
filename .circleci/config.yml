@@ -40,7 +40,7 @@ defaults_android: &defaults_android
 defaults_macos: &defaults_macos
   <<: *defaults
   macos:
-    xcode: "13.3.0"
+    xcode: "12.5.1"
   resource_class: macos.x86.medium.gen2
   working_directory: /Users/distiller/italia-app
   environment:
@@ -407,6 +407,12 @@ jobs:
           keys:
             - *ios_gems_cache_key
 
+      - run: 
+        name: Setting up the Node environment
+        command: |
+          nvm install 14.17.4 && nvm alias default 14.17.4
+          ln -s $(which node) /usr/local/bin/node
+
       - run:
           name: Configure Bundler
           command: |
@@ -481,23 +487,23 @@ workflows:
   build:
     jobs:
       - compile-typescript
-      - run-tests
-      - run-eslint
-      - run-prettier
+#      - run-tests
+#      - run-eslint
+#      - run-prettier
 
-      - run-danger:
-          filters:
-            branches:
-              ignore: master
+#      - run-danger:
+#          filters:
+#            branches:
+#              ignore: master
 
       # TODO: Native Android e2e tests
       # TODO: Slack integration
       - run-e2e-test-IOS:
           requires:
             - compile-typescript
-          filters:
-            branches:
-              only: master
+#          filters:
+#            branches:
+#              only: master
 
   # Release workflow triggered only when a new release tag is pushed
   release:
