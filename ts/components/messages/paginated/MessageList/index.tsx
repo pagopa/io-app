@@ -42,7 +42,6 @@ import { showToast } from "../../../../utils/showToast";
 import { isIos } from "../../../../utils/platform";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import { isNoticePaid } from "../../../../store/reducers/entities/payments";
-import { getMessageStatus } from "../../../../store/reducers/entities/messages/messagesStatus";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   AnimatedFlatList,
@@ -158,7 +157,6 @@ const MessageList = ({
   // extracted from the store
   allMessages,
   error,
-  getMessageStatus,
   isLoadingMore,
   isRefreshing,
   isReloadingAll,
@@ -279,7 +277,6 @@ const MessageList = ({
         refreshing={isRefreshing}
         renderItem={renderItem({
           hasPaidBadge,
-          getMessageStatus,
           onLongPress,
           onPress: onPressItem,
           selectedMessageIds
@@ -323,7 +320,6 @@ const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
 
   return {
     allMessages,
-    getMessageStatus: (id: string) => getMessageStatus(state, id),
     error,
     hasPaidBadge: (category: UIMessage["category"]) =>
       isNoticePaid(state, category),

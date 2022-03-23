@@ -6,7 +6,8 @@ import { createSelector } from "reselect";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
-  reloadAllMessages
+  reloadAllMessages,
+  upsertMessageStatusAttributes
 } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
@@ -63,6 +64,11 @@ const reducer = (
     case getType(loadPreviousPageMessages.success):
     case getType(loadPreviousPageMessages.failure):
       return reduceLoadPreviousPage(state, action);
+
+    case getType(upsertMessageStatusAttributes.request):
+    case getType(upsertMessageStatusAttributes.success):
+    case getType(upsertMessageStatusAttributes.failure):
+      return reduceUpsertMessageStatusAttributes(state, action);
 
     case getType(clearCache):
       return INITIAL_STATE;
@@ -301,6 +307,75 @@ const reduceLoadPreviousPage = (
       return state;
   }
 };
+
+/**
+ * Implements an optimistic UI by updating the state at request time and rolling back the updates
+ * in case of failure.
+ *
+ *   TODO: https://pagopa.atlassian.net/browse/IA-681
+ *   1 - identify the direction
+ *   2 - move to the right collection
+ *   3 - verify sorting
+ *
+ * @param state
+ * @param action
+ */
+const reduceUpsertMessageStatusAttributes = (
+  state: AllPaginated = INITIAL_STATE,
+  action: Action
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+): AllPaginated => {
+  switch (action.type) {
+    case getType(upsertMessageStatusAttributes.request): {
+      const message = findOneById(action.payload.id, state);
+      if (message) {
+        const { update } = action.payload;
+        if (update.tag === "bulk" || update.tag === "reading") {
+          // We only update TRUE for is_read state
+          // eslint-disable-next-line functional/immutable-data
+          message.isRead = true;
+        }
+        if (update.tag === "bulk" || update.tag === "archiving") {
+          // eslint-disable-next-line functional/immutable-data
+          message.isArchived = update.isArchived;
+          // TODO: move to Archive
+        }
+      }
+      return { ...state };
+    }
+
+    case getType(upsertMessageStatusAttributes.failure): {
+      const message = findOneById(action.payload.payload.id, state);
+      if (message) {
+        const { update } = action.payload.payload;
+        if (update.tag === "bulk" || update.tag === "reading") {
+          // We only update TRUE for is_read state
+          // eslint-disable-next-line functional/immutable-data
+          message.isRead = false;
+        }
+        if (update.tag === "bulk" || update.tag === "archiving") {
+          // eslint-disable-next-line functional/immutable-data
+          message.isArchived = !update.isArchived;
+          // TODO: move to Archive
+        }
+      }
+      return { ...state };
+    }
+
+    case getType(upsertMessageStatusAttributes.success):
+      return state;
+    default:
+      return state;
+  }
+};
+
+const findOneById = (id: string, state: AllPaginated): UIMessage | undefined =>
+  pot.toUndefined(
+    pot.map(state.inbox.data, inbox => inbox.page.find(_ => _.id === id))
+  ) ||
+  pot.toUndefined(
+    pot.map(state.archive.data, archive => archive.page.find(_ => _.id === id))
+  );
 
 // Selectors
 

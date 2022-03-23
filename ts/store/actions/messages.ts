@@ -118,6 +118,23 @@ export const reloadAllMessages = createAsyncAction(
   MessagesFailurePayload
 >();
 
+export type UpsertMessageStatusAttributesPayload = {
+  id: string;
+  update:
+    | { tag: "archiving"; isArchived: boolean }
+    | { tag: "reading" }
+    | { tag: "bulk"; isArchived: boolean };
+};
+export const upsertMessageStatusAttributes = createAsyncAction(
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_REQUEST",
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_SUCCESS",
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_FAILURE"
+)<
+  UpsertMessageStatusAttributesPayload,
+  UpsertMessageStatusAttributesPayload,
+  { error: Error; payload: UpsertMessageStatusAttributesPayload }
+>();
+
 /**
  *  @deprecated Please use actions with pagination instead
  */
@@ -133,13 +150,19 @@ export const removeMessages =
 export type MessageReadType =
   | Extract<MessageCategory["tag"], TagEnum.PAYMENT>
   | "unknown";
-export const setMessageReadState = createAction(
+/**
+ *  @deprecated Please use actions with pagination instead
+ */
+export const DEPRECATED_setMessageReadState = createAction(
   "MESSAGES_SET_READ",
   resolve => (id: string, read: boolean, messageType: MessageReadType) =>
     resolve({ id, read, messageType }, { id, read })
 );
 
-export const setMessagesArchivedState = createAction(
+/**
+ *  @deprecated Please use actions with pagination instead
+ */
+export const DEPRECATED_setMessagesArchivedState = createAction(
   "MESSAGES_SET_ARCHIVED",
   resolve => (ids: ReadonlyArray<string>, archived: boolean) =>
     resolve({ ids, archived })
@@ -154,5 +177,6 @@ export type MessagesActions =
   | ActionType<typeof loadMessageDetails>
   | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
-  | ActionType<typeof setMessageReadState>
-  | ActionType<typeof setMessagesArchivedState>;
+  | ActionType<typeof DEPRECATED_setMessageReadState>
+  | ActionType<typeof upsertMessageStatusAttributes>
+  | ActionType<typeof DEPRECATED_setMessagesArchivedState>;
