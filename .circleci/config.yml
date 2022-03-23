@@ -40,7 +40,7 @@ defaults_android: &defaults_android
 defaults_macos: &defaults_macos
   <<: *defaults
   macos:
-    xcode: "13.0.0"
+    xcode: "13.3.0"
   resource_class: macos.x86.medium.gen2
   working_directory: /Users/distiller/italia-app
   environment:
@@ -495,9 +495,12 @@ workflows:
       - run-e2e-test-IOS:
           requires:
             - compile-typescript
-#          filters:
-#            branches:
-#              only: master
+          filters:
+            branches:
+              only: master
+      - ios-beta-release:
+          requires:
+            - compile-typescript
 
   # Release workflow triggered only when a new release tag is pushed
   release:
