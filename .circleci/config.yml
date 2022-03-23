@@ -13,7 +13,7 @@ android_sdk_cache_key: &android_sdk_cache_key v1-android-sdkmanager-packages-{{ 
 
 android_jars_cache_key: &android_jars_cache_key jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
 
-ios_gems_cache_key: &ios_gems_cache_key ruby-v1-{{ checksum "Gemfile.lock" }}
+ios_gems_cache_key: &ios_gems_cache_key ruby-{{ checksum "Gemfile.lock" }}
 
 release_tag: &release_tag /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
 
@@ -441,7 +441,7 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: RN_SRC_EXT=e2e.ts NODE_BINARY=$(which node) yarn detox build -c ios.sim.release
+          command: RN_SRC_EXT=e2e.ts EXCLUDED_ARCHS=arm64 yarn detox build -c ios.sim.release
 
       - run:
           name: Run E2E tests with io-dev-api server
