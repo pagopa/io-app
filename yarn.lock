@@ -12891,9 +12891,10 @@ react-native-fingerprint-scanner@^6.0.0:
   resolved "https://registry.yarnpkg.com/react-native-fingerprint-scanner/-/react-native-fingerprint-scanner-6.0.0.tgz#ecb47ad0682d2a66a5e126d2b9e4d95e73c8dbf2"
   integrity sha512-8VoKSA0Z0kWnIni96yABZfUUzfmWFXQEXcELwWr1CNLloPt3WoPptYb/6pGsBcH0YxSsW3X4+C8tl0clgyBsvA==
 
-"react-native-flag-secure-android@git://github.com/pagopa/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795":
-  version "1.0.0"
-  resolved "git://github.com/pagopa/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795"
+react-native-flag-secure-android@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-flag-secure-android/-/react-native-flag-secure-android-1.0.3.tgz#0e86b24836c68ff38f75d43774bf475ae6f70793"
+  integrity sha512-vbwTUVFAAqzcTlmqt09ykfzBsSTXKQOIW87eg9pQkgVuqkO4Vo9kX7JMs3nE2GF+xlrr7tCaDYf+jKQmgOVMdQ==
 
 react-native-flipper@^0.103.0:
   version "0.103.0"

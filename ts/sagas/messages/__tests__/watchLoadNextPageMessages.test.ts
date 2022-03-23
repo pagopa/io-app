@@ -6,18 +6,18 @@ import { loadNextPageMessages as action } from "../../../store/actions/messages"
 import { testTryLoadNextPageMessages } from "../watchLoadNextPageMessages";
 import {
   apiPayload,
+  defaultRequestPayload,
   successLoadNextPageMessagesPayload
 } from "../../../__mocks__/messages";
 
 const tryLoadNextPageMessages = testTryLoadNextPageMessages!;
 
-const defaultPageSize = 8;
-
 describe("tryLoadNextPageMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
-    page_size: defaultPageSize,
-    maximum_id: undefined
+    page_size: defaultRequestPayload.pageSize,
+    maximum_id: undefined,
+    get_archived: defaultRequestPayload.filter.getArchived
   };
 
   describe("when the response is successful", () => {
@@ -27,7 +27,7 @@ describe("tryLoadNextPageMessages", () => {
       const getMessages = jest.fn();
       testSaga(
         tryLoadNextPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
@@ -43,12 +43,17 @@ describe("tryLoadNextPageMessages", () => {
       const getMessages = jest.fn();
       testSaga(
         tryLoadNextPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
         .next(right({ status: 500, value: { title: "Backend error" } }))
-        .put(action.failure(Error("Backend error")))
+        .put(
+          action.failure({
+            error: new Error("Backend error"),
+            filter: defaultRequestPayload.filter
+          })
+        )
         .next()
         .isDone();
     });
@@ -61,13 +66,16 @@ describe("tryLoadNextPageMessages", () => {
       };
       testSaga(
         tryLoadNextPageMessages(getMessages),
-        action.request({ pageSize: defaultPageSize })
+        action.request(defaultRequestPayload)
       )
         .next()
         .call(getMessages, getMessagesPayload)
         .next()
         .put(
-          action.failure(TypeError("Cannot read property 'fold' of undefined"))
+          action.failure({
+            error: new TypeError("Cannot read property 'fold' of undefined"),
+            filter: defaultRequestPayload.filter
+          })
         )
         .next()
         .isDone();

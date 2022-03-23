@@ -78,6 +78,7 @@ import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { PspData } from "../../../../definitions/pagopa/PspData";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 
 export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -256,7 +257,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     );
   };
 
-  const formData = {};
+  const formData = props.payStartWebviewPayload
+    .map<Record<string, string | number>>(payload => ({
+      ...payload,
+      ...getLookUpIdPO()
+    }))
+    .getOrElse({});
   const paymentMethod = props.getPaymentMethodById(wallet.idWallet);
   const ispaymentMethodCreditCard =
     paymentMethod !== undefined && isCreditCard(paymentMethod);

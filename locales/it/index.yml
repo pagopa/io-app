@@ -787,7 +787,8 @@ onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
-    headerTitle: Attivazione
+    headerTitle: Configura IO
+    contentTitle: Informativa Privacy e Termini e Condizioni d’uso
     accept: Accetta
     error: Errore nel caricamento
     alert:
@@ -953,6 +954,7 @@ wallet:
       bankNotAvailable: "nome banca non disponibile"
     addElement: Aggiungi elemento al portafoglio
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
+    cardHolder: Intestatario carta
     transactionListItem:
       payment:
         read: Transazione
@@ -1824,7 +1826,7 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   fiscalCode: "C.F. Ente"
-  fiscalCodeAccessibility: "Codice fiscale Ente" 
+  fiscalCodeAccessibility: "Codice fiscale Ente"
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
@@ -2564,8 +2566,8 @@ bonus:
         suggestedOption: Consigliato
         options:
           keepAll:
-            title: Mantieni tutti i metodi nel Portafoglio 
-            body: Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento. 
+            title: Mantieni tutti i metodi nel Portafoglio
+            body: Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento.
           deleteAll:
             title: Elimina tutti i metodi dal Portafoglio
             body: Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
@@ -3024,6 +3026,9 @@ features:
   uaDonations:
     webViewScreen:
       headerTitle: Donazione
+      errors:
+        data:
+          buttonTitle: Torna indietro
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3066,6 +3071,8 @@ support:
     cta:
       allow: "Consenti"
       denies: "Non consentire"
+    toast:
+      emailClientNotFound: "Per ricevere assistenza scrivici a: {{emailAddress}}"
   chooseCategory:
     header: "Scrivici"
     title:

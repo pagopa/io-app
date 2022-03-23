@@ -21,7 +21,8 @@ import NavigationService from "../../../navigation/NavigationService";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
-  reloadAllMessages
+  reloadAllMessages,
+  upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
 import {
   navigateBack,
@@ -42,9 +43,11 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../utils/pot";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
+  isArchived: boolean;
 };
 
 type OwnProps =
@@ -84,6 +87,10 @@ const navigateToScreenHandler =
     }
   };
 
+/**
+ * Component for the message details.
+ * Handle routing based on message type and reload if necessary.
+ */
 const MessageRouterScreen = ({
   cancel,
   cursors,
@@ -92,7 +99,8 @@ const MessageRouterScreen = ({
   reloadPage,
   maybeMessage,
   maybeMessageDetails,
-  messageId
+  messageId,
+  setMessageReadState
 }: Props): React.ReactElement => {
   const navigation = useNavigationContext();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
@@ -119,6 +127,12 @@ const MessageRouterScreen = ({
     loadPreviousPage,
     reloadPage
   ]);
+
+  useOnFirstRender(() => {
+    if (maybeMessage !== undefined && !maybeMessage.isRead) {
+      setMessageReadState(maybeMessage.id);
+    }
+  });
 
   useEffect(() => {
     // message in the list and its details loaded: green light
@@ -156,27 +170,42 @@ const MessageRouterScreen = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => navigateBack(),
-  loadMessageDetails: (id: UIMessageId) => {
-    dispatch(loadMessageDetails.request({ id }));
-  },
-  loadPreviousPage: (cursor?: Cursor) =>
-    dispatch(
-      loadPreviousPageMessages.request({
-        cursor,
-        pageSize: maximumItemsFromAPI
-      })
-    ),
-  reloadPage: () => dispatch(reloadAllMessages.request({ pageSize }))
-});
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
+  const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
+  const filter = { getArchived: isArchived };
+
+  return {
+    cancel: () => navigateBack(),
+    loadMessageDetails: (id: UIMessageId) => {
+      dispatch(loadMessageDetails.request({ id }));
+    },
+    loadPreviousPage: (cursor?: Cursor) =>
+      dispatch(
+        loadPreviousPageMessages.request({
+          cursor,
+          pageSize: maximumItemsFromAPI,
+          filter
+        })
+      ),
+    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter })),
+    setMessageReadState: (messageId: string) =>
+      dispatch(
+        upsertMessageStatusAttributes.request({
+          id: messageId,
+          update: { tag: "reading" }
+        })
+      )
+  };
+};
+
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
+  const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
   const maybeMessage = allPaginated.getById(state, messageId);
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
-  const cursors = getCursors(state);
+  const { archive, inbox } = getCursors(state);
   return {
-    cursors,
+    cursors: isArchived ? archive : inbox,
     maybeMessage,
     maybeMessageDetails,
     messageId

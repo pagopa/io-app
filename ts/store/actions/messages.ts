@@ -44,6 +44,13 @@ export const DEPRECATED_loadMessage = createAsyncAction(
   { id: string; error: Error }
 >();
 
+export type Filter = { getArchived?: boolean };
+// generic error used by all pagination actions
+export type MessagesFailurePayload = {
+  error: Error;
+  filter: Filter;
+};
+
 /**
  * Load a single message's details given its ID, and the sender service
  * if needed.
@@ -52,37 +59,50 @@ export const loadMessageWithRelations = createAsyncAction(
   "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
   "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS",
   "MESSAGE_WITH_RELATIONS_LOAD_FAILURE"
-)<CreatedMessageWithoutContent, void, Error>();
+)<CreatedMessageWithoutContent, void, MessagesFailurePayload>();
 
 export type LoadMessagesRequestPayload = {
   pageSize: number;
   cursor?: Cursor;
+  filter: Filter;
 };
 
 type PaginatedMessagesSuccessPayload = {
   messages: ReadonlyArray<UIMessage>;
+  filter: Filter;
 };
 
 // The data is appended to the state
 export type NextPageMessagesSuccessPayload = PaginatedMessagesSuccessPayload & {
   pagination: { next?: string };
+  filter: Filter;
 };
 export const loadNextPageMessages = createAsyncAction(
   "MESSAGES_LOAD_NEXT_PAGE_REQUEST",
   "MESSAGES_LOAD_NEXT_PAGE_SUCCESS",
   "MESSAGES_LOAD_NEXT_PAGE_FAILURE"
-)<LoadMessagesRequestPayload, NextPageMessagesSuccessPayload, Error>();
+)<
+  LoadMessagesRequestPayload,
+  NextPageMessagesSuccessPayload,
+  MessagesFailurePayload
+>();
 
 // The data is prepended to the state
 export type PreviousPageMessagesSuccessPayload =
   PaginatedMessagesSuccessPayload & {
     pagination: { previous?: string };
+    filter: Filter;
   };
+
 export const loadPreviousPageMessages = createAsyncAction(
   "MESSAGES_LOAD_PREVIOUS_PAGE_REQUEST",
   "MESSAGES_LOAD_PREVIOUS_PAGE_SUCCESS",
   "MESSAGES_LOAD_PREVIOUS_PAGE_FAILURE"
-)<LoadMessagesRequestPayload, PreviousPageMessagesSuccessPayload, Error>();
+)<
+  LoadMessagesRequestPayload,
+  PreviousPageMessagesSuccessPayload,
+  MessagesFailurePayload
+>();
 
 // Forces a refresh of the internal state
 export type ReloadMessagesPayload = PaginatedMessagesSuccessPayload & {
@@ -92,7 +112,28 @@ export const reloadAllMessages = createAsyncAction(
   "MESSAGES_RELOAD_REQUEST",
   "MESSAGES_RELOAD_SUCCESS",
   "MESSAGES_RELOAD_FAILURE"
-)<Pick<LoadMessagesRequestPayload, "pageSize">, ReloadMessagesPayload, Error>();
+)<
+  Pick<LoadMessagesRequestPayload, "pageSize" | "filter">,
+  ReloadMessagesPayload,
+  MessagesFailurePayload
+>();
+
+export type UpsertMessageStatusAttributesPayload = {
+  id: string;
+  update:
+    | { tag: "archiving"; isArchived: boolean }
+    | { tag: "reading" }
+    | { tag: "bulk"; isArchived: boolean };
+};
+export const upsertMessageStatusAttributes = createAsyncAction(
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_REQUEST",
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_SUCCESS",
+  "UPSERT_MESSAGE_STATUS_ATTRIBUTES_FAILURE"
+)<
+  UpsertMessageStatusAttributesPayload,
+  UpsertMessageStatusAttributesPayload,
+  { error: Error; payload: UpsertMessageStatusAttributesPayload }
+>();
 
 /**
  *  @deprecated Please use actions with pagination instead
@@ -109,13 +150,19 @@ export const removeMessages =
 export type MessageReadType =
   | Extract<MessageCategory["tag"], TagEnum.PAYMENT>
   | "unknown";
-export const setMessageReadState = createAction(
+/**
+ *  @deprecated Please use actions with pagination instead
+ */
+export const DEPRECATED_setMessageReadState = createAction(
   "MESSAGES_SET_READ",
   resolve => (id: string, read: boolean, messageType: MessageReadType) =>
     resolve({ id, read, messageType }, { id, read })
 );
 
-export const setMessagesArchivedState = createAction(
+/**
+ *  @deprecated Please use actions with pagination instead
+ */
+export const DEPRECATED_setMessagesArchivedState = createAction(
   "MESSAGES_SET_ARCHIVED",
   resolve => (ids: ReadonlyArray<string>, archived: boolean) =>
     resolve({ ids, archived })
@@ -130,5 +177,6 @@ export type MessagesActions =
   | ActionType<typeof loadMessageDetails>
   | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
-  | ActionType<typeof setMessageReadState>
-  | ActionType<typeof setMessagesArchivedState>;
+  | ActionType<typeof DEPRECATED_setMessageReadState>
+  | ActionType<typeof upsertMessageStatusAttributes>
+  | ActionType<typeof DEPRECATED_setMessagesArchivedState>;
