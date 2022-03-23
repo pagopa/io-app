@@ -408,10 +408,10 @@ jobs:
             - *ios_gems_cache_key
 
       - run: 
-        name: Setting up the Node environment
-        command: |
-          nvm install 14.17.4 && nvm alias default 14.17.4
-          ln -s $(which node) /usr/local/bin/node
+          name: Setting up the Node environment
+          command: |
+            nvm install 14.17.4 && nvm alias default 14.17.4
+            ln -s $(which node) /usr/local/bin/node
 
       - run:
           name: Configure Bundler
