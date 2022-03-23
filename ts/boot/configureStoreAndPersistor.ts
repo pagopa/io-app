@@ -42,20 +42,7 @@ import {
   INSTALLATION_INITIAL_STATE,
   InstallationState
 } from "../store/reducers/installation";
-import { usePaginatedMessages } from "../config";
-import { messagesStatusSelector } from "../store/reducers/entities/messages/messagesStatus";
-import {
-  DEPRECATED_setMessageReadState,
-  DEPRECATED_setMessagesArchivedState,
-  migrateToPaginatedMessages
-} from "../store/actions/messages";
 import { configureReactotron } from "./configureRectotron";
-import {
-  allArchiveMessagesSelector,
-  allArchiveSelector,
-  allInboxMessagesSelector,
-  allInboxSelector
-} from "../store/reducers/entities/messages/allPaginated";
 
 /**
  * Redux persist will migrate the store to the current version
