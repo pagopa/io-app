@@ -441,7 +441,9 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release EXCLUDED_ARCHS=arm64
+          command: |
+            unset PREFIX
+            RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release EXCLUDED_ARCHS=arm64
 
       - run:
           name: Run E2E tests with io-dev-api server
