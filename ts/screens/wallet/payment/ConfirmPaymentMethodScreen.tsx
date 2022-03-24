@@ -366,7 +366,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View
               style={styles.totalContainer}
               accessibilityRole="header"
-              accessibilityLabel={`Totale ${formattedTotal}`}
+              accessibilityLabel={`${I18n.t(
+                "wallet.ConfirmPayment.total"
+              )} ${formattedTotal}`}
               accessible
             >
               <H1>{I18n.t("wallet.ConfirmPayment.total")}</H1>
