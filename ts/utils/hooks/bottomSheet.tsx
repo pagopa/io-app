@@ -3,6 +3,7 @@ import { ComponentProps } from "react";
 import { BottomSheetModal, useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { Dimensions } from "react-native";
 import { View } from "native-base";
+import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetContent } from "../../components/bottomSheet/BottomSheetContent";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
@@ -82,7 +83,7 @@ export const useIOBottomSheet = (
 
   const bottomSheet = (
     <BottomSheetModal
-      footerComponent={props =>
+      footerComponent={(props: BottomSheetFooterProps) =>
         footer !== undefined ? (
           <>
             {footer(props)}
