@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 type Props = {
   allMessagesIDs: Array<string>;
   navigateToMessageDetail: (message: UIMessage) => void;
+  archiveMessages: (messages: ReadonlySet<string>) => void;
 };
 
 /**
@@ -30,14 +31,20 @@ type Props = {
  *
  * @param allMessagesIDs used for handling messages selection
  * @param navigateToMessageDetail
+ * @param archiveMessages a function called when the user taps on the archive CTA
  * @constructor
  */
-const MessagesInbox = ({ allMessagesIDs, navigateToMessageDetail }: Props) => {
+const MessagesInbox = ({
+  allMessagesIDs,
+  navigateToMessageDetail,
+  archiveMessages
+}: Props) => {
   const { selectedItems, onPressItem, onLongPressItem, MessageSelectionBar } =
     useMessagesSelection(
       allMessagesIDs,
       navigateToMessageDetail,
-      I18n.t("messages.cta.archive")
+      I18n.t("messages.cta.archive"),
+      archiveMessages
     );
 
   const ListEmptyComponent = () => (

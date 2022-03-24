@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { NavigationContext } from "react-navigation";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Animated, Platform, StyleSheet, View } from "react-native";
 import { Tab, Tabs } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -39,6 +39,7 @@ import {
   allArchiveMessagesSelector,
   allInboxMessagesSelector
 } from "../../../store/reducers/entities/messages/allPaginated";
+import { upsertMessageStatusAttributes } from "../../../store/actions/messages";
 
 type Props = NavigationStackScreenProps & ReturnType<typeof mapStateToProps>;
 
@@ -79,12 +80,14 @@ type AllTabsProps = {
   navigateToMessageDetail: (message: UIMessage) => void;
   allInboxMessagesIDs: Array<string>;
   allArchiveMessagesIDs: Array<string>;
+  setArchived: (isArchived: boolean, messageIDs: ReadonlySet<string>) => void;
 };
 
 const AllTabs = ({
   navigateToMessageDetail,
   allInboxMessagesIDs,
-  allArchiveMessagesIDs
+  allArchiveMessagesIDs,
+  setArchived
 }: AllTabsProps) => (
   <View style={IOStyles.flex}>
     <AnimatedTabs
@@ -102,6 +105,7 @@ const AllTabs = ({
         <MessagesInbox
           allMessagesIDs={allInboxMessagesIDs}
           navigateToMessageDetail={navigateToMessageDetail}
+          archiveMessages={messages => setArchived(true, messages)}
         />
       </Tab>
 
@@ -113,6 +117,7 @@ const AllTabs = ({
         <MessagesArchive
           allMessagesIDs={allArchiveMessagesIDs}
           navigateToMessageDetail={navigateToMessageDetail}
+          unarchiveMessages={messages => setArchived(false, messages)}
         />
       </Tab>
     </AnimatedTabs>
@@ -140,6 +145,18 @@ const MessagesHomeScreen = ({
       })
     );
   };
+
+  const dispatch = useDispatch();
+
+  const setArchived = (isArchived: boolean, messageIDs: ReadonlySet<string>) =>
+    messageIDs.forEach(id =>
+      dispatch(
+        upsertMessageStatusAttributes.request({
+          id,
+          update: { tag: "archiving", isArchived }
+        })
+      )
+    );
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
@@ -179,6 +196,7 @@ const MessagesHomeScreen = ({
             allInboxMessagesIDs={allInboxMessagesIDs}
             allArchiveMessagesIDs={allArchiveMessagesIDs}
             navigateToMessageDetail={navigateToMessageDetail}
+            setArchived={setArchived}
           />
         </React.Fragment>
       )}

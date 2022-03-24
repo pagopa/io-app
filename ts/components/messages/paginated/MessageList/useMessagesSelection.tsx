@@ -6,7 +6,8 @@ import ListSelectionBar from "../../../ListSelectionBar";
 export const useMessagesSelection = (
   allMessagesIDs: Array<string>,
   navigateToMessageDetail: (message: UIMessage) => void,
-  primaryButtonText: string
+  primaryActionText: string,
+  primaryAction: (selectedItems: ReadonlySet<string>) => void
 ) => {
   const { selectedItems, toggleItem, setAllItems, resetSelection } =
     useItemsSelection();
@@ -40,10 +41,12 @@ export const useMessagesSelection = (
       <ListSelectionBar
         selectedItems={selectedItemsCount}
         totalItems={allItemsCount}
-        onToggleSelection={() => undefined}
+        onToggleSelection={() =>
+          primaryAction(selectedItems.getOrElse(new Set()))
+        }
         onToggleAllSelection={onToggleAllSelection}
         onResetSelection={resetSelection}
-        primaryButtonText={primaryButtonText}
+        primaryButtonText={primaryActionText}
       />
     ) : null;
 
