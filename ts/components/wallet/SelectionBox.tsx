@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 0,
     flexBasis: "auto",
-    paddingRight: 24
+    paddingRight: 16
   },
 
   selectionBoxContent: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 0,
     flexBasis: "auto",
-    paddingLeft: 24
+    paddingLeft: 16
   }
 });
 

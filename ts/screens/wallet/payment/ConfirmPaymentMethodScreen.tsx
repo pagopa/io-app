@@ -20,7 +20,7 @@ import {
   isLoading,
   isReady
 } from "../../../features/bonus/bpd/model/RemoteValue";
-import paypalLogoMin from "../../../../img/wallet/cards-icons/paypal_card.png";
+import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import I18n from "../../../i18n";
 import {
   navigateToPaymentOutcomeCode,
@@ -137,16 +137,18 @@ const payUrlSuffix = "/v3/webview/transactions/pay";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 
-const getPaymentMethodInfo = (
-  paymentMethod: PaymentMethod | undefined,
-  isPaypalEnabled: boolean
-): Option<{
+type ComputedPaymentMethodInfo = {
   logo: JSX.Element;
   subject: string;
   expiration: string;
   caption: string;
   accessibilityLabel: string;
-}> => {
+};
+
+const getPaymentMethodInfo = (
+  paymentMethod: PaymentMethod | undefined,
+  isPaypalEnabled: boolean
+): Option<ComputedPaymentMethodInfo> => {
   switch (paymentMethod?.kind) {
     case "CreditCard":
       return some({
@@ -174,7 +176,7 @@ const getPaymentMethodInfo = (
         const paypalEmail = getPaypalAccountEmail(paymentMethod.info);
 
         return some({
-          logo: <BrandImage image={paypalLogoMin} scale={0.7} />,
+          logo: <PaypalLogo width={24} height={24} />,
           subject: paypalEmail,
           expiration: "",
           caption: I18n.t("wallet.onboarding.paypal.name"),
