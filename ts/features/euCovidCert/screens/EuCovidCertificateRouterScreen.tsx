@@ -4,8 +4,9 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { usePaginatedMessages } from "../../../config";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { setMessageReadState } from "../../../store/actions/messages";
+import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
 import { GlobalState } from "../../../store/reducers/types";
 import { EUCovidCertParamsList } from "../navigation/params";
 import { euCovidCertificateGet } from "../store/actions";
@@ -110,8 +111,10 @@ const EuCovidCertificateRouterScreen = (
 
   useEffect(() => {
     if (firstLoading.current) {
-      // At the first rendering, set the message to read
-      setMessageRead(messageId);
+      if (!usePaginatedMessages) {
+        // TODO: remove once we publish pagination
+        setMessageRead(messageId);
+      }
       // check if a load is required
       if (shouldBeLoaded(authCode)) {
         loadCertificate(authCode);
@@ -157,7 +160,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCertificate: (authCode: EUCovidCertificateAuthCode) =>
     dispatch(euCovidCertificateGet.request(authCode)),
   setMessageRead: (messageId: string) =>
-    dispatch(setMessageReadState(messageId, true, "unknown"))
+    dispatch(DEPRECATED_setMessageReadState(messageId, true, "unknown"))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

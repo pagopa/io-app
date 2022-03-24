@@ -5,7 +5,7 @@ import { Action } from "../../../../store/actions/types";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { setMessageReadState } from "../../../../store/actions/messages";
+import { DEPRECATED_setMessageReadState } from "../../../../store/actions/messages";
 import MVL_ROUTES from "../../navigation/routes";
 import { mvlDetailsLoad } from "../../store/actions";
 import { mvlMock, mvlMockId } from "../../types/__mock__/mvlMock";
@@ -47,7 +47,7 @@ describe("MvlRouterScreen behaviour", () => {
     it("Should set the message ID as read", () => {
       const { store } = renderWithDefaultStore();
       expect(store.getActions()).toContainEqual(
-        setMessageReadState(mvlMockId, true, "unknown")
+        DEPRECATED_setMessageReadState(mvlMockId, true, "unknown")
       );
     });
 
@@ -146,7 +146,7 @@ describe("MvlRouterScreen behaviour", () => {
       const { store } = renderWithDefaultStore();
       store.dispatch(success);
       expect(store.getActions()).toContainEqual(
-        setMessageReadState(mvlMockId, true, "unknown")
+        DEPRECATED_setMessageReadState(mvlMockId, true, "unknown")
       );
     });
   });

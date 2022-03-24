@@ -1,8 +1,9 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
+import { usePaginatedMessages } from "../../../config";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { setMessageReadState } from "../../../store/actions/messages";
+import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isMessageRead } from "../../../store/reducers/entities/messages/messagesStatus";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
@@ -55,8 +56,9 @@ export const MvlRouterScreen = (props: {
   const dispatch = useIODispatch();
   const isRead = useIOSelector(state => isMessageRead(state, mvlId));
   useOnFirstRender(() => {
-    if (!isRead) {
-      dispatch(setMessageReadState(mvlId, true, "unknown"));
+    if (!isRead && !usePaginatedMessages) {
+      // TODO: remove once we publish pagination
+      dispatch(DEPRECATED_setMessageReadState(mvlId, true, "unknown"));
     }
     if (!pot.isSome(mvlPot)) {
       dispatch(mvlDetailsLoad.request(mvlId));

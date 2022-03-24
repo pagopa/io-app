@@ -55,7 +55,9 @@ import {
   upsertUserDataProcessingDefaultDecoder,
   UpsertUserDataProcessingT,
   upsertUserMetadataDefaultDecoder,
-  UpsertUserMetadataT
+  UpsertUserMetadataT,
+  upsertMessageStatusAttributesDefaultDecoder,
+  UpsertMessageStatusAttributesT
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
@@ -233,6 +235,15 @@ export function BackendClient(
     query: _ => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getUserMessageDefaultDecoder()
+  };
+
+  const upsertMessageStatusAttributesT: UpsertMessageStatusAttributesT = {
+    method: "put",
+    url: params => `/api/v1/messages/${params.id}/message-status`,
+    query: _ => ({}),
+    body: params => JSON.stringify(params.messageStatusChange),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    response_decoder: upsertMessageStatusAttributesDefaultDecoder()
   };
 
   const getProfileT: GetUserProfileT = {
@@ -446,6 +457,9 @@ export function BackendClient(
       createFetchRequestForApi(getMessagesT, options)
     ),
     getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
+    upsertMessageStatusAttributes: withBearerToken(
+      createFetchRequestForApi(upsertMessageStatusAttributesT, options)
+    ),
     getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)

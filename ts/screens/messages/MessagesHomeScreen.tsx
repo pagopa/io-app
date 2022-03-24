@@ -25,7 +25,7 @@ import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   DEPRECATED_loadMessages as loadMessages,
-  setMessagesArchivedState
+  DEPRECATED_setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
@@ -360,7 +360,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean
-  ) => dispatch(setMessagesArchivedState(ids, archived))
+  ) => dispatch(DEPRECATED_setMessagesArchivedState(ids, archived))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);
