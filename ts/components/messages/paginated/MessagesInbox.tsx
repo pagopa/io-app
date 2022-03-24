@@ -2,14 +2,12 @@ import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-import { none } from "fp-ts/lib/Option";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import I18n from "../../../i18n";
 import { EmptyListComponent } from "../EmptyListComponent";
 
-import { useItemsSelection } from "../../../utils/hooks/useItemsSelection";
-import ListSelectionBar from "../../ListSelectionBar";
 import MessageList from "./MessageList";
+import { useMessagesSelection } from "./MessageList/useMessagesSelection";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -35,31 +33,12 @@ type Props = {
  * @constructor
  */
 const MessagesInbox = ({ allMessagesIDs, navigateToMessageDetail }: Props) => {
-  const { selectedItems, toggleItem, setAllItems, resetSelection } =
-    useItemsSelection();
-
-  const selectedItemsCount = selectedItems.toUndefined()?.size ?? 0;
-  const allItemsCount = allMessagesIDs.length;
-
-  const onPressItem = (message: UIMessage) => {
-    if (selectedItems.isSome()) {
-      toggleItem(message.id);
-    } else {
-      navigateToMessageDetail(message);
-    }
-  };
-
-  const onLongPressItem = (id: string) => {
-    toggleItem(id);
-  };
-
-  const onToggleAllSelection = () => {
-    if (selectedItemsCount === allItemsCount) {
-      setAllItems([]);
-    } else {
-      setAllItems(allMessagesIDs);
-    }
-  };
+  const { selectedItems, onPressItem, onLongPressItem, MessageSelectionBar } =
+    useMessagesSelection(
+      allMessagesIDs,
+      navigateToMessageDetail,
+      I18n.t("messages.cta.archive")
+    );
 
   const ListEmptyComponent = () => (
     <EmptyListComponent
@@ -80,16 +59,7 @@ const MessagesInbox = ({ allMessagesIDs, navigateToMessageDetail }: Props) => {
           ListEmptyComponent={ListEmptyComponent}
         />
       </View>
-      {selectedItems !== none && (
-        <ListSelectionBar
-          selectedItems={selectedItemsCount}
-          totalItems={allItemsCount}
-          onToggleSelection={() => undefined}
-          onToggleAllSelection={onToggleAllSelection}
-          onResetSelection={resetSelection}
-          primaryButtonText={I18n.t("messages.cta.archive")}
-        />
-      )}
+      <MessageSelectionBar />
     </View>
   );
 };
