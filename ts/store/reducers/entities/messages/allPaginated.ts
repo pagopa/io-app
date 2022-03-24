@@ -85,7 +85,10 @@ const reducer = (
     case getType(migrateToPaginatedMessages.request):
       return {
         ...state,
-        migration: some({ _tag: "started", total: action.payload.length })
+        migration: some({
+          _tag: "started",
+          total: Object.keys(action.payload).length
+        })
       };
 
     case getType(migrateToPaginatedMessages.success):

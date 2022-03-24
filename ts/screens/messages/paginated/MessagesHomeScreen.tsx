@@ -39,13 +39,10 @@ import MessagesArchive from "../../../components/messages/paginated/MessagesArch
 import {
   allArchiveMessagesSelector,
   allInboxMessagesSelector,
-  allPaginatedSelector,
-  MigrationStatus
+  allPaginatedSelector
 } from "../../../store/reducers/entities/messages/allPaginated";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
-  DEPRECATED_setMessageReadState,
-  DEPRECATED_setMessagesArchivedState,
   migrateToPaginatedMessages,
   resetMigrationStatus
 } from "../../../store/actions/messages";
@@ -55,7 +52,9 @@ import {
 } from "../../../store/reducers/entities/messages/messagesStatus";
 import MigratingMessage from "./MigratingMessage";
 
-type Props = NavigationStackScreenProps & ReturnType<typeof mapStateToProps>;
+type Props = NavigationStackScreenProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "messages.contextualHelpTitle",

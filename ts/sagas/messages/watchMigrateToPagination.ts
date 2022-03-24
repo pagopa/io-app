@@ -12,10 +12,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import migrateToPagination from "../../boot/migrateToPagination";
 
-import {
-  MessagesStatus,
-  MessageStatus
-} from "../../store/reducers/entities/messages/messagesStatus";
+import { MessageStatus } from "../../store/reducers/entities/messages/messagesStatus";
 import { readablePrivacyReport } from "../../utils/reporters";
 
 type LocalActionType = ActionType<typeof migrateToPaginatedMessages["request"]>;
@@ -106,7 +103,7 @@ function tryMigration(putMessages: LocalBeClient) {
       // assuming the worst, no messages were migrated because of an unexpected failure
       const errorPayload = {
         succeeded: [],
-        failed: action.payload.map(({ id }) => ({
+        failed: Object.keys(action.payload).map(id => ({
           messageId: id,
           error: readablePrivacyReport(error)
         }))
