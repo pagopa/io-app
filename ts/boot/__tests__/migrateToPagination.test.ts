@@ -1,10 +1,16 @@
-import migrateToPagination from "../migrateToPagination";
+import * as Either from "fp-ts/lib/Either";
 
-const mockUpsert = jest.fn();
+import migrateToPagination, { ResponseType } from "../migrateToPagination";
+
+const mockUpsert = jest.fn().mockResolvedValue(Either.right({ status: 200 }));
+//   () => {
+//     Promise.resolve(Either.right({ status: 200 })) as ResponseType
+//   }
+// );
 
 describe("migrateToPagination module", function () {
   afterEach(() => {
-    mockUpsert.mockReset();
+    mockUpsert.mockClear();
   });
 
   describe("when the messageStatus collection is empty", function () {
@@ -15,6 +21,10 @@ describe("migrateToPagination module", function () {
   });
 
   describe("when the messageStatus collection has messages", function () {
+    afterEach(() => {
+      mockUpsert.mockClear();
+    });
+
     const statuses = [
       { id: "A", isRead: true, isArchived: true },
       { id: "B", isRead: true, isArchived: false },
@@ -24,19 +34,22 @@ describe("migrateToPagination module", function () {
 
     it("migrates the messages status", async () => {
       const result = await migrateToPagination(statuses, mockUpsert);
-      expect(result).toEqual({ failed: [], succeeded: Object.keys(statuses) });
-      expect(mockUpsert).toHaveBeenCalledWith(
-        "A",
-        expect.objectContaining(statuses[0])
-      );
-      expect(mockUpsert).toHaveBeenCalledWith(
-        "B",
-        expect.objectContaining(statuses[1])
-      );
-      expect(mockUpsert).toHaveBeenCalledWith(
-        "C",
-        expect.objectContaining(statuses[2])
-      );
+      expect(result).toEqual({
+        failed: [],
+        succeeded: statuses.map(_ => _.id)
+      });
+      expect(mockUpsert).toHaveBeenCalledWith("A", {
+        isArchived: true,
+        isRead: true
+      });
+      expect(mockUpsert).toHaveBeenCalledWith("B", {
+        isArchived: false,
+        isRead: true
+      });
+      expect(mockUpsert).toHaveBeenCalledWith("C", {
+        isArchived: true,
+        isRead: false
+      });
       expect(mockUpsert).toHaveBeenCalledTimes(3);
     });
 
@@ -46,17 +59,27 @@ describe("migrateToPagination module", function () {
           statuses,
           mockUpsert.mockImplementation(id => {
             if (id === "B") {
-              throw new Error("Network error");
+              return Promise.resolve(Either.right({ status: 500 }));
             }
+            return Promise.resolve(Either.right({ status: 200 }));
           })
         );
         expect(result).toEqual({
-          failed: [{ error: new Error("Network error"), messageId: "B" }],
+          failed: [{ error: new Error("UNKNOWN"), messageId: "B" }],
           succeeded: ["A", "C", "D"]
         });
-        expect(mockUpsert).toHaveBeenCalledWith("A", statuses[0]);
-        expect(mockUpsert).toHaveBeenCalledWith("B", statuses[1]);
-        expect(mockUpsert).toHaveBeenCalledWith("C", statuses[2]);
+        expect(mockUpsert).toHaveBeenCalledWith("A", {
+          isArchived: true,
+          isRead: true
+        });
+        expect(mockUpsert).toHaveBeenCalledWith("B", {
+          isArchived: false,
+          isRead: true
+        });
+        expect(mockUpsert).toHaveBeenCalledWith("C", {
+          isArchived: true,
+          isRead: false
+        });
         expect(mockUpsert).toHaveBeenCalledTimes(3);
       });
     });

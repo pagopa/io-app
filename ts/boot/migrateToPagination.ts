@@ -14,7 +14,7 @@ type MigrationResult = {
   succeeded: Array<string>;
 };
 
-type ResponseType = ReturnType<
+export type ResponseType = ReturnType<
   ReturnType<typeof BackendClient>["upsertMessageStatusAttributes"]
 >;
 
@@ -38,7 +38,7 @@ export default async function init(
             .mapLeft(
               errors =>
                 ({
-                  error: readablePrivacyReport(errors),
+                  error: new Error(readablePrivacyReport(errors)),
                   messageId: id
                 } as Failure)
             )
@@ -67,7 +67,7 @@ export default async function init(
             });
         } catch (error) {
           return Either.left<Failure, string>({
-            error: readablePrivacyReport(error),
+            error: error ?? new Error("UNKNOWN"),
             messageId: id
           });
         }
