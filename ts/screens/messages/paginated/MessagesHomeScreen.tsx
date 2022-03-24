@@ -110,7 +110,10 @@ const AllTabs = ({
         textStyle={styles.textStyle}
         heading={I18n.t("messages.tab.archive")}
       >
-        <MessagesArchive navigateToMessageDetail={navigateToMessageDetail} />
+        <MessagesArchive
+          allMessagesIDs={allArchiveMessagesIDs}
+          navigateToMessageDetail={navigateToMessageDetail}
+        />
       </Tab>
     </AnimatedTabs>
   </View>

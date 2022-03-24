@@ -7,6 +7,7 @@ import I18n from "../../../i18n";
 import { EmptyListComponent } from "../EmptyListComponent";
 
 import MessageList from "./MessageList";
+import { useMessagesSelection } from "./MessageList/useMessagesSelection";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
+  allMessagesIDs: Array<string>;
   navigateToMessageDetail: (message: UIMessage) => void;
 };
 
@@ -26,10 +28,21 @@ type Props = {
  * It looks redundant at the moment but will be used later on once we bring back
  * states and filtering in the Messages.
  *
+ * @param allMessagesIDs used for handling messages selection
  * @param navigateToMessageDetail
  * @constructor
  */
-const MessagesArchive = ({ navigateToMessageDetail }: Props) => {
+const MessagesArchive = ({
+  allMessagesIDs,
+  navigateToMessageDetail
+}: Props) => {
+  const { selectedItems, onPressItem, onLongPressItem, MessageSelectionBar } =
+    useMessagesSelection(
+      allMessagesIDs,
+      navigateToMessageDetail,
+      I18n.t("messages.cta.unarchive")
+    );
+
   const ListEmptyComponent = () => (
     <EmptyListComponent
       image={require("../../../../img/messages/empty-message-list-icon.png")}
@@ -43,10 +56,13 @@ const MessagesArchive = ({ navigateToMessageDetail }: Props) => {
       <View style={styles.listContainer}>
         <MessageList
           filter={{ getArchived: true }}
-          onPressItem={navigateToMessageDetail}
+          onPressItem={onPressItem}
+          onLongPressItem={onLongPressItem}
+          selectedMessageIds={selectedItems.toUndefined()}
           ListEmptyComponent={ListEmptyComponent}
         />
       </View>
+      <MessageSelectionBar />
     </View>
   );
 };
