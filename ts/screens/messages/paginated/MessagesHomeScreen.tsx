@@ -77,9 +77,15 @@ const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
 type AllTabsProps = {
   navigateToMessageDetail: (message: UIMessage) => void;
+  allInboxMessagesIDs: Array<string>;
+  allArchiveMessagesIDs: Array<string>;
 };
 
-const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
+const AllTabs = ({
+  navigateToMessageDetail,
+  allInboxMessagesIDs,
+  allArchiveMessagesIDs
+}: AllTabsProps) => (
   <View style={IOStyles.flex}>
     <AnimatedTabs
       tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
@@ -93,7 +99,10 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
         textStyle={styles.textStyle}
         heading={I18n.t("messages.tab.inbox")}
       >
-        <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+        <MessagesInbox
+          allMessagesIDs={allInboxMessagesIDs}
+          navigateToMessageDetail={navigateToMessageDetail}
+        />
       </Tab>
 
       <Tab
@@ -114,7 +123,9 @@ const MessagesHomeScreen = ({
   isSearchEnabled,
   messageSectionStatusActive,
   searchText,
-  searchMessages
+  searchMessages,
+  allInboxMessagesIDs,
+  allArchiveMessagesIDs
 }: Props) => {
   const navigation = useContext(NavigationContext);
 
@@ -161,7 +172,11 @@ const MessagesHomeScreen = ({
             title={I18n.t("messages.contentTitle")}
             iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
           />
-          <AllTabs navigateToMessageDetail={navigateToMessageDetail} />
+          <AllTabs
+            allInboxMessagesIDs={allInboxMessagesIDs}
+            allArchiveMessagesIDs={allArchiveMessagesIDs}
+            navigateToMessageDetail={navigateToMessageDetail}
+          />
         </React.Fragment>
       )}
 
@@ -199,6 +214,12 @@ const mapStateToProps = (state: GlobalState) => ({
   searchMessages: createSelector(
     [allInboxMessagesSelector, allArchiveMessagesSelector],
     (inbox, archive) => inbox.concat(archive)
+  )(state),
+  allInboxMessagesIDs: createSelector(allInboxMessagesSelector, inbox =>
+    inbox.map(_ => _.id)
+  )(state),
+  allArchiveMessagesIDs: createSelector(allArchiveMessagesSelector, archive =>
+    archive.map(_ => _.id)
   )(state)
 });
 
