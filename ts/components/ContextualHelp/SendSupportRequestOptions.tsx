@@ -86,7 +86,7 @@ const SendSupportRequestOptions: React.FC<Props> = ({
           )
         }}
         customGoBack={<CustomGoBackButton onPressHandler={onGoBack} />}
-        showInstabugChat={false}
+        showChat={false}
       />
       <Content contentContainerStyle={styles.contentContainer} noPadded={true}>
         <H1 accessible={true}>

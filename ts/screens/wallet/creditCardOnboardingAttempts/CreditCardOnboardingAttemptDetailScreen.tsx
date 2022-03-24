@@ -147,7 +147,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   return (
     <BaseScreenComponent
       goBack={() => props.navigation.goBack()}
-      showInstabugChat={false}
+      showChat={false}
       dark={true}
       headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
     >

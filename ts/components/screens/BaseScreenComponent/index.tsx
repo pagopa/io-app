@@ -79,7 +79,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       isSearchAvailable,
       onAccessibilityNavigationHeaderFocus,
       primary,
-      showInstabugChat,
+      showChat,
       titleColor
     } = props;
 
@@ -144,7 +144,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           backButtonTestID={backButtonTestID}
           accessibilityEvents={accessibilityEvents}
           accessibilityLabel={accessibilityLabel}
-          showInstabugChat={showInstabugChat}
+          showChat={showChat}
           primary={primary}
           dark={dark}
           goBack={goBack}

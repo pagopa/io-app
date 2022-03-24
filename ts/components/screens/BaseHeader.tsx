@@ -78,7 +78,7 @@ interface OwnProps {
     searchType?: SearchType;
     onSearchTap?: () => void;
   };
-  showInstabugChat?: boolean;
+  showChat?: boolean;
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
@@ -230,11 +230,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       isSearchEnabled,
       onShowHelp,
       isSearchAvailable,
-      showInstabugChat,
+      showChat,
       customRightIcon
     } = this.props;
 
-    const shouldShowChat = !isSearchEnabled && showInstabugChat !== false;
+    const shouldShowChat = !isSearchEnabled && showChat !== false;
 
     return (
       <Right>
