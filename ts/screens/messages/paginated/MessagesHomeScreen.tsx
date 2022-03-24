@@ -1,19 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
-import {
-  Animated,
-  Platform,
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator
-} from "react-native";
+import { Animated, Platform, StyleSheet, View } from "react-native";
 import { Tab, Tabs } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
-
 import { createSelector } from "reselect";
+
+import { Dispatch } from "../../../store/actions/types";
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -49,22 +43,17 @@ import {
   MigrationStatus
 } from "../../../store/reducers/entities/messages/allPaginated";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import _ from "lodash";
 import {
   DEPRECATED_setMessageReadState,
   DEPRECATED_setMessagesArchivedState,
-  migrateToPaginatedMessages
+  migrateToPaginatedMessages,
+  resetMigrationStatus
 } from "../../../store/actions/messages";
 import {
   MessagesStatus,
   messagesStatusSelector
 } from "../../../store/reducers/entities/messages/messagesStatus";
-import { H2 } from "../../../components/core/typography/H2";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { InfoBox } from "../../../components/box/InfoBox";
-import IconFont from "../../../components/ui/IconFont";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import MigratingMessage from "./MigratingMessage";
 
 type Props = NavigationStackScreenProps & ReturnType<typeof mapStateToProps>;
 
@@ -96,28 +85,6 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: customVariables.brandDarkGray
-  },
-
-  // migration part
-  migrationMessageContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 60
-  },
-  migrationIconContainer: {
-    height: 80
-  },
-  migrationMessageText: {
-    textAlign: "center",
-    // marginTop: 40,
-    marginBottom: 40
-  },
-  migrationMessageButtonText: {
-    color: IOColors.white
-  },
-  activityIndicator: {
-    padding: 12
   }
 });
 
@@ -153,71 +120,6 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
   </View>
 );
 
-type MigratingMessageProps = { status: MigrationStatus; onRetry: () => void };
-const MigratingMessage = ({ status, onRetry }: MigratingMessageProps) =>
-  status.fold(null, ongoing => {
-    // eslint-disable-next-line no-underscore-dangle
-    switch (ongoing._tag) {
-      case "failed":
-        return (
-          <View style={styles.migrationMessageContainer}>
-            <View style={styles.migrationIconContainer}>
-              <IconFont size={48} color={IOColors.blue} name={"io-sad"} />
-            </View>
-            <H2 style={styles.migrationMessageText}>
-              {I18n.t("messages.pagination.migration.failed")}
-            </H2>
-            <ButtonDefaultOpacity
-              primary={false}
-              disabled={false}
-              onPress={onRetry}
-              style={{ width: "100%" }}
-            >
-              <Text style={styles.migrationMessageButtonText}>
-                {I18n.t("global.buttons.retry")}
-              </Text>
-            </ButtonDefaultOpacity>
-          </View>
-        );
-      case "succeeded":
-        return (
-          <View style={styles.migrationMessageContainer}>
-            <View style={styles.migrationIconContainer}>
-              <IconFont size={48} color={IOColors.blue} name={"io-happy"} />
-            </View>
-            <H2 style={styles.migrationMessageText}>
-              {I18n.t("messages.pagination.migration.succeeded")}
-            </H2>
-          </View>
-        );
-      case "started":
-        return (
-          <View style={styles.migrationMessageContainer}>
-            <View style={styles.migrationIconContainer}>
-              <ActivityIndicator
-                animating={true}
-                size={"large"}
-                style={styles.activityIndicator}
-                color={customVariables.brandPrimary}
-                accessible={true}
-                accessibilityHint={I18n.t(
-                  "global.accessibility.activityIndicator.hint"
-                )}
-                accessibilityLabel={I18n.t(
-                  "global.accessibility.activityIndicator.label"
-                )}
-                importantForAccessibility={"no-hide-descendants"}
-                testID={"activityIndicator"}
-              />
-            </View>
-            <H2 style={styles.migrationMessageText}>
-              {I18n.t("messages.pagination.migration.started")}
-            </H2>
-          </View>
-        );
-    }
-  });
-
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
  */
@@ -228,25 +130,12 @@ const MessagesHomeScreen = ({
   searchText,
 
   // migration
-  inbox,
   messagesStatus,
   migrateMessages,
-  migrationStatus
+  migrationStatus,
+  resetMigrationStatus
 }: Props) => {
   const navigation = useContext(NavigationContext);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     _.shuffle(inbox)
-  //       .slice(0, inbox.length)
-  //       .forEach(message => {
-  //         console.log(message.id);
-  //         dispatch(DEPRECATED_setMessageReadState(message.id, true, "unknown"));
-  //         dispatch(DEPRECATED_setMessagesArchivedState([message.id], true));
-  //       });
-  //   }, 5000);
-  // }, [inbox]);
-
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
   useOnFirstRender(() => {
@@ -302,6 +191,7 @@ const MessagesHomeScreen = ({
             <MigratingMessage
               status={migrationStatus}
               onRetry={() => migrateMessages(messagesStatus)}
+              onEnd={resetMigrationStatus}
             />
           ) : (
             <AllTabs navigateToMessageDetail={navigateToMessageDetail} />
@@ -344,15 +234,15 @@ const mapStateToProps = (state: GlobalState) => ({
     [allInboxMessagesSelector, allArchiveMessagesSelector],
     (inbox, archive) => inbox.concat(archive)
   )(state),
-
-  // TEMP
-  inbox: allInboxMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
   migrationStatus: allPaginatedSelector(state).migration
 });
 
-export default connect(mapStateToProps, dispatch => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   migrateMessages: (messageStatus: MessagesStatus) => {
     dispatch(migrateToPaginatedMessages.request(messageStatus));
-  }
-}))(MessagesHomeScreen);
+  },
+  resetMigrationStatus: () => dispatch(resetMigrationStatus())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);
