@@ -336,7 +336,8 @@ const MessageListItemMemo = React.memo(
     curr.isArchived === prev.isArchived &&
     curr.isSelectionModeEnabled === prev.isSelectionModeEnabled &&
     curr.isSelected === prev.isSelected &&
-    curr.hasPaidBadge === prev.hasPaidBadge
+    curr.hasPaidBadge === prev.hasPaidBadge &&
+    curr.onPress === prev.onPress
 );
 
 export default MessageListItemMemo;
