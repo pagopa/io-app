@@ -1,5 +1,4 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -47,7 +46,6 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type Props = NavigationStackScreenProps &
@@ -64,8 +62,6 @@ type State = {
   errorCode?: string;
   loginTrace?: string;
 };
-
-const loginFailureTag = "spid-login-failure";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -158,9 +154,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
     );
 
     handleSendAssistanceLog(this.choosenTool, logText);
-    if (this.choosenTool === ToolEnum.instabug) {
-      Instabug.appendTags([loginFailureTag]);
-    }
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
@@ -169,9 +162,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleLoginSuccess = (token: SessionToken) => {
     handleSendAssistanceLog(this.choosenTool, `login success`);
-    if (this.choosenTool === ToolEnum.instabug) {
-      Instabug.resetTags();
-    }
     this.props.dispatchLoginSuccess(token, this.idp);
   };
 
