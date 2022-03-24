@@ -8,7 +8,6 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import themeVariables from "../../theme/variables";
 import { H3 } from "../core/typography/H3";
 import FAQComponent from "../FAQComponent";
-import InstabugAssistanceComponent from "../InstabugAssistanceComponent";
 import { BaseHeader } from "../screens/BaseHeader";
 import BetaBannerComponent from "../screens/BetaBannerComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
@@ -39,8 +38,7 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
   onClose,
   contextualHelpData,
   isContentLoaded,
-  onLinkClicked,
-  onRequestAssistance
+  onLinkClicked
 }) => {
   // Being content a ReactNode we can rely on `null` to represent no-content
   const isContentReady = contextualHelpData.content === undefined;
@@ -95,9 +93,6 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
               {contextualHelpData.content !== null && (
                 <View spacer={true} extralarge={true} />
               )}
-              <InstabugAssistanceComponent
-                requestAssistance={onRequestAssistance}
-              />
             </>
           )}
           {isContentLoaded && <EdgeBorderComponent />}
