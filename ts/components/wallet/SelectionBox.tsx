@@ -1,8 +1,9 @@
 import React from "react";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { H4 } from "../core/typography/H4";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOColors } from "../core/variables/IOColors";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 
 type Props = {
   logo?: React.ReactNode;
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
  * - The third one containing a CTA
  */
 export const SelectionBox = (props: Props) => (
-  <TouchableOpacity
+  <TouchableDefaultOpacity
     disabled={!props.onPress}
     onPress={props.onPress}
     accessibilityLabel={props.accessibilityLabel}
@@ -75,5 +76,5 @@ export const SelectionBox = (props: Props) => (
         </View>
       )}
     </View>
-  </TouchableOpacity>
+  </TouchableDefaultOpacity>
 );
