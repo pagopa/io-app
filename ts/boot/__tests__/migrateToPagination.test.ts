@@ -1,12 +1,8 @@
 import * as Either from "fp-ts/lib/Either";
 
-import migrateToPagination, { ResponseType } from "../migrateToPagination";
+import migrateToPagination from "../migrateToPagination";
 
 const mockUpsert = jest.fn().mockResolvedValue(Either.right({ status: 200 }));
-//   () => {
-//     Promise.resolve(Either.right({ status: 200 })) as ResponseType
-//   }
-// );
 
 describe("migrateToPagination module", function () {
   afterEach(() => {
