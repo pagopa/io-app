@@ -97,16 +97,15 @@ export const unreadTicketsCountRefreshRateWhileSupportIsOpen: Millisecond = (2 *
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
-// help can be shown only when remote FF is instabug or (zendesk + local FF + emailValidated)
+// help can be shown only when remote FF is  zendesk + local FF + emailValidated
 export const canShowHelp = (
   assistanceTool: ToolEnum,
   isEmailValidated: boolean
 ): boolean => {
   switch (assistanceTool) {
-    case ToolEnum.instabug:
-      return true;
     case ToolEnum.zendesk:
       return zendeskEnabled && isEmailValidated;
+    case ToolEnum.instabug:
     case ToolEnum.web:
     case ToolEnum.none:
       return false;
