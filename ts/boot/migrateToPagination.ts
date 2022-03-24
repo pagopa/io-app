@@ -27,6 +27,7 @@ export default async function init(
   upsert: (id: string, messageStatus: MessageStatus) => ResponseType
 ): Promise<MigrationResult> {
   const requests: Array<Promise<Either.Either<Failure, string>>> =
+    // eslint-disable-next-line sonarjs/cognitive-complexity
     messageAttributes.map(async ({ id, isArchived, isRead }) => {
       // we only migrate non-default updates
       const needsMigration = isRead || isArchived;
