@@ -36,7 +36,6 @@ import {
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
 import { contentMunicipalityLoad } from "../actions/content";
-import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
@@ -249,11 +248,6 @@ const trackAction =
       case getType(setMessageReadState): {
         return mp.track(action.type, action.payload);
       }
-
-      // instabug
-      case getType(instabugReportClosed):
-      case getType(instabugReportOpened):
-        return mp.track(action.type, action.payload);
 
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
