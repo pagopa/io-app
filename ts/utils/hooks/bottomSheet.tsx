@@ -34,8 +34,6 @@ export const bottomSheetContent = (
   snapPoint: number,
   onClose: () => void
 ): BottomSheetModalProps => {
-  // const isScreenReaderActive = await isScreenReaderEnabled();
-
   const header = <BottomSheetHeader title={title} onClose={onClose} />;
 
   const bottomSheetBody: React.ReactNode = (
@@ -96,6 +94,12 @@ export const useIOBottomSheet = (
       handleComponent={bottomSheetProps.config.handleComponent}
       backdropComponent={bottomSheetProps.config.backdropComponent}
       enableDismissOnClose={true}
+      accessible={false}
+      // set this attribute to an empty string to avoid the default announcement from the library
+      accessibilityPositionChangeAnnouncement={""}
+      handleComponentAccessibility={{
+        accessible: false
+      }}
     >
       {bottomSheetProps.content}
     </BottomSheetModal>
