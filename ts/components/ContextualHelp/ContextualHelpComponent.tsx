@@ -1,4 +1,3 @@
-import { BugReporting } from "instabug-reactnative";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -31,7 +30,6 @@ type Props = {
   contextualHelpData: ContextualHelpData;
   isContentLoaded: boolean | undefined;
   onLinkClicked?: (url: string) => void;
-  onRequestAssistance: (reportType: BugReporting.reportType) => void;
 };
 
 const ContextualHelpComponent: React.FunctionComponent<Props> = ({
