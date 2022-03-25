@@ -7,9 +7,9 @@ import {
   isIoInternalLink
 } from "../../ui/Markdown/handlers/link";
 import { ScreenCHData } from "../../../../definitions/content/ScreenCHData";
-import { ContextualHelpData } from "../../ContextualHelp/ContextualHelpComponent";
 import Markdown from "../../ui/Markdown";
 import I18n from "../../../i18n";
+import { ContextualHelpData } from "../../../features/zendesk/screens/ZendeskSupportHelpCenter";
 import { ContextualHelpProps, ContextualHelpPropsMarkdown } from "./index";
 
 export const handleOnLinkClicked = (hideHelp: () => void) => (url: string) => {
