@@ -1,20 +1,12 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
-import React, {
-  ComponentProps,
-  PropsWithChildren,
-  ReactNode,
-  useEffect,
-  useState
-} from "react";
+import React, { ComponentProps, PropsWithChildren, ReactNode } from "react";
 import { ColorValue } from "react-native";
 import { useDispatch } from "react-redux";
 import { TranslationKeys } from "../../../../locales/locales";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import ContextualHelp, { RequestAssistancePayload } from "../../ContextualHelp";
 import { SearchType } from "../../search/SearchButton";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
@@ -23,6 +15,7 @@ import { assistanceToolConfigSelector } from "../../../store/reducers/backendSta
 import { assistanceToolRemoteConfig } from "../../../utils/supportAssistance";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { FAQsCategoriesType } from "../../../utils/faq";
 
 export type ContextualHelpProps = {
   title: string;
@@ -48,15 +41,12 @@ interface OwnProps {
   // As of now, the following prop is propagated through 4 levels
   // to finally display a checkbox in SendSupportRequestOptions
   shouldAskForScreenshotWithInitialValue?: boolean;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
 export type Props = PropsWithChildren<
-  OwnProps &
-    ComponentProps<typeof BaseHeader> &
-    Pick<ComponentProps<typeof ContextualHelp>, "faqCategories">
+  OwnProps & ComponentProps<typeof BaseHeader>
 >;
-
-const ANDROID_OPEN_REPORT_DELAY = 50 as Millisecond;
 
 const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
   (props: Props, _) => {
@@ -87,23 +77,6 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     const currentScreenName = fromNullable(useNavigationContext())
       .map(x => x.state.routeName)
       .getOrElse("n/a");
-
-    // used to trigger the side-effect base on timeout to take the screenshot
-    const [requestAssistanceData, setRequestAssistanceData] = useState<{
-      payload: RequestAssistancePayload;
-    } | null>(null);
-
-    useEffect(() => {
-      if (requestAssistanceData) {
-        // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
-        // we force handling here. The timeout is due to wait until the modal is completely hidden
-        // otherwise in the Instabug screenshot we will see the contextual help content instead the screen below
-        // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
-        setTimeout(() => {
-          setRequestAssistanceData(null);
-        }, ANDROID_OPEN_REPORT_DELAY);
-      }
-    }, [requestAssistanceData]);
 
     const dispatch = useDispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
