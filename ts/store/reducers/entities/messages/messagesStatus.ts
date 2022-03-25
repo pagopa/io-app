@@ -4,8 +4,8 @@ import { getType } from "typesafe-actions";
 import {
   DEPRECATED_loadMessage,
   removeMessages,
-  setMessageReadState,
-  setMessagesArchivedState
+  DEPRECATED_setMessageReadState,
+  DEPRECATED_setMessagesArchivedState
 } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -43,7 +43,7 @@ const reducer = (
       };
     }
 
-    case getType(setMessageReadState): {
+    case getType(DEPRECATED_setMessageReadState): {
       const { id, read } = action.payload;
       // if misses, set the default values for given message
       const prevState = state[id] || EMPTY_MESSAGE_STATUS;
@@ -55,7 +55,7 @@ const reducer = (
         }
       };
     }
-    case getType(setMessagesArchivedState): {
+    case getType(DEPRECATED_setMessagesArchivedState): {
       const { ids, archived } = action.payload;
       const updatedMessageStates = ids.reduce<{
         [key: string]: MessageStatus;

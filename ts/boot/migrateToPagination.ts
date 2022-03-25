@@ -31,7 +31,9 @@ export default async function init(
   const requests: Array<Promise<Either.Either<Failure, string>>> = allIds.map(
     async id => {
       const messageStatus = data[id];
-      if (messageStatus) {
+      // we only migrate non-default updates
+      const needsMigration = messageStatus?.isRead || messageStatus?.isArchived;
+      if (messageStatus && needsMigration) {
         try {
           await upsert(id, messageStatus);
           return Either.right<Failure, string>(id);

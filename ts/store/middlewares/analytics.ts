@@ -49,7 +49,8 @@ import {
   DEPRECATED_loadMessage,
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
-  setMessageReadState
+  DEPRECATED_setMessageReadState,
+  upsertMessageStatusAttributes
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
@@ -245,10 +246,21 @@ const trackAction =
           messagesIdsToRemoveFromCache: action.payload
         });
       }
-      case getType(setMessageReadState): {
+      case getType(DEPRECATED_setMessageReadState): {
+        if (action.payload.read === true) {
+          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
+        }
         return mp.track(action.type, action.payload);
       }
-
+      case getType(upsertMessageStatusAttributes.success): {
+        if (
+          action.payload.update.tag === "bulk" ||
+          action.payload.update.tag === "reading"
+        ) {
+          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
+        }
+        break;
+      }
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):

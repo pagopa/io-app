@@ -13,7 +13,7 @@ import I18n from "../../../i18n";
 import {
   loadMessageWithRelations,
   MessageReadType,
-  setMessageReadState
+  DEPRECATED_setMessageReadState
 } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
@@ -172,7 +172,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     messageId: string,
     isRead: boolean,
     messageType: MessageReadType
-  ) => dispatch(setMessageReadState(messageId, isRead, messageType)),
+  ) => dispatch(DEPRECATED_setMessageReadState(messageId, isRead, messageType)),
   navigateToServiceDetailsScreen: (
     params: ServiceDetailsScreenNavigationParams
   ) => navigateToServiceDetailsScreen(params)

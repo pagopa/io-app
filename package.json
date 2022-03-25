@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.6.0-rc.0",
+  "version": "2.6.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.37.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.37.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.8/definitions.yml",
@@ -91,7 +91,7 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "detox": "^19.0.0",
+    "detox": "^19.5.7",
     "fbjs": "^3.0.2",
     "fp-ts": "1.17.4",
     "front-matter": "^4.0.2",
