@@ -18,7 +18,6 @@ import {
 import { loadSupportToken } from "../../store/actions/authentication";
 import { remoteUndefined } from "../../features/bonus/bpd/model/RemoteValue";
 import { FAQsCategoriesType, getFAQsFromCategories } from "../../utils/faq";
-import { instabugReportOpened } from "../../store/actions/debug";
 
 import {
   getContextualHelpData,
@@ -139,7 +138,6 @@ const ContextualHelp: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const finalizeRequestAssistance = (payload: RequestAssistancePayload) => {
-    props.dispatchOpenReportType(payload.supportType);
     props.onRequestAssistance(payload);
   };
 
@@ -212,9 +210,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadContextualHelpData: () => dispatch(loadContextualHelpData.request()),
-  loadSupportToken: () => dispatch(loadSupportToken.request()),
-  dispatchOpenReportType: (type: BugReporting.reportType) =>
-    dispatch(instabugReportOpened({ type }))
+  loadSupportToken: () => dispatch(loadSupportToken.request())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContextualHelp);
