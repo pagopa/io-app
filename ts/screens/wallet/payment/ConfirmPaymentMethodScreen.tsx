@@ -2,7 +2,7 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { ActionSheet, Content, View } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, Text } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
@@ -476,16 +476,19 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <>
                 <View spacer={true} />
 
-                <Label color={"bluegrey"} weight={"Regular"}>
-                  {I18n.t(
-                    "wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer"
-                  )}
-                </Label>
-                <Link onPress={() => openWebUrl(privacyUrl)}>
-                  {I18n.t(
-                    "wallet.onboarding.paypal.paymentCheckout.privacyTerms"
-                  )}
-                </Link>
+                <Text>
+                  <Label color={"bluegrey"} weight={"Regular"}>
+                    {`${I18n.t(
+                      "wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer"
+                    )} `}
+                  </Label>
+
+                  <Link onPress={() => openWebUrl(privacyUrl)}>
+                    {I18n.t(
+                      "wallet.onboarding.paypal.paymentCheckout.privacyTerms"
+                    )}
+                  </Link>
+                </Text>
               </>
             )}
           </View>
