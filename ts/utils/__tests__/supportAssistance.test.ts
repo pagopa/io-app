@@ -28,15 +28,13 @@ describe("anonymousAssistanceAddress", () => {
 });
 
 describe("canShowHelp", () => {
-  it("if assistanceTool is Instabug, should return true", () => {
-    expect(canShowHelp(ToolEnum.instabug, true)).toBeTruthy();
-    expect(canShowHelp(ToolEnum.instabug, false)).toBeTruthy();
-  });
   it("if assistanceTool is Zendesk, should return true if the email is validated", () => {
     expect(canShowHelp(ToolEnum.zendesk, true)).toBeTruthy();
     expect(canShowHelp(ToolEnum.zendesk, false)).toBeFalsy();
   });
-  it("if assistanceTool is web or none, should return false", () => {
+  it("if assistanceTool is instabug, web or none, should return false", () => {
+    expect(canShowHelp(ToolEnum.instabug, true)).toBeFalsy();
+    expect(canShowHelp(ToolEnum.instabug, false)).toBeFalsy();
     expect(canShowHelp(ToolEnum.web, true)).toBeFalsy();
     expect(canShowHelp(ToolEnum.none, true)).toBeFalsy();
     expect(canShowHelp(ToolEnum.web, false)).toBeFalsy();
