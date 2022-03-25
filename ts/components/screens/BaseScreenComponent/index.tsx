@@ -78,7 +78,6 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     const dispatch = useDispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
     const canShowHelp = useIOSelector(canShowHelpSelector);
-
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
     const onShowHelp = (): (() => void) | undefined => {
@@ -101,6 +100,9 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       }
     };
 
+    const canShowHelpButton =
+      canShowHelp && (contextualHelp || contextualHelpMarkdown);
+
     return (
       <Container>
         <BaseHeader
@@ -116,7 +118,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           goBack={goBack}
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
-          onShowHelp={canShowHelp ? onShowHelp() : undefined}
+          onShowHelp={canShowHelpButton ? onShowHelp() : undefined}
           isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
