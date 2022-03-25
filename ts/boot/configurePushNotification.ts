@@ -50,7 +50,6 @@ function handleMessageReload() {
   const { inbox: cursors } = getCursors(store.getState());
   if (pot.isNone(cursors)) {
     // nothing in the collection, refresh
-    // TODO: check whether it requires migration or not
     store.dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
   } else if (pot.isSome(cursors)) {
     // something in the collection, get the maximum amount of new ones only,

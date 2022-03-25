@@ -91,7 +91,6 @@ export default async function init(
         }
       );
     });
-    // store.dispatch(removeMessages(migrationResult.succeeded));
     return migrationResult;
   });
 }
