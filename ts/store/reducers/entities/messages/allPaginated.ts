@@ -325,6 +325,31 @@ const reduceUpsertMessageStatusAttributes = (
   action: Action
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ): AllPaginated => {
+  const remove = (message: UIMessage, from: Collection) => ({
+    ...from,
+    data: pot.map(from.data, old => ({
+      ...old,
+      page: old.page.filter(_ => _.id !== message.id)
+    }))
+  });
+
+  // Messages are inserted locally ONLY if their ID is within the
+  // pages that were already fetched. In the other case the moved
+  // message will be returned by the backend once the user scrolls
+  // to that particular page.
+  const insert = (message: UIMessage, to: Collection) => ({
+    ...to,
+    data: pot.map(to.data, old => ({
+      ...old,
+      page:
+        old.next === undefined || old.next.localeCompare(message.id, "en") <= 0
+          ? [...old.page, message].sort((a, b) =>
+              b.id.localeCompare(a.id, "en")
+            )
+          : old.page
+    }))
+  });
+
   switch (action.type) {
     case getType(upsertMessageStatusAttributes.request): {
       const message = findOneById(action.payload.id, state);
@@ -338,7 +363,19 @@ const reduceUpsertMessageStatusAttributes = (
         if (update.tag === "bulk" || update.tag === "archiving") {
           // eslint-disable-next-line functional/immutable-data
           message.isArchived = update.isArchived;
-          // TODO: move to Archive
+          if (update.isArchived) {
+            return {
+              ...state,
+              archive: insert(message, state.archive),
+              inbox: remove(message, state.inbox)
+            };
+          } else {
+            return {
+              ...state,
+              archive: remove(message, state.archive),
+              inbox: insert(message, state.inbox)
+            };
+          }
         }
       }
       return { ...state };
@@ -356,7 +393,19 @@ const reduceUpsertMessageStatusAttributes = (
         if (update.tag === "bulk" || update.tag === "archiving") {
           // eslint-disable-next-line functional/immutable-data
           message.isArchived = !update.isArchived;
-          // TODO: move to Archive
+          if (update.isArchived) {
+            return {
+              ...state,
+              archive: remove(message, state.archive),
+              inbox: insert(message, state.inbox)
+            };
+          } else {
+            return {
+              ...state,
+              archive: insert(message, state.archive),
+              inbox: remove(message, state.inbox)
+            };
+          }
         }
       }
       return { ...state };
