@@ -491,6 +491,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                 </Text>
               </>
             )}
+
+            <View spacer extralarge />
           </View>
         </Content>
 
