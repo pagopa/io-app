@@ -21,7 +21,11 @@ const messages = successReloadMessagesPayload.messages;
 describe("MessagesInbox component", () => {
   describe("when there at least one message and the user taps on it", () => {
     it("should call `navigateToMessageDetail` with the message", async () => {
-      const props = { navigateToMessageDetail: jest.fn() };
+      const props = {
+        allMessagesIDs: [],
+        navigateToMessageDetail: jest.fn(),
+        archiveMessages: jest.fn()
+      };
       const { component } = renderComponent(props);
       await fireEvent(component.getByText(messages[0].title), "onPress");
       expect(props.navigateToMessageDetail).toHaveBeenNthCalledWith(
