@@ -36,7 +36,7 @@ export const useMessagesSelection = (
     }
   };
 
-  const MessageSelectionBar = () =>
+  const MessagesSelectionBar = () =>
     isSelecting ? (
       <ListSelectionBar
         selectedItems={selectedItemsCount}
@@ -55,6 +55,6 @@ export const useMessagesSelection = (
     selectedItems,
     onPressItem,
     onLongPressItem,
-    MessageSelectionBar
+    MessagesSelectionBar
   };
 };

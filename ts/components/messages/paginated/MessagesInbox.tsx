@@ -39,7 +39,7 @@ const MessagesInbox = ({
   navigateToMessageDetail,
   archiveMessages
 }: Props) => {
-  const { selectedItems, onPressItem, onLongPressItem, MessageSelectionBar } =
+  const { selectedItems, onPressItem, onLongPressItem, MessagesSelectionBar } =
     useMessagesSelection(
       allMessagesIDs,
       navigateToMessageDetail,
@@ -66,7 +66,7 @@ const MessagesInbox = ({
           ListEmptyComponent={ListEmptyComponent}
         />
       </View>
-      <MessageSelectionBar />
+      <MessagesSelectionBar />
     </View>
   );
 };
