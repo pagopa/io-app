@@ -52,6 +52,7 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
     )}
     style={styles.helpButton}
     accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
+    testID={"helpButton"}
   >
     <IconFont name={"io-question"} />
   </ButtonDefaultOpacity>
