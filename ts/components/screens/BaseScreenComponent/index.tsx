@@ -38,9 +38,6 @@ interface OwnProps {
   appLogo?: boolean;
   searchType?: SearchType;
   backButtonTestID?: string;
-  // As of now, the following prop is propagated through 4 levels
-  // to finally display a checkbox in SendSupportRequestOptions
-  shouldAskForScreenshotWithInitialValue?: boolean;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
