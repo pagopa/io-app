@@ -41,9 +41,10 @@ export const useMessagesSelection = (
       <ListSelectionBar
         selectedItems={selectedItemsCount}
         totalItems={allItemsCount}
-        onToggleSelection={() =>
-          primaryAction(selectedItems.getOrElse(new Set()))
-        }
+        onToggleSelection={() => {
+          primaryAction(selectedItems.getOrElse(new Set()));
+          resetSelection();
+        }}
         onToggleAllSelection={onToggleAllSelection}
         onResetSelection={resetSelection}
         primaryButtonText={primaryActionText}
