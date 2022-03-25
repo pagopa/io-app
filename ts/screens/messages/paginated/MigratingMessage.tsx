@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   },
   migrationMessageText: {
     textAlign: "center",
-    // marginTop: 40,
     marginBottom: 40
   },
   migrationMessageButtonText: {
