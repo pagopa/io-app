@@ -80,8 +80,6 @@ import { BrandImage } from "../../../features/wallet/component/card/BrandImage";
 import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { Label } from "../../../components/core/typography/Label";
-import { Link } from "../../../components/core/typography/Link";
 import { openWebUrl } from "../../../utils/url";
 import TagIcon from "../../../../img/wallet/tag.svg";
 import CardIcon from "../../../../img/wallet/card.svg";
@@ -476,18 +474,21 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <>
                 <View spacer={true} />
 
-                <Text>
-                  <Label color={"bluegrey"} weight={"Regular"}>
+                <Text
+                  onPress={() => openWebUrl(privacyUrl)}
+                  accessibilityRole="link"
+                >
+                  <LabelSmall color="bluegrey" weight="Regular">
                     {`${I18n.t(
                       "wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer"
                     )} `}
-                  </Label>
+                  </LabelSmall>
 
-                  <Link onPress={() => openWebUrl(privacyUrl)}>
+                  <LabelSmall weight="SemiBold">
                     {I18n.t(
                       "wallet.onboarding.paypal.paymentCheckout.privacyTerms"
                     )}
-                  </Link>
+                  </LabelSmall>
                 </Text>
               </>
             )}
