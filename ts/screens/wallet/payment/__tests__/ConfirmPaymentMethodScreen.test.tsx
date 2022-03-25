@@ -230,11 +230,9 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
 
     // Should render the privacy url for PayPal
     rendered.getByText(
-      I18n.t("wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer")
-    );
-
-    rendered.getByText(
-      I18n.t("wallet.onboarding.paypal.paymentCheckout.privacyTerms")
+      `${I18n.t(
+        "wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer"
+      )} ${I18n.t("wallet.onboarding.paypal.paymentCheckout.privacyTerms")}`
     );
 
     // It should retrieve one `Edit` text, only
