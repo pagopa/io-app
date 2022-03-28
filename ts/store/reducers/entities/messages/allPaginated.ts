@@ -325,34 +325,45 @@ const reduceUpsertMessageStatusAttributes = (
   action: Action
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ): AllPaginated => {
-  const remove = (message: UIMessage, from: Collection) => ({
-    ...from,
-    data: pot.map(from.data, old => ({
-      ...old,
-      page: old.page.filter(_ => _.id !== message.id)
-    }))
-  });
+  const remove = (message: UIMessage, from: Collection) =>
+    refreshCursors({
+      ...from,
+      data: pot.map(from.data, old => ({
+        ...old,
+        page: old.page.filter(_ => _.id !== message.id)
+      }))
+    });
 
   // Messages are inserted locally ONLY if their ID is within the
   // pages that were already fetched. In the other case the moved
   // message will be returned by the backend once the user scrolls
   // to that particular page.
-  const insert = (message: UIMessage, to: Collection) => ({
-    ...to,
-    data: pot.map(to.data, old => ({
+  const insert = (message: UIMessage, to: Collection) =>
+    refreshCursors({
+      ...to,
+      data: pot.map(to.data, old => ({
+        ...old,
+        page:
+          old.next === undefined ||
+          old.next.localeCompare(message.id, "en") <= 0
+            ? [...old.page, message].sort((a, b) =>
+                b.id.localeCompare(a.id, "en")
+              )
+            : old.page
+      }))
+    });
+
+  const refreshCursors = (of: Collection): Collection => ({
+    ...of,
+    data: pot.map(of.data, old => ({
       ...old,
-      page:
-        old.next === undefined || old.next.localeCompare(message.id, "en") <= 0
-          ? [...old.page, message].sort((a, b) =>
-              b.id.localeCompare(a.id, "en")
-            )
-          : old.page,
-      previous:
-        old.previous === undefined ||
-        old.previous.localeCompare(message.id, "en") < 0
-          ? message.id
-          : old.previous,
-      next: old.next
+      previous: old.page[0]?.id
+      // there's no need to change next as:
+      // 1. we never insert messages older than next
+      // 2. removing the last message of the page keeps pagination
+      //    working in the backend (i.e. messages older than next
+      //    are returned even if next is not in the inbox/archive
+      //    anymore)
     }))
   });
 
