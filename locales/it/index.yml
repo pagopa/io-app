@@ -1700,6 +1700,11 @@ messages:
     barcodes: Codici a barre
     nationalService: Servizio Sanitario Nazionale
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
+  pagination:
+    migration:
+      started: "Attendi per favore, stiamo aggiornando la pagina dei messaggi"
+      succeeded: "Abbiamo aggiornato la pagina dei messaggi!"
+      failed: "Non siamo riusciti ad aggiornare la pagina dei messaggi a causa di un errore. Premi il bottone per riprovare"
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md

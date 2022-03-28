@@ -1676,6 +1676,11 @@ messages:
     barcodes: Barcodes
     nationalService: National Health Service
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
+  pagination:
+    migration:
+      started: We are updating the messages section, please wait...
+      succeeded: The messages section was updated!
+      failed: We couldn't update the messages section due to an error. Please tap on the button to try again.
 messageDetails:
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
