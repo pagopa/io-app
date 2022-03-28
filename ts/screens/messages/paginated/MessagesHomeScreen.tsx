@@ -135,7 +135,7 @@ const MessagesHomeScreen = ({
   resetMigrationStatus
 }: Props) => {
   const navigation = useContext(NavigationContext);
-  const needsMigration = Object.keys(messagesStatus).length > -1;
+  const needsMigration = Object.keys(messagesStatus).length > 0;
 
   useOnFirstRender(() => {
     if (needsMigration) {
