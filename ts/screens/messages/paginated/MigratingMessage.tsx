@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
-import IconFont from "../../../components/ui/IconFont";
+import doubtImage from "../../../../img/pictograms/doubt.png";
+import paymentCompletedImage from "../../../../img/pictograms/payment-completed.png";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { H2 } from "../../../components/core/typography/H2";
 import I18n from "../../../i18n";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import customVariables from "../../../theme/variables";
 import { MigrationStatus } from "../../../store/reducers/entities/messages/allPaginated";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 
 const styles = StyleSheet.create({
   migrationMessageContainer: {
@@ -17,14 +19,18 @@ const styles = StyleSheet.create({
     padding: 60
   },
   migrationIconContainer: {
-    height: 80
+    height: 120
   },
   migrationMessageText: {
     textAlign: "center",
     marginBottom: 40
   },
   migrationMessageButtonText: {
-    color: IOColors.white
+    color: IOColors.white,
+    fontWeight: "700",
+    fontSize: 16,
+    lineHeight: 18
+    // fontFamily: "TitilliumWeb"
   },
   activityIndicator: {
     padding: 12
@@ -37,11 +43,11 @@ type Props = {
   onEnd: () => void;
 };
 
-const MigratingMessage = ({ status, onRetry }: Props) => {
+const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
   useEffect(() => {
     // eslint-disable-next-line no-underscore-dangle
     if (status.toUndefined()?._tag === "succeeded") {
-      setTimeout(onRetry, 2000);
+      setTimeout(onEnd, 1000);
     }
   }, [status]);
 
@@ -52,7 +58,7 @@ const MigratingMessage = ({ status, onRetry }: Props) => {
         return (
           <View style={styles.migrationMessageContainer}>
             <View style={styles.migrationIconContainer}>
-              <IconFont size={48} color={IOColors.blue} name={"io-sad"} />
+              {renderInfoRasterImage(doubtImage)}
             </View>
             <H2 style={styles.migrationMessageText}>
               {I18n.t("messages.pagination.migration.failed")}
@@ -73,7 +79,7 @@ const MigratingMessage = ({ status, onRetry }: Props) => {
         return (
           <View style={styles.migrationMessageContainer}>
             <View style={styles.migrationIconContainer}>
-              <IconFont size={48} color={IOColors.blue} name={"io-happy"} />
+              {renderInfoRasterImage(paymentCompletedImage)}
             </View>
             <H2 style={styles.migrationMessageText}>
               {I18n.t("messages.pagination.migration.succeeded")}
