@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     color: IOColors.white,
     fontWeight: "700",
     fontSize: 16,
-    lineHeight: 18
-    // fontFamily: "TitilliumWeb"
+    lineHeight: 18,
+    fontFamily: "TitilliumWeb"
   },
   activityIndicator: {
     padding: 12
