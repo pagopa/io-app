@@ -346,7 +346,13 @@ const reduceUpsertMessageStatusAttributes = (
           ? [...old.page, message].sort((a, b) =>
               b.id.localeCompare(a.id, "en")
             )
-          : old.page
+          : old.page,
+      previous:
+        old.previous === undefined ||
+        old.previous.localeCompare(message.id, "en") < 0
+          ? message.id
+          : old.previous,
+      next: old.next
     }))
   });
 
