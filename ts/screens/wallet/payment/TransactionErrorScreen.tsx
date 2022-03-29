@@ -57,6 +57,7 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  resetCustomFields,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategory
@@ -125,6 +126,7 @@ const requestZendeskAssistanceForPaymentFailure = (
   rptId: RptId,
   payment?: PaymentHistory
 ) => {
+  resetCustomFields();
   // Set pagamenti_pagopa as category
   addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
 
