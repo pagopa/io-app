@@ -715,11 +715,6 @@ describe("isLoadingNextPage selector", () => {
 });
 
 describe("Message archiving", () => {
-  const defaultState: AllPaginated = {
-    inbox: { data: pot.none, lastRequest: none },
-    archive: { data: pot.none, lastRequest: none }
-  };
-
   const A = successReloadMessagesPayload.messages[0];
   const B = successReloadMessagesPayload.messages[1];
   const C = successReloadMessagesPayload.messages[2];
