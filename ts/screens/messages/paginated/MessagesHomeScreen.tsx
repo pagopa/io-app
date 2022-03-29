@@ -41,11 +41,11 @@ import {
   allInboxMessagesSelector,
   allPaginatedSelector
 } from "../../../store/reducers/entities/messages/allPaginated";
-import { upsertMessageStatusAttributes } from "../../../store/actions/messages";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   migrateToPaginatedMessages,
-  resetMigrationStatus
+  resetMigrationStatus,
+  upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
 import {
   MessagesStatus,
@@ -147,9 +147,8 @@ const MessagesHomeScreen = ({
   messageSectionStatusActive,
   searchMessages,
   searchText,
-  searchMessages,
   allInboxMessages,
-  allArchiveMessages
+  allArchiveMessages,
 
   // migration
   messagesStatus,
