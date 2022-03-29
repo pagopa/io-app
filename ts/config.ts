@@ -97,7 +97,8 @@ export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
 export const fimsEnabled = Config.FIMS_ENABLED === "YES";
 
 // Premium Messages Feature Flag
-export const premiumMessagesEnabled = Config.PREMIUM_MESSAGES_ENABLED === "YES";
+export const premiumMessagesOptInEnabled =
+  Config.PREMIUM_MESSAGES_OPT_IN_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
