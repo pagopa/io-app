@@ -1,9 +1,8 @@
-import { call, put, select, takeLatest } from "typed-redux-saga/macro";
+import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
 import { BackendClient } from "../../api/backend";
 import {
-  reloadAllMessages,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../../store/actions/messages";
@@ -14,8 +13,6 @@ import { MessageStatusBulkChange } from "../../../definitions/backend/MessageSta
 import { MessageStatusReadingChange } from "../../../definitions/backend/MessageStatusReadingChange";
 import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
 import { isTestEnv } from "../../utils/environment";
-import { pageSize } from "../../config";
-import { getById } from "../../store/reducers/entities/messages/allPaginated";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<
@@ -31,30 +28,6 @@ export default function* watcher(
   yield* takeLatest(
     getType(upsertMessageStatusAttributes.request),
     tryUpsertMessageStatusAttributes(putMessage)
-  );
-
-  // if an archive operation fails, we may need to reload
-  // the initial messages, because the original message
-  // could be lost
-  yield* takeLatest(
-    getType(upsertMessageStatusAttributes.failure),
-    function* (
-      action: ActionType<typeof upsertMessageStatusAttributes.failure>
-    ) {
-      const payload = action.payload.payload;
-
-      if (payload.update.tag === "bulk" || payload.update.tag === "archiving") {
-        const message = yield* select(getById, payload.message.id);
-        if (!message) {
-          yield* put(
-            reloadAllMessages.request({
-              pageSize,
-              filter: { getArchived: !payload.update.isArchived }
-            })
-          );
-        }
-      }
-    }
   );
 }
 
