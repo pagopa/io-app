@@ -4,17 +4,17 @@ import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import ListSelectionBar from "../../../ListSelectionBar";
 
 export const useMessagesSelection = (
-  allMessagesIDs: Array<string>,
+  allMessages: ReadonlyArray<UIMessage>,
   navigateToMessageDetail: (message: UIMessage) => void,
   primaryActionText: string,
-  primaryAction: (selectedItems: ReadonlySet<string>) => void
+  primaryAction: (selectedItems: ReadonlyArray<UIMessage>) => void
 ) => {
   const { selectedItems, toggleItem, setAllItems, resetSelection } =
     useItemsSelection();
 
   const isSelecting = selectedItems.isSome();
   const selectedItemsCount = selectedItems.toUndefined()?.size ?? 0;
-  const allItemsCount = allMessagesIDs.length;
+  const allItemsCount = allMessages.length;
 
   const onPressItem = (message: UIMessage) => {
     if (selectedItems.isSome()) {
@@ -32,7 +32,7 @@ export const useMessagesSelection = (
     if (selectedItemsCount === allItemsCount) {
       setAllItems([]);
     } else {
-      setAllItems(allMessagesIDs);
+      setAllItems(allMessages.map(_ => _.id));
     }
   };
 
@@ -42,7 +42,11 @@ export const useMessagesSelection = (
         selectedItems={selectedItemsCount}
         totalItems={allItemsCount}
         onToggleSelection={() => {
-          primaryAction(selectedItems.getOrElse(new Set()));
+          primaryAction(
+            allMessages.filter(_ =>
+              selectedItems.getOrElse(new Set()).has(_.id)
+            )
+          );
           resetSelection();
         }}
         onToggleAllSelection={onToggleAllSelection}

@@ -914,7 +914,7 @@ describe("Message archiving", () => {
 
       describe(`${when.desc}`, () => {
         const payload: UpsertMessageStatusAttributesPayload = {
-          id: when.archivingMessage.id,
+          message: when.archivingMessage,
           update: { tag: "archiving", isArchived: true }
         };
 

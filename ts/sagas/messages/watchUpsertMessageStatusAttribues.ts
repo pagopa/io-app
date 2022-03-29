@@ -44,7 +44,7 @@ export default function* watcher(
       const payload = action.payload.payload;
 
       if (payload.update.tag === "bulk" || payload.update.tag === "archiving") {
-        const message = yield* select(getById, payload.id);
+        const message = yield* select(getById, payload.message.id);
         if (!message) {
           yield* put(
             reloadAllMessages.request({
@@ -95,7 +95,7 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
       const messageStatusChange = validatePayload(action.payload);
       const response: SagaCallReturnType<typeof putMessage> = yield* call(
         putMessage,
-        { id: action.payload.id, messageStatusChange }
+        { id: action.payload.message.id, messageStatusChange }
       );
 
       const nextAction = handleResponse<unknown>(

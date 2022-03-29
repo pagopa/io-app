@@ -78,15 +78,18 @@ const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
 type AllTabsProps = {
   navigateToMessageDetail: (message: UIMessage) => void;
-  allInboxMessagesIDs: Array<string>;
-  allArchiveMessagesIDs: Array<string>;
-  setArchived: (isArchived: boolean, messageIDs: ReadonlySet<string>) => void;
+  inbox: ReadonlyArray<UIMessage>;
+  archive: ReadonlyArray<UIMessage>;
+  setArchived: (
+    isArchived: boolean,
+    messages: ReadonlyArray<UIMessage>
+  ) => void;
 };
 
 const AllTabs = ({
   navigateToMessageDetail,
-  allInboxMessagesIDs,
-  allArchiveMessagesIDs,
+  inbox,
+  archive,
   setArchived
 }: AllTabsProps) => (
   <View style={IOStyles.flex}>
@@ -103,7 +106,7 @@ const AllTabs = ({
         heading={I18n.t("messages.tab.inbox")}
       >
         <MessagesInbox
-          allMessagesIDs={allInboxMessagesIDs}
+          messages={inbox}
           navigateToMessageDetail={navigateToMessageDetail}
           archiveMessages={messages => setArchived(true, messages)}
         />
@@ -115,7 +118,7 @@ const AllTabs = ({
         heading={I18n.t("messages.tab.archive")}
       >
         <MessagesArchive
-          allMessagesIDs={allArchiveMessagesIDs}
+          messages={archive}
           navigateToMessageDetail={navigateToMessageDetail}
           unarchiveMessages={messages => setArchived(false, messages)}
         />
@@ -132,8 +135,8 @@ const MessagesHomeScreen = ({
   messageSectionStatusActive,
   searchText,
   searchMessages,
-  allInboxMessagesIDs,
-  allArchiveMessagesIDs
+  allInboxMessages,
+  allArchiveMessages
 }: Props) => {
   const navigation = useContext(NavigationContext);
 
@@ -148,11 +151,14 @@ const MessagesHomeScreen = ({
 
   const dispatch = useDispatch();
 
-  const setArchived = (isArchived: boolean, messageIDs: ReadonlySet<string>) =>
-    messageIDs.forEach(id =>
+  const setArchived = (
+    isArchived: boolean,
+    messages: ReadonlyArray<UIMessage>
+  ) =>
+    messages.forEach(message =>
       dispatch(
         upsertMessageStatusAttributes.request({
-          id,
+          message,
           update: { tag: "archiving", isArchived }
         })
       )
@@ -193,8 +199,8 @@ const MessagesHomeScreen = ({
             iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
           />
           <AllTabs
-            allInboxMessagesIDs={allInboxMessagesIDs}
-            allArchiveMessagesIDs={allArchiveMessagesIDs}
+            inbox={allInboxMessages}
+            archive={allArchiveMessages}
             navigateToMessageDetail={navigateToMessageDetail}
             setArchived={setArchived}
           />
@@ -236,12 +242,8 @@ const mapStateToProps = (state: GlobalState) => ({
     [allInboxMessagesSelector, allArchiveMessagesSelector],
     (inbox, archive) => inbox.concat(archive)
   )(state),
-  allInboxMessagesIDs: createSelector(allInboxMessagesSelector, inbox =>
-    inbox.map(_ => _.id)
-  )(state),
-  allArchiveMessagesIDs: createSelector(allArchiveMessagesSelector, archive =>
-    archive.map(_ => _.id)
-  )(state)
+  allInboxMessages: allInboxMessagesSelector(state),
+  allArchiveMessages: allArchiveMessagesSelector(state)
 });
 
 export default connect(mapStateToProps, undefined)(MessagesHomeScreen);

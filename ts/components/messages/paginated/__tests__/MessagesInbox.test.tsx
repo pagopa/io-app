@@ -22,7 +22,7 @@ describe("MessagesInbox component", () => {
   describe("when there at least one message and the user taps on it", () => {
     it("should call `navigateToMessageDetail` with the message", async () => {
       const props = {
-        allMessagesIDs: [],
+        messages: [],
         navigateToMessageDetail: jest.fn(),
         archiveMessages: jest.fn()
       };

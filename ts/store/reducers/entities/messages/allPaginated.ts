@@ -369,7 +369,7 @@ const reduceUpsertMessageStatusAttributes = (
 
   switch (action.type) {
     case getType(upsertMessageStatusAttributes.request): {
-      const message = findOneById(action.payload.id, state);
+      const message = findOneById(action.payload.message.id, state);
       if (message) {
         const { update } = action.payload;
         if (update.tag === "bulk" || update.tag === "reading") {
@@ -399,7 +399,7 @@ const reduceUpsertMessageStatusAttributes = (
     }
 
     case getType(upsertMessageStatusAttributes.failure): {
-      const message = findOneById(action.payload.payload.id, state);
+      const message = findOneById(action.payload.payload.message.id, state);
       if (message) {
         const { update } = action.payload.payload;
         if (update.tag === "bulk" || update.tag === "reading") {

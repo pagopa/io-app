@@ -119,7 +119,7 @@ export const reloadAllMessages = createAsyncAction(
 >();
 
 export type UpsertMessageStatusAttributesPayload = {
-  id: string;
+  message: UIMessage;
   update:
     | { tag: "archiving"; isArchived: boolean }
     | { tag: "reading" }

@@ -19,9 +19,9 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  allMessagesIDs: Array<string>;
+  messages: ReadonlyArray<UIMessage>;
   navigateToMessageDetail: (message: UIMessage) => void;
-  unarchiveMessages: (messages: ReadonlySet<string>) => void;
+  unarchiveMessages: (messages: ReadonlyArray<UIMessage>) => void;
 };
 
 /**
@@ -29,19 +29,19 @@ type Props = {
  * It looks redundant at the moment but will be used later on once we bring back
  * states and filtering in the Messages.
  *
- * @param allMessagesIDs used for handling messages selection
+ * @param messages used for handling messages selection
  * @param navigateToMessageDetail
  * @param unarchiveMessages a function called when the user taps on the unarchive CTA
  * @constructor
  */
 const MessagesArchive = ({
-  allMessagesIDs,
+  messages,
   navigateToMessageDetail,
   unarchiveMessages
 }: Props) => {
   const { selectedItems, onPressItem, onLongPressItem, MessagesSelectionBar } =
     useMessagesSelection(
-      allMessagesIDs,
+      messages,
       navigateToMessageDetail,
       I18n.t("messages.cta.unarchive"),
       unarchiveMessages
