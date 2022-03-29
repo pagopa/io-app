@@ -351,11 +351,6 @@ const reduceLoadPreviousPage = (
  * Implements an optimistic UI by updating the state at request time and rolling back the updates
  * in case of failure.
  *
- *   TODO: https://pagopa.atlassian.net/browse/IA-681
- *   1 - identify the direction
- *   2 - move to the right collection
- *   3 - verify sorting
- *
  * @param state
  * @param action
  */
@@ -374,9 +369,9 @@ const reduceUpsertMessageStatusAttributes = (
     });
 
   // Messages are inserted locally ONLY if their ID is within the
-  // pages that were already fetched. In the other case the moved
-  // message will be returned by the backend once the user scrolls
-  // to that particular page.
+  // pages that were already fetched. Otherwise, the moved message
+  // will be returned by the backend once the user scrolls to that
+  // particular page.
   const insert = (message: UIMessage, to: Collection) =>
     refreshCursors({
       ...to,
