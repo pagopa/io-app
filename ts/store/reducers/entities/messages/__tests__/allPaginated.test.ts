@@ -928,6 +928,17 @@ describe("Message archiving", () => {
           expect(requestState.inbox.data).toEqual(then.expectedInbox);
         });
 
+        describe(`and the request succeeds`, () => {
+          const successState = reducer(
+            requestState,
+            upsertMessageStatusAttributes.success(payload)
+          );
+          it(`archive and inbox keep their request state`, () => {
+            expect(successState.archive.data).toEqual(then.expectedArchive);
+            expect(successState.inbox.data).toEqual(then.expectedInbox);
+          });
+        });
+
         describe(`and the request fails`, () => {
           const failureState = reducer(
             requestState,
@@ -936,8 +947,9 @@ describe("Message archiving", () => {
               payload
             })
           );
-          it(`archive is reverted to its original state`, () => {
+          it(`archive and inbox are reverted to their original state`, () => {
             expect(failureState.archive.data).toEqual(given.archive);
+            expect(failureState.inbox.data).toEqual(given.inbox);
           });
         });
       });

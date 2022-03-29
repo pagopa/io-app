@@ -358,18 +358,18 @@ const reduceUpsertMessageStatusAttributes = (
     data: pot.map(of.data, old => ({
       ...old,
       previous: old.page[0]?.id
-      // there's no need to change next as:
-      // 1. we never insert messages older than next
+      // there's no need to update `next` as:
+      // 1. we never insert messages older than `next`
       // 2. removing the last message of the page keeps pagination
-      //    working in the backend (i.e. messages older than next
-      //    are returned even if next is not in the inbox/archive
+      //    working in the backend (i.e. messages older than `next`
+      //    are returned even if `next` is not in the inbox/archive
       //    anymore)
     }))
   });
 
   switch (action.type) {
     case getType(upsertMessageStatusAttributes.request): {
-      const message = findOneById(action.payload.message.id, state);
+      const message = action.payload.message;
       if (message) {
         const { update } = action.payload;
         if (update.tag === "bulk" || update.tag === "reading") {
@@ -399,7 +399,7 @@ const reduceUpsertMessageStatusAttributes = (
     }
 
     case getType(upsertMessageStatusAttributes.failure): {
-      const message = findOneById(action.payload.payload.message.id, state);
+      const message = action.payload.payload.message;
       if (message) {
         const { update } = action.payload.payload;
         if (update.tag === "bulk" || update.tag === "reading") {
@@ -434,14 +434,6 @@ const reduceUpsertMessageStatusAttributes = (
       return state;
   }
 };
-
-const findOneById = (id: string, state: AllPaginated): UIMessage | undefined =>
-  pot.toUndefined(
-    pot.map(state.inbox.data, inbox => inbox.page.find(_ => _.id === id))
-  ) ||
-  pot.toUndefined(
-    pot.map(state.archive.data, archive => archive.page.find(_ => _.id === id))
-  );
 
 // Selectors
 
