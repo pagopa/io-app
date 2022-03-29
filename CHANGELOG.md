@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0-rc.3](https://github.com/pagopa/io-app/compare/2.6.0-rc.2...2.6.0-rc.3) (2022-03-29)
+
+
+### Chores
+
+* [[IA-766](https://pagopa.atlassian.net/browse/IA-766)] Enable pagination [#3859](https://github.com/pagopa/io-app/issues/3859) ([82055ec](https://github.com/pagopa/io-app/commit/82055ecd2bdc69c7fd8a8978bd46990c0c6c2e2e))
+
 ## [2.6.0-rc.2](https://github.com/pagopa/io-app/compare/2.6.0-rc.1...2.6.0-rc.2) (2022-03-29)
 
 
