@@ -54,10 +54,12 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../utils/supportAssistance";
 import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -120,6 +122,12 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private zendeskAssistanceLogAndStart = () => {
     // Set pagamenti_pagopa as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+
+    // Add rptId custom field
+    addTicketCustomField(
+      zendeskBlockedPaymentRptIdId,
+      RptIdFromString.encode(this.props.navigation.getParam("payment").data)
+    );
     // Append the payment history details in the log
     appendLog(
       getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
