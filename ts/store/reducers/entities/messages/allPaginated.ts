@@ -6,7 +6,10 @@ import { createSelector } from "reselect";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
+  migrateToPaginatedMessages,
+  MigrationResult,
   reloadAllMessages,
+  resetMigrationStatus,
   upsertMessageStatusAttributes
 } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
@@ -29,17 +32,25 @@ type Collection = {
   lastRequest: Option<"previous" | "next" | "all">;
 };
 
+export type MigrationStatus = Option<
+  | { _tag: "started"; total: number }
+  | { _tag: "succeeded"; total: number }
+  | ({ _tag: "failed" } & MigrationResult)
+>;
+
 /**
  * A list of messages and pagination inbox.
  */
 export type AllPaginated = {
   inbox: Collection;
   archive: Collection;
+  migration: MigrationStatus;
 };
 
 const INITIAL_STATE: AllPaginated = {
   inbox: { data: pot.none, lastRequest: none },
-  archive: { data: pot.none, lastRequest: none }
+  archive: { data: pot.none, lastRequest: none },
+  migration: none
 };
 
 /**
@@ -69,6 +80,34 @@ const reducer = (
     case getType(upsertMessageStatusAttributes.success):
     case getType(upsertMessageStatusAttributes.failure):
       return reduceUpsertMessageStatusAttributes(state, action);
+
+    /* BEGIN Migration-related block */
+    case getType(migrateToPaginatedMessages.request):
+      return {
+        ...state,
+        migration: some({
+          _tag: "started",
+          total: Object.keys(action.payload).length
+        })
+      };
+
+    case getType(migrateToPaginatedMessages.success):
+      return {
+        ...state,
+        migration: some({ _tag: "succeeded", total: action.payload })
+      };
+    case getType(migrateToPaginatedMessages.failure):
+      return {
+        ...state,
+        migration: some({ _tag: "failed", ...action.payload })
+      };
+
+    case getType(resetMigrationStatus):
+      return {
+        ...state,
+        migration: none
+      };
+    /* END Migration-related block */
 
     case getType(clearCache):
       return INITIAL_STATE;

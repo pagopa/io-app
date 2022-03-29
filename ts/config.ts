@@ -96,6 +96,10 @@ export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
 // FIMS (Federated Identity Management System) Feature Flag
 export const fimsEnabled = Config.FIMS_ENABLED === "YES";
 
+// Premium Messages Opt-in/out Feature Flag
+export const premiumMessagesOptInEnabled =
+  Config.PREMIUM_MESSAGES_OPT_IN_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 

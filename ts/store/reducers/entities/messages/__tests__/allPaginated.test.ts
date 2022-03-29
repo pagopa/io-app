@@ -431,7 +431,7 @@ describe("allPaginated reducer", () => {
 
   describe("when loadPreviousPageMessages and loadNextPageMessages success actions follow each other", () => {
     const initialState: AllPaginated = {
-      archive: { data: pot.none, lastRequest: none },
+      ...defaultState,
       inbox: {
         data: pot.some({
           page: [],
@@ -506,6 +506,12 @@ describe("allPaginated reducer", () => {
     });
 });
 
+const defaultState: AllPaginated = {
+  inbox: { data: pot.none, lastRequest: none },
+  archive: { data: pot.none, lastRequest: none },
+  migration: none
+};
+
 function toGlobalState(localState: AllPaginated): GlobalState {
   return {
     entities: { messages: { allPaginated: localState } }
@@ -570,6 +576,7 @@ describe("isLoadingPreviousPage selector", () => {
           expect(
             isLoadingInboxPreviousPage(
               toGlobalState({
+                ...defaultState,
                 archive: {
                   data: archive,
                   lastRequest:
@@ -589,6 +596,7 @@ describe("isLoadingPreviousPage selector", () => {
           expect(
             isLoadingArchivePreviousPage(
               toGlobalState({
+                ...defaultState,
                 archive: {
                   data: archive,
                   lastRequest:
@@ -666,6 +674,7 @@ describe("isLoadingNextPage selector", () => {
           expect(
             isLoadingInboxNextPage(
               toGlobalState({
+                ...defaultState,
                 archive: {
                   data: archive,
                   lastRequest:
@@ -685,6 +694,7 @@ describe("isLoadingNextPage selector", () => {
           expect(
             isLoadingArchiveNextPage(
               toGlobalState({
+                ...defaultState,
                 archive: {
                   data: archive,
                   lastRequest:
