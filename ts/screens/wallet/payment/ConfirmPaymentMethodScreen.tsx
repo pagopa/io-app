@@ -306,27 +306,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentMethodInfo = getPaymentMethodInfo(
     paymentMethod,
     props.isPaypalEnabled
-  );
-
-  const paymentMethodSubject = paymentMethodInfo
-    .map(({ subject }) => subject)
-    .getOrElse("");
-
-  const paymentMethodExpiration = paymentMethodInfo
-    .map(({ expiration }) => expiration)
-    .getOrElse("");
-
-  const paymentMethodCaption = paymentMethodInfo
-    .map(({ caption }) => caption)
-    .getOrElse("");
-
-  const paymentMethodLogo = paymentMethodInfo
-    .map(({ logo }) => logo)
-    .getOrElse(<View />);
-
-  const paymentMethodA11yLabel = paymentMethodInfo
-    .map(({ accessibilityLabel }) => accessibilityLabel)
-    .getOrElse("");
+  ).getOrElse({
+    subject: "",
+    expiration: "",
+    caption: "",
+    logo: <View />,
+    accessibilityLabel: ""
+  });
 
   // It should be possible to change PSP only when the user
   // is not paying using PayPal or the relative flag is
@@ -425,17 +411,19 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <View spacer />
 
             <SelectionBox
-              logo={paymentMethodLogo}
-              mainText={paymentMethodCaption}
+              logo={paymentMethodInfo.logo}
+              mainText={paymentMethodInfo.caption}
               subText={
-                paymentMethodSubject +
-                (!isPayingWithPaypal ? ` · ${paymentMethodExpiration}` : "")
+                paymentMethodInfo.subject +
+                (!isPayingWithPaypal
+                  ? ` · ${paymentMethodInfo.expiration}`
+                  : "")
               }
               ctaText={I18n.t("wallet.ConfirmPayment.edit")}
               onPress={props.pickPaymentMethod}
-              accessibilityLabel={`${paymentMethodA11yLabel}, ${I18n.t(
-                "wallet.ConfirmPayment.accessibility.edit"
-              )}`}
+              accessibilityLabel={`${
+                paymentMethodInfo.accessibilityLabel
+              }, ${I18n.t("wallet.ConfirmPayment.accessibility.edit")}`}
             />
 
             <View spacer large />
