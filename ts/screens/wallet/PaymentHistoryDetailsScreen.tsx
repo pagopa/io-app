@@ -54,6 +54,7 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  resetCustomFields,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategory
@@ -120,6 +121,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   };
 
   private zendeskAssistanceLogAndStart = () => {
+    resetCustomFields();
     // Set pagamenti_pagopa as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
 
