@@ -1706,7 +1706,7 @@ messages:
     migration:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
       succeeded: "Fatto!"
-      failed: "Non siamo riusciti ad aggiornare sezione messaggi."
+      failed: "Non siamo riusciti ad aggiornare la sezione messaggi."
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md
