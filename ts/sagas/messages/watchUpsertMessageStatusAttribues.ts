@@ -68,7 +68,7 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
       const messageStatusChange = validatePayload(action.payload);
       const response: SagaCallReturnType<typeof putMessage> = yield* call(
         putMessage,
-        { id: action.payload.id, messageStatusChange }
+        { id: action.payload.message.id, messageStatusChange }
       );
 
       const nextAction = handleResponse<unknown>(

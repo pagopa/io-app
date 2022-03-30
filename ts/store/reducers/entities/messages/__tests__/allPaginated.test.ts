@@ -12,7 +12,9 @@ import {
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
-  reloadAllMessages
+  reloadAllMessages,
+  upsertMessageStatusAttributes,
+  UpsertMessageStatusAttributesPayload
 } from "../../../../actions/messages";
 import { GlobalState } from "../../../types";
 import reducer, {
@@ -710,4 +712,252 @@ describe("isLoadingNextPage selector", () => {
       });
     }
   );
+});
+
+describe("Message archiving", () => {
+  const A = successReloadMessagesPayload.messages[0];
+  const B = successReloadMessagesPayload.messages[1];
+  const C = successReloadMessagesPayload.messages[2];
+
+  [
+    {
+      given: {
+        desc: "given a pot.none archive",
+        inbox: pot.some({
+          page: [A],
+          previous: A.id,
+          next: undefined
+        }),
+        archive: pot.none
+      },
+      when: {
+        desc: "when archiving a message",
+        archivingMessage: A
+      },
+      then: {
+        desc: "then the message is deleted from inbox and archive remains unchanged",
+        expectedInbox: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        }),
+        expectedArchive: pot.none
+      }
+    },
+
+    {
+      given: {
+        desc: "given an empty archive",
+        inbox: pot.some({
+          page: [A],
+          previous: A.id,
+          next: undefined
+        }),
+        archive: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        })
+      },
+      when: {
+        desc: "when archiving a message",
+        archivingMessage: A
+      },
+      then: {
+        desc: "then the message is moved from inbox to archive and cursors updated",
+        expectedInbox: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        }),
+        expectedArchive: pot.some({
+          page: [A],
+          previous: A.id,
+          next: undefined
+        })
+      }
+    },
+
+    {
+      given: {
+        desc: "given a partially fetched archive",
+        inbox: pot.some({
+          page: [A],
+          previous: A.id,
+          next: undefined
+        }),
+        archive: pot.some({
+          page: [B, C],
+          previous: B.id,
+          next: C.id
+        })
+      },
+      when: {
+        desc: "when archiving a message newer than the archived ones",
+        archivingMessage: A
+      },
+      then: {
+        desc: "then the message is moved from inbox to archive and cursors updated",
+        expectedInbox: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        }),
+        expectedArchive: pot.some({
+          page: [A, B, C],
+          previous: A.id,
+          next: C.id
+        })
+      }
+    },
+
+    {
+      given: {
+        desc: "given a partially fetched archive",
+        inbox: pot.some({
+          page: [C],
+          previous: C.id,
+          next: undefined
+        }),
+        archive: pot.some({
+          page: [A, B],
+          previous: A.id,
+          next: B.id
+        })
+      },
+      when: {
+        desc: "when archiving a message older than the archived ones",
+        archivingMessage: C
+      },
+      then: {
+        desc: "then the message is removed from inbox and archive remains unchanged",
+        expectedInbox: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        }),
+        expectedArchive: pot.some({
+          page: [A, B],
+          previous: A.id,
+          next: B.id
+        })
+      }
+    },
+
+    {
+      given: {
+        desc: "given a partially fetched archive",
+        inbox: pot.some({
+          page: [B],
+          previous: B.id,
+          next: undefined
+        }),
+        archive: pot.some({
+          page: [A, C],
+          previous: A.id,
+          next: C.id
+        })
+      },
+      when: {
+        desc: "when archiving a message neither newer nor older than the archived ones",
+        archivingMessage: B
+      },
+      then: {
+        desc: "then the message is moved from inbox to archive and archive cursors remain unchanged",
+        expectedInbox: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        }),
+        expectedArchive: pot.some({
+          page: [A, B, C],
+          previous: A.id,
+          next: C.id
+        })
+      }
+    },
+
+    {
+      given: {
+        desc: "given a fully fetched archive",
+        inbox: pot.some({
+          page: [C],
+          previous: C.id,
+          next: undefined
+        }),
+        archive: pot.some({
+          page: [A, B],
+          previous: A.id,
+          next: undefined
+        })
+      },
+      when: {
+        desc: "when archiving a message older than the archived ones",
+        archivingMessage: C
+      },
+      then: {
+        desc: "then the message is moved from inbox to archive and next cursor remains undefined",
+        expectedInbox: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        }),
+        expectedArchive: pot.some({
+          page: [A, B, C],
+          previous: A.id,
+          next: undefined
+        })
+      }
+    }
+  ].forEach(({ given, when, then }) => {
+    describe(`${given.desc}`, () => {
+      const initialState = {
+        ...defaultState,
+        inbox: { ...defaultState.inbox, data: given.inbox },
+        archive: { ...defaultState.archive, data: given.archive }
+      };
+
+      describe(`${when.desc}`, () => {
+        const payload: UpsertMessageStatusAttributesPayload = {
+          message: when.archivingMessage,
+          update: { tag: "archiving", isArchived: true }
+        };
+
+        const requestState = reducer(
+          initialState,
+          upsertMessageStatusAttributes.request(payload)
+        );
+
+        it(`${then.desc}`, () => {
+          expect(requestState.archive.data).toEqual(then.expectedArchive);
+          expect(requestState.inbox.data).toEqual(then.expectedInbox);
+        });
+
+        describe(`and the request succeeds`, () => {
+          const successState = reducer(
+            requestState,
+            upsertMessageStatusAttributes.success(payload)
+          );
+          it(`archive and inbox keep their request state`, () => {
+            expect(successState.archive.data).toEqual(then.expectedArchive);
+            expect(successState.inbox.data).toEqual(then.expectedInbox);
+          });
+        });
+
+        describe(`and the request fails`, () => {
+          const failureState = reducer(
+            requestState,
+            upsertMessageStatusAttributes.failure({
+              error: new Error(),
+              payload
+            })
+          );
+          it(`archive and inbox are reverted to their original state`, () => {
+            expect(failureState.archive.data).toEqual(given.archive);
+            expect(failureState.inbox.data).toEqual(given.inbox);
+          });
+        });
+      });
+    });
+  });
 });
