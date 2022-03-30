@@ -52,7 +52,8 @@ import {
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
   DEPRECATED_setMessageReadState,
-  upsertMessageStatusAttributes
+  upsertMessageStatusAttributes,
+  migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
@@ -262,6 +263,22 @@ const trackAction =
           setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
         }
         break;
+      }
+      case getType(migrateToPaginatedMessages.request): {
+        return mp.track("MESSAGES_MIGRATION_START", {
+          total: action.payload.total
+        });
+      }
+      case getType(migrateToPaginatedMessages.success): {
+        return mp.track("MESSAGES_MIGRATION_SUCCESS", {
+          total: action.payload
+        });
+      }
+      case getType(migrateToPaginatedMessages.failure): {
+        return mp.track("MESSAGES_MIGRATION_FAILURE", {
+          failed: action.payload.failed,
+          succeeded: action.payload.succeeded
+        });
       }
       // instabug
       case getType(instabugReportClosed):
