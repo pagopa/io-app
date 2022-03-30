@@ -1,12 +1,10 @@
 import * as React from "react";
-import { Body, Container, Content, Right, View } from "native-base";
+import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import AppHeader from "../../../components/ui/AppHeader";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import customVariables from "../../../theme/variables";
 import { Label } from "../../../components/core/typography/Label";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import CommonContent from "./CommonContent";
 
 const styles = StyleSheet.create({
   itemsCenter: { alignItems: "center" },
@@ -19,29 +17,19 @@ type Props = {
 };
 
 const ErrorContent = ({ text, close }: Props) => (
-  <Container>
-    <AppHeader noLeft={true}>
-      <Body />
-      <Right>
-        <ButtonDefaultOpacity onPress={close} transparent={true}>
-          <IconFont name={"io-close"} />
-        </ButtonDefaultOpacity>
-      </Right>
-    </AppHeader>
-    <Content style={IOStyles.flex}>
-      <IconFont
-        name={"io-error"}
-        size={120}
-        color={customVariables.brandDanger}
-        style={styles.selfCenter}
-      />
-      <View spacer={true} />
+  <CommonContent close={close}>
+    <IconFont
+      name={"io-error"}
+      size={120}
+      color={customVariables.brandDanger}
+      style={styles.selfCenter}
+    />
+    <View spacer={true} />
 
-      <View style={styles.itemsCenter}>
-        <Label weight={"Bold"}>{text}</Label>
-      </View>
-    </Content>
-  </Container>
+    <View style={styles.itemsCenter}>
+      <Label weight={"Bold"}>{text}</Label>
+    </View>
+  </CommonContent>
 );
 
 export default ErrorContent;
