@@ -49,8 +49,7 @@ import {
   DEPRECATED_loadMessage,
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
-  DEPRECATED_setMessageReadState,
-  upsertMessageStatusAttributes
+  DEPRECATED_setMessageReadState
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
@@ -249,7 +248,6 @@ const trackAction =
       case getType(DEPRECATED_setMessageReadState): {
         return mp.track(action.type, action.payload);
       }
-
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
