@@ -174,7 +174,7 @@ export const isFIMSEnabledSelector = createSelector(
 );
 
 /**
- * Return the remote config about the Premium Messages' opt-in/out
+ * Return the remote config about the Premium Messages opt-in/out
  * screens enabled/disable. If there is no data or the local Feature Flag is
  * disabled, false is the default value -> (Opt-in/out screen disabled)
  */

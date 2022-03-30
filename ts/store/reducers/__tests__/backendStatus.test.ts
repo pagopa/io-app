@@ -6,13 +6,17 @@ import {
   areSystemsDeadReducer,
   BackendStatusState,
   bpdRankingEnabledSelector,
+  isPremiumMessagesOptInOutEnabledSelector,
   isUaDonationsEnabledSelector,
   sectionStatusSelector,
   uaDonationsBannerConfigSelector
 } from "../backendStatus";
 import { GlobalState } from "../types";
 
-jest.mock("../../../config", () => ({ uaDonationsEnabled: true }));
+jest.mock("../../../config", () => ({
+  uaDonationsEnabled: true,
+  premiumMessagesOptInEnabled: true
+}));
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
@@ -313,6 +317,45 @@ describe("test selectors", () => {
       } as any as GlobalState;
       const bannerConfig = uaDonationsBannerConfigSelector(someStoreConfig);
       expect(bannerConfig).toEqual(status.config.uaDonations.banner);
+    });
+  });
+
+  describe("premium messages opt-in/out selectors", () => {
+    it("should return false if the remote flag is undefined", () => {
+      const output = isPremiumMessagesOptInOutEnabledSelector(noneStore);
+      expect(output).toBeFalsy();
+    });
+
+    it("should return false if the remote flag is false", () => {
+      const customStore = {
+        backendStatus: {
+          status: some({
+            config: {
+              premiumMessages: { opt_in_out_enabled: false }
+            }
+          })
+        }
+      } as unknown as GlobalState;
+
+      const output = isPremiumMessagesOptInOutEnabledSelector(customStore);
+
+      expect(output).toBeFalsy();
+    });
+
+    it("should return true if the remote flag is true", () => {
+      const customStore = {
+        backendStatus: {
+          status: some({
+            config: {
+              premiumMessages: { opt_in_out_enabled: true }
+            }
+          })
+        }
+      } as unknown as GlobalState;
+
+      const output = isPremiumMessagesOptInOutEnabledSelector(customStore);
+
+      expect(output).toBeTruthy();
     });
   });
 });
