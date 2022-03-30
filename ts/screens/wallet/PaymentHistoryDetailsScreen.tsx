@@ -5,6 +5,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
@@ -60,7 +61,6 @@ import {
   zendeskPaymentCategory
 } from "../../utils/supportAssistance";
 import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
