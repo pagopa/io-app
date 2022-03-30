@@ -80,7 +80,7 @@ interface OwnProps {
     searchType?: SearchType;
     onSearchTap?: () => void;
   };
-  showInstabugChat?: boolean;
+  showChat?: boolean;
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
@@ -232,16 +232,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       isSearchEnabled,
       onShowHelp,
       isSearchAvailable,
-      showInstabugChat,
-      customRightIcon,
-      assistanceToolConfig
+      showChat,
+      customRightIcon
     } = this.props;
 
-    const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-    const hasInstabugChat =
-      !isSearchEnabled &&
-      showInstabugChat !== false &&
-      choosenTool === ToolEnum.instabug;
+    const shouldShowChat = !isSearchEnabled && showChat !== false;
 
     return (
       <Right>

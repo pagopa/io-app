@@ -192,7 +192,7 @@ const ZendeskSupportHelpCenter = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      showInstabugChat={false}
+      showChat={false}
       customGoBack={<View />}
       customRightIcon={{
         iconName: "io-close",

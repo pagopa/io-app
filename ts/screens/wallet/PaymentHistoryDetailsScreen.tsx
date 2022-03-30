@@ -254,7 +254,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent
         goBack={() => this.props.navigation.goBack()}
-        showInstabugChat={false}
+        showChat={false}
         dark={true}
         headerTitle={I18n.t("payment.details.info.title")}
       >
