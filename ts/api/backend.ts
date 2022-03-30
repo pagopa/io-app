@@ -190,7 +190,7 @@ export function BackendClient(
       readonly page_size?: number;
       readonly maximum_id?: string;
       readonly minimum_id?: string;
-      readonly get_archived?: boolean;
+      readonly archived?: boolean;
       readonly Bearer: string;
     },
     "Authorization",
@@ -212,7 +212,7 @@ export function BackendClient(
         enrich_result_data,
         minimum_id,
         page_size,
-        get_archived
+        archived
       } = params;
       return _.pickBy(
         {
@@ -220,7 +220,7 @@ export function BackendClient(
           enrich_result_data,
           minimum_id,
           page_size,
-          get_archived
+          archived
         },
         v => !_.isUndefined(v)
       );
