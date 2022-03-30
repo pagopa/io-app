@@ -159,6 +159,16 @@ export const isCGNEnabledSelector = createSelector(
     backendStatus.map(bs => bs.config.cgn.enabled).toUndefined() ?? false
 );
 
+/**
+ * return the remote config about CGN enabled/disabled
+ * if there is no data, false is the default value -> (CGN disabled)
+ */
+export const isFIMSEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.fims.enabled).toUndefined() ?? false
+);
+
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 

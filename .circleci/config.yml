@@ -40,7 +40,7 @@ defaults_android: &defaults_android
 defaults_macos: &defaults_macos
   <<: *defaults
   macos:
-    xcode: "12.5.1"
+    xcode: "13.3.0"
   resource_class: macos.x86.medium.gen2
   working_directory: /Users/distiller/italia-app
   environment:
@@ -406,6 +406,14 @@ jobs:
       - restore_cache:
           keys:
             - *ios_gems_cache_key
+
+      - run:
+          name: Configure Node
+          command: |
+            brew uninstall node yarn
+            nvm install 14.17.4
+            nvm alias default 14.17.4
+            npm install -g yarn
 
       - run:
           name: Configure Bundler

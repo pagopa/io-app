@@ -92,7 +92,7 @@ const completePaymentFlow = async () => {
   await element(by.text(I18n.t("wallet.continue"))).tap();
 
   const matchConfirmPayment = by.text(
-    `${I18n.t("wallet.ConfirmPayment.goToPay")} ${formatNumberCentsToAmount(
+    `${I18n.t("wallet.ConfirmPayment.pay")} ${formatNumberCentsToAmount(
       2322,
       true
     )}`

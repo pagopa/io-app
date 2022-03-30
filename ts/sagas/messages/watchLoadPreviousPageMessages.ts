@@ -37,7 +37,7 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
           enrich_result_data: true,
           page_size: pageSize,
           minimum_id: cursor,
-          get_archived: filter.getArchived
+          archived: filter.getArchived
         }
       );
 
