@@ -36,7 +36,6 @@ import {
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
 import { contentMunicipalityLoad } from "../actions/content";
-import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
@@ -250,19 +249,6 @@ const trackAction =
       case getType(DEPRECATED_setMessageReadState): {
         return mp.track(action.type, action.payload);
       }
-      case getType(upsertMessageStatusAttributes.success): {
-        if (
-          action.payload.update.tag === "bulk" ||
-          action.payload.update.tag === "reading"
-        ) {
-          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
-        }
-        break;
-      }
-      // instabug
-      case getType(instabugReportClosed):
-      case getType(instabugReportOpened):
-        return mp.track(action.type, action.payload);
 
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
