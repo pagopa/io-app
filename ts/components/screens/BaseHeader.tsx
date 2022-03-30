@@ -17,14 +17,11 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
-import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import I18n from "../../i18n";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { assistanceToolRemoteConfig } from "../../utils/supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -229,15 +226,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   }
 
   private renderRight = () => {
-    const {
-      isSearchEnabled,
-      onShowHelp,
-      isSearchAvailable,
-      showChat,
-      customRightIcon
-    } = this.props;
-
-    const shouldShowChat = !isSearchEnabled && showChat !== false;
+    const { isSearchEnabled, onShowHelp, isSearchAvailable, customRightIcon } =
+      this.props;
 
     return (
       <Right>
@@ -247,7 +237,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onSearchTap={isSearchAvailable.onSearchTap}
           />
         )}
-        {hasInstabugChat && <InstabugChatsComponent />}
 
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
@@ -267,10 +256,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
-        {!customRightIcon &&
-          !isSearchAvailable &&
-          !onShowHelp &&
-          !hasInstabugChat && <ButtonDefaultOpacity transparent={true} />}
+        {!customRightIcon && !isSearchAvailable && !onShowHelp && (
+          <ButtonDefaultOpacity transparent={true} />
+        )}
 
         {fromNullable(this.props.accessibilityEvents).fold(
           true,
