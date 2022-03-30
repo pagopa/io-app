@@ -276,8 +276,8 @@ const trackAction =
       }
       case getType(migrateToPaginatedMessages.failure): {
         return mp.track("MESSAGES_MIGRATION_FAILURE", {
-          failed: action.payload.failed,
-          succeeded: action.payload.succeeded
+          failed: action.payload.failed.length,
+          succeeded: action.payload.succeeded.length
         });
       }
       // instabug
