@@ -5,7 +5,6 @@ import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
 import { getValueOrElse } from "../features/bonus/bpd/model/RemoteValue";
 import { zendeskEnabled } from "../config";
-import { instabugLog, TypeLogs } from "../boot/configureInstabug";
 
 export type ZendeskAppConfig = {
   key: string;
@@ -106,14 +105,9 @@ export const canShowHelp = (
 // Send a log based on
 export const handleSendAssistanceLog = (
   assistanceTool: ToolEnum,
-  log: string,
-  instabugTypeLog?: TypeLogs,
-  instabugTag?: string
+  log: string
 ) => {
   switch (assistanceTool) {
-    case ToolEnum.instabug:
-      instabugLog(log, instabugTypeLog ?? TypeLogs.INFO, instabugTag);
-      break;
     case ToolEnum.zendesk:
       appendLog(log);
   }

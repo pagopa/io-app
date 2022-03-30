@@ -4,7 +4,6 @@ import {
   handleSendAssistanceLog
 } from "../supportAssistance";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
-import * as configureInstabug from "../../boot/configureInstabug";
 import MockZendesk from "../../__mocks__/io-react-native-zendesk";
 
 jest.mock("../../config", () => ({ zendeskEnabled: true }));
@@ -49,20 +48,8 @@ describe("handleSendAssistanceLog", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  it("if the assistanceTool is Instabug should call the instabugLog function", () => {
-    const instabugLogSpy = jest
-      .spyOn(configureInstabug, "instabugLog")
-      .mockImplementation();
-    handleSendAssistanceLog(ToolEnum.instabug, "mockedLog");
-    expect(instabugLogSpy).toBeCalled();
-    expect(MockZendesk.appendLog).not.toBeCalled();
-  });
   it("if the assistanceTool is Zendesk should call the appendLog function", () => {
-    const instabugLogSpy = jest
-      .spyOn(configureInstabug, "instabugLog")
-      .mockImplementation();
     handleSendAssistanceLog(ToolEnum.zendesk, "mockedLog");
-    expect(instabugLogSpy).not.toBeCalled();
     expect(MockZendesk.appendLog).toBeCalled();
   });
 });
