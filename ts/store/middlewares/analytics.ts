@@ -266,7 +266,7 @@ const trackAction =
       }
       case getType(migrateToPaginatedMessages.request): {
         return mp.track("MESSAGES_MIGRATION_START", {
-          total: Object.keys(action.payload)
+          total: Object.keys(action.payload).length
         });
       }
       case getType(migrateToPaginatedMessages.success): {
