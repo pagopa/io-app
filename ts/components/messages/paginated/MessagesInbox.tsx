@@ -6,8 +6,9 @@ import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import I18n from "../../../i18n";
 import { EmptyListComponent } from "../EmptyListComponent";
 
+import { useItemsSelection } from "../../../utils/hooks/useItemsSelection";
+import ListSelectionBar from "../../ListSelectionBar";
 import MessageList from "./MessageList";
-import { useMessagesSelection } from "./MessageList/useMessagesSelection";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -39,13 +40,32 @@ const MessagesInbox = ({
   navigateToMessageDetail,
   archiveMessages
 }: Props) => {
-  const { selectedItems, onPressItem, onLongPressItem, MessagesSelectionBar } =
-    useMessagesSelection(
-      messages,
-      navigateToMessageDetail,
-      I18n.t("messages.cta.archive"),
-      archiveMessages
-    );
+  const { selectedItems, toggleItem, setAllItems, resetSelection } =
+    useItemsSelection();
+
+  const isSelecting = selectedItems.isSome();
+  const selectedItemsCount = selectedItems.toUndefined()?.size ?? 0;
+  const allItemsCount = messages.length;
+
+  const onPressItem = (message: UIMessage) => {
+    if (selectedItems.isSome()) {
+      toggleItem(message.id);
+    } else {
+      navigateToMessageDetail(message);
+    }
+  };
+
+  const onLongPressItem = (id: string) => {
+    toggleItem(id);
+  };
+
+  const onToggleAllSelection = () => {
+    if (selectedItemsCount === allItemsCount) {
+      setAllItems([]);
+    } else {
+      setAllItems(messages.map(_ => _.id));
+    }
+  };
 
   const ListEmptyComponent = () => (
     <EmptyListComponent
@@ -66,7 +86,21 @@ const MessagesInbox = ({
           ListEmptyComponent={ListEmptyComponent}
         />
       </View>
-      <MessagesSelectionBar />
+      {isSelecting && (
+        <ListSelectionBar
+          selectedItems={selectedItemsCount}
+          totalItems={allItemsCount}
+          onToggleSelection={() => {
+            archiveMessages(
+              messages.filter(_ => selectedItems.getOrElse(new Set()).has(_.id))
+            );
+            resetSelection();
+          }}
+          onToggleAllSelection={onToggleAllSelection}
+          onResetSelection={resetSelection}
+          primaryButtonText={I18n.t("messages.cta.archive")}
+        />
+      )}
     </View>
   );
 };
