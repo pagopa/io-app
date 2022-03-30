@@ -260,7 +260,10 @@ const trackAction =
           action.payload.update.tag === "bulk" ||
           action.payload.update.tag === "reading"
         ) {
-          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
+          setInstabugUserAttribute(
+            "lastSeenMessageID",
+            action.payload.message.id
+          );
         }
         break;
       }

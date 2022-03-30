@@ -7,12 +7,17 @@ import {
   UpsertMessageStatusAttributesPayload
 } from "../../../store/actions/messages";
 import { testTryUpsertMessageStatusAttributes } from "../watchUpsertMessageStatusAttribues";
+import { successReloadMessagesPayload } from "../../../__mocks__/messages";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 
 const tryUpsertMessageStatusAttributes = testTryUpsertMessageStatusAttributes!;
 
 describe("tryUpsertMessageStatusAttributes", () => {
   const actionPayload: UpsertMessageStatusAttributesPayload = {
-    id: "A",
+    message: {
+      ...successReloadMessagesPayload.messages[0],
+      id: "A" as UIMessageId
+    },
     update: { tag: "bulk", isArchived: true }
   };
 
