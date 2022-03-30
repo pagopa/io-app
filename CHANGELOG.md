@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0-rc.0](https://github.com/pagopa/io-app/compare/2.6.0-rc.3...2.7.0-rc.0) (2022-03-30)
+
+
+### Features
+
+* [[IA-711](https://pagopa.atlassian.net/browse/IA-711)] Refactored payment confirmation user interface ([#3840](https://github.com/pagopa/io-app/issues/3840)) ([686e5c8](https://github.com/pagopa/io-app/commit/686e5c8163b932d53c88a5b05a9e01aea5e21f8d))
+
+
+### Chores
+
+* [[IA-762](https://pagopa.atlassian.net/browse/IA-762)] Add a local Feature Flag for the Premium Messages Opt-In/Out feature ([#3861](https://github.com/pagopa/io-app/issues/3861)) ([564ddc5](https://github.com/pagopa/io-app/commit/564ddc5b54f10f369ec47b9d74daee6d92e6e233))
+* [[IA-765](https://pagopa.atlassian.net/browse/IA-765)] Migration messages: copy update ([#3862](https://github.com/pagopa/io-app/issues/3862)) ([619ce28](https://github.com/pagopa/io-app/commit/619ce285ae8e4a033d6bb4cd7dcbd6b966571bd0))
+* [[IA-766](https://pagopa.atlassian.net/browse/IA-766)] Enable pagination" [#3860](https://github.com/pagopa/io-app/issues/3860) ([34ef89c](https://github.com/pagopa/io-app/commit/34ef89cb603f1c39875d0425cc4a2d36b5ded8f7))
+
 ## [2.6.0-rc.3](https://github.com/pagopa/io-app/compare/2.6.0-rc.2...2.6.0-rc.3) (2022-03-29)
 
 
