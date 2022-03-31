@@ -50,7 +50,6 @@ import {
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
   DEPRECATED_setMessageReadState,
-  upsertMessageStatusAttributes,
   migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
@@ -249,18 +248,6 @@ const trackAction =
       }
       case getType(DEPRECATED_setMessageReadState): {
         return mp.track(action.type, action.payload);
-      }
-      case getType(upsertMessageStatusAttributes.success): {
-        if (
-          action.payload.update.tag === "bulk" ||
-          action.payload.update.tag === "reading"
-        ) {
-          setInstabugUserAttribute(
-            "lastSeenMessageID",
-            action.payload.message.id
-          );
-        }
-        break;
       }
       case getType(migrateToPaginatedMessages.request): {
         return mp.track("MESSAGES_MIGRATION_START", {
