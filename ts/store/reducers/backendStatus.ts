@@ -60,13 +60,8 @@ export const bpdRankingEnabledSelector = createSelector(
 
 export const bpdRemoteConfigSelector = createSelector(
   backendStatusSelector,
-  (_): BpdConfig | undefined => ({
-    enroll_bpd_after_add_payment_method: false,
-
-    program_active: false,
-
-    opt_in_payment_methods: true
-  })
+  (backendStatus): BpdConfig | undefined =>
+    backendStatus.map(bs => bs.config.bpd).toUndefined()
 );
 
 export const cgnMerchantVersionSelector = createSelector(
