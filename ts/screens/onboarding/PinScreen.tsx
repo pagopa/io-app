@@ -459,7 +459,7 @@ class PinScreen extends React.PureComponent<Props, State> {
       .catch(e => {
         handleSendAssistanceLog(
           this.choosenTool,
-          `setPin error ${e ? e.toString() : ""}`
+          `setPin error ${e?.toString?.() ?? ""}`
         );
       });
   };
