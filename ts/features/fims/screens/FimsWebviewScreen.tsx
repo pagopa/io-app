@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { Alert, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -14,6 +13,11 @@ import { FimsWebviewParams } from "../types/FimsWebviewParams";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
+import {
+  ioClearCookie,
+  IOCookie,
+  setCookie
+} from "../../../utils/cookieManager";
 
 const FimsWebviewScreen = () => {
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
@@ -33,7 +37,7 @@ const FimsWebviewScreen = () => {
   }, [navigation, dispatch]);
 
   const clearCookie = () => {
-    CookieManager.clearAll().catch(_ => setCookieError(true));
+    ioClearCookie(() => setCookieError(true));
   };
 
   const handleGoBack = () => {
@@ -65,18 +69,19 @@ const FimsWebviewScreen = () => {
       return;
     }
     const url = new URLParse(maybeParams.value.url as string, true);
-    const cookie: Cookie = {
+    const cookie: IOCookie = {
       name: "token",
       value: maybeSessionToken.value,
       domain: url.hostname,
       path: "/"
     };
 
-    CookieManager.set(url.origin, cookie, true)
-      .then(_ => {
-        setIsCookieAvailable(true);
-      })
-      .catch(_ => setCookieError(true));
+    setCookie(
+      url.origin,
+      cookie,
+      () => setIsCookieAvailable(true),
+      () => setCookieError(true)
+    );
 
     return clearCookie;
   }, [
