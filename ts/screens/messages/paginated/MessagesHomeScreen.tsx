@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { NavigationContext } from "react-navigation";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Animated, Platform, StyleSheet, View } from "react-native";
 import { Tab, Tabs } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -44,7 +44,8 @@ import {
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   migrateToPaginatedMessages,
-  resetMigrationStatus
+  resetMigrationStatus,
+  upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
 import {
   MessagesStatus,
@@ -91,9 +92,20 @@ const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
 type AllTabsProps = {
   navigateToMessageDetail: (message: UIMessage) => void;
+  inbox: ReadonlyArray<UIMessage>;
+  archive: ReadonlyArray<UIMessage>;
+  setArchived: (
+    isArchived: boolean,
+    messages: ReadonlyArray<UIMessage>
+  ) => void;
 };
 
-const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
+const AllTabs = ({
+  navigateToMessageDetail,
+  inbox,
+  archive,
+  setArchived
+}: AllTabsProps) => (
   <View style={IOStyles.flex}>
     <AnimatedTabs
       tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
@@ -105,7 +117,11 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
         textStyle={styles.textStyle}
         heading={I18n.t("messages.tab.inbox")}
       >
-        <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+        <MessagesInbox
+          messages={inbox}
+          navigateToMessageDetail={navigateToMessageDetail}
+          archiveMessages={messages => setArchived(true, messages)}
+        />
       </Tab>
 
       <Tab
@@ -113,7 +129,11 @@ const AllTabs = ({ navigateToMessageDetail }: AllTabsProps) => (
         textStyle={styles.textStyle}
         heading={I18n.t("messages.tab.archive")}
       >
-        <MessagesArchive navigateToMessageDetail={navigateToMessageDetail} />
+        <MessagesArchive
+          messages={archive}
+          navigateToMessageDetail={navigateToMessageDetail}
+          unarchiveMessages={messages => setArchived(false, messages)}
+        />
       </Tab>
     </AnimatedTabs>
   </View>
@@ -127,6 +147,8 @@ const MessagesHomeScreen = ({
   messageSectionStatusActive,
   searchMessages,
   searchText,
+  allInboxMessages,
+  allArchiveMessages,
 
   // migration
   messagesStatus,
@@ -151,6 +173,21 @@ const MessagesHomeScreen = ({
       })
     );
   };
+
+  const dispatch = useDispatch();
+
+  const setArchived = (
+    isArchived: boolean,
+    messages: ReadonlyArray<UIMessage>
+  ) =>
+    messages.forEach(message =>
+      dispatch(
+        upsertMessageStatusAttributes.request({
+          message,
+          update: { tag: "archiving", isArchived }
+        })
+      )
+    );
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
@@ -193,7 +230,12 @@ const MessagesHomeScreen = ({
               onEnd={resetMigrationStatus}
             />
           ) : (
-            <AllTabs navigateToMessageDetail={navigateToMessageDetail} />
+            <AllTabs
+              inbox={allInboxMessages}
+              archive={allArchiveMessages}
+              navigateToMessageDetail={navigateToMessageDetail}
+              setArchived={setArchived}
+            />
           )}
         </React.Fragment>
       )}
@@ -233,6 +275,8 @@ const mapStateToProps = (state: GlobalState) => ({
     [allInboxMessagesSelector, allArchiveMessagesSelector],
     (inbox, archive) => inbox.concat(archive)
   )(state),
+  allInboxMessages: allInboxMessagesSelector(state),
+  allArchiveMessages: allArchiveMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
   migrationStatus: allPaginatedSelector(state).migration
 });
