@@ -4,7 +4,13 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
-import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled, uaDonationsEnabled } from "../../../../config";
+import {
+  bpdEnabled,
+  fimsEnabled,
+  myPortalEnabled,
+  svEnabled,
+  uaDonationsEnabled
+} from "../../../../config";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
