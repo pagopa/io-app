@@ -149,6 +149,13 @@ const getPaymentMethodInfo = (
 ): Option<ComputedPaymentMethodInfo> => {
   switch (paymentMethod?.kind) {
     case "CreditCard":
+      const subject = paymentMethod.info.holder ?? "";
+      const expiration =
+        getTranslatedShortNumericMonthYear(
+          paymentMethod.info.expireYear,
+          paymentMethod.info.expireMonth
+        ) ?? "";
+
       return some({
         logo: (
           <BrandImage
@@ -156,17 +163,16 @@ const getPaymentMethodInfo = (
             scale={0.7}
           />
         ),
-        subject: paymentMethod.info.holder ?? "",
-        expiration:
-          getTranslatedShortNumericMonthYear(
-            paymentMethod.info.expireYear,
-            paymentMethod.info.expireMonth
-          ) ?? "",
+        subject,
+        expiration,
         caption: paymentMethod.caption ?? "",
-        accessibilityLabel: I18n.t("wallet.accessibility.folded.creditCard", {
-          brand: paymentMethod.info.brand,
-          blurredNumber: paymentMethod.info.blurredNumber
-        })
+        accessibilityLabel: `${I18n.t(
+          "wallet.accessibility.folded.creditCard",
+          {
+            brand: paymentMethod.info.brand,
+            blurredNumber: paymentMethod.info.blurredNumber
+          }
+        )}, ${subject}, ${expiration}`
       });
 
     case "PayPal":
