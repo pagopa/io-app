@@ -18,6 +18,7 @@ import {
   IOCookie,
   setCookie
 } from "../../../utils/cookieManager";
+import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
 
 const FimsWebviewScreen = () => {
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
@@ -30,6 +31,7 @@ const FimsWebviewScreen = () => {
     useIOSelector(internalRouteNavigationParamsSelector)
   );
   const maybeSessionToken = fromNullable(useIOSelector(sessionTokenSelector));
+  const maybeFimsDomain = fromNullable(useIOSelector(fimsDomainSelector));
 
   const goBackAndResetInternalNavigationInfo = useCallback(() => {
     navigation.goBack(null);
@@ -68,7 +70,18 @@ const FimsWebviewScreen = () => {
       );
       return;
     }
-    const url = new URLParse(maybeParams.value.url as string, true);
+
+    if (maybeFimsDomain.isNone()) {
+      Alert.alert(I18n.t("global.genericAlert"), "", [
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: goBackAndResetInternalNavigationInfo
+        }
+      ]);
+      return;
+    }
+    const url = new URLParse(maybeFimsDomain.value as string, true);
     const cookie: IOCookie = {
       name: "token",
       value: maybeSessionToken.value,
@@ -88,6 +101,7 @@ const FimsWebviewScreen = () => {
     goBackAndResetInternalNavigationInfo,
     maybeParams,
     maybeSessionToken,
+    maybeFimsDomain,
     navigation
   ]);
 

@@ -219,6 +219,9 @@ export const baseRawBackendStatus: BackendStatus = {
     }
   },
   config: {
+    premiumMessages: {
+      opt_in_out_enabled: false
+    },
     bpd: {
       enroll_bpd_after_add_payment_method: false,
       program_active: true,
@@ -249,7 +252,8 @@ export const baseRawBackendStatus: BackendStatus = {
       }
     },
     fims: {
-      enabled: false
+      enabled: false,
+      domain: "http://localhost:3000"
     }
   }
 };
@@ -261,6 +265,9 @@ export const baseBackendState: BackendStatusState = {
 };
 
 export const baseBackendConfig: Config = {
+  premiumMessages: {
+    opt_in_out_enabled: false
+  },
   bpd: {
     enroll_bpd_after_add_payment_method: false,
     program_active: true,
@@ -291,7 +298,8 @@ export const baseBackendConfig: Config = {
     }
   },
   fims: {
-    enabled: false
+    enabled: false,
+    domain: "http://localhost:3000"
   }
 };
 
