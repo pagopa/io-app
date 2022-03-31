@@ -32,7 +32,6 @@ const withLogging =
 const setTopLevelNavigator = (
   navigatorRef: NavigationContainerComponent | null | undefined
 ) => {
-  // TODO: remove when the bug is confirmed as solved
   navigator = navigatorRef;
 };
 
