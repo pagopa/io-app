@@ -226,8 +226,13 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   }
 
   private renderRight = () => {
-    const { isSearchEnabled, onShowHelp, isSearchAvailable, customRightIcon } =
-      this.props;
+    const {
+      isSearchEnabled,
+      onShowHelp,
+      isSearchAvailable,
+      showChat,
+      customRightIcon
+    } = this.props;
 
     return (
       <Right>
@@ -256,7 +261,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
-        {!customRightIcon && !isSearchAvailable && !onShowHelp && (
+        {!customRightIcon && !isSearchAvailable && !onShowHelp && !showChat && (
           <ButtonDefaultOpacity transparent={true} />
         )}
 
