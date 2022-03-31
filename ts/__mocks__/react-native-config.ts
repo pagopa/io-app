@@ -1,3 +1,4 @@
 export default {
-  MYPORTAL_ENABLED: "YES"
+  MYPORTAL_ENABLED: "YES",
+  FIMS_ENABLED: "YES"
 };
