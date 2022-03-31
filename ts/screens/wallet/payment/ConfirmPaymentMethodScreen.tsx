@@ -461,7 +461,11 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                   cost: formattedFees,
                   psp: pspName
                 }
-              )}, ${I18n.t("wallet.ConfirmPayment.accessibility.edit")}`}
+              )}${
+                canChangePsp
+                  ? ", " + I18n.t("wallet.ConfirmPayment.accessibility.edit")
+                  : ""
+              }`}
             />
 
             {isPayingWithPaypal && privacyUrl && (
