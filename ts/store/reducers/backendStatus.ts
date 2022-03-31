@@ -18,7 +18,6 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
-import * as t from "io-ts";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
