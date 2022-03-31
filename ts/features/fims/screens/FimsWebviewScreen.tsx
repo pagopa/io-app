@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { Alert, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
@@ -86,11 +86,15 @@ const FimsWebviewScreen = () => {
     navigation
   ]);
 
+  const showWebview = useMemo(
+    () => !cookieError && isCookieAvailable,
+    [cookieError, isCookieAvailable]
+  );
   return (
     <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          {!cookieError && isCookieAvailable && maybeParams.isRight() && (
+          {showWebview && maybeParams.isRight() && (
             <FimsWebView
               onWebviewClose={handleGoBack}
               uri={maybeParams.value.url}
