@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0-rc.1](https://github.com/pagopa/io-app/compare/2.7.0-rc.0...2.7.0-rc.1) (2022-03-31)
+
+
+### Features
+
+* [[IA-681](https://pagopa.atlassian.net/browse/IA-681)] Add archiving to messages with pagination ([#3856](https://github.com/pagopa/io-app/issues/3856)) ([6fffc56](https://github.com/pagopa/io-app/commit/6fffc56392e54d1f719394ff24c0f591bcc6ea81))
+
+
+### Chores
+
+* [[IA-754](https://pagopa.atlassian.net/browse/IA-754)] Track migration events ([#3865](https://github.com/pagopa/io-app/issues/3865)) ([7857bb7](https://github.com/pagopa/io-app/commit/7857bb7c07a36d6fc8e429a2e4089e3514e79894))
+
 ## [2.7.0-rc.0](https://github.com/pagopa/io-app/compare/2.6.0-rc.3...2.7.0-rc.0) (2022-03-30)
 
 
