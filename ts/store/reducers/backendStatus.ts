@@ -18,6 +18,7 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
+import * as t from "io-ts";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -59,8 +60,13 @@ export const bpdRankingEnabledSelector = createSelector(
 
 export const bpdRemoteConfigSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): BpdConfig | undefined =>
-    backendStatus.map(bs => bs.config.bpd).toUndefined()
+  (_): BpdConfig | undefined => ({
+    enroll_bpd_after_add_payment_method: false,
+
+    program_active: false,
+
+    opt_in_payment_methods: true
+  })
 );
 
 export const cgnMerchantVersionSelector = createSelector(

@@ -49,7 +49,9 @@ import {
   DEPRECATED_loadMessage,
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
-  DEPRECATED_setMessageReadState
+  DEPRECATED_setMessageReadState,
+  upsertMessageStatusAttributes,
+  migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
@@ -247,6 +249,34 @@ const trackAction =
       }
       case getType(DEPRECATED_setMessageReadState): {
         return mp.track(action.type, action.payload);
+      }
+      case getType(upsertMessageStatusAttributes.success): {
+        if (
+          action.payload.update.tag === "bulk" ||
+          action.payload.update.tag === "reading"
+        ) {
+          setInstabugUserAttribute(
+            "lastSeenMessageID",
+            action.payload.message.id
+          );
+        }
+        break;
+      }
+      case getType(migrateToPaginatedMessages.request): {
+        return mp.track("MESSAGES_MIGRATION_START", {
+          total: Object.keys(action.payload).length
+        });
+      }
+      case getType(migrateToPaginatedMessages.success): {
+        return mp.track("MESSAGES_MIGRATION_SUCCESS", {
+          total: action.payload
+        });
+      }
+      case getType(migrateToPaginatedMessages.failure): {
+        return mp.track("MESSAGES_MIGRATION_FAILURE", {
+          failed: action.payload.failed.length,
+          succeeded: action.payload.succeeded.length
+        });
       }
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
