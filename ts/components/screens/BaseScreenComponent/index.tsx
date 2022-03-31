@@ -95,7 +95,9 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
               })
             );
           };
-        default:
+        case ToolEnum.instabug:
+        case ToolEnum.web:
+        case ToolEnum.none:
           return undefined;
       }
     };
