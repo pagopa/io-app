@@ -29,6 +29,21 @@ const ListEmptyComponent = () => <Text>{"empty"}</Text>;
 const filter = defaultRequestPayload.filter;
 
 describe("MessagesInbox component", () => {
+  describe("when messages aren't loaded yet", () => {
+    const messagesState = {
+      inbox: { data: pot.noneLoading, lastRequest: none },
+      archive: { data: pot.noneLoading, lastRequest: none }
+    };
+
+    it("should not render the empty component", () => {
+      const { component } = renderComponent(
+        { ListEmptyComponent, filter },
+        messagesState
+      );
+      expect(component.queryByText("empty")).toBeNull();
+    });
+  });
+
   describe("when there are no messages", () => {
     it("should render the empty component", () => {
       const { component } = renderComponent({ ListEmptyComponent, filter });
@@ -87,8 +102,22 @@ const renderComponent = (
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = {
-    archive: { data: pot.none, lastRequest: none },
-    inbox: { data: pot.none, lastRequest: none },
+    archive: {
+      data: pot.some({
+        page: [],
+        previous: undefined,
+        next: undefined
+      }),
+      lastRequest: none
+    },
+    inbox: {
+      data: pot.some({
+        page: [],
+        previous: undefined,
+        next: undefined
+      }),
+      lastRequest: none
+    },
     ...paginatedState
   };
 
