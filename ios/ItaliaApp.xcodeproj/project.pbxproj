@@ -443,7 +443,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-frameworks.sh",
 				"${PODS_ROOT}/hermes-engine/destroot/Library/Frameworks/iphoneos/hermes.framework",
-				"${PODS_ROOT}/../../node_modules/instabug-reactnative/ios/Instabug.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AnswerBotProvidersSDK/AnswerBotProvidersSDK.framework/AnswerBotProvidersSDK",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AnswerBotSDK/AnswerBotSDK.framework/AnswerBotSDK",
@@ -460,7 +459,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instabug.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotProvidersSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotSDK.framework",
@@ -577,7 +575,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-frameworks.sh",
 				"${PODS_ROOT}/hermes-engine/destroot/Library/Frameworks/iphoneos/hermes.framework",
-				"${PODS_ROOT}/../../node_modules/instabug-reactnative/ios/Instabug.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AnswerBotProvidersSDK/AnswerBotProvidersSDK.framework/AnswerBotProvidersSDK",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AnswerBotSDK/AnswerBotSDK.framework/AnswerBotSDK",
@@ -594,7 +591,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instabug.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotProvidersSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotSDK.framework",
