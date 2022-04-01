@@ -126,11 +126,10 @@ const getPaymentMethods = (
     name: I18n.t("wallet.methods.bancomatPay.name"),
     description: I18n.t("wallet.methods.bancomatPay.description"),
     icon: BpayLogo,
-    status: !options.canOnboardBPay
-      ? "notImplemented"
-      : !options.onlyPaymentMethodCanPay
-      ? "implemented"
-      : "notImplemented",
+    status:
+      options.canOnboardBPay && !options.onlyPaymentMethodCanPay
+        ? "implemented"
+        : "notImplemented",
     onPress: props.startBPayOnboarding,
     section: "digital_payments"
   },
