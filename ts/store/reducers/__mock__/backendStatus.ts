@@ -255,6 +255,9 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     fims: {
       enabled: false
+    },
+    premiumMessages: {
+      opt_in_out_enabled: false
     }
   }
 };
@@ -302,6 +305,9 @@ export const baseBackendConfig: Config = {
   },
   fims: {
     enabled: false
+  },
+  premiumMessages: {
+    opt_in_out_enabled: false
   }
 };
 
