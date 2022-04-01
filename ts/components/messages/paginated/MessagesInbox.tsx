@@ -8,6 +8,7 @@ import { EmptyListComponent } from "../EmptyListComponent";
 
 import { useItemsSelection } from "../../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../../ListSelectionBar";
+import { UaDonationsBanner } from "../../../features/uaDonations/components/UaDonationsBanner";
 import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
@@ -84,6 +85,7 @@ const MessagesInbox = ({
           onLongPressItem={onLongPressItem}
           selectedMessageIds={selectedItems.toUndefined()}
           ListEmptyComponent={ListEmptyComponent}
+          ListHeaderComponent={<UaDonationsBanner />}
         />
       </View>
       {isSelecting && (
