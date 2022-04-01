@@ -1075,9 +1075,6 @@ systemsOff:
   closeApp: Schließen Sie die Anwendung und versuchen Sie es erneut
 contextualHelp:
   title: Die IO-App hilft Ihnen
-instabug:
-  contextualHelp:
-    title1: Benötigen Sie Hilfe?
 features:
   euCovidCertificate:
     save:
