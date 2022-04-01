@@ -1,7 +1,6 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
-import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
   loadAllBonusActivations,
   loadAvailableBonuses
@@ -37,7 +36,6 @@ import {
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
 import { contentMunicipalityLoad } from "../actions/content";
-import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
@@ -52,7 +50,6 @@ import {
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
   DEPRECATED_setMessageReadState,
-  upsertMessageStatusAttributes,
   migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
@@ -250,22 +247,7 @@ const trackAction =
         });
       }
       case getType(DEPRECATED_setMessageReadState): {
-        if (action.payload.read === true) {
-          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
-        }
         return mp.track(action.type, action.payload);
-      }
-      case getType(upsertMessageStatusAttributes.success): {
-        if (
-          action.payload.update.tag === "bulk" ||
-          action.payload.update.tag === "reading"
-        ) {
-          setInstabugUserAttribute(
-            "lastSeenMessageID",
-            action.payload.message.id
-          );
-        }
-        break;
       }
       case getType(migrateToPaginatedMessages.request): {
         return mp.track("MESSAGES_MIGRATION_START", {
@@ -283,11 +265,6 @@ const trackAction =
           succeeded: action.payload.succeeded.length
         });
       }
-      // instabug
-      case getType(instabugReportClosed):
-      case getType(instabugReportOpened):
-        return mp.track(action.type, action.payload);
-
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
