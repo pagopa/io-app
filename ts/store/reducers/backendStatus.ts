@@ -21,6 +21,7 @@ import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
+import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -151,6 +152,22 @@ export const isPaypalEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
     backendStatus.map(bs => bs.config.paypal.enabled).toUndefined() ?? false
+);
+
+/**
+ * return the remote config about BancomatPay
+ * if no data is available the default is considering all flags set to false
+ */
+export const bancomatPayConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): BancomatPayConfig =>
+    backendStatus
+      .map(bs => bs.config.bancomatPay)
+      .getOrElse({
+        display: false,
+        onboarding: false,
+        payment: false
+      })
 );
 
 /**
