@@ -133,7 +133,7 @@ const ZendeskChooseCategory = (props: Props) => {
   // The void customRightIcon is needed to have a centered header title
   return (
     <BaseScreenComponent
-      showInstabugChat={false}
+      showChat={false}
       goBack={true}
       customRightIcon={{
         iconName: "",

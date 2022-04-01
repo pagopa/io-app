@@ -4,11 +4,6 @@ import { StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import {
-  instabugLog,
-  openInstabugQuestionReport,
-  TypeLogs
-} from "../../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
@@ -74,7 +69,6 @@ const renderRow = (label: string, value: string) => (
     <Body>{value}</Body>
   </View>
 );
-const instabugTag = "credit-card-support";
 /**
  * This screen shows credit card onboarding attempt details and allows the user
  * to ask assistance about this attempts
@@ -87,10 +81,6 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const canShowHelp = useIOSelector(canShowHelpSelector);
 
-  const instabugLogAndOpenReport = () => {
-    instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
-    openInstabugQuestionReport();
-  };
   const zendeskAssistanceLogAndStart = () => {
     // Set metodo_di_pagamento as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentMethodCategory.value);
@@ -104,9 +94,6 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
 
   const handleAskAssistance = () => {
     switch (choosenTool) {
-      case ToolEnum.instabug:
-        instabugLogAndOpenReport();
-        break;
       case ToolEnum.zendesk:
         zendeskAssistanceLogAndStart();
         break;
@@ -160,7 +147,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   return (
     <BaseScreenComponent
       goBack={() => props.navigation.goBack()}
-      showInstabugChat={false}
+      showChat={false}
       dark={true}
       headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
     >
