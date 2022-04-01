@@ -13,11 +13,6 @@ import {
 } from "../backendStatus";
 import { GlobalState } from "../types";
 
-jest.mock("../../../config", () => ({
-  uaDonationsEnabled: true,
-  premiumMessagesOptInEnabled: true
-}));
-
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
   const responseON: BackendStatus = {
