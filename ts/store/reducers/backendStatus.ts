@@ -152,11 +152,18 @@ export const isPaypalEnabledSelector = createSelector(
 
 /**
  * return the remote config about BancomatPay
+ * if no data is available the default is considering all flags set to false
  */
 export const bancomatPayConfigSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): BancomatPayConfig | undefined =>
-    backendStatus.map(bs => bs.config.bancomatPay).toUndefined()
+  (backendStatus): BancomatPayConfig =>
+    backendStatus
+      .map(bs => bs.config.bancomatPay)
+      .getOrElse({
+        display: false,
+        onboarding: false,
+        payment: false
+      })
 );
 
 /**

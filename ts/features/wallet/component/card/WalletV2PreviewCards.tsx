@@ -44,7 +44,7 @@ const paymentMethodPreview = (
         <CreditCardWalletPreview key={pm.idWallet} creditCard={pm} />
       );
     case "BPay":
-      if (props.bancomatPayConfig?.display === false) {
+      if (!props.bancomatPayConfig.display) {
         return null;
       }
       return <BPayWalletPreview key={pm.idWallet} bPay={pm} />;
