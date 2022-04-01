@@ -44,6 +44,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { paypalSelector } from "../../store/reducers/wallet/wallets";
 import { AsyncAlert } from "../../utils/asyncAlert";
+import { isTestEnv } from "../../utils/environment";
 
 export type AddPaymentMethodScreenNavigationParams = Readonly<{
   inPayment: Option<{
@@ -59,10 +60,9 @@ export type AddPaymentMethodScreenNavigationParams = Readonly<{
 
 type OwnProps =
   NavigationStackScreenProps<AddPaymentMethodScreenNavigationParams>;
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
+type ReduxProps = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
+type Props = ReduxProps & OwnProps;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.newPaymentMethod.contextualHelpTitle",
@@ -70,7 +70,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const getPaymentMethods = (
-  props: Props,
+  props: ReduxProps,
   options: {
     onlyPaymentMethodCanPay: boolean;
     isPaymentOnGoing: boolean;
@@ -274,3 +274,8 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AddPaymentMethodScreen);
+
+// to keep solid code encapsulation
+export const testableFunctions = {
+  getPaymentMethods: isTestEnv ? getPaymentMethods : undefined
+};
