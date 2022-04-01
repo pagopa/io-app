@@ -68,6 +68,7 @@ describe("MessagesInbox component", () => {
       inbox: { data: pot.some({ page: messages }), lastRequest: none }
     };
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     it("should not render the empty component", () => {
       const { component } = renderComponent(
         { ListEmptyComponent, filter },
