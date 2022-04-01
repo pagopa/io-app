@@ -63,7 +63,6 @@ import {
   GetPspListV2UsingGETT,
   getPspUsingGETDecoder,
   GetPspUsingGETT,
-  getSelectedPspUsingGETDecoder,
   getTransactionsUsingGETDecoder,
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
@@ -315,13 +314,6 @@ const getPspQuery = (params: PspParams) => {
     idWallet,
     language
   };
-};
-const getPspSelected: GetSelectedPspUsingGETTExtra = {
-  method: "get",
-  url: () => "/v1/psps/selected",
-  query: getPspQuery,
-  headers: ParamAuthorizationBearerHeader,
-  response_decoder: getSelectedPspUsingGETDecoder(PspListResponse)
 };
 
 type GetAllPspListUsingGETTExtra = MapResponseType<
@@ -722,19 +714,6 @@ export function PaymentManagerClient(
       flip(
         withPaymentManagerToken(
           createFetchRequestForApi(getAllPspList, options)
-        )
-      )({
-        idPayment,
-        idWallet,
-        language: getLocalePrimaryWithFallback()
-      }),
-    getPspSelected: (
-      idPayment: TypeofApiParams<GetAllPspsUsingGETT>["idPayment"],
-      idWallet: TypeofApiParams<GetAllPspsUsingGETT>["idWallet"]
-    ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(getPspSelected, options)
         )
       )({
         idPayment,

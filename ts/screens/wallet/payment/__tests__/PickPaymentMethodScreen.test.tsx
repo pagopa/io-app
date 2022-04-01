@@ -12,7 +12,6 @@ import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onbo
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as NavigationActions from "../../../../store/actions/navigation";
-import { paymentFetchPspsForPaymentId } from "../../../../store/actions/wallet/payment";
 import { toIndexed } from "../../../../store/helpers/indexer";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -23,6 +22,7 @@ import {
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
+import { pspForPaymentV2WithCallbacks } from "../../../../store/actions/wallet/payment";
 
 const rptId = {} as RptId;
 const initialAmount = "300" as AmountInEuroCents;
@@ -167,7 +167,7 @@ describe("PickPaymentMethodScreen", () => {
       fireEvent.press(availablePaymentMethodList);
 
       expect(store.getActions()).toEqual([
-        paymentFetchPspsForPaymentId.request({
+        pspForPaymentV2WithCallbacks({
           idPayment,
           idWallet: aCreditCard.idWallet,
           onFailure: expect.any(Function),

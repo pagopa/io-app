@@ -134,23 +134,6 @@ export const paymentCheck = createAsyncAction(
 // fetch psp list
 //
 
-type PaymentFetchPspsForPaymentIdRequestPayload = Readonly<{
-  idPayment: string;
-  idWallet: number;
-  onSuccess?: (
-    action: ActionType<typeof paymentFetchPspsForPaymentId["success"]>
-  ) => void;
-  onFailure?: (
-    action: ActionType<typeof paymentFetchPspsForPaymentId["failure"]>
-  ) => void;
-}>;
-
-export const paymentFetchPspsForPaymentId = createAsyncAction(
-  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_REQUEST",
-  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_SUCCESS",
-  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_FAILURE"
-)<PaymentFetchPspsForPaymentIdRequestPayload, ReadonlyArray<Psp>, Error>();
-
 type PaymentFetchAllPspsForPaymentIdRequestPayload = Readonly<{
   idPayment: string;
   idWallet: string;
@@ -332,7 +315,6 @@ export type PaymentActions =
   | ActionType<typeof paymentIdPolling>
   | ActionType<typeof paymentWebViewEnd>
   | ActionType<typeof paymentCheck>
-  | ActionType<typeof paymentFetchPspsForPaymentId>
   | ActionType<typeof paymentExecuteStart>
   | ActionType<typeof paymentCompletedSuccess>
   | ActionType<typeof paymentCompletedFailure>

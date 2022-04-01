@@ -63,6 +63,10 @@ import {
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import {
+  isError,
+  isLoading as isRemoteLoading
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
@@ -352,7 +356,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
 // eslint-disable-next-line complexity,sonarjs/cognitive-complexity
 const mapStateToProps = (state: GlobalState) => {
-  const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
+  const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;
   const isPaypalEnabled = isPaypalEnabledSelector(state);
   const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
@@ -367,7 +371,7 @@ const mapStateToProps = (state: GlobalState) => {
       ? undefined
       : favouriteWallet
   );
-
+  const psps = pspsV2.psps;
   const error: Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
@@ -380,7 +384,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? some(attiva.error)
     : pot.isError(paymentId)
     ? some(paymentId.error)
-    : pot.isError(check) || pot.isError(psps)
+    : pot.isError(check) || isError(psps)
     ? some(undefined)
     : none;
 
@@ -398,11 +402,8 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(paymentId) ||
     (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
     pot.isLoading(check) ||
-    (maybeFavoriteWallet.isSome() &&
-      error.isNone() &&
-      pot.isSome(check) &&
-      pot.isNone(psps)) ||
-    (maybeFavoriteWallet.isSome() && pot.isLoading(psps));
+    (maybeFavoriteWallet.isSome() && error.isNone() && pot.isSome(check)) ||
+    (maybeFavoriteWallet.isSome() && isRemoteLoading(psps));
 
   const loadingCaption = isLoadingVerifica
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.verification")

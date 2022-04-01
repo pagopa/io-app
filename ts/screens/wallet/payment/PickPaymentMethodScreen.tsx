@@ -45,7 +45,10 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
-import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
+import {
+  isLoading as isRemoteLoading,
+  isLoading as isLoadingRemote
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
@@ -183,11 +186,11 @@ const mapStateToProps = (state: GlobalState) => {
   const potVisibleBPay = bPayListVisibleInWalletSelector(state);
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
-  const potPsps = state.wallet.payment.psps;
+  const psps = state.wallet.payment.pspsV2.psps;
   const pspV2 = pspV2ListSelector(state);
   const isLoading =
     pot.isLoading(potVisibleCreditCard) ||
-    pot.isLoading(potPsps) ||
+    isRemoteLoading(psps) ||
     isLoadingRemote(pspV2);
 
   const visibleWallets = [

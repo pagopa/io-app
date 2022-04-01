@@ -9,7 +9,6 @@ import {
   paymentCheck,
   paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
-  paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
@@ -71,10 +70,6 @@ export type PaymentState = Readonly<{
     typeof paymentCheck["success"],
     typeof paymentCheck["failure"]
   >;
-  psps: PotFromActions<
-    typeof paymentFetchPspsForPaymentId["success"],
-    typeof paymentFetchPspsForPaymentId["failure"]
-  >;
   allPsps: PotFromActions<
     typeof paymentFetchAllPspsForPaymentId["success"],
     typeof paymentFetchAllPspsForPaymentId["failure"]
@@ -135,11 +130,6 @@ export const paymentVerificaSelector = createSelector(
   (payment: PaymentState): PaymentState["verifica"] => payment.verifica
 );
 
-export const paymentPspsSelector = createSelector(
-  paymentSelector,
-  (payment: PaymentState): PaymentState["psps"] => payment.psps
-);
-
 export const pmSessionTokenSelector = (
   state: GlobalState
 ): RemoteValue<PaymentManagerToken, Error> =>
@@ -158,7 +148,6 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   attiva: pot.none,
   paymentId: pot.none,
   check: pot.none,
-  psps: pot.none,
   allPsps: pot.none,
   entrypointRoute: undefined,
   paymentStartPayload: undefined,
@@ -265,26 +254,6 @@ const reducer = (
       return {
         ...state,
         check: pot.noneError(action.payload)
-      };
-
-    //
-    // fetch available psps
-    //
-    case getType(paymentFetchPspsForPaymentId.request):
-      return {
-        ...state,
-        psps: pot.noneLoading
-      };
-    case getType(paymentFetchPspsForPaymentId.success):
-      // before storing the PSPs, filter only the PSPs for the current locale
-      return {
-        ...state,
-        psps: pot.some(pspsForLocale(action.payload))
-      };
-    case getType(paymentFetchPspsForPaymentId.failure):
-      return {
-        ...state,
-        psps: pot.noneError(action.payload)
       };
 
     //

@@ -13,7 +13,6 @@ import {
   paymentDeletePayment,
   paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
-  paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentUpdateWalletPsp,
   paymentVerifica,
@@ -517,47 +516,6 @@ export function* addWalletCreditCardRequestHandler(
         reason: getError(e).message
       })
     );
-  }
-}
-
-/**
- * Handles paymentFetchPspsForWalletRequest
- */
-export function* paymentFetchPspsForWalletRequestHandler(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentFetchPspsForPaymentId["request"]>
-) {
-  const apiGetPspSelected = pagoPaClient.getPspSelected(
-    action.payload.idPayment,
-    action.payload.idWallet.toString()
-  );
-  const apiGetPspSelectedWithRefresh =
-    pmSessionManager.withRefresh(apiGetPspSelected);
-  try {
-    const response: SagaCallReturnType<typeof apiGetPspSelectedWithRefresh> =
-      yield* call(apiGetPspSelectedWithRefresh);
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        const successAction = paymentFetchPspsForPaymentId.success(
-          response.value.value.data
-        );
-        yield* put(successAction);
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess(successAction);
-        }
-      } else {
-        throw Error(`response status ${response.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
-    }
-  } catch (e) {
-    const failureAction = paymentFetchPspsForPaymentId.failure(e);
-    yield* put(failureAction);
-    if (action.payload.onFailure) {
-      action.payload.onFailure(failureAction);
-    }
   }
 }
 

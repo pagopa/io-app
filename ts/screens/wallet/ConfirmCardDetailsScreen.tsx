@@ -37,6 +37,7 @@ import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/
 
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
+  isError,
   isLoading as isRemoteLoading,
   isReady
 } from "../../features/bonus/bpd/model/RemoteValue";
@@ -347,13 +348,13 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const { creditCardAddWallet, walletById } = state.wallet.wallets;
 
-  const { psps } = state.wallet.payment;
+  const { pspsV2 } = state.wallet.payment;
   const pmSessionToken = pmSessionTokenSelector(state);
   const isLoading =
     isRemoteLoading(pmSessionToken) ||
     pot.isLoading(creditCardAddWallet) ||
     pot.isLoading(walletById) ||
-    pot.isLoading(psps);
+    isRemoteLoading(pspsV2.psps);
 
   // considering wallet error only when the first step is completed and not in error
   const areWalletsInError =
@@ -362,7 +363,7 @@ const mapStateToProps = (state: GlobalState) => {
   const error =
     (pot.isError(creditCardAddWallet) &&
       creditCardAddWallet.error.kind !== "ALREADY_EXISTS") ||
-    pot.isError(psps)
+    isError(pspsV2.psps)
       ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
 

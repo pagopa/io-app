@@ -11,16 +11,16 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentFetchPspsForPaymentId,
   paymentUpdateWalletPsp,
-  pspForPaymentV2WithCallbacks
+  pspForPaymentV2WithCallbacks,
+  pspSelectedForPaymentV2
 } from "../../../store/actions/wallet/payment";
 import { isRawPayPal, Psp, Wallet } from "../../../types/pagopa";
+import { walletHasFavoriteAvailablePsp } from "../../../utils/payment";
 import {
-  pspsForLocale,
-  walletHasFavoriteAvailablePsp
-} from "../../../utils/payment";
-import { getPayPalPspIconUrl } from "../../../utils/paymentMethod";
+  convertPspDataToPsp,
+  convertPspToPspData
+} from "../../../features/wallet/onboarding/paypal/store/transformers";
 
 /**
  * Common action dispatchers for payment screens
@@ -46,7 +46,7 @@ export const dispatchUpdatePspForWalletAndConfirm =
         ) => {
           const psp = action.payload.updatedWallet.psp;
           if (psp !== undefined) {
-            dispatch(paymentFetchPspsForPaymentId.success([psp]));
+            dispatch(pspSelectedForPaymentV2(convertPspToPspData(psp)));
           }
 
           navigateToPaymentConfirmPaymentMethodScreen({
@@ -108,15 +108,7 @@ export const dispatchPickPspOrConfirm =
                 // there should exists only 1 psp that can handle Paypal transactions
                 psps: pspList
                   .filter(pd => pd.defaultPsp)
-                  .map<Psp>(p => ({
-                    id: parseInt(p.idPsp, 10),
-                    logoPSP: getPayPalPspIconUrl(p.codiceAbi),
-                    fixedCost: {
-                      currency: "EUR",
-                      amount: p.fee,
-                      decimalDigits: 2
-                    }
-                  })),
+                  .map<Psp>(convertPspDataToPsp),
                 wallet: maybeSelectedWallet.value
               });
             }
@@ -129,14 +121,13 @@ export const dispatchPickPspOrConfirm =
         // there's no need to ask to select a wallet - we can ask pagopa for the
         // PSPs that we can use with this wallet.
         dispatch(
-          paymentFetchPspsForPaymentId.request({
+          pspForPaymentV2WithCallbacks({
             idPayment,
             idWallet: selectedWallet.idWallet,
             onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
-            onSuccess: successAction => {
-              // filter PSPs for the current locale only (the list will contain
-              // duplicates for all the supported languages)
-              const psps = pspsForLocale(successAction.payload);
+            onSuccess: pspList => {
+              const psps = pspList.map(convertPspDataToPsp);
+              const eligiblePsp = pspList.find(p => p.defaultPsp);
               if (psps.length === 0) {
                 // this payment method cannot be used!
                 onFailure("NO_PSPS_AVAILABLE");
@@ -153,12 +144,12 @@ export const dispatchPickPspOrConfirm =
                   psps,
                   wallet: maybeSelectedWallet.value
                 });
-              } else if (psps.length === 1) {
+              } else if (eligiblePsp) {
                 // there is only one PSP available for this payment, we can go ahead
                 // and associate it to the current wallet without asking the user to
                 // select it
                 dispatchUpdatePspForWalletAndConfirm(dispatch)(
-                  psps[0].id,
+                  parseInt(eligiblePsp.idPsp, 10),
                   selectedWallet,
                   rptId,
                   initialAmount,
