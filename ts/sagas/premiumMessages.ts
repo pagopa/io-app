@@ -8,7 +8,12 @@ import ROUTES from "../navigation/routes";
  * will retrieve the preference the user gave from the
  * backend.
  */
-const isPremiumMessagesEnabledSelector = (): boolean | null => false;
+export const isPremiumMessagesEnabledSelector = (): boolean | null => false;
+
+/**
+ * A mock action that will complete this saga.
+ */
+export const setPremiumMessagesEnabled = Symbol();
 
 /**
  * check, and eventually ask, about the premium messages otp-in.
@@ -21,6 +26,7 @@ export function* askPremiumMessagesOptIn() {
   if (isEnabled !== null) {
     return;
   }
+
   // navigate to the screen where user can opt-in or not his preference
   // wait until he/she done a choice.
   yield* call(
@@ -31,5 +37,5 @@ export function* askPremiumMessagesOptIn() {
   );
 
   // The action that will allow this saga to complete.
-  yield* take(Symbol());
+  yield* take(setPremiumMessagesEnabled);
 }
