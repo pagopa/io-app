@@ -2782,7 +2782,6 @@
         "fee",
         "idPsp",
         "onboard",
-        "privacyUrl",
         "ragioneSociale"
       ],
       "properties": {

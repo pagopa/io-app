@@ -57,7 +57,6 @@ import {
   isCreditCard,
   isRawPayPal,
   PaymentMethod,
-  Psp,
   Wallet
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
@@ -97,7 +96,7 @@ export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   verifica: PaymentRequestsGetResponse;
   idPayment: string;
   wallet: Wallet;
-  psps: ReadonlyArray<Psp>;
+  psps: ReadonlyArray<PspData>;
 }>;
 
 type OwnProps =

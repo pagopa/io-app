@@ -117,13 +117,13 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                     <PickAvailablePaymentMethodListItem
                       isFirst={i.index === 0}
                       paymentMethod={i.item}
-                      onPress={() =>
+                      onPress={() => {
                         props.navigateToConfirmOrPickPsp(
                           // Since only credit cards are now accepted method we manage only this case
                           // TODO: if payment methods different from credit card should be accepted manage every case
                           convertWalletV2toWalletV1(i.item)
-                        )
-                      }
+                        );
+                      }}
                     />
                   )}
                 />

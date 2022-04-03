@@ -15,12 +15,11 @@ import {
   pspForPaymentV2WithCallbacks,
   pspSelectedForPaymentV2
 } from "../../../store/actions/wallet/payment";
-import { isRawPayPal, Psp, Wallet } from "../../../types/pagopa";
-import { walletHasFavoriteAvailablePsp } from "../../../utils/payment";
-import {
-  convertPspDataToPsp,
-  convertPspToPspData
-} from "../../../features/wallet/onboarding/paypal/store/transformers";
+import { isRawPayPal, Wallet } from "../../../types/pagopa";
+import { walletHasFavoriteAvailablePspData } from "../../../utils/payment";
+import { convertPspToPspData } from "../../../features/wallet/onboarding/paypal/store/transformers";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 /**
  * Common action dispatchers for payment screens
@@ -28,13 +27,13 @@ import {
 export const dispatchUpdatePspForWalletAndConfirm =
   (dispatch: Dispatch) =>
   (
-    idPsp: number,
+    idPsp: string,
     wallet: Wallet,
     rptId: RptId,
     initialAmount: AmountInEuroCents,
     verifica: PaymentRequestsGetResponse,
     idPayment: string,
-    psps: ReadonlyArray<Psp>,
+    psps: ReadonlyArray<PspData>,
     onFailure: () => void
   ) =>
     dispatch(
@@ -48,7 +47,6 @@ export const dispatchUpdatePspForWalletAndConfirm =
           if (psp !== undefined) {
             dispatch(pspSelectedForPaymentV2(convertPspToPspData(psp)));
           }
-
           navigateToPaymentConfirmPaymentMethodScreen({
             rptId,
             initialAmount,
@@ -106,9 +104,7 @@ export const dispatchPickPspOrConfirm =
                 verifica,
                 idPayment,
                 // there should exists only 1 psp that can handle Paypal transactions
-                psps: pspList
-                  .filter(pd => pd.defaultPsp)
-                  .map<Psp>(convertPspDataToPsp),
+                psps: pspList.filter(pd => pd.defaultPsp),
                 wallet: maybeSelectedWallet.value
               });
             }
@@ -126,22 +122,22 @@ export const dispatchPickPspOrConfirm =
             idWallet: selectedWallet.idWallet,
             onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
             onSuccess: pspList => {
-              const psps = pspList.map(convertPspDataToPsp);
               const eligiblePsp = pspList.find(p => p.defaultPsp);
-              if (psps.length === 0) {
+              if (pspList.length === 0) {
                 // this payment method cannot be used!
                 onFailure("NO_PSPS_AVAILABLE");
-              } else if (walletHasFavoriteAvailablePsp(selectedWallet, psps)) {
+              } else if (
+                walletHasFavoriteAvailablePspData(selectedWallet, pspList)
+              ) {
                 // The user already selected a psp in the past for this wallet, and
                 // that PSP can be used for this payment, in this case we can
                 // proceed to the confirmation screen
-
                 navigateToPaymentConfirmPaymentMethodScreen({
                   rptId,
                   initialAmount,
                   verifica,
                   idPayment,
-                  psps,
+                  psps: pspList,
                   wallet: maybeSelectedWallet.value
                 });
               } else if (eligiblePsp) {
@@ -149,13 +145,13 @@ export const dispatchPickPspOrConfirm =
                 // and associate it to the current wallet without asking the user to
                 // select it
                 dispatchUpdatePspForWalletAndConfirm(dispatch)(
-                  parseInt(eligiblePsp.idPsp, 10),
+                  eligiblePsp.idPsp,
                   selectedWallet,
                   rptId,
                   initialAmount,
                   verifica,
                   idPayment,
-                  psps,
+                  pspList,
                   () =>
                     // associating the only available psp to the wallet has failed, go
                     // to the psp selection screen anyway
@@ -165,7 +161,7 @@ export const dispatchPickPspOrConfirm =
                       initialAmount,
                       verifica,
                       wallet: selectedWallet,
-                      psps,
+                      psps: pspList,
                       idPayment
                     })
                 );
@@ -178,7 +174,7 @@ export const dispatchPickPspOrConfirm =
                   initialAmount,
                   verifica,
                   wallet: selectedWallet,
-                  psps,
+                  psps: pspList,
                   idPayment
                 });
               }

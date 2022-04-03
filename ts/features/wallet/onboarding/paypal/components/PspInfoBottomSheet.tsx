@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 type Props = {
   pspName: string;
   pspFee: NonNegativeNumber;
-  pspPrivacyUrl: string;
+  pspPrivacyUrl?: string;
   onButtonPress: () => void;
 };
 
@@ -69,7 +69,7 @@ const getItem = (props: Props) => [
     description: (
       <View>
         <TouchableWithoutFeedback
-          onPress={() => openWebUrl(props.pspPrivacyUrl)}
+          onPress={() => props.pspPrivacyUrl && openWebUrl(props.pspPrivacyUrl)}
         >
           <Link weight={"SemiBold"}>
             {I18n.t(

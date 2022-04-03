@@ -25,11 +25,16 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { allPspsSelector } from "../../../store/reducers/wallet/payment";
+import {
+  allPspsSelector,
+  pspV2ListSelector
+} from "../../../store/reducers/wallet/payment";
 import customVariables from "../../../theme/variables";
-import { Psp, Wallet } from "../../../types/pagopa";
+import { Wallet } from "../../../types/pagopa";
 import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 export type PickPspScreenNavigationParams = Readonly<{
@@ -37,7 +42,7 @@ export type PickPspScreenNavigationParams = Readonly<{
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
   idPayment: string;
-  psps: ReadonlyArray<Psp>;
+  psps: ReadonlyArray<PspData>;
   wallet: Wallet;
   chooseToChange?: boolean;
 }>;
@@ -138,9 +143,12 @@ class PickPspScreen extends React.Component<Props> {
               renderItem={({ item }) => (
                 <PspComponent
                   psp={item}
-                  onPress={() =>
-                    this.props.pickPsp(item.id, this.props.allPsps)
-                  }
+                  onPress={() => {
+                    this.props.pickPsp(
+                      item.id.toString(),
+                      this.props.allPspsV2
+                    );
+                  }}
                 />
               )}
               ListHeaderComponent={this.headerItem}
@@ -166,7 +174,8 @@ const mapStateToProps = (state: GlobalState) => {
     isLoading:
       pot.isLoading(state.wallet.wallets.walletById) || pot.isLoading(psps),
     hasError: pot.isError(state.wallet.wallets.walletById) || pot.isError(psps),
-    allPsps: pot.getOrElse(psps, [])
+    allPsps: pot.getOrElse(psps, []),
+    allPspsV2: getValueOrElse(pspV2ListSelector(state), [])
   };
 };
 
@@ -180,7 +189,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
       })
     );
   },
-  pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
+  pickPsp: (idPsp: string, psps: ReadonlyArray<PspData>) =>
     dispatchUpdatePspForWalletAndConfirm(dispatch)(
       idPsp,
       props.navigation.getParam("wallet"),

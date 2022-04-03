@@ -7,7 +7,6 @@ import {
   myInitialAmount,
   myVerifiedData,
   myWallet,
-  myPsp,
   AuthSeq
 } from "../../../../utils/testFaker";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
@@ -25,6 +24,7 @@ import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wal
 import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { isPaypalEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
+import { PspData } from "../../../../../definitions/pagopa/PspData";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
@@ -83,6 +83,27 @@ const creditCardPaymentMethod = {
   caption: "caption"
 } as CreditCardPaymentMethod;
 
+const pspList: ReadonlyArray<PspData> = [
+  {
+    codiceAbi: "0001",
+    defaultPsp: true,
+    fee: 100,
+    idPsp: "1",
+    onboard: true,
+    privacyUrl: "https://io.italia.it",
+    ragioneSociale: "PayTipper"
+  },
+  {
+    codiceAbi: "0002",
+    defaultPsp: true,
+    fee: 120,
+    idPsp: "2",
+    onboard: true,
+    privacyUrl: "https://io.italia.it",
+    ragioneSociale: "PayTipper2"
+  }
+];
+
 // PayPal card payment method stub
 const paypalEmail = "email@email.com";
 const payPalPaymentMethod = {
@@ -110,7 +131,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     verifica: myVerifiedData,
     idPayment: "hjkdhgkdj",
     wallet: myWallet,
-    psps: [myPsp]
+    psps: pspList
   };
 
   // Store with the true appReducer

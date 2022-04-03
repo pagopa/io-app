@@ -57,6 +57,8 @@ import {
 } from "../../utils/errors";
 import { checkCurrentSession } from "../../store/actions/authentication";
 import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 //
 // Payment Manager APIs
@@ -314,7 +316,7 @@ export function* updateWalletPspRequestHandler(
   const { wallet, idPsp } = action.payload;
 
   const apiUpdateWalletPsp = pagoPaClient.updateWalletPsp(wallet.idWallet, {
-    data: { idPsp }
+    data: { psp: { idPsp } }
   });
   const updateWalletPspWithRefresh =
     pmSessionManager.withRefresh(apiUpdateWalletPsp);
@@ -322,36 +324,42 @@ export function* updateWalletPspRequestHandler(
   try {
     const response: SagaCallReturnType<typeof updateWalletPspWithRefresh> =
       yield* call(updateWalletPspWithRefresh);
-
+    RTron?.log("A", response);
     if (response.isRight()) {
       if (response.value.status === 200) {
+        RTron?.log("B");
         const maybeWallets: SagaCallReturnType<typeof getWallets> = yield* call(
           getWallets,
           pagoPaClient,
           pmSessionManager
         );
         if (maybeWallets.isRight()) {
+          RTron?.log("C");
           // look for the updated wallet
           const updatedWallet = maybeWallets.value.find(
             _ => _.idWallet === wallet.idWallet
           );
           if (updatedWallet !== undefined) {
+            RTron?.log("D", maybeWallets.value, response.value.value.data);
             // the wallet is still there, we can proceed
             const successAction = paymentUpdateWalletPsp.success({
               wallets: maybeWallets.value,
               // attention: updatedWallet is V1
               updatedWallet: response.value.value.data
             });
+            RTron?.log("D1", successAction);
             yield* put(successAction);
             if (action.payload.onSuccess) {
               // signal the callee if requested
               action.payload.onSuccess(successAction);
             }
           } else {
+            RTron?.log("E", response);
             // oops, the wallet is not there anymore!
             throw Error(`response status ${response.value.status}`);
           }
         } else {
+          RTron?.log("F", maybeWallets.value);
           throw maybeWallets.value;
         }
       } else {
@@ -362,6 +370,7 @@ export function* updateWalletPspRequestHandler(
       throw Error(readablePrivacyReport(response.value));
     }
   } catch (error) {
+    RTron?.log("error", error);
     const failureAction = paymentUpdateWalletPsp.failure(error.message);
     yield* put(failureAction);
     if (action.payload.onFailure) {

@@ -31,10 +31,9 @@ export const convertPspToPspData = (psp: Psp): PspData => ({
   codiceAbi: "",
   defaultPsp: true,
   fee: psp.fixedCost.amount,
-  idPsp: psp.idPsp ?? "",
+  idPsp: psp.id.toString(),
   onboard: true,
-  privacyUrl: "",
-  ragioneSociale: ""
+  ragioneSociale: psp.businessName ?? ""
 });
 
 // convert a paypal psp returned by the API into the app domain model

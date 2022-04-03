@@ -37,6 +37,7 @@ import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
+import { PspData } from "../../definitions/pagopa/PspData";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -115,6 +116,31 @@ export function walletHasFavoriteAvailablePsp(
   // see whether the PSP associated with this wallet can be used for this
   // payment
   const walletPspInPsps = psps.find(psp => psp.id === maybeWalletPsp.id);
+
+  // if the wallet PSP is one of the available PSPs, we can automatically
+  // select it
+  return walletPspInPsps !== undefined;
+}
+
+/**
+ * Whether we need to show the PSP selection screen to the user.
+ */
+export function walletHasFavoriteAvailablePspData(
+  wallet: Wallet,
+  psps: ReadonlyArray<PspData>
+): boolean {
+  // see whether there's a PSP that has already been used with this wallet
+  const maybeWalletPsp = wallet.psp;
+
+  if (maybeWalletPsp === undefined) {
+    // there is no PSP associated to this payment method (wallet), we cannot
+    // automatically select a PSP
+    return false;
+  }
+
+  // see whether the PSP associated with this wallet can be used for this
+  // payment
+  const walletPspInPsps = psps.find(psp => psp.idPsp === maybeWalletPsp.idPsp);
 
   // if the wallet PSP is one of the available PSPs, we can automatically
   // select it
