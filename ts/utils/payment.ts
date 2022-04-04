@@ -340,11 +340,11 @@ export const getTransactionIUV = (
 /**
  * Order the list of PSPs by fixed cost amount: from lower to higher
  */
-export const orderPspByAmount = (pspList: ReadonlyArray<Psp>) =>
-  pspList.concat().sort((pspA: Psp, pspB: Psp) => {
-    if (pspA.fixedCost.amount < pspB.fixedCost.amount) {
+export const orderPspByAmount = (pspList: ReadonlyArray<PspData>) =>
+  pspList.concat().sort((pspA: PspData, pspB: PspData) => {
+    if (pspA.fee < pspB.fee) {
       return -1;
-    } else if (pspA.fixedCost.amount > pspB.fixedCost.amount) {
+    } else if (pspA.fee > pspB.fee) {
       return 1;
     }
     return 0;

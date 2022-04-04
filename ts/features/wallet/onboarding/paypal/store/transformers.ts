@@ -1,7 +1,7 @@
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { PspData } from "../../../../../../definitions/pagopa/PspData";
 import { IOPayPalPsp } from "../types";
-import { getPayPalPspIconUrl } from "../../../../../utils/paymentMethod";
+import { getPspIconUrlFromAbi } from "../../../../../utils/paymentMethod";
 import { PayPalPsp } from "../../../../../../definitions/pagopa/PayPalPsp";
 import { Psp } from "../../../../../types/pagopa";
 
@@ -11,7 +11,7 @@ import { Psp } from "../../../../../types/pagopa";
  */
 export const convertPspData = (psp: PspData): IOPayPalPsp => ({
   id: psp.idPsp,
-  logoUrl: getPayPalPspIconUrl(psp.codiceAbi),
+  logoUrl: getPspIconUrlFromAbi(psp.codiceAbi),
   name: psp.ragioneSociale,
   fee: psp.fee as NonNegativeNumber,
   privacyUrl: psp.privacyUrl
@@ -19,7 +19,7 @@ export const convertPspData = (psp: PspData): IOPayPalPsp => ({
 
 export const convertPspDataToPsp = (psp: PspData): Psp => ({
   id: parseInt(psp.idPsp, 10),
-  logoPSP: getPayPalPspIconUrl(psp.codiceAbi),
+  logoPSP: getPspIconUrlFromAbi(psp.codiceAbi),
   fixedCost: {
     currency: "EUR",
     amount: psp.fee,
@@ -39,7 +39,7 @@ export const convertPspToPspData = (psp: Psp): PspData => ({
 // convert a paypal psp returned by the API into the app domain model
 export const convertPayPalPsp = (psp: PayPalPsp): IOPayPalPsp => ({
   id: psp.idPsp,
-  logoUrl: getPayPalPspIconUrl(psp.codiceAbi),
+  logoUrl: getPspIconUrlFromAbi(psp.codiceAbi),
   name: psp.ragioneSociale,
   fee: psp.maxFee as NonNegativeNumber,
   privacyUrl: psp.privacyUrl
