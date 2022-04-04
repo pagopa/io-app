@@ -371,7 +371,7 @@ export function* updateWalletPspRequestHandler(
             const successAction = paymentUpdateWalletPsp.success({
               wallets: maybeWallets.value,
               // attention: updatedWallet is V1
-              updatedWallet: response.value.value.data
+              updatedWallet
             });
             yield* put(successAction);
             if (action.payload.onSuccess) {

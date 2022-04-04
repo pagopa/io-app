@@ -69,7 +69,7 @@ import {
   GetWalletsUsingGETT,
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
-  updateWalletUsingPUTDecoder,
+  updateWalletUsingPUTV2DefaultDecoder,
   UpdateWalletUsingPUTV2T
 } from "../../definitions/pagopa/requestTypes";
 import {
@@ -340,19 +340,13 @@ const getPsp: GetPspUsingGETTExtra = {
   response_decoder: getPspUsingGETDecoder(PspResponse)
 };
 
-type UpdateWalletUsingPUTTExtra = MapResponseType<
-  UpdateWalletUsingPUTV2T,
-  200,
-  WalletResponse
->;
-
-const updateWalletPsp: UpdateWalletUsingPUTTExtra = {
+const updateWalletPsp: UpdateWalletUsingPUTV2T = {
   method: "put",
   url: ({ id }) => `/v2/wallet/${id}`,
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
+  response_decoder: updateWalletUsingPUTV2DefaultDecoder()
 };
 
 type FavouriteWalletUsingPOSTTExtra = MapResponseType<
