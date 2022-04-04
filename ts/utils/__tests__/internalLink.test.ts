@@ -5,6 +5,7 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   testableALLOWED_ROUTE_NAMES
 } from "../../components/ui/Markdown/handlers/internalLink";
+import ROUTES from "../../navigation/routes";
 
 describe("getInternalRoute", () => {
   const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(
@@ -30,9 +31,9 @@ describe("getInternalRoute", () => {
           routeName: validRoute,
           navigationAction: {
             payload: {
-              name: "MAIN",
+              name: ROUTES.MAIN,
               params: {
-                screen: "MESSAGES_HOME"
+                screen: ROUTES.MESSAGES_HOME
               }
             },
             type: "NAVIGATE"
@@ -49,9 +50,9 @@ describe("getInternalRoute", () => {
           routeName: validRoute,
           navigationAction: {
             payload: {
-              name: "MAIN",
+              name: ROUTES.MAIN,
               params: {
-                screen: "MESSAGES_HOME"
+                screen: ROUTES.MESSAGES_HOME
               }
             },
             type: "NAVIGATE"
