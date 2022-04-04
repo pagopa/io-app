@@ -233,6 +233,11 @@ export const baseRawBackendStatus: BackendStatus = {
     paypal: {
       enabled: false
     },
+    bancomatPay: {
+      display: true,
+      onboarding: true,
+      payment: false
+    },
     cgn: {
       enabled: true,
       merchants_v2: false
@@ -277,6 +282,11 @@ export const baseBackendConfig: Config = {
   },
   paypal: {
     enabled: false
+  },
+  bancomatPay: {
+    display: true,
+    onboarding: true,
+    payment: false
   },
   cgn: {
     enabled: true,
