@@ -19,6 +19,7 @@ import { BadgeComponent } from "../../../screens/BadgeComponent";
 import IconFont from "../../../ui/IconFont";
 import customVariables from "../../../../theme/variables";
 import { IOColors } from "../../../core/variables/IOColors";
+import QrCode from "../../../../../img/messages/qr-code.svg";
 
 const ICON_WIDTH = 24;
 
@@ -65,13 +66,9 @@ const styles = StyleSheet.create({
     textAlign: "right",
     marginLeft: 7
   },
-  icon: {
-    alignItems: "flex-start",
-    justifyContent: "flex-end",
-    flexDirection: "row",
+  checkBoxContainer: {
     flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: "auto"
+    flexShrink: 0
   },
   text3Line: {
     flex: 1,
@@ -95,25 +92,32 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     width: 74,
     height: 25,
-    flexDirection: "row"
+    flexDirection: "row",
+    backgroundColor: IOColors.aqua
   },
   badgeInfoPaid: {
     borderColor: IOColors.aqua,
     backgroundColor: IOColors.aqua
   },
-  badgeInfoArchived: {
-    borderColor: IOColors.greyLight,
-    backgroundColor: IOColors.greyLight
-  },
   qrContainer: {
-    marginRight: 16
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: IOColors.blue,
+    color: IOColors.white,
+    height: 48,
+    width: 48,
+    borderRadius: 24
+  },
+  // needed to keep the inner item still between selections
+  qrCheckBoxContainer: {
+    minHeight: 48
   }
 });
 
 /**
  * The data structure representing a badge.
  */
-type ItemBadge = "paid" | "archived" | "qrcode";
+type ItemBadge = "paid" | "qrcode";
 
 /**
  * Given various item states, return the corresponding
@@ -121,19 +125,13 @@ type ItemBadge = "paid" | "archived" | "qrcode";
  */
 const getMaybeItemBadge = ({
   paid,
-  archived,
   qrCode
 }: {
   paid: boolean;
-  archived: boolean;
   qrCode: boolean;
 }): O.Option<ItemBadge> => {
   if (paid) {
     return O.some("paid");
-  }
-
-  if (archived) {
-    return O.some("archived");
   }
 
   if (qrCode) {
@@ -156,19 +154,10 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
         </Badge>
       );
 
-    case "archived":
-      return (
-        <Badge style={[styles.badgeInfo, styles.badgeInfoArchived]}>
-          <H5 color="bluegreyDark">
-            {I18n.t("messages.accessibility.message.archived")}
-          </H5>
-        </Badge>
-      );
-
     case "qrcode":
       return (
         <View style={styles.qrContainer}>
-          <IconFont name={"io-qr"} color={IOColors.blue} />
+          <QrCode height={22} width={22} fill={IOColors.white} />
         </View>
       );
   }
@@ -182,9 +171,6 @@ const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
   switch (itemBadge) {
     case "paid":
       return I18n.t("messages.badge.paid");
-
-    case "archived":
-      return I18n.t("messages.accessibility.message.archived");
 
     default:
       return "";
@@ -206,7 +192,6 @@ type Props = {
   category: MessageCategory;
   hasPaidBadge: boolean;
   isRead: boolean;
-  isArchived: boolean;
   isSelected: boolean;
   isSelectionModeEnabled: boolean;
   message: UIMessage;
@@ -243,7 +228,6 @@ const MessageListItem = ({
   category,
   hasPaidBadge,
   isRead,
-  isArchived,
   isSelected,
   isSelectionModeEnabled,
   message,
@@ -258,16 +242,11 @@ const MessageListItem = ({
     message.organizationName || UNKNOWN_SERVICE_DATA.organizationName;
   const serviceName = message.serviceName || UNKNOWN_SERVICE_DATA.serviceName;
   const messageTitle = message.title || I18n.t("messages.errorLoading.noTitle");
-  const iconName = isSelectionModeEnabled
-    ? isSelected
-      ? "io-checkbox-on"
-      : "io-checkbox-off"
-    : "io-right";
+  const iconName = isSelected ? "io-checkbox-on" : "io-checkbox-off";
   const showQrCode = category?.tag === "EU_COVID_CERT";
 
   const maybeItemBadge = getMaybeItemBadge({
     paid: hasPaidBadge,
-    archived: isArchived,
     qrCode: showQrCode
   });
 
@@ -275,7 +254,7 @@ const MessageListItem = ({
     <TouchableDefaultOpacity
       onPress={onPress}
       onLongPress={onLongPress}
-      style={styles.verticalPad}
+      style={[styles.verticalPad]}
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead, maybeItemBadge)}
       accessibilityRole="button"
@@ -309,15 +288,22 @@ const MessageListItem = ({
           </View>
         </View>
 
-        <View style={styles.icon}>
-          {maybeItemBadge.map(itemBadgeToTagOrIcon).getOrElse(undefined)}
-
-          <IconFont
-            name={iconName}
-            size={ICON_WIDTH}
-            color={customVariables.contentPrimaryBackground}
-          />
-        </View>
+        {isSelectionModeEnabled ? (
+          <View
+            style={[
+              styles.checkBoxContainer,
+              showQrCode && styles.qrCheckBoxContainer
+            ]}
+          >
+            <IconFont
+              name={iconName}
+              size={ICON_WIDTH}
+              color={customVariables.contentPrimaryBackground}
+            />
+          </View>
+        ) : (
+          maybeItemBadge.map(itemBadgeToTagOrIcon).getOrElse(undefined)
+        )}
       </View>
     </TouchableDefaultOpacity>
   );
@@ -333,7 +319,6 @@ const MessageListItemMemo = React.memo(
   (prev: Props, curr: Props) =>
     curr.message.id === prev.message.id &&
     curr.isRead === prev.isRead &&
-    curr.isArchived === prev.isArchived &&
     curr.isSelectionModeEnabled === prev.isSelectionModeEnabled &&
     curr.isSelected === prev.isSelected &&
     curr.hasPaidBadge === prev.hasPaidBadge &&
