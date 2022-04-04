@@ -300,7 +300,6 @@ const AddCardScreen: React.FC<Props> = props => {
 
   return (
     <BaseScreenComponent
-      shouldAskForScreenshotWithInitialValue={false}
       goBack={true}
       headerTitle={I18n.t("wallet.addCardTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}

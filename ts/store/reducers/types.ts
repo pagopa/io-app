@@ -15,7 +15,6 @@ import { DebugState } from "./debug";
 import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
-import { InstabugUnreadMessagesState } from "./instabug/instabugUnreadMessages";
 import { InstallationState } from "./installation";
 import { InternalRouteNavigationState } from "./internalRouteNavigation";
 import { NavigationState } from "./navigation";
@@ -37,7 +36,6 @@ export type GlobalState = Readonly<{
   backendStatus: BackendStatusState;
   versionInfo: VersionInfoState;
   entities: PersistedEntitiesState;
-  instabug: InstabugUnreadMessagesState;
   backoffError: BackoffErrorState;
   notifications: NotificationsState;
   onboarding: OnboardingState;

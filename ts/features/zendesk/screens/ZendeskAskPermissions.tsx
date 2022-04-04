@@ -320,7 +320,7 @@ const ZendeskAskPermissions = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      showInstabugChat={false}
+      showChat={false}
       goBack={true}
       // customRightIcon is needed to have a centered header title
       customRightIcon={{

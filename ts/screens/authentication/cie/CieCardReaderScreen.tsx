@@ -17,7 +17,6 @@ import {
   Vibration
 } from "react-native";
 import { connect } from "react-redux";
-import { TypeLogs } from "../../../boot/configureInstabug";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
@@ -117,7 +116,6 @@ const analyticActions = new Map<CieAuthenticationErrorReason, string>([
   ["START_NFC_ERROR", ""]
 ]);
 
-const instabugTag = "cie";
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
@@ -236,12 +234,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieEvent = async (event: CEvent) => {
-    handleSendAssistanceLog(
-      this.choosenTool,
-      event.event,
-      TypeLogs.DEBUG,
-      instabugTag
-    );
+    handleSendAssistanceLog(this.choosenTool, event.event);
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -353,12 +346,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
-    handleSendAssistanceLog(
-      this.choosenTool,
-      error.message,
-      TypeLogs.DEBUG,
-      instabugTag
-    );
+    handleSendAssistanceLog(this.choosenTool, error.message);
     this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
 
@@ -366,12 +354,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     if (this.state.readingState === ReadingState.completed) {
       return;
     }
-    handleSendAssistanceLog(
-      this.choosenTool,
-      "authentication SUCCESS",
-      TypeLogs.DEBUG,
-      instabugTag
-    );
+    handleSendAssistanceLog(this.choosenTool, "authentication SUCCESS");
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
       setTimeout(

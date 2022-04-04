@@ -1,4 +1,4 @@
-import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
+import { fromNullable, isNone, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Alert } from "react-native";
@@ -18,13 +18,7 @@ import {
 import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
-import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { BackendClient } from "../api/backend";
-import {
-  instabugLog,
-  setInstabugProfileAttributes,
-  TypeLogs
-} from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
@@ -62,7 +56,6 @@ import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
-  idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
@@ -87,6 +80,7 @@ import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
 import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
 import watchReloadAllMessages from "./messages/watchReloadAllMessages";
 import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStatusAttribues";
+import watchMigrateToPagination from "./messages/watchMigrateToPagination";
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
@@ -283,10 +277,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* put(clearOnboarding());
     yield* put(clearCache());
   }
-
-  const maybeIdp: Option<SpidIdp> = yield* select(idpSelector);
-
-  setInstabugProfileAttributes(maybeIdp);
 
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
@@ -496,6 +486,10 @@ export function* initializeApplicationSaga(): Generator<
       watchUpsertMessageStatusAttribues,
       backendClient.upsertMessageStatusAttributes
     );
+    yield* fork(
+      watchMigrateToPagination,
+      backendClient.upsertMessageStatusAttributes
+    );
   }
 
   // Load a message when requested
@@ -560,11 +554,7 @@ function* waitForNavigatorServiceInitialization() {
     const elapsedTime = performance.now() - startTime;
     if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
       timeoutLogged = true;
-      instabugLog(
-        `NavigationService is not initialized after ${elapsedTime} ms`,
-        TypeLogs.ERROR,
-        "initializeApplicationSaga"
-      );
+
       yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
     }
     yield* delay(navigatorPollingTime);
@@ -573,11 +563,6 @@ function* waitForNavigatorServiceInitialization() {
 
   const initTime = performance.now() - startTime;
 
-  instabugLog(
-    `NavigationService initialized after ${initTime} ms`,
-    TypeLogs.DEBUG,
-    "initializeApplicationSaga"
-  );
   yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
     elapsedTime: initTime
   });

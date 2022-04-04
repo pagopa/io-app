@@ -1,6 +1,5 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -8,11 +7,6 @@ import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
-import {
-  instabugLog,
-  openInstabugQuestionReport,
-  TypeLogs
-} from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
@@ -47,8 +41,7 @@ import {
   getErrorDescriptionV2,
   getPaymentHistoryDetails,
   getPaymentOutcomeCodeDescription,
-  getTransactionFee,
-  paymentInstabugTag
+  getTransactionFee
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
@@ -111,16 +104,6 @@ const renderItem = (label: string, value?: string) => {
  * Payment Details
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
-  private instabugLogAndOpenReport = () => {
-    Instabug.appendTags([paymentInstabugTag]);
-    instabugLog(
-      getPaymentHistoryDetails(this.props.navigation.getParam("payment")),
-      TypeLogs.INFO,
-      paymentInstabugTag
-    );
-    openInstabugQuestionReport();
-  };
-
   private zendeskAssistanceLogAndStart = () => {
     // Set pagamenti_pagopa as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
@@ -138,9 +121,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private handleAskAssistance = () => {
     switch (this.choosenTool) {
-      case ToolEnum.instabug:
-        this.instabugLogAndOpenReport();
-        break;
       case ToolEnum.zendesk:
         this.zendeskAssistanceLogAndStart();
         break;
@@ -278,7 +258,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent
         goBack={() => this.props.navigation.goBack()}
-        showInstabugChat={false}
+        showChat={false}
         dark={true}
         headerTitle={I18n.t("payment.details.info.title")}
       >

@@ -10,6 +10,8 @@ import { GlobalState } from "../../../store/reducers/types";
 import { isValidCardHolder } from "../../../utils/input";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import AddCardScreen, { AddCardScreenNavigationParams } from "../AddCardScreen";
+import { testableFunctions } from "../AddPaymentMethodScreen";
+import { IPaymentMethod } from "../../../components/wallet/PaymentMethodsList";
 
 const mockPresentFn = jest.fn();
 jest.mock("../../../utils/bottomSheet", () => ({
@@ -135,6 +137,105 @@ describe("AddCardScreen", () => {
     expect(isValidCardHolder(some(anInvalidCardHolder))).toBeFalsy();
     expect(errorMessage).not.toBeNull();
     expect(continueButton).toBeDisabled();
+  });
+});
+
+describe("getPaymentMethods", () => {
+  beforeEach(() => jest.useFakeTimers());
+  const props = {
+    navigateBack: jest.fn(),
+    startBPayOnboarding: jest.fn(),
+    startSatispayOnboarding: jest.fn(),
+    startPaypalOnboarding: jest.fn(),
+    startAddBancomat: jest.fn(),
+    startAddPrivative: jest.fn(),
+    navigateToAddCreditCard: jest.fn(),
+    isPaypalAlreadyAdded: true,
+    isPaypalEnabled: true,
+    canOnboardBPay: false
+  };
+  // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+  const methods = testableFunctions.getPaymentMethods!(props as any, {
+    onlyPaymentMethodCanPay: true,
+    isPaymentOnGoing: true,
+    isPaypalEnabled: true,
+    canOnboardBPay: true
+  });
+
+  const getMethodStatus = (
+    methods: ReadonlyArray<IPaymentMethod>,
+    description: string
+  ): IPaymentMethod["status"] =>
+    methods.find(m => m.description === description)!.status;
+
+  it("credit card should be always implemented", () => {
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.card.description"))
+    ).toEqual("implemented");
+  });
+
+  it("paypal should be always implemented when the FF is ON", () => {
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.paypal.description"))
+    ).toEqual("implemented");
+  });
+
+  it("paypal should be always notImplemented when the FF is OFF", () => {
+    // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+    const methods = testableFunctions.getPaymentMethods!(props as any, {
+      onlyPaymentMethodCanPay: true,
+      isPaymentOnGoing: true,
+      isPaypalEnabled: false,
+      canOnboardBPay: true
+    });
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.paypal.description"))
+    ).toEqual("notImplemented");
+  });
+
+  it("satispay should be always notImplemented", () => {
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.satispay.description"))
+    ).toEqual("notImplemented");
+  });
+
+  it("bpay should be always notImplemented if Bpay onboarding FF is OFF", () => {
+    // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+    const methods = testableFunctions.getPaymentMethods!(props as any, {
+      onlyPaymentMethodCanPay: true,
+      isPaymentOnGoing: true,
+      isPaypalEnabled: true,
+      canOnboardBPay: false
+    });
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+    ).toEqual("notImplemented");
+  });
+
+  it("bpay should be always implemented if Bpay onboarding FF is ON and onlyPaymentMethodCanPay flag is OFF", () => {
+    // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+    const methods = testableFunctions.getPaymentMethods!(props as any, {
+      onlyPaymentMethodCanPay: false,
+      isPaymentOnGoing: true,
+      isPaypalEnabled: true,
+      canOnboardBPay: true
+    });
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+    ).toEqual("implemented");
+  });
+
+  it("bpay should be notImplemented implemented if Bpay onboarding FF is ON and onlyPaymentMethodCanPay flag is ON", () => {
+    // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+    const methods = testableFunctions.getPaymentMethods!(props as any, {
+      onlyPaymentMethodCanPay: true,
+      isPaymentOnGoing: true,
+      isPaypalEnabled: true,
+      canOnboardBPay: true
+    });
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+    ).toEqual("notImplemented");
   });
 });
 

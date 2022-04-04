@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { TypeLogs } from "../../boot/configureInstabug";
 import AdviceComponent from "../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
@@ -65,12 +64,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       setCounter(newValue);
     } else {
       props.setSelectedIdp(idp);
-      handleSendAssistanceLog(
-        choosenTool,
-        `IDP selected: ${idp.id}`,
-        TypeLogs.DEBUG,
-        "login"
-      );
+      handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
       props.navigateToIdpSelection();
     }
   };

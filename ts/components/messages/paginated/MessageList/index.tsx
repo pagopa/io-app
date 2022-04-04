@@ -12,7 +12,6 @@ import {
 import { connect } from "react-redux";
 
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
-import { UaDonationsBanner } from "../../../../features/uaDonations/components/UaDonationsBanner";
 import I18n from "../../../../i18n";
 import {
   Filter,
@@ -87,6 +86,7 @@ const styles = StyleSheet.create({
 
 type OwnProps = {
   ListEmptyComponent?: EmptyComponent;
+  ListHeaderComponent?: React.ReactElement;
 
   /** @deprecated This list is used instead of the messages from the store */
   filteredMessages?: ReadonlyArray<UIMessage>;
@@ -147,6 +147,7 @@ type Props = OwnProps &
  */
 const MessageList = ({
   ListEmptyComponent,
+  ListHeaderComponent,
   filteredMessages,
   onLongPressItem,
   hasPaidBadge,
@@ -263,7 +264,7 @@ const MessageList = ({
       {isRefreshing && isFirstLoad && <Loader />}
 
       <AnimatedFlatList
-        ListHeaderComponent={<UaDonationsBanner />}
+        ListHeaderComponent={ListHeaderComponent}
         ItemSeparatorComponent={ItemSeparator}
         ListEmptyComponent={renderEmptyList({
           error,

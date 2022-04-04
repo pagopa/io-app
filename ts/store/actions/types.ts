@@ -33,7 +33,6 @@ import { ContentActions } from "./content";
 import { CrossSessionsActions } from "./crossSessions";
 import { DebugActions } from "./debug";
 import { IdentificationActions } from "./identification";
-import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
 import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 import { MessagesActions } from "./messages";
@@ -80,7 +79,6 @@ export type Action =
   | SearchActions
   | PaymentsActions
   | OrganizationsActions
-  | InstabugInfoActions
   | InternalRouteNavigationActions
   | UserDataProcessingActions
   | ProfileEmailValidationAction

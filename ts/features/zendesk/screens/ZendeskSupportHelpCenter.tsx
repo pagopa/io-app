@@ -5,7 +5,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
-import { ContextualHelpData } from "../../../components/ContextualHelp/ContextualHelpComponent";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FAQComponent from "../../../components/FAQComponent";
@@ -25,7 +24,7 @@ import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import themeVariables from "../../../theme/variables";
-import { getFAQsFromCategories } from "../../../utils/faq";
+import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
 import { ZendeskParamsList } from "../navigation/params";
@@ -42,6 +41,12 @@ type FaqManagerProps = Pick<
 > & {
   contentLoaded: boolean;
   contextualHelpConfig: ContextualHelpProps | undefined;
+};
+
+export type ContextualHelpData = {
+  title: string;
+  content: React.ReactNode;
+  faqs?: ReadonlyArray<FAQType>;
 };
 
 export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
@@ -200,7 +205,7 @@ const ZendeskSupportHelpCenter = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      showInstabugChat={false}
+      showChat={false}
       customGoBack={<View />}
       customRightIcon={{
         iconName: "io-close",

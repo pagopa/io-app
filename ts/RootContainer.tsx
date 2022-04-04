@@ -3,7 +3,6 @@ import * as React from "react";
 import { AppState, Platform, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
-import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
@@ -48,7 +47,6 @@ class RootContainer extends React.PureComponent<Props> {
     this.props.applicationChangeState(activity);
 
   public componentDidMount() {
-    initialiseInstabug();
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
     AppState.addEventListener("change", this.handleApplicationActivity);

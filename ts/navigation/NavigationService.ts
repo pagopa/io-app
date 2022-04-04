@@ -4,7 +4,6 @@ import {
 } from "@react-navigation/native";
 import { Route } from "@react-navigation/routers";
 import React from "react";
-import { instabugLog, TypeLogs } from "../boot/configureInstabug";
 import { mixpanelTrack } from "../mixpanel";
 
 export const navigationRef = React.createRef<NavigationContainerRef>();
@@ -23,11 +22,6 @@ const withLogging =
   <A extends Array<unknown>, R>(f: (...a: A) => R) =>
   (...args: A): R => {
     if (navigationRef.current === null || !isNavigationReady) {
-      instabugLog(
-        `call to NavigationService.${f.name} but navigator is ${navigationRef.current} and isNavigationReady: ${isNavigationReady}`,
-        TypeLogs.ERROR,
-        "NavigationService"
-      );
       void mixpanelTrack("NAVIGATION_SERVICE_NAVIGATOR_UNDEFINED", {
         method: f.name
       });

@@ -12,11 +12,16 @@ import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
 import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
-import { cgnMerchantsV2Enabled, uaDonationsEnabled } from "../../config";
+import {
+  cgnMerchantsV2Enabled,
+  premiumMessagesOptInEnabled,
+  uaDonationsEnabled
+} from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
+import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -150,6 +155,22 @@ export const isPaypalEnabledSelector = createSelector(
 );
 
 /**
+ * return the remote config about BancomatPay
+ * if no data is available the default is considering all flags set to false
+ */
+export const bancomatPayConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): BancomatPayConfig =>
+    backendStatus
+      .map(bs => bs.config.bancomatPay)
+      .getOrElse({
+        display: false,
+        onboarding: false,
+        payment: false
+      })
+);
+
+/**
  * return the remote config about CGN enabled/disabled
  * if there is no data, false is the default value -> (CGN disabled)
  */
@@ -167,6 +188,21 @@ export const isFIMSEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
     backendStatus.map(bs => bs.config.fims.enabled).toUndefined() ?? false
+);
+
+/**
+ * Return the remote config about the Premium Messages opt-in/out
+ * screens enabled/disable. If there is no data or the local Feature Flag is
+ * disabled, false is the default value -> (Opt-in/out screen disabled)
+ */
+export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    (premiumMessagesOptInEnabled &&
+      backendStatus
+        .map(bs => bs.config.premiumMessages.opt_in_out_enabled)
+        .toUndefined()) ??
+    false
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times

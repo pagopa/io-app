@@ -81,7 +81,6 @@ export const EuCovidCertMarkdownDetailsScreen = (props: {
   const canShowButton = !isCapturingScreenShoot && loadMarkdownComplete;
   return (
     <BaseScreenComponent
-      shouldAskForScreenshotWithInitialValue={false}
       goBack={true}
       headerTitle={I18n.t(
         "features.euCovidCertificate.valid.markdownDetails.headerTitle"
