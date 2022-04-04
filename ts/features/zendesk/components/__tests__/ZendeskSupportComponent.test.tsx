@@ -17,6 +17,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ZENDESK_ROUTES from "../../navigation/routes";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber
@@ -98,7 +99,7 @@ describe("the ZendeskSupportComponent", () => {
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
         expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
           params: { assistanceForPayment: undefined },
-          screen: "ZENDESK_ASK_PERMISSIONS"
+          screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
       });
       it("if the zendeskRemoteConfig is not remoteReady should navigate to the ZendeskAskPermissions screen", () => {
@@ -107,25 +108,25 @@ describe("the ZendeskSupportComponent", () => {
         const zendeskButton = component.getByTestId("contactSupportButton");
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
-        expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
+        expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
           params: { assistanceForPayment: undefined },
-          screen: "ZENDESK_ASK_PERMISSIONS"
+          screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
         store.dispatch(getZendeskConfig.request());
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(2);
-        expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
+        expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
           params: { assistanceForPayment: undefined },
-          screen: "ZENDESK_ASK_PERMISSIONS"
+          screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
         store.dispatch(
           getZendeskConfig.failure(getNetworkError("mockedError"))
         );
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(3);
-        expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
+        expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
           params: { assistanceForPayment: undefined },
-          screen: "ZENDESK_ASK_PERMISSIONS"
+          screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
       });
       it("if the assistanceForPayment is false and the zendeskRemoteConfig is remoteReady should navigate to the navigateToZendeskChooseCategory screen", () => {
@@ -135,9 +136,9 @@ describe("the ZendeskSupportComponent", () => {
         const zendeskButton = component.getByTestId("contactSupportButton");
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
-        expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
+        expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
           params: { assistanceForPayment: undefined },
-          screen: "ZENDESK_CHOOSE_CATEGORY"
+          screen: ZENDESK_ROUTES.CHOOSE_CATEGORY
         });
       });
     });
@@ -149,8 +150,8 @@ describe("the ZendeskSupportComponent", () => {
       const zendeskButton = component.getByTestId("contactSupportButton");
       fireEvent(zendeskButton, "onPress");
       expect(mockedNavigation).toHaveBeenCalledTimes(1);
-      expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
-        screen: "ZENDESK_PANIC_MODE"
+      expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.PANIC_MODE
       });
     });
   });
