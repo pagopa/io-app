@@ -2,13 +2,14 @@ import { select, call, take } from "typed-redux-saga/macro";
 import { NavigationActions } from "react-navigation";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
+import { isPremiumMessagesOptInOutEnabledSelector } from "../store/reducers/backendStatus";
 
 /**
  * This selector is a mock for a future selector which
  * will retrieve the preference the user gave from the
  * backend.
  */
-export const isPremiumMessagesEnabledSelector = (): boolean | null => false;
+export const isPremiumMessagesAcceptedSelector = (): boolean | null => false;
 
 /**
  * A mock action that will complete this saga.
@@ -18,12 +19,25 @@ export const setPremiumMessagesEnabled = Symbol();
 /**
  * check, and eventually ask, about the premium messages otp-in.
  */
-export function* askPremiumMessagesOptIn() {
-  const isEnabled = yield* select(isPremiumMessagesEnabledSelector);
+export function* askPremiumMessagesOptInOut() {
+  const isOptInOutEnabled = yield* select(
+    isPremiumMessagesOptInOutEnabledSelector
+  );
+
+  // If the opt-in/out screen is not enabled
+  // through the remote feature flag then exit
+  // this saga.
+  if (!isOptInOutEnabled) {
+    return;
+  }
+
+  const premiumMessagesAccepted = yield* select(
+    isPremiumMessagesAcceptedSelector
+  );
 
   // If the user already expressed a preference
   // nothing else is required.
-  if (isEnabled !== null) {
+  if (premiumMessagesAccepted !== null) {
     return;
   }
 
