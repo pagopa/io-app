@@ -38,7 +38,6 @@ import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../../../theme/variables";
 import { showToast } from "../../../../utils/showToast";
-import { isIos } from "../../../../utils/platform";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import { isNoticePaid } from "../../../../store/reducers/entities/payments";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -159,8 +158,9 @@ const MessageList = ({
   allMessages,
   error,
   isLoadingMore,
-  isRefreshing,
+  isLoadingPrevious,
   isReloadingAll,
+  didLoad,
   loadNextPage,
   loadPreviousPage,
   nextCursor,
@@ -177,13 +177,19 @@ const MessageList = ({
   const [longPressedItemIndex, setLongPressedItemIndex] =
     useState<Option<number>>(none);
 
-  const [isFirstLoad, setIsFirstLoad] = useState(isIos);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  useEffect(() => {
+    if (!isLoadingPrevious && !isReloadingAll) {
+      setIsRefreshing(false);
+    }
+  }, [isLoadingPrevious, isReloadingAll]);
 
   useOnFirstRender(
     () => {
       reloadAll();
     },
-    () => shouldUseLoad && messages.length === 0
+    () => shouldUseLoad && !didLoad
   );
 
   useEffect(() => {
@@ -232,9 +238,8 @@ const MessageList = ({
           return;
         }
 
-        if (isFirstLoad) {
-          setIsFirstLoad(false);
-        }
+        setIsRefreshing(true);
+
         if (messages.length === 0) {
           reloadAll();
         } else if (previousCursor !== undefined) {
@@ -245,7 +250,7 @@ const MessageList = ({
   ) : undefined;
 
   const renderListFooter = () => {
-    if (isLoadingMore || isReloadingAll) {
+    if (isLoadingMore || (isReloadingAll && !didLoad)) {
       return <Loader />;
     }
     if (messages.length > 0 && !nextCursor) {
@@ -256,19 +261,12 @@ const MessageList = ({
 
   return (
     <>
-      {/* in iOS refresh indicator is shown only when user does pull to refresh on list
-          so only for iOS devices the ActivityIndicator is shown in place of RefreshControl
-          see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load
-          see https://github.com/facebook/react-native/issues/15892
-        */}
-      {isRefreshing && isFirstLoad && <Loader />}
-
       <AnimatedFlatList
         ListHeaderComponent={ListHeaderComponent}
         ItemSeparatorComponent={ItemSeparator}
         ListEmptyComponent={renderEmptyList({
           error,
-          EmptyComponent: ListEmptyComponent
+          EmptyComponent: didLoad ? ListEmptyComponent : null
         })}
         data={messages}
         initialNumToRender={pageSize}
@@ -318,7 +316,7 @@ const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
       previousCursor: undefined
     }
   );
-
+  const didLoad = pot.isSome(paginatedState);
   return {
     allMessages,
     error,
@@ -327,12 +325,13 @@ const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
     isLoadingMore: isArchive
       ? isLoadingArchiveNextPage(state)
       : isLoadingInboxNextPage(state),
-    isRefreshing: isArchive
+    isLoadingPrevious: isArchive
       ? isLoadingArchivePreviousPage(state)
       : isLoadingInboxPreviousPage(state),
     isReloadingAll: isArchive
       ? isReloadingArchive(state)
       : isReloadingInbox(state),
+    didLoad,
     nextCursor,
     previousCursor
   };
