@@ -23,10 +23,7 @@ import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/comp
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import {
-  paymentFetchAllPspsForPaymentId,
-  pspForPaymentV2
-} from "../../../store/actions/wallet/payment";
+import { pspForPaymentV2 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import customVariables from "../../../theme/variables";

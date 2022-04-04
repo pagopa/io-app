@@ -3,7 +3,6 @@ import { PspData } from "../../../../../../definitions/pagopa/PspData";
 import { IOPayPalPsp } from "../types";
 import { getPspIconUrlFromAbi } from "../../../../../utils/paymentMethod";
 import { PayPalPsp } from "../../../../../../definitions/pagopa/PayPalPsp";
-import { Psp } from "../../../../../types/pagopa";
 
 /**
  * convert pspData (one of many PM representations of a psp) into IOPayPalPsp
