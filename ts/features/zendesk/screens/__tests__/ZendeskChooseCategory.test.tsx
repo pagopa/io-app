@@ -175,7 +175,7 @@ describe("the ZendeskChooseCategory screen", () => {
       expect(MockZendesk.addTicketCustomField).toBeCalled();
       expect(mockedNavigation).toHaveBeenCalledTimes(1);
       expect(mockedNavigation).toHaveBeenCalledWith(
-        "ZENDESK_CHOOSE_SUB_CATEGORY",
+        ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY,
         {
           assistanceForPayment: undefined
         }
