@@ -145,9 +145,7 @@ class PickPspScreen extends React.Component<Props> {
               renderItem={({ item }) => (
                 <PspComponent
                   psp={item}
-                  onPress={() => {
-                    this.props.pickPsp(item, this.props.allPsps);
-                  }}
+                  onPress={() => this.props.pickPsp(item, this.props.allPsps)}
                 />
               )}
               ListHeaderComponent={this.headerItem}
@@ -183,13 +181,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     dispatch(
       pspForPaymentV2.request({
         idWallet,
-        idPayment
-      })
-    );
-    // TODO remove
-    dispatch(
-      paymentFetchAllPspsForPaymentId.request({
-        idWallet: idWallet.toString(),
         idPayment
       })
     );

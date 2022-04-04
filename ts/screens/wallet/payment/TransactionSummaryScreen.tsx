@@ -65,7 +65,8 @@ import { formatTextRecipient } from "../../../utils/strings";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import {
   isError,
-  isLoading as isRemoteLoading
+  isLoading as isRemoteLoading,
+  isUndefined
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchPickPspOrConfirm } from "./common";
 
@@ -402,7 +403,10 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(paymentId) ||
     (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
     pot.isLoading(check) ||
-    (maybeFavoriteWallet.isSome() && error.isNone() && pot.isSome(check)) ||
+    (maybeFavoriteWallet.isSome() &&
+      error.isNone() &&
+      pot.isSome(check) &&
+      isUndefined(psps)) ||
     (maybeFavoriteWallet.isSome() && isRemoteLoading(psps));
 
   const loadingCaption = isLoadingVerifica
