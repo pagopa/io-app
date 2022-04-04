@@ -150,8 +150,9 @@ export const paymentFetchAllPspsForPaymentId = createAsyncAction(
 //
 
 type WalletUpdatePspRequestPayload = Readonly<{
-  idPsp: string;
+  psp: PspData;
   wallet: Wallet;
+  idPayment: string;
   onSuccess?: (
     action: ActionType<typeof paymentUpdateWalletPsp["success"]>
   ) => void;

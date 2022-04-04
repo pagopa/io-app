@@ -70,7 +70,7 @@ import {
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
   updateWalletUsingPUTDecoder,
-  UpdateWalletUsingPUTT
+  UpdateWalletUsingPUTV2T
 } from "../../definitions/pagopa/requestTypes";
 import {
   NullableWallet,
@@ -341,14 +341,14 @@ const getPsp: GetPspUsingGETTExtra = {
 };
 
 type UpdateWalletUsingPUTTExtra = MapResponseType<
-  UpdateWalletUsingPUTT,
+  UpdateWalletUsingPUTV2T,
   200,
   WalletResponse
 >;
 
 const updateWalletPsp: UpdateWalletUsingPUTTExtra = {
   method: "put",
-  url: ({ id }) => `/v1/wallet/${id}`,
+  url: ({ id }) => `/v2/wallet/${id}`,
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
@@ -725,8 +725,8 @@ export function PaymentManagerClient(
         id
       }),
     updateWalletPsp: (
-      id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],
-      walletRequest: TypeofApiParams<UpdateWalletUsingPUTT>["walletRequest"]
+      id: TypeofApiParams<UpdateWalletUsingPUTV2T>["id"],
+      walletRequest: TypeofApiParams<UpdateWalletUsingPUTV2T>["walletRequest"]
     ) =>
       flip(
         withPaymentManagerToken(

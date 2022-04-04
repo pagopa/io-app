@@ -12,14 +12,11 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentUpdateWalletPsp,
-  pspForPaymentV2WithCallbacks,
-  pspSelectedForPaymentV2
+  pspForPaymentV2WithCallbacks
 } from "../../../store/actions/wallet/payment";
 import { isRawPayPal, Wallet } from "../../../types/pagopa";
 import { walletHasFavoriteAvailablePspData } from "../../../utils/payment";
-import { convertPspToPspData } from "../../../features/wallet/onboarding/paypal/store/transformers";
 import { PspData } from "../../../../definitions/pagopa/PspData";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 /**
  * Common action dispatchers for payment screens
@@ -27,7 +24,7 @@ import { RTron } from "../../../boot/configureStoreAndPersistor";
 export const dispatchUpdatePspForWalletAndConfirm =
   (dispatch: Dispatch) =>
   (
-    idPsp: string,
+    psp: PspData,
     wallet: Wallet,
     rptId: RptId,
     initialAmount: AmountInEuroCents,
@@ -38,14 +35,15 @@ export const dispatchUpdatePspForWalletAndConfirm =
   ) =>
     dispatch(
       paymentUpdateWalletPsp.request({
-        idPsp,
+        psp,
         wallet,
+        idPayment,
         onSuccess: (
           action: ActionType<typeof paymentUpdateWalletPsp["success"]>
         ) => {
           const psp = action.payload.updatedWallet.psp;
           if (psp !== undefined) {
-            dispatch(pspSelectedForPaymentV2(convertPspToPspData(psp)));
+            //dispatch(pspSelectedForPaymentV2(psp));
           }
           navigateToPaymentConfirmPaymentMethodScreen({
             rptId,
@@ -145,7 +143,7 @@ export const dispatchPickPspOrConfirm =
                 // and associate it to the current wallet without asking the user to
                 // select it
                 dispatchUpdatePspForWalletAndConfirm(dispatch)(
-                  eligiblePsp.idPsp,
+                  eligiblePsp,
                   selectedWallet,
                   rptId,
                   initialAmount,

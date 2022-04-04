@@ -23,7 +23,10 @@ import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/comp
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { pspForPaymentV2 } from "../../../store/actions/wallet/payment";
+import {
+  paymentFetchAllPspsForPaymentId,
+  pspForPaymentV2
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import customVariables from "../../../theme/variables";
@@ -143,7 +146,7 @@ class PickPspScreen extends React.Component<Props> {
                 <PspComponent
                   psp={item}
                   onPress={() => {
-                    this.props.pickPsp(item.idPsp, this.props.allPsps);
+                    this.props.pickPsp(item, this.props.allPsps);
                   }}
                 />
               )}
@@ -183,10 +186,17 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
         idPayment
       })
     );
+    // TODO remove
+    dispatch(
+      paymentFetchAllPspsForPaymentId.request({
+        idWallet: idWallet.toString(),
+        idPayment
+      })
+    );
   },
-  pickPsp: (idPsp: string, psps: ReadonlyArray<PspData>) =>
+  pickPsp: (psp: PspData, psps: ReadonlyArray<PspData>) =>
     dispatchUpdatePspForWalletAndConfirm(dispatch)(
-      idPsp,
+      psp,
       props.navigation.getParam("wallet"),
       props.navigation.getParam("rptId"),
       props.navigation.getParam("initialAmount"),
