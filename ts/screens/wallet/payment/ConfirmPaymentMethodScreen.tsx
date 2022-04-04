@@ -9,7 +9,9 @@ import { connect } from "react-redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
+import CardIcon from "../../../../img/wallet/card.svg";
 import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
+import TagIcon from "../../../../img/wallet/tag.svg";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -86,8 +88,6 @@ import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
-import TagIcon from "../../../../img/wallet/tag.svg";
-import CardIcon from "../../../../img/wallet/card.svg";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -102,10 +102,13 @@ export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   psps: ReadonlyArray<Psp>;
 }>;
 
+type ConfirmPaymentNavigationProps = IOStackNavigationProp<
+  WalletParamsList,
+  "PAYMENT_CONFIRM_PAYMENT_METHOD"
+>;
+
 type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_CONFIRM_PAYMENT_METHOD">
-  >;
+  navigation: CompatNavigationProp<ConfirmPaymentNavigationProps>;
 };
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -215,10 +218,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<WalletParamsList, "PAYMENT_CONFIRM_PAYMENT_METHOD">
-    >();
+  const navigation = useNavigation<ConfirmPaymentNavigationProps>();
   // each payment method has its own psp fee
   const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
   const fee: number | undefined = isPayingWithPaypal
