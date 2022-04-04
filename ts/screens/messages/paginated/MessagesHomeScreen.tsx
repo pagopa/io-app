@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { NavigationContext } from "react-navigation";
 import { connect, useDispatch } from "react-redux";
@@ -51,6 +51,7 @@ import {
   MessagesStatus,
   messagesStatusSelector
 } from "../../../store/reducers/entities/messages/messagesStatus";
+import { showToast } from "../../../utils/showToast";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = NavigationStackScreenProps &
@@ -154,7 +155,8 @@ const MessagesHomeScreen = ({
   messagesStatus,
   migrateMessages,
   migrationStatus,
-  resetMigrationStatus
+  resetMigrationStatus,
+  latestMessageOperation
 }: Props) => {
   const navigation = useContext(NavigationContext);
   const needsMigration = Object.keys(messagesStatus).length > 0;
@@ -164,6 +166,34 @@ const MessagesHomeScreen = ({
       migrateMessages(messagesStatus);
     }
   });
+
+  useEffect(() => {
+    if (latestMessageOperation === undefined) {
+      return;
+    }
+
+    if (latestMessageOperation.isLeft()) {
+      switch (latestMessageOperation.value.operation) {
+        case "archive":
+          showToast(I18n.t("messages.operations.archive.failure"), "danger");
+          return;
+        case "restore":
+          showToast(I18n.t("messages.operations.restore.failure"), "danger");
+          return;
+      }
+    }
+
+    if (latestMessageOperation.isRight()) {
+      switch (latestMessageOperation.value) {
+        case "archive":
+          showToast(I18n.t("messages.operations.archive.success"), "success");
+          return;
+        case "restore":
+          showToast(I18n.t("messages.operations.restore.success"), "success");
+          return;
+      }
+    }
+  }, [latestMessageOperation]);
 
   const navigateToMessageDetail = (message: UIMessage) => {
     navigation.dispatch(
@@ -278,7 +308,11 @@ const mapStateToProps = (state: GlobalState) => ({
   allInboxMessages: allInboxMessagesSelector(state),
   allArchiveMessages: allArchiveMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
-  migrationStatus: allPaginatedSelector(state).migration
+  migrationStatus: allPaginatedSelector(state).migration,
+  latestMessageOperation: createSelector(
+    allPaginatedSelector,
+    _ => _.latestMessageOperation
+  )(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
