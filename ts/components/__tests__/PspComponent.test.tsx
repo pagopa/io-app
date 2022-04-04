@@ -21,7 +21,7 @@ describe("Test PspComponent", () => {
     const onPress = jest.fn();
     const component = renderComponent(onPress);
 
-    fireEvent.press(component.getByTestId("psp-0"));
+    fireEvent.press(component.getByTestId("psp-" + psp.idPsp));
     expect(onPress).toHaveBeenCalled();
   });
   it("should show the logoPSP if there is one and useImageResize return some value", () => {
