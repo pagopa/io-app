@@ -7,7 +7,6 @@ import ROUTES from "../navigation/routes";
  */
 export const isOnboardingCompleted = () => {
   const route = navigationRef?.current?.getRootState();
-  // console.log(route);
   if (route === null) {
     return false;
   }
