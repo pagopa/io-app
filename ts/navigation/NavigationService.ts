@@ -46,16 +46,13 @@ const dispatchNavigationAction = (action: NavigationAction) => {
 
 const getCurrentRouteName = (): string | undefined =>
   navigationRef.current?.getCurrentRoute()?.name;
-// currentRouteState ? utilsGetCurrentRouteName(currentRouteState) : undefined;
 
 const getCurrentRouteKey = (): string | undefined =>
   navigationRef.current?.getCurrentRoute()?.key;
-// currentRouteState ? utilsGetCurrentRouteKey(currentRouteState) : undefined;
 
 // NavigationLeafRoute
 const getCurrentRoute = (): Route<string> | undefined =>
   navigationRef.current?.getCurrentRoute();
-// currentRouteState ? utilsGetCurrentRoute(currentRouteState) : undefined;
 
 const getCurrentState = () => navigationRef?.current?.getState();
 
