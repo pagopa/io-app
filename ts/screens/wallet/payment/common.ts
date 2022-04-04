@@ -12,7 +12,8 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentUpdateWalletPsp,
-  pspForPaymentV2WithCallbacks
+  pspForPaymentV2WithCallbacks,
+  pspSelectedForPaymentV2
 } from "../../../store/actions/wallet/payment";
 import { isRawPayPal, Wallet } from "../../../types/pagopa";
 import { walletHasFavoriteAvailablePspData } from "../../../utils/payment";
@@ -41,9 +42,8 @@ export const dispatchUpdatePspForWalletAndConfirm =
         onSuccess: (
           action: ActionType<typeof paymentUpdateWalletPsp["success"]>
         ) => {
-          const psp = action.payload.updatedWallet.psp;
           if (psp !== undefined) {
-            //dispatch(pspSelectedForPaymentV2(psp));
+            dispatch(pspSelectedForPaymentV2(psp));
           }
           navigateToPaymentConfirmPaymentMethodScreen({
             rptId,
