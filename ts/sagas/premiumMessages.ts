@@ -1,5 +1,6 @@
 import { select, call, take } from "typed-redux-saga/macro";
 import { NavigationActions } from "react-navigation";
+import { createAction } from "typesafe-actions";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../store/reducers/backendStatus";
@@ -9,12 +10,14 @@ import { isPremiumMessagesOptInOutEnabledSelector } from "../store/reducers/back
  * will retrieve the preference the user gave from the
  * backend.
  */
-export const isPremiumMessagesAcceptedSelector = (): boolean | null => false;
+export const isPremiumMessagesAcceptedSelector = (): boolean | null => null;
 
 /**
  * A mock action that will complete this saga.
  */
-export const setPremiumMessagesEnabled = Symbol();
+export const setPremiumMessagesAccepted = createAction(
+  "SET_PREMIUM_MESSAGES_ENABLED"
+);
 
 /**
  * check, and eventually ask, about the premium messages otp-in.
@@ -51,5 +54,5 @@ export function* askPremiumMessagesOptInOut() {
   );
 
   // The action that will allow this saga to complete.
-  yield* take(setPremiumMessagesEnabled);
+  yield* take(setPremiumMessagesAccepted);
 }

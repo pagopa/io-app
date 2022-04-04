@@ -6,7 +6,7 @@ import { isPremiumMessagesOptInOutEnabledSelector } from "../../store/reducers/b
 import {
   askPremiumMessagesOptInOut,
   isPremiumMessagesAcceptedSelector,
-  setPremiumMessagesEnabled
+  setPremiumMessagesAccepted
 } from "../premiumMessages";
 
 describe("Premium messages sagas", () => {
@@ -46,7 +46,7 @@ describe("Premium messages sagas", () => {
           })
         )
         .next()
-        .take(setPremiumMessagesEnabled)
+        .take(setPremiumMessagesAccepted)
         .next()
         .isDone();
     });
