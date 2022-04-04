@@ -136,7 +136,6 @@ describe("CobadgeWalletPreview component", () => {
     const cardComponent = component.queryByTestId("cardPreview");
     const expectedPayload: NavigationAction = {
       type: "NAVIGATE",
-      // routeName: ROUTES.WALLET_COBADGE_DETAIL,
       payload: {
         name: "WALLET_NAVIGATOR",
         params: {
