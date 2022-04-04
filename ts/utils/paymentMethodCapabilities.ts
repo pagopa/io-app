@@ -21,6 +21,7 @@ export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
   if (paymentMethod.pagoPA === false) {
     return false;
   }
+
   if (isCreditCard(paymentMethod)) {
     return CreditCardType.decode(paymentMethod.info.brand).fold(
       () => true,

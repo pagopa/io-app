@@ -1,15 +1,19 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { none, some } from "fp-ts/lib/Option";
-import { Psp } from "../../types/pagopa";
 import { PspComponent } from "../wallet/payment/PspComponent";
 import * as hooks from "../../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
+import { PspData } from "../../../definitions/pagopa/PspData";
+import { getPspIconUrlFromAbi } from "../../utils/paymentMethod";
 
-const psp: Psp = {
-  id: 0,
-  fixedCost: { amount: 10 },
-  logoPSP:
-    "https://acardste.vaservices.eu:1443/pp-restapi/v1/resources/psp/43188"
+const psp: PspData = {
+  codiceAbi: "0001",
+  defaultPsp: true,
+  fee: 100,
+  idPsp: "1",
+  onboard: true,
+  privacyUrl: "https://io.italia.it",
+  ragioneSociale: "PayTipper"
 };
 
 describe("Test PspComponent", () => {
@@ -27,7 +31,9 @@ describe("Test PspComponent", () => {
     const logoPSP = component.queryByTestId("logoPSP");
 
     expect(logoPSP).not.toBeNull();
-    expect(logoPSP).toHaveProp("source", { uri: psp.logoPSP });
+    expect(logoPSP).toHaveProp("source", {
+      uri: getPspIconUrlFromAbi(psp.codiceAbi)
+    });
   });
   it("should show the businessName if there isn't logoPSP", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(none);

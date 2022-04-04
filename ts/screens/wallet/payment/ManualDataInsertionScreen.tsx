@@ -98,12 +98,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      paymentNoticeNumber: some("302000000000000200").map(
-        PaymentNoticeNumberFromString.decode
-      ),
-      organizationFiscalCode: some("77777777777").map(
-        OrganizationFiscalCode.decode
-      )
+      paymentNoticeNumber: none,
+      organizationFiscalCode: none
     };
   }
 

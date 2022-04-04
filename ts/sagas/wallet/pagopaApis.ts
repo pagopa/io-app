@@ -341,12 +341,12 @@ export function* updateWalletPspRequestHandler(
     }
     return;
   }
-  const idPsp = allPspActionResult.payload.find(
+  const pspSelected = allPspActionResult.payload.find(
     p => p.idPsp === action.payload.psp.idPsp
-  )?.id;
+  );
 
   const apiUpdateWalletPsp = pagoPaClient.updateWalletPsp(wallet.idWallet, {
-    data: { idPsp }
+    data: { idPsp: pspSelected?.id }
   });
   const updateWalletPspWithRefresh =
     pmSessionManager.withRefresh(apiUpdateWalletPsp);
@@ -371,7 +371,7 @@ export function* updateWalletPspRequestHandler(
             const successAction = paymentUpdateWalletPsp.success({
               wallets: maybeWallets.value,
               // attention: updatedWallet is V1
-              updatedWallet
+              updatedWallet: { ...updatedWallet, psp: pspSelected }
             });
             yield* put(successAction);
             if (action.payload.onSuccess) {
