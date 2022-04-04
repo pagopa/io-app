@@ -118,7 +118,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
         if (currentRouteName !== undefined) {
           dispatch(setDebugCurrentRouteName(currentRouteName));
-          await trackScreen(previousRouteName, currentRouteName);
+          trackScreen(previousRouteName, currentRouteName);
         }
         routeNameRef.current = currentRouteName;
       }}
