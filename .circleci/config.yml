@@ -498,6 +498,13 @@ workflows:
             branches:
               ignore: master
 
+      - ios-beta-release:
+          requires:
+            - compile-typescript
+            - run-tests
+            - run-eslint
+            - run-prettier
+
       # TODO: Native Android e2e tests
       # TODO: Slack integration
       - run-e2e-test-IOS:
