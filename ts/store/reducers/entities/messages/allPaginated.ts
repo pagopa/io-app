@@ -6,7 +6,10 @@ import { createSelector } from "reselect";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
+  migrateToPaginatedMessages,
+  MigrationResult,
   reloadAllMessages,
+  resetMigrationStatus,
   upsertMessageStatusAttributes
 } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
@@ -29,17 +32,25 @@ type Collection = {
   lastRequest: Option<"previous" | "next" | "all">;
 };
 
+export type MigrationStatus = Option<
+  | { _tag: "started"; total: number }
+  | { _tag: "succeeded"; total: number }
+  | ({ _tag: "failed" } & MigrationResult)
+>;
+
 /**
  * A list of messages and pagination inbox.
  */
 export type AllPaginated = {
   inbox: Collection;
   archive: Collection;
+  migration: MigrationStatus;
 };
 
 const INITIAL_STATE: AllPaginated = {
   inbox: { data: pot.none, lastRequest: none },
-  archive: { data: pot.none, lastRequest: none }
+  archive: { data: pot.none, lastRequest: none },
+  migration: none
 };
 
 /**
@@ -69,6 +80,34 @@ const reducer = (
     case getType(upsertMessageStatusAttributes.success):
     case getType(upsertMessageStatusAttributes.failure):
       return reduceUpsertMessageStatusAttributes(state, action);
+
+    /* BEGIN Migration-related block */
+    case getType(migrateToPaginatedMessages.request):
+      return {
+        ...state,
+        migration: some({
+          _tag: "started",
+          total: Object.keys(action.payload).length
+        })
+      };
+
+    case getType(migrateToPaginatedMessages.success):
+      return {
+        ...state,
+        migration: some({ _tag: "succeeded", total: action.payload })
+      };
+    case getType(migrateToPaginatedMessages.failure):
+      return {
+        ...state,
+        migration: some({ _tag: "failed", ...action.payload })
+      };
+
+    case getType(resetMigrationStatus):
+      return {
+        ...state,
+        migration: none
+      };
+    /* END Migration-related block */
 
     case getType(clearCache):
       return INITIAL_STATE;
@@ -312,11 +351,6 @@ const reduceLoadPreviousPage = (
  * Implements an optimistic UI by updating the state at request time and rolling back the updates
  * in case of failure.
  *
- *   TODO: https://pagopa.atlassian.net/browse/IA-681
- *   1 - identify the direction
- *   2 - move to the right collection
- *   3 - verify sorting
- *
  * @param state
  * @param action
  */
@@ -325,9 +359,51 @@ const reduceUpsertMessageStatusAttributes = (
   action: Action
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ): AllPaginated => {
+  const remove = (message: UIMessage, from: Collection) =>
+    refreshCursors({
+      ...from,
+      data: pot.map(from.data, old => ({
+        ...old,
+        page: old.page.filter(_ => _.id !== message.id)
+      }))
+    });
+
+  // Messages are inserted locally ONLY if their ID is within the
+  // pages that were already fetched. Otherwise, the moved message
+  // will be returned by the backend once the user scrolls to that
+  // particular page.
+  const insert = (message: UIMessage, to: Collection) =>
+    refreshCursors({
+      ...to,
+      data: pot.map(to.data, old => ({
+        ...old,
+        page:
+          old.next === undefined ||
+          old.next.localeCompare(message.id, "en") <= 0
+            ? [...old.page, message].sort((a, b) =>
+                b.id.localeCompare(a.id, "en")
+              )
+            : old.page
+      }))
+    });
+
+  const refreshCursors = (of: Collection): Collection => ({
+    ...of,
+    data: pot.map(of.data, old => ({
+      ...old,
+      previous: old.page[0]?.id
+      // there's no need to update `next` as:
+      // 1. we never insert messages older than `next`
+      // 2. removing the last message of the page keeps pagination
+      //    working in the backend (i.e. messages older than `next`
+      //    are returned even if `next` is not in the inbox/archive
+      //    anymore)
+    }))
+  });
+
   switch (action.type) {
     case getType(upsertMessageStatusAttributes.request): {
-      const message = findOneById(action.payload.id, state);
+      const message = action.payload.message;
       if (message) {
         const { update } = action.payload;
         if (update.tag === "bulk" || update.tag === "reading") {
@@ -338,14 +414,26 @@ const reduceUpsertMessageStatusAttributes = (
         if (update.tag === "bulk" || update.tag === "archiving") {
           // eslint-disable-next-line functional/immutable-data
           message.isArchived = update.isArchived;
-          // TODO: move to Archive
+          if (update.isArchived) {
+            return {
+              ...state,
+              archive: insert(message, state.archive),
+              inbox: remove(message, state.inbox)
+            };
+          } else {
+            return {
+              ...state,
+              archive: remove(message, state.archive),
+              inbox: insert(message, state.inbox)
+            };
+          }
         }
       }
       return { ...state };
     }
 
     case getType(upsertMessageStatusAttributes.failure): {
-      const message = findOneById(action.payload.payload.id, state);
+      const message = action.payload.payload.message;
       if (message) {
         const { update } = action.payload.payload;
         if (update.tag === "bulk" || update.tag === "reading") {
@@ -356,7 +444,19 @@ const reduceUpsertMessageStatusAttributes = (
         if (update.tag === "bulk" || update.tag === "archiving") {
           // eslint-disable-next-line functional/immutable-data
           message.isArchived = !update.isArchived;
-          // TODO: move to Archive
+          if (update.isArchived) {
+            return {
+              ...state,
+              archive: remove(message, state.archive),
+              inbox: insert(message, state.inbox)
+            };
+          } else {
+            return {
+              ...state,
+              archive: insert(message, state.archive),
+              inbox: remove(message, state.inbox)
+            };
+          }
         }
       }
       return { ...state };
@@ -368,14 +468,6 @@ const reduceUpsertMessageStatusAttributes = (
       return state;
   }
 };
-
-const findOneById = (id: string, state: AllPaginated): UIMessage | undefined =>
-  pot.toUndefined(
-    pot.map(state.inbox.data, inbox => inbox.page.find(_ => _.id === id))
-  ) ||
-  pot.toUndefined(
-    pot.map(state.archive.data, archive => archive.page.find(_ => _.id === id))
-  );
 
 // Selectors
 

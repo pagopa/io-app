@@ -20,6 +20,7 @@ import {
 import { Cursor } from "../reducers/entities/messages/allPaginated";
 import { MessageCategory } from "../../../definitions/backend/MessageCategory";
 import { TagEnum } from "../../../definitions/backend/MessageCategoryPayment";
+import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 
 /**
  * Load a single message's details given its ID
@@ -119,7 +120,7 @@ export const reloadAllMessages = createAsyncAction(
 >();
 
 export type UpsertMessageStatusAttributesPayload = {
-  id: string;
+  message: UIMessage;
   update:
     | { tag: "archiving"; isArchived: boolean }
     | { tag: "reading" }
@@ -168,6 +169,27 @@ export const DEPRECATED_setMessagesArchivedState = createAction(
     resolve({ ids, archived })
 );
 
+type MigrationFailure = {
+  error: unknown;
+  messageId: string;
+};
+export type MigrationResult = {
+  failed: Array<MigrationFailure>;
+  succeeded: Array<string>;
+};
+export const migrateToPaginatedMessages = createAsyncAction(
+  "MESSAGES_MIGRATE_TO_PAGINATED_REQUEST",
+  "MESSAGES_MIGRATE_TO_PAGINATED_SUCCESS",
+  "MESSAGES_MIGRATE_TO_PAGINATED_FAILURE"
+)<MessagesStatus, number, MigrationResult>();
+
+/**
+ * Used to mark the end of a migration and reset it to a pristine state.
+ */
+export const resetMigrationStatus = createAction(
+  "MESSAGES_MIGRATE_TO_PAGINATED_DONE"
+);
+
 export type MessagesActions =
   | ActionType<typeof DEPRECATED_loadMessage>
   | ActionType<typeof loadMessageWithRelations>
@@ -175,6 +197,8 @@ export type MessagesActions =
   | ActionType<typeof loadNextPageMessages>
   | ActionType<typeof loadPreviousPageMessages>
   | ActionType<typeof loadMessageDetails>
+  | ActionType<typeof migrateToPaginatedMessages>
+  | ActionType<typeof resetMigrationStatus>
   | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
   | ActionType<typeof DEPRECATED_setMessageReadState>
