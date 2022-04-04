@@ -32,12 +32,12 @@ import {
   Detail_v2Enum,
   DetailEnum
 } from "../../definitions/backend/PaymentProblemJson";
+import { PspData } from "../../definitions/pagopa/PspData";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
-import { PspData } from "../../definitions/pagopa/PspData";
 
 /**
  * A method to convert an payment amount in a proper formatted string
