@@ -5,6 +5,7 @@ import * as React from "react";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import NavigationService from "../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../navigation/routes";
 import { CreditCardPaymentMethod } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
@@ -137,9 +138,9 @@ describe("CobadgeWalletPreview component", () => {
     const expectedPayload: NavigationAction = {
       type: "NAVIGATE",
       payload: {
-        name: "WALLET_NAVIGATOR",
+        name: ROUTES.WALLET_NAVIGATOR,
         params: {
-          screen: "WALLET_COBADGE_DETAIL",
+          screen: ROUTES.WALLET_COBADGE_DETAIL,
           params: {
             cobadge: aCobadgeCard
           }
