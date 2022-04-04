@@ -5,6 +5,10 @@ import { useDispatch } from "react-redux";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { setPremiumMessagesAccepted } from "../../../sagas/premiumMessages";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 type Props = void;
 
@@ -27,17 +31,9 @@ export const PremiumMessagesOptInOutScreen = (_: Props) => {
       </Content>
 
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
-        leftButton={{
-          light: true,
-          bordered: true,
-          onPress: handleSubmit,
-          title: "No"
-        }}
-        rightButton={{
-          onPress: handleSubmit,
-          title: "Yes"
-        }}
+        type="TwoButtonsInlineHalf"
+        leftButton={cancelButtonProps(handleSubmit, "Don't share")}
+        rightButton={confirmButtonProps(handleSubmit, "Share")}
       />
     </SafeAreaView>
   );
