@@ -29,9 +29,6 @@ import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
 
-// Be sure that navigation is unmocked
-jest.unmock("react-navigation");
-
 // Mock the internal payment method
 jest.mock("../../../../store/reducers/wallet/wallets", () => {
   const actualModule = jest.requireActual(
