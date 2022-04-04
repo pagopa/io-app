@@ -6,6 +6,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
+import ZENDESK_ROUTES from "../../navigation/routes";
 import * as zendeskAction from "../../store/actions";
 import { zendeskSelectedCategory } from "../../store/actions";
 import { ZendeskSubCategories } from "../../../../../definitions/content/ZendeskSubCategories";
@@ -118,9 +119,12 @@ describe("the ZendeskChooseSubCategory screen", () => {
       );
       fireEvent(subCategoryItem, "onPress");
       expect(MockZendesk.addTicketCustomField).toBeCalled();
-      expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_ASK_PERMISSIONS", {
-        assistanceForPayment: undefined
-      });
+      expect(mockedNavigation).toHaveBeenCalledWith(
+        ZENDESK_ROUTES.ASK_PERMISSIONS,
+        {
+          assistanceForPayment: undefined
+        }
+      );
     });
   });
 });
