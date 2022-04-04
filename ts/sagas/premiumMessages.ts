@@ -20,7 +20,7 @@ export const setPremiumMessagesAccepted = createAction(
 );
 
 /**
- * check, and eventually ask, about the premium messages otp-in.
+ * Check, and eventually ask, about the premium messages otp-in.
  */
 export function* askPremiumMessagesOptInOut() {
   const isOptInOutEnabled = yield* select(
