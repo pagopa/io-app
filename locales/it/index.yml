@@ -1239,17 +1239,16 @@ wallet:
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
-    header: Conferma pagamento
+    header: Riepilogo del pagamento
+    total: Totale
+    paymentInformations: Dati del pagamento
+    payWith: Paga con
+    transactionCosts: Costo della transazione
+    edit: Modifica
+    providedBy: Gestita da
+    pay: Paga
     cancelPayment: Annulla l'operazione
-    goToPay: Paga
-    askConfirm: Confermi il pagamento?
-    partialAmount: Importo dovuto
     fee: Costi di transazione
-    why: Perché?
-    info: "Dopo questo passaggio non sarà più possibile annullare"
-    info2: Stai utilizzando il tuo metodo di pagamento preferito.
-    changeMethod: Cambia metodo di pagamento
-    change: Cambia metodo
     identificationMessage: "Conferma l'operazione inserendo il tuo codice di sblocco"
     transactionSuccess: il pagamento è stato completato!
     transactionFailure: Si è verificato un errore durante il pagamento, riprova!
@@ -1258,6 +1257,9 @@ wallet:
     confirmCancelPayment: Annulla il pagamento
     confirmContinuePayment: Continua con il pagamento
     cancelPaymentSuccess: Il pagamento di questo avviso è stato annullato, potrai pagarlo nuovamente tra qualche minuto
+    accessibility:
+      edit: "tocca per modificare"
+      transactionCosts: "{{cost}}, transazione gestita da {{psp}}"
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
@@ -1702,9 +1704,9 @@ messages:
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
   pagination:
     migration:
-      started: "Attendi per favore, stiamo aggiornando la pagina dei messaggi"
-      succeeded: "Abbiamo aggiornato la pagina dei messaggi!"
-      failed: "Non siamo riusciti ad aggiornare la pagina dei messaggi a causa di un errore. Premi il bottone per riprovare"
+      started: "Attendi, stiamo aggiornando la sezione messaggi"
+      succeeded: "Fatto!"
+      failed: "Non siamo riusciti ad aggiornare la sezione messaggi."
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md
@@ -1922,16 +1924,6 @@ contextualHelp:
     cta: Condividi il tuo codice fiscale, in modo da rendere più semplice la risoluzione del problema.
     informativeTitle: Come sapete il mio codice fiscale?
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
-instabug:
-  overrideText:
-    commentFieldHintForQuestion: "Sii il più preciso possibile. Cosa doveva succedere e cosa invece è successo?\nPer quanto possibile, ti invitiamo a non inserire dati sensibili nelle tue segnalazioni"
-  contextualHelp:
-    title1: Hai bisogno di aiuto?
-    descriptionBug: "Se qualcosa **non funziona** come dovrebbe o se vuoi **suggerirci un miglioramento** o una nuova funzionalità, scrivici! Il team di IO ti risponderà direttamente tramite l'app."
-    buttonBug: Scrivi al team di IO
-    descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
-    buttonChat: Riapri una segnalazione
-    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8 alle 20; sabato, domenica dalle ore 8 alle 13. Sono esclusi i giorni di festività nazionale.
 bottomSheets:
   ciePin:
       title: Dove trovo il mio PIN?

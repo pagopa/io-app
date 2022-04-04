@@ -1217,17 +1217,16 @@ wallet:
     contextualHelpTitle: Select a provider
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
-    header: Confirm transaction
+    header: Checkout
+    total: Total
+    paymentInformations: Payment informations
+    payWith: Pay with
+    transactionCosts: Transaction costs
+    edit: Edit
+    providedBy: Provided by
+    pay: Pay
     cancelPayment: Cancel the transaction
-    goToPay: Pay
-    askConfirm: Want to proceed with the transaction?
-    partialAmount: Amount to pay
     fee: Fee
-    why: Why?
-    info: 'After this step it will not be possible to come back.'
-    info2: You are using your favourite payment method.
-    changeMethod: Change the payment method
-    change: Change method
     identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: the payment has been completed!
     transactionFailure: There was an error with the payment, please retry!
@@ -1236,6 +1235,9 @@ wallet:
     confirmCancelPayment: Cancel this payment
     confirmContinuePayment: Continue with the payment
     cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
+    accessibility:
+      edit: "tap to edit"
+      transactionCosts: "{{cost}}, provided by {{psp}}"
   payWith:
     noWallets:
       title: No payment methods found
@@ -1678,9 +1680,9 @@ messages:
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
   pagination:
     migration:
-      started: We are updating the messages section, please wait...
-      succeeded: The messages section was updated!
-      failed: We couldn't update the messages section due to an error. Please tap on the button to try again.
+      started: Please wait, we are updating the Messages section.
+      succeeded: Done!
+      failed: We couldn't update the Messages section.
 messageDetails:
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
@@ -1897,16 +1899,6 @@ contextualHelp:
     cta: Share your fiscal code, in order to make it easier to solve your problem.
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
-instabug:
-  overrideText:
-    commentFieldHintForQuestion: "Be as specific as possible. What should have happened and what happened instead?\nAs far as possible, please do not enter sensitive data in your reports"
-  contextualHelp:
-    title1: Do you need help?
-    descriptionBug: "If something **doesn't work** as it should or if you want to **suggest an improvement** or a new feature, write us! The IO team will get back to you directly via app."
-    buttonBug: Write to the IO team
-    descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
-    buttonChat: Reopen a report
-    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays.
 bottomSheets:
   ciePin:
       title: "Where can I find my PIN?"

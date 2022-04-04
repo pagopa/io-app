@@ -27,11 +27,7 @@ const styles = StyleSheet.create({
 export const BaseEuCovidCertificateLayout = (props: Props) => {
   const elementRef = useRef(null);
   return (
-    <BaseScreenComponent
-      goBack={true}
-      contextualHelp={emptyContextualHelp}
-      shouldAskForScreenshotWithInitialValue={false}
-    >
+    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}

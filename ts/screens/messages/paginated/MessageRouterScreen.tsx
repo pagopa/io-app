@@ -130,7 +130,7 @@ const MessageRouterScreen = ({
 
   useOnFirstRender(() => {
     if (maybeMessage !== undefined && !maybeMessage.isRead) {
-      setMessageReadState(maybeMessage.id);
+      setMessageReadState(maybeMessage);
     }
   });
 
@@ -188,10 +188,10 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
         })
       ),
     reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter })),
-    setMessageReadState: (messageId: string) =>
+    setMessageReadState: (message: UIMessage) =>
       dispatch(
         upsertMessageStatusAttributes.request({
-          id: messageId,
+          message,
           update: { tag: "reading" }
         })
       )
