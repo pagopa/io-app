@@ -10,7 +10,7 @@ import { isPremiumMessagesOptInOutEnabledSelector } from "../store/reducers/back
  * will retrieve the preference the user gave from the
  * backend.
  */
-export const isPremiumMessagesAcceptedSelector = (): boolean | null => null;
+export const isPremiumMessagesAcceptedSelector = (): boolean | null => false;
 
 /**
  * A mock action that will complete this saga.
