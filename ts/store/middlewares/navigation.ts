@@ -1,5 +1,4 @@
 import { NavigationState } from "react-navigation";
-import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import { mixpanelTrack } from "../../mixpanel";
 import { noAnalyticsRoutes } from "../../utils/analytics";
 import { getCurrentRouteName } from "../../utils/navigation";
@@ -16,8 +15,6 @@ export const trackScreen = (
     screenName !== undefined &&
     previousScreenName !== screenName
   ) {
-    setInstabugUserAttribute("activeScreen", screenName);
-
     // track only those events that are not included in the blacklist
     if (!noAnalyticsRoutes.has(screenName)) {
       void mixpanelTrack("SCREEN_CHANGE_V2", {

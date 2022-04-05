@@ -60,8 +60,6 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - glog (0.3.5)
   - hermes-engine (0.7.2)
-  - instabug-reactnative (9.1.6):
-    - React
   - jail-monkey (2.3.2):
     - React
   - libevent (2.1.12)
@@ -496,7 +494,6 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (~> 0.75.1)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (~> 0.7.2)
-  - instabug-reactnative (from `../node_modules/instabug-reactnative`)
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
   - Permission-Calendars (from `../node_modules/react-native-permissions/ios/Calendars.podspec`)
@@ -612,8 +609,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
-  instabug-reactnative:
-    :path: "../node_modules/instabug-reactnative"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
   Permission-Calendars:
@@ -773,7 +768,6 @@ SPEC CHECKSUMS:
   FlipperKit: 8a20b5c5fcf9436cac58551dc049867247f64b00
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   hermes-engine: 7d97ba46a1e29bacf3e3c61ecb2804a5ddd02d4f
-  instabug-reactnative: aae9da235f22a48455fd837f5983c144d169330c
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mixpanel: 61e6d8c0717c8e94ccc6d3a1ae8677b9a78f64c5
@@ -863,4 +857,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cfe9cf6887cc0c4a2fe426f861721f73b4fcf161
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3
