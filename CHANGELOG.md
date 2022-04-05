@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0-rc.3](https://github.com/pagopa/io-app/compare/2.7.0-rc.2...2.7.0-rc.3) (2022-04-05)
+
+
+### Chores
+
+* [[IA-767](https://pagopa.atlassian.net/browse/IA-767),[IA-804](https://pagopa.atlassian.net/browse/IA-804),[IA-793](https://pagopa.atlassian.net/browse/IA-793)] Show a toast to inform the user when a message operation completes ([#3878](https://github.com/pagopa/io-app/issues/3878)) ([1a2636c](https://github.com/pagopa/io-app/commit/1a2636cb163dcf23d85d108570e0d9ae29ee0835))
+* [[IA-799](https://pagopa.atlassian.net/browse/IA-799)] Enable pagination ([#3882](https://github.com/pagopa/io-app/issues/3882)) ([b7e377c](https://github.com/pagopa/io-app/commit/b7e377cdde1b07a48b9628a7198fa441712f59a6))
+* [[IA-802](https://pagopa.atlassian.net/browse/IA-802)] Remove the button for (un)selecting all messages [#3879](https://github.com/pagopa/io-app/issues/3879) ([a8aa894](https://github.com/pagopa/io-app/commit/a8aa894ffce04e10368a24965cd263c9afe3ba63))
+* [[IAI-179](https://pagopa.atlassian.net/browse/IAI-179)] Remove "upload sourcemap to Instabug" build phase on iOS ([#3880](https://github.com/pagopa/io-app/issues/3880)) ([8076f9e](https://github.com/pagopa/io-app/commit/8076f9ed471c159223e0b24fa53ac4d203de220a))
+
+## [2.7.0-rc.2](https://github.com/pagopa/io-app/compare/2.7.0-rc.1...2.7.0-rc.2) (2022-04-04)
+
+
+### Bug Fixes
+
+* [[IA-783](https://pagopa.atlassian.net/browse/IA-783)] State handling on message loading ([#3873](https://github.com/pagopa/io-app/issues/3873)) ([e50cb17](https://github.com/pagopa/io-app/commit/e50cb1727427da1a6f3b178c06785ec4d79aa0b0))
+
+
+### Chores
+
+* [Snyk] Security upgrade cocoapods from 1.10.1 to 1.11.3 and fastlane from 2.191.0 to 2.205.1 ([#3876](https://github.com/pagopa/io-app/issues/3876)) ([953feb1](https://github.com/pagopa/io-app/commit/953feb1471186af0266dd892d3ae1fab6dc28a60))
+* **deps-dev:** bump plist from 3.0.4 to 3.0.5 ([#3858](https://github.com/pagopa/io-app/issues/3858)) ([6dabe3f](https://github.com/pagopa/io-app/commit/6dabe3f57c240747fb5d5d50a0badb24b113188a))
+* [[IA-736](https://pagopa.atlassian.net/browse/IA-736)] Remove instabug ([#3867](https://github.com/pagopa/io-app/issues/3867)) ([9b99669](https://github.com/pagopa/io-app/commit/9b99669e8bcf083d3290cfe5f00373757294dcac))
+* [[IA-770](https://pagopa.atlassian.net/browse/IA-770)] Create the Premium Messages opt-in/out selectors ([#3866](https://github.com/pagopa/io-app/issues/3866)) ([b3e42ee](https://github.com/pagopa/io-app/commit/b3e42eef7087a685231dca184b31fb37c450fe1a))
+* [[IA-794](https://pagopa.atlassian.net/browse/IA-794)] Add BancomatPay remote config ([#3872](https://github.com/pagopa/io-app/issues/3872)) ([ae09fa7](https://github.com/pagopa/io-app/commit/ae09fa7df3cac67fa9a212742aca52eb7a5b1f63))
+* [[IA-801](https://pagopa.atlassian.net/browse/IA-801)] Remove donation banner from archive and search [#3874](https://github.com/pagopa/io-app/issues/3874) ([93e694d](https://github.com/pagopa/io-app/commit/93e694dd0dff14e720bcdc00f3828f3ee0451133))
+* **Carta Giovani Nazionale:** [[IOACGN-65](https://pagopa.atlassian.net/browse/IOACGN-65)] Implements event tracking for landing page error events [#3842](https://github.com/pagopa/io-app/issues/3842) ([b69076f](https://github.com/pagopa/io-app/commit/b69076feaa15160f0c624ae6f888b01bb59c39fa))
+
 ## [2.7.0-rc.1](https://github.com/pagopa/io-app/compare/2.7.0-rc.0...2.7.0-rc.1) (2022-03-31)
 
 
