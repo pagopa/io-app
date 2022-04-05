@@ -308,9 +308,9 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     );
 
     // Should display the payment method
-    rendered.getByText(bpayPaymentMethod.caption ?? "");
+    rendered.getByText(bpayPaymentMethod.caption!);
 
-    rendered.getByText(bpayPaymentMethod.info?.numberObfuscated ?? "");
+    rendered.getByText(bpayPaymentMethod.info!.numberObfuscated!);
 
     // Should render the PSP with the fees
     rendered.getByText(
@@ -323,10 +323,13 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       }`
     );
 
-    // It should retrieve one `Edit` text, only
-    // the one for the payment method.
+    /**
+     * It should retrieve two `Edit` CTAs
+     * one for the payment method.
+     * one for the PSP
+     */
     expect(
       rendered.getAllByText(I18n.t("wallet.ConfirmPayment.edit"))
-    ).toHaveLength(1);
+    ).toHaveLength(2);
   });
 });

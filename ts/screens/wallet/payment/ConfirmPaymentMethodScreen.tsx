@@ -142,7 +142,6 @@ const webViewOutcomeParamName = "outcome";
 type ComputedPaymentMethodInfo = {
   logo: JSX.Element;
   subject: string;
-  expiration: string;
   caption: string;
   accessibilityLabel: string;
 };
@@ -153,6 +152,10 @@ const getPaymentMethodInfo = (
 ): Option<ComputedPaymentMethodInfo> => {
   switch (paymentMethod?.kind) {
     case "CreditCard":
+      const expiration = getTranslatedShortNumericMonthYear(
+        paymentMethod.info.expireYear,
+        paymentMethod.info.expireMonth
+      );
       return some({
         logo: (
           <BrandImage
@@ -160,12 +163,10 @@ const getPaymentMethodInfo = (
             scale={0.7}
           />
         ),
-        subject: paymentMethod.info.holder ?? "",
-        expiration:
-          getTranslatedShortNumericMonthYear(
-            paymentMethod.info.expireYear,
-            paymentMethod.info.expireMonth
-          ) ?? "",
+        subject: `${paymentMethod.info.holder ?? ""}${
+          expiration ? " · " + expiration : ""
+        }`,
+        expiration,
         caption: paymentMethod.caption ?? "",
         accessibilityLabel: I18n.t("wallet.accessibility.folded.creditCard", {
           brand: paymentMethod.info.brand,
@@ -178,7 +179,6 @@ const getPaymentMethodInfo = (
       return some({
         logo: <PaypalLogo width={24} height={24} />,
         subject: paypalEmail,
-        expiration: "",
         caption: I18n.t("wallet.onboarding.paypal.name"),
         accessibilityLabel: `${I18n.t(
           "wallet.onboarding.paypal.name"
@@ -188,9 +188,8 @@ const getPaymentMethodInfo = (
       return some({
         logo: <BrandImage image={bancomatPayLogo} scale={0.7} />,
         subject: paymentMethod?.caption,
-        expiration: "",
         caption: paymentMethod.info.numberObfuscated ?? "",
-        accessibilityLabel: `${I18n.t("wallet.onboarding.paypal.name")}`
+        accessibilityLabel: `${I18n.t("wallet.methods.bancomatPay.name")}`
       }).filter(() => options.isBPayPaymentEnabled);
 
     default:
@@ -315,7 +314,6 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     isBPayPaymentEnabled: props.isBPayPaymentEnabled
   }).getOrElse({
     subject: "",
-    expiration: "",
     caption: "",
     logo: <View />,
     accessibilityLabel: ""
@@ -420,12 +418,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <SelectionBox
               logo={paymentMethodInfo.logo}
               mainText={paymentMethodInfo.caption}
-              subText={
-                paymentMethodInfo.subject +
-                (!isPayingWithPaypal
-                  ? ` · ${paymentMethodInfo.expiration}`
-                  : "")
-              }
+              subText={paymentMethodInfo.subject}
               ctaText={I18n.t("wallet.ConfirmPayment.edit")}
               onPress={props.pickPaymentMethod}
               accessibilityLabel={`${
