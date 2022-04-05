@@ -134,6 +134,12 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       creditCardPaymentMethod
     );
 
+    (bancomatPayConfigSelector as unknown as jest.Mock).mockReturnValue({
+      display: false,
+      onboarding: false,
+      payment: true
+    });
+
     const rendered = renderScreenFakeNavRedux<
       GlobalState,
       ConfirmPaymentMethodScreenNavigationParams
@@ -191,6 +197,12 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     (paymentMethodByIdSelector as unknown as jest.Mock).mockReturnValue(
       payPalPaymentMethod
     );
+
+    (bancomatPayConfigSelector as unknown as jest.Mock).mockReturnValue({
+      display: false,
+      onboarding: false,
+      payment: true
+    });
 
     (isPaypalEnabledSelector as unknown as jest.Mock).mockReturnValue(true);
 
