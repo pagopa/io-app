@@ -118,6 +118,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
         Object {
           "flexDirection": "row",
         },
+        false,
       ]
     }
   >
@@ -167,6 +168,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
             "flexShrink": 1,
             "minHeight": 24,
           },
+          false,
         ]
       }
     >
@@ -333,6 +335,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         Object {
           "flexDirection": "row",
         },
+        false,
       ]
     }
   >
@@ -382,6 +385,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             "flexShrink": 1,
             "minHeight": 24,
           },
+          false,
         ]
       }
     >
@@ -482,6 +486,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         Array [
           Object {},
           Object {
+            "alignSelf": "center",
             "flexGrow": 0,
             "flexShrink": 0,
           },
@@ -644,6 +649,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         Object {
           "flexDirection": "row",
         },
+        false,
       ]
     }
   >
@@ -693,6 +699,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             "flexShrink": 1,
             "minHeight": 24,
           },
+          false,
         ]
       }
     >
@@ -793,6 +800,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         Array [
           Object {},
           Object {
+            "alignSelf": "center",
             "flexGrow": 0,
             "flexShrink": 0,
           },
@@ -960,6 +968,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
         Object {
           "flexDirection": "row",
         },
+        false,
       ]
     }
   >
@@ -1009,6 +1018,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
             "flexShrink": 1,
             "minHeight": 24,
           },
+          false,
         ]
       }
     >
@@ -1226,6 +1236,9 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
         Object {
           "flexDirection": "row",
         },
+        Object {
+          "marginRight": 56,
+        },
       ]
     }
   >
@@ -1274,6 +1287,9 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
             "flexGrow": 1,
             "flexShrink": 1,
             "minHeight": 24,
+          },
+          Object {
+            "marginRight": 56,
           },
         ]
       }
@@ -1378,9 +1394,12 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
             "alignItems": "center",
             "backgroundColor": "#0073E6",
             "borderRadius": 24,
+            "bottom": 0,
             "color": "#FFFFFF",
             "height": 48,
             "justifyContent": "center",
+            "position": "absolute",
+            "right": 0,
             "width": 48,
           },
         ]
@@ -1514,6 +1533,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
         Object {
           "flexDirection": "row",
         },
+        false,
       ]
     }
   >
@@ -1563,6 +1583,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
             "flexShrink": 1,
             "minHeight": 24,
           },
+          false,
         ]
       }
     >
@@ -1780,6 +1801,9 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
         Object {
           "flexDirection": "row",
         },
+        Object {
+          "marginRight": 56,
+        },
       ]
     }
   >
@@ -1828,6 +1852,9 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
             "flexGrow": 1,
             "flexShrink": 1,
             "minHeight": 24,
+          },
+          Object {
+            "marginRight": 56,
           },
         ]
       }
@@ -2103,6 +2130,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
         Object {
           "flexDirection": "row",
         },
+        false,
       ]
     }
   >
@@ -2152,6 +2180,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
             "flexShrink": 1,
             "minHeight": 24,
           },
+          false,
         ]
       }
     >
@@ -2426,6 +2455,7 @@ exports[`MessageList Item component with all the flags set to false should match
         Object {
           "flexDirection": "row",
         },
+        false,
       ]
     }
   >
@@ -2475,6 +2505,7 @@ exports[`MessageList Item component with all the flags set to false should match
             "flexShrink": 1,
             "minHeight": 24,
           },
+          false,
         ]
       }
     >
