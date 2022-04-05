@@ -20,7 +20,7 @@ export const PremiumMessagesOptInOutScreen = (_: Props) => {
   const dispatch = useDispatch();
 
   const handleSubmit = useCallback(
-    () => dispatch(setPremiumMessagesAccepted()),
+    (value: boolean) => dispatch(setPremiumMessagesAccepted(value)),
     [dispatch]
   );
 
@@ -32,8 +32,8 @@ export const PremiumMessagesOptInOutScreen = (_: Props) => {
 
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={cancelButtonProps(handleSubmit, "Don't share")}
-        rightButton={confirmButtonProps(handleSubmit, "Share")}
+        leftButton={cancelButtonProps(() => handleSubmit(false), "Don't share")}
+        rightButton={confirmButtonProps(() => handleSubmit(true), "Share")}
       />
     </SafeAreaView>
   );
