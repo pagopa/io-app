@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
   },
   checkBoxContainer: {
     flexGrow: 0,
-    flexShrink: 0
+    flexShrink: 0,
+    alignSelf: "center"
   },
   text3Line: {
     flex: 1,
@@ -106,11 +107,18 @@ const styles = StyleSheet.create({
     color: IOColors.white,
     height: 48,
     width: 48,
-    borderRadius: 24
+    borderRadius: 24,
+    bottom: 0,
+    right: 0,
+    position: "absolute"
   },
   // needed to keep the inner item still between selections
   qrCheckBoxContainer: {
-    minHeight: 48
+    marginLeft: 32
+  },
+  // needed to avoid text overlapping with the qrContainer
+  qrMargin: {
+    marginRight: 56
   }
 });
 
@@ -243,11 +251,12 @@ const MessageListItem = ({
   const serviceName = message.serviceName || UNKNOWN_SERVICE_DATA.serviceName;
   const messageTitle = message.title || I18n.t("messages.errorLoading.noTitle");
   const iconName = isSelected ? "io-checkbox-on" : "io-checkbox-off";
-  const showQrCode = category?.tag === "EU_COVID_CERT";
+  const hasQrCode = category?.tag === "EU_COVID_CERT";
+  const showQrCode = hasQrCode && !isSelectionModeEnabled;
 
   const maybeItemBadge = getMaybeItemBadge({
     paid: hasPaidBadge,
-    qrCode: showQrCode
+    qrCode: hasQrCode
   });
 
   return (
@@ -271,13 +280,13 @@ const MessageListItem = ({
         </View>
       </View>
 
-      <View style={styles.serviceName}>
+      <View style={[styles.serviceName, showQrCode && styles.qrMargin]}>
         <Text>{serviceName}</Text>
       </View>
 
       <View style={styles.smallSpacer} />
       <View style={styles.text3Line}>
-        <View style={styles.text3Container}>
+        <View style={[styles.text3Container, showQrCode && styles.qrMargin]}>
           {!isRead && (
             <View style={styles.badgeContainer}>
               <BadgeComponent />
@@ -292,7 +301,7 @@ const MessageListItem = ({
           <View
             style={[
               styles.checkBoxContainer,
-              showQrCode && styles.qrCheckBoxContainer
+              hasQrCode && styles.qrCheckBoxContainer
             ]}
           >
             <IconFont
