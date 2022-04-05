@@ -104,10 +104,17 @@ exports[`PspRadioItem match snapshot 1`] = `
     </View>
   </View>
   <Modal
+    accessibilityPositionChangeAnnouncement=""
+    accessible={false}
     backdropComponent={[Function]}
     enableDismissOnClose={true}
     footerComponent={[Function]}
     handleComponent={[Function]}
+    handleComponentAccessibility={
+      Object {
+        "accessible": false,
+      }
+    }
     hardwareAccelerated={false}
     snapPoints={
       Array [
