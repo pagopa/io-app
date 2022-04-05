@@ -21,7 +21,6 @@ import { setPin } from "../../utils/keychain";
 import { isOnboardingCompleted } from "../../utils/navigation";
 import { maybeNotNullyString } from "../../utils/strings";
 import { GlobalState } from "../../store/reducers/types";
-import { TypeLogs } from "../../boot/configureInstabug";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -96,7 +95,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "onboarding.unlockCode.contextualHelpContent"
 };
 const accessibilityTimeout = 100 as Millisecond;
-const instabuglogTag = "pin-creation";
 /**
  * A screen that allows the user to set the unlock code.
  */
@@ -123,9 +121,7 @@ class PinScreen extends React.PureComponent<Props, State> {
   public onPinFulfill = (code: PinString) => {
     handleSendAssistanceLog(
       this.choosenTool,
-      `onPinFulfill: len ${code.length} - state PinSelected`,
-      TypeLogs.DEBUG,
-      instabuglogTag
+      `onPinFulfill: len ${code.length} - state PinSelected`
     );
     this.setState(
       {
@@ -144,9 +140,7 @@ class PinScreen extends React.PureComponent<Props, State> {
     if (this.state.pinState.state === "PinConfirmed") {
       handleSendAssistanceLog(
         this.choosenTool,
-        `onPinConfirmRemoveLastDigit - state PinSelected`,
-        TypeLogs.DEBUG,
-        instabuglogTag
+        `onPinConfirmRemoveLastDigit - state PinSelected`
       );
       const pinState: PinSelected = {
         ...this.state.pinState,
@@ -162,9 +156,7 @@ class PinScreen extends React.PureComponent<Props, State> {
   public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
     handleSendAssistanceLog(
       this.choosenTool,
-      `onPinConfirmFulfill len ${code.length} valid ${isValid}`,
-      TypeLogs.DEBUG,
-      instabuglogTag
+      `onPinConfirmFulfill len ${code.length} valid ${isValid}`
     );
     // If the inserted unlock code do not match we clear the component to let the user retry
     if (!isValid && this.pinConfirmComponent) {
@@ -175,9 +167,7 @@ class PinScreen extends React.PureComponent<Props, State> {
       ) {
         handleSendAssistanceLog(
           this.choosenTool,
-          `onPinConfirmFulfill - state PinConfirmError`,
-          TypeLogs.DEBUG,
-          instabuglogTag
+          `onPinConfirmFulfill - state PinConfirmError`
         );
         const pinConfirmError: PinConfirmError = {
           ...this.state.pinState,
@@ -201,9 +191,7 @@ class PinScreen extends React.PureComponent<Props, State> {
     }
     handleSendAssistanceLog(
       this.choosenTool,
-      `onPinConfirmFulfill - state PinConfirmed`,
-      TypeLogs.DEBUG,
-      instabuglogTag
+      `onPinConfirmFulfill - state PinConfirmed`
     );
     this.setState(
       {
@@ -429,12 +417,7 @@ class PinScreen extends React.PureComponent<Props, State> {
   }
 
   private setPin = (pin: PinString) => {
-    handleSendAssistanceLog(
-      this.choosenTool,
-      `setPin - state PinSaved`,
-      TypeLogs.DEBUG,
-      instabuglogTag
-    );
+    handleSendAssistanceLog(this.choosenTool, `setPin - state PinSaved`);
     this.setState({
       pinState: {
         state: "PinSaved",
@@ -452,12 +435,7 @@ class PinScreen extends React.PureComponent<Props, State> {
               savedPin: pot.some(pin)
             }
           });
-          handleSendAssistanceLog(
-            this.choosenTool,
-            `createPinSuccess`,
-            TypeLogs.DEBUG,
-            instabuglogTag
-          );
+          handleSendAssistanceLog(this.choosenTool, `createPinSuccess`);
           this.props.createPinSuccess(pin);
           // user is updating his/her pin inside the app, go back
           if (isOnboardingCompleted()) {
@@ -467,12 +445,7 @@ class PinScreen extends React.PureComponent<Props, State> {
           }
         },
         _ => {
-          handleSendAssistanceLog(
-            this.choosenTool,
-            `setPin error`,
-            TypeLogs.DEBUG,
-            instabuglogTag
-          );
+          handleSendAssistanceLog(this.choosenTool, `setPin error`);
           // TODO: show toast if error (https://www.pivotaltracker.com/story/show/170819508)
           this.setState({
             pinState: {
@@ -486,9 +459,7 @@ class PinScreen extends React.PureComponent<Props, State> {
       .catch(e => {
         handleSendAssistanceLog(
           this.choosenTool,
-          `setPin error ${e ? e.toString() : ""}`,
-          TypeLogs.DEBUG,
-          instabuglogTag
+          `setPin error ${e?.toString?.() ?? ""}`
         );
       });
   };

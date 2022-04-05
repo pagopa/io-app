@@ -8,6 +8,7 @@ import { EmptyListComponent } from "../EmptyListComponent";
 
 import { useItemsSelection } from "../../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../../ListSelectionBar";
+import { UaDonationsBanner } from "../../../features/uaDonations/components/UaDonationsBanner";
 import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
@@ -40,8 +41,7 @@ const MessagesInbox = ({
   navigateToMessageDetail,
   archiveMessages
 }: Props) => {
-  const { selectedItems, toggleItem, setAllItems, resetSelection } =
-    useItemsSelection();
+  const { selectedItems, toggleItem, resetSelection } = useItemsSelection();
 
   const isSelecting = selectedItems.isSome();
   const selectedItemsCount = selectedItems.toUndefined()?.size ?? 0;
@@ -57,14 +57,6 @@ const MessagesInbox = ({
 
   const onLongPressItem = (id: string) => {
     toggleItem(id);
-  };
-
-  const onToggleAllSelection = () => {
-    if (selectedItemsCount === allItemsCount) {
-      setAllItems([]);
-    } else {
-      setAllItems(messages.map(_ => _.id));
-    }
   };
 
   const ListEmptyComponent = () => (
@@ -84,6 +76,7 @@ const MessagesInbox = ({
           onLongPressItem={onLongPressItem}
           selectedMessageIds={selectedItems.toUndefined()}
           ListEmptyComponent={ListEmptyComponent}
+          ListHeaderComponent={<UaDonationsBanner />}
         />
       </View>
       {isSelecting && (
@@ -96,7 +89,6 @@ const MessagesInbox = ({
             );
             resetSelection();
           }}
-          onToggleAllSelection={onToggleAllSelection}
           onResetSelection={resetSelection}
           primaryButtonText={I18n.t("messages.cta.archive")}
         />
