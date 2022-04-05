@@ -309,10 +309,7 @@ const mapStateToProps = (state: GlobalState) => ({
   allArchiveMessages: allArchiveMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
   migrationStatus: allPaginatedSelector(state).migration,
-  latestMessageOperation: createSelector(
-    allPaginatedSelector,
-    _ => _.latestMessageOperation
-  )(state)
+  latestMessageOperation: allPaginatedSelector(state).latestMessageOperation
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
