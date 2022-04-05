@@ -7,6 +7,7 @@ import { Tab, Tabs } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { createSelector } from "reselect";
 
+import { pipe } from "fp-ts/lib/function";
 import { Dispatch } from "../../../store/actions/types";
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
@@ -39,7 +40,8 @@ import MessagesArchive from "../../../components/messages/paginated/MessagesArch
 import {
   allArchiveMessagesSelector,
   allInboxMessagesSelector,
-  allPaginatedSelector
+  allPaginatedSelector,
+  MessageOperation
 } from "../../../store/reducers/entities/messages/allPaginated";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
@@ -168,31 +170,34 @@ const MessagesHomeScreen = ({
   });
 
   useEffect(() => {
-    if (latestMessageOperation === undefined) {
+    if (!latestMessageOperation) {
       return;
     }
 
-    if (latestMessageOperation.isLeft()) {
-      switch (latestMessageOperation.value.operation) {
-        case "archive":
-          showToast(I18n.t("messages.operations.archive.failure"), "danger");
-          return;
-        case "restore":
-          showToast(I18n.t("messages.operations.restore.failure"), "danger");
-          return;
-      }
-    }
-
-    if (latestMessageOperation.isRight()) {
-      switch (latestMessageOperation.value) {
-        case "archive":
-          showToast(I18n.t("messages.operations.archive.success"), "success");
-          return;
-        case "restore":
-          showToast(I18n.t("messages.operations.restore.success"), "success");
-          return;
-      }
-    }
+    type toastData = {
+      operation: MessageOperation;
+      archive: string;
+      restore: string;
+      type: "success" | "danger";
+    };
+    pipe<typeof latestMessageOperation, toastData, void>(
+      lmo =>
+        lmo.fold<toastData>(
+          l => ({
+            operation: l.operation,
+            archive: I18n.t("messages.operations.archive.failure"),
+            restore: I18n.t("messages.operations.restore.failure"),
+            type: "danger"
+          }),
+          r => ({
+            operation: r,
+            archive: I18n.t("messages.operations.archive.success"),
+            restore: I18n.t("messages.operations.restore.success"),
+            type: "success"
+          })
+        ),
+      lmo => showToast(lmo[lmo.operation], lmo.type)
+    )(latestMessageOperation);
   }, [latestMessageOperation]);
 
   const navigateToMessageDetail = (message: UIMessage) => {
