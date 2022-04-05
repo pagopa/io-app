@@ -50,7 +50,6 @@ export const renderItem =
         category={message.category}
         hasPaidBadge={hasPaidBadge(message.category)}
         isRead={message.isRead}
-        isArchived={message.isArchived}
         message={message}
         onPress={() => onPress(message)}
         onLongPress={() => onLongPress(message)}

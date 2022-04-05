@@ -1683,6 +1683,13 @@ messages:
       started: Please wait, we are updating the Messages section.
       succeeded: Done!
       failed: We couldn't update the Messages section.
+  operations:
+    archive:
+      success: "Successfully archived!"
+      failure: "Failed to archive"
+    restore:
+      success: "Successfully unarchived."
+      failure: "Failed to unarchive"
 messageDetails:
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
