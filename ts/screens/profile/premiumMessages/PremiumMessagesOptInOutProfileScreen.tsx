@@ -13,6 +13,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 type Props = void;
 
@@ -40,12 +41,17 @@ export const PremiumMessagesOptInOutProfileScreen = (_: Props) => {
   );
 
   return (
-    <SafeAreaView style={IOStyles.flex}>
-      <Content>
-        <Text>Premium Messages Opt-in/out</Text>
-      </Content>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle="Premium Messages Opt-in/out"
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        <Content>
+          <Text>Premium Messages Opt-in/out</Text>
+        </Content>
 
-      <FooterWithButtons type="SingleButton" leftButton={footerButtonProps} />
-    </SafeAreaView>
+        <FooterWithButtons type="SingleButton" leftButton={footerButtonProps} />
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 };
