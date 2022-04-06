@@ -1,4 +1,9 @@
-import { createStackNavigator } from "react-navigation-stack";
+import {
+  createStackNavigator,
+  NavigationStackOptions,
+  NavigationStackProp
+} from "react-navigation-stack";
+import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
@@ -22,7 +27,23 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
 import SecurityScreen from "../screens/profile/SecurityScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
+import { PremiumMessagesOptInOutProfileScreen } from "../screens/profile/premiumMessages/PremiumMessagesOptInOutProfileScreen";
+import { premiumMessagesOptInEnabled } from "../config";
 import ROUTES from "./routes";
+
+/**
+ * The routes used for the premium messages feature.
+ */
+const premiumMessagesRoutes: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = premiumMessagesOptInEnabled
+  ? {
+      [ROUTES.PROFILE_PREMIUM_MESSAGES_OPT_IN_OUT]: {
+        screen: PremiumMessagesOptInOutProfileScreen
+      }
+    }
+  : {};
 
 /**
  * A navigator for all the screens of the Profile section
@@ -97,7 +118,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS]: {
       screen: RemoveAccountSuccess
-    }
+    },
+
+    ...premiumMessagesRoutes
   },
   {
     // Let each screen handle the header and navigation

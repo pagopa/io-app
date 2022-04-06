@@ -267,8 +267,12 @@ class PrivacyMainScreen extends React.Component<Props, State> {
             {this.props.isPremiumMessagesOptInOutEnabled && (
               <ListItemComponent
                 title="Premium Messages Opt-in/out"
-                subTitle="Temporary screen for the Premium Messages  opt-in/out feature"
-                onPress={() => null}
+                subTitle="Temporary screen for the Premium Messages opt-in/out feature"
+                onPress={() =>
+                  this.props.navigation.navigate(
+                    ROUTES.PROFILE_PREMIUM_MESSAGES_OPT_IN_OUT
+                  )
+                }
                 useExtendedSubTitle={true}
               />
             )}
