@@ -160,10 +160,13 @@ const getPaymentMethodInfo = (
 ): Option<ComputedPaymentMethodInfo> => {
   switch (paymentMethod?.kind) {
     case "CreditCard":
-      const expiration = getTranslatedShortNumericMonthYear(
-        paymentMethod.info.expireYear,
-        paymentMethod.info.expireMonth
-      );
+      const holder = paymentMethod.info.holder ?? "";
+      const expiration =
+        getTranslatedShortNumericMonthYear(
+          paymentMethod.info.expireYear,
+          paymentMethod.info.expireMonth
+        ) ?? "";
+
       return some({
         logo: (
           <BrandImage
@@ -171,15 +174,16 @@ const getPaymentMethodInfo = (
             scale={0.7}
           />
         ),
-        subject: `${paymentMethod.info.holder ?? ""}${
-          expiration ? " · " + expiration : ""
-        }`,
+        subject: `${holder}${expiration ? " · " + expiration : ""}`,
         expiration,
         caption: paymentMethod.caption ?? "",
-        accessibilityLabel: I18n.t("wallet.accessibility.folded.creditCard", {
-          brand: paymentMethod.info.brand,
-          blurredNumber: paymentMethod.info.blurredNumber
-        })
+        accessibilityLabel: `${I18n.t(
+          "wallet.accessibility.folded.creditCard",
+          {
+            brand: paymentMethod.info.brand,
+            blurredNumber: paymentMethod.info.blurredNumber
+          }
+        )}, ${holder}, ${expiration}`
       });
 
     case "PayPal":
@@ -460,7 +464,11 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                   cost: formattedFees,
                   psp: pspName
                 }
-              )}, ${I18n.t("wallet.ConfirmPayment.accessibility.edit")}`}
+              )}${
+                canChangePsp
+                  ? ", " + I18n.t("wallet.ConfirmPayment.accessibility.edit")
+                  : ""
+              }`}
             />
 
             {isPayingWithPaypal && privacyUrl && (
