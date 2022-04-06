@@ -78,15 +78,16 @@ import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
 import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
+import watchMigrateToPagination from "./messages/watchMigrateToPagination";
 import watchReloadAllMessages from "./messages/watchReloadAllMessages";
 import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStatusAttribues";
-import watchMigrateToPagination from "./messages/watchMigrateToPagination";
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
   initMixpanel
 } from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
+import { askPremiumMessagesOptInOut } from "./premiumMessages";
 import {
   loadProfile,
   watchProfile,
@@ -308,6 +309,10 @@ export function* initializeApplicationSaga(): Generator<
     // check if the user expressed preference about mixpanel, if not ask for it
     yield* call(askMixpanelOptIn);
 
+    // Check if the user has expressed a preference
+    // about the Premium Messages.
+    yield* call(askPremiumMessagesOptInOut);
+
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
@@ -342,6 +347,10 @@ export function* initializeApplicationSaga(): Generator<
 
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
+
+      // Check if the user has expressed a preference
+      // about the Premium Messages.
+      yield* call(askPremiumMessagesOptInOut);
 
       yield* call(askServicesPreferencesModeOptin, false);
 

@@ -6,6 +6,7 @@ import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
+import { PremiumMessagesOptInOutScreen } from "../screens/onboarding/premiumMessages/PremiumMessagesOptInOutScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import ROUTES from "./routes";
@@ -38,6 +39,9 @@ const navigator = createCompatNavigatorFactory(createStackNavigator)(
     },
     [ROUTES.READ_EMAIL_SCREEN]: {
       screen: EmailReadScreen
+    },
+    [ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT]: {
+      screen: PremiumMessagesOptInOutScreen
     }
   },
   {

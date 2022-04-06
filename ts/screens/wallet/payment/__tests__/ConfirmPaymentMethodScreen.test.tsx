@@ -1,30 +1,34 @@
 import { createStore, DeepPartial, Store } from "redux";
-import ConfirmPaymentMethodScreen, {
-  ConfirmPaymentMethodScreenNavigationParams
-} from "../ConfirmPaymentMethodScreen";
-import {
-  myRptId,
-  myInitialAmount,
-  myVerifiedData,
-  myWallet,
-  myPsp,
-  AuthSeq
-} from "../../../../utils/testFaker";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { appReducer } from "../../../../store/reducers/";
+import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
-import { GlobalState } from "../../../../store/reducers/types";
-import { reproduceSequence } from "../../../../utils/tests";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { appReducer } from "../../../../store/reducers/";
 import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../store/reducers/types";
+import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
+import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
+import {
+  BPayPaymentMethod,
   CreditCardPaymentMethod,
   PayPalPaymentMethod
 } from "../../../../types/pagopa";
-import I18n from "../../../../i18n";
-import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
-import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
-import { isPaypalEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import {
+  AuthSeq,
+  myInitialAmount,
+  myPsp,
+  myRptId,
+  myVerifiedData,
+  myWallet
+} from "../../../../utils/testFaker";
+import { reproduceSequence } from "../../../../utils/tests";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ConfirmPaymentMethodScreen, {
+  ConfirmPaymentMethodScreenNavigationParams
+} from "../ConfirmPaymentMethodScreen";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
@@ -64,7 +68,8 @@ jest.mock("../../../../store/reducers/backendStatus", () => {
   return {
     __esModule: true,
     ...actualModule,
-    isPaypalEnabledSelector: jest.fn()
+    isPaypalEnabledSelector: jest.fn(),
+    bancomatPayConfigSelector: jest.fn()
   };
 });
 
@@ -95,6 +100,14 @@ const payPalPaymentMethod = {
   caption: "caption"
 } as DeepPartial<PayPalPaymentMethod>;
 
+const bpayPaymentMethod = {
+  kind: "BPay",
+  caption: "BPay caption",
+  info: {
+    numberObfuscated: "***123"
+  }
+} as DeepPartial<BPayPaymentMethod>;
+
 describe("Integration Tests With Actual Store and Simplified Navigation", () => {
   afterAll(() => jest.resetAllMocks());
   beforeEach(() => jest.useFakeTimers());
@@ -117,6 +130,12 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     (paymentMethodByIdSelector as unknown as jest.Mock).mockReturnValue(
       creditCardPaymentMethod
     );
+
+    (bancomatPayConfigSelector as unknown as jest.Mock).mockReturnValue({
+      display: false,
+      onboarding: false,
+      payment: true
+    });
 
     const rendered = renderScreenFakeNavRedux<GlobalState>(
       ConfirmPaymentMethodScreen,
@@ -172,6 +191,12 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     (paymentMethodByIdSelector as unknown as jest.Mock).mockReturnValue(
       payPalPaymentMethod
     );
+
+    (bancomatPayConfigSelector as unknown as jest.Mock).mockReturnValue({
+      display: false,
+      onboarding: false,
+      payment: true
+    });
 
     (isPaypalEnabledSelector as unknown as jest.Mock).mockReturnValue(true);
 
@@ -231,5 +256,68 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     expect(
       rendered.getAllByText(I18n.t("wallet.ConfirmPayment.edit"))
     ).toHaveLength(1);
+  });
+
+  it("should display all the information correctly for a `BPay` payment method", () => {
+    (paymentMethodByIdSelector as unknown as jest.Mock).mockReturnValue(
+      bpayPaymentMethod
+    );
+
+    (bancomatPayConfigSelector as unknown as jest.Mock).mockReturnValue({
+      display: false,
+      onboarding: false,
+      payment: true
+    });
+
+    const bpayParams = {
+      ...params,
+      wallet: {
+        ...params.wallet,
+        paymentMethod: bpayPaymentMethod as BPayPaymentMethod
+      }
+    };
+
+    const rendered = renderScreenFakeNavRedux<GlobalState>(
+      ConfirmPaymentMethodScreen,
+      ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
+      bpayParams,
+      myStore
+    );
+
+    // Should display the payment reason
+    rendered.getByText(bpayParams.verifica.causaleVersamento);
+
+    // Should display the payment amount
+    rendered.getByText(
+      formatNumberCentsToAmount(
+        bpayParams.verifica.importoSingoloVersamento,
+        true
+      )
+    );
+
+    // Should display the payment method
+    rendered.getByText(bpayPaymentMethod.caption!);
+
+    rendered.getByText(bpayPaymentMethod.info!.numberObfuscated!);
+
+    // Should render the PSP with the fees
+    rendered.getByText(
+      formatNumberCentsToAmount(params.wallet.psp?.fixedCost.amount ?? -1, true)
+    );
+
+    rendered.getByText(
+      `${I18n.t("wallet.ConfirmPayment.providedBy")} ${
+        params.wallet.psp?.businessName
+      }`
+    );
+
+    /**
+     * It should retrieve two `Edit` CTAs
+     * one for the payment method.
+     * one for the PSP
+     */
+    expect(
+      rendered.getAllByText(I18n.t("wallet.ConfirmPayment.edit"))
+    ).toHaveLength(2);
   });
 });

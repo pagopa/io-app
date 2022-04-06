@@ -1,8 +1,9 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Tab, Tabs } from "native-base";
-import React from "react";
+import React, { useEffect } from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
@@ -33,7 +34,8 @@ import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
 import {
   allArchiveMessagesSelector,
   allInboxMessagesSelector,
-  allPaginatedSelector
+  allPaginatedSelector,
+  MessageOperation
 } from "../../../store/reducers/entities/messages/allPaginated";
 import {
   MessagesStatus,
@@ -53,6 +55,7 @@ import {
 } from "../../../utils/accessibility";
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { showToast } from "../../../utils/showToast";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = {
@@ -159,7 +162,8 @@ const MessagesHomeScreen = ({
   messagesStatus,
   migrateMessages,
   migrationStatus,
-  resetMigrationStatus
+  resetMigrationStatus,
+  latestMessageOperation
 }: Props) => {
   const navigation = useNavigation();
   const needsMigration = Object.keys(messagesStatus).length > 0;
@@ -169,6 +173,37 @@ const MessagesHomeScreen = ({
       migrateMessages(messagesStatus);
     }
   });
+
+  useEffect(() => {
+    if (!latestMessageOperation) {
+      return;
+    }
+
+    type toastData = {
+      operation: MessageOperation;
+      archive: string;
+      restore: string;
+      type: "success" | "danger";
+    };
+    pipe<typeof latestMessageOperation, toastData, void>(
+      lmo =>
+        lmo.fold<toastData>(
+          l => ({
+            operation: l.operation,
+            archive: I18n.t("messages.operations.archive.failure"),
+            restore: I18n.t("messages.operations.restore.failure"),
+            type: "danger"
+          }),
+          r => ({
+            operation: r,
+            archive: I18n.t("messages.operations.archive.success"),
+            restore: I18n.t("messages.operations.restore.success"),
+            type: "success"
+          })
+        ),
+      lmo => showToast(lmo[lmo.operation], lmo.type)
+    )(latestMessageOperation);
+  }, [latestMessageOperation]);
 
   const navigateToMessageDetail = (message: UIMessage) => {
     navigation.navigate(ROUTES.MESSAGE_ROUTER_PAGINATED, {
@@ -281,7 +316,8 @@ const mapStateToProps = (state: GlobalState) => ({
   allInboxMessages: allInboxMessagesSelector(state),
   allArchiveMessages: allArchiveMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
-  migrationStatus: allPaginatedSelector(state).migration
+  migrationStatus: allPaginatedSelector(state).migration,
+  latestMessageOperation: allPaginatedSelector(state).latestMessageOperation
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
