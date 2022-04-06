@@ -4,6 +4,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
@@ -49,6 +50,8 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  resetCustomFields,
+  zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../utils/supportAssistance";
@@ -105,8 +108,15 @@ const renderItem = (label: string, value?: string) => {
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private zendeskAssistanceLogAndStart = () => {
+    resetCustomFields();
     // Set pagamenti_pagopa as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+
+    // Add rptId custom field
+    addTicketCustomField(
+      zendeskBlockedPaymentRptIdId,
+      RptIdFromString.encode(this.props.navigation.getParam("payment").data)
+    );
     // Append the payment history details in the log
     appendLog(
       getPaymentHistoryDetails(this.props.navigation.getParam("payment"))

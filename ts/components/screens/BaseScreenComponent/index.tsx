@@ -8,6 +8,12 @@ import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIOSelector } from "../../../store/hooks";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import {
+  assistanceToolRemoteConfig,
+  resetCustomFields
+} from "../../../utils/supportAssistance";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
@@ -87,6 +93,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
         case ToolEnum.zendesk:
           // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
           return () => {
+            resetCustomFields();
             dispatch(
               zendeskSupportStart({
                 faqCategories,

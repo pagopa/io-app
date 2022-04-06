@@ -34,6 +34,7 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  resetCustomFields,
   zendeskCategoryId,
   zendeskPaymentMethodCategory
 } from "../../../utils/supportAssistance";
@@ -90,6 +91,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const canShowHelp = useIOSelector(canShowHelpSelector);
 
   const zendeskAssistanceLogAndStart = () => {
+    resetCustomFields();
     // Set metodo_di_pagamento as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentMethodCategory.value);
     // Append the attempt in the log
