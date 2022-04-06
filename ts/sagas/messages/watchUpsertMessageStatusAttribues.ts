@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "typed-redux-saga/macro";
+import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
 import { BackendClient } from "../../api/backend";
@@ -25,7 +25,7 @@ type LocalBeClient = ReturnType<
 export default function* watcher(
   putMessage: LocalBeClient
 ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof putMessage>> {
-  yield* takeLatest(
+  yield* takeEvery(
     getType(upsertMessageStatusAttributes.request),
     tryUpsertMessageStatusAttributes(putMessage)
   );
