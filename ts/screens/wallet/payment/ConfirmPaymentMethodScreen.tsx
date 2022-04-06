@@ -152,7 +152,7 @@ const getPaymentMethodInfo = (
 ): Option<ComputedPaymentMethodInfo> => {
   switch (paymentMethod?.kind) {
     case "CreditCard":
-      const subject = paymentMethod.info.holder ?? "";
+      const holder = paymentMethod.info.holder ?? "";
       const expiration =
         getTranslatedShortNumericMonthYear(
           paymentMethod.info.expireYear,
@@ -166,7 +166,7 @@ const getPaymentMethodInfo = (
             scale={0.7}
           />
         ),
-        subject: `${subject}${expiration ? " · " + expiration : ""}`,
+        subject: `${holder}${expiration ? " · " + expiration : ""}`,
         expiration,
         caption: paymentMethod.caption ?? "",
         accessibilityLabel: `${I18n.t(
@@ -175,7 +175,7 @@ const getPaymentMethodInfo = (
             brand: paymentMethod.info.brand,
             blurredNumber: paymentMethod.info.blurredNumber
           }
-        )}, ${subject}, ${expiration}`
+        )}, ${holder}, ${expiration}`
       });
 
     case "PayPal":
