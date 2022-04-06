@@ -5,7 +5,6 @@ import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
 import { getValueOrElse } from "../features/bonus/bpd/model/RemoteValue";
 import { zendeskEnabled } from "../config";
-import { instabugLog, TypeLogs } from "../boot/configureInstabug";
 
 export type ZendeskAppConfig = {
   key: string;
@@ -97,16 +96,15 @@ export const resetAssistanceData = () => {
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
-// help can be shown only when remote FF is instabug or (zendesk + local FF + emailValidated)
+// help can be shown only when remote FF is  zendesk + local FF + emailValidated
 export const canShowHelp = (
   assistanceTool: ToolEnum,
   isEmailValidated: boolean
 ): boolean => {
   switch (assistanceTool) {
-    case ToolEnum.instabug:
-      return true;
     case ToolEnum.zendesk:
       return zendeskEnabled && isEmailValidated;
+    case ToolEnum.instabug:
     case ToolEnum.web:
     case ToolEnum.none:
       return false;
@@ -115,14 +113,9 @@ export const canShowHelp = (
 // Send a log based on
 export const handleSendAssistanceLog = (
   assistanceTool: ToolEnum,
-  log: string,
-  instabugTypeLog?: TypeLogs,
-  instabugTag?: string
+  log: string
 ) => {
   switch (assistanceTool) {
-    case ToolEnum.instabug:
-      instabugLog(log, instabugTypeLog ?? TypeLogs.INFO, instabugTag);
-      break;
     case ToolEnum.zendesk:
       appendLog(log);
   }

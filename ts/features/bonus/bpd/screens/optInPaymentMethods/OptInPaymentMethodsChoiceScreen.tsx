@@ -118,7 +118,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
   return (
     // The void customRightIcon and customGoBack are needed to have a centered header title
     <BaseScreenComponent
-      showInstabugChat={false}
+      showChat={false}
       goBack={false}
       headerTitle={I18n.t("bonus.bpd.optInPaymentMethods.choice.header")}
       customRightIcon={{

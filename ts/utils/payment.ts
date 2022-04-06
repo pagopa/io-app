@@ -38,8 +38,6 @@ import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
 
-export const paymentInstabugTag = "payment-support";
-
 /**
  * A method to convert an payment amount in a proper formatted string
  * @param amount In euro-cents

@@ -4,7 +4,6 @@
  */
 import * as t from "io-ts";
 import { Option } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
@@ -12,12 +11,6 @@ import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import {
-  instabugLog,
-  openInstabugQuestionReport,
-  setInstabugUserAttribute,
-  TypeLogs
-} from "../../../boot/configureInstabug";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
@@ -34,8 +27,7 @@ import {
   ErrorTypes,
   getCodiceAvviso,
   getPaymentHistoryDetails,
-  getV2ErrorMainType,
-  paymentInstabugTag
+  getV2ErrorMainType
 } from "../../../utils/payment";
 import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -100,26 +92,6 @@ const imageMapping: Record<ErrorTypes, ImageSourcePropType> = {
   REVOKED: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
   UNCOVERED: require(baseIconPath + "/wallet/errors/generic-error-icon.png"),
   TECHNICAL: require(baseIconPath + "servicesStatus/error-detail-icon.png")
-};
-
-// Save the rptId as attribute and open the Instabug chat.
-const requestAssistanceForPaymentFailure = (
-  rptId: RptId,
-  payment?: PaymentHistory
-) => {
-  Instabug.appendTags([paymentInstabugTag]);
-  setInstabugUserAttribute(
-    "blockedPaymentRptId",
-    RptIdFromString.encode(rptId)
-  );
-  if (payment) {
-    instabugLog(
-      getPaymentHistoryDetails(payment),
-      TypeLogs.INFO,
-      paymentInstabugTag
-    );
-  }
-  openInstabugQuestionReport();
 };
 
 const requestZendeskAssistanceForPaymentFailure = (
@@ -194,9 +166,6 @@ export const errorTransactionUIElements = (
   }
   const requestAssistance = () => {
     switch (choosenTool) {
-      case ToolEnum.instabug:
-        requestAssistanceForPaymentFailure(rptId, paymentHistory);
-        break;
       case ToolEnum.zendesk:
         requestZendeskAssistanceForPaymentFailure(rptId, paymentHistory);
         handleZendeskRequestAssistance();

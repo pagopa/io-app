@@ -1707,6 +1707,13 @@ messages:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
       succeeded: "Fatto!"
       failed: "Non siamo riusciti ad aggiornare la sezione messaggi."
+  operations:
+    archive:
+      success: "Archiviazione riuscita!"
+      failure: "L’archiviazione non è andata a buon fine"
+    restore:
+      success: "Ripristino effettuato."
+      failure: "Il ripristino non è andato a buon fine"
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md
@@ -1924,16 +1931,6 @@ contextualHelp:
     cta: Condividi il tuo codice fiscale, in modo da rendere più semplice la risoluzione del problema.
     informativeTitle: Come sapete il mio codice fiscale?
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
-instabug:
-  overrideText:
-    commentFieldHintForQuestion: "Sii il più preciso possibile. Cosa doveva succedere e cosa invece è successo?\nPer quanto possibile, ti invitiamo a non inserire dati sensibili nelle tue segnalazioni"
-  contextualHelp:
-    title1: Hai bisogno di aiuto?
-    descriptionBug: "Se qualcosa **non funziona** come dovrebbe o se vuoi **suggerirci un miglioramento** o una nuova funzionalità, scrivici! Il team di IO ti risponderà direttamente tramite l'app."
-    buttonBug: Scrivi al team di IO
-    descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
-    buttonChat: Riapri una segnalazione
-    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8 alle 20; sabato, domenica dalle ore 8 alle 13. Sono esclusi i giorni di festività nazionale.
 bottomSheets:
   ciePin:
       title: Dove trovo il mio PIN?

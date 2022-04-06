@@ -1,4 +1,4 @@
-import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
+import { fromNullable, isNone, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Alert } from "react-native";
@@ -18,13 +18,7 @@ import {
 import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
-import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { BackendClient } from "../api/backend";
-import {
-  instabugLog,
-  setInstabugProfileAttributes,
-  TypeLogs
-} from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
@@ -62,7 +56,6 @@ import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
-  idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
@@ -130,6 +123,7 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
+import { askPremiumMessagesOptInOut } from "./premiumMessages";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -285,10 +279,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* put(clearCache());
   }
 
-  const maybeIdp: Option<SpidIdp> = yield* select(idpSelector);
-
-  setInstabugProfileAttributes(maybeIdp);
-
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
 
@@ -318,6 +308,10 @@ export function* initializeApplicationSaga(): Generator<
 
     // check if the user expressed preference about mixpanel, if not ask for it
     yield* call(askMixpanelOptIn);
+
+    // Check if the user has expressed a preference
+    // about the Premium Messages.
+    yield* call(askPremiumMessagesOptInOut);
 
     storedPin = yield* call(checkConfiguredPinSaga);
 
@@ -353,6 +347,10 @@ export function* initializeApplicationSaga(): Generator<
 
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
+
+      // Check if the user has expressed a preference
+      // about the Premium Messages.
+      yield* call(askPremiumMessagesOptInOut);
 
       yield* call(askServicesPreferencesModeOptin, false);
 
@@ -562,11 +560,7 @@ function* waitForNavigatorServiceInitialization() {
     const elapsedTime = performance.now() - startTime;
     if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
       timeoutLogged = true;
-      instabugLog(
-        `NavigationService is not initialized after ${elapsedTime} ms`,
-        TypeLogs.ERROR,
-        "initializeApplicationSaga"
-      );
+
       yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
     }
     yield* delay(navigatorPollingTime);
@@ -575,11 +569,6 @@ function* waitForNavigatorServiceInitialization() {
 
   const initTime = performance.now() - startTime;
 
-  instabugLog(
-    `NavigationService initialized after ${initTime} ms`,
-    TypeLogs.DEBUG,
-    "initializeApplicationSaga"
-  );
   yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
     elapsedTime: initTime
   });
