@@ -166,7 +166,7 @@ const getPaymentMethodInfo = (
             scale={0.7}
           />
         ),
-        subject,
+        subject: `${subject}${expiration ? " · " + expiration : ""}`,
         expiration,
         caption: paymentMethod.caption ?? "",
         accessibilityLabel: `${I18n.t(
