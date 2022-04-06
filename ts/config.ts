@@ -95,6 +95,9 @@ export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
 // FIMS (Federated Identity Management System) Feature Flag
 export const fimsEnabled = Config.FIMS_ENABLED === "YES";
 
+// CdC (Carta della cultura) Feature Flag
+export const cdcEnabled = Config.CDC_ENABLED === "YES";
+
 // Premium Messages Opt-in/out Feature Flag
 export const premiumMessagesOptInEnabled =
   Config.PREMIUM_MESSAGES_OPT_IN_ENABLED === "YES";
