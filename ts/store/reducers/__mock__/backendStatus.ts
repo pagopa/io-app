@@ -258,6 +258,9 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     premiumMessages: {
       opt_in_out_enabled: false
+    },
+    cdc: {
+      enabled: false
     }
   }
 };
@@ -308,6 +311,9 @@ export const baseBackendConfig: Config = {
   },
   premiumMessages: {
     opt_in_out_enabled: false
+  },
+  cdc: {
+    enabled: false
   }
 };
 
