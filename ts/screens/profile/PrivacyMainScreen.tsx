@@ -31,6 +31,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
 import ScreenContent from "../../components/screens/ScreenContent";
+import { isPremiumMessagesOptInOutEnabledSelector } from "../../store/reducers/backendStatus";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -261,6 +262,16 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                   : undefined
               }
             />
+
+            {/* Premium Messages Opt-in/out */}
+            {this.props.isPremiumMessagesOptInOutEnabled && (
+              <ListItemComponent
+                title="Premium Messages Opt-in/out"
+                subTitle="Temporary screen for the Premium Messages  opt-in/out feature"
+                onPress={() => null}
+                useExtendedSubTitle={true}
+              />
+            )}
           </List>
         </ScreenContent>
       </TopScreenComponent>
@@ -299,7 +310,9 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     userDataProcessing,
     isLoading,
-    isEmailValidated: isProfileEmailValidatedSelector(state)
+    isEmailValidated: isProfileEmailValidatedSelector(state),
+    isPremiumMessagesOptInOutEnabled:
+      isPremiumMessagesOptInOutEnabledSelector(state)
   };
 };
 
