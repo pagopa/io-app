@@ -6,11 +6,11 @@ import DeviceInfo from "react-native-device-info";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { connect } from "react-redux";
 import { useState } from "react";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { ReduxProps } from "../store/actions/types";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
