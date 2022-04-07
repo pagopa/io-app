@@ -7,7 +7,7 @@ const euCovidCertRevokedSubject = "🏥 EUCovidCert - revoked";
 const euCovidCertRevokedTitle = "Revoked Certificate title";
 const euCovidCertRevokedSubTitle = "Revoked Certificate sub title";
 
-const messageListTestId = "messageList";
+const messageListTestId = "MessageList_inbox";
 const learnMoreLinkTestId = "euCovidCertLearnMoreLink";
 
 describe("EuCovidCert Revoked", () => {
@@ -25,9 +25,21 @@ describe("EuCovidCert Revoked", () => {
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
 
+    // scroll down until all messages are loaded
+    await element(by.id(messageListTestId)).scrollTo("bottom");
+
+    await waitFor(element(by.id(`MessageListItem_00000000000000000000000008`)))
+      .toExist()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    await element(by.id(messageListTestId)).scrollTo("bottom");
+
     await waitFor(element(by.id(`MessageListItem_00000000000000000000000001`)))
       .toExist()
       .withTimeout(e2eWaitRenderTimeout);
+
+    // restore the top offset
+    await element(by.id(messageListTestId)).scrollTo("top");
   });
 
   it("should find the revoked EuCovidCert message and open it", async () => {
