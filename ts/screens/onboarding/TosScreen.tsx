@@ -13,7 +13,6 @@ import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { H1 } from "../../components/core/typography/H1";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
