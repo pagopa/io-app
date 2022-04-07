@@ -771,7 +771,6 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
-    contentTitle: Privacy Policy and Terms of Service
     accept: Accept
     error: Loading error
     alert:
