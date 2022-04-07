@@ -1,7 +1,7 @@
 import { Content, Text, View } from "native-base";
-import { ComponentProps } from "react";
 import * as React from "react";
-import { Image, StyleSheet, SafeAreaView } from "react-native";
+import { ComponentProps } from "react";
+import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { index } from "fp-ts/lib/Array";
@@ -184,16 +184,15 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       return null;
     }
     const buttons = urls.map((url, idx) => (
-      <>
+      <View key={`${idx}_${url.url}`}>
         <ButtonDefaultOpacity
           bordered={true}
-          key={`${idx}_${url.url}`}
           onPress={() => handleModalPress(url.url)}
         >
           <Text style={styles.urlButton}>{url.name}</Text>
         </ButtonDefaultOpacity>
         {idx !== urls.length - 1 && <View spacer={true} small={true} />}
-      </>
+      </View>
     ));
     return <>{buttons}</>;
   };
