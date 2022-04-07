@@ -267,6 +267,7 @@ const MessageListItem = ({
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead, maybeItemBadge)}
       accessibilityRole="button"
+      testID={`MessageListItem_${message.id}`}
     >
       <View style={styles.titleRow}>
         <View style={styles.organizationNameWrapper}>
