@@ -303,32 +303,34 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        {!hasError && (
+        {
           <View style={styles.webViewWrapper}>
-            <WebView
-              cacheEnabled={false}
-              androidCameraAccessDisabled={true}
-              androidMicrophoneAccessDisabled={true}
-              textZoom={100}
-              originWhitelist={originSchemasWhiteList}
-              source={{ uri: loginUri }}
-              onError={this.handleLoadingError}
-              javaScriptEnabled={true}
-              onNavigationStateChange={this.handleNavigationStateChange}
-              onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-            />
+            {!hasError && (
+              <WebView
+                cacheEnabled={false}
+                androidCameraAccessDisabled={true}
+                androidMicrophoneAccessDisabled={true}
+                textZoom={100}
+                originWhitelist={originSchemasWhiteList}
+                source={{ uri: loginUri }}
+                onError={this.handleLoadingError}
+                javaScriptEnabled={true}
+                onNavigationStateChange={this.handleNavigationStateChange}
+                onShouldStartLoadWithRequest={this.handleShouldStartLoading}
+              />
+            )}
             {this.renderMask()}
           </View>
-        )}
+        }
       </BaseScreenComponent>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const selectedtIdp = selectedIdentityProviderSelector(state);
+  const selectedIdp = selectedIdentityProviderSelector(state);
 
-  const selectedIdpTextData = fromNullable(selectedtIdp).fold(none, idp =>
+  const selectedIdpTextData = fromNullable(selectedIdp).fold(none, idp =>
     idpContextualHelpDataFromIdSelector(idp.id)(state)
   );
 
