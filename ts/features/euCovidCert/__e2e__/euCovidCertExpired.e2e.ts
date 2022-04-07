@@ -1,5 +1,4 @@
 import { device } from "detox";
-import I18n from "../../../i18n";
 import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../__e2e__/utils";
 
@@ -14,32 +13,6 @@ describe("EuCovidCert Expired", () => {
   beforeAll(async () => {
     await device.reloadReactNative();
     await ensureLoggedIn();
-  });
-
-  it("should load all the messages", async () => {
-    await waitFor(element(by.text(I18n.t("messages.contentTitle"))))
-      .toBeVisible()
-      .withTimeout(e2eWaitRenderTimeout);
-
-    await waitFor(element(by.id(`MessageListItem_00000000000000000000000021`)))
-      .toBeVisible()
-      .withTimeout(e2eWaitRenderTimeout);
-
-    // scroll down until all messages are loaded
-    await element(by.id(messageListTestId)).scrollTo("bottom");
-
-    await waitFor(element(by.id(`MessageListItem_00000000000000000000000008`)))
-      .toExist()
-      .withTimeout(e2eWaitRenderTimeout);
-
-    await element(by.id(messageListTestId)).scrollTo("bottom");
-
-    await waitFor(element(by.id(`MessageListItem_00000000000000000000000001`)))
-      .toExist()
-      .withTimeout(e2eWaitRenderTimeout);
-
-    // restore the top offset
-    await element(by.id(messageListTestId)).scrollTo("top");
   });
 
   it("should find the expired EuCovidCert message and open it", async () => {
