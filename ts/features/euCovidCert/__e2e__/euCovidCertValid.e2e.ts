@@ -7,7 +7,7 @@ const euCovidCertValidSubject = "🏥 EUCovidCert - valid";
 const euCovidCertValidTitle = "Valid Certificate title";
 const euCovidCertValidSubTitle = "Valid Certificate sub title";
 
-const messageListTestId = "messageList";
+const messageListTestId = "MessageList_inbox";
 const qrCodeTestId = "QRCode";
 const fullScreenQrCodeTestId = "fullScreenQRCode";
 
@@ -26,9 +26,21 @@ describe("EuCovidCert Valid", () => {
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
 
+    // scroll down until all messages are loaded
+    await element(by.id(messageListTestId)).scrollTo("bottom");
+
+    await waitFor(element(by.id(`MessageListItem_00000000000000000000000008`)))
+      .toExist()
+      .withTimeout(e2eWaitRenderTimeout);
+
+    await element(by.id(messageListTestId)).scrollTo("bottom");
+
     await waitFor(element(by.id(`MessageListItem_00000000000000000000000001`)))
       .toExist()
       .withTimeout(e2eWaitRenderTimeout);
+
+    // restore the top offset
+    await element(by.id(messageListTestId)).scrollTo("top");
   });
 
   it("should find the valid EuCovidCert message and open it", async () => {
