@@ -3,11 +3,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
-import {
-  NavigationEvents,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -275,13 +271,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     clearInterval(this.idResetTap);
   };
 
-  private ServiceListRef = React.createRef<ScrollView>();
-  private scrollToTop = () => {
-    if (this.ServiceListRef.current) {
-      this.ServiceListRef.current.scrollTo({ x: 0, y: 0, animated: false });
-    }
-  };
-
   private renderDeveloperSection() {
     const {
       dispatchSessionExpired,
@@ -440,8 +429,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     };
 
     const screenContent = () => (
-      <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
-        <NavigationEvents onWillFocus={this.scrollToTop} />
+      <ScrollView style={styles.whiteBg}>
         <View spacer={true} />
         <List withContentLateralPadding={true}>
           {/* Data */}
