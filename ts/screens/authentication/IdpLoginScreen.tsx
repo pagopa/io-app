@@ -1,5 +1,4 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -12,7 +11,6 @@ import {
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
-import { TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -48,7 +46,6 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type Props = NavigationStackScreenProps &
@@ -65,8 +62,6 @@ type State = {
   errorCode?: string;
   loginTrace?: string;
 };
-
-const loginFailureTag = "spid-login-failure";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -158,10 +153,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
     );
 
-    handleSendAssistanceLog(this.choosenTool, logText, TypeLogs.ERROR, "login");
-    if (this.choosenTool === ToolEnum.instabug) {
-      Instabug.appendTags([loginFailureTag]);
-    }
+    handleSendAssistanceLog(this.choosenTool, logText);
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
@@ -169,15 +161,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    handleSendAssistanceLog(
-      this.choosenTool,
-      `login success`,
-      TypeLogs.DEBUG,
-      "login"
-    );
-    if (this.choosenTool === ToolEnum.instabug) {
-      Instabug.resetTags();
-    }
+    handleSendAssistanceLog(this.choosenTool, `login success`);
     this.props.dispatchLoginSuccess(token, this.idp);
   };
 

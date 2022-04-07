@@ -40,8 +40,7 @@ const MessagesArchive = ({
   navigateToMessageDetail,
   unarchiveMessages
 }: Props) => {
-  const { selectedItems, toggleItem, setAllItems, resetSelection } =
-    useItemsSelection();
+  const { selectedItems, toggleItem, resetSelection } = useItemsSelection();
 
   const isSelecting = selectedItems.isSome();
   const selectedItemsCount = selectedItems.toUndefined()?.size ?? 0;
@@ -57,14 +56,6 @@ const MessagesArchive = ({
 
   const onLongPressItem = (id: string) => {
     toggleItem(id);
-  };
-
-  const onToggleAllSelection = () => {
-    if (selectedItemsCount === allItemsCount) {
-      setAllItems([]);
-    } else {
-      setAllItems(messages.map(_ => _.id));
-    }
   };
 
   const ListEmptyComponent = () => (
@@ -96,7 +87,6 @@ const MessagesArchive = ({
             );
             resetSelection();
           }}
-          onToggleAllSelection={onToggleAllSelection}
           onResetSelection={resetSelection}
           primaryButtonText={I18n.t("messages.cta.unarchive")}
         />

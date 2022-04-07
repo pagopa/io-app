@@ -46,7 +46,6 @@ export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
-export const instabugToken: string = Config.INSTABUG_TOKEN;
 
 export const bonusVacanzeEnabled: boolean =
   Config.BONUS_VACANZE_ENABLED === "YES";
@@ -95,6 +94,9 @@ export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
 
 // FIMS (Federated Identity Management System) Feature Flag
 export const fimsEnabled = Config.FIMS_ENABLED === "YES";
+
+// CdC (Carta della cultura) Feature Flag
+export const cdcEnabled = Config.CDC_ENABLED === "YES";
 
 // Premium Messages Opt-in/out Feature Flag
 export const premiumMessagesOptInEnabled =
