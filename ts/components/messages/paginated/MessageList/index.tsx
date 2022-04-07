@@ -165,7 +165,8 @@ const MessageList = ({
   loadPreviousPage,
   nextCursor,
   previousCursor,
-  reloadAll
+  reloadAll,
+  testID
 }: Props) => {
   // when filteredMessage is defined, this component is used
   // in search, so loading data on demand should be prevented
@@ -292,6 +293,7 @@ const MessageList = ({
         onLayout={handleOnLayoutChange}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.1}
+        testID={testID}
         ListFooterComponent={renderListFooter}
       />
     </>
@@ -319,6 +321,7 @@ const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
   const didLoad = pot.isSome(paginatedState);
   return {
     allMessages,
+    testID: `MessageList_${isArchive ? "archive" : "inbox"}`,
     error,
     hasPaidBadge: (category: UIMessage["category"]) =>
       isNoticePaid(state, category),
