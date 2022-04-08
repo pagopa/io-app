@@ -303,25 +303,23 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        {
-          <View style={styles.webViewWrapper}>
-            {!hasError && (
-              <WebView
-                cacheEnabled={false}
-                androidCameraAccessDisabled={true}
-                androidMicrophoneAccessDisabled={true}
-                textZoom={100}
-                originWhitelist={originSchemasWhiteList}
-                source={{ uri: loginUri }}
-                onError={this.handleLoadingError}
-                javaScriptEnabled={true}
-                onNavigationStateChange={this.handleNavigationStateChange}
-                onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-              />
-            )}
-            {this.renderMask()}
-          </View>
-        }
+        <View style={styles.webViewWrapper}>
+          {!hasError && (
+            <WebView
+              cacheEnabled={false}
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              textZoom={100}
+              originWhitelist={originSchemasWhiteList}
+              source={{ uri: loginUri }}
+              onError={this.handleLoadingError}
+              javaScriptEnabled={true}
+              onNavigationStateChange={this.handleNavigationStateChange}
+              onShouldStartLoadWithRequest={this.handleShouldStartLoading}
+            />
+          )}
+          {this.renderMask()}
+        </View>
       </BaseScreenComponent>
     );
   }
