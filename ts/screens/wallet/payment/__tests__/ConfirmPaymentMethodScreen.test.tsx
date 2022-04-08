@@ -29,12 +29,27 @@ import {
   isPaypalEnabledSelector
 } from "../../../../store/reducers/backendStatus";
 import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
+import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
+import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
 
 // Be sure that navigation is unmocked
 jest.unmock("react-navigation");
+
+// Mock the PayWebViewModal
+jest.mock("../../../../components/wallet/PayWebViewModal", () => {
+  const actualModule = jest.requireActual(
+    "../../../../components/wallet/PayWebViewModal"
+  );
+
+  return {
+    __esModule: true,
+    ...actualModule,
+    PayWebViewModal: jest.fn(() => null)
+  };
+});
 
 // Mock the internal payment method
 jest.mock("../../../../store/reducers/wallet/wallets", () => {
@@ -331,5 +346,59 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     expect(
       rendered.getAllByText(I18n.t("wallet.ConfirmPayment.edit"))
     ).toHaveLength(2);
+  });
+
+  it("should send all the correct informations to the `PayWebViewModal` component", () => {
+    const PayWebViewModalMock = PayWebViewModal as unknown as jest.Mock;
+
+    const idPayment = "id";
+    const language = "it";
+    const idWallet = 123;
+    const sessionToken = "token";
+
+    const customInitState = reproduceSequence(
+      {
+        wallet: {
+          payment: {
+            pmSessionToken: remoteReady(sessionToken),
+            paymentStartPayload: {
+              idWallet,
+              idPayment,
+              language
+            }
+          }
+        }
+      } as GlobalState,
+      appReducer,
+      AuthSeq
+    );
+
+    const customStore: Store<GlobalState> = createStore(
+      appReducer,
+      customInitState as any
+    );
+
+    renderScreenFakeNavRedux<
+      GlobalState,
+      ConfirmPaymentMethodScreenNavigationParams
+    >(
+      ConfirmPaymentMethodScreen,
+      ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
+      params,
+      customStore
+    );
+
+    const expectedFormDataProp: Record<string, string | number> = {
+      idPayment,
+      idWallet,
+      language,
+      sessionToken
+    };
+
+    expect(PayWebViewModalMock).toBeCalled();
+
+    const receivedProps = PayWebViewModalMock.mock.calls[0][0];
+
+    expect(receivedProps.formData).toMatchObject(expectedFormDataProp);
   });
 });
