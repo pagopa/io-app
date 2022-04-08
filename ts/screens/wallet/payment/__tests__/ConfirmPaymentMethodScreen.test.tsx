@@ -10,6 +10,7 @@ import {
   myPsp,
   AuthSeq
 } from "../../../../utils/testFaker";
+import { getLookUpIdPO, newLookUpId } from "../../../../utils/pmLookUpId";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { appReducer } from "../../../../store/reducers/";
 import ROUTES from "../../../../navigation/routes";
@@ -351,6 +352,8 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
   it("should send all the correct informations to the `PayWebViewModal` component", () => {
     const PayWebViewModalMock = PayWebViewModal as unknown as jest.Mock;
 
+    newLookUpId();
+
     const idPayment = "id";
     const language = "it";
     const idWallet = 123;
@@ -392,7 +395,8 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       idPayment,
       idWallet,
       language,
-      sessionToken
+      sessionToken,
+      ...getLookUpIdPO()
     };
 
     expect(PayWebViewModalMock).toBeCalled();
