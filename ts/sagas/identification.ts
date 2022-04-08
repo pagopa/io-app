@@ -17,7 +17,8 @@ import {
 } from "../store/actions/identification";
 import {
   navigateToMessageRouterScreen,
-  navigateToOnboardingPinScreenAction
+  navigateToOnboardingPinScreenAction,
+  navigateToPaginatedMessageRouterAction
 } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { updatePin } from "../store/actions/pinset";
@@ -37,6 +38,9 @@ import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
+import { usePaginatedMessages } from "../config";
+import NavigationService from "../navigation/NavigationService";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -173,7 +177,16 @@ function* startAndHandleIdentificationResult(
       yield* put(clearNotificationPendingMessage());
 
       // Navigate to message router screen
-      yield* call(navigateToMessageRouterScreen, { messageId });
+      if (usePaginatedMessages) {
+        NavigationService.dispatchNavigationAction(
+          navigateToPaginatedMessageRouterAction({
+            messageId: messageId as UIMessageId,
+            isArchived: false
+          })
+        );
+      } else {
+        yield* call(navigateToMessageRouterScreen, { messageId });
+      }
     }
   }
 }
