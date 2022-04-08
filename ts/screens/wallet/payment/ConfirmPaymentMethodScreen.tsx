@@ -40,7 +40,10 @@ import {
   PaymentWebViewEndReason
 } from "../../../store/actions/wallet/payment";
 import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/wallet/transactions";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../store/reducers/backendStatus";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../store/reducers/types";
 import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
@@ -85,6 +88,7 @@ import CardIcon from "../../../../img/wallet/card.svg";
 import { SelectionBox } from "../../../components/wallet/SelectionBox";
 import { getTranslatedShortNumericMonthYear } from "../../../utils/dates";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
+import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -137,17 +141,23 @@ const webViewOutcomeParamName = "outcome";
 type ComputedPaymentMethodInfo = {
   logo: JSX.Element;
   subject: string;
-  expiration: string;
   caption: string;
   accessibilityLabel: string;
 };
 
 const getPaymentMethodInfo = (
   paymentMethod: PaymentMethod | undefined,
-  isPaypalEnabled: boolean
+  options: { isPaypalEnabled: boolean; isBPayPaymentEnabled: boolean }
 ): Option<ComputedPaymentMethodInfo> => {
   switch (paymentMethod?.kind) {
     case "CreditCard":
+      const holder = paymentMethod.info.holder ?? "";
+      const expiration =
+        getTranslatedShortNumericMonthYear(
+          paymentMethod.info.expireYear,
+          paymentMethod.info.expireMonth
+        ) ?? "";
+
       return some({
         logo: (
           <BrandImage
@@ -155,35 +165,35 @@ const getPaymentMethodInfo = (
             scale={0.7}
           />
         ),
-        subject: paymentMethod.info.holder ?? "",
-        expiration:
-          getTranslatedShortNumericMonthYear(
-            paymentMethod.info.expireYear,
-            paymentMethod.info.expireMonth
-          ) ?? "",
+        subject: `${holder}${expiration ? " · " + expiration : ""}`,
+        expiration,
         caption: paymentMethod.caption ?? "",
-        accessibilityLabel: I18n.t("wallet.accessibility.folded.creditCard", {
-          brand: paymentMethod.info.brand,
-          blurredNumber: paymentMethod.info.blurredNumber
-        })
+        accessibilityLabel: `${I18n.t(
+          "wallet.accessibility.folded.creditCard",
+          {
+            brand: paymentMethod.info.brand,
+            blurredNumber: paymentMethod.info.blurredNumber
+          }
+        )}, ${holder}, ${expiration}`
       });
 
     case "PayPal":
-      if (isPaypalEnabled) {
-        const paypalEmail = getPaypalAccountEmail(paymentMethod.info);
-
-        return some({
-          logo: <PaypalLogo width={24} height={24} />,
-          subject: paypalEmail,
-          expiration: "",
-          caption: I18n.t("wallet.onboarding.paypal.name"),
-          accessibilityLabel: `${I18n.t(
-            "wallet.onboarding.paypal.name"
-          )}, ${paypalEmail}`
-        });
-      } else {
-        return none;
-      }
+      const paypalEmail = getPaypalAccountEmail(paymentMethod.info);
+      return some({
+        logo: <PaypalLogo width={24} height={24} />,
+        subject: paypalEmail,
+        caption: I18n.t("wallet.onboarding.paypal.name"),
+        accessibilityLabel: `${I18n.t(
+          "wallet.onboarding.paypal.name"
+        )}, ${paypalEmail}`
+      }).filter(() => options.isPaypalEnabled);
+    case "BPay":
+      return some({
+        logo: <BrandImage image={bancomatPayLogo} scale={0.7} />,
+        subject: paymentMethod?.caption,
+        caption: paymentMethod.info.numberObfuscated ?? "",
+        accessibilityLabel: `${I18n.t("wallet.methods.bancomatPay.name")}`
+      }).filter(() => options.isBPayPaymentEnabled);
 
     default:
       return none;
@@ -302,12 +312,11 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   // Retrieve all the informations needed by the
   // user interface based on the payment method
   // selected by the user.
-  const paymentMethodInfo = getPaymentMethodInfo(
-    paymentMethod,
-    props.isPaypalEnabled
-  ).getOrElse({
+  const paymentMethodInfo = getPaymentMethodInfo(paymentMethod, {
+    isPaypalEnabled: props.isPaypalEnabled,
+    isBPayPaymentEnabled: props.isBPayPaymentEnabled
+  }).getOrElse({
     subject: "",
-    expiration: "",
     caption: "",
     logo: <View />,
     accessibilityLabel: ""
@@ -412,12 +421,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <SelectionBox
               logo={paymentMethodInfo.logo}
               mainText={paymentMethodInfo.caption}
-              subText={
-                paymentMethodInfo.subject +
-                (!isPayingWithPaypal
-                  ? ` · ${paymentMethodInfo.expiration}`
-                  : "")
-              }
+              subText={paymentMethodInfo.subject}
               ctaText={I18n.t("wallet.ConfirmPayment.edit")}
               onPress={props.pickPaymentMethod}
               accessibilityLabel={`${
@@ -454,7 +458,11 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
                   cost: formattedFees,
                   psp: pspName
                 }
-              )}, ${I18n.t("wallet.ConfirmPayment.accessibility.edit")}`}
+              )}${
+                canChangePsp
+                  ? ", " + I18n.t("wallet.ConfirmPayment.accessibility.edit")
+                  : ""
+              }`}
             />
 
             {isPayingWithPaypal && privacyUrl && (
@@ -534,6 +542,7 @@ const mapStateToProps = (state: GlobalState) => {
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     outcomeCodes: outcomeCodesSelector(state),
     isPaypalEnabled: isPaypalEnabledSelector(state),
+    isBPayPaymentEnabled: bancomatPayConfigSelector(state).payment,
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
     retrievingSessionTokenError: isError(pmSessionToken)

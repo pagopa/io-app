@@ -788,7 +788,6 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configura IO
-    contentTitle: Informativa Privacy e Termini e Condizioni d’uso
     accept: Accetta
     error: Errore nel caricamento
     alert:
@@ -1259,7 +1258,7 @@ wallet:
     cancelPaymentSuccess: Il pagamento di questo avviso è stato annullato, potrai pagarlo nuovamente tra qualche minuto
     accessibility:
       edit: "tocca per modificare"
-      transactionCosts: "{{cost}}, transazione gestita da {{psp}}"
+      transactionCosts: "{{cost}}, transazione {{psp}}"
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
@@ -1707,6 +1706,13 @@ messages:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
       succeeded: "Fatto!"
       failed: "Non siamo riusciti ad aggiornare la sezione messaggi."
+  operations:
+    archive:
+      success: "Archiviazione riuscita!"
+      failure: "L’archiviazione non è andata a buon fine"
+    restore:
+      success: "Ripristino effettuato."
+      failure: "Il ripristino non è andato a buon fine"
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md

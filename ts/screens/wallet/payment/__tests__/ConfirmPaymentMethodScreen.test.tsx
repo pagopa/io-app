@@ -16,13 +16,17 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../utils/tests";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import {
+  BPayPaymentMethod,
   CreditCardPaymentMethod,
   PayPalPaymentMethod
 } from "../../../../types/pagopa";
 import I18n from "../../../../i18n";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
-import { isPaypalEnabledSelector } from "../../../../store/reducers/backendStatus";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
 import { PspData } from "../../../../../definitions/pagopa/PspData";
 
@@ -67,7 +71,8 @@ jest.mock("../../../../store/reducers/backendStatus", () => {
   return {
     __esModule: true,
     ...actualModule,
-    isPaypalEnabledSelector: jest.fn()
+    isPaypalEnabledSelector: jest.fn(),
+    bancomatPayConfigSelector: jest.fn()
   };
 });
 
@@ -119,6 +124,14 @@ const payPalPaymentMethod = {
   caption: "caption"
 } as DeepPartial<PayPalPaymentMethod>;
 
+const bpayPaymentMethod = {
+  kind: "BPay",
+  caption: "BPay caption",
+  info: {
+    numberObfuscated: "***123"
+  }
+} as DeepPartial<BPayPaymentMethod>;
+
 describe("Integration Tests With Actual Store and Simplified Navigation", () => {
   afterAll(() => jest.resetAllMocks());
   beforeEach(() => jest.useFakeTimers());
@@ -141,6 +154,12 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     (paymentMethodByIdSelector as unknown as jest.Mock).mockReturnValue(
       creditCardPaymentMethod
     );
+
+    (bancomatPayConfigSelector as unknown as jest.Mock).mockReturnValue({
+      display: false,
+      onboarding: false,
+      payment: true
+    });
 
     const rendered = renderScreenFakeNavRedux<
       GlobalState,
@@ -199,6 +218,12 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     (paymentMethodByIdSelector as unknown as jest.Mock).mockReturnValue(
       payPalPaymentMethod
     );
+
+    (bancomatPayConfigSelector as unknown as jest.Mock).mockReturnValue({
+      display: false,
+      onboarding: false,
+      payment: true
+    });
 
     (isPaypalEnabledSelector as unknown as jest.Mock).mockReturnValue(true);
 
@@ -261,5 +286,71 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     expect(
       rendered.getAllByText(I18n.t("wallet.ConfirmPayment.edit"))
     ).toHaveLength(1);
+  });
+
+  it("should display all the information correctly for a `BPay` payment method", () => {
+    (paymentMethodByIdSelector as unknown as jest.Mock).mockReturnValue(
+      bpayPaymentMethod
+    );
+
+    (bancomatPayConfigSelector as unknown as jest.Mock).mockReturnValue({
+      display: false,
+      onboarding: false,
+      payment: true
+    });
+
+    const bpayParams = {
+      ...params,
+      wallet: {
+        ...params.wallet,
+        paymentMethod: bpayPaymentMethod as BPayPaymentMethod
+      }
+    };
+
+    const rendered = renderScreenFakeNavRedux<
+      GlobalState,
+      ConfirmPaymentMethodScreenNavigationParams
+    >(
+      ConfirmPaymentMethodScreen,
+      ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
+      bpayParams,
+      myStore
+    );
+
+    // Should display the payment reason
+    rendered.getByText(bpayParams.verifica.causaleVersamento);
+
+    // Should display the payment amount
+    rendered.getByText(
+      formatNumberCentsToAmount(
+        bpayParams.verifica.importoSingoloVersamento,
+        true
+      )
+    );
+
+    // Should display the payment method
+    rendered.getByText(bpayPaymentMethod.caption!);
+
+    rendered.getByText(bpayPaymentMethod.info!.numberObfuscated!);
+
+    // Should render the PSP with the fees
+    rendered.getByText(
+      formatNumberCentsToAmount(params.wallet.psp?.fixedCost.amount ?? -1, true)
+    );
+
+    rendered.getByText(
+      `${I18n.t("wallet.ConfirmPayment.providedBy")} ${
+        params.wallet.psp?.businessName
+      }`
+    );
+
+    /**
+     * It should retrieve two `Edit` CTAs
+     * one for the payment method.
+     * one for the PSP
+     */
+    expect(
+      rendered.getAllByText(I18n.t("wallet.ConfirmPayment.edit"))
+    ).toHaveLength(2);
   });
 });
