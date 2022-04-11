@@ -65,6 +65,7 @@ import { CreditCard, Wallet } from "../../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getLookUpIdPO } from "../../utils/pmLookUpId";
 import { showToast } from "../../utils/showToast";
+import { runDeleteActivePaymentSaga } from "../../store/actions/wallet/payment";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type ConfirmCardDetailsScreenNavigationParams = Readonly<{
@@ -307,6 +308,9 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             formData={formData}
             finishPathName={webViewExitPathName}
             onFinish={(maybeCode, navigationUrls) => {
+              if (isInPayment) {
+                this.props.deletePayment();
+              }
               this.props.dispatchCreditCardPaymentNavigationUrls(
                 navigationUrls
               );
@@ -469,7 +473,8 @@ const mapDispatchToProps = (
       navigationUrls: ReadonlyArray<string>
     ) => {
       dispatch(creditCardPaymentNavigationUrls(navigationUrls));
-    }
+    },
+    deletePayment: () => dispatch(runDeleteActivePaymentSaga())
   };
 };
 
