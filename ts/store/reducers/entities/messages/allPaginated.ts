@@ -3,6 +3,8 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 
+import * as Either from "fp-ts/lib/Either";
+
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -38,6 +40,12 @@ export type MigrationStatus = Option<
   | ({ _tag: "failed" } & MigrationResult)
 >;
 
+export type MessageOperation = "archive" | "restore";
+export type MessageOperationFailure = {
+  operation: MessageOperation;
+  error: Error;
+};
+
 /**
  * A list of messages and pagination inbox.
  */
@@ -45,6 +53,10 @@ export type AllPaginated = {
   inbox: Collection;
   archive: Collection;
   migration: MigrationStatus;
+  latestMessageOperation?: Either.Either<
+    MessageOperationFailure,
+    MessageOperation
+  >;
 };
 
 const INITIAL_STATE: AllPaginated = {
@@ -418,13 +430,15 @@ const reduceUpsertMessageStatusAttributes = (
             return {
               ...state,
               archive: insert(message, state.archive),
-              inbox: remove(message, state.inbox)
+              inbox: remove(message, state.inbox),
+              latestMessageOperation: undefined
             };
           } else {
             return {
               ...state,
               archive: remove(message, state.archive),
-              inbox: insert(message, state.inbox)
+              inbox: insert(message, state.inbox),
+              latestMessageOperation: undefined
             };
           }
         }
@@ -448,13 +462,21 @@ const reduceUpsertMessageStatusAttributes = (
             return {
               ...state,
               archive: remove(message, state.archive),
-              inbox: insert(message, state.inbox)
+              inbox: insert(message, state.inbox),
+              latestMessageOperation: Either.left({
+                operation: "archive",
+                error: action.payload.error
+              })
             };
           } else {
             return {
               ...state,
               archive: insert(message, state.archive),
-              inbox: remove(message, state.inbox)
+              inbox: remove(message, state.inbox),
+              latestMessageOperation: Either.left({
+                operation: "restore",
+                error: action.payload.error
+              })
             };
           }
         }
@@ -463,6 +485,15 @@ const reduceUpsertMessageStatusAttributes = (
     }
 
     case getType(upsertMessageStatusAttributes.success):
+      const { update } = action.payload;
+      if (update.tag === "bulk" || update.tag === "archiving") {
+        return {
+          ...state,
+          latestMessageOperation: Either.right(
+            update.isArchived ? "archive" : "restore"
+          )
+        };
+      }
       return state;
     default:
       return state;

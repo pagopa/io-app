@@ -5,10 +5,13 @@ import DeviceInfo from "react-native-device-info";
 
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { connect } from "react-redux";
+import { useState } from "react";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { ReduxProps } from "../store/actions/types";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
+import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -37,6 +40,7 @@ const styles = StyleSheet.create({
   },
 
   routeText: {
+    maxWidth: widthPercentageToDP(80),
     padding: 2,
     backgroundColor: "#ffffffaa",
     fontSize: 14,
@@ -47,11 +51,22 @@ const styles = StyleSheet.create({
 
 const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const appVersion = getAppVersion();
+  const [showRootName, setShowRootName] = useState(true);
 
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
-      <Text style={styles.versionText}>{`v: ${appVersion}`}</Text>
-      <Text style={styles.routeText}>{props.screenNameDebug}</Text>
+      <Text
+        style={styles.versionText}
+        onPress={() => setShowRootName(prevState => !prevState)}
+      >{`v: ${appVersion}`}</Text>
+      {showRootName && (
+        <Text
+          style={styles.routeText}
+          onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
+        >
+          {props.screenNameDebug}
+        </Text>
+      )}
     </View>
   );
 };

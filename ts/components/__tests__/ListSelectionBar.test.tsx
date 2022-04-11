@@ -59,4 +59,16 @@ describe("ListSelectionBar component", () => {
       expect(findByText(I18n.t("messages.cta.deselectAll"))).not.toBeNull();
     });
   });
+
+  describe("when onToggleAllSelection is undefined", () => {
+    const props = {
+      ...defaultProps,
+      onToggleAllSelection: undefined
+    };
+
+    it("should not render the 'select all messages' button", () => {
+      const component = render(<ListSelectionBar {...props} />);
+      expect(component.queryByTestId("toggleAllSelection")).toBeNull();
+    });
+  });
 });

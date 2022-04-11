@@ -49,6 +49,7 @@ import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageRouterScreen,
+  navigateToPaginatedMessageRouterAction,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
@@ -70,6 +71,7 @@ import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -123,6 +125,7 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
+import { askPremiumMessagesOptInOut } from "./premiumMessages";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -308,6 +311,10 @@ export function* initializeApplicationSaga(): Generator<
     // check if the user expressed preference about mixpanel, if not ask for it
     yield* call(askMixpanelOptIn);
 
+    // Check if the user has expressed a preference
+    // about the Premium Messages.
+    yield* call(askPremiumMessagesOptInOut);
+
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
@@ -342,6 +349,10 @@ export function* initializeApplicationSaga(): Generator<
 
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
+
+      // Check if the user has expressed a preference
+      // about the Premium Messages.
+      yield* call(askPremiumMessagesOptInOut);
 
       yield* call(askServicesPreferencesModeOptin, false);
 
@@ -526,7 +537,16 @@ export function* initializeApplicationSaga(): Generator<
     // Remove the pending message from the notification state
     yield* put(clearNotificationPendingMessage());
     // Navigate to message router screen
-    yield* call(navigateToMessageRouterScreen, { messageId });
+    if (usePaginatedMessages) {
+      NavigationService.dispatchNavigationAction(
+        navigateToPaginatedMessageRouterAction({
+          messageId: messageId as UIMessageId,
+          isArchived: false
+        })
+      );
+    } else {
+      yield* call(navigateToMessageRouterScreen, { messageId });
+    }
   } else {
     yield* call(navigateToMainNavigatorAction);
   }

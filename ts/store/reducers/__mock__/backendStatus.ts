@@ -233,6 +233,11 @@ export const baseRawBackendStatus: BackendStatus = {
     paypal: {
       enabled: false
     },
+    bancomatPay: {
+      display: true,
+      onboarding: true,
+      payment: false
+    },
     cgn: {
       enabled: true,
       merchants_v2: false
@@ -249,10 +254,14 @@ export const baseRawBackendStatus: BackendStatus = {
       }
     },
     fims: {
-      enabled: false
+      enabled: false,
+      domain: "mockFimsDomain"
     },
     premiumMessages: {
       opt_in_out_enabled: false
+    },
+    cdc: {
+      enabled: false
     }
   }
 };
@@ -278,6 +287,11 @@ export const baseBackendConfig: Config = {
   paypal: {
     enabled: false
   },
+  bancomatPay: {
+    display: true,
+    onboarding: true,
+    payment: false
+  },
   cgn: {
     enabled: true,
     merchants_v2: false
@@ -294,10 +308,14 @@ export const baseBackendConfig: Config = {
     }
   },
   fims: {
-    enabled: false
+    enabled: false,
+    domain: "mockFimsDomain"
   },
   premiumMessages: {
     opt_in_out_enabled: false
+  },
+  cdc: {
+    enabled: false
   }
 };
 
