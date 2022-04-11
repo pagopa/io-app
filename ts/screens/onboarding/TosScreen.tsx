@@ -13,13 +13,12 @@ import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { H1 } from "../../components/core/typography/H1";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
-import { WebViewMessage } from "../../components/ui/Markdown/types";
+import { WebViewMessage } from "../../components/ui/Markdown/typeøs";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
@@ -47,9 +46,6 @@ type State = {
   isLoading: boolean;
   hasError: boolean;
 };
-
-import brokenLinkImage from "../../../img/broken-link.png";
-import { openWebUrl } from "../../utils/url";
 
 const styles = StyleSheet.create({
   alert: {

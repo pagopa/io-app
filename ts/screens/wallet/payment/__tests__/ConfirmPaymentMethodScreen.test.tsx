@@ -1,18 +1,6 @@
 import { createStore, DeepPartial, Store } from "redux";
-import ConfirmPaymentMethodScreen, {
-  ConfirmPaymentMethodScreenNavigationParams
-} from "../ConfirmPaymentMethodScreen";
-import {
-  myRptId,
-  myInitialAmount,
-  myVerifiedData,
-  myWallet,
-  myPsp,
-  AuthSeq
-} from "../../../../utils/testFaker";
-import { getLookUpIdPO, newLookUpId } from "../../../../utils/pmLookUpId";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { appReducer } from "../../../../store/reducers/";
+import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
+import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
 import ROUTES from "../../../../navigation/routes";
 import { appReducer } from "../../../../store/reducers/";
 import {
@@ -28,8 +16,19 @@ import {
   PayPalPaymentMethod
 } from "../../../../types/pagopa";
 import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
-import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
-import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
+import { getLookUpIdPO, newLookUpId } from "../../../../utils/pmLookUpId";
+import {
+  AuthSeq,
+  myInitialAmount,
+  myPsp,
+  myRptId,
+  myVerifiedData,
+  myWallet
+} from "../../../../utils/testFaker";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ConfirmPaymentMethodScreen, {
+  ConfirmPaymentMethodScreenNavigationParams
+} from "../ConfirmPaymentMethodScreen";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
