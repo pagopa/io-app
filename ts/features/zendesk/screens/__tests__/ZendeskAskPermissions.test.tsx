@@ -12,7 +12,8 @@ import * as device from "../../../../utils/device";
 import * as appVersion from "../../../../utils/appVersion";
 import {
   idpSelected,
-  loginSuccess
+  loginSuccess,
+  sessionInformationLoadSuccess
 } from "../../../../store/actions/authentication";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -23,6 +24,8 @@ import * as zendeskAction from "../../store/actions";
 import * as url from "../../../../utils/url";
 import { zendeskSelectedCategory } from "../../store/actions";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
+import { PublicSession } from "../../../../../definitions/backend/PublicSession";
+import { SpidLevelEnum } from "../../../../../definitions/backend/SpidLevel";
 
 jest.useFakeTimers();
 
@@ -39,6 +42,14 @@ const mockedZendeskCategory = {
     "it-IT": "mock_description",
     "en-EN": "mock_description"
   }
+};
+
+const mockPublicSession: PublicSession = {
+  bpdToken: "bpdToken",
+  myPortalToken: "myPortalToken",
+  spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"],
+  walletToken: "walletToken",
+  zendeskToken: "zendeskToken"
 };
 
 describe("the ZendeskAskPermissions screen", () => {
@@ -215,6 +226,40 @@ describe("the ZendeskAskPermissions screen", () => {
   describe("when the continue button is pressed", () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "mixpanelTrack");
 
+    it("should call setUserIdentity with the zendeskToken if the user is authenticated with session info and the zendeskToken is defined", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      store.dispatch(idpSelected({} as SpidIdp));
+      store.dispatch(
+        loginSuccess({
+          token: "abc1234" as SessionToken,
+          idp: "test"
+        })
+      );
+      store.dispatch(sessionInformationLoadSuccess(mockPublicSession));
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+      const component: RenderAPI = renderComponent(store, false);
+      const continueButton: ReactTestInstance =
+        component.getByTestId("continueButtonId");
+      fireEvent(continueButton, "onPress");
+      expect(MockZendesk.setUserIdentity).toBeCalledWith({
+        token: mockPublicSession.zendeskToken
+      });
+    });
+    it("should call setUserIdentity with the void object as input if the user is not authenticated", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+      const component: RenderAPI = renderComponent(store, false);
+      const continueButton: ReactTestInstance =
+        component.getByTestId("continueButtonId");
+      fireEvent(continueButton, "onPress");
+      expect(MockZendesk.setUserIdentity).toBeCalledWith({});
+    });
     it("should call the openSupportTicket, the mixpanelTrack and the workUnitCompleted functions", () => {
       const store: Store<GlobalState> = createStore(
         appReducer,
