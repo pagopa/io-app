@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -37,12 +36,12 @@ describe("Test EuCovidCertificateRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
+    const render = renderComponent(store);
+
     navigateToEuCovidCertificateDetailScreen({
       authCode,
       messageId: "messageId"
     });
-
-    const render = renderComponent(store);
 
     expect(
       render.component.queryByTestId("EuCovidCertLoadingScreen")
@@ -215,7 +214,7 @@ describe("Test EuCovidCertificateRouterScreen", () => {
 });
 
 const renderComponent = (store: Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  component: renderScreenFakeNavRedux<GlobalState>(
     EuCovidCertificateRouterScreen,
     EUCOVIDCERT_ROUTES.CERTIFICATE,
     { authCode, messageId: "messageId" },

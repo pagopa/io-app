@@ -1,17 +1,16 @@
 import React from "react";
-import configureMockStore from "redux-mock-store";
-import { render } from "@testing-library/react-native";
-import { Provider } from "react-redux";
 import { Store } from "redux";
+import configureMockStore from "redux-mock-store";
 import { NotificationChannelEnum } from "../../../../../definitions/backend/NotificationChannel";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { GlobalState } from "../../../../store/reducers/types";
-import { appReducer } from "../../../../store/reducers";
-import ContactPreferencesToggles from "../index";
-import { ServicePreferenceResponse } from "../../../../types/services/ServicePreferenceResponse";
-import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import I18n from "../../../../i18n";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { ServicePreferenceResponse } from "../../../../types/services/ServicePreferenceResponse";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ContactPreferencesToggles from "../index";
 
 jest.useFakeTimers();
 
@@ -179,12 +178,15 @@ const renderComponent = (
     channels?: ReadonlyArray<NotificationChannelEnum>;
   }
 ) =>
-  render(
-    <Provider store={store}>
+  renderScreenFakeNavRedux(
+    () => (
       <ContactPreferencesToggles
         {...options}
         isSpecialService={false}
         serviceId={"aServiceID" as ServiceId}
       />
-    </Provider>
+    ),
+    "route",
+    {},
+    store
   );

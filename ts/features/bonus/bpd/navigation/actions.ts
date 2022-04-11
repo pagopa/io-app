@@ -1,5 +1,6 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
 import { BpdPeriodWithInfo } from "../store/reducers/details/periods";
 import BPD_ROUTES from "./routes";
 
@@ -9,8 +10,11 @@ import BPD_ROUTES from "./routes";
  */
 export const navigateToBpdOnboardingLoadActivationStatus = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS
+      }
     })
   );
 
@@ -20,8 +24,11 @@ export const navigateToBpdOnboardingLoadActivationStatus = () =>
  */
 export const navigateToBpdOnboardingInformationTos = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.ONBOARDING.INFORMATION_TOS
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: BPD_ROUTES.ONBOARDING.INFORMATION_TOS
+      }
     })
   );
 
@@ -31,8 +38,11 @@ export const navigateToBpdOnboardingInformationTos = () =>
  */
 export const navigateToBpdOnboardingDeclaration = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.ONBOARDING.DECLARATION
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: BPD_ROUTES.ONBOARDING.DECLARATION
+      }
     })
   );
 
@@ -42,8 +52,11 @@ export const navigateToBpdOnboardingDeclaration = () =>
  */
 export const navigateToBpdOnboardingLoadActivate = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD
+      }
     })
   );
 
@@ -53,8 +66,11 @@ export const navigateToBpdOnboardingLoadActivate = () =>
  */
 export const navigateToBpdOnboardingEnrollPaymentMethod = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHODS
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHODS
+      }
     })
   );
 
@@ -64,8 +80,11 @@ export const navigateToBpdOnboardingEnrollPaymentMethod = () =>
  */
 export const navigateToBpdOnboardingNoPaymentMethods = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS
+      }
     })
   );
 
@@ -75,8 +94,11 @@ export const navigateToBpdOnboardingNoPaymentMethods = () =>
  */
 export const navigateToBpdOnboardingErrorPaymentMethods = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS
+      }
     })
   );
 
@@ -88,8 +110,8 @@ export const navigateToBpdOnboardingErrorPaymentMethods = () =>
  */
 export const navigateToBpdIbanInsertion = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.IBAN
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.IBAN
     })
   );
 
@@ -101,9 +123,12 @@ export const navigateToBpdIbanInsertion = () =>
  */
 export const navigateToBpdDetails = (specificPeriod?: BpdPeriodWithInfo) =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.DETAILS,
-      params: { specificPeriod }
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.DETAILS_MAIN,
+      params: {
+        screen: BPD_ROUTES.DETAILS,
+        params: { specificPeriod }
+      }
     })
   );
 
@@ -115,23 +140,35 @@ export const navigateToBpdDetails = (specificPeriod?: BpdPeriodWithInfo) =>
  */
 export const navigateToBpdTransactions = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BPD_ROUTES.TRANSACTIONS
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BPD_ROUTES.DETAILS_MAIN,
+      params: {
+        screen: BPD_ROUTES.TRANSACTIONS
+      }
     })
   );
 
 // OPT-IN
 export const navigateToOptInPaymentMethodsChoiceScreen = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE
+  CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+    screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN,
+    params: {
+      screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE
+    }
   });
 
 export const navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_DELETE_METHOD
+  CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+    screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN,
+    params: {
+      screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_DELETE_METHOD
+    }
   });
 
 export const navigateToOptInPaymentMethodsThankYouKeepMethodsScreen = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_KEEP_METHOD
+  CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+    screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN,
+    params: {
+      screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_KEEP_METHOD
+    }
   });

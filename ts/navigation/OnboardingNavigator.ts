@@ -1,39 +1,20 @@
-import {
-  createStackNavigator,
-  NavigationStackOptions,
-  NavigationStackProp
-} from "react-navigation-stack";
-import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
+import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
-import TosScreen from "../screens/onboarding/TosScreen";
-import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
-import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import { PremiumMessagesOptInOutScreen } from "../screens/onboarding/premiumMessages/PremiumMessagesOptInOutScreen";
-import { premiumMessagesOptInEnabled } from "../config";
+import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
+import TosScreen from "../screens/onboarding/TosScreen";
 import ROUTES from "./routes";
-
-/**
- * The routes used for the premium messages feature.
- */
-const premiumMessagesRoutes: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = premiumMessagesOptInEnabled
-  ? {
-      [ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT]: {
-        screen: PremiumMessagesOptInOutScreen
-      }
-    }
-  : {};
 
 /**
  * The onboarding related stack of screens of the application.
  */
-const navigator = createStackNavigator(
+const navigator = createCompatNavigatorFactory(createStackNavigator)(
   {
     [ROUTES.ONBOARDING_SHARE_DATA]: {
       screen: OnboardingShareDataScreen
@@ -59,7 +40,9 @@ const navigator = createStackNavigator(
     [ROUTES.READ_EMAIL_SCREEN]: {
       screen: EmailReadScreen
     },
-    ...premiumMessagesRoutes
+    [ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT]: {
+      screen: PremiumMessagesOptInOutScreen
+    }
   },
   {
     // Let each screen handle the header and navigation

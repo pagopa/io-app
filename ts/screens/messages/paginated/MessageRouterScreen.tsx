@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { CompatNavigationProp } from "@react-navigation/compat/src/types";
+import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
@@ -18,6 +19,8 @@ import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/
 import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
 import I18n from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
@@ -41,7 +44,6 @@ import {
 } from "../../../store/reducers/entities/messages/types";
 import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../utils/pot";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
@@ -50,8 +52,11 @@ export type MessageRouterScreenPaginatedNavigationParams = {
   isArchived: boolean;
 };
 
-type OwnProps =
-  NavigationStackScreenProps<MessageRouterScreenPaginatedNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MessagesParamsList, "MESSAGE_ROUTER_PAGINATED">
+  >;
+};
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -102,7 +107,7 @@ const MessageRouterScreen = ({
   messageId,
   setMessageReadState
 }: Props): React.ReactElement => {
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
   // (avoid displaying error at the first frame)
   const firstRendering = useRef(true);

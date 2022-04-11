@@ -1,7 +1,7 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import * as React from "react";
 import { useState } from "react";
 import { StatusBar, StatusBarProps } from "react-native";
-import { NavigationEvents } from "react-navigation";
 
 /**
  * FocusAwareStatusBar makes the status bar component aware of

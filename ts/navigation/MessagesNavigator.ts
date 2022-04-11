@@ -1,37 +1,18 @@
-import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import {
-  NavigationStackOptions,
-  NavigationStackProp
-} from "react-navigation-stack/src/types";
-
-import {
-  euCovidCertificateEnabled,
-  mvlEnabled,
-  usePaginatedMessages
-} from "../config";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
+import { euCovidCertificateEnabled, mvlEnabled } from "../config";
 import EuCovidCertNavigator from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import MvlNavigator from "../features/mvl/navigation/navigator";
 import MVL_ROUTES from "../features/mvl/navigation/routes";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
-import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageDetailScreen";
 import PaginatedMessageRouterScreen from "../screens/messages/paginated/MessageRouterScreen";
-import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 
 import ROUTES from "./routes";
 
-const baseMessageRouteConfig: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = {
-  [ROUTES.MESSAGES_HOME]: {
-    screen: usePaginatedMessages
-      ? PaginatedMessagesHomeScreen
-      : MessagesHomeScreen
-  },
+const baseMessageRouteConfig = {
   [ROUTES.MESSAGE_ROUTER]: {
     screen: MessageRouterScreen
   },
@@ -46,43 +27,32 @@ const baseMessageRouteConfig: NavigationRouteConfigMap<
   }
 };
 
-const euCovidCertificateRouteConfig: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = euCovidCertificateEnabled
-  ? {
-      [EUCOVIDCERT_ROUTES.MAIN]: {
-        screen: EuCovidCertNavigator
-      }
-    }
-  : {};
-
-const mvlRouteConfig: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = mvlEnabled
-  ? {
-      [MVL_ROUTES.MAIN]: {
-        screen: MvlNavigator
-      }
-    }
-  : {};
-
-const messageRouteConfig: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = {
-  ...baseMessageRouteConfig,
-  ...euCovidCertificateRouteConfig,
-  ...mvlRouteConfig
+const euCovidCertificateRouteConfig = {
+  [EUCOVIDCERT_ROUTES.MAIN]: {
+    screen: EuCovidCertNavigator
+  }
 };
 
-const MessagesNavigator = createStackNavigator(messageRouteConfig, {
-  // Let each screen handle the header and navigation
-  headerMode: "none",
-  defaultNavigationOptions: {
-    gesturesEnabled: false
+const mvlRouteConfig = {
+  [MVL_ROUTES.MAIN]: {
+    screen: MvlNavigator
   }
-});
+};
+const messageRouteConfig = {
+  ...baseMessageRouteConfig,
+  ...(euCovidCertificateEnabled ? euCovidCertificateRouteConfig : {}),
+  ...(mvlEnabled ? mvlRouteConfig : {})
+};
+
+const MessagesNavigator = createCompatNavigatorFactory(createStackNavigator)(
+  messageRouteConfig,
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
+  }
+);
 
 export default MessagesNavigator;

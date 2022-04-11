@@ -1,21 +1,21 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Dimensions, SafeAreaView, View } from "react-native";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import I18n from "../../../../../i18n";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { Body } from "../../../../../components/core/typography/Body";
-import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
-import PPLogo from "../../../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
+import { Dispatch } from "redux";
 import Oval from "../../../../../../img/wallet/payment-methods/paypal/oval.svg";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
-import { navigateToPaypalSearchPsp } from "../store/actions/navigation";
+import PPLogo from "../../../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
+import { Body } from "../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
+import { navigateToPaypalSearchPsp } from "../store/actions/navigation";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -50,9 +50,9 @@ const PayPalLogo = () => (
 const PayPalStartOnboardingScreen = (
   props: Props
 ): React.ReactElement | null => {
-  const navigationContext = useNavigationContext();
+  const navigationContext = useNavigation();
   const navigateToSearchPsp = () =>
-    navigationContext.navigate(navigateToPaypalSearchPsp());
+    navigationContext.dispatch(navigateToPaypalSearchPsp());
 
   const cancelButtonProps = {
     testID: "cancelButtonId",

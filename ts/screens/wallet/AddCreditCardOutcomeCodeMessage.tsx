@@ -1,5 +1,5 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import React from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import paymentCompleted from "../../../img/pictograms/payment-completed.png";
@@ -7,6 +7,8 @@ import { renderInfoRasterImage } from "../../components/infoScreen/imageRenderin
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import OutcomeCodeMessageComponent from "../../components/wallet/OutcomeCodeMessageComponent";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../store/reducers/wallet/outcomeCode";
@@ -16,8 +18,14 @@ export type AddCreditCardOutcomeCodeMessageNavigationParams = Readonly<{
   selectedWallet: Wallet;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<AddCreditCardOutcomeCodeMessageNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<
+      WalletParamsList,
+      "ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE"
+    >
+  >;
+};
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

@@ -1,6 +1,6 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
@@ -12,6 +12,8 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import { profileEmailSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
@@ -23,8 +25,11 @@ export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<PaymentOutcomeCodeMessageNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_OUTCOMECODE_MESSAGE">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

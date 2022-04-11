@@ -19,7 +19,6 @@ jest.mock("../../../utils/bottomSheet", () => ({
   useIOBottomSheet: () => ({ present: mockPresentFn })
 }));
 
-jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
@@ -155,7 +154,8 @@ describe("getPaymentMethods", () => {
     isPaypalEnabled: true,
     canOnboardBPay: false
   };
-  const methods = testableFunctions.getPaymentMethods!(props, {
+  // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+  const methods = testableFunctions.getPaymentMethods!(props as any, {
     onlyPaymentMethodCanPay: true,
     isPaymentOnGoing: true,
     isPaypalEnabled: true,
@@ -181,7 +181,8 @@ describe("getPaymentMethods", () => {
   });
 
   it("paypal should be always notImplemented when the FF is OFF", () => {
-    const methods = testableFunctions.getPaymentMethods!(props, {
+    // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+    const methods = testableFunctions.getPaymentMethods!(props as any, {
       onlyPaymentMethodCanPay: true,
       isPaymentOnGoing: true,
       isPaypalEnabled: false,
@@ -198,8 +199,9 @@ describe("getPaymentMethods", () => {
     ).toEqual("notImplemented");
   });
 
-  it("bpay should be always notImplemented if Bpay onboaring FF is OFF", () => {
-    const methods = testableFunctions.getPaymentMethods!(props, {
+  it("bpay should be always notImplemented if Bpay onboarding FF is OFF", () => {
+    // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+    const methods = testableFunctions.getPaymentMethods!(props as any, {
       onlyPaymentMethodCanPay: true,
       isPaymentOnGoing: true,
       isPaypalEnabled: true,
@@ -210,8 +212,9 @@ describe("getPaymentMethods", () => {
     ).toEqual("notImplemented");
   });
 
-  it("bpay should be always implemented if Bpay onboaring FF is ON and onlyPaymentMethodCanPay flag is OFF", () => {
-    const methods = testableFunctions.getPaymentMethods!(props, {
+  it("bpay should be always implemented if Bpay onboarding FF is ON and onlyPaymentMethodCanPay flag is OFF", () => {
+    // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+    const methods = testableFunctions.getPaymentMethods!(props as any, {
       onlyPaymentMethodCanPay: false,
       isPaymentOnGoing: true,
       isPaypalEnabled: true,
@@ -222,8 +225,9 @@ describe("getPaymentMethods", () => {
     ).toEqual("implemented");
   });
 
-  it("bpay should be notImplemented implemented if Bpay onboaring FF is ON and onlyPaymentMethodCanPay flag is ON", () => {
-    const methods = testableFunctions.getPaymentMethods!(props, {
+  it("bpay should be notImplemented implemented if Bpay onboarding FF is ON and onlyPaymentMethodCanPay flag is ON", () => {
+    // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+    const methods = testableFunctions.getPaymentMethods!(props as any, {
       onlyPaymentMethodCanPay: true,
       isPaymentOnGoing: true,
       isPaypalEnabled: true,
@@ -249,7 +253,7 @@ const getComponent = () => {
 
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     ToBeTested,
     ROUTES.WALLET_ADD_CARD,
     params,

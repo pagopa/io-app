@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
@@ -41,8 +41,8 @@ describe("Premium messages sagas", () => {
         .next(null)
         .call(
           NavigationService.dispatchNavigationAction,
-          NavigationActions.navigate({
-            routeName: ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT
+          CommonActions.navigate(ROUTES.ONBOARDING, {
+            route: ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT
           })
         )
         .next()

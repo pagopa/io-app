@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
@@ -10,10 +11,12 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import { showToast } from "../../../../../utils/showToast";
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
+import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnCategories,
@@ -21,13 +24,15 @@ import {
 } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { showToast } from "../../../../../utils/showToast";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const isFirstRender = useRef<boolean>(true);
   const dispatch = useIODispatch();
   const potCategories = useIOSelector(cgnCategoriesListSelector);
-  const navigation = useNavigationContext();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
+    >();
 
   const loadCategories = () => {
     dispatch(cgnCategories.request());

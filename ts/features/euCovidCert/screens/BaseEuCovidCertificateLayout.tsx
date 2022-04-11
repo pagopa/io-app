@@ -1,15 +1,15 @@
+import { NavigationEvents } from "@react-navigation/compat";
+import { View } from "native-base";
 import * as React from "react";
 import { useRef } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
-import { View } from "native-base";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import SectionStatusComponent from "../../../components/SectionStatus";
 import { WithTestID } from "../../../types/WithTestID";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import SectionStatusComponent from "../../../components/SectionStatus";
 
 type Props = WithTestID<{
   header?: React.ReactElement;
@@ -28,7 +28,7 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
   const elementRef = useRef(null);
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-      <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
+      <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
         testID={"BaseEuCovidCertificateLayout"}

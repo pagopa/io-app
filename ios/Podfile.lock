@@ -324,6 +324,8 @@ PODS:
     - React
   - react-native-pdf (6.4.0):
     - React-Core
+  - react-native-safe-area-context (3.3.2):
+    - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
   - react-native-slider (3.0.3):
@@ -531,6 +533,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -675,6 +678,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-mixpanel"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   react-native-screen-brightness:
     :path: "../node_modules/react-native-screen-brightness"
   react-native-slider:
@@ -804,6 +809,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
+  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865

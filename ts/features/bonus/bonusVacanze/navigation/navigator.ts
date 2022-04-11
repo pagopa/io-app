@@ -1,4 +1,5 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import ActivateBonusCompletedScreen from "../screens/activation/ActivateBonusCompletedScreen";
 import BonusAlreadyExists from "../screens/activation/BonusAlreadyExists";
 import EligibilityExpired from "../screens/activation/EligibilityExpired";
@@ -16,7 +17,9 @@ import TimeoutEligibilityCheckInfoScreen from "../screens/eligibility/TimeoutEli
 import UnderageScreen from "../screens/eligibility/UnderageScreen";
 import BONUSVACANZE_ROUTES from "./routes";
 
-const BonusVacanzeNavigator = createStackNavigator(
+const BonusVacanzeNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST]: {
       screen: AvailableBonusScreen

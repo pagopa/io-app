@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import { call, put, race, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -50,6 +50,9 @@ export function* handleBpdEnroll() {
   });
 
   if (cancelAction) {
-    yield* put(NavigationActions.back());
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.goBack()
+    );
   }
 }
