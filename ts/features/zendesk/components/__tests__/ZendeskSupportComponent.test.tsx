@@ -18,19 +18,17 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ZENDESK_ROUTES from "../../navigation/routes";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ROUTES from "../../../../navigation/routes";
+import ZendeskSupportComponent from "../ZendeskSupportComponent";
+import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber
 } from "../../store/actions";
 import ZendeskSupportComponent from "../ZendeskSupportComponent";
 
-const mockPublicSession: PublicSession = {
-  bpdToken: "bpdToken",
-  myPortalToken: "myPortalToken",
-  spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"],
-  walletToken: "walletToken",
-  zendeskToken: "zendeskToken"
-};
 const mockZendeskConfig: Zendesk = {
   panicMode: false
 };
@@ -65,25 +63,6 @@ describe("the ZendeskSupportComponent", () => {
     const component = renderComponent(store, false);
     store.dispatch(zendeskRequestTicketNumber.success(1));
     expect(component.getByTestId("showTicketsButton")).toBeDefined();
-  });
-  describe("when the user is authenticated with session info", () => {
-    const store = createStore(appReducer, globalState as any);
-    store.dispatch(idpSelected({} as SpidIdp));
-    store.dispatch(
-      loginSuccess({
-        token: "abc1234" as SessionToken,
-        idp: "test"
-      })
-    );
-    describe("and the zendeskToken is defined", () => {
-      store.dispatch(sessionInformationLoadSuccess(mockPublicSession));
-      it("should call setUserIdentity with the zendeskToken", () => {
-        renderComponent(store, false);
-        expect(MockZendesk.setUserIdentity).toBeCalledWith({
-          token: mockPublicSession.zendeskToken
-        });
-      });
-    });
   });
 
   describe("when the user press the zendesk open ticket button", () => {

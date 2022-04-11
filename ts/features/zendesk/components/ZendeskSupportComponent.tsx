@@ -21,16 +21,15 @@ import { useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import { profileSelector } from "../../../store/reducers/profile";
 import {
-  AnonymousIdentity,
   initSupportAssistance,
   isPanicModeActive,
-  JwtIdentity,
-  setUserIdentity,
   showSupportTickets,
   ZendeskAppConfig,
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
+import { profileSelector } from "../../../store/reducers/profile";
+import { useIOSelector } from "../../../store/hooks";
 import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   zendeskRequestTicketNumber,
@@ -76,33 +75,11 @@ const ZendeskSupportComponent = (props: Props) => {
   }, [zendeskToken]);
 
   useEffect(() => {
-    const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
-
     initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
     // The AnonymousConfig is used both for the users authenticated with name and email and for the anonymous user.
-    // Since the zendesk session token and the profile are provided by two different endpoint
-    // we sequentially check both:
-    // - if the zendeskToken is present the user will be authenticated via jwt
-    // - if the zendeskToken is not present but there is the profile,
-    //   the user will be authenticated, in anonymous mode, with the profile data (if available)
-    // - as last nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = fromNullable(zendeskToken)
-      .map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      }))
-      .alt(
-        maybeProfile.map(
-          (mP: InitializedProfile): AnonymousIdentity => ({
-            name: mP.name,
-            email: mP.email
-          })
-        )
-      )
-      .getOrElse({});
 
-    setUserIdentity(zendeskIdentity);
     dispatch(zendeskRequestTicketNumber.request());
   }, [dispatch, zendeskConfig, zendeskToken, profile]);
 
