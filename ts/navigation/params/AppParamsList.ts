@@ -21,6 +21,8 @@ import { OnboardingParamsList } from "./OnboardingParamsList";
 import { ProfileParamsList } from "./ProfileParamsList";
 import { ServicesParamsList } from "./ServicesParamsList";
 import { WalletParamsList } from "./WalletParamsList";
+import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
+import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
@@ -42,6 +44,7 @@ export type AppParamsList = {
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
   [UADONATION_ROUTES.WEBVIEW]: undefined;
+  [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
 };
 
 /**
