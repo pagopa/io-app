@@ -36,9 +36,6 @@ import I18n from "../../../../i18n";
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
 
-// Be sure that navigation is unmocked
-jest.unmock("react-navigation");
-
 // Mock the PayWebViewModal
 jest.mock("../../../../components/wallet/PayWebViewModal", () => {
   const actualModule = jest.requireActual(
