@@ -21,6 +21,8 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isTestEnv } from "../utils/environment";
+import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
+import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import authenticationNavigator from "./AuthenticationNavigator";
 import messagesNavigator from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -88,6 +90,10 @@ export const AppStackNavigator = () => (
     <Stack.Screen
       name={UADONATION_ROUTES.WEBVIEW}
       component={UAWebViewScreen}
+    />
+    <Stack.Screen
+      name={CDC_ROUTES.BONUS_REQUEST_MAIN}
+      component={CdcStackNavigator}
     />
   </Stack.Navigator>
 );
