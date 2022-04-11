@@ -22,13 +22,16 @@ describe("Messages Screen", () => {
       // exists (but is not visible)
 
       await waitFor(
-        element(by.id(`MessageListItem_00000000000000000000000021`))
+        element(by.id(`MessageListItem_00000000000000000000000020`))
       )
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
 
+      // check for infinite scrolling
+      await element(by.id(`MessageList_inbox`)).scrollTo("bottom");
+
       await waitFor(
-        element(by.id(`MessageListItem_00000000000000000000000001`))
+        element(by.id(`MessageListItem_00000000000000000000000008`))
       )
         .toExist()
         .withTimeout(e2eWaitRenderTimeout);

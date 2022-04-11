@@ -48,11 +48,10 @@ type State = {
   hasError: boolean;
 };
 
+import brokenLinkImage from "../../../img/broken-link.png";
+import { openWebUrl } from "../../utils/url";
+
 const styles = StyleSheet.create({
-  h1: {
-    paddingVertical: customVariables.spacingBase,
-    paddingHorizontal: customVariables.contentPadding
-  },
   alert: {
     backgroundColor: customVariables.toastColor,
     borderRadius: 4,
@@ -188,9 +187,6 @@ class TosScreen extends React.PureComponent<Props, State> {
         }
       >
         <SafeAreaView style={styles.webViewContainer}>
-          {!onboardingCompleted && (
-            <H1 style={styles.h1}>{I18n.t("onboarding.tos.contentTitle")}</H1>
-          )}
           {!this.props.hasAcceptedCurrentTos && (
             <View style={styles.alert}>
               <Text>
