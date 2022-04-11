@@ -18,7 +18,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
-import { WebViewMessage } from "../../components/ui/Markdown/typeøs";
+import { WebViewMessage } from "../../components/ui/Markdown/types";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";

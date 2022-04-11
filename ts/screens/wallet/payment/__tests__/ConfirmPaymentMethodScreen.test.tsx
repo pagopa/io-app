@@ -17,6 +17,7 @@ import {
 } from "../../../../types/pagopa";
 import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
 import { getLookUpIdPO, newLookUpId } from "../../../../utils/pmLookUpId";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import {
   AuthSeq,
   myInitialAmount,
@@ -25,10 +26,12 @@ import {
   myVerifiedData,
   myWallet
 } from "../../../../utils/testFaker";
+import { reproduceSequence } from "../../../../utils/tests";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ConfirmPaymentMethodScreen, {
   ConfirmPaymentMethodScreenNavigationParams
 } from "../ConfirmPaymentMethodScreen";
+import I18n from "../../../../i18n";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
@@ -369,10 +372,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       customInitState as any
     );
 
-    renderScreenFakeNavRedux<
-      GlobalState,
-      ConfirmPaymentMethodScreenNavigationParams
-    >(
+    renderScreenFakeNavRedux<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       params,

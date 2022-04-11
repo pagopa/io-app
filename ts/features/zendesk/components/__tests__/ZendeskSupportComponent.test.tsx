@@ -1,28 +1,14 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
-import { PublicSession } from "../../../../../definitions/backend/PublicSession";
-import { SpidLevelEnum } from "../../../../../definitions/backend/SpidLevel";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
-import {
-  idpSelected,
-  loginSuccess,
-  sessionInformationLoadSuccess
-} from "../../../../store/actions/authentication";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { SessionToken } from "../../../../types/SessionToken";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ZENDESK_ROUTES from "../../navigation/routes";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
-import ZendeskSupportComponent from "../ZendeskSupportComponent";
-import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber
