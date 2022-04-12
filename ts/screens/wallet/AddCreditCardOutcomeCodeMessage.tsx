@@ -9,13 +9,8 @@ import OutcomeCodeMessageComponent from "../../components/wallet/OutcomeCodeMess
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
-import {
-  lastPaymentOutcomeCodeSelector,
-  outcomeCodesSelector
-} from "../../store/reducers/wallet/outcomeCode";
+import { lastPaymentOutcomeCodeSelector } from "../../store/reducers/wallet/outcomeCode";
 import { Wallet } from "../../types/pagopa";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { runDeleteActivePaymentSaga } from "../../store/actions/wallet/payment";
 
 export type AddCreditCardOutcomeCodeMessageNavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -42,34 +37,23 @@ const successComponent = () => (
  *
  */
 const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
-  /**
-   * if the card insertion fails, run the procedure to delete the payment activation
-   * even if there is no one running (that check is done by the relative saga)
-   */
-  useOnFirstRender(() => {
-    if (props.paymentOutcome?.status !== "success") {
-      props.deletePayment();
-    }
-  });
+  const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
 
-  return props.paymentOutcome ? (
+  return outcomeCode ? (
     <OutcomeCodeMessageComponent
-      outcomeCode={props.paymentOutcome}
+      outcomeCode={outcomeCode}
       onClose={props.navigateToWalletHome}
       successComponent={successComponent}
     />
   ) : null;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => navigateToWalletHome(),
-  deletePayment: () => dispatch(runDeleteActivePaymentSaga())
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateToWalletHome: () => navigateToWalletHome()
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  paymentOutcome:
-    lastPaymentOutcomeCodeSelector(state).outcomeCode.toUndefined(),
-  outcomeCodes: outcomeCodesSelector(state)
+  outcomeCode: lastPaymentOutcomeCodeSelector(state)
 });
 
 export default connect(

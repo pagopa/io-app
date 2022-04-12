@@ -98,7 +98,10 @@ import ROUTES from "../navigation/routes";
 import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
-import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
+import {
+  addCreditCardOutcomeCode,
+  paymentOutcomeCode
+} from "../store/actions/wallet/outcomeCode";
 import {
   abortRunningPayment,
   backToEntrypointPayment,
@@ -543,6 +546,21 @@ function* deleteActivePaymentSaga() {
   }
 }
 
+function* shouldDeleteActivePaymentSaga() {
+  // it can be related to a payment or a payment check done during the credit card onboarding
+  const lastPaymentOutCome = yield* select(lastPaymentOutcomeCodeSelector);
+  if (
+    lastPaymentOutCome.outcomeCode.isSome() &&
+    lastPaymentOutCome.outcomeCode.value.status !== "success"
+  ) {
+    /**
+     * run the procedure to delete the payment activation
+     * even if there is no one running (that check is done by the relative saga)
+     */
+    yield* put(runDeleteActivePaymentSaga());
+  }
+}
+
 /**
  * this saga delete a payment just before the user pays
  * it should be invoked from the payment UX
@@ -635,6 +653,11 @@ export function* watchWalletSaga(
   yield* takeLatest(
     getType(runDeleteActivePaymentSaga),
     deleteActivePaymentSaga
+  );
+
+  yield* takeLatest(
+    [paymentOutcomeCode, addCreditCardOutcomeCode],
+    shouldDeleteActivePaymentSaga
   );
 
   //
