@@ -23,6 +23,7 @@ import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { BarcodeCamera } from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -303,66 +304,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.colorWhite}
           />
           <ScrollView bounces={false}>
-            {this.state.isFocused && this.state.permissionRationaleDisplayed && (
-              <QRCodeScanner
-                onRead={(reading: { data: string }) =>
-                  this.onQrCodeData(reading.data)
-                }
-                ref={this.qrCodeScanner}
-                containerStyle={styles.cameraContainer as any}
-                showMarker={true}
-                cameraStyle={styles.camera as any}
-                customMarker={
-                  <CameraMarker
-                    screenWidth={screenWidth}
-                    state={this.state.scanningState}
-                  />
-                }
-                bottomContent={
-                  <View>
-                    <ButtonDefaultOpacity
-                      onPress={this.onShowImagePicker}
-                      style={styles.button}
-                      bordered={true}
-                    >
-                      <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
-                    </ButtonDefaultOpacity>
-                    <View style={styles.content}>
-                      <View spacer={true} />
-                      <Text style={[styles.padded, styles.bottomText]}>
-                        {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                      </Text>
-                      <View spacer={true} extralarge={true} />
-                    </View>
-                  </View>
-                }
-                // "captureAudio" enable/disable microphone permission
-                cameraProps={{ captureAudio: false }}
-                // "checkAndroid6Permissions" property enables permission checking for
-                // Android versions greater than 6.0 (23+).
-                checkAndroid6Permissions={true}
-                // "notAuthorizedView" is by default available on iOS systems ONLY.
-                // In order to make Android systems act the same as iOSs you MUST
-                // enable "checkAndroid6Permissions" property as well.
-                // On devices before SDK version 23, the permissions are automatically
-                // granted if they appear in the manifest, so message customization would
-                // be impossible.
-                notAuthorizedView={
-                  <View style={styles.notAuthorizedContainer}>
-                    <Text style={styles.notAuthorizedText}>
-                      {I18n.t("wallet.QRtoPay.enroll_cta")}
-                    </Text>
-
-                    <ButtonDefaultOpacity
-                      onPress={openAppSettings}
-                      style={styles.notAuthorizedBtn}
-                    >
-                      <Text>{I18n.t("global.buttons.settings")}</Text>
-                    </ButtonDefaultOpacity>
-                  </View>
-                }
-              />
-            )}
+            <BarcodeCamera />
           </ScrollView>
           <FooterWithButtons
             type="TwoButtonsInlineThird"

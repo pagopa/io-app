@@ -147,6 +147,7 @@
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^7.0.0",
     "react-native-view-shot": "3.1.2",
+    "react-native-vision-camera": "^2.13.2",
     "react-native-webview": "^11.13.0",
     "react-navigation": "^4.4.4",
     "react-navigation-drawer": "^1.4.0",

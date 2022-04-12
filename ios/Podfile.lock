@@ -442,6 +442,10 @@ PODS:
     - ZendeskChatSDK (~> 2.11.1)
     - ZendeskMessagingAPISDK (~> 3.8.2)
     - ZendeskSupportSDK (~> 5.3.0)
+  - VisionCamera (2.13.2):
+    - React
+    - React-callinvoker
+    - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -568,6 +572,7 @@ DEPENDENCIES:
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNZendeskChat (from `../node_modules/io-react-native-zendesk`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -749,6 +754,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-vector-icons"
   RNZendeskChat:
     :path: "../node_modules/io-react-native-zendesk"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -841,6 +848,7 @@ SPEC CHECKSUMS:
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   RNZendeskChat: d22f866bc9cf8b426d5fa9d773a4a280889cc6c8
+  VisionCamera: 58b4b21d128b474f14b11e4fe11691696e6059bf
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZendeskAnswerBotProvidersSDK: 8ef75d4484f09c324cd93ce2725364d73dbabcf5
@@ -855,6 +863,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: 2bdf8544f7cd0fd4c002546f5704b813845beb2a
   ZendeskSupportSDK: 3a8e508ab1d9dd22dc038df6c694466414e037ba
 
-PODFILE CHECKSUM: cfe9cf6887cc0c4a2fe426f861721f73b4fcf161
+PODFILE CHECKSUM: 54d3b578042f3349aeeab78cd456ba1424f4b858
 
 COCOAPODS: 1.11.3
