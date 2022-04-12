@@ -107,7 +107,6 @@ import {
   backToEntrypointPayment,
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
@@ -826,7 +825,7 @@ export function* watchWalletSaga(
   );
 
   yield* takeLatest(
-    [getType(paymentDeletePayment.request), getType(paymentCompletedFailure)],
+    getType(paymentDeletePayment.request),
     paymentDeletePaymentRequestHandler,
     paymentManagerClient,
     pmSessionManager
