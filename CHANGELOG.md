@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0-rc.4](https://github.com/pagopa/io-app/compare/2.7.0-rc.3...2.7.0-rc.4) (2022-04-08)
+
+
+### Bug Fixes
+
+* [[IA-769](https://pagopa.atlassian.net/browse/IA-769)] Rptid custom field not filled or filled with wrong value ([#3864](https://github.com/pagopa/io-app/issues/3864)) ([431c7fe](https://github.com/pagopa/io-app/commit/431c7fe77d6f4c0f0ee132066a40b5b9258177a0))
+* [[IABT-1364](https://pagopa.atlassian.net/browse/IABT-1364)] Add accessibility fixes to the checkout page ([#3869](https://github.com/pagopa/io-app/issues/3869)) ([11bc32e](https://github.com/pagopa/io-app/commit/11bc32ea393bf5521bc508a61d3fc91e1e6ba124))
+* [[IABT-1368](https://pagopa.atlassian.net/browse/IABT-1368)] Wrong message router navigation from push notification ([#3897](https://github.com/pagopa/io-app/issues/3897)) ([fe1382f](https://github.com/pagopa/io-app/commit/fe1382fa846815d377f0a4df5184307e15cead98))
+
+
+### Chores
+
+* **Federated Identity Management System:** [[IAFIMS-10](https://pagopa.atlassian.net/browse/IAFIMS-10)] Upgrade io-services-metadata specifications [#3895](https://github.com/pagopa/io-app/issues/3895) ([58d2b8b](https://github.com/pagopa/io-app/commit/58d2b8b605c0592da104c60bdc311bcf53effddb))
+* [[IA-763](https://pagopa.atlassian.net/browse/IA-763)] Premium Messages Opt-In/Out onboarding stub screen ([#3877](https://github.com/pagopa/io-app/issues/3877)) ([4f5f126](https://github.com/pagopa/io-app/commit/4f5f1268a24f71e400a29a41d34f6d778fd93c43))
+* [[IA-805](https://pagopa.atlassian.net/browse/IA-805)] Update e2e tests ([#3889](https://github.com/pagopa/io-app/issues/3889)) ([2bfd702](https://github.com/pagopa/io-app/commit/2bfd702fcd6b78c25685af9978c4fe6cbc4345ac))
+* [[IA-806](https://pagopa.atlassian.net/browse/IA-806)] Show BPay in checkout payment screen ([#3884](https://github.com/pagopa/io-app/issues/3884)) ([3fa0b01](https://github.com/pagopa/io-app/commit/3fa0b01777df30886033332876e4921ad2775e64))
+* [[IA-812](https://pagopa.atlassian.net/browse/IA-812)] Fix euCovidCert e2e tests under paginated messages ([#3893](https://github.com/pagopa/io-app/issues/3893)) ([76bbef2](https://github.com/pagopa/io-app/commit/76bbef23ec9013e14de5f737cefdd681e583b11c))
+* **Carta della cultura:** [[AP-3](https://pagopa.atlassian.net/browse/AP-3)] Add remote carta della cultura feature flag ([#3888](https://github.com/pagopa/io-app/issues/3888)) ([06ddd26](https://github.com/pagopa/io-app/commit/06ddd2641a750ddfa0f89d3f9fd646d9f9388ecf))
+* [[IA-810](https://pagopa.atlassian.net/browse/IA-810)] Improve debug top overlay ([#3886](https://github.com/pagopa/io-app/issues/3886)) ([afc38c8](https://github.com/pagopa/io-app/commit/afc38c8660dc1b00bebdaf86c9c942e7d87577c1))
+* **Carta della cultura:** [[AP-2](https://pagopa.atlassian.net/browse/AP-2)] Add CDC local feature flag ([#3883](https://github.com/pagopa/io-app/issues/3883)) ([28ffffc](https://github.com/pagopa/io-app/commit/28ffffc2c313c1d2e414d29f91404cdac2e6fff7))
+
 ## [2.7.0-rc.3](https://github.com/pagopa/io-app/compare/2.7.0-rc.2...2.7.0-rc.3) (2022-04-05)
 
 
