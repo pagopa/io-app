@@ -65,10 +65,7 @@ import { CreditCard, Wallet } from "../../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getLookUpIdPO } from "../../utils/pmLookUpId";
 import { showToast } from "../../utils/showToast";
-import { runDeleteActivePaymentSaga } from "../../store/actions/wallet/payment";
 import { dispatchPickPspOrConfirm } from "./payment/common";
-import { isPaymentOutcomeCodeSuccessfully } from "../../utils/payment";
-import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
 
 export type ConfirmCardDetailsScreenNavigationParams = Readonly<{
   creditCard: CreditCard;
@@ -135,17 +132,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
   private goBack = () => {
     this.props.navigation.goBack();
-  };
-
-  // if the card insertion fails and a payment is on going, run the procedure to delete the payment activation
-  private handleCreditCardFinish = (outcome: string) => {
-    const isInPayment = this.props.navigation.getParam("inPayment").isSome();
-    if (
-      isInPayment &&
-      !isPaymentOutcomeCodeSuccessfully(outcome, this.props.outcomeCodes)
-    ) {
-      this.props.deletePayment();
-    }
   };
 
   public render(): React.ReactNode {
@@ -321,7 +307,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             formData={formData}
             finishPathName={webViewExitPathName}
             onFinish={(maybeCode, navigationUrls) => {
-              this.handleCreditCardFinish(maybeCode.getOrElse(""));
               this.props.dispatchCreditCardPaymentNavigationUrls(
                 navigationUrls
               );
@@ -388,7 +373,6 @@ const mapStateToProps = (state: GlobalState) => {
     .map(c => c.data);
 
   return {
-    outcomeCodes: outcomeCodesSelector(state),
     isLoading,
     error,
     areWalletsInError,
@@ -485,8 +469,7 @@ const mapDispatchToProps = (
       navigationUrls: ReadonlyArray<string>
     ) => {
       dispatch(creditCardPaymentNavigationUrls(navigationUrls));
-    },
-    deletePayment: () => dispatch(runDeleteActivePaymentSaga())
+    }
   };
 };
 

@@ -9,8 +9,13 @@ import OutcomeCodeMessageComponent from "../../components/wallet/OutcomeCodeMess
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
-import { lastPaymentOutcomeCodeSelector } from "../../store/reducers/wallet/outcomeCode";
+import {
+  lastPaymentOutcomeCodeSelector,
+  outcomeCodesSelector
+} from "../../store/reducers/wallet/outcomeCode";
 import { Wallet } from "../../types/pagopa";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { runDeleteActivePaymentSaga } from "../../store/actions/wallet/payment";
 
 export type AddCreditCardOutcomeCodeMessageNavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -37,23 +42,31 @@ const successComponent = () => (
  *
  */
 const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
-  const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
+  // if the card insertion fails and a payment is on going, run the procedure to delete the payment activation
+  useOnFirstRender(() => {
+    if (props.paymentOutcome?.status !== "success") {
+      props.deletePayment();
+    }
+  });
 
-  return outcomeCode ? (
+  return props.paymentOutcome ? (
     <OutcomeCodeMessageComponent
-      outcomeCode={outcomeCode}
+      outcomeCode={props.paymentOutcome}
       onClose={props.navigateToWalletHome}
       successComponent={successComponent}
     />
   ) : null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToWalletHome: () => navigateToWalletHome()
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToWalletHome: () => navigateToWalletHome(),
+  deletePayment: () => dispatch(runDeleteActivePaymentSaga())
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  outcomeCode: lastPaymentOutcomeCodeSelector(state)
+  paymentOutcome:
+    lastPaymentOutcomeCodeSelector(state).outcomeCode.toUndefined(),
+  outcomeCodes: outcomeCodesSelector(state)
 });
 
 export default connect(
