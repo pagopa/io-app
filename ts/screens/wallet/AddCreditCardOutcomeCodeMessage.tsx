@@ -43,8 +43,8 @@ const successComponent = () => (
  */
 const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   /**
-   * if the card insertion fails and a payment is on going,
-   * run the procedure to delete the payment activation even if there is no one running (that check is done by the relative saga)
+   * if the card insertion fails, run the procedure to delete the payment activation
+   * even if there is no one running (that check is done by the relative saga)
    */
   useOnFirstRender(() => {
     if (props.paymentOutcome?.status !== "success") {
