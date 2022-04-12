@@ -626,7 +626,7 @@ const searchPayPalPsp: GetPaypalPspsUsingGETT = {
 const getPspListV2: GetPspListV2UsingGETT = {
   method: "get",
   url: ({ idPayment }) => `/v2/payments/${idPayment}/psps`,
-  query: ({ language, idWallet }) => ({ language, idWallet }),
+  query: ({ language, idWallet }) => ({ language, idWallet, isList: true }),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListV2UsingGETDefaultDecoder()
 };
