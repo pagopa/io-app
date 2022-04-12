@@ -788,7 +788,6 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configura IO
-    contentTitle: Informativa Privacy e Termini e Condizioni d’uso
     accept: Accetta
     error: Errore nel caricamento
     alert:
@@ -1259,7 +1258,7 @@ wallet:
     cancelPaymentSuccess: Il pagamento di questo avviso è stato annullato, potrai pagarlo nuovamente tra qualche minuto
     accessibility:
       edit: "tocca per modificare"
-      transactionCosts: "{{cost}}, transazione gestita da {{psp}}"
+      transactionCosts: "{{cost}}, transazione {{psp}}"
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato

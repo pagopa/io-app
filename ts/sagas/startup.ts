@@ -49,6 +49,7 @@ import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageRouterScreen,
+  navigateToPaginatedMessageRouterAction,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
@@ -70,6 +71,7 @@ import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -535,7 +537,16 @@ export function* initializeApplicationSaga(): Generator<
     // Remove the pending message from the notification state
     yield* put(clearNotificationPendingMessage());
     // Navigate to message router screen
-    yield* call(navigateToMessageRouterScreen, { messageId });
+    if (usePaginatedMessages) {
+      NavigationService.dispatchNavigationAction(
+        navigateToPaginatedMessageRouterAction({
+          messageId: messageId as UIMessageId,
+          isArchived: false
+        })
+      );
+    } else {
+      yield* call(navigateToMessageRouterScreen, { messageId });
+    }
   } else {
     yield* call(navigateToMainNavigatorAction);
   }

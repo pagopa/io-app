@@ -771,7 +771,6 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
-    contentTitle: Privacy Policy and Terms of Service
     accept: Accept
     error: Loading error
     alert:
@@ -1237,7 +1236,7 @@ wallet:
     cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
     accessibility:
       edit: "tap to edit"
-      transactionCosts: "{{cost}}, provided by {{psp}}"
+      transactionCosts: "{{cost}}, transaction {{psp}}"
   payWith:
     noWallets:
       title: No payment methods found
