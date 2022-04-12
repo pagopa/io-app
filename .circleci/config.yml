@@ -505,7 +505,7 @@ workflows:
             - compile-typescript
           filters:
             branches:
-              only: IOACGN-69-cgn-e2e-tests
+              only: master
 
   # Release workflow triggered only when a new release tag is pushed
   release:
