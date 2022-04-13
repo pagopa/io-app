@@ -5,8 +5,8 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
+import { useIOBottomSheet } from "../../../../../../utils/hooks/bottomSheet";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -53,18 +53,14 @@ export const BpdNotActivableInformation: React.FunctionComponent<Props> =
   );
 
 export const useNotActivableInformationBottomSheet = (
-  representation: PaymentMethodRepresentation
+  representation: PaymentMethodRepresentation,
+  type: NotActivableType
 ) => {
-  const { present, dismiss } = useIOBottomSheetRaw(310);
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <BpdNotActivableInformation type={type} representation={representation} />,
+    getTitle(type),
+    310
+  );
 
-  const openModalBox = async (type: NotActivableType) =>
-    present(
-      <BpdNotActivableInformation
-        type={type}
-        representation={representation}
-      />,
-      getTitle(type)
-    );
-
-  return { present: openModalBox, dismiss };
+  return { present, bottomSheet, dismiss };
 };

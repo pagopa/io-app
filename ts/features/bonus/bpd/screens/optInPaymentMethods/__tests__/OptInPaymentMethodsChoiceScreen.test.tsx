@@ -56,7 +56,7 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
     // See: https://stackoverflow.com/a/51132058/9825478
     void Promise.resolve().then(() => jest.advanceTimersByTime(100));
 
-    const bottomSheet = await component.findByText(
+    const bottomSheet = component.findByText(
       I18n.t(
         "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
       )

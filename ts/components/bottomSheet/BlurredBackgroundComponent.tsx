@@ -8,6 +8,10 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
  */
 export const BlurredBackgroundComponent = (onPress: () => void) => (
   <TouchableDefaultOpacity
+    accessible={true}
+    accessibilityRole={"button"}
+    accessibilityLabel={"Sfondo della bottomsheet"}
+    accessibilityHint={"Premi per nascondere la bottomsheet"}
     onPress={onPress}
     style={{
       ...StyleSheet.absoluteFillObject,

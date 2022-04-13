@@ -2,7 +2,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -165,6 +165,9 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     ? calculateBpdToggleGraphicalState(props.bpdPotActivation)
     : { state: "ready", value: "notActivable" };
 
+  const [toggleValue, setToggleValue] = useState<boolean>(
+    graphicalState.value === "active"
+  );
   // trigger the initial loading / retry
   useInitialValue(props);
 
@@ -173,10 +176,15 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     ? "NotCompatible"
     : "NotActivable";
 
-  const askConfirmation =
-    useChangeActivationConfirmationBottomSheet(props).present;
+  const { present: askConfirmation } =
+    useChangeActivationConfirmationBottomSheet(props, toggleValue, () =>
+      props.updateValue(props.hPan, toggleValue)
+    );
 
-  const showExplanation = useNotActivableInformationBottomSheet(props).present;
+  const { present: showExplanation } = useNotActivableInformationBottomSheet(
+    props,
+    notActivableType
+  );
 
   return (
     <>
@@ -187,10 +195,11 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
         />
         <BpdToggle
           graphicalValue={graphicalState}
-          onValueChanged={newVal =>
-            askConfirmation(newVal, () => props.updateValue(props.hPan, newVal))
-          }
-          onPress={() => showExplanation(notActivableType)}
+          onValueChanged={newVal => {
+            setToggleValue(newVal);
+            askConfirmation();
+          }}
+          onPress={showExplanation}
         />
       </View>
     </>

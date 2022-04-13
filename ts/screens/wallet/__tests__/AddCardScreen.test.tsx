@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { fireEvent } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
@@ -12,12 +13,6 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import AddCardScreen, { AddCardScreenNavigationParams } from "../AddCardScreen";
 import { testableFunctions } from "../AddPaymentMethodScreen";
 import { IPaymentMethod } from "../../../components/wallet/PaymentMethodsList";
-
-const mockPresentFn = jest.fn();
-jest.mock("../../../utils/bottomSheet", () => ({
-  __esModule: true,
-  useIOBottomSheet: () => ({ present: mockPresentFn })
-}));
 
 jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
@@ -244,7 +239,9 @@ const getComponent = () => {
   const ToBeTested: React.FunctionComponent<
     React.ComponentProps<typeof AddCardScreen>
   > = (props: React.ComponentProps<typeof AddCardScreen>) => (
-    <AddCardScreen {...props} />
+    <BottomSheetModalProvider>
+      <AddCardScreen {...props} />
+    </BottomSheetModalProvider>
   );
 
   const globalState = appReducer(undefined, applicationChangeState("active"));

@@ -33,7 +33,7 @@ import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
-import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../utils/hooks/bottomSheet";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import { withBase64Uri } from "../../../../utils/image";
 import { getRemoteLocale } from "../../../../utils/messages";
@@ -404,7 +404,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
-  const { present: openModalBox } = useIOBottomSheet(
+  const { present: openModalBox, bottomSheet } = useIOBottomSheet(
     <QrModalBox
       codeToDisplay={getBonusCodeFormatted(bonus)}
       codeToCopy={bonus.id}
@@ -681,6 +681,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         pointerEvents={"none"}
         style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
       />
+      {bottomSheet}
     </>
   ) : (
     <GenericErrorComponent

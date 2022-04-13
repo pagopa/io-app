@@ -80,14 +80,28 @@ Created on **20/08/2021**
 Created on **16/09/2021**
 
 #### Reason:
-- The package use the prop `checkAndroid6Permissions` for both display the `notAuthorizedView` and display the rationale.
-  We need always to display the rationale alert and not only when requested by the Android OS. Without this patch is impossible
-  to use the `notAuthorizedView` without displaying again the alert.
-  ⚠️ The `QRCodeScanner` component, with this patch, doesn't use anymore the props permissionDialogTitle, permissionDialogMessage and
+- The package use the prop `checkAndroid6Permissions` for both display the `notAuthorizedView` and display the
+  rationale. We need always to display the rationale alert and not only when requested by the Android OS. Without this
+  patch is impossible to use the `notAuthorizedView` without displaying again the alert. ⚠️ The `QRCodeScanner`
+  component, with this patch, doesn't use anymore the props permissionDialogTitle, permissionDialogMessage and
   buttonPositive.
 
 ### react-native+0.64.2 (Localizable.strings)
+
 Created on **28/02/2022**
 
 #### Reason:
-- This patch is going to add a new `Localizable.strings` file inside the `[package]/React/AccessibilityResources/it.lproj` directory in order to translate various internal strings used for accessibility. At the moment there are no other ways to translate these strings even in newer React Native versions, thus this patch should be replicated for every new update. See https://github.com/pagopa/io-app/pull/3791 for reference.
+
+- This patch is going to add a new `Localizable.strings` file inside
+  the `[package]/React/AccessibilityResources/it.lproj` directory in order to translate various internal strings used
+  for accessibility. At the moment there are no other ways to translate these strings even in newer React Native
+  versions, thus this patch should be replicated for every new update. See https://github.com/pagopa/io-app/pull/3791
+  for reference.
+
+### @gorhom+bottom-sheet+4.1.5
+
+Created on **24/03/2022**
+
+#### Reason:
+
+- This patch is going to add the customization of accessibility props on bottom sheet children components

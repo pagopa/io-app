@@ -4,13 +4,10 @@ import { Dimensions } from "react-native";
 import { Discount } from "../../../../../definitions/cgn/merchants/Discount";
 import { DiscountCodeType } from "../../../../../definitions/cgn/merchants/DiscountCodeType";
 import {
-  bottomSheetContent,
-  useIOBottomSheetRaw
-} from "../../../../utils/bottomSheet";
-import {
   CgnDiscountDetail,
   CgnDiscountDetailHeader
 } from "../components/merchants/CgnDiscountDetail";
+import { useIOBottomSheet } from "../../../../utils/hooks/bottomSheet";
 
 const screenHeight = Dimensions.get("screen").height;
 const calculateBottomSheetHeight = (
@@ -40,24 +37,22 @@ export const useCgnDiscountDetailBottomSheet = (
     [discount, merchantType]
   );
 
-  const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
-    height,
-    bottomSheetContent
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <CgnDiscountDetail
+      discount={discount}
+      merchantType={merchantType}
+      onLandingCtaPress={(url: string, referer: string) => {
+        landingPageHandler?.(url, referer);
+        dismiss();
+      }}
+    />,
+    <CgnDiscountDetailHeader discount={discount} />,
+    height
   );
 
   return {
     dismiss,
-    present: () =>
-      openBottomSheet(
-        <CgnDiscountDetail
-          discount={discount}
-          merchantType={merchantType}
-          onLandingCtaPress={(url: string, referer: string) => {
-            landingPageHandler?.(url, referer);
-            dismiss();
-          }}
-        />,
-        <CgnDiscountDetailHeader discount={discount} />
-      )
+    present,
+    bottomSheet
   };
 };

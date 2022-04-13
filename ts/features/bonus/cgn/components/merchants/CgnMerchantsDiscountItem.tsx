@@ -42,11 +42,12 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   merchantType,
   navigateToLandingWebview
 }: Props) => {
-  const { present } = useCgnDiscountDetailBottomSheet(
-    discount,
-    merchantType,
-    navigateToLandingWebview
-  );
+  const { present, bottomSheet: cgnDiscountDetail } =
+    useCgnDiscountDetailBottomSheet(
+      discount,
+      merchantType,
+      navigateToLandingWebview
+    );
   return (
     <TouchableDefaultOpacity style={styles.verticalPadding} onPress={present}>
       <ShadowBox>
@@ -110,6 +111,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
             <CgnDiscountValueBox value={discount.discount} small={true} />
           )}
         </View>
+        {cgnDiscountDetail}
       </ShadowBox>
     </TouchableDefaultOpacity>
   );

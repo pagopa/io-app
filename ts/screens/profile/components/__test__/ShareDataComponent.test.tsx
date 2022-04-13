@@ -4,10 +4,18 @@ import { openWebUrl } from "../../../../utils/url";
 import { ShareDataComponent } from "../ShareDataComponent";
 
 const mockPresentFn = jest.fn();
-jest.mock("../../../../utils/bottomSheet", () => ({
-  __esModule: true,
-  useIOBottomSheet: () => ({ present: mockPresentFn })
-}));
+jest.mock("../../../../utils/hooks/bottomSheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+
+  return {
+    __esModule: true,
+    useIOBottomSheet: () => ({
+      present: mockPresentFn,
+      bottomSheet: react.View
+    })
+  };
+});
 jest.mock("../../../../utils/url");
 
 describe("Test ShareDataComponent", () => {

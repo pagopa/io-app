@@ -24,11 +24,24 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
+jest.mock("@gorhom/bottom-sheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const rn = require("react-native");
+
+  return {
+    __esModule: true,
+    BottomSheetModal: rn.Modal,
+    BottomSheetScrollView: rn.ScrollView,
+    TouchableWithoutFeedback: rn.TouchableWithoutFeedback,
+    useBottomSheetModal: () => ({
+      dismissAll: jest.fn()
+    }),
+    namedExport: {
+      ...require("react-native-reanimated/mock"),
+      ...jest.requireActual("@gorhom/bottom-sheet")
+    }
+  };
+});
 
 describe("Test TransactionsSectionList behaviour and states", () => {
   jest.useFakeTimers();

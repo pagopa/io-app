@@ -66,3 +66,5 @@ jest.mock("rehype-stringify", jest.fn());
 jest.mock("rehype-format", jest.fn());
 jest.mock("unist-util-visit", jest.fn());
 jest.mock("hastscript", jest.fn());
+
+global.__reanimatedWorkletInit = jest.fn();

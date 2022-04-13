@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import Markdown from "../../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../../i18n";
-import { useIOBottomSheet } from "../../../../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../../../../utils/locale";
 import { BpdPeriod } from "../../../../store/actions/periods";
 
@@ -34,10 +33,3 @@ export const HowItWorks: React.FunctionComponent<Props> = props => (
     </View>
   </View>
 );
-
-export const useHowItWorksBottomSheet = (period: BpdPeriod) =>
-  useIOBottomSheet(
-    <HowItWorks period={period} />,
-    I18n.t("bonus.bpd.details.howItWorks.title"),
-    569
-  );

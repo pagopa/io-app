@@ -42,7 +42,12 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
     {React.isValidElement(title) ? (
       title
     ) : (
-      <View style={IOStyles.flex}>
+      <View
+        style={IOStyles.flex}
+        accessible={true}
+        accessibilityRole={"header"}
+        accessibilityLabel={typeof title === "string" ? title : undefined}
+      >
         <H3>{title}</H3>
       </View>
     )}
