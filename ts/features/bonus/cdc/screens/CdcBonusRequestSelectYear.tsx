@@ -1,15 +1,13 @@
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useNavigation } from "@react-navigation/native";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { CdcBonusRequestParamsList } from "../navigation/params";
-import { CDC_ROUTES } from "../navigation/routes";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
 import ROUTES from "../../../../navigation/routes";
 
 const CdcBonusRequestSelectYear = () => {
