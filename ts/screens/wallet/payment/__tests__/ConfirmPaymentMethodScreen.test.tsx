@@ -106,6 +106,7 @@ const creditCardPaymentMethod = {
 
 const pspList: ReadonlyArray<PspData> = [
   {
+    id: 1,
     codiceAbi: "0001",
     defaultPsp: true,
     fee: 100,
@@ -115,6 +116,7 @@ const pspList: ReadonlyArray<PspData> = [
     ragioneSociale: "PayTipper"
   },
   {
+    id: 2,
     codiceAbi: "0002",
     defaultPsp: true,
     fee: 120,
