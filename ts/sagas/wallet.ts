@@ -553,8 +553,7 @@ function* deleteUnsuccessfulActivePaymentSaga() {
   // it can be related to a payment or a payment check done during the credit card onboarding
   const lastPaymentOutCome = yield* select(lastPaymentOutcomeCodeSelector);
   if (
-    lastPaymentOutCome.outcomeCode.isSome() &&
-    lastPaymentOutCome.outcomeCode.value.status !== "success"
+    lastPaymentOutCome.outcomeCode.exists(({ status }) => status === "success")
   ) {
     /**
      * run the procedure to delete the payment activation
@@ -1101,5 +1100,9 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
 
 // to keep solid code encapsulation
 export const testableWalletsSaga = isTestEnv
-  ? { startOrResumeAddCreditCardSaga, successScreenDelay }
+  ? {
+      startOrResumeAddCreditCardSaga,
+      successScreenDelay,
+      deleteUnsuccessfulActivePaymentSaga
+    }
   : undefined;

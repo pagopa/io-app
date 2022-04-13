@@ -1,4 +1,4 @@
-import { some } from "fp-ts/lib/Option";
+import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType, getType } from "typesafe-actions";
@@ -30,6 +30,7 @@ import {
 } from "../../utils/input";
 import { SessionManager } from "../../utils/SessionManager";
 import { testableWalletsSaga } from "../wallet";
+import { runDeleteActivePaymentSaga } from "../../store/actions/wallet/payment";
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -131,5 +132,39 @@ describe("startOrResumeAddCreditCardSaga", () => {
       })
       .delay(testableWalletsSaga!.successScreenDelay)
       .next();
+  });
+});
+
+describe("deleteUnsuccessfulActivePaymentSaga", () => {
+  describe("when there is no outcomeCode", () => {
+    it("it should done nothing", () => {
+      testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
+        .next()
+        .select(lastPaymentOutcomeCodeSelector)
+        .next({ outcomeCode: none })
+        .isDone();
+    });
+  });
+
+  describe("when there is an outcomeCode and it is not a success", () => {
+    it("it should done nothing", () => {
+      testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
+        .next()
+        .select(lastPaymentOutcomeCodeSelector)
+        .next({ outcomeCode: some({ status: "errorBlocking" }) })
+        .isDone();
+    });
+  });
+
+  describe("when there is an outcomeCode and it is a success", () => {
+    it("it should put runDeleteActivePaymentSaga", () => {
+      testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
+        .next()
+        .select(lastPaymentOutcomeCodeSelector)
+        .next({ outcomeCode: some({ status: "success" }) })
+        .put(runDeleteActivePaymentSaga())
+        .next()
+        .isDone();
+    });
   });
 });
