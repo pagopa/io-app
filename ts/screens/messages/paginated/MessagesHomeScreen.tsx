@@ -206,9 +206,12 @@ const MessagesHomeScreen = ({
   }, [latestMessageOperation]);
 
   const navigateToMessageDetail = (message: UIMessage) => {
-    navigation.navigate(ROUTES.MESSAGE_ROUTER_PAGINATED, {
-      messageId: message.id,
-      isArchived: message.isArchived
+    navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+      screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+      params: {
+        messageId: message.id,
+        isArchived: message.isArchived
+      }
     });
   };
 
