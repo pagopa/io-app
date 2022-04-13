@@ -1,14 +1,14 @@
-import { CommonActions } from "@react-navigation/native";
-import { fireEvent } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
+import { NavigationActions } from "react-navigation";
+import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../i18n";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { mockPrivativeCard } from "../../../../../store/reducers/wallet/__mocks__/wallets";
 import { PrivativePaymentMethod } from "../../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import PrivativeWalletPreview from "../PrivativeWalletPreview";
 
@@ -65,8 +65,8 @@ describe("PrivativeWalletPreview", () => {
     if (cardComponent) {
       fireEvent.press(cardComponent);
       expect(spy).toHaveBeenCalledWith(
-        CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-          screen: ROUTES.WALLET_PRIVATIVE_DETAIL,
+        NavigationActions.navigate({
+          routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
           params: { privative: mockPrivativeCard }
         })
       );
@@ -77,11 +77,10 @@ const getComponent = (privative: PrivativePaymentMethod) => {
   const mockStore = configureMockStore();
   const store = mockStore();
   return {
-    component: renderScreenFakeNavRedux(
-      () => <PrivativeWalletPreview privative={privative} />,
-      "WALLET_HOME",
-      {},
-      store
+    component: render(
+      <Provider store={store}>
+        <PrivativeWalletPreview privative={privative} />
+      </Provider>
     ),
     store
   };

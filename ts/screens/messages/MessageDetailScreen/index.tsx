@@ -1,7 +1,7 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
@@ -10,8 +10,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import {
   loadMessageWithRelations,
   MessageReadType,
@@ -37,11 +35,7 @@ export type MessageDetailScreenNavigationParams = {
   messageId: string;
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL">
-  >;
-};
+type OwnProps = NavigationStackScreenProps<MessageDetailScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

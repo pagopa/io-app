@@ -1,6 +1,6 @@
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import * as React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { Action, createStore, Store } from "redux";
 import { CobadgeResponse } from "../../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import {
@@ -261,7 +261,7 @@ const getSearchAvailableCoBadgeScreen = (abi?: string) => {
 const renderSearchAvailableCoBadgeScreen = (
   store: Store<GlobalState, Action>
 ) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <SearchAvailableCoBadgeScreen />,
     WALLET_ONBOARDING_COBADGE_ROUTES.SEARCH_AVAILABLE,
     {},

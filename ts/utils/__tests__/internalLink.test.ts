@@ -1,24 +1,16 @@
-import { none, some } from "fp-ts/lib/Option";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { none, some } from "fp-ts/lib/Option";
 import {
   getInternalRoute,
   IO_INTERNAL_LINK_PREFIX,
   testableALLOWED_ROUTE_NAMES
 } from "../../components/ui/Markdown/handlers/internalLink";
-import ROUTES from "../../navigation/routes";
 
 describe("getInternalRoute", () => {
-  const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(
-    ([r, v]) =>
-      Tuple2(
-        `${IO_INTERNAL_LINK_PREFIX}${r}`,
-        some({
-          navigationAction: v,
-          routeName: r
-        })
-      )
+  const allowedRoutes = testableALLOWED_ROUTE_NAMES!.map(r =>
+    Tuple2(`${IO_INTERNAL_LINK_PREFIX}${r}`, some({ routeName: r }))
   );
-  const validRoute = Object.keys(testableALLOWED_ROUTE_NAMES!)[0];
+  const validRoute = testableALLOWED_ROUTE_NAMES![0];
   it("should recognize a valid internal route", () => {
     [
       ...allowedRoutes,
@@ -29,15 +21,6 @@ describe("getInternalRoute", () => {
         IO_INTERNAL_LINK_PREFIX + validRoute + "?param1=value1&param2=value2",
         some({
           routeName: validRoute,
-          navigationAction: {
-            payload: {
-              name: ROUTES.MAIN,
-              params: {
-                screen: ROUTES.MESSAGES_HOME
-              }
-            },
-            type: "NAVIGATE"
-          },
           params: {
             param1: "value1",
             param2: "value2"
@@ -48,15 +31,6 @@ describe("getInternalRoute", () => {
         IO_INTERNAL_LINK_PREFIX + validRoute + "?param1=&param2=value2",
         some({
           routeName: validRoute,
-          navigationAction: {
-            payload: {
-              name: ROUTES.MAIN,
-              params: {
-                screen: ROUTES.MESSAGES_HOME
-              }
-            },
-            type: "NAVIGATE"
-          },
           params: {
             param1: "",
             param2: "value2"

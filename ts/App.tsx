@@ -10,15 +10,16 @@ import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
 
-// Infer the `RootState` and `AppDispatch` types from the store itself export
+// Infer the `RootState` and `AppDispatch` types from the store itselfexport
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 /**
  * Main component of the application
- * @constructor
+ *
+ * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
-export const App: React.FunctionComponent<never> = () => (
+export const App: React.SFC<never> = () => (
   <StyleProvider style={theme()}>
     <Provider store={store}>
       <PersistGate loading={undefined} persistor={persistor}>

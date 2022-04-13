@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -44,7 +44,7 @@ const renderComponent = (
   store: Store,
   revokedCertificate: ExpiredCertificate
 ) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => (
       <EuCovidCertExpiredScreen headerData={revokedCertificate.headerData} />
     ),

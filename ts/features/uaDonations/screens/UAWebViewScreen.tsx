@@ -1,42 +1,38 @@
+import WebView from "react-native-webview";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+import { View } from "native-base";
+import URLParse from "url-parse";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import {
   AmountInEuroCents,
   PaymentNoticeNumber,
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
-import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import WebView from "react-native-webview";
-import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
-import URLParse from "url-parse";
-import dataErrorImage from "../../../../img/pictograms/doubt.png";
-import genericErrorImage from "../../../../img/wallet/errors/generic-error-icon.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../../components/ui/BlockButtons";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../navigation/params/AppParamsList";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { showToast } from "../../../utils/showToast";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import { isHttp, openWebUrl } from "../../../utils/url";
-import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
+import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
+import { showToast } from "../../../utils/showToast";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import genericErrorImage from "../../../../img/wallet/errors/generic-error-icon.png";
+import dataErrorImage from "../../../../img/pictograms/doubt.png";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { BlockButtonProps } from "../../../components/ui/BlockButtons";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { UADonationWebViewMessage } from "../types";
+import { mixpanelTrack } from "../../../mixpanel";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
+import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
 
 const styles = StyleSheet.create({
   loading: {
@@ -173,7 +169,7 @@ const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
  */
 export const UAWebViewScreen = () => {
   const navigationParams = useIOSelector(internalRouteNavigationParamsSelector);
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useNavigationContext();
   const dispatch = useIODispatch();
   const uri = navigationParams?.urlToLoad;
   const ref = React.createRef<WebView>();
@@ -205,7 +201,8 @@ export const UAWebViewScreen = () => {
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "donation"
+      paymentStartOrigin: "donation",
+      startRoute: undefined
     });
   };
 
@@ -241,7 +238,7 @@ export const UAWebViewScreen = () => {
             )}
             errorText={I18n.t("wallet.errors.GENERIC_ERROR")}
             onRetry={() => {
-              navigation.goBack();
+              navigation.goBack(null);
             }}
           />
         );

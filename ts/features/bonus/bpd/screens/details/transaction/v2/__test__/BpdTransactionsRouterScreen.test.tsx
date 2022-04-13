@@ -1,7 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import I18n from "../../../../../../../../i18n";
 import { applicationChangeState } from "../../../../../../../../store/actions/application";
@@ -105,7 +105,7 @@ const getStateWithBpdInitialized = (): Store => {
 };
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <BpdTransactionsRouterScreen />,
     BPD_ROUTES.TRANSACTIONS,
     {},

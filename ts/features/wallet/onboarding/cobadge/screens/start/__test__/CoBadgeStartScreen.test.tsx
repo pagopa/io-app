@@ -1,7 +1,7 @@
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { Action, createStore, Store } from "redux";
 import { StatusEnum } from "../../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 import { CoBadgeServices } from "../../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
@@ -252,7 +252,7 @@ const getInitCoBadgeStartScreen = (abi: string) => {
 };
 
 const renderCoBadgeScreen = (store: Store<GlobalState, Action>) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <CoBadgeStartScreen />,
     WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE,
     {},

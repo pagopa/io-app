@@ -1,7 +1,6 @@
 /**
  * A screen where the user can know more about SPID, CIE and access to spid.gov.it
  */
-import { CompatNavigationProp } from "@react-navigation/compat";
 import {
   Col,
   Content,
@@ -15,24 +14,16 @@ import {
 } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import customVariables from "../../theme/variables";
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
-      AuthenticationParamsList,
-      "AUTHENTICATION_SPID_CIE_INFORMATION"
-    >
-  >;
-};
+type Props = NavigationStackScreenProps;
 
 type State = {
   currentTab: number;

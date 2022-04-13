@@ -1,6 +1,6 @@
 import React from "react";
 import configureMockStore from "redux-mock-store";
-
+import { NavigationParams } from "react-navigation";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -98,7 +98,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       () => <ProfileDataScreen />,
       ROUTES.PROFILE_DATA,
       {},

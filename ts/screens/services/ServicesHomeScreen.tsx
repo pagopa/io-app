@@ -32,6 +32,7 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { Label } from "../../components/core/typography/Label";
@@ -53,10 +54,6 @@ import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
 import {
   navigateToServiceDetailsScreen,
   navigateToServicePreferenceScreen
@@ -103,7 +100,7 @@ import {
 import { showToast } from "../../utils/showToast";
 import { ServiceDetailsScreenNavigationParams } from "./ServiceDetailsScreen";
 
-type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
+type OwnProps = NavigationStackScreenProps;
 
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (

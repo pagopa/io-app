@@ -1,5 +1,5 @@
 import { createStore, Store } from "redux";
-
+import { NavigationParams } from "react-navigation";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
@@ -145,7 +145,7 @@ describe("the OptInPaymentMethodsCashbackUpdateScreen screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     OptInPaymentMethodsCashbackUpdateScreen,
     ROUTES.MAIN,
     {},

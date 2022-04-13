@@ -1,6 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import configureMockStore from "redux-mock-store";
+import { NavigationParams } from "react-navigation";
 import { pot } from "@pagopa/ts-commons";
 import { none } from "fp-ts/lib/Option";
 
@@ -131,7 +132,7 @@ const renderComponent = (
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       () => <MessageList {...props} />,
       ROUTES.MESSAGES_HOME,
       {},

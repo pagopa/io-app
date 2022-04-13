@@ -1,3 +1,4 @@
+import { NavigationParams } from "react-navigation";
 import * as React from "react";
 import { Action, createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
@@ -110,7 +111,7 @@ const getAddPrivativeCardScreen = () => {
 };
 
 const renderAddPrivativeCardScreen = (store: Store<GlobalState, Action>) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <AddPrivativeCardScreen />,
     WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE,
     {},

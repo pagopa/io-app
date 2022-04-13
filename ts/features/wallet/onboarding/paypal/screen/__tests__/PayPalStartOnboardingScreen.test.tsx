@@ -1,5 +1,5 @@
 import { createStore, Store } from "redux";
-
+import { NavigationParams } from "react-navigation";
 import PayPalStartOnboardingScreen from "../PayPalStartOnboardingScreen";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -30,7 +30,7 @@ describe("PayPalStartOnboardingScreen", () => {
 });
 
 const renderComponent = (store: Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     PayPalStartOnboardingScreen,
     "N/A",
     {},

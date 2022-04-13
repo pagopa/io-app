@@ -1,12 +1,11 @@
-import { createCompatNavigatorFactory } from "@react-navigation/compat";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from "react-navigation-stack";
 import { MvlCertificatesScreen } from "../screens/metadata/MvlCertificatesScreen";
 import { MvlRecipientsScreen } from "../screens/metadata/MvlRecipientsScreen";
 import { MvlSignatureScreen } from "../screens/metadata/MvlSignatureScreen";
 import { MvlRouterScreen } from "../screens/MvlRouterScreen";
 import MVL_ROUTES from "./routes";
 
-const MvlNavigator = createCompatNavigatorFactory(createStackNavigator)(
+const MvlNavigator = createStackNavigator(
   {
     [MVL_ROUTES.DETAILS]: {
       screen: MvlRouterScreen

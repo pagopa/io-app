@@ -1,21 +1,17 @@
-import { some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../../../../../definitions/content/BackendStatus";
-import { Config } from "../../../../../../../../definitions/content/Config";
+import { some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
 import BPD_ROUTES from "../../../../navigation/routes";
 import TransactionsUnavailable from "../TransactionsUnavailable";
-
-jest.mock("../../../../../../../store/reducers/navigation", () => ({
-  currentRouteSelector: jest.fn()
-}));
+import { ToolEnum } from "../../../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../../../definitions/content/Config";
+import { BackendStatus } from "../../../../../../../../definitions/content/BackendStatus";
 
 describe("TransactionsUnavailable component", () => {
   const mockStore = configureMockStore();
@@ -69,7 +65,7 @@ describe("TransactionsUnavailable component", () => {
   });
 });
 const getComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <TransactionsUnavailable />,
     BPD_ROUTES.TRANSACTIONS,
     {},

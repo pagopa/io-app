@@ -1,3 +1,4 @@
+import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import configureMockStore, { MockStore } from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -160,7 +161,7 @@ const dispatchActionAndRenderComponent = (actions: ReadonlyArray<Action>) => {
 };
 
 const renderComponent = (store: MockStore<GlobalState> | Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     MvlRouterScreen,
     MVL_ROUTES.DETAILS,
     { id: mvlMockId },

@@ -1,3 +1,4 @@
+import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
@@ -52,7 +53,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       PickPspScreen,
       ROUTES.PAYMENT_PICK_PSP,
       {

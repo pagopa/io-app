@@ -11,9 +11,6 @@ module.exports = {
   },
   setupFiles: ["./jestSetup.js"],
   globalSetup: "./jestGlobalSetup.js",
-  setupFilesAfterEnv: [
-    "@testing-library/jest-native/extend-expect",
-    "./jestSetupAfterEnv.js"
-  ],
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
   collectCoverage: true
 };

@@ -6,17 +6,14 @@
 import { Container, H2, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../navigation/params/AppParamsList";
 
 type OwnProps = {
-  navigation: IOStackNavigationProp<AppParamsList>;
+  navigation: NavigationScreenProp<NavigationState>;
 };
 
 type Props = OwnProps;
@@ -38,7 +35,7 @@ class InvalidNfcConnectionScreen extends React.Component<Props, never> {
     const cancelButtonProps = {
       cancel: true,
       block: true,
-      onPress: (): void => this.props.navigation.goBack(),
+      onPress: (): boolean => this.props.navigation.goBack(),
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {

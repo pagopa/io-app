@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { Alert } from "react-native";
@@ -9,7 +8,10 @@ import I18n from "../../../../../i18n";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import {
+  useActionOnFocus,
+  useNavigationContext
+} from "../../../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../../../utils/pot";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToBpdDetails } from "../../navigation/actions";
@@ -115,7 +117,7 @@ const InnerIbanCTAEditScreen = (props: Props) => {
  * Landing screen from the CTA message that asks to review user's IBAN insertion
  */
 const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigationContext();
   if (!props.bpdRemoteConfig?.program_active) {
     Alert.alert(
       I18n.t("bonus.bpd.title"),

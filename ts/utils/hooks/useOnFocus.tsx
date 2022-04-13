@@ -1,6 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { NavigationContext } from "react-navigation";
 
 /**
  * Call the action when the component isFocused() and dontExecuteBefore has passed since the last update.
@@ -14,7 +14,7 @@ export const useActionOnFocus = (
 ) => {
   const [lastUpdate, setLastUpdate] = useState<Date | undefined>(undefined);
 
-  const navigation = useNavigation();
+  const navigation = useNavigationContext();
   const isFocused = navigation.isFocused();
   useEffect(() => {
     const now = new Date();
@@ -29,3 +29,5 @@ export const useActionOnFocus = (
     }
   }, [isFocused]);
 };
+
+export const useNavigationContext = () => useContext(NavigationContext);

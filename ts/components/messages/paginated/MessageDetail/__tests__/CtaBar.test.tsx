@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
 import { service_1 } from "../../../../../__mocks__/messages";
@@ -129,7 +129,7 @@ const renderComponent = (props: React.ComponentProps<typeof CtaBar>) => {
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       () => <CtaBar {...props} />,
       ROUTES.MESSAGE_DETAIL,
       {},

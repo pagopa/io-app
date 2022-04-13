@@ -1,6 +1,7 @@
 import ROUTES from "../routes";
 
 export type ProfileParamsList = {
+  [ROUTES.PROFILE_MAIN]: undefined;
   [ROUTES.PROFILE_PRIVACY_MAIN]: undefined;
   [ROUTES.PROFILE_PRIVACY]: undefined;
   [ROUTES.PROFILE_PRIVACY_SHARE_DATA]: undefined;
@@ -22,5 +23,4 @@ export type ProfileParamsList = {
   [ROUTES.PROFILE_REMOVE_ACCOUNT_INFO]: undefined;
   [ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS]: undefined;
   [ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS]: undefined;
-  [ROUTES.CGN_LANDING_PLAYGROUND]: undefined;
 };

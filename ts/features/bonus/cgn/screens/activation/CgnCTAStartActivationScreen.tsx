@@ -1,14 +1,15 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
-import { Alert } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Alert } from "react-native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
-import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import {
+  useActionOnFocus,
+  useNavigationContext
+} from "../../../../../utils/hooks/useOnFocus";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
 import {
@@ -18,6 +19,7 @@ import {
 } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
 import { cgnActivationStart } from "../../store/actions/activation";
+import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -58,7 +60,7 @@ const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
  * this is a dummy screen reachable only from a message CTA
  */
 const CgnCTAStartOnboardingScreen = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigationContext();
   if (!props.isCgnEnabled) {
     Alert.alert(
       I18n.t("bonus.cgn.name"),

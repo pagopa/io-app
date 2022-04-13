@@ -1,15 +1,15 @@
-import { NavigationAction } from "@react-navigation/native";
-import { fireEvent } from "@testing-library/react-native";
-import { none, some } from "fp-ts/lib/Option";
+import { render, fireEvent } from "@testing-library/react-native";
 import * as React from "react";
 import { Store } from "redux";
+import { Provider } from "react-redux";
+import { NavigationAction, NavigationActions } from "react-navigation";
 import configureMockStore from "redux-mock-store";
+import { none, some } from "fp-ts/lib/Option";
 import NavigationService from "../../../../../navigation/NavigationService";
-import ROUTES from "../../../../../navigation/routes";
 import { CreditCardPaymentMethod } from "../../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import CobadgeWalletPreview from "../CobadgeWalletPreview";
+import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import ROUTES from "../../../../../navigation/routes";
 
 jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
 describe("CobadgeWalletPreview component", () => {
@@ -136,15 +136,10 @@ describe("CobadgeWalletPreview component", () => {
     const component = getComponent(aCobadgeCard, store);
     const cardComponent = component.queryByTestId("cardPreview");
     const expectedPayload: NavigationAction = {
-      type: "NAVIGATE",
-      payload: {
-        name: ROUTES.WALLET_NAVIGATOR,
-        params: {
-          screen: ROUTES.WALLET_COBADGE_DETAIL,
-          params: {
-            cobadge: aCobadgeCard
-          }
-        }
+      type: NavigationActions.NAVIGATE,
+      routeName: ROUTES.WALLET_COBADGE_DETAIL,
+      params: {
+        cobadge: aCobadgeCard
       }
     };
     if (cardComponent) {
@@ -158,9 +153,8 @@ const getComponent = (
   cobadge: CreditCardPaymentMethod,
   store: Store<unknown>
 ) =>
-  renderScreenFakeNavRedux(
-    () => <CobadgeWalletPreview cobadge={cobadge} />,
-    "WALLET_HOME",
-    {},
-    store
+  render(
+    <Provider store={store}>
+      <CobadgeWalletPreview cobadge={cobadge} />
+    </Provider>
   );

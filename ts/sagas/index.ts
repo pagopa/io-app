@@ -12,12 +12,14 @@ import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
 } from "./wallet";
+import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 export default function* root() {
   yield* all([
     call(startupSaga),
     call(backendStatusSaga),
     call(versionInfoSaga),
+    call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
     call(watchContentSaga),
     call(watchPaymentInitializeSaga),

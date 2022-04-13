@@ -2,7 +2,6 @@
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { NavigationEvents } from "@react-navigation/compat";
 import { head } from "fp-ts/lib/Array";
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
@@ -21,6 +20,8 @@ import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
+import { NavigationEvents } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -32,10 +33,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../../navigation/params/AppParamsList";
+import NavigationService from "../../../navigation/NavigationService";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen,
@@ -51,8 +49,9 @@ import { decodePagoPaQrCode } from "../../../utils/payment";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 
-type Props = IOStackNavigationRouteProps<AppParamsList> &
-  ReturnType<typeof mapDispatchToProps>;
+type OwnProps = NavigationStackScreenProps;
+
+type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
@@ -392,7 +391,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "qrcode_scan"
+      paymentStartOrigin: "qrcode_scan",
+      startRoute: NavigationService.getCurrentRoute()
     });
   }
 });

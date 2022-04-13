@@ -1,6 +1,6 @@
-import { CommonActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import { none } from "fp-ts/lib/Option";
+import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
@@ -33,15 +33,12 @@ describe("CoBadgeChooseType component", () => {
     if (enabledItem) {
       fireEvent.press(enabledItem);
       expect(spyBack).toHaveBeenCalledTimes(1);
-      expect(spyService.mock.calls).toEqual([
-        [CommonActions.goBack()],
-        [
-          CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-            screen: ROUTES.WALLET_ADD_CARD,
-            params: { inPayment: none }
-          })
-        ]
-      ]);
+      expect(spyService).toHaveBeenCalledWith(
+        NavigationActions.navigate({
+          routeName: ROUTES.WALLET_ADD_CARD,
+          params: { inPayment: none }
+        })
+      );
     }
   });
   it("should dispatch walletAddCoBadgeStart action if press disabled or unknown item", () => {
@@ -77,7 +74,7 @@ const getComponent = (abi?: string, legacyAddCreditCardBack?: number) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       CoBadgeChooseType,
       ROUTES.WALLET_BPAY_DETAIL,
       { abi, legacyAddCreditCardBack },

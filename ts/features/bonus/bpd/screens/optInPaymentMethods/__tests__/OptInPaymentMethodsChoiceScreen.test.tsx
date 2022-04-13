@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
@@ -67,7 +67,7 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
 });
 
 const renderComponent = () =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => (
       <BottomSheetModalProvider>
         <OptInPaymentMethodsChoiceScreen />

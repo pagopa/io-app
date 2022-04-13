@@ -1,6 +1,6 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { TypeEnum } from "../../../../../../definitions/pagopa/walletv2/CardInfo";
 import { WalletTypeEnum } from "../../../../../../definitions/pagopa/WalletV2";
@@ -124,7 +124,7 @@ const renderDetailScreen = (
   store: Store,
   creditCard: CreditCardPaymentMethod
 ) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     CreditCardWrapper,
     ROUTES.WALLET_CREDIT_CARD_DETAIL,
     { creditCard },

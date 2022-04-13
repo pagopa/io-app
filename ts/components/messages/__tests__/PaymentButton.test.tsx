@@ -4,6 +4,7 @@ import { fireEvent } from "@testing-library/react-native";
 import { some } from "fp-ts/lib/Option";
 import React from "react";
 import DeviceInfo from "react-native-device-info";
+import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
@@ -24,6 +25,11 @@ import { GlobalState } from "../../../store/reducers/types";
 import * as PaymentsUtils from "../../../utils/payment";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import PaymentButton from "../PaymentButton";
+
+jest.mock("react-native-device-info", () => ({
+  getVersion: jest.fn(),
+  getReadableVersion: jest.fn()
+}));
 
 describe("PaymentButton", () => {
   jest.useFakeTimers();
@@ -84,7 +90,7 @@ const testPaymentButton = (
 
   expect(isProfileEmailValidatedSelector(finalStore.getState())).toBe(true);
 
-  const testComponent = renderScreenFakeNavRedux<GlobalState>(
+  const testComponent = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => (
       <PaymentButton
         amount={1055 as PaymentAmount}

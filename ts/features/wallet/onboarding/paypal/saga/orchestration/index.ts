@@ -1,16 +1,13 @@
-import { StackActions } from "@react-navigation/compat";
-import { CommonActions } from "@react-navigation/native";
 import { call } from "typed-redux-saga/macro";
+import { NavigationActions, StackActions } from "react-navigation";
 import { ActionType } from "typesafe-actions";
-import NavigationService from "../../../../../../navigation/NavigationService";
-import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withResetNavigationStack,
   WorkUnitHandler
 } from "../../../../../../sagas/workUnit";
-import { navigateToPayPalDetailScreen } from "../../../../../../store/actions/navigation";
 import PAYPAL_ROUTES from "../../navigation/routes";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import {
   walletAddPaypalBack,
   walletAddPaypalCancel,
@@ -18,17 +15,15 @@ import {
   walletAddPaypalFailure,
   walletAddPaypalStart
 } from "../../store/actions";
+import { navigateToPayPalDetailScreen } from "../../../../../../store/actions/navigation";
 
 // handle the flow of paypal onboarding
 function* paypalWorkOnboaringUnit() {
   return yield* call(executeWorkUnit, {
     startScreenNavigation: () =>
       NavigationService.dispatchNavigationAction(
-        CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-          screen: PAYPAL_ROUTES.ONBOARDING.MAIN,
-          params: {
-            screen: PAYPAL_ROUTES.ONBOARDING.START
-          }
+        NavigationActions.navigate({
+          routeName: PAYPAL_ROUTES.ONBOARDING.START
         })
       ),
     startScreenName: PAYPAL_ROUTES.ONBOARDING.START,

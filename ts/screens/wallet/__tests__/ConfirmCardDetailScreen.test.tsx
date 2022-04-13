@@ -17,6 +17,7 @@ import {
   fetchWalletsRequest
 } from "../../../store/actions/wallet/wallets";
 
+jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
@@ -73,12 +74,10 @@ const getComponent = () => {
 
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
-  const component = renderScreenFakeNavRedux<GlobalState>(
-    ToBeTested,
-    ROUTES.WALLET_ADD_CARD,
-    params,
-    store
-  );
+  const component = renderScreenFakeNavRedux<
+    GlobalState,
+    ConfirmCardDetailsScreenNavigationParams
+  >(ToBeTested, ROUTES.WALLET_ADD_CARD, params, store);
 
   return { component, store };
 };

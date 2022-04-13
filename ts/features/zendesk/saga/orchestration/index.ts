@@ -1,13 +1,11 @@
 import { call } from "typed-redux-saga/macro";
-import { CommonActions } from "@react-navigation/native";
+import { NavigationActions } from "react-navigation";
 import { ActionType } from "typesafe-actions";
-import NavigationService from "../../../../navigation/NavigationService";
 import {
   executeWorkUnit,
   withFailureHandling,
   withResetNavigationStack
 } from "../../../../sagas/workUnit";
-import ZENDESK_ROUTES from "../../navigation/routes";
 import {
   zendeskSupportBack,
   zendeskSupportCancel,
@@ -15,6 +13,8 @@ import {
   zendeskSupportFailure,
   zendeskSupportStart
 } from "../../store/actions";
+import ZENDESK_ROUTES from "../../navigation/routes";
+import NavigationService from "../../../../navigation/NavigationService";
 
 function* zendeskSupportWorkUnit(
   zendeskStart: ActionType<typeof zendeskSupportStart>
@@ -22,8 +22,8 @@ function* zendeskSupportWorkUnit(
   return yield* call(executeWorkUnit, {
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
-        CommonActions.navigate(ZENDESK_ROUTES.MAIN, {
-          screen: ZENDESK_ROUTES.HELP_CENTER,
+        NavigationActions.navigate({
+          routeName: ZENDESK_ROUTES.HELP_CENTER,
           params: zendeskStart.payload
         })
       );

@@ -1,21 +1,23 @@
-import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
 import { useEffect } from "react";
+import * as React from "react";
 import { Alert } from "react-native";
-import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../i18n";
+import { connect } from "react-redux";
 import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import { bpdOnboardingStart } from "../../store/actions/onboarding";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import I18n from "../../../../../i18n";
 import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
 } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { bpdOnboardingStart } from "../../store/actions/onboarding";
+import {
+  useActionOnFocus,
+  useNavigationContext
+} from "../../../../../utils/hooks/useOnFocus";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -48,7 +50,7 @@ const BaseBpdCTAStartOnboardingComponent = (props: Props) => {
  * this is a dummy screen reachable only from a message CTA
  */
 const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigationContext();
   if (!props.bpdRemoteConfig?.program_active) {
     Alert.alert(
       I18n.t("bonus.bpd.title"),

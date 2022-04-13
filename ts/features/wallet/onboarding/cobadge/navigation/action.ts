@@ -1,6 +1,5 @@
-import { CommonActions } from "@react-navigation/native";
+import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../../../navigation/NavigationService";
-import ROUTES from "../../../../../navigation/routes";
 import { CoBadgeChooseTypeNavigationProps } from "../screens/CoBadgeChooseType";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "./routes";
 
@@ -12,12 +11,9 @@ export const navigateToOnboardingCoBadgeChooseTypeStartScreen = (
   navigationParams: CoBadgeChooseTypeNavigationProps
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: WALLET_ONBOARDING_COBADGE_ROUTES.MAIN,
-      params: {
-        screen: WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE,
-        params: navigationParams
-      }
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE,
+      params: navigationParams
     })
   );
 
@@ -27,11 +23,8 @@ export const navigateToOnboardingCoBadgeChooseTypeStartScreen = (
  */
 export const navigateToOnboardingCoBadgeSearchStartScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: WALLET_ONBOARDING_COBADGE_ROUTES.MAIN,
-      params: {
-        screen: WALLET_ONBOARDING_COBADGE_ROUTES.START
-      }
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_COBADGE_ROUTES.START
     })
   );
 
@@ -41,11 +34,8 @@ export const navigateToOnboardingCoBadgeSearchStartScreen = () =>
  */
 export const navigateToOnboardingCoBadgeSearchAvailable = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: WALLET_ONBOARDING_COBADGE_ROUTES.MAIN,
-      params: {
-        screen: WALLET_ONBOARDING_COBADGE_ROUTES.SEARCH_AVAILABLE
-      }
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_COBADGE_ROUTES.SEARCH_AVAILABLE
     })
   );
 
@@ -55,10 +45,7 @@ export const navigateToOnboardingCoBadgeSearchAvailable = () =>
  */
 export const navigateToActivateBpdOnNewCoBadge = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: WALLET_ONBOARDING_COBADGE_ROUTES.MAIN,
-      params: {
-        screen: WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW
-      }
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW
     })
   );

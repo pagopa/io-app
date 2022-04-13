@@ -1,26 +1,24 @@
-import { NavigationEvents } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
+import { NavigationEvents, StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 
 import { connect } from "react-redux";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
+import { LightModalContextInterface } from "../ui/LightModal";
+import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import { acknowledgeOnEmailValidation } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { LightModalContextInterface } from "../ui/LightModal";
-import { withConditionalView } from "./withConditionalView";
 import { withLightModalContext } from "./withLightModalContext";
+import { withConditionalView } from "./withConditionalView";
 
 export type ModalProps = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
-  IOStackNavigationRouteProps<AppParamsList>;
+  NavigationStackScreenProps;
 
 /*
   ModalRemindEmailValidationOverlay is the component that allows viewing the email reminder via light modal.
@@ -47,6 +45,14 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
     this.props.dispatchAcknowledgeOnEmailValidation();
   };
 
+  private handleForcedClose = () => {
+    // due a known bug (see https://github.com/react-navigation/react-navigation/issues/4867)
+    // when the user is in onboarding phase and he asks to go to insert email screen
+    // the navigation is forced reset
+    this.props.navigation.dispatch(StackActions.popToTop());
+    navigateToEmailInsertScreen();
+  };
+
   public render() {
     return (
       <View>
@@ -54,9 +60,14 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
           onWillBlur={() => {
             this.hideModal();
           }}
-          onWillFocus={() => {
+          onDidFocus={() => {
             this.props.showModal(
-              <RemindEmailValidationOverlay onClose={this.hideModal} />
+              <RemindEmailValidationOverlay
+                closeModalAndNavigateToEmailInsertScreen={
+                  this.handleForcedClose
+                }
+                onClose={this.hideModal}
+              />
             );
           }}
         />
@@ -93,7 +104,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
  * A HOC to display the WrappedComponent when the email is validated, otherwise the RemindEmailValidationOverlay will be displayed
  *
  * TODO: fix workaround introduced to solve bug on navigation during the onboarding (https://github.com/react-navigation/react-navigation/issues/4867)
- *       If the willFocus and the blur related events are not fired, at forward navigation the hideModal is dispatched manually
+ *       If the didFocus and the blur related events are not fired, at forward navigation the hideModal is dispatched manually
  */
 export function withValidatedEmail<P>(
   WrappedComponent: React.ComponentType<P>

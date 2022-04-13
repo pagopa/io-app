@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { Alert } from "react-native";
 import configureMockStore from "redux-mock-store";
@@ -158,7 +158,7 @@ describe("Test AvailableBonusScreen behaviour", () => {
 });
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <AvailableBonusScreen />,
     BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST,
     {},

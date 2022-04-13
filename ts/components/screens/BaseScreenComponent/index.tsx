@@ -1,23 +1,24 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import React, { ComponentProps, PropsWithChildren, ReactNode } from "react";
 import { ColorValue } from "react-native";
 import { useDispatch } from "react-redux";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { SearchType } from "../../search/SearchButton";
+import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIOSelector } from "../../../store/hooks";
-import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
-import { currentRouteSelector } from "../../../store/reducers/navigation";
-import { FAQsCategoriesType } from "../../../utils/faq";
 import {
   assistanceToolRemoteConfig,
   resetCustomFields
 } from "../../../utils/supportAssistance";
-import { SearchType } from "../../search/SearchButton";
-import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { FAQsCategoriesType } from "../../../utils/faq";
 
 export type ContextualHelpProps = {
   title: string;
@@ -72,13 +73,10 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       titleColor
     } = props;
 
-    /**
-     *  We have to use the deprecated currentRouteSelector because, at the moment, some BaseScreenComponent
-     *  are outside the navigation context.
-     *  TODO: Full usage of navigation header and modal, in order to have always the right context
-     *
-     */
-    const currentScreenName = useIOSelector(currentRouteSelector);
+    // We should check for undefined context because the BaseScreen is used also in the Modal layer, without the navigation context.
+    const currentScreenName = fromNullable(useNavigationContext())
+      .map(x => x.state.routeName)
+      .getOrElse("n/a");
 
     const dispatch = useDispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);

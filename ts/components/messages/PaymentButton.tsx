@@ -9,6 +9,7 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { isPagoPaSupportedSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 
 import I18n from "../../i18n";
+import NavigationService from "../../navigation/NavigationService";
 import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -70,7 +71,8 @@ const PaymentButton = ({
         navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
           initialAmount: amount.value,
-          paymentStartOrigin: "message"
+          paymentStartOrigin: "message",
+          startRoute: NavigationService.getCurrentRoute()
         });
       } else {
         // Navigating to Wallet home, having the email address is not validated,

@@ -1,5 +1,5 @@
-import { CommonActions } from "@react-navigation/native";
 import { select, call, take } from "typed-redux-saga/macro";
+import { NavigationActions } from "react-navigation";
 import { createStandardAction } from "typesafe-actions";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -48,8 +48,8 @@ export function* askPremiumMessagesOptInOut() {
   // wait until he/she done a choice.
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(ROUTES.ONBOARDING, {
-      route: ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT
     })
   );
 

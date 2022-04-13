@@ -1,15 +1,13 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { Content, Text } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import {
   abortOnboarding,
   fingerprintAcknowledge
@@ -50,11 +48,8 @@ function getBiometryIconName(biometryType: BiometricsValidType): string {
   }
 }
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<OnboardingParamsList, "ONBOARDING_FINGERPRINT">
-  >;
-} & ReturnType<typeof mapDispatchToProps>;
+type Props = NavigationStackScreenProps<FingerprintScreenNavigationParams> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",

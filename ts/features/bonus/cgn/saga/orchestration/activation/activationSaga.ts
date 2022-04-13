@@ -1,14 +1,9 @@
 import { SagaIterator } from "redux-saga";
 import { call } from "typed-redux-saga/macro";
-import NavigationService from "../../../../../../navigation/NavigationService";
-import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateBack } from "../../../../../../store/actions/navigation";
-import { SagaCallReturnType } from "../../../../../../types/utils";
-import BONUSVACANZE_ROUTES from "../../../../bonusVacanze/navigation/routes";
 import {
   navigateToCgnActivationInformationTos,
   navigateToCgnDetails
@@ -20,6 +15,11 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import BONUSVACANZE_ROUTES from "../../../../bonusVacanze/navigation/routes";
+import { navigateBack } from "../../../../../../store/actions/navigation";
+import ROUTES from "../../../../../../navigation/routes";
 
 function* cgnActivationWorkUnit() {
   return yield* call(executeWorkUnit, {
@@ -44,11 +44,11 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     sagaExecution
   );
 
-  if (initialScreen?.name === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
+  if (initialScreen?.routeName === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
     yield* call(NavigationService.navigate, ROUTES.MESSAGES_HOME);
   }
   if (result === "completed") {
-    if (initialScreen?.name === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST) {
+    if (initialScreen?.routeName === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST) {
       yield* call(navigateBack);
     }
     yield* call(navigateToCgnDetails);

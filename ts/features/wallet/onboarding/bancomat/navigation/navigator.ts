@@ -1,14 +1,11 @@
-import { createCompatNavigatorFactory } from "@react-navigation/compat";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from "react-navigation-stack";
 import SuggestBpdActivationScreen from "../../common/screens/bpd/SuggestBpdActivationScreen";
 import BancomatSearchBankScreen from "../screens/search/BancomatSearchBankScreen";
 import BancomatSearchStartScreen from "../screens/search/BancomatSearchStartScreen";
 import SearchAvailableUserBancomatScreen from "../screens/searchBancomat/SearchAvailableUserBancomatScreen";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
-const PaymentMethodOnboardingBancomatNavigator = createCompatNavigatorFactory(
-  createStackNavigator
-)(
+const PaymentMethodOnboardingBancomatNavigator = createStackNavigator(
   {
     [WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START]: {
       screen: BancomatSearchStartScreen

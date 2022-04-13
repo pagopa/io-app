@@ -17,7 +17,6 @@ import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import appStateReducer from "./appState";
-import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as autenticationInitialState
@@ -30,6 +29,7 @@ import contentReducer, {
 } from "./content";
 import crossSessionsReducer from "./crossSessions";
 import { debugReducer } from "./debug";
+import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
 import entitiesReducer, {
   entitiesPersistConfig,
@@ -52,6 +52,7 @@ import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
+import assistanceToolsReducer from "./assistanceTools";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -88,6 +89,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   appState: appStateReducer,
   navigation: navigationReducer,
   backoffError: backoffErrorReducer,
+  deepLink: deepLinkReducer,
   wallet: walletReducer,
   versionInfo: versionInfoReducer,
   backendStatus: backendStatusReducer,

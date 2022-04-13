@@ -1,9 +1,9 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { ReactElement, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H2 } from "../../components/core/typography/H2";
@@ -19,8 +19,6 @@ import {
   LightModalContextInterface
 } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
@@ -28,11 +26,9 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
-type Props = ReturnType<typeof mapStateToProps> & {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">
-  >;
-} & ReturnType<typeof mapDispatchToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
+  NavigationStackScreenProps &
+  ReturnType<typeof mapDispatchToProps> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({

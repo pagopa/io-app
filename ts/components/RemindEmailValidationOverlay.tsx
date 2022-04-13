@@ -9,8 +9,6 @@ import * as React from "react";
 import { Alert, BackHandler, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../i18n";
-import NavigationService from "../navigation/NavigationService";
-import ROUTES from "../navigation/routes";
 import {
   navigateBack,
   navigateToEmailInsertScreen
@@ -46,6 +44,7 @@ import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
 
 type OwnProp = {
+  closeModalAndNavigateToEmailInsertScreen: () => void;
   onClose: () => void;
 };
 
@@ -316,22 +315,11 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               bordered: true,
               disabled: this.state.isLoading,
               onPress: () => {
-                /**
-                 * TODO: this is a temp workaround to complete porting a react-navigation v5
-                 * without a full rework of all the related email / isOnboardingCompleted screens
-                 * Will be removed in https://pagopa.atlassian.net/browse/IAI-139 . We want:
-                 * - Have a common component with the shared logic
-                 * - Compose the common logic with the navigation stack dependent logic and isolate the dependent navigation logic
-                 */
-                if (
-                  NavigationService.getCurrentRouteName() === ROUTES.WALLET_HOME
-                ) {
-                  NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                    screen: ROUTES.INSERT_EMAIL_SCREEN
-                  });
-                } else {
-                  navigateToEmailInsertScreen();
+                if (!isOnboardingCompleted) {
+                  this.props.closeModalAndNavigateToEmailInsertScreen();
+                  return;
                 }
+                this.props.navigateToEmailInsertScreen();
               },
               title: I18n.t("email.edit.title")
             }}
@@ -428,6 +416,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   reloadProfile: () => {
     // Refresh profile to check if the email address has been validated
     dispatch(profileLoadRequest());
+  },
+  navigateToEmailInsertScreen: () => {
+    navigateToEmailInsertScreen();
   },
   acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
   dispatchAcknowledgeOnEmailValidation: (maybeAcknowledged: Option<boolean>) =>

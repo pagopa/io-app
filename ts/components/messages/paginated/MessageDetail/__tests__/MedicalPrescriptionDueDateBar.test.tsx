@@ -1,5 +1,6 @@
 import React from "react";
 import configureMockStore from "redux-mock-store";
+import { NavigationParams } from "react-navigation";
 
 import MedicalPrescriptionDueDateBar from "../MedicalPrescriptionDueDateBar";
 import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
@@ -85,7 +86,7 @@ const renderComponent = (
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       () => <MedicalPrescriptionDueDateBar {...props} />,
       ROUTES.MESSAGE_DETAIL,
       {},

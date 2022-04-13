@@ -1,17 +1,18 @@
-import { pot } from "@pagopa/ts-commons";
-import { fireEvent } from "@testing-library/react-native";
-import { none } from "fp-ts/lib/Option";
 import React from "react";
 import configureMockStore from "redux-mock-store";
-import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
-import ROUTES from "../../../../navigation/routes";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { NavigationParams } from "react-navigation";
+import { pot } from "@pagopa/ts-commons";
+import { none } from "fp-ts/lib/Option";
+import { fireEvent } from "@testing-library/react-native";
 
 import MessagesInbox from "../MessagesInbox";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ROUTES from "../../../../navigation/routes";
+import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
+import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 
 jest.useFakeTimers();
 
@@ -52,7 +53,7 @@ const renderComponent = (props: React.ComponentProps<typeof MessagesInbox>) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       () => <MessagesInbox {...props} />,
       ROUTES.MESSAGES_HOME,
       {},

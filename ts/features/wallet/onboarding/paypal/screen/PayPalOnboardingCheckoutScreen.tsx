@@ -1,32 +1,32 @@
-import { useNavigation } from "@react-navigation/native";
-import { Option } from "fp-ts/lib/Option";
-import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import WorkunitGenericFailure from "../../../../../components/error/WorkunitGenericFailure";
+import { Option } from "fp-ts/lib/Option";
+import { NavigationContext } from "react-navigation";
+import { Alert } from "react-native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../i18n";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import {
+  walletAddPaypalOutcome,
+  walletAddPaypalBack,
+  walletAddPaypalRefreshPMToken
+} from "../store/actions";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { pmSessionTokenSelector } from "../../../../../store/reducers/wallet/payment";
+import { fold } from "../../../../bonus/bpd/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { PayWebViewModal } from "../../../../../components/wallet/PayWebViewModal";
 import {
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../../../../../config";
-import I18n from "../../../../../i18n";
 import { isPagoPATestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { pmSessionTokenSelector } from "../../../../../store/reducers/wallet/payment";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
 import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
-import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { fold } from "../../../../bonus/bpd/model/RemoteValue";
-import {
-  walletAddPaypalBack,
-  walletAddPaypalOutcome,
-  walletAddPaypalRefreshPMToken
-} from "../store/actions";
+import WorkunitGenericFailure from "../../../../../components/error/WorkunitGenericFailure";
 import { navigateToPayPalCheckoutCompleted } from "../store/actions/navigation";
-import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -104,7 +104,7 @@ const CheckoutContent = (
  * 4. navigate to the checkout completed screen
  */
 const PayPalOnboardingCheckoutScreen = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useContext(NavigationContext);
   const { refreshPMtoken } = props;
   // refresh the PM at the startup
   useEffect(() => {

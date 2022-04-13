@@ -1,4 +1,5 @@
 import React from "react";
+import { NavigationParams } from "react-navigation";
 import URLParse from "url-parse";
 import { createStore } from "redux";
 import {
@@ -96,7 +97,7 @@ describe("PayWebViewModal component", () => {
 
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => (
       <PayWebViewModal
         postUri={"where.to.post"}

@@ -1,8 +1,8 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
@@ -24,8 +24,6 @@ import {
   zendeskSupportStart
 } from "../../features/zendesk/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
@@ -61,12 +59,10 @@ export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_HISTORY_DETAIL_INFO">
-  >;
-} & ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type Props =
+  NavigationStackScreenProps<PaymentHistoryDetailsScreenNavigationParams> &
+    ReturnType<typeof mapStateToProps> &
+    ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   flex: {

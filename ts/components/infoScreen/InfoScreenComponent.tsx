@@ -1,7 +1,7 @@
-import { NavigationEvents } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { Body } from "../core/typography/Body";
@@ -57,7 +57,7 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
 
   return (
     <View style={styles.main} testID="InfoScreenComponent">
-      <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
+      <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
       <View spacer={true} large={true} />
       <H2

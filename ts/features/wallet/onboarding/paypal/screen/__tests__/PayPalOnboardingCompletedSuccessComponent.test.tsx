@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-
+import { NavigationParams } from "react-navigation";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
@@ -86,7 +86,7 @@ const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
   const render = {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       PayPalOnboardingCompletedSuccessComponent,
       "N/A",
       {},

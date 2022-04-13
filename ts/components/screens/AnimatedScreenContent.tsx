@@ -3,7 +3,6 @@
  * - scroll to top on its focus
  * - provide a dynanic subheader appearing on scroll
  */
-import { NavigationEvents } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -15,6 +14,7 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
+import { NavigationEvents } from "react-navigation";
 
 import { isIphoneX } from "react-native-iphone-x-helper";
 import customVariables from "../../theme/variables";

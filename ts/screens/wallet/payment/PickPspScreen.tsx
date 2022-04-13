@@ -1,9 +1,9 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { H3, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -21,8 +21,6 @@ import { PspComponent } from "../../../components/wallet/payment/PspComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
@@ -44,11 +42,7 @@ export type PickPspScreenNavigationParams = Readonly<{
   chooseToChange?: boolean;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_PICK_PSP">
-  >;
-};
+type OwnProps = NavigationStackScreenProps<PickPspScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

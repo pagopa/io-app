@@ -1,9 +1,7 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { SatispayPaymentMethod } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
@@ -16,11 +14,8 @@ export type SatispayDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<WalletParamsList, "WALLET_SATISPAY_DETAIL">
-    >;
-  };
+  ReturnType<typeof mapStateToProps> &
+  NavigationStackScreenProps<SatispayDetailScreenNavigationParams>;
 
 /**
  * Detail screen for a satispay

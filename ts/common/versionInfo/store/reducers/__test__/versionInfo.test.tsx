@@ -14,6 +14,11 @@ import {
   isAppSupportedSelector
 } from "../versionInfo";
 
+jest.mock("react-native-device-info", () => ({
+  getVersion: jest.fn(),
+  getReadableVersion: jest.fn()
+}));
+
 describe("versionInfo selectors", () => {
   describe("When the store is in initial state", () => {
     it("isAppSupportedSelector should return true", () => {

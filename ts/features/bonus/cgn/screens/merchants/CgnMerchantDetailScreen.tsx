@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
@@ -11,6 +10,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
@@ -26,7 +26,6 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
@@ -37,7 +36,6 @@ import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/But
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
-import { CgnDetailsParamsList } from "../../navigation/params";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 
@@ -46,11 +44,8 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_DETAIL">
-    >;
-  };
+  ReturnType<typeof mapDispatchToProps> &
+  NavigationStackScreenProps<CgnMerchantDetailScreenNavigationParams>;
 
 const styles = StyleSheet.create({
   merchantImage: {

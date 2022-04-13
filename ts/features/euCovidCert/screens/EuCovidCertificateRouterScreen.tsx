@@ -1,14 +1,12 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { usePaginatedMessages } from "../../../config";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
+import { usePaginatedMessages } from "../../../config";
 import { GlobalState } from "../../../store/reducers/types";
-import { EUCovidCertParamsList } from "../navigation/params";
 import { euCovidCertificateGet } from "../store/actions";
 import {
   euCovidCertificateFromAuthCodeSelector,
@@ -35,11 +33,8 @@ export type EuCovidCertificateRouterScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<EUCovidCertParamsList, "EUCOVIDCERT_CERTIFICATE">
-    >;
-  };
+  ReturnType<typeof mapStateToProps> &
+  NavigationStackScreenProps<EuCovidCertificateRouterScreenNavigationParams>;
 
 /**
  * Return the right screen based on the response value

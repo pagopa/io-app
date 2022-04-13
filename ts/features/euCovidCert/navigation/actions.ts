@@ -1,6 +1,5 @@
-import { CommonActions } from "@react-navigation/native";
+import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../navigation/NavigationService";
-import ROUTES from "../../../navigation/routes";
 import { EuCovidCertificateRouterScreenNavigationParams } from "../screens/EuCovidCertificateRouterScreen";
 import { EuCovidCertMarkdownDetailsScreenNavigationParams } from "../screens/valid/EuCovidCertMarkdownDetailsScreen";
 import { EuCovidCertQrCodeFullScreenNavigationParams } from "../screens/valid/EuCovidCertQrCodeFullScreen";
@@ -14,12 +13,9 @@ export const navigateToEuCovidCertificateDetailScreen = (
   params: EuCovidCertificateRouterScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: EUCOVIDCERT_ROUTES.MAIN,
-      params: {
-        screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
-        params
-      }
+    NavigationActions.navigate({
+      routeName: EUCOVIDCERT_ROUTES.CERTIFICATE,
+      params
     })
   );
 
@@ -31,12 +27,9 @@ export const navigateToEuCovidCertificateQrCodeFullScreen = (
   params: EuCovidCertQrCodeFullScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: EUCOVIDCERT_ROUTES.MAIN,
-      params: {
-        screen: EUCOVIDCERT_ROUTES.QRCODE,
-        params
-      }
+    NavigationActions.navigate({
+      routeName: EUCOVIDCERT_ROUTES.QRCODE,
+      params
     })
   );
 
@@ -48,11 +41,8 @@ export const navigateToEuCovidCertificateMarkdownDetailsScreen = (
   params: EuCovidCertMarkdownDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: EUCOVIDCERT_ROUTES.MAIN,
-      params: {
-        screen: EUCOVIDCERT_ROUTES.MARKDOWN_DETAILS,
-        params
-      }
+    NavigationActions.navigate({
+      routeName: EUCOVIDCERT_ROUTES.MARKDOWN_DETAILS,
+      params
     })
   );

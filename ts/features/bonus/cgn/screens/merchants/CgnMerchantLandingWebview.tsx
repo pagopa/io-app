@@ -1,28 +1,23 @@
-import { CompatNavigationProp } from "@react-navigation/compat/src/types";
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import WebviewComponent from "../../../../../components/WebviewComponent";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { CgnDetailsParamsList } from "../../navigation/params";
+import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
 export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
   landingPageUrl: string;
   landingPageReferrer: string;
 }>;
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_LANDING_WEBVIEW">
-  >;
-};
+type Props =
+  NavigationStackScreenProps<CgnMerchantLandingWebviewNavigationParams>;
 
 const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const navigation = useNavigation();
+  const navigation = useNavigationContext();
   const landingPageUrl = props.navigation.getParam("landingPageUrl");
   const landingPageReferrer = props.navigation.getParam("landingPageReferrer");
 

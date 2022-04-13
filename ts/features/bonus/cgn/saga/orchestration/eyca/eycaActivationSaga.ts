@@ -1,6 +1,5 @@
-import { CommonActions } from "@react-navigation/native";
+import { NavigationActions } from "react-navigation";
 import { call, put, race, take } from "typed-redux-saga/macro";
-import NavigationService from "../../../../../../navigation/NavigationService";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { BackendCGN } from "../../../api/backendCgn";
 import {
@@ -94,9 +93,6 @@ export function* eycaActivationSaga(
   });
 
   if (cancelAction) {
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      CommonActions.goBack()
-    );
+    yield* put(NavigationActions.back());
   }
 }

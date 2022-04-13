@@ -1,7 +1,7 @@
 import { FiscalCode } from "italia-ts-commons/lib/strings";
 import { Content, View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { connect } from "react-redux";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 import { LabelledItem } from "../../components/LabelledItem";

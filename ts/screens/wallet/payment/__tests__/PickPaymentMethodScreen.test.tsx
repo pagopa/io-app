@@ -2,7 +2,7 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fireEvent } from "@testing-library/react-native";
 import { some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-
+import { NavigationParams } from "react-navigation";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -230,7 +230,7 @@ describe("PickPaymentMethodScreen", () => {
 });
 
 const renderPickPaymentMethodScreen = (store: Store<GlobalState, Action>) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     PickPaymentMethodScreen,
     WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE,
     {

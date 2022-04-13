@@ -1,8 +1,8 @@
-import { StackActions } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView } from "react-native";
+import { StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {

@@ -1,13 +1,13 @@
 /**
  * A screen that contains all the Tabs related to messages.
  */
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
@@ -19,10 +19,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../components/SectionStatus";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   DEPRECATED_loadMessages as loadMessages,
   DEPRECATED_setMessagesArchivedState
@@ -30,7 +27,6 @@ import {
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
-import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import {
@@ -44,17 +40,16 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
+import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
+import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import {
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../../utils/accessibility";
-import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MainTabParamsList, "MESSAGES_HOME">
-  >;
-} & ReturnType<typeof mapStateToProps> &
+type Props = NavigationStackScreenProps &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {

@@ -1,5 +1,5 @@
+import { NavigationActions } from "react-navigation";
 import { call, select, take } from "typed-redux-saga/macro";
-import { CommonActions } from "@react-navigation/native";
 import { ActionType } from "typesafe-actions";
 import { initializeMixPanel, terminateMixpanel } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -43,11 +43,8 @@ export function* askMixpanelOptIn() {
   // wait until he/she done a choice
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.navigate({
-      name: ROUTES.ONBOARDING,
-      params: {
-        name: ROUTES.ONBOARDING_SHARE_DATA
-      }
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_SHARE_DATA
     })
   );
   yield* take(setMixpanelEnabled);

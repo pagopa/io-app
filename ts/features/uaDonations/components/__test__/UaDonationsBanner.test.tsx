@@ -1,5 +1,5 @@
 // import React from "react";
-
+import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { MockStore } from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
@@ -138,7 +138,7 @@ describe("UaDonationsBanner", () => {
 });
 
 const renderComponent = (store: MockStore<GlobalState> | Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     UaDonationsBanner,
     ROUTES.MESSAGES_HOME,
     {},

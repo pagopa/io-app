@@ -1,4 +1,8 @@
-import { CommonActions } from "@react-navigation/native";
+import {
+  NavigationActions,
+  NavigationBackActionPayload,
+  StackActions
+} from "react-navigation";
 import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
@@ -31,15 +35,21 @@ import {
   PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
+import { PayPalPspUpdateScreenNavigationParams } from "../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 
 /**
  * @deprecated
  */
 export const resetToAuthenticationRoute = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.reset({
+    StackActions.reset({
       index: 0,
-      routes: [{ name: ROUTES.AUTHENTICATION }]
+      key: null,
+      actions: [
+        NavigationActions.navigate({
+          routeName: ROUTES.AUTHENTICATION
+        })
+      ]
     })
   );
 
@@ -48,17 +58,22 @@ export const resetToAuthenticationRoute = () =>
  */
 export const navigateToMainNavigatorAction = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.reset({
+    StackActions.reset({
+      key: "StackRouterRoot",
       index: 0,
-      routes: [{ name: ROUTES.MAIN }]
+      actions: [
+        NavigationActions.navigate({
+          routeName: ROUTES.MAIN
+        })
+      ]
     })
   );
 
 /**
  * @deprecated
  */
-export const navigateBack = () =>
-  NavigationService.dispatchNavigationAction(CommonActions.goBack());
+export const navigateBack = (options?: NavigationBackActionPayload) =>
+  NavigationService.dispatchNavigationAction(NavigationActions.back(options));
 
 /**
  * Authentication
@@ -69,8 +84,11 @@ export const navigateBack = () =>
  */
 export const navigateToIdpSelectionScreenAction = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+    NavigationActions.navigate({
+      routeName: ROUTES.AUTHENTICATION,
+      action: NavigationActions.navigate({
+        routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
+      })
     })
   );
 
@@ -79,8 +97,9 @@ export const navigateToIdpSelectionScreenAction = () =>
  */
 export const navigateToOnboardingPinScreenAction = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_PIN
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING,
+      action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
     })
   );
 
@@ -91,8 +110,8 @@ export const navigateToOnboardingFingerprintScreenAction = (
   params: FingerprintScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_FINGERPRINT,
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_FINGERPRINT,
       params
     })
   );
@@ -102,8 +121,9 @@ export const navigateToOnboardingFingerprintScreenAction = (
  */
 export const navigateToTosScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_TOS
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING,
+      action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
     })
   );
 
@@ -112,8 +132,8 @@ export const navigateToTosScreen = () =>
  */
 export const navigateToOnboardingServicePreferenceCompleteAction = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
     })
   );
 
@@ -124,8 +144,8 @@ export const navigateToServicesPreferenceModeSelectionScreen = (
   params: OnboardingServicesPreferenceScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
       params
     })
   );
@@ -137,20 +157,22 @@ export const navigateToServicesPreferenceModeSelectionScreen = (
 /**
  * @deprecated
  */
-export const navigateToEmailReadScreen = () => {
+export const navigateToEmailReadScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.READ_EMAIL_SCREEN)
+    NavigationActions.navigate({
+      routeName: ROUTES.READ_EMAIL_SCREEN
+    })
   );
-};
 
 /**
  * @deprecated
  */
-export const navigateToEmailInsertScreen = () => {
+export const navigateToEmailInsertScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.INSERT_EMAIL_SCREEN)
+    NavigationActions.navigate({
+      routeName: ROUTES.INSERT_EMAIL_SCREEN
+    })
   );
-};
 
 /**
  * Message
@@ -163,8 +185,8 @@ export const navigateToMessageDetailScreenAction = (
   params: MessageDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: ROUTES.MESSAGE_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.MESSAGE_DETAIL,
       params
     })
   );
@@ -175,8 +197,8 @@ export const navigateToMessageDetailScreenAction = (
 export const navigateToPaginatedMessageDetailScreenAction = (
   params: MessageDetailScreenPaginatedNavigationParams
 ) =>
-  CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-    screen: ROUTES.MESSAGE_DETAIL_PAGINATED,
+  NavigationActions.navigate({
+    routeName: ROUTES.MESSAGE_DETAIL_PAGINATED,
     params
   });
 
@@ -186,8 +208,8 @@ export const navigateToPaginatedMessageDetailScreenAction = (
 export const navigateToPaginatedMessageRouterAction = (
   params: MessageRouterScreenPaginatedNavigationParams
 ) =>
-  CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-    screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+  NavigationActions.navigate({
+    routeName: ROUTES.MESSAGE_ROUTER_PAGINATED,
     params
   });
 
@@ -198,8 +220,8 @@ export const navigateToMessageRouterScreen = (
   params: MessageDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: ROUTES.MESSAGE_ROUTER,
+    NavigationActions.navigate({
+      routeName: ROUTES.MESSAGE_ROUTER,
       params
     })
   );
@@ -213,8 +235,8 @@ export const navigateToMessageRouterScreen = (
  */
 export const navigateToServiceHomeScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
-      screen: ROUTES.SERVICES_HOME
+    NavigationActions.navigate({
+      routeName: ROUTES.SERVICES_HOME
     })
   );
 
@@ -225,8 +247,8 @@ export const navigateToServiceDetailsScreen = (
   params: ServiceDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
-      screen: ROUTES.SERVICE_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.SERVICE_DETAIL,
       params
     })
   );
@@ -240,8 +262,8 @@ export const navigateToServiceDetailsScreen = (
  */
 export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
     })
   );
 
@@ -250,8 +272,8 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
  */
 export const navigateToServicePreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
     })
   );
 
@@ -260,8 +282,8 @@ export const navigateToServicePreferenceScreen = () =>
  */
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_CALENDAR
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
     })
   );
 
@@ -270,8 +292,8 @@ export const navigateToCalendarPreferenceScreen = () =>
  */
 export const navigateToLanguagePreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_LANGUAGE
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
     })
   );
 
@@ -280,8 +302,8 @@ export const navigateToLanguagePreferenceScreen = () =>
  */
 export const navigateToLogout = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_LOGOUT
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_LOGOUT
     })
   );
 
@@ -290,8 +312,8 @@ export const navigateToLogout = () =>
  */
 export const navigateToRemoveAccountSuccess = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
     })
   );
 
@@ -300,8 +322,8 @@ export const navigateToRemoveAccountSuccess = () =>
  */
 export const navigateToRemoveAccountDetailScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
     })
   );
 
@@ -310,11 +332,11 @@ export const navigateToRemoveAccountDetailScreen = () =>
  */
 export const navigateToPrivacyScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PRIVACY_MAIN,
-      params: {
-        screen: ROUTES.PROFILE_PRIVACY_MAIN
-      }
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PRIVACY_MAIN,
+      action: NavigationActions.navigate({
+        routeName: ROUTES.PROFILE_PRIVACY_MAIN
+      })
     })
   );
 
@@ -323,8 +345,8 @@ export const navigateToPrivacyScreen = () =>
  */
 export const navigateToPrivacyShareData = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
     })
   );
 
@@ -339,8 +361,8 @@ export const navigateToPaymentTransactionSummaryScreen = (
   params: TransactionSummaryScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
       params
     })
   );
@@ -352,8 +374,8 @@ export const navigateToPaymentTransactionErrorScreen = (
   params: TransactionErrorScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_TRANSACTION_ERROR,
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_TRANSACTION_ERROR,
       params
     })
   );
@@ -365,8 +387,8 @@ export const navigateToPaymentPickPaymentMethodScreen = (
   params: PickPaymentMethodScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
       params
     })
   );
@@ -378,8 +400,8 @@ export const navigateToTransactionDetailsScreen = (
   params: TransactionDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_TRANSACTION_DETAILS,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_TRANSACTION_DETAILS,
       params
     })
   );
@@ -391,8 +413,8 @@ export const navigateToCreditCardDetailScreen = (
   params: CreditCardDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_CREDIT_CARD_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_CREDIT_CARD_DETAIL,
       params
     })
   );
@@ -404,8 +426,8 @@ export const navigateToBancomatDetailScreen = (
   bancomat: BancomatPaymentMethod
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_BANCOMAT_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
       params: { bancomat }
     })
   );
@@ -417,15 +439,23 @@ export const navigateToSatispayDetailScreen = (
   satispay: SatispayPaymentMethod
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_SATISPAY_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_SATISPAY_DETAIL,
       params: { satispay }
     })
   );
 
 export const navigateToPayPalDetailScreen = () =>
-  CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-    screen: ROUTES.WALLET_PAYPAL_DETAIL
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PAYPAL_DETAIL
+  });
+
+export const navigateToPayPalUpdatePspForPayment = (
+  params: PayPalPspUpdateScreenNavigationParams
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP,
+    params
   });
 
 /**
@@ -433,8 +463,8 @@ export const navigateToPayPalDetailScreen = () =>
  */
 export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_BPAY_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_BPAY_DETAIL,
       params: { bPay }
     })
   );
@@ -446,8 +476,8 @@ export const navigateToCobadgeDetailScreen = (
   cobadge: CreditCardPaymentMethod
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_COBADGE_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_COBADGE_DETAIL,
       params: { cobadge }
     })
   );
@@ -459,8 +489,8 @@ export const navigateToPrivativeDetailScreen = (
   privative: PrivativePaymentMethod
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_PRIVATIVE_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
       params: { privative }
     })
   );
@@ -472,8 +502,8 @@ export const navigateToPaymentPickPspScreen = (
   params: PickPspScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_PICK_PSP,
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_PICK_PSP,
       params
     })
   );
@@ -485,8 +515,8 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
   params: ConfirmPaymentMethodScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       params
     })
   );
@@ -498,8 +528,8 @@ export const navigateToPaymentHistoryDetail = (
   params: PaymentHistoryDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
       params
     })
   );
@@ -511,8 +541,8 @@ export const navigateToCreditCardOnboardingAttempt = (
   params: CreditCardOnboardingAttemptDetailScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL,
+    NavigationActions.navigate({
+      routeName: ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL,
       params
     })
   );
@@ -522,8 +552,8 @@ export const navigateToCreditCardOnboardingAttempt = (
  */
 export const navigateToWalletHome = (params?: WalletHomeNavigationParams) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MAIN, {
-      screen: ROUTES.WALLET_HOME,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_HOME,
       params
     })
   );
@@ -535,8 +565,8 @@ export const navigateToWalletAddPaymentMethod = (
   params: AddPaymentMethodScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_ADD_PAYMENT_METHOD,
       params
     })
   );
@@ -548,8 +578,8 @@ export const navigateToWalletAddCreditCard = (
   params: AddCardScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_ADD_CARD,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_ADD_CARD,
       params
     })
   );
@@ -561,8 +591,8 @@ export const navigateToWalletConfirmCardDetails = (
   params: ConfirmCardDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_CONFIRM_CARD_DETAILS,
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_CONFIRM_CARD_DETAILS,
       params
     })
   );
@@ -572,8 +602,8 @@ export const navigateToWalletConfirmCardDetails = (
  */
 export const navigateToPaymentScanQrCode = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_SCAN_QR_CODE
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_SCAN_QR_CODE
     })
   );
 
@@ -584,8 +614,8 @@ export const navigateToPaymentManualDataInsertion = (
   params?: ManualDataInsertionScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
       params
     })
   );
@@ -597,8 +627,8 @@ export const navigateToAddCreditCardOutcomeCode = (
   params: AddCreditCardOutcomeCodeMessageNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
+    NavigationActions.navigate({
+      routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
       params
     })
   );
@@ -610,8 +640,8 @@ export const navigateToPaymentOutcomeCode = (
   params: PaymentOutcomeCodeMessageNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE,
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE,
       params
     })
   );
@@ -625,8 +655,8 @@ export const navigateToPaymentOutcomeCode = (
  */
 export const navigateToCieInvalidScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_EXPIRED_SCREEN
+    NavigationActions.navigate({
+      routeName: ROUTES.CIE_EXPIRED_SCREEN
     })
   );
 
@@ -635,8 +665,8 @@ export const navigateToCieInvalidScreen = () =>
  */
 export const navigateToCiePinScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_PIN_SCREEN
+    NavigationActions.navigate({
+      routeName: ROUTES.CIE_PIN_SCREEN
     })
   );
 
@@ -647,8 +677,8 @@ export const navigateToCieCardReaderScreen = (
   params?: CieCardReaderScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_CARD_READER_SCREEN,
+    NavigationActions.navigate({
+      routeName: ROUTES.CIE_CARD_READER_SCREEN,
       params
     })
   );
@@ -658,7 +688,9 @@ export const navigateToCieCardReaderScreen = (
  */
 export const navigateToWorkunitGenericFailureScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE)
+    NavigationActions.navigate({
+      routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
+    })
   );
 
 /**
@@ -669,8 +701,8 @@ export const navigateToWorkunitGenericFailureScreen = () =>
  */
 export const navigateToSPIDTestIDP = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_TEST
+    NavigationActions.navigate({
+      routeName: ROUTES.AUTHENTICATION_IDP_TEST
     })
   );
 
@@ -679,7 +711,7 @@ export const navigateToSPIDTestIDP = () =>
  */
 export const navigateToSPIDLogin = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_LOGIN
+    NavigationActions.navigate({
+      routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
     })
   );

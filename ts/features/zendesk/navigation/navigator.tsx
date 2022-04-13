@@ -1,5 +1,4 @@
-import { createCompatNavigatorFactory } from "@react-navigation/compat";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from "react-navigation-stack";
 import ZendeskSupportHelpCenter from "../screens/ZendeskSupportHelpCenter";
 import ZendeskAskPermissions from "../screens/ZendeskAskPermissions";
 import ZendeskChooseCategory from "../screens/ZendeskChooseCategory";
@@ -7,9 +6,7 @@ import ZendeskChooseSubCategory from "../screens/ZendeskChooseSubCategory";
 import ZendeskPanicMode from "../screens/ZendeskPanicMode";
 import ZENDESK_ROUTES from "./routes";
 
-export const zendeskSupportNavigator = createCompatNavigatorFactory(
-  createStackNavigator
-)(
+export const zendeskSupportNavigator = createStackNavigator(
   {
     [ZENDESK_ROUTES.HELP_CENTER]: { screen: ZendeskSupportHelpCenter },
     [ZENDESK_ROUTES.PANIC_MODE]: { screen: ZendeskPanicMode },

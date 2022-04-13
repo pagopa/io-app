@@ -12,6 +12,7 @@ import { CieState } from "./cie";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
 import { DebugState } from "./debug";
+import { DeepLinkState } from "./deepLink";
 import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
@@ -35,6 +36,7 @@ export type GlobalState = Readonly<{
   authentication: PersistedAuthenticationState;
   backendStatus: BackendStatusState;
   versionInfo: VersionInfoState;
+  deepLink: DeepLinkState;
   entities: PersistedEntitiesState;
   backoffError: BackoffErrorState;
   notifications: NotificationsState;

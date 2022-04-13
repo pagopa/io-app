@@ -1,26 +1,21 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import BonusInformationComponent from "../../common/components/BonusInformationComponent";
-import { BonusVacanzeParamsList } from "../navigation/params";
 import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
 
 export type BonusInformationScreenNavigationParams = Readonly<{
   bonusItem: BonusAvailable;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<BonusVacanzeParamsList, "BONUS_REQUEST_INFORMATION">
-  >;
-};
+type OwnProps =
+  NavigationStackScreenProps<BonusInformationScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

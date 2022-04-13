@@ -1,4 +1,4 @@
-import { NavigationActions } from "@react-navigation/compat";
+import { NavigationActions } from "react-navigation";
 import PAYPAL_ROUTES from "../../navigation/routes";
 
 export const navigateToPaypalSearchPsp = () =>

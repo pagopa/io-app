@@ -1,7 +1,7 @@
 import { createStore, Store } from "redux";
 import * as pot from "italia-ts-commons/lib/pot";
 import { RenderAPI } from "@testing-library/react-native";
-
+import { NavigationParams } from "react-navigation";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import ROUTES from "../../../../../../navigation/routes";
@@ -91,7 +91,7 @@ describe("the OptInPaymentMethodsThankYouKeepMethodsScreen screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     OptInPaymentMethodsThankYouKeepMethodsScreen,
     ROUTES.MAIN,
     {},

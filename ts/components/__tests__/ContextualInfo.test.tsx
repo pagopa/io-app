@@ -1,13 +1,14 @@
-import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import React from "react";
+import { NavigationParams } from "react-navigation";
 import { BackHandler, Text } from "react-native";
 import { createStore } from "redux";
-import ROUTES from "../../navigation/routes";
+import { fireEvent, RenderAPI } from "@testing-library/react-native";
 
 import { applicationChangeState } from "../../store/actions/application";
-import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
+import ROUTES from "../../navigation/routes";
+import { appReducer } from "../../store/reducers";
 import ContextualInfo from "../ContextualInfo";
 
 jest.useFakeTimers();
@@ -85,7 +86,7 @@ describe("ContextualInfo component", () => {
 
 function renderComponent(props: React.ComponentProps<typeof ContextualInfo>) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     () => <ContextualInfo {...props} />,
     ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
     {},

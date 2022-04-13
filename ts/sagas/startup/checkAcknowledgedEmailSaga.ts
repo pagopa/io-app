@@ -1,7 +1,9 @@
 import { call, take } from "typed-redux-saga/macro";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import NavigationService from "../../navigation/NavigationService";
-import ROUTES from "../../navigation/routes";
+import {
+  navigateToEmailInsertScreen,
+  navigateToEmailReadScreen
+} from "../../store/actions/navigation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
 import {
   hasProfileEmail,
@@ -31,9 +33,7 @@ export function* checkAcknowledgedEmailSaga(
       // OR
       // An email exists on the user's profile but it is not validated, the conditional
       // view shows the component that reminds to validate the email address or allows the navigation to edit it.
-      yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-        screen: ROUTES.READ_EMAIL_SCREEN
-      });
+      yield* call(navigateToEmailReadScreen);
     } else {
       // we can go on, no need to wait
       return;
@@ -43,9 +43,7 @@ export function* checkAcknowledgedEmailSaga(
     // EmailInsertScreen knows if the user comes from onboarding or not
     // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
     // to validate it
-    yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-      screen: ROUTES.INSERT_EMAIL_SCREEN
-    });
+    yield* call(navigateToEmailInsertScreen);
   }
 
   // Wait for the user to press "Continue" button after having checked out

@@ -1,8 +1,8 @@
-import { NavigationEvents } from "@react-navigation/compat";
 import { Content } from "native-base";
 import * as React from "react";
 import { useRef } from "react";
 import { SafeAreaView } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

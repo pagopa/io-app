@@ -1,52 +1,32 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { useNavigation } from "@react-navigation/native";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { ActionSheet, Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet, Text } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { PspData } from "../../../../definitions/pagopa/PspData";
-import CardIcon from "../../../../img/wallet/card.svg";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
-import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
-import TagIcon from "../../../../img/wallet/tag.svg";
-import { H1 } from "../../../components/core/typography/H1";
-import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
-import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
-import { SelectionBox } from "../../../components/wallet/SelectionBox";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
-import { confirmButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import {
   getValueOrElse,
   isError,
   isLoading,
   isReady
 } from "../../../features/bonus/bpd/model/RemoteValue";
-import { BrandImage } from "../../../features/wallet/component/card/BrandImage";
+import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
-import ROUTES from "../../../navigation/routes";
 import {
   navigateToPaymentOutcomeCode,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen
+  navigateToPaymentPickPspScreen,
+  navigateToPayPalUpdatePspForPayment
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
@@ -84,14 +64,32 @@ import {
   Wallet
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
-import { getTranslatedShortNumericMonthYear } from "../../../utils/dates";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
-import { getPaypalAccountEmail } from "../../../utils/paypal";
-import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import { getLookUpIdPO } from "../../../utils/pmLookUpId";
+import { H1 } from "../../../components/core/typography/H1";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import IconFont from "../../../components/ui/IconFont";
+import { H3 } from "../../../components/core/typography/H3";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
+import { BrandImage } from "../../../features/wallet/component/card/BrandImage";
+import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { confirmButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { openWebUrl } from "../../../utils/url";
+import TagIcon from "../../../../img/wallet/tag.svg";
+import CardIcon from "../../../../img/wallet/card.svg";
+import { SelectionBox } from "../../../components/wallet/SelectionBox";
+import { getTranslatedShortNumericMonthYear } from "../../../utils/dates";
+import { getPaypalAccountEmail } from "../../../utils/paypal";
+import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -106,14 +104,8 @@ export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   psps: ReadonlyArray<Psp>;
 }>;
 
-type ConfirmPaymentNavigationProps = IOStackNavigationProp<
-  WalletParamsList,
-  "PAYMENT_CONFIRM_PAYMENT_METHOD"
->;
-
-type OwnProps = {
-  navigation: CompatNavigationProp<ConfirmPaymentNavigationProps>;
-};
+type OwnProps =
+  NavigationStackScreenProps<ConfirmPaymentMethodScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -228,7 +220,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
-  const navigation = useNavigation<ConfirmPaymentNavigationProps>();
+  const navigation = useNavigationContext();
   // each payment method has its own psp fee
   const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
   const fee: number | undefined = isPayingWithPaypal
@@ -285,10 +277,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   // navigate to the screen where the user can pick the desired psp
   const handleOnEditPaypalPsp = () => {
-    navigation.navigate(ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP, {
-      idWallet: wallet.idWallet,
-      idPayment
-    });
+    navigation.navigate(
+      navigateToPayPalUpdatePspForPayment({
+        idPayment,
+        idWallet: wallet.idWallet
+      })
+    );
   };
 
   // Handle the PSP change, this will trigger
@@ -305,7 +299,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     .getOrElse({});
 
   const paymentMethod = props.getPaymentMethodById(wallet.idWallet);
-  const isPaymentMethodCreditCard =
+
+  const ispaymentMethodCreditCard =
     paymentMethod !== undefined && isCreditCard(paymentMethod);
 
   const formattedSingleAmount = formatNumberCentsToAmount(
@@ -502,7 +497,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           <PayWebViewModal
             postUri={urlPrefix + payUrlSuffix}
             formData={formData}
-            showInfoHeader={isPaymentMethodCreditCard}
+            showInfoHeader={ispaymentMethodCreditCard}
             finishPathName={webViewExitPathName}
             onFinish={handlePaymentOutcome}
             outcomeQueryparamName={webViewOutcomeParamName}

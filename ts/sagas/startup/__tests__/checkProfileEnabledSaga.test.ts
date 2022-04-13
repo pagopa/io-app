@@ -28,12 +28,10 @@ describe("checkProfileEnabledSaga", () => {
     version: 1 as NonNegativeInteger
   };
 
-  it("should enable inbox if tos version is not defined or 0", async () => {
-    jest.useRealTimers();
-    await expectSaga(checkProfileEnabledSaga, updatedProfile)
+  it("should enable inbox if tos version is not defined or 0", () =>
+    expectSaga(checkProfileEnabledSaga, updatedProfile)
       .put.like({ action: { type: getType(profileUpsert.request) } })
-      .run();
-  });
+      .run());
 
   it("should enable inbox if it's disabled and tos version > 1", () =>
     expectSaga(checkProfileEnabledSaga, {

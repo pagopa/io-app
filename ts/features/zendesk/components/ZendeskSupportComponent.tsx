@@ -1,22 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import AdviceComponent from "../../../components/AdviceComponent";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { H3 } from "../../../components/core/typography/H3";
-import { H4 } from "../../../components/core/typography/H4";
-import { Label } from "../../../components/core/typography/Label";
-import I18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
+import { View } from "native-base";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
-import { profileSelector } from "../../../store/reducers/profile";
 import {
   initSupportAssistance,
   isPanicModeActive,
@@ -25,15 +11,30 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
+import { profileSelector } from "../../../store/reducers/profile";
+import { useIOSelector } from "../../../store/hooks";
+import {
+  navigateToZendeskAskPermissions,
+  navigateToZendeskChooseCategory,
+  navigateToZendeskPanicMode
+} from "../store/actions/navigation";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import {
   zendeskRequestTicketNumber,
   zendeskSupportCompleted
 } from "../store/actions";
+import I18n from "../../../i18n";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../components/core/typography/Label";
+import AdviceComponent from "../../../components/AdviceComponent";
+import { H4 } from "../../../components/core/typography/H4";
 import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
 } from "../store/reducers";
+import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
+import { H3 } from "../../../components/core/typography/H3";
+import { mixpanelTrack } from "../../../mixpanel";
 
 type Props = {
   assistanceForPayment: boolean;
@@ -51,7 +52,7 @@ const ZendeskSupportComponent = (props: Props) => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const profile = useIOSelector(profileSelector);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useNavigationContext();
   const dispatch = useDispatch();
   const ticketsNumber = useIOSelector(zendeskTicketNumberSelector);
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
@@ -84,23 +85,14 @@ const ZendeskSupportComponent = (props: Props) => {
 
     if (isPanicModeActive(zendeskRemoteConfig)) {
       // Go to panic mode screen
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_PANIC_MODE"
-      });
+      navigation.navigate(navigateToZendeskPanicMode());
       return;
     }
 
-    if (canSkipCategoryChoice) {
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_ASK_PERMISSIONS",
-        params: { assistanceForPayment }
-      });
-    } else {
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_CHOOSE_CATEGORY",
-        params: { assistanceForPayment }
-      });
-    }
+    const navigationAction = canSkipCategoryChoice
+      ? navigateToZendeskAskPermissions
+      : navigateToZendeskChooseCategory;
+    navigation.navigate(navigationAction({ assistanceForPayment }));
   };
 
   // If the user opened at least at ticket show the "Show tickets" button

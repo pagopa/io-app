@@ -1,9 +1,10 @@
-import { NavigationEvents } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
+import { NavigationEvents } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -54,8 +55,6 @@ import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedC
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   navigateBack,
   navigateToPaymentScanQrCode,
@@ -108,7 +107,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME"> &
+  NavigationStackScreenProps<WalletHomeNavigationParams> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
@@ -189,13 +188,20 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.state = { hasFocus: false };
   }
 
+  get newMethodAdded() {
+    return this.props.navigation.getParam("newMethodAdded");
+  }
+
+  get navigationKeyFrom() {
+    return this.props.navigation.getParam("keyFrom");
+  }
+
   private handleBackPress = () => {
-    const keyFrom = this.props.route.params?.keyFrom;
     const shouldPop =
-      this.props.route.params?.newMethodAdded && keyFrom !== undefined;
+      this.newMethodAdded && this.navigationKeyFrom !== undefined;
 
     if (shouldPop) {
-      this.props.navigateBack();
+      this.props.navigateBack(this.navigationKeyFrom);
       return true;
     }
     return false;
@@ -623,7 +629,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     validTo?: Date
   ) => navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }),
   navigateToBonusList: () => navigateToAvailableBonusScreen(),
-  navigateBack: () => navigateBack(),
+  navigateBack: (keyFrom?: string) => navigateBack({ key: keyFrom }),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),

@@ -14,7 +14,7 @@ const CGN_ROUTES = {
     ACTIVATION: {
       MAIN: "CGN_EYCA_MAIN",
       LOADING: "CGN_EYCA_ACTIVATION_LOADING"
-    } as const
+    }
   },
   DETAILS: {
     MAIN: "CGN_DETAILS_MAIN",
@@ -26,8 +26,8 @@ const CGN_ROUTES = {
       TABS: "CGN_MERCHANTS_TABS",
       DETAIL: "CGN_MERCHANTS_DETAIL",
       LANDING_WEBVIEW: "CGN_MERCHANTS_LANDING_WEBVIEW"
-    } as const
-  } as const
+    }
+  }
 } as const;
 
 export default CGN_ROUTES;

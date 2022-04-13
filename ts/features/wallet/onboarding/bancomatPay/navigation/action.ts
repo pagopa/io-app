@@ -1,6 +1,5 @@
-import { CommonActions } from "@react-navigation/native";
+import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../../../navigation/NavigationService";
-import ROUTES from "../../../../../navigation/routes";
 import WALLET_ONBOARDING_BPAY_ROUTES from "./routes";
 
 /**
@@ -9,11 +8,8 @@ import WALLET_ONBOARDING_BPAY_ROUTES from "./routes";
  */
 export const navigateToOnboardingBPaySearchStartScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: WALLET_ONBOARDING_BPAY_ROUTES.MAIN,
-      params: {
-        screen: WALLET_ONBOARDING_BPAY_ROUTES.START
-      }
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_BPAY_ROUTES.START
     })
   );
 
@@ -23,11 +19,8 @@ export const navigateToOnboardingBPaySearchStartScreen = () =>
  */
 export const navigateToOnboardingBPayChooseBank = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: WALLET_ONBOARDING_BPAY_ROUTES.MAIN,
-      params: {
-        screen: WALLET_ONBOARDING_BPAY_ROUTES.CHOOSE_BANK
-      }
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_BPAY_ROUTES.CHOOSE_BANK
     })
   );
 
@@ -37,11 +30,8 @@ export const navigateToOnboardingBPayChooseBank = () =>
  */
 export const navigateToOnboardingBPaySearchAvailableUserAccount = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: WALLET_ONBOARDING_BPAY_ROUTES.MAIN,
-      params: {
-        screen: WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT
-      }
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT
     })
   );
 
@@ -51,10 +41,7 @@ export const navigateToOnboardingBPaySearchAvailableUserAccount = () =>
  */
 export const navigateToActivateBpdOnNewBPay = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: WALLET_ONBOARDING_BPAY_ROUTES.MAIN,
-      params: {
-        screen: WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW
-      }
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW
     })
   );

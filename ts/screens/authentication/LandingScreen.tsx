@@ -2,7 +2,6 @@
  * A screen where the user can choose to login with SPID or get more informations.
  * It includes a carousel with highlights on the app functionalities
  */
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import JailMonkey from "jail-monkey";
@@ -10,6 +9,7 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -31,10 +31,6 @@ import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import {
   idpSelected,
@@ -55,11 +51,8 @@ import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<AppParamsList, "INGRESS">
-  >;
-} & LightModalContextInterface &
+type Props = NavigationStackScreenProps &
+  LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -192,32 +185,26 @@ class LandingScreen extends React.PureComponent<Props, State> {
   };
 
   private navigateToMarkdown = () =>
-    this.props.navigation.navigate({
-      routeName: ROUTES.MARKDOWN
-    });
+    this.props.navigation.navigate(ROUTES.MARKDOWN);
 
   private navigateToIdpSelection = () =>
-    this.props.navigation.navigate({
-      routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
-    });
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
   private navigateToCiePinScreen = () => {
     if (this.isCieSupported()) {
       this.props.dispatchIdpCieSelected();
-      this.props.navigation.navigate({
-        routeName: ROUTES.CIE_PIN_SCREEN
-      });
+      this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
     } else {
       this.openUnsupportedCIEModal();
     }
   };
 
   private navigateToSpidCieInformationRequest = () =>
-    this.props.navigation.navigate({
-      routeName: this.isCieSupported()
+    this.props.navigation.navigate(
+      this.isCieSupported()
         ? ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
         : ROUTES.AUTHENTICATION_SPID_INFORMATION
-    });
+    );
 
   private renderCardComponents = () => {
     const cardProps = getCards(this.isCieSupported());

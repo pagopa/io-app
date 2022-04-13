@@ -1,6 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { useNavigation } from "@react-navigation/native";
-import { ListItem } from "native-base";
 import React from "react";
 import {
   FlatList,
@@ -9,51 +6,48 @@ import {
   ScrollView
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
-import { H1 } from "../../../components/core/typography/H1";
-import { H4 } from "../../../components/core/typography/H4";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { ListItem } from "native-base";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import IconFont from "../../../components/ui/IconFont";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { H1 } from "../../../components/core/typography/H1";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { toArray } from "../../../store/helpers/indexer";
 import { useIOSelector } from "../../../store/hooks";
-import customVariables from "../../../theme/variables";
-import { getFullLocale } from "../../../utils/locale";
-import {
-  addTicketCustomField,
-  hasSubCategories
-} from "../../../utils/supportAssistance";
+import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
-import { ZendeskParamsList } from "../navigation/params";
-import ZENDESK_ROUTES from "../navigation/routes";
+import { toArray } from "../../../store/helpers/indexer";
+import { H4 } from "../../../components/core/typography/H4";
+import customVariables from "../../../theme/variables";
+import IconFont from "../../../components/ui/IconFont";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import {
+  navigateToZendeskAskPermissions,
+  navigateToZendeskChooseSubCategory
+} from "../store/actions/navigation";
 import {
   zendeskSelectedCategory,
   zendeskSupportFailure
 } from "../store/actions";
-import { zendeskConfigSelector } from "../store/reducers";
+import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
+import {
+  addTicketCustomField,
+  hasSubCategories
+} from "../../../utils/supportAssistance";
+import { getFullLocale } from "../../../utils/locale";
 
 export type ZendeskChooseCategoryNavigationParams = {
   assistanceForPayment: boolean;
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_CATEGORY">
-  >;
-};
+type Props = NavigationStackScreenProps<ZendeskChooseCategoryNavigationParams>;
 
 /**
  * this screen shows the categories for which the user can ask support with the assistance
  */
 const ZendeskChooseCategory = (props: Props) => {
   const dispatch = useDispatch();
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_CATEGORY">
-    >();
+  const navigation = useNavigationContext();
   const assistanceForPayment = props.navigation.getParam(
     "assistanceForPayment"
   );
@@ -93,13 +87,13 @@ const ZendeskChooseCategory = (props: Props) => {
           // Set category as custom field
           addTicketCustomField(categoriesId, category.value);
           if (hasSubCategories(category)) {
-            navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
-              assistanceForPayment
-            });
+            navigation.navigate(
+              navigateToZendeskChooseSubCategory({ assistanceForPayment })
+            );
           } else {
-            navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
-              assistanceForPayment
-            });
+            navigation.navigate(
+              navigateToZendeskAskPermissions({ assistanceForPayment })
+            );
           }
         }}
         first={listItem.index === 0}
