@@ -1,7 +1,7 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { call, put, select, take } from "typed-redux-saga/macro";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
@@ -43,7 +43,7 @@ import {
   updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { PaymentManagerToken, Wallet } from "../../types/pagopa";
+import { PaymentManagerToken, Psp, Wallet } from "../../types/pagopa";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
@@ -311,42 +311,11 @@ export function* updateWalletPspRequestHandler(
   // First update the selected wallet (walletId) with the
   // new PSP (action.payload); then request a new list
   // of wallets (which will contain the updated PSP)
-  const { wallet, idPayment } = action.payload;
-
-  yield* put(
-    paymentFetchAllPspsForPaymentId.request({
-      idWallet: wallet.idWallet.toString(),
-      idPayment
-    })
-  );
-  const allPspActionResult = yield* take<
-    ActionType<
-      | typeof paymentFetchAllPspsForPaymentId.success
-      | typeof paymentFetchAllPspsForPaymentId.failure
-    >
-  >([
-    paymentFetchAllPspsForPaymentId.success,
-    paymentFetchAllPspsForPaymentId.failure
-  ]);
-  if (
-    allPspActionResult.type === getType(paymentFetchAllPspsForPaymentId.failure)
-  ) {
-    const failureAction = paymentUpdateWalletPsp.failure(
-      new Error("failed to load all psp")
-    );
-    yield* put(failureAction);
-    if (action.payload.onFailure) {
-      // signal the callee if requested
-      action.payload.onFailure(failureAction);
-    }
-    return;
-  }
-  const pspSelected = allPspActionResult.payload.find(
-    p => p.idPsp === action.payload.psp.idPsp
-  );
+  const { wallet, psp, idPayment } = action.payload;
+  const { id: idPsp } = psp;
 
   const apiUpdateWalletPsp = pagoPaClient.updateWalletPsp(wallet.idWallet, {
-    data: { idPsp: pspSelected?.id }
+    data: { idPsp, idPagamentoFromEC: idPayment }
   });
   const updateWalletPspWithRefresh =
     pmSessionManager.withRefresh(apiUpdateWalletPsp);
@@ -361,7 +330,8 @@ export function* updateWalletPspRequestHandler(
           pagoPaClient,
           pmSessionManager
         );
-        if (maybeWallets.isRight()) {
+        const maybePsp = Psp.decode(response.value.value.data?.psp);
+        if (maybeWallets.isRight() && maybePsp.isRight()) {
           // look for the updated wallet
           const updatedWallet = maybeWallets.value.find(
             _ => _.idWallet === wallet.idWallet
@@ -371,7 +341,7 @@ export function* updateWalletPspRequestHandler(
             const successAction = paymentUpdateWalletPsp.success({
               wallets: maybeWallets.value,
               // attention: updatedWallet is V1
-              updatedWallet: { ...updatedWallet, psp: pspSelected }
+              updatedWallet: { ...updatedWallet, psp: maybePsp.value }
             });
             yield* put(successAction);
             if (action.payload.onSuccess) {

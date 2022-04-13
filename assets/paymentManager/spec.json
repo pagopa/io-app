@@ -2782,6 +2782,7 @@
         "codiceAbi",
         "defaultPsp",
         "fee",
+        "id",
         "idPsp",
         "onboard",
         "ragioneSociale"
@@ -2798,6 +2799,11 @@
         },
         "fee": {
           "type": "integer",
+          "allowEmptyValue": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
           "allowEmptyValue": false
         },
         "idPsp": {
