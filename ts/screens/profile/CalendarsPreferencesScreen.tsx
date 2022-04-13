@@ -1,6 +1,6 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
 import { Calendar } from "react-native-calendar-events";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import CalendarsListContainer from "../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -8,13 +8,19 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import {
   preferredCalendarRemoveSuccess,
   preferredCalendarSaveSuccess
 } from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
 
-type OwnProps = NavigationStackScreenProps;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ProfileParamsList, "PROFILE_PREFERENCES_CALENDAR">
+  >;
+};
 
 type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
 

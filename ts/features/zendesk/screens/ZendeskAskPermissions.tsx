@@ -1,8 +1,8 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
 import React, { ReactNode } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
@@ -25,6 +25,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
@@ -39,7 +40,9 @@ import {
 } from "../../../store/reducers/profile";
 import { getAppVersion } from "../../../utils/appVersion";
 import { getModel, getSystemVersion } from "../../../utils/device";
+import { getFullLocale } from "../../../utils/locale";
 import { isIos } from "../../../utils/platform";
+import { showToast } from "../../../utils/showToast";
 import {
   addTicketCustomField,
   addTicketTag,
@@ -54,6 +57,8 @@ import {
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
+import { handleItemOnPress } from "../../../utils/url";
+import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskSupportCompleted,
   zendeskSupportFailure
@@ -62,9 +67,6 @@ import {
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
-import { getFullLocale } from "../../../utils/locale";
-import { showToast } from "../../../utils/showToast";
-import { handleItemOnPress } from "../../../utils/url";
 
 /**
  * Transform an array of string into a Zendesk
@@ -193,7 +195,11 @@ export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
 };
 
-type Props = NavigationStackScreenProps<ZendeskAskPermissionsNavigationParams>;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_ASK_PERMISSIONS">
+  >;
+};
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor

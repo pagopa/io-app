@@ -5,19 +5,22 @@
  * - send a request to delete his profile
  * - send a request to export all his data (receiving them by email)
  */
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, AlertButton } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -30,10 +33,12 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
-import ScreenContent from "../../components/screens/ScreenContent";
 
-type Props = NavigationStackScreenProps &
-  ReturnType<typeof mapDispatchToProps> &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">
+  >;
+} & ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 type State = {
@@ -197,8 +202,8 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.privacyPolicy.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY, {
-                  isProfile: true
+                this.props.navigation.navigate({
+                  routeName: ROUTES.PROFILE_PRIVACY
                 })
               }
               useExtendedSubTitle={true}
@@ -210,9 +215,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.shareData.listItem.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate(
-                  ROUTES.PROFILE_PRIVACY_SHARE_DATA
-                )
+                this.props.navigation.navigate({
+                  routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+                })
               }
               useExtendedSubTitle={true}
             />
@@ -249,9 +254,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                     UserDataProcessingChoiceEnum.DELETE
                   );
                 } else {
-                  this.props.navigation.navigate(
-                    ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
-                  );
+                  this.props.navigation.navigate({
+                    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
+                  });
                 }
               }}
               useExtendedSubTitle={true}

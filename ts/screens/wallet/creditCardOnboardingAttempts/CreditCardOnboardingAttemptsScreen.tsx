@@ -1,28 +1,31 @@
 import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { Body } from "../../../components/core/typography/Body";
+import { H2 } from "../../../components/core/typography/H2";
 import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
-import { H2 } from "../../../components/core/typography/H2";
+import { CreditCardAttemptsList } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import I18n from "../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../../navigation/params/AppParamsList";
 import { navigateToCreditCardOnboardingAttempt } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import variables from "../../../theme/variables";
 import {
   creditCardAttemptsSelector,
   CreditCardInsertion
 } from "../../../store/reducers/wallet/creditCard";
-import { Body } from "../../../components/core/typography/Body";
-import { CreditCardAttemptsList } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
+import variables from "../../../theme/variables";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps;
+  IOStackNavigationRouteProps<AppParamsList>;
 
 const styles = StyleSheet.create({
   noBottomPadding: {

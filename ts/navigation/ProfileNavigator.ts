@@ -1,9 +1,11 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
+import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
@@ -11,27 +13,22 @@ import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesS
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
-import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
+import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
 import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
 import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen";
+import SecurityScreen from "../screens/profile/SecurityScreen";
+import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
-import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
-import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
-import SecurityScreen from "../screens/profile/SecurityScreen";
-import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import ROUTES from "./routes";
 
 /**
  * A navigator for all the screens of the Profile section
  */
-const ProfileNavigator = createStackNavigator(
+const ProfileNavigator = createCompatNavigatorFactory(createStackNavigator)(
   {
-    [ROUTES.PROFILE_MAIN]: {
-      screen: ProfileMainScreen
-    },
     [ROUTES.PROFILE_PRIVACY_MAIN]: {
       screen: PrivacyMainScreen
     },

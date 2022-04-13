@@ -1,14 +1,16 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
 import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
+import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
@@ -16,12 +18,10 @@ import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
-import I18n from "../../i18n";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -268,7 +268,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         {fromNullable(this.props.accessibilityEvents).fold(
           true,
           ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
-        ) && <NavigationEvents onDidFocus={this.handleFocus} />}
+        ) && <NavigationEvents onWillFocus={this.handleFocus} />}
       </Right>
     );
   };

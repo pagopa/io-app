@@ -1,8 +1,8 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import MessageDetailComponent from "../../../components/messages/paginated/MessageDetail";
 
@@ -10,6 +10,8 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import { loadMessageDetails } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
@@ -45,8 +47,11 @@ export type MessageDetailScreenPaginatedNavigationParams = {
   message: UIMessage;
 };
 
-type OwnProps =
-  NavigationStackScreenProps<MessageDetailScreenPaginatedNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL_PAGINATED">
+  >;
+};
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

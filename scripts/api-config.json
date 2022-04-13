@@ -26,6 +26,9 @@
     "payment": {
       "amount": 2222,
       "pspFeeAmount": 100
+    },
+    "methods": {
+      "walletCreditCardCount":1
     }
   }
 }

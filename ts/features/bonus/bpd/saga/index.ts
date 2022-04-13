@@ -17,6 +17,11 @@ import {
   bpdUpdateOptInStatusMethod
 } from "../store/actions/onboarding";
 import {
+  optInPaymentMethodsDeletionChoice,
+  optInPaymentMethodsShowChoice,
+  optInPaymentMethodsStart
+} from "../store/actions/optInPaymentMethods";
+import {
   bpdPaymentMethodActivation,
   bpdUpdatePaymentMethodActivation
 } from "../store/actions/paymentMethods";
@@ -28,11 +33,6 @@ import {
   bpdTransactionsLoadPage,
   bpdTransactionsLoadRequiredData
 } from "../store/actions/transactions";
-import {
-  optInPaymentMethodsDeletionChoice,
-  optInPaymentMethodsShowChoice,
-  optInPaymentMethodsStart
-} from "../store/actions/optInPaymentMethods";
 import {
   deleteCitizen,
   getCitizenV2,
@@ -54,8 +54,8 @@ import { handleTransactionsPage } from "./networking/winning-transactions/transa
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
-import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethods/optInPaymentMethodsHandler";
 import { optInDeletionChoiceHandler } from "./orchestration/optInPaymentMethods/optInDeletionChoiceHandler";
+import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethods/optInPaymentMethodsHandler";
 import { optInShouldShowChoiceHandler } from "./orchestration/optInPaymentMethods/optInShouldShowChoiceHandler";
 
 // watch all events about bpd

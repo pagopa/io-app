@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import {
   ActionCreator,
@@ -61,18 +61,15 @@ function* ensureScreen(navigateTo: () => void, startScreen: string) {
  */
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, T>
-) {
-  const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
-    yield* call(NavigationService.getCurrentRoute);
+): Generator<ReduxSagaEffect, T, any> {
+  const navigator = yield* call(NavigationService.getNavigator);
+  const initialState = navigator.current?.getRootState();
+
   const res: T = yield* call(g);
-  if (initialScreen?.routeName !== undefined) {
+  if (initialState !== undefined) {
     yield* call(
       NavigationService.dispatchNavigationAction,
-      NavigationActions.navigate({
-        routeName: initialScreen.routeName,
-        params: initialScreen?.params,
-        key: initialScreen?.key
-      })
+      CommonActions.reset(initialState)
     );
   }
   return res;

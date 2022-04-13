@@ -1,5 +1,5 @@
+import { CommonActions } from "@react-navigation/native";
 import { fromNullable } from "fp-ts/lib/Option";
-import { NavigationActions } from "react-navigation";
 import { call, put, race, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -68,6 +68,9 @@ export function* handleCgnActivationSaga(cgnActivationSaga: CgnActivationType) {
     cancelAction: take(cgnActivationCancel)
   });
   if (cancelAction) {
-    yield* put(NavigationActions.back());
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.goBack()
+    );
   }
 }

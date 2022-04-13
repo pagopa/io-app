@@ -1,7 +1,5 @@
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import React from "react";
-import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
 import {
@@ -34,11 +32,25 @@ jest.mock("../../../../config", () => ({
   pageSize: 8,
   maximumItemsFromAPI: 8
 }));
-jest.mock("../../../../utils/hooks/useOnFocus", () => ({
-  useNavigationContext: () => ({
-    dispatch: mockNavDispatch,
-    state: { routeName: "test-route" }
-  })
+
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: mockNavDispatch,
+      addListener: () => jest.fn()
+    })
+  };
+});
+
+jest.mock("../../../../navigation/NavigationService", () => ({
+  dispatchNavigationAction: jest.fn(),
+  setNavigationReady: jest.fn(),
+  navigationRef: {
+    current: jest.fn()
+  }
 }));
 
 describe("MessageRouterScreen", () => {
@@ -211,21 +223,9 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
     }
   } as GlobalState);
   const spyStoreDispatch = spyOn(store, "dispatch");
-  const navParams = { messageId } as any;
-  const navigation = {
-    state: {},
-    dispatch: jest.fn(),
-    getParam: (key: string) => navParams[key]
-  } as any;
 
-  const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    () => (
-      <MessageRouterScreen
-        navigation={navigation as any}
-        theme={"light"}
-        screenProps={undefined}
-      />
-    ),
+  const component = renderScreenFakeNavRedux(
+    MessageRouterScreen,
     ROUTES.MESSAGE_ROUTER,
     { messageId },
     store
@@ -234,7 +234,6 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
   return {
     component,
     store,
-    spyStoreDispatch,
-    navigation
+    spyStoreDispatch
   };
 };

@@ -1,9 +1,5 @@
-import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import {
-  NavigationStackOptions,
-  NavigationStackProp
-} from "react-navigation-stack/src/types";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
@@ -23,10 +19,7 @@ import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
 
 // Routes loaded in production mode
-const productionRouteConfigMap: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = {
+const productionRouteConfigMap = {
   [ROUTES.AUTHENTICATION_LANDING]: {
     screen: LandingScreen
   },
@@ -76,10 +69,7 @@ const productionRouteConfigMap: NavigationRouteConfigMap<
 };
 
 // Routes loaded on development mode
-const developmentRouteConfigMap: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = {
+const developmentRouteConfigMap = {
   ...productionRouteConfigMap,
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
@@ -89,7 +79,7 @@ const developmentRouteConfigMap: NavigationRouteConfigMap<
 /**
  * The authentication related stack of screens of the application.
  */
-const navigator = createStackNavigator(
+const navigator = createCompatNavigatorFactory(createStackNavigator)(
   environment === "DEV" ? developmentRouteConfigMap : productionRouteConfigMap,
   {
     // Let each screen handle the header and navigation

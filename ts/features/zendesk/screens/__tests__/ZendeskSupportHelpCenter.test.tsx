@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { RenderAPI } from "@testing-library/react-native";
 import { appReducer } from "../../../../store/reducers";
@@ -38,7 +37,7 @@ describe("the ZendeskSupportHelpCenter screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     ZendeskSupportHelpCenter,
     ROUTES.MAIN,
     {},

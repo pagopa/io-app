@@ -1,10 +1,13 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import SuggestBpdActivationScreen from "../../common/screens/bpd/SuggestBpdActivationScreen";
 import SearchSatispayManagerScreen from "../screens/search/SearchSatispayManagerScreen";
 import StartSatispaySearchScreen from "../screens/StartSatispaySearchScreen";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "./routes";
 
-const PaymentMethodOnboardingSatispayNavigator = createStackNavigator(
+const PaymentMethodOnboardingSatispayNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [WALLET_ONBOARDING_SATISPAY_ROUTES.START]: {
       screen: StartSatispaySearchScreen

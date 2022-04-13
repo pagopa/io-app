@@ -1,5 +1,6 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../navigation/routes";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "./routes";
 
 /**
@@ -8,8 +9,11 @@ import WALLET_ONBOARDING_SATISPAY_ROUTES from "./routes";
  */
 export const navigateToOnboardingSatispayStart = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_SATISPAY_ROUTES.START
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_SATISPAY_ROUTES.START
+      }
     })
   );
 
@@ -19,9 +23,11 @@ export const navigateToOnboardingSatispayStart = () =>
  */
 export const navigateToOnboardingSatispaySearchAvailableUserAccount = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName:
-        WALLET_ONBOARDING_SATISPAY_ROUTES.SEARCH_AVAILABLE_USER_SATISPAY
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_SATISPAY_ROUTES.SEARCH_AVAILABLE_USER_SATISPAY
+      }
     })
   );
 
@@ -31,8 +37,11 @@ export const navigateToOnboardingSatispaySearchAvailableUserAccount = () =>
  */
 export const navigateToSuggestBpdActivation = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_SATISPAY_ROUTES.SUGGEST_BPD_ACTIVATION
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_SATISPAY_ROUTES.SUGGEST_BPD_ACTIVATION
+      }
     })
   );
 
@@ -42,7 +51,10 @@ export const navigateToSuggestBpdActivation = () =>
  */
 export const navigateToActivateBpdOnNewSatispay = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY
+      }
     })
   );

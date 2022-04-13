@@ -1,8 +1,8 @@
+import { CommonActions } from "@react-navigation/native";
 import * as React from "react";
 import { BackHandler } from "react-native";
-import { withNavigation } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import I18n from "../i18n";
+import NavigationService from "../navigation/NavigationService";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
@@ -13,7 +13,7 @@ interface OwnProps {
   white?: boolean;
 }
 
-type Props = NavigationStackScreenProps & OwnProps;
+type Props = OwnProps;
 
 class GoBackButton extends React.PureComponent<Props> {
   public static defaultProps: Partial<Props> = {
@@ -34,7 +34,8 @@ class GoBackButton extends React.PureComponent<Props> {
     return true;
   };
 
-  private handleOnPressDefault = () => this.props.navigation.goBack(null);
+  private handleOnPressDefault = () =>
+    NavigationService.dispatchNavigationAction(CommonActions.goBack());
 
   private getOnPressHandler = () =>
     typeof this.props.onPress === "function"
@@ -64,4 +65,4 @@ class GoBackButton extends React.PureComponent<Props> {
   }
 }
 
-export default withNavigation(GoBackButton);
+export default GoBackButton;

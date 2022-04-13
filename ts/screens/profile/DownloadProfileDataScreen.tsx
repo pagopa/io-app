@@ -1,9 +1,9 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
@@ -14,6 +14,8 @@ import ScreenContent from "../../components/screens/ScreenContent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import { ReduxProps } from "../../store/actions/types";
 import {
   resetUserDataProcessingRequest,
@@ -25,7 +27,9 @@ import themeVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ProfileParamsList, "PROFILE_DOWNLOAD_DATA">
+  >;
 };
 
 type Props = ReduxProps &

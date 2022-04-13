@@ -1,19 +1,21 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AnimatedRing from "../../components/animations/AnimatedRing";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import customVariables from "../../theme/variables";
 
-interface OwnProps {
-  navigation: NavigationScreenProp<NavigationState>;
-}
-
-type Props = OwnProps;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AuthenticationParamsList, "AUTHENTICATION_CIE">
+  >;
+};
 // Image dimension
 const imgDimension = 180;
 const boxDimension = 245;

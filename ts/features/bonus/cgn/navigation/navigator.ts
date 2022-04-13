@@ -1,4 +1,5 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
 import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
@@ -18,7 +19,9 @@ import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen"
 
 import CGN_ROUTES from "./routes";
 
-export const CgnActivationNavigator = createStackNavigator(
+export const CgnActivationNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [CGN_ROUTES.ACTIVATION.INFORMATION_TOS]: {
       screen: CgnInformationScreen
@@ -54,7 +57,9 @@ export const CgnActivationNavigator = createStackNavigator(
   }
 );
 
-export const CgnDetailsNavigator = createStackNavigator(
+export const CgnDetailsNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [CGN_ROUTES.DETAILS.DETAILS]: {
       screen: CgnDetailScreen
@@ -87,7 +92,9 @@ export const CgnDetailsNavigator = createStackNavigator(
   }
 );
 
-export const CgnEYCAActivationNavigator = createStackNavigator(
+export const CgnEYCAActivationNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [CGN_ROUTES.EYCA.ACTIVATION.LOADING]: {
       screen: EycaActivationLoading

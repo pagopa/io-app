@@ -1,5 +1,5 @@
 import DeviceInfo from "react-native-device-info";
-import { NavigationParams } from "react-navigation";
+
 import { createStore } from "redux";
 import { versionInfoLoadSuccess } from "../../../common/versionInfo/store/actions/versionInfo";
 import { mockIoVersionInfo } from "../../../common/versionInfo/store/reducers/__mock__/ioVersionInfo";
@@ -11,11 +11,6 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import WalletHomeScreen from "../WalletHomeScreen";
-
-jest.mock("react-native-device-info", () => ({
-  getVersion: jest.fn(),
-  getReadableVersion: jest.fn()
-}));
 
 describe("WalletHomeScreen", () => {
   jest.useFakeTimers();
@@ -53,7 +48,7 @@ const testWalletHomeScreen = (
     android: minVersion
   });
 
-  const testComponent = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  const testComponent = renderScreenFakeNavRedux<GlobalState>(
     WalletHomeScreen,
     ROUTES.WALLET_HOME,
     {},

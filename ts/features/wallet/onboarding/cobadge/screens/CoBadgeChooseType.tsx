@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import { Content, ListItem, View } from "native-base";
 import * as React from "react";
@@ -7,7 +8,6 @@ import {
   SafeAreaView,
   StyleSheet
 } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -20,6 +20,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import {
   navigateBack as legacyNavigateBack,
   navigateToWalletAddCreditCard
@@ -27,11 +28,18 @@ import {
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { PaymentMethodOnboardingCoBadgeParamsList } from "../navigation/params";
 import { walletAddCoBadgeStart } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<CoBadgeChooseTypeNavigationProps>;
+  ReturnType<typeof mapStateToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<
+        PaymentMethodOnboardingCoBadgeParamsList,
+        "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE"
+      >
+    >;
+  };
 
 export type CoBadgeChooseTypeNavigationProps = {
   abi?: string;

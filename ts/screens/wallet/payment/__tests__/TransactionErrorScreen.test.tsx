@@ -1,5 +1,5 @@
 import configureMockStore from "redux-mock-store";
-import { NavigationParams } from "react-navigation";
+
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Option, some } from "fp-ts/lib/Option";
 
@@ -196,7 +196,7 @@ const renderComponent = (
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       TransactionErrorScreen,
       ROUTES.PAYMENT_TRANSACTION_ERROR,
       {
