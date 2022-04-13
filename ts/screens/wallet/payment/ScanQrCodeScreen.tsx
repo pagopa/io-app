@@ -20,6 +20,7 @@ import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
+import { Camera } from "react-native-vision-camera";
 import { NavigationEvents } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
@@ -256,22 +257,20 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     if (Platform.OS !== "android") {
       return;
     }
-    const hasPermission = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.CAMERA
-    );
-    if (!hasPermission) {
-      await AsyncAlert(
-        I18n.t("permissionRationale.camera.title"),
-        I18n.t("permissionRationale.camera.message"),
-        [
-          {
-            text: I18n.t("global.buttons.choose"),
-            style: "default"
-          }
-        ]
-      );
+
+    const cameraPermissions = await Camera.getCameraPermissionStatus();
+
+    if (cameraPermissions === "not-determined") {
+      const selectedPermissions = await Camera.requestCameraPermission();
+
+      this.setState({
+        permissionRationaleDisplayed: selectedPermissions === "authorized"
+      });
+    } else {
+      this.setState({
+        permissionRationaleDisplayed: cameraPermissions === "authorized"
+      });
     }
-    this.setState({ permissionRationaleDisplayed: true });
   }
 
   private handleWillFocus = () => this.setState({ isFocused: true });
@@ -304,7 +303,9 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.colorWhite}
           />
           <ScrollView bounces={false}>
-            <BarcodeCamera />
+            {this.state.isFocused && this.state.permissionRationaleDisplayed ? (
+              <BarcodeCamera />
+            ) : undefined}
           </ScrollView>
           <FooterWithButtons
             type="TwoButtonsInlineThird"

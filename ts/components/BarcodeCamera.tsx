@@ -22,20 +22,22 @@ export const BarcodeCamera = () => {
   );
 
   return (
-    <View style={{ width: "100%", height: 400 }}>
-      {device && (
-        <Camera
-          style={{ width: "100%", height: "100%" }}
-          device={device}
-          isActive={true}
-          frameProcessor={frameProcessor}
-          frameProcessorFps={5}
-        />
-      )}
+    <>
+      <View style={{ width: "100%", height: 400, flexDirection: "column" }}>
+        {device && (
+          <Camera
+            style={{ width: "100%", height: "100%" }}
+            device={device}
+            isActive={true}
+            frameProcessor={frameProcessor}
+            frameProcessorFps={5}
+          />
+        )}
+      </View>
 
       <View style={{ marginTop: 15 }}>
-        <Text>{serializedBarcodes}</Text>
+        <Text>Recognized code: {serializedBarcodes || "none"}</Text>
       </View>
-    </View>
+    </>
   );
 };
