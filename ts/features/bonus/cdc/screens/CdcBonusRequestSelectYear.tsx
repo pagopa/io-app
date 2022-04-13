@@ -26,8 +26,6 @@ const CdcBonusRequestSelectYear = () => {
           <H1>{"CdcBonusRequestSelectYear"}</H1>
           <ButtonDefaultOpacity
             onPress={() => {
-              // navigation.popToTop();
-              // navigation.goBack();
               navigation.getParent()?.goBack();
               navigation.navigate(ROUTES.MAIN, {
                 screen: ROUTES.PROFILE_MAIN
