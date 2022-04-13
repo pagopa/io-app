@@ -121,6 +121,7 @@ const MessageDetailScreen = ({
       <BaseScreenComponent
         headerTitle={I18n.t("messageDetails.headerTitle")}
         goBack={goBack}
+        backButtonTestID={"back-button"}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["messages_detail"]}
       >
