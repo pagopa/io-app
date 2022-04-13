@@ -7,6 +7,7 @@ import { PspData } from "../../../definitions/pagopa/PspData";
 import { getPspIconUrlFromAbi } from "../../utils/paymentMethod";
 
 const psp: PspData = {
+  id: 1,
   codiceAbi: "0001",
   defaultPsp: true,
   fee: 100,
