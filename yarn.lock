@@ -13032,10 +13032,10 @@ react-native-codegen@^0.0.6:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-react-native-config@1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.4.3.tgz#22de798ffea621c2683abfa3fc054e17dd2cf1cc"
-  integrity sha512-KcrlImtkrANeYMT5VM3NaXO5+nyxZkY42CVW8FCHThVqLa5xkNwQJSn8RXu+pNn5WpUatxYgUTP5ZqUpA4/ZKQ==
+react-native-config@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.4.5.tgz#6fe5895410b75e44fe4f4bf00caaf894a0981f3a"
+  integrity sha512-5oiAsoW88SOYDg/0cleJ2vJDqv98FJUbFQYEnH4sdMtEn3AAT3lb7BkTGW8HO/t3Vk9VOruwxUUnO4tzuxzCsw==
 
 react-native-device-info@^8.3.3:
   version "8.3.3"
@@ -13332,10 +13332,10 @@ react-native-view-shot@3.1.2:
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.2.tgz#8c8e84c67a4bc8b603e697dbbd59dbc9b4f84825"
   integrity sha512-9u9fPtp6a52UMoZ/UCPrCjKZk8tnkI9To0Eh6yYnLKFEGkRZ7Chm6DqwDJbYJHeZrheCCopaD5oEOnRqhF4L2Q==
 
-react-native-vision-camera@^2.13.2:
-  version "2.13.2"
-  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.13.2.tgz#6c38c7bd14426b9f3b2676172cbda89f68451e82"
-  integrity sha512-4joXeHYT0477aPjqRxmz9Gmw6wgTkrGmFaZHQdCi67rh+Qnb+7cy7N7QEKsgr1JjRlyJY3B+o5ye/9gioPWltQ==
+react-native-vision-camera@2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.13.0.tgz#844ed5872895b25cc26004d1762c2d7139845d6e"
+  integrity sha512-7rMkw/AUPuqP1wSN470IvZao2M/UqRzMyaBZdCJQhubVjEbQRXSvg7rz1rg9camRD1S8v/yS4k4bkbKFBth3mw==
 
 react-native-webview@^11.13.0:
   version "11.13.0"
