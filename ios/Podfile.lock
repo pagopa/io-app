@@ -362,9 +362,9 @@ PODS:
     - React-Core
   - react-native-cameraroll (4.0.0):
     - React
-  - react-native-config (1.4.3):
-    - react-native-config/App (= 1.4.3)
-  - react-native-config/App (1.4.3):
+  - react-native-config (1.4.5):
+    - react-native-config/App (= 1.4.5)
+  - react-native-config/App (1.4.5):
     - React-Core
   - react-native-cookies (4.0.1):
     - React
@@ -528,7 +528,7 @@ PODS:
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
     - React-Core
-  - VisionCamera (2.13.2):
+  - VisionCamera (2.13.0):
     - React
     - React-callinvoker
     - React-Core
@@ -918,7 +918,7 @@ SPEC CHECKSUMS:
   react-native-blob-util: 180714990c4563645fa70e9202cd32e27656a6e6
   react-native-camera: b8cc03e2feec0c04403d0998e37cf519d8fd4c6f
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
-  react-native-config: 387b1ea507bc50a2059e69149dac1342b9532f58
+  react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-cookies: ff2e6865dff2e5feeca8f1ed082ae7898e4fa912
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-flipper: 169e8ba429b73ad637ce007337ce4b415e783799
@@ -956,7 +956,7 @@ SPEC CHECKSUMS:
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
   RNPermissions: 5df468064df661a4c8c017e2791ce90d7695eea5
-  RNReanimated: 93fe36bf01e6bd4346e0ffc9e469ce37a6b2bea9
+  RNReanimated: 7f143675d94978c3555345d5bfa8ed6ae800c5d3
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: 730a2773b1e0007425f2f111dcf75208a919c902
@@ -964,7 +964,7 @@ SPEC CHECKSUMS:
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   RNZendeskChat: d22f866bc9cf8b426d5fa9d773a4a280889cc6c8
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
-  VisionCamera: 58b4b21d128b474f14b11e4fe11691696e6059bf
+  VisionCamera: 57487a11a98a0d5d3ed73946062ab3920110f08e
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZendeskAnswerBotProvidersSDK: 8ef75d4484f09c324cd93ce2725364d73dbabcf5
