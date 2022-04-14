@@ -98,13 +98,15 @@ import ROUTES from "../navigation/routes";
 import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
-import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
+import {
+  addCreditCardOutcomeCode,
+  paymentOutcomeCode
+} from "../store/actions/wallet/outcomeCode";
 import {
   abortRunningPayment,
   backToEntrypointPayment,
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
@@ -542,6 +544,24 @@ function* deleteActivePaymentSaga() {
 }
 
 /**
+ * this saga checks the outcome codes coming from a payment or from the payment-check done during the credit card onboarding
+ * if the outcome exits and it is different from "success" it tries to delete the payment activation
+ */
+function* deleteUnsuccessfulActivePaymentSaga() {
+  // it can be related to a payment or a payment check done during the credit card onboarding
+  const lastPaymentOutCome = yield* select(lastPaymentOutcomeCodeSelector);
+  if (
+    lastPaymentOutCome.outcomeCode.exists(({ status }) => status !== "success")
+  ) {
+    /**
+     * run the procedure to delete the payment activation
+     * even if there is no one running (that check is done by the relative saga)
+     */
+    yield* put(runDeleteActivePaymentSaga());
+  }
+}
+
+/**
  * this saga delete a payment just before the user pays
  * it should be invoked from the payment UX
  */
@@ -633,6 +653,11 @@ export function* watchWalletSaga(
   yield* takeLatest(
     getType(runDeleteActivePaymentSaga),
     deleteActivePaymentSaga
+  );
+
+  yield* takeLatest(
+    [paymentOutcomeCode, addCreditCardOutcomeCode],
+    deleteUnsuccessfulActivePaymentSaga
   );
 
   //
@@ -790,7 +815,7 @@ export function* watchWalletSaga(
   );
 
   yield* takeLatest(
-    [getType(paymentDeletePayment.request), getType(paymentCompletedFailure)],
+    getType(paymentDeletePayment.request),
     paymentDeletePaymentRequestHandler,
     paymentManagerClient,
     pmSessionManager
@@ -1066,5 +1091,9 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
 
 // to keep solid code encapsulation
 export const testableWalletsSaga = isTestEnv
-  ? { startOrResumeAddCreditCardSaga, successScreenDelay }
+  ? {
+      startOrResumeAddCreditCardSaga,
+      successScreenDelay,
+      deleteUnsuccessfulActivePaymentSaga
+    }
   : undefined;
