@@ -10,7 +10,7 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { bpdDeleteUserFromProgram } from "../../../../store/actions/onboarding";
 import { identificationRequest } from "../../../../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../../../../config";
-import { useIOBottomSheet } from "../../../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../../../utils/hooks/bottomSheet";
 import { UnsubscribeComponent } from "./UnsubscribeComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <UnsubscribeComponent
       onCancel={() => dismiss()}
       onConfirm={() => {

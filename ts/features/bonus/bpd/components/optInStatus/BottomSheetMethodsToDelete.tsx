@@ -13,7 +13,7 @@ import { Label } from "../../../../../components/core/typography/Label";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = {
   onDeletePress: () => void;
@@ -89,7 +89,7 @@ export const useBottomSheetMethodsToDelete = (
     // (subtitle + footer) + items
     280 + paymentMethods.length * 58
   );
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <BottomSheetMethodsToDelete
       paymentMethods={paymentMethods}
       onDeletePress={() => {

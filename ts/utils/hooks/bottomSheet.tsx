@@ -57,13 +57,13 @@ export const bottomSheetContent = (
  * @param snapPoint
  * @param footer
  */
-export const useIOBottomSheet = (
+export const useIOBottomSheetModal = (
   component: React.ReactNode,
   title: string | React.ReactNode,
   snapPoint: number,
   footer?: ComponentProps<typeof BottomSheetModal>["footerComponent"]
 ) => {
-  const { dismissAll } = useBottomSheetModal();
+  const {dismissAll} = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
   const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
 

@@ -4,17 +4,6 @@ import { constNull } from "fp-ts/lib/function";
 import { BottomSheetMethodsToDelete } from "../optInStatus/BottomSheetMethodsToDelete";
 import { mockPrivativeCard } from "../../../../../store/reducers/wallet/__mocks__/wallets";
 
-jest.mock("@gorhom/bottom-sheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const react = require("react-native");
-  return {
-    __esModule: true,
-    BottomSheetModal: react.Modal,
-    BottomSheetScrollView: react.ScrollView,
-    TouchableWithoutFeedback: react.TouchableWithoutFeedback
-  };
-});
-
 describe("BottomSheetMethodsToDelete", () => {
   jest.useFakeTimers();
   it(`component should be defined`, () => {

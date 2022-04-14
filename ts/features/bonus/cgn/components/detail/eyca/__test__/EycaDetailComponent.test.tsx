@@ -17,26 +17,6 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 
-const mockPresent = jest.fn();
-jest.mock("@gorhom/bottom-sheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const rn = require("react-native");
-
-  return {
-    __esModule: true,
-    BottomSheetModal: rn.Modal,
-    BottomSheetScrollView: rn.ScrollView,
-    TouchableWithoutFeedback: rn.TouchableWithoutFeedback,
-    useBottomSheetModal: () => ({
-      dismissAll: mockPresent
-    }),
-    namedExport: {
-      ...require("react-native-reanimated/mock"),
-      ...jest.requireActual("@gorhom/bottom-sheet")
-    }
-  };
-});
-
 const eycaCardActive: EycaCard = {
   status: AcivatedStatus.ACTIVATED,
   card_number: "W413-K096-O814-Z223" as CcdbNumber,

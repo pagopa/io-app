@@ -2,7 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import I18n from "../../../../../../../../i18n";
 import Markdown from "../../../../../../../../components/ui/Markdown";
-import { useIOBottomSheet } from "../../../../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../../../../utils/hooks/bottomSheet";
 
 /**
  * Display information about the current period
@@ -20,7 +20,7 @@ const RankingNotReady = (): React.ReactElement => (
 );
 
 export const useRankingNotReadyBottomSheet = () =>
-  useIOBottomSheet(
+  useIOBottomSheetModal(
     <RankingNotReady />,
     I18n.t("bonus.bpd.details.components.ranking.notReady.title"),
     450

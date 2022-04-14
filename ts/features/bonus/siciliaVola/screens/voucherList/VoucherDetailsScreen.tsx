@@ -40,7 +40,7 @@ import { fromVoucherToDestinationLabels } from "../../utils";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { showToast } from "../../../../../utils/showToast";
 import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
-import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -168,7 +168,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <VoucherDetailBottomSheet
       barCode={selectedVoucher.barCode}
       qrCode={selectedVoucher.qrCode}

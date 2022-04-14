@@ -8,7 +8,7 @@ import {
 } from "../../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { useIOBottomSheet } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 type Props = {
   onConfirm: () => void;
@@ -48,7 +48,7 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     present,
     bottomSheet: manualConfigBottomSheet,
     dismiss
-  } = useIOBottomSheet(
+  } = useIOBottomSheetModal(
     <ManualConfigConfirm
       onConfirm={() => {
         onConfirm();

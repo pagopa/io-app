@@ -23,7 +23,7 @@ import {
   LightModalContext
 } from "../../../../../../components/ui/LightModal";
 import { showToast } from "../../../../../../utils/showToast";
-import { useIOBottomSheet } from "../../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
@@ -209,7 +209,7 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
   const dispatch = useIODispatch();
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <DownloadAttachmentConfirmationBottomSheet
       onCancel={() => dismiss()}
       onConfirm={({ dontAskAgain }) => {

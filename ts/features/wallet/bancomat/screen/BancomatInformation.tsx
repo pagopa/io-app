@@ -40,7 +40,9 @@ const styles = StyleSheet.create({
  */
 
 const BancomatInformation: React.FunctionComponent<Props> = props => {
-  const { present } = bancomatInformationBottomSheet(props.onAddPaymentMethod);
+  const { present, bottomSheet } = bancomatInformationBottomSheet(
+    props.onAddPaymentMethod
+  );
   return (
     <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
@@ -67,6 +69,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
       >
         <Label>{I18n.t("wallet.bancomat.details.debit.addCta")}</Label>
       </ButtonDefaultOpacity>
+      {bottomSheet}
     </View>
   );
 };

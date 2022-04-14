@@ -9,7 +9,7 @@ import {
   errorButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import { useIOBottomSheet } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
 type ConfirmOptOutProps = {
   onCancel: () => void;
@@ -45,7 +45,7 @@ const ConfirmOptOut = (props: ConfirmOptOutProps): React.ReactElement => (
 );
 
 export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <ConfirmOptOut
       onCancel={() => dismiss()}
       onConfirm={() => {

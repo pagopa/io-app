@@ -7,7 +7,7 @@ import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { useIOBottomSheet } from "../../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -87,7 +87,7 @@ export const useChangeActivationConfirmationBottomSheet = (
   newVal: boolean,
   onConfirm: () => void
 ) => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <BpdChangeActivationConfirmationScreen
       onCancel={() => dismiss()}
       onConfirm={() => {

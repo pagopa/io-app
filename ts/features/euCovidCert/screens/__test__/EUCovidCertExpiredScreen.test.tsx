@@ -11,19 +11,6 @@ import { expiredCertificate } from "../../types/__mock__/EUCovidCertificate.mock
 import { ExpiredCertificate } from "../../types/EUCovidCertificate";
 import EuCovidCertExpiredScreen from "../EuCovidCertExpiredScreen";
 
-jest.mock("@gorhom/bottom-sheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const react = require("react-native");
-  return {
-    __esModule: true,
-    BottomSheetModal: react.Modal,
-    useBottomSheetModal: () => ({
-      present: jest.fn(),
-      dismissAll: jest.fn()
-    })
-  };
-});
-
 describe("Test EuCovidCertExpiredScreen", () => {
   jest.useFakeTimers();
 
