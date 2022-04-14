@@ -1,6 +1,6 @@
 import { createStackNavigator } from "react-navigation-stack";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
-import { uaDonationsEnabled, zendeskEnabled } from "../config";
+import { fimsEnabled, uaDonationsEnabled, zendeskEnabled } from "../config";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
@@ -14,6 +14,8 @@ import BackgroundScreen from "../screens/BackgroundScreen";
 import IngressScreen from "../screens/ingress/IngressScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
+import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { FimsNavigator } from "../features/fims/navigation/navigator";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -80,6 +82,15 @@ if (uaDonationsEnabled) {
     }
   };
   configMap = { ...configMap, ...uaConfigMap };
+}
+
+if (fimsEnabled) {
+  const fimsConfigMap = {
+    [FIMS_ROUTES.MAIN]: {
+      screen: FimsNavigator
+    }
+  };
+  configMap = { ...configMap, ...fimsConfigMap };
 }
 
 const navigator = createStackNavigator(configMap, {
