@@ -1,7 +1,7 @@
 /**
  * An handler for application internal links
  */
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
 import {
@@ -25,6 +25,11 @@ import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
 export const IO_INTERNAL_LINK_PREFIX = IO_INTERNAL_LINK_PROTOCOL + "//";
+
+// Prefix to match deeplink uri like `iosso://www.customserviceuri.it`
+// this prefix is used to handle the sso through FIMS system
+const IO_FIMS_LINK_PROTOCOL = "iosso:";
+export const IO_FIMS_LINK_PREFIX = IO_FIMS_LINK_PROTOCOL + "//";
 
 const ROUTE_NAMES: ReadonlyArray<string> = [
   ROUTES.MESSAGES_HOME,
@@ -59,17 +64,12 @@ const UA_DONATION_ROUTES: ReadonlyArray<string> = uaDonationsEnabled
   ? [UADONATION_ROUTES.WEBVIEW]
   : [];
 
-const FIMS_INTERNAL_ROUTES: ReadonlyArray<string> = fimsEnabled
-  ? [FIMS_ROUTES.WEBVIEW]
-  : [];
-
 const ALLOWED_ROUTE_NAMES = ROUTE_NAMES.concat(
   myPortalEnabled ? MY_PORTAL_ROUTES : [],
   bpdEnabled ? BPD_ROUTE_NAMES : [],
   CGN_ROUTE_NAMES,
   svEnabled ? SV_ROUTE_NAMES : [],
-  UA_DONATION_ROUTES,
-  FIMS_INTERNAL_ROUTES
+  UA_DONATION_ROUTES
 );
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
@@ -109,6 +109,17 @@ export function getInternalRoute(href: string): Option<InternalRoute> {
         routeName,
         params: Object.keys(url.query).length === 0 ? undefined : url.query // avoid empty object
       }));
+    }
+    // if the request is to navigate to FIMS webview screen
+    // we receive a dedicated protocol to navigate directly to FIMS webview screen
+    if (url.protocol.toLowerCase() === IO_FIMS_LINK_PROTOCOL && fimsEnabled) {
+      return some({
+        routeName: FIMS_ROUTES.WEBVIEW,
+        params: {
+          // the url to be opened inside the FIMS webview is the remaining part of the custom url received
+          url: href.replace(IO_FIMS_LINK_PREFIX, "")
+        }
+      });
     }
     return none;
   } catch (_) {

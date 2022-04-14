@@ -2,9 +2,11 @@ import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { none, some } from "fp-ts/lib/Option";
 import {
   getInternalRoute,
+  IO_FIMS_LINK_PREFIX,
   IO_INTERNAL_LINK_PREFIX,
   testableALLOWED_ROUTE_NAMES
 } from "../../components/ui/Markdown/handlers/internalLink";
+import FIMS_ROUTES from "../../features/fims/navigation/routes";
 
 describe("getInternalRoute", () => {
   const allowedRoutes = testableALLOWED_ROUTE_NAMES!.map(r =>
@@ -36,6 +38,20 @@ describe("getInternalRoute", () => {
             param2: "value2"
           }
         })
+      ),
+      Tuple2(
+        IO_FIMS_LINK_PREFIX + "https://foo.com",
+        some({
+          routeName: FIMS_ROUTES.WEBVIEW,
+          params: {
+            url: "https://foo.com"
+          }
+        })
+      ),
+      Tuple2("ioit:" + IO_FIMS_LINK_PREFIX + "https://foo.com", none),
+      Tuple2(
+        IO_INTERNAL_LINK_PREFIX + FIMS_ROUTES.WEBVIEW + "?url=https://foo.com",
+        none
       )
     ].forEach(tuple => {
       expect(getInternalRoute(tuple.e1)).toEqual(tuple.e2);
