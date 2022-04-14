@@ -547,7 +547,7 @@ function* deleteActivePaymentSaga() {
 
 /**
  * this saga checks the outcome codes coming from a payment or from the payment-check done during the credit card onboarding
- * if the outcome is different from "success" it tries to delete the payment activation
+ * if the outcome exits and it is different from "success" it tries to delete the payment activation
  */
 function* deleteUnsuccessfulActivePaymentSaga() {
   // it can be related to a payment or a payment check done during the credit card onboarding
