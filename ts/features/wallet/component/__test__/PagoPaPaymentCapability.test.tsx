@@ -53,9 +53,7 @@ describe("PagoPaPaymentCapability", () => {
       GlobalState,
       NavigationParams
     >(
-      () => (
-          <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />
-      ),
+      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
       store

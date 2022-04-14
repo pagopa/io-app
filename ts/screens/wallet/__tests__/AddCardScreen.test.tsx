@@ -238,7 +238,7 @@ const getComponent = () => {
   const ToBeTested: React.FunctionComponent<
     React.ComponentProps<typeof AddCardScreen>
   > = (props: React.ComponentProps<typeof AddCardScreen>) => (
-      <AddCardScreen {...props} />
+    <AddCardScreen {...props} />
   );
 
   const globalState = appReducer(undefined, applicationChangeState("active"));
