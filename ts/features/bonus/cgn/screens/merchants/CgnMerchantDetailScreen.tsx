@@ -130,16 +130,6 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                 <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
                 <View spacer />
                 <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
-                {merchantDetail.value.addresses &&
-                  merchantDetail.value.addresses.length > 0 && (
-                    <>
-                      <FlatList
-                        data={merchantDetail.value.addresses}
-                        renderItem={renderAddressesListItem}
-                        keyExtractor={(item: Address) => item.full_address}
-                      />
-                    </>
-                  )}
                 {fromNullable(merchantDetail.value.websiteUrl).fold(
                   undefined,
                   url => (
@@ -166,6 +156,16 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                     </TouchableDefaultOpacity>
                   )
                 )}
+                {merchantDetail.value.addresses &&
+                  merchantDetail.value.addresses.length > 0 && (
+                    <>
+                      <FlatList
+                        data={merchantDetail.value.addresses}
+                        renderItem={renderAddressesListItem}
+                        keyExtractor={(item: Address) => item.full_address}
+                      />
+                    </>
+                  )}
               </View>
             </ScrollView>
           </>
