@@ -2123,10 +2123,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@codler/react-native-keyboard-aware-scroll-view@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@codler/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-1.0.0.tgz#7ca45d9a06aa118e7acfbddc33dd5e2fb9c9bb4b"
-  integrity sha512-syLIolsZEe9quJ9RUF+PaswA+TLXCHkbIJVe54E4fuVu3mrL+9B1fjcX0Grq0hbu/s5EE+mVPIXvFY/3cADpqg==
+"@codler/react-native-keyboard-aware-scroll-view@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@codler/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-1.0.1.tgz#e823cedfd064d7dc849ec71fa3f8d9f4b0558bb6"
+  integrity sha512-ACGSY+VPJ1KwdNQi/oKt74ld2PtGW+o09hJNsllHyBWcrnke0aOxXdtaS87nRLvVXwWadRawnSrYR/PDxr5QEg==
   dependencies:
     react-native-iphone-x-helper "^1.0.3"
 
@@ -2917,14 +2917,7 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/cookies@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cookies/-/cookies-4.0.1.tgz#520f16ddf87156269b291ef9f03283a032414300"
-  integrity sha512-SHr9evZD5NipwwKvVeSMyjdYxdouWIPP5x8AJRaABDM1BnW6Md5hyAQvQzQJMKBym5uyH9MkFvjSSJI2ueBYQQ==
-  dependencies:
-    invariant "^2.2.4"
-
-"@react-native-community/datetimepicker@^3.5.2":
+"@react-native-community/datetimepicker@^3.0.2", "@react-native-community/datetimepicker@^3.5.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.5.2.tgz#8e6feb30f2620e5abdf565d5fe74c0c04edcf6ae"
   integrity sha512-TWRuAtr/DnrEcRewqvXMLea2oB+YF+SbtuYLHguALLxNJQLl/RFB7aTNZeF+OoH75zKFqtXECXV1/uxQUpA+sg==
@@ -2966,6 +2959,23 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-3.0.3.tgz#830167fd757ba70ac638747ba3169b2dbae60330"
   integrity sha512-8IeHfDwJ9/CTUwFs6x90VlobV3BfuPgNLjTgC6dRZovfCWigaZwVNIFFJnHBakK3pW2xErAPwhdvNR4JeNoYbw==
+
+"@react-native-cookies/cookies@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-cookies/cookies/-/cookies-6.1.0.tgz#fa7900fe5a7b5d06ea3466ea047570268c15f4e9"
+  integrity sha512-S5NMnDKjMxSU/dBWEaUdbJOqY50q+z9MQ+nv4THhSF01bds8LOQ0sBptoshPmGCDYL2KJZzU4peEuf4MZ1mT2A==
+  dependencies:
+    invariant "^2.2.4"
+
+"@react-native-picker/picker@^1.9.7":
+  version "1.16.8"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.8.tgz#2126ca54d4a5a3e9ea5e3f39ad1e6643f8e4b3d4"
+  integrity sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ==
+
+"@react-native-picker/picker@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.1.tgz#92feb7e0672d739624517dae04bf4de1452dfcdc"
+  integrity sha512-1XWy3IQgwr7MWd30KdY1iUh2gQZD+JiotN1ifj/ptFUYKon/0UFwngKQaWCO/CP/FdLl20/huSSLwKedYrdMMA==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -11888,12 +11898,14 @@ native-base-shoutem-theme@0.3.1:
     lodash "^4.17.14"
     prop-types "^15.5.10"
 
-native-base@^2.13.13:
-  version "2.13.13"
-  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.13.13.tgz#431735005151f456c0faee6f00abe00b1e049dc9"
-  integrity sha512-/JOCe/iqnIzto2QJBw/p/PRtJNB8G+NdLOWUYB43TZFWEk6aun1CRBQ0eJ5ibI0bL2aL2ytU2k9Wdp0HxM9Ong==
+native-base@^2.15.2:
+  version "2.15.2"
+  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.15.2.tgz#59988005532489a843998d8d6c24a6e61e8dfbef"
+  integrity sha512-Oa42UOlOVgzA6oNc5ai86r3DFom9Wj5JuJ3ShsHmEkqhnqWw7TBKpuIDNV8Zt9NmycH5xMdMcgxliob6jniZjw==
   dependencies:
-    "@codler/react-native-keyboard-aware-scroll-view" "1.0.0"
+    "@codler/react-native-keyboard-aware-scroll-view" "1.0.1"
+    "@react-native-community/datetimepicker" "^3.0.2"
+    "@react-native-picker/picker" "^1.9.7"
     blueimp-md5 "^2.5.0"
     clamp "^1.0.1"
     color "~3.1.2"
@@ -13318,10 +13330,10 @@ react-native-codegen@^0.0.8:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-react-native-config@1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.4.3.tgz#22de798ffea621c2683abfa3fc054e17dd2cf1cc"
-  integrity sha512-KcrlImtkrANeYMT5VM3NaXO5+nyxZkY42CVW8FCHThVqLa5xkNwQJSn8RXu+pNn5WpUatxYgUTP5ZqUpA4/ZKQ==
+react-native-config@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.4.5.tgz#6fe5895410b75e44fe4f4bf00caaf894a0981f3a"
+  integrity sha512-5oiAsoW88SOYDg/0cleJ2vJDqv98FJUbFQYEnH4sdMtEn3AAT3lb7BkTGW8HO/t3Vk9VOruwxUUnO4tzuxzCsw==
 
 react-native-device-info@^8.3.3:
   version "8.3.3"

@@ -1,4 +1,4 @@
-import CookieManager, { Cookie } from "@react-native-community/cookies";
+import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import { Content } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
