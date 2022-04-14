@@ -1,6 +1,5 @@
 import { View } from "native-base";
 import * as React from "react";
-import { BottomSheetContent } from "../../../components/bottomSheet/BottomSheetContent";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -11,50 +10,36 @@ import {
 import I18n from "../../../i18n";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
-type ConfirmOptOutProps = {
-  onCancel: () => void;
-  onConfirm: () => void;
-};
-
-const ConfirmOptOut = (props: ConfirmOptOutProps): React.ReactElement => (
-  <BottomSheetContent
-    footer={
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={{
-          ...cancelButtonProps(props.onCancel),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...errorButtonProps(
-            props.onConfirm,
-            I18n.t("global.buttons.confirm")
-          ),
-          onPressWithGestureHandler: true
-        }}
-      />
-    }
-  >
-    <View>
-      <View spacer={true} />
-      <View style={IOStyles.flex}>
-        <Body>{I18n.t("profile.main.privacy.shareData.alert.body")}</Body>
-      </View>
+const ConfirmOptOut = (): React.ReactElement => (
+  <View>
+    <View spacer={true} />
+    <View style={IOStyles.flex}>
+      <Body>{I18n.t("profile.main.privacy.shareData.alert.body")}</Body>
     </View>
-  </BottomSheetContent>
+  </View>
 );
 
 export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    <ConfirmOptOut
-      onCancel={() => dismiss()}
-      onConfirm={() => {
-        dismiss();
-        onConfirm();
-      }}
-    />,
+    <ConfirmOptOut />,
     I18n.t("profile.main.privacy.shareData.alert.title"),
-    350
+    350,
+    () => (
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        leftButton={{
+          ...cancelButtonProps(() => dismiss()),
+          onPressWithGestureHandler: true
+        }}
+        rightButton={{
+          ...errorButtonProps(() => {
+            dismiss();
+            onConfirm();
+          }, I18n.t("global.buttons.confirm")),
+          onPressWithGestureHandler: true
+        }}
+      />
+    )
   );
 
   return { present, bottomSheet, dismiss };

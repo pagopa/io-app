@@ -1,13 +1,38 @@
 import * as React from "react";
 import { ComponentProps } from "react";
-import { BottomSheetModal, useBottomSheetModal } from "@gorhom/bottom-sheet";
+import {
+  BottomSheetModal,
+  BottomSheetScrollView,
+  useBottomSheetModal
+} from "@gorhom/bottom-sheet";
 import { Dimensions } from "react-native";
 import { View } from "native-base";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
-import { BottomSheetContent } from "../../components/bottomSheet/BottomSheetContent";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { TestID } from "../../types/WithTestID";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+
+type Props = {
+  children: React.ReactNode;
+  footer?: React.ReactNode;
+} & TestID;
+
+/**
+ * Build the base content of a BottomSheet including content padding and a ScrollView
+ */
+const BottomSheetContent: React.FunctionComponent<Props> = ({
+  children,
+  testID
+}: Props) => (
+  <View
+    style={{ flex: 1, ...IOStyles.horizontalContentPadding }}
+    testID={testID}
+  >
+    <BottomSheetScrollView>{children}</BottomSheetScrollView>
+  </View>
+);
 
 export type BottomSheetModalProps = {
   content: React.ReactNode;
@@ -63,7 +88,7 @@ export const useIOBottomSheetModal = (
   snapPoint: number,
   footer?: ComponentProps<typeof BottomSheetModal>["footerComponent"]
 ) => {
-  const {dismissAll} = useBottomSheetModal();
+  const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
   const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
 
@@ -100,6 +125,7 @@ export const useIOBottomSheetModal = (
       handleComponentAccessibility={{
         accessible: false
       }}
+      importantForAccessibility={"yes"}
     >
       {bottomSheetProps.content}
     </BottomSheetModal>

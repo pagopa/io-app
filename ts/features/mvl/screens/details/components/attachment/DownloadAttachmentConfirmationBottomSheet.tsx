@@ -1,8 +1,6 @@
 import { View } from "native-base";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-
-import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -96,73 +94,41 @@ const DownloadAttachmentConfirmationBottomSheet = ({
 
   if (isLoading) {
     return (
-      <BottomSheetContent>
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator
-            animating={true}
-            size={"large"}
-            style={styles.activityIndicator}
-            color={customVariables.brandPrimary}
-            accessible={true}
-            accessibilityHint={i18n.t(
-              "global.accessibility.activityIndicator.hint"
-            )}
-            accessibilityLabel={i18n.t(
-              "global.accessibility.activityIndicator.label"
-            )}
-            importantForAccessibility={"no-hide-descendants"}
-            testID={"activityIndicator"}
-          />
-          <H4 weight={"Regular"}>
-            {i18n.t(
-              "features.mvl.details.attachments.bottomSheet.loading.body"
-            )}
-          </H4>
-        </View>
-      </BottomSheetContent>
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator
+          animating={true}
+          size={"large"}
+          style={styles.activityIndicator}
+          color={customVariables.brandPrimary}
+          accessible={true}
+          accessibilityHint={i18n.t(
+            "global.accessibility.activityIndicator.hint"
+          )}
+          accessibilityLabel={i18n.t(
+            "global.accessibility.activityIndicator.label"
+          )}
+          importantForAccessibility={"no-hide-descendants"}
+          testID={"activityIndicator"}
+        />
+        <H4 weight={"Regular"}>
+          {i18n.t("features.mvl.details.attachments.bottomSheet.loading.body")}
+        </H4>
+      </View>
     );
   }
 
   if (downloadError) {
     return (
-      <BottomSheetContent
-        footer={
-          <FooterWithButtons
-            type={"TwoButtonsInlineHalf"}
-            leftButton={{
-              ...cancelButtonProps(onCancel),
-              onPressWithGestureHandler: true
-            }}
-            rightButton={{
-              ...confirmButtonProps(() => {
-                setDownloadError(null);
-                void performDownload();
-              }, i18n.t("global.buttons.retry")),
-              onPressWithGestureHandler: true
-            }}
-          />
-        }
-      >
-        <View>
-          <View spacer={true} />
-          <H4 weight={"Regular"}>
-            {i18n.t(
-              "features.mvl.details.attachments.bottomSheet.failing.body"
-            )}
-          </H4>
-          <Body>
-            {i18n.t(
-              "features.mvl.details.attachments.bottomSheet.failing.details"
-            )}
-          </Body>
-        </View>
-      </BottomSheetContent>
-    );
-  }
-
-  return (
-    <BottomSheetContent
-      footer={
+      <View>
+        <View spacer={true} />
+        <H4 weight={"Regular"}>
+          {i18n.t("features.mvl.details.attachments.bottomSheet.failing.body")}
+        </H4>
+        <Body>
+          {i18n.t(
+            "features.mvl.details.attachments.bottomSheet.failing.details"
+          )}
+        </Body>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={{
@@ -171,33 +137,49 @@ const DownloadAttachmentConfirmationBottomSheet = ({
           }}
           rightButton={{
             ...confirmButtonProps(() => {
+              setDownloadError(null);
               void performDownload();
-            }, i18n.t("global.buttons.continue")),
+            }, i18n.t("global.buttons.retry")),
             onPressWithGestureHandler: true
           }}
         />
-      }
-    >
-      <View>
-        <View spacer={true} />
-        <Body>
-          {i18n.t("features.mvl.details.attachments.bottomSheet.warning.body")}
-        </Body>
-        <View spacer={true} />
-        <View style={IOStyles.row}>
-          <RawCheckBox
-            checked={dontAskAgain}
-            onPress={() => setDontAskAgain(!dontAskAgain)}
-          />
-          <Body
-            style={{ paddingLeft: 8 }}
-            onPress={() => setDontAskAgain(!dontAskAgain)}
-          >
-            {i18n.t("features.mvl.details.attachments.bottomSheet.checkBox")}
-          </Body>
-        </View>
       </View>
-    </BottomSheetContent>
+    );
+  }
+
+  return (
+    <View>
+      <View spacer={true} />
+      <Body>
+        {i18n.t("features.mvl.details.attachments.bottomSheet.warning.body")}
+      </Body>
+      <View spacer={true} />
+      <View style={IOStyles.row}>
+        <RawCheckBox
+          checked={dontAskAgain}
+          onPress={() => setDontAskAgain(!dontAskAgain)}
+        />
+        <Body
+          style={{ paddingLeft: 8 }}
+          onPress={() => setDontAskAgain(!dontAskAgain)}
+        >
+          {i18n.t("features.mvl.details.attachments.bottomSheet.checkBox")}
+        </Body>
+      </View>
+      <FooterWithButtons
+        type={"TwoButtonsInlineHalf"}
+        leftButton={{
+          ...cancelButtonProps(onCancel),
+          onPressWithGestureHandler: true
+        }}
+        rightButton={{
+          ...confirmButtonProps(() => {
+            void performDownload();
+          }, i18n.t("global.buttons.continue")),
+          onPressWithGestureHandler: true
+        }}
+      />
+    </View>
   );
 };
 

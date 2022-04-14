@@ -121,16 +121,32 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       <VoucherDetailBottomSheet
         barCode={props.selectedVoucher.value.barCode}
         qrCode={props.selectedVoucher.value.qrCode}
-        onExit={() => dismiss()}
-        onSaveVoucher={() => {
-          dismiss();
-          props.stampaVoucher(selectedVoucher.id);
-        }}
         pdfVoucherState={pdfVoucherState}
       />
     ) : null,
     I18n.t("bonus.sv.components.voucherBottomsheet.title"),
-    650
+    650,
+    () => (
+      <FooterWithButtons
+        type={"TwoButtonsInlineHalf"}
+        leftButton={{
+          bordered: true,
+          onPress: () => dismiss(),
+          title: I18n.t("bonus.sv.components.voucherBottomsheet.cta.exit"),
+          onPressWithGestureHandler: true
+        }}
+        rightButton={{
+          primary: true,
+          onPress: () => {
+            dismiss();
+            props.stampaVoucher(selectedVoucher.id);
+          },
+          title: I18n.t("global.genericSave"),
+          onPressWithGestureHandler: true,
+          disabled: isLoading(props.pdfVoucherState)
+        }}
+      />
+    )
   );
 
   // The selectedVoucherCode can't be undefined in this screen

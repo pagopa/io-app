@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { ListItem, View } from "native-base";
 import { PaymentMethodRepresentationComponent } from "../paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 import { getBPDMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
-import { BottomSheetContent } from "../../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -16,59 +15,27 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = {
-  onDeletePress: () => void;
-  onCancelPress?: () => void;
   paymentMethods: ReadonlyArray<PaymentMethod>;
 };
 
-export const BottomSheetMethodsToDelete = (props: Props) => {
-  const deleteProps: BlockButtonProps = {
-    testID: "deleteButtonTestID",
-    style: {
-      flex: 1,
-      borderColor: IOColors.red
-    },
-    onPressWithGestureHandler: true,
-    labelColor: IOColors.red,
-    bordered: true,
-    onPress: props.onDeletePress,
-    title: I18n.t("global.buttons.delete")
-  };
-  const cancelProps: BlockButtonProps = {
-    testID: "cancelButtonTestID",
-    bordered: true,
-    onPressWithGestureHandler: true,
-    onPress: props.onCancelPress,
-    title: I18n.t("global.buttons.cancel")
-  };
-  return (
-    <BottomSheetContent
-      testID={"BottomSheetMethodsToDeleteTestID"}
-      footer={
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={deleteProps}
-          rightButton={cancelProps}
-        />
-      }
-    >
-      <Label color={"bluegrey"} weight={"Regular"}>
-        {I18n.t(
-          "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.subtitle"
-        )}
-      </Label>
-      <View spacer={true} />
-      {props.paymentMethods.map(pm => (
-        <ListItem
-          key={`payment_method_${pm.idWallet}`}
-          testID={`payment_method_${pm.idWallet}`}
-        >
-          <PaymentMethodRepresentationComponent {...pm} />
-        </ListItem>
-      ))}
-    </BottomSheetContent>
-  );
-};
+export const BottomSheetMethodsToDelete = (props: Props) => (
+  <View testID={"BottomSheetMethodsToDeleteTestID"}>
+    <Label color={"bluegrey"} weight={"Regular"}>
+      {I18n.t(
+        "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.subtitle"
+      )}
+    </Label>
+    <View spacer={true} />
+    {props.paymentMethods.map(pm => (
+      <ListItem
+        key={`payment_method_${pm.idWallet}`}
+        testID={`payment_method_${pm.idWallet}`}
+      >
+        <PaymentMethodRepresentationComponent {...pm} />
+      </ListItem>
+    ))}
+  </View>
+);
 
 type BottomSheetReturnType = {
   presentBottomSheet: () => void;
@@ -80,9 +47,9 @@ type BottomSheetReturnType = {
  * containing the list of those payment methods that have BPD as function enabled
  * @param props
  */
-export const useBottomSheetMethodsToDelete = (
-  props: Pick<Props, "onDeletePress">
-): BottomSheetReturnType => {
+export const useBottomSheetMethodsToDelete = (props: {
+  onDeletePress: () => void;
+}): BottomSheetReturnType => {
   const paymentMethods = useSelector(getBPDMethodsSelector);
   const snapPoint = Math.min(
     Dimensions.get("window").height * 0.8,
@@ -90,14 +57,7 @@ export const useBottomSheetMethodsToDelete = (
     280 + paymentMethods.length * 58
   );
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    <BottomSheetMethodsToDelete
-      paymentMethods={paymentMethods}
-      onDeletePress={() => {
-        props.onDeletePress();
-        dismiss();
-      }}
-      onCancelPress={() => dismiss()}
-    />,
+    <BottomSheetMethodsToDelete paymentMethods={paymentMethods} />,
     <View style={IOStyles.flex}>
       <H3>
         {I18n.t(
@@ -106,7 +66,38 @@ export const useBottomSheetMethodsToDelete = (
       </H3>
       <View spacer={true} />
     </View>,
-    snapPoint
+    snapPoint,
+    () => {
+      const deleteProps: BlockButtonProps = {
+        testID: "deleteButtonTestID",
+        style: {
+          flex: 1,
+          borderColor: IOColors.red
+        },
+        onPressWithGestureHandler: true,
+        labelColor: IOColors.red,
+        bordered: true,
+        onPress: () => {
+          props.onDeletePress();
+          dismiss();
+        },
+        title: I18n.t("global.buttons.delete")
+      };
+      const cancelProps: BlockButtonProps = {
+        testID: "cancelButtonTestID",
+        bordered: true,
+        onPressWithGestureHandler: true,
+        onPress: () => dismiss(),
+        title: I18n.t("global.buttons.cancel")
+      };
+      return (
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={deleteProps}
+          rightButton={cancelProps}
+        />
+      );
+    }
   );
 
   return {

@@ -1,6 +1,5 @@
 import { View } from "native-base";
 import * as React from "react";
-import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
@@ -41,24 +40,9 @@ const getText = (confirmationType: ConfirmationType) => ({
  */
 export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Props> =
   props => {
-    const { cta, body } = getText(props.type);
+    const { body } = getText(props.type);
 
     return (
-      <BottomSheetContent
-        footer={
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            leftButton={{
-              ...cancelButtonProps(props.onCancel),
-              onPressWithGestureHandler: true
-            }}
-            rightButton={{
-              ...confirmButtonProps(props.onConfirm, cta),
-              onPressWithGestureHandler: true
-            }}
-          />
-        }
-      >
         <View>
           <View spacer={true} />
           <PaymentMethodRepresentationComponent {...props.representation} />
@@ -78,7 +62,6 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
             </>
           )}
         </View>
-      </BottomSheetContent>
     );
   };
 
@@ -87,6 +70,8 @@ export const useChangeActivationConfirmationBottomSheet = (
   newVal: boolean,
   onConfirm: () => void
 ) => {
+  const { cta } = getText(newVal ? "Activation" : "Deactivation");
+
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <BpdChangeActivationConfirmationScreen
       onCancel={() => dismiss()}
@@ -103,7 +88,23 @@ export const useChangeActivationConfirmationBottomSheet = (
     newVal
       ? I18n.t("bonus.bpd.details.paymentMethods.activate.title")
       : I18n.t("bonus.bpd.details.paymentMethods.deactivate.title"),
-    466
+    466,
+    () => (
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        leftButton={{
+          ...cancelButtonProps(() => dismiss()),
+          onPressWithGestureHandler: true
+        }}
+        rightButton={{
+          ...confirmButtonProps(() => {
+            dismiss();
+            onConfirm();
+          }, cta),
+          onPressWithGestureHandler: true
+        }}
+      />
+    )
   );
 
   return { present, bottomSheet, dismiss };

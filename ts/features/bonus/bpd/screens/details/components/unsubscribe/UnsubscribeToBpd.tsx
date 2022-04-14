@@ -11,6 +11,11 @@ import { bpdDeleteUserFromProgram } from "../../../../store/actions/onboarding";
 import { identificationRequest } from "../../../../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../../../../config";
 import { useIOBottomSheetModal } from "../../../../../../../utils/hooks/bottomSheet";
+import {
+  cancelButtonProps,
+  errorButtonProps
+} from "../../../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
 import { UnsubscribeComponent } from "./UnsubscribeComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -31,15 +36,25 @@ const styles = StyleSheet.create({
  */
 const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    <UnsubscribeComponent
-      onCancel={() => dismiss()}
-      onConfirm={() => {
-        dismiss();
-        props.cancelBpd();
-      }}
-    />,
+    <UnsubscribeComponent />,
     I18n.t("bonus.bpd.unsubscribe.title"),
-    582
+    582,
+    () => (
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        leftButton={{
+          ...cancelButtonProps(() => dismiss()),
+          onPressWithGestureHandler: true
+        }}
+        rightButton={{
+          ...errorButtonProps(() => {
+            dismiss();
+            props.cancelBpd();
+          }, I18n.t("bonus.bpd.unsubscribe.confirmCta")),
+          onPressWithGestureHandler: true
+        }}
+      />
+    )
   );
 
   return (
