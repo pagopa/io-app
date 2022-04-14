@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     marginBottom: 16,
     borderRadius: 8,
-    borderColor: "#CCD4DC",
+    borderColor: IOColors.bluegreyLight,
     borderStyle: "solid",
     borderWidth: 1
   }
