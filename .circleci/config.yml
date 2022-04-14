@@ -493,11 +493,16 @@ workflows:
       - run-eslint
       - run-prettier
 
-      - run-danger:
-          filters:
-            branches:
-              ignore: master
-
+      #      - run-danger:
+      #          filters:
+      #            branches:
+      #              ignore: master
+      - alpha-release-android:
+          requires:
+            - compile-typescript
+            - run-tests
+            - run-eslint
+            - run-prettier
       # TODO: Native Android e2e tests
       # TODO: Slack integration
       - run-e2e-test-IOS:
