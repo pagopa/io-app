@@ -1,4 +1,3 @@
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
@@ -10,10 +9,7 @@ import { fetchWalletsSuccess } from "../../../../../store/actions/wallet/wallets
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { walletsV2_1 } from "../../../../../store/reducers/wallet/__mocks__/wallets";
-import {
-  CreditCardPaymentMethod,
-  PatchedWalletV2ListResponse
-} from "../../../../../types/pagopa";
+import { CreditCardPaymentMethod, PatchedWalletV2ListResponse } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import CreditCardDetailScreen from "../CreditCardDetailScreen";
@@ -115,9 +111,7 @@ describe("Test CreditCardDetailScreen", () => {
 const CreditCardWrapper = (
   props: React.ComponentProps<typeof CreditCardDetailScreen>
 ) => (
-  <BottomSheetModalProvider>
     <CreditCardDetailScreen {...props} />
-  </BottomSheetModalProvider>
 );
 
 const renderDetailScreen = (

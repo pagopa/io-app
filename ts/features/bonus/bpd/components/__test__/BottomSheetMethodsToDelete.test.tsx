@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import React from "react";
 import { BottomSheetMethodsToDelete } from "../optInStatus/BottomSheetMethodsToDelete";
 import { mockPrivativeCard } from "../../../../../store/reducers/wallet/__mocks__/wallets";
@@ -32,29 +32,6 @@ describe("BottomSheetMethodsToDelete", () => {
           renderComponent.queryByTestId(`payment_method_${pm.idWallet}`)
         ).not.toBeNull();
       });
-    });
-
-    it(`footer buttons should be tappable`, () => {
-      const paymentMethods = [
-        { ...mockPrivativeCard, idWallet: 1 },
-        { ...mockPrivativeCard, idWallet: 2 },
-        { ...mockPrivativeCard, idWallet: 3 }
-      ];
-      const deleteHandler = jest.fn();
-      const cancelHandler = jest.fn();
-      const renderComponent = render(
-        <BottomSheetMethodsToDelete paymentMethods={paymentMethods} />
-      );
-      expect(
-        renderComponent.queryByTestId("cancelButtonTestID")
-      ).not.toBeNull();
-      expect(
-        renderComponent.queryByTestId("deleteButtonTestID")
-      ).not.toBeNull();
-      fireEvent.press(renderComponent.queryByTestId("cancelButtonTestID")!);
-      fireEvent.press(renderComponent.queryByTestId("deleteButtonTestID")!);
-      expect(deleteHandler).toBeCalledTimes(1);
-      expect(cancelHandler).toBeCalledTimes(1);
     });
   });
 });
