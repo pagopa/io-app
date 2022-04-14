@@ -167,8 +167,8 @@ describe("MessageRouterScreen", () => {
             })
           );
         });
+        // eslint-disable-next-line sonarjs/no-identical-functions
         it("should dispatch `loadServiceDetail`", () => {
-          // eslint-disable-next-line sonarjs/no-identical-functions
           const { spyStoreDispatch } = renderComponent(id, { allPaginated });
           expect(spyStoreDispatch).toHaveBeenCalledWith(
             loadServiceDetail.request(serviceId)
