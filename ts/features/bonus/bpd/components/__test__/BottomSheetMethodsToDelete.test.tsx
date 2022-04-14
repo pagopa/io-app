@@ -1,6 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
-import { constNull } from "fp-ts/lib/function";
 import { BottomSheetMethodsToDelete } from "../optInStatus/BottomSheetMethodsToDelete";
 import { mockPrivativeCard } from "../../../../../store/reducers/wallet/__mocks__/wallets";
 
@@ -8,10 +7,7 @@ describe("BottomSheetMethodsToDelete", () => {
   jest.useFakeTimers();
   it(`component should be defined`, () => {
     const renderComponent = render(
-      <BottomSheetMethodsToDelete
-        onDeletePress={constNull}
-        paymentMethods={[mockPrivativeCard]}
-      />
+      <BottomSheetMethodsToDelete paymentMethods={[mockPrivativeCard]} />
     );
     expect(
       renderComponent.queryByTestId("BottomSheetMethodsToDeleteTestID")
@@ -26,10 +22,7 @@ describe("BottomSheetMethodsToDelete", () => {
         { ...mockPrivativeCard, idWallet: 3 }
       ];
       const renderComponent = render(
-        <BottomSheetMethodsToDelete
-          onDeletePress={constNull}
-          paymentMethods={paymentMethods}
-        />
+        <BottomSheetMethodsToDelete paymentMethods={paymentMethods} />
       );
       expect(
         renderComponent.queryByTestId("BottomSheetMethodsToDeleteTestID")
@@ -50,11 +43,7 @@ describe("BottomSheetMethodsToDelete", () => {
       const deleteHandler = jest.fn();
       const cancelHandler = jest.fn();
       const renderComponent = render(
-        <BottomSheetMethodsToDelete
-          onDeletePress={deleteHandler}
-          onCancelPress={cancelHandler}
-          paymentMethods={paymentMethods}
-        />
+        <BottomSheetMethodsToDelete paymentMethods={paymentMethods} />
       );
       expect(
         renderComponent.queryByTestId("cancelButtonTestID")
