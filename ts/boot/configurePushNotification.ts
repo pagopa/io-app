@@ -68,7 +68,7 @@ function handleMessageReload() {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function configurePushNotifications() {
-  // if isDevEnv is enabled and we are on Android, we need to disable the push notification to avoid crash for missing firebase settings
+  // if isDevEnv is enabled and we are on Android, we need to disable the push notifications to avoid crash for missing firebase settings
   if (isDevEnv && Platform.OS === "android") {
     return;
   }
