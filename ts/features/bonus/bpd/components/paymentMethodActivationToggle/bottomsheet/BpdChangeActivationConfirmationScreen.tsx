@@ -43,25 +43,25 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
     const { body } = getText(props.type);
 
     return (
-        <View>
-          <View spacer={true} />
-          <PaymentMethodRepresentationComponent {...props.representation} />
-          <View spacer={true} />
-          <Markdown>{body}</Markdown>
-          {props.type === "Activation" && (
-            <>
-              <View spacer={true} large={true} />
-              <InfoBox>
-                <Body>
-                  {I18n.t(
-                    "bonus.bpd.details.paymentMethods.activate.disclaimer",
-                    { activate: I18n.t("global.buttons.activate") }
-                  )}
-                </Body>
-              </InfoBox>
-            </>
-          )}
-        </View>
+      <View>
+        <View spacer={true} />
+        <PaymentMethodRepresentationComponent {...props.representation} />
+        <View spacer={true} />
+        <Markdown>{body}</Markdown>
+        {props.type === "Activation" && (
+          <>
+            <View spacer={true} large={true} />
+            <InfoBox>
+              <Body>
+                {I18n.t(
+                  "bonus.bpd.details.paymentMethods.activate.disclaimer",
+                  { activate: I18n.t("global.buttons.activate") }
+                )}
+              </Body>
+            </InfoBox>
+          </>
+        )}
+      </View>
     );
   };
 

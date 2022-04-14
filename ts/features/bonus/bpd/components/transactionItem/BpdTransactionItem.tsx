@@ -45,11 +45,11 @@ export const getSubtitle = (transaction: BpdTransaction) => {
 };
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
-    const { present: openBottomSheet, bottomSheet } = useIOBottomSheetModal(
-      <BpdTransactionDetailComponent transaction={props.transaction} />,
-      I18n.t("bonus.bpd.details.transaction.detail.title"),
-      522
-    );
+  const { present: openBottomSheet, bottomSheet } = useIOBottomSheetModal(
+    <BpdTransactionDetailComponent transaction={props.transaction} />,
+    I18n.t("bonus.bpd.details.transaction.detail.title"),
+    522
+  );
 
   return (
     <>

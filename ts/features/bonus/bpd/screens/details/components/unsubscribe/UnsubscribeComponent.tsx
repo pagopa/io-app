@@ -13,12 +13,12 @@ const iconSize = 64;
  * @constructor
  */
 export const UnsubscribeComponent = (): React.ReactElement => (
-  <View style={{justifyContent: "space-between"}}>
-    <View spacer={true}/>
-    <IconFont name={"io-notice"} size={iconSize} color={IOColors.red}/>
-    <View spacer={true}/>
+  <View style={{ justifyContent: "space-between" }}>
+    <View spacer={true} />
+    <IconFont name={"io-notice"} size={iconSize} color={IOColors.red} />
+    <View spacer={true} />
     <H3 color={"red"}>{I18n.t("bonus.bpd.unsubscribe.body1")}</H3>
-    <View spacer={true}/>
+    <View spacer={true} />
     <Markdown>{I18n.t("bonus.bpd.unsubscribe.body2")}</Markdown>
   </View>
 );

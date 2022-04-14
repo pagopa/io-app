@@ -11,15 +11,15 @@ type Props = {
 };
 
 const VoucherDetailBottomSheet = (props: Props): React.ReactElement => (
-    <View>
-      <View spacer={true} />
-      <VoucherInformationComponent
-        voucherCode={"1324123"}
-        onPressWithGestureHandler={true}
-        barCode={props.barCode}
-        qrCode={props.qrCode}
-      />
-    </View>
+  <View>
+    <View spacer={true} />
+    <VoucherInformationComponent
+      voucherCode={"1324123"}
+      onPressWithGestureHandler={true}
+      barCode={props.barCode}
+      qrCode={props.qrCode}
+    />
+  </View>
 );
 
 export default VoucherDetailBottomSheet;
