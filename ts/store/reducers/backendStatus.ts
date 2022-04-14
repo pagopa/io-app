@@ -13,6 +13,7 @@ import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
 import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
 import {
+  cdcEnabled,
   cgnMerchantsV2Enabled,
   premiumMessagesOptInEnabled,
   uaDonationsEnabled
@@ -207,12 +208,15 @@ export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
 
 /**
  * return the remote config about CDC enabled/disabled
- * if there is no data, false is the default value -> (CDC disabled)
+ * if there is no data or the local Feature Flag is disabled,
+ * false is the default value -> (CDC disabled)
  */
 export const isCdcEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    backendStatus.map(bs => bs.config.cdc.enabled).toUndefined() ?? false
+    (cdcEnabled &&
+      backendStatus.map(bs => bs.config.cdc.enabled).toUndefined()) ??
+    false
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
