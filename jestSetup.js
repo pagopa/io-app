@@ -22,7 +22,7 @@ NativeModules.RNGestureHandlerModule = {
 jest.mock("@react-native-community/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", jest.fn());
 jest.mock("react-native-permissions", jest.fn());
-jest.mock("@react-native-community/cookies", jest.fn());
+jest.mock("@react-native-cookies/cookies", jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 
