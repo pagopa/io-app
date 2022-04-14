@@ -3,7 +3,7 @@ import React from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
 import { View } from "native-base";
 import I18n from "../../../../../i18n";
-import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
 import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
 import { H4 } from "../../../../../components/core/typography/H4";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
@@ -11,6 +11,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { TestID } from "../../../../../types/WithTestID";
 import { IOPayPalPsp } from "../types";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 
 export const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
@@ -53,22 +54,33 @@ export const PspRadioItem = (
     PSP_LOGO_MAX_HEIGHT,
     psp.logoUrl
   );
-  const pspInfoBottomSheet = useIOBottomSheetRaw(
-    Math.min(420, Dimensions.get("window").height)
+
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <PspInfoBottomSheetContent
+      pspFee={psp.fee}
+      pspName={psp.name}
+      pspPrivacyUrl={psp.privacyUrl}
+    />,
+    I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
+      pspName: psp.name
+    }),
+    Math.min(420, Dimensions.get("window").height),
+    () => (
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={{
+          testID: "continueButtonId",
+          bordered: false,
+          onPressWithGestureHandler: true,
+          onPress: () => dismiss(),
+          title: I18n.t(
+            "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
+          )
+        }}
+      />
+    )
   );
-  const handleInfoPress = () => {
-    void pspInfoBottomSheet.present(
-      <PspInfoBottomSheetContent
-        onButtonPress={pspInfoBottomSheet.dismiss}
-        pspFee={psp.fee}
-        pspName={psp.name}
-        pspPrivacyUrl={psp.privacyUrl}
-      />,
-      I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
-        pspName: psp.name
-      })
-    );
-  };
+
   return (
     <View style={styles.radioItemBody} testID={props.testID}>
       {/* show the psp name while its image is loading */}
@@ -86,13 +98,11 @@ export const PspRadioItem = (
         )
       )}
       <View style={styles.radioItemRight}>
-        <TouchableDefaultOpacity
-          testID={"infoIconTestID"}
-          onPress={handleInfoPress}
-        >
+        <TouchableDefaultOpacity testID={"infoIconTestID"} onPress={present}>
           <IconFont name={"io-info"} size={24} color={IOColors.blue} />
         </TouchableDefaultOpacity>
       </View>
+      {bottomSheet}
     </View>
   );
 };

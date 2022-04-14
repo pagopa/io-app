@@ -7,10 +7,10 @@ import { Label } from "../../../../../../../components/core/typography/Label";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { useIOBottomSheetRaw } from "../../../../../../../utils/bottomSheet";
 import { bpdDeleteUserFromProgram } from "../../../../store/actions/onboarding";
 import { identificationRequest } from "../../../../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../../../../config";
+import { useIOBottomSheet } from "../../../../../../../utils/hooks/bottomSheet";
 import { UnsubscribeComponent } from "./UnsubscribeComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -30,24 +30,25 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
-  const { present, dismiss } = useIOBottomSheetRaw(582);
-
-  const openModalBox = () =>
-    present(
-      <UnsubscribeComponent
-        onCancel={dismiss}
-        onConfirm={() => {
-          dismiss();
-          props.cancelBpd();
-        }}
-      />,
-      I18n.t("bonus.bpd.unsubscribe.title")
-    );
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <UnsubscribeComponent
+      onCancel={() => dismiss()}
+      onConfirm={() => {
+        dismiss();
+        props.cancelBpd();
+      }}
+    />,
+    I18n.t("bonus.bpd.unsubscribe.title"),
+    582
+  );
 
   return (
-    <ButtonDefaultOpacity style={styles.button} onPress={openModalBox}>
-      <Label color={"red"}>{I18n.t("bonus.bpd.unsubscribe.cta")}</Label>
-    </ButtonDefaultOpacity>
+    <>
+      <ButtonDefaultOpacity style={styles.button} onPress={present}>
+        <Label color={"red"}>{I18n.t("bonus.bpd.unsubscribe.cta")}</Label>
+      </ButtonDefaultOpacity>
+      {bottomSheet}
+    </>
   );
 };
 

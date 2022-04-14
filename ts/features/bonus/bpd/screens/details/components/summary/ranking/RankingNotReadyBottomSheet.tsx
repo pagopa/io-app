@@ -2,7 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import I18n from "../../../../../../../../i18n";
 import Markdown from "../../../../../../../../components/ui/Markdown";
-import { useIOBottomSheet } from "../../../../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../../../../utils/hooks/bottomSheet";
 
 /**
  * Display information about the current period

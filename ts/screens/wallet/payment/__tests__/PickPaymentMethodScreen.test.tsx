@@ -51,10 +51,19 @@ const aSatispay = {
 } as SatispayPaymentMethod;
 
 const mockPresentFn = jest.fn();
-jest.mock("../../../../utils/bottomSheet", () => ({
-  __esModule: true,
-  useIOBottomSheet: () => ({ present: mockPresentFn })
-}));
+
+jest.mock("../../../../utils/hooks/bottomSheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+
+  return {
+    __esModule: true,
+    useIOBottomSheet: () => ({
+      present: mockPresentFn,
+      bottomSheet: react.View
+    })
+  };
+});
 describe("PickPaymentMethodScreen", () => {
   jest.useFakeTimers();
 

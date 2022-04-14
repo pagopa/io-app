@@ -69,3 +69,5 @@ jest.mock("unist-util-visit", jest.fn());
 jest.mock("hastscript", jest.fn());
 
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
+
+global.__reanimatedWorkletInit = jest.fn();

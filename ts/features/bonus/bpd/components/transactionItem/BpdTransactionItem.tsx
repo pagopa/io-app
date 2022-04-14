@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import I18n from "../../../../../i18n";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import {
@@ -45,19 +45,22 @@ export const getSubtitle = (transaction: BpdTransaction) => {
 };
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
-  const { present: openBottomSheet } = useIOBottomSheet(
+  const { present: openBottomSheet, bottomSheet } = useIOBottomSheet(
     <BpdTransactionDetailComponent transaction={props.transaction} />,
     I18n.t("bonus.bpd.details.transaction.detail.title"),
     522
   );
 
   return (
-    <BaseBpdTransactionItem
-      title={props.transaction.title}
-      image={props.transaction.image}
-      subtitle={getSubtitle(props.transaction)}
-      rightText={formatNumberAmount(props.transaction.cashback)}
-      onPress={openBottomSheet}
-    />
+    <>
+      <BaseBpdTransactionItem
+        title={props.transaction.title}
+        image={props.transaction.image}
+        subtitle={getSubtitle(props.transaction)}
+        rightText={formatNumberAmount(props.transaction.cashback)}
+        onPress={openBottomSheet}
+      />
+      {bottomSheet}
+    </>
   );
 };

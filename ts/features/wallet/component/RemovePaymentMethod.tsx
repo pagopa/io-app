@@ -1,11 +1,10 @@
 import { View } from "native-base";
 import * as React from "react";
-import { BottomSheetContent } from "../../../components/bottomSheet/BottomSheetContent";
 import { Body } from "../../../components/core/typography/Body";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { PaymentMethodRepresentation } from "../../../types/pagopa";
-import { useIOBottomSheetRaw } from "../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
   errorButtonProps
@@ -13,8 +12,6 @@ import {
 import { PaymentMethodRepresentationComponent } from "../../bonus/bpd/components/paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 
 type Props = {
-  onCancel: () => void;
-  onConfirm: () => void;
   representation: PaymentMethodRepresentation;
 };
 
@@ -24,49 +21,48 @@ type Props = {
  * @constructor
  */
 const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
-  <BottomSheetContent
-    footer={
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={{
-          ...cancelButtonProps(props.onCancel),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...errorButtonProps(props.onConfirm, I18n.t("global.buttons.delete")),
-          onPressWithGestureHandler: true
-        }}
-      />
-    }
-  >
-    <View>
-      <View spacer={true} />
-      <PaymentMethodRepresentationComponent {...props.representation} />
-      <View spacer={true} />
-      <Body>{I18n.t("wallet.newRemove.body")}</Body>
-    </View>
-  </BottomSheetContent>
+  <View>
+    <View spacer={true} />
+    <PaymentMethodRepresentationComponent {...props.representation} />
+    <View spacer={true} />
+    <Body>{I18n.t("wallet.newRemove.body")}</Body>
+  </View>
 );
 
 export const useRemovePaymentMethodBottomSheet = (
-  representation: PaymentMethodRepresentation
+  representation: PaymentMethodRepresentation,
+  onConfirm: () => void
 ) => {
-  const { present, dismiss } = useIOBottomSheetRaw(350);
+  const {
+    present,
+    bottomSheet: removePaymentMethodBottomSheet,
+    dismiss
+  } = useIOBottomSheet(
+    <RemovePaymentMethod
+      representation={{
+        caption: representation.caption,
+        icon: representation.icon
+      }}
+    />,
+    I18n.t("wallet.newRemove.title"),
+    380,
+    () => (
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        leftButton={{
+          ...cancelButtonProps(() => dismiss()),
+          onPressWithGestureHandler: true
+        }}
+        rightButton={{
+          ...errorButtonProps(() => {
+            dismiss();
+            onConfirm();
+          }, I18n.t("global.buttons.delete")),
+          onPressWithGestureHandler: true
+        }}
+      />
+    )
+  );
 
-  const openBottomSheet = (onConfirm: () => void) =>
-    present(
-      <RemovePaymentMethod
-        onCancel={dismiss}
-        onConfirm={() => {
-          dismiss();
-          onConfirm();
-        }}
-        representation={{
-          caption: representation.caption,
-          icon: representation.icon
-        }}
-      />,
-      I18n.t("wallet.newRemove.title")
-    );
-  return { present: openBottomSheet, dismiss };
+  return { present, removePaymentMethodBottomSheet, dismiss };
 };

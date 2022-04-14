@@ -8,7 +8,7 @@ import {
 } from "../../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetRaw } from "../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../utils/hooks/bottomSheet";
 
 type Props = {
   onConfirm: () => void;
@@ -43,20 +43,22 @@ const ManualConfigConfirm = ({
   </BottomSheetContent>
 );
 
-export const useManualConfigBottomSheet = () => {
-  const { present, dismiss } = useIOBottomSheetRaw(350);
+export const useManualConfigBottomSheet = (onConfirm: () => void) => {
+  const {
+    present,
+    bottomSheet: manualConfigBottomSheet,
+    dismiss
+  } = useIOBottomSheet(
+    <ManualConfigConfirm
+      onConfirm={() => {
+        onConfirm();
+        dismiss();
+      }}
+      onCancel={() => dismiss()}
+    />,
+    I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
+    350
+  );
 
-  const openModalBox = (onConfirm: () => void) =>
-    present(
-      <ManualConfigConfirm
-        onConfirm={() => {
-          onConfirm();
-          dismiss();
-        }}
-        onCancel={dismiss}
-      />,
-      I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title")
-    );
-
-  return { present: openModalBox, dismiss };
+  return { present, manualConfigBottomSheet, dismiss };
 };

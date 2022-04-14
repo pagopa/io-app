@@ -4,6 +4,7 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
@@ -52,36 +53,55 @@ const InnerBpdPaymentMethodCapability = (
   const graphicalState: GraphicalValue = calculateBpdToggleGraphicalState(
     props.bpdPotActivation
   );
+  const [toggleValue, setToggleValue] = useState<boolean>(
+    graphicalState.value === "active"
+  );
 
-  const askConfirmation = useChangeActivationConfirmationBottomSheet({
-    caption: props.paymentMethod.caption,
-    icon: props.paymentMethod.icon
-  }).present;
+  const {
+    present: askConfirmation,
+    bottomSheet: changeActivationConfirmationBottomSheet
+  } = useChangeActivationConfirmationBottomSheet(
+    {
+      caption: props.paymentMethod.caption,
+      icon: props.paymentMethod.icon
+    },
+    toggleValue,
+    () => props.updateValue(hash as HPan, toggleValue)
+  );
 
-  const showExplanation = useNotActivableInformationBottomSheet({
-    caption: props.paymentMethod.caption,
-    icon: props.paymentMethod.icon
-  }).present;
+  const {
+    present: showExplanation,
+    bottomSheet: notActivableInformationBottomSheet
+  } = useNotActivableInformationBottomSheet(
+    {
+      caption: props.paymentMethod.caption,
+      icon: props.paymentMethod.icon
+    },
+    "NotActivable"
+  );
 
   const bpdToggle = (
     <BpdToggle
       graphicalValue={graphicalState}
-      onPress={() => showExplanation("NotActivable")}
-      onValueChanged={newVal =>
-        handleValueChanged(props, () =>
-          askConfirmation(newVal, () => props.updateValue(hash as HPan, newVal))
-        )
-      }
+      onPress={() => showExplanation()}
+      onValueChanged={newVal => {
+        setToggleValue(newVal);
+        handleValueChanged(props, askConfirmation);
+      }}
     />
   );
 
   return (
-    <BasePaymentFeatureListItem
-      testID={"BpdPaymentMethodCapability"}
-      title={I18n.t("bonus.bpd.title")}
-      description={I18n.t("bonus.bpd.description")}
-      rightElement={bpdToggle}
-    />
+    <>
+      <BasePaymentFeatureListItem
+        testID={"BpdPaymentMethodCapability"}
+        title={I18n.t("bonus.bpd.title")}
+        description={I18n.t("bonus.bpd.description")}
+        rightElement={bpdToggle}
+      />
+      {changeActivationConfirmationBottomSheet}
+      {notActivableInformationBottomSheet}
+    </>
   );
 };
 

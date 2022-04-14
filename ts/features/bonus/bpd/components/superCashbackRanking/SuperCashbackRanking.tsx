@@ -8,7 +8,7 @@ import ItemSeparatorComponent from "../../../../../components/ItemSeparatorCompo
 import Markdown from "../../../../../components/ui/Markdown";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
 import {
   formatIntegerNumber,
   formatNumberWithNoDigits

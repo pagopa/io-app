@@ -10,7 +10,7 @@ import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { useIOBottomSheet } from "../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../utils/hooks/bottomSheet";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H1 } from "../core/typography/H1";
 import { H3 } from "../core/typography/H3";
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   badgeText: { fontSize: 12, lineHeight: 18 }
 });
 
-const WalletHomeHeader: React.FC<Props> = (props: Props) => {
+const WalletHomeHeader = (props: Props) => {
   const navigationListItems: ReadonlyArray<NavigationListItem> = [
     {
       title: I18n.t("wallet.paymentMethod"),
@@ -71,7 +71,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
     }
   ];
 
-  const { present, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
     <FlatList
       data={navigationListItems}
       keyExtractor={item => item.title}
@@ -110,10 +110,6 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
     315
   );
 
-  const openBS = async () => {
-    await present();
-  };
-
   return (
     <View
       style={[
@@ -133,7 +129,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
           flexDirection: "row",
           alignItems: "center"
         }}
-        onPress={openBS}
+        onPress={present}
         accessible={true}
         accessibilityLabel={I18n.t("wallet.accessibility.addElement")}
         accessibilityRole="button"
@@ -148,6 +144,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
           {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
         </H4>
       </TouchableDefaultOpacity>
+      {bottomSheet}
     </View>
   );
 };

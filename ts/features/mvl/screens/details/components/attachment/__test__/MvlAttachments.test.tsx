@@ -17,16 +17,25 @@ import { MvlPreferences } from "../../../../../store/reducers/preferences";
 import { MvlAttachments } from "../MvlAttachments";
 import { useDownloadAttachmentConfirmationBottomSheet } from "../DownloadAttachmentConfirmationBottomSheet";
 import * as platform from "../../../../../../../utils/platform";
+import { MvlAttachment } from "../../../../../types/mvlData";
 
 jest.mock("../../../../../../../utils/platform");
+
+const mockBsConfig = (_: MvlAttachment) => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+
+  return {
+    present: jest.fn(),
+    bottomSheet: react.View,
+    dismiss: jest.fn()
+  };
+};
 
 const mockBottomSheetPresent = jest.fn<
   ReturnType<typeof useDownloadAttachmentConfirmationBottomSheet>,
   Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
->(_ => ({
-  present: jest.fn(),
-  dismiss: jest.fn()
-}));
+>(mockBsConfig);
 jest.mock("../DownloadAttachmentConfirmationBottomSheet", () => ({
   useDownloadAttachmentConfirmationBottomSheet: (
     ...args: Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
@@ -38,10 +47,7 @@ describe("MvlAttachments", () => {
 
   beforeEach(() => {
     mockBottomSheetPresent.mockReset();
-    mockBottomSheetPresent.mockImplementation(_ => ({
-      present: jest.fn(),
-      dismiss: jest.fn()
-    }));
+    mockBottomSheetPresent.mockImplementation(mockBsConfig);
   });
 
   describe("When there are no attachments", () => {
@@ -119,10 +125,14 @@ describe("MvlAttachments", () => {
 
         describe("when the user taps on the attachment", () => {
           it("Should open the bottom sheet", async () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            const react = require("react-native");
+
             const mockPresent = jest.fn();
             const mockDismiss = jest.fn();
             mockBottomSheetPresent.mockImplementationOnce(_ => ({
               present: mockPresent,
+              bottomSheet: react.View,
               dismiss: mockDismiss
             }));
             const { getByText } = renderComponent(props, preferences);

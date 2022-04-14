@@ -29,7 +29,11 @@ type Props = ReturnType<typeof mapStateToProps> &
  * @constructor
  */
 const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
-  const { present: confirmManualConfig } = useManualConfigBottomSheet();
+  const { present: confirmManualConfig, manualConfigBottomSheet } =
+    useManualConfigBottomSheet(() =>
+      props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
+    );
+
   const { potProfile } = props;
   const [prevPotProfile, setPrevPotProfile] = React.useState<
     typeof props.potProfile
@@ -47,9 +51,7 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
     if (mode === ServicesPreferencesModeEnum.MANUAL) {
-      void confirmManualConfig(() =>
-        props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
-      );
+      confirmManualConfig();
       return;
     }
     props.onServicePreferenceSelected(mode);
@@ -67,6 +69,7 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
           mode={props.profileServicePreferenceMode}
         />
       </ScrollView>
+      {manualConfigBottomSheet}
     </BaseScreenComponent>
   );
 };

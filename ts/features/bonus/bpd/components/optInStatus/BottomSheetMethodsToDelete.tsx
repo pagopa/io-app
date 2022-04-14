@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { ListItem, View } from "native-base";
 import { PaymentMethodRepresentationComponent } from "../paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 import { getBPDMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
-import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
 import { BottomSheetContent } from "../../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
@@ -14,6 +13,7 @@ import { Label } from "../../../../../components/core/typography/Label";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = {
   onDeletePress: () => void;
@@ -72,6 +72,7 @@ export const BottomSheetMethodsToDelete = (props: Props) => {
 
 type BottomSheetReturnType = {
   presentBottomSheet: () => void;
+  bottomSheet: React.ReactNode;
 };
 
 /**
@@ -88,30 +89,28 @@ export const useBottomSheetMethodsToDelete = (
     // (subtitle + footer) + items
     280 + paymentMethods.length * 58
   );
-  const { present, dismiss } = useIOBottomSheetRaw(snapPoint);
-
-  const handleDelete = () => {
-    props.onDeletePress();
-    dismiss();
-  };
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <BottomSheetMethodsToDelete
+      paymentMethods={paymentMethods}
+      onDeletePress={() => {
+        props.onDeletePress();
+        dismiss();
+      }}
+      onCancelPress={() => dismiss()}
+    />,
+    <View style={IOStyles.flex}>
+      <H3>
+        {I18n.t(
+          "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
+        )}
+      </H3>
+      <View spacer={true} />
+    </View>,
+    snapPoint
+  );
 
   return {
-    presentBottomSheet: () => {
-      void present(
-        <BottomSheetMethodsToDelete
-          paymentMethods={paymentMethods}
-          onDeletePress={handleDelete}
-          onCancelPress={dismiss}
-        />,
-        <View style={IOStyles.flex}>
-          <H3>
-            {I18n.t(
-              "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
-            )}
-          </H3>
-          <View spacer={true} />
-        </View>
-      );
-    }
+    presentBottomSheet: present,
+    bottomSheet
   };
 };

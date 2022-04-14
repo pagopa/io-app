@@ -9,7 +9,7 @@ import {
   errorButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import { useIOBottomSheetRaw } from "../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../utils/hooks/bottomSheet";
 
 type ConfirmOptOutProps = {
   onCancel: () => void;
@@ -44,20 +44,18 @@ const ConfirmOptOut = (props: ConfirmOptOutProps): React.ReactElement => (
   </BottomSheetContent>
 );
 
-export const useConfirmOptOutBottomSheet = () => {
-  const { present, dismiss } = useIOBottomSheetRaw(350);
+export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+    <ConfirmOptOut
+      onCancel={() => dismiss()}
+      onConfirm={() => {
+        dismiss();
+        onConfirm();
+      }}
+    />,
+    I18n.t("profile.main.privacy.shareData.alert.title"),
+    350
+  );
 
-  const openModalBox = (onConfirm: () => void) =>
-    present(
-      <ConfirmOptOut
-        onCancel={dismiss}
-        onConfirm={() => {
-          dismiss();
-          onConfirm();
-        }}
-      />,
-      I18n.t("profile.main.privacy.shareData.alert.title")
-    );
-
-  return { present: openModalBox, dismiss };
+  return { present, bottomSheet, dismiss };
 };

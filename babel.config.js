@@ -1,4 +1,4 @@
 module.exports = {
-  plugins: ["macros"],
+  plugins: ["react-native-reanimated/plugin", "macros"],
   presets: ["module:metro-react-native-babel-preset"]
 };

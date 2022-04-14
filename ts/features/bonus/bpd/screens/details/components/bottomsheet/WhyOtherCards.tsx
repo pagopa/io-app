@@ -6,7 +6,7 @@ import { Body } from "../../../../../../../components/core/typography/Body";
 import { Link } from "../../../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
-import { useIOBottomSheet } from "../../../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../../utils/url";
 
 const styles = StyleSheet.create({

@@ -26,6 +26,8 @@ import {
   isReady
 } from "../../../../bonus/bpd/model/RemoteValue";
 import { PspRadioItem } from "../components/PspRadioItem";
+import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
+import { IOPayPalPsp } from "../types";
 import {
   searchPaypalPsp as searchPaypalPspAction,
   walletAddPaypalBack,
@@ -99,11 +101,12 @@ const getLocales = () => ({
  */
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
-  const { present: presentWhatIsPspBottomSheet } = useIOBottomSheet(
-    <Body>{locales.whatIsPspBody}</Body>,
-    locales.whatIsPspTitle,
-    280
-  );
+  const { present: presentWhatIsPspBottomSheet, bottomSheet } =
+    useIOBottomSheet(
+      <Body>{locales.whatIsPspBody}</Body>,
+      locales.whatIsPspTitle,
+      280
+    );
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
   const dispatch = useDispatch();
@@ -182,6 +185,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
               disabled: selectedPsp === undefined
             }}
           />
+          {bottomSheet}
         </SafeAreaView>
       ) : (
         <LoadingErrorComponent

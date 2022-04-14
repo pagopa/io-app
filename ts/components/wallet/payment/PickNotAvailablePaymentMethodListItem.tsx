@@ -10,7 +10,7 @@ import { PaymentMethod } from "../../../types/pagopa";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
-import { useIOBottomSheet } from "../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../utils/hooks/bottomSheet";
 import { H4 } from "../../core/typography/H4";
 import IconFont from "../../ui/IconFont";
 import I18n from "../../../i18n";
@@ -138,23 +138,30 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   const { logo, title, description, bottomSheetTitle, bottomSheetBody } =
     extractInfoFromPaymentMethod(props.paymentMethod, props.nameSurname ?? "");
 
-  const { present } = useIOBottomSheet(bottomSheetBody, bottomSheetTitle, 300);
+  const { present, bottomSheet } = useIOBottomSheet(
+    bottomSheetBody,
+    bottomSheetTitle,
+    300
+  );
   return (
-    <PickPaymentMethodBaseListItem
-      isFirst={props.isFirst}
-      isFavourite={
-        pot.isSome(props.favoriteWalletId)
-          ? props.favoriteWalletId.value === props.paymentMethod.idWallet
-          : false
-      }
-      logo={logo}
-      title={title}
-      description={description}
-      rightElement={
-        <IconFont name={"io-info"} color={IOColors.blue} size={24} />
-      }
-      onPress={present}
-    />
+    <>
+      {bottomSheet}
+      <PickPaymentMethodBaseListItem
+        isFirst={props.isFirst}
+        isFavourite={
+          pot.isSome(props.favoriteWalletId)
+            ? props.favoriteWalletId.value === props.paymentMethod.idWallet
+            : false
+        }
+        logo={logo}
+        title={title}
+        description={description}
+        rightElement={
+          <IconFont name={"io-info"} color={IOColors.blue} size={24} />
+        }
+        onPress={present}
+      />
+    </>
   );
 };
 

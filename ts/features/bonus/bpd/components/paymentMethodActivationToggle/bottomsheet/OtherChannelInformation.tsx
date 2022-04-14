@@ -5,7 +5,7 @@ import BlockButtons from "../../../../../../components/ui/BlockButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../store/actions/navigation";
-import { useIOBottomSheet } from "../../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../../utils/hooks/bottomSheet";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -44,7 +44,7 @@ export const OtherChannelInformation: React.FunctionComponent<Props> =
   );
 
 export const useOtherChannelInformationBottomSheet = () => {
-  const { present, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheet(
     <OtherChannelInformation
       onAddPayment={() => {
         dismiss();
@@ -54,5 +54,5 @@ export const useOtherChannelInformationBottomSheet = () => {
     I18n.t("bonus.bpd.details.paymentMethods.activateOnOthersChannel.title"),
     350
   );
-  return { present, dismiss };
+  return { present, bottomSheet, dismiss };
 };
