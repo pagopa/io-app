@@ -172,8 +172,6 @@ describe("deleteUnsuccessfulActivePaymentSaga", () => {
         .next()
         .select(lastPaymentOutcomeCodeSelector)
         .next({ outcomeCode: some({ status: "success" }) })
-
-        .next()
         .isDone();
     });
   });
