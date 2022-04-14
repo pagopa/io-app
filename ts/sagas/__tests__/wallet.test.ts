@@ -137,7 +137,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
 
 describe("deleteUnsuccessfulActivePaymentSaga", () => {
   describe("when there is no outcomeCode", () => {
-    it("it should done nothing", () => {
+    it("it should do nothing", () => {
       testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
         .next()
         .select(lastPaymentOutcomeCodeSelector)
@@ -147,22 +147,32 @@ describe("deleteUnsuccessfulActivePaymentSaga", () => {
   });
 
   describe("when there is an outcomeCode and it is not a success", () => {
-    it("it should done nothing", () => {
+    it("it should put runDeleteActivePaymentSaga", () => {
       testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
         .next()
         .select(lastPaymentOutcomeCodeSelector)
         .next({ outcomeCode: some({ status: "errorBlocking" }) })
+        .put(runDeleteActivePaymentSaga())
+        .next()
+        .isDone();
+
+      testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
+        .next()
+        .select(lastPaymentOutcomeCodeSelector)
+        .next({ outcomeCode: some({ status: "errorTryAgain" }) })
+        .put(runDeleteActivePaymentSaga())
+        .next()
         .isDone();
     });
   });
 
   describe("when there is an outcomeCode and it is a success", () => {
-    it("it should put runDeleteActivePaymentSaga", () => {
+    it("it should do nothing", () => {
       testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
         .next()
         .select(lastPaymentOutcomeCodeSelector)
         .next({ outcomeCode: some({ status: "success" }) })
-        .put(runDeleteActivePaymentSaga())
+
         .next()
         .isDone();
     });

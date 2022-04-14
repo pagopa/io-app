@@ -553,7 +553,7 @@ function* deleteUnsuccessfulActivePaymentSaga() {
   // it can be related to a payment or a payment check done during the credit card onboarding
   const lastPaymentOutCome = yield* select(lastPaymentOutcomeCodeSelector);
   if (
-    lastPaymentOutCome.outcomeCode.exists(({ status }) => status === "success")
+    lastPaymentOutCome.outcomeCode.exists(({ status }) => status !== "success")
   ) {
     /**
      * run the procedure to delete the payment activation
