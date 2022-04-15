@@ -162,6 +162,7 @@ Array [
         ]
       }
       testID="DueDateBar_TextContent"
+      uppercase={false}
       white={true}
     >
       This notice expired at
@@ -174,6 +175,7 @@ Array [
             "fontSize": 16,
           }
         }
+        uppercase={false}
         white={true}
       >
          13:29 
@@ -188,6 +190,7 @@ Array [
             "fontSize": 16,
           }
         }
+        uppercase={false}
         white={true}
       >
          12/01/2021
@@ -364,6 +367,7 @@ Array [
         ]
       }
       testID="DueDateBar_TextContent"
+      uppercase={false}
       white={false}
     >
       This notice will expire on
@@ -376,6 +380,7 @@ Array [
             "fontSize": 16,
           }
         }
+        uppercase={false}
       >
          12/01/2021 
       </Text>
@@ -551,6 +556,7 @@ Array [
         ]
       }
       testID="DueDateBar_TextContent"
+      uppercase={false}
       white={false}
     >
       This notice will expire on
@@ -563,6 +569,7 @@ Array [
             "fontSize": 16,
           }
         }
+        uppercase={false}
       >
          12/01/2021 
       </Text>
@@ -636,6 +643,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
         },
       ]
     }
+    uppercase={false}
   >
     This notice has been already paid!
   </Text>

@@ -23,6 +23,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
       }
     }
     accessible={true}
+    collapsable={false}
     focusable={true}
     forwardedRef={[Function]}
     hitSlop={
@@ -79,6 +80,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
           "paddingRight": 16,
         }
       }
+      uppercase={false}
     >
       Cancel
     </Text>
@@ -91,6 +93,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
       }
     }
     accessible={true}
+    collapsable={false}
     focusable={true}
     forwardedRef={[Function]}
     hitSlop={
@@ -148,6 +151,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
           "paddingRight": 16,
         }
       }
+      uppercase={false}
     >
       All
     </Text>
@@ -160,6 +164,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
       }
     }
     accessible={true}
+    collapsable={false}
     focusable={true}
     forwardedRef={[Function]}
     hitSlop={
@@ -216,6 +221,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
           "paddingRight": 16,
         }
       }
+      uppercase={false}
     >
       archive
     </Text>

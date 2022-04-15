@@ -28,6 +28,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
           },
         ]
       }
+      uppercase={false}
     >
       NATIONAL HEALTH SERVICE
     </Text>
@@ -44,6 +45,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
           },
         ]
       }
+      uppercase={false}
     >
       WHO
     </Text>
@@ -98,6 +100,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
             },
           ]
         }
+        uppercase={false}
       >
         BARCODES
       </Text>
@@ -210,6 +213,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         },
       ]
     }
+    uppercase={false}
   >
     Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
   </Text>
@@ -244,6 +248,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
           },
         ]
       }
+      uppercase={false}
     >
       NATIONAL HEALTH SERVICE
     </Text>
@@ -260,6 +265,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
           },
         ]
       }
+      uppercase={false}
     >
       WHO
     </Text>
@@ -321,6 +327,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         },
       ]
     }
+    uppercase={false}
   >
     Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
   </Text>
@@ -355,6 +362,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
           },
         ]
       }
+      uppercase={false}
     >
       NATIONAL HEALTH SERVICE
     </Text>
@@ -371,6 +379,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
           },
         ]
       }
+      uppercase={false}
     >
       WHO
     </Text>
@@ -432,6 +441,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         },
       ]
     }
+    uppercase={false}
   >
     Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
   </Text>
@@ -466,6 +476,7 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
           },
         ]
       }
+      uppercase={false}
     >
       NATIONAL HEALTH SERVICE
     </Text>
@@ -482,6 +493,7 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
           },
         ]
       }
+      uppercase={false}
     >
       WHO
     </Text>
@@ -543,6 +555,7 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
         },
       ]
     }
+    uppercase={false}
   >
     Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
   </Text>
@@ -577,6 +590,7 @@ exports[`MedicalPrescriptionAttachments component with default properties should
           },
         ]
       }
+      uppercase={false}
     >
       NATIONAL HEALTH SERVICE
     </Text>
@@ -638,6 +652,7 @@ exports[`MedicalPrescriptionAttachments component with default properties should
         },
       ]
     }
+    uppercase={false}
   >
     Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
   </Text>

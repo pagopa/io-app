@@ -13,10 +13,7 @@ exports[`RemoteSwitch tests Snapshot for pot.none 1`] = `
 >
   <ActivityIndicator
     accessibilityLabel="Loading..."
-    animating={true}
     color="black"
-    hidesWhenStopped={true}
-    size="small"
   />
 </View>
 `;
@@ -26,6 +23,7 @@ exports[`RemoteSwitch tests Snapshot for pot.noneError 1`] = `
   accessibilityLabel="Try again"
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={false}
   hitSlop={
     Object {
@@ -102,10 +100,7 @@ exports[`RemoteSwitch tests Snapshot for pot.noneLoading 1`] = `
 >
   <ActivityIndicator
     accessibilityLabel="Loading..."
-    animating={true}
     color="black"
-    hidesWhenStopped={true}
-    size="small"
   />
 </View>
 `;
@@ -123,10 +118,7 @@ exports[`RemoteSwitch tests Snapshot for pot.noneUpdating 1`] = `
 >
   <ActivityIndicator
     accessibilityLabel="Loading..."
-    animating={true}
     color="black"
-    hidesWhenStopped={true}
-    size="small"
   />
 </View>
 `;
@@ -252,10 +244,7 @@ exports[`RemoteSwitch tests Snapshot for pot.someLoading 1`] = `
 >
   <ActivityIndicator
     accessibilityLabel="Loading..."
-    animating={true}
     color="black"
-    hidesWhenStopped={true}
-    size="small"
   />
 </View>
 `;
@@ -273,10 +262,7 @@ exports[`RemoteSwitch tests Snapshot for pot.someLoading 2`] = `
 >
   <ActivityIndicator
     accessibilityLabel="Loading..."
-    animating={true}
     color="black"
-    hidesWhenStopped={true}
-    size="small"
   />
 </View>
 `;
