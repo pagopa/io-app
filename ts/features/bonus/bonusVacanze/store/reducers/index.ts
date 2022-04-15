@@ -3,7 +3,7 @@ import { Action } from "../../../../../store/actions/types";
 import bpdReducer, { BpdState } from "../../../bpd/store/reducers";
 import cgnReducer, { CgnState } from "../../../cgn/store/reducers";
 import svReducer, { SvState } from "../../../siciliaVola/store/reducers";
-import CdcReducer, { CdcState } from "../../../cdc/store/reducers";
+import cdcReducer, { CdcState } from "../../../cdc/store/reducers";
 import bonusVacanzeActivationReducer, { ActivationState } from "./activation";
 import allActiveReducer, { AllActiveState } from "./allActive";
 import availableBonusesReducer, {
@@ -39,7 +39,7 @@ const bonusReducer = combineReducers<BonusState, Action>({
   bpd: bpdReducer,
   cgn: cgnReducer,
   sv: svReducer,
-  cdc: CdcReducer
+  cdc: cdcReducer
 });
 
 export default bonusReducer;
