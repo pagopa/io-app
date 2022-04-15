@@ -60,8 +60,6 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - glog (0.3.5)
   - hermes-engine (0.7.2)
-  - instabug-reactnative (9.1.6):
-    - React
   - jail-monkey (2.3.2):
     - React
   - libevent (2.1.12)
@@ -295,6 +293,8 @@ PODS:
   - React-jsinspector (0.64.2)
   - react-native-background-timer (2.1.1):
     - React
+  - react-native-blob-util (0.14.0):
+    - React-Core
   - react-native-camera (3.44.3):
     - React-Core
     - react-native-camera/RCT (= 3.44.3)
@@ -322,8 +322,8 @@ PODS:
   - react-native-mixpanel (1.2.0):
     - Mixpanel (~> 3.6.0)
     - React
-  - react-native-netinfo (4.7.0):
-    - React
+  - react-native-pdf (6.4.0):
+    - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
   - react-native-slider (3.0.3):
@@ -414,7 +414,7 @@ PODS:
     - React-Core
   - RNDeviceInfo (8.3.3):
     - React-Core
-  - RNFS (2.16.6):
+  - RNFS (2.18.0):
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
@@ -430,15 +430,43 @@ PODS:
     - React-Core
   - RNSha256 (1.2.3):
     - React
-  - RNShare (3.7.0):
-    - React
-  - RNSVG (12.1.1):
-    - React
+  - RNShare (7.3.5):
+    - React-Core
+  - RNSVG (12.3.0):
+    - React-Core
   - RNVectorIcons (7.0.0):
     - React
+  - RNZendeskChat (0.3.21):
+    - React
+    - ZendeskAnswerBotSDK (~> 2.1.3)
+    - ZendeskChatSDK (~> 2.11.1)
+    - ZendeskMessagingAPISDK (~> 3.8.2)
+    - ZendeskSupportSDK (~> 5.3.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
+  - ZendeskAnswerBotProvidersSDK (2.1.3):
+    - ZendeskSupportProvidersSDK (~> 5.3.0)
+  - ZendeskAnswerBotSDK (2.1.3):
+    - ZendeskAnswerBotProvidersSDK (~> 2.1.3)
+    - ZendeskMessagingSDK (~> 3.8.2)
+  - ZendeskChatProvidersSDK (2.11.1)
+  - ZendeskChatSDK (2.11.1):
+    - ZendeskChatProvidersSDK (~> 2.11.1)
+    - ZendeskMessagingSDK (~> 3.8.2)
+  - ZendeskCommonUISDK (6.1.1)
+  - ZendeskCoreSDK (2.5.1)
+  - ZendeskMessagingAPISDK (3.8.2):
+    - ZendeskSDKConfigurationsSDK (~> 1.1.8)
+  - ZendeskMessagingSDK (3.8.2):
+    - ZendeskCommonUISDK (~> 6.1.1)
+    - ZendeskMessagingAPISDK (~> 3.8.2)
+  - ZendeskSDKConfigurationsSDK (1.1.8)
+  - ZendeskSupportProvidersSDK (5.3.0):
+    - ZendeskCoreSDK (~> 2.5.1)
+  - ZendeskSupportSDK (5.3.0):
+    - ZendeskMessagingSDK (~> 3.8.2)
+    - ZendeskSupportProvidersSDK (~> 5.3.0)
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
@@ -466,7 +494,6 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (~> 0.75.1)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (~> 0.7.2)
-  - instabug-reactnative (from `../node_modules/instabug-reactnative`)
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
   - Permission-Calendars (from `../node_modules/react-native-permissions/ios/Calendars.podspec`)
@@ -493,6 +520,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
+  - react-native-blob-util (from `../node_modules/react-native-blob-util`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-config (from `../node_modules/react-native-config`)
@@ -502,7 +530,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
-  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -539,6 +567,7 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - RNZendeskChat (from `../node_modules/io-react-native-zendesk`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -557,6 +586,17 @@ SPEC REPOS:
     - Mixpanel
     - OpenSSL-Universal
     - YogaKit
+    - ZendeskAnswerBotProvidersSDK
+    - ZendeskAnswerBotSDK
+    - ZendeskChatProvidersSDK
+    - ZendeskChatSDK
+    - ZendeskCommonUISDK
+    - ZendeskCoreSDK
+    - ZendeskMessagingAPISDK
+    - ZendeskMessagingSDK
+    - ZendeskSDKConfigurationsSDK
+    - ZendeskSupportProvidersSDK
+    - ZendeskSupportSDK
 
 EXTERNAL SOURCES:
   BVLinearGradient:
@@ -569,8 +609,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
-  instabug-reactnative:
-    :path: "../node_modules/instabug-reactnative"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
   Permission-Calendars:
@@ -615,6 +653,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-background-timer:
     :path: "../node_modules/react-native-background-timer"
+  react-native-blob-util:
+    :path: "../node_modules/react-native-blob-util"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
   react-native-cameraroll:
@@ -633,8 +673,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
-  react-native-netinfo:
-    :path: "../node_modules/@react-native-community/netinfo"
+  react-native-pdf:
+    :path: "../node_modules/react-native-pdf"
   react-native-screen-brightness:
     :path: "../node_modules/react-native-screen-brightness"
   react-native-slider:
@@ -707,6 +747,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  RNZendeskChat:
+    :path: "../node_modules/io-react-native-zendesk"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -726,7 +768,6 @@ SPEC CHECKSUMS:
   FlipperKit: 8a20b5c5fcf9436cac58551dc049867247f64b00
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   hermes-engine: 7d97ba46a1e29bacf3e3c61ecb2804a5ddd02d4f
-  instabug-reactnative: aae9da235f22a48455fd837f5983c144d169330c
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mixpanel: 61e6d8c0717c8e94ccc6d3a1ae8677b9a78f64c5
@@ -752,6 +793,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
+  react-native-blob-util: 180714990c4563645fa70e9202cd32e27656a6e6
   react-native-camera: b8cc03e2feec0c04403d0998e37cf519d8fd4c6f
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
   react-native-config: 387b1ea507bc50a2059e69149dac1342b9532f58
@@ -761,7 +803,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
-  react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
+  react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -787,7 +829,7 @@ SPEC CHECKSUMS:
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: cc7de0772378f85d8f36ae439df20f05c590a651
-  RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
+  RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
@@ -795,12 +837,24 @@ SPEC CHECKSUMS:
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
-  RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNShare: 730a2773b1e0007425f2f111dcf75208a919c902
+  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
+  RNZendeskChat: d22f866bc9cf8b426d5fa9d773a4a280889cc6c8
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
+  ZendeskAnswerBotProvidersSDK: 8ef75d4484f09c324cd93ce2725364d73dbabcf5
+  ZendeskAnswerBotSDK: 5427374afc76811d17ef47db8c20967cee84ee2b
+  ZendeskChatProvidersSDK: 37901c1c7529722d71ffade971bb984edd74a5e1
+  ZendeskChatSDK: e312c1899c52eff0ef2b7219385c5aaac3d9e76e
+  ZendeskCommonUISDK: 5808802951ad2bb424f0bed4259dc3c0ce9b52ec
+  ZendeskCoreSDK: 19a18e5ef2edcb18f4dbc0ea0d12bd31f515712a
+  ZendeskMessagingAPISDK: 144e0fb0e633a3c4e73149b781ab65338938d5a8
+  ZendeskMessagingSDK: 500e83d9413481e95180c37ddca0d4ef9d515600
+  ZendeskSDKConfigurationsSDK: 8371b468db0d09e9198f6c5a97818826943ee1ee
+  ZendeskSupportProvidersSDK: 2bdf8544f7cd0fd4c002546f5704b813845beb2a
+  ZendeskSupportSDK: 3a8e508ab1d9dd22dc038df6c694466414e037ba
 
-PODFILE CHECKSUM: eb8085af15261f979e57ec1a58985cd1ed011308
+PODFILE CHECKSUM: cfe9cf6887cc0c4a2fe426f861721f73b4fcf161
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3

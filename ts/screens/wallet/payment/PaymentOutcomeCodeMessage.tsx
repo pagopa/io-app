@@ -1,27 +1,34 @@
-import React from "react";
 import * as pot from "italia-ts-commons/lib/pot";
+import React from "react";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
+import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
+import { Label } from "../../../components/core/typography/Label";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
+import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
+import { navigateToWalletHome } from "../../../store/actions/navigation";
+import { profileEmailSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
-import {
-  paymentPspsSelector,
-  paymentVerificaSelector
-} from "../../../store/reducers/wallet/payment";
-import { navigateToWalletHome } from "../../../store/actions/navigation";
-import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { Label } from "../../../components/core/typography/Label";
-import { profileEmailSelector } from "../../../store/reducers/profile";
+import { paymentVerificaSelector } from "../../../store/reducers/wallet/payment";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 
+export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
+  fee: ImportoEuroCents;
+}>;
+
+type OwnProps =
+  NavigationStackScreenProps<PaymentOutcomeCodeMessageNavigationParams>;
+
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps;
 
 const successBody = (emailAddress: string) => (
   <Label weight={"Regular"} color={"bluegrey"} style={{ textAlign: "center" }}>
@@ -62,16 +69,16 @@ const successFooter = (onClose: () => void) => (
  * If the outcome code is of type success the render a single buttons footer that allow the user to go to the wallet home.
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
-  const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
+  const outcomeCode = props.outcomeCode.outcomeCode.toNullable();
 
   // FIXME: this CTA will point to an external site, yet to be defined
   const onLearnMore = () => null;
 
   const renderSuccessComponent = () => {
-    if (pot.isSome(props.verifica) && pot.isSome(props.psps)) {
+    if (pot.isSome(props.verifica)) {
       const totalAmount =
         (props.verifica.value.importoSingoloVersamento as number) +
-        (props.psps.value[0].fixedCost.amount as number);
+        (props.navigation.getParam("fee") as number);
 
       return successComponent(
         props.profileEmail.getOrElse(""),
@@ -93,14 +100,13 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   ) : null;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome())
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateToWalletHome: () => navigateToWalletHome()
 });
 
 const mapStateToProps = (state: GlobalState) => ({
   outcomeCode: lastPaymentOutcomeCodeSelector(state),
   profileEmail: profileEmailSelector(state),
-  psps: paymentPspsSelector(state),
   verifica: paymentVerificaSelector(state)
 });
 

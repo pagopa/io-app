@@ -1,11 +1,6 @@
-const { defaults: tsjPreset } = require("ts-jest/presets");
-
 module.exports = {
-  ...tsjPreset,
   preset: "react-native",
   transform: {
-    "^.+\\.ts?$": "ts-jest",
-    "^.+\\.tsx?$": "ts-jest",
     "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
   },
   transformIgnorePatterns: [
@@ -14,14 +9,13 @@ module.exports = {
   moduleNameMapper: {
     "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js"
   },
-  globals: {
-    "ts-jest": {
-      babelConfig: true
-    }
-  },
-  setupFiles: ["./jestSetup.js"],
-  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
+  setupFilesAfterEnv: ["./e2e/globalSetup.js"],
   testMatch: ["**/__e2e__/*.e2e.ts?(x)"],
   forceExit: true,
-  verbose: true
+  verbose: true,
+  maxWorkers: 1,
+  testTimeout: 300000,
+  testEnvironment: "./e2e/environment",
+  testRunner: "jest-circus/runner",
+  reporters: ["detox/runners/jest/streamlineReporter"]
 };

@@ -16,7 +16,6 @@ import {
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import customVariables from "../../theme/variables";
-import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
@@ -44,8 +43,8 @@ type Props = OwnProps & AnimatedProps;
 
 const styles = StyleSheet.create({
   listItem: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
   },
   padded: {
     marginLeft: customVariables.contentPadding,
@@ -87,6 +86,7 @@ class ServiceList extends React.Component<Props> {
       style={styles.padded}
       logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
       rightItem={this.props.renderRightIcon?.(info.section)}
+      accessibilityRole={"header"}
     />
   );
 

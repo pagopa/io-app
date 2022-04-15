@@ -1,31 +1,33 @@
 import {
-  NavigationAction,
   NavigationActions,
-  NavigationResetAction,
-  NavigationState,
+  NavigationBackActionPayload,
   StackActions
 } from "react-navigation";
-import { ActionType, createStandardAction } from "typesafe-actions";
+import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
+import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
-import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
-import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
-import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
-import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
-import AddCardScreen from "../../screens/wallet/AddCardScreen";
-import AddCreditCardOutcomeCodeMessage from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
-import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
-import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
-import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
-import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
-import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataInsertionScreen";
-import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
-import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
-import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
-import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSuccessScreen";
-import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
-import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
-import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
-import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
+import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
+import { MessageDetailScreenNavigationParams } from "../../screens/messages/MessageDetailScreen";
+import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageDetailScreen";
+import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageRouterScreen";
+import { FingerprintScreenNavigationParams } from "../../screens/onboarding/FingerprintScreen";
+import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
+import { ServiceDetailsScreenNavigationParams } from "../../screens/services/ServiceDetailsScreen";
+import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
+import { AddCreditCardOutcomeCodeMessageNavigationParams } from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
+import { AddPaymentMethodScreenNavigationParams } from "../../screens/wallet/AddPaymentMethodScreen";
+import { ConfirmCardDetailsScreenNavigationParams } from "../../screens/wallet/ConfirmCardDetailsScreen";
+import { CreditCardOnboardingAttemptDetailScreenNavigationParams } from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
+import { ConfirmPaymentMethodScreenNavigationParams } from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
+import { ManualDataInsertionScreenNavigationParams } from "../../screens/wallet/payment/ManualDataInsertionScreen";
+import { PaymentOutcomeCodeMessageNavigationParams } from "../../screens/wallet/payment/PaymentOutcomeCodeMessage";
+import { PickPaymentMethodScreenNavigationParams } from "../../screens/wallet/payment/PickPaymentMethodScreen";
+import { PickPspScreenNavigationParams } from "../../screens/wallet/payment/PickPspScreen";
+import { TransactionErrorScreenNavigationParams } from "../../screens/wallet/payment/TransactionErrorScreen";
+import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
+import { PaymentHistoryDetailsScreenNavigationParams } from "../../screens/wallet/PaymentHistoryDetailsScreen";
+import { TransactionDetailsScreenNavigationParams } from "../../screens/wallet/TransactionDetailsScreen";
+import { WalletHomeNavigationParams } from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
@@ -33,402 +35,683 @@ import {
   PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
-import { InferNavigationParams } from "../../types/react";
-import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
-import CreditCardDetailScreen from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
+import { PayPalPspUpdateScreenNavigationParams } from "../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 
-export const navigationRestore =
-  createStandardAction("NAVIGATION_RESTORE")<NavigationState>();
-
-export type NavigationActions =
-  | NavigationAction
-  | ActionType<typeof navigationRestore>;
-
-export const resetToAuthenticationRoute: NavigationResetAction =
-  StackActions.reset({
-    index: 0,
-    key: null,
-    actions: [
-      NavigationActions.navigate({
-        routeName: ROUTES.AUTHENTICATION
-      })
-    ]
-  });
-
-export const navigateToMainNavigatorAction = StackActions.reset({
-  key: "StackRouterRoot",
-  index: 0,
-  actions: [
-    NavigationActions.navigate({
-      routeName: ROUTES.MAIN
+/**
+ * @deprecated
+ */
+export const resetToAuthenticationRoute = () =>
+  NavigationService.dispatchNavigationAction(
+    StackActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({
+          routeName: ROUTES.AUTHENTICATION
+        })
+      ]
     })
-  ]
-});
+  );
 
-export const navigateBack = NavigationActions.back;
+/**
+ * @deprecated
+ */
+export const navigateToMainNavigatorAction = () =>
+  NavigationService.dispatchNavigationAction(
+    StackActions.reset({
+      key: "StackRouterRoot",
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: ROUTES.MAIN
+        })
+      ]
+    })
+  );
+
+/**
+ * @deprecated
+ */
+export const navigateBack = (options?: NavigationBackActionPayload) =>
+  NavigationService.dispatchNavigationAction(NavigationActions.back(options));
 
 /**
  * Authentication
  */
 
-export const navigateToIdpSelectionScreenAction = NavigationActions.navigate({
-  routeName: ROUTES.AUTHENTICATION,
-  action: NavigationActions.navigate({
-    routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
-  })
-});
+/**
+ * @deprecated
+ */
+export const navigateToIdpSelectionScreenAction = () =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.AUTHENTICATION,
+      action: NavigationActions.navigate({
+        routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
+      })
+    })
+  );
 
-export const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
-  routeName: ROUTES.ONBOARDING,
-  action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
-});
+/**
+ * @deprecated
+ */
+export const navigateToOnboardingPinScreenAction = () =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING,
+      action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToOnboardingFingerprintScreenAction = (
-  params: InferNavigationParams<typeof FingerprintScreen>
+  params: FingerprintScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING_FINGERPRINT,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_FINGERPRINT,
+      params
+    })
+  );
 
-export const navigateToTosScreen = NavigationActions.navigate({
-  routeName: ROUTES.ONBOARDING,
-  action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
-});
+/**
+ * @deprecated
+ */
+export const navigateToTosScreen = () =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING,
+      action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToOnboardingServicePreferenceCompleteAction = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToServicesPreferenceModeSelectionScreen = (
-  params: InferNavigationParams<typeof OnboardingServicesPreferenceScreen>
+  params: OnboardingServicesPreferenceScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
+      params
+    })
+  );
 
 /**
  * Email
  */
 
+/**
+ * @deprecated
+ */
 export const navigateToEmailReadScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.READ_EMAIL_SCREEN
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.READ_EMAIL_SCREEN
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToEmailInsertScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.INSERT_EMAIL_SCREEN
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.INSERT_EMAIL_SCREEN
+    })
+  );
 
 /**
  * Message
  */
 
+/**
+ * @deprecated
+ */
 export const navigateToMessageDetailScreenAction = (
-  params: InferNavigationParams<typeof MessageDetailScreen>
+  params: MessageDetailScreenNavigationParams
+) =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.MESSAGE_DETAIL,
+      params
+    })
+  );
+
+/**
+ * Open the Message Detail screen supporting the new UIMessage type.
+ */
+export const navigateToPaginatedMessageDetailScreenAction = (
+  params: MessageDetailScreenPaginatedNavigationParams
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.MESSAGE_DETAIL,
+    routeName: ROUTES.MESSAGE_DETAIL_PAGINATED,
     params
   });
 
-export const navigateToMessageRouterScreen = (
-  params: InferNavigationParams<typeof MessageDetailScreen>
+/**
+ * Open the Message Detail Router supporting the new UIMessage type.
+ */
+export const navigateToPaginatedMessageRouterAction = (
+  params: MessageRouterScreenPaginatedNavigationParams
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.MESSAGE_ROUTER,
+    routeName: ROUTES.MESSAGE_ROUTER_PAGINATED,
     params
   });
+
+/**
+ * @deprecated
+ */
+export const navigateToMessageRouterScreen = (
+  params: MessageDetailScreenNavigationParams
+) =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.MESSAGE_ROUTER,
+      params
+    })
+  );
 
 /**
  * Service
  */
 
+/**
+ * @deprecated
+ */
 export const navigateToServiceHomeScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.SERVICES_HOME
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.SERVICES_HOME
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToServiceDetailsScreen = (
-  params: InferNavigationParams<typeof ServiceDetailsScreen>
+  params: ServiceDetailsScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.SERVICE_DETAIL,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.SERVICE_DETAIL,
+      params
+    })
+  );
 
 /**
  * Profile
  */
 
+/**
+ * @deprecated
+ */
 export const navigateToEmailForwardingPreferenceScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToServicePreferenceScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToCalendarPreferenceScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToLanguagePreferenceScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToLogout = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_LOGOUT
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_LOGOUT
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToRemoveAccountSuccess = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToRemoveAccountDetailScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+    })
+  );
 
-export const navigateToPrivacyScreen = NavigationActions.navigate({
-  routeName: ROUTES.PROFILE_PRIVACY_MAIN,
-  action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
-});
+/**
+ * @deprecated
+ */
+export const navigateToPrivacyScreen = () =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PRIVACY_MAIN,
+      action: NavigationActions.navigate({
+        routeName: ROUTES.PROFILE_PRIVACY_MAIN
+      })
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPrivacyShareData = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+    })
+  );
+
 /**
  * Wallet & Payments
  */
 
+/**
+ * @deprecated
+ */
 export const navigateToPaymentTransactionSummaryScreen = (
-  params: InferNavigationParams<typeof TransactionSummaryScreen>
+  params: TransactionSummaryScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPaymentTransactionErrorScreen = (
-  params: InferNavigationParams<typeof TransactionErrorScreen>
+  params: TransactionErrorScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_TRANSACTION_ERROR,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_TRANSACTION_ERROR,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPaymentPickPaymentMethodScreen = (
-  params: InferNavigationParams<typeof PickPaymentMethodScreen>
+  params: PickPaymentMethodScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
+      params
+    })
+  );
 
-export const navigateToTransactionSuccessScreen = (
-  params: InferNavigationParams<typeof TransactionSuccessScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_TRANSACTION_SUCCESS,
-    params
-  });
-
+/**
+ * @deprecated
+ */
 export const navigateToTransactionDetailsScreen = (
-  params: InferNavigationParams<typeof TransactionDetailsScreen>
+  params: TransactionDetailsScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_TRANSACTION_DETAILS,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_TRANSACTION_DETAILS,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToCreditCardDetailScreen = (
-  params: InferNavigationParams<typeof CreditCardDetailScreen>
+  params: CreditCardDetailScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_CREDIT_CARD_DETAIL,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_CREDIT_CARD_DETAIL,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToBancomatDetailScreen = (
   bancomat: BancomatPaymentMethod
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
-    params: { bancomat }
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
+      params: { bancomat }
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToSatispayDetailScreen = (
   satispay: SatispayPaymentMethod
 ) =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_SATISPAY_DETAIL,
+      params: { satispay }
+    })
+  );
+
+export const navigateToPayPalDetailScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_SATISPAY_DETAIL,
-    params: { satispay }
+    routeName: ROUTES.WALLET_PAYPAL_DETAIL
   });
 
+export const navigateToPayPalUpdatePspForPayment = (
+  params: PayPalPspUpdateScreenNavigationParams
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP,
+    params
+  });
+
+/**
+ * @deprecated
+ */
 export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_BPAY_DETAIL,
-    params: { bPay }
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_BPAY_DETAIL,
+      params: { bPay }
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToCobadgeDetailScreen = (
   cobadge: CreditCardPaymentMethod
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_COBADGE_DETAIL,
-    params: { cobadge }
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_COBADGE_DETAIL,
+      params: { cobadge }
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPrivativeDetailScreen = (
   privative: PrivativePaymentMethod
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
-    params: { privative }
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
+      params: { privative }
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPaymentPickPspScreen = (
-  params: InferNavigationParams<typeof PickPspScreen>
+  params: PickPspScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_PICK_PSP,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_PICK_PSP,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPaymentConfirmPaymentMethodScreen = (
-  params: InferNavigationParams<typeof ConfirmPaymentMethodScreen>
+  params: ConfirmPaymentMethodScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPaymentHistoryDetail = (
-  params: InferNavigationParams<typeof PaymentHistoryDetailsScreen>
+  params: PaymentHistoryDetailsScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToCreditCardOnboardingAttempt = (
-  params: InferNavigationParams<typeof CreditCardOnboardingAttemptDetailScreen>
+  params: CreditCardOnboardingAttemptDetailScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL,
+      params
+    })
+  );
 
-export const navigateToWalletHome = (
-  params?: InferNavigationParams<typeof WalletHomeScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_HOME,
-    params
-  });
+/**
+ * @deprecated
+ */
+export const navigateToWalletHome = (params?: WalletHomeNavigationParams) =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_HOME,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToWalletAddPaymentMethod = (
-  params: InferNavigationParams<typeof AddPaymentMethodScreen>
+  params: AddPaymentMethodScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_ADD_PAYMENT_METHOD,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+      params
+    })
+  );
 
-export const navigateToWalletAddDigitalPaymentMethod = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
-  });
-
+/**
+ * @deprecated
+ */
 export const navigateToWalletAddCreditCard = (
-  params: InferNavigationParams<typeof AddCardScreen>
+  params: AddCardScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_ADD_CARD,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_ADD_CARD,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToWalletConfirmCardDetails = (
-  params: InferNavigationParams<typeof ConfirmCardDetailsScreen>
+  params: ConfirmCardDetailsScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_CONFIRM_CARD_DETAILS,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WALLET_CONFIRM_CARD_DETAILS,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPaymentScanQrCode = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_SCAN_QR_CODE
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_SCAN_QR_CODE
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToPaymentManualDataInsertion = (
-  params?: InferNavigationParams<typeof ManualDataInsertionScreen>
+  params?: ManualDataInsertionScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToAddCreditCardOutcomeCode = (
-  params: InferNavigationParams<typeof AddCreditCardOutcomeCodeMessage>
+  params: AddCreditCardOutcomeCodeMessageNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
+      params
+    })
+  );
 
-export const navigateToPaymentOutcomeCode = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
-  });
+/**
+ * @deprecated
+ */
+export const navigateToPaymentOutcomeCode = (
+  params: PaymentOutcomeCodeMessageNavigationParams
+) =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE,
+      params
+    })
+  );
 
 /**
  * CIE
  */
 
+/**
+ * @deprecated
+ */
 export const navigateToCieInvalidScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_EXPIRED_SCREEN
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.CIE_EXPIRED_SCREEN
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToCiePinScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_PIN_SCREEN
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.CIE_PIN_SCREEN
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToCieCardReaderScreen = (
-  params?: InferNavigationParams<typeof CieCardReaderScreen>
+  params?: CieCardReaderScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_CARD_READER_SCREEN,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.CIE_CARD_READER_SCREEN,
+      params
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToWorkunitGenericFailureScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
+    })
+  );
 
 /**
  * SPID
  */
+/**
+ * @deprecated
+ */
 export const navigateToSPIDTestIDP = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.AUTHENTICATION_IDP_TEST
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.AUTHENTICATION_IDP_TEST
+    })
+  );
 
+/**
+ * @deprecated
+ */
 export const navigateToSPIDLogin = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
+    })
+  );

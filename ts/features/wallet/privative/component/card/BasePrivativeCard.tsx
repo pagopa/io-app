@@ -21,6 +21,7 @@ import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useIm
 type Props = {
   loyaltyLogo?: ImageSourcePropType;
   caption?: string;
+  blurredNumber?: string;
   gdoLogo?: ImageURISource;
   blocked?: boolean;
 };
@@ -55,6 +56,17 @@ const fallbackLoyaltyLogo: React.ReactElement = (
     testID={"unknownLoyaltyLogo"}
   />
 );
+
+/**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = (blurredNumber: string) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.privative", {
+    blurredNumber
+  });
+
+  return `${cardRepresentation}`;
+};
 
 const BASE_IMG_W = 100;
 const BASE_IMG_H = 30;
@@ -113,6 +125,11 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <BaseCardComponent
+      accessibilityLabel={
+        props.blurredNumber !== undefined
+          ? getAccessibilityRepresentation(props.blurredNumber)
+          : undefined
+      }
       topLeftCorner={
         <>
           <View style={styles.topLeftContainer}>

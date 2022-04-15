@@ -1,37 +1,69 @@
 import { NavigationActions } from "react-navigation";
+import NavigationService from "../../../../../navigation/NavigationService";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToOnboardingPrivativeChooseIssuerScreen = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToOnboardingPrivativeInsertCardNumberScreen = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToOnboardingPrivativeKoDisabledScreen = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_ISSUER
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_ISSUER
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToOnboardingPrivativeKoUnavailableScreen = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_ISSUER
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_ISSUER
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToOnboardingPrivativeSearchAvailable = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE
+    })
+  );
 
-export const navigateToOnboardingPrivativeAdd = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.ADD_PRIVATIVE
-  });
-
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToActivateBpdOnNewPrivative = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW
+    })
+  );

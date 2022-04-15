@@ -1,14 +1,17 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
-import { connect } from "react-redux";
+import DeviceInfo from "react-native-device-info";
 
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-import DeviceInfo from "react-native-device-info";
+import { connect } from "react-redux";
+import { useState } from "react";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { ReduxProps } from "../store/actions/types";
+import { currentRouteSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
-import { getCurrentRouteName } from "../utils/navigation";
+import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -37,6 +40,7 @@ const styles = StyleSheet.create({
   },
 
   routeText: {
+    maxWidth: widthPercentageToDP(80),
     padding: 2,
     backgroundColor: "#ffffffaa",
     fontSize: 14,
@@ -47,21 +51,30 @@ const styles = StyleSheet.create({
 
 const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const appVersion = getAppVersion();
-  const serverInfo = props.serverInfo;
-  const serverVersion = serverInfo ? serverInfo.version : "?";
+  const [showRootName, setShowRootName] = useState(true);
+
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
-      <Text style={styles.versionText}>
-        {`app: ${appVersion}`} - {`backend: ${serverVersion}`}
-      </Text>
-      <Text style={styles.routeText}>{getCurrentRouteName(props.nav)}</Text>
+      <Text
+        style={styles.versionText}
+        onPress={() => setShowRootName(prevState => !prevState)}
+      >{`v: ${appVersion}`}</Text>
+      {showRootName && (
+        <Text
+          style={styles.routeText}
+          onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
+        >
+          {props.screenNameDebug}
+        </Text>
+      )}
     </View>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  nav: state.nav,
-  serverInfo: state.backendInfo.serverInfo
+  // We need to use the currentRouteDebugSelector because this component is outside the NavigationContext and otherwise
+  // doesn't receive the updates about the new screens
+  screenNameDebug: currentRouteSelector(state)
 });
 
 export default connect(mapStateToProps)(VersionInfoOverlay);

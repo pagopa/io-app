@@ -1,14 +1,15 @@
-import { render, fireEvent } from "@testing-library/react-native";
-import * as React from "react";
-import { Store } from "redux";
-import { Provider } from "react-redux";
-import { NavigationActions } from "react-navigation";
-import configureMockStore from "redux-mock-store";
+import { fireEvent, render } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
-import { BPayPaymentMethod } from "../../../../../types/pagopa";
-import BPayWalletPreview from "../BPayWalletPreview";
-import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import * as React from "react";
+import { NavigationActions } from "react-navigation";
+import { Provider } from "react-redux";
+import { Store } from "redux";
+import configureMockStore from "redux-mock-store";
+import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
+import { BPayPaymentMethod } from "../../../../../types/pagopa";
+import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import BPayWalletPreview from "../BPayWalletPreview";
 
 describe("BPayWalletPreview component", () => {
   const mockStore = configureMockStore();
@@ -84,16 +85,17 @@ describe("BPayWalletPreview component", () => {
 
   it("should call navigateToBPayDetails when press on it", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
     const component = getComponent(aBPay, store);
     const cardComponent = component.queryByTestId("cardPreview");
-    const expectedPayload = {
-      type: NavigationActions.NAVIGATE,
-      routeName: ROUTES.WALLET_BPAY_DETAIL,
-      params: { bPay: aBPay }
-    };
     if (cardComponent) {
       fireEvent.press(cardComponent);
-      expect(store.getActions()).toEqual([expectedPayload]);
+      expect(spy).toHaveBeenCalledWith(
+        NavigationActions.navigate({
+          routeName: ROUTES.WALLET_BPAY_DETAIL,
+          params: { bPay: aBPay }
+        })
+      );
     }
   });
 });

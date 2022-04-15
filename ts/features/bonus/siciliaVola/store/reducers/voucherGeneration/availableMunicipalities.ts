@@ -1,5 +1,5 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import {
   IndexedById,
   toIndexed
@@ -9,17 +9,24 @@ import { NetworkError } from "../../../../../../utils/errors";
 import { Action } from "../../../../../../store/actions/types";
 import {
   svGenerateVoucherAvailableMunicipality,
-  svGenerateVoucherAvailableProvince,
-  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
+  svGenerateVoucherResetAvailableMunicipality,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../bpd/model/RemoteValue";
 
-export type AvailableMunicipalitiesState = pot.Pot<
+export type AvailableMunicipalitiesState = RemoteValue<
   IndexedById<Municipality>,
   NetworkError
 >;
-const INITIAL_STATE: AvailableMunicipalitiesState = pot.none;
+const INITIAL_STATE: AvailableMunicipalitiesState = remoteUndefined;
 
 const reducer = (
   state: AvailableMunicipalitiesState = INITIAL_STATE,
@@ -27,21 +34,27 @@ const reducer = (
 ): AvailableMunicipalitiesState => {
   switch (action.type) {
     case getType(svGenerateVoucherStart):
-      return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableState.request):
-      return pot.none;
-    case getType(svGenerateVoucherAvailableRegion.request):
-      return pot.none;
-    case getType(svGenerateVoucherAvailableProvince.request):
-      return pot.none;
+    case getType(svGenerateVoucherResetAvailableMunicipality):
+      return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableMunicipality.request):
-      return pot.toLoading(state);
+      return remoteLoading;
     case getType(svGenerateVoucherAvailableMunicipality.success):
-      return pot.some(toIndexed(action.payload, m => m.id));
+      return remoteReady(toIndexed(action.payload, m => m.id));
     case getType(svGenerateVoucherAvailableMunicipality.failure):
-      return pot.toError(state, action.payload);
+      return remoteError(action.payload);
   }
   return state;
 };
+
+export const availableMunicipalitiesSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.sv.voucherGeneration.availableMunicipalities
+  ],
+  (
+    availableMunicipalities: AvailableMunicipalitiesState
+  ): AvailableMunicipalitiesState => availableMunicipalities
+);
 
 export default reducer;

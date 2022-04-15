@@ -1,91 +1,71 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import { index } from "fp-ts/lib/Array";
 import { connect } from "react-redux";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { H5 } from "../../../../../components/core/typography/H5";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { ShadowBox } from "../../../bpd/screens/details/components/summary/base/ShadowBox";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { getCategorySpecs } from "../../utils/filters";
-import I18n from "../../../../../i18n";
 import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useCgnDiscountDetailBottomSheet } from "./CgnDiscountDetail";
-import CgnDiscountValueBox from "./CgnDiscountValueBox";
+import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
+import { Label } from "../../../../../components/core/typography/Label";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import IconFont from "../../../../../components/ui/IconFont";
+import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 
 type Props = {
   discount: Discount;
+  merchantType?: DiscountCodeType;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   container: { justifyContent: "space-between", alignItems: "center" },
-  row: {
-    flexDirection: "row"
-  },
-  verticalPadding: {
+  listItem: {
+    paddingHorizontal: 16,
     flex: 1,
-    paddingVertical: 7
+    paddingVertical: 20,
+    marginBottom: 16,
+    borderRadius: 8,
+    borderColor: IOColors.bluegreyLight,
+    borderStyle: "solid",
+    borderWidth: 1
   }
 });
 
 const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   discount,
+  merchantType,
   navigateToLandingWebview
 }: Props) => {
   const { present } = useCgnDiscountDetailBottomSheet(
     discount,
+    merchantType,
     navigateToLandingWebview
   );
   return (
-    <TouchableDefaultOpacity style={styles.verticalPadding} onPress={present}>
-      <ShadowBox>
-        <View style={[styles.row, styles.container]}>
-          <View style={IOStyles.flex}>
-            <View style={IOStyles.flex}>
-              <H4 weight={"SemiBold"} color={"blue"}>
-                {discount.name}
-              </H4>
-            </View>
-            <View spacer xsmall />
-            {index(0, [...discount.productCategories]).fold(
-              undefined,
-              categoryKey =>
-                getCategorySpecs(categoryKey).fold(undefined, c => (
-                  <View style={styles.row}>
-                    {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
-                    <View hspacer small />
-                    <H5 weight={"SemiBold"} color={"bluegrey"}>
-                      {I18n.t(c.nameKey).toLocaleUpperCase()}
-                    </H5>
-                  </View>
-                ))
-            )}
-          </View>
-          {discount.discount && (
-            <CgnDiscountValueBox value={discount.discount} small={true} />
-          )}
+    <TouchableDefaultOpacity style={[styles.listItem]} onPress={present}>
+      <View style={[IOStyles.row, styles.container]}>
+        <View style={IOStyles.flex}>
+          <Label weight={"SemiBold"} color={"bluegreyDark"}>
+            {discount.name}
+          </Label>
         </View>
-      </ShadowBox>
+        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+      </View>
     </TouchableDefaultOpacity>
   );
 };
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToLandingWebview: (url: string, referer: string) =>
-    dispatch(
-      navigateToCgnMerchantLandingWebview({
-        landingPageUrl: url,
-        landingPageReferrer: referer
-      })
-    )
+    navigateToCgnMerchantLandingWebview({
+      landingPageUrl: url,
+      landingPageReferrer: referer
+    })
 });
 export default connect(
   mapStateToProps,

@@ -15,6 +15,7 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import _ from "lodash";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
@@ -54,7 +55,9 @@ import {
   upsertUserDataProcessingDefaultDecoder,
   UpsertUserDataProcessingT,
   upsertUserMetadataDefaultDecoder,
-  UpsertUserMetadataT
+  UpsertUserMetadataT,
+  upsertMessageStatusAttributesDefaultDecoder,
+  UpsertMessageStatusAttributesT
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
@@ -185,8 +188,9 @@ export function BackendClient(
     {
       readonly enrich_result_data?: boolean;
       readonly page_size?: number;
-      readonly maximum_id?: number;
-      readonly minimum_id?: number;
+      readonly maximum_id?: string;
+      readonly minimum_id?: string;
+      readonly archived?: boolean;
       readonly Bearer: string;
     },
     "Authorization",
@@ -202,7 +206,25 @@ export function BackendClient(
   const getMessagesT: GetUserMessagesTCustom = {
     method: "get",
     url: _ => "/api/v1/messages",
-    query: _ => ({}),
+    query: params => {
+      const {
+        maximum_id,
+        enrich_result_data,
+        minimum_id,
+        page_size,
+        archived
+      } = params;
+      return _.pickBy(
+        {
+          maximum_id,
+          enrich_result_data,
+          minimum_id,
+          page_size,
+          archived
+        },
+        v => !_.isUndefined(v)
+      );
+    },
     headers: tokenHeaderProducer,
     response_decoder: getUserMessagesDefaultDecoder()
   };
@@ -213,6 +235,15 @@ export function BackendClient(
     query: _ => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getUserMessageDefaultDecoder()
+  };
+
+  const upsertMessageStatusAttributesT: UpsertMessageStatusAttributesT = {
+    method: "put",
+    url: params => `/api/v1/messages/${params.id}/message-status`,
+    query: _ => ({}),
+    body: params => JSON.stringify(params.messageStatusChange),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    response_decoder: upsertMessageStatusAttributesDefaultDecoder()
   };
 
   const getProfileT: GetUserProfileT = {
@@ -426,6 +457,9 @@ export function BackendClient(
       createFetchRequestForApi(getMessagesT, options)
     ),
     getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
+    upsertMessageStatusAttributes: withBearerToken(
+      createFetchRequestForApi(upsertMessageStatusAttributesT, options)
+    ),
     getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)

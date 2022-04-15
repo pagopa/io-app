@@ -16,10 +16,7 @@ import { Predicate } from "fp-ts/lib/function";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import {
   getInternalRoute,
   handleInternalLink
@@ -32,10 +29,10 @@ import { Locales } from "../../locales/locales";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { mixpanelTrack } from "../mixpanel";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
+import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
-import { getError } from "./errors";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -53,7 +50,7 @@ export function messageNeedsDueDateCTA(
   return message.content.due_date !== undefined;
 }
 
-export function messageNeedsPaymentCTA(
+export function hasMessagePaymentData(
   message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return message.content.payment_data !== undefined;
@@ -65,7 +62,7 @@ export function messageNeedsCTABar(
   return (
     message.content.eu_covid_cert !== undefined || // eucovid data
     messageNeedsDueDateCTA(message) ||
-    messageNeedsPaymentCTA(message) ||
+    hasMessagePaymentData(message) ||
     getCTA(message).isSome()
   );
 }
@@ -94,29 +91,17 @@ export const hasPrescriptionData = (
   message: CreatedMessageWithContent
 ): boolean => fromNullable(message.content.prescription_data).isSome();
 
-type MessagePayment = {
-  noticeNumber: NonNullable<
-    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-  >["notice_number"];
-  amount: NonNullable<
-    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-  >["amount"];
-  organizationFiscalCode: NonNullable<
-    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-  >["payee"]["fiscal_code"];
-};
-
 type MessagePaymentUnexpirable = {
   kind: "UNEXPIRABLE";
   expireStatus?: ExpireStatus;
   dueDate?: Date;
-} & MessagePayment;
+};
 export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
 type MessagePaymentExpirable = {
   kind: "EXPIRABLE";
   expireStatus: ExpireStatus;
   dueDate: Date;
-} & MessagePayment;
+};
 
 export type MessagePaymentExpirationInfo =
   | MessagePaymentUnexpirable
@@ -137,7 +122,7 @@ export function getMessagePaymentExpirationInfo(
   >,
   dueDate?: Date
 ): MessagePaymentExpirationInfo {
-  const { notice_number, amount, invalid_after_due_date, payee } = paymentData;
+  const { invalid_after_due_date } = paymentData;
 
   if (dueDate !== undefined) {
     const expireStatus = getExpireStatus(dueDate);
@@ -145,18 +130,12 @@ export function getMessagePaymentExpirationInfo(
     return {
       kind: invalid_after_due_date ? "EXPIRABLE" : "UNEXPIRABLE",
       expireStatus,
-      noticeNumber: notice_number,
-      organizationFiscalCode: payee.fiscal_code,
-      amount,
       dueDate
     };
   }
 
   return {
-    kind: "UNEXPIRABLE",
-    noticeNumber: notice_number,
-    amount,
-    organizationFiscalCode: payee.fiscal_code
+    kind: "UNEXPIRABLE"
   };
 }
 
@@ -218,16 +197,15 @@ export const getPrescriptionDataFromName = (
     return none;
   });
 
-const hasMetadataTokenName = (
-  metadata?: ServicePublicService_metadata
-): boolean => metadata?.token_name !== undefined;
+const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
+  metadata?.token_name !== undefined;
 
 // a mapping between routes name (the key) and predicates (the value)
 // the predicate says if for that specific route the navigation is allowed
 const internalRoutePredicates: Map<
   string,
-  Predicate<ServicePublicService_metadata | undefined>
-> = new Map<string, Predicate<ServicePublicService_metadata | undefined>>([
+  Predicate<ServiceMetadata | undefined>
+> = new Map<string, Predicate<ServiceMetadata | undefined>>([
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
@@ -243,7 +221,7 @@ export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
 
 const extractCTA = (
   text: string,
-  serviceMetadata?: ServicePublicService_metadata,
+  serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
 ): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(text)
@@ -252,7 +230,6 @@ const extractCTA = (
         return FM<MessageCTA>(m).attributes;
       } catch (e) {
         void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
-          reason: getError(e).message,
           serviceId
         });
         return null;
@@ -269,16 +246,30 @@ const extractCTA = (
 /**
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
+ * @deprecated please use getMessageCTA instead
  * @param message
  * @param serviceMetadata
  * @param serviceId
  */
 export const getCTA = (
   message: CreatedMessageWithContentAndAttachments,
-  serviceMetadata?: ServicePublicService_metadata,
+  serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
 ): Option<CTAS> =>
-  extractCTA(message.content.markdown, serviceMetadata, serviceId);
+  getMessageCTA(message.content.markdown, serviceMetadata, serviceId);
+
+/**
+ * Extract the CTAs if they are nested inside the message markdown content.
+ * The returned CTAs are already localized.
+ * @param markdown
+ * @param serviceMetadata
+ * @param serviceId
+ */
+export const getMessageCTA = (
+  markdown: MessageBodyMarkdown,
+  serviceMetadata?: ServiceMetadata,
+  serviceId?: ServiceId
+): Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
@@ -286,7 +277,7 @@ export const getCTA = (
  * @param serviceMetadata
  */
 export const getServiceCTA = (
-  serviceMetadata?: ServicePublicService_metadata
+  serviceMetadata?: ServiceMetadata
 ): Option<CTAS> =>
   fromNullable(serviceMetadata?.cta).chain(cta =>
     extractCTA(cta, serviceMetadata)
@@ -300,7 +291,7 @@ export const getServiceCTA = (
  */
 export const isCtaActionValid = (
   cta: CTA,
-  serviceMetadata?: ServicePublicService_metadata
+  serviceMetadata?: ServiceMetadata
 ): boolean => {
   // check if it is an internal navigation
   const maybeInternalRoute = getInternalRoute(cta.action);
@@ -323,7 +314,7 @@ export const isCtaActionValid = (
  */
 export const hasCtaValidActions = (
   ctas: CTAS,
-  serviceMetadata?: ServicePublicService_metadata
+  serviceMetadata?: ServiceMetadata
 ): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
   if (ctas.cta_2 === undefined) {

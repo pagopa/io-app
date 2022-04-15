@@ -23,6 +23,7 @@ import {
 import { isStrictSome } from "../../../utils/pot";
 import { showToast } from "../../../utils/showToast";
 import SectionHeader from "../SectionHeader";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
 type Item = "email" | "push" | "inbox";
@@ -30,6 +31,7 @@ type Item = "email" | "push" | "inbox";
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
   serviceId: ServiceId;
+  isSpecialService: boolean;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -68,9 +70,13 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
     [serviceId, loadServicePreference]
   );
 
+  const nav = useNavigationContext();
+
+  const isFocused = nav?.isFocused();
+
   useEffect(() => {
     loadPreferences();
-  }, [serviceId, loadPreferences]);
+  }, [serviceId, loadPreferences, isFocused]);
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -105,9 +111,14 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         iconName="io-envelope"
         title={"serviceDetail.contacts.title"}
       />
+      {/*
+        This Toggle is disabled if the current service is a Special Service cause user can
+        enable or disable the service only using the proper Special Service flow and not only tapping the specific toggle
+      */}
       <PreferenceToggleRow
         label={I18n.t("services.serviceIsEnabled")}
         onPress={(value: boolean) => onValueChange(value, "inbox")}
+        disabled={props.isSpecialService}
         graphicalState={graphicalState}
         onReload={loadPreferences}
         value={getChannelPreference(props.servicePreferenceStatus, "inbox")}

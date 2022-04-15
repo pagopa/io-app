@@ -30,7 +30,7 @@ import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
 } from "../helpers/withItemsSelection";
-import { ListSelectionBar } from "../ListSelectionBar";
+import ListSelectionBar from "../ListSelectionBar";
 import MessageAgenda, {
   isPlaceholderItem,
   MessageAgendaItem,
@@ -532,10 +532,11 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     });
   }
 
-  public componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     const { messagesState } = this.props;
     const { messagesState: prevMessagesState } = prevProps;
-    const { maybeLastLoadedStartOfMonthTime } = this.state;
+    const { maybeLastLoadedStartOfMonthTime, isWorking, sectionsToRender } =
+      this.state;
 
     if (prevProps.currentTab !== this.props.currentTab) {
       this.props.resetSelection();
@@ -569,6 +570,29 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         isContinuosScrollEnabled,
         lastDeadlineId,
         nextDeadlineId
+      });
+    }
+
+    /**
+     * If this screen switched to `isWorking = false` from a
+     * `isWorking = true` state, but the rendered sections didn't
+     * actually change, then we can disable the `isContinuosScrollEnabled`
+     * in order to remove the loader in deadlock.
+     *
+     * FIXME: This fix won't address the real problem in this section, which is
+     * in the function `onLoadMoreDataRequest` and in the fact that the `isWorking`
+     * state is not really switching from `true` to `false` due probably to
+     * an internal React debouncing. **This workaround needs to be removed if
+     * the real issue has to be fixed**.
+     */
+
+    const hasFinishedWorking = prevState.isWorking && !isWorking;
+    const haveSectionsChanged =
+      sectionsToRender.length > prevState.sectionsToRender.length;
+
+    if (hasFinishedWorking && haveSectionsChanged) {
+      this.setState({
+        isContinuosScrollEnabled: false
       });
     }
   }
@@ -627,14 +651,16 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             nextDeadlineId={nextDeadlineId}
           />
         </View>
-        <ListSelectionBar
-          selectedItemIds={selectedItemIds}
-          allItemIds={some(allMessageIdsState)}
-          onToggleSelection={this.archiveMessages}
-          onToggleAllSelection={this.toggleAllMessagesSelection}
-          onResetSelection={resetSelection}
-          primaryButtonText={I18n.t("messages.cta.archive")}
-        />
+        {selectedItemIds.isSome() && (
+          <ListSelectionBar
+            selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
+            totalItems={allMessageIdsState.size}
+            onToggleSelection={this.archiveMessages}
+            onToggleAllSelection={this.toggleAllMessagesSelection}
+            onResetSelection={resetSelection}
+            primaryButtonText={I18n.t("messages.cta.archive")}
+          />
+        )}
       </View>
     );
   }

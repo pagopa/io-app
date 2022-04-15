@@ -74,10 +74,7 @@ class ScreenHeader extends React.Component<Props> {
   public render() {
     const { heading, dark, rightComponent } = this.props;
     return (
-      <View
-        importantForAccessibility={"no-hide-descendants"}
-        style={[dark && styles.darkGrayBg, styles.container]}
-      >
+      <View style={[dark && styles.darkGrayBg, styles.container]}>
         <View
           accessible={true}
           style={styles.text}

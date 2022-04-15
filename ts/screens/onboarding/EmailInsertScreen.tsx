@@ -7,7 +7,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Keyboard, Platform, StyleSheet } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  Platform,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
 import { StackActions } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
@@ -26,7 +32,6 @@ import {
 } from "../../store/actions/onboarding";
 import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
@@ -34,6 +39,7 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { isOnboardingCompleted } from "../../utils/navigation";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { withKeyboard } from "../../utils/keyboard";
@@ -132,7 +138,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   private handleGoBack = () => {
     // goback if the onboarding is completed
-    if (this.props.isOnboardingCompleted) {
+    if (isOnboardingCompleted()) {
       this.props.navigation.goBack();
     }
     // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
@@ -164,11 +170,11 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   private navigateToEmailReadScreen = () => {
     this.props.navigation.dispatch(StackActions.popToTop());
-    this.props.navigation.dispatch(navigateToEmailReadScreen());
+    navigateToEmailReadScreen();
   };
 
   public componentDidMount() {
-    if (this.props.isOnboardingCompleted) {
+    if (isOnboardingCompleted()) {
       this.setState({ email: some(EMPTY_EMAIL) });
     }
   }
@@ -190,10 +196,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         // user is inserting his email from onboarding phase
         // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
         // and he has not an email
-        if (
-          !this.props.isOnboardingCompleted &&
-          prevProps.optionEmail.isNone()
-        ) {
+        if (!isOnboardingCompleted() && prevProps.optionEmail.isNone()) {
           // since this screen is mounted from saga it won't be unmounted because on saga
           // we have a direct navigation instead of back
           // so we have to force a reset (to get this screen unmounted) and navigate to emailReadScreen
@@ -233,7 +236,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const isFromProfileSection = this.props.isOnboardingCompleted;
+    const isFromProfileSection = isOnboardingCompleted();
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
@@ -244,7 +247,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <View style={styles.flex}>
+        <SafeAreaView style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
             <H1
               color={"bluegreyDark"}
@@ -294,9 +297,9 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
               </Form>
             </View>
           </Content>
-        </View>
 
-        {withKeyboard(this.renderFooterButtons())}
+          {withKeyboard(this.renderFooterButtons())}
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }
@@ -308,8 +311,7 @@ function mapStateToProps(state: GlobalState) {
     profile,
     optionEmail: profileEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
-    isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
-    isOnboardingCompleted: isOnboardingCompletedSelector(state)
+    isLoading: pot.isUpdating(profile) || pot.isLoading(profile)
   };
 }
 
@@ -320,9 +322,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         email
       })
     ),
-  navigateToEmailReadScreen: () => {
-    dispatch(navigateToEmailReadScreen());
-  },
   acknowledgeEmailInsert: () => dispatch(emailInsert()),
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),

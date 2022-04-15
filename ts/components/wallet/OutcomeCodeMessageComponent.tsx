@@ -16,6 +16,7 @@ import { OutcomeCode } from "../../types/outcomeCode";
 import { getFullLocale } from "../../utils/locale";
 
 type OwnProp = {
+  hideContextualHelp?: true;
   outcomeCode: OutcomeCode;
   successComponent: React.FC;
   onClose: () => void;
@@ -71,7 +72,9 @@ const OutcomeCodeMessageComponent: React.FC<Props> = (props: Props) => {
     <BaseScreenComponent
       goBack={false}
       customGoBack={<View />}
-      contextualHelp={emptyContextualHelp}
+      contextualHelp={
+        props.hideContextualHelp === true ? undefined : emptyContextualHelp
+      }
     >
       <SafeAreaView style={IOStyles.flex} testID={"OutcomeCode"}>
         {props.outcomeCode.status === "success" ? (

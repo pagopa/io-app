@@ -14,14 +14,14 @@ import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { maybeNotNullyString } from "../../utils/strings";
+import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
-import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import I18n from "../../i18n";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -49,6 +49,7 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
     )}
     style={styles.helpButton}
     accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
+    testID={"helpButton"}
   >
     <IconFont name={"io-question"} />
   </ButtonDefaultOpacity>
@@ -77,7 +78,7 @@ interface OwnProps {
     searchType?: SearchType;
     onSearchTap?: () => void;
   };
-  showInstabugChat?: boolean;
+  showChat?: boolean;
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
@@ -85,6 +86,7 @@ interface OwnProps {
   };
   customGoBack?: React.ReactNode;
   titleColor?: IOColorType;
+  backButtonTestID?: string;
 }
 
 type Props = OwnProps &
@@ -228,7 +230,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       isSearchEnabled,
       onShowHelp,
       isSearchAvailable,
-      showInstabugChat,
+      showChat,
       customRightIcon
     } = this.props;
 
@@ -240,9 +242,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onSearchTap={isSearchAvailable.onSearchTap}
           />
         )}
-        {!isSearchEnabled && showInstabugChat !== false && (
-          <InstabugChatsComponent />
-        )}
+
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
         )}
@@ -254,9 +254,17 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             accessible={customRightIcon.accessibilityLabel !== undefined}
             accessibilityLabel={customRightIcon.accessibilityLabel}
           >
-            <IconFont name={customRightIcon.iconName} />
+            {!isStringNullyOrEmpty(customRightIcon.iconName) && (
+              <IconFont name={customRightIcon.iconName} />
+            )}
           </ButtonDefaultOpacity>
         )}
+
+        {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
+        {!customRightIcon && !isSearchAvailable && !onShowHelp && !showChat && (
+          <ButtonDefaultOpacity transparent={true} />
+        )}
+
         {fromNullable(this.props.accessibilityEvents).fold(
           true,
           ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
@@ -266,13 +274,17 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   };
 
   private renderGoBack = () => {
-    const { goBack, dark, customGoBack } = this.props;
+    const { goBack, dark, customGoBack, backButtonTestID } = this.props;
     return customGoBack ? (
       <Left>{customGoBack}</Left>
     ) : (
       goBack && (
         <Left>
-          <GoBackButton testID={"back-button"} onPress={goBack} white={dark} />
+          <GoBackButton
+            testID={backButtonTestID ?? "back-button"}
+            onPress={goBack}
+            white={dark}
+          />
         </Left>
       )
     );
@@ -309,13 +321,12 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => {
-    dispatch(navigateBack());
-  }
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateBack: () => navigateBack()
 });
 
 export const BaseHeader = connect(

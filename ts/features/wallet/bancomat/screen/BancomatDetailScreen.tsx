@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -15,13 +15,14 @@ import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboardi
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import BancomatInformation from "./BancomatInformation";
 
-type NavigationParams = Readonly<{
+export type BancomatDetailScreenNavigationParams = Readonly<{
+  // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
   bancomat: BancomatPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationStackScreenProps<BancomatDetailScreenNavigationParams>;
 
 /**
  * Start the cobadge onboarding, if the abi is defined
@@ -68,14 +69,12 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   addCoBadge: (abi: string) =>
-    dispatch(
-      navigateToOnboardingCoBadgeChooseTypeStartScreen({
-        abi,
-        legacyAddCreditCardBack: 1
-      })
-    )
+    navigateToOnboardingCoBadgeChooseTypeStartScreen({
+      abi,
+      legacyAddCreditCardBack: 1
+    })
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

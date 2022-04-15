@@ -1,22 +1,23 @@
 /**
  * This component displays a list of payments
  */
-import { fromNullable, Option } from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import { Content, Text, View } from "native-base";
+
 import I18n from "../../i18n";
 import {
-  isPaymentDoneSuccessfully,
   PaymentHistory,
   PaymentsHistoryState
 } from "../../store/reducers/payments/history";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import { getIuv } from "../../utils/payment";
+import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
+
 import PaymentHistoryItem from "./PaymentHistoryItem";
 
 type Props = Readonly<{
@@ -28,7 +29,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: variables.colorWhite,
+    backgroundColor: customVariables.colorWhite,
     flex: 1
   },
   subHeaderContent: {
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   brandDarkGray: {
-    color: variables.brandDarkGray
+    color: customVariables.brandDarkGray
   }
 });
 
@@ -56,7 +57,7 @@ export const getPaymentHistoryInfo = (
       if (success) {
         return {
           text11: I18n.t("payment.details.state.successful"),
-          text3: fromNullable(paymentHistory.verified_data).fold(
+          text3: fromNullable(paymentHistory.verifiedData).fold(
             notAvailable,
             vd =>
               fromNullable(vd.causaleVersamento).fold(notAvailable, cv => cv)

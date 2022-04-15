@@ -2,8 +2,8 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, Toast, View } from "native-base";
-import { useCallback } from "react";
 import * as React from "react";
+import { useCallback } from "react";
 import {
   Animated,
   Easing,
@@ -12,10 +12,13 @@ import {
   ViewStyle
 } from "react-native";
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { Label } from "../../../../components/core/typography/Label";
+import { Link } from "../../../../components/core/typography/Link";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
@@ -30,7 +33,10 @@ import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { formatDateAsLocal } from "../../../../utils/dates";
+import { withBase64Uri } from "../../../../utils/image";
+import { getRemoteLocale } from "../../../../utils/messages";
 import {
   isShareEnabled,
   saveImageToGallery,
@@ -61,19 +67,13 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
-import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import { useIOBottomSheet } from "../../../../utils/bottomSheet";
-import { getRemoteLocale } from "../../../../utils/messages";
-import { Link } from "../../../../components/core/typography/Link";
-import { withBase64Uri } from "../../../../utils/image";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
   [key: string]: string;
 };
 
-type NavigationParams = Readonly<{
+export type ActiveBonusScreenNavigationParams = Readonly<{
   bonus: BonusActivationWithQrCode;
   validFrom?: Date;
   validTo?: Date;
@@ -82,7 +82,7 @@ type NavigationParams = Readonly<{
 const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationStackScreenProps<ActiveBonusScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -705,7 +705,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  goBack: () => dispatch(navigateBack()),
+  goBack: () => navigateBack(),
   startPollingBonusFromId: (id: string) =>
     dispatch(startLoadBonusFromIdPolling(id)),
   cancelPollingBonusFromId: () => dispatch(cancelLoadBonusFromIdPolling())

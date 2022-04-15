@@ -8,8 +8,12 @@ import { BasePaymentFeatureListItem } from "../../features/wallet/component/feat
 import I18n from "../../i18n";
 import { setFavouriteWalletRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
+import {
+  updatingFavouriteWalletSelector,
+  getFavoriteWalletId
+} from "../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../types/pagopa";
+import { isAndroid } from "../../utils/platform";
 import { handleSetFavourite } from "../../utils/wallet";
 import { IOStyleVariables } from "../core/variables/IOStyleVariables";
 import Switch from "../ui/Switch";
@@ -29,16 +33,30 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const FavoritePaymentMethodSwitch = (props: Props) => {
+  // check if we are setting this specific wallet
+  const isTheSameWallet: boolean = pot.getOrElseWithUpdating(
+    pot.map(
+      props.updatingFavouriteWallet,
+      _ => _ === props.paymentMethod.idWallet
+    ),
+    false
+  );
   const isLoading =
-    pot.isLoading(props.favoriteWalletId) ||
-    pot.isUpdating(props.favoriteWalletId);
+    (pot.isUpdating(props.updatingFavouriteWallet) ||
+      pot.isLoading(props.updatingFavouriteWallet)) &&
+    isTheSameWallet;
   const isFavorite = pot.map(
     props.favoriteWalletId,
     _ => _ === props.paymentMethod.idWallet
   );
 
   const rightElement = isLoading ? (
-    <View style={{ width: IOStyleVariables.switchWidth }}>
+    <View
+      style={{
+        width: IOStyleVariables.switchWidth,
+        alignSelf: isAndroid ? "center" : undefined
+      }}
+    >
       <ActivityIndicator
         color={"black"}
         accessible={false}
@@ -72,6 +90,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
+  updatingFavouriteWallet: updatingFavouriteWalletSelector(state),
   favoriteWalletId: getFavoriteWalletId(state)
 });
 

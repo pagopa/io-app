@@ -2,9 +2,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView } from "react-native";
+import { StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../components/core/selection/RadioButtonList";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -16,6 +20,7 @@ import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/compone
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import I18n from "../../i18n";
+import NavigationService from "../../navigation/NavigationService";
 import { identificationRequest } from "../../store/actions/identification";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import {
@@ -27,29 +32,29 @@ import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { withKeyboard } from "../../utils/keyboard";
+import { isCgnEnrolledSelector } from "../../features/bonus/cgn/store/reducers/details";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const getMotivationItems = (): ReadonlyArray<{
-  label: string;
-  id: RemoveAccountMotivationEnum;
-}> => [
+const getMotivationItems = (): ReadonlyArray<
+  RadioItem<RemoveAccountMotivationEnum>
+> => [
   {
-    label: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
     id: RemoveAccountMotivationEnum.NOT_UTILS
   },
   {
-    label: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
     id: RemoveAccountMotivationEnum.NOT_SAFE
   },
   {
-    label: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
     id: RemoveAccountMotivationEnum.NEVER_USED
   },
   {
-    label: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
     id: RemoveAccountMotivationEnum.OTHERS
   }
 ];
@@ -68,7 +73,9 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
 
   const handleContinuePress = () => {
     const hasActiveBonus =
-      props.bvActiveBonus || pot.getOrElse(props.bpdActiveBonus, false);
+      props.bvActiveBonus ||
+      pot.getOrElse(props.bpdActiveBonus, false) ||
+      props.cgnActiveBonus;
 
     if (hasActiveBonus) {
       Alert.alert(
@@ -214,13 +221,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
           shufflePinPadOnPayment
         )
       ),
-    navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
+    navigateToWalletHomeScreen: () => {
+      NavigationService.dispatchNavigationAction(StackActions.popToTop());
+      navigateToWalletHome();
+    }
   };
 };
 
 const mapStateToProps = (state: GlobalState) => {
   const bpdActiveBonus = bpdEnabledSelector(state);
   const bvActiveBonus = allBonusActiveSelector(state).length > 0;
+  const cgnActiveBonus = isCgnEnrolledSelector(state);
   const userDataProcessing = userDataProcessingSelector(state);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
@@ -229,6 +240,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     bvActiveBonus,
     bpdActiveBonus,
+    cgnActiveBonus,
     userDataProcessing,
     isLoading,
     isError

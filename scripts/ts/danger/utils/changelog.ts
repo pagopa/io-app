@@ -7,10 +7,12 @@ import { GenericTicket, GenericTicketType } from "../../common/ticket/types";
 const storyTag = new Map<GenericTicketType, string>([
   ["feat", "feat"],
   ["fix", "fix"],
-  ["chore", "chore"]
+  ["chore", "chore"],
+  ["epic", "feat"]
 ]);
 
 const storyOrder = new Map<GenericTicketType, number>([
+  ["epic", 3],
   ["feat", 2],
   ["fix", 1],
   ["chore", 0]
@@ -29,6 +31,7 @@ const allowedScope = new Map<string, string>([
   ["accessibility", "Accessibility"],
   ["bpd", "Bonus Pagamenti Digitali"],
   ["cgn", "Carta Giovani Nazionale"],
+  ["fims", "Federated Identity Management System"],
   ["myportal", "MyPortal"]
 ]);
 
@@ -38,13 +41,18 @@ const projectToScope = new Map<string, string>([
   ["2463683", "My Portal"],
   ["2477137", "Bonus Pagamenti Digitali"],
   ["IAC", "Bonus Pagamenti Digitali"],
-  ["2476636", "Carta Giovani Nazionale"],
+  ["IOACGN", "Carta Giovani Nazionale"],
   ["IASV", "Sicilia Vola"],
   ["IAGP", "EU Covid Certificate"],
-  ["IARS", "Redesign Servizi"]
+  ["IARS", "Redesign Servizi"],
+  ["ASZ", "Zendesk"],
+  ["IAMVL", "Messaggi a valore legale"],
+  ["IAFIMS", "Federated Identity Management System"],
+  ["AP", "Carta della cultura"]
 ]);
 
-const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
+const cleanChangelogRegex =
+  /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
 
 // pattern used to recognize a scope label
 const regex = /(changelog-scope:|epic-)(.*)/m;
@@ -141,14 +149,14 @@ export const getStoryChangelogScope = (
     return scopeDisplayName !== undefined
       ? right(some(scopeDisplayName))
       : left(
-        new Error(
-          `The scope ${
-            maybeChangelogScopeTag[0]
-          } is not present in the allowed scopes: ${Array.from(
-            allowedScope.keys()
-          ).join(",")}`
-        )
-      );
+          new Error(
+            `The scope ${
+              maybeChangelogScopeTag[0]
+            } is not present in the allowed scopes: ${Array.from(
+              allowedScope.keys()
+            ).join(",")}`
+          )
+        );
   }
   // neither project scope nor scope label found
   return right(none);
@@ -190,11 +198,11 @@ export const getChangelogScope = (
   return scopesList.every((scope, _, arr) => scope === arr[0])
     ? right(some(scopesList[0]))
     : left([
-      new Error(
-        `Different scopes were found on the stories related to the pull request: [${scopesList.join(
-          ","
-        )}].\n
+        new Error(
+          `Different scopes were found on the stories related to the pull request: [${scopesList.join(
+            ","
+          )}].\n
            It is not possible to assign a single scope to this pull request!`
-      )
-    ]);
+        )
+      ]);
 };

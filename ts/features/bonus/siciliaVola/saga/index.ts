@@ -1,4 +1,4 @@
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
 import { none, some } from "fp-ts/lib/Option";
@@ -6,13 +6,11 @@ import { SessionManager } from "../../../../utils/SessionManager";
 import { apiUrlPrefix } from "../../../../config";
 import {
   svGenerateVoucherAvailableDestination,
-  svGenerateVoucherAvailableDestinationAbroad,
   svGenerateVoucherAvailableMunicipality,
-  svGenerateVoucherAvailableProvince,
-  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherGeneratedVoucher,
-  svGenerateVoucherStart
+  svGenerateVoucherStart,
+  svGetPdfVoucher
 } from "../store/actions/voucherGeneration";
 import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -32,16 +30,15 @@ import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/vo
 import { handleSvServiceAlive } from "./networking/handleSvServiceAlive";
 import { handleGetStatiUE } from "./networking/handleGetStatiUE";
 import { handleSvTosAccepted } from "./networking/handleSvTosAccepted";
-import { handleGetListaRegioni } from "./networking/handleGetListaRegioni";
-import { handleGetListaProvinceByIdRegione } from "./networking/handleGetListaProvinceByIdRegione";
 import { handleGetListaComuniBySiglaProvincia } from "./networking/handleGetListaComuniBySiglaProvincia";
 import { handleGetDettaglioVoucher } from "./networking/handleGetDettaglioVoucher";
 import { handlePostAggiungiVoucher } from "./networking/handlePostAggiungiVoucher";
 import { handleGetVoucherBeneficiario } from "./networking/handleGetVoucherBeneficiario";
 import { handleSvAccepTos } from "./networking/handleSvAcceptTos";
-import { handleGetAeroportiBeneficiario } from "./networking/handleGetAeroportiBeneficiario";
+import { handleGetAeroportiAmmessi } from "./networking/handleGetAeroportAmmessi";
 import { handleVoucherRevocation } from "./networking/handleVoucherRevocation";
 import { handleGetVoucheStati } from "./networking/handleGetVoucherStati";
+import { handleGetStampaVoucher } from "./networking/handleGetStampaVoucher";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -72,74 +69,53 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   );
 
   // SV Activation workflow
-  yield takeLatest(
+  yield* takeLatest(
     getType(svGenerateVoucherStart),
     handleSvVoucherGenerationStartActivationSaga
   );
 
   // SV get check if the service is alive
-  yield takeLatest(getType(svServiceAlive.request), handleSvServiceAlive);
+  yield* takeLatest(getType(svServiceAlive.request), handleSvServiceAlive);
 
   // SV get check if the user already accepted the ToS
   // TODO: pass svSessionManager in order to send the MitVoucherToken
-  yield takeLatest(getType(svTosAccepted.request), handleSvTosAccepted);
+  yield* takeLatest(getType(svTosAccepted.request), handleSvTosAccepted);
 
   // SV post the user tos acceptance
   // TODO: pass svSessionManager in order to send the MitVoucherToken
-  yield takeLatest(getType(svAcceptTos.request), handleSvAccepTos);
+  yield* takeLatest(getType(svAcceptTos.request), handleSvAccepTos);
 
   // SV get the list of UE state
-  yield takeLatest(
+  yield* takeLatest(
     getType(svGenerateVoucherAvailableState.request),
     handleGetStatiUE,
     siciliaVolaClient.getStatiUE
   );
 
-  // SV get the list of the Italian regions
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableRegion.request),
-    handleGetListaRegioni,
-    siciliaVolaClient.getListaRegioni
-  );
-
-  // SV get the list of province given a region id
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableProvince.request),
-    handleGetListaProvinceByIdRegione,
-    siciliaVolaClient.getListaProvinceByIdRegione
-  );
-
   // SV get the list municipalities given a province
-  yield takeLatest(
+  yield* takeLatest(
     getType(svGenerateVoucherAvailableMunicipality.request),
     handleGetListaComuniBySiglaProvincia,
     siciliaVolaClient.getListaComuniBySiglaProvincia
   );
 
   // SV get the list of available destination given a region when the selected state is Italy
-  yield takeLatest(
+  yield* takeLatest(
     getType(svGenerateVoucherAvailableDestination.request),
-    handleGetAeroportiBeneficiario,
-    siciliaVolaClient.getAeroportiBeneficiario,
-    svSessionManager
-  );
-  // SV get the list of available destination given a state when the selected state is an abroad state
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableDestinationAbroad.request),
-    handleGetAeroportiBeneficiario,
-    siciliaVolaClient.getAeroportiStato,
+    handleGetAeroportiAmmessi,
+    siciliaVolaClient.getAeroportiAmmessi,
     svSessionManager
   );
 
   // SV post the voucher request
-  yield takeLatest(
+  yield* takeLatest(
     getType(svGenerateVoucherGeneratedVoucher.request),
     handlePostAggiungiVoucher,
     svSessionManager
   );
 
   // SV get the vouchers list already generated
-  yield takeLatest(
+  yield* takeLatest(
     getType(svVoucherListGet.request),
     handleGetVoucherBeneficiario,
     siciliaVolaClient.getVoucherBeneficiario,
@@ -147,7 +123,7 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   );
 
   // SV get the list of the possible voucher state
-  yield takeLatest(
+  yield* takeLatest(
     getType(svPossibleVoucherStateGet.request),
     handleGetVoucheStati,
     siciliaVolaClient.getStatiVoucher,
@@ -156,17 +132,24 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
 
   // SV get the voucher details
   // TODO: pass the client when it will be created
-  yield takeLatest(
+  yield* takeLatest(
     getType(svVoucherDetailGet.request),
     handleGetDettaglioVoucher,
     svSessionManager
   );
 
   // SV post the voucher revocation
-  // TODO: pass the client when it will be created
-  yield takeLatest(
+  yield* takeLatest(
     getType(svVoucherRevocation.request),
     handleVoucherRevocation,
+    siciliaVolaClient.postAnnullaVoucher,
+    svSessionManager
+  );
+
+  yield* takeLatest(
+    getType(svGetPdfVoucher.request),
+    handleGetStampaVoucher,
+    siciliaVolaClient.getStampaVoucher,
     svSessionManager
   );
 }

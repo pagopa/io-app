@@ -5,12 +5,23 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { BpdConfig } from "../../../definitions/content/BpdConfig";
-import { backendStatusLoadSuccess } from "../actions/backendStatus";
-import { Action } from "../actions/types";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { BpdConfig } from "../../../definitions/content/BpdConfig";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
+import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
+import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
+import {
+  cgnMerchantsV2Enabled,
+  premiumMessagesOptInEnabled,
+  uaDonationsEnabled
+} from "../../config";
+import { LocalizedMessageKeys } from "../../i18n";
+import { isStringNullyOrEmpty } from "../../utils/strings";
+import { backendStatusLoadSuccess } from "../actions/backendStatus";
+import { Action } from "../actions/types";
+import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -60,10 +71,148 @@ export const bpdRemoteConfigSelector = createSelector(
 export const cgnMerchantVersionSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean | undefined =>
+    cgnMerchantsV2Enabled &&
     backendStatus
       .mapNullable(bs => bs.config)
-      .mapNullable(config => config.cgn_merchants_v2)
+      .mapNullable(config => config.cgn.merchants_v2)
       .toUndefined()
+);
+
+export const assistanceToolConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): ToolEnum | undefined =>
+    backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
+);
+
+/**
+ * return the remote config about Ukrainian donations enabled/disabled
+ * if there is no data, false is the default value -> (donation disabled)
+ */
+export const isUaDonationsEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    (uaDonationsEnabled &&
+      backendStatus.map(bs => bs.config.uaDonations.enabled).toUndefined()) ??
+    false
+);
+
+/**
+ * return the remote config about Ukrainian donations banner if available
+ */
+export const uaDonationsBannerConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): UaDonationsBanner | undefined =>
+    backendStatus.map(bs => bs.config.uaDonations.banner).toUndefined()
+);
+
+/**
+ * Transform a UaDonationsConfig to `some(UaDonationsBanner)` if all the required conditions are met:
+ * - local feature flag === true
+ * - remote feature flag === true
+ * - banner visible === true
+ * - The description in the current locale is not an empty string
+ *
+ * Return `none` otherwise.
+ * @param uaConfig
+ * @param locale
+ */
+const filterBannerVisible = (
+  uaConfig: UaDonationsConfig,
+  locale: LocalizedMessageKeys
+): Option<UaDonationsBanner> =>
+  uaDonationsEnabled &&
+  uaConfig.enabled &&
+  uaConfig.banner.visible &&
+  !isStringNullyOrEmpty(uaConfig.banner.description[locale])
+    ? some(uaConfig.banner)
+    : none;
+
+/**
+ * The donation data is an information that we can or we cannot render, based on some conditions.
+ * We represent this information using an {@link Option} in order to avoid chaining multiple boolean condition at component level
+ * Return `some(UaDonationsBanner)` if all the enabled / visible conditions are met.
+ * Return `none` otherwise
+ */
+export const uaDonationsBannerSelector = createSelector(
+  [
+    backendStatusSelector,
+    (_: GlobalState, locale: LocalizedMessageKeys) => locale
+  ],
+  (backendStatus, locale): Option<UaDonationsBanner> =>
+    backendStatus.chain(bs =>
+      filterBannerVisible(bs.config.uaDonations, locale)
+    )
+);
+
+/**
+ * return the remote config about paypal enabled/disabled
+ * if there is no data, false is the default value -> (paypal disabled)
+ */
+export const isPaypalEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.paypal.enabled).toUndefined() ?? false
+);
+
+/**
+ * return the remote config about BancomatPay
+ * if no data is available the default is considering all flags set to false
+ */
+export const bancomatPayConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): BancomatPayConfig =>
+    backendStatus
+      .map(bs => bs.config.bancomatPay)
+      .getOrElse({
+        display: false,
+        onboarding: false,
+        payment: false
+      })
+);
+
+/**
+ * return the remote config about CGN enabled/disabled
+ * if there is no data, false is the default value -> (CGN disabled)
+ */
+export const isCGNEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.cgn.enabled).toUndefined() ?? false
+);
+
+/**
+ * return the remote config about CGN enabled/disabled
+ * if there is no data, false is the default value -> (CGN disabled)
+ */
+export const isFIMSEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.fims.enabled).toUndefined() ?? false
+);
+
+/**
+ * Return the remote config about the Premium Messages opt-in/out
+ * screens enabled/disable. If there is no data or the local Feature Flag is
+ * disabled, false is the default value -> (Opt-in/out screen disabled)
+ */
+export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    (premiumMessagesOptInEnabled &&
+      backendStatus
+        .map(bs => bs.config.premiumMessages.opt_in_out_enabled)
+        .toUndefined()) ??
+    false
+);
+
+/**
+ * return the remote config about CDC enabled/disabled
+ * if there is no data, false is the default value -> (CDC disabled)
+ */
+export const isCdcEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    backendStatus.map(bs => bs.config.cdc.enabled).toUndefined() ?? false
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times

@@ -1,7 +1,6 @@
 import { createMockTask } from "@redux-saga/testing-utils";
 import { Task } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
-import { getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../../boot/scheduleLocalNotifications";
 import {
   analyticsAuthenticationCompleted,
@@ -33,9 +32,9 @@ describe("authenticationSaga", () => {
       .next(watchTestLoginRequest)
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
-      .put(resetToAuthenticationRoute)
+      .call(resetToAuthenticationRoute)
       .next()
-      .take(getType(loginSuccess))
+      .take(loginSuccess)
       .next(loginSuccess({ token: aSessionToken, idp: "idp" }))
       .cancel(watchCieAuthentication)
       .next()

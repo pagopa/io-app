@@ -13,7 +13,6 @@ import {
   navigateToWalletAddPaymentMethod,
   navigateToWalletHome
 } from "../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
@@ -56,15 +55,13 @@ const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> =
     );
   };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   skip: () => {
-    dispatch(navigationHistoryPop(1));
-    dispatch(navigateToWalletHome());
+    navigateToWalletHome();
   },
   addPaymentMethod: () => {
-    dispatch(navigationHistoryPop(1));
-    dispatch(navigateToWalletHome());
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }));
+    navigateToWalletHome();
+    navigateToWalletAddPaymentMethod({ inPayment: none });
   }
 });
 

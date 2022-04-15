@@ -3,7 +3,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
+import { NavigationEvents } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
@@ -14,15 +15,14 @@ import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
-import { navHistorySelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
@@ -30,7 +30,6 @@ import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
-import { whereAmIFrom } from "../../utils/navigation";
 import {
   cleanTransactionDescription,
   getTransactionFee,
@@ -38,12 +37,13 @@ import {
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
-type NavigationParams = Readonly<{
+export type TransactionDetailsScreenNavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
   transaction: Transaction;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionDetailsScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -115,19 +115,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  private handleBackPress = () => {
-    if (
-      whereAmIFrom(this.props.nav).fold(
-        false,
-        r => r === ROUTES.WALLET_HOME || r === ROUTES.WALLET_CREDIT_CARD_DETAIL
-      )
-    ) {
-      return this.props.navigation.goBack();
-    } else {
-      this.props.navigateBackToEntrypointPayment();
-      return true;
-    }
-  };
+  private handleBackPress = () => this.props.navigation.goBack();
 
   private handleWillFocus = () => {
     const transaction = this.props.navigation.getParam("transaction");
@@ -211,6 +199,10 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
         headerTitle={I18n.t("wallet.transactionDetails")}
         faqCategories={["wallet_transaction"]}
       >
+        <FocusAwareStatusBar
+          backgroundColor={customVariables.brandDarkGray}
+          barStyle={"light-content"}
+        />
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <SlidedContentComponent hasFlatBottom={true}>
           <PaymentSummaryComponent
@@ -218,7 +210,16 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
-          <Link onPress={this.handleOnFullReasonPress}>
+          <Link
+            onPress={this.handleOnFullReasonPress}
+            accessible
+            accessibilityRole={"button"}
+            accessibilityLabel={`${I18n.t("wallet.transactionFullReason")} ${
+              this.state.showFullReason
+                ? I18n.t("global.accessibility.expanded")
+                : I18n.t("global.accessibility.collapsed")
+            }`}
+          >
             {I18n.t("wallet.transactionFullReason")}
           </Link>
           {this.state.showFullReason && (
@@ -345,8 +346,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   return {
     wallets: pot.toUndefined(getWalletsById(state)),
     isLoading,
-    psp: pot.toUndefined(potPsp),
-    nav: navHistorySelector(state)
+    psp: pot.toUndefined(potPsp)
   };
 };
 

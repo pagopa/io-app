@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   selectCategory: (category: SvBeneficiaryCategory) =>
     dispatch(svGenerateVoucherSelectCategory(category)),
   navigateToSvSickSelectDestination: () =>
-    dispatch(navigateToSvSickSelectDestinationScreen())
+    navigateToSvSickSelectDestinationScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

@@ -1,10 +1,10 @@
+import AsyncStorage from "@react-native-community/async-storage";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
 import {
   NavigationEvents,
-  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
@@ -29,6 +29,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { navigateToLogout } from "../../store/actions/navigation";
 import { preferencesPagoPaTestEnvironmentSetEnabled } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -43,10 +44,8 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import { isDevEnv } from "../../utils/environment";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { navigateToLogout } from "../../store/actions/navigation";
 import { getDeviceId } from "../../utils/device";
+import { isDevEnv } from "../../utils/environment";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -59,7 +58,6 @@ type Props = OwnProps &
 
 type State = {
   tapsOnAppVersion: number;
-  deviceUniqueId: string;
 };
 
 const styles = StyleSheet.create({
@@ -106,31 +104,15 @@ const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
  * A screen to show all the options related to the user profile
  */
 class ProfileMainScreen extends React.PureComponent<Props, State> {
-  private navListener?: NavigationEventSubscription;
-
   constructor(props: Props) {
     super(props);
     this.state = {
-      tapsOnAppVersion: 0,
-      deviceUniqueId: getDeviceId()
+      tapsOnAppVersion: 0
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
 
-  public componentDidMount() {
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    });
-  }
-
   public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
     // This ensures modals will be closed (if there are some opened)
     this.props.hideModal();
     if (this.idResetTap) {
@@ -302,7 +284,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   private renderDeveloperSection() {
     const {
-      backendInfo,
       dispatchSessionExpired,
       isDebugModeEnabled,
       isPagoPATestEnabled,
@@ -313,7 +294,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       walletToken,
       setDebugModeEnabled
     } = this.props;
-    const { deviceUniqueId } = this.state;
+    const deviceUniqueId = getDeviceId();
 
     return (
       <React.Fragment>
@@ -329,6 +310,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             <ListItemComponent
               title={"Markdown Playground"}
               onPress={() => navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)}
+            />
+            <ListItemComponent
+              title={"CGN LandingPage Playground"}
+              onPress={() => navigation.navigate(ROUTES.CGN_LANDING_PLAYGROUND)}
             />
           </>
         )}
@@ -353,15 +338,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         )}
         {isDebugModeEnabled && (
           <React.Fragment>
-            {backendInfo &&
-              this.debugListItem(
-                `${I18n.t("profile.main.backendVersion")} ${
-                  backendInfo.version
-                }`,
-                () => clipboardSetStringWithFeedback(backendInfo.version),
-                false
-              )}
-
             {isDevEnv &&
               sessionToken &&
               this.debugListItem(
@@ -393,12 +369,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 false
               )}
 
-            {isDevEnv &&
-              this.debugListItem(
-                `Device unique ID ${deviceUniqueId}`,
-                () => clipboardSetStringWithFeedback(deviceUniqueId),
-                false
-              )}
+            {this.debugListItem(
+              `Device unique ID ${deviceUniqueId}`,
+              () => clipboardSetStringWithFeedback(deviceUniqueId),
+              false
+            )}
 
             {this.debugListItem(
               I18n.t("profile.main.cache.clear"),
@@ -411,6 +386,37 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 I18n.t("profile.main.forgetCurrentSession"),
                 dispatchSessionExpired,
                 true
+              )}
+            {isDevEnv &&
+              this.debugListItem(
+                I18n.t("profile.main.clearAsyncStorage"),
+                () => {
+                  void AsyncStorage.clear();
+                },
+                true
+              )}
+            {isDevEnv &&
+              this.debugListItem(
+                I18n.t("profile.main.dumpAsyncStorage"),
+                () => {
+                  /* eslint-disable no-console */
+                  console.log("[DUMP START]");
+                  AsyncStorage.getAllKeys()
+                    .then(keys => {
+                      console.log(`\tAvailable keys: ${keys.join(", ")}`);
+                      return Promise.all(
+                        keys.map(key =>
+                          AsyncStorage.getItem(key).then(value => {
+                            console.log(`\tValue for ${key}\n\t\t`, value);
+                          })
+                        )
+                      );
+                    })
+                    .then(() => console.log("[DUMP END]"))
+                    .catch(e => console.error(e));
+                  /* eslint-enable no-console */
+                },
+                false
               )}
           </React.Fragment>
         )}
@@ -530,7 +536,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  backendInfo: state.backendInfo.serverInfo,
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,
@@ -544,7 +549,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: () => dispatch(navigateToLogout()),
+  logout: () => navigateToLogout(),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),

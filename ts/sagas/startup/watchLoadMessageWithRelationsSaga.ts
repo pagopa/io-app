@@ -1,12 +1,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { call, Effect, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { SagaCallReturnType } from "../../types/utils";
-import { loadMessage } from "../messages/messages";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
+import { loadMessage } from "../messages/loadMessage";
 
 /**
  * Load message with related entities (e.g. the sender service).
@@ -19,12 +19,12 @@ export function* watchLoadMessageWithRelationsSaga(
   messageWithRelationsLoadRequest: ActionType<
     typeof loadMessageWithRelations["request"]
   >
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   // Extract the message id from the action payload
   const messageId = messageWithRelationsLoadRequest.payload;
 
   try {
-    const messageOrError: SagaCallReturnType<typeof loadMessage> = yield call(
+    const messageOrError: SagaCallReturnType<typeof loadMessage> = yield* call(
       loadMessage,
       getMessage,
       messageId
@@ -35,11 +35,11 @@ export function* watchLoadMessageWithRelationsSaga(
     }
 
     const message = messageOrError.value;
-    yield put(loadMessageWithRelations.success());
+    yield* put(loadMessageWithRelations.success());
 
     const serviceById = serviceByIdSelector(message.sender_service_id);
 
-    const potService: ReturnType<typeof serviceById> = yield select(
+    const potService: ReturnType<typeof serviceById> = yield* select(
       serviceById
     );
 
@@ -49,9 +49,9 @@ export function* watchLoadMessageWithRelationsSaga(
       potService === undefined ||
       (!pot.isSome(potService) && !pot.isLoading(potService))
     ) {
-      yield put(loadServiceDetail.request(message.sender_service_id));
+      yield* put(loadServiceDetail.request(message.sender_service_id));
     }
   } catch (e) {
-    yield put(loadMessageWithRelations.failure(e));
+    yield* put(loadMessageWithRelations.failure(e));
   }
 }

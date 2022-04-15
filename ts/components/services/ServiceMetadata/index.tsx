@@ -1,13 +1,13 @@
 import React from "react";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
-
 import { isAndroid, isIos } from "../../../utils/platform";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ItemAction } from "../../../utils/url";
 import SectionHeader from ".././SectionHeader";
 import LinkRow from ".././LinkRow";
-
-import { ServicePublicService_metadata } from "../../../../definitions/backend/ServicePublic";
+import I18n from "../../../i18n";
+import { isTestEnv } from "../../../utils/environment";
 import InformationRow from "./InformationRow";
 
 type Props = {
@@ -15,13 +15,29 @@ type Props = {
   isDebugModeEnabled: boolean;
   organizationFiscalCode: OrganizationFiscalCode;
   serviceId: ServiceId;
-  servicesMetadata?: ServicePublicService_metadata;
+  servicesMetadata?: ServiceMetadata;
 };
+
+/**
+ * Function used to generate the `accessibilityLabel` for a single
+ * row in the `ServiceMetadataComponent`. Given the `field`, `value,
+ * and `hint` it creates a custom label that contains all these
+ * informations.
+ */
+const genServiceMetadataAccessibilityLabel = (
+  field: string,
+  value: string,
+  hint: string
+) => `${field}: ${value}, ${hint}`;
+
+export const testableGenServiceMetadataAccessibilityLabel = isTestEnv
+  ? genServiceMetadataAccessibilityLabel
+  : undefined;
 
 /**
  * Renders a dedicated section with a service's metadata and the header.
  */
-const ServiceMetadata: React.FC<Props> = ({
+const ServiceMetadataComponent: React.FC<Props> = ({
   organizationFiscalCode,
   getItemOnPress,
   serviceId,
@@ -60,7 +76,11 @@ const ServiceMetadata: React.FC<Props> = ({
           value={organizationFiscalCode}
           label={"serviceDetail.fiscalCode"}
           onPress={getItemOnPress(organizationFiscalCode, "COPY")}
-          hint={"clipboard.copyText"}
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
+            I18n.t("serviceDetail.fiscalCodeAccessibility"),
+            organizationFiscalCode,
+            I18n.t("clipboard.copyText")
+          )}
         />
       }
       {address && (
@@ -68,7 +88,11 @@ const ServiceMetadata: React.FC<Props> = ({
           value={address}
           label={"services.contactAddress"}
           onPress={getItemOnPress(address, "MAP")}
-          hint={"openMaps.openAddressOnMap"}
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
+            I18n.t("services.contactAddress"),
+            address,
+            I18n.t("openMaps.openAddressOnMap")
+          )}
         />
       )}
       {phone && (
@@ -76,7 +100,11 @@ const ServiceMetadata: React.FC<Props> = ({
           value={phone}
           label={"global.media.phone"}
           onPress={getItemOnPress(`tel:${phone}`)}
-          hint={"messageDetails.call"}
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
+            I18n.t("global.media.phone"),
+            phone,
+            I18n.t("messageDetails.call")
+          )}
         />
       )}
       {email && (
@@ -84,7 +112,11 @@ const ServiceMetadata: React.FC<Props> = ({
           value={email}
           label={"global.media.email"}
           onPress={getItemOnPress(`mailto:${email}`)}
-          hint={"messageDetails.sendEmail"}
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
+            I18n.t("global.media.email"),
+            email,
+            I18n.t("messageDetails.sendEmail")
+          )}
         />
       )}
       {pec && (
@@ -92,7 +124,11 @@ const ServiceMetadata: React.FC<Props> = ({
           value={pec}
           label={"global.media.pec"}
           onPress={getItemOnPress(`mailto:${pec}`)}
-          hint={"messageDetails.sendEmail"}
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
+            I18n.t("global.media.pec"),
+            pec,
+            I18n.t("messageDetails.sendEmail")
+          )}
         />
       )}
       {isDebugModeEnabled && serviceId && (
@@ -100,11 +136,15 @@ const ServiceMetadata: React.FC<Props> = ({
           value={serviceId}
           label={"global.id"}
           onPress={getItemOnPress(serviceId, "COPY")}
-          hint={"clipboard.copyText"}
+          accessibilityLabel={genServiceMetadataAccessibilityLabel(
+            I18n.t("global.id"),
+            serviceId,
+            I18n.t("clipboard.copyText")
+          )}
         />
       )}
     </>
   );
 };
 
-export default ServiceMetadata;
+export default ServiceMetadataComponent;

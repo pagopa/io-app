@@ -11,10 +11,11 @@ import {
 } from "redux-persist";
 import _ from "lodash";
 import AsyncStorage from "@react-native-community/async-storage";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import { isDevEnv } from "../../../utils/environment";
+import { PotTransform } from "../../transforms/potTransform";
+import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import messagesReducer, { MessagesState } from "./messages";
 import messagesStatusReducer, {
@@ -53,29 +54,23 @@ const migrations: MigrationManifest = {
   },
   // version 1
   // remove services section from persisted entities
-  "1": (state: PersistedState): PersistedEntitiesState => {
-    const entities = state as PersistedEntitiesState;
-    return {
-      ...entities,
-      services: {
-        servicePreference: pot.none,
-        byId: {},
-        byOrgFiscalCode: {},
-        readState: {},
-        visible: pot.none,
-        firstLoading: { isFirstServicesLoadingCompleted: false }
-      }
-    };
-  }
+  // TO avoid the proliferation of too many API requests until paged messages' API has been introduced
+  // we restore the persistence of services so this RULE doesn't actually migrates the store.
+  // ref: https://pagopa.atlassian.net/browse/IA-292
+  "1": (state: PersistedState): PersistedEntitiesState =>
+    ({
+      ...state
+    } as PersistedEntitiesState)
 };
 
-// A custom configuration to avoid to persist messages section
+// A custom configuration to avoid persisting messages section
 export const entitiesPersistConfig: PersistConfig = {
   key: "entities",
   storage: AsyncStorage,
   version: CURRENT_REDUX_ENTITIES_STORE_VERSION,
-  blacklist: ["messages", "services"],
-  migrate: createMigrate(migrations, { debug: isDevEnv })
+  blacklist: ["messages"],
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
+  transforms: [DateISO8601Transform, PotTransform]
 };
 
 const reducer = combineReducers<EntitiesState, Action>({

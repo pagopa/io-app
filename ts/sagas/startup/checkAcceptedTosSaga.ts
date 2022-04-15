@@ -1,4 +1,4 @@
-import { call, Effect, put, take } from "redux-saga/effects";
+import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../config";
@@ -6,11 +6,12 @@ import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
+import { ReduxSagaEffect } from "../../types/utils";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   | ActionType<typeof profileUpsert["success"]>
   | ActionType<typeof profileUpsert["failure"]>
@@ -32,24 +33,23 @@ export function* checkAcceptedTosSaga(
       userProfile.accepted_tos_version < tosVersion) // accepted an older version of TOS
   ) {
     // Navigate to the TosScreen
-    yield put(navigateToTosScreen);
+    yield* call(navigateToTosScreen);
     // Wait the user accept the ToS
-    yield take(tosAccepted);
+    yield* take(tosAccepted);
 
     /**
      * The user profile is updated storing the last ToS version.
      * If the user logs in for the first time, the accepted tos version is stored once the profile in initialized
      */
     if (userProfile.has_profile) {
-      yield put(profileUpsert.request({ accepted_tos_version: tosVersion }));
-      const action = yield take([
-        getType(profileUpsert.success),
-        getType(profileUpsert.failure)
-      ]);
+      yield* put(profileUpsert.request({ accepted_tos_version: tosVersion }));
+      const action = yield* take<
+        ActionType<typeof profileUpsert.success | typeof profileUpsert.failure>
+      >([profileUpsert.success, profileUpsert.failure]);
       // call checkAcceptedTosSaga until we don't receive profileUpsert.success
       // tos acceptance must be saved in IO backend
       if (action.type === getType(profileUpsert.failure)) {
-        yield call(checkAcceptedTosSaga, userProfile);
+        yield* call(checkAcceptedTosSaga, userProfile);
       }
     }
   }

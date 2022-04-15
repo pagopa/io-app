@@ -1,8 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Effect } from "redux-saga/effects";
-import { call, put } from "redux-saga/effects";
-
+import { call, put } from "typed-redux-saga/macro";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 
 import {
@@ -11,7 +9,7 @@ import {
 } from "../../store/actions/authentication";
 
 import { BackendClient } from "../../api/backend";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 
 /**
  * Load session info from the Backend
@@ -23,13 +21,13 @@ import { SagaCallReturnType } from "../../types/utils";
 export function* loadSessionInformationSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Option<PublicSession>,
   SagaCallReturnType<typeof getSession>
 > {
   try {
     // Call the Backend service
-    const response = yield call(getSession, {});
+    const response = yield* call(getSession, {});
     // Ko we got an error
     if (response.isLeft()) {
       throw readableReport(response.value);
@@ -37,7 +35,7 @@ export function* loadSessionInformationSaga(
 
     if (response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-      yield put(sessionInformationLoadSuccess(response.value.value));
+      yield* put(sessionInformationLoadSuccess(response.value.value));
       return some(response.value.value);
     }
 
@@ -48,7 +46,7 @@ export function* loadSessionInformationSaga(
       ? response.value.value.title || errorMsgDefault
       : errorMsgDefault;
   } catch (e) {
-    yield put(sessionInformationLoadFailure(Error(e)));
+    yield* put(sessionInformationLoadFailure(Error(e)));
     return none;
   }
 }

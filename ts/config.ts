@@ -33,6 +33,10 @@ const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 // Default number of workers to fetch service.
 const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
 
+// TODO: calculate the page size based on available screen space and item's height
+// https://pagopa.atlassian.net/browse/IA-474
+const DEFAULT_PAGE_SIZE = 12;
+
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
@@ -42,7 +46,6 @@ export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
-export const instabugToken: string = Config.INSTABUG_TOKEN;
 
 export const bonusVacanzeEnabled: boolean =
   Config.BONUS_VACANZE_ENABLED === "YES";
@@ -50,7 +53,6 @@ export const bonusVacanzeEnabled: boolean =
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
-export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
 export const bpdTransactionsPaging: boolean =
   Config.BPD_TRANSACTIONS_PAGING === "YES";
@@ -63,10 +65,6 @@ export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
-// CGN Feature Flag
-export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
-export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
-
 // EU Covid Certificate feature flag
 export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";
@@ -74,8 +72,35 @@ export const euCovidCertificateEnabled: boolean =
 // SiciliaVola Feature Flag
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
-// Paypal configuration
-export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
+// Zendesk Feature Flag
+export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
+
+// Paginated messages
+export const usePaginatedMessages: boolean =
+  Config.PAGINATED_MESSAGES === "YES";
+
+// MVL messages
+export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
+
+// CGN new merchants features
+export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
+
+// Opt-in payments method
+export const bpdOptInPaymentMethodsEnabled =
+  Config.BPD_OPT_IN_PAYMENT_METHODS === "YES";
+
+// Ukraine donation
+export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
+
+// FIMS (Federated Identity Management System) Feature Flag
+export const fimsEnabled = Config.FIMS_ENABLED === "YES";
+
+// CdC (Carta della cultura) Feature Flag
+export const cdcEnabled = Config.CDC_ENABLED === "YES";
+
+// Premium Messages Opt-in/out Feature Flag
+export const premiumMessagesOptInEnabled =
+  Config.PREMIUM_MESSAGES_OPT_IN_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
@@ -112,9 +137,6 @@ export const totServiceFetchWorkers = t.Integer.decode(
   parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_SERVICE_FETCH_WORKERS);
 
-export const shouldDisplayVersionInfoOverlay =
-  Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
-
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
 
@@ -125,3 +147,11 @@ export const privacyUrl: string = t.string
 export const localServicesWebUrl: string = t.string
   .decode(Config.LOCAL_SERVICE_WEB_URL)
   .getOrElse("https://io.italia.it");
+
+export const pageSize: number = DEFAULT_PAGE_SIZE;
+
+// This is the maximum number supported by API via pagination regardless of the content.
+export const maximumItemsFromAPI: number = 100;
+
+export const testOverlayCaption: string | undefined =
+  Config.TEST_OVERLAY_CAPTION;

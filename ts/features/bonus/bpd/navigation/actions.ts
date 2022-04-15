@@ -1,58 +1,137 @@
 import { NavigationActions } from "react-navigation";
+import NavigationService from "../../../../navigation/NavigationService";
 import { BpdPeriodWithInfo } from "../store/reducers/details/periods";
 import BPD_ROUTES from "./routes";
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdOnboardingLoadActivationStatus = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdOnboardingInformationTos = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.INFORMATION_TOS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.ONBOARDING.INFORMATION_TOS
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdOnboardingDeclaration = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.DECLARATION
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.ONBOARDING.DECLARATION
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdOnboardingLoadActivate = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdOnboardingEnrollPaymentMethod = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHODS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHODS
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdOnboardingNoPaymentMethods = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdOnboardingErrorPaymentMethods = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS
+    })
+  );
 
 // IBAN
+
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdIbanInsertion = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.IBAN
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.IBAN
+    })
+  );
 
 // Details
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdDetails = (specificPeriod?: BpdPeriodWithInfo) =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.DETAILS,
-    params: { specificPeriod }
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.DETAILS,
+      params: { specificPeriod }
+    })
+  );
 
 // Transactions
+
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToBpdTransactions = () =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: BPD_ROUTES.TRANSACTIONS
+    })
+  );
+
+// OPT-IN
+export const navigateToOptInPaymentMethodsChoiceScreen = () =>
   NavigationActions.navigate({
-    routeName: BPD_ROUTES.TRANSACTIONS
+    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE
+  });
+
+export const navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_DELETE_METHOD
+  });
+
+export const navigateToOptInPaymentMethodsThankYouKeepMethodsScreen = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.THANK_YOU_KEEP_METHOD
   });

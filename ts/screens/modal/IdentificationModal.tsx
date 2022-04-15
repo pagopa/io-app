@@ -7,11 +7,8 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Link } from "../../components/core/typography/Link";
 import Pinpad from "../../components/Pinpad";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { IdentificationLockModal } from "../../screens/modal/IdentificationLockModal";
 import {
   identificationCancel,
   identificationFailure,
@@ -30,7 +27,6 @@ import {
 import { profileNameSelector } from "../../store/reducers/profile";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
@@ -40,6 +36,8 @@ import {
   isBiometricsValidType
 } from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -62,11 +60,6 @@ type State = {
   canInsertPinTooManyAttempts: boolean;
   countdown?: Millisecond;
   errorDescription?: string;
-};
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.unlockCode.contextualHelpTitle",
-  body: "onboarding.unlockCode.contextualHelpContent"
 };
 
 const checkPinInterval = 100 as Millisecond;
@@ -251,11 +244,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     // Added to solve the issue https://www.pivotaltracker.com/story/show/173217033
     if (prevProps.isFingerprintEnabled !== this.props.isFingerprintEnabled) {
-      this.setState({
+      this.setState((_, props) => ({
         biometryAuthAvailable: fromNullable(
-          this.props.isFingerprintEnabled
+          props.isFingerprintEnabled
         ).getOrElse(false)
-      });
+      }));
     }
 
     const previousAttempts = prevProps.identificationFailState.fold(
@@ -490,13 +483,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           accessibilityEvents={{ avoidNavigationEventsUsage: true }}
           accessibilityLabel={I18n.t("identification.title")}
           primary={!isValidatingTask}
-          contextualHelpMarkdown={contextualHelpMarkdown}
+          showChat={false}
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
         >
           <StatusBar
             barStyle="light-content"
-            backgroundColor={variables.contentPrimaryBackground}
+            backgroundColor={customVariables.contentPrimaryBackground}
           />
           <Content
             primary={!isValidatingTask}
@@ -564,7 +557,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   /**
    * Return the proper instruction based on the avaiable identification method
-   * @param biometrySimplePrintableType
    */
   private getInstructions(): string {
     // We have a failure cause the biometry auth responded with a DeviceLocked or DeviceLockedPermanent code.
@@ -643,7 +635,8 @@ const mapStateToProps = (state: GlobalState) => ({
   identificationFailState: identificationFailSelector(state),
   isFingerprintEnabled: isFingerprintEnabledSelector(state),
   appState: appCurrentStateSelector(state),
-  profileName: profileNameSelector(state)
+  profileName: profileNameSelector(state),
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
 export default connect(

@@ -110,6 +110,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    packagingOptions {
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/x86_64/libjsc.so'
+        pickFirst 'lib/arm64-v8a/libjsc.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+    }
+
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -119,7 +128,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1
-        versionName "1.36.0.1"
+        versionName "2.7.0.5"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -221,7 +230,7 @@ dependencies {
         force = true
     }
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
-    
+
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
@@ -233,6 +242,7 @@ dependencies {
     implementation project(':@react-native-clipboard_clipboard')
     implementation project(':react-native-fingerprint-scanner')
     implementation project(':react-native-art')
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.41"
 }
 
 // Run this once to be able to run the application with BUCK

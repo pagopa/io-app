@@ -1,23 +1,24 @@
-import { NavigationState } from "react-navigation";
 import { PersistPartial } from "redux-persist";
+import { VersionInfoState } from "../../common/versionInfo/store/reducers/versionInfo";
 
 import { BonusState } from "../../features/bonus/bonusVacanze/store/reducers";
-import { FeaturesState } from "../../features/common/store/reducers";
-import { Action } from "../actions/types";
+import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { AppState } from "./appState";
+import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
-import { BackendInfoState } from "./backendInfo";
 import { BackendStatusState } from "./backendStatus";
+import { BackoffErrorState } from "./backoffError";
 import { CieState } from "./cie";
 import { ContentState } from "./content";
+import { CrossSessionsState } from "./crossSessions";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
-import { InstabugUnreadMessagesState } from "./instabug/instabugUnreadMessages";
 import { InstallationState } from "./installation";
-import { NavigationHistoryState } from "./navigationHistory";
+import { InternalRouteNavigationState } from "./internalRouteNavigation";
+import { NavigationState } from "./navigation";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PaymentsState } from "./payments";
@@ -28,25 +29,15 @@ import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
-import { InternalRouteNavigationState } from "./internalRouteNavigation";
-import { CrossSessionsState } from "./crossSessions";
-import { BackoffErrorState } from "./backoffError";
-
-type NetworkState = Readonly<{
-  isConnected: boolean;
-  actionQueue: ReadonlyArray<Action>;
-}>;
 
 export type GlobalState = Readonly<{
   appState: AppState;
+  navigation: NavigationState;
   authentication: PersistedAuthenticationState;
   backendStatus: BackendStatusState;
-  backendInfo: BackendInfoState;
+  versionInfo: VersionInfoState;
   deepLink: DeepLinkState;
   entities: PersistedEntitiesState;
-  instabug: InstabugUnreadMessagesState;
-  nav: NavigationState;
-  network: NetworkState;
   backoffError: BackoffErrorState;
   notifications: NotificationsState;
   onboarding: OnboardingState;
@@ -56,7 +47,6 @@ export type GlobalState = Readonly<{
   preferences: PreferencesState;
   persistedPreferences: PersistedPreferencesState;
   content: ContentState;
-  navigationHistory: NavigationHistoryState;
   identification: PersistedIdentificationState;
   installation: InstallationState;
   debug: DebugState;
@@ -66,9 +56,10 @@ export type GlobalState = Readonly<{
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;
-  features: FeaturesState;
+  features: PersistedFeaturesState;
   internalRouteNavigation: InternalRouteNavigationState;
   crossSessions: CrossSessionsState;
+  assistanceTools: AssistanceToolsState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

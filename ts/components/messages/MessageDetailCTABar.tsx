@@ -9,7 +9,6 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import {
   getCTA,
-  isExpirable,
   isExpired,
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
@@ -53,10 +52,6 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
-  get isPaymentExpirable() {
-    return this.paymentExpirationInfo.fold(false, isExpirable);
-  }
-
   get isPaymentExpired() {
     return this.paymentExpirationInfo.fold(false, isExpired);
   }
@@ -74,26 +69,20 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
       .chain(fromPredicate(() => !this.paid && !this.isPaymentExpired))
       .fold(null, _ => <CalendarEventButton message={this.props.message} />);
 
-  // Render a button to display details of the payment related to the message
-  private renderPaymentButton() {
-    if (this.paid) {
+  // return a payment button only when the advice is not paid and the payment_data is defined
+  private renderPaymentButton(): React.ReactNode {
+    if (this.props.message.content.payment_data === undefined) {
       return null;
     }
-    // the payment is expired and it is not valid (can't pay after due date)
-    if (this.isPaymentExpired && this.isPaymentExpirable) {
-      return null;
-    }
-    // The button is displayed if the payment has an expiration date in the future
-    return this.paymentExpirationInfo.fold(null, pei => {
-      const { amount, noticeNumber, organizationFiscalCode } = pei;
-      return (
-        <PaymentButton
-          amount={amount}
-          noticeNumber={noticeNumber}
-          organizationFiscalCode={organizationFiscalCode}
-        />
-      );
-    });
+    const paymentData = this.props.message.content.payment_data;
+    const { amount, notice_number } = paymentData;
+    return (
+      <PaymentButton
+        amount={amount}
+        noticeNumber={notice_number}
+        organizationFiscalCode={paymentData.payee.fiscal_code}
+      />
+    );
   }
 
   public render() {

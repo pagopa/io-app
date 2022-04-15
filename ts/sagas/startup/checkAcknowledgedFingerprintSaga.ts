@@ -1,8 +1,9 @@
-import { call, Effect, put, select, take } from "redux-saga/effects";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
+import { ReduxSagaEffect } from "../../types/utils";
 import {
   BiometricsType,
   getBiometricsType,
@@ -19,41 +20,39 @@ import {
  * supported/Others".
  */
 function* onboardFingerprintIfAvailableSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   BiometricsType
 > {
   // Check if user device has biometric recognition feature by trying to
   // query data from TouchID library
-  const biometricsType = yield call(getBiometricsType);
+  const biometricsType = yield* call(getBiometricsType);
 
   if (isBiometricsValidType(biometricsType)) {
     // If biometric recognition is available, navigate to the Fingerprint
     // Screen and wait for the user to press "Continue". Otherwise the whole
     // step is bypassed
-    yield put(
-      navigateToOnboardingFingerprintScreenAction({
-        biometryType: biometricsType
-      })
-    );
+    yield* call(navigateToOnboardingFingerprintScreenAction, {
+      biometryType: biometricsType
+    });
 
     // Wait for the user to press "Continue" button after having read the
     // informative text
-    yield take(fingerprintAcknowledge.request);
+    yield* take(fingerprintAcknowledge.request);
 
     // Receive the acknowledgement, then update system state that flags this
     // screen as "Read"
-    yield put(fingerprintAcknowledge.success());
+    yield* put(fingerprintAcknowledge.success());
 
     // Set Fingerprint usage system preferences to true if available and enrolled
-    yield put(
+    yield* put(
       preferenceFingerprintIsEnabledSaveSuccess({
         isFingerprintEnabled: true
       })
     );
   } else {
     // Set Fingerprint usage system preference to false otherwise
-    yield put(
+    yield* put(
       preferenceFingerprintIsEnabledSaveSuccess({
         isFingerprintEnabled: false
       })
@@ -68,18 +67,18 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
  * at first launch of the app ONLY.
  */
 export function* checkAcknowledgedFingerprintSaga(): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   ReturnType<typeof isFingerprintAcknowledgedSelector>
 > {
   // Query system state and check whether the user has already acknowledged biometric
   // recognition Screen. Consider that, like ToS, this should be displayed once.
-  const isFingerprintAcknowledged = yield select(
+  const isFingerprintAcknowledged = yield* select(
     isFingerprintAcknowledgedSelector
   );
 
   if (!isFingerprintAcknowledged) {
     // Navigate to the FingerprintScreen and wait for acknowledgment
-    yield call(onboardFingerprintIfAvailableSaga);
+    yield* call(onboardFingerprintIfAvailableSaga);
   }
 }

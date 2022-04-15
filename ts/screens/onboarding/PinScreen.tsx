@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -18,13 +18,17 @@ import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
+import { isOnboardingCompleted } from "../../utils/navigation";
 import { maybeNotNullyString } from "../../utils/strings";
 import { GlobalState } from "../../store/reducers/types";
-import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
-import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../utils/supportAssistance";
 
 type Props = NavigationStackScreenProps &
   LightModalContextInterface &
@@ -71,11 +75,19 @@ type State = {
 };
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1
+  },
   header: {
     fontSize: 20,
     lineHeight: 22
   },
-  description: { lineHeight: 22 }
+  description: { lineHeight: 22 },
+  footerContainer: {
+    overflow: "hidden",
+    marginTop: -variables.footerShadowOffsetHeight,
+    paddingTop: variables.footerShadowOffsetHeight
+  }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -83,7 +95,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "onboarding.unlockCode.contextualHelpContent"
 };
 const accessibilityTimeout = 100 as Millisecond;
-const instabuglogTag = "pin-creation";
 /**
  * A screen that allows the user to set the unlock code.
  */
@@ -92,6 +103,9 @@ class PinScreen extends React.PureComponent<Props, State> {
   private headerRef = React.createRef<Text>();
   private confirmationStatusRef = React.createRef<Text>();
   private continueButtonRef = React.createRef<View>();
+  private choosenTool = assistanceToolRemoteConfig(
+    this.props.assistanceToolConfig
+  );
   constructor(props: Props) {
     super(props);
 
@@ -105,10 +119,9 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   // Method called when the first CodeInput is filled
   public onPinFulfill = (code: PinString) => {
-    instabugLog(
-      `onPinFulfill: len ${code.length} - state PinSelected`,
-      TypeLogs.DEBUG,
-      instabuglogTag
+    handleSendAssistanceLog(
+      this.choosenTool,
+      `onPinFulfill: len ${code.length} - state PinSelected`
     );
     this.setState(
       {
@@ -125,10 +138,9 @@ class PinScreen extends React.PureComponent<Props, State> {
   // Method called when the confirmation CodeInput is valid and cancel button is pressed
   public onPinConfirmRemoveLastDigit = () => {
     if (this.state.pinState.state === "PinConfirmed") {
-      instabugLog(
-        `onPinConfirmRemoveLastDigit - state PinSelected`,
-        TypeLogs.DEBUG,
-        instabuglogTag
+      handleSendAssistanceLog(
+        this.choosenTool,
+        `onPinConfirmRemoveLastDigit - state PinSelected`
       );
       const pinState: PinSelected = {
         ...this.state.pinState,
@@ -142,10 +154,9 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   // Method called when the confirmation CodeInput is filled
   public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
-    instabugLog(
-      `onPinConfirmFulfill len ${code.length} valid ${isValid}`,
-      TypeLogs.DEBUG,
-      instabuglogTag
+    handleSendAssistanceLog(
+      this.choosenTool,
+      `onPinConfirmFulfill len ${code.length} valid ${isValid}`
     );
     // If the inserted unlock code do not match we clear the component to let the user retry
     if (!isValid && this.pinConfirmComponent) {
@@ -154,10 +165,9 @@ class PinScreen extends React.PureComponent<Props, State> {
         this.state.pinState.state === "PinSelected" ||
         this.state.pinState.state === "PinConfirmed"
       ) {
-        instabugLog(
-          `onPinConfirmFulfill - state PinConfirmError`,
-          TypeLogs.DEBUG,
-          instabuglogTag
+        handleSendAssistanceLog(
+          this.choosenTool,
+          `onPinConfirmFulfill - state PinConfirmError`
         );
         const pinConfirmError: PinConfirmError = {
           ...this.state.pinState,
@@ -179,10 +189,9 @@ class PinScreen extends React.PureComponent<Props, State> {
       }
       return;
     }
-    instabugLog(
-      `onPinConfirmFulfill - state PinConfirmed`,
-      TypeLogs.DEBUG,
-      instabuglogTag
+    handleSendAssistanceLog(
+      this.choosenTool,
+      `onPinConfirmFulfill - state PinConfirmed`
     );
     this.setState(
       {
@@ -337,28 +346,31 @@ class PinScreen extends React.PureComponent<Props, State> {
   // The Footer of the Screen
   public renderFooter(pinState: PinState) {
     return (
-      <View footer={true}>
-        {this.renderContinueButton(pinState)}
+      <View style={styles.footerContainer}>
+        {/* the actual footer must be wrapped in this container in order to keep a white background below the safe area */}
+        <View footer={true}>
+          {this.renderContinueButton(pinState)}
 
-        {pinState.state !== "PinUnselected" && (
-          <React.Fragment>
-            <ButtonDefaultOpacity
-              block={true}
-              bordered={true}
-              onPress={() => this.onPinReset()}
-              // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
-            >
-              <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
-            </ButtonDefaultOpacity>
-          </React.Fragment>
-        )}
+          {pinState.state !== "PinUnselected" && (
+            <React.Fragment>
+              <ButtonDefaultOpacity
+                block={true}
+                bordered={true}
+                onPress={() => this.onPinReset()}
+                // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
+              >
+                <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
+              </ButtonDefaultOpacity>
+            </React.Fragment>
+          )}
+        </View>
       </View>
     );
   }
 
   private handleGoBack = () => {
-    if (this.props.isOnboardingCompleted) {
-      this.props.navigation.goBack();
+    if (isOnboardingCompleted()) {
+      this.props.navigation.goBack(null);
       return;
     }
     Alert.alert(
@@ -396,14 +408,16 @@ class PinScreen extends React.PureComponent<Props, State> {
         faqCategories={["onboarding_pin", "unlock"]}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
-        {this.renderContent(pinState)}
-        {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
+        <SafeAreaView style={styles.flex}>
+          {this.renderContent(pinState)}
+          {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }
 
   private setPin = (pin: PinString) => {
-    instabugLog(`setPin - state PinSaved`, TypeLogs.DEBUG, instabuglogTag);
+    handleSendAssistanceLog(this.choosenTool, `setPin - state PinSaved`);
     this.setState({
       pinState: {
         state: "PinSaved",
@@ -421,17 +435,17 @@ class PinScreen extends React.PureComponent<Props, State> {
               savedPin: pot.some(pin)
             }
           });
-          instabugLog(`createPinSuccess`, TypeLogs.DEBUG, instabuglogTag);
+          handleSendAssistanceLog(this.choosenTool, `createPinSuccess`);
           this.props.createPinSuccess(pin);
           // user is updating his/her pin inside the app, go back
-          if (this.props.isOnboardingCompleted) {
+          if (isOnboardingCompleted()) {
             // We need to ask the user to restart the app
             this.showModal();
             this.props.navigation.goBack();
           }
         },
         _ => {
-          instabugLog(`setPin error`, TypeLogs.DEBUG, instabuglogTag);
+          handleSendAssistanceLog(this.choosenTool, `setPin error`);
           // TODO: show toast if error (https://www.pivotaltracker.com/story/show/170819508)
           this.setState({
             pinState: {
@@ -443,17 +457,16 @@ class PinScreen extends React.PureComponent<Props, State> {
         }
       )
       .catch(e => {
-        instabugLog(
-          `setPin error ${e ? e.toString() : ""}`,
-          TypeLogs.DEBUG,
-          instabuglogTag
+        handleSendAssistanceLog(
+          this.choosenTool,
+          `setPin error ${e?.toString?.() ?? ""}`
         );
       });
   };
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isOnboardingCompleted: isOnboardingCompletedSelector(state)
+  assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

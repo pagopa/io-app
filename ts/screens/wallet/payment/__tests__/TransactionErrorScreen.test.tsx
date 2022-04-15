@@ -1,7 +1,8 @@
 import configureMockStore from "redux-mock-store";
 import { NavigationParams } from "react-navigation";
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Option, some } from "fp-ts/lib/Option";
+
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -76,9 +77,24 @@ describe("TransactionErrorScreen", () => {
     expect(component.queryByTestId("closeButtonCancel")).toBeDefined();
   });
 
-  it("Should render ONGOING screen", () => {
+  it("Should render ONGOING screen on PAA_PAGAMENTO_IN_CORSO error code", () => {
     const { component } = renderComponent(
       some(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
+    );
+    expect(component.queryByTestId("error-code-copy-component")).toBeNull();
+    expect(component.queryByTestId("infoScreenTitle")).toHaveTextContent(
+      I18n.t("wallet.errors.ONGOING")
+    );
+    expect(component.queryByTestId("ongoing-subtitle")).toHaveTextContent(
+      I18n.t("wallet.errors.ONGOING_SUBTITLE")
+    );
+    expect(component.queryByTestId("sendReportButtonCcancel")).toBeDefined();
+    expect(component.queryByTestId("closeButtonConfirm")).toBeDefined();
+  });
+
+  it("Should render ONGOING screen on PPT_PAGAMENTO_IN_CORSO error code", () => {
+    const { component } = renderComponent(
+      some(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO)
     );
     expect(component.queryByTestId("error-code-copy-component")).toBeNull();
     expect(component.queryByTestId("infoScreenTitle")).toHaveTextContent(
@@ -119,9 +135,22 @@ describe("TransactionErrorScreen", () => {
     expect(component.queryByTestId("closeButtonCancel")).toBeDefined();
   });
 
-  it("Should render DUPLICATED screen", () => {
+  it("Should render DUPLICATED screen on PAA_PAGAMENTO_DUPLICATO error code", () => {
     const { component } = renderComponent(
       some(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+    );
+    expect(component.queryByTestId("error-code-copy-component")).toBeNull();
+    expect(component.queryByTestId("infoScreenTitle")).toHaveTextContent(
+      I18n.t("wallet.errors.DUPLICATED")
+    );
+    expect(component.queryByTestId("revoked-subtitle")).toBeNull();
+    expect(component.queryByTestId("expired-subtitle")).toBeNull();
+    expect(component.queryByTestId("closeButtonCancel")).toBeDefined();
+  });
+
+  it("Should render DUPLICATED screen on PPT_PAGAMENTO_DUPLICATO error code", () => {
+    const { component } = renderComponent(
+      some(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
     );
     expect(component.queryByTestId("error-code-copy-component")).toBeNull();
     expect(component.queryByTestId("infoScreenTitle")).toHaveTextContent(

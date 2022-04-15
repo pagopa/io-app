@@ -1,3 +1,4 @@
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import I18n from "../../../../../i18n";
 
@@ -31,13 +32,15 @@ export const confirmButtonProps = (
   onPress: () => void,
   title?: string,
   iconName?: string,
-  testID?: string
+  testID?: string,
+  disabled?: boolean
 ): BlockButtonProps => ({
   primary: true,
   title: title ? title : I18n.t("global.buttons.confirm"),
   iconName,
   onPress,
-  testID
+  testID,
+  disabled
 });
 
 /**
@@ -57,16 +60,40 @@ export const errorButtonProps = (
 });
 
 /**
+ * Style for error props
+ * @param onPress
+ * @param title
+ */
+export const errorBorderedButtonProps = (
+  onPress: () => void,
+  title?: string,
+  iconName?: string
+): BlockButtonProps => ({
+  title: title ?? I18n.t("global.buttons.confirm"),
+  iconName,
+  onPress,
+  style: {
+    flex: 1,
+    borderColor: IOColors.red
+  },
+  onPressWithGestureHandler: true,
+  labelColor: IOColors.red,
+  bordered: true
+});
+
+/**
  * A common configuration for all the buttons that represent a confirm/active action (disabled)
  * @param onPress
  * @param title
  */
 export const disablePrimaryButtonProps = (
   title?: string,
-  iconName?: string
+  iconName?: string,
+  testID?: string
 ): BlockButtonProps => ({
   primary: true,
   disabled: true,
   title: title ? title : I18n.t("global.buttons.confirm"),
-  iconName
+  iconName,
+  testID
 });

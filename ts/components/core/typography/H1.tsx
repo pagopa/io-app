@@ -12,7 +12,10 @@ type OwnProps = ExternalTypographyProps<
 >;
 
 const fontName: IOFontFamily = "TitilliumWeb";
-const fontSize = 28;
+export const h1FontSize = 28;
+export const h1LineHeight = h1FontSize * 1.23;
+export const h1DefaultColor: AllowedColors = "bluegreyDark";
+export const h1DefaultWeight: AllowedWeight = "Bold";
 
 /**
  * Typography component to render H1 text with font size {@link fontSize} and fontFamily {@link fontName}.
@@ -23,8 +26,8 @@ const fontSize = 28;
 export const H1: React.FunctionComponent<OwnProps> = props =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
-    defaultWeight: "Bold",
-    defaultColor: "bluegreyDark",
+    defaultWeight: h1DefaultWeight,
+    defaultColor: h1DefaultColor,
     font: fontName,
-    fontStyle: { fontSize }
+    fontStyle: { fontSize: h1FontSize, lineHeight: h1LineHeight }
   });

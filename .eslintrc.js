@@ -20,7 +20,8 @@ module.exports = {
     "react-hooks",
     "import",
     "functional",
-    "sonarjs"
+    "sonarjs",
+    "@jambit/typed-redux-saga"
   ],
   rules: {
     "no-case-declarations": "off",
@@ -41,6 +42,7 @@ module.exports = {
     "no-console": "error",
     "no-caller": "error",
     "no-bitwise": "error",
+    "no-duplicate-imports": "error",
     eqeqeq: ["error", "smart"],
     "max-classes-per-file": ["error", 1],
     "guard-for-in": "error",
@@ -98,6 +100,14 @@ module.exports = {
       files: ["**/*.test.*"],
       rules: {
         "@typescript-eslint/no-non-null-assertion": "off"
+      }
+    },
+    {
+      files: ["./**/*.ts"],
+      excludedFiles: ["./**/*.test.ts"],
+      rules: {
+        "@jambit/typed-redux-saga/use-typed-effects": ["error", "macro"],
+        "@jambit/typed-redux-saga/delegate-effects": "error"
       }
     }
   ],

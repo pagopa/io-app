@@ -1,7 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { View as NBView } from "native-base";
-
 import { TranslationKeys } from "../../../../locales/locales";
 import { capitalize } from "../../../utils/strings";
 import I18n from "../../../i18n";
@@ -29,16 +28,21 @@ type Props = {
   value: string;
   label: TranslationKeys;
   onPress: () => void;
-  hint: TranslationKeys;
+  accessibilityLabel?: string;
 };
 
-const InformationRow = ({ value, label, onPress, hint }: Props) => (
+const InformationRow = ({
+  value,
+  label,
+  onPress,
+  accessibilityLabel
+}: Props) => (
   <View style={styles.row}>
     <TouchableDefaultOpacity
       onPress={onPress}
       style={styles.touchable}
       accessibilityRole={"button"}
-      accessibilityHint={I18n.t(hint)}
+      accessibilityLabel={accessibilityLabel}
     >
       <H4
         style={styles.label}

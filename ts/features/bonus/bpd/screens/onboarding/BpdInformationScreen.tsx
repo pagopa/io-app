@@ -41,6 +41,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
           bonus={props.bonus}
           onConfirm={onConfirm}
           onCancel={props.onCancel}
+          onBack={props.onCancel}
           contextualHelp={emptyContextualHelp}
         />
       ) : null}

@@ -1,6 +1,6 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Link } from "../../../components/core/typography/Link";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -11,7 +11,7 @@ import I18n from "../../../i18n";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 
-type Props = NavigationInjectedProps & ReduxProps;
+type Props = NavigationStackScreenProps & ReduxProps;
 const bookingUrl = I18n.t("cie.booking_url");
 const browseToLink = () => openLink(bookingUrl);
 
@@ -20,7 +20,7 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
     super(props);
   }
 
-  private handleGoBack = () => this.props.dispatch(resetToAuthenticationRoute);
+  private handleGoBack = () => resetToAuthenticationRoute();
 
   public render(): React.ReactNode {
     return (

@@ -1,7 +1,6 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import variables from "../../../theme/variables";
 import I18n from "../../../i18n";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
@@ -27,7 +26,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: variables.colorWhite,
+    backgroundColor: customVariables.colorWhite,
     flex: 1
   },
   subHeaderContent: {

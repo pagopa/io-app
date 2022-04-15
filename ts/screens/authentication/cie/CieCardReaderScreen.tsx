@@ -34,7 +34,6 @@ import {
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../../../utils/accessibility";
-import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
 import {
   cieAuthenticationError,
   CieAuthenticationErrorPayload,
@@ -43,13 +42,18 @@ import {
 import { ReduxProps } from "../../../store/actions/types";
 import { isIos } from "../../../utils/platform";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../../utils/supportAssistance";
 
-type NavigationParams = {
+export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
   authorizationUri: string;
 };
 
-type Props = NavigationStackScreenProps<NavigationParams> &
+type Props = NavigationStackScreenProps<CieCardReaderScreenNavigationParams> &
   ReduxProps &
   ReturnType<typeof mapStateToProps>;
 
@@ -108,7 +112,6 @@ const analyticActions = new Map<CieAuthenticationErrorReason, string>([
   ["START_NFC_ERROR", ""]
 ]);
 
-const instabugTag = "cie";
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
@@ -167,7 +170,9 @@ const getTextForState = (
  */
 class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private subTitleRef = React.createRef<Text>();
-
+  private choosenTool = assistanceToolRemoteConfig(
+    this.props.assistanceToolConfig
+  );
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -228,7 +233,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieEvent = async (event: CEvent) => {
-    instabugLog(event.event, TypeLogs.DEBUG, instabugTag);
+    handleSendAssistanceLog(this.choosenTool, event.event);
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -303,20 +308,20 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       case ReadingState.error:
         this.setState(
-          getTextForState(ReadingState.error, this.state.errorMessage),
+          state => getTextForState(ReadingState.error, state.errorMessage),
           this.announceUpdate
         );
         break;
       case ReadingState.completed:
         this.setState(
-          {
+          state => ({
             title: I18n.t("global.buttons.ok2"),
             subtitle: I18n.t("authentication.cie.card.cieCardValid"),
             // duplicate message so screen reader can read the updated message
-            content: this.state.isScreenReaderEnabled
+            content: state.isScreenReaderEnabled
               ? I18n.t("authentication.cie.card.cieCardValid")
               : undefined
-          },
+          }),
           this.announceUpdate
         );
         break;
@@ -331,7 +336,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
-    instabugLog(error.message, TypeLogs.DEBUG, instabugTag);
+    handleSendAssistanceLog(this.choosenTool, error.message);
     this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
 
@@ -339,7 +344,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     if (this.state.readingState === ReadingState.completed) {
       return;
     }
-    instabugLog("authentication SUCCESS", TypeLogs.DEBUG, instabugTag);
+    handleSendAssistanceLog(this.choosenTool, "authentication SUCCESS");
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
       setTimeout(
@@ -427,7 +432,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
   };
 
-  private handleCancel = () => this.props.dispatch(resetToAuthenticationRoute);
+  private handleCancel = () => resetToAuthenticationRoute();
 
   private getFooter = () =>
     Platform.select({
@@ -487,7 +492,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const isEnabled = isNfcEnabledSelector(state);
   return {
-    isNfcEnabled: pot.getOrElse(isEnabled, false)
+    isNfcEnabled: pot.getOrElse(isEnabled, false),
+    assistanceToolConfig: assistanceToolConfigSelector(state)
   };
 };
 

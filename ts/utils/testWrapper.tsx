@@ -1,10 +1,12 @@
-import React, { ReactElement, useEffect } from "react";
-import { Provider } from "react-redux";
 import { render, RenderOptions } from "@testing-library/react-native";
+import React, { ReactElement, useEffect } from "react";
 import { createAppContainer, NavigationNavigator } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
+import {
+  createStackNavigator,
+  NavigationStackScreenProps
+} from "react-navigation-stack";
+import { Provider } from "react-redux";
 import { Store } from "redux";
-import { NavigationInjectedProps } from "react-navigation";
 
 // Creates a simple wrapper for the render method which encloses the element to render in a store provider
 export function renderWithRedux<S>(
@@ -30,7 +32,7 @@ function renderNavContainerRedux<S>(
 
 export function fakeScreenFactory<NP>(route: string, params: NP) {
   // The fake screen fires a navigation to the screen under test when mounted, so as to avoid mocking navigation route parmeters.
-  return ({ navigation }: NavigationInjectedProps) => {
+  return ({ navigation }: NavigationStackScreenProps) => {
     useEffect(() => {
       navigation.navigate(route, params);
     });

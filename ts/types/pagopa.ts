@@ -25,18 +25,20 @@ import { WalletListResponse as WalletListResponsePagoPA } from "../../definition
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
-import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-
 import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
-import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
+import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
-import { TypeEnum as CreditCardTypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
+import {
+  TypeEnum as CreditCardTypeEnum,
+  CardInfo
+} from "../../definitions/pagopa/walletv2/CardInfo";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
+import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 
 /**
  * Union of all possible credit card types
@@ -51,6 +53,7 @@ export const CreditCardType = t.union([
   t.literal("DINERS"),
   t.literal("DISCOVER"),
   t.literal("JCB"),
+  t.literal("JCB15"),
   t.literal("POSTEPAY"),
   t.literal("UNKNOWN")
 ]);
@@ -111,7 +114,8 @@ export type Psp = t.TypeOf<typeof Psp>;
 const PatchedPaymentMethodInfo = t.union([
   CardInfo,
   SatispayInfoPagoPa,
-  BPayInfoPagoPa
+  BPayInfoPagoPa,
+  PayPalInfo
 ]);
 export type PatchedPaymentMethodInfo = t.TypeOf<
   typeof PatchedPaymentMethodInfo
@@ -154,7 +158,8 @@ export type RawPaymentMethod =
   | RawCreditCardPaymentMethod
   | RawBPayPaymentMethod
   | RawSatispayPaymentMethod
-  | RawPrivativePaymentMethod;
+  | RawPrivativePaymentMethod
+  | RawPayPalPaymentMethod;
 
 export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
   kind: "Bancomat";
@@ -181,31 +186,35 @@ export type RawSatispayPaymentMethod = WalletV2WithoutInfo & {
   info: SatispayInfoPagoPa;
 };
 
+export type RawPayPalPaymentMethod = WalletV2WithoutInfo & {
+  kind: "PayPal";
+  info: PayPalInfo;
+};
+
 // payment methods type guards
 export const isRawBancomat = (
   pm: RawPaymentMethod | undefined
-): pm is RawBancomatPaymentMethod =>
-  pm === undefined ? false : pm.kind === "Bancomat";
+): pm is RawBancomatPaymentMethod => pm?.kind === "Bancomat";
 
 export const isRawSatispay = (
   pm: RawPaymentMethod | undefined
-): pm is RawSatispayPaymentMethod =>
-  pm === undefined ? false : pm.kind === "Satispay";
+): pm is RawSatispayPaymentMethod => pm?.kind === "Satispay";
+
+export const isRawPayPal = (
+  pm: RawPaymentMethod | undefined
+): pm is RawPayPalPaymentMethod => pm?.kind === "PayPal";
 
 export const isRawCreditCard = (
   pm: RawPaymentMethod | undefined
-): pm is RawCreditCardPaymentMethod =>
-  pm === undefined ? false : pm.kind === "CreditCard";
+): pm is RawCreditCardPaymentMethod => pm?.kind === "CreditCard";
 
 export const isRawPrivative = (
   pm: RawPaymentMethod | undefined
-): pm is RawPrivativePaymentMethod =>
-  pm === undefined ? false : pm.kind === "Privative";
+): pm is RawPrivativePaymentMethod => pm?.kind === "Privative";
 
 export const isRawBPay = (
   pm: RawPaymentMethod | undefined
-): pm is RawBPayPaymentMethod =>
-  pm === undefined ? false : pm.kind === "BPay";
+): pm is RawBPayPaymentMethod => pm?.kind === "BPay";
 
 export type PaymentMethodRepresentation = {
   // A textual representation for a payment method
@@ -238,23 +247,29 @@ export type BPayPaymentMethod = RawBPayPaymentMethod &
 export type SatispayPaymentMethod = RawSatispayPaymentMethod &
   PaymentMethodRepresentation;
 
+export type PayPalPaymentMethod = RawPayPalPaymentMethod &
+  PaymentMethodRepresentation;
+
 export type PaymentMethod =
   | BancomatPaymentMethod
   | CreditCardPaymentMethod
   | BPayPaymentMethod
   | SatispayPaymentMethod
-  | PrivativePaymentMethod;
+  | PrivativePaymentMethod
+  | PayPalPaymentMethod;
 
 // payment methods type guards
 export const isBancomat = (
   pm: PaymentMethod | undefined
-): pm is BancomatPaymentMethod =>
-  pm === undefined ? false : pm.kind === "Bancomat";
+): pm is BancomatPaymentMethod => pm?.kind === "Bancomat";
 
 export const isSatispay = (
   pm: PaymentMethod | undefined
-): pm is SatispayPaymentMethod =>
-  pm === undefined ? false : pm.kind === "Satispay";
+): pm is SatispayPaymentMethod => pm?.kind === "Satispay";
+
+export const isPayPal = (
+  pm: PaymentMethod | undefined
+): pm is PayPalPaymentMethod => pm?.kind === "PayPal";
 
 export const isCreditCard = (
   pm: PaymentMethod | undefined
@@ -503,3 +518,19 @@ export const PatchedWalletV2Response = t.intersection(
 );
 
 export type PatchedWalletV2Response = t.TypeOf<typeof PatchedWalletV2Response>;
+
+/**
+ * The patched version of the DeleteWalletResponse is needed because remainingWallets is not of type
+ * PatchedWalletV2 but instead it's type is WalletV2.
+ */
+export const PatchedDeleteWalletResponse = t.interface({
+  data: t.interface({
+    deletedWallets: t.number,
+    notDeletedWallets: t.number,
+    remainingWallets: t.readonlyArray(PatchedWalletV2)
+  })
+});
+
+export type PatchedDeleteWalletResponse = t.TypeOf<
+  typeof PatchedDeleteWalletResponse
+>;

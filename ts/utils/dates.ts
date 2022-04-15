@@ -1,16 +1,17 @@
-import { compareDesc, format as dateFnsFormat } from "date-fns";
+import { format as dateFnsFormat } from "date-fns";
+import dfns_de from "date-fns/locale/de";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
-import dfns_de from "date-fns/locale/de";
-import * as t from "io-ts";
+import { Either, left } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as t from "io-ts";
+import { Errors } from "io-ts";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
+import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary, localeDateFormat } from "./locale";
 import { ExpireStatus } from "./messages";
 import { NumberFromString } from "./number";
-import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");
 
@@ -18,6 +19,14 @@ type DFNSLocales = Record<Locales, DateFnsLocale>;
 
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
 
+// return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970) without considering the timezone
+export const formatDateAsShortFormatUTC = (date: Date): string =>
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(
+        new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
+        I18n.t("global.dateFormats.shortFormat")
+      );
 // return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
 export const formatDateAsShortFormat = (date: Date): string =>
   isNaN(date.getTime())
@@ -73,30 +82,65 @@ export function format(
   );
 }
 
+/**
+ * Try to parse month and validate as month
+ * @param month
+ */
+export const decodeCreditCardMonth = (
+  month: string | number | undefined
+): Either<Error | Errors, number> => {
+  // convert month to string (if it is a number) and
+  // ensure it is left padded: 2 -> 02
+  const monthStr = (month ?? "").toString().trim().padStart(2, "0");
+  // check that month matches the pattern (01-12)
+  if (!CreditCardExpirationMonth.is(monthStr)) {
+    return left(
+      new Error("month doesn't follow CreditCardExpirationMonth pattern")
+    );
+  }
+  return NumberFromString.decode(monthStr);
+};
+
+/**
+ * Try to parse year and validate as year
+ * @param year
+ */
+export const decodeCreditCardYear = (
+  year: string | number | undefined
+): Either<Error | Errors, number> => {
+  const yearStr = (year ?? "").toString().trim();
+  // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
+  if (yearStr.length === 2) {
+    // check that year is included matches the pattern (00-99)
+    if (!CreditCardExpirationYear.is(yearStr)) {
+      return left(
+        new Error("year doesn't follow CreditCardExpirationYear pattern")
+      );
+    }
+    const now = new Date();
+    return NumberFromString.decode(
+      now.getFullYear().toString().substring(0, 2) + yearStr.toString()
+    );
+  }
+  return NumberFromString.decode(yearStr);
+};
+
+/**
+ * ⚠️ Beware, the Date that this method returns is partially correct since is created only from year and month.
+ * Eg: month: "03" year: "2022" will return -> 2022-02-28T23:00:00.000Z
+ * The date thus returned is therefore ambiguous since it may not correspond to the intended semantics
+ * (for example the date returned is not applicable to credit cards that includes the last day of the month)
+ * Using the date thus generated to make comparisons could lead to unexpected behaviour
+ * @param month
+ * @param year
+ * @deprecated
+ */
 export const dateFromMonthAndYear = (
   month: string | number | undefined,
   year: string | number | undefined
 ): Option<Date> => {
-  // convert month to string (if it is a number) and
-  // ensure it is left padded: 2 -> 02
-  const monthStr = (month ?? "").toString().trim().padStart(2, "0");
-  // eslint-disable-next-line functional/no-let
-  let yearStr = (year ?? "").toString().trim();
-  // check that month matches the pattern (01-12)
-  if (!CreditCardExpirationMonth.is(monthStr)) {
-    return none;
-  }
-  // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
-  if (yearStr.length === 2) {
-    // check that month is included matches the pattern (00-99)
-    if (!CreditCardExpirationYear.is(yearStr)) {
-      return none;
-    }
-    const now = new Date();
-    yearStr = now.getFullYear().toString().substring(0, 2) + yearStr.toString();
-  }
-  const maybeMonth = NumberFromString.decode(monthStr);
-  const maybeYear = NumberFromString.decode(yearStr);
+  const maybeMonth = decodeCreditCardMonth(month);
+  const maybeYear = decodeCreditCardYear(year);
   if (maybeMonth.isLeft() || maybeYear.isLeft()) {
     return none;
   }
@@ -104,7 +148,7 @@ export const dateFromMonthAndYear = (
 };
 
 /**
- * if expireMonth and expireYear are defined and they represent a valid date then
+ * if expireMonth and expireYear are defined, and they represent a valid date then
  * return some, with 'true' if the given date is expired compared with now.
  * return none if the input is not valid
  * {@expireYear could be 2 or 4 digits}
@@ -115,11 +159,18 @@ export const isExpired = (
   expireMonth: string | number | undefined,
   expireYear: string | number | undefined
 ): Either<Error, boolean> => {
-  const maybeDate = dateFromMonthAndYear(expireMonth, expireYear);
-  if (maybeDate.isNone()) {
-    return left(Error("invalid input"));
-  }
-  return right(compareDesc(maybeDate.value, new Date()) > 0);
+  const maybeMonth = decodeCreditCardMonth(expireMonth);
+  const maybeYear = decodeCreditCardYear(expireYear);
+  return maybeYear
+    .chain(year =>
+      maybeMonth.map(month => {
+        const now = new Date();
+        const nowYearMonth = new Date(now.getFullYear(), now.getMonth() + 1);
+        const cardExpirationDate = new Date(year, month);
+        return nowYearMonth > cardExpirationDate;
+      })
+    )
+    .mapLeft(_ => new Error("invalid input"));
 };
 
 /**

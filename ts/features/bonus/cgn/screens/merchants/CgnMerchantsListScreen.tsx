@@ -36,24 +36,9 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const OFFLINE_FIXED_BOUNDINGBOX = {
-  userCoordinates: {
-    latitude: 41.827701462326985,
-    longitude: 12.66444625336996
-  },
-  boundingBox: {
-    coordinates: {
-      latitude: 34.845459548,
-      longitude: 6.5232427904
-    },
-    deltaLatitude: 6.9822419143,
-    deltaLongitude: 6.141203463
-  }
-};
-
 const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 
-type MerchantsAll = OfflineMerchant | OnlineMerchant;
+export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props
@@ -128,42 +113,52 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     Keyboard.dismiss();
   };
 
-  return isReady(props.onlineMerchants) && isReady(props.offlineMerchants) ? (
+  return (
     <BaseScreenComponent
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
-          <Item>
-            <LabelledItem
-              icon={"io-search"}
-              iconPosition={"right"}
-              inputProps={{
-                value: searchValue,
-                autoFocus: true,
-                onChangeText: setSearchValue,
-                placeholder: I18n.t("global.buttons.search")
-              }}
+        {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
+          <>
+            <View style={[IOStyles.horizontalContentPadding]}>
+              <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
+              <Item>
+                <LabelledItem
+                  icon={"io-search"}
+                  iconPosition={"right"}
+                  inputProps={{
+                    value: searchValue,
+                    autoFocus: false,
+                    onChangeText: setSearchValue,
+                    placeholder: I18n.t("global.buttons.search")
+                  }}
+                />
+              </Item>
+            </View>
+            <CgnMerchantsListView
+              refreshing={
+                isLoading(props.onlineMerchants) ||
+                isLoading(props.offlineMerchants)
+              }
+              onRefresh={initLoadingLists}
+              merchantList={merchantList}
+              onItemPress={onItemPress}
             />
-          </Item>
-        </View>
-        <CgnMerchantsListView
-          merchantList={merchantList}
-          onItemPress={onItemPress}
-        />
+          </>
+        ) : (
+          <LoadingErrorComponent
+            isLoading={
+              isLoading(props.offlineMerchants) ||
+              isLoading(props.onlineMerchants)
+            }
+            loadingCaption={I18n.t("global.remoteStates.loading")}
+            onRetry={initLoadingLists}
+          />
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
-  ) : (
-    <LoadingErrorComponent
-      isLoading={
-        isLoading(props.offlineMerchants) || isLoading(props.onlineMerchants)
-      }
-      loadingCaption={I18n.t("global.remoteStates.loading")}
-      onRetry={initLoadingLists}
-    />
   );
 };
 
@@ -174,10 +169,9 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestOnlineMerchants: () => dispatch(cgnOnlineMerchants.request({})),
-  requestOfflineMerchants: () =>
-    dispatch(cgnOfflineMerchants.request(OFFLINE_FIXED_BOUNDINGBOX)),
+  requestOfflineMerchants: () => dispatch(cgnOfflineMerchants.request({})),
   navigateToMerchantDetail: (id: Merchant["id"]) =>
-    dispatch(navigateToCgnMerchantDetail({ merchantID: id }))
+    navigateToCgnMerchantDetail({ merchantID: id })
 });
 
 export default connect(

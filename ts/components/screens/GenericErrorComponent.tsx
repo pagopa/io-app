@@ -18,6 +18,8 @@ type Props = WithTestID<
     image?: ImageSourcePropType;
     text?: string;
     subText?: string;
+    retryButtonTitle?: string;
+    cancelButtonTitle?: string;
   }>
 >;
 
@@ -25,6 +27,7 @@ const styles = StyleSheet.create({
   center: {
     alignItems: "center"
   },
+  contentContainerStyle: { flexGrow: 1, justifyContent: "center" },
   errorText: {
     fontSize: customVariables.fontSize2,
     paddingTop: customVariables.contentPadding
@@ -39,12 +42,12 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
       type: "TwoButtonsInlineHalf",
       leftButton: {
         bordered: true,
-        title: I18n.t("global.buttons.cancel"),
+        title: this.props.cancelButtonTitle ?? I18n.t("global.buttons.cancel"),
         onPress: this.props.onCancel
       },
       rightButton: {
         primary: true,
-        title: I18n.t("global.buttons.retry"),
+        title: this.props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
         onPress: this.props.onRetry
       }
     };
@@ -53,7 +56,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
       type: "SingleButton",
       leftButton: {
         primary: true,
-        title: I18n.t("global.buttons.retry"),
+        title: this.props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
         onPress: this.props.onRetry
       }
     };
@@ -79,7 +82,11 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
             onDidFocus={() => setAccessibilityFocus(this.elementRef)}
           />
         )}
-        <Content bounces={false} testID={this.props.testID}>
+        <Content
+          bounces={false}
+          testID={this.props.testID}
+          contentContainerStyle={styles.contentContainerStyle}
+        >
           <View style={styles.center}>
             <View spacer={true} extralarge={true} />
             <Image

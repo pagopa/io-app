@@ -1,5 +1,4 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -12,7 +11,6 @@ import {
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
-import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -21,6 +19,7 @@ import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomCo
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
+import { mixpanelTrack } from "../../mixpanel";
 import {
   idpLoginUrlChanged,
   loginFailure,
@@ -42,8 +41,12 @@ import {
 } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { getUrlBasepath } from "../../utils/url";
-import { mixpanelTrack } from "../../mixpanel";
-import { isDevEnv } from "../../utils/environment";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../utils/supportAssistance";
+import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -59,8 +62,6 @@ type State = {
   errorCode?: string;
   loginTrace?: string;
 };
-
-const loginFailureTag = "spid-login-failure";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -100,15 +101,10 @@ const styles = StyleSheet.create({
   },
   flex2: {
     flex: 2
-  }
+  },
+  webViewWrapper: { flex: 1 }
 });
 
-// if the app is running in dev env, add "http" to allow the dev-server usage
-const originSchemasWhiteList = [
-  "https://*",
-  "intent://*",
-  ...(isDevEnv ? ["http://*"] : [])
-];
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -120,6 +116,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
       requestState: pot.noneLoading
     };
   }
+
+  private choosenTool = assistanceToolRemoteConfig(
+    this.props.assistanceToolConfig
+  );
 
   get idp(): string {
     return this.props.loggedOutWithIdpAuth?.idp.id ?? "n/a";
@@ -153,8 +153,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
     );
 
-    instabugLog(logText, TypeLogs.ERROR, "login");
-    Instabug.appendTags([loginFailureTag]);
+    handleSendAssistanceLog(this.choosenTool, logText);
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
@@ -162,8 +161,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    instabugLog(`login success`, TypeLogs.DEBUG, "login");
-    Instabug.resetTags();
+    handleSendAssistanceLog(this.choosenTool, `login success`);
     this.props.dispatchLoginSuccess(token, this.idp);
   };
 
@@ -241,7 +239,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
           <View style={styles.errorButtonsContainer}>
             <ButtonDefaultOpacity
-              onPress={this.props.navigation.goBack}
+              onPress={() => this.props.navigation.goBack()}
               style={styles.cancelButtonStyle}
               block={true}
               light={true}
@@ -292,7 +290,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     if (!loggedOutWithIdpAuth) {
       // This condition will be true only temporarily (if the navigation occurs
-      // before the redux state is updated succesfully)
+      // before the redux state is updated successfully)
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
     const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.id);
@@ -305,29 +303,32 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        {!hasError && (
-          <WebView
-            androidCameraAccessDisabled={true}
-            androidMicrophoneAccessDisabled={true}
-            textZoom={100}
-            originWhitelist={originSchemasWhiteList}
-            source={{ uri: loginUri }}
-            onError={this.handleLoadingError}
-            javaScriptEnabled={true}
-            onNavigationStateChange={this.handleNavigationStateChange}
-            onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-          />
-        )}
-        {this.renderMask()}
+        <View style={styles.webViewWrapper}>
+          {!hasError && (
+            <WebView
+              cacheEnabled={false}
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              textZoom={100}
+              originWhitelist={originSchemasWhiteList}
+              source={{ uri: loginUri }}
+              onError={this.handleLoadingError}
+              javaScriptEnabled={true}
+              onNavigationStateChange={this.handleNavigationStateChange}
+              onShouldStartLoadWithRequest={this.handleShouldStartLoading}
+            />
+          )}
+          {this.renderMask()}
+        </View>
       </BaseScreenComponent>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const selectedtIdp = selectedIdentityProviderSelector(state);
+  const selectedIdp = selectedIdentityProviderSelector(state);
 
-  const selectedIdpTextData = fromNullable(selectedtIdp).fold(none, idp =>
+  const selectedIdpTextData = fromNullable(selectedIdp).fold(none, idp =>
     idpContextualHelpDataFromIdSelector(idp.id)(state)
   );
 
@@ -338,7 +339,8 @@ const mapStateToProps = (state: GlobalState) => {
     loggedInAuth: isLoggedIn(state.authentication)
       ? state.authentication
       : undefined,
-    selectedIdpTextData
+    selectedIdpTextData,
+    assistanceToolConfig: assistanceToolConfigSelector(state)
   };
 };
 

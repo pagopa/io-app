@@ -1,6 +1,4 @@
 import { createStackNavigator } from "react-navigation-stack";
-import ActivateBpdOnNewPrivativeScreen from "../screens/ActivateBpdOnNewPrivativeScreen";
-import AddPrivativeCardScreen from "../screens/add/AddPrivativeCardScreen";
 import AddPrivativeCardNumberScreen from "../screens/AddPrivativeCardNumberScreen";
 import ChoosePrivativeIssuerScreen from "../screens/choosePrivativeIssuer/ChoosePrivativeIssuerScreen";
 import PrivativeIssuerKoDisabled from "../screens/choosePrivativeIssuer/ko/PrivativeIssuerKoDisabled";
@@ -24,12 +22,6 @@ const PaymentMethodOnboardingPrivativeNavigator = createStackNavigator(
     },
     [WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE]: {
       screen: SearchPrivativeCardScreen
-    },
-    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.ADD_PRIVATIVE]: {
-      screen: AddPrivativeCardScreen
-    },
-    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW]: {
-      screen: ActivateBpdOnNewPrivativeScreen
     }
   },
   {

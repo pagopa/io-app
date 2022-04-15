@@ -1,24 +1,26 @@
-import { none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
-} from "italia-pagopa-commons/lib/pagopa";
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { NavigationLeafRoute, StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
@@ -34,10 +36,12 @@ import {
   paymentCompletedSuccess,
   paymentIdPolling,
   paymentInitializeState,
+  PaymentStartOrigin,
   paymentVerifica,
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
+import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
@@ -45,27 +49,31 @@ import {
   getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
+import { isRawPayPal } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
+import {
+  alertNoActivePayablePaymentMethods,
+  alertNoPayablePaymentMethods
+} from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import {
-  alertNoActivePayablePaymentMethods,
-  alertNoPayablePaymentMethods
-} from "../../../utils/paymentMethod";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { dispatchPickPspOrConfirm } from "./common";
 
-export type NavigationParams = Readonly<{
+export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
-  isManualPaymentInsertion?: boolean;
+  paymentStartOrigin: PaymentStartOrigin;
+  startRoute: NavigationLeafRoute | undefined;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<TransactionSummaryScreenNavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -82,12 +90,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20
   },
-  noticeIcon: {
-    paddingLeft: 10
+  flex: {
+    flex: 1
   }
 });
-
-const NOTICE_ICON_SIZE = 24;
 
 /**
  * This screen shows the transaction details once the payment has been verified
@@ -155,7 +161,26 @@ class TransactionSummaryScreen extends React.Component<Props> {
         }
       );
     } else {
-      this.props.navigation.goBack();
+      /**
+       * Since the payment flow starts from the next screen, even though we are already
+       * in the payment flow, it is really difficult to make up for the static stack organization in a homogeneous way.
+       * The only solution that allows to avoid to heavily modify the existing logic is to distinguish based on the starting screen,
+       * in order to perform the right navigation actions if we are not in the wallet stack.
+       * TODO: This is a temporary (and not scalable) solution, a complete refactoring of the payment workflow is strongly recommended
+       */
+      const startRoute = this.props.navigation.getParam("startRoute");
+      if (startRoute !== undefined) {
+        // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
+        if (
+          startRoute.routeName === ROUTES.MESSAGE_DETAIL ||
+          startRoute.routeName === ROUTES.MESSAGE_DETAIL_PAGINATED
+        ) {
+          this.props.navigation.dispatch(StackActions.popToTop());
+        }
+        this.props.navigation.navigate(startRoute);
+      } else {
+        this.props.navigation.goBack();
+      }
     }
   };
 
@@ -230,8 +255,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const rptId: RptId = this.props.navigation.getParam("rptId");
-    // TODO: it should compare the current an d the initial amount BUT the initialAmount seems to be provided with an incorrect format https://www.pivotaltracker.com/story/show/172084929
-    const isAmountUpdated = true;
 
     const { potVerifica } = this.props;
 
@@ -269,67 +292,62 @@ class TransactionSummaryScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent
         goBack={this.handleBackPress}
-        headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
         dark={true}
+        headerBackgroundColor={customVariables.milderGray}
       >
-        <SlidedContentComponent dark={true}>
-          <PaymentSummaryComponent
-            dark={true}
-            title={I18n.t("wallet.firstTransactionSummary.title")}
-            description={transactionDescription}
-            recipient={recipient.fold("-", r => r)}
-            image={require("../../../../img/wallet/icon-avviso-pagopa.png")}
-          />
+        <FocusAwareStatusBar
+          backgroundColor={customVariables.milderGray}
+          barStyle={"light-content"}
+        />
+        <SafeAreaView style={styles.flex}>
+          <SlidedContentComponent dark={true}>
+            <PaymentSummaryComponent
+              dark={true}
+              title={I18n.t("wallet.firstTransactionSummary.title")}
+              description={transactionDescription}
+              recipient={recipient.fold("-", r => r)}
+            />
 
-          <View spacer={true} large={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+            <View spacer={true} large={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
 
-          {/** Amount to pay */}
-          <View style={styles.row}>
+            {/** Amount to pay */}
             <View style={styles.row}>
-              <Text style={[styles.title, styles.lighterGray]}>
-                {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
+              <View style={styles.row}>
+                <Text style={[styles.title, styles.lighterGray]}>
+                  {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
+                </Text>
+              </View>
+              <Text white={true} style={[styles.title]} bold={true}>
+                {currentAmount}
               </Text>
-              {isAmountUpdated && (
-                <IconFont
-                  style={styles.noticeIcon}
-                  name={"io-notice"}
-                  size={NOTICE_ICON_SIZE}
-                  color={customVariables.colorWhite}
-                />
-              )}
             </View>
-            <Text white={true} style={[styles.title]} bold={true}>
-              {currentAmount}
-            </Text>
-          </View>
 
-          {isAmountUpdated && (
             <React.Fragment>
               <View spacer={true} small={true} />
               <Text style={styles.lighterGray}>
                 {I18n.t("wallet.firstTransactionSummary.updateInfo")}
               </Text>
             </React.Fragment>
-          )}
-          <View spacer={true} large={true} />
+            <View spacer={true} large={true} />
 
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
 
-          {standardRow(
-            I18n.t("wallet.firstTransactionSummary.entityCode"),
-            rptId.organizationFiscalCode
-          )}
-          <View spacer={true} small={true} />
-          {standardRow(
-            I18n.t("payment.noticeCode"),
-            PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
-          )}
-          <View spacer={true} large={true} />
-        </SlidedContentComponent>
-        {this.getFooterButtons()}
+            {standardRow(
+              I18n.t("wallet.firstTransactionSummary.entityCode"),
+              rptId.organizationFiscalCode
+            )}
+            <View spacer={true} small={true} />
+            {standardRow(
+              I18n.t("payment.noticeCode"),
+              PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
+            )}
+            <View spacer={true} large={true} />
+          </SlidedContentComponent>
+          {this.getFooterButtons()}
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }
@@ -339,8 +357,19 @@ class TransactionSummaryScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;
-
-  const maybeFavoriteWallet = pot.toOption(getFavoriteWallet(state));
+  const isPaypalEnabled = isPaypalEnabledSelector(state);
+  const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
+  /**
+   * if the favourite wallet is Paypal but the relative feature is not enabled,
+   * the favourite wallet will be undefined
+   */
+  const maybeFavoriteWallet = fromNullable(
+    favouriteWallet &&
+      isRawPayPal(favouriteWallet.paymentMethod) &&
+      !isPaypalEnabled
+      ? undefined
+      : favouriteWallet
+  );
 
   const error: Option<
     PayloadForAction<
@@ -405,12 +434,13 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
-  const isManualPaymentInsertion = props.navigation.getParam(
-    "isManualPaymentInsertion"
-  );
+  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
+  const isManualPaymentInsertion = paymentStartOrigin === "manual_insertion";
 
   const dispatchPaymentVerificaRequest = () =>
-    dispatch(paymentVerifica.request(rptId));
+    dispatch(
+      paymentVerifica.request({ rptId, startOrigin: paymentStartOrigin })
+    );
 
   const resetPayment = () => {
     dispatch(runDeleteActivePaymentSaga());
@@ -420,9 +450,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const onCancel = () => {
     dispatch(abortRunningPayment());
   };
-
-  // navigateToMessageDetail: (messageId: string) =>
-  // dispatch(navigateToMessageDetailScreenAction({ messageId }))
 
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,
@@ -446,14 +473,13 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
               // either we cannot use the default payment method for this
               // payment, or fetching the PSPs for this payment and the
               // default wallet has failed, ask the user to pick a wallet
-              dispatch(
-                navigateToPaymentPickPaymentMethodScreen({
-                  rptId,
-                  initialAmount,
-                  verifica,
-                  idPayment
-                })
-              );
+
+              navigateToPaymentPickPaymentMethodScreen({
+                rptId,
+                initialAmount,
+                verifica,
+                idPayment
+              });
             },
             hasPayableMethods
           )
@@ -469,31 +495,25 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       >
     >
   ) =>
-    dispatch(
-      navigateToPaymentTransactionErrorScreen({
-        error,
-        onCancel,
-        rptId
-      })
-    );
+    navigateToPaymentTransactionErrorScreen({
+      error,
+      onCancel,
+      rptId
+    });
 
   const dispatchNavigateToPaymentManualDataInsertion = () =>
-    dispatch(
-      navigateToPaymentManualDataInsertion({
-        isInvalidAmount: isManualPaymentInsertion
-      })
-    );
+    navigateToPaymentManualDataInsertion({
+      isInvalidAmount: isManualPaymentInsertion
+    });
 
   return {
-    navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+    navigateToWalletHome: () => navigateToWalletHome(),
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
-      dispatch(
-        navigateToWalletAddPaymentMethod({
-          inPayment: none,
-          showOnlyPayablePaymentMethods: true
-        })
-      ),
+      navigateToWalletAddPaymentMethod({
+        inPayment: none,
+        showOnlyPayablePaymentMethods: true
+      }),
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
     dispatchNavigateToPaymentManualDataInsertion,

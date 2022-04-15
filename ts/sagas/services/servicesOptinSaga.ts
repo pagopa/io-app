@@ -1,7 +1,6 @@
-import { put, select, take } from "redux-saga/effects";
-import { servicesOptinCompleted } from "../../store/actions/onboarding";
-import { navigationHistoryPop } from "../../store/actions/navigationHistory";
+import { call, select, take } from "typed-redux-saga/macro";
 import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
+import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import {
   isServicesPreferenceModeSet,
   profileServicePreferencesModeSelector
@@ -15,18 +14,14 @@ import {
 export function* askServicesPreferencesModeOptin(isFirstOnboarding: boolean) {
   const profileServicePreferenceMode: ReturnType<
     typeof profileServicePreferencesModeSelector
-  > = yield select(profileServicePreferencesModeSelector);
+  > = yield* select(profileServicePreferencesModeSelector);
   // if the user's preference is set, do nothing
   if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
     return;
   }
-  yield put(
-    navigateToServicesPreferenceModeSelectionScreen({ isFirstOnboarding })
-  );
-  if (!isFirstOnboarding) {
-    // for existing users the selection ends with a thank you screen, remove it from the stack
-    yield put(navigationHistoryPop(1));
-  }
+  yield* call(navigateToServicesPreferenceModeSelectionScreen, {
+    isFirstOnboarding
+  });
   // wait until a choice is done by the user
-  yield take(servicesOptinCompleted);
+  yield* take(servicesOptinCompleted);
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import paymentCompleted from "../../../img/pictograms/payment-completed.png";
@@ -12,11 +12,12 @@ import { GlobalState } from "../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../store/reducers/wallet/outcomeCode";
 import { Wallet } from "../../types/pagopa";
 
-type NavigationParams = Readonly<{
+export type AddCreditCardOutcomeCodeMessageNavigationParams = Readonly<{
   selectedWallet: Wallet;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<AddCreditCardOutcomeCodeMessageNavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -47,8 +48,8 @@ const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   ) : null;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome())
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateToWalletHome: () => navigateToWalletHome()
 });
 
 const mapStateToProps = (state: GlobalState) => ({

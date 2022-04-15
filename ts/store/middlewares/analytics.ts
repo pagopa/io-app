@@ -1,17 +1,22 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
-import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
-import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
   loadAllBonusActivations,
   loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+
+import trackBpdAction from "../../features/bonus/bpd/analytics/index";
+import trackCgnAction from "../../features/bonus/cgn/analytics/index";
+import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
+import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
+import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
+import trackZendesk from "../../features/zendesk/analytics/index";
 import { mixpanel } from "../../mixpanel";
-import { getCurrentRouteName } from "../../utils/navigation";
+import { getNetworkErrorMessage } from "../../utils/errors";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
@@ -31,7 +36,6 @@ import {
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
 import { contentMunicipalityLoad } from "../actions/content";
-import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
@@ -42,16 +46,17 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  loadMessage,
-  loadMessages,
+  DEPRECATED_loadMessage,
+  DEPRECATED_loadMessages as loadMessages,
   removeMessages,
-  setMessageReadState
+  DEPRECATED_setMessageReadState,
+  migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
+  notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure,
-  updateNotificationsInstallationToken,
-  notificationsInstallationTokenRegistered
+  updateNotificationsInstallationToken
 } from "../actions/notifications";
 import { tosAccepted } from "../actions/onboarding";
 import { createPinSuccess, updatePin } from "../actions/pinset";
@@ -64,12 +69,18 @@ import {
   removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
+import { searchMessagesEnabled } from "../actions/search";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
 import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
+import { deleteAllPaymentMethodsByFunction } from "../actions/wallet/delete";
+import {
+  addCreditCardOutcomeCode,
+  paymentOutcomeCode
+} from "../actions/wallet/outcomeCode";
 import {
   abortRunningPayment,
   paymentAttiva,
@@ -105,19 +116,6 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../actions/wallet/wallets";
-
-import trackBpdAction from "../../features/bonus/bpd/analytics/index";
-import trackCgnAction from "../../features/bonus/cgn/analytics/index";
-import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
-import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
-import {
-  addCreditCardOutcomeCode,
-  paymentOutcomeCode
-} from "../actions/wallet/outcomeCode";
-import { noAnalyticsRoutes } from "../../utils/analytics";
-import { getNetworkErrorMessage } from "../../utils/errors";
-import { searchMessagesEnabled } from "../actions/search";
-import { deleteAllPaymentMethodsByFunction } from "../actions/wallet/delete";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -168,31 +166,35 @@ const trackAction =
       case getType(loadMessages.success):
       // end pay webview Payment (payment + onboarding credit card) actions (with properties)
       case getType(addCreditCardWebViewEnd):
-      case getType(paymentWebViewEnd):
         return mp.track(action.type, {
           exitType: action.payload
         });
-      case getType(addCreditCardOutcomeCode):
       case getType(paymentOutcomeCode):
         return mp.track(action.type, {
+          outCome: action.payload.outcome.getOrElse(""),
+          paymentMethodType: action.payload.paymentMethodType
+        });
+      case getType(addCreditCardOutcomeCode):
+        return mp.track(action.type, {
           outCome: action.payload.getOrElse("")
+        });
+      case getType(paymentWebViewEnd):
+        return mp.track(action.type, {
+          exitType: action.payload.reason,
+          paymentMethodType: action.payload.paymentMethodType
         });
       //
       // Payment actions (with properties)
       //
+      case getType(paymentAttiva.request):
       case getType(paymentVerifica.request):
         return mp.track(action.type, {
-          organizationFiscalCode: action.payload.organizationFiscalCode,
-          paymentNoticeNumber: action.payload.paymentNoticeNumber
+          organizationFiscalCode: action.payload.rptId.organizationFiscalCode,
+          paymentNoticeNumber: action.payload.rptId.paymentNoticeNumber
         });
       case getType(paymentVerifica.success):
         return mp.track(action.type, {
           amount: action.payload.importoSingoloVersamento
-        });
-      case getType(paymentAttiva.request):
-        return mp.track(action.type, {
-          organizationFiscalCode: action.payload.rptId.organizationFiscalCode,
-          paymentNoticeNumber: action.payload.rptId.paymentNoticeNumber
         });
       case getType(paymentCompletedSuccess):
         // PaymentCompletedSuccess may be generated by a completed payment or
@@ -244,22 +246,29 @@ const trackAction =
           messagesIdsToRemoveFromCache: action.payload
         });
       }
-      case getType(setMessageReadState): {
-        if (action.payload.read === true) {
-          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
-        }
+      case getType(DEPRECATED_setMessageReadState): {
         return mp.track(action.type, action.payload);
       }
-
-      // instabug
-      case getType(instabugReportClosed):
-      case getType(instabugReportOpened):
-        return mp.track(action.type, action.payload);
-
+      case getType(migrateToPaginatedMessages.request): {
+        return mp.track("MESSAGES_MIGRATION_START", {
+          total: Object.keys(action.payload).length
+        });
+      }
+      case getType(migrateToPaginatedMessages.success): {
+        return mp.track("MESSAGES_MIGRATION_SUCCESS", {
+          total: action.payload
+        });
+      }
+      case getType(migrateToPaginatedMessages.failure): {
+        return mp.track("MESSAGES_MIGRATION_FAILURE", {
+          failed: action.payload.failed.length,
+          succeeded: action.payload.succeeded.length
+        });
+      }
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
-      case getType(loadMessage.failure):
+      case getType(DEPRECATED_loadMessage.failure):
       case getType(logoutFailure):
         return mp.track(action.type, {
           reason: action.payload.error.message
@@ -378,7 +387,7 @@ const trackAction =
       //  profile First time Login
       case getType(profileFirstLogin):
       // other
-      case getType(loadMessage.success):
+      case getType(DEPRECATED_loadMessage.success):
       case getType(updateNotificationsInstallationToken):
       case getType(notificationsInstallationTokenRegistered):
       case getType(loadAllBonusActivations.request):
@@ -431,43 +440,8 @@ export const actionTracking =
       void trackContentAction(mixpanel)(action);
       void trackServiceAction(mixpanel)(action);
       void trackEuCovidCertificateActions(mixpanel)(action);
+      void trackPaypalOnboarding(mixpanel)(action);
+      void trackZendesk(mixpanel)(action);
     }
     return next(action);
   };
-
-/*
-  The middleware acts as a general hook in order to track any meaningful navigation action
-  https://reactnavigation.org/docs/1.x/screen-tracking/#screen-tracking-with-redux
-*/
-export function screenTracking(
-  store: MiddlewareAPI
-): (_: Dispatch) => (__: Action) => Action {
-  return (next: Dispatch): ((_: Action) => Action) =>
-    (action: Action): Action => {
-      if (
-        action.type !== NavigationActions.NAVIGATE &&
-        action.type !== NavigationActions.BACK
-      ) {
-        return next(action);
-      }
-      const currentScreen = getCurrentRouteName(store.getState().nav);
-      const result = next(action);
-      const nextScreen = getCurrentRouteName(store.getState().nav);
-      if (nextScreen !== currentScreen && mixpanel) {
-        if (nextScreen) {
-          setInstabugUserAttribute("activeScreen", nextScreen);
-        }
-        // track only those events that are not included in the blacklist
-        if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
-          void mixpanel.track("SCREEN_CHANGE_V2", {
-            SCREEN_NAME: nextScreen
-          });
-        }
-        // sent to 10-days retention project
-        void mixpanel.track("SCREEN_CHANGE", {
-          SCREEN_NAME: nextScreen
-        });
-      }
-      return result;
-    };
-}

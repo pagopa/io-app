@@ -1,88 +1,157 @@
 import { NavigationActions } from "react-navigation";
-import { InferNavigationParams } from "../../../../types/react";
-import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
-import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
+import NavigationService from "../../../../navigation/NavigationService";
+import { CgnMerchantDetailScreenNavigationParams } from "../screens/merchants/CgnMerchantDetailScreen";
+import { CgnMerchantLandingWebviewNavigationParams } from "../screens/merchants/CgnMerchantLandingWebview";
 import CGN_ROUTES from "./routes";
 
-export const navigateToCgnActivationLoadActivationStatus = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.LOAD_CHECK_ACTIVATION_STATUS
-  });
-
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnActivationInformationTos = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnActivationLoading = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.LOADING
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.ACTIVATION.LOADING
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToEycaActivationLoading = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.EYCA.ACTIVATION.LOADING
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.EYCA.ACTIVATION.LOADING
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnAlreadyActive = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.EXISTS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.ACTIVATION.EXISTS
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnActivationPending = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.PENDING
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.ACTIVATION.PENDING
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnActivationTimeout = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.TIMEOUT
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.ACTIVATION.TIMEOUT
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnActivationIneligible = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.INELIGIBLE
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.ACTIVATION.INELIGIBLE
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnActivationCompleted = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.COMPLETED
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.ACTIVATION.COMPLETED
+    })
+  );
 
 // Details
-export const navigateToCgnDetails = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.DETAILS
-  });
 
-export const navigateToCgnDetailsOtp = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.DETAILS_OTP
-  });
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
+export const navigateToCgnDetails = () =>
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.DETAILS.DETAILS
+    })
+  );
 
 // Merchants
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnMerchantsList = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.MERCHANTS.LIST
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.DETAILS.MERCHANTS.LIST
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnMerchantsTabs = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.MERCHANTS.TABS
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.DETAILS.MERCHANTS.TABS
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnMerchantDetail = (
-  params: InferNavigationParams<typeof CgnMerchantDetailScreen>
+  params: CgnMerchantDetailScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.MERCHANTS.DETAIL,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
+      params
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToCgnMerchantLandingWebview = (
-  params: InferNavigationParams<typeof CgnMerchantLandingWebview>
+  params: CgnMerchantLandingWebviewNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.MERCHANTS.LANDING_WEBVIEW,
-    params
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW,
+      params
+    })
+  );

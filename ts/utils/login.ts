@@ -3,6 +3,7 @@ import URLParse from "url-parse";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as config from "../config";
 import { SessionToken } from "../types/SessionToken";
+import { isStringNullyOrEmpty } from "./strings";
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
@@ -17,7 +18,7 @@ type LoginFailure = {
   errorCode?: string;
 };
 
-type LoginResult = LoginSuccess | LoginFailure;
+export type LoginResult = LoginSuccess | LoginFailure;
 
 /**
  * return some(intentFallbackUrl) if the given input is a valid intent and it has the fallback url
@@ -39,43 +40,26 @@ export const getIntentFallbackUrl = (intentUrl: string): Option<string> => {
 };
 
 // Prefixes for LOGIN SUCCESS/ERROR
-const LOGIN_SUCCESS_PREFIX = "/profile.html?token=";
-const LOGIN_FAILURE_PREFIX = "/error.html";
-const LOGIN_FAILURE_WITH_ERROR_CODE_PREFIX = "/error.html?errorCode=";
+const LOGIN_SUCCESS_PAGE = "profile.html";
+const LOGIN_FAILURE_PAGE = "error.html";
 
 export const extractLoginResult = (url: string): LoginResult | undefined => {
-  // Check for LOGIN_SUCCESS
-  const successTokenPathPos = url.indexOf(LOGIN_SUCCESS_PREFIX);
+  const urlParse = new URLParse(url, true);
 
-  if (successTokenPathPos !== -1) {
-    const token = url.substr(successTokenPathPos + LOGIN_SUCCESS_PREFIX.length);
-
-    if (token && token.length > 0) {
+  // LOGIN_SUCCESS
+  if (urlParse.pathname.includes(LOGIN_SUCCESS_PAGE)) {
+    const token = urlParse.query.token;
+    if (!isStringNullyOrEmpty(token)) {
       return { success: true, token: token as SessionToken };
-    } else {
-      return { success: false };
     }
+    return { success: false };
   }
-
-  // Check for LOGIN_FAILURE
-  if (url.indexOf(LOGIN_FAILURE_PREFIX) !== -1) {
-    const failureWithErrorCodeTokenPathPos = url.indexOf(
-      LOGIN_FAILURE_WITH_ERROR_CODE_PREFIX
-    );
-    // try to extract error code
-    if (failureWithErrorCodeTokenPathPos !== -1) {
-      const errCode = url.substr(
-        failureWithErrorCodeTokenPathPos +
-          LOGIN_FAILURE_WITH_ERROR_CODE_PREFIX.length
-      );
-      return {
-        success: false,
-        errorCode: errCode.length > 0 ? errCode : undefined
-      };
-    }
+  // LOGIN_FAILURE
+  if (urlParse.pathname.includes(LOGIN_FAILURE_PAGE)) {
+    const errorCode = urlParse.query.errorCode;
     return {
       success: false,
-      errorCode: undefined
+      errorCode: isStringNullyOrEmpty(errorCode) ? undefined : errorCode
     };
   }
   // Url is not LOGIN related

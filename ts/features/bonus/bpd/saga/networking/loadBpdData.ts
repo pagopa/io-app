@@ -1,5 +1,4 @@
-import { select, take } from "redux-saga-test-plan/matchers";
-import { all, call, delay, put } from "redux-saga/effects";
+import { all, call, delay, put, take, select } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -21,12 +20,12 @@ import { bpdTransactionsLoad } from "../../store/actions/transactions";
 function* checkPreviousFailures() {
   // wait if some previous errors occurred
   const loadActivationBackOff: SagaCallReturnType<typeof getBackoffTime> =
-    yield call(getBackoffTime, bpdLoadActivationStatus.failure);
+    yield* call(getBackoffTime, bpdLoadActivationStatus.failure);
   const loadPeriodsBackOff: SagaCallReturnType<typeof getBackoffTime> =
-    yield call(getBackoffTime, bpdPeriodsAmountLoad.failure);
+    yield* call(getBackoffTime, bpdPeriodsAmountLoad.failure);
   const waitingTime = Math.max(loadActivationBackOff, loadPeriodsBackOff);
   if (waitingTime > 0) {
-    yield delay(waitingTime);
+    yield* delay(waitingTime);
   }
 }
 
@@ -40,52 +39,51 @@ function* checkPreviousFailures() {
  */
 export function* loadBpdData() {
   // TODO: move from here
-  const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);
+  const abiList: ReturnType<typeof abiSelector> = yield* select(abiSelector);
 
   // The volatility of the bank list is extremely low.
   // There is no need to refresh it every time.
   // A further refinement could be to insert an expiring cache
   if (!isReady(abiList)) {
-    yield put(loadAbi.request());
+    yield* put(loadAbi.request());
   }
-  yield call(checkPreviousFailures);
+  yield* call(checkPreviousFailures);
   // First request the bpd activation status
-  yield put(bpdLoadActivationStatus.request());
+  yield* put(bpdLoadActivationStatus.request());
 
-  const activationStatus: ActionType<
-    | typeof bpdLoadActivationStatus.success
-    | typeof bpdLoadActivationStatus.failure
-  > = yield take([
-    getType(bpdLoadActivationStatus.success),
-    getType(bpdLoadActivationStatus.failure)
-  ]);
+  const activationStatus = yield* take<
+    ActionType<
+      | typeof bpdLoadActivationStatus.success
+      | typeof bpdLoadActivationStatus.failure
+    >
+  >([bpdLoadActivationStatus.success, bpdLoadActivationStatus.failure]);
 
   if (activationStatus.type === getType(bpdLoadActivationStatus.success)) {
     // if the user is not registered with bpd,
     // there is no need to request other data as it is never allowed to view closed periods
     if (!activationStatus.payload.enabled) {
-      yield put(bpdAllData.success());
+      yield* put(bpdAllData.success());
       return;
     }
 
     // In case of success, request the periods, amounts and ranking foreach required period
-    yield put(bpdPeriodsAmountLoad.request());
+    yield* put(bpdPeriodsAmountLoad.request());
 
-    const periods: ActionType<
-      typeof bpdPeriodsAmountLoad.success | typeof bpdPeriodsAmountLoad.failure
-    > = yield take([
-      getType(bpdPeriodsAmountLoad.success),
-      getType(bpdPeriodsAmountLoad.failure)
-    ]);
+    const periods = yield* take<
+      ActionType<
+        | typeof bpdPeriodsAmountLoad.success
+        | typeof bpdPeriodsAmountLoad.failure
+      >
+    >([bpdPeriodsAmountLoad.success, bpdPeriodsAmountLoad.failure]);
 
     if (periods.type === getType(bpdPeriodsAmountLoad.success)) {
       // The load of all the required data for bpd is now completed with success
-      yield put(bpdAllData.success());
+      yield* put(bpdAllData.success());
 
       // Prefetch the transactions list foreach required period (optional, can fail)
       // TODO: Remove after cleaning code v1
       if (!bpdTransactionsPaging) {
-        yield all(
+        yield* all(
           periods.payload
             .filter(p => p.status !== "Inactive")
             .map(period =>
@@ -95,11 +93,11 @@ export function* loadBpdData() {
       }
     } else {
       // The load of all the required bpd data is failed
-      yield put(bpdAllData.failure(periods.payload));
+      yield* put(bpdAllData.failure(periods.payload));
     }
   } else {
     // The load of all the required bpd data is failed
-    yield put(bpdAllData.failure(activationStatus.payload));
+    yield* put(bpdAllData.failure(activationStatus.payload));
   }
 }
 

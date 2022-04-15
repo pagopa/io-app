@@ -26,6 +26,7 @@ import customVariables from "../theme/variables";
 import { dateToAccessibilityReadableFormat } from "../utils/accessibility";
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
+import { formatDateAsShortFormatUTC } from "../utils/dates";
 import { IOColors } from "./core/variables/IOColors";
 
 interface BaseProps {
@@ -383,7 +384,10 @@ export default class FiscalCodeComponent extends React.Component<Props> {
       this.props.profile.fiscal_code,
       this.props.municipality
     );
+
     const na = I18n.t("profile.fiscalCode.accessibility.unavailable");
+    const birthDate =
+      this.props.profile.date_of_birth ?? fiscalCodeData.birthday;
     // goBackSide === false
     return {
       accessibilityLabel: I18n.t(
@@ -393,8 +397,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           name: this.props.profile.name,
           family_name: this.props.profile.family_name,
           gender: fiscalCodeData.gender || na,
-          birthDate: fiscalCodeData.birthday
-            ? dateToAccessibilityReadableFormat(fiscalCodeData.birthday)
+          birthDate: birthDate
+            ? dateToAccessibilityReadableFormat(birthDate)
             : na,
           province: maybeNotNullyString(
             fiscalCodeData.siglaProvincia
@@ -417,7 +421,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
   ) {
     const fiscalCode = profile.fiscal_code;
     const fiscalCodeData = extractFiscalCodeData(fiscalCode, municipality);
-
+    const birthDate = profile.date_of_birth ?? fiscalCodeData.birthday;
     return (
       <React.Fragment>
         {this.renderItem(
@@ -466,9 +470,9 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             isLandscape
           )}
 
-        {fiscalCodeData.birthDate &&
+        {birthDate &&
           this.renderItem(
-            fiscalCodeData.birthDate,
+            formatDateAsShortFormatUTC(birthDate),
             styles.fullDateText,
             styles.landscapeDateText,
             isLandscape

@@ -5,15 +5,15 @@ import { NavigationEvents, StackActions } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 
 import { connect } from "react-redux";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { LightModalContextInterface } from "../ui/LightModal";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import { acknowledgeOnEmailValidation } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { withLightModalContext } from "./withLightModalContext";
 import { withConditionalView } from "./withConditionalView";
 
 export type ModalProps = LightModalContextInterface &
@@ -50,7 +50,7 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
     // when the user is in onboarding phase and he asks to go to insert email screen
     // the navigation is forced reset
     this.props.navigation.dispatch(StackActions.popToTop());
-    this.props.navigation.dispatch(navigateToEmailInsertScreen());
+    navigateToEmailInsertScreen();
   };
 
   public render() {
@@ -60,7 +60,7 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
           onWillBlur={() => {
             this.hideModal();
           }}
-          onWillFocus={() => {
+          onDidFocus={() => {
             this.props.showModal(
               <RemindEmailValidationOverlay
                 closeModalAndNavigateToEmailInsertScreen={
@@ -69,9 +69,6 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
                 onClose={this.hideModal}
               />
             );
-          }}
-          onDidFocus={() => {
-            this.setState({ forceNavigationEvents: false });
           }}
         />
       </View>

@@ -1,22 +1,33 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
+import ServiceMetadataComponent from "../../components/services/ServiceMetadata";
+import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
+import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
+import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 import I18n from "../../i18n";
+import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { contentSelector } from "../../store/reducers/content";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
+import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import {
   isEmailEnabledSelector,
   isInboxEnabledSelector,
@@ -26,28 +37,19 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getServiceCTA } from "../../utils/messages";
-import {
-  EnabledChannels,
-  getEnabledChannelsForService
-} from "../../utils/profile";
-import { showToast } from "../../utils/showToast";
+import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
-import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
-import ServiceMetadata from "../../components/services/ServiceMetadata";
-import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 
-type NavigationParams = Readonly<{
+export type ServiceDetailsScreenNavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
+type OwnProps =
+  NavigationStackScreenProps<ServiceDetailsScreenNavigationParams>;
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps<NavigationParams>;
-
-type State = {
-  uiEnabledChannels: EnabledChannels;
-  isMarkdownLoaded: boolean;
-};
+  OwnProps;
 
 const styles = StyleSheet.create({
   infoHeader: {
@@ -99,76 +101,48 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * Screen displaying the details of a selected service. The user
  * can enable/disable the service and customize the notification settings.
  */
-class ServiceDetailsScreen extends React.Component<Props, State> {
-  get serviceId() {
-    return this.props.navigation.getParam("service").service_id;
+const ServiceDetailsScreen = (props: Props) => {
+  const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
+
+  useEffect(() => {
+    props.loadServiceDetail(props.serviceId);
+  }, []);
+
+  const onMarkdownEnd = () => setIsMarkdownLoaded(true);
+
+  const { service } = props;
+
+  // This has been considered just to avoid compiling errors
+  // once we navigate from list or a message we always have the service data since they're previously loaded
+  if (service === undefined) {
+    return null;
   }
 
-  constructor(props: Props) {
-    super(props);
-    // We initialize the UI by making the states of the channels the same
-    // as what is set in the profile. The user will be able to change the state
-    // via the UI and the profile will be updated in the background accordingly
-    this.state = {
-      uiEnabledChannels: getEnabledChannelsForService(
-        this.props.profile,
-        this.serviceId
-      ),
-      isMarkdownLoaded: false
-    };
-  }
+  const metadata = service.service_metadata;
 
-  public componentDidUpdate(prevProps: Props) {
-    if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
-      // in case of new or resolved errors while updating the profile, we show a toast and
-      // reset the UI to match the state of the profile preferences
-      showToast(
-        I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
-        "danger"
-      );
+  // if markdown content is not available, render immediately what is possible
+  // but we must wait for metadata load to be completed to avoid flashes
+  const isMarkdownAvailable = metadata?.description;
+  // if markdown data is available, wait for it to be rendered
+  const canRenderItems = isMarkdownAvailable ? isMarkdownLoaded : true;
 
-      const uiEnabledChannels = getEnabledChannelsForService(
-        this.props.profile,
-        this.props.navigation.getParam("service").service_id
-      );
-      this.setState({
-        uiEnabledChannels
-      });
-    }
-  }
-  // collect the service
-  private service = this.props.navigation.getParam("service");
+  const maybeCTA = getServiceCTA(metadata);
 
-  private onMarkdownEnd = () => {
-    this.setState({ isMarkdownLoaded: true });
-  };
-
-  public render() {
-    const { service } = this;
-
-    const metadata = service.service_metadata;
-
-    // if markdown content is not available, render immediately what is possible
-    // but we must wait for metadata load to be completed to avoid flashes
-    const isMarkdownAvailable = metadata?.description;
-    const isMarkdownLoaded = isMarkdownAvailable
-      ? this.state.isMarkdownLoaded
-      : true;
-    // if markdown data is available, wait for it to be rendered
-    const canRenderItems = isMarkdownLoaded;
-
-    const maybeCTA = getServiceCTA(metadata);
-
-    return (
-      <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
-        headerTitle={I18n.t("serviceDetail.headerTitle")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["services_detail"]}
-      >
-        <Content>
+  return (
+    <BaseScreenComponent
+      goBack={() => props.navigation.goBack()}
+      headerTitle={I18n.t("serviceDetail.headerTitle")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["services_detail"]}
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        <Content style={IOStyles.flex}>
           <Grid>
-            <OrganizationHeader service={service} />
+            <OrganizationHeader
+              serviceName={service.service_name}
+              organizationName={service.organization_name}
+              logoURLs={logosForService(service)}
+            />
           </Grid>
           <View spacer={true} small={true} />
 
@@ -176,8 +150,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             <>
               <Markdown
                 animated={true}
-                onLoadEnd={this.onMarkdownEnd}
-                onError={this.onMarkdownEnd}
+                onLoadEnd={onMarkdownEnd}
+                onError={onMarkdownEnd}
               >
                 {metadata.description}
               </Markdown>
@@ -200,15 +174,16 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               <ContactPreferencesToggles
                 serviceId={service.service_id}
                 channels={service.available_notification_channels}
+                isSpecialService={SpecialServiceMetadata.is(metadata)}
               />
               <View spacer={true} large={true} />
 
-              <ServiceMetadata
+              <ServiceMetadataComponent
                 servicesMetadata={service.service_metadata}
                 organizationFiscalCode={service.organization_fiscal_code}
                 getItemOnPress={handleItemOnPress}
                 serviceId={service.service_id}
-                isDebugModeEnabled={this.props.isDebugModeEnabled}
+                isDebugModeEnabled={props.isDebugModeEnabled}
               />
 
               <EdgeBorderComponent />
@@ -218,32 +193,54 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           )}
         </Content>
 
-        {maybeCTA.isSome() && (
-          <View footer={true} style={styles.flexRow}>
-            <ExtractedCTABar
-              ctas={maybeCTA.value}
-              xsmall={false}
-              dispatch={this.props.dispatch}
-              serviceMetadata={metadata}
-              service={service}
-            />
-          </View>
+        {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) && (
+          <FooterTopShadow>
+            {maybeCTA.isSome() && (
+              <View style={[styles.flexRow]}>
+                <ExtractedCTABar
+                  ctas={maybeCTA.value}
+                  xsmall={false}
+                  dispatch={props.dispatch}
+                  serviceMetadata={metadata}
+                  service={service}
+                />
+              </View>
+            )}
+            {SpecialServiceMetadata.is(metadata) && (
+              <>
+                <View spacer small />
+                <SpecialServicesCTA
+                  serviceId={props.serviceId}
+                  customSpecialFlow={metadata.custom_special_flow}
+                />
+              </>
+            )}
+          </FooterTopShadow>
         )}
-      </BaseScreenComponent>
-    );
-  }
-}
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
-const mapStateToProps = (state: GlobalState) => ({
-  isInboxEnabled: isInboxEnabledSelector(state),
-  isEmailEnabled: isEmailEnabledSelector(state),
-  isEmailValidated: isProfileEmailValidatedSelector(state),
-  content: contentSelector(state),
-  profile: profileSelector(state),
-  isDebugModeEnabled: isDebugModeEnabledSelector(state)
-});
+const mapStateToProps = (state: GlobalState, props: OwnProps) => {
+  const serviceId = props.navigation.getParam("service").service_id;
+
+  return {
+    serviceId,
+    service: fromNullable(serviceByIdSelector(serviceId)(state))
+      .chain(pot.toOption)
+      .toUndefined(),
+    isInboxEnabled: isInboxEnabledSelector(state),
+    isEmailEnabled: isEmailEnabledSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
+    content: contentSelector(state),
+    profile: profileSelector(state),
+    isDebugModeEnabled: isDebugModeEnabledSelector(state)
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadServiceDetail: (id: ServiceId) => dispatch(loadServiceDetail.request(id)),
   dispatch
 });
 

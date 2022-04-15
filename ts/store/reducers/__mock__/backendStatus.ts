@@ -3,6 +3,7 @@ import { BackendStatusState } from "../backendStatus";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { Config } from "../../../../definitions/content/Config";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -108,6 +109,18 @@ export const baseRawBackendStatus: BackendStatus = {
         "en-EN": "possible slowness"
       }
     },
+    paypal: {
+      is_visible: true,
+      level: LevelEnum.warning,
+      badge: {
+        "it-IT": "warning message",
+        "en-EN": "possible slowness"
+      },
+      message: {
+        "it-IT": "warning message",
+        "en-EN": "possible slowness"
+      }
+    },
     satispay: {
       is_visible: false,
       level: LevelEnum.critical,
@@ -179,16 +192,77 @@ export const baseRawBackendStatus: BackendStatus = {
         "it-IT": "aggiornamento richiesto",
         "en-EN": "update required"
       }
+    },
+    cgn: {
+      is_visible: true,
+      level: LevelEnum.normal,
+      web_url: {
+        "it-IT": "",
+        "en-EN": ""
+      },
+      message: {
+        "it-IT": "aggiornamento richiesto",
+        "en-EN": "update required"
+      }
+    },
+    fims: {
+      is_visible: true,
+      level: LevelEnum.normal,
+      web_url: {
+        "it-IT": "",
+        "en-EN": ""
+      },
+      message: {
+        "it-IT": "aggiornamento richiesto",
+        "en-EN": "update required"
+      }
     }
   },
   config: {
     bpd: {
       enroll_bpd_after_add_payment_method: false,
-      program_active: true
+      program_active: true,
+      opt_in_payment_methods: false
     },
     bpd_ranking: true,
     bpd_ranking_v2: true,
-    cgn_merchants_v2: false
+    cgn_merchants_v2: false,
+    assistanceTool: {
+      tool: ToolEnum.none
+    },
+    paypal: {
+      enabled: false
+    },
+    bancomatPay: {
+      display: true,
+      onboarding: true,
+      payment: false
+    },
+    cgn: {
+      enabled: true,
+      merchants_v2: false
+    },
+    uaDonations: {
+      enabled: false,
+      banner: {
+        visible: false,
+        description: {
+          "it-IT": "descrizione mock banner",
+          "en-EN": "mock banner description"
+        },
+        url: "mockbannerurl"
+      }
+    },
+    fims: {
+      enabled: false,
+      domain: "mockFimsDomain"
+    },
+    premiumMessages: {
+      opt_in_out_enabled: false
+    },
+    cdc: {
+      enabled: false
+    }
   }
 };
 
@@ -201,11 +275,48 @@ export const baseBackendState: BackendStatusState = {
 export const baseBackendConfig: Config = {
   bpd: {
     enroll_bpd_after_add_payment_method: false,
-    program_active: true
+    program_active: true,
+    opt_in_payment_methods: false
   },
   bpd_ranking: true,
   bpd_ranking_v2: true,
-  cgn_merchants_v2: true
+  cgn_merchants_v2: true,
+  assistanceTool: {
+    tool: ToolEnum.none
+  },
+  paypal: {
+    enabled: false
+  },
+  bancomatPay: {
+    display: true,
+    onboarding: true,
+    payment: false
+  },
+  cgn: {
+    enabled: true,
+    merchants_v2: false
+  },
+  uaDonations: {
+    enabled: false,
+    banner: {
+      visible: false,
+      description: {
+        "it-IT": "descrizione mock banner",
+        "en-EN": "mock banner description"
+      },
+      url: "mockbannerurl"
+    }
+  },
+  fims: {
+    enabled: false,
+    domain: "mockFimsDomain"
+  },
+  premiumMessages: {
+    opt_in_out_enabled: false
+  },
+  cdc: {
+    enabled: false
+  }
 };
 
 export const withBpdRankingConfig = (

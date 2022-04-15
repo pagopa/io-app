@@ -2,24 +2,16 @@ export type State = {
   id: number;
   name: string;
 };
-export type Region = {
-  id: number;
-  name: string;
-};
-export type Province = {
-  id: string;
-  name: string;
-};
 
 export type Municipality = {
   id: string;
   name: string;
+  latitude: number;
+  longitude: number;
 };
 export type University = {
   universityName: string;
   state: State;
-  region: Region;
-  province: Province;
   municipality: Municipality;
 };
 
@@ -27,16 +19,12 @@ export type Company = {
   businessName: string;
   vat: string;
   state: State;
-  region: Region;
-  province: Province;
   municipality: Municipality;
 };
 
 export type Hospital = {
   hospitalName: string;
   state: State;
-  region: Region;
-  province: Province;
   municipality: Municipality;
 };
 

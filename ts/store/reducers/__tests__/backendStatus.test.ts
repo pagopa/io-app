@@ -1,14 +1,17 @@
 import { none, some } from "fp-ts/lib/Option";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { baseRawBackendStatus } from "../__mock__/backendStatus";
 import {
   areSystemsDeadReducer,
   BackendStatusState,
   bpdRankingEnabledSelector,
-  sectionStatusSelector
+  isPremiumMessagesOptInOutEnabledSelector,
+  isUaDonationsEnabledSelector,
+  sectionStatusSelector,
+  uaDonationsBannerConfigSelector
 } from "../backendStatus";
 import { GlobalState } from "../types";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { baseRawBackendStatus } from "../__mock__/backendStatus";
-import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
@@ -262,5 +265,92 @@ describe("test selectors", () => {
     } as any as GlobalState;
     const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
     expect(bpd_ranking).toBeFalsy();
+  });
+
+  describe("donation selectors", () => {
+    it("isUaDonationsEnabledSelector should return false if bs.config.donation.enabled is undefined", () => {
+      const donationFeatureFlag = isUaDonationsEnabledSelector(noneStore);
+      expect(donationFeatureFlag).toBeFalsy();
+    });
+    it("isUaDonationsEnabledSelector should return the value of bs.config.donation.enabled if is defined", () => {
+      const someFalsyStoreConfig = {
+        backendStatus: {
+          status: some({
+            ...status,
+            config: {
+              ...status.config,
+              uaDonations: { ...status.config.uaDonations, enabled: false }
+            }
+          })
+        }
+      } as any as GlobalState;
+      const falsyConfig = isUaDonationsEnabledSelector(someFalsyStoreConfig);
+      expect(falsyConfig).toBeFalsy();
+      const someTruthyStoreConfig = {
+        backendStatus: {
+          status: some({
+            ...status,
+            config: {
+              ...status.config,
+              uaDonations: { ...status.config.uaDonations, enabled: true }
+            }
+          })
+        }
+      } as any as GlobalState;
+      const truthyConfig = isUaDonationsEnabledSelector(someTruthyStoreConfig);
+      expect(truthyConfig).toBeTruthy();
+    });
+    it("uaDonationsBannerConfigSelector should return undefined if bs.config.donation.banner is undefined", () => {
+      const bannerConfig = uaDonationsBannerConfigSelector(noneStore);
+      expect(bannerConfig).toBeUndefined();
+    });
+    it("uaDonationsBannerConfigSelector should return the banner config if bs.config.donation.banner is defined", () => {
+      const someStoreConfig = {
+        backendStatus: {
+          status: some(status)
+        }
+      } as any as GlobalState;
+      const bannerConfig = uaDonationsBannerConfigSelector(someStoreConfig);
+      expect(bannerConfig).toEqual(status.config.uaDonations.banner);
+    });
+  });
+
+  describe("premium messages opt-in/out selectors", () => {
+    it("should return false if the remote flag is undefined", () => {
+      const output = isPremiumMessagesOptInOutEnabledSelector(noneStore);
+      expect(output).toBeFalsy();
+    });
+
+    it("should return false if the remote flag is false", () => {
+      const customStore = {
+        backendStatus: {
+          status: some({
+            config: {
+              premiumMessages: { opt_in_out_enabled: false }
+            }
+          })
+        }
+      } as unknown as GlobalState;
+
+      const output = isPremiumMessagesOptInOutEnabledSelector(customStore);
+
+      expect(output).toBeFalsy();
+    });
+
+    it("should return true if the remote flag is true", () => {
+      const customStore = {
+        backendStatus: {
+          status: some({
+            config: {
+              premiumMessages: { opt_in_out_enabled: true }
+            }
+          })
+        }
+      } as unknown as GlobalState;
+
+      const output = isPremiumMessagesOptInOutEnabledSelector(customStore);
+
+      expect(output).toBeTruthy();
+    });
   });
 });

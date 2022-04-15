@@ -6,7 +6,7 @@ import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { SagaIterator } from "redux-saga";
-import { call, Effect, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
@@ -17,8 +17,7 @@ import {
   loadIdps
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
-import { SagaCallReturnType } from "../types/utils";
-import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
+import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 const contentClient = ContentClient();
@@ -43,12 +42,12 @@ function* fetchMunicipalityMetadata(
   getMunicipality: ReturnType<typeof ContentClient>["getMunicipality"],
   codiceCatastale: CodiceCatastale
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   Either<Error, MunicipalityMedadata>,
   SagaCallReturnType<typeof getMunicipality>
 > {
   try {
-    const response: SagaCallReturnType<typeof getMunicipality> = yield call(
+    const response: SagaCallReturnType<typeof getMunicipality> = yield* call(
       getMunicipality,
       { codiceCatastale }
     );
@@ -74,14 +73,14 @@ function* watchContentMunicipalityLoadSaga(
   const codiceCatastale = action.payload;
   try {
     const response: SagaCallReturnType<typeof fetchMunicipalityMetadata> =
-      yield call(
+      yield* call(
         fetchMunicipalityMetadata,
         contentClient.getMunicipality,
         codiceCatastale
       );
 
     if (response.isRight()) {
-      yield put(
+      yield* put(
         contentMunicipalityLoad.success({
           codiceCatastale,
           data: response.value
@@ -91,7 +90,7 @@ function* watchContentMunicipalityLoadSaga(
       throw response.value;
     }
   } catch (e) {
-    yield put(
+    yield* put(
       contentMunicipalityLoad.failure({
         error: e,
         codiceCatastale
@@ -106,17 +105,17 @@ function* watchContentMunicipalityLoadSaga(
 function* watchLoadContextualHelp(): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof getContextualHelpData> =
-      yield call(getContextualHelpData);
+      yield* call(getContextualHelpData);
     if (response.isRight()) {
       if (response.value.status === 200) {
-        yield put(loadContextualHelpData.success(response.value.value));
+        yield* put(loadContextualHelpData.success(response.value.value));
         return;
       }
       throw Error(`response status ${response.value.status}`);
     }
     throw Error(readableReport(response.value));
   } catch (e) {
-    yield put(loadContextualHelpData.failure(e));
+    yield* put(loadContextualHelpData.failure(e));
   }
 }
 
@@ -127,12 +126,12 @@ function* watchLoadIdps(
   getIdps: ReturnType<typeof ContentClient>["getIdps"]
 ): SagaIterator {
   try {
-    const idpsListResponse: SagaCallReturnType<typeof getIdps> = yield call(
+    const idpsListResponse: SagaCallReturnType<typeof getIdps> = yield* call(
       getIdps
     );
     if (idpsListResponse.isRight()) {
       if (idpsListResponse.value.status === 200) {
-        yield put(loadIdps.success(idpsListResponse.value.value));
+        yield* put(loadIdps.success(idpsListResponse.value.value));
         return;
       }
       throw Error(`response status ${idpsListResponse.value.status}`);
@@ -140,7 +139,7 @@ function* watchLoadIdps(
       throw Error(readableReport(idpsListResponse.value));
     }
   } catch (e) {
-    yield put(loadIdps.failure(e));
+    yield* put(loadIdps.failure(e));
   }
 }
 
@@ -150,10 +149,10 @@ function* handleLoadAvailableBonus(
 ): SagaIterator {
   try {
     const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> =
-      yield call(getBonusAvailable, {});
+      yield* call(getBonusAvailable, {});
     if (bonusListReponse.isRight()) {
       if (bonusListReponse.value.status === 200) {
-        yield put(loadAvailableBonuses.success(bonusListReponse.value.value));
+        yield* put(loadAvailableBonuses.success(bonusListReponse.value.value));
         return;
       }
       throw Error(`response status ${bonusListReponse.value.status}`);
@@ -161,39 +160,37 @@ function* handleLoadAvailableBonus(
       throw Error(readableReport(bonusListReponse.value));
     }
   } catch (e) {
-    yield put(loadAvailableBonuses.failure(e));
+    yield* put(loadAvailableBonuses.failure(e));
   }
 }
 
 export function* watchContentSaga() {
   // watch municipality loading request
-  yield takeEvery(
+  yield* takeEvery(
     getType(contentMunicipalityLoad.request),
     watchContentMunicipalityLoadSaga
   );
 
   // Watch contextual help text data loading request
-  yield takeLatest(
+  yield* takeLatest(
     getType(loadContextualHelpData.request),
     watchLoadContextualHelp
   );
 
   // Watch idps data loading request
-  yield takeLatest(
+  yield* takeLatest(
     getType(loadIdps.request),
     watchLoadIdps,
     contentClient.getIdps
   );
 
   // Load content related to the contextual help body
-  yield put(loadContextualHelpData.request());
+  yield* put(loadContextualHelpData.request());
 
-  if (bonusVacanzeEnabled || bpdEnabled || cgnEnabled) {
-    // available bonus list request
-    yield takeLatest(
-      getType(loadAvailableBonuses.request),
-      handleLoadAvailableBonus,
-      contentClient.getBonusAvailable
-    );
-  }
+  // available bonus list request
+  yield* takeLatest(
+    getType(loadAvailableBonuses.request),
+    handleLoadAvailableBonus,
+    contentClient.getBonusAvailable
+  );
 }

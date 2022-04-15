@@ -1,43 +1,39 @@
 import { Root } from "native-base";
 import * as React from "react";
-import {
-  AppState,
-  BackHandler,
-  Linking,
-  Platform,
-  StatusBar
-} from "react-native";
+import { AppState, Linking, Platform, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
+import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
-import { initialiseInstabug } from "./boot/configureInstabug";
+import customVariables from "./theme/variables";
 import configurePushNotifications from "./boot/configurePushNotification";
+import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
-import {
-  bpdApiSitUrlPrefix,
-  bpdApiUatUrlPrefix,
-  bpdApiUrlPrefix,
-  bpdTestOverlay,
-  cgnTestOverlay,
-  shouldDisplayVersionInfoOverlay
-} from "./config";
-import Navigation from "./navigation";
+import { testOverlayCaption } from "./config";
+
+import { setLocale } from "./i18n";
+import AppNavigator from "./navigation/AppNavigator";
+import NavigationService from "./navigation/NavigationService";
+import RootModal from "./screens/modal/RootModal";
 import {
   applicationChangeState,
   ApplicationState
 } from "./store/actions/application";
+import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
+import { trackScreen } from "./store/middlewares/navigation";
+import { isDebugModeEnabledSelector } from "./store/reducers/debug";
+import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
-
-import { setLocale } from "./i18n";
-import RootModal from "./screens/modal/RootModal";
-import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
-import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
+import { getCurrentRouteName } from "./utils/navigation";
+import { isStringNullyOrEmpty } from "./utils/strings";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const AppContainer = createAppContainer(AppNavigator);
 
 /**
  * The main container of the application with:
@@ -55,11 +51,6 @@ class RootContainer extends React.PureComponent<Props> {
     configurePushNotifications();
   }
 
-  private handleBackButton = () => {
-    this.props.navigateBack();
-    return true;
-  };
-
   private handleOpenUrlEvent = (event: { url: string }): void =>
     this.navigateToUrlHandler(event.url);
 
@@ -76,9 +67,6 @@ class RootContainer extends React.PureComponent<Props> {
   };
 
   public componentDidMount() {
-    initialiseInstabug();
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
-
     if (Platform.OS === "android") {
       Linking.getInitialURL()
         .then(this.navigateToUrlHandler)
@@ -105,8 +93,6 @@ class RootContainer extends React.PureComponent<Props> {
     });
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
-
     if (Platform.OS === "ios") {
       Linking.removeEventListener("url", this.handleOpenUrlEvent);
     }
@@ -141,26 +127,30 @@ class RootContainer extends React.PureComponent<Props> {
 
     // if we have no information about the backend, don't force the update
 
-    const bpdEndpointStr =
-      bpdApiUrlPrefix === bpdApiSitUrlPrefix
-        ? "SIT"
-        : bpdApiUrlPrefix === bpdApiUatUrlPrefix
-        ? "UAT"
-        : "PROD";
-
     return (
       <Root>
-        <StatusBar barStyle={"dark-content"} />
+        <StatusBar
+          barStyle={"dark-content"}
+          backgroundColor={customVariables.androidStatusBarColor}
+        />
         {Platform.OS === "android" && <FlagSecureComponent />}
-        <Navigation />
-        {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
-        {cgnTestOverlay && (
-          <BetaTestingOverlay title="🛠️ CGN TEST VERSION 🛠️" />
-        )}
-        {bpdTestOverlay && (
+        <AppContainer
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+          onNavigationStateChange={(prevState, currentState) => {
+            NavigationService.setCurrentState(currentState);
+            this.props.setDebugCurrentRouteName(
+              getCurrentRouteName(currentState) ?? "Undefined"
+            );
+            trackScreen(prevState, currentState);
+          }}
+        />
+        {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
+        {!isStringNullyOrEmpty(testOverlayCaption) && (
           <BetaTestingOverlay
-            title="🛠️ BPD TEST VERSION 🛠️"
-            body={bpdEndpointStr}
+            title={`🛠️ TEST VERSION 🛠️`}
+            body={testOverlayCaption}
           />
         )}
         <RootModal />
@@ -172,14 +162,16 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   preferredLanguage: preferredLanguageSelector(state),
-  deepLinkState: state.deepLink
+  deepLinkState: state.deepLink,
+  isDebugModeEnabled: isDebugModeEnabledSelector(state)
 });
 
 const mapDispatchToProps = {
   applicationChangeState,
   setDeepLink,
   navigateToDeepLink,
-  navigateBack
+  navigateBack,
+  setDebugCurrentRouteName
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

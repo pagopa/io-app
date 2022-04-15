@@ -64,6 +64,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    switchLabel: "Select to activate"
     reload: "Reload"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
@@ -105,6 +106,7 @@ global:
     tomorrow: "tomorrow"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    shortFormatWithTime: "%d/%m/%Y, %H:%M"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
     fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
@@ -113,6 +115,8 @@ global:
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
     shortNumericMonthYear: "%m/%-y"
+    timeFormat: "%H:%M"
+    timeFormatWithTimezone: "%H:%M:%S (%z)"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -216,8 +220,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Some features will not work.
-exit:
-  pressAgain: press again to exit
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
@@ -228,6 +230,9 @@ permissionRationale:
   camera:
     title: "Allow camera access"
     message: "You’ll be able to read QR codes and pay pagoPA notices."
+  calendar:
+    title: "Allow calendar access"
+    message: "You’ll be able to add deadlines to your calendar and set a reminder."
 startup:
   title: Initialization
   authentication: User authenticated
@@ -297,6 +302,8 @@ profile:
     title: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    clearAsyncStorage: Clear AsyncStorage
+    dumpAsyncStorage: Dump AsyncStorage content to console
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
@@ -382,20 +389,19 @@ profile:
             description:
               one: "IO collects only the information "
               two: "necessary "
-              three: "to monitor the performance of the services provided to you"
+              three: "to monitor the performance of the services provided to you."
             cta: "Why?"
           security:
             description:
-              one: "We take security measures to protect your data and "
-              two: "pseudonymise it where possible"
+              one: "We take security measures to protect your data."
             cta: "Learn more"
           gdpr:
             description:
               one: "The IO team works with other providers in accordance with "
-              two: "GDPR regulations"
+              two: "GDPR regulations."
             cta: "See our providers"
           additionalInformation:
-            description: "For more information, please read"
+            description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
           profileSettings: "You can change this choice anytime in Profile > Preferences"
           cta:
@@ -498,12 +504,13 @@ navigation:
   messages: Messages
   profile: Profile
   accessibility: "Section {{section}}, panel, {{order}} of 4"
+  accessibilityWithBadge: "Section {{section}}, {{unread}} new items, panel, {{order}} of 4"
   selected: Is selected
 cie:
   title: Touch the card
   layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
   layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
-  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
+  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
 spid:
   login: LOGIN
   loginButton: LOGIN WITH
@@ -602,10 +609,10 @@ authentication:
       button: "Load/open CieID"
     card:
       headerTitle: Login with CIE
-      titleiOS: Please try again
+      titleiOS: Hold the card still
       title: Hold the card again
       layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: Place your electronic ID card on the top of your iPhone
+      layCardMessageHeaderiOS: The sensor is located on top of the device.
       layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
       cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
@@ -632,6 +639,8 @@ authentication:
         unknownCardTitle: Unknown card
         unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
         unknownCardHelpLink: What is the Electronic Identity Card?
+    dataUsageConsent:
+      retryCTA: Entra
   spid: SPID
   spid_information_request:
     headerTitle: Insert email address
@@ -698,9 +707,10 @@ authentication:
       error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
       error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
       error_21: "It's been too long since you started accessing: please start over again."
-      error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
+      error_22: "To use IO, you have to consent access to some data. Enter again and consent."
       error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
       error_25: "You have canceled the login operation: you can try again whenever you want."
+      error_1001: "Access Denied: You are not of the minimum age required to use IO"
   expiredSessionBanner:
     title: Security notice
     message: To keep your private information safe, please login again with your SPID credentials, thanks!
@@ -760,7 +770,7 @@ onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
-    headerTitle: Activation
+    headerTitle: Configure IO
     accept: Accept
     error: Loading error
     alert:
@@ -790,6 +800,8 @@ onboarding:
         faceId: Face ID
         touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  shareData:
+    title: "Configure IO"
 forms:
   validators:
     required: Required value
@@ -890,22 +902,21 @@ wallet:
     bancomat:
       title: "Search for your PagoBANCOMAT cards"
       description:
-        text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
+        text1: "By adding PagoBANCOMAT to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
       title: "Search for your BANCOMAT Pay accounts"
       description:
-        text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
+        text1: "By adding BANCOMAT Pay to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
     cobadge:
       title: "Search for your international circuit cards"
       description:
-        text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
-        text2: the banks participating in the service
+        text1: "By adding all the Maestro, Mastercard, V-Pay and Visa cards associated with you to your Wallet, you’ll be able to join the initiatives available on IO."
         text3: "For further information, please read the "
         text4: privacy policy.
     bankName: Name of the bank
@@ -924,6 +935,7 @@ wallet:
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
+    cardHolder: Card holder
     transactionListItem:
       payment:
         read: Transaction
@@ -956,7 +968,7 @@ wallet:
         bodyPlural: "We found {{number}} cards registered to you. Continue to add this card skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
         warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact the card issuer."
     bPay:
       headerTitle: "Add BANCOMAT Pay"
       loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
@@ -989,6 +1001,52 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Add PayPal"
+      emailNotAvailable: "not available"
+      start:
+        title: "Pay on IO with PayPal"
+        body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      updatePsp:
+        headerTitle: "Choose the PSP"
+        title: "Which payment provider do you want to pay with?"
+        body: "Each provider presents a transaction fee.\nIn this list you will find all the providers compatible with your method, even if you are not their client."
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Maximum Fee (€)"
+      selectPsp:
+        title: "Which payment provider do you want to use PayPal with?"
+        body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
+        link: "What is a payment provider?"
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Info & Fees"
+        infoBottomSheet:
+          title: "Who is {{pspName}}?"
+          ctaTitle: "Got it"
+          row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
+          row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
+          row2Description2: ". You'll see the right amount before confirming the payment."
+          row3Description1: "{{psp}}’s Terms and Conditions and Privacy Policy apply"
+        whatIsPspBottomSheet:
+          title: "What is a payment provider?"
+          body: "The Payment Service Provider (PSP) collects the amount on behalf of the Payee, and it may charge a fee for its service.\nWhenever you'll pay, you can to choose the provider that suits you best, whether you're a customer or not."
+      paypalAlreadyAdded:
+        alert:
+          title: "You already have a PayPal account in your Wallet"
+          message: "By continuing, the new account will replace the current one."
+      onBoardingCompleted:
+        title: "That's it!"
+        body: "Now have a look at the current settings of your new method."
+        primaryButton: "Continue"
+      onBoardingCompletedWhilePayment:
+        title: "That's it!"
+        body: "Now you can continue with your payment."
+        primaryButton: "Continue"
+      paymentCheckout:
+        transactionCost: "Transaction cost"
+        pspHandler: "Processed by {{pspName}}"
+        privacyDisclaimer: "By continuing, you declare you have read and understood the"
+        privacyTerms: "Terms and Conditions of Use and Privacy Policy"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -1016,7 +1074,7 @@ wallet:
       add:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact the card issuer."
         warning1: "In some cases, the displayed data might be different from the data printed on the physical card: "
         warning2: "if in doubt, contact your bank."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
@@ -1037,8 +1095,8 @@ wallet:
       headerTitle: "Add supermarket card"
       choosePrivativeIssuer:
         loading: "Loading settings\n\nPlease wait a few seconds"
-        title: "Choose your card brand"
-        body: "You can only add cards that allow you to pay in supermarkets."
+        title: "Choose the card brand"
+        body: "By adding the card to your Wallet, you’ll be able to join the initiatives available on IO."
         koDisabled:
           title: "This supermarket doesn't offer this feature yet"
           body: "We are working to allow you to add your card soon."
@@ -1067,7 +1125,7 @@ wallet:
       add:
         screenTitle: "Do you want to add this card?"
         loading: "We are adding your card\n\nPlease hold on..."
-        blocked: "This card is blocked and can't be activated for Cashback. Please, contact your supermarket."
+        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1081,7 +1139,7 @@ wallet:
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
-  paymentMethodDesc: Credit, debit, prepaid card, PagoBANCOMAT, app
+  paymentMethodDesc: Credit, debit, prepaid cards, PayPal and others
   walletLoadMessage: Loading payment methods...
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
@@ -1126,11 +1184,11 @@ wallet:
     contextualHelpTitle: Save a card to IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Save the card
-    title: Do you want to save this card?
-    infoTitle: Set the card as favourite payment method
-    info: This payment method will be automatically proposed for the next payment
-    save: Save
-    notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
+    title: "Is everything correct?"
+    subtitle: "By adding the card to your Wallet, you will be able to make payments in the app and join the initiatives available on IO."
+    infoTitle: "Use as favorite"
+    info: "When you pay in-app, IO will automatically show this payment method"
+    notice: "In order to verify your card, we temporarily hold 0.02 €. Don't worry, we will return the amount to you as soon as possible."
     temporaryError: There was a problem while saving this card.
     temporarySubError: We have not received a response from the security systems. We apologize for the inconvenience.
     loadWalletsErrorTitle: Systems are taking longer than expected
@@ -1146,9 +1204,9 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    headerTitle: "Choose the provider"
-    title: Which provider do you want to pay with?
-    info: Each provider proposes a transaction cost.
+    headerTitle: "Choose the PSP"
+    title: Which payment provider do you want to pay with?
+    info: Each provider presents a transaction fee.
     info2: In this list you will find all the providers
     info2Bold: compatible with your method, even if you are not their client.
     provider: Provider
@@ -1158,17 +1216,16 @@ wallet:
     contextualHelpTitle: Select a provider
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
-    header: Confirm transaction
+    header: Checkout
+    total: Total
+    paymentInformations: Payment informations
+    payWith: Pay with
+    transactionCosts: Transaction costs
+    edit: Edit
+    providedBy: Provided by
+    pay: Pay
     cancelPayment: Cancel the transaction
-    goToPay: Pay
-    askConfirm: Want to proceed with the transaction?
-    partialAmount: Amount to pay
     fee: Fee
-    why: Why?
-    info: 'After this step it will not be possible to come back.'
-    info2: You are using your favourite payment method.
-    changeMethod: Change the payment method
-    change: Change method
     identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: the payment has been completed!
     transactionFailure: There was an error with the payment, please retry!
@@ -1177,6 +1234,9 @@ wallet:
     confirmCancelPayment: Cancel this payment
     confirmContinuePayment: Continue with the payment
     cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
+    accessibility:
+      edit: "tap to edit"
+      transactionCosts: "{{cost}}, transaction {{psp}}"
   payWith:
     noWallets:
       title: No payment methods found
@@ -1200,8 +1260,7 @@ wallet:
           bottomSheetTitle: "Why can't I pay with this card?"
           bottomSheetDescription: "This circuit allows you to pay in physical stores, but not online. If your card is enabled for online purchases, add it to your Wallet as a 'debit or credit card'."
   firstTransactionSummary:
-    header: Transaction notice summary
-    title: Transaction notice
+    title: Payment information
     amount: Transaction amount
     total: Total paid
     expireDate: Expire date
@@ -1220,8 +1279,8 @@ wallet:
     updatedAmount: Updated amount
     updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
     loadingMessage:
-      activation: I'm alerting the entity, wait a few seconds...
-      verification: I am checking the status and the amount of your notice...
+      activation: We are contacting the entity, wait a few seconds
+      verification: We are verifying your payment information
       generic: I am finishing the verification operations of your notice, wait a few seconds...
       wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
@@ -1265,8 +1324,8 @@ wallet:
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
-  addPaymentMethodTitle: Add app and other methods
-  continue: Pay this notice
+  addPaymentMethodTitle: Add a method
+  continue: Go to payment
   backToPayments: Back to payments
   methods:
     comingSoon: upcoming
@@ -1274,7 +1333,7 @@ wallet:
     card:
       name: Credit, debit or prepaid card
       shortName: "Card"
-      description: The card issued by your bank that you normally use to pay in stores and online
+      description: The card that you use to pay in stores and online
       pagoPaCapability:
         title: In app payments
         description: Pay your notices with pagoPA logo
@@ -1285,25 +1344,26 @@ wallet:
         bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
     bonus:
-      name: Discount, bonus and other services
+      name: Discounts, bonuses and other initiatives
       description: Public initiatives to support Economy, or services related to payments
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
     loyalty:
       name: Supermarket Loyalty Card
-      description: The payment card issued by your supermarket, used to pay for groceries
+      description: The payment card you use to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
-      description: The card with the PagoBANCOMAT logo typically used to withdraw cash or pay in stores
+      description: The card used to pay in stores
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
-      description: Pay with Satispay
+      description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
+      description: Link your BANCOMAT Pay account
     postepayApp:
       name: Postepay
       description: your Postepay app
@@ -1312,6 +1372,7 @@ wallet:
       description: Cards issued by Poste Italiane
     paypal:
       name: PayPal
+      description: Pay with your linked card or bank account
     bancomat:
       name: PagoBANCOMAT
     cobadge:
@@ -1359,7 +1420,7 @@ wallet:
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
-    body: If you can't find the security code, it's likely your card doesn't support online payments. However, you can add it for Cashback purposes, if your bank is supported.
+    body: If you can't find the security code, it's likely your card doesn't support online payments.
     cta: "Search your cards"
   chooseMethod: Select the desired method
   QRtoPay:
@@ -1370,6 +1431,9 @@ wallet:
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
+    readStorageDisclosure:
+      title: Allow gallery access
+      message: You’ll be able to upload screenshots and payment notices.
     settingsAlert:
       title: It seems access to Photos has been denied
       message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
@@ -1417,7 +1481,7 @@ wallet:
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have more than one logo?"
-        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
+        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you."
         addCta: "Add second circuit"
   satispay:
     details:
@@ -1430,8 +1494,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this method?"
-    body: "This method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
+    title: "Delete this payment method?"
+    body: "We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1442,13 +1506,16 @@ wallet:
       visualizeCard: View card
     fallback:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code1:
       title: "Sorry, an unexpected error has occurred"
-      description: "No charges were made."
+      description: "If this problem persists, please contact support."
     code2:
       title: "Authorization declined"
       description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
+    code3:
+      title: "The card details are incorrect"
+      description: "Delete the card from your Wallet and add it again. Make sure to enter the details exactly as they appear on the card."
     code4:
       title: "Sorry, the session has expired"
       description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
@@ -1460,6 +1527,15 @@ wallet:
     code10:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
+    code18:
+      title: "Sorry, an unexpected error has occurred"
+      description: "If this problem persists, please contact support."
+    code19:
+      title: "Authorization declined"
+      description: "You may have removed pagoPA from your PayPal automatic payments. Delete your PayPal account from the Wallet, add it back and try to make the payment again."
+    code15:
+      title: "Enable in-app payments first"
+      description: "Before trying again, select the method in your Wallet and turn on the 'in-app payments' feature."
     addCreditCard:
       success:
         title: "Your card has been successfully added!"
@@ -1486,7 +1562,7 @@ cardComponent:
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
-  deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
+  deleteMsg: We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours.
   deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
@@ -1498,7 +1574,8 @@ messages:
     message:
       read: "Message"
       unread: "Unread message"
-      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      archived: Archived
+      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "received on"
       received_at: "received at"
   contextualHelpTitle: About this section
@@ -1520,6 +1597,7 @@ messages:
     senderInfo:  Sender service unknown
     serviceInfo: Service info unknown
     departmentInfo: Department info unknown
+    noTitle: No title
   loadingErrorTitle: Loading messages has failed
   cta:
     archive: Archive
@@ -1600,6 +1678,18 @@ messages:
     barcodes: Barcodes
     nationalService: National Health Service
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
+  pagination:
+    migration:
+      started: Please wait, we are updating the Messages section.
+      succeeded: Done!
+      failed: We couldn't update the Messages section.
+  operations:
+    archive:
+      success: "Successfully archived!"
+      failure: "Failed to archive"
+    restore:
+      success: "Successfully unarchived."
+      failure: "Failed to unarchive"
 messageDetails:
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
@@ -1724,6 +1814,7 @@ services:
   emptyListMessage: There are no services available at this time, pull down to refresh
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
+  fiscalCodeAccessibility: "Organization's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -1812,19 +1903,9 @@ contextualHelp:
   sendPersonalInfo:
     title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
-    cta: Share your fiscal code and your device's unique identifier, in order to make it easier to solve the problem.
+    cta: Share your fiscal code, in order to make it easier to solve your problem.
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
-instabug:
-  overrideText:
-    commentFieldHintForQuestion: "Be as specific as possible. What should have happened and what happened instead?\nAs far as possible, please do not enter sensitive data in your reports"
-  contextualHelp:
-    title1: Do you need help?
-    descriptionBug: "If something **doesn't work** as it should or if you want to **suggest an improvement** or a new feature, write us! The IO team will get back to you directly via app."
-    buttonBug: Write to the IO team
-    descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
-    buttonChat: Reopen a report
-    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays.
 bottomSheets:
   ciePin:
       title: "Where can I find my PIN?"
@@ -2450,7 +2531,42 @@ bonus:
             active: "**The ranking changes every day.** You will receive a message when it will be published."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
+    optInPaymentMethods:
+      cashbackUpdate:
+        header: "News and updates"
+        title: "Update on the Cashback initiative"
+        subtitle: "Ministry of Economy and Finance"
+        body: !include bonus/bpd/optInPaymentMethods.md
+      choice:
+        header: Configure IO
+        title: Do you want to keep your payment methods?
+        subtitle: If you keep them, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments.
+        suggestedOption: Recommended
+        options:
+          keepAll:
+            title: Keep all payment methods in the Wallet
+            body: If supported, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. You can change your method preferences or delete them at any time.
+          deleteAll:
+            title: Delete all payment methods from the Wallet
+            body: All methods added in the Wallet so far will be permanently deleted. You can add them again at any time, but you’ll have to enter back the method details and have it authorized.
+        deleteAllButton: Delete all methods
+      deletePaymentMethodsBottomSheet:
+        title: "Do you really want to delete the following methods from the Wallet?"
+        subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
+      thankYouPage:
+        cta:
+          goToWallet: "Go to Wallet"
+          retry: "Try again"
+        success:
+          title: "Done!"
+          body: "We’ve saved your choice."
+        retryAfterDeletion:
+          title: "Sorry, an unexpected error has occurred"
+          body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
+        toast: "Your choice was not saved. Try again later."
   cgn:
+    generic:
+      linkError: "The site can't be reached at the moment. Please, try again later."
     accessibility:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
@@ -2458,12 +2574,14 @@ bonus:
     merchantsList:
       online: Online
       places: Places
-      navigationTitle: View merchants
-      screenTitle: Select the merchant where you want to buy something
+      navigationTitle: Benefits
+      screenTitle: Select the operator and discover the benefits
       cta:
         filter: Filter
+      categoriesList:
+        title: Select a category and discover the benefits
       filter:
-        title: Filter merchants
+        title: Filter operators
         searchTitle: Find by name
         inputPlaceholder: Find store, theater or other
         addressTitle: Find by address
@@ -2482,8 +2600,13 @@ bonus:
           byDistance: By proximity to your location
           byName: Alphabetical order
     merchantDetail:
+      bucket:
+        alert:
+          cta: I got it!
+        error:
+          noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Discounts
+        deals: Benefits
         description: Description
         services: Services
         addresses: Addresses
@@ -2492,25 +2615,29 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to merchant website
+        label: Navigate to operator website
         landingPage: Get the benefit
+        discountUrl: Go to the benefit
       categories:
+        all: All the operators
         counting: and other {{count}}
-        theater: free time
-        travel: travels, transportation and mobility
-        food: restaurant and cooking
-        hotel: hotel
-        service: services
-        book: instruction
-        shopping: shopping
-        sport: sport
-        health: health and wellness
+        cultureAndEntertainment: Culture and Entertainment
+        health: Health and Wellness
+        learning: Education and Learning
+        sport: Sport
+        home: Home
+        telco: Telephony and Internet
+        finance: Banking and Financial Services
+        travel: Travels and Transportation
+        mobility: Sustainable Transport
+        job: Jobs and Internships
     cta:
-      activeBonus: Activate your Carta Giovani
+      activeBonus: Request your Card
+      deactivateBonus: Deactivate your Card
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: See benefits
+        buyers: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
@@ -2523,7 +2650,7 @@ bonus:
         warning: "Attention! "
         revoked: "This card has been revoked cause {{reason}}"
         expired: "This card expired on {{date}}"
-      ownership: Who can take advantage of discounts?
+      ownership: Who can take advantage of benefits?
       status:
         title: Carta Giovani Nazionale
         eyca: EYCA card
@@ -2531,7 +2658,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating operators, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
@@ -2559,8 +2686,8 @@ bonus:
         title: "The Carta Giovani Nazionale service is not available at the moment."
         body: "We apologize for the issue.\nWe invite you to retry again later."
       ineligible:
-        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
-        body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."
+        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionale."
+        body: "The Carta Giovani Nazionale is available only to Italian and European citizens residing in Italy, aged 18 to 35."
       timeout:
         title: "We're processing your request."
         body: "We will send you an in-app message when your Carta Giovani will be activated."
@@ -2573,7 +2700,13 @@ bonus:
       success:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
+      deactivate:
+        toast: "The request to deactivate the card has been successfully executed"
+        alert:
+          title: "Deactivate card"
+          message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
     otp:
+      error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       screen:
         title: Use discount code
         cta: Copy code
@@ -2653,7 +2786,27 @@ bonus:
           departure: "Departure date"
           return: "Return date"
       summary:
-        title: "SummaryScreen"
+        title: "Summary"
+        subtitle1:
+          normal1: "By continuing, you declare under your responsibility and aware of the penal sanctions in case of untruthful declarations and false acts ("
+          link: "art.76 of the Presidential Decree of 28 December 2000, n.445"
+          normal2: ") that you meet the following requirements:"
+        subtitle2: "And to request a discount code for a flight with the following characteristics:"
+        fields:
+          residence:
+            label: "Residence:"
+            value: "Sicily"
+          category:
+            label: "Category:"
+            value:
+              disabled: "Severely disabled pursuant to article 3, paragraph 3, of law no. 104"
+              student: "Off-site student"
+              worker: "Employee with a workplace outside Sicily"
+              sick: "Patient in need of treatment outside the Sicily region"
+          flightDate:
+            label: "Flight date:"
+            disabled: "All"
+          availableDestination: "Possible destinations:"
       voucherGenerated:
         title: "Here is your discount code"
         subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."
@@ -2706,6 +2859,16 @@ bonus:
         cta:
           voucherRevocation: "Voucher revocation"
           openQr: "Open QR code"
+        voucherRevocation:
+          alert:
+            title: "Attention"
+            message: "Are you sure you want to proceed? The discount code will be deleted."
+            cta:
+              ok: "Continue"
+              ko: "Cancel the request"
+          toast:
+            ok: "Voucher successfully deleted"
+            ko: "Error while deleting the voucher. Try again"
     components:
       voucherVisualDetails:
         uniqueCode: "Unique code"
@@ -2721,10 +2884,74 @@ bonus:
         cta:
           exit: "Exit"
           voucherRevocation: "Voucher revocation"
+      destinationSelector:
+        state:
+          title: "Select a state"
+          label: "State"
+          placeholder: "Select a state"
+        municipality:
+          title: "Select a municipality"
+          label: "Municipality"
+          placeholder: "Select a municipality"
+          ko:
+            label1: "Error loading municipalities. "
+            label2: "Try again"
+    pdfVoucher:
+      toast:
+        ok: "Voucher saved successfully"
+        ko: "Problems saving the voucher"
 
 features:
+  mvl:
+    title: "legal message"
+    loading:
+      title: "Loading message details"
+      subtitle: "Please wait"
+    ko:
+      genericError:
+        title: "There was an error retrieving the message"
+        subtitle: "Please try again"
+    details:
+      hasAttachments: "contains attachments"
+      attachments:
+        title: "Attachments"
+        toast:
+          success: "Download complete"
+        bottomSheet:
+          warning:
+            title: "Pay attention to attachments"
+            body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
+          loading:
+            title: "Attachment"
+            body: "Downloading the attachment"
+          failing:
+            title: "Attachment"
+            body: "An error occurred while downloading the attachment"
+            details: "Check your connection please and try again"
+          checkBox: "OK, don't show me again"
+        pdfPreview:
+          title: "PDF Preview"
+          singleBtn: "Save, print, or share"
+          open: "Open"
+          save: "Save"
+      body:
+        plain: "plain text"
+        html: "html"
+      metadata:
+        title: "the message has legal value"
+        description: "On {{date}} at {{time}} the message \"{{subject}}\" was sent to you by \"{{sender}}\""
+        messageId: "Message identifier:"
+        links:
+          copy: "Copy message identifier"
+          recipients: "Show full list of recipients"
+          signature: "Show signature details"
+          certificates: "Show certificates"
+          originalMessage: "Download original message"
+          datiCert: "Download daticert.xml"
+          smime: "Download smime.p7s"
   euCovidCertificate:
     save:
+      album: "IO"
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
       ok: "Image saved in your device gallery"
       bottomSheet:
@@ -2752,7 +2979,7 @@ features:
         headerTitle: "Certificate Details"
         save: "Save details"
     revoked:
-      title: "This certificate is no longer valid"
+      title: "This certificate is not valid"
     expired:
       title: "This certificate has expired"
     ko:
@@ -2773,8 +3000,60 @@ features:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
         cta: "Get support"
+  uaDonations:
+    webViewScreen:
+      headerTitle: Donation
+      errors:
+        data:
+          buttonTitle: Go back
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
     missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
+support:
+  helpCenter:
+    header: "Support"
+    cta:
+      contactSupport: "Write us"
+      seeReports: "See your requests"
+    supportComponent:
+      title: "Need help?"
+      subtitle: "If you need support or want to suggest an improvement, please write to us: we will get back to you as soon as possible."
+      adviceMessage: "If your problem concerns the content of a message or the service of an Institution, contact the latter. You will find the contact details within the message or in the tab of the service concerned."
+  panicMode:
+    title: "Sorry, we cannot help you at the moment"
+    body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
+  askPermissions:
+    nameSurname: "Name and Surname"
+    fiscalCode: "Fiscal code"
+    emailAddress: "Email address"
+    deviceAndOS: "Device and Operating System"
+    ipAddress: "IP address"
+    appVersionsHistory: "App version history"
+    appVersionsHistoryValue: "To determine if the issue is due to the most recent update"
+    identityProvider: "Identity Provider"
+    navigationData: "In-app navigation data"
+    navigationDataValue: "Such as the the last screen or message displayed in IO."
+    stock: "Payment Notice details"
+    stockValue: "Including the error you just received"
+    header: "Write us"
+    title: "Do you give us your consent?"
+    body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
+    listHeader: "If you consent, we'll access this data:"
+    devicePerformance: "Device performance"
+    devicePerformanceData: "Memory and battery level"
+    prominentDisclosure: "Access to the device gallery"
+    prominentDisclosureData: "To upload photos and screenshots"
+    cta:
+      allow: "Agree"
+      denies: "Deny"
+    toast:
+      emailClientNotFound: "To get support write us: {{emailAddress}}"
+  chooseCategory:
+    header: "Write us"
+    title:
+      category: "Select a topic"
+      subCategory: "Can you give us more details?"
+    subTitle:
+      category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."

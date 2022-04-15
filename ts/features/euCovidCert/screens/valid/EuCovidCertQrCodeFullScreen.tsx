@@ -7,16 +7,16 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { useMaxBrightness } from "../../../../utils/brightness";
-import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { withBase64Uri } from "../../../../utils/image";
+import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
-type NavigationParams = Readonly<{
+export type EuCovidCertQrCodeFullScreenNavigationParams = Readonly<{
   qrCodeContent: string;
 }>;
 
@@ -30,14 +30,11 @@ const styles = StyleSheet.create({
 });
 
 export const EuCovidCertQrCodeFullScreen = (
-  props: NavigationInjectedProps<NavigationParams>
+  props: NavigationStackScreenProps<EuCovidCertQrCodeFullScreenNavigationParams>
 ): React.ReactElement => {
   useMaxBrightness();
   return (
-    <BaseScreenComponent
-      goBack={true}
-      shouldAskForScreenshotWithInitialValue={false}
-    >
+    <BaseScreenComponent goBack={true}>
       <SafeAreaView
         style={IOStyles.flex}
         testID={"EuCovidCertQrCodeFullScreen"}
@@ -46,6 +43,7 @@ export const EuCovidCertQrCodeFullScreen = (
           <View spacer={true} extralarge={true} />
           <View spacer={true} extralarge={true} />
           <Image
+            testID="fullScreenQRCode"
             accessible={true}
             accessibilityRole={"image"}
             accessibilityLabel={I18n.t(

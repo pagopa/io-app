@@ -1,20 +1,17 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
-import { format, formatDateAsLocal } from "../../utils/dates";
 import CopyButtonComponent from "../CopyButtonComponent";
 import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 
 const styles = StyleSheet.create({
   container: {
@@ -37,8 +34,8 @@ const styles = StyleSheet.create({
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
-  serviceDetail: pot.Pot<ServicePublic, Error>;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceDetail: Option<ServicePublic>;
+  serviceMetadata?: ServiceMetadata;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
 }>;
@@ -47,7 +44,7 @@ type MessageData = {
   service_detail: Option<ServicePublic>;
   organization_name: Option<string>;
   service_name: Option<string>;
-  metadata: Option<ServicePublicService_metadata>;
+  metadata: Option<ServiceMetadata>;
 };
 
 /**
@@ -55,11 +52,8 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-  private date = formatDateAsLocal(this.props.message.created_at);
-  private time = format(this.props.message.created_at, "HH.mm");
-
   get data(): MessageData {
-    const serviceDetail = pot.toOption(this.props.serviceDetail);
+    const serviceDetail = this.props.serviceDetail;
     const metadata = fromNullable(this.props.serviceMetadata);
     return {
       service_detail: serviceDetail,
@@ -89,8 +83,7 @@ class MessageDetailData extends React.PureComponent<Props> {
   };
 
   public render() {
-    const textToCopy: string = pot
-      .toOption(this.props.serviceDetail)
+    const textToCopy: string = this.props.serviceDetail
       .map(({ service_name }) => `${service_name} - ${this.props.message.id}`)
       .getOrElse(this.props.message.id);
 
@@ -98,7 +91,9 @@ class MessageDetailData extends React.PureComponent<Props> {
       <View style={styles.container}>
         <Text>
           {I18n.t("messageDetails.dateSending")}
-          <Text bold={true}>{` ${this.date} - ${this.time}`}</Text>
+          <Text bold={true}>{` ${convertDateTimeToWordDistance(
+            this.props.message.created_at
+          )}`}</Text>
         </Text>
 
         {this.data.organization_name.isSome() && (
@@ -110,10 +105,12 @@ class MessageDetailData extends React.PureComponent<Props> {
 
         {this.data.service_name.isSome() && this.data.service_detail.isSome() && (
           <View style={styles.service}>
-            <Text>{`${I18n.t("messageDetails.service")} `}</Text>
-            <Link weight={"Bold"} onPress={this.props.goToServiceDetail}>
-              {this.data.service_detail.value.service_name}
-            </Link>
+            <Text>
+              {`${I18n.t("messageDetails.service")} `}
+              <Link weight={"Bold"} onPress={this.props.goToServiceDetail}>
+                {this.data.service_detail.value.service_name}
+              </Link>
+            </Text>
           </View>
         )}
         {this.hasEmailOrPhone && (

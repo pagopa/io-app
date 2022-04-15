@@ -1,7 +1,5 @@
-import { Effect } from "redux-saga/effects";
-import { call, put, take } from "redux-saga/effects";
+import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
 import { fromNullable } from "fp-ts/lib/Option";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
@@ -10,9 +8,10 @@ import {
   hasProfileEmail,
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
+import { ReduxSagaEffect } from "../../types/utils";
 
 function* enableProfileInboxWebhook() {
-  yield put(
+  yield* put(
     profileUpsert.request({
       is_inbox_enabled: true,
       is_webhook_enabled: true
@@ -23,7 +22,7 @@ function* enableProfileInboxWebhook() {
 export function* checkProfileEnabledSaga(
   profile: InitializedProfile
 ): Generator<
-  Effect,
+  ReduxSagaEffect,
   void,
   | ActionType<typeof profileUpsert["success"]>
   | ActionType<typeof profileUpsert["failure"]>
@@ -34,7 +33,7 @@ export function* checkProfileEnabledSaga(
   // auto-update for those profiles that have been fallen in a buggy scenario
   // see https://www.pivotaltracker.com/story/show/174845929
   if (shouldEnableInbox) {
-    yield call(enableProfileInboxWebhook);
+    yield* call(enableProfileInboxWebhook);
   }
   if (
     tosNotAccepted &&
@@ -43,20 +42,19 @@ export function* checkProfileEnabledSaga(
       !profile.is_webhook_enabled)
   ) {
     // Upsert the user profile to enable inbox and webhook
-    yield call(enableProfileInboxWebhook);
-    const action = yield take([
-      getType(profileUpsert.success),
-      getType(profileUpsert.failure)
-    ]);
+    yield* call(enableProfileInboxWebhook);
+    const action = yield* take<
+      ActionType<typeof profileUpsert.success | typeof profileUpsert.failure>
+    >([profileUpsert.success, profileUpsert.failure]);
     // We got an error
     if (action.type === getType(profileUpsert.failure)) {
       // Restart the initialization loop to let the user retry.
       // FIXME: show an error message
-      yield put(startApplicationInitialization());
+      yield* put(startApplicationInitialization());
     } else {
       // First time login
       if (isProfileFirstOnBoarding(profile)) {
-        yield put(profileFirstLogin());
+        yield* put(profileFirstLogin());
       }
     }
   }

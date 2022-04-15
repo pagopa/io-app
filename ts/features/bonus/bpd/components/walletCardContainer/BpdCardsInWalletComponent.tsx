@@ -1,14 +1,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import _ from "lodash";
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToBpdDetails } from "../../navigation/actions";
-import { bpdAllData } from "../../store/actions/details";
+import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
 import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
 import { BpdCardComponent } from "../bpdCardComponent/BpdCardComponent";
@@ -41,24 +39,20 @@ const BpdCardListMemo = React.memo(
     _.isEqual(curr.periodsWithAmount.value, prev.periodsWithAmount.value)
 );
 
-// Automatically refresh when focused every 5 minutes (the remote data can change every 4 h)
-const refreshTime = 300000 as Millisecond;
-
 /**
  * Render the bpd card in the wallet
  * //TODO: handle error, render only if some
  * @constructor
  */
-const BpdCardsInWalletContainer = (props: Props) => {
-  // If the user does "pull to refresh", this timer is ignored and the refresh is forced
-  useActionOnFocus(props.load, refreshTime);
-  return <BpdCardListMemo {...props} />;
-};
+const BpdCardsInWalletContainer = (props: Props) => (
+  <BpdCardListMemo {...props} />
+);
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdAllData.request()),
-  navigateToCashbackDetails: (period: BpdPeriodWithInfo) =>
-    dispatch(navigateToBpdDetails(period))
+  navigateToCashbackDetails: (period: BpdPeriodWithInfo) => {
+    dispatch(bpdSelectPeriod(period));
+    navigateToBpdDetails(period);
+  }
 });
 
 const mapStateToProps = (state: GlobalState) => ({

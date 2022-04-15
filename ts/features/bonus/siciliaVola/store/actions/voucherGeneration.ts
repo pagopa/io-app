@@ -8,8 +8,6 @@ import {
   Company,
   Hospital,
   Municipality,
-  Province,
-  Region,
   State,
   SvBeneficiaryCategory,
   University,
@@ -17,6 +15,8 @@ import {
 } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
+import { SvVoucherId } from "../../types/SvVoucher";
+import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher
@@ -101,22 +101,13 @@ export const svGenerateVoucherSelectFlightsDate = createStandardAction(
 )<FlightsDate>();
 
 /**
- * get and handle available destination for a voucher request when the user select as destination state Italy
+ * get and handle available destination for a voucher request
  */
 export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
-)<number, AvailableDestinations, NetworkError>();
-
-/**
- * get and handle available destination for a voucher request when the user select as destination state an abroad state
- */
-export const svGenerateVoucherAvailableDestinationAbroad = createAsyncAction(
-  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_ABROAD_REQUEST",
-  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_ABROAD_SUCCESS",
-  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_ABROAD_FAILURE"
-)<number, AvailableDestinations, NetworkError>();
+)<AeroportiAmmessiInputBean, AvailableDestinations, NetworkError>();
 
 /**
  * get and handle the generated voucher
@@ -138,24 +129,6 @@ export const svGenerateVoucherAvailableState = createAsyncAction(
 )<void, ReadonlyArray<State>, NetworkError>();
 
 /**
- * get and handle the available region
- */
-export const svGenerateVoucherAvailableRegion = createAsyncAction(
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_REQUEST",
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_SUCCESS",
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_FAILURE"
-)<void, ReadonlyArray<Region>, NetworkError>();
-
-/**
- * get and handle the available province
- */
-export const svGenerateVoucherAvailableProvince = createAsyncAction(
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_REQUEST",
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_SUCCESS",
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_FAILURE"
-)<number, ReadonlyArray<Province>, NetworkError>();
-
-/**
  * get and handle the available municipality
  */
 export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
@@ -163,6 +136,22 @@ export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_FAILURE"
 )<string, ReadonlyArray<Municipality>, NetworkError>();
+
+/**
+ * Reset the available municipalities
+ */
+export const svGenerateVoucherResetAvailableMunicipality = createStandardAction(
+  "SV_GENERATE_VOUCHER_SELECT_RESET_AVAILABLE_MUNICIPALITY"
+)<void>();
+
+/**
+ * get and handle the voucher pdf download
+ */
+export const svGetPdfVoucher = createAsyncAction(
+  "SV_GENERATE_GET_VOUCHER_PDF_REQUEST",
+  "SV_GENERATE_GET_VOUCHER_PDF_SUCCESS",
+  "SV_GENERATE_GET_VOUCHER_PDF_FAILURE"
+)<SvVoucherId, string, NetworkError>();
 
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
@@ -177,9 +166,8 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherSelectHospital>
   | ActionType<typeof svGenerateVoucherSelectFlightsDate>
   | ActionType<typeof svGenerateVoucherAvailableDestination>
-  | ActionType<typeof svGenerateVoucherAvailableDestinationAbroad>
   | ActionType<typeof svGenerateVoucherGeneratedVoucher>
   | ActionType<typeof svGenerateVoucherAvailableState>
-  | ActionType<typeof svGenerateVoucherAvailableRegion>
-  | ActionType<typeof svGenerateVoucherAvailableProvince>
-  | ActionType<typeof svGenerateVoucherAvailableMunicipality>;
+  | ActionType<typeof svGenerateVoucherAvailableMunicipality>
+  | ActionType<typeof svGetPdfVoucher>
+  | ActionType<typeof svGenerateVoucherResetAvailableMunicipality>;

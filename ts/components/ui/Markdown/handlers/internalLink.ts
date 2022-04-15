@@ -6,10 +6,11 @@ import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
 import {
   bpdEnabled,
-  cgnEnabled,
   myPortalEnabled,
-  svEnabled
+  svEnabled,
+  uaDonationsEnabled
 } from "../../../../config";
+import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
@@ -17,6 +18,7 @@ import { addInternalRouteNavigation } from "../../../../store/actions/internalRo
 import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
+import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
@@ -39,7 +41,10 @@ const BPD_ROUTE_NAMES: ReadonlyArray<string> = [
   BPD_ROUTES.CTA_BPD_IBAN_EDIT
 ];
 
-const CGN_ROUTE_NAMES: ReadonlyArray<string> = [CGN_ROUTES.CTA_START_CGN];
+const CGN_ROUTE_NAMES: ReadonlyArray<string> = [
+  CGN_ROUTES.ACTIVATION.CTA_START_CGN,
+  CGN_ROUTES.DETAILS.DETAILS
+];
 
 const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
 
@@ -48,11 +53,16 @@ const SV_ROUTE_NAMES: ReadonlyArray<string> = [
   SV_ROUTES.VOUCHER_LIST.LIST
 ];
 
+const UA_DONATION_ROUTES: ReadonlyArray<string> = uaDonationsEnabled
+  ? [UADONATION_ROUTES.WEBVIEW]
+  : [];
+
 const ALLOWED_ROUTE_NAMES = ROUTE_NAMES.concat(
   myPortalEnabled ? MY_PORTAL_ROUTES : [],
   bpdEnabled ? BPD_ROUTE_NAMES : [],
-  cgnEnabled ? CGN_ROUTE_NAMES : [],
-  svEnabled ? SV_ROUTE_NAMES : []
+  CGN_ROUTE_NAMES,
+  svEnabled ? SV_ROUTE_NAMES : [],
+  UA_DONATION_ROUTES
 );
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
@@ -118,7 +128,7 @@ export function handleInternalLink(
         params: { ...internalNavigation.params, serviceId }
       })
     );
-    dispatch(
+    NavigationService.dispatchNavigationAction(
       NavigationActions.navigate({
         routeName: internalNavigation.routeName
       })

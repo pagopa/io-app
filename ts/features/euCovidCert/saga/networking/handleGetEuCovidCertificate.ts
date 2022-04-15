@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable } from "fp-ts/lib/Option";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { Certificate } from "../../../../../definitions/eu_covid_cert/Certificate";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -19,6 +19,8 @@ import {
 } from "../../types/EUCovidCertificateResponse";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { HeaderInfo } from "../../../../../definitions/eu_covid_cert/HeaderInfo";
+import { contentRepoUrl } from "../../../../config";
 
 const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   400: "wrongFormat",
@@ -26,6 +28,14 @@ const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   410: "notOperational",
   504: "temporarilyNotAvailable"
 };
+
+export const convertHeaderInfo = (
+  headerInfo: HeaderInfo
+): EUCovidCertificate["headerData"] => ({
+  title: headerInfo.title,
+  subTitle: headerInfo.subtitle,
+  logoUrl: `${contentRepoUrl}/logos/eucovidcert/${headerInfo.logo_id}.png`
+});
 
 // convert a success response to the logical app representation of it
 const convertSuccess = (
@@ -43,20 +53,23 @@ const convertSuccess = (
             content: certificate.qr_code.content
           },
           markdownInfo: certificate.info,
-          markdownDetails: certificate.detail
+          markdownDetails: certificate.detail,
+          headerData: convertHeaderInfo(certificate.header_info)
         };
       case "revoked":
         return {
           kind: "revoked",
           id: certificate.uvci as EUCovidCertificate["id"],
           revokedOn: certificate.revoked_on,
-          markdownInfo: certificate.info
+          markdownInfo: certificate.info,
+          headerData: convertHeaderInfo(certificate.header_info)
         };
       case "expired":
         return {
           kind: "expired",
           id: certificate.uvci as EUCovidCertificate["id"],
-          markdownInfo: certificate.info
+          markdownInfo: certificate.info,
+          headerData: convertHeaderInfo(certificate.header_info)
         };
       default:
         return undefined;
@@ -85,13 +98,13 @@ export function* handleGetEuCovidCertificate(
 ) {
   const authCode = action.payload;
 
-  const profile: ReturnType<typeof profileSelector> = yield select(
+  const profile: ReturnType<typeof profileSelector> = yield* select(
     profileSelector
   );
 
   try {
     const getCertificateResult: SagaCallReturnType<typeof getCertificate> =
-      yield call(getCertificate, {
+      yield* call(getCertificate, {
         getCertificateParams: {
           auth_code: authCode,
           preferred_languages: pot.getOrElse(
@@ -103,7 +116,7 @@ export function* handleGetEuCovidCertificate(
     if (getCertificateResult.isRight()) {
       if (getCertificateResult.value.status === 200) {
         // handled success
-        yield put(
+        yield* put(
           euCovidCertificateGet.success(
             convertSuccess(getCertificateResult.value.value, authCode)
           )
@@ -111,7 +124,7 @@ export function* handleGetEuCovidCertificate(
         return;
       }
       if (mapKinds[getCertificateResult.value.status] !== undefined) {
-        yield put(
+        yield* put(
           euCovidCertificateGet.success({
             kind: mapKinds[getCertificateResult.value.status],
             authCode
@@ -120,7 +133,7 @@ export function* handleGetEuCovidCertificate(
         return;
       }
       // not handled error codes
-      yield put(
+      yield* put(
         euCovidCertificateGet.failure({
           ...getGenericError(
             new Error(
@@ -132,7 +145,7 @@ export function* handleGetEuCovidCertificate(
       );
     } else {
       // cannot decode response
-      yield put(
+      yield* put(
         euCovidCertificateGet.failure({
           ...getGenericError(
             new Error(readablePrivacyReport(getCertificateResult.value))
@@ -142,7 +155,7 @@ export function* handleGetEuCovidCertificate(
       );
     }
   } catch (e) {
-    yield put(
+    yield* put(
       euCovidCertificateGet.failure({ ...getNetworkError(e), authCode })
     );
   }

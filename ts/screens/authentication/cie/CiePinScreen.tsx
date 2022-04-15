@@ -14,7 +14,8 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { NavigationContext, NavigationInjectedProps } from "react-navigation";
+import { NavigationContext } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -45,7 +46,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
 
 const CIE_PIN_LENGTH = 8;
 const FORGOT_PIN_PAGE_URL =
-  "https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/";
+  "https://www.cartaidentita.interno.gov.it/cittadini/smarrimento-pin-e-puk/";
 
 const getContextualHelp = () => ({
   title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
@@ -104,9 +105,14 @@ const CiePinScreen: React.FC<Props> = props => {
     320
   );
 
+  const handleAuthenticationOverlayOnClose = useCallback(() => {
+    setPin("");
+    setAuthUrlGenerated(undefined);
+    hideModal();
+  }, [setPin, setAuthUrlGenerated, hideModal]);
+
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      setPin("");
       navigate({
         routeName: ROUTES.CIE_CARD_READER_SCREEN,
         params: {
@@ -114,14 +120,15 @@ const CiePinScreen: React.FC<Props> = props => {
           authorizationUri: authUrlGenerated
         }
       });
-      hideModal();
+      handleAuthenticationOverlayOnClose();
     }
-  }, [authUrlGenerated, hideModal, navigate, pin]);
-
-  const handleAuthenticationOverlayOnClose = () => {
-    setPin("");
-    hideModal();
-  };
+  }, [
+    handleAuthenticationOverlayOnClose,
+    authUrlGenerated,
+    hideModal,
+    navigate,
+    pin
+  ]);
 
   const showModal = () => {
     props.requestNfcEnabledCheck();

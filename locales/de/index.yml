@@ -34,6 +34,7 @@ global:
     today: "heute"
     tomorrow: "morgen"
   dateFormats:
+    timeFormat: "%H.%M"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD"
@@ -115,8 +116,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Einige Funktionen werden nicht funktionieren.
-exit:
-  pressAgain: zum Beenden erneut drücken
 errors:
   loginError: Es gab einen Fehler bei der Anmeldung, wiederholen Sie den Vorgang.
   profileUpdateError: Beim Aktualisieren Ihres Profils ist ein Fehler aufgetreten.
@@ -292,7 +291,7 @@ cie:
   title: Berühren Sie die Karte
   layCardMessageHeader: Legen Sie für einige Sekunden Ihre elektronische ID-Karte auf der Rückseite Ihres Telefons.
   layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie Ihre Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie einen Ton hören.
-  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
+  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
 spid:
   login: LOGIN
   loginButton: LOGIN MIT
@@ -656,7 +655,6 @@ wallet:
     title: Möchten Sie diese Karte speichern?
     infoTitle: Die Karte als bevorzugte Zahlungsmethode festlegen
     info: Diese Zahlungsmethode wird automatisch für die nächste Zahlung vorgeschlagen
-    save: Speichern
     notice: Zur Verifizierung der Karte wird eine Transaktion von wenigen Cent auf Ihrer Karte abgebucht.
     loadingAlert: Ihre Kartendaten werden überprüft...
   saveCardInPayment:
@@ -669,17 +667,8 @@ wallet:
     onUpdateWalletPspFailure: Vorgang ist fehlgeschlagen, bitte erneut versuchen
     contextualHelpTitle: Wählen Sie einen Provider
   ConfirmPayment:
-    header: Transaktion bestätigen
     cancelPayment: Transaktion abbrechen
-    goToPay: Bezahlen
-    askConfirm: Möchten Sie mit der Aktion fortfahren?
-    partialAmount: Zu zahlender Betrag
     fee: Gebühr
-    why: Warum?
-    info: 'Nach diesem Schritt wird es nicht mehr möglich sein, zurückzukehren.'
-    info2: Sie verwenden Ihre bevorzugte Zahlungsmethode.
-    changeMethod: Ändern Sie die Zahlungsmethode
-    change: Methode wechseln
     identificationMessage: Bestätigen Sie die Transaktion mit Ihrem Freischaltcode
     transactionSuccess: die Zahlung wurde abgeschlossen!
     transactionFailure: Es gab einen Fehler mit der Zahlung, bitte versuchen Sie es erneut!
@@ -698,7 +687,6 @@ wallet:
     noPspsAvailable: Diese Zahlungsmethode kann nicht verwendet werden
     contextualHelpTitle: Auswahl der Zahlungsmethode
   firstTransactionSummary:
-    header: Zusammenfassung der Transaktionsmitteilungen
     title: Transaktionshinweis
     amount: Transaktionsbetrag
     total: Insgesamt bezahlt
@@ -839,7 +827,7 @@ messages:
     message:
       read: "Mitteilung"
       unread: "Ungelesene Mitteilung"
-      description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "erhalten am"
       received_at: "erhalten um"
   contextualHelpTitle: Über diesen Abschnitt
@@ -860,6 +848,7 @@ messages:
     senderInfo:  Absenderdienst unbekannt
     serviceInfo: Service-Info unbekannt
     departmentInfo: Abteilungsinfo unbekannt
+    noTitle: Kein Titel
   loadingErrorTitle: Das Laden der Mitteilungen ist fehlgeschlagen
   cta:
     archive: Archiviert
@@ -1086,12 +1075,10 @@ systemsOff:
   closeApp: Schließen Sie die Anwendung und versuchen Sie es erneut
 contextualHelp:
   title: Die IO-App hilft Ihnen
-instabug:
-  contextualHelp:
-    title1: Benötigen Sie Hilfe?
 features:
   euCovidCertificate:
     save:
+      album: "IO"
       noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfen Sie Ihre Geräteeinstellungen."
       ok: "Das Bild wurde auf Ihrem Smartphone gespeichert"
       bottomSheet:

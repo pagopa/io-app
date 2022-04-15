@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { Locales, TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
+import { messagesUnreadAndUnarchivedSelector } from "../store/reducers/entities/messages/messagesStatus";
+import { getSafeUnreadTransactionsNumSelector } from "../store/reducers/entities/readTransactions";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { makeFontStyleObject } from "../theme/fonts";
@@ -25,7 +27,6 @@ type RouteLabelMap = { [key in Routes]?: TranslationKeys };
 const ROUTE_LABEL: RouteLabelMap = {
   MESSAGES_NAVIGATOR: "global.navigator.messages",
   WALLET_HOME: "global.navigator.wallet",
-  DOCUMENTS_HOME: "global.navigator.documents",
   SERVICES_NAVIGATOR: "global.navigator.services",
   PROFILE_NAVIGATOR: "global.navigator.profile"
 };
@@ -51,19 +52,54 @@ const styles = StyleSheet.create({
   }
 });
 
+const computeAccessibilityLabel = (
+  section: string,
+  order: number,
+  unread?: number
+) =>
+  typeof unread === "undefined"
+    ? I18n.t("navigation.accessibility", {
+        section,
+        order
+      })
+    : I18n.t("navigation.accessibilityWithBadge", {
+        section,
+        order,
+        unread
+      });
+
 /**
  * This Component is used to Render the Labels of the bottom navbar of the app
  * translated in the preferred locale if it was selected
  * @param props
  */
 const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
-  const { options, routeName, preferredLanguage } = props;
+  const {
+    options,
+    routeName,
+    preferredLanguage,
+    messagesUnread,
+    transactionsNumUnread
+  } = props;
   const locale: Locales = preferredLanguage.fold(I18n.locale, l => l);
   const label = getLabel(routeName, locale);
   const maybeOrder = fromNullable(routeOrder.get(routeName as Routes));
   const isSelected = options.focused
     ? `${I18n.t("navigation.selected")}, `
     : "";
+
+  const unreadMessagesMap: Record<string, number> = {
+    [ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length,
+    [ROUTES.WALLET_HOME]: transactionsNumUnread
+  };
+
+  const computedUnreadMessages = unreadMessagesMap[routeName] || undefined;
+
+  const panelAccessibilityLabel = computeAccessibilityLabel(
+    label,
+    maybeOrder.getOrElse(0),
+    computedUnreadMessages
+  );
 
   return (
     <Text
@@ -73,10 +109,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
           color: options.tintColor === null ? undefined : options.tintColor
         }
       ]}
-      accessibilityLabel={`${isSelected} ${I18n.t("navigation.accessibility", {
-        section: label,
-        order: maybeOrder.getOrElse(0)
-      })}`}
+      accessibilityLabel={`${isSelected} ${panelAccessibilityLabel}`}
     >
       {label}
     </Text>
@@ -84,7 +117,9 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  preferredLanguage: preferredLanguageSelector(state)
+  preferredLanguage: preferredLanguageSelector(state),
+  messagesUnread: messagesUnreadAndUnarchivedSelector(state),
+  transactionsNumUnread: getSafeUnreadTransactionsNumSelector(state)
 });
 
 export default connect(mapStateToProps)(NavBarLabel);

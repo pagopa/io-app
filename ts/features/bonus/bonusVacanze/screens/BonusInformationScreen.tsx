@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
@@ -10,11 +10,12 @@ import { GlobalState } from "../../../../store/reducers/types";
 import BonusInformationComponent from "../../common/components/BonusInformationComponent";
 import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
 
-type NavigationParams = Readonly<{
+export type BonusInformationScreenNavigationParams = Readonly<{
   bonusItem: BonusAvailable;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps =
+  NavigationStackScreenProps<BonusInformationScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -47,8 +48,8 @@ const mapStateToProps = (state: GlobalState) => ({
   hasOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 0
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => dispatch(navigateBack())
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateBack: () => navigateBack()
 });
 
 export default connect(

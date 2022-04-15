@@ -1,8 +1,9 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import { Effect, put, takeEvery } from "redux-saga/effects";
+import { put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { profileLoadSuccess } from "../store/actions/profile";
 import { profileEmailValidationChanged } from "../store/actions/profileEmailValidationChange";
+import { ReduxSagaEffect } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 
 // eslint-disable-next-line
@@ -15,9 +16,9 @@ let maybePreviousEmailValidated: Option<boolean> = none;
  */
 export function* watchProfileEmailValidationChangedSaga(
   initialEmailValidated: Option<boolean>
-): IterableIterator<Effect> {
+): IterableIterator<ReduxSagaEffect> {
   maybePreviousEmailValidated = initialEmailValidated;
-  yield takeEvery(getType(profileLoadSuccess), checkProfileEmailChanged);
+  yield* takeEvery(getType(profileLoadSuccess), checkProfileEmailChanged);
 }
 
 export const isProfileEmailValidatedChanged = (
@@ -37,7 +38,7 @@ function* checkProfileEmailChanged(
   );
 
   if (emailStateChanged) {
-    yield put(
+    yield* put(
       profileEmailValidationChanged(profileUpdate.is_email_validated || false)
     );
   }

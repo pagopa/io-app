@@ -1,4 +1,4 @@
-import { some } from "fp-ts/lib/Option";
+import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType, getType } from "typesafe-actions";
@@ -13,8 +13,7 @@ import {
   fetchWalletsRequest,
   fetchWalletsSuccess,
   refreshPMTokenWhileAddCreditCard,
-  runStartOrResumeAddCreditCardSaga,
-  setFavouriteWalletRequest
+  runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import {
   lastPaymentOutcomeCodeSelector,
@@ -31,6 +30,7 @@ import {
 } from "../../utils/input";
 import { SessionManager } from "../../utils/SessionManager";
 import { testableWalletsSaga } from "../wallet";
+import { runDeleteActivePaymentSaga } from "../../store/actions/wallet/payment";
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -106,10 +106,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
         })
       )
       .next()
-      .take([
-        getType(addWalletCreditCardSuccess),
-        getType(addWalletCreditCardFailure)
-      ])
+      .take([addWalletCreditCardSuccess, addWalletCreditCardFailure])
       .next(getType(addWalletCreditCardSuccess))
       // Step 2
       .select(getAllWallets)
@@ -120,7 +117,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       .next(some(aNewPMToken))
       .put(refreshPMTokenWhileAddCreditCard.success(aNewPMToken))
       .next()
-      .take(getType(addCreditCardOutcomeCode))
+      .take(addCreditCardOutcomeCode)
       .next()
       .select(lastPaymentOutcomeCodeSelector)
       .next(anOutcomeCode)
@@ -128,14 +125,54 @@ describe("startOrResumeAddCreditCardSaga", () => {
       .next()
       .put(fetchWalletsRequest())
       .next()
-      .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
+      .take([fetchWalletsSuccess, fetchWalletsFailure])
       .next({
         type: getType(fetchWalletsSuccess),
         payload: [{ idWallet: anIdWallet }]
       })
       .delay(testableWalletsSaga!.successScreenDelay)
-      .next()
-      .put(setFavouriteWalletRequest(anIdWallet))
       .next();
+  });
+});
+
+describe("deleteUnsuccessfulActivePaymentSaga", () => {
+  describe("when there is no outcomeCode", () => {
+    it("it should do nothing", () => {
+      testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
+        .next()
+        .select(lastPaymentOutcomeCodeSelector)
+        .next({ outcomeCode: none })
+        .isDone();
+    });
+  });
+
+  describe("when there is an outcomeCode and it is not a success", () => {
+    it("it should put runDeleteActivePaymentSaga", () => {
+      testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
+        .next()
+        .select(lastPaymentOutcomeCodeSelector)
+        .next({ outcomeCode: some({ status: "errorBlocking" }) })
+        .put(runDeleteActivePaymentSaga())
+        .next()
+        .isDone();
+
+      testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
+        .next()
+        .select(lastPaymentOutcomeCodeSelector)
+        .next({ outcomeCode: some({ status: "errorTryAgain" }) })
+        .put(runDeleteActivePaymentSaga())
+        .next()
+        .isDone();
+    });
+  });
+
+  describe("when there is an outcomeCode and it is a success", () => {
+    it("it should do nothing", () => {
+      testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
+        .next()
+        .select(lastPaymentOutcomeCodeSelector)
+        .next({ outcomeCode: some({ status: "success" }) })
+        .isDone();
+    });
   });
 });

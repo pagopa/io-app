@@ -7,3 +7,11 @@ import DeviceInfo from "react-native-device-info";
 export const getDeviceId = (): string => DeviceInfo.getUniqueId();
 
 export const getFontScale = (): Promise<number> => DeviceInfo.getFontScale();
+
+export const getModel = (): string => DeviceInfo.getModel();
+
+export const getSystemVersion = (): string => DeviceInfo.getSystemVersion();
+
+// true if at least one screen lock method is set
+export const isScreenLockSet = (): Promise<boolean> =>
+  DeviceInfo.isPinOrFingerprintSet();

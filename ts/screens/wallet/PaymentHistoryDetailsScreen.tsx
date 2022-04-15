@@ -1,17 +1,13 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  instabugLog,
-  openInstabugQuestionReport,
-  TypeLogs
-} from "../../boot/configureInstabug";
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
@@ -23,12 +19,18 @@ import {
   PaymentSummaryComponent
 } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
-import I18n from "../../i18n";
 import {
-  isPaymentDoneSuccessfully,
-  PaymentHistory
-} from "../../store/reducers/payments/history";
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../features/zendesk/store/actions";
+import I18n from "../../i18n";
+import { Dispatch } from "../../store/actions/types";
+import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { PaymentHistory } from "../../store/reducers/payments/history";
+import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
 import { GlobalState } from "../../store/reducers/types";
+import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
@@ -38,19 +40,29 @@ import {
   getErrorDescriptionV2,
   getPaymentHistoryDetails,
   getPaymentOutcomeCodeDescription,
-  getTransactionFee,
-  paymentInstabugTag
+  getTransactionFee
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
-import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
+import {
+  addTicketCustomField,
+  appendLog,
+  assistanceToolRemoteConfig,
+  resetCustomFields,
+  zendeskBlockedPaymentRptIdId,
+  zendeskCategoryId,
+  zendeskPaymentCategory
+} from "../../utils/supportAssistance";
+import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
 
-type NavigationParams = Readonly<{
+export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
-type Props = NavigationInjectedProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps>;
+type Props =
+  NavigationStackScreenProps<PaymentHistoryDetailsScreenNavigationParams> &
+    ReturnType<typeof mapStateToProps> &
+    ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   flex: {
@@ -91,14 +103,34 @@ const renderItem = (label: string, value?: string) => {
  * Payment Details
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
-  private instabugLogAndOpenReport = () => {
-    Instabug.appendTags([paymentInstabugTag]);
-    instabugLog(
-      getPaymentHistoryDetails(this.props.navigation.getParam("payment")),
-      TypeLogs.INFO,
-      paymentInstabugTag
+  private zendeskAssistanceLogAndStart = () => {
+    resetCustomFields();
+    // Set pagamenti_pagopa as category
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+
+    // Add rptId custom field
+    addTicketCustomField(
+      zendeskBlockedPaymentRptIdId,
+      RptIdFromString.encode(this.props.navigation.getParam("payment").data)
     );
-    openInstabugQuestionReport();
+    // Append the payment history details in the log
+    appendLog(
+      getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
+    );
+
+    this.props.zendeskSupportWorkunitStart();
+    this.props.zendeskSelectedCategory(zendeskPaymentCategory);
+  };
+  private choosenTool = assistanceToolRemoteConfig(
+    this.props.assistanceToolConfig
+  );
+
+  private handleAskAssistance = () => {
+    switch (this.choosenTool) {
+      case ToolEnum.zendesk:
+        this.zendeskAssistanceLogAndStart();
+        break;
+    }
   };
 
   private getData = () => {
@@ -133,7 +165,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       PaymentRequestsGetResponse,
       "causaleVersamento",
       string
-    >(payment.verified_data, "causaleVersamento", m => m).fold(
+    >(payment.verifiedData, "causaleVersamento", m => m).fold(
       notAvailable,
       cv => cv
     );
@@ -167,7 +199,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       PaymentRequestsGetResponse,
       "enteBeneficiario",
       EnteBeneficiario | undefined
-    >(payment.verified_data, "enteBeneficiario", m => m).getOrElse(undefined);
+    >(payment.verifiedData, "enteBeneficiario", m => m).getOrElse(undefined);
 
     const outcomeCode = payment.outcomeCode ?? "-";
     return {
@@ -205,6 +237,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     </React.Fragment>
   );
 
+  /**
+   * This fragment is rendered only if {@link canShowHelp} is true
+   */
   private renderHelper = () => (
     <View>
       <Text alignCenter={true} style={styles.padded}>
@@ -212,7 +247,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       </Text>
       <View spacer={true} />
       <ButtonDefaultOpacity
-        onPress={this.instabugLogAndOpenReport}
+        onPress={this.handleAskAssistance}
         bordered={true}
         block={true}
         style={styles.button}
@@ -228,8 +263,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
-        showInstabugChat={false}
+        goBack={() => this.props.navigation.goBack()}
+        showChat={false}
         dark={true}
         headerTitle={I18n.t("payment.details.info.title")}
       >
@@ -263,21 +298,17 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               )}
             </React.Fragment>
           )}
-
           <View spacer={true} xsmall={true} />
           {this.standardRow(
             I18n.t("payment.details.info.outcomeCode"),
             data.outcomeCode
           )}
-
           <View spacer={true} xsmall={true} />
           {this.standardRow(
             I18n.t("payment.details.info.dateAndTime"),
             data.dateTime
           )}
-
           {this.renderSeparator()}
-
           {data.paymentOutcome.isSome() &&
             data.paymentOutcome.value &&
             data.amount.isSome() &&
@@ -331,8 +362,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 <View spacer={true} extralarge={true} />
               </React.Fragment>
             )}
-
-          {this.renderHelper()}
+          {/* This check is redundant, since if the help can't be shown the user can't get there */}
+          {this.props.canShowHelp && this.renderHelper()}
         </SlidedContentComponent>
       </BaseScreenComponent>
     );
@@ -340,7 +371,21 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  outcomeCodes: outcomeCodesSelector(state)
+  outcomeCodes: outcomeCodesSelector(state),
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  canShowHelp: canShowHelpSelector(state)
+});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  // Start the assistance without FAQ ("n/a" is a placeholder)
+  zendeskSupportWorkunitStart: () =>
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    ),
+  zendeskSelectedCategory: (category: ZendeskCategory) =>
+    dispatch(zendeskSelectedCategory(category))
 });
 
-export default connect(mapStateToProps)(PaymentHistoryDetailsScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentHistoryDetailsScreen);

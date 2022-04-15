@@ -1,6 +1,6 @@
 /**
  * A screen to display, by a webview, the consent to send user sensitive data
- * to backend and proceed with the onbording process
+ * to backend and proceed with the onboarding process
  */
 import { View } from "native-base";
 import * as React from "react";
@@ -27,7 +27,7 @@ import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
 import { IdpCIE } from "../LandingScreen";
 
-type NavigationParams = {
+export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
 };
 
@@ -37,12 +37,13 @@ type OwnProps = {
 
 type State = {
   hasError: boolean;
+  errorCode?: string;
   isLoginSuccess?: boolean;
 };
 
 type Props = NavigationScreenProp<NavigationState> &
   OwnProps &
-  NavigationStackScreenProps<NavigationParams> &
+  NavigationStackScreenProps<CieConsentDataUsageScreenNavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (
@@ -60,7 +61,12 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     };
   }
 
-  private handleBackPress = () => {
+  private showAbortAlert = (): boolean => {
+    // if the screen is in error state, skip the confirmation alert to go back at the landing screen
+    if (this.state.hasError) {
+      this.props.resetNavigation();
+      return true;
+    }
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -80,11 +86,11 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.addEventListener("hardwareBackPress", this.showAbortAlert);
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.removeEventListener("hardwareBackPress", this.showAbortAlert);
   }
 
   get cieAuthorizationUri(): string {
@@ -104,7 +110,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    this.setState({ isLoginSuccess: true }, () => {
+    this.setState({ isLoginSuccess: true, hasError: false }, () => {
       this.props.loginSuccess(token);
     });
   };
@@ -123,38 +129,30 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     this.props.loginFailure(
       new Error(`login CIE failure with code ${errorCode || "n/a"}`)
     );
-    this.props.resetNavigation();
+    this.setState({ hasError: true, errorCode });
   };
 
-  private handleGoBack = () =>
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: this.handleLoginFailure
-        }
-      ]
-    );
-
   private getContent = () => {
+    if (this.state.isLoginSuccess) {
+      return loaderComponent;
+    }
     if (this.state.hasError) {
+      const errorTranslationKey = this.state.errorCode
+        ? `authentication.errors.spid.error_${this.state.errorCode}`
+        : "authentication.errors.network.title";
       return (
         <GenericErrorComponent
+          retryButtonTitle={I18n.t(
+            "authentication.cie.dataUsageConsent.retryCTA"
+          )}
           onRetry={this.props.resetNavigation}
           onCancel={undefined}
           image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
-          text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
+          text={I18n.t(errorTranslationKey, {
+            defaultValue: I18n.t("authentication.errors.spid.unknown")
+          })}
         />
       );
-    } else if (this.state.isLoginSuccess) {
-      return loaderComponent;
     } else {
       return (
         <WebView
@@ -173,9 +171,10 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   public render(): React.ReactNode {
+    const goBack = this.state.hasError ? false : this.showAbortAlert;
     return (
       <TopScreenComponent
-        goBack={this.handleGoBack}
+        goBack={goBack}
         headerTitle={I18n.t("authentication.cie.genericTitle")}
       >
         {this.getContent()}
@@ -185,7 +184,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  resetNavigation: () => dispatch(resetToAuthenticationRoute),
+  resetNavigation: () => resetToAuthenticationRoute(),
   loginSuccess: (token: SessionToken) =>
     dispatch(loginSuccess({ token, idp: IdpCIE.id })),
   loginFailure: (error: Error) =>

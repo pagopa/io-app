@@ -1,10 +1,11 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { setMessageReadState } from "../../../store/actions/messages";
+import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
+import { usePaginatedMessages } from "../../../config";
 import { GlobalState } from "../../../store/reducers/types";
 import { euCovidCertificateGet } from "../store/actions";
 import {
@@ -12,8 +13,8 @@ import {
   euCovidCertificateShouldBeLoadedSelector
 } from "../store/reducers/byAuthCode";
 import {
-  EUCovidCertificateAuthCode,
-  EUCovidCertificate
+  EUCovidCertificate,
+  EUCovidCertificateAuthCode
 } from "../types/EUCovidCertificate";
 import { EUCovidCertificateResponse } from "../types/EUCovidCertificateResponse";
 import EuCovidCertExpiredScreen from "./EuCovidCertExpiredScreen";
@@ -26,14 +27,14 @@ import EuCovidCertTemporarilyNotAvailableKoScreen from "./ko/EuCovidCertTemporar
 import EuCovidCertWrongFormatKoScreen from "./ko/EuCovidCertWrongFormatKoScreen";
 import EuCovidCertValidScreen from "./valid/EuCovidCertValidScreen";
 
-type NavigationParams = Readonly<{
+export type EuCovidCertificateRouterScreenNavigationParams = Readonly<{
   authCode: EUCovidCertificateAuthCode;
   messageId: string;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationStackScreenProps<EuCovidCertificateRouterScreenNavigationParams>;
 
 /**
  * Return the right screen based on the response value
@@ -61,15 +62,33 @@ const routeSuccessEuCovidResponse = (
 ): React.ReactElement => {
   switch (certificate.kind) {
     case "valid":
-      return <EuCovidCertValidScreen validCertificate={certificate} />;
+      return (
+        <EuCovidCertValidScreen
+          validCertificate={certificate}
+          headerData={certificate.headerData}
+        />
+      );
     case "revoked":
-      return <EuCovidCertRevokedScreen revokeInfo={certificate.markdownInfo} />;
+      return (
+        <EuCovidCertRevokedScreen
+          revokeInfo={certificate.markdownInfo}
+          headerData={certificate.headerData}
+        />
+      );
     case "expired":
       return (
-        <EuCovidCertExpiredScreen expiredInfo={certificate.markdownInfo} />
+        <EuCovidCertExpiredScreen
+          expiredInfo={certificate.markdownInfo}
+          headerData={certificate.headerData}
+        />
       );
   }
 };
+
+export const EUCovidContext =
+  React.createContext<EuCovidCertificateRouterScreenNavigationParams | null>(
+    null
+  );
 
 /**
  * Router screen that triggers the first loading of the certificate (if not present in the store)
@@ -87,8 +106,10 @@ const EuCovidCertificateRouterScreen = (
 
   useEffect(() => {
     if (firstLoading.current) {
-      // At the first rendering, set the message to read
-      setMessageRead(messageId);
+      if (!usePaginatedMessages) {
+        // TODO: remove once we publish pagination
+        setMessageRead(messageId);
+      }
       // check if a load is required
       if (shouldBeLoaded(authCode)) {
         loadCertificate(authCode);
@@ -99,16 +120,34 @@ const EuCovidCertificateRouterScreen = (
   }, [setMessageRead, shouldBeLoaded, loadCertificate, messageId, authCode]);
 
   // handle with the fold the remote state and with routeEuCovidResponse the different response values
-  return pot.fold(
-    props.euCovidCertificateResponse(authCode),
-    () => <EuCovidCertLoadingScreen />,
-    () => <EuCovidCertLoadingScreen />,
-    _ => <EuCovidCertLoadingScreen />,
-    _ => <EuCovidCertGenericErrorKoScreen />,
-    response => routeEuCovidResponse(response),
-    _ => <EuCovidCertLoadingScreen />,
-    (_, __) => <EuCovidCertLoadingScreen />,
-    _ => <EuCovidCertGenericErrorKoScreen />
+  return (
+    <EUCovidContext.Provider value={{ authCode, messageId }}>
+      {pot.fold(
+        props.euCovidCertificateResponse(authCode),
+        () => (
+          <EuCovidCertLoadingScreen />
+        ),
+        () => (
+          <EuCovidCertLoadingScreen />
+        ),
+        _ => (
+          <EuCovidCertLoadingScreen />
+        ),
+        _ => (
+          <EuCovidCertGenericErrorKoScreen />
+        ),
+        response => routeEuCovidResponse(response),
+        _ => (
+          <EuCovidCertLoadingScreen />
+        ),
+        (_, __) => (
+          <EuCovidCertLoadingScreen />
+        ),
+        _ => (
+          <EuCovidCertGenericErrorKoScreen />
+        )
+      )}
+    </EUCovidContext.Provider>
   );
 };
 
@@ -116,7 +155,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCertificate: (authCode: EUCovidCertificateAuthCode) =>
     dispatch(euCovidCertificateGet.request(authCode)),
   setMessageRead: (messageId: string) =>
-    dispatch(setMessageReadState(messageId, true))
+    dispatch(DEPRECATED_setMessageReadState(messageId, true, "unknown"))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

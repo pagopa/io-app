@@ -1,16 +1,16 @@
 import { createSelector } from "reselect";
 import ROUTES from "../../navigation/routes";
 import { isDebugModeEnabledSelector } from "./debug";
-import { plainNavigationCurrentRouteSelector } from "./navigation";
+import { currentRouteSelector } from "./navigation";
 
-export const screenBlackList = new Set([ROUTES.WALLET_ADD_CARD]);
+export const screenBlackList = new Set([ROUTES.WALLET_ADD_CARD as string]);
 
 /**
- * Return {true} if the current screen can be snapshotted (android only).
+ * Return {true} if a snapshot can be taken in the current screen (android only).
  * If the app is in debug mode, the snapshot is always possible.
  */
 export const isAllowedSnapshotCurrentScreen = createSelector(
-  [plainNavigationCurrentRouteSelector, isDebugModeEnabledSelector],
+  [currentRouteSelector, isDebugModeEnabledSelector],
   (currentRoute, debugEnabled) =>
     debugEnabled ? true : !screenBlackList.has(currentRoute)
 );

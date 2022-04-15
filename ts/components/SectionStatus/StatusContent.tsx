@@ -1,8 +1,9 @@
 import { AccessibilityRole, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { ComponentProps } from "react";
 import { WithTestID } from "../../types/WithTestID";
 import IconFont from "../ui/IconFont";
 import { Label } from "../core/typography/Label";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 
 const iconSize = 24;
 
@@ -22,16 +23,19 @@ const styles = StyleSheet.create({
 });
 
 type Props = WithTestID<{
+  accessible?: boolean;
   accessibilityHint?: string;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
-  backgroundColor: string;
+  backgroundColor: IOColorType;
   iconColor: string;
   iconName: string;
   viewRef: React.RefObject<View>;
+  labelColor: ComponentProps<typeof Label>["color"];
 }>;
 
 const StatusContent: React.FC<Props> = ({
+  accessible,
   accessibilityHint,
   accessibilityLabel,
   accessibilityRole,
@@ -39,15 +43,16 @@ const StatusContent: React.FC<Props> = ({
   children,
   iconColor,
   iconName,
-  viewRef
+  viewRef,
+  labelColor
 }) => (
   <View
     accessibilityHint={accessibilityHint}
     accessibilityLabel={accessibilityLabel}
     accessibilityRole={accessibilityRole}
-    accessible={true}
+    accessible={accessible ?? true}
     ref={viewRef}
-    style={[styles.container, { backgroundColor }]}
+    style={[styles.container, { backgroundColor: IOColors[backgroundColor] }]}
     testID={"SectionStatusContent"}
   >
     <IconFont
@@ -56,7 +61,7 @@ const StatusContent: React.FC<Props> = ({
       size={iconSize}
       style={styles.alignCenter}
     />
-    <Label color={"white"} style={styles.text} weight={"Regular"}>
+    <Label color={labelColor} style={styles.text} weight={"Regular"}>
       {children}
     </Label>
   </View>

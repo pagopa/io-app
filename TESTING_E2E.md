@@ -7,9 +7,8 @@ As of today, only IOS is supported via Detox.
 ### Requirements
 
 * [Wix AppleSimulatorUtils](https://github.com/wix/AppleSimulatorUtils)
-* [ios-sim](https://www.npmjs.com/package/ios-sim)
 * a running instance of [io-dev-api-server
-](https://github.com/pagopa/io-dev-api-server) at `http://127.0.0.1:3000` (default config)
+](https://github.com/pagopa/io-dev-api-server) at `http://127.0.0.1:3000` (with the same config available at https://github.com/pagopa/io-app/blob/master/scripts/api-config.json)
 
 ### Running
 
@@ -21,7 +20,7 @@ Since Detox is installed as an NPM package, you can run every command using `yar
 Preparing a build to test:
 
 ```
-yarn detox build --configuration ios.sim.release
+RN_SRC_EXT=e2e.ts yarn detox build --configuration ios.sim.release
 ```
 
 Launching the test suite:
@@ -29,6 +28,12 @@ Launching the test suite:
 ```
 yarn detox test --configuration ios.sim.release
 ```
+
+To run in _debug_ mode use `ios.sim.debug` as configuration target and `--loglevel verbose` to see more
+logs from the tests.
+
+Important: the tests run in a **headless simulator**. You must open it by yourself **before running them** if 
+you want to see what happens on the UI on your machine.
 
 Please look at [CircleCI config](./circleci/config.yml) for more options and to see how the
  different parts interact.

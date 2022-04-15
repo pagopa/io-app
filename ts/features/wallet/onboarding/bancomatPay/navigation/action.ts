@@ -1,27 +1,47 @@
 import { NavigationActions } from "react-navigation";
+import NavigationService from "../../../../../navigation/NavigationService";
 import WALLET_ONBOARDING_BPAY_ROUTES from "./routes";
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToOnboardingBPaySearchStartScreen = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BPAY_ROUTES.START
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_BPAY_ROUTES.START
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToOnboardingBPayChooseBank = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BPAY_ROUTES.CHOOSE_BANK
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_BPAY_ROUTES.CHOOSE_BANK
+    })
+  );
 
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToOnboardingBPaySearchAvailableUserAccount = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT
+    })
+  );
 
-export const navigateToOnboardingBPayAdd = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BPAY_ROUTES.ADD_BPAY
-  });
-
+/**
+ * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
+ * and many helper methods specific to screens won't be available.
+ */
 export const navigateToActivateBpdOnNewBPay = () =>
-  NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW
-  });
+  NavigationService.dispatchNavigationAction(
+    NavigationActions.navigate({
+      routeName: WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW
+    })
+  );

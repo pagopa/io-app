@@ -15,9 +15,9 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../bpd/model/RemoteValue";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
 import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 
 export type CgnMerchantsState = {
   onlineMerchants: RemoteValue<OnlineMerchants["items"], NetworkError>;

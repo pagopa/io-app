@@ -1,22 +1,24 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
-
+import { testableGenServiceMetadataAccessibilityLabel } from "../";
 import { TranslationKeys } from "../../../../../locales/locales";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { capitalize } from "../../../../utils/strings";
 import * as utilsUrl from "../../../../utils/url";
 import I18n from "../../../../i18n";
-import ServiceMetadata from "../../ServiceMetadata";
-import { ServicePublicService_metadata } from "../../../../../definitions/backend/ServicePublic";
 import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import { StandardServiceCategoryEnum } from "../../../../../definitions/backend/StandardServiceCategory";
+import ServiceMetadataComponent from "../../ServiceMetadata";
 
 jest.mock("../../../../utils/platform");
 
 const spyOpenWebUrl = jest.spyOn(utilsUrl, "openWebUrl");
 
-const defaultServiceMetadata: ServicePublicService_metadata = {
-  scope: ServiceScopeEnum.NATIONAL
+const defaultServiceMetadata: ServiceMetadata = {
+  scope: ServiceScopeEnum.NATIONAL,
+  category: StandardServiceCategoryEnum.STANDARD
 };
 
 const defaultProps = {
@@ -26,6 +28,9 @@ const defaultProps = {
   serviceId: "ABC123" as ServiceId,
   servicesMetadata: defaultServiceMetadata
 };
+
+const genServiceMetadataAccessibilityLabel =
+  testableGenServiceMetadataAccessibilityLabel!;
 
 describe("ServiceMetadata component", () => {
   beforeEach(() => {
@@ -89,6 +94,18 @@ describe("ServiceMetadata component", () => {
       ).toBeDefined();
     });
 
+    it("should render the correct accessibility label", () => {
+      const a11yLabel = genServiceMetadataAccessibilityLabel(
+        I18n.t("serviceDetail.fiscalCode"),
+        defaultProps.organizationFiscalCode,
+        I18n.t("clipboard.copyText")
+      );
+
+      expect(
+        renderComponent(defaultProps).getByA11yLabel(a11yLabel)
+      ).toBeDefined();
+    });
+
     it(`should call "getItemOnPress" with (${defaultProps.organizationFiscalCode}, "COPY")`, () => {
       renderComponent(defaultProps);
       expect(defaultProps.getItemOnPress).toHaveBeenCalledWith(
@@ -98,38 +115,53 @@ describe("ServiceMetadata component", () => {
     });
   });
 
-  [["address", "via genova", "services.contactAddress", "MAP"]].forEach(
-    ([name, value, label, action]) => {
-      describe(`when ${name} is defined`, () => {
-        const currentOptions = {
-          ...defaultProps,
-          servicesMetadata: {
-            ...defaultServiceMetadata,
-            [name]: value
-          }
-        };
-        it(`should render its label "${label}"`, () => {
-          expect(
-            renderComponent(currentOptions).getByText(
-              capitalize(I18n.t(label as TranslationKeys))
-            )
-          ).toBeDefined();
-        });
-        it(`should render its value "${value}"`, () => {
-          expect(
-            renderComponent(currentOptions).getByText(value)
-          ).toBeDefined();
-        });
-        it(`should call "getItemOnPress" with ("${value}", ${action})`, () => {
-          renderComponent(currentOptions);
-          expect(currentOptions.getItemOnPress).toHaveBeenCalledWith(
-            value,
-            action
-          );
-        });
+  [
+    [
+      "address",
+      "via genova",
+      "services.contactAddress",
+      "MAP",
+      "openMaps.openAddressOnMap"
+    ]
+  ].forEach(([name, value, label, action, hint]) => {
+    describe(`when ${name} is defined`, () => {
+      const currentOptions = {
+        ...defaultProps,
+        servicesMetadata: {
+          ...defaultServiceMetadata,
+          [name]: value
+        }
+      };
+      it(`should render its label "${label}"`, () => {
+        expect(
+          renderComponent(currentOptions).getByText(
+            capitalize(I18n.t(label as TranslationKeys))
+          )
+        ).toBeDefined();
       });
-    }
-  );
+      it(`should render its value "${value}"`, () => {
+        expect(renderComponent(currentOptions).getByText(value)).toBeDefined();
+      });
+      it(`should call "getItemOnPress" with ("${value}", ${action})`, () => {
+        renderComponent(currentOptions);
+        expect(currentOptions.getItemOnPress).toHaveBeenCalledWith(
+          value,
+          action
+        );
+      });
+      it("should render the correct accessibility label", () => {
+        const a11yLabel = genServiceMetadataAccessibilityLabel(
+          I18n.t(label as TranslationKeys),
+          value,
+          I18n.t(hint as TranslationKeys)
+        );
+
+        expect(
+          renderComponent(currentOptions).getByA11yLabel(a11yLabel)
+        ).toBeDefined();
+      });
+    });
+  });
 
   [
     ["email", "jest@test.com", "global.media.email", "mailto:"],
@@ -208,7 +240,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_android: androidUrl
-        } as ServicePublicService_metadata
+        } as ServiceMetadata
       };
       it(`should render the Android link`, () => {
         const component = renderComponent(currentOptions);
@@ -234,7 +266,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_ios: "dummy"
-        } as ServicePublicService_metadata
+        } as ServiceMetadata
       };
       it(`should not render it`, () => {
         expect(renderComponent(currentOptions).queryByRole("link")).toBeNull();
@@ -255,7 +287,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_ios: iosUrl
-        } as ServicePublicService_metadata
+        } as ServiceMetadata
       };
       it(`should render the iOS link`, () => {
         const component = renderComponent(currentOptions);
@@ -281,7 +313,7 @@ describe("ServiceMetadata component", () => {
         servicesMetadata: {
           ...defaultServiceMetadata,
           app_android: "dummy"
-        } as ServicePublicService_metadata
+        } as ServiceMetadata
       };
       it(`should not render it`, () => {
         expect(renderComponent(currentOptions).queryByRole("link")).toBeNull();
@@ -290,6 +322,8 @@ describe("ServiceMetadata component", () => {
   });
 });
 
-function renderComponent(props: Parameters<typeof ServiceMetadata>[0]) {
-  return render(<ServiceMetadata {...props} />);
+function renderComponent(
+  props: Parameters<typeof ServiceMetadataComponent>[0]
+) {
+  return render(<ServiceMetadataComponent {...props} />);
 }

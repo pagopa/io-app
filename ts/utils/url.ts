@@ -4,6 +4,8 @@ import { Linking } from "react-native";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
+import { storeUrl, webStoreURL } from "./appVersion";
+
 /**
  * Generic utilities for url parsing
  */
@@ -51,7 +53,9 @@ export type ItemAction = "MAP" | "COPY" | "LINK";
  */
 export function handleItemOnPress(
   value: string,
-  valueType?: ItemAction
+  valueType?: ItemAction,
+  onSuccess: () => void = constNull,
+  onError: () => void = constNull
 ): () => void {
   switch (valueType) {
     case "MAP":
@@ -59,11 +63,11 @@ export function handleItemOnPress(
     case "COPY":
       return () => clipboardSetStringWithFeedback(value);
     default:
-      return () => Linking.openURL(value).then(constNull).catch(constNull);
+      return () => Linking.openURL(value).then(onSuccess).catch(onError);
   }
 }
 
-const isHttp = (url: string): boolean => {
+export const isHttp = (url: string): boolean => {
   const urlLower = url.trim().toLocaleLowerCase();
   return urlLower.match(/http(s)?:\/\//gm) !== null;
 };
@@ -91,4 +95,12 @@ export const openWebUrl = (url: string, onError: () => void = constNull) => {
   )({})
     .run()
     .then(ei => ei.fold(onError, constNull), onError);
+};
+
+export const openAppStoreUrl = async (onError: () => void = constNull) => {
+  try {
+    await Linking.openURL(storeUrl);
+  } catch (e) {
+    openWebUrl(webStoreURL, onError);
+  }
 };

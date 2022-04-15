@@ -5,13 +5,15 @@
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { all, call, Effect, put, select, takeLatest } from "redux-saga/effects";
+/* eslint-disable-next-line */
+import { put as basePut } from "redux-saga/effects";
+import { all, call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
-  loadMessage as loadMessageAction,
-  loadMessages as loadMessagesAction,
+  DEPRECATED_loadMessage as loadMessageAction,
+  DEPRECATED_loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
@@ -19,9 +21,9 @@ import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/m
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { messagesStatusSelector } from "../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { SagaCallReturnType } from "../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
-import { isDevEnv } from "../../utils/environment";
+import { isTestEnv } from "../../utils/environment";
 
 /**
  * A generator to load messages from the Backend.
@@ -31,14 +33,14 @@ import { isDevEnv } from "../../utils/environment";
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function* loadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
-): Generator<Effect, void, any> {
+): Generator<ReduxSagaEffect, void, any> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
     // Request the list of messages from the Backend
     // TODO: we will have to forward PaginationResponse data (page size, next)
     //       and persist it somewhere
-    const response: SagaCallReturnType<typeof getMessages> = yield call(
+    const response: SagaCallReturnType<typeof getMessages> = yield* call(
       getMessages,
       {}
     );
@@ -50,7 +52,7 @@ function* loadMessages(
     if (response.isRight()) {
       if (response.value.status === 401) {
         // on 401, expire the current session and restart the authentication flow
-        yield put(sessionExpired());
+        yield* put(sessionExpired());
         return;
       } else if (response.value.status !== 200) {
         // TODO: provide status code along with message in error https://www.pivotaltracker.com/story/show/170819193
@@ -58,17 +60,17 @@ function* loadMessages(
           response.value.status === 500 && response.value.value.title
             ? response.value.value.title
             : "";
-        yield put(loadMessagesAction.failure(Error(error)));
+        yield* put(loadMessagesAction.failure(Error(error)));
       } else {
         // 200 ok
         const responseItemsIds = response.value.value.items.map(_ => _.id);
 
-        yield put(loadMessagesAction.success(responseItemsIds));
+        yield* put(loadMessagesAction.success(responseItemsIds));
 
         // Load already cached messages ids from the store
         const potCachedMessagesAllIds: ReturnType<
           typeof messagesAllIdsSelector
-        > = yield select(messagesAllIdsSelector);
+        > = yield* select(messagesAllIdsSelector);
         const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
 
         // Calculate the ids of the message no more visible that we need
@@ -79,7 +81,7 @@ function* loadMessages(
 
         // Load already cached messages status ids from the store
         const messagesStatusMapping: ReturnType<typeof messagesStatusSelector> =
-          yield select(messagesStatusSelector);
+          yield* select(messagesStatusSelector);
         const messagesStatusIds = Object.keys(messagesStatusMapping).filter(
           _ => responseItemsIds.indexOf(_) < 0
         );
@@ -93,7 +95,7 @@ function* loadMessages(
         // Remove the details of the no more visible messages from the
         // redux store.
         if (messagesIdsToRemoveFromCache.length > 0) {
-          yield put(removeMessagesAction(messagesIdsToRemoveFromCache));
+          yield* put(removeMessagesAction(messagesIdsToRemoveFromCache));
         }
 
         // The Backend returns the items from the oldest to the latest
@@ -104,7 +106,7 @@ function* loadMessages(
 
         // Load already cached messages from the store
         const cachedMessagesById: ReturnType<typeof messagesStateByIdSelector> =
-          yield select(messagesStateByIdSelector);
+          yield* select(messagesStateByIdSelector);
 
         // TODO: with the enrichment, we don't need to discern which messages to reload
         const shouldLoadMessage = (message: { id: string }) => {
@@ -121,11 +123,11 @@ function* loadMessages(
 
         // Load already cached services from the store
         const cachedServicesById: ReturnType<typeof servicesByIdSelector> =
-          yield select(servicesByIdSelector);
+          yield* select(servicesByIdSelector);
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
-          // we need to load a service if (one of these is true)
+          // we need to load a service if either
           // - service is not cached
           // - service is not loading AND (service is none OR service is error)
           return (
@@ -143,20 +145,28 @@ function* loadMessages(
         // Fetch the services detail in parallel
         // We don't need to store the results because the LOAD_SERVICE_DETAIL_REQUEST is already dispatched by each `loadServiceDetail` action called.
         // We fetch services first because to show messages you need the related service info
-        yield all(
-          pendingServicesIds.map(id => put(loadServiceDetail.request(id)))
+        yield* all(
+          // Here we are not using the `put` from typed-redux saga
+          // because it's going to clash with the default one from
+          // redux-saga in the unit tests.
+          pendingServicesIds.map(id => basePut(loadServiceDetail.request(id)))
         );
 
         // Fetch the messages detail in parallel
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
         // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
         // TODO: with the enrichment, we don't need to load each message anymore
-        yield all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
+        yield* all(
+          // Here we are not using the `put` from typed-redux saga
+          // because it's going to clash with the default one from
+          // redux-saga in the unit tests.
+          pendingMessages.map(_ => basePut(loadMessageAction.request(_)))
+        );
       }
     }
   } catch (error) {
     // Dispatch failure action
-    yield put(loadMessagesAction.failure(error));
+    yield* put(loadMessagesAction.failure(error));
   }
 }
 
@@ -165,10 +175,10 @@ function* loadMessages(
  */
 export function* watchLoadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
-): Generator<Effect, void, any> {
-  yield takeLatest(getType(loadMessagesAction.request), () =>
+): Generator<ReduxSagaEffect, void, any> {
+  yield* takeLatest(getType(loadMessagesAction.request), () =>
     loadMessages(getMessages)
   );
 }
 
-export const testLoadMessages = isDevEnv ? loadMessages : undefined;
+export const testLoadMessages = isTestEnv ? loadMessages : undefined;

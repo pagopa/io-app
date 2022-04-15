@@ -1,28 +1,18 @@
-import { render } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
 import * as React from "react";
-import { Provider } from "react-redux";
+import { NavigationParams } from "react-navigation";
 import { Store } from "redux";
+import configureMockStore from "redux-mock-store";
+import { some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import I18n from "../../../../../../../i18n";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import BPD_ROUTES from "../../../../navigation/routes";
 import TransactionsUnavailable from "../TransactionsUnavailable";
+import { ToolEnum } from "../../../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../../../definitions/content/Config";
+import { BackendStatus } from "../../../../../../../../definitions/content/BackendStatus";
 
-jest.mock("react-navigation", () => ({
-  NavigationEvents: "mockNavigationEvents",
-  StackActions: {
-    push: jest
-      .fn()
-      .mockImplementation(x => ({ ...x, type: "Navigation/PUSH" })),
-    replace: jest
-      .fn()
-      .mockImplementation(x => ({ ...x, type: "Navigation/REPLACE" })),
-    reset: jest.fn()
-  },
-  NavigationActions: {
-    navigate: jest.fn().mockImplementation(x => x)
-  },
-  createStackNavigator: jest.fn(),
-  withNavigation: (component: any) => component
-}));
 describe("TransactionsUnavailable component", () => {
   const mockStore = configureMockStore();
   // eslint-disable-next-line functional/no-let
@@ -34,7 +24,16 @@ describe("TransactionsUnavailable component", () => {
       search: { isSearchEnabled: false },
       persistedPreferences: { isPagoPATestEnabled: false },
       network: { isConnected: true },
-      instabug: { unreadMessages: 0 }
+      authentication: {
+        kind: "LoggedOutWithoutIdp",
+        reason: "NOT_LOGGED_IN"
+      },
+      backendStatus: {
+        status: some({
+          config: { assistanceTool: { tool: ToolEnum.none } } as Config
+        } as BackendStatus)
+      },
+      profile: pot.some({ is_email_validated: true })
     });
   });
 
@@ -65,9 +64,10 @@ describe("TransactionsUnavailable component", () => {
     expect(body).not.toBeEmpty();
   });
 });
-const getComponent = (store: Store<unknown>) =>
-  render(
-    <Provider store={store}>
-      <TransactionsUnavailable />
-    </Provider>
+const getComponent = (store: Store) =>
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    () => <TransactionsUnavailable />,
+    BPD_ROUTES.TRANSACTIONS,
+    {},
+    store
   );

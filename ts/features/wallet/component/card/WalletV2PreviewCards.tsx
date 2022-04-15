@@ -12,14 +12,27 @@ import CobadgeWalletPreview from "../../cobadge/component/CobadgeWalletPreview";
 import CreditCardWalletPreview from "../../creditCard/component/CreditCardWalletPreview";
 import PrivativeWalletPreview from "../../privative/component/PrivativeWalletPreview";
 import SatispayWalletPreview from "../../satispay/SatispayWalletPreview";
+import PayPalWalletPreview from "../../paypal/PayPalWalletPreview";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
+const paymentMethodPreview = (
+  pm: PaymentMethod,
+  props: Props
+): React.ReactElement | null => {
   switch (pm.kind) {
     case "Satispay":
       return <SatispayWalletPreview key={pm.idWallet} satispay={pm} />;
+    case "PayPal":
+      if (!props.isPaypalEnabled) {
+        return null;
+      }
+      return <PayPalWalletPreview key={pm.idWallet} paypal={pm} />;
     case "Bancomat":
       return <BancomatWalletPreview key={pm.idWallet} bancomat={pm} />;
     case "CreditCard":
@@ -31,6 +44,9 @@ const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
         <CreditCardWalletPreview key={pm.idWallet} creditCard={pm} />
       );
     case "BPay":
+      if (!props.bancomatPayConfig.display) {
+        return null;
+      }
       return <BPayWalletPreview key={pm.idWallet} bPay={pm} />;
     case "Privative":
       return <PrivativeWalletPreview key={pm.idWallet} privative={pm} />;
@@ -45,7 +61,7 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
   <>
     {pot.toUndefined(
       pot.mapNullable(props.paymentMethods, pm => (
-        <>{pm.map(paymentMethodPreview)}</>
+        <>{pm.map(p => paymentMethodPreview(p, props))}</>
       ))
     )}
   </>
@@ -54,7 +70,9 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  paymentMethods: paymentMethodListVisibleInWalletSelector(state)
+  paymentMethods: paymentMethodListVisibleInWalletSelector(state),
+  isPaypalEnabled: isPaypalEnabledSelector(state),
+  bancomatPayConfig: bancomatPayConfigSelector(state)
 });
 
 export default connect(

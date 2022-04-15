@@ -14,10 +14,10 @@ import {
   StyleSheet,
   Vibration
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { UaDonationsBanner } from "../../features/uaDonations/components/UaDonationsBanner";
 import I18n from "../../i18n";
 import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
@@ -322,7 +322,6 @@ class MessageList extends React.Component<Props, State> {
     );
     return (
       <React.Fragment>
-        <NavigationEvents onWillFocus={() => this.scrollTo(0)} />
         {/* in iOS refresh indicator is shown only when user does pull to refresh on list
           so only for iOS devices the ActivityIndicator is shown in place of RefreshControl
           see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load
@@ -335,6 +334,7 @@ class MessageList extends React.Component<Props, State> {
           />
         )}
         <AnimatedFlatList
+          ListHeaderComponent={<UaDonationsBanner />}
           ref={this.flatListRef}
           style={styles.padded}
           scrollEnabled={true}
@@ -356,6 +356,7 @@ class MessageList extends React.Component<Props, State> {
           ListFooterComponent={
             messageStates.length > 0 && <EdgeBorderComponent />
           }
+          testID="messageList"
         />
       </React.Fragment>
     );

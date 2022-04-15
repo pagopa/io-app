@@ -102,6 +102,9 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
             heading={I18n.t("bonus.cgn.merchantsList.online")}
           >
             <CgnMerchantsListView
+              // TODO replace with correct handler
+              onRefresh={constNull}
+              refreshing={false}
               merchantList={props.merchants}
               onItemPress={onItemPress}
             />
@@ -134,11 +137,9 @@ const mapStateToProps = (_: GlobalState) => ({
   merchants: []
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToMerchantDetail: () =>
-    dispatch(
-      navigateToCgnMerchantDetail({ merchantID: "some" as Merchant["id"] })
-    )
+    navigateToCgnMerchantDetail({ merchantID: "some" as Merchant["id"] })
 });
 
 export default connect(
