@@ -2928,6 +2928,14 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
+    selectResidence:
+      header: "Residenza"
+      items:
+        residesInItaly: "Risiedo in Italia"
+        residesAbroad: "Risiedo all’estero"
+      info: "Ricorda che il bonus è disponibile solo per i cittadini residenti in Italia"
+
+
 features:
   mvl:
     title: "messaggio a valore legale"

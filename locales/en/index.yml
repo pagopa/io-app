@@ -2901,6 +2901,12 @@ bonus:
         ko: "Problems saving the voucher"
   cdc:
     title: "Carta della cultura"
+    selectResidence:
+      header: "Residence"
+      items:
+        residesInItaly: "I live in Italy"
+        residesAbroad: "I live abroad"
+      info: "Remember that the bonus is only available for citizens resident in Italy"
 features:
   mvl:
     title: "legal message"
