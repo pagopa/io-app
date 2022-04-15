@@ -34,6 +34,7 @@ import { bpdDaysInfoByIdSelector } from "../../../../store/reducers/details/tran
 import {
   bpdTransactionByIdSelector,
   bpdTransactionsGetNextCursor,
+  BpdTransactionsSectionItem,
   bpdTransactionsSelector
 } from "../../../../store/reducers/details/transactionsv2/ui";
 import { NoPaymentMethodAreActiveWarning } from "../BpdAvailableTransactionsScreen";
@@ -44,7 +45,9 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 type HeaderProps = Props & {
-  info: { section: SectionListData<BpdTransactionId> };
+  info: {
+    section: SectionListData<BpdTransactionId, BpdTransactionsSectionItem>;
+  };
 };
 
 const RenderSectionHeaderBase = (
@@ -70,7 +73,7 @@ const RenderSectionHeaderBase = (
 export const RenderSectionHeader = React.memo(
   RenderSectionHeaderBase,
   (prev: HeaderProps, curr: HeaderProps) =>
-    prev.info.section.dayInfo === curr.info.section.dayInfo
+    prev.info.section.dayInfoId === curr.info.section.dayInfoId
 );
 
 type ItemProps = Props & {
