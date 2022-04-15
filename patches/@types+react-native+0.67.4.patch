@@ -1,15 +1,15 @@
 diff --git a/node_modules/@types/react-native/index.d.ts b/node_modules/@types/react-native/index.d.ts
-index 5a65d89..b9bf0bf 100644
+index 1caa4c7..9f7e478 100755
 --- a/node_modules/@types/react-native/index.d.ts
 +++ b/node_modules/@types/react-native/index.d.ts
-@@ -8284,6 +8284,10 @@ export interface ToastAndroidStatic {
- }
- 
- export interface UIManagerStatic {
+@@ -8440,6 +8440,10 @@ export interface UIManagerStatic {
+      * commandArgs - Args of the native method that we can pass from JS to native.
+      */
+     dispatchViewManagerCommand: (reactTag: number | null, commandID: number | string, commandArgs?: Array<any>) => void;
++
 +    //Added missing accesibility definition
 +    sendAccessibilityEvent(reactTag?: number, eventType: number): void;
 +    AccessibilityEventTypes: { typeViewFocused : number; }
-+    
-     /**
-      * Capture an image of the screen, window or an individual view. The image
-      * will be stored in a temporary file that will only exist for as long as the
+ }
+ 
+ export interface SwitchPropsIOS extends ViewProps {

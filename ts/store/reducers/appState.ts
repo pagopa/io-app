@@ -4,17 +4,15 @@
  * Handles React Native's AppState changes.
  */
 
+import { AppStateStatus } from "react-native";
 import { isActionOf } from "typesafe-actions";
 
-import {
-  applicationChangeState,
-  ApplicationState
-} from "../actions/application";
+import { applicationChangeState } from "../actions/application";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export type AppState = Readonly<{
-  appState: ApplicationState;
+  appState: AppStateStatus;
 }>;
 
 export const initialAppState: AppState = {

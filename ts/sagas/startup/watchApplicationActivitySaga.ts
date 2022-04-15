@@ -1,12 +1,10 @@
+import { AppStateStatus } from "react-native";
 import { Task } from "redux-saga";
 import { call, cancel, fork, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
 import NavigationService from "../../navigation/NavigationService";
-import {
-  applicationChangeState,
-  ApplicationState
-} from "../../store/actions/application";
+import { applicationChangeState } from "../../store/actions/application";
 import { identificationRequest } from "../../store/actions/identification";
 import { ReduxSagaEffect } from "../../types/utils";
 import { startTimer } from "../../utils/timer";
@@ -19,14 +17,14 @@ import { watchNotificationSaga } from "./watchNotificationSaga";
  */
 export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffect> {
   // eslint-disable-next-line
-  let lastState: ApplicationState = "active";
+  let lastState: AppStateStatus = "active";
   // eslint-disable-next-line
   let identificationBackgroundTimer: Task | undefined;
   yield* takeEvery(
     getType(applicationChangeState),
     function* (action: ActionType<typeof applicationChangeState>) {
       // Listen for changes in application state
-      const newApplicationState: ApplicationState = action.payload;
+      const newApplicationState: AppStateStatus = action.payload;
       // eslint-disable-next-line
 
       const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;

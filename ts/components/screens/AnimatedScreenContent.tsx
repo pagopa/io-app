@@ -10,7 +10,6 @@ import {
   Animated,
   LayoutChangeEvent,
   Platform,
-  RefreshControlProps,
   StyleProp,
   StyleSheet,
   ViewStyle
@@ -27,7 +26,6 @@ type OwnProps = Readonly<{
   animationOffset: number;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
-  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
@@ -140,7 +138,6 @@ export default class AnimatedScreenContent extends React.Component<
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
             { useNativeDriver: true }
           )}
-          refreshControl={this.props.contentRefreshControl}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
 

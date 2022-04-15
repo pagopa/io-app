@@ -8,7 +8,6 @@ import {
   lexicallyOrderedMessagesStateSelector,
   MessagesStateAndStatus
 } from "../../store/reducers/entities/messages";
-import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -58,7 +57,7 @@ type State = {
  */
 const generateMessagesStateArchivedArray = (
   potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
-): ReadonlyArray<MessageState> =>
+): ReadonlyArray<MessagesStateAndStatus> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>
       _.filter(messageState => messageState.isArchived)

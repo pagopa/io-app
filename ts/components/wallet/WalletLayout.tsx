@@ -124,7 +124,6 @@ export default class WalletLayout extends React.Component<Props> {
         footerFullWidth={footerFullWidth}
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
-        contentRefreshControl={this.props.refreshControl}
         faqCategories={this.props.faqCategories}
         gradientHeader={this.props.gradientHeader}
         headerPaddingMin={this.props.headerPaddingMin}

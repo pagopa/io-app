@@ -1,10 +1,9 @@
 /**
  * A component to display a brandDarkGray background color on the screen using it
  */
-import { Content, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import {
-  Animated,
   ImageSourcePropType,
   StyleProp,
   StyleSheet,
@@ -12,9 +11,9 @@ import {
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { IconProps } from "react-native-vector-icons/Icon";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -41,7 +40,6 @@ type Props = Readonly<{
   footerContent?: React.ReactNode;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  contentRefreshControl?: Animated.ComponentProps<Content>["refreshControl"];
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   customGoBack?: React.ReactNode;
   gradientHeader?: boolean;
@@ -128,7 +126,6 @@ export default class DarkLayout extends React.Component<Props> {
               this.props.topContentHeight ? this.props.topContentHeight : 0
             }
             animationOffset={40}
-            contentRefreshControl={this.props.contentRefreshControl}
           >
             {this.screenContent()}
           </AnimatedScreenContent>
@@ -140,11 +137,7 @@ export default class DarkLayout extends React.Component<Props> {
             iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
-            bounces={
-              this.props.bounces ||
-              this.props.contentRefreshControl !== undefined
-            }
-            contentRefreshControl={this.props.contentRefreshControl}
+            bounces={this.props.bounces}
           >
             {this.screenContent()}
           </ScreenContent>

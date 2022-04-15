@@ -26,23 +26,21 @@ import {
   Cursor,
   isLoadingArchiveNextPage,
   isLoadingArchivePreviousPage,
-  isReloadingArchive,
   isLoadingInboxNextPage,
   isLoadingInboxPreviousPage,
+  isReloadingArchive,
   isReloadingInbox
 } from "../../../../store/reducers/entities/messages/allPaginated";
-import { MessageState } from "../../../../store/reducers/entities/messages/messagesById";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { isNoticePaid } from "../../../../store/reducers/entities/payments";
 import { GlobalState } from "../../../../store/reducers/types";
 import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../../../theme/variables";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../../utils/showToast";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
-import { isNoticePaid } from "../../../../store/reducers/entities/payments";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
-  AnimatedFlatList,
   EmptyComponent,
   generateItemLayout,
   ITEM_HEIGHT,
@@ -262,7 +260,7 @@ const MessageList = ({
 
   return (
     <>
-      <AnimatedFlatList
+      <Animated.FlatList
         ListHeaderComponent={ListHeaderComponent}
         ItemSeparatorComponent={ItemSeparator}
         ListEmptyComponent={renderEmptyList({
@@ -284,9 +282,10 @@ const MessageList = ({
         scrollEnabled={true}
         scrollEventThrottle={animated?.scrollEventThrottle}
         style={styles.padded}
-        getItemLayout={(_: ReadonlyArray<MessageState> | null, index: number) =>
-          generateItemLayout(messages.length)(index)
-        }
+        getItemLayout={(
+          _: ReadonlyArray<UIMessage> | null | undefined,
+          index: number
+        ) => generateItemLayout(messages.length)(index)}
         onScroll={(...args) => {
           animated.onScroll(...args);
         }}

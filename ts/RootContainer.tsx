@@ -1,6 +1,6 @@
 import { Root } from "native-base";
 import * as React from "react";
-import { AppState, Platform, StatusBar } from "react-native";
+import { AppState, AppStateStatus, Platform, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import configurePushNotifications from "./boot/configurePushNotification";
@@ -13,10 +13,7 @@ import { testOverlayCaption } from "./config";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
-import {
-  applicationChangeState,
-  ApplicationState
-} from "./store/actions/application";
+import { applicationChangeState } from "./store/actions/application";
 import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateBack } from "./store/actions/navigation";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
@@ -43,7 +40,7 @@ class RootContainer extends React.PureComponent<Props> {
     configurePushNotifications();
   }
 
-  private handleApplicationActivity = (activity: ApplicationState) =>
+  private handleApplicationActivity = (activity: AppStateStatus) =>
     this.props.applicationChangeState(activity);
 
   public componentDidMount() {
