@@ -9,6 +9,8 @@ import ROUTES from "../../../../../navigation/routes";
 import CdcBonusRequestSelectResidence from "../CdcBonusRequestSelectResidence";
 import I18n from "../../../../../i18n";
 
+jest.useFakeTimers();
+
 describe("the CdcBonusRequestSelectResidence screen", () => {
   it("should render the title", () => {
     const { component } = renderComponent();
