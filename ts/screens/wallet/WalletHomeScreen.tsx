@@ -3,7 +3,12 @@ import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Image,
+  NativeEventSubscription,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -184,6 +189,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * a "pay notice" button and payment methods info/button to add new ones
  */
 class WalletHomeScreen extends React.PureComponent<Props, State> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
     this.state = { hasFocus: false };
@@ -248,7 +254,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackPress
+    );
 
     // Dispatch the action associated to the saga responsible to remind a user
     // to add the co-badge card.
@@ -257,7 +267,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    this.subscription?.remove();
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>) {

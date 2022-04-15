@@ -8,6 +8,7 @@ import {
   BackHandler,
   ImageSourcePropType,
   KeyboardAvoidingView,
+  NativeEventSubscription,
   Platform,
   StyleSheet
 } from "react-native";
@@ -70,6 +71,7 @@ const searchDelay = 300 as Millisecond;
  * A component for view, search and select a list of items
  */
 class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props<T>) {
     super(props);
     this.state = {
@@ -90,11 +92,15 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
       this.props.setSelectedItemIds(initialSelectedItemIds);
     }
 
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackPress
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    this.subscription?.remove();
   }
 
   private onPressCancel = () => {

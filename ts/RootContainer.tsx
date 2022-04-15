@@ -1,6 +1,12 @@
 import { Root } from "native-base";
 import * as React from "react";
-import { AppState, AppStateStatus, Platform, StatusBar } from "react-native";
+import {
+  AppState,
+  AppStateStatus,
+  NativeEventSubscription,
+  Platform,
+  StatusBar
+} from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import configurePushNotifications from "./boot/configurePushNotification";
@@ -33,9 +39,9 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
  * - the root for displaying light modals
  */
 class RootContainer extends React.PureComponent<Props> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
-
     /* Configure the application to receive push notifications */
     configurePushNotifications();
   }
@@ -46,7 +52,11 @@ class RootContainer extends React.PureComponent<Props> {
   public componentDidMount() {
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
-    AppState.addEventListener("change", this.handleApplicationActivity);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = AppState.addEventListener(
+      "change",
+      this.handleApplicationActivity
+    );
 
     this.updateLocale();
     // Hide splash screen
@@ -63,7 +73,7 @@ class RootContainer extends React.PureComponent<Props> {
     });
 
   public componentWillUnmount() {
-    AppState.removeEventListener("change", this.handleApplicationActivity);
+    this.subscription?.remove();
   }
 
   public componentDidUpdate() {

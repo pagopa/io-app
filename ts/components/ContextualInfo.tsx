@@ -1,6 +1,6 @@
 import { Body, Container, Content, Right } from "native-base";
 import * as React from "react";
-import { BackHandler, StyleSheet } from "react-native";
+import { BackHandler, NativeEventSubscription, StyleSheet } from "react-native";
 import themeVariables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -26,15 +26,17 @@ const styles = StyleSheet.create({
  * needed)
  */
 export default class ContextualInfo extends React.Component<Props> {
+  private subscription: NativeEventSubscription | undefined;
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPressed);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener(
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
       "hardwareBackPress",
       this.handleBackPressed
     );
+  }
+
+  public componentWillUnmount() {
+    this.subscription?.remove();
   }
 
   private handleBackPressed = () => {

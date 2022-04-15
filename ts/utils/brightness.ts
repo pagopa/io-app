@@ -40,7 +40,7 @@ export const useMaxBrightness = () => {
 
   // First mount, read and save the current device brightness
   React.useEffect(() => {
-    AppState.addEventListener("change", setAppState);
+    const subscription = AppState.addEventListener("change", setAppState);
     const getCurrentBrightness = async () => {
       const currentBrightness = await getBrightness().catch(_ => undefined);
       setInitialBrightness(currentBrightness);
@@ -48,7 +48,7 @@ export const useMaxBrightness = () => {
     // eslint-disable-next-line functional/immutable-data
     currentTransition.current = getCurrentBrightness();
     return () => {
-      AppState.removeEventListener("change", setAppState);
+      subscription.remove();
     };
   }, []);
 
