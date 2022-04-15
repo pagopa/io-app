@@ -2735,10 +2735,10 @@
     io-ts "1.8.5"
     italia-ts-commons "5.1.1"
 
-"@pagopa/react-native-cie@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.1.3.tgz#ae00d997825c4e79152bf3986ab4e705b4465956"
-  integrity sha512-fAPL7xjr0IHWVWPhDsUJYtXFAwo2zM2TfNAi7mkLDoktBIsbTavfvXnx/jTxNgGvhqGWXIOVvZLGIgIhAsXpaw==
+"@pagopa/react-native-cie@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.1.4.tgz#3b876851764264d8b34beb6fdec7d4b270512a0a"
+  integrity sha512-QBYK8N9sAC8TtH+Lf4/DxXgLl7IAupa6+MSZm1NWG+uGJwXbZFMJJQWSjeHN+pPNV+MJhc2sg2tFY9L3oE0oVw==
 
 "@pagopa/ts-commons@^9.4.0":
   version "9.4.0"
