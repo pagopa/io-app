@@ -2926,7 +2926,8 @@ bonus:
       toast:
         ok: "Voucher salvato con successo"
         ko: "Problemi durante il salvataggio del voucher"
-
+  cdc:
+    title: "Carta della cultura"
 features:
   mvl:
     title: "messaggio a valore legale"
