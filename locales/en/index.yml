@@ -2899,7 +2899,8 @@ bonus:
       toast:
         ok: "Voucher saved successfully"
         ko: "Problems saving the voucher"
-
+  cdc:
+    title: "Carta della cultura"
 features:
   mvl:
     title: "legal message"
