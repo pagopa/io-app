@@ -153,7 +153,8 @@ describe("getPaymentMethods", () => {
     navigateToAddCreditCard: jest.fn(),
     isPaypalAlreadyAdded: true,
     isPaypalEnabled: true,
-    canOnboardBPay: false
+    canOnboardBPay: false,
+    canPayWithBPay: false
   };
   const methods = testableFunctions.getPaymentMethods!(props, {
     onlyPaymentMethodCanPay: true,
@@ -222,16 +223,38 @@ describe("getPaymentMethods", () => {
     ).toEqual("implemented");
   });
 
-  it("bpay should be notImplemented implemented if Bpay onboaring FF is ON and onlyPaymentMethodCanPay flag is ON", () => {
-    const methods = testableFunctions.getPaymentMethods!(props, {
-      onlyPaymentMethodCanPay: true,
-      isPaymentOnGoing: true,
-      isPaypalEnabled: true,
-      canOnboardBPay: true
-    });
+  it("bpay should be notImplemented implemented during a payment if it can be onboarded but it cannot pay", () => {
+    const canPayWithBPay = false;
+    const canOnboardBPay = true;
+    const methods = testableFunctions.getPaymentMethods!(
+      { ...props, canPayWithBPay },
+      {
+        onlyPaymentMethodCanPay: true,
+        isPaymentOnGoing: true,
+        isPaypalEnabled: true,
+        canOnboardBPay: canPayWithBPay && canOnboardBPay
+      }
+    );
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
     ).toEqual("notImplemented");
+  });
+
+  it("bpay should be implemented implemented outside a payment if it can be onboarded but it cannot pay", () => {
+    const canPayWithBPay = true;
+    const canOnboardBPay = true;
+    const methods = testableFunctions.getPaymentMethods!(
+      { ...props, canPayWithBPay },
+      {
+        onlyPaymentMethodCanPay: true,
+        isPaymentOnGoing: false,
+        isPaypalEnabled: true,
+        canOnboardBPay: canPayWithBPay && canOnboardBPay
+      }
+    );
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+    ).toEqual("implemented");
   });
 });
 

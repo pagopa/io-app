@@ -218,6 +218,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
                   onlyPaymentMethodCanPay: true,
                   isPaymentOnGoing: inPayment.isSome(),
                   isPaypalEnabled: props.isPaypalEnabled,
+                  // can onboard bpay only when both FF are enabled
                   canOnboardBPay: props.canOnboardBPay && props.canPayWithBPay
                 })}
               />
