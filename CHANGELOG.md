@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0-rc.6](https://github.com/pagopa/io-app/compare/2.7.0-rc.5...2.7.0-rc.6) (2022-04-19)
+
+
+### Bug Fixes
+
+* [[IA-829](https://pagopa.atlassian.net/browse/IA-829)] Fix crash on press the support button on Android [#3918](https://github.com/pagopa/io-app/issues/3918) ([f2964f7](https://github.com/pagopa/io-app/commit/f2964f78acc8607ac6a5a3fe4268dcb620f5ac09))
+* [[IA-830](https://pagopa.atlassian.net/browse/IA-830)] Fix performance issue when rendering new message pages ([#3919](https://github.com/pagopa/io-app/issues/3919)) ([a98ccad](https://github.com/pagopa/io-app/commit/a98ccadf5ff8e04a2d4749a333e0b7d6094b5808))
+
+
+### Chores
+
+* **Carta della cultura:** [[AP-7](https://pagopa.atlassian.net/browse/AP-7)] Model types, actions and reducers of carta della cultura ([#3907](https://github.com/pagopa/io-app/issues/3907)) ([b5387ce](https://github.com/pagopa/io-app/commit/b5387ce37e18d3eec128ba487551159e08282aa6))
+
 ## [2.7.0-rc.5](https://github.com/pagopa/io-app/compare/2.7.0-rc.4...2.7.0-rc.5) (2022-04-14)
 
 

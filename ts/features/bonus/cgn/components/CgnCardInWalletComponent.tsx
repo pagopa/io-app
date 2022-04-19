@@ -71,6 +71,7 @@ const CgnCardList = (props: Props) => (
               styles.paddedContentPreview,
               { alignItems: "center" }
             ]}
+            testID={"cgn-card-component"}
           >
             <H3 color={"black"} weight={"Bold"}>
               {I18n.t("bonus.cgn.name")}
