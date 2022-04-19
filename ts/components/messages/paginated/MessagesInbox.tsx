@@ -1,5 +1,5 @@
 import { View } from "native-base";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet } from "react-native";
 
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
@@ -47,13 +47,16 @@ const MessagesInbox = ({
   const selectedItemsCount = selectedItems.toUndefined()?.size ?? 0;
   const allItemsCount = messages.length;
 
-  const onPressItem = (message: UIMessage) => {
-    if (selectedItems.isSome()) {
-      toggleItem(message.id);
-    } else {
-      navigateToMessageDetail(message);
-    }
-  };
+  const onPressItem = useCallback(
+    (message: UIMessage) => {
+      if (selectedItems.isSome()) {
+        toggleItem(message.id);
+      } else {
+        navigateToMessageDetail(message);
+      }
+    },
+    [selectedItems]
+  );
 
   const onLongPressItem = (id: string) => {
     toggleItem(id);

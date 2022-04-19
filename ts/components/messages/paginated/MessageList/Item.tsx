@@ -204,7 +204,7 @@ type Props = {
   isSelectionModeEnabled: boolean;
   message: UIMessage;
   onLongPress: () => void;
-  onPress: () => void;
+  onPress: (message: UIMessage) => void;
   service?: ServicePublic;
 };
 
@@ -261,7 +261,7 @@ const MessageListItem = ({
 
   return (
     <TouchableDefaultOpacity
-      onPress={onPress}
+      onPress={() => onPress(message)}
       onLongPress={onLongPress}
       style={[styles.verticalPad]}
       accessible={true}
