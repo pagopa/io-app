@@ -1259,6 +1259,9 @@ wallet:
         unaccepted:
           bottomSheetTitle: "Why can't I pay with this card?"
           bottomSheetDescription: "This circuit allows you to pay in physical stores, but not online. If your card is enabled for online purchases, add it to your Wallet as a 'debit or credit card'."
+        payment_disabled:
+          bottomSheetTitle: "Title"
+          bottomSheetDescription: "Description"
   firstTransactionSummary:
     title: Payment information
     amount: Transaction amount

@@ -126,10 +126,7 @@ const getPaymentMethods = (
     name: I18n.t("wallet.methods.bancomatPay.name"),
     description: I18n.t("wallet.methods.bancomatPay.description"),
     icon: BpayLogo,
-    status:
-      options.canOnboardBPay && !options.onlyPaymentMethodCanPay
-        ? "implemented"
-        : "notImplemented",
+    status: options.canOnboardBPay ? "implemented" : "notImplemented",
     onPress: props.startBPayOnboarding,
     section: "digital_payments"
   },
@@ -221,7 +218,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
                   onlyPaymentMethodCanPay: true,
                   isPaymentOnGoing: inPayment.isSome(),
                   isPaypalEnabled: props.isPaypalEnabled,
-                  canOnboardBPay: props.canOnboardBPay
+                  canOnboardBPay: props.canOnboardBPay && props.canPayWithBPay
                 })}
               />
             </View>
@@ -263,11 +260,15 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     })
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  isPaypalAlreadyAdded: pot.isSome(paypalSelector(state)),
-  isPaypalEnabled: isPaypalEnabledSelector(state),
-  canOnboardBPay: bancomatPayConfigSelector(state).onboarding
-});
+const mapStateToProps = (state: GlobalState) => {
+  const bpayConfig = bancomatPayConfigSelector(state);
+  return {
+    isPaypalAlreadyAdded: pot.isSome(paypalSelector(state)),
+    isPaypalEnabled: isPaypalEnabledSelector(state),
+    canOnboardBPay: bpayConfig.onboarding,
+    canPayWithBPay: bpayConfig.payment
+  };
+};
 
 export default connect(
   mapStateToProps,

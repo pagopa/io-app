@@ -88,7 +88,7 @@ import CardIcon from "../../../../img/wallet/card.svg";
 import { SelectionBox } from "../../../components/wallet/SelectionBox";
 import { getTranslatedShortNumericMonthYear } from "../../../utils/dates";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
+import BancomatPayLogo from "../../../../img/wallet/payment-methods/bancomat_pay.svg";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -189,7 +189,7 @@ const getPaymentMethodInfo = (
       }).filter(() => options.isPaypalEnabled);
     case "BPay":
       return some({
-        logo: <BrandImage image={bancomatPayLogo} scale={0.7} />,
+        logo: <BancomatPayLogo width={24} height={24} />,
         subject: paymentMethod?.caption,
         caption: paymentMethod.info.numberObfuscated ?? "",
         accessibilityLabel: `${I18n.t("wallet.methods.bancomatPay.name")}`

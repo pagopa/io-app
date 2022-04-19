@@ -41,6 +41,22 @@ const unacceptedBottomSheetBody = () => (
   </>
 );
 
+const paymentDisabledBottomSheetTitle = () =>
+  I18n.t(
+    "wallet.payWith.pickPaymentMethod.notAvailable.payment_disabled.bottomSheetTitle"
+  );
+const paymentDisabledBottomSheetBody = () => (
+  <>
+    <View spacer={true} large={true} />
+    <H4 weight={"Regular"}>
+      {I18n.t(
+        "wallet.payWith.pickPaymentMethod.notAvailable.payment_disabled.bottomSheetDescription"
+      )}
+    </H4>
+    <View spacer={true} large={true} />
+  </>
+);
+
 const arrivingBottomSheetTitle = () =>
   I18n.t(
     "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetTitle"
@@ -80,8 +96,8 @@ const extractInfoFromPaymentMethod = (
           paymentMethod,
           nameSurname
         ),
-        bottomSheetTitle: unacceptedBottomSheetTitle(),
-        bottomSheetBody: unacceptedBottomSheetBody()
+        bottomSheetTitle: paymentDisabledBottomSheetTitle(),
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
     case "Bancomat":
       return {
@@ -99,8 +115,8 @@ const extractInfoFromPaymentMethod = (
         logo: bancomatPayLogo,
         title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? "",
-        bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: arrivingBottomSheetBody()
+        bottomSheetTitle: paymentDisabledBottomSheetTitle(),
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
     case "Satispay":
       return {
@@ -115,8 +131,8 @@ const extractInfoFromPaymentMethod = (
         logo: paymentMethod.icon,
         title: paymentMethod.kind,
         description: getPaypalAccountEmail(paymentMethod.info),
-        bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: arrivingBottomSheetBody()
+        bottomSheetTitle: paymentDisabledBottomSheetTitle(),
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
     case "Privative":
       return {
