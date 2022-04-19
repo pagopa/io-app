@@ -42,7 +42,7 @@ describe("CGN", () => {
   describe("When the user want to start activation from card carousel", () => {
     it("Should complete activation", async () => {
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
-      await element(by.text(CGN_TITLE)).tap();
+      await element(by.id("FeaturedCardCGNTestID")).tap();
       await activateBonusSuccess();
     });
   });
@@ -50,7 +50,7 @@ describe("CGN", () => {
   describe("When the user want to start activation from service detail", () => {
     it("Should complete activation", async () => {
       await element(by.text(I18n.t("global.navigator.services"))).tap();
-      const cgnServiceItem = element(by.text(CGN_TITLE));
+      const cgnServiceItem = element(by.id(CGN_TITLE));
       await waitFor(cgnServiceItem)
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
@@ -70,7 +70,9 @@ describe("CGN", () => {
     await device.reloadReactNative();
     await ensureLoggedIn();
     await element(by.text(I18n.t("global.navigator.wallet"))).tap();
-    await element(by.text(CGN_TITLE)).tap();
+    const cgnCardItem = element(by.id("cgn-card-component"));
+    await waitFor(cgnCardItem).toBeVisible().withTimeout(e2eWaitRenderTimeout);
+    await cgnCardItem.tap();
     const unsubscribeCgnCta = element(
       by.text(I18n.t("bonus.cgn.cta.deactivateBonus"))
     );
