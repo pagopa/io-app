@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import {IndexedById} from "../../../../store/helpers/indexer";
-import {Action} from "../../../../store/actions/types";
+import { IndexedById } from "../../../../store/helpers/indexer";
+import { Action } from "../../../../store/actions/types";
 
 export type MvlDownloads = IndexedById<pot.Pot<string, Error>>;
 

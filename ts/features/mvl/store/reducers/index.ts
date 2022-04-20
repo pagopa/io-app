@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
 import { mvlByIdReducer, MvlByIdState } from "./byId";
 import { mvlPreferencesReducer, MvlPreferences } from "./preferences";
-import {MvlDownloads, mvlDownloadsReducer} from "./downloads";
+import { MvlDownloads, mvlDownloadsReducer } from "./downloads";
 
 export type MvlState = {
   byId: MvlByIdState;
