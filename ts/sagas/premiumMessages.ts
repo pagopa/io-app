@@ -49,7 +49,7 @@ export function* askPremiumMessagesOptInOut() {
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ROUTES.ONBOARDING, {
-      route: ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT
+      screen: ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT
     })
   );
 
