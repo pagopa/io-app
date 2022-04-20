@@ -46,7 +46,7 @@ export function* askMixpanelOptIn() {
     CommonActions.navigate({
       name: ROUTES.ONBOARDING,
       params: {
-        name: ROUTES.ONBOARDING_SHARE_DATA
+        screen: ROUTES.ONBOARDING_SHARE_DATA
       }
     })
   );
