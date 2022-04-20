@@ -46,7 +46,6 @@ export const useRemovePaymentMethodBottomSheet = (
     />,
     I18n.t("wallet.newRemove.title"),
     380,
-    () => (
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}
         leftButton={{
@@ -61,7 +60,6 @@ export const useRemovePaymentMethodBottomSheet = (
           onPressWithGestureHandler: true
         }}
       />
-    )
   );
 
   return { present, removePaymentMethodBottomSheet, dismiss };

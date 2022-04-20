@@ -39,7 +39,6 @@ const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
     <UnsubscribeComponent />,
     I18n.t("bonus.bpd.unsubscribe.title"),
     582,
-    () => (
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}
         leftButton={{
@@ -54,7 +53,6 @@ const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
           onPressWithGestureHandler: true
         }}
       />
-    )
   );
 
   return (

@@ -24,7 +24,6 @@ export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
     <ConfirmOptOut />,
     I18n.t("profile.main.privacy.shareData.alert.title"),
     350,
-    () => (
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}
         leftButton={{
@@ -39,7 +38,6 @@ export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
           onPressWithGestureHandler: true
         }}
       />
-    )
   );
 
   return { present, bottomSheet, dismiss };

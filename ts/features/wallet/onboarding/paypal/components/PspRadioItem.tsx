@@ -65,7 +65,6 @@ export const PspRadioItem = (
       pspName: psp.name
     }),
     Math.min(420, Dimensions.get("window").height),
-    () => (
       <FooterWithButtons
         type={"SingleButton"}
         leftButton={{
@@ -78,7 +77,6 @@ export const PspRadioItem = (
           )
         }}
       />
-    )
   );
 
   return (

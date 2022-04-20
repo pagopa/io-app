@@ -1,11 +1,11 @@
 import * as React from "react";
-import { ComponentProps } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import {
   BottomSheetModal,
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import { Dimensions } from "react-native";
+import { Dimensions, Modal } from "react-native";
 import { View } from "native-base";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
@@ -13,6 +13,7 @@ import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeade
 import { useHardwareBackButtonToDismiss } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { isScreenReaderEnabled } from "../accessibility";
 
 type Props = {
   children: React.ReactNode;
@@ -41,7 +42,7 @@ export type BottomSheetModalProps = {
     backdropComponent: ComponentProps<
       typeof BottomSheetModal
     >["backdropComponent"];
-    handleComponent: ComponentProps<typeof BottomSheetModal>["handleComponent"];
+    handleComponent: React.ReactElement;
   };
 };
 
@@ -70,7 +71,7 @@ export const bottomSheetContent = (
     config: {
       snapPoints: [Math.min(snapPoint, Dimensions.get("window").height)],
       backdropComponent: () => BlurredBackgroundComponent(onClose),
-      handleComponent: () => header
+      handleComponent: header
     }
   };
 };
@@ -86,11 +87,13 @@ export const useIOBottomSheetModal = (
   component: React.ReactNode,
   title: string | React.ReactNode,
   snapPoint: number,
-  footer?: ComponentProps<typeof BottomSheetModal>["footerComponent"]
+  footer?: React.ReactElement
 ) => {
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
   const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
+  const [screenReaderEnabled, setIsScreenReaderEnabled] =
+    useState<boolean>(false);
 
   const bottomSheetProps = bottomSheetContent(
     component,
@@ -104,19 +107,25 @@ export const useIOBottomSheetModal = (
     setBSOpened();
   };
 
+  useEffect(() => {
+    isScreenReaderEnabled()
+      .then(sre => setIsScreenReaderEnabled(sre))
+      .catch(_ => setIsScreenReaderEnabled(false));
+  }, []);
+
   const bottomSheet = (
     <BottomSheetModal
-      footerComponent={(props: BottomSheetFooterProps) =>
+      footerComponent={(_: BottomSheetFooterProps) =>
         footer !== undefined ? (
           <>
-            {footer(props)}
+            {footer}
             <View spacer />
           </>
         ) : null
       }
       snapPoints={[snapPoint]}
       ref={bottomSheetModalRef}
-      handleComponent={bottomSheetProps.config.handleComponent}
+      handleComponent={_ => bottomSheetProps.config.handleComponent}
       backdropComponent={bottomSheetProps.config.backdropComponent}
       enableDismissOnClose={true}
       accessible={false}
@@ -127,7 +136,23 @@ export const useIOBottomSheetModal = (
       }}
       importantForAccessibility={"yes"}
     >
-      {bottomSheetProps.content}
+      {screenReaderEnabled ? (
+        <Modal>
+          {bottomSheetProps.config.handleComponent}
+          {bottomSheetProps.content}
+          <>
+            {footer !== undefined ? (
+              <>
+                {footer}
+                <View spacer />
+              </>
+            ) : null}
+            <View spacer />
+          </>
+        </Modal>
+      ) : (
+        bottomSheetProps.content
+      )}
     </BottomSheetModal>
   );
   return { present, dismiss: dismissAll, bottomSheet };

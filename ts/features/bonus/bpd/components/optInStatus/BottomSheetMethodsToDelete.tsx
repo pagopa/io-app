@@ -9,7 +9,6 @@ import I18n from "../../../../../i18n";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { PaymentMethod } from "../../../../../types/pagopa";
 import { Label } from "../../../../../components/core/typography/Label";
-import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
@@ -67,8 +66,9 @@ export const useBottomSheetMethodsToDelete = (props: {
       <View spacer={true} />
     </View>,
     snapPoint,
-    () => {
-      const deleteProps: BlockButtonProps = {
+    <FooterWithButtons
+      type={"TwoButtonsInlineHalf"}
+      leftButton={{
         testID: "deleteButtonTestID",
         style: {
           flex: 1,
@@ -82,22 +82,15 @@ export const useBottomSheetMethodsToDelete = (props: {
           dismiss();
         },
         title: I18n.t("global.buttons.delete")
-      };
-      const cancelProps: BlockButtonProps = {
+      }}
+      rightButton={{
         testID: "cancelButtonTestID",
         bordered: true,
         onPressWithGestureHandler: true,
         onPress: () => dismiss(),
         title: I18n.t("global.buttons.cancel")
-      };
-      return (
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={deleteProps}
-          rightButton={cancelProps}
-        />
-      );
-    }
+      }}
+    />
   );
 
   return {

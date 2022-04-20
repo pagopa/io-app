@@ -27,7 +27,6 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     <ManualConfigConfirm />,
     I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
     350,
-    () => (
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
         leftButton={{
@@ -42,7 +41,6 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
           onPressWithGestureHandler: true
         }}
       />
-    )
   );
 
   return { present, manualConfigBottomSheet, dismiss };

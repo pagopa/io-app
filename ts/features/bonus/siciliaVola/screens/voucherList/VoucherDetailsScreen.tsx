@@ -126,7 +126,6 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
     ) : null,
     I18n.t("bonus.sv.components.voucherBottomsheet.title"),
     650,
-    () => (
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
         leftButton={{
@@ -146,7 +145,6 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
           disabled: isLoading(props.pdfVoucherState)
         }}
       />
-    )
   );
 
   // The selectedVoucherCode can't be undefined in this screen
