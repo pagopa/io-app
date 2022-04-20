@@ -4,7 +4,6 @@ import { ListItem, View } from "native-base";
 import React, { ReactNode } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -29,8 +28,7 @@ import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList"
 import { useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
-  isLoggedIn,
-  zendeskTokenSelector
+  isLoggedIn
 } from "../../../store/reducers/authentication";
 import { appVersionHistorySelector } from "../../../store/reducers/installation";
 import {
@@ -48,10 +46,7 @@ import {
   addTicketTag,
   anonymousAssistanceAddress,
   anonymousAssistanceAddressWithSubject,
-  AnonymousIdentity,
-  JwtIdentity,
   openSupportTicket,
-  setUserIdentity,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
@@ -212,7 +207,6 @@ const ZendeskAskPermissions = (props: Props) => {
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
-  const zendeskToken = useIOSelector(zendeskTokenSelector);
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = useIOSelector(idpSelector)
     .map(idp => idp.name)
@@ -284,17 +278,6 @@ const ZendeskAskPermissions = (props: Props) => {
   };
 
   const handleOnContinuePress = () => {
-    // First of all set the user identity
-    // If the zendeskToken is available authenticate the user with a JwtIdentity
-    // otherwise authenticate the user with an AnonymousIdentity
-    const zendeskIdentity = fromNullable(zendeskToken)
-      .map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      }))
-      .getOrElse({});
-
-    setUserIdentity(zendeskIdentity);
-
     // Set custom fields
     items.forEach(it => {
       if (it.value !== undefined && it.zendeskId !== undefined) {

@@ -23,6 +23,7 @@ import { PrivativeActions } from "../../features/wallet/onboarding/privative/sto
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
+import { CdcActions } from "../../features/bonus/cdc/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -96,7 +97,8 @@ export type Action =
   | OutcomeCodeActions
   | SvActions
   | MvlActions
-  | ZendeskSupportActions;
+  | ZendeskSupportActions
+  | CdcActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
