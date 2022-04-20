@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
-import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable, Option } from "fp-ts/lib/Option";
 import { useDispatch } from "react-redux";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H3 } from "../../../components/core/typography/H3";
@@ -30,9 +31,6 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import { profileSelector } from "../../../store/reducers/profile";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { useIOSelector } from "../../../store/hooks";
 import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   zendeskRequestTicketNumber,
