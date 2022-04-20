@@ -14,6 +14,7 @@ import {
   cdcRequestBonusList,
   cdcSelectedBonus
 } from "../actions/cdcBonusRequest";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export type CdcBonusRequestState = {
   bonusList: RemoteValue<CdcBonusRequestList, NetworkError>;
@@ -54,3 +55,9 @@ const reducer = (
 };
 
 export default reducer;
+
+// Selectors
+export const cdcBonusRequestListSelector = (
+  state: GlobalState
+): RemoteValue<CdcBonusRequestList, NetworkError> =>
+  state.bonus.cdc.bonusRequest.bonusList;
