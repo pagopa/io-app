@@ -5,7 +5,7 @@ import {
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import { Dimensions, Modal } from "react-native";
+import { Dimensions, Modal, Platform } from "react-native";
 import { View } from "native-base";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
@@ -136,8 +136,12 @@ export const useIOBottomSheetModal = (
       }}
       importantForAccessibility={"yes"}
     >
-      {screenReaderEnabled ? (
+      {screenReaderEnabled && Platform.OS === "android" ? (
         <Modal>
+          <View style={IOStyles.flex} accessible={true}>
+            {bottomSheetProps.config.handleComponent}
+            {bottomSheetProps.content}
+          </View>
           {bottomSheetProps.config.handleComponent}
           {bottomSheetProps.content}
           <>

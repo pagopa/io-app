@@ -48,12 +48,11 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   }, [headerRef]);
 
   return (
-    <View style={styles.row}>
+    <View style={styles.row} ref={headerRef}>
       {React.isValidElement(title) ? (
-        <View ref={headerRef}>{title}</View>
+        title
       ) : (
         <View
-          ref={headerRef}
           style={IOStyles.flex}
           accessible={true}
           accessibilityRole={"header"}
