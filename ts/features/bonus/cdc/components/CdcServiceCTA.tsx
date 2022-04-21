@@ -32,7 +32,9 @@ const ReadyButton = (props: ReadyButtonProp) => {
         onPress={() => true}
         testID={"activateCardButton"}
       >
-        <Label color={"white"}>{"Attiva la carta"}</Label>
+        <Label color={"white"}>
+          {I18n.t("bonus.cdc.serviceCta.activable")}
+        </Label>
       </ButtonDefaultOpacity>
     );
   }
@@ -49,7 +51,7 @@ const ReadyButton = (props: ReadyButtonProp) => {
         onPress={() => true}
         testID={"pendingCardButton"}
       >
-        <Label color={"white"}>{"Richiesta inviata"}</Label>
+        <Label color={"white"}>{I18n.t("bonus.cdc.serviceCta.pending")}</Label>
       </ButtonDefaultOpacity>
     );
   }
@@ -61,19 +63,20 @@ const ReadyButton = (props: ReadyButtonProp) => {
 const ErrorButton = () => {
   const viewRef = React.createRef<RNView>();
   const dispatch = useIODispatch();
+
   return (
     <View>
       <StatusContent
-        accessibilityLabel={`Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare, ${I18n.t(
-          "global.accessibility.alert"
-        )}`}
+        accessibilityLabel={`${I18n.t(
+          "bonus.cdc.serviceCta.error.status"
+        )} ${I18n.t("global.accessibility.alert")}`}
         backgroundColor={"orange"}
         iconColor={IOColors.white}
         iconName={"io-warning"}
         viewRef={viewRef}
         labelColor={"white"}
       >
-        {`Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare.`}
+        {I18n.t("bonus.cdc.serviceCta.error.status")}
       </StatusContent>
       <View spacer={true} />
       <ButtonDefaultOpacity
@@ -83,7 +86,7 @@ const ErrorButton = () => {
         onPress={() => dispatch(cdcRequestBonusList.request())}
         testID={"retryButton"}
       >
-        <Label color={"blue"}>{"Riprova"}</Label>
+        <Label color={"blue"}>{I18n.t("global.buttons.retry")}</Label>
       </ButtonDefaultOpacity>
     </View>
   );
