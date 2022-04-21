@@ -20,6 +20,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
 import { paymentVerificaSelector } from "../../../store/reducers/wallet/payment";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { openWebUrl } from "../../../utils/url";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
@@ -75,6 +76,8 @@ const successFooter = (onClose: () => void) => (
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   const outcomeCode = props.outcomeCode.outcomeCode.toNullable();
+  const learnMoreLink = "https://io.italia.it/faq/#pagamenti";
+  const onLearnMore = () => openWebUrl(learnMoreLink);
 
   const renderSuccessComponent = () => {
     if (pot.isSome(props.verifica)) {
@@ -97,6 +100,7 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
       onClose={props.navigateToWalletHome}
       successComponent={renderSuccessComponent}
       successFooter={() => successFooter(props.navigateToWalletHome)}
+      onLearnMore={onLearnMore}
     />
   ) : null;
 };
