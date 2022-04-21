@@ -22,6 +22,7 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
 import SecurityScreen from "../screens/profile/SecurityScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
+import FimsPlayground from "../features/fims/screens/FimsPlayground";
 import ROUTES from "./routes";
 
 /**
@@ -85,6 +86,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.WEB_PLAYGROUND]: {
       screen: WebPlayground
+    },
+    [ROUTES.FIMS_PLAYGROUND]: {
+      screen: FimsPlayground
     },
     [ROUTES.CGN_LANDING_PLAYGROUND]: {
       screen: CgnLandingPlayground
