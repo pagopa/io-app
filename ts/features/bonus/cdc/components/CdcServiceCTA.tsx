@@ -13,8 +13,6 @@ import { fold } from "../../bpd/model/RemoteValue";
 import { CdcBonusRequestList } from "../types/CdcBonusRequest";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
-import { sectionStatusSelector } from "../../../../store/reducers/backendStatus";
-import SectionStatusComponent from "../../../../components/SectionStatus";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;
@@ -32,6 +30,7 @@ const ReadyButton = (props: ReadyButtonProp) => {
         primary
         // TODO: dispatch the navigation to the first screen of the workunit
         onPress={() => true}
+        testID={"activateCardButton"}
       >
         <Label color={"white"}>{"Attiva la carta"}</Label>
       </ButtonDefaultOpacity>
@@ -44,7 +43,12 @@ const ReadyButton = (props: ReadyButtonProp) => {
   );
   if (pendingBonuses.length > 0) {
     return (
-      <ButtonDefaultOpacity block disabled={true} onPress={() => true}>
+      <ButtonDefaultOpacity
+        block
+        disabled={true}
+        onPress={() => true}
+        testID={"pendingCardButton"}
+      >
         <Label color={"white"}>{"Richiesta inviata"}</Label>
       </ButtonDefaultOpacity>
     );
@@ -66,7 +70,6 @@ const ErrorButton = () => {
         backgroundColor={"orange"}
         iconColor={IOColors.white}
         iconName={"io-warning"}
-        testID={"SectionStatusComponentContent"}
         viewRef={viewRef}
         labelColor={"white"}
       >
@@ -78,6 +81,7 @@ const ErrorButton = () => {
         primary
         bordered
         onPress={() => dispatch(cdcRequestBonusList.request())}
+        testID={"retryButton"}
       >
         <Label color={"blue"}>{"Riprova"}</Label>
       </ButtonDefaultOpacity>
@@ -88,15 +92,10 @@ const ErrorButton = () => {
 const CdcServiceCTA = () => {
   const dispatch = useIODispatch();
   const cdcBonusRequestList = useIOSelector(cdcBonusRequestListSelector);
-  const sectionStatus = useIOSelector(sectionStatusSelector("messages"));
 
   useEffect(() => {
     dispatch(cdcRequestBonusList.request());
   }, [dispatch]);
-
-  if (sectionStatus?.is_visible) {
-    return <SectionStatusComponent sectionKey={"wallets"} />;
-  }
 
   return fold(
     cdcBonusRequestList,
