@@ -89,20 +89,20 @@ export const useChangeActivationConfirmationBottomSheet = (
       ? I18n.t("bonus.bpd.details.paymentMethods.activate.title")
       : I18n.t("bonus.bpd.details.paymentMethods.deactivate.title"),
     466,
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={{
-          ...cancelButtonProps(() => dismiss()),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...confirmButtonProps(() => {
-            dismiss();
-            onConfirm();
-          }, cta),
-          onPressWithGestureHandler: true
-        }}
-      />
+    <FooterWithButtons
+      type={"TwoButtonsInlineThird"}
+      leftButton={{
+        ...cancelButtonProps(() => dismiss()),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        ...confirmButtonProps(() => {
+          dismiss();
+          onConfirm();
+        }, cta),
+        onPressWithGestureHandler: true
+      }}
+    />
   );
 
   return { present, bottomSheet, dismiss };

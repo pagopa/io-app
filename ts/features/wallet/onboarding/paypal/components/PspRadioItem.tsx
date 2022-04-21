@@ -65,18 +65,18 @@ export const PspRadioItem = (
       pspName: psp.name
     }),
     Math.min(420, Dimensions.get("window").height),
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={{
-          testID: "continueButtonId",
-          bordered: false,
-          onPressWithGestureHandler: true,
-          onPress: () => dismiss(),
-          title: I18n.t(
-            "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
-          )
-        }}
-      />
+    <FooterWithButtons
+      type={"SingleButton"}
+      leftButton={{
+        testID: "continueButtonId",
+        bordered: false,
+        onPressWithGestureHandler: true,
+        onPress: () => dismiss(),
+        title: I18n.t(
+          "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
+        )
+      }}
+    />
   );
 
   return (

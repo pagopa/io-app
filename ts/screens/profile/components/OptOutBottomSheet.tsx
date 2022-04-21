@@ -24,20 +24,20 @@ export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
     <ConfirmOptOut />,
     I18n.t("profile.main.privacy.shareData.alert.title"),
     350,
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={{
-          ...cancelButtonProps(() => dismiss()),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...errorButtonProps(() => {
-            dismiss();
-            onConfirm();
-          }, I18n.t("global.buttons.confirm")),
-          onPressWithGestureHandler: true
-        }}
-      />
+    <FooterWithButtons
+      type={"TwoButtonsInlineThird"}
+      leftButton={{
+        ...cancelButtonProps(() => dismiss()),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        ...errorButtonProps(() => {
+          dismiss();
+          onConfirm();
+        }, I18n.t("global.buttons.confirm")),
+        onPressWithGestureHandler: true
+      }}
+    />
   );
 
   return { present, bottomSheet, dismiss };

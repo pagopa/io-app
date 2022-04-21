@@ -27,20 +27,20 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     <ManualConfigConfirm />,
     I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
     350,
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={{
-          ...cancelButtonProps(() => dismiss()),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...errorButtonProps(() => {
-            onConfirm();
-            dismiss();
-          }),
-          onPressWithGestureHandler: true
-        }}
-      />
+    <FooterWithButtons
+      type={"TwoButtonsInlineHalf"}
+      leftButton={{
+        ...cancelButtonProps(() => dismiss()),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        ...errorButtonProps(() => {
+          onConfirm();
+          dismiss();
+        }),
+        onPressWithGestureHandler: true
+      }}
+    />
   );
 
   return { present, manualConfigBottomSheet, dismiss };

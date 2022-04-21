@@ -39,20 +39,20 @@ const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
     <UnsubscribeComponent />,
     I18n.t("bonus.bpd.unsubscribe.title"),
     582,
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={{
-          ...cancelButtonProps(() => dismiss()),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...errorButtonProps(() => {
-            dismiss();
-            props.cancelBpd();
-          }, I18n.t("bonus.bpd.unsubscribe.confirmCta")),
-          onPressWithGestureHandler: true
-        }}
-      />
+    <FooterWithButtons
+      type={"TwoButtonsInlineThird"}
+      leftButton={{
+        ...cancelButtonProps(() => dismiss()),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        ...errorButtonProps(() => {
+          dismiss();
+          props.cancelBpd();
+        }, I18n.t("bonus.bpd.unsubscribe.confirmCta")),
+        onPressWithGestureHandler: true
+      }}
+    />
   );
 
   return (

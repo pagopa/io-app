@@ -46,20 +46,20 @@ export const useRemovePaymentMethodBottomSheet = (
     />,
     I18n.t("wallet.newRemove.title"),
     380,
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={{
-          ...cancelButtonProps(() => dismiss()),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...errorButtonProps(() => {
-            dismiss();
-            onConfirm();
-          }, I18n.t("global.buttons.delete")),
-          onPressWithGestureHandler: true
-        }}
-      />
+    <FooterWithButtons
+      type={"TwoButtonsInlineThird"}
+      leftButton={{
+        ...cancelButtonProps(() => dismiss()),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        ...errorButtonProps(() => {
+          dismiss();
+          onConfirm();
+        }, I18n.t("global.buttons.delete")),
+        onPressWithGestureHandler: true
+      }}
+    />
   );
 
   return { present, removePaymentMethodBottomSheet, dismiss };
