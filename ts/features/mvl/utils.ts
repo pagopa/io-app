@@ -1,4 +1,4 @@
-import ReactNativeBlobUtil from "react-native-blob-util";
+import ReactNativeBlobUtil, { RNFetchBlobDf } from "react-native-blob-util";
 import RNFS from "react-native-fs";
 
 import { share } from "../../utils/share";
@@ -91,7 +91,17 @@ export const handleDownloadResult = async (
               });
           },
           save: () => {
-            console.log("save");
+            const destination = `${ReactNativeBlobUtil.fs.dirs.DownloadDir}/${attachment.displayName}`;
+            ReactNativeBlobUtil.fs
+              .cp(path, destination)
+              .then(_ => {
+                console.log(`stored in ${destination}`);
+                // TODO: likely a toast saying we are done
+              })
+              .catch(error => {
+                // TODO: likely a toast with the error
+                console.error(error);
+              });
           }
         });
       } else {
