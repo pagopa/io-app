@@ -189,7 +189,7 @@ export const enhanceBPay = (
   abiInfo: rawBPay.info.instituteCode
     ? abiList[rawBPay.info.instituteCode]
     : undefined,
-  caption: getTitleFromPaymentMethod(rawBPay, abiList),
+  caption: I18n.t("wallet.methods.bancomatPay.name"),
   icon: getImageFromPaymentMethod(rawBPay)
 });
 
