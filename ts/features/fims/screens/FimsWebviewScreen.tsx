@@ -73,7 +73,9 @@ const FimsWebviewScreen = () => {
       name: "token",
       value: maybeSessionToken.value,
       domain: url.hostname,
-      path: "/"
+      path: "/",
+      httpOnly: true,
+      secure: true
     };
 
     setCookie(
