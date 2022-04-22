@@ -23,6 +23,7 @@ import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
   bpdEnabled,
+  cdcEnabled,
   euCovidCertificateEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
@@ -126,8 +127,7 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { askPremiumMessagesOptInOut } from "./premiumMessages";
-import { watchBonusCdcSaga } from "../features/bonus/cdc/saga/networking";
-import { PublicSession } from "../../definitions/backend/PublicSession";
+import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -200,7 +200,6 @@ export function* initializeApplicationSaga(): Generator<
     sessionToken
   );
 
-  yield* call(watchBonusCdcSaga, { bpdToken: "abcds" } as PublicSession);
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(checkSession, backendClient.getSession);
@@ -377,6 +376,11 @@ export function* initializeApplicationSaga(): Generator<
   if (bpdEnabled) {
     // Start watching for bpd actions
     yield* fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
+  }
+
+  if (cdcEnabled) {
+    // Start watching for cdc actions
+    yield* fork(watchBonusCdcSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Start watching for cgn actions
