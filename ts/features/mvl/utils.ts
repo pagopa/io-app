@@ -1,6 +1,7 @@
 import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
 
+import { share } from "../../utils/share";
 import { fetchTimeout } from "../../config";
 import { ContentTypeValues } from "../../types/contentType";
 import { isIos } from "../../utils/platform";
@@ -72,13 +73,36 @@ export const handleDownloadResult = async (
         ReactNativeBlobUtil.ios.presentOptionsMenu(result.path());
       }
     } else {
-      await ReactNativeBlobUtil.android.addCompleteDownload({
-        mime: attachment.contentType,
-        title: attachment.displayName,
-        showNotification: true,
-        description: attachment.displayName,
-        path: result.path()
-      });
+      if (attachment.contentType === ContentTypeValues.applicationPdf) {
+        showPreview(path, {
+          _tag: "android",
+          open: () => {
+            ReactNativeBlobUtil.android
+              .actionViewIntent(path, attachment.contentType)
+              .catch(error => {
+                // TODO: likely a toast with the error
+              });
+          },
+          share: () => {
+            share(`data:application/pdf;${result.base64()}`, undefined, false)
+              .run()
+              .catch(error => {
+                // TODO: likely a toast with the error
+              });
+          },
+          save: () => {
+            console.log("save");
+          }
+        });
+      } else {
+        await ReactNativeBlobUtil.android.addCompleteDownload({
+          mime: attachment.contentType,
+          title: attachment.displayName,
+          showNotification: true,
+          description: attachment.displayName,
+          path: result.path()
+        });
+      }
     }
   } catch (e) {
     if (e instanceof Error) {
