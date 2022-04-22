@@ -160,11 +160,14 @@ export const isPaypalEnabledSelector = createSelector(
  */
 export const bancomatPayConfigSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): BancomatPayConfig => ({
-    display: true,
-    onboarding: true,
-    payment: true
-  })
+  (backendStatus): BancomatPayConfig =>
+    backendStatus
+      .map(bs => bs.config.bancomatPay)
+      .getOrElse({
+        display: false,
+        onboarding: false,
+        payment: false
+      })
 );
 
 /**
