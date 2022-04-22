@@ -1,4 +1,3 @@
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
@@ -114,11 +113,7 @@ describe("Test CreditCardDetailScreen", () => {
 
 const CreditCardWrapper = (
   props: React.ComponentProps<typeof CreditCardDetailScreen>
-) => (
-  <BottomSheetModalProvider>
-    <CreditCardDetailScreen {...props} />
-  </BottomSheetModalProvider>
-);
+) => <CreditCardDetailScreen {...props} />;
 
 const renderDetailScreen = (
   store: Store,

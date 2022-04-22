@@ -19,12 +19,6 @@ import {
 import { ValidCertificate } from "../../types/EUCovidCertificate";
 import EuCovidCertValidScreen from "../valid/EuCovidCertValidScreen";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
-
 describe("Test EUCovidCertificateValidScreen", () => {
   jest.useFakeTimers();
   it("With baseValidCertificate, the details button and the preview markdown shouldn't be rendered", () => {
