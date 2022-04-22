@@ -1,14 +1,9 @@
-export type CdcBonusRequestStatus =
-  | "Activable"
-  | "Active"
-  | "Pending"
-  | "Expired"
-  | "NotRequestable";
+import { StatoBeneficiario } from "../../../../../definitions/cdc/StatoBeneficiario";
+import { Anno } from "../../../../../definitions/cdc/Anno";
 
 export type CdcBonusRequest = {
-  id: string;
-  year: number;
-  status: CdcBonusRequestStatus;
+  year: Anno;
+  status: StatoBeneficiario;
 };
 
 export type CdcBonusRequestList = ReadonlyArray<CdcBonusRequest>;
