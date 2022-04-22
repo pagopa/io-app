@@ -24,11 +24,11 @@ export const mvlDownloadsReducer = (
 ): MvlDownloads => {
   switch (action.type) {
     case getType(mvlAttachmentDownload.request):
-      return toLoading(action.payload, state);
+      return toLoading(action.payload.id, state);
     case getType(mvlAttachmentDownload.success):
-      return toSome(action.payload.id, state, action.payload.path);
+      return toSome(action.payload.attachment.id, state, action.payload.path);
     case getType(mvlAttachmentDownload.failure):
-      return toError(action.payload.id, state, action.payload.error);
+      return toError(action.payload.attachment.id, state, action.payload.error);
   }
   return state;
 };

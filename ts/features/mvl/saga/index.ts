@@ -6,7 +6,9 @@ import { waitBackoffError } from "../../../utils/backoffError";
 import { mvlDetailsLoad } from "../store/actions";
 import { BackendMvlClient } from "../api/backendMvl";
 import { apiUrlPrefix } from "../../../config";
+import { mvlAttachmentDownload } from "../store/actions/downloads";
 import { handleGetMvl } from "./networking/handleGetMvlDetails";
+import { downloadMvlAttachment } from "./networking/downloadMvlAttachment";
 
 /**
  * Handle the MVL Requests
@@ -22,6 +24,14 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
       // wait backoff time if there were previous errors
       yield* call(waitBackoffError, mvlDetailsLoad.failure);
       yield* call(handleGetMvl, mvlClient.getUserLegalMessage, action);
+    }
+  );
+
+  // handle the request for a new mvlAttachmentDownload
+  yield* takeLatest(
+    mvlAttachmentDownload.request,
+    async function* (action: ActionType<typeof mvlAttachmentDownload.request>) {
+      yield* call(downloadMvlAttachment, bearerToken, action);
     }
   );
 }
