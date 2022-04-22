@@ -61,6 +61,7 @@ const NewServiceListItem = (props: Props): React.ReactElement => {
       onPress={onPress}
       hideSeparator={props.hideSeparator}
       style={styles.listItem}
+      testID={serviceName}
     />
   );
 };
