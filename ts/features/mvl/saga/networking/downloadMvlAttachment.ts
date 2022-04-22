@@ -1,7 +1,7 @@
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { call, cancelled } from "typed-redux-saga/macro";
+import { cancelled } from "typed-redux-saga/macro";
 import { put } from "typed-redux-saga/macro";
 import { mvlAttachmentDownload } from "../../store/actions/downloads";
 import { isIos } from "../../../../utils/platform";
