@@ -26,7 +26,7 @@ export const PaymentMethodOnboardingPayPalOnboardingNavigator =
       // Let each screen handles the header and navigation
       headerMode: "none",
       defaultNavigationOptions: {
-        gesturesEnabled: false
+        gestureEnabled: false
       }
     }
   );

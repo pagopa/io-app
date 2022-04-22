@@ -51,7 +51,7 @@ export const BpdOnboardingNavigator = createCompatNavigatorFactory(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );
@@ -73,7 +73,7 @@ export const BpdDetailsNavigator = createCompatNavigatorFactory(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );
@@ -99,7 +99,7 @@ export const OptInPaymentMethodNavigator = createCompatNavigatorFactory(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );
