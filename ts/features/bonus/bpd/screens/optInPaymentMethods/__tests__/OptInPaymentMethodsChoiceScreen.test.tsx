@@ -35,7 +35,7 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
 });
 
 const renderComponent = () =>
-  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  renderScreenFakeNavRedux<GlobalState>(
     () => <OptInPaymentMethodsChoiceScreen />,
     BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE,
     {},

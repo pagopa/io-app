@@ -17,8 +17,8 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   getValueOrElse,
@@ -26,8 +26,6 @@ import {
   isReady
 } from "../../../../bonus/bpd/model/RemoteValue";
 import { PspRadioItem } from "../components/PspRadioItem";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { IOPayPalPsp } from "../types";
 import {
   searchPaypalPsp as searchPaypalPspAction,
   walletAddPaypalBack,
