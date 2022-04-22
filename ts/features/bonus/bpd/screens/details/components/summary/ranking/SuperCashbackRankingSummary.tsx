@@ -48,71 +48,77 @@ const SuperCashbackRankingReady = (props: {
   minRanking: number;
 }): React.ReactElement => {
   const { title, of } = loadLocales();
-  const { present } = useSuperCashbackRankingBottomSheet();
+  const { present, bottomSheet } = useSuperCashbackRankingBottomSheet();
   return (
-    <TouchableOpacity onPress={present} style={IOStyles.flex}>
-      <BpdBaseShadowBoxLayout
-        row1={
-          <H5 testID={"supercashbackSummary.title"} style={styles.title}>
-            {title}
-          </H5>
-        }
-        row2={
-          <H2
-            testID={"supercashbackSummary.ranking"}
-            color={"blue"}
-            style={styles.title}
-          >
-            {formatIntegerNumber(props.ranking)}°
-          </H2>
-        }
-        row3={
-          <H5
-            testID={"supercashbackSummary.minRanking"}
-            color={"bluegrey"}
-            style={styles.title}
-          >
-            {of} {formatIntegerNumber(props.minRanking)}
-          </H5>
-        }
-      />
-    </TouchableOpacity>
+    <>
+      {bottomSheet}
+      <TouchableOpacity onPress={present} style={IOStyles.flex}>
+        <BpdBaseShadowBoxLayout
+          row1={
+            <H5 testID={"supercashbackSummary.title"} style={styles.title}>
+              {title}
+            </H5>
+          }
+          row2={
+            <H2
+              testID={"supercashbackSummary.ranking"}
+              color={"blue"}
+              style={styles.title}
+            >
+              {formatIntegerNumber(props.ranking)}°
+            </H2>
+          }
+          row3={
+            <H5
+              testID={"supercashbackSummary.minRanking"}
+              color={"bluegrey"}
+              style={styles.title}
+            >
+              {of} {formatIntegerNumber(props.minRanking)}
+            </H5>
+          }
+        />
+      </TouchableOpacity>
+    </>
   );
 };
 
 const SuperCashbackRankingNotReady = (): React.ReactElement => {
   const { title, wip } = loadLocales();
-  const { present } = useRankingNotReadyBottomSheet();
+  const { present, bottomSheet } = useRankingNotReadyBottomSheet();
   return (
-    <TouchableOpacity onPress={present} style={IOStyles.flex}>
-      <BpdBaseShadowBoxLayout
-        row1={
-          <H5
-            testID={"superCashbackRankingNotReady.title"}
-            style={styles.title}
-          >
-            {title}
-          </H5>
-        }
-        row2={
-          <>
-            <View spacer={true} xsmall={true} />
-            <IconFont
-              name={"io-hourglass"}
-              size={24}
-              color={IOColors.blue as string}
-              style={styles.center}
-            />
-            <View spacer={true} xsmall={true} />
-          </>
-        }
-        row3={
-          <H5 color={"bluegrey"} style={styles.title}>
-            {wip}
-          </H5>
-        }
-      />
-    </TouchableOpacity>
+    <>
+      {bottomSheet}
+      <TouchableOpacity onPress={present} style={IOStyles.flex}>
+        <BpdBaseShadowBoxLayout
+          row1={
+            <H5
+              testID={"superCashbackRankingNotReady.title"}
+              style={styles.title}
+            >
+              {title}
+            </H5>
+          }
+          row2={
+            <>
+              <View spacer={true} xsmall={true} />
+              <IconFont
+                name={"io-hourglass"}
+                size={24}
+                color={IOColors.blue as string}
+                style={styles.center}
+              />
+              <View spacer={true} xsmall={true} />
+            </>
+          }
+          row3={
+            <H5 color={"bluegrey"} style={styles.title}>
+              {wip}
+            </H5>
+          }
+        />
+      </TouchableOpacity>
+    </>
   );
 };
 

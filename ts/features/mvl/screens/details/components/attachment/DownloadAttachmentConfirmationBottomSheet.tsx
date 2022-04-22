@@ -1,15 +1,12 @@
 import { View } from "native-base";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { StyleSheet, ActivityIndicator } from "react-native";
-
-import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import i18n from "../../../../../../i18n";
 import { useIODispatch } from "../../../../../../store/hooks";
-import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -24,6 +21,7 @@ import {
   LightModalContext
 } from "../../../../../../components/ui/LightModal";
 import { showToast } from "../../../../../../utils/showToast";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
@@ -96,73 +94,41 @@ const DownloadAttachmentConfirmationBottomSheet = ({
 
   if (isLoading) {
     return (
-      <BottomSheetContent>
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator
-            animating={true}
-            size={"large"}
-            style={styles.activityIndicator}
-            color={customVariables.brandPrimary}
-            accessible={true}
-            accessibilityHint={i18n.t(
-              "global.accessibility.activityIndicator.hint"
-            )}
-            accessibilityLabel={i18n.t(
-              "global.accessibility.activityIndicator.label"
-            )}
-            importantForAccessibility={"no-hide-descendants"}
-            testID={"activityIndicator"}
-          />
-          <H4 weight={"Regular"}>
-            {i18n.t(
-              "features.mvl.details.attachments.bottomSheet.loading.body"
-            )}
-          </H4>
-        </View>
-      </BottomSheetContent>
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator
+          animating={true}
+          size={"large"}
+          style={styles.activityIndicator}
+          color={customVariables.brandPrimary}
+          accessible={true}
+          accessibilityHint={i18n.t(
+            "global.accessibility.activityIndicator.hint"
+          )}
+          accessibilityLabel={i18n.t(
+            "global.accessibility.activityIndicator.label"
+          )}
+          importantForAccessibility={"no-hide-descendants"}
+          testID={"activityIndicator"}
+        />
+        <H4 weight={"Regular"}>
+          {i18n.t("features.mvl.details.attachments.bottomSheet.loading.body")}
+        </H4>
+      </View>
     );
   }
 
   if (downloadError) {
     return (
-      <BottomSheetContent
-        footer={
-          <FooterWithButtons
-            type={"TwoButtonsInlineHalf"}
-            leftButton={{
-              ...cancelButtonProps(onCancel),
-              onPressWithGestureHandler: true
-            }}
-            rightButton={{
-              ...confirmButtonProps(() => {
-                setDownloadError(null);
-                void performDownload();
-              }, i18n.t("global.buttons.retry")),
-              onPressWithGestureHandler: true
-            }}
-          />
-        }
-      >
-        <View>
-          <View spacer={true} />
-          <H4 weight={"Regular"}>
-            {i18n.t(
-              "features.mvl.details.attachments.bottomSheet.failing.body"
-            )}
-          </H4>
-          <Body>
-            {i18n.t(
-              "features.mvl.details.attachments.bottomSheet.failing.details"
-            )}
-          </Body>
-        </View>
-      </BottomSheetContent>
-    );
-  }
-
-  return (
-    <BottomSheetContent
-      footer={
+      <View>
+        <View spacer={true} />
+        <H4 weight={"Regular"}>
+          {i18n.t("features.mvl.details.attachments.bottomSheet.failing.body")}
+        </H4>
+        <Body>
+          {i18n.t(
+            "features.mvl.details.attachments.bottomSheet.failing.details"
+          )}
+        </Body>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={{
@@ -171,33 +137,49 @@ const DownloadAttachmentConfirmationBottomSheet = ({
           }}
           rightButton={{
             ...confirmButtonProps(() => {
+              setDownloadError(null);
               void performDownload();
-            }, i18n.t("global.buttons.continue")),
+            }, i18n.t("global.buttons.retry")),
             onPressWithGestureHandler: true
           }}
         />
-      }
-    >
-      <View>
-        <View spacer={true} />
-        <Body>
-          {i18n.t("features.mvl.details.attachments.bottomSheet.warning.body")}
-        </Body>
-        <View spacer={true} />
-        <View style={IOStyles.row}>
-          <RawCheckBox
-            checked={dontAskAgain}
-            onPress={() => setDontAskAgain(!dontAskAgain)}
-          />
-          <Body
-            style={{ paddingLeft: 8 }}
-            onPress={() => setDontAskAgain(!dontAskAgain)}
-          >
-            {i18n.t("features.mvl.details.attachments.bottomSheet.checkBox")}
-          </Body>
-        </View>
       </View>
-    </BottomSheetContent>
+    );
+  }
+
+  return (
+    <View>
+      <View spacer={true} />
+      <Body>
+        {i18n.t("features.mvl.details.attachments.bottomSheet.warning.body")}
+      </Body>
+      <View spacer={true} />
+      <View style={IOStyles.row}>
+        <RawCheckBox
+          checked={dontAskAgain}
+          onPress={() => setDontAskAgain(!dontAskAgain)}
+        />
+        <Body
+          style={{ paddingLeft: 8 }}
+          onPress={() => setDontAskAgain(!dontAskAgain)}
+        >
+          {i18n.t("features.mvl.details.attachments.bottomSheet.checkBox")}
+        </Body>
+      </View>
+      <FooterWithButtons
+        type={"TwoButtonsInlineHalf"}
+        leftButton={{
+          ...cancelButtonProps(onCancel),
+          onPressWithGestureHandler: true
+        }}
+        rightButton={{
+          ...confirmButtonProps(() => {
+            void performDownload();
+          }, i18n.t("global.buttons.continue")),
+          onPressWithGestureHandler: true
+        }}
+      />
+    </View>
   );
 };
 
@@ -206,45 +188,44 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
   authHeader: { [key: string]: string },
   options: { dontAskAgain: boolean; showToastOnSuccess: boolean }
 ) => {
-  const { present, dismiss } = useIOBottomSheetRaw(BOTTOM_SHEET_HEIGHT);
   const dispatch = useIODispatch();
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
-  const openModalBox = () =>
-    present(
-      <DownloadAttachmentConfirmationBottomSheet
-        onCancel={dismiss}
-        onConfirm={({ dontAskAgain }) => {
-          dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
-          return handleDownloadResult(
-            attachment,
-            authHeader,
-            (path, actionConfig) =>
-              showAnimatedModal(
-                <PdfPreview
-                  path={path}
-                  onClose={hideModal}
-                  onError={_error => {
-                    dismiss();
-                    showToast(
-                      i18n.t(
-                        "features.mvl.details.attachments.bottomSheet.failing.details"
-                      )
-                    );
-                  }}
-                  actionConfig={actionConfig}
-                />,
-                BottomTopAnimation
-              )
-          ).then(() => dismiss());
-        }}
-        initialPreferences={options}
-        withoutConfirmation={options.dontAskAgain}
-      />,
-      options.dontAskAgain
-        ? i18n.t("features.mvl.details.attachments.bottomSheet.loading.title")
-        : i18n.t("features.mvl.details.attachments.bottomSheet.warning.title")
-    );
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+    <DownloadAttachmentConfirmationBottomSheet
+      onCancel={() => dismiss()}
+      onConfirm={({ dontAskAgain }) => {
+        dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
+        return handleDownloadResult(
+          attachment,
+          authHeader,
+          (path, actionConfig) =>
+            showAnimatedModal(
+              <PdfPreview
+                path={path}
+                onClose={hideModal}
+                onError={_error => {
+                  dismiss();
+                  showToast(
+                    i18n.t(
+                      "features.mvl.details.attachments.bottomSheet.failing.details"
+                    )
+                  );
+                }}
+                actionConfig={actionConfig}
+              />,
+              BottomTopAnimation
+            )
+        ).then(() => dismiss());
+      }}
+      initialPreferences={options}
+      withoutConfirmation={options.dontAskAgain}
+    />,
+    options.dontAskAgain
+      ? i18n.t("features.mvl.details.attachments.bottomSheet.loading.title")
+      : i18n.t("features.mvl.details.attachments.bottomSheet.warning.title"),
+    BOTTOM_SHEET_HEIGHT
+  );
 
-  return { present: openModalBox, dismiss };
+  return { present, bottomSheet, dismiss };
 };
