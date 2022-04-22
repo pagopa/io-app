@@ -1,6 +1,9 @@
 import { SagaIterator } from "redux-saga";
+import { takeLatest } from "typed-redux-saga/macro";
 import { BackendCdcClient } from "../api/backendCdc";
 import { apiUrlPrefix } from "../../../../config";
+import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
+import { handleGetStatoBeneficiario } from "./networking/handleGetStatoBeneficiario";
 
 /**
  *
@@ -14,5 +17,12 @@ export function* watchBonusCdcSaga(bpdBearerToken: string): SagaIterator {
   const cdcClient: BackendCdcClient = BackendCdcClient(
     apiUrlPrefix,
     bpdBearerToken
+  );
+
+  // SV get the list of bonus per year with the associated status
+  yield* takeLatest(
+    cdcRequestBonusList.request,
+    handleGetStatoBeneficiario,
+    cdcClient.getStatoBeneficiario
   );
 }
