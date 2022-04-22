@@ -2,19 +2,21 @@ import { SagaIterator } from "redux-saga";
 import { call } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../../config";
 import { BackendCdcClient } from "../../api/backendCdc";
-import { PublicSession } from "../../../../../../definitions/backend/PublicSession";
+import { SagaCallReturnType } from "../../../../../types/utils";
 import { Anno } from "../../../../../../definitions/cdc/Anno";
 
-export function* watchBonusCdcSaga(publicSession: PublicSession): SagaIterator {
+export function* watchBonusCdcSaga(bpdBearerToken: string): SagaIterator {
   // Client for the Cdc
   const cdcClient: BackendCdcClient = BackendCdcClient(
     apiUrlPrefix,
-    publicSession.bpdToken
+    bpdBearerToken
   );
 
   yield* call(cdcClient.getStatoBeneficiario, {});
 
-  const payload = {
+  const response: SagaCallReturnType<
+    typeof cdcClient["postRegistraBeneficiario"]
+  > = yield* call(cdcClient.postRegistraBeneficiario, {
     anniRiferimento: {
       anniRif: [{ anno: "2028" as Anno }]
     }
