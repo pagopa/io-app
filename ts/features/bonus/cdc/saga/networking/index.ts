@@ -13,12 +13,9 @@ export function* watchBonusCdcSaga(publicSession: PublicSession): SagaIterator {
 
   yield* call(cdcClient.getStatoBeneficiario, {});
 
-  yield* call(
-    cdcClient.postRegistraBeneficiario({
-      anniRiferimento: {
-        anniRif: [{ anno: "2028" }]
-      }
-    }),
-    {}
-  );
+  yield* call(cdcClient.postRegistraBeneficiario, {
+    anniRiferimento: {
+      anniRif: [{ anno: "2028" }]
+    }
+  });
 }
