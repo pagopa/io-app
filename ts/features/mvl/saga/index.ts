@@ -30,7 +30,7 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
   // handle the request for a new mvlAttachmentDownload
   yield* takeLatest(
     mvlAttachmentDownload.request,
-    async function* (action: ActionType<typeof mvlAttachmentDownload.request>) {
+    function* (action: ActionType<typeof mvlAttachmentDownload.request>) {
       yield* call(downloadMvlAttachment, bearerToken, action);
     }
   );
