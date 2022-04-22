@@ -1,7 +1,8 @@
 import { View } from "native-base";
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 import Svg from "react-native-svg";
+import * as pot from "italia-ts-commons/lib/pot";
 import Default from "../../../../../../../img/features/mvl/attachmentsIcon/default.svg";
 import Pdf from "../../../../../../../img/features/mvl/attachmentsIcon/pdf.svg";
 import { H2 } from "../../../../../../components/core/typography/H2";
@@ -18,6 +19,7 @@ import { MvlAttachment, MvlData } from "../../../../types/mvlData";
 import { useIOSelector } from "../../../../../../store/hooks";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
 import { ioBackendAuthenticationHeaderSelector } from "../../../../../../store/reducers/authentication";
+import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
 import { useDownloadAttachmentConfirmationBottomSheet } from "./DownloadAttachmentConfirmationBottomSheet";
 
 type Props = {
@@ -80,6 +82,9 @@ const AttachmentIcon = (props: {
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
   const authHeader = useIOSelector(ioBackendAuthenticationHeaderSelector);
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
+  const downloadPot = useIOSelector(state =>
+    mvlAttachmentDownloadFromIdSelector(state, props.attachment.id)
+  );
   const { present } = useDownloadAttachmentConfirmationBottomSheet(
     props.attachment,
     authHeader,
@@ -108,12 +113,20 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
             </H5>
           )}
         </View>
-        <IconFont
-          name={"io-right"}
-          color={IOColors.blue}
-          size={24}
-          style={styles.icon}
-        />
+        {pot.isLoading(downloadPot) ? (
+          <ActivityIndicator
+            accessibilityLabel={I18n.t("global.remoteStates.loading")}
+            color={IOColors.blue}
+            style={{ ...styles.icon, width: 24 }}
+          />
+        ) : (
+          <IconFont
+            name={"io-right"}
+            color={IOColors.blue}
+            size={24}
+            style={styles.icon}
+          />
+        )}
       </View>
     </TouchableOpacity>
   );
