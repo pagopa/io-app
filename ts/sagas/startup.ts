@@ -126,6 +126,8 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { askPremiumMessagesOptInOut } from "./premiumMessages";
+import { watchBonusCdcSaga } from "../features/bonus/cdc/saga/networking";
+import { PublicSession } from "../../definitions/backend/PublicSession";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -197,6 +199,8 @@ export function* initializeApplicationSaga(): Generator<
     apiUrlPrefix,
     sessionToken
   );
+
+  yield* call(watchBonusCdcSaga, { bpdToken: "abcds" } as PublicSession);
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(checkSession, backendClient.getSession);
