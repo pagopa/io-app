@@ -13,12 +13,6 @@ import AddCardScreen, { AddCardScreenNavigationParams } from "../AddCardScreen";
 import { testableFunctions } from "../AddPaymentMethodScreen";
 import { IPaymentMethod } from "../../../components/wallet/PaymentMethodsList";
 
-const mockPresentFn = jest.fn();
-jest.mock("../../../utils/bottomSheet", () => ({
-  __esModule: true,
-  useIOBottomSheet: () => ({ present: mockPresentFn })
-}));
-
 jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
   open: jest.fn()
