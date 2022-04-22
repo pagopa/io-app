@@ -8,7 +8,7 @@ import { Body } from "../../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import i18n from "../../../../../../i18n";
-import { useIODispatch } from "../../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
 import {
   cancelButtonProps,
@@ -24,6 +24,9 @@ import {
   LightModalContext
 } from "../../../../../../components/ui/LightModal";
 import { showToast } from "../../../../../../utils/showToast";
+import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
+import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
+import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
 import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
@@ -247,4 +250,38 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
     );
 
   return { present: openModalBox, dismiss };
+};
+
+export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
+  const dispatch = useIODispatch();
+
+  const downloadPot = useIOSelector(state =>
+    mvlAttachmentDownloadFromIdSelector(state, attachment.id)
+  );
+
+  const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
+  const { present, dismiss } = useIOBottomSheetRaw(BOTTOM_SHEET_HEIGHT);
+
+  const startDownload = () => {
+    if (showAlertForAttachments) {
+      void present(
+        <DownloadAttachmentConfirmationBottomSheet
+          onCancel={dismiss}
+          onConfirm={({ dontAskAgain }) => {
+            dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
+            dismiss();
+            dispatch(mvlAttachmentDownload.request(attachment));
+            return Promise.resolve();
+          }}
+          initialPreferences={{ dontAskAgain: false }}
+          withoutConfirmation={false}
+        />,
+        i18n.t("features.mvl.details.attachments.bottomSheet.warning.title")
+      );
+    } else {
+      dispatch(mvlAttachmentDownload.request(attachment));
+    }
+  };
+
+  return { downloadPot, startDownload };
 };

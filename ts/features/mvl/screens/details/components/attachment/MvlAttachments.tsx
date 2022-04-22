@@ -14,13 +14,8 @@ import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
-import * as platform from "../../../../../../utils/platform";
 import { MvlAttachment, MvlData } from "../../../../types/mvlData";
-import { useIOSelector } from "../../../../../../store/hooks";
-import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
-import { ioBackendAuthenticationHeaderSelector } from "../../../../../../store/reducers/authentication";
-import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
-import { useDownloadAttachmentConfirmationBottomSheet } from "./DownloadAttachmentConfirmationBottomSheet";
+import { useMvlAttachmentDownload } from "./DownloadAttachmentConfirmationBottomSheet";
 
 type Props = {
   attachments: MvlData["attachments"];
@@ -80,22 +75,12 @@ const AttachmentIcon = (props: {
  * @constructor
  */
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
-  const authHeader = useIOSelector(ioBackendAuthenticationHeaderSelector);
-  const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
-  const downloadPot = useIOSelector(state =>
-    mvlAttachmentDownloadFromIdSelector(state, props.attachment.id)
-  );
-  const { present } = useDownloadAttachmentConfirmationBottomSheet(
-    props.attachment,
-    authHeader,
-    {
-      dontAskAgain: !showAlertForAttachments,
-      showToastOnSuccess: platform.isAndroid
-    }
+  const { downloadPot, startDownload } = useMvlAttachmentDownload(
+    props.attachment
   );
 
   return (
-    <TouchableOpacity style={styles.container} onPress={present}>
+    <TouchableOpacity style={styles.container} onPress={startDownload}>
       <View style={styles.row}>
         <AttachmentIcon contentType={props.attachment.contentType} />
         <View style={styles.middleSection}>
