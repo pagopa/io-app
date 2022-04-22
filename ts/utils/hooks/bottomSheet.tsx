@@ -142,8 +142,6 @@ export const useIOBottomSheetModal = (
             {bottomSheetProps.config.handleComponent}
             {bottomSheetProps.content}
           </View>
-          {bottomSheetProps.config.handleComponent}
-          {bottomSheetProps.content}
           <>
             {footer !== undefined ? (
               <>
