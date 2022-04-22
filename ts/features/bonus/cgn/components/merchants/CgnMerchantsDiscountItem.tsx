@@ -39,11 +39,12 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   merchantType,
   navigateToLandingWebview
 }: Props) => {
-  const { present } = useCgnDiscountDetailBottomSheet(
-    discount,
-    merchantType,
-    navigateToLandingWebview
-  );
+  const { present, bottomSheet: cgnDiscountDetail } =
+    useCgnDiscountDetailBottomSheet(
+      discount,
+      merchantType,
+      navigateToLandingWebview
+    );
   return (
     <TouchableDefaultOpacity style={[styles.listItem]} onPress={present}>
       <View style={[IOStyles.row, styles.container]}>
@@ -54,6 +55,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
         </View>
         <IconFont name={"io-right"} color={IOColors.blue} size={24} />
       </View>
+      {cgnDiscountDetail}
     </TouchableDefaultOpacity>
   );
 };
