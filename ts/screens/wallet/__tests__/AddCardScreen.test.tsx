@@ -1,4 +1,3 @@
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { fireEvent } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
@@ -243,9 +242,7 @@ const getComponent = () => {
   const ToBeTested: React.FunctionComponent<
     React.ComponentProps<typeof AddCardScreen>
   > = (props: React.ComponentProps<typeof AddCardScreen>) => (
-    <BottomSheetModalProvider>
-      <AddCardScreen {...props} />
-    </BottomSheetModalProvider>
+    <AddCardScreen {...props} />
   );
 
   const globalState = appReducer(undefined, applicationChangeState("active"));

@@ -7,7 +7,8 @@ import {
   FlatList,
   RefreshControl,
   StyleSheet,
-  Vibration
+  Vibration,
+  View
 } from "react-native";
 import { connect } from "react-redux";
 
@@ -78,6 +79,9 @@ const styles = StyleSheet.create({
   },
   activityIndicator: {
     padding: 12
+  },
+  bottomSpacer: {
+    height: 60
   }
 });
 
@@ -255,7 +259,7 @@ const MessageList = ({
     if (messages.length > 0 && !nextCursor) {
       return <EdgeBorderComponent />;
     }
-    return null;
+    return <View style={styles.bottomSpacer} />;
   };
 
   return (
@@ -291,7 +295,7 @@ const MessageList = ({
         }}
         onLayout={handleOnLayoutChange}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.25}
         testID={testID}
         ListFooterComponent={renderListFooter}
       />

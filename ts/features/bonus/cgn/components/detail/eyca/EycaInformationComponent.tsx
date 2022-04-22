@@ -2,7 +2,7 @@ import * as React from "react";
 import { View } from "native-base";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
-import { useIOBottomSheet } from "../../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
@@ -46,7 +46,7 @@ const EycaInformationComponent: React.FunctionComponent = () => {
 };
 
 export const useEycaInformationBottomSheet = () =>
-  useIOBottomSheet(
+  useIOBottomSheetModal(
     <EycaInformationComponent />,
     I18n.t("bonus.cgn.detail.status.eycaBottomSheetTitle"),
     420

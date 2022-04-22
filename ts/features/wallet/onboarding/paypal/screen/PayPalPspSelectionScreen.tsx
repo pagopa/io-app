@@ -27,6 +27,8 @@ import {
   isReady
 } from "../../../../bonus/bpd/model/RemoteValue";
 import { PspRadioItem } from "../components/PspRadioItem";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { IOPayPalPsp } from "../types";
 import {
   searchPaypalPsp as searchPaypalPspAction,
   walletAddPaypalBack,
@@ -101,7 +103,7 @@ const getLocales = () => ({
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const { present: presentWhatIsPspBottomSheet, bottomSheet } =
-    useIOBottomSheet(
+    useIOBottomSheetModal(
       <Body>{locales.whatIsPspBody}</Body>,
       locales.whatIsPspTitle,
       280

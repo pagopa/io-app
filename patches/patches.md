@@ -104,4 +104,6 @@ Created on **24/03/2022**
 
 #### Reason:
 
-- This patch is going to add the customization of accessibility props on bottom sheet children components
+- This patch is going to add the customization of accessibility props on bottom sheet children components.
+  A [PR has been opened](https://github.com/gorhom/react-native-bottom-sheet/pull/889) on the package repo in order to
+  fix the issue on the dependency too.

@@ -4,7 +4,7 @@ import { Body } from "../../../components/core/typography/Body";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { PaymentMethodRepresentation } from "../../../types/pagopa";
-import { useIOBottomSheet } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
   errorButtonProps
@@ -37,7 +37,7 @@ export const useRemovePaymentMethodBottomSheet = (
     present,
     bottomSheet: removePaymentMethodBottomSheet,
     dismiss
-  } = useIOBottomSheet(
+  } = useIOBottomSheetModal(
     <RemovePaymentMethod
       representation={{
         caption: representation.caption,
@@ -46,22 +46,20 @@ export const useRemovePaymentMethodBottomSheet = (
     />,
     I18n.t("wallet.newRemove.title"),
     380,
-    () => (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={{
-          ...cancelButtonProps(() => dismiss()),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...errorButtonProps(() => {
-            dismiss();
-            onConfirm();
-          }, I18n.t("global.buttons.delete")),
-          onPressWithGestureHandler: true
-        }}
-      />
-    )
+    <FooterWithButtons
+      type={"TwoButtonsInlineThird"}
+      leftButton={{
+        ...cancelButtonProps(() => dismiss()),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        ...errorButtonProps(() => {
+          dismiss();
+          onConfirm();
+        }, I18n.t("global.buttons.delete")),
+        onPressWithGestureHandler: true
+      }}
+    />
   );
 
   return { present, removePaymentMethodBottomSheet, dismiss };

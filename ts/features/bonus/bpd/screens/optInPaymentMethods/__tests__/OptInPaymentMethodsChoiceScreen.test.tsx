@@ -1,6 +1,5 @@
 import React from "react";
 
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../store/reducers";
@@ -33,46 +32,11 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
 
     expect(activeButton).toBeTruthy();
   });
-
-  it("should show the red button after selecting the `Delete all` option and a bottom sheet after pressing it", async () => {
-    const component = renderComponent();
-
-    const secondOptionTitle = component.getByText(
-      I18n.t("bonus.bpd.optInPaymentMethods.choice.options.deleteAll.title")
-    );
-
-    fireEvent.press(secondOptionTitle);
-
-    const redButton = component.getByText(
-      I18n.t("bonus.bpd.optInPaymentMethods.choice.deleteAllButton")
-    );
-
-    expect(redButton).toBeTruthy();
-
-    fireEvent.press(redButton);
-
-    // This is an hack to use asynchronous code inside
-    // jest while using `jest.useFakeTimers()`.
-    // See: https://stackoverflow.com/a/51132058/9825478
-    void Promise.resolve().then(() => jest.advanceTimersByTime(100));
-
-    const bottomSheet = component.findByText(
-      I18n.t(
-        "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
-      )
-    );
-
-    expect(bottomSheet).toBeTruthy();
-  });
 });
 
 const renderComponent = () =>
-  renderScreenFakeNavRedux<GlobalState>(
-    () => (
-      <BottomSheetModalProvider>
-        <OptInPaymentMethodsChoiceScreen />
-      </BottomSheetModalProvider>
-    ),
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    () => <OptInPaymentMethodsChoiceScreen />,
     BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE,
     {},
     createStore(appReducer)

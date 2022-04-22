@@ -40,7 +40,7 @@ import { fromVoucherToDestinationLabels } from "../../utils";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { showToast } from "../../../../../utils/showToast";
 import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
-import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -116,6 +116,37 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
     );
   }, [pdfVoucherState]);
 
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+    isReady(props.selectedVoucher) ? (
+      <VoucherDetailBottomSheet
+        barCode={props.selectedVoucher.value.barCode}
+        qrCode={props.selectedVoucher.value.qrCode}
+        pdfVoucherState={pdfVoucherState}
+      />
+    ) : null,
+    I18n.t("bonus.sv.components.voucherBottomsheet.title"),
+    650,
+    <FooterWithButtons
+      type={"TwoButtonsInlineHalf"}
+      leftButton={{
+        bordered: true,
+        onPress: () => dismiss(),
+        title: I18n.t("bonus.sv.components.voucherBottomsheet.cta.exit"),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        primary: true,
+        onPress: () => {
+          dismiss();
+          props.stampaVoucher(selectedVoucher.id);
+        },
+        title: I18n.t("global.genericSave"),
+        onPressWithGestureHandler: true,
+        disabled: isLoading(props.pdfVoucherState)
+      }}
+    />
+  );
+
   // The selectedVoucherCode can't be undefined in this screen
   if (!isReady(props.selectedVoucher)) {
     return fromNullable(selectedVoucherCode).fold(null, svc => (
@@ -166,22 +197,6 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       </BaseScreenComponent>
     );
   }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
-    <VoucherDetailBottomSheet
-      barCode={selectedVoucher.barCode}
-      qrCode={selectedVoucher.qrCode}
-      onExit={() => dismiss()}
-      onSaveVoucher={() => {
-        dismiss();
-        props.stampaVoucher(selectedVoucher.id);
-      }}
-      pdfVoucherState={pdfVoucherState}
-    />,
-    I18n.t("bonus.sv.components.voucherBottomsheet.title"),
-    650
-  );
 
   const openQrButtonProps = {
     primary: true,

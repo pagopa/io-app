@@ -10,7 +10,7 @@ import { PaymentMethod } from "../../../types/pagopa";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
-import { useIOBottomSheet } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { H4 } from "../../core/typography/H4";
 import IconFont from "../../ui/IconFont";
 import I18n from "../../../i18n";
@@ -138,7 +138,7 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   const { logo, title, description, bottomSheetTitle, bottomSheetBody } =
     extractInfoFromPaymentMethod(props.paymentMethod, props.nameSurname ?? "");
 
-  const { present, bottomSheet } = useIOBottomSheet(
+  const { present, bottomSheet } = useIOBottomSheetModal(
     bottomSheetBody,
     bottomSheetTitle,
     300

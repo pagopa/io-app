@@ -5,26 +5,6 @@ import { PspRadioItem } from "../../components/PspRadioItem";
 import { privacyUrl } from "../../../../../../config";
 import { IOPayPalPsp } from "../../types";
 
-const mockPresent = jest.fn();
-jest.mock("@gorhom/bottom-sheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const rn = require("react-native");
-
-  return {
-    __esModule: true,
-    BottomSheetModal: rn.Modal,
-    BottomSheetScrollView: rn.ScrollView,
-    TouchableWithoutFeedback: rn.TouchableWithoutFeedback,
-    useBottomSheetModal: () => ({
-      dismissAll: mockPresent
-    }),
-    namedExport: {
-      ...require("react-native-reanimated/mock"),
-      ...jest.requireActual("@gorhom/bottom-sheet")
-    }
-  };
-});
-
 const payPalPsp: IOPayPalPsp = {
   id: "1",
   logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",

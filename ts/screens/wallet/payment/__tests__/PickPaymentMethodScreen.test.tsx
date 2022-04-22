@@ -58,7 +58,7 @@ jest.mock("../../../../utils/hooks/bottomSheet", () => {
 
   return {
     __esModule: true,
-    useIOBottomSheet: () => ({
+    useIOBottomSheetModal: () => ({
       present: mockPresentFn,
       bottomSheet: react.View
     })
