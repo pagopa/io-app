@@ -70,7 +70,6 @@ import {
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
   updateWalletUsingPUTV2Decoder,
-  updateWalletUsingPUTV2DefaultDecoder,
   UpdateWalletUsingPUTV2T
 } from "../../definitions/pagopa/requestTypes";
 import {
