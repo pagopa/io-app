@@ -41,7 +41,10 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
@@ -49,7 +52,6 @@ import {
   getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
-import { isRawPayPal } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import {
@@ -363,18 +365,23 @@ const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;
   const isPaypalEnabled = isPaypalEnabledSelector(state);
+  const isBPayPaymentEnabled = bancomatPayConfigSelector(state).payment;
   const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
   /**
-   * if the favourite wallet is Paypal but the relative feature is not enabled,
-   * the favourite wallet will be undefined
+   * the favourite will be undefined if one of these condition is true
+   * - payment method is Paypal & the relative feature flag is not enabled
+   * - payment method is BPay & the relative feature flag is not enabled
    */
-  const maybeFavoriteWallet = fromNullable(
-    favouriteWallet &&
-      isRawPayPal(favouriteWallet.paymentMethod) &&
-      !isPaypalEnabled
-      ? undefined
-      : favouriteWallet
-  );
+  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
+    switch (fw.paymentMethod?.kind) {
+      case "PayPal":
+        return isPaypalEnabled;
+      case "BPay":
+        return isBPayPaymentEnabled;
+      default:
+        return true;
+    }
+  });
   const psps = pspsV2.psps;
   const error: Option<
     PayloadForAction<
