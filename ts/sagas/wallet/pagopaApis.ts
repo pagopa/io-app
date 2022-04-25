@@ -41,7 +41,7 @@ import {
   updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { PaymentManagerToken, Psp, Wallet } from "../../types/pagopa";
+import { PaymentManagerToken, Wallet } from "../../types/pagopa";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
@@ -328,8 +328,7 @@ export function* updateWalletPspRequestHandler(
           pagoPaClient,
           pmSessionManager
         );
-        const maybePsp = Psp.decode(response.value.value.data?.psp);
-        if (maybeWallets.isRight() && maybePsp.isRight()) {
+        if (maybeWallets.isRight()) {
           // look for the updated wallet
           const updatedWallet = maybeWallets.value.find(
             _ => _.idWallet === wallet.idWallet
@@ -339,7 +338,7 @@ export function* updateWalletPspRequestHandler(
             const successAction = paymentUpdateWalletPsp.success({
               wallets: maybeWallets.value,
               // attention: updatedWallet is V1
-              updatedWallet: { ...updatedWallet, psp: maybePsp.value }
+              updatedWallet: response.value.value.data
             });
             yield* put(successAction);
             if (action.payload.onSuccess) {
