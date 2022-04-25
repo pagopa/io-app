@@ -40,15 +40,6 @@ import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
 
 /**
- * A method to convert an payment amount in a proper formatted string
- * @param amount In euro-cents
- */
-export function formatPaymentAmount(amount: number): string {
-  // We need to divide by 100 to get euro from euro-cents
-  return I18n.toNumber(amount / 100, { precision: 2 });
-}
-
-/**
  * Converts a NoticeNumber coming from a Message to an RptId needed by PagoPA
  */
 export function getRptIdFromNoticeNumber(
@@ -125,16 +116,10 @@ export function walletHasFavoriteAvailablePsp(
 /**
  * return true if the given wallet has a psp set and it is included in the given psp list
  */
-export function walletHasFavoriteAvailablePspData(
+export const walletHasFavoriteAvailablePspData = (
   wallet: Wallet,
   psps: ReadonlyArray<PspData>
-): boolean {
-  // see whether the PSP associated with this wallet can be found in the psp list
-  const walletPspInPsps = psps.find(psp => psp.idPsp === wallet.psp?.idPsp);
-  // if the wallet PSP is one of the available PSPs, we can automatically
-  // select it
-  return walletPspInPsps !== undefined;
-}
+): boolean => psps.find(psp => psp.idPsp === wallet.psp?.idPsp) !== undefined;
 
 /**
  * This tags are defined in PagoPA specs for transaction description.
