@@ -193,7 +193,7 @@ describe("getPaymentMethods", () => {
     ).toEqual("notImplemented");
   });
 
-  it("bpay should be always notImplemented if Bpay onboaring FF is OFF", () => {
+  it("bpay should be always notImplemented if bpay onboaring FF is OFF", () => {
     const methods = testableFunctions.getPaymentMethods!(props, {
       onlyPaymentMethodCanPay: true,
       isPaymentOnGoing: true,
@@ -205,7 +205,7 @@ describe("getPaymentMethods", () => {
     ).toEqual("notImplemented");
   });
 
-  it("bpay should be always implemented if Bpay onboaring FF is ON and onlyPaymentMethodCanPay flag is OFF", () => {
+  it("bpay should be always implemented if bpay onboaring FF is ON and onlyPaymentMethodCanPay flag is OFF", () => {
     const methods = testableFunctions.getPaymentMethods!(props, {
       onlyPaymentMethodCanPay: false,
       isPaymentOnGoing: true,
@@ -217,7 +217,7 @@ describe("getPaymentMethods", () => {
     ).toEqual("implemented");
   });
 
-  it("bpay should be notImplemented implemented during a payment if it can be onboarded but it cannot pay", () => {
+  it("bpay should be notImplemented while a payment if it can be onboarded but it cannot pay", () => {
     const canPayWithBPay = false;
     const canOnboardBPay = true;
     const methods = testableFunctions.getPaymentMethods!(
@@ -234,7 +234,7 @@ describe("getPaymentMethods", () => {
     ).toEqual("notImplemented");
   });
 
-  it("bpay should be implemented implemented outside a payment if it can be onboarded but it cannot pay", () => {
+  it("bpay should be implemented outside a payment if it can be onboarded but it cannot pay", () => {
     const canPayWithBPay = true;
     const canOnboardBPay = true;
     const methods = testableFunctions.getPaymentMethods!(
