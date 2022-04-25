@@ -123,25 +123,14 @@ export function walletHasFavoriteAvailablePsp(
 }
 
 /**
- * Whether we need to show the PSP selection screen to the user.
+ * return true if the given wallet has a psp set and it is included in the given psp list
  */
 export function walletHasFavoriteAvailablePspData(
   wallet: Wallet,
   psps: ReadonlyArray<PspData>
 ): boolean {
-  // see whether there's a PSP that has already been used with this wallet
-  const maybeWalletPsp = wallet.psp;
-
-  if (maybeWalletPsp === undefined) {
-    // there is no PSP associated to this payment method (wallet), we cannot
-    // automatically select a PSP
-    return false;
-  }
-
-  // see whether the PSP associated with this wallet can be used for this
-  // payment
-  const walletPspInPsps = psps.find(psp => psp.idPsp === maybeWalletPsp.idPsp);
-
+  // see whether the PSP associated with this wallet can be found in the psp list
+  const walletPspInPsps = psps.find(psp => psp.idPsp === wallet.psp?.idPsp);
   // if the wallet PSP is one of the available PSPs, we can automatically
   // select it
   return walletPspInPsps !== undefined;
