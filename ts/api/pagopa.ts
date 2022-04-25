@@ -298,15 +298,7 @@ type PspParams = {
   readonly idPayment: string;
   readonly language: string;
 };
-export type GetSelectedPspUsingGETTExtra = r.IGetApiRequestType<
-  PspParams,
-  "Authorization",
-  never,
-  | r.IResponseType<200, PspListResponse>
-  | r.IResponseType<401, undefined>
-  | r.IResponseType<403, undefined>
-  | r.IResponseType<404, undefined>
->;
+
 const getPspQuery = (params: PspParams) => {
   const { idPayment, idWallet, language } = params;
   return {
