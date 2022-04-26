@@ -75,12 +75,16 @@ const AttachmentIcon = (props: {
  * @constructor
  */
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
-  const { downloadPot, startDownload } = useMvlAttachmentDownload(
+  const { downloadPot, openAttachment } = useMvlAttachmentDownload(
     props.attachment
   );
 
   return (
-    <TouchableOpacity style={styles.container} onPress={startDownload}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={openAttachment}
+      disabled={pot.isLoading(downloadPot)}
+    >
       <View style={styles.row}>
         <AttachmentIcon contentType={props.attachment.contentType} />
         <View style={styles.middleSection}>

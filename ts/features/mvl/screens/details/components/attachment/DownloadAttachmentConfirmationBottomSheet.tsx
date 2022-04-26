@@ -2,6 +2,7 @@ import { View } from "native-base";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyleSheet, ActivityIndicator } from "react-native";
 
+import * as pot from "italia-ts-commons/lib/pot";
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -27,6 +28,8 @@ import { showToast } from "../../../../../../utils/showToast";
 import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
 import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
+import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
+import MVL_ROUTES from "../../../../navigation/routes";
 import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
@@ -253,16 +256,48 @@ export const useDownloadAttachmentConfirmationBottomSheet = (
 };
 
 export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
-  const dispatch = useIODispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const dispatch = useIODispatch();
+  const { navigate } = useNavigationContext();
+  const { present, dismiss } = useIOBottomSheetRaw(BOTTOM_SHEET_HEIGHT);
+
+  const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
   const downloadPot = useIOSelector(state =>
     mvlAttachmentDownloadFromIdSelector(state, attachment.id)
   );
 
-  const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
-  const { present, dismiss } = useIOBottomSheetRaw(BOTTOM_SHEET_HEIGHT);
+  const showAttachment = () => {
+    if (pot.isError(downloadPot)) {
+      // show error
+    } else if (pot.isSome(downloadPot)) {
+      navigate(MVL_ROUTES.ATTACHMENT, { path: pot.toUndefined(downloadPot) });
+    }
+  };
 
-  const startDownload = () => {
+  useEffect(() => {
+    const wasLoading = isLoading;
+    const isStillLoading = pot.isLoading(downloadPot);
+
+    if (wasLoading && !isStillLoading) {
+      showAttachment();
+    }
+    setIsLoading(isStillLoading);
+  }, [downloadPot, isLoading, setIsLoading]);
+
+  const downloadAttachmentIfNeeded = () => {
+    if (pot.isLoading(downloadPot)) {
+      return;
+    }
+
+    if (pot.isSome(downloadPot)) {
+      showAttachment();
+    } else {
+      dispatch(mvlAttachmentDownload.request(attachment));
+    }
+  };
+
+  const openAttachment = () => {
     if (showAlertForAttachments) {
       void present(
         <DownloadAttachmentConfirmationBottomSheet
@@ -270,7 +305,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
           onConfirm={({ dontAskAgain }) => {
             dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
             dismiss();
-            dispatch(mvlAttachmentDownload.request(attachment));
+            downloadAttachmentIfNeeded();
             return Promise.resolve();
           }}
           initialPreferences={{ dontAskAgain: false }}
@@ -279,9 +314,9 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
         i18n.t("features.mvl.details.attachments.bottomSheet.warning.title")
       );
     } else {
-      dispatch(mvlAttachmentDownload.request(attachment));
+      downloadAttachmentIfNeeded();
     }
   };
 
-  return { downloadPot, startDownload };
+  return { downloadPot, openAttachment };
 };

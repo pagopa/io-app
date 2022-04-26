@@ -3,6 +3,7 @@ import { MvlCertificatesScreen } from "../screens/metadata/MvlCertificatesScreen
 import { MvlRecipientsScreen } from "../screens/metadata/MvlRecipientsScreen";
 import { MvlSignatureScreen } from "../screens/metadata/MvlSignatureScreen";
 import { MvlRouterScreen } from "../screens/MvlRouterScreen";
+import { MvlAttachmentPreview } from "../screens/details/components/attachment/MvlAttachmentPreview";
 import MVL_ROUTES from "./routes";
 
 const MvlNavigator = createStackNavigator(
@@ -18,6 +19,9 @@ const MvlNavigator = createStackNavigator(
     },
     [MVL_ROUTES.SIGNATURE]: {
       screen: MvlSignatureScreen
+    },
+    [MVL_ROUTES.ATTACHMENT]: {
+      screen: MvlAttachmentPreview
     }
   },
   {
