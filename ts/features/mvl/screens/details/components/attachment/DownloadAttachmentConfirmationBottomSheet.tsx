@@ -25,7 +25,10 @@ import {
   LightModalContext
 } from "../../../../../../components/ui/LightModal";
 import { showToast } from "../../../../../../utils/showToast";
-import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
+import {
+  mvlAttachmentDownload,
+  mvlRemoveCachedAttachment
+} from "../../../../store/actions/downloads";
 import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
 import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
@@ -267,11 +270,26 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
     mvlAttachmentDownloadFromIdSelector(state, attachment.id)
   );
 
+  const showError = () => {
+    showToast(
+      i18n.t("features.mvl.details.attachments.bottomSheet.failing.details")
+    );
+    dispatch(
+      mvlRemoveCachedAttachment({
+        id: attachment.id,
+        path: pot.toUndefined(downloadPot)
+      })
+    );
+  };
+
   const showAttachment = () => {
     if (pot.isError(downloadPot)) {
-      // show error
+      showError();
     } else if (pot.isSome(downloadPot)) {
-      navigate(MVL_ROUTES.ATTACHMENT, { path: pot.toUndefined(downloadPot) });
+      navigate(MVL_ROUTES.ATTACHMENT, {
+        path: pot.toUndefined(downloadPot),
+        onError: showError
+      });
     }
   };
 

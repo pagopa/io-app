@@ -3,7 +3,10 @@ import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import { Action } from "../../../../store/actions/types";
-import { mvlAttachmentDownload } from "../actions/downloads";
+import {
+  mvlAttachmentDownload,
+  mvlRemoveCachedAttachment
+} from "../actions/downloads";
 import {
   toError,
   toLoading,
@@ -42,6 +45,8 @@ export const mvlDownloadsReducer = (
         // the download was cancelled, so it goes back to none
         return toNone(action.payload.attachment.id, state);
       }
+    case getType(mvlRemoveCachedAttachment):
+      return toNone(action.payload.id, state);
   }
   return state;
 };

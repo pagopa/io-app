@@ -3,7 +3,10 @@ import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { cancelled } from "typed-redux-saga/macro";
 import { put } from "typed-redux-saga/macro";
-import { mvlAttachmentDownload } from "../../store/actions/downloads";
+import {
+  mvlAttachmentDownload,
+  mvlRemoveCachedAttachment
+} from "../../store/actions/downloads";
 import { isIos } from "../../../../utils/platform";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -53,5 +56,20 @@ export function* downloadMvlAttachment(
         })
       );
     }
+  }
+}
+
+/**
+ * Clear any cached file of the attachment
+ * @param action
+ */
+export function* clearMvlAttachment(
+  action: ActionType<typeof mvlRemoveCachedAttachment>
+) {
+  const path = action.payload.path;
+  if (path) {
+    yield RNFS.exists(path).then(exists =>
+      exists ? RNFS.unlink(path) : Promise.resolve()
+    );
   }
 }

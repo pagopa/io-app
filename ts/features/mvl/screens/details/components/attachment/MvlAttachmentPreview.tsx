@@ -40,6 +40,7 @@ const renderFooter = () =>
 
 export type MvlAttachmentPreviewNavigationParams = Readonly<{
   path: string;
+  onError: () => void;
 }>;
 
 export const MvlAttachmentPreview = (
@@ -54,6 +55,7 @@ export const MvlAttachmentPreview = (
       <Pdf
         source={{ uri: props.navigation.getParam("path"), cache: true }}
         style={styles.pdf}
+        onError={_ => props.navigation.getParam("onError")()}
       />
       {renderFooter()}
     </SafeAreaView>

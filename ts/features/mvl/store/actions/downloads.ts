@@ -1,4 +1,4 @@
-import { createAsyncAction } from "typesafe-actions";
+import { createAsyncAction, createStandardAction } from "typesafe-actions";
 import { MvlAttachment } from "../../types/mvlData";
 
 /**
@@ -15,3 +15,10 @@ export const mvlAttachmentDownload = createAsyncAction(
   { attachment: MvlAttachment; path: string },
   { attachment: MvlAttachment; error?: Error }
 >();
+
+/**
+ * This action removes any cached data in order to perform another download.
+ */
+export const mvlRemoveCachedAttachment = createStandardAction(
+  "MVL_ATTACHMENT_REMOVE_CACHED"
+)<{ id: string; path: string | undefined }>();

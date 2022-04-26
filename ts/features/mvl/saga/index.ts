@@ -1,14 +1,20 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeLatest } from "typed-redux-saga/macro";
+import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { waitBackoffError } from "../../../utils/backoffError";
 import { mvlDetailsLoad } from "../store/actions";
 import { BackendMvlClient } from "../api/backendMvl";
 import { apiUrlPrefix } from "../../../config";
-import { mvlAttachmentDownload } from "../store/actions/downloads";
+import {
+  mvlAttachmentDownload,
+  mvlRemoveCachedAttachment
+} from "../store/actions/downloads";
 import { handleGetMvl } from "./networking/handleGetMvlDetails";
-import { downloadMvlAttachment } from "./networking/downloadMvlAttachment";
+import {
+  clearMvlAttachment,
+  downloadMvlAttachment
+} from "./networking/downloadMvlAttachment";
 
 /**
  * Handle the MVL Requests
@@ -32,6 +38,14 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
     mvlAttachmentDownload.request,
     function* (action: ActionType<typeof mvlAttachmentDownload.request>) {
       yield* call(downloadMvlAttachment, bearerToken, action);
+    }
+  );
+
+  // handle the request for removing a downloaded attachment
+  yield* takeEvery(
+    mvlRemoveCachedAttachment,
+    function* (action: ActionType<typeof mvlRemoveCachedAttachment>) {
+      yield* call(clearMvlAttachment, action);
     }
   );
 }
