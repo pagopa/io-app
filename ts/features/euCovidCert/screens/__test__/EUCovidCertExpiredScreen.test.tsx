@@ -11,12 +11,6 @@ import { expiredCertificate } from "../../types/__mock__/EUCovidCertificate.mock
 import { ExpiredCertificate } from "../../types/EUCovidCertificate";
 import EuCovidCertExpiredScreen from "../EuCovidCertExpiredScreen";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
-
 describe("Test EuCovidCertExpiredScreen", () => {
   jest.useFakeTimers();
 

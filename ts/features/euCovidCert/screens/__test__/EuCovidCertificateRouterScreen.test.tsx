@@ -14,12 +14,6 @@ import {
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import EuCovidCertificateRouterScreen from "../EuCovidCertificateRouterScreen";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
-
 const authCode = "authCode" as EUCovidCertificateAuthCode;
 
 describe("Test EuCovidCertificateRouterScreen", () => {
