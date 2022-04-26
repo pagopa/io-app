@@ -60,6 +60,7 @@ import {
   isCreditCard,
   isRawPayPal,
   PaymentMethod,
+  RawPaymentMethod,
   Wallet
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
@@ -200,6 +201,19 @@ const getPaymentMethodInfo = (
   }
 };
 
+const getPaymentMethodType = (
+  paymentMethod: RawPaymentMethod | undefined
+): PaymentMethodType => {
+  switch (paymentMethod?.kind) {
+    case "BPay":
+    case "CreditCard":
+    case "PayPal":
+      return paymentMethod.kind;
+    default:
+      return "CreditCard";
+  }
+};
+
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
     // show a toast if we got an error while retrieving pm session token
@@ -215,13 +229,14 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const verifica: PaymentRequestsGetResponse =
     props.navigation.getParam("verifica");
   const wallet: Wallet = props.navigation.getParam("wallet");
+  console.log("screen", wallet);
   const idPayment: string = props.navigation.getParam("idPayment");
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
   const navigation = useNavigationContext();
   // each payment method has its own psp fee
-  const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
+  const paymentMethodType = getPaymentMethodType(wallet.paymentMethod);
   const fee: number | undefined = isPayingWithPaypal
     ? props.paypalSelectedPsp?.fee
     : maybePsp.fold(undefined, psp => psp.fixedCost.amount);

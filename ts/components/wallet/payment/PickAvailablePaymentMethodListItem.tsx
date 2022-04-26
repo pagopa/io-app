@@ -80,6 +80,7 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
     props.paymentMethod,
     props.nameSurname ?? ""
   );
+
   return (
     <PickPaymentMethodBaseListItem
       testID={`availableMethod-${props.paymentMethod.idWallet}`}

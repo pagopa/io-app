@@ -177,7 +177,7 @@ export const paymentExecuteStart = createAsyncAction(
 export type PaymentWebViewEndReason = "USER_ABORT" | "EXIT_PATH";
 export type PaymentMethodType = Extract<
   RawPaymentMethod["kind"],
-  "CreditCard" | "PayPal"
+  "CreditCard" | "PayPal" | "BPay"
 >;
 // event fired when the paywebview ends its challenge (used to reset payment values)
 export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<{
