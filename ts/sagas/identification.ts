@@ -70,7 +70,7 @@ function* waitIdentificationResult(): Generator<
         yield* select(paymentsCurrentStateSelector);
       if (paymentState.kind === "ACTIVATED") {
         yield* put(runDeleteActivePaymentSaga());
-        // we try to wait untinl the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
+        // we try to wait until the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
         yield* take([
           paymentDeletePayment.failure,
           paymentDeletePayment.success

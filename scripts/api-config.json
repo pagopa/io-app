@@ -27,5 +27,15 @@
       "amount": 2222,
       "pspFeeAmount": 100
     }
+  },
+  "features": {
+    "bonus": {
+      "cgn": {
+        "isCgnEligible": true,
+        "isEycaEligible": true,
+        "allowRandomValues": true
+      }
+    },
+    "allowRandomValues": true
   }
 }
