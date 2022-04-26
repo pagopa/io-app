@@ -79,7 +79,7 @@ definitions:
       - CIT_REGISTRATO
   Anno:
     type: string
-    pattern: ^\d{4}$
+    pattern: ^\\d{4}$
     description: Anno a quattro cifre
     example: '2000'
   AnnoIsee:
