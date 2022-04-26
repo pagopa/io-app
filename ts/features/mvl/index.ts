@@ -11,7 +11,7 @@ const persistConfig: PersistConfig = {
   key: "mvl",
   storage: AsyncStorage,
   version: CURRENT_REDUX_MVL_STORE_VERSION,
-  whitelist: ["preferences"]
+  whitelist: ["preferences", "downloads"]
 };
 
 export const mvlPersistor = persistReducer<MvlState, Action>(
