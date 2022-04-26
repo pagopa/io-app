@@ -13,6 +13,11 @@ const convertSuccess = (listaPerAnno: ListaStatoPerAnno): CdcBonusRequestList =>
     year: statusPerYear.annoRiferimento
   }));
 
+/**
+ * Return the state of the user for each year in which the bonus is available
+ * @param getStatoBeneficiario
+ * @param _
+ */
 export function* handleGetStatoBeneficiario(
   getStatoBeneficiario: BackendCdcClient["getStatoBeneficiario"],
   _: ActionType<typeof cdcRequestBonusList.request>
@@ -27,6 +32,7 @@ export function* handleGetStatoBeneficiario(
             convertSuccess(getStatoBeneficiarioResult.value.value)
           )
         );
+        return;
       }
       yield* put(
         cdcRequestBonusList.failure(
@@ -35,7 +41,11 @@ export function* handleGetStatoBeneficiario(
           )
         )
       );
+      return;
     }
+    cdcRequestBonusList.failure(
+      getGenericError(new Error("Invalid payload from getStatoBeneficiario"))
+    );
   } catch (e) {
     yield* put(cdcRequestBonusList.failure(getNetworkError(e)));
   }
