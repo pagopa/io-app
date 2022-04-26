@@ -24,7 +24,7 @@ const GetStatoBeneficiario: GetStatoBeneficiarioT = {
  */
 const PostRegistraBeneficiario: RegistraBeneficiarioT = {
   method: "post",
-  url: () => "/secured/utente",
+  url: () => "/beneficiario/registrazione",
   query: _ => ({}),
   body: ({ anniRiferimento }) => JSON.stringify(anniRiferimento),
   headers: p => ({
