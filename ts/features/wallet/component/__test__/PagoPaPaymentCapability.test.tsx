@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { createStore } from "redux";
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -19,7 +20,6 @@ import {
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PagoPaPaymentCapability from "../features/PagoPaPaymentCapability";
-import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 
 jest.mock("../../../../config", () => ({ pmActivatePaymentEnabled: true }));
 
@@ -49,10 +49,7 @@ describe("PagoPaPaymentCapability", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fetchWalletsSuccess(updatedMethods));
 
-    const testComponent = renderScreenFakeNavRedux<
-      GlobalState,
-      NavigationParams
-    >(
+    const testComponent = renderScreenFakeNavRedux<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
@@ -73,7 +70,7 @@ describe("PagoPaPaymentCapability", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    const component = renderScreenFakeNavRedux<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
@@ -93,7 +90,7 @@ describe("PagoPaPaymentCapability", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    const component = renderScreenFakeNavRedux<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
@@ -114,7 +111,7 @@ describe("PagoPaPaymentCapability", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    const component = renderScreenFakeNavRedux<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
@@ -141,7 +138,7 @@ describe("PagoPaPaymentCapability", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    const component = renderScreenFakeNavRedux<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
@@ -167,7 +164,7 @@ describe("PagoPaPaymentCapability", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    const component = renderScreenFakeNavRedux<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
