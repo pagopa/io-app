@@ -117,6 +117,7 @@ const FimsWebviewScreen = () => {
             <FimsWebView
               onWebviewClose={handleGoBack}
               uri={maybeParams.value.url}
+              fimsDomain={maybeFimsDomain.toUndefined()}
             />
           )}
         </View>

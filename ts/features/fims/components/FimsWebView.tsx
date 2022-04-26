@@ -27,6 +27,7 @@ import WebviewErrorComponent from "./WebviewErrorComponent";
 type Props = {
   onWebviewClose: () => void;
   uri: string;
+  fimsDomain?: string;
   handleWebMessage?: (message: string) => void;
 };
 
@@ -48,7 +49,14 @@ const FimsWebView = (props: Props) => {
     setLoading(false);
   };
 
-  const onWebviewHttpError = (_: WebViewHttpErrorEvent) => {
+  const onWebviewHttpError = (e: WebViewHttpErrorEvent) => {
+    if (
+      props.fimsDomain &&
+      e.nativeEvent.url.indexOf(props.fimsDomain) !== -1 &&
+      e.nativeEvent.statusCode === 400
+    ) {
+      return;
+    }
     setHasError(true);
     setLoading(false);
   };
