@@ -50,7 +50,7 @@ export const dispatchUpdatePspForWalletAndConfirm =
             initialAmount,
             verifica,
             idPayment,
-            wallet: action.payload.updatedWallet, // the updated wallet
+            wallet: { ...wallet, psp: action.payload.updatedWallet.psp }, // the updated wallet
             psps
           });
         },
@@ -109,7 +109,7 @@ export const dispatchPickPspOrConfirm =
           })
         );
       } else {
-        // credit card
+        // credit card or bpay
         // the user has selected a wallet (either because it was the favourite one
         // or because he just added a new card he wants to use for the payment), so
         // there's no need to ask to select a wallet - we can ask pagopa for the
