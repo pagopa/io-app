@@ -1,9 +1,9 @@
-import { StatoBeneficiario } from "../../../../../definitions/cdc/StatoBeneficiario";
+import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { Anno } from "../../../../../definitions/cdc/Anno";
 
 export type CdcBonusRequest = {
   year: Anno;
-  status: StatoBeneficiario;
+  status: StatoBeneficiarioEnum;
 };
 
 export type CdcBonusRequestList = ReadonlyArray<CdcBonusRequest>;
