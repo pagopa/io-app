@@ -142,6 +142,7 @@ const FimsPlayground = () => {
               key={`${reloadKey}_webview`}
               uri={loadUri}
               onWebviewClose={handleGoBack}
+              fimsDomain={maybeFimsDomain.toUndefined()}
             />
           </View>
         </Content>
