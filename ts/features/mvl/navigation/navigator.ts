@@ -25,7 +25,7 @@ const MvlNavigator = createCompatNavigatorFactory(createStackNavigator)(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );

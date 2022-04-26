@@ -17,6 +17,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ZENDESK_ROUTES from "../../navigation/routes";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber

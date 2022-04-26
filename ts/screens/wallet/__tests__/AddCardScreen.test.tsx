@@ -2,6 +2,7 @@ import { fireEvent } from "@testing-library/react-native";
 import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
 import { createStore } from "redux";
+import { IPaymentMethod } from "../../../components/wallet/PaymentMethodsList";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -11,7 +12,6 @@ import { isValidCardHolder } from "../../../utils/input";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import AddCardScreen, { AddCardScreenNavigationParams } from "../AddCardScreen";
 import { testableFunctions } from "../AddPaymentMethodScreen";
-import { IPaymentMethod } from "../../../components/wallet/PaymentMethodsList";
 
 jest.mock("react-native-share", () => ({
   open: jest.fn()

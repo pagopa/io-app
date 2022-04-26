@@ -94,3 +94,5 @@ jest.mock("@gorhom/bottom-sheet", () => {
     }
   };
 });
+
+jest.mock("react-native-device-info", () => mockRNDeviceInfo);

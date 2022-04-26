@@ -19,7 +19,6 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   getValueOrElse,

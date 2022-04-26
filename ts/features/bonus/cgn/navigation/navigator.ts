@@ -52,7 +52,7 @@ export const CgnActivationNavigator = createCompatNavigatorFactory(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );
@@ -87,7 +87,7 @@ export const CgnDetailsNavigator = createCompatNavigatorFactory(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );
@@ -104,7 +104,7 @@ export const CgnEYCAActivationNavigator = createCompatNavigatorFactory(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );
