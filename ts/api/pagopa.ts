@@ -133,11 +133,7 @@ export type GetTransactionsUsingGETT = r.IGetApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
-type GetTransactionsUsingGETTExtra = MapResponseType<
-  GetTransactionsUsingGETT,
-  200,
-  TransactionListResponse
->;
+type GetTransactionsUsingGETTExtra = GetTransactionsUsingGETT;
 
 const ParamAuthorizationBearerHeader = <
   P extends { readonly Bearer: string; readonly LookUpId?: string }
@@ -167,10 +163,14 @@ const getTransactions: GetTransactionsUsingGETTExtra = {
   response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
 };
 
-type GetTransactionUsingGETTExtra = MapResponseType<
-  GetTransactionUsingGETT,
-  200,
-  TransactionResponse
+type GetTransactionUsingGETTExtra = r.IGetApiRequestType<
+  { readonly Bearer: string; readonly id: number },
+  "Authorization",
+  never,
+  | r.IResponseType<200, TransactionResponse>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
 >;
 
 const getTransaction: GetTransactionUsingGETTExtra = {
