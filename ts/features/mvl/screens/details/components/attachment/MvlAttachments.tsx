@@ -80,7 +80,7 @@ const AttachmentIcon = (props: {
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
   const authHeader = useIOSelector(ioBackendAuthenticationHeaderSelector);
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
-  const { present } = useDownloadAttachmentConfirmationBottomSheet(
+  const { present, bottomSheet } = useDownloadAttachmentConfirmationBottomSheet(
     props.attachment,
     authHeader,
     {
@@ -90,32 +90,35 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
   );
 
   return (
-    <TouchableOpacity style={styles.container} onPress={present}>
-      <View style={styles.row}>
-        <AttachmentIcon contentType={props.attachment.contentType} />
-        <View style={styles.middleSection}>
-          <H3
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            ellipsizeMode={"middle"}
-            numberOfLines={2}
-          >
-            {props.attachment.displayName}
-          </H3>
-          {typeof props.attachment.size !== "undefined" && (
-            <H5 color={"bluegrey"} weight={"Regular"}>
-              {formatByte(props.attachment.size)}
-            </H5>
-          )}
+    <>
+      <TouchableOpacity style={styles.container} onPress={present}>
+        <View style={styles.row}>
+          <AttachmentIcon contentType={props.attachment.contentType} />
+          <View style={styles.middleSection}>
+            <H3
+              color={"bluegrey"}
+              weight={"SemiBold"}
+              ellipsizeMode={"middle"}
+              numberOfLines={2}
+            >
+              {props.attachment.displayName}
+            </H3>
+            {typeof props.attachment.size !== "undefined" && (
+              <H5 color={"bluegrey"} weight={"Regular"}>
+                {formatByte(props.attachment.size)}
+              </H5>
+            )}
+          </View>
+          <IconFont
+            name={"io-right"}
+            color={IOColors.blue}
+            size={24}
+            style={styles.icon}
+          />
         </View>
-        <IconFont
-          name={"io-right"}
-          color={IOColors.blue}
-          size={24}
-          style={styles.icon}
-        />
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      {bottomSheet}
+    </>
   );
 };
 

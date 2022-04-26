@@ -41,8 +41,14 @@ const clusterizePaymentMethods = (
 const OtherChannelsSection = (props: {
   paymentMethods: ReadonlyArray<PaymentMethodWithActivation>;
 }) => {
-  const presentOtherChannel = useOtherChannelInformationBottomSheet().present;
-  const presentWhyOthersCard = useWhyOtherCardsBottomSheet().present;
+  const {
+    present: presentOtherChannel,
+    bottomSheet: otherChannelInformationBottomSheet
+  } = useOtherChannelInformationBottomSheet();
+  const {
+    present: presentWhyOthersCard,
+    bottomSheet: whyOtherCardsBottomSheet
+  } = useWhyOtherCardsBottomSheet();
 
   return (
     <View>
@@ -70,6 +76,8 @@ const OtherChannelsSection = (props: {
           "bonus.bpd.details.paymentMethods.activateOnOthersChannel.whyOtherCards.title"
         )}
       </Link>
+      {otherChannelInformationBottomSheet}
+      {whyOtherCardsBottomSheet}
     </View>
   );
 };

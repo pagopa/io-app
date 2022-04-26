@@ -1,16 +1,9 @@
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
-import { fireEvent, render } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import React from "react";
 import { PspRadioItem } from "../../components/PspRadioItem";
 import { privacyUrl } from "../../../../../../config";
 import { IOPayPalPsp } from "../../types";
-
-const mockPresent = jest.fn();
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: mockPresent
-  })
-}));
 
 const payPalPsp: IOPayPalPsp = {
   id: "1",
@@ -44,14 +37,5 @@ describe("PspRadioItem", () => {
     const pspName = component.queryByTestId("pspNameTestID");
     const pspLogo = component.queryByTestId("pspNameLogoID");
     expect(pspName === null && pspLogo === null).toBeFalsy();
-  });
-
-  it(`info icon should present the bottom sheet`, () => {
-    const component = render(<PspRadioItem psp={payPalPsp} />);
-    const infoIcon = component.queryByTestId("infoIconTestID");
-    if (infoIcon) {
-      fireEvent.press(infoIcon);
-      expect(mockPresent).toHaveBeenCalledTimes(1);
-    }
   });
 });

@@ -24,12 +24,6 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
-
 describe("Test TransactionsSectionList behaviour and states", () => {
   jest.useFakeTimers();
   it("When the transactions list length is zero, should render BpdEmptyTransactionsList (wallet is pot.none)", () => {

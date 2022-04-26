@@ -17,12 +17,6 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
-
 const eycaCardActive: EycaCard = {
   status: AcivatedStatus.ACTIVATED,
   card_number: "W413-K096-O814-Z223" as CcdbNumber,

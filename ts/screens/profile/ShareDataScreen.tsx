@@ -21,21 +21,18 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const ShareDataScreen = (props: Props): React.ReactElement => {
-  const confirmOptOut = useConfirmOptOutBottomSheet();
+  const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
+    props.setMixpanelEnabled(false);
+    showToast(
+      I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
+      "success"
+    );
+  });
   const isMixpanelEnabled = props.isMixpanelEnabled ?? true;
-
-  const optOutAction = () =>
-    confirmOptOut.present(() => {
-      props.setMixpanelEnabled(false);
-      showToast(
-        I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
-        "success"
-      );
-    });
 
   const buttonProps = isMixpanelEnabled
     ? cancelButtonProps(
-        optOutAction,
+        present,
         I18n.t("profile.main.privacy.shareData.screen.cta.dontShareData")
       )
     : confirmButtonProps(() => {
@@ -56,6 +53,7 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
           <ShareDataComponent />
         </ScrollView>
         <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
+        {bottomSheet}
       </SafeAreaView>
     </BaseScreenComponent>
   );
