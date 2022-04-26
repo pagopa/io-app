@@ -23,7 +23,6 @@ import {
   zendeskRequestTicketNumber
 } from "../../store/actions";
 import ZendeskSupportComponent from "../ZendeskSupportComponent";
-import ZENDESK_ROUTES from "../../navigation/routes";
 
 const mockPublicSession: PublicSession = {
   bpdToken: "bpdToken",
