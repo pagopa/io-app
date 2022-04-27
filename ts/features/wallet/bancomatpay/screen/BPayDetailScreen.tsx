@@ -1,19 +1,25 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
+import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { BPayPaymentMethod, isBPay } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import BPayCard from "../component/BPayCard";
-import { useIOSelector } from "../../../../store/hooks";
-import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
-import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 
 export type BPayDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
   bPay: BPayPaymentMethod;
 }>;
 
-type Props = NavigationStackScreenProps<BPayDetailScreenNavigationParams>;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "WALLET_BPAY_DETAIL">
+  >;
+};
 
 /**
  * Detail screen for a Bancomat Pay
