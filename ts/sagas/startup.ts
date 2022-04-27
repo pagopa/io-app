@@ -73,6 +73,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -127,7 +128,6 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { askPremiumMessagesOptInOut } from "./premiumMessages";
-import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
