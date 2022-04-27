@@ -1,19 +1,8 @@
 import { createStore, DeepPartial, Store } from "redux";
-import ConfirmPaymentMethodScreen, {
-  ConfirmPaymentMethodScreenNavigationParams
-} from "../ConfirmPaymentMethodScreen";
-import {
-  myRptId,
-  myInitialAmount,
-  myVerifiedData,
-  myWallet,
-  AuthSeq
-} from "../../../../utils/testFaker";
-import { getLookUpIdPO, newLookUpId } from "../../../../utils/pmLookUpId";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { appReducer } from "../../../../store/reducers/";
+import { PspData } from "../../../../../definitions/pagopa/PspData";
 import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
 import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
+import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
 import { appReducer } from "../../../../store/reducers/";
 import {
@@ -29,15 +18,11 @@ import {
   PayPalPaymentMethod
 } from "../../../../types/pagopa";
 import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
-import { PspData } from "../../../../../definitions/pagopa/PspData";
-import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
-import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
 import { getLookUpIdPO, newLookUpId } from "../../../../utils/pmLookUpId";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import {
   AuthSeq,
   myInitialAmount,
-  myPsp,
   myRptId,
   myVerifiedData,
   myWallet
@@ -47,7 +32,6 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ConfirmPaymentMethodScreen, {
   ConfirmPaymentMethodScreenNavigationParams
 } from "../ConfirmPaymentMethodScreen";
-import I18n from "../../../../i18n";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());

@@ -237,7 +237,8 @@ describe("getPaymentMethods", () => {
     const canPayWithBPay = true;
     const canOnboardBPay = true;
     const methods = testableFunctions.getPaymentMethods!(
-      { ...props, canPayWithBPay },
+      // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+      { ...props, canPayWithBPay } as any,
       {
         onlyPaymentMethodCanPay: true,
         isPaymentOnGoing: false,

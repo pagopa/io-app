@@ -10,7 +10,7 @@ import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCen
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
 import CardIcon from "../../../../img/wallet/card.svg";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
+import BancomatPayLogo from "../../../../img/wallet/payment-methods/bancomat_pay.svg";
 import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import TagIcon from "../../../../img/wallet/tag.svg";
 import { H1 } from "../../../components/core/typography/H1";
@@ -91,12 +91,6 @@ import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
-import TagIcon from "../../../../img/wallet/tag.svg";
-import CardIcon from "../../../../img/wallet/card.svg";
-import { SelectionBox } from "../../../components/wallet/SelectionBox";
-import { getTranslatedShortNumericMonthYear } from "../../../utils/dates";
-import { getPaypalAccountEmail } from "../../../utils/paypal";
-import BancomatPayLogo from "../../../../img/wallet/payment-methods/bancomat_pay.svg";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)

@@ -15,9 +15,15 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
+import {
+  isError,
+  isLoading as isRemoteLoading,
+  isUndefined
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -41,12 +47,11 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
+import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
 } from "../../../store/reducers/backendStatus";
-import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
@@ -66,12 +71,6 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import {
-  isError,
-  isLoading as isRemoteLoading,
-  isUndefined
-} from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
