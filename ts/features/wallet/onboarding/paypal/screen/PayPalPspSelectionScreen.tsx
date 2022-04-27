@@ -17,8 +17,8 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   getValueOrElse,
@@ -99,11 +99,12 @@ const getLocales = () => ({
  */
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
-  const { present: presentWhatIsPspBottomSheet } = useIOBottomSheet(
-    <Body>{locales.whatIsPspBody}</Body>,
-    locales.whatIsPspTitle,
-    280
-  );
+  const { present: presentWhatIsPspBottomSheet, bottomSheet } =
+    useIOBottomSheetModal(
+      <Body>{locales.whatIsPspBody}</Body>,
+      locales.whatIsPspTitle,
+      280
+    );
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
   const dispatch = useDispatch();
@@ -182,6 +183,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
               disabled: selectedPsp === undefined
             }}
           />
+          {bottomSheet}
         </SafeAreaView>
       ) : (
         <LoadingErrorComponent

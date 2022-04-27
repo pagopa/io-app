@@ -84,7 +84,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
     useState<PaymentMethodsChoiceOptions | null>(null);
   const navigation = useNavigation();
 
-  const { presentBottomSheet } = useBottomSheetMethodsToDelete({
+  const { presentBottomSheet, bottomSheet } = useBottomSheetMethodsToDelete({
     onDeletePress: () =>
       navigation.dispatch(
         navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen()
@@ -157,6 +157,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
           leftButton={computedBottomButtonProps}
         />
       </SafeAreaView>
+      {bottomSheet}
     </BaseScreenComponent>
   );
 };

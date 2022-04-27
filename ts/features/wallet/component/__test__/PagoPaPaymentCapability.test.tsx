@@ -1,5 +1,3 @@
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { render } from "@testing-library/react-native";
 import * as React from "react";
 
 import { createStore } from "redux";
@@ -22,13 +20,6 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PagoPaPaymentCapability from "../features/PagoPaPaymentCapability";
 import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
-
-const renderTestTarget = (paymentMethod: PaymentMethod) =>
-  render(
-    <BottomSheetModalProvider>
-      <PagoPaPaymentCapability paymentMethod={paymentMethod} />
-    </BottomSheetModalProvider>
-  );
 
 jest.mock("../../../../config", () => ({ pmActivatePaymentEnabled: true }));
 
@@ -59,11 +50,7 @@ describe("PagoPaPaymentCapability", () => {
     store.dispatch(fetchWalletsSuccess(updatedMethods));
 
     const testComponent = renderScreenFakeNavRedux<GlobalState>(
-      () => (
-        <BottomSheetModalProvider>
-          <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />
-        </BottomSheetModalProvider>
-      ),
+      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
       store
@@ -80,8 +67,15 @@ describe("PagoPaPaymentCapability", () => {
       enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
-    const component = renderTestTarget(aPaymentMethod);
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
 
+    const component = renderScreenFakeNavRedux<GlobalState>(
+      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
+      ROUTES.WALLET_HOME,
+      {},
+      store
+    );
     expect(component.getByText("Arriving")).toBeTruthy();
   });
 
@@ -93,7 +87,15 @@ describe("PagoPaPaymentCapability", () => {
       enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
-    const component = renderTestTarget(aPaymentMethod);
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+
+    const component = renderScreenFakeNavRedux<GlobalState>(
+      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
+      ROUTES.WALLET_HOME,
+      {},
+      store
+    );
 
     expect(component.getByText("Arriving")).toBeTruthy();
   });
@@ -106,7 +108,15 @@ describe("PagoPaPaymentCapability", () => {
       enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
-    const component = renderTestTarget(aPaymentMethod);
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+
+    const component = renderScreenFakeNavRedux<GlobalState>(
+      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
+      ROUTES.WALLET_HOME,
+      {},
+      store
+    );
 
     expect(component.getByText("Incompatible")).toBeTruthy();
   });
@@ -125,7 +135,15 @@ describe("PagoPaPaymentCapability", () => {
       enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
-    const component = renderTestTarget(aPaymentMethod);
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+
+    const component = renderScreenFakeNavRedux<GlobalState>(
+      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
+      ROUTES.WALLET_HOME,
+      {},
+      store
+    );
     expect(component.getByText("Incompatible")).not.toBeNull();
   });
   it('should render a badge with test "Incompatible" if passed a privative card, payment method of kind CreditCard with issuerAbiCode and type = PRV', () => {
@@ -143,7 +161,15 @@ describe("PagoPaPaymentCapability", () => {
       pagoPA: false
     } as PaymentMethod;
 
-    const component = renderTestTarget(aPaymentMethod);
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+
+    const component = renderScreenFakeNavRedux<GlobalState>(
+      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
+      ROUTES.WALLET_HOME,
+      {},
+      store
+    );
     expect(component.getByText("Incompatible")).toBeTruthy();
   });
 });

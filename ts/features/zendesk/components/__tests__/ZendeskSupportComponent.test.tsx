@@ -1,11 +1,20 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
+import { PublicSession } from "../../../../../definitions/backend/PublicSession";
+import { SpidLevelEnum } from "../../../../../definitions/backend/SpidLevel";
+import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import {
+  idpSelected,
+  loginSuccess,
+  sessionInformationLoadSuccess
+} from "../../../../store/actions/authentication";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
+import { SessionToken } from "../../../../types/SessionToken";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ZENDESK_ROUTES from "../../navigation/routes";
@@ -15,6 +24,13 @@ import {
 } from "../../store/actions";
 import ZendeskSupportComponent from "../ZendeskSupportComponent";
 
+const mockPublicSession: PublicSession = {
+  bpdToken: "bpdToken",
+  myPortalToken: "myPortalToken",
+  spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"],
+  walletToken: "walletToken",
+  zendeskToken: "zendeskToken"
+};
 const mockZendeskConfig: Zendesk = {
   panicMode: false
 };
@@ -49,6 +65,25 @@ describe("the ZendeskSupportComponent", () => {
     const component = renderComponent(store, false);
     store.dispatch(zendeskRequestTicketNumber.success(1));
     expect(component.getByTestId("showTicketsButton")).toBeDefined();
+  });
+  describe("when the user is authenticated with session info", () => {
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(idpSelected({} as SpidIdp));
+    store.dispatch(
+      loginSuccess({
+        token: "abc1234" as SessionToken,
+        idp: "test"
+      })
+    );
+    describe("and the zendeskToken is defined", () => {
+      store.dispatch(sessionInformationLoadSuccess(mockPublicSession));
+      it("should call setUserIdentity with the zendeskToken", () => {
+        renderComponent(store, false);
+        expect(MockZendesk.setUserIdentity).toBeCalledWith({
+          token: mockPublicSession.zendeskToken
+        });
+      });
+    });
   });
 
   describe("when the user press the zendesk open ticket button", () => {

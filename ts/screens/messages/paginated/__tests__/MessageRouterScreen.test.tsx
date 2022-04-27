@@ -15,6 +15,7 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../../store/actions/messages";
+import { loadServiceDetail } from "../../../../store/actions/services";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
@@ -86,6 +87,7 @@ describe("MessageRouterScreen", () => {
 
   describe("when is already running, with a populated messages state", () => {
     const previousCursor = successLoadNextPageMessagesPayload.messages[0].id;
+    const serviceId = successLoadNextPageMessagesPayload.messages[0].serviceId;
     const allPaginated = {
       inbox: {
         data: pot.some({
@@ -145,9 +147,15 @@ describe("MessageRouterScreen", () => {
             loadMessageDetails.request({ id })
           );
         });
+        it("should dispatch `loadServiceDetail`", () => {
+          const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+          expect(spyStoreDispatch).toHaveBeenCalledWith(
+            loadServiceDetail.request(serviceId)
+          );
+        });
         it("should not dispatch any other action", () => {
           const { spyStoreDispatch } = renderComponent(id, { allPaginated });
-          expect(spyStoreDispatch).toHaveBeenCalledTimes(1);
+          expect(spyStoreDispatch).toHaveBeenCalledTimes(2);
         });
       });
 
@@ -171,13 +179,19 @@ describe("MessageRouterScreen", () => {
             })
           );
         });
-
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        it("should dispatch `loadServiceDetail`", () => {
+          const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+          expect(spyStoreDispatch).toHaveBeenCalledWith(
+            loadServiceDetail.request(serviceId)
+          );
+        });
         it("should not dispatch any other action", () => {
           const { spyStoreDispatch } = renderComponent(id, {
             allPaginated,
             detailsById
           });
-          expect(spyStoreDispatch).toHaveBeenCalledTimes(0);
+          expect(spyStoreDispatch).toHaveBeenCalledTimes(1);
         });
       });
     });
