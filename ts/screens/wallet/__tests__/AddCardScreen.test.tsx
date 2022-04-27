@@ -220,14 +220,17 @@ describe("getPaymentMethods", () => {
     ).toEqual("implemented");
   });
 
-  it("bpay should be notImplemented implemented if Bpay onboarding FF is ON and onlyPaymentMethodCanPay flag is ON", () => {
+  it("bpay should be notImplemented while a payment if it can be onboarded but it cannot pay", () => {
     // TODO: ⚠️ cast to any only to complete the merge, should be removed!
-    const methods = testableFunctions.getPaymentMethods!(props as any, {
-      onlyPaymentMethodCanPay: true,
-      isPaymentOnGoing: true,
-      isPaypalEnabled: true,
-      canOnboardBPay: true
-    });
+    const methods = testableFunctions.getPaymentMethods!(
+      { ...props, canPayWithBpay: false } as any,
+      {
+        onlyPaymentMethodCanPay: true,
+        isPaymentOnGoing: true,
+        isPaypalEnabled: true,
+        canOnboardBPay: true
+      }
+    );
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
     ).toEqual("notImplemented");
