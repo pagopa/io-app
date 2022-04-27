@@ -67,8 +67,9 @@ export const handleDownloadResult = async (
     if (attachment.contentType !== ContentTypeValues.applicationPdf) {
       if (isIos) {
         ReactNativeBlobUtil.ios.presentOptionsMenu(result.path());
+        return Promise.resolve();
       } else {
-        await ReactNativeBlobUtil.android.addCompleteDownload({
+        return ReactNativeBlobUtil.android.addCompleteDownload({
           mime: attachment.contentType,
           title: attachment.displayName,
           showNotification: true,
@@ -135,6 +136,7 @@ export const handleDownloadResult = async (
         }
       });
     }
+    return Promise.resolve();
   } catch (e) {
     if (e instanceof Error) {
       return Promise.reject(e);
