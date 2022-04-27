@@ -2,13 +2,13 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -18,6 +18,8 @@ import BaseScreenComponent, {
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToWalletAddPaymentMethod
@@ -58,8 +60,11 @@ export type PickPaymentMethodScreenNavigationParams = Readonly<{
   idPayment: string;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<PickPaymentMethodScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_PICK_PAYMENT_METHOD">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

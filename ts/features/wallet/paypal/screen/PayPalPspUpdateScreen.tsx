@@ -1,36 +1,38 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
+import { ListItem, View } from "native-base";
 import React, { useEffect } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { ListItem, View } from "native-base";
 import { useDispatch } from "react-redux";
-import { NavigationInjectedProps } from "react-navigation";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import I18n from "../../../../i18n";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
 import { Body } from "../../../../components/core/typography/Body";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { isError, isReady } from "../../../bonus/bpd/model/RemoteValue";
+import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
-import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { IOPayPalPsp } from "../../onboarding/paypal/types";
-import { useNavigationContext } from "../../../../utils/hooks/useOnFocus";
-import customVariables from "../../../../theme/variables";
-import IconFont from "../../../../components/ui/IconFont";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { Label } from "../../../../components/core/typography/Label";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import IconFont from "../../../../components/ui/IconFont";
+import I18n from "../../../../i18n";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import {
+  pspForPaymentV2,
+  pspSelectedForPaymentV2
+} from "../../../../store/actions/wallet/payment";
+import { useIOSelector } from "../../../../store/hooks";
+import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
+import customVariables from "../../../../theme/variables";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { isError, isReady } from "../../../bonus/bpd/model/RemoteValue";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,
   PSP_LOGO_MAX_WIDTH
 } from "../../onboarding/paypal/components/PspRadioItem";
-import { useIOSelector } from "../../../../store/hooks";
-import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
-import {
-  pspForPaymentV2,
-  pspSelectedForPaymentV2
-} from "../../../../store/actions/wallet/payment";
 import { convertPspData } from "../../onboarding/paypal/store/transformers";
+import { IOPayPalPsp } from "../../onboarding/paypal/types";
 
 const styles = StyleSheet.create({
   radioListHeaderRightColumn: {
@@ -141,7 +143,12 @@ export type PayPalPspUpdateScreenNavigationParams = {
   idPayment: string;
   idWallet: number;
 };
-type Props = NavigationInjectedProps<PayPalPspUpdateScreenNavigationParams>;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "WALLET_PAYPAL_UPDATE_PAYMENT_PSP">
+  >;
+};
+
 /**
  * This screen is where the user updates the PSP that will be used for the payment
  * Only 1 psp can be selected
@@ -150,7 +157,7 @@ const PayPalPspUpdateScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const locales = getLocales();
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const pspList = useIOSelector(pspV2ListSelector);
   const idPayment = props.navigation.getParam("idPayment");
