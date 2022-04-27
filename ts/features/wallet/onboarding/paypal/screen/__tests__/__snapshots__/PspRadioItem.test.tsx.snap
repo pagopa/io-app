@@ -116,6 +116,7 @@ exports[`PspRadioItem match snapshot 1`] = `
       }
     }
     hardwareAccelerated={false}
+    importantForAccessibility="yes"
     snapPoints={
       Array [
         420,
@@ -123,75 +124,159 @@ exports[`PspRadioItem match snapshot 1`] = `
     }
     visible={true}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
+    <View
       style={
-        Object {
-          "backgroundColor": "white",
-          "flex": 1,
-        }
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "paddingLeft": 24,
+            "paddingRight": 24,
+          },
+        ]
       }
     >
-      <View
-        style={
-          Array [
-            Object {},
-            Object {
-              "flex": 1,
-              "paddingLeft": 24,
-              "paddingRight": 24,
-            },
-          ]
-        }
-      >
-        <RCTScrollView>
-          <View>
+      <RCTScrollView>
+        <View>
+          <View
+            style={Object {}}
+            testID="PspInfoBottomSheetContentTestID"
+          >
             <View
-              style={Object {}}
-              testID="PspInfoBottomSheetContentTestID"
+              style={
+                Array [
+                  Object {},
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "marginTop": 12,
+                  },
+                ]
+              }
             >
               <View
                 style={
                   Array [
                     Object {},
                     Object {
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "marginTop": 12,
+                      "marginRight": 16,
+                      "marginTop": 6,
                     },
                   ]
                 }
               >
-                <View
+                <SvgMock
+                  height={24}
+                  width={24}
+                />
+              </View>
+              <View
+                style={
+                  Array [
+                    Object {},
+                    Object {
+                      "flex": 1,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  color="bluegreyDark"
+                  defaultColor="bluegreyDark"
+                  defaultWeight="Regular"
+                  font="TitilliumWeb"
+                  fontStyle={
+                    Object {
+                      "fontSize": 16,
+                    }
+                  }
                   style={
                     Array [
-                      Object {},
                       Object {
-                        "marginRight": 16,
-                        "marginTop": 6,
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#17324D",
+                        "fontFamily": "Titillium Web",
+                        "fontStyle": "normal",
+                        "fontWeight": "400",
                       },
                     ]
                   }
+                  weight="Regular"
                 >
-                  <SvgMock
-                    height={24}
-                    width={24}
-                  />
-                </View>
-                <View
+                  It's a Payment Service Provider (PSP) which can process your transactions via PayPal.
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                Array [
+                  Object {},
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "marginTop": 12,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {},
+                    Object {
+                      "marginRight": 16,
+                      "marginTop": 6,
+                    },
+                  ]
+                }
+              >
+                <SvgMock
+                  height={24}
+                  width={24}
+                />
+              </View>
+              <View
+                style={
+                  Array [
+                    Object {},
+                    Object {
+                      "flex": 1,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  color="bluegreyDark"
+                  defaultColor="bluegreyDark"
+                  defaultWeight="Regular"
+                  font="TitilliumWeb"
+                  fontStyle={
+                    Object {
+                      "fontSize": 16,
+                    }
+                  }
                   style={
                     Array [
-                      Object {},
                       Object {
-                        "flex": 1,
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#17324D",
+                        "fontFamily": "Titillium Web",
+                        "fontStyle": "normal",
+                        "fontWeight": "400",
                       },
                     ]
                   }
+                  weight="Regular"
                 >
+                  When you pay a notice, this PSP can apply a maximum fee of 
                   <Text
                     color="bluegreyDark"
-                    defaultColor="bluegreyDark"
-                    defaultWeight="Regular"
+                    defaultColor="blue"
+                    defaultWeight="Bold"
                     font="TitilliumWeb"
                     fontStyle={
                       Object {
@@ -207,15 +292,45 @@ exports[`PspRadioItem match snapshot 1`] = `
                           "color": "#17324D",
                           "fontFamily": "Titillium Web",
                           "fontStyle": "normal",
-                          "fontWeight": "400",
+                          "fontWeight": "700",
                         },
                       ]
                     }
-                    weight="Regular"
+                    weight="Bold"
                   >
-                    It's a Payment Service Provider (PSP) which can process your transactions via PayPal.
+                    € 1.00
                   </Text>
-                </View>
+                  . You'll see the right amount before confirming the payment.
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                Array [
+                  Object {},
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "marginTop": 12,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {},
+                    Object {
+                      "marginRight": 16,
+                      "marginTop": 6,
+                    },
+                  ]
+                }
+              >
+                <SvgMock
+                  height={24}
+                  width={24}
+                />
               </View>
               <View
                 style={
@@ -223,182 +338,58 @@ exports[`PspRadioItem match snapshot 1`] = `
                     Object {},
                     Object {
                       "flex": 1,
-                      "flexDirection": "row",
-                      "marginTop": 12,
                     },
                   ]
                 }
               >
                 <View
-                  style={
-                    Array [
-                      Object {},
-                      Object {
-                        "marginRight": 16,
-                        "marginTop": 6,
-                      },
-                    ]
-                  }
-                >
-                  <SvgMock
-                    height={24}
-                    width={24}
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {},
-                      Object {
-                        "flex": 1,
-                      },
-                    ]
-                  }
+                  style={Object {}}
                 >
                   <Text
-                    color="bluegreyDark"
-                    defaultColor="bluegreyDark"
-                    defaultWeight="Regular"
+                    accessible={true}
+                    color="blue"
+                    defaultColor="blue"
+                    defaultWeight="SemiBold"
+                    focusable={true}
                     font="TitilliumWeb"
                     fontStyle={
                       Object {
                         "fontSize": 16,
+                        "textDecorationLine": "underline",
                       }
                     }
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
                     style={
                       Array [
-                        Object {
-                          "fontSize": 16,
-                        },
-                        Object {
-                          "color": "#17324D",
-                          "fontFamily": "Titillium Web",
-                          "fontStyle": "normal",
-                          "fontWeight": "400",
-                        },
-                      ]
-                    }
-                    weight="Regular"
-                  >
-                    When you pay a notice, this PSP can apply a maximum fee of 
-                    <Text
-                      color="bluegreyDark"
-                      defaultColor="blue"
-                      defaultWeight="Bold"
-                      font="TitilliumWeb"
-                      fontStyle={
-                        Object {
-                          "fontSize": 16,
-                        }
-                      }
-                      style={
-                        Array [
-                          Object {
-                            "fontSize": 16,
-                          },
-                          Object {
-                            "color": "#17324D",
-                            "fontFamily": "Titillium Web",
-                            "fontStyle": "normal",
-                            "fontWeight": "700",
-                          },
-                        ]
-                      }
-                      weight="Bold"
-                    >
-                      € 1.00
-                    </Text>
-                    . You'll see the right amount before confirming the payment.
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={
-                  Array [
-                    Object {},
-                    Object {
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "marginTop": 12,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      Object {},
-                      Object {
-                        "marginRight": 16,
-                        "marginTop": 6,
-                      },
-                    ]
-                  }
-                >
-                  <SvgMock
-                    height={24}
-                    width={24}
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {},
-                      Object {
-                        "flex": 1,
-                      },
-                    ]
-                  }
-                >
-                  <View
-                    style={Object {}}
-                  >
-                    <Text
-                      accessible={true}
-                      color="blue"
-                      defaultColor="blue"
-                      defaultWeight="SemiBold"
-                      focusable={true}
-                      font="TitilliumWeb"
-                      fontStyle={
                         Object {
                           "fontSize": 16,
                           "textDecorationLine": "underline",
-                        }
-                      }
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        Array [
-                          Object {
-                            "fontSize": 16,
-                            "textDecorationLine": "underline",
-                          },
-                          Object {
-                            "color": "#0073E6",
-                            "fontFamily": "Titillium Web",
-                            "fontStyle": "normal",
-                            "fontWeight": "600",
-                          },
-                        ]
-                      }
-                      weight="SemiBold"
-                    >
-                      PayTipper’s Terms and Conditions and Privacy Policy apply
-                    </Text>
-                  </View>
+                        },
+                        Object {
+                          "color": "#0073E6",
+                          "fontFamily": "Titillium Web",
+                          "fontStyle": "normal",
+                          "fontWeight": "600",
+                        },
+                      ]
+                    }
+                    weight="SemiBold"
+                  >
+                    PayTipper’s Terms and Conditions and Privacy Policy apply
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
-        </RCTScrollView>
-      </View>
-    </RCTSafeAreaView>
+        </View>
+      </RCTScrollView>
+    </View>
   </Modal>
 </View>
 `;

@@ -176,15 +176,15 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     ? "NotCompatible"
     : "NotActivable";
 
-  const { present: askConfirmation } =
-    useChangeActivationConfirmationBottomSheet(props, toggleValue, () =>
-      props.updateValue(props.hPan, toggleValue)
-    );
-
-  const { present: showExplanation } = useNotActivableInformationBottomSheet(
-    props,
-    notActivableType
+  const {
+    present: askConfirmation,
+    bottomSheet: changeActivationConfirmationBS
+  } = useChangeActivationConfirmationBottomSheet(props, toggleValue, () =>
+    props.updateValue(props.hPan, toggleValue)
   );
+
+  const { present: showExplanation, bottomSheet: notAvailableInformationBS } =
+    useNotActivableInformationBottomSheet(props, notActivableType);
 
   return (
     <>
@@ -202,6 +202,8 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
           onPress={showExplanation}
         />
       </View>
+      {changeActivationConfirmationBS}
+      {notAvailableInformationBS}
     </>
   );
 };

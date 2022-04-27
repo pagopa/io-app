@@ -3,7 +3,7 @@ import React from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
 import { View } from "native-base";
 import I18n from "../../../../../i18n";
-import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
 import { H4 } from "../../../../../components/core/typography/H4";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
@@ -55,7 +55,7 @@ export const PspRadioItem = (
     psp.logoUrl
   );
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <PspInfoBottomSheetContent
       pspFee={psp.fee}
       pspName={psp.name}
@@ -65,20 +65,18 @@ export const PspRadioItem = (
       pspName: psp.name
     }),
     Math.min(420, Dimensions.get("window").height),
-    () => (
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={{
-          testID: "continueButtonId",
-          bordered: false,
-          onPressWithGestureHandler: true,
-          onPress: () => dismiss(),
-          title: I18n.t(
-            "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
-          )
-        }}
-      />
-    )
+    <FooterWithButtons
+      type={"SingleButton"}
+      leftButton={{
+        testID: "continueButtonId",
+        bordered: false,
+        onPressWithGestureHandler: true,
+        onPress: () => dismiss(),
+        title: I18n.t(
+          "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
+        )
+      }}
+    />
   );
 
   return (

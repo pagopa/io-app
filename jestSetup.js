@@ -3,11 +3,12 @@
  * Set up of the testing environment
  */
 
-import { NativeModules } from "react-native";
+import {NativeModules} from "react-native";
 import mockAsyncStorage from "@react-native-community/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
 
+// eslint-disable-next-line functional/immutable-data
 NativeModules.RNGestureHandlerModule = {
   attachGestureHandler: jest.fn(),
   createGestureHandler: jest.fn(),
@@ -30,10 +31,12 @@ jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
  * https://docs.swmansion.com/react-native-reanimated/docs/1.x.x/getting_started/#testing
  */
 jest.mock("react-native-reanimated", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const Reanimated = require("react-native-reanimated/mock");
 
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
+  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
   Reanimated.default.addWhitelistedUIProps = () => {};
 
   return Reanimated;
@@ -44,6 +47,7 @@ jest.mock("react-native-blob-util", () => ({
   polyfill: jest.fn()
 }));
 
+// eslint-disable-next-line functional/immutable-data
 NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
   forceTouchAvailable: false
 };
@@ -67,4 +71,24 @@ jest.mock("rehype-format", jest.fn());
 jest.mock("unist-util-visit", jest.fn());
 jest.mock("hastscript", jest.fn());
 
+// eslint-disable-next-line functional/immutable-data,no-underscore-dangle
 global.__reanimatedWorkletInit = jest.fn();
+
+jest.mock("@gorhom/bottom-sheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const rn = require("react-native");
+
+  return {
+    __esModule: true,
+    BottomSheetModal: rn.Modal,
+    BottomSheetScrollView: rn.ScrollView,
+    TouchableWithoutFeedback: rn.TouchableWithoutFeedback,
+    useBottomSheetModal: () => ({
+      dismissAll: jest.fn()
+    }),
+    namedExport: {
+      ...require("react-native-reanimated/mock"),
+      ...jest.requireActual("@gorhom/bottom-sheet")
+    }
+  };
+});

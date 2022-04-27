@@ -24,7 +24,7 @@ import { H4 } from "../../../../../components/core/typography/H4";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { PspRadioItem } from "../components/PspRadioItem";
-import { useIOBottomSheet } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { IOPayPalPsp } from "../types";
 import {
   searchPaypalPsp as searchPaypalPspAction,
@@ -100,7 +100,7 @@ const getLocales = () => ({
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const { present: presentWhatIsPspBottomSheet, bottomSheet } =
-    useIOBottomSheet(
+    useIOBottomSheetModal(
       <Body>{locales.whatIsPspBody}</Body>,
       locales.whatIsPspTitle,
       280

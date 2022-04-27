@@ -44,7 +44,7 @@ import variables from "../../theme/variables";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
-import { useIOBottomSheet } from "../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
@@ -233,7 +233,7 @@ const AddCardScreen: React.FC<Props> = props => {
   );
   const inPayment = props.navigation.getParam("inPayment");
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <>
       <Body>{I18n.t("wallet.missingDataText.body")}</Body>
       <View spacer={true} large />

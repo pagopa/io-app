@@ -19,20 +19,6 @@ import {
 import { ValidCertificate } from "../../types/EUCovidCertificate";
 import EuCovidCertValidScreen from "../valid/EuCovidCertValidScreen";
 
-jest.mock("@gorhom/bottom-sheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const react = require("react-native");
-  return {
-    __esModule: true,
-    BottomSheetScrollView: react.ScrollView,
-    BottomSheetModal: react.Modal,
-    TouchableWithoutFeedback: react.TouchableWithoutFeedback,
-    useBottomSheetModal: () => ({
-      present: jest.fn(),
-      dismissAll: jest.fn()
-    })
-  };
-});
 describe("Test EUCovidCertificateValidScreen", () => {
   jest.useFakeTimers();
   it("With baseValidCertificate, the details button and the preview markdown shouldn't be rendered", () => {

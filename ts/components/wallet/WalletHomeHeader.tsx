@@ -10,7 +10,7 @@ import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { useIOBottomSheet } from "../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H1 } from "../core/typography/H1";
 import { H3 } from "../core/typography/H3";
@@ -71,7 +71,7 @@ const WalletHomeHeader = (props: Props) => {
     }
   ];
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <FlatList
       data={navigationListItems}
       keyExtractor={item => item.title}

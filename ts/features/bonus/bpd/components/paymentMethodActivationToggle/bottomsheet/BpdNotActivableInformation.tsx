@@ -6,7 +6,7 @@ import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
-import { useIOBottomSheet } from "../../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -56,7 +56,7 @@ export const useNotActivableInformationBottomSheet = (
   representation: PaymentMethodRepresentation,
   type: NotActivableType
 ) => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <BpdNotActivableInformation type={type} representation={representation} />,
     getTitle(type),
     310

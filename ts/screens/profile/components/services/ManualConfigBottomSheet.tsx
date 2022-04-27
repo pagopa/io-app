@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View } from "native-base";
-import { BottomSheetContent } from "../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
@@ -8,39 +7,15 @@ import {
 } from "../../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { useIOBottomSheet } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
-type Props = {
-  onConfirm: () => void;
-  onCancel: () => void;
-};
-
-const ManualConfigConfirm = ({
-  onConfirm,
-  onCancel
-}: Props): React.ReactElement => (
-  <BottomSheetContent
-    footer={
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={{
-          ...cancelButtonProps(onCancel),
-          onPressWithGestureHandler: true
-        }}
-        rightButton={{
-          ...errorButtonProps(onConfirm),
-          onPressWithGestureHandler: true
-        }}
-      />
-    }
-  >
-    <>
-      <View spacer />
-      <Markdown>
-        {I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")}
-      </Markdown>
-    </>
-  </BottomSheetContent>
+const ManualConfigConfirm = (): React.ReactElement => (
+  <>
+    <View spacer />
+    <Markdown>
+      {I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")}
+    </Markdown>
+  </>
 );
 
 export const useManualConfigBottomSheet = (onConfirm: () => void) => {
@@ -48,16 +23,24 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     present,
     bottomSheet: manualConfigBottomSheet,
     dismiss
-  } = useIOBottomSheet(
-    <ManualConfigConfirm
-      onConfirm={() => {
-        onConfirm();
-        dismiss();
-      }}
-      onCancel={() => dismiss()}
-    />,
+  } = useIOBottomSheetModal(
+    <ManualConfigConfirm />,
     I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
-    350
+    350,
+    <FooterWithButtons
+      type={"TwoButtonsInlineHalf"}
+      leftButton={{
+        ...cancelButtonProps(() => dismiss()),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        ...errorButtonProps(() => {
+          onConfirm();
+          dismiss();
+        }),
+        onPressWithGestureHandler: true
+      }}
+    />
   );
 
   return { present, manualConfigBottomSheet, dismiss };
