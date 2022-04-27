@@ -1,8 +1,7 @@
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { cancelled } from "typed-redux-saga/macro";
-import { put } from "typed-redux-saga/macro";
+import { cancelled, put } from "typed-redux-saga/macro";
 import {
   mvlAttachmentDownload,
   mvlRemoveCachedAttachment
@@ -10,9 +9,23 @@ import {
 import { isIos } from "../../../../utils/platform";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
+import { MvlAttachment } from "../../types/mvlData";
 
 /**
- * Handle the download of an MVL attachment
+ * Builds the save path for the given attachment
+ * @param attachment
+ */
+const savePath = (attachment: MvlAttachment) =>
+  isIos
+    ? RNFS.CachesDirectoryPath +
+      "/mvl/attachments/" +
+      attachment.id +
+      "/" +
+      attachment.displayName
+    : RNFS.DownloadDirectoryPath + "/" + attachment.displayName;
+
+/**
+ * Handles the download of an MVL attachment
  * @param bearerToken
  * @param action
  */
@@ -23,12 +36,8 @@ export function* downloadMvlAttachment(
   const attachment = action.payload;
 
   try {
-    const savePath = isIos
-      ? RNFS.DocumentDirectoryPath
-      : RNFS.DownloadDirectoryPath;
-
     const result = yield ReactNativeBlobUtil.config({
-      path: savePath + "/" + attachment.displayName,
+      path: savePath(attachment),
       timeout: fetchTimeout
     }).fetch("GET", attachment.resourceUrl.href, {
       Authorization: `Bearer ${bearerToken}`
@@ -60,7 +69,7 @@ export function* downloadMvlAttachment(
 }
 
 /**
- * Clear any cached file of the attachment
+ * Clears any cached file of the attachment
  * @param action
  */
 export function* clearMvlAttachment(
