@@ -1,9 +1,9 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { constNull } from "fp-ts/lib/function";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -19,6 +19,7 @@ import {
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
@@ -26,6 +27,7 @@ import themeVariables from "../../../theme/variables";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
+import { ZendeskParamsList } from "../navigation/params";
 import {
   getZendeskConfig,
   ZendeskStartPayload,
@@ -46,6 +48,8 @@ export type ContextualHelpData = {
   content: React.ReactNode;
   faqs?: ReadonlyArray<FAQType>;
 };
+
+export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
 
 /**
  * This component must be used only here.
@@ -149,7 +153,11 @@ const FaqManager = (props: FaqManagerProps) => {
   );
 };
 
-type Props = NavigationStackScreenProps<ZendeskStartPayload>;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">
+  >;
+};
 /**
  * Ingress screen to access the Zendesk assistance tool
  * the user can choose to open a new ticket, follow previous conversations or read the faqs

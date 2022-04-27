@@ -1,20 +1,20 @@
-import React, { useCallback } from "react";
-import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
+import React, { useCallback } from "react";
 import { Pressable, View } from "react-native";
-import { GlobalState } from "../../store/reducers/types";
+import { connect } from "react-redux";
+import { LevelEnum } from "../../../definitions/content/SectionStatus";
+import I18n from "../../i18n";
 import {
   SectionStatusKey,
   sectionStatusSelector
 } from "../../store/reducers/backendStatus";
-import I18n from "../../i18n";
+import { GlobalState } from "../../store/reducers/types";
+import { getFullLocale } from "../../utils/locale";
 import { maybeNotNullyString } from "../../utils/strings";
 import { openWebUrl } from "../../utils/url";
-import { getFullLocale } from "../../utils/locale";
-import { LevelEnum } from "../../../definitions/content/SectionStatus";
-import { useNavigationContext } from "../../utils/hooks/useOnFocus";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { Link } from "../core/typography/Link";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 import StatusContent from "./StatusContent";
 
 type OwnProps = {
@@ -56,7 +56,7 @@ const InnerSectionStatus = (
   const maybeWebUrl = maybeNotNullyString(
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
 
   const color = getStatusTextColor(sectionStatus.level);
 
@@ -68,8 +68,8 @@ const InnerSectionStatus = (
 
   React.useEffect(() => {
     handleOnSectionRef();
-    const unsubscribe = navigation?.addListener("didFocus", handleOnSectionRef);
-    return () => unsubscribe?.remove();
+    navigation?.addListener("focus", handleOnSectionRef);
+    return () => navigation?.removeListener("focus", handleOnSectionRef);
   }, [handleOnSectionRef, navigation, viewRef]);
 
   return maybeWebUrl.fold(

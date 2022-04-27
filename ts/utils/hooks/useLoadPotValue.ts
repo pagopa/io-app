@@ -1,8 +1,8 @@
 /* eslint-disable functional/immutable-data */
+import { useNavigation } from "@react-navigation/native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { NavigationContext } from "react-navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const retryTimeout = 5000 as Millisecond;
 
@@ -19,7 +19,7 @@ export const useLoadPotValue = <T, E>(
 ) => {
   const [idState, setId] = useState("");
   const timerRetry = useRef<number | undefined>(undefined);
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const retry = useCallback(() => {
     timerRetry.current = undefined;
     loadAction();

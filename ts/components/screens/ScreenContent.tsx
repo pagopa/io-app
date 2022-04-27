@@ -1,8 +1,8 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { Content } from "native-base";
 import * as React from "react";
 
 import { StyleProp, ViewStyle } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
