@@ -1,6 +1,8 @@
 import ReactNativeBlobUtil, { RNFetchBlobDf } from "react-native-blob-util";
 import RNFS from "react-native-fs";
 
+import i18n from "../../i18n";
+import { showToast } from "../../utils/showToast";
 import { share } from "../../utils/share";
 import { fetchTimeout } from "../../config";
 import { ContentTypeValues } from "../../types/contentType";
@@ -62,48 +64,9 @@ export const handleDownloadResult = async (
     }
 
     const path = result.path();
-
-    if (isIos) {
-      if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        showPreview(path, {
-          _tag: "ios",
-          action: () => ReactNativeBlobUtil.ios.presentOptionsMenu(path)
-        });
-      } else {
+    if (attachment.contentType !== ContentTypeValues.applicationPdf) {
+      if (isIos) {
         ReactNativeBlobUtil.ios.presentOptionsMenu(result.path());
-      }
-    } else {
-      if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        showPreview(path, {
-          _tag: "android",
-          open: () => {
-            ReactNativeBlobUtil.android
-              .actionViewIntent(path, attachment.contentType)
-              .catch(error => {
-                // TODO: likely a toast with the error
-              });
-          },
-          share: () => {
-            share(`data:application/pdf;${result.base64()}`, undefined, false)
-              .run()
-              .catch(error => {
-                // TODO: likely a toast with the error
-              });
-          },
-          save: () => {
-            const destination = `${ReactNativeBlobUtil.fs.dirs.DownloadDir}/${attachment.displayName}`;
-            ReactNativeBlobUtil.fs
-              .cp(path, destination)
-              .then(_ => {
-                console.log(`stored in ${destination}`);
-                // TODO: likely a toast saying we are done
-              })
-              .catch(error => {
-                // TODO: likely a toast with the error
-                console.error(error);
-              });
-          }
-        });
       } else {
         await ReactNativeBlobUtil.android.addCompleteDownload({
           mime: attachment.contentType,
@@ -113,6 +76,64 @@ export const handleDownloadResult = async (
           path: result.path()
         });
       }
+    }
+
+    // PDF only
+    if (isIos) {
+      showPreview(path, {
+        _tag: "ios",
+        action: () => ReactNativeBlobUtil.ios.presentOptionsMenu(path)
+      });
+    } else {
+      showPreview(path, {
+        _tag: "android",
+        open: () => {
+          ReactNativeBlobUtil.android
+            .actionViewIntent(path, attachment.contentType)
+            .catch(_ => {
+              showToast(
+                i18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.opening"
+                )
+              );
+            });
+        },
+        share: () => {
+          share(`data:application/pdf;${result.base64()}`, undefined, false)
+            .run()
+            .catch(_ => {
+              showToast(
+                i18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.sharing"
+                )
+              );
+            });
+        },
+        save: () => {
+          const destination = `${ReactNativeBlobUtil.fs.dirs.DownloadDir}/${attachment.displayName}`;
+          ReactNativeBlobUtil.fs
+            .cp(path, destination)
+            .then(_ => {
+              showToast(
+                i18n.t(
+                  "features.mvl.details.attachments.pdfPreview.savedAtLocation",
+                  {
+                    name: attachment.displayName,
+                    location: destination
+                  }
+                ),
+                "success"
+              );
+            })
+            .catch(_ => {
+              showToast(
+                i18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.saving"
+                )
+              );
+            });
+        }
+      });
     }
   } catch (e) {
     if (e instanceof Error) {
