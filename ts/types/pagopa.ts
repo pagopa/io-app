@@ -17,7 +17,6 @@ import { PspListResponseCD as PspListResponsePagoPA } from "../../definitions/pa
 import { PspResponse as PspResponsePagoPA } from "../../definitions/pagopa/PspResponse";
 import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
 import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
-import { Transaction as TransactionPagoPA } from "../../definitions/pagopa/Transaction";
 import { TransactionListResponse as TransactionListResponsePagoPA } from "../../definitions/pagopa/TransactionListResponse";
 import { TransactionResponse as TransactionResponsePagoPA } from "../../definitions/pagopa/TransactionResponse";
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
@@ -39,6 +38,7 @@ import {
 } from "../../definitions/pagopa/walletv2/CardInfo";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
 import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
+import { IOTransaction } from "./IOTransaction";
 
 /**
  * Union of all possible credit card types
@@ -313,37 +313,8 @@ export type NullableWallet = ReplaceProp1<Wallet, "idWallet", undefined>;
 /**
  * A refined Transaction
  */
-export const Transaction = repP(
-  repP(
-    repP(
-      reqP(
-        reqP(
-          reqP(
-            reqP(
-              reqP(
-                reqP(reqP(TransactionPagoPA, "created"), "description"),
-                "id"
-              ),
-              "idPayment"
-            ),
-            "idWallet"
-          ),
-          "merchant"
-        ),
-        "statusMessage"
-      ),
-      "amount",
-      Amount
-    ),
-    "fee",
-    t.union([Amount, t.undefined])
-  ),
-  "grandTotal",
-  Amount,
-  "Transaction"
-);
-
-export type Transaction = t.TypeOf<typeof Transaction>;
+export type Transaction = IOTransaction;
+export const Transaction = IOTransaction;
 
 export const isCompletedTransaction = (tx: Transaction) => tx.idStatus === 3;
 
