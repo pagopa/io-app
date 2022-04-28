@@ -2962,11 +2962,11 @@ features:
           singleBtn: "Salva, stampa o condividi"
           open: "Apri"
           save: "Salva"
-          savedAtLocation: "Il documento {{name}} e' stato salvato in {{location}}."
+          savedAtLocation: "Il documento {{name}} e' stato salvato nella cartella Scaricati ({{location}})."
           errors:
-            sharing: "Non sono riuscito a condividere il documento"
-            opening: "Non sono riuscito ad aprire il documento"
-            saving: "Non sono riuscito a salvare il documento"
+            sharing: "Si è verificato un errore condividendo il documento."
+            opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
+            saving: "Si è verificato un errore salvando il documento."
       body:
         plain: "testo semplice"
         html: "html"
