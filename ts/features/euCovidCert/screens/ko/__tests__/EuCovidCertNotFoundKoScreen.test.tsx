@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { createStore } from "redux";
 import i18n from "../../../../../i18n";
 import * as mixpanelTrack from "../../../../../mixpanel";
@@ -79,7 +79,7 @@ const renderComponent = (state: GlobalState, withContext: boolean = true) => {
     <EuCovidCertWrongFormatKoScreen />
   );
 
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     () => Component,
     EUCOVIDCERT_ROUTES.CERTIFICATE,
     {},

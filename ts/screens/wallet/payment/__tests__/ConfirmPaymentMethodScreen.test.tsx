@@ -1,43 +1,40 @@
 import { createStore, DeepPartial, Store } from "redux";
-import ConfirmPaymentMethodScreen, {
-  ConfirmPaymentMethodScreenNavigationParams
-} from "../ConfirmPaymentMethodScreen";
-import {
-  myRptId,
-  myInitialAmount,
-  myVerifiedData,
-  myWallet,
-  AuthSeq
-} from "../../../../utils/testFaker";
-import { getLookUpIdPO, newLookUpId } from "../../../../utils/pmLookUpId";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { appReducer } from "../../../../store/reducers/";
+import { PspData } from "../../../../../definitions/pagopa/PspData";
+import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
+import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
+import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
+import { appReducer } from "../../../../store/reducers/";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import { reproduceSequence } from "../../../../utils/tests";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
+import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import {
   BPayPaymentMethod,
   CreditCardPaymentMethod,
   PayPalPaymentMethod
 } from "../../../../types/pagopa";
-import I18n from "../../../../i18n";
-import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
-import { pspSelectedV2ListSelector } from "../../../../store/reducers/wallet/payment";
-import {
-  bancomatPayConfigSelector,
-  isPaypalEnabledSelector
-} from "../../../../store/reducers/backendStatus";
 import { getTranslatedShortNumericMonthYear } from "../../../../utils/dates";
-import { PspData } from "../../../../../definitions/pagopa/PspData";
-import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
-import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
+import { getLookUpIdPO, newLookUpId } from "../../../../utils/pmLookUpId";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import {
+  AuthSeq,
+  myInitialAmount,
+  myRptId,
+  myVerifiedData,
+  myWallet
+} from "../../../../utils/testFaker";
+import { reproduceSequence } from "../../../../utils/tests";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ConfirmPaymentMethodScreen, {
+  ConfirmPaymentMethodScreenNavigationParams
+} from "../ConfirmPaymentMethodScreen";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
-
-// Be sure that navigation is unmocked
-jest.unmock("react-navigation");
 
 // Mock the PayWebViewModal
 jest.mock("../../../../components/wallet/PayWebViewModal", () => {
@@ -179,10 +176,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       payment: true
     });
 
-    const rendered = renderScreenFakeNavRedux<
-      GlobalState,
-      ConfirmPaymentMethodScreenNavigationParams
-    >(
+    const rendered = renderScreenFakeNavRedux<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       params,
@@ -259,10 +253,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       }
     };
 
-    const rendered = renderScreenFakeNavRedux<
-      GlobalState,
-      ConfirmPaymentMethodScreenNavigationParams
-    >(
+    const rendered = renderScreenFakeNavRedux<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       paypalParams,
@@ -325,10 +316,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       }
     };
 
-    const rendered = renderScreenFakeNavRedux<
-      GlobalState,
-      ConfirmPaymentMethodScreenNavigationParams
-    >(
+    const rendered = renderScreenFakeNavRedux<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       bpayParams,
@@ -404,10 +392,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       customInitState as any
     );
 
-    renderScreenFakeNavRedux<
-      GlobalState,
-      ConfirmPaymentMethodScreenNavigationParams
-    >(
+    renderScreenFakeNavRedux<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       params,

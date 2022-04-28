@@ -1,27 +1,27 @@
 import {
   NavigationAction,
-  NavigationActions,
-  NavigationContainerComponent,
-  NavigationLeafRoute,
-  NavigationParams,
-  NavigationState
-} from "react-navigation";
+  NavigationContainerRef
+} from "@react-navigation/native";
+import { Route } from "@react-navigation/routers";
+import React from "react";
 import { mixpanelTrack } from "../mixpanel";
-import {
-  getCurrentRoute as utilsGetCurrentRoute,
-  getCurrentRouteKey as utilsGetCurrentRouteKey,
-  getCurrentRouteName as utilsGetCurrentRouteName
-} from "../utils/navigation";
 
+export const navigationRef = React.createRef<NavigationContainerRef>();
 // eslint-disable-next-line functional/no-let
-let navigator: NavigationContainerComponent | null | undefined;
-// eslint-disable-next-line functional/no-let
-let currentRouteState: NavigationState | null = null;
+let isNavigationReady: boolean = false;
+
+export const setNavigationReady = () => {
+  // eslint-disable-next-line functional/immutable-data
+  isNavigationReady = true;
+};
+
+export const getIsNavigationReady = () =>
+  isNavigationReady && navigationRef.current !== null;
 
 const withLogging =
   <A extends Array<unknown>, R>(f: (...a: A) => R) =>
   (...args: A): R => {
-    if (navigator === null || navigator === undefined) {
+    if (navigationRef.current === null || !isNavigationReady) {
       void mixpanelTrack("NAVIGATION_SERVICE_NAVIGATOR_UNDEFINED", {
         method: f.name
       });
@@ -29,48 +29,42 @@ const withLogging =
     return f(...args);
   };
 
-const setTopLevelNavigator = (
-  navigatorRef: NavigationContainerComponent | null | undefined
-) => {
-  navigator = navigatorRef;
-};
+// NavigationContainerComponent
+const getNavigator = (): React.RefObject<NavigationContainerRef> =>
+  navigationRef;
 
-const getNavigator = (): NavigationContainerComponent | null | undefined =>
-  navigator;
-
-const setCurrentState = (state: NavigationState) => {
-  // This is a security check since sometime the onNavigationStateChange could return an undefined state ignoring the type
-  currentRouteState = state ?? null;
-};
-
-const navigate = (routeName: string, params?: NavigationParams) => {
-  navigator?.dispatch(NavigationActions.navigate({ routeName, params }));
+// NavigationParams
+const navigate = (routeName: string, params?: any) => {
+  if (isNavigationReady) {
+    navigationRef.current?.navigate(routeName, params);
+  }
 };
 
 const dispatchNavigationAction = (action: NavigationAction) => {
-  navigator?.dispatch(action);
+  navigationRef.current?.dispatch(action);
 };
 
 const getCurrentRouteName = (): string | undefined =>
-  currentRouteState ? utilsGetCurrentRouteName(currentRouteState) : undefined;
+  navigationRef.current?.getCurrentRoute()?.name;
 
 const getCurrentRouteKey = (): string | undefined =>
-  currentRouteState ? utilsGetCurrentRouteKey(currentRouteState) : undefined;
+  navigationRef.current?.getCurrentRoute()?.key;
 
-const getCurrentRoute = (): NavigationLeafRoute | undefined =>
-  currentRouteState ? utilsGetCurrentRoute(currentRouteState) : undefined;
+// NavigationLeafRoute
+const getCurrentRoute = (): Route<string> | undefined =>
+  navigationRef.current?.getCurrentRoute();
 
-const getCurrentState = (): NavigationState | null => currentRouteState;
+const getCurrentState = () => navigationRef?.current?.getState();
 
 // add other navigation functions that you need and export them
 export default {
   navigate: withLogging(navigate),
   getNavigator,
-  setTopLevelNavigator,
   dispatchNavigationAction: withLogging(dispatchNavigationAction),
-  setCurrentState,
   getCurrentRouteName,
   getCurrentRouteKey,
   getCurrentRoute,
-  getCurrentState
+  getCurrentState,
+  getIsNavigationReady,
+  setNavigationReady
 };

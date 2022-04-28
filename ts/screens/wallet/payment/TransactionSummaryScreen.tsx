@@ -3,24 +3,30 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { NavigationLeafRoute, StackActions } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
+import {
+  isError,
+  isLoading as isRemoteLoading,
+  isUndefined
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
@@ -41,6 +47,7 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
+import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
@@ -64,23 +71,19 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import {
-  isError,
-  isLoading as isRemoteLoading,
-  isUndefined
-} from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
-  startRoute: NavigationLeafRoute | undefined;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<TransactionSummaryScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -111,6 +114,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
     if (pot.isNone(this.props.potVerifica)) {
       // on component mount, fetch the payment summary if we haven't already
       this.props.dispatchPaymentVerificaRequest();
+    }
+    if (!pot.isSome(this.props.walletById)) {
+      this.props.loadWallets();
     }
   }
 
@@ -168,26 +174,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         }
       );
     } else {
-      /**
-       * Since the payment flow starts from the next screen, even though we are already
-       * in the payment flow, it is really difficult to make up for the static stack organization in a homogeneous way.
-       * The only solution that allows to avoid to heavily modify the existing logic is to distinguish based on the starting screen,
-       * in order to perform the right navigation actions if we are not in the wallet stack.
-       * TODO: This is a temporary (and not scalable) solution, a complete refactoring of the payment workflow is strongly recommended
-       */
-      const startRoute = this.props.navigation.getParam("startRoute");
-      if (startRoute !== undefined) {
-        // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
-        if (
-          startRoute.routeName === ROUTES.MESSAGE_DETAIL ||
-          startRoute.routeName === ROUTES.MESSAGE_DETAIL_PAGINATED
-        ) {
-          this.props.navigation.dispatch(StackActions.popToTop());
-        }
-        this.props.navigation.navigate(startRoute);
-      } else {
-        this.props.navigation.goBack();
-      }
+      this.props.navigation.goBack();
     }
   };
 
@@ -439,7 +426,8 @@ const mapStateToProps = (state: GlobalState) => {
     paymentId,
     maybeFavoriteWallet,
     hasPayableMethods,
-    hasPagoPaMethods
+    hasPagoPaMethods,
+    walletById
   };
 };
 
@@ -519,6 +507,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     });
 
   return {
+    loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     navigateToWalletHome: () => navigateToWalletHome(),
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
