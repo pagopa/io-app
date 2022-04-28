@@ -1,5 +1,6 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../navigation/routes";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
 
 /**
@@ -8,8 +9,11 @@ import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
  */
 export const navigateToOnboardingPrivativeChooseIssuerScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER
+      }
     })
   );
 
@@ -19,8 +23,11 @@ export const navigateToOnboardingPrivativeChooseIssuerScreen = () =>
  */
 export const navigateToOnboardingPrivativeInsertCardNumberScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER
+      }
     })
   );
 
@@ -30,8 +37,11 @@ export const navigateToOnboardingPrivativeInsertCardNumberScreen = () =>
  */
 export const navigateToOnboardingPrivativeKoDisabledScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_ISSUER
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_ISSUER
+      }
     })
   );
 
@@ -41,8 +51,11 @@ export const navigateToOnboardingPrivativeKoDisabledScreen = () =>
  */
 export const navigateToOnboardingPrivativeKoUnavailableScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_ISSUER
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_ISSUER
+      }
     })
   );
 
@@ -52,8 +65,11 @@ export const navigateToOnboardingPrivativeKoUnavailableScreen = () =>
  */
 export const navigateToOnboardingPrivativeSearchAvailable = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE
+      }
     })
   );
 
@@ -63,7 +79,10 @@ export const navigateToOnboardingPrivativeSearchAvailable = () =>
  */
 export const navigateToActivateBpdOnNewPrivative = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN,
+      params: {
+        screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW
+      }
     })
   );

@@ -51,7 +51,7 @@ export const renderItem =
         hasPaidBadge={hasPaidBadge(message.category)}
         isRead={message.isRead}
         message={message}
-        onPress={() => onPress(message)}
+        onPress={onPress}
         onLongPress={() => onLongPress(message)}
         isSelectionModeEnabled={!!selectedMessageIds}
         isSelected={!!selectedMessageIds?.has(message.id)}
