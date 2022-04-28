@@ -11,7 +11,7 @@ const Stack = createStackNavigator<CdcBonusRequestParamsList>();
 
 export const CdcStackNavigator = () => (
   <Stack.Navigator
-    initialRouteName={"CDC_INFORMATION_TOS"}
+    initialRouteName={CDC_ROUTES.INFORMATION_TOS}
     headerMode={"none"}
     screenOptions={{ gestureEnabled: false }}
   >
