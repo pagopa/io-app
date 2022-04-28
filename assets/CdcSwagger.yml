@@ -77,6 +77,7 @@ definitions:
       - INIZIATIVA_TERMINATA
       - ANNO_NON_AMMISSIBILE
       - CIT_REGISTRATO
+      - OK
   Anno:
     type: string
     pattern: ^\\d{4}$
@@ -131,10 +132,10 @@ definitions:
   EsitoRichiestaPerAnno:
     type: object
     required:
-      - statoBeneficiario
+      - esitoRichiesta
       - annoRiferimento
     properties:
-      statoBeneficiario:
+      esitoRichiesta:
         $ref: '#/definitions/EsitoRichiesta'
       annoRiferimento:
         $ref: '#/definitions/Anno'

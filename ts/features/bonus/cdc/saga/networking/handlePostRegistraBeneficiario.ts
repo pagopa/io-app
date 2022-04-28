@@ -12,7 +12,7 @@ const convertSuccess = (
 ): CdcBonusEnrollmentOutcomeList =>
   listaEsitoRichiestaPerAnno.listaEsitoRichiestaPerAnno.map(o => ({
     year: o.annoRiferimento,
-    outcome: o.statoBeneficiario
+    outcome: o.esitoRichiesta
   }));
 
 export function* handlePostRegistraBeneficiario(
