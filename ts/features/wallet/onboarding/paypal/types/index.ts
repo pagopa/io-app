@@ -5,5 +5,5 @@ export type IOPayPalPsp = {
   logoUrl: string;
   name: string;
   fee: NonNegativeNumber;
-  privacyUrl: string;
+  privacyUrl?: string;
 };

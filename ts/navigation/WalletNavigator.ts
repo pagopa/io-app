@@ -17,7 +17,7 @@ import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import IbanCTAEditScreen from "../features/bonus/bpd/screens/iban/IbanCTAEditScreen";
 import MainIbanScreen from "../features/bonus/bpd/screens/iban/MainIbanScreen";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
-import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
+import { BPayDetailScreen } from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import CreditCardDetailScreen from "../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
