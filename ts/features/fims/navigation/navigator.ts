@@ -1,8 +1,9 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import FimsWebviewScreen from "../screens/FimsWebviewScreen";
 import FIMS_ROUTES from "./routes";
 
-export const FimsNavigator = createStackNavigator(
+export const FimsNavigator = createCompatNavigatorFactory(createStackNavigator)(
   {
     [FIMS_ROUTES.WEBVIEW]: {
       screen: FimsWebviewScreen

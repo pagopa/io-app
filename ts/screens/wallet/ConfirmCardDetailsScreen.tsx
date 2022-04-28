@@ -3,13 +3,13 @@
  * inserted the data required to save a new card
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { constNull } from "fp-ts/lib/function";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -37,10 +37,13 @@ import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/
 
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
+  isError,
   isLoading as isRemoteLoading,
   isReady
 } from "../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateToAddCreditCardOutcomeCode,
   navigateToPaymentPickPaymentMethodScreen,
@@ -82,8 +85,11 @@ type ReduxMergedProps = Readonly<{
   onRetry?: () => void;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<ConfirmCardDetailsScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "WALLET_CONFIRM_CARD_DETAILS">
+  >;
+};
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -347,13 +353,13 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const { creditCardAddWallet, walletById } = state.wallet.wallets;
 
-  const { psps } = state.wallet.payment;
+  const { pspsV2 } = state.wallet.payment;
   const pmSessionToken = pmSessionTokenSelector(state);
   const isLoading =
     isRemoteLoading(pmSessionToken) ||
     pot.isLoading(creditCardAddWallet) ||
     pot.isLoading(walletById) ||
-    pot.isLoading(psps);
+    isRemoteLoading(pspsV2.psps);
 
   // considering wallet error only when the first step is completed and not in error
   const areWalletsInError =
@@ -362,7 +368,7 @@ const mapStateToProps = (state: GlobalState) => {
   const error =
     (pot.isError(creditCardAddWallet) &&
       creditCardAddWallet.error.kind !== "ALREADY_EXISTS") ||
-    pot.isError(psps)
+    isError(pspsV2.psps)
       ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
 
@@ -384,10 +390,7 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  props: NavigationStackScreenProps<ConfirmCardDetailsScreenNavigationParams>
-) => {
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const navigateToNextScreen = (maybeWallet: Option<Wallet>) => {
     const inPayment = props.navigation.getParam("inPayment");
     if (inPayment.isSome()) {

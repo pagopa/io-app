@@ -1,38 +1,40 @@
+import { useNavigation } from "@react-navigation/native";
+import { fromNullable } from "fp-ts/lib/Option";
+import { View } from "native-base";
 import * as React from "react";
 import { useMemo } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { View } from "native-base";
-import { fromNullable } from "fp-ts/lib/Option";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import {
-  cgnOfflineMerchants,
-  cgnOnlineMerchants
-} from "../../store/actions/merchants";
-import { cgnSelectedCategorySelector } from "../../store/reducers/categories";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import I18n from "../../../../../i18n";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
+import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
+import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
   getValueOrElse,
   isError,
   isLoading
 } from "../../../bpd/model/RemoteValue";
-import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
+import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+import { CgnDetailsParamsList } from "../../navigation/params";
+import CGN_ROUTES from "../../navigation/routes";
+import {
+  cgnOfflineMerchants,
+  cgnOnlineMerchants
+} from "../../store/actions/merchants";
+import { cgnSelectedCategorySelector } from "../../store/reducers/categories";
 import {
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
-import CGN_ROUTES from "../../navigation/routes";
 import { CATEGORY_GRADIENT_ANGLE, getCategorySpecs } from "../../utils/filters";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import { MerchantsAll } from "./CgnMerchantsListScreen";
 
 const styles = StyleSheet.create({
@@ -56,7 +58,10 @@ const CgnMerchantsListByCategory = () => {
     [currentCategory]
   );
 
-  const navigation = useNavigationContext();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
+    >();
 
   const categoryFilter = useMemo(
     () =>

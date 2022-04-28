@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../store/reducers";
@@ -35,7 +35,7 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
 });
 
 const renderComponent = () =>
-  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  renderScreenFakeNavRedux<GlobalState>(
     () => <OptInPaymentMethodsChoiceScreen />,
     BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE,
     {},
