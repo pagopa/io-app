@@ -3,6 +3,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyleSheet, ActivityIndicator } from "react-native";
 
 import * as pot from "italia-ts-commons/lib/pot";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -33,6 +34,8 @@ import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
 import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
 import MVL_ROUTES from "../../../../navigation/routes";
+import { isIos } from "../../../../../../utils/platform";
+import { ContentTypeValues } from "../../../../../../types/contentType";
 import PdfPreview from "./PdfPreview";
 
 const BOTTOM_SHEET_HEIGHT = 375;
@@ -283,13 +286,29 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
   };
 
   const showAttachment = () => {
+    const path = pot.toUndefined(downloadPot);
+
     if (pot.isError(downloadPot)) {
       showError();
-    } else if (pot.isSome(downloadPot)) {
-      navigate(MVL_ROUTES.ATTACHMENT, {
-        path: pot.toUndefined(downloadPot),
-        onError: showError
-      });
+    } else if (path) {
+      if (attachment.contentType === ContentTypeValues.applicationPdf) {
+        navigate(MVL_ROUTES.ATTACHMENT, {
+          path,
+          onError: showError
+        });
+      } else {
+        if (isIos) {
+          ReactNativeBlobUtil.ios.presentOptionsMenu(path);
+        } else {
+          void ReactNativeBlobUtil.android.addCompleteDownload({
+            mime: attachment.contentType,
+            title: attachment.displayName,
+            showNotification: true,
+            description: attachment.displayName,
+            path
+          });
+        }
+      }
     }
   };
 

@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
 import { NavigationStackScreenProps } from "react-navigation-stack";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import I18n from "../../../../../../i18n";
@@ -20,12 +21,13 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderFooter = () =>
+const renderFooter = (path: string) =>
   isIos ? (
     <FooterWithButtons
       type={"SingleButton"}
-      leftButton={confirmButtonProps(() => {},
-      I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
+      leftButton={confirmButtonProps(() => {
+        ReactNativeBlobUtil.ios.presentOptionsMenu(path);
+      }, I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
     />
   ) : (
     <FooterWithButtons
@@ -57,7 +59,7 @@ export const MvlAttachmentPreview = (
         style={styles.pdf}
         onError={_ => props.navigation.getParam("onError")()}
       />
-      {renderFooter()}
+      {renderFooter(props.navigation.getParam("path"))}
     </SafeAreaView>
   </BaseScreenComponent>
 );
