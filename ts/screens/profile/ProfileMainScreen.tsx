@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import { NavigationEvents } from "@react-navigation/compat";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
@@ -269,13 +268,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     clearInterval(this.idResetTap);
   };
 
-  private ServiceListRef = React.createRef<ScrollView>();
-  private scrollToTop = () => {
-    if (this.ServiceListRef.current) {
-      this.ServiceListRef.current.scrollTo({ x: 0, y: 0, animated: false });
-    }
-  };
-
   private renderDeveloperSection() {
     const {
       dispatchSessionExpired,
@@ -450,8 +442,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     };
 
     const screenContent = () => (
-      <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
-        <NavigationEvents onWillFocus={this.scrollToTop} />
+      <ScrollView style={styles.whiteBg}>
         <View spacer={true} />
         <List withContentLateralPadding={true}>
           {/* Data */}
