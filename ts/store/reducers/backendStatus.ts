@@ -214,9 +214,8 @@ export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
 export const isCdcEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    (cdcEnabled &&
-      backendStatus.map(bs => bs.config.cdc.enabled).toUndefined()) ??
-    false
+    cdcEnabled &&
+    backendStatus.map(bs => bs.config.cdc.enabled).getOrElse(false)
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
