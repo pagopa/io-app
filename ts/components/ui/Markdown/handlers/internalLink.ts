@@ -4,7 +4,13 @@
 import { CommonActions, NavigationAction } from "@react-navigation/native";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import URLParse from "url-parse";
-import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled, uaDonationsEnabled } from "../../../../config";
+import {
+  bpdEnabled,
+  fimsEnabled,
+  myPortalEnabled,
+  svEnabled,
+  uaDonationsEnabled
+} from "../../../../config";
 import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";

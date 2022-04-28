@@ -23,7 +23,10 @@ import { trackScreen } from "../store/middlewares/navigation";
 import { isTestEnv } from "../utils/environment";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
-import { isCdcEnabledSelector, isFIMSEnabledSelector } from "../store/reducers/backendStatus";
+import {
+  isCdcEnabledSelector,
+  isFIMSEnabledSelector
+} from "../store/reducers/backendStatus";
 import { fimsEnabled } from "../config";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
