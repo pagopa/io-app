@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import { NavigationEvents } from "@react-navigation/compat";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
