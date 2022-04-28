@@ -1,6 +1,6 @@
+import { StackActions } from "@react-navigation/compat";
 import { Either, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
-import { StackActions } from "react-navigation";
 import { call, put, select, take, race } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
