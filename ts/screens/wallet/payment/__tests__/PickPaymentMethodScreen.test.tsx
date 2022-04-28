@@ -23,6 +23,7 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
 import { pspForPaymentV2WithCallbacks } from "../../../../store/actions/wallet/payment";
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 
 const rptId = {} as RptId;
 const initialAmount = "300" as AmountInEuroCents;
@@ -37,6 +38,12 @@ const aCreditCard = {
     brand: "VISA",
     type: undefined
   },
+  enableableFunctions: [
+    EnableableFunctionsEnum.pagoPA,
+    EnableableFunctionsEnum.BPD
+  ],
+  caption: "",
+  icon: "",
   pagoPA: true,
   onboardingChannel: "IO"
 } as CreditCardPaymentMethod;
@@ -47,7 +54,9 @@ const aSatispay = {
   walletType: WalletTypeEnum.Satispay,
   pagoPA: false,
   onboardingChannel: "IO",
-  enableableFunctions: [],
+  enableableFunctions: [EnableableFunctionsEnum.BPD],
+  caption: "",
+  icon: "",
   info: {}
 } as SatispayPaymentMethod;
 
