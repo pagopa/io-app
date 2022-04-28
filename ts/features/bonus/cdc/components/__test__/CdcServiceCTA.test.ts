@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -104,7 +103,7 @@ describe("CdcServiceCTA", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     CdcServiceCTA,
     ROUTES.MAIN,
     {},
