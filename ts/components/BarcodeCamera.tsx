@@ -1,5 +1,5 @@
 import "react-native-reanimated";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 import { View } from "react-native";
 import { useScanBarcodes, BarcodeFormat } from "vision-camera-code-scanner";
@@ -48,6 +48,7 @@ type Props = {
 export const BarcodeCamera = (props: Props) => {
   const { onBarcodeScanned } = props;
   const devices = useCameraDevices();
+  const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
 
   const [frameProcessor, barcodes] = useScanBarcodes(
@@ -57,6 +58,23 @@ export const BarcodeCamera = (props: Props) => {
     }
   );
 
+  // Hook that handles the permissions initialization.
+  useEffect(() => {
+    async function checkPermissions() {
+      const cameraPermissions = await Camera.getCameraPermissionStatus();
+
+      if (cameraPermissions === "not-determined") {
+        const selectedPermissions = await Camera.requestCameraPermission();
+        setPermissionsGranted(selectedPermissions === "authorized");
+      } else {
+        setPermissionsGranted(cameraPermissions === "authorized");
+      }
+    }
+
+    void checkPermissions();
+  }, [setPermissionsGranted]);
+
+  // Hook that handles the `onBarcodeScanned` callback.
   useEffect(() => {
     // This is going to take only the first scanned
     // barcode. This could be improved or changed in relation
@@ -81,8 +99,14 @@ export const BarcodeCamera = (props: Props) => {
   }, [barcodes, onBarcodeScanned]);
 
   return (
-    <View style={{ width: "100%", height: 400, flexDirection: "column" }}>
-      {device && (
+    <View
+      style={{
+        width: "100%",
+        height: 400,
+        backgroundColor: "#000"
+      }}
+    >
+      {device && permissionsGranted && (
         <Camera
           style={{ width: "100%", height: "100%" }}
           device={device}
