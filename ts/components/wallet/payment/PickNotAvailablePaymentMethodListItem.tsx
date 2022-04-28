@@ -79,6 +79,7 @@ type PaymentMethodInformation = {
   description: string;
   bottomSheetTitle: string;
   bottomSheetBody: JSX.Element;
+  snapPoint?: number;
 };
 
 const extractInfoFromPaymentMethod = (
@@ -97,7 +98,8 @@ const extractInfoFromPaymentMethod = (
           nameSurname
         ),
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody()
+        bottomSheetBody: paymentDisabledBottomSheetBody(),
+        snapPoint: 360
       };
     case "Bancomat":
       return {
@@ -116,7 +118,8 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? "",
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody()
+        bottomSheetBody: paymentDisabledBottomSheetBody(),
+        snapPoint: 360
       };
     case "Satispay":
       return {
@@ -132,7 +135,8 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.kind,
         description: getPaypalAccountEmail(paymentMethod.info),
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody()
+        bottomSheetBody: paymentDisabledBottomSheetBody(),
+        snapPoint: 360
       };
     case "Privative":
       return {
@@ -151,13 +155,22 @@ const extractInfoFromPaymentMethod = (
 const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   props: Props
 ) => {
-  const { logo, title, description, bottomSheetTitle, bottomSheetBody } =
-    extractInfoFromPaymentMethod(props.paymentMethod, props.nameSurname ?? "");
+  const {
+    logo,
+    title,
+    description,
+    bottomSheetTitle,
+    bottomSheetBody,
+    snapPoint
+  } = extractInfoFromPaymentMethod(
+    props.paymentMethod,
+    props.nameSurname ?? ""
+  );
 
   const { present, bottomSheet } = useIOBottomSheetModal(
     bottomSheetBody,
     bottomSheetTitle,
-    300
+    snapPoint ?? 300
   );
   return (
     <>
