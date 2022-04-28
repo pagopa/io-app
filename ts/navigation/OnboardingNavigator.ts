@@ -3,17 +3,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
-import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
 import { PremiumMessagesOptInOutScreen } from "../screens/onboarding/premiumMessages/PremiumMessagesOptInOutScreen";
-import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
-import { PremiumMessagesOptInOutScreen } from "../screens/onboarding/premiumMessages/PremiumMessagesOptInOutScreen";
-import { premiumMessagesOptInEnabled } from "../config";
 import ROUTES from "./routes";
 
 /**
@@ -51,6 +47,7 @@ const navigator = createCompatNavigatorFactory(createStackNavigator)(
     [ROUTES.ONBOARDING_COMPLETED]: {
       screen: OnboardingCompletedScreen
     }
+  },
   {
     // Let each screen handle the header and navigation
     headerMode: "none",
