@@ -2932,6 +2932,10 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
+    bonusRequest:
+      bonusRequested:
+        cta: "Ho capito!"
+
 features:
   mvl:
     title: "messaggio a valore legale"
@@ -3088,4 +3092,5 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+
 
