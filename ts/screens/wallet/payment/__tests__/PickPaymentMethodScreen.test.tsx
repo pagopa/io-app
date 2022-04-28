@@ -47,6 +47,7 @@ const aSatispay = {
   walletType: WalletTypeEnum.Satispay,
   pagoPA: false,
   onboardingChannel: "IO",
+  enableableFunctions: [],
   info: {}
 } as SatispayPaymentMethod;
 
