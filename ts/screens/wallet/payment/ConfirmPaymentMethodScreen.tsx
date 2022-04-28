@@ -237,7 +237,6 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const verifica: PaymentRequestsGetResponse =
     props.navigation.getParam("verifica");
   const wallet: Wallet = props.navigation.getParam("wallet");
-  console.log("screen", wallet);
   const idPayment: string = props.navigation.getParam("idPayment");
   const paymentReason = verifica.causaleVersamento;
   const maybePsp = fromNullable(wallet.psp);
