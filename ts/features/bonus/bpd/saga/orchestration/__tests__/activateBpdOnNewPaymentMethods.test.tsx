@@ -1,4 +1,5 @@
 import { left, right } from "fp-ts/lib/Either";
+import { View } from "react-native";
 import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
@@ -8,6 +9,7 @@ import { navigateToWalletHome } from "../../../../../../store/actions/navigation
 import { appReducer } from "../../../../../../store/reducers";
 import { bpdRemoteConfigSelector } from "../../../../../../store/reducers/backendStatus";
 import { mockPrivativeCard } from "../../../../../../store/reducers/wallet/__mocks__/wallets";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { navigateToSuggestBpdActivation } from "../../../../../wallet/onboarding/bancomat/navigation/action";
 import { navigateToActivateBpdOnNewPrivative } from "../../../../../wallet/onboarding/privative/navigation/action";
 import { activateBpdOnNewPaymentMethods } from "../activateBpdOnNewAddedPaymentMethods";
@@ -28,9 +30,19 @@ const enrollAfterAddFalse: BpdConfig = {
 
 describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
   jest.useFakeTimers();
+
+  beforeEach(() => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+  });
+
   it("With default state and no payment methods, should navigate to wallet home", async () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
+
+    // We trigger the initialization of the NavigationService
+    renderScreenFakeNavRedux(View, "DUMMY", {}, store);
 
     await expectSaga(
       activateBpdOnNewPaymentMethods,

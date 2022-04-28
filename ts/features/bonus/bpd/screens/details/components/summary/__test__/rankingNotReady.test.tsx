@@ -16,12 +16,6 @@ import {
   mockBpdState
 } from "./bpdSummaryComponent.test";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
-
 describe("Ranking ready vs not ready", () => {
   const mockStore = configureMockStore();
 

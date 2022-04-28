@@ -3,34 +3,37 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import { AlertModal } from "../../components/ui/AlertModal";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { createPinSuccess } from "../../store/actions/pinset";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
 import { isOnboardingCompleted } from "../../utils/navigation";
 import { maybeNotNullyString } from "../../utils/strings";
-import { GlobalState } from "../../store/reducers/types";
-import { AlertModal } from "../../components/ui/AlertModal";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 
-type Props = NavigationStackScreenProps &
+type Props = IOStackNavigationRouteProps<AppParamsList> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -370,7 +373,7 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   private handleGoBack = () => {
     if (isOnboardingCompleted()) {
-      this.props.navigation.goBack(null);
+      this.props.navigation.goBack();
       return;
     }
     Alert.alert(
