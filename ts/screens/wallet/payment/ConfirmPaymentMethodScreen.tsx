@@ -10,7 +10,7 @@ import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCen
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
 import CardIcon from "../../../../img/wallet/card.svg";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
+import BancomatPayLogo from "../../../../img/wallet/payment-methods/bancomat_pay.svg";
 import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import TagIcon from "../../../../img/wallet/tag.svg";
 import { H1 } from "../../../components/core/typography/H1";
@@ -80,7 +80,6 @@ import {
   isCreditCard,
   isRawPayPal,
   PaymentMethod,
-  Psp,
   Wallet
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
@@ -103,7 +102,7 @@ export type ConfirmPaymentMethodScreenNavigationParams = Readonly<{
   verifica: PaymentRequestsGetResponse;
   idPayment: string;
   wallet: Wallet;
-  psps: ReadonlyArray<Psp>;
+  psps: ReadonlyArray<PspData>;
 }>;
 
 type ConfirmPaymentNavigationProps = IOStackNavigationProp<
@@ -198,7 +197,7 @@ const getPaymentMethodInfo = (
       }).filter(() => options.isPaypalEnabled);
     case "BPay":
       return some({
-        logo: <BrandImage image={bancomatPayLogo} scale={0.7} />,
+        logo: <BancomatPayLogo width={24} height={24} />,
         subject: paymentMethod?.caption,
         caption: paymentMethod.info.numberObfuscated ?? "",
         accessibilityLabel: `${I18n.t("wallet.methods.bancomatPay.name")}`
