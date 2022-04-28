@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -10,12 +10,6 @@ import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import { revokedCertificate } from "../../types/__mock__/EUCovidCertificate.mock";
 import { RevokedCertificate } from "../../types/EUCovidCertificate";
 import EuCovidCertRevokedScreen from "../EuCovidCertRevokedScreen";
-
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
 
 describe("Test EuCovidCertRevokedScreen", () => {
   jest.useFakeTimers();
@@ -44,7 +38,7 @@ const renderComponent = (
   store: Store,
   revokedCertificate: RevokedCertificate
 ) => ({
-  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  component: renderScreenFakeNavRedux<GlobalState>(
     () => (
       <EuCovidCertRevokedScreen headerData={revokedCertificate.headerData} />
     ),

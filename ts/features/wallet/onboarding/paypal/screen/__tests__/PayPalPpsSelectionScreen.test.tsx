@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../store/reducers";
@@ -12,15 +11,15 @@ import { getNetworkError } from "../../../../../../utils/errors";
 import { pspList } from "../__mocks__/psp";
 
 const mockPresentBottomSheet = jest.fn();
-jest.mock("../../../../../../utils/bottomSheet", () => {
+
+jest.mock("../../../../../../utils/hooks/bottomSheet", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const react = require("react-native");
   return {
     __esModule: true,
     BottomSheetScrollView: react.ScrollView,
     TouchableWithoutFeedback: react.TouchableWithoutFeedback,
-    useIOBottomSheetRaw: () => ({ present: mockPresentBottomSheet }),
-    useIOBottomSheet: () => ({ present: mockPresentBottomSheet })
+    useIOBottomSheetModal: () => ({ present: mockPresentBottomSheet })
   };
 });
 
@@ -88,7 +87,7 @@ const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       PayPalPpsSelectionScreen,
       "N/A",
       {},

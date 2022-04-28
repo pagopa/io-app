@@ -1,3 +1,4 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { Content } from "native-base";
 import * as React from "react";
 

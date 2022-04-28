@@ -23,6 +23,7 @@ import { PrivativeActions } from "../../features/wallet/onboarding/privative/sto
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
+import { CdcActions } from "../../features/bonus/cdc/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -32,7 +33,6 @@ import { CieAuthenticationActions } from "./cie";
 import { ContentActions } from "./content";
 import { CrossSessionsActions } from "./crossSessions";
 import { DebugActions } from "./debug";
-import { DeepLinkActions } from "./deepLink";
 import { IdentificationActions } from "./identification";
 import { InstallationActions } from "./installation";
 import { InternalRouteNavigationActions } from "./internalRouteNavigation";
@@ -61,7 +61,6 @@ export type Action =
   | BackendStatusActions
   | CieAuthenticationActions
   | VersionInfoActions
-  | DeepLinkActions
   | MessagesActions
   | MixpanelActions
   | NotificationsActions
@@ -98,7 +97,8 @@ export type Action =
   | OutcomeCodeActions
   | SvActions
   | MvlActions
-  | ZendeskSupportActions;
+  | ZendeskSupportActions
+  | CdcActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

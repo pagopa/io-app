@@ -22,7 +22,40 @@ describe("Payment", () => {
           .toBeVisible()
           .withTimeout(e2eWaitRenderTimeout);
       });
+
+      describe("when navigating to the wallet", () => {
+        it("then the wallet root screen should be visible", async () => {
+          await openPaymentFromMessage();
+
+          const cancelButton = element(
+            by.text(I18n.t("global.buttons.cancel"))
+          );
+          await waitFor(cancelButton)
+            .toBeVisible()
+            .withTimeout(e2eWaitRenderTimeout);
+          await cancelButton.tap();
+
+          const backButton = element(by.id("back-button"));
+          await waitFor(backButton)
+            .toBeVisible()
+            .withTimeout(e2eWaitRenderTimeout);
+          await backButton.tap();
+
+          const walletButton = element(
+            by.text(I18n.t("global.navigator.wallet"))
+          );
+          await waitFor(walletButton)
+            .toBeVisible()
+            .withTimeout(e2eWaitRenderTimeout);
+          await walletButton.tap();
+
+          await waitFor(element(by.text(I18n.t("wallet.payNotice"))))
+            .toBeVisible()
+            .withTimeout(e2eWaitRenderTimeout);
+        });
+      });
     });
+
     describe("And press cancel in the payment confirm screen", () => {
       it("Should return to the message details screen", async () => {
         await openPaymentFromMessage();

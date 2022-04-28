@@ -1,7 +1,5 @@
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import React from "react";
-import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
 import {
@@ -17,6 +15,7 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../../store/actions/messages";
+import { loadServiceDetail } from "../../../../store/actions/services";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
@@ -34,11 +33,25 @@ jest.mock("../../../../config", () => ({
   pageSize: 8,
   maximumItemsFromAPI: 8
 }));
-jest.mock("../../../../utils/hooks/useOnFocus", () => ({
-  useNavigationContext: () => ({
-    dispatch: mockNavDispatch,
-    state: { routeName: "test-route" }
-  })
+
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: mockNavDispatch,
+      addListener: () => jest.fn()
+    })
+  };
+});
+
+jest.mock("../../../../navigation/NavigationService", () => ({
+  dispatchNavigationAction: jest.fn(),
+  setNavigationReady: jest.fn(),
+  navigationRef: {
+    current: jest.fn()
+  }
 }));
 
 describe("MessageRouterScreen", () => {
@@ -74,6 +87,7 @@ describe("MessageRouterScreen", () => {
 
   describe("when is already running, with a populated messages state", () => {
     const previousCursor = successLoadNextPageMessagesPayload.messages[0].id;
+    const serviceId = successLoadNextPageMessagesPayload.messages[0].serviceId;
     const allPaginated = {
       inbox: {
         data: pot.some({
@@ -133,9 +147,15 @@ describe("MessageRouterScreen", () => {
             loadMessageDetails.request({ id })
           );
         });
+        it("should dispatch `loadServiceDetail`", () => {
+          const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+          expect(spyStoreDispatch).toHaveBeenCalledWith(
+            loadServiceDetail.request(serviceId)
+          );
+        });
         it("should not dispatch any other action", () => {
           const { spyStoreDispatch } = renderComponent(id, { allPaginated });
-          expect(spyStoreDispatch).toHaveBeenCalledTimes(1);
+          expect(spyStoreDispatch).toHaveBeenCalledTimes(2);
         });
       });
 
@@ -159,13 +179,19 @@ describe("MessageRouterScreen", () => {
             })
           );
         });
-
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        it("should dispatch `loadServiceDetail`", () => {
+          const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+          expect(spyStoreDispatch).toHaveBeenCalledWith(
+            loadServiceDetail.request(serviceId)
+          );
+        });
         it("should not dispatch any other action", () => {
           const { spyStoreDispatch } = renderComponent(id, {
             allPaginated,
             detailsById
           });
-          expect(spyStoreDispatch).toHaveBeenCalledTimes(0);
+          expect(spyStoreDispatch).toHaveBeenCalledTimes(1);
         });
       });
     });
@@ -211,21 +237,9 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
     }
   } as GlobalState);
   const spyStoreDispatch = spyOn(store, "dispatch");
-  const navParams = { messageId } as any;
-  const navigation = {
-    state: {},
-    dispatch: jest.fn(),
-    getParam: (key: string) => navParams[key]
-  } as any;
 
-  const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    () => (
-      <MessageRouterScreen
-        navigation={navigation as any}
-        theme={"light"}
-        screenProps={undefined}
-      />
-    ),
+  const component = renderScreenFakeNavRedux(
+    MessageRouterScreen,
     ROUTES.MESSAGE_ROUTER,
     { messageId },
     store
@@ -234,7 +248,6 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
   return {
     component,
     store,
-    spyStoreDispatch,
-    navigation
+    spyStoreDispatch
   };
 };
