@@ -1,6 +1,8 @@
 import { createStore, DeepPartial, Store } from "redux";
+import { PspData } from "../../../../../definitions/pagopa/PspData";
 import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
 import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
+import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
 import { appReducer } from "../../../../store/reducers/";
 import {
@@ -21,7 +23,6 @@ import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import {
   AuthSeq,
   myInitialAmount,
-  myPsp,
   myRptId,
   myVerifiedData,
   myWallet
@@ -31,7 +32,6 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ConfirmPaymentMethodScreen, {
   ConfirmPaymentMethodScreenNavigationParams
 } from "../ConfirmPaymentMethodScreen";
-import I18n from "../../../../i18n";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
@@ -101,6 +101,29 @@ const creditCardPaymentMethod = {
   caption: "caption"
 } as CreditCardPaymentMethod;
 
+const pspList: ReadonlyArray<PspData> = [
+  {
+    id: 1,
+    codiceAbi: "0001",
+    defaultPsp: true,
+    fee: 100,
+    idPsp: "1",
+    onboard: true,
+    privacyUrl: "https://io.italia.it",
+    ragioneSociale: "PayTipper"
+  },
+  {
+    id: 2,
+    codiceAbi: "0002",
+    defaultPsp: true,
+    fee: 120,
+    idPsp: "2",
+    onboard: true,
+    privacyUrl: "https://io.italia.it",
+    ragioneSociale: "PayTipper2"
+  }
+];
+
 // PayPal card payment method stub
 const paypalEmail = "email@email.com";
 const payPalPaymentMethod = {
@@ -136,7 +159,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     verifica: myVerifiedData,
     idPayment: "hjkdhgkdj",
     wallet: myWallet,
-    psps: [myPsp]
+    psps: pspList
   };
 
   // Store with the true appReducer

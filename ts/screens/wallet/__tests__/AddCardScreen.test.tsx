@@ -146,7 +146,8 @@ describe("getPaymentMethods", () => {
     navigateToAddCreditCard: jest.fn(),
     isPaypalAlreadyAdded: true,
     isPaypalEnabled: true,
-    canOnboardBPay: false
+    canOnboardBPay: false,
+    canPayWithBPay: false
   };
   // TODO: ⚠️ cast to any only to complete the merge, should be removed!
   const methods = testableFunctions.getPaymentMethods!(props as any, {
@@ -219,17 +220,40 @@ describe("getPaymentMethods", () => {
     ).toEqual("implemented");
   });
 
-  it("bpay should be notImplemented implemented if Bpay onboarding FF is ON and onlyPaymentMethodCanPay flag is ON", () => {
+  it("bpay should be notImplemented while a payment if it can be onboarded but it cannot pay", () => {
+    const canPayWithBPay = false;
+    const canOnboardBPay = true;
     // TODO: ⚠️ cast to any only to complete the merge, should be removed!
-    const methods = testableFunctions.getPaymentMethods!(props as any, {
-      onlyPaymentMethodCanPay: true,
-      isPaymentOnGoing: true,
-      isPaypalEnabled: true,
-      canOnboardBPay: true
-    });
+    const methods = testableFunctions.getPaymentMethods!(
+      { ...props, canPayWithBPay } as any,
+      {
+        onlyPaymentMethodCanPay: true,
+        isPaymentOnGoing: true,
+        isPaypalEnabled: true,
+        canOnboardBPay: canPayWithBPay && canOnboardBPay
+      }
+    );
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
     ).toEqual("notImplemented");
+  });
+
+  it("bpay should be implemented outside a payment if it can be onboarded but it cannot pay", () => {
+    const canPayWithBPay = true;
+    const canOnboardBPay = true;
+    const methods = testableFunctions.getPaymentMethods!(
+      // TODO: ⚠️ cast to any only to complete the merge, should be removed!
+      { ...props, canPayWithBPay } as any,
+      {
+        onlyPaymentMethodCanPay: true,
+        isPaymentOnGoing: false,
+        isPaypalEnabled: true,
+        canOnboardBPay: canPayWithBPay && canOnboardBPay
+      }
+    );
+    expect(
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+    ).toEqual("implemented");
   });
 });
 
