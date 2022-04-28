@@ -24,7 +24,10 @@ import { Camera } from "react-native-vision-camera";
 import { NavigationEvents } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { BarcodeCamera } from "../../../components/BarcodeCamera";
+import {
+  BarcodeCamera,
+  ScannedBarcode
+} from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -195,6 +198,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.showImagePicker();
   };
 
+  private handleBarcodeScanned = (barcode: ScannedBarcode) => {
+    switch (barcode.format) {
+      case "QRCODE":
+        this.onQrCodeData(barcode.value);
+    }
+  };
+
   /**
    * Start image chooser
    */
@@ -253,26 +263,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     }
   }
 
-  public async componentDidMount() {
-    if (Platform.OS !== "android") {
-      return;
-    }
-
-    const cameraPermissions = await Camera.getCameraPermissionStatus();
-
-    if (cameraPermissions === "not-determined") {
-      const selectedPermissions = await Camera.requestCameraPermission();
-
-      this.setState({
-        permissionRationaleDisplayed: selectedPermissions === "authorized"
-      });
-    } else {
-      this.setState({
-        permissionRationaleDisplayed: cameraPermissions === "authorized"
-      });
-    }
-  }
-
   private handleWillFocus = () => this.setState({ isFocused: true });
 
   private handleWillBlur = () => this.setState({ isFocused: false });
@@ -303,9 +293,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.colorWhite}
           />
           <ScrollView bounces={false}>
-            {this.state.isFocused && this.state.permissionRationaleDisplayed ? (
-              <BarcodeCamera />
-            ) : undefined}
+            <BarcodeCamera
+              onBarcodeScanned={this.handleBarcodeScanned}
+              disabled={!this.state.isFocused}
+            />
           </ScrollView>
           <FooterWithButtons
             type="TwoButtonsInlineThird"

@@ -7,13 +7,13 @@ import { useScanBarcodes, BarcodeFormat } from "vision-camera-code-scanner";
 /**
  * Type describing the supported barcodes in IO.
  */
-type IOBarcodeFormat = "DATA_MATRIX" | "QRCODE";
+export type IOBarcodeFormat = "QRCODE";
 
 /**
  * The message sent through the `onBarcodeScanned`
  * callback.
  */
-type ScannedBarcode = {
+export type ScannedBarcode = {
   format: IOBarcodeFormat;
   value: string;
 };
@@ -29,9 +29,6 @@ function barcodeFormatToIOFormat(
     case BarcodeFormat.QR_CODE:
       return "QRCODE";
 
-    case BarcodeFormat.DATA_MATRIX:
-      return "DATA_MATRIX";
-
     default:
       return null;
   }
@@ -39,6 +36,7 @@ function barcodeFormatToIOFormat(
 
 type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
+  disabled?: boolean;
 };
 
 /**
@@ -46,7 +44,7 @@ type Props = {
  * barcodes (QRCodes, Data Matrix, ...).
  */
 export const BarcodeCamera = (props: Props) => {
-  const { onBarcodeScanned } = props;
+  const { onBarcodeScanned, disabled } = props;
   const devices = useCameraDevices();
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
@@ -110,7 +108,7 @@ export const BarcodeCamera = (props: Props) => {
         <Camera
           style={{ width: "100%", height: "100%" }}
           device={device}
-          isActive={true}
+          isActive={!disabled}
           frameProcessor={frameProcessor}
           frameProcessorFps={5}
         />
