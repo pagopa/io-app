@@ -2905,6 +2905,9 @@ bonus:
         ko: "Problems saving the voucher"
   cdc:
     title: "Carta della cultura"
+    bonusRequest:
+      bonusRequested:
+        cta: "I understand!"
 
 features:
   mvl:
