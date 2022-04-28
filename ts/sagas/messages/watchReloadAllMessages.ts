@@ -34,7 +34,7 @@ function tryReloadAllMessages(getMessages: LocalBeClient) {
         {
           enrich_result_data: true,
           page_size: pageSize,
-          get_archived: filter.getArchived
+          archived: filter.getArchived
         }
       );
 

@@ -6,7 +6,7 @@ import { constNull } from "fp-ts/lib/function";
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
@@ -68,8 +68,8 @@ function handleMessageReload() {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function configurePushNotifications() {
-  // if isDevEnv, disable push notification to avoid crash for missing firebase settings
-  if (isDevEnv) {
+  // if isDevEnv is enabled and we are on Android, we need to disable the push notifications to avoid crash for missing firebase settings
+  if (isDevEnv && Platform.OS === "android") {
     return;
   }
 

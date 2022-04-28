@@ -1,4 +1,4 @@
-import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
+import { fromNullable, isNone, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Alert } from "react-native";
@@ -18,13 +18,7 @@ import {
 import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
-import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { BackendClient } from "../api/backend";
-import {
-  instabugLog,
-  setInstabugProfileAttributes,
-  TypeLogs
-} from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
@@ -55,6 +49,7 @@ import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageRouterScreen,
+  navigateToPaginatedMessageRouterAction,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
@@ -62,7 +57,6 @@ import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
-  idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
@@ -77,6 +71,7 @@ import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -86,6 +81,9 @@ import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
 import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
 import watchReloadAllMessages from "./messages/watchReloadAllMessages";
+import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStatusAttribues";
+import watchMigrateToPagination from "./messages/watchMigrateToPagination";
+
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
@@ -129,6 +127,7 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
+import { askPremiumMessagesOptInOut } from "./premiumMessages";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -284,10 +283,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* put(clearCache());
   }
 
-  const maybeIdp: Option<SpidIdp> = yield* select(idpSelector);
-
-  setInstabugProfileAttributes(maybeIdp);
-
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
 
@@ -317,6 +312,10 @@ export function* initializeApplicationSaga(): Generator<
 
     // check if the user expressed preference about mixpanel, if not ask for it
     yield* call(askMixpanelOptIn);
+
+    // Check if the user has expressed a preference
+    // about the Premium Messages.
+    yield* call(askPremiumMessagesOptInOut);
 
     storedPin = yield* call(checkConfiguredPinSaga);
 
@@ -355,6 +354,10 @@ export function* initializeApplicationSaga(): Generator<
 
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
+
+      // Check if the user has expressed a preference
+      // about the Premium Messages.
+      yield* call(askPremiumMessagesOptInOut);
 
       yield* call(askServicesPreferencesModeOptin, false);
 
@@ -495,6 +498,14 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
     yield* fork(watchReloadAllMessages, backendClient.getMessages);
     yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+    yield* fork(
+      watchUpsertMessageStatusAttribues,
+      backendClient.upsertMessageStatusAttributes
+    );
+    yield* fork(
+      watchMigrateToPagination,
+      backendClient.upsertMessageStatusAttributes
+    );
   }
 
   // Load a message when requested
@@ -531,7 +542,16 @@ export function* initializeApplicationSaga(): Generator<
     // Remove the pending message from the notification state
     yield* put(clearNotificationPendingMessage());
     // Navigate to message router screen
-    yield* call(navigateToMessageRouterScreen, { messageId });
+    if (usePaginatedMessages) {
+      NavigationService.dispatchNavigationAction(
+        navigateToPaginatedMessageRouterAction({
+          messageId: messageId as UIMessageId,
+          isArchived: false
+        })
+      );
+    } else {
+      yield* call(navigateToMessageRouterScreen, { messageId });
+    }
   } else {
     yield* call(navigateToMainNavigatorAction);
   }
@@ -556,11 +576,7 @@ function* waitForNavigatorServiceInitialization() {
     const elapsedTime = performance.now() - startTime;
     if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
       timeoutLogged = true;
-      instabugLog(
-        `NavigationService is not initialized after ${elapsedTime} ms`,
-        TypeLogs.ERROR,
-        "initializeApplicationSaga"
-      );
+
       yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
     }
     yield* delay(navigatorPollingTime);
@@ -569,11 +585,6 @@ function* waitForNavigatorServiceInitialization() {
 
   const initTime = performance.now() - startTime;
 
-  instabugLog(
-    `NavigationService initialized after ${initTime} ms`,
-    TypeLogs.DEBUG,
-    "initializeApplicationSaga"
-  );
   yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
     elapsedTime: initTime
   });

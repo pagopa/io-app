@@ -3,6 +3,7 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
 type Props = {
   image: ImageSourcePropType;
+  scale?: number;
 };
 
 const styles = StyleSheet.create({
@@ -20,7 +21,10 @@ const styles = StyleSheet.create({
 export const BrandImage = (props: Props): React.ReactElement => (
   <Image
     source={props.image}
-    style={styles.cardLogo}
+    style={{
+      width: styles.cardLogo.width * (props.scale ?? 1),
+      height: styles.cardLogo.height * (props.scale ?? 1)
+    }}
     testID={"cardImage"}
     resizeMode="contain"
   />

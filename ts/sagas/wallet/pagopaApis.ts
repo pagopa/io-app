@@ -9,7 +9,6 @@ import { mixpanelTrack } from "../../mixpanel";
 import {
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentDeletePayment,
   paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
@@ -661,9 +660,7 @@ export function* paymentStartRequest(
 export function* paymentDeletePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<
-    typeof paymentDeletePayment["request"] | typeof paymentCompletedFailure
-  >
+  action: ActionType<typeof paymentDeletePayment["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);

@@ -171,7 +171,10 @@ class TransactionSummaryScreen extends React.Component<Props> {
       const startRoute = this.props.navigation.getParam("startRoute");
       if (startRoute !== undefined) {
         // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
-        if (startRoute.routeName === ROUTES.MESSAGE_DETAIL) {
+        if (
+          startRoute.routeName === ROUTES.MESSAGE_DETAIL ||
+          startRoute.routeName === ROUTES.MESSAGE_DETAIL_PAGINATED
+        ) {
           this.props.navigation.dispatch(StackActions.popToTop());
         }
         this.props.navigation.navigate(startRoute);

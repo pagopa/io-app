@@ -3,10 +3,16 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 
+import * as Either from "fp-ts/lib/Either";
+
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
-  reloadAllMessages
+  migrateToPaginatedMessages,
+  MigrationResult,
+  reloadAllMessages,
+  resetMigrationStatus,
+  upsertMessageStatusAttributes
 } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
@@ -28,17 +34,35 @@ type Collection = {
   lastRequest: Option<"previous" | "next" | "all">;
 };
 
+export type MigrationStatus = Option<
+  | { _tag: "started"; total: number }
+  | { _tag: "succeeded"; total: number }
+  | ({ _tag: "failed" } & MigrationResult)
+>;
+
+export type MessageOperation = "archive" | "restore";
+export type MessageOperationFailure = {
+  operation: MessageOperation;
+  error: Error;
+};
+
 /**
  * A list of messages and pagination inbox.
  */
 export type AllPaginated = {
   inbox: Collection;
   archive: Collection;
+  migration: MigrationStatus;
+  latestMessageOperation?: Either.Either<
+    MessageOperationFailure,
+    MessageOperation
+  >;
 };
 
 const INITIAL_STATE: AllPaginated = {
   inbox: { data: pot.none, lastRequest: none },
-  archive: { data: pot.none, lastRequest: none }
+  archive: { data: pot.none, lastRequest: none },
+  migration: none
 };
 
 /**
@@ -63,6 +87,39 @@ const reducer = (
     case getType(loadPreviousPageMessages.success):
     case getType(loadPreviousPageMessages.failure):
       return reduceLoadPreviousPage(state, action);
+
+    case getType(upsertMessageStatusAttributes.request):
+    case getType(upsertMessageStatusAttributes.success):
+    case getType(upsertMessageStatusAttributes.failure):
+      return reduceUpsertMessageStatusAttributes(state, action);
+
+    /* BEGIN Migration-related block */
+    case getType(migrateToPaginatedMessages.request):
+      return {
+        ...state,
+        migration: some({
+          _tag: "started",
+          total: Object.keys(action.payload).length
+        })
+      };
+
+    case getType(migrateToPaginatedMessages.success):
+      return {
+        ...state,
+        migration: some({ _tag: "succeeded", total: action.payload })
+      };
+    case getType(migrateToPaginatedMessages.failure):
+      return {
+        ...state,
+        migration: some({ _tag: "failed", ...action.payload })
+      };
+
+    case getType(resetMigrationStatus):
+      return {
+        ...state,
+        migration: none
+      };
+    /* END Migration-related block */
 
     case getType(clearCache):
       return INITIAL_STATE;
@@ -297,6 +354,147 @@ const reduceLoadPreviousPage = (
         }
       };
 
+    default:
+      return state;
+  }
+};
+
+/**
+ * Implements an optimistic UI by updating the state at request time and rolling back the updates
+ * in case of failure.
+ *
+ * @param state
+ * @param action
+ */
+const reduceUpsertMessageStatusAttributes = (
+  state: AllPaginated = INITIAL_STATE,
+  action: Action
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+): AllPaginated => {
+  const remove = (message: UIMessage, from: Collection) =>
+    refreshCursors({
+      ...from,
+      data: pot.map(from.data, old => ({
+        ...old,
+        page: old.page.filter(_ => _.id !== message.id)
+      }))
+    });
+
+  // Messages are inserted locally ONLY if their ID is within the
+  // pages that were already fetched. Otherwise, the moved message
+  // will be returned by the backend once the user scrolls to that
+  // particular page.
+  const insert = (message: UIMessage, to: Collection) =>
+    refreshCursors({
+      ...to,
+      data: pot.map(to.data, old => ({
+        ...old,
+        page:
+          old.next === undefined ||
+          old.next.localeCompare(message.id, "en") <= 0
+            ? [...old.page, message].sort((a, b) =>
+                b.id.localeCompare(a.id, "en")
+              )
+            : old.page
+      }))
+    });
+
+  const refreshCursors = (of: Collection): Collection => ({
+    ...of,
+    data: pot.map(of.data, old => ({
+      ...old,
+      previous: old.page[0]?.id
+      // there's no need to update `next` as:
+      // 1. we never insert messages older than `next`
+      // 2. removing the last message of the page keeps pagination
+      //    working in the backend (i.e. messages older than `next`
+      //    are returned even if `next` is not in the inbox/archive
+      //    anymore)
+    }))
+  });
+
+  switch (action.type) {
+    case getType(upsertMessageStatusAttributes.request): {
+      const message = action.payload.message;
+      if (message) {
+        const { update } = action.payload;
+        if (update.tag === "bulk" || update.tag === "reading") {
+          // We only update TRUE for is_read state
+          // eslint-disable-next-line functional/immutable-data
+          message.isRead = true;
+        }
+        if (update.tag === "bulk" || update.tag === "archiving") {
+          // eslint-disable-next-line functional/immutable-data
+          message.isArchived = update.isArchived;
+          if (update.isArchived) {
+            return {
+              ...state,
+              archive: insert(message, state.archive),
+              inbox: remove(message, state.inbox),
+              latestMessageOperation: undefined
+            };
+          } else {
+            return {
+              ...state,
+              archive: remove(message, state.archive),
+              inbox: insert(message, state.inbox),
+              latestMessageOperation: undefined
+            };
+          }
+        }
+      }
+      return { ...state };
+    }
+
+    case getType(upsertMessageStatusAttributes.failure): {
+      const message = action.payload.payload.message;
+      if (message) {
+        const { update } = action.payload.payload;
+        if (update.tag === "bulk" || update.tag === "reading") {
+          // We only update TRUE for is_read state
+          // eslint-disable-next-line functional/immutable-data
+          message.isRead = false;
+        }
+        if (update.tag === "bulk" || update.tag === "archiving") {
+          // eslint-disable-next-line functional/immutable-data
+          message.isArchived = !update.isArchived;
+          if (update.isArchived) {
+            return {
+              ...state,
+              archive: remove(message, state.archive),
+              inbox: insert(message, state.inbox),
+              latestMessageOperation: Either.left({
+                operation: "archive",
+                error: action.payload.error
+              })
+            };
+          } else {
+            return {
+              ...state,
+              archive: insert(message, state.archive),
+              inbox: remove(message, state.inbox),
+              latestMessageOperation: Either.left({
+                operation: "restore",
+                error: action.payload.error
+              })
+            };
+          }
+        }
+      }
+      return { ...state };
+    }
+
+    case getType(upsertMessageStatusAttributes.success):
+      const { update } = action.payload;
+      if (update.tag === "bulk" || update.tag === "archiving") {
+        return {
+          ...state,
+          latestMessageOperation: Either.right(
+            update.isArchived ? "archive" : "restore"
+          )
+        };
+      }
+      return state;
     default:
       return state;
   }

@@ -36,7 +36,6 @@ import entitiesReducer, {
   EntitiesState
 } from "./entities";
 import identificationReducer, { IdentificationState } from "./identification";
-import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
 import internalRouteNavigationReducer from "./internalRouteNavigation";
 import { navigationReducer } from "./navigation";
@@ -95,7 +94,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   versionInfo: versionInfoReducer,
   backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
-  instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,

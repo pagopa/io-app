@@ -17,7 +17,7 @@ describe("tryLoadNextPageMessages", () => {
     enrich_result_data: true,
     page_size: defaultRequestPayload.pageSize,
     maximum_id: undefined,
-    get_archived: defaultRequestPayload.filter.getArchived
+    archived: defaultRequestPayload.filter.getArchived
   };
 
   describe("when the response is successful", () => {

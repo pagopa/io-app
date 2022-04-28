@@ -7,11 +7,8 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Link } from "../../components/core/typography/Link";
 import Pinpad from "../../components/Pinpad";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { IdentificationLockModal } from "../../screens/modal/IdentificationLockModal";
 import {
   identificationCancel,
   identificationFailure,
@@ -40,8 +37,7 @@ import {
 } from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { assistanceToolRemoteConfig } from "../../utils/supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -64,11 +60,6 @@ type State = {
   canInsertPinTooManyAttempts: boolean;
   countdown?: Millisecond;
   errorDescription?: string;
-};
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.unlockCode.contextualHelpTitle",
-  body: "onboarding.unlockCode.contextualHelpContent"
 };
 
 const checkPinInterval = 100 as Millisecond;
@@ -484,10 +475,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       ? customVariables.contentPrimaryBackground
       : customVariables.colorWhite;
 
-    const choosenTool = assistanceToolRemoteConfig(
-      this.props.assistanceToolConfig
-    );
-
     return !this.state.canInsertPinTooManyAttempts ? (
       IdentificationLockModal({ countdown })
     ) : (
@@ -496,11 +483,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           accessibilityEvents={{ avoidNavigationEventsUsage: true }}
           accessibilityLabel={I18n.t("identification.title")}
           primary={!isValidatingTask}
-          contextualHelpMarkdown={
-            choosenTool === ToolEnum.instabug
-              ? contextualHelpMarkdown
-              : undefined
-          }
+          showChat={false}
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
         >
@@ -574,7 +557,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   /**
    * Return the proper instruction based on the avaiable identification method
-   * @param biometrySimplePrintableType
    */
   private getInstructions(): string {
     // We have a failure cause the biometry auth responded with a DeviceLocked or DeviceLockedPermanent code.

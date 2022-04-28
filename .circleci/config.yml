@@ -408,6 +408,14 @@ jobs:
             - *ios_gems_cache_key
 
       - run:
+          name: Configure Node
+          command: |
+            brew uninstall node yarn
+            nvm install 14.17.4
+            nvm alias default 14.17.4
+            npm install -g yarn
+
+      - run:
           name: Configure Bundler
           command: |
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV

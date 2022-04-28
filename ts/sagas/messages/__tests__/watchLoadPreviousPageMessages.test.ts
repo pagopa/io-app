@@ -17,7 +17,7 @@ describe("tryLoadPreviousPageMessages", () => {
     enrich_result_data: true,
     page_size: 8,
     minimum_id: undefined,
-    get_archived: defaultRequestPayload.filter.getArchived
+    archived: defaultRequestPayload.filter.getArchived
   };
 
   describe("when the response is successful", () => {

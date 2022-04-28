@@ -17,7 +17,7 @@ describe("tryReloadAllMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
     page_size: defaultRequestPayload.pageSize,
-    get_archived: defaultRequestPayload.filter.getArchived
+    archived: defaultRequestPayload.filter.getArchived
   };
 
   describe("when the response is successful", () => {

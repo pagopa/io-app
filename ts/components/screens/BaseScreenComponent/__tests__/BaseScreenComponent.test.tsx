@@ -5,19 +5,18 @@ import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import { some } from "fp-ts/lib/Option";
 import { Store } from "redux";
-import * as mixpanel from "../../../../mixpanel";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { applicationChangeState } from "../../../../store/actions/application";
 import ROUTES from "../../../../navigation/routes";
-import I18n from "../../../../i18n";
 
 import BaseScreenComponent, { Props } from "../index";
 import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../definitions/content/Config";
+import * as zendeskActions from "../../../../features/zendesk/store/actions";
 
 jest.useFakeTimers();
 
@@ -37,108 +36,55 @@ describe("BaseScreenComponent", () => {
       } as BackendStatus)
     } as BackendStatusState
   };
-  describe("when the assistanceTool is instabug", () => {
-    it("and contextualHelp is defined renders the help button", () => {
+
+  it.each`
+    tool
+    ${ToolEnum.instabug}
+    ${ToolEnum.web}
+    ${ToolEnum.none}
+  `(
+    "when the assistanceTool is $tool the help button should not be rendered",
+    ({ tool }) => {
       const { component } = renderComponent(
-        {
-          ...defaultProps,
-          contextualHelp: { title: "fake help", body: () => null }
-        },
+        defaultProps,
         mockStore({
           ...state,
           backendStatus: {
             status: some({
-              config: { assistanceTool: { tool: ToolEnum.instabug } } as Config
+              config: { assistanceTool: { tool } } as Config
             } as BackendStatus)
           } as BackendStatusState
         })
       );
-      expect(
-        component.getByA11yLabel(
-          I18n.t("global.accessibility.contextualHelp.open.label")
-        )
-      ).toBeDefined();
-    });
+      expect(component.queryByTestId("helpButton")).toBeNull();
+    }
+  );
 
-    it("and the contextualHelpMarkdown is defined renders the help button", () => {
-      const { component } = renderComponent(
-        {
-          ...defaultProps,
-          contextualHelpMarkdown: {
-            title:
-              "bonus.bonusVacanze.eligibility.activateBonus.contextualHelp.title",
-            body: "bonus.bonusVacanze.eligibility.activateBonus.contextualHelp.body"
-          }
-        },
-        mockStore({
-          ...state,
-          backendStatus: {
-            status: some({
-              config: { assistanceTool: { tool: ToolEnum.instabug } } as Config
-            } as BackendStatus)
-          } as BackendStatusState
-        })
+  describe("when the assistanceTool is zendesk", () => {
+    const { component } = renderComponent(
+      defaultProps,
+      mockStore({
+        ...state,
+        backendStatus: {
+          status: some({
+            config: { assistanceTool: { tool: ToolEnum.zendesk } } as Config
+          } as BackendStatus)
+        } as BackendStatusState
+      })
+    );
+    const helpButton = component.queryByTestId("helpButton");
+    it("should render the help button", () => {
+      expect(helpButton).toBeDefined();
+    });
+    it("should dispatch the zendeskSupportStart action when the help button is pressed", () => {
+      const zendeskSupportStartSpy = jest.spyOn(
+        zendeskActions,
+        "zendeskSupportStart"
       );
-      expect(
-        component.getByA11yLabel(
-          I18n.t("global.accessibility.contextualHelp.open.label")
-        )
-      ).toBeDefined();
-    });
-  });
-
-  describe("when the help button is pressed", () => {
-    describe("and the assistanceTool is instabug", () => {
-      it("should show the contextual help modal", () => {
-        const { component } = renderComponent(
-          {
-            ...defaultProps,
-            contextualHelp: { title: "fake help", body: () => null }
-          },
-          mockStore({
-            ...state,
-            backendStatus: {
-              status: some({
-                config: {
-                  assistanceTool: { tool: ToolEnum.instabug }
-                } as Config
-              } as BackendStatus)
-            } as BackendStatusState
-          })
-        );
-        const helpButton = component.getByA11yLabel(
-          I18n.t("global.accessibility.contextualHelp.open.label")
-        );
+      if (helpButton) {
         fireEvent(helpButton, "onPress");
-        expect(component.getByText("fake help")).toBeDefined();
-      });
-
-      it("should send the analytics OPEN_CONTEXTUAL_HELP event with the screen name", () => {
-        const spy_mixpanelTrack = jest.spyOn(mixpanel, "mixpanelTrack");
-        const { component } = renderComponent(
-          {
-            ...defaultProps,
-            contextualHelp: { title: "fake help", body: () => null }
-          },
-          mockStore({
-            ...state,
-            backendStatus: {
-              status: some({
-                config: {
-                  assistanceTool: { tool: ToolEnum.instabug }
-                } as Config
-              } as BackendStatus)
-            } as BackendStatusState
-          })
-        );
-        const helpButton = component.getByA11yLabel(
-          I18n.t("global.accessibility.contextualHelp.open.label")
-        );
-        fireEvent(helpButton, "onPress");
-        expect(spy_mixpanelTrack).toHaveBeenCalledWith("OPEN_CONTEXTUAL_HELP", {
-          SCREEN_NAME: ROUTES.MESSAGES_HOME
-        });
-      });
+        expect(zendeskSupportStartSpy).toBeCalled();
+      }
     });
   });
 });

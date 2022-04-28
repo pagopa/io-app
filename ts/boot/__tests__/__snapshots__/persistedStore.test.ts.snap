@@ -64,6 +64,9 @@ Object {
           "_tag": "None",
         },
       },
+      "migration": None {
+        "_tag": "None",
+      },
     },
     "byId": Object {},
     "detailsById": Object {},

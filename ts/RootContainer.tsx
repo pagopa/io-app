@@ -5,7 +5,6 @@ import SplashScreen from "react-native-splash-screen";
 import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
 import customVariables from "./theme/variables";
-import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
@@ -68,8 +67,6 @@ class RootContainer extends React.PureComponent<Props> {
   };
 
   public componentDidMount() {
-    initialiseInstabug();
-
     if (Platform.OS === "android") {
       Linking.getInitialURL()
         .then(this.navigateToUrlHandler)

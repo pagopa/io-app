@@ -9,7 +9,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../bpd/model/RemoteValue";
-import { cgnCodeFromBucket } from "../actions/bucket";
+import { cgnCodeFromBucket, cgnCodeFromBucketReset } from "../actions/bucket";
 import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 
 export type CgnBucketState = {
@@ -39,6 +39,10 @@ const reducer = (
       return {
         ...state,
         data: remoteError(action.payload)
+      };
+    case getType(cgnCodeFromBucketReset):
+      return {
+        ...INITIAL_STATE
       };
   }
   return state;

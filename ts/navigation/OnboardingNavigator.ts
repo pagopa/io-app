@@ -1,5 +1,9 @@
-import { createStackNavigator } from "react-navigation-stack";
-
+import {
+  createStackNavigator,
+  NavigationStackOptions,
+  NavigationStackProp
+} from "react-navigation-stack";
+import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
@@ -9,7 +13,23 @@ import TosScreen from "../screens/onboarding/TosScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
+import { PremiumMessagesOptInOutScreen } from "../screens/onboarding/premiumMessages/PremiumMessagesOptInOutScreen";
+import { premiumMessagesOptInEnabled } from "../config";
 import ROUTES from "./routes";
+
+/**
+ * The routes used for the premium messages feature.
+ */
+const premiumMessagesRoutes: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = premiumMessagesOptInEnabled
+  ? {
+      [ROUTES.ONBOARDING_PREMIUM_MESSAGES_OPT_IN_OUT]: {
+        screen: PremiumMessagesOptInOutScreen
+      }
+    }
+  : {};
 
 /**
  * The onboarding related stack of screens of the application.
@@ -42,7 +62,8 @@ const navigator = createStackNavigator(
     },
     [ROUTES.ONBOARDING_COMPLETED]: {
       screen: OnboardingCompletedScreen
-    }
+    },
+    ...premiumMessagesRoutes
   },
   {
     // Let each screen handle the header and navigation

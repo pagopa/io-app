@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import * as O from "fp-ts/lib/Option";
+
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -21,8 +23,10 @@ import NavigationService from "../../../navigation/NavigationService";
 import {
   loadMessageDetails,
   loadPreviousPageMessages,
-  reloadAllMessages
+  reloadAllMessages,
+  upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
+import { loadServiceDetail } from "../../../store/actions/services";
 import {
   navigateBack,
   navigateToPaginatedMessageDetailScreenAction
@@ -38,10 +42,12 @@ import {
   UIMessageDetails,
   UIMessageId
 } from "../../../store/reducers/entities/messages/types";
+import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../utils/pot";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -92,12 +98,15 @@ const navigateToScreenHandler =
 const MessageRouterScreen = ({
   cancel,
   cursors,
+  isServiceAvailable,
   loadMessageDetails,
   loadPreviousPage,
+  loadServiceDetail,
   reloadPage,
   maybeMessage,
   maybeMessageDetails,
-  messageId
+  messageId,
+  setMessageReadState
 }: Props): React.ReactElement => {
   const navigation = useNavigationContext();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
@@ -124,6 +133,18 @@ const MessageRouterScreen = ({
     loadPreviousPage,
     reloadPage
   ]);
+
+  useOnFirstRender(() => {
+    if (maybeMessage !== undefined && !maybeMessage.isRead) {
+      setMessageReadState(maybeMessage);
+    }
+  });
+
+  useEffect(() => {
+    if (!isServiceAvailable && maybeMessage) {
+      loadServiceDetail(maybeMessage.serviceId);
+    }
+  }, [isServiceAvailable, loadServiceDetail]);
 
   useEffect(() => {
     // message in the list and its details loaded: green light
@@ -178,7 +199,16 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
           filter
         })
       ),
-    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter }))
+    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter })),
+    loadServiceDetail: (serviceId: string) =>
+      dispatch(loadServiceDetail.request(serviceId)),
+    setMessageReadState: (message: UIMessage) =>
+      dispatch(
+        upsertMessageStatusAttributes.request({
+          message,
+          update: { tag: "reading" }
+        })
+      )
   };
 };
 
@@ -186,10 +216,15 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
   const maybeMessage = allPaginated.getById(state, messageId);
+  const isServiceAvailable = O.fromNullable(maybeMessage?.serviceId)
+    .map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none)
+    .map(_ => Boolean(pot.toUndefined(_)))
+    .getOrElse(false);
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
   const { archive, inbox } = getCursors(state);
   return {
     cursors: isArchived ? archive : inbox,
+    isServiceAvailable,
     maybeMessage,
     maybeMessageDetails,
     messageId

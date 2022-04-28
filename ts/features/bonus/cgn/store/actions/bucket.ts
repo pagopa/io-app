@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
@@ -12,4 +16,10 @@ export const cgnCodeFromBucket = createAsyncAction(
   "CGN_BUCKET_CODE_FAILURE"
 )<Discount["id"], DiscountBucketCodeResponse, NetworkError>();
 
-export type CgnBucketActions = ActionType<typeof cgnCodeFromBucket>;
+export const cgnCodeFromBucketReset = createStandardAction(
+  "CGN_BUCKET_CODE_RESET"
+)<void>();
+
+export type CgnBucketActions =
+  | ActionType<typeof cgnCodeFromBucket>
+  | ActionType<typeof cgnCodeFromBucketReset>;
