@@ -214,7 +214,6 @@ const getPaymentMethodInfo = (
  * atm only three methods can pay: credit card, paypal and bancomat pay
  * @param paymentMethod
  */
-
 const getPaymentMethodType = (
   paymentMethod: RawPaymentMethod | undefined
 ): PaymentMethodType => {
