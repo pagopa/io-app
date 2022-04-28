@@ -4,6 +4,7 @@ import { StyleSheet, ActivityIndicator } from "react-native";
 
 import * as pot from "italia-ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
+import RNFS from "react-native-fs";
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -322,12 +323,14 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
     setIsLoading(isStillLoading);
   }, [downloadPot, isLoading, setIsLoading]);
 
-  const downloadAttachmentIfNeeded = () => {
+  const downloadAttachmentIfNeeded = async () => {
     if (pot.isLoading(downloadPot)) {
       return;
     }
 
-    if (pot.isSome(downloadPot)) {
+    const path = pot.toUndefined(downloadPot);
+    const fileExists = path !== undefined ? await RNFS.exists(path) : false;
+    if (fileExists) {
       showAttachment();
     } else {
       dispatch(mvlAttachmentDownload.request(attachment));
@@ -342,8 +345,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
           onConfirm={({ dontAskAgain }) => {
             dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
             dismiss();
-            downloadAttachmentIfNeeded();
-            return Promise.resolve();
+            return downloadAttachmentIfNeeded();
           }}
           initialPreferences={{ dontAskAgain: false }}
           withoutConfirmation={false}
@@ -351,7 +353,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
         i18n.t("features.mvl.details.attachments.bottomSheet.warning.title")
       );
     } else {
-      downloadAttachmentIfNeeded();
+      void downloadAttachmentIfNeeded();
     }
   };
 
