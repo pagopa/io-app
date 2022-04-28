@@ -1,4 +1,4 @@
-import ReactNativeBlobUtil from "react-native-blob-util";
+import ReactNativeBlobUtil, { RNFetchBlobDf } from "react-native-blob-util";
 import RNFS from "react-native-fs";
 
 import i18n from "../../i18n";
@@ -100,7 +100,11 @@ export const handleDownloadResult = async (
             });
         },
         share: () => {
-          share(`data:application/pdf;${result.base64()}`, undefined, false)
+          share(
+            `file://${ReactNativeBlobUtil.fs.dirs.DownloadDir}/${attachment.displayName}`,
+            undefined,
+            false
+          )
             .run()
             .catch(_ => {
               showToast(
