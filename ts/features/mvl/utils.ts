@@ -1,4 +1,4 @@
-import ReactNativeBlobUtil, { RNFetchBlobDf } from "react-native-blob-util";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
 
 import i18n from "../../i18n";
