@@ -209,6 +209,12 @@ const getPaymentMethodInfo = (
   }
 };
 
+/**
+ * return the type of the paying method
+ * atm only three methods can pay: credit card, paypal and bancomat pay
+ * @param paymentMethod
+ */
+
 const getPaymentMethodType = (
   paymentMethod: RawPaymentMethod | undefined
 ): PaymentMethodType => {
@@ -218,7 +224,7 @@ const getPaymentMethodType = (
     case "PayPal":
       return paymentMethod.kind;
     default:
-      return "CreditCard";
+      return "Unknown";
   }
 };
 
