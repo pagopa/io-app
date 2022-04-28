@@ -1273,6 +1273,8 @@ wallet:
     pickPaymentMethod:
       title: "Con quale metodo vuoi pagare?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Metodi disattivati"
       notAvailable:
         title: "Metodi non compatibili"
         arriving:

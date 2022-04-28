@@ -23,13 +23,17 @@ export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
   }
   if (isCreditCard(paymentMethod)) {
     return CreditCardType.decode(paymentMethod.info.brand).fold(
-      () => true,
+      () => paymentMethod.pagoPA,
       // eslint-disable-next-line sonarjs/no-empty-collection
       pm => !brandsBlackList.has(pm)
     );
   }
   return paymentMethod.pagoPA;
 };
+
+export const couldMethodPay = (paymentMethod: PaymentMethod): boolean =>
+  !paymentMethod.pagoPA &&
+  hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
 
 export const isCobadge = (paymentMethod: CreditCardPaymentMethod) =>
   paymentMethod.info?.issuerAbiCode && paymentMethod.info.type !== TypeEnum.PRV;

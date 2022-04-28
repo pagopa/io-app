@@ -35,7 +35,10 @@ import {
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
-import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
+import {
+  canMethodPay,
+  couldMethodPay
+} from "../../../utils/paymentMethodCapabilities";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -57,6 +60,7 @@ import {
 } from "../../../store/reducers/backendStatus";
 import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
+import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type PickPaymentMethodScreenNavigationParams = Readonly<{
@@ -95,8 +99,7 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const payableWallets = props.payableWallets;
-  const notPayableWallets = props.notPayableWallets;
+  const { payableWallets, notPayableWallets, paymentDisabledWallets } = props;
 
   return (
     <BaseScreenComponent
@@ -147,6 +150,33 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
               </H4>
             )}
 
+            {paymentDisabledWallets.length > 0 && (
+              <>
+                <View spacer={true} />
+                <H4 color={"bluegreyDark"}>
+                  {I18n.t("wallet.payWith.pickPaymentMethod.disabled.title")}
+                </H4>
+                <View spacer={true} />
+                <FlatList
+                  testID={"DisabledPaymentMethodList"}
+                  removeClippedSubviews={false}
+                  data={paymentDisabledWallets}
+                  keyExtractor={item => `disabled_payment_${item.idWallet}`}
+                  ListFooterComponent={<View spacer />}
+                  renderItem={i => (
+                    <PickAvailablePaymentMethodListItem
+                      rightElement={
+                        <PaymentStatusSwitch paymentMethod={i.item} />
+                      }
+                      isFirst={i.index === 0}
+                      paymentMethod={i.item}
+                      onPress={undefined}
+                    />
+                  )}
+                />
+              </>
+            )}
+
             {notPayableWallets.length > 0 && (
               <>
                 <View spacer={true} />
@@ -179,12 +209,6 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   );
 };
 
-function getValueOrEmptyArray(
-  value: pot.Pot<ReadonlyArray<PaymentMethod>, unknown>
-): ReadonlyArray<PaymentMethod> {
-  return pot.getOrElse(value, []);
-}
-
 const mapStateToProps = (state: GlobalState) => {
   const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
   const potVisiblePaypal = isPaypalEnabledSelector(state)
@@ -214,16 +238,22 @@ const mapStateToProps = (state: GlobalState) => {
     (
       acc: ReadonlyArray<PaymentMethod>,
       curr: pot.Pot<ReadonlyArray<PaymentMethod>, unknown>
-    ) => [...acc, ...getValueOrEmptyArray(curr)],
+    ) => [...acc, ...pot.getOrElse(curr, [])],
     [] as ReadonlyArray<PaymentMethod>
   );
-
+  const paymentDisabledWallets = visibleWallets.filter(couldMethodPay);
   return {
     // Considering that the creditCardListVisibleInWalletSelector return
     // all the visible credit card we need to filter them in order to extract
     // only the cards that can pay on IO.
-    payableWallets: visibleWallets.filter(vPW => canMethodPay(vPW)),
-    notPayableWallets: visibleWallets.filter(vPW => !canMethodPay(vPW)),
+    payableWallets: visibleWallets.filter(canMethodPay),
+    paymentDisabledWallets,
+    // all those method that can't pay and that couldn't pay (pagoPa=false && pagopa is not in the enableable function)
+    notPayableWallets: visibleWallets.filter(
+      vPW =>
+        !canMethodPay(vPW) &&
+        !paymentDisabledWallets.some(pm => pm.idWallet === vPW.idWallet)
+    ),
     isLoading,
     nameSurname: profileNameSurnameSelector(state)
   };
