@@ -10,7 +10,6 @@ import * as React from "react";
 import {
   Alert,
   Dimensions,
-  PermissionsAndroid,
   Platform,
   SafeAreaView,
   ScrollView,
@@ -20,7 +19,6 @@ import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { Camera } from "react-native-vision-camera";
 import { NavigationEvents } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
@@ -297,6 +295,23 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               onBarcodeScanned={this.handleBarcodeScanned}
               disabled={!this.state.isFocused}
             />
+
+            <View>
+              <ButtonDefaultOpacity
+                onPress={this.onShowImagePicker}
+                style={styles.button}
+                bordered={true}
+              >
+                <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+              </ButtonDefaultOpacity>
+              <View style={styles.content}>
+                <View spacer={true} />
+                <Text style={[styles.padded, styles.bottomText]}>
+                  {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
+                </Text>
+                <View spacer={true} extralarge={true} />
+              </View>
+            </View>
           </ScrollView>
           <FooterWithButtons
             type="TwoButtonsInlineThird"

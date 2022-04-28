@@ -1,7 +1,7 @@
 import "react-native-reanimated";
 import React, { useEffect, useState } from "react";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
-import { View } from "react-native";
+import { View, Dimensions } from "react-native";
 import { useScanBarcodes, BarcodeFormat } from "vision-camera-code-scanner";
 
 /**
@@ -38,6 +38,8 @@ type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
   disabled?: boolean;
 };
+
+const screenWidth = Dimensions.get("screen").width;
 
 /**
  * A Camera view which can scan different types of
@@ -100,7 +102,7 @@ export const BarcodeCamera = (props: Props) => {
     <View
       style={{
         width: "100%",
-        height: 400,
+        height: screenWidth,
         backgroundColor: "#000"
       }}
     >
