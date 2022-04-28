@@ -6,7 +6,6 @@ import {
   mvlAttachmentDownload,
   mvlRemoveCachedAttachment
 } from "../../store/actions/downloads";
-import { isIos } from "../../../../utils/platform";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { MvlAttachment } from "../../types/mvlData";
@@ -16,13 +15,11 @@ import { MvlAttachment } from "../../types/mvlData";
  * @param attachment
  */
 const savePath = (attachment: MvlAttachment) =>
-  isIos
-    ? RNFS.CachesDirectoryPath +
-      "/mvl/attachments/" +
-      attachment.id +
-      "/" +
-      attachment.displayName
-    : RNFS.DownloadDirectoryPath + "/" + attachment.displayName;
+  RNFS.CachesDirectoryPath +
+  "/mvl/attachments/" +
+  attachment.id +
+  "/" +
+  attachment.displayName;
 
 /**
  * Handles the download of an MVL attachment
