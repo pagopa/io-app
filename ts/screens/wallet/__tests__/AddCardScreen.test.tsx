@@ -221,14 +221,16 @@ describe("getPaymentMethods", () => {
   });
 
   it("bpay should be notImplemented while a payment if it can be onboarded but it cannot pay", () => {
+    const canPayWithBPay = false;
+    const canOnboardBPay = true;
     // TODO: ⚠️ cast to any only to complete the merge, should be removed!
     const methods = testableFunctions.getPaymentMethods!(
-      { ...props, canPayWithBPay: false } as any,
+      { ...props, canPayWithBPay } as any,
       {
         onlyPaymentMethodCanPay: true,
         isPaymentOnGoing: true,
         isPaypalEnabled: true,
-        canOnboardBPay: true
+        canOnboardBPay: canPayWithBPay && canOnboardBPay
       }
     );
     expect(
