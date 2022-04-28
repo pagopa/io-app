@@ -2,19 +2,23 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { H4 } from "../../components/core/typography/H4";
 import { H2 } from "../../components/core/typography/H2";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
 import expiredIcon from "../../../img/wallet/errors/payment-expired-icon.png";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 
-type Props = NavigationStackScreenProps & ReturnType<typeof mapDispatchToProps>;
+type Props = IOStackNavigationRouteProps<AppParamsList> &
+  ReturnType<typeof mapDispatchToProps>;
 const styles = StyleSheet.create({
   content: {
     flex: 1,

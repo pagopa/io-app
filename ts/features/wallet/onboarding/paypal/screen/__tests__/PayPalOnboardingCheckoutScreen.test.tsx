@@ -1,5 +1,5 @@
 import { createStore, Store } from "redux";
-import { NavigationParams } from "react-navigation";
+
 import { Alert } from "react-native";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../store/reducers";
@@ -150,7 +150,7 @@ describe("PayPalOnboardingCheckoutScreen", () => {
 });
 
 const renderComponent = (store: Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  component: renderScreenFakeNavRedux<GlobalState>(
     PayPalOnboardingCheckoutScreen,
     PAYPAL_ROUTES.ONBOARDING.CHECKOUT,
     {},

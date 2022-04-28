@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { createStore, Store } from "redux";
 import { applicationChangeState } from "../../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../../store/reducers";
@@ -157,7 +157,7 @@ const getStateWithBpdInitialized = (): Store => {
 };
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  renderScreenFakeNavRedux<GlobalState>(
     () => <TransactionsSectionList />,
     BPD_ROUTES.TRANSACTIONS,
     {},

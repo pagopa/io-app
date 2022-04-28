@@ -1,5 +1,5 @@
+import { CommonActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
-import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../i18n";
 import NavigationService from "../../../../../navigation/NavigationService";
@@ -60,8 +60,8 @@ describe("the CheckResidenceComponent", () => {
       fireEvent(continueButton, "onPress");
 
       expect(spy).toHaveBeenCalledWith(
-        NavigationActions.navigate({
-          routeName: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
+        CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
         })
       );
     });
@@ -79,8 +79,8 @@ describe("the CheckResidenceComponent", () => {
     );
     fireEvent(continueButton, "onPress");
     expect(spy).toHaveBeenCalledWith(
-      NavigationActions.navigate({
-        routeName: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
+      CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+        screen: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
       })
     );
   });
@@ -100,7 +100,7 @@ function renderComponent() {
   const mockStore = configureMockStore<GlobalState>();
   const store = mockStore(globalState);
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       CheckResidenceComponent,
       ROUTES.MAIN,
       {},
