@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import configureMockStore, { MockStore } from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -11,12 +10,6 @@ import MVL_ROUTES from "../../navigation/routes";
 import { mvlDetailsLoad } from "../../store/actions";
 import { mvlMock, mvlMockId } from "../../types/__mock__/mvlMock";
 import { MvlRouterScreen } from "../MvlRouterScreen";
-
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
 
 describe("MvlRouterScreen behaviour", () => {
   jest.useFakeTimers();
@@ -161,7 +154,7 @@ const dispatchActionAndRenderComponent = (actions: ReadonlyArray<Action>) => {
 };
 
 const renderComponent = (store: MockStore<GlobalState> | Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  component: renderScreenFakeNavRedux<GlobalState>(
     MvlRouterScreen,
     MVL_ROUTES.DETAILS,
     { id: mvlMockId },

@@ -2,7 +2,6 @@ import { reverse } from "fp-ts/lib/Array";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { H2 } from "../../components/core/typography/H2";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -11,6 +10,10 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import PaymentHistoryList from "../../components/wallet/PaymentsHistoryList";
 import I18n from "../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import { navigateToPaymentHistoryDetail } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -22,7 +25,7 @@ import variables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps;
+  IOStackNavigationRouteProps<AppParamsList>;
 
 const styles = StyleSheet.create({
   noBottomPadding: {

@@ -88,7 +88,6 @@ import {
   paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
-  paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeState,
   paymentUpdateWalletPsp,
@@ -287,7 +286,6 @@ const trackAction =
       case getType(deleteWalletFailure):
       case getType(setFavouriteWalletFailure):
       case getType(fetchTransactionsFailure):
-      case getType(paymentFetchPspsForPaymentId.failure):
       case getType(paymentDeletePayment.failure):
       case getType(paymentUpdateWalletPsp.failure):
       case getType(paymentExecuteStart.failure):
@@ -376,8 +374,6 @@ const trackAction =
       case getType(paymentIdPolling.success):
       case getType(paymentCheck.request):
       case getType(paymentCheck.success):
-      case getType(paymentFetchPspsForPaymentId.request):
-      case getType(paymentFetchPspsForPaymentId.success):
       case getType(paymentExecuteStart.request):
       case getType(paymentExecuteStart.success):
       case getType(paymentUpdateWalletPsp.request):
