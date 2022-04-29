@@ -1,6 +1,6 @@
 import { CreditCardPaymentMethod, PaymentMethod } from "../../types/pagopa";
 import {
-  hasPaymentFeatureEnabled,
+  hasPaymentFeature,
   isDisabledToPay,
   isEnabledToPay
 } from "../paymentMethodCapabilities";
@@ -90,9 +90,7 @@ const testCases: ReadonlyArray<
 test.each(testCases)(
   `given payment method with pagoPa=%j as argument, expect these results %s`,
   ({ pm, expected }) => {
-    expect(hasPaymentFeatureEnabled(pm)).toEqual(
-      expected.hasPaymentFeatureEnabled
-    );
+    expect(hasPaymentFeature(pm)).toEqual(expected.hasPaymentFeatureEnabled);
 
     expect(isEnabledToPay(pm)).toEqual(expected.isEnabledToPay);
 

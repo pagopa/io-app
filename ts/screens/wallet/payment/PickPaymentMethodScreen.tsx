@@ -36,7 +36,7 @@ import {
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
 import {
-  hasPaymentFeatureEnabled,
+  hasPaymentFeature,
   isDisabledToPay,
   isEnabledToPay
 } from "../../../utils/paymentMethodCapabilities";
@@ -249,7 +249,7 @@ const mapStateToProps = (state: GlobalState) => {
     payableWallets: visibleWallets.filter(isEnabledToPay),
     paymentDisabledWallets: visibleWallets.filter(isDisabledToPay),
     // all those method that can't pay and that couldn't pay (pagoPa=false && pagopa is not in the enableable function)
-    notPayableWallets: visibleWallets.filter(v => !hasPaymentFeatureEnabled(v)),
+    notPayableWallets: visibleWallets.filter(v => !hasPaymentFeature(v)),
     isLoading,
     nameSurname: profileNameSurnameSelector(state)
   };

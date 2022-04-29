@@ -67,7 +67,7 @@ import { GlobalState } from "../types";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
 import {
-  hasPaymentFeatureEnabled,
+  hasPaymentFeature,
   isEnabledToPay
 } from "../../../utils/paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
@@ -361,7 +361,7 @@ export const paymentMethodListVisibleInWalletSelector = createSelector(
   (paymentMethodsPot): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
     pot.map(paymentMethodsPot, paymentMethodList =>
       _.sortBy(paymentMethodList.filter(isVisibleInWallet), pm =>
-        hasPaymentFeatureEnabled(pm) ? -1 : pm.idWallet
+        hasPaymentFeature(pm) ? -1 : pm.idWallet
       )
     )
 );

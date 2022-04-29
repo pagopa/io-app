@@ -10,15 +10,14 @@ import { hasFunctionEnabled } from "./walletv2";
  * it doesn't use the payment method can actually pay
  * @param paymentMethod
  */
-export const hasPaymentFeatureEnabled = (
-  paymentMethod: PaymentMethod
-): boolean => hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
+export const hasPaymentFeature = (paymentMethod: PaymentMethod): boolean =>
+  hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
 
 export const isEnabledToPay = (paymentMethod: PaymentMethod): boolean =>
-  hasPaymentFeatureEnabled(paymentMethod) && paymentMethod.pagoPA === true;
+  hasPaymentFeature(paymentMethod) && paymentMethod.pagoPA === true;
 
 export const isDisabledToPay = (paymentMethod: PaymentMethod): boolean =>
-  hasPaymentFeatureEnabled(paymentMethod) && paymentMethod.pagoPA === false;
+  hasPaymentFeature(paymentMethod) && paymentMethod.pagoPA === false;
 
 export const isCobadge = (paymentMethod: CreditCardPaymentMethod) =>
   paymentMethod.info?.issuerAbiCode && paymentMethod.info.type !== TypeEnum.PRV;
@@ -49,8 +48,11 @@ const paymentNotSupportedCustomRepresentation = (
 export const isPaymentSupported = (
   paymentMethod: PaymentMethod
 ): PaymentSupportStatus => {
-  const paymentSupported: Option<PaymentSupportStatus> =
-    hasPaymentFeatureEnabled(paymentMethod) ? some("available") : none;
+  const paymentSupported: Option<PaymentSupportStatus> = hasPaymentFeature(
+    paymentMethod
+  )
+    ? some("available")
+    : none;
 
   const notAvailableCustomRepresentation = some(
     paymentNotSupportedCustomRepresentation(paymentMethod)
