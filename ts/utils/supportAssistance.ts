@@ -57,7 +57,9 @@ export const initSupportAssistance = ZendDesk.init;
 export const setUserIdentity = ZendDesk.setUserIdentity;
 export const openSupportTicket = ZendDesk.openTicket;
 export const showSupportTickets = ZendDesk.showTickets;
-export const resetAssistanceData = ZendDesk.reset;
+export const resetCustomFields = ZendDesk.resetCustomFields;
+export const resetLog = ZendDesk.resetLog;
+export const resetTag = ZendDesk.resetTags;
 export const addTicketCustomField = ZendDesk.addTicketCustomField;
 export const appendLog = ZendDesk.appendLog;
 export const hasOpenedTickets = ZendDesk.hasOpenedTickets;
@@ -84,6 +86,13 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
     "en-EN": "Payment method"
   }
 };
+
+export const resetAssistanceData = () => {
+  resetCustomFields();
+  resetLog();
+  resetTag();
+};
+
 // return true if zendeskSubCategories is defined and subCategories > 0
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;

@@ -254,10 +254,14 @@ export const baseRawBackendStatus: BackendStatus = {
       }
     },
     fims: {
-      enabled: false
+      enabled: false,
+      domain: "mockFimsDomain"
     },
     premiumMessages: {
       opt_in_out_enabled: false
+    },
+    cdc: {
+      enabled: false
     }
   }
 };
@@ -304,10 +308,14 @@ export const baseBackendConfig: Config = {
     }
   },
   fims: {
-    enabled: false
+    enabled: false,
+    domain: "mockFimsDomain"
   },
   premiumMessages: {
     opt_in_out_enabled: false
+  },
+  cdc: {
+    enabled: false
   }
 };
 

@@ -1,14 +1,13 @@
 import * as React from "react";
 import { View } from "react-native";
-import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { setLocale } from "../../../i18n";
-import { OutcomeCode } from "../../../types/outcomeCode";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
-import { GlobalState } from "../../../store/reducers/types";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
+import { GlobalState } from "../../../store/reducers/types";
+import { OutcomeCode } from "../../../types/outcomeCode";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import OutcomeCodeMessageComponent from "../OutcomeCodeMessageComponent";
 
 const ASuccessComponent = () => <View testID="a-success-component" />;
@@ -90,7 +89,7 @@ const renderComponent = (
     ...globalState
   } as GlobalState);
 
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     () => (
       <OutcomeCodeMessageComponent
         outcomeCode={outcomeCode}

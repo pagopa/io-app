@@ -1,5 +1,6 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
 import SV_ROUTES from "./routes";
 
 /**
@@ -7,8 +8,8 @@ import SV_ROUTES from "./routes";
  */
 export const navigateToSvCheckStatusRouterScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
     })
   );
 
@@ -17,8 +18,8 @@ export const navigateToSvCheckStatusRouterScreen = () =>
  */
 export const navigateToSvSelectBeneficiaryCategoryScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
     })
   );
 
@@ -27,8 +28,8 @@ export const navigateToSvSelectBeneficiaryCategoryScreen = () =>
  */
 export const navigateToSvStudentSelectDestinationScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.STUDENT_SELECT_DESTINATION
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.STUDENT_SELECT_DESTINATION
     })
   );
 
@@ -37,8 +38,8 @@ export const navigateToSvStudentSelectDestinationScreen = () =>
  */
 export const navigateToSvDisabledAdditionalInfoScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.DISABLED_ADDITIONAL_INFO
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.DISABLED_ADDITIONAL_INFO
     })
   );
 
@@ -47,8 +48,8 @@ export const navigateToSvDisabledAdditionalInfoScreen = () =>
  */
 export const navigateToSvWorkerCheckIncomeThresholdScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.WORKER_CHECK_INCOME_THRESHOLD
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.WORKER_CHECK_INCOME_THRESHOLD
     })
   );
 
@@ -57,8 +58,8 @@ export const navigateToSvWorkerCheckIncomeThresholdScreen = () =>
  */
 export const navigateToSvWorkerSelectDestinationScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.WORKER_SELECT_DESTINATION
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.WORKER_SELECT_DESTINATION
     })
   );
 
@@ -67,8 +68,8 @@ export const navigateToSvWorkerSelectDestinationScreen = () =>
  */
 export const navigateToSvSickCheckIncomeThresholdScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.SICK_CHECK_INCOME_THRESHOLD
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.SICK_CHECK_INCOME_THRESHOLD
     })
   );
 
@@ -77,8 +78,8 @@ export const navigateToSvSickCheckIncomeThresholdScreen = () =>
  */
 export const navigateToSvSickSelectDestinationScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
     })
   );
 
@@ -87,8 +88,8 @@ export const navigateToSvSickSelectDestinationScreen = () =>
  */
 export const navigateToSvSelectFlightsDateScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA
     })
   );
 
@@ -97,8 +98,8 @@ export const navigateToSvSelectFlightsDateScreen = () =>
  */
 export const navigateToSvSummaryScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.SUMMARY
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.SUMMARY
     })
   );
 
@@ -107,8 +108,8 @@ export const navigateToSvSummaryScreen = () =>
  */
 export const navigateToSvVoucherGeneratedScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED
     })
   );
 
@@ -117,8 +118,8 @@ export const navigateToSvVoucherGeneratedScreen = () =>
  */
 export const navigateToSvKoCheckResidenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
     })
   );
 
@@ -127,8 +128,8 @@ export const navigateToSvKoCheckResidenceScreen = () =>
  */
 export const navigateToSvKoSelectBeneficiaryCategoryScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.KO_SELECT_BENEFICIARY_CATEGORY
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.KO_SELECT_BENEFICIARY_CATEGORY
     })
   );
 
@@ -137,8 +138,8 @@ export const navigateToSvKoSelectBeneficiaryCategoryScreen = () =>
  */
 export const navigateToSvKoCheckIncomeThresholdScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_INCOME_THRESHOLD
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_INCOME_THRESHOLD
     })
   );
 
@@ -147,8 +148,8 @@ export const navigateToSvKoCheckIncomeThresholdScreen = () =>
  */
 export const navigateToSvTimeoutGeneratedVoucherScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_GENERATION.TIMEOUT_GENERATED_VOUCHER
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.TIMEOUT_GENERATED_VOUCHER
     })
   );
 
@@ -157,8 +158,8 @@ export const navigateToSvTimeoutGeneratedVoucherScreen = () =>
  */
 export const navigateToSvVoucherListScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_LIST.LIST
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_LIST.LIST
     })
   );
 
@@ -167,7 +168,7 @@ export const navigateToSvVoucherListScreen = () =>
  */
 export const navigateToSvVoucherDetailsScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: SV_ROUTES.VOUCHER_LIST.DETAILS
+    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_LIST.DETAILS
     })
   );

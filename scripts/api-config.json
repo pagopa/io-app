@@ -26,6 +26,19 @@
     "payment": {
       "amount": 2222,
       "pspFeeAmount": 100
+    },
+    "methods": {
+      "walletCreditCardCount":1
     }
+  },
+  "features": {
+    "bonus": {
+      "cgn": {
+        "isCgnEligible": true,
+        "isEycaEligible": true,
+        "allowRandomValues": true
+      }
+    },
+    "allowRandomValues": true
   }
 }

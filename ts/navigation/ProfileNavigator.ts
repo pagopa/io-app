@@ -1,14 +1,12 @@
-import {
-  createStackNavigator,
-  NavigationStackOptions,
-  NavigationStackProp
-} from "react-navigation-stack";
-import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
+import { ParamListBase } from "@react-navigation/native";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
+import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
@@ -16,17 +14,15 @@ import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesS
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
-import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
+import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
 import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
 import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen";
+import SecurityScreen from "../screens/profile/SecurityScreen";
+import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
-import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
-import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
-import SecurityScreen from "../screens/profile/SecurityScreen";
-import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import { PremiumMessagesOptInOutProfileScreen } from "../screens/profile/premiumMessages/PremiumMessagesOptInOutProfileScreen";
 import { premiumMessagesOptInEnabled } from "../config";
 import ROUTES from "./routes";
@@ -34,10 +30,7 @@ import ROUTES from "./routes";
 /**
  * The routes used for the premium messages feature.
  */
-const premiumMessagesRoutes: NavigationRouteConfigMap<
-  NavigationStackOptions,
-  NavigationStackProp<NavigationRoute, any>
-> = premiumMessagesOptInEnabled
+const premiumMessagesRoutes: ParamListBase = premiumMessagesOptInEnabled
   ? {
       [ROUTES.PROFILE_PREMIUM_MESSAGES_OPT_IN_OUT]: {
         screen: PremiumMessagesOptInOutProfileScreen
@@ -48,11 +41,8 @@ const premiumMessagesRoutes: NavigationRouteConfigMap<
 /**
  * A navigator for all the screens of the Profile section
  */
-const ProfileNavigator = createStackNavigator(
+const ProfileNavigator = createCompatNavigatorFactory(createStackNavigator)(
   {
-    [ROUTES.PROFILE_MAIN]: {
-      screen: ProfileMainScreen
-    },
     [ROUTES.PROFILE_PRIVACY_MAIN]: {
       screen: PrivacyMainScreen
     },
@@ -126,7 +116,7 @@ const ProfileNavigator = createStackNavigator(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );

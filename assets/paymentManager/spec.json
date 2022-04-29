@@ -1500,52 +1500,13 @@
         ]
       }
     },
-    "/v1/wallet/{id}": {
-      "get": {
-        "tags": [
-          "wallet-controller"
-        ],
-        "summary": "getWallet",
-        "operationId": "getWalletUsingGET",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "id",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/WalletResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      },
+    "/v2/wallet/{id}": {
       "put": {
         "tags": [
-          "wallet-controller"
+          "wallet-v-2-controller"
         ],
-        "summary": "updateWallet",
-        "operationId": "updateWalletUsingPUT",
+        "summary": "updateWalletV2",
+        "operationId": "updateWalletUsingPUTV2",
         "consumes": [
           "application/json"
         ],
@@ -1577,6 +1538,47 @@
           },
           "201": {
             "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/wallet/{id}": {
+      "get": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "getWallet",
+        "operationId": "getWalletUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletResponse"
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -2780,9 +2782,9 @@
         "codiceAbi",
         "defaultPsp",
         "fee",
+        "id",
         "idPsp",
         "onboard",
-        "privacyUrl",
         "ragioneSociale"
       ],
       "properties": {
@@ -2797,6 +2799,11 @@
         },
         "fee": {
           "type": "integer",
+          "allowEmptyValue": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
           "allowEmptyValue": false
         },
         "idPsp": {

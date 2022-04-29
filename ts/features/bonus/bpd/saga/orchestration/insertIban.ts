@@ -1,5 +1,5 @@
+import { NavigationActions } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";

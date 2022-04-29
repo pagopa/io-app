@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -12,6 +11,7 @@ import { pspForPaymentV2 } from "../../../../../../store/actions/wallet/payment"
 
 const pspList: ReadonlyArray<PspData> = [
   {
+    id: 1,
     codiceAbi: "0001",
     defaultPsp: true,
     fee: 100,
@@ -21,6 +21,7 @@ const pspList: ReadonlyArray<PspData> = [
     ragioneSociale: "PayTipper"
   },
   {
+    id: 2,
     codiceAbi: "0002",
     defaultPsp: true,
     fee: 120,
@@ -90,7 +91,7 @@ const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       PayPalPspUpdateScreen,
       "N/A",
       {},

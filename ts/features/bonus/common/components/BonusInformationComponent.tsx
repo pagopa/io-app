@@ -1,10 +1,11 @@
 import { Content, Text, View } from "native-base";
-import { ComponentProps } from "react";
 import * as React from "react";
-import { Image, StyleSheet, SafeAreaView } from "react-native";
+import { ComponentProps } from "react";
+import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { index } from "fp-ts/lib/Array";
+import { constNull } from "fp-ts/lib/function";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -24,6 +25,7 @@ import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { Link } from "../../../../components/core/typography/Link";
+import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 
 type OwnProps = {
   onBack?: () => void;
@@ -156,12 +158,12 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     onPress: props.onCancel,
     title: I18n.t("global.buttons.cancel")
   };
-  const requestButtonProps = {
-    block: true,
-    primary: true,
-    onPress: props.onConfirm,
-    title: props.primaryCtaText
-  };
+  const requestButtonProps = confirmButtonProps(
+    props.onConfirm ?? constNull,
+    props.primaryCtaText,
+    undefined,
+    "activate-bonus-button"
+  );
 
   const onMarkdownLoaded = () => {
     setMarkdownLoaded(true);
@@ -184,16 +186,15 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       return null;
     }
     const buttons = urls.map((url, idx) => (
-      <>
+      <View key={`${idx}_${url.url}`}>
         <ButtonDefaultOpacity
           bordered={true}
-          key={`${idx}_${url.url}`}
           onPress={() => handleModalPress(url.url)}
         >
           <Text style={styles.urlButton}>{url.name}</Text>
         </ButtonDefaultOpacity>
         {idx !== urls.length - 1 && <View spacer={true} small={true} />}
-      </>
+      </View>
     ));
     return <>{buttons}</>;
   };

@@ -5,12 +5,11 @@
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
+import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, SafeAreaView, StyleSheet } from "react-native";
-import { StackActions } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -25,6 +24,8 @@ import {
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import {
   navigateBack,
   navigateToEmailInsertScreen
@@ -45,8 +46,11 @@ import { isOnboardingCompleted } from "../../utils/navigation";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps;
+  ReturnType<typeof mapDispatchToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<OnboardingParamsList, "READ_EMAIL_SCREEN">
+    >;
+  };
 
 const styles = StyleSheet.create({
   flex: {

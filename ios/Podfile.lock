@@ -324,6 +324,8 @@ PODS:
     - React
   - react-native-pdf (6.4.0):
     - React-Core
+  - react-native-safe-area-context (3.3.2):
+    - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
   - react-native-slider (3.0.3):
@@ -416,7 +418,7 @@ PODS:
     - React-Core
   - RNFS (2.18.0):
     - React
-  - RNGestureHandler (1.10.3):
+  - RNGestureHandler (2.1.1):
     - React-Core
   - RNI18n (2.0.15):
     - React
@@ -424,8 +426,33 @@ PODS:
     - React
   - RNPermissions (2.2.2):
     - React-Core
-  - RNReanimated (1.13.1):
-    - React
+  - RNReanimated (2.7.0):
+    - DoubleConversion
+    - FBLazyVector
+    - FBReactNativeSpec
+    - glog
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React-callinvoker
+    - React-Core
+    - React-Core/DevSupport
+    - React-Core/RCTWebSocket
+    - React-CoreModules
+    - React-cxxreact
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-RCTActionSheet
+    - React-RCTAnimation
+    - React-RCTBlob
+    - React-RCTImage
+    - React-RCTLinking
+    - React-RCTNetwork
+    - React-RCTSettings
+    - React-RCTText
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (2.18.1):
     - React-Core
   - RNSha256 (1.2.3):
@@ -436,7 +463,7 @@ PODS:
     - React-Core
   - RNVectorIcons (7.0.0):
     - React
-  - RNZendeskChat (0.3.20):
+  - RNZendeskChat (0.3.21):
     - React
     - ZendeskAnswerBotSDK (~> 2.1.3)
     - ZendeskChatSDK (~> 2.11.1)
@@ -531,6 +558,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -675,6 +703,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-mixpanel"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   react-native-screen-brightness:
     :path: "../node_modules/react-native-screen-brightness"
   react-native-slider:
@@ -804,6 +834,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
+  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -830,17 +861,17 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: cc7de0772378f85d8f36ae439df20f05c590a651
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
-  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
+  RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
   RNPermissions: 5df468064df661a4c8c017e2791ce90d7695eea5
-  RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
+  RNReanimated: 93fe36bf01e6bd4346e0ffc9e469ce37a6b2bea9
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: 730a2773b1e0007425f2f111dcf75208a919c902
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
-  RNZendeskChat: 2edfe52bac3a2487b6f6c435aadfe919f75bd6a1
+  RNZendeskChat: d22f866bc9cf8b426d5fa9d773a4a280889cc6c8
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZendeskAnswerBotProvidersSDK: 8ef75d4484f09c324cd93ce2725364d73dbabcf5

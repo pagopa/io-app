@@ -1,3 +1,4 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
@@ -8,7 +9,6 @@ import {
   WebViewErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -20,6 +20,8 @@ import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import {
   idpLoginUrlChanged,
   loginFailure,
@@ -31,6 +33,7 @@ import {
   isLoggedOutWithIdp,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
@@ -40,16 +43,18 @@ import {
   onLoginUriChanged
 } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
-import { getUrlBasepath } from "../../utils/url";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
+import { getUrlBasepath } from "../../utils/url";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
-type Props = NavigationStackScreenProps &
-  ReturnType<typeof mapStateToProps> &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AuthenticationParamsList, "AUTHENTICATION_IDP_LOGIN">
+  >;
+} & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 enum ErrorType {
@@ -303,8 +308,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        {!hasError && (
-          <View style={styles.webViewWrapper}>
+        <View style={styles.webViewWrapper}>
+          {!hasError && (
             <WebView
               cacheEnabled={false}
               androidCameraAccessDisabled={true}
@@ -317,18 +322,18 @@ class IdpLoginScreen extends React.Component<Props, State> {
               onNavigationStateChange={this.handleNavigationStateChange}
               onShouldStartLoadWithRequest={this.handleShouldStartLoading}
             />
-            {this.renderMask()}
-          </View>
-        )}
+          )}
+          {this.renderMask()}
+        </View>
       </BaseScreenComponent>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const selectedtIdp = selectedIdentityProviderSelector(state);
+  const selectedIdp = selectedIdentityProviderSelector(state);
 
-  const selectedIdpTextData = fromNullable(selectedtIdp).fold(none, idp =>
+  const selectedIdpTextData = fromNullable(selectedIdp).fold(none, idp =>
     idpContextualHelpDataFromIdSelector(idp.id)(state)
   );
 

@@ -7,7 +7,8 @@ import {
   FlatList,
   RefreshControl,
   StyleSheet,
-  Vibration
+  Vibration,
+  View
 } from "react-native";
 import { connect } from "react-redux";
 
@@ -80,6 +81,9 @@ const styles = StyleSheet.create({
   },
   activityIndicator: {
     padding: 12
+  },
+  bottomSpacer: {
+    height: 60
   }
 });
 
@@ -165,7 +169,8 @@ const MessageList = ({
   loadPreviousPage,
   nextCursor,
   previousCursor,
-  reloadAll
+  reloadAll,
+  testID
 }: Props) => {
   // when filteredMessage is defined, this component is used
   // in search, so loading data on demand should be prevented
@@ -256,7 +261,7 @@ const MessageList = ({
     if (messages.length > 0 && !nextCursor) {
       return <EdgeBorderComponent />;
     }
-    return null;
+    return <View style={styles.bottomSpacer} />;
   };
 
   return (
@@ -291,7 +296,8 @@ const MessageList = ({
         }}
         onLayout={handleOnLayoutChange}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.25}
+        testID={testID}
         ListFooterComponent={renderListFooter}
       />
     </>
@@ -319,6 +325,7 @@ const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
   const didLoad = pot.isSome(paginatedState);
   return {
     allMessages,
+    testID: `MessageList_${isArchive ? "archive" : "inbox"}`,
     error,
     hasPaidBadge: (category: UIMessage["category"]) =>
       isNoticePaid(state, category),
