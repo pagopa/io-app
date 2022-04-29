@@ -1,9 +1,10 @@
+import { NavigationActions } from "@react-navigation/compat";
 import { fireEvent } from "@testing-library/react-native";
 import * as React from "react";
-import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../i18n";
 import NavigationService from "../../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -72,7 +73,13 @@ describe("AddPrivativeCardNumberScreen", () => {
     ]);
     expect(spy).toHaveBeenCalledWith(
       NavigationActions.navigate({
-        routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE
+        routeName: ROUTES.WALLET_NAVIGATOR,
+        params: {
+          screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN,
+          params: {
+            screen: WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE
+          }
+        }
       })
     );
 
@@ -107,7 +114,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       () => <AddPrivativeCardNumberScreen />,
       WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER,
       {},

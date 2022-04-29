@@ -1,18 +1,18 @@
+import { NavigationActions } from "@react-navigation/compat";
 import { call } from "typed-redux-saga/macro";
-import { NavigationActions } from "react-navigation";
 import NavigationService from "../../../../../../navigation/NavigationService";
-import {
-  optInPaymentMethodsBack,
-  optInPaymentMethodsCancel,
-  optInPaymentMethodsCompleted,
-  optInPaymentMethodsFailure
-} from "../../../store/actions/optInPaymentMethods";
 import {
   executeWorkUnit,
   withFailureHandling,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import BPD_ROUTES from "../../../navigation/routes";
+import {
+  optInPaymentMethodsBack,
+  optInPaymentMethodsCancel,
+  optInPaymentMethodsCompleted,
+  optInPaymentMethodsFailure
+} from "../../../store/actions/optInPaymentMethods";
 
 function* optInPaymentMethodsWorkUnit() {
   return yield* call(executeWorkUnit, {

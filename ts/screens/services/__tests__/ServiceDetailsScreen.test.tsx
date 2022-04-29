@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -72,7 +71,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       ServiceDetailsScreen,
       ROUTES.SERVICE_DETAIL,
       { service },

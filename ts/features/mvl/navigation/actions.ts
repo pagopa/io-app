@@ -1,26 +1,39 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
+import ROUTES from "../../../navigation/routes";
 import { MvlRouterScreenNavigationParams } from "../screens/MvlRouterScreen";
 import MVL_ROUTES from "./routes";
 
 export const navigateToMvlDetailsScreen = (
   params: MvlRouterScreenNavigationParams
 ) =>
-  NavigationActions.navigate({
-    routeName: MVL_ROUTES.DETAILS,
-    params
+  CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+    screen: MVL_ROUTES.MAIN,
+    params: {
+      screen: MVL_ROUTES.DETAILS,
+      params
+    }
   });
 
 export const navigateToMvlCertificatesScreen = () =>
-  NavigationActions.navigate({
-    routeName: MVL_ROUTES.CERTIFICATES
+  CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+    screen: MVL_ROUTES.MAIN,
+    params: {
+      screen: MVL_ROUTES.CERTIFICATES
+    }
   });
 
 export const navigateToMvlRecipientsScreen = () =>
-  NavigationActions.navigate({
-    routeName: MVL_ROUTES.RECIPIENTS
+  CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+    screen: MVL_ROUTES.MAIN,
+    params: {
+      screen: MVL_ROUTES.RECIPIENTS
+    }
   });
 
 export const navigateToMvlSignatureScreen = () =>
-  NavigationActions.navigate({
-    routeName: MVL_ROUTES.SIGNATURE
+  CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+    screen: MVL_ROUTES.MAIN,
+    params: {
+      screen: MVL_ROUTES.SIGNATURE
+    }
   });
