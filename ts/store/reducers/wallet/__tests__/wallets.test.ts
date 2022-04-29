@@ -274,7 +274,7 @@ describe("getPayablePaymentMethodsSelector", () => {
     const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
       .value as PatchedWalletV2ListResponse;
     const updatedMethods = paymentMethods.data!.map(w =>
-      convertWalletV2toWalletV1({ ...w, pagoPA: false })
+      convertWalletV2toWalletV1({ ...w, enableableFunctions: [] })
     );
     const withWallets = appReducer(
       undefined,
@@ -289,7 +289,11 @@ describe("getPayablePaymentMethodsSelector", () => {
       .value as PatchedWalletV2ListResponse;
     const updatedMethods = [...paymentMethods.data!];
     // eslint-disable-next-line functional/immutable-data
-    updatedMethods[0] = { ...updatedMethods[0], pagoPA: true };
+    updatedMethods[0] = {
+      ...updatedMethods[0],
+      pagoPA: true,
+      enableableFunctions: [EnableableFunctionsEnum.pagoPA]
+    };
     const withWallets = appReducer(
       undefined,
       fetchWalletsSuccess(updatedMethods.map(convertWalletV2toWalletV1))

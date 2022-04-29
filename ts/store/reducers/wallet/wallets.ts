@@ -66,10 +66,7 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
-import {
-  hasPaymentFeature,
-  isEnabledToPay
-} from "../../../utils/paymentMethodCapabilities";
+import { hasPaymentFeature } from "../../../utils/paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
 import {
   DeleteAllByFunctionError,
