@@ -66,7 +66,10 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
-import { hasPaymentFeatureEnabled } from "../../../utils/paymentMethodCapabilities";
+import {
+  hasPaymentFeatureEnabled,
+  isEnabledToPay
+} from "../../../utils/paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
 import {
   DeleteAllByFunctionError,
@@ -209,7 +212,7 @@ export const getPayablePaymentMethodsSelector = createSelector(
     potPm: ReturnType<typeof paymentMethodsSelector>
   ): ReadonlyArray<PaymentMethod> =>
     pot.getOrElse(
-      pot.map(potPm, pms => pms.filter(hasPaymentFeatureEnabled)),
+      pot.map(potPm, pms => pms.filter(isEnabledToPay)),
       []
     )
 );
