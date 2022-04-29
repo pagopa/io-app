@@ -415,7 +415,7 @@ const mapStateToProps = (state: GlobalState) => {
     potVerifica: verifica,
     paymentId,
     maybeFavoriteWallet,
-    hasPayableMethods,
+    hasPayableMethods: hasMethodsWithPaymentFeature,
     walletById
   };
 };

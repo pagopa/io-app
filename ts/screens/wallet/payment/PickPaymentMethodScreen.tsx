@@ -100,7 +100,7 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { payableWallets, notPayableWallets, paymentDisabledWallets } = props;
+  const { methodsCanPay, methodsCantPay, methodsCanPayButDisabled } = props;
 
   return (
     <BaseScreenComponent
@@ -114,7 +114,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
           <Content>
             <H1>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H1>
             <View spacer={true} />
-            {payableWallets.length > 0 ? (
+            {methodsCanPay.length > 0 ? (
               <>
                 <H4 weight={"Regular"} color={"bluegreyDark"}>
                   {I18n.t("wallet.payWith.text")}
@@ -122,7 +122,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 <FlatList
                   testID={"availablePaymentMethodList"}
                   removeClippedSubviews={false}
-                  data={payableWallets}
+                  data={methodsCanPay}
                   keyExtractor={item => item.idWallet.toString()}
                   ListFooterComponent={<View spacer />}
                   renderItem={i => (
@@ -151,7 +151,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
               </H4>
             )}
 
-            {paymentDisabledWallets.length > 0 && (
+            {methodsCanPayButDisabled.length > 0 && (
               <>
                 <View spacer={true} />
                 <H4 color={"bluegreyDark"}>
@@ -161,7 +161,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 <FlatList
                   testID={"DisabledPaymentMethodList"}
                   removeClippedSubviews={false}
-                  data={paymentDisabledWallets}
+                  data={methodsCanPayButDisabled}
                   keyExtractor={item => `disabled_payment_${item.idWallet}`}
                   ListFooterComponent={<View spacer />}
                   renderItem={i => (
@@ -178,7 +178,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
               </>
             )}
 
-            {notPayableWallets.length > 0 && (
+            {methodsCantPay.length > 0 && (
               <>
                 <View spacer={true} />
                 <H4 color={"bluegreyDark"}>
@@ -190,7 +190,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 <FlatList
                   testID={"notPayablePaymentMethodList"}
                   removeClippedSubviews={false}
-                  data={notPayableWallets}
+                  data={methodsCantPay}
                   keyExtractor={item => item.idWallet.toString()}
                   ListFooterComponent={<View spacer />}
                   renderItem={i => (
@@ -243,13 +243,9 @@ const mapStateToProps = (state: GlobalState) => {
     [] as ReadonlyArray<PaymentMethod>
   );
   return {
-    // Considering that the creditCardListVisibleInWalletSelector return
-    // all the visible credit card we need to filter them in order to extract
-    // only the cards that can pay on IO.
-    payableWallets: visibleWallets.filter(isEnabledToPay),
-    paymentDisabledWallets: visibleWallets.filter(isDisabledToPay),
-    // all those method that can't pay and that couldn't pay (pagoPa=false && pagopa is not in the enableable function)
-    notPayableWallets: visibleWallets.filter(v => !hasPaymentFeature(v)),
+    methodsCanPay: visibleWallets.filter(isEnabledToPay),
+    methodsCanPayButDisabled: visibleWallets.filter(isDisabledToPay),
+    methodsCantPay: visibleWallets.filter(v => !hasPaymentFeature(v)),
     isLoading,
     nameSurname: profileNameSurnameSelector(state)
   };

@@ -108,8 +108,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 
   public componentDidMount() {
-    if (!this.props.hasPayableMethods) {
-      if (this.props.hasPayableMethodsEnabledToPay) {
+    if (!this.props.hasMethodsWithPaymentFeature) {
+      if (this.props.hasMethodsCanPay) {
         alertNoActivePayablePaymentMethods(this.props.navigateToWalletHome);
         return;
       }
@@ -271,8 +271,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0,
-  hasPayableMethodsEnabledToPay:
+  hasMethodsWithPaymentFeature:
+    getPayablePaymentMethodsSelector(state).length > 0,
+  hasMethodsCanPay:
     getPayablePaymentMethodsSelector(state).filter(isEnabledToPay).length > 0
 });
 
