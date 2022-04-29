@@ -1366,7 +1366,7 @@ wallet:
       description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
-      description: Link your BANCOMAT Pay account
+      description: Pay with your linked card or bank account
     postepayApp:
       name: Postepay
       description: your Postepay app
