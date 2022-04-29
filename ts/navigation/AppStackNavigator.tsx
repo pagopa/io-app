@@ -29,7 +29,7 @@ import {
 } from "../store/reducers/backendStatus";
 import { fimsEnabled } from "../config";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
-import { FimsNavigator } from "../features/fims/navigation/navigator";
+import FimsWebviewScreen from "../features/fims/screens/FimsWebviewScreen";
 import authenticationNavigator from "./AuthenticationNavigator";
 import messagesNavigator from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -108,7 +108,10 @@ export const AppStackNavigator = () => {
       />
 
       {isFimsEnabled && (
-        <Stack.Screen name={FIMS_ROUTES.MAIN} component={FimsNavigator} />
+        <Stack.Screen
+          name={FIMS_ROUTES.WEBVIEW}
+          component={FimsWebviewScreen}
+        />
       )}
 
       {cdcEnabled && (

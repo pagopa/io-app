@@ -47,7 +47,7 @@ export type AppParamsList = {
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
   [UADONATION_ROUTES.WEBVIEW]: undefined;
   [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
-  [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
+  [FIMS_ROUTES.WEBVIEW]: NavigatorScreenParams<FimsParamsList>;
 };
 
 /**
