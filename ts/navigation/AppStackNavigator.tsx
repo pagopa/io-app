@@ -23,7 +23,13 @@ import { trackScreen } from "../store/middlewares/navigation";
 import { isTestEnv } from "../utils/environment";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
-import { isCdcEnabledSelector } from "../store/reducers/backendStatus";
+import {
+  isCdcEnabledSelector,
+  isFIMSEnabledSelector
+} from "../store/reducers/backendStatus";
+import { fimsEnabled } from "../config";
+import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { FimsNavigator } from "../features/fims/navigation/navigator";
 import authenticationNavigator from "./AuthenticationNavigator";
 import messagesNavigator from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -39,7 +45,9 @@ const Stack = createStackNavigator<AppParamsList>();
 
 export const AppStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
+  const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
 
+  const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
   return (
     <Stack.Navigator
       initialRouteName={"INGRESS"}
@@ -98,6 +106,10 @@ export const AppStackNavigator = () => {
         name={UADONATION_ROUTES.WEBVIEW}
         component={UAWebViewScreen}
       />
+
+      {isFimsEnabled && (
+        <Stack.Screen name={FIMS_ROUTES.MAIN} component={FimsNavigator} />
+      )}
 
       {cdcEnabled && (
         <Stack.Screen

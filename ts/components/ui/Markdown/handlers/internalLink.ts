@@ -6,6 +6,7 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import URLParse from "url-parse";
 import {
   bpdEnabled,
+  fimsEnabled,
   myPortalEnabled,
   svEnabled,
   uaDonationsEnabled
@@ -19,6 +20,7 @@ import ROUTES from "../../../../navigation/routes";
 import { addInternalRouteNavigation } from "../../../../store/actions/internalRouteNavigation";
 import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
+import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
@@ -137,6 +139,12 @@ const svRoutesToNavigationAction: Record<string, NavigationAction> = {
   )
 };
 
+const fimsRoutesToNavigationAction: Record<string, NavigationAction> = {
+  [FIMS_ROUTES.WEBVIEW]: CommonActions.navigate(FIMS_ROUTES.MAIN, {
+    screen: FIMS_ROUTES.WEBVIEW
+  })
+};
+
 const allowedRoutes = {
   ...routesToNavigationAction,
   ...cgnRoutesToNavigationAction,
@@ -144,7 +152,8 @@ const allowedRoutes = {
   ...(myPortalEnabled ? myPortalRoutesToNavigationAction : {}),
   ...(bpdEnabled ? bpdRoutesToNavigationAction : {}),
   ...(svEnabled ? svRoutesToNavigationAction : {}),
-  ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationAction : {})
+  ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationAction : {}),
+  ...(fimsEnabled ? fimsRoutesToNavigationAction : {})
 };
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
