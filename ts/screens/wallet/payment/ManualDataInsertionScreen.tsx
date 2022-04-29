@@ -47,7 +47,7 @@ import {
   alertNoActivePayablePaymentMethods,
   alertNoPayablePaymentMethods
 } from "../../../utils/paymentMethod";
-import { isPaymentMethodEnabledToPay } from "../../../utils/paymentMethodCapabilities";
+import { isEnabledToPay } from "../../../utils/paymentMethodCapabilities";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
@@ -273,8 +273,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => ({
   hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0,
   hasPayableMethodsEnabledToPay:
-    getPayablePaymentMethodsSelector(state).filter(isPaymentMethodEnabledToPay)
-      .length > 0
+    getPayablePaymentMethodsSelector(state).filter(isEnabledToPay).length > 0
 });
 
 export default connect(

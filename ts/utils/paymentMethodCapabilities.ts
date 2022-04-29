@@ -7,21 +7,18 @@ import { hasFunctionEnabled } from "./walletv2";
 
 /**
  * check if a payment method is supported to make payment via pagaPA platform.
- * a credit card is supported if it isn't included in the brandsBlacklist or if its brand is not recognized.
+ * it doesn't use the payment method can actually pay
  * @param paymentMethod
  */
-export const canPaymentMethodPay = (paymentMethod: PaymentMethod): boolean =>
-  hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
-
-export const isPaymentMethodEnabledToPay = (
+export const hasPaymentFeatureEnabled = (
   paymentMethod: PaymentMethod
-): boolean =>
-  canPaymentMethodPay(paymentMethod) && paymentMethod.pagoPA === true;
+): boolean => hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
 
-export const isPaymentMethodDisabledToPay = (
-  paymentMethod: PaymentMethod
-): boolean =>
-  canPaymentMethodPay(paymentMethod) && paymentMethod.pagoPA === false;
+export const isEnabledToPay = (paymentMethod: PaymentMethod): boolean =>
+  hasPaymentFeatureEnabled(paymentMethod) && paymentMethod.pagoPA === true;
+
+export const isDisabledToPay = (paymentMethod: PaymentMethod): boolean =>
+  hasPaymentFeatureEnabled(paymentMethod) && paymentMethod.pagoPA === false;
 
 export const isCobadge = (paymentMethod: CreditCardPaymentMethod) =>
   paymentMethod.info?.issuerAbiCode && paymentMethod.info.type !== TypeEnum.PRV;
@@ -35,7 +32,6 @@ const paymentNotSupportedCustomRepresentation = (
 ): PaymentSupportStatus => {
   switch (paymentMethod.kind) {
     case "Satispay":
-    case "BPay":
       return "arriving";
     default:
       return "notAvailable";
@@ -53,12 +49,8 @@ const paymentNotSupportedCustomRepresentation = (
 export const isPaymentSupported = (
   paymentMethod: PaymentMethod
 ): PaymentSupportStatus => {
-  const paymentSupported: Option<PaymentSupportStatus> = hasFunctionEnabled(
-    paymentMethod,
-    EnableableFunctionsEnum.pagoPA
-  )
-    ? some("available")
-    : none;
+  const paymentSupported: Option<PaymentSupportStatus> =
+    hasPaymentFeatureEnabled(paymentMethod) ? some("available") : none;
 
   const notAvailableCustomRepresentation = some(
     paymentNotSupportedCustomRepresentation(paymentMethod)

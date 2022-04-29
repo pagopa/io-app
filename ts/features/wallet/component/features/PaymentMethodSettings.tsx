@@ -11,7 +11,7 @@ import FavoritePaymentMethodSwitch from "../../../../components/wallet/FavoriteM
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
-import { isPaymentMethodEnabledToPay } from "../../../../utils/paymentMethodCapabilities";
+import { isEnabledToPay } from "../../../../utils/paymentMethodCapabilities";
 import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };
@@ -46,7 +46,7 @@ const PaymentMethodSettings = (props: Props): React.ReactElement => (
     </View>
     <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     <ItemSeparatorComponent noPadded={true} />
-    {isPaymentMethodEnabledToPay(props.paymentMethod) && (
+    {isEnabledToPay(props.paymentMethod) && (
       <>
         <FavoritePaymentMethodSwitch paymentMethod={props.paymentMethod} />
         <ItemSeparatorComponent noPadded={true} />

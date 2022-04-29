@@ -36,9 +36,9 @@ import {
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
 import {
-  canPaymentMethodPay,
-  isPaymentMethodDisabledToPay,
-  isPaymentMethodEnabledToPay
+  hasPaymentFeatureEnabled,
+  isDisabledToPay,
+  isEnabledToPay
 } from "../../../utils/paymentMethodCapabilities";
 import {
   cancelButtonProps,
@@ -246,10 +246,10 @@ const mapStateToProps = (state: GlobalState) => {
     // Considering that the creditCardListVisibleInWalletSelector return
     // all the visible credit card we need to filter them in order to extract
     // only the cards that can pay on IO.
-    payableWallets: visibleWallets.filter(isPaymentMethodEnabledToPay),
-    paymentDisabledWallets: visibleWallets.filter(isPaymentMethodDisabledToPay),
+    payableWallets: visibleWallets.filter(isEnabledToPay),
+    paymentDisabledWallets: visibleWallets.filter(isDisabledToPay),
     // all those method that can't pay and that couldn't pay (pagoPa=false && pagopa is not in the enableable function)
-    notPayableWallets: visibleWallets.filter(v => !canPaymentMethodPay(v)),
+    notPayableWallets: visibleWallets.filter(v => !hasPaymentFeatureEnabled(v)),
     isLoading,
     nameSurname: profileNameSurnameSelector(state)
   };
