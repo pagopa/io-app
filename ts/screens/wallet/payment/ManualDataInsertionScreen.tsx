@@ -44,7 +44,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { getPayablePaymentMethodsSelector } from "../../../store/reducers/wallet/wallets";
 import variables from "../../../theme/variables";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
-import { isEnabledToPay } from "../../../utils/paymentMethodCapabilities";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
@@ -264,8 +263,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  hasMethodsCanPay:
-    getPayablePaymentMethodsSelector(state).filter(isEnabledToPay).length > 0
+  hasMethodsCanPay: getPayablePaymentMethodsSelector(state).length > 0
 });
 
 export default connect(

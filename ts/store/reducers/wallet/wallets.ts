@@ -212,7 +212,7 @@ export const getPayablePaymentMethodsSelector = createSelector(
     potPm: ReturnType<typeof paymentMethodsSelector>
   ): ReadonlyArray<PaymentMethod> =>
     pot.getOrElse(
-      pot.map(potPm, pms => pms.filter(isEnabledToPay)),
+      pot.map(potPm, pms => pms.filter(hasPaymentFeature)),
       []
     )
 );
