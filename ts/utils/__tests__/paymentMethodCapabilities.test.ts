@@ -5,7 +5,10 @@ import {
   PaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
-import { isPaymentSupported, canMethodPay } from "../paymentMethodCapabilities";
+import {
+  isPaymentSupported,
+  canPaymentMethodPay
+} from "../paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../definitions/pagopa/EnableableFunctions";
 
 describe("canMethodPay", () => {
@@ -18,7 +21,7 @@ describe("canMethodPay", () => {
       pagoPA: true
     } as CreditCardPaymentMethod;
 
-    expect(canMethodPay(aKnownCreditCard)).toBeTruthy();
+    expect(canPaymentMethodPay(aKnownCreditCard)).toBeTruthy();
   });
 
   it("should return false if the Credit card is of type CrediCardType but pagoPA is false", () => {
@@ -29,7 +32,7 @@ describe("canMethodPay", () => {
       },
       pagoPA: false
     } as CreditCardPaymentMethod;
-    expect(canMethodPay(aKnownCreditCard)).toBeFalsy();
+    expect(canPaymentMethodPay(aKnownCreditCard)).toBeFalsy();
   });
   it("should return true if the Credit card is not of type CrediCardType", () => {
     const anUnKnownCreditCard = {
@@ -40,14 +43,14 @@ describe("canMethodPay", () => {
       pagoPA: true
     } as CreditCardPaymentMethod;
 
-    expect(canMethodPay(anUnKnownCreditCard)).toBeTruthy();
+    expect(canPaymentMethodPay(anUnKnownCreditCard)).toBeTruthy();
   });
   it("should return true if pagoPa is true but is not of type CrediCardType", () => {
     const anNonCreditCardPaymentMethod = {
       pagoPA: true
     } as SatispayPaymentMethod;
 
-    expect(canMethodPay(anNonCreditCardPaymentMethod)).toBeTruthy();
+    expect(canPaymentMethodPay(anNonCreditCardPaymentMethod)).toBeTruthy();
   });
 });
 

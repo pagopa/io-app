@@ -66,7 +66,7 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
-import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
+import { canPaymentMethodPay } from "../../../utils/paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
 import {
   DeleteAllByFunctionError,
@@ -209,21 +209,7 @@ export const getPayablePaymentMethodsSelector = createSelector(
     potPm: ReturnType<typeof paymentMethodsSelector>
   ): ReadonlyArray<PaymentMethod> =>
     pot.getOrElse(
-      pot.map(potPm, pms => pms.filter(canMethodPay)),
-      []
-    )
-);
-
-// return those payment methods that have pagoPA as enabled function
-export const getPagoPAMethodsSelector = createSelector(
-  paymentMethodsSelector,
-  (
-    potPm: ReturnType<typeof paymentMethodsSelector>
-  ): ReadonlyArray<PaymentMethod> =>
-    pot.getOrElse(
-      pot.map(potPm, pms =>
-        pms.filter(pm => hasFunctionEnabled(pm, EnableableFunctionsEnum.pagoPA))
-      ),
+      pot.map(potPm, pms => pms.filter(canPaymentMethodPay)),
       []
     )
 );
@@ -372,9 +358,7 @@ export const paymentMethodListVisibleInWalletSelector = createSelector(
   (paymentMethodsPot): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
     pot.map(paymentMethodsPot, paymentMethodList =>
       _.sortBy(paymentMethodList.filter(isVisibleInWallet), pm =>
-        hasFunctionEnabled(pm, EnableableFunctionsEnum.pagoPA)
-          ? -1
-          : pm.idWallet
+        canPaymentMethodPay(pm) ? -1 : pm.idWallet
       )
     )
 );

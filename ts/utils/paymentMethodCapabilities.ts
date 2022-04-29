@@ -1,39 +1,27 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
-import {
-  CreditCardPaymentMethod,
-  CreditCardType,
-  isCreditCard,
-  PaymentMethod
-} from "../types/pagopa";
+import { CreditCardPaymentMethod, PaymentMethod } from "../types/pagopa";
 import { PaymentSupportStatus } from "../types/paymentMethodCapabilities";
 import { hasFunctionEnabled } from "./walletv2";
-
-export const brandsBlackList = new Set<CreditCardType>();
 
 /**
  * check if a payment method is supported to make payment via pagaPA platform.
  * a credit card is supported if it isn't included in the brandsBlacklist or if its brand is not recognized.
  * @param paymentMethod
  */
-export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
-  if (paymentMethod.pagoPA === false) {
-    return false;
-  }
-  if (isCreditCard(paymentMethod)) {
-    return CreditCardType.decode(paymentMethod.info.brand).fold(
-      () => paymentMethod.pagoPA,
-      // eslint-disable-next-line sonarjs/no-empty-collection
-      pm => !brandsBlackList.has(pm)
-    );
-  }
-  return paymentMethod.pagoPA;
-};
-
-export const couldMethodPay = (paymentMethod: PaymentMethod): boolean =>
-  !paymentMethod.pagoPA &&
+export const canPaymentMethodPay = (paymentMethod: PaymentMethod): boolean =>
   hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
+
+export const isPaymentMethodEnabledToPay = (
+  paymentMethod: PaymentMethod
+): boolean =>
+  canPaymentMethodPay(paymentMethod) && paymentMethod.pagoPA === true;
+
+export const isPaymentMethodDisabledToPay = (
+  paymentMethod: PaymentMethod
+): boolean =>
+  canPaymentMethodPay(paymentMethod) && paymentMethod.pagoPA === false;
 
 export const isCobadge = (paymentMethod: CreditCardPaymentMethod) =>
   paymentMethod.info?.issuerAbiCode && paymentMethod.info.type !== TypeEnum.PRV;

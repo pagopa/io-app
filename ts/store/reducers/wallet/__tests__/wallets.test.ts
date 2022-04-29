@@ -19,7 +19,6 @@ import {
   creditCardWalletV1Selector,
   getFavoriteWallet,
   getFavoriteWalletId,
-  getPagoPAMethodsSelector,
   getPayablePaymentMethodsSelector,
   getWalletsById,
   pagoPaCreditCardWalletV1Selector,
@@ -305,7 +304,7 @@ describe("getPayablePaymentMethodsSelector", () => {
 describe("getPagoPAMethodsSelector", () => {
   it("should return false - no payable methods", () => {
     const withWallets = appReducer(undefined, fetchWalletsSuccess([]));
-    expect(getPagoPAMethodsSelector(withWallets).length).toEqual(0);
+    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
   });
 
   it("should return false - no pagoPA method", () => {
@@ -319,7 +318,7 @@ describe("getPagoPAMethodsSelector", () => {
       fetchWalletsSuccess(updatedMethods)
     );
     expect(updatedMethods.length).toBeGreaterThan(0);
-    expect(getPagoPAMethodsSelector(withWallets).length).toEqual(0);
+    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
   });
 
   it("should return true - one pagoPA method", () => {

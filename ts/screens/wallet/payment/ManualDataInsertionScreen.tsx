@@ -41,15 +41,13 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import {
-  getPagoPAMethodsSelector,
-  getPayablePaymentMethodsSelector
-} from "../../../store/reducers/wallet/wallets";
+import { getPayablePaymentMethodsSelector } from "../../../store/reducers/wallet/wallets";
 import variables from "../../../theme/variables";
 import {
   alertNoActivePayablePaymentMethods,
   alertNoPayablePaymentMethods
 } from "../../../utils/paymentMethod";
+import { isPaymentMethodEnabledToPay } from "../../../utils/paymentMethodCapabilities";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
@@ -111,7 +109,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     if (!this.props.hasPayableMethods) {
-      if (this.props.hasPagoPaMethods) {
+      if (this.props.hasPayableMethodsEnabledToPay) {
         alertNoActivePayablePaymentMethods(this.props.navigateToWalletHome);
         return;
       }
@@ -274,7 +272,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0,
-  hasPagoPaMethods: getPagoPAMethodsSelector(state).length > 0
+  hasPayableMethodsEnabledToPay:
+    getPayablePaymentMethodsSelector(state).filter(isPaymentMethodEnabledToPay)
+      .length > 0
 });
 
 export default connect(
