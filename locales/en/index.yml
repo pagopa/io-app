@@ -907,12 +907,12 @@ wallet:
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
-      title: "Search for your BANCOMAT Pay accounts"
+      title: "Pay on IO with BANCOMAT Pay"
       description:
-        text1: "By adding BANCOMAT Pay to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
+        text1: "Add your BANCOMAT Pay account to more easily pay pagoPA notices and join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
-        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
-        text4: by searching among those available
+        text3: "Choose “Continue” to search for accounts in your name. Alternatively, search for the bank on which you have an active BANCOMAT Pay account "
+        text4: among those available.
     cobadge:
       title: "Search for your international circuit cards"
       description:
