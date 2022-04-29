@@ -51,12 +51,9 @@ export const BarcodeCamera = (props: Props) => {
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
 
-  const [frameProcessor, barcodes] = useScanBarcodes(
-    [BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX],
-    {
-      checkInverted: true
-    }
-  );
+  const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
+    checkInverted: true
+  });
 
   // Hook that handles the permissions initialization.
   useEffect(() => {
