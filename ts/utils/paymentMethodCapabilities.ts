@@ -6,16 +6,20 @@ import { PaymentSupportStatus } from "../types/paymentMethodCapabilities";
 import { hasFunctionEnabled } from "./walletv2";
 
 /**
- * check if a payment method is supported to make payment via pagaPA platform.
- * it doesn't use the payment method can actually pay
- * @param paymentMethod
+ * return true if the payment method has the payment feature
  */
 export const hasPaymentFeature = (paymentMethod: PaymentMethod): boolean =>
   hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
 
+/**
+ * return true if the payment method has the payment feature and the payment flag enabled
+ */
 export const isEnabledToPay = (paymentMethod: PaymentMethod): boolean =>
   hasPaymentFeature(paymentMethod) && paymentMethod.pagoPA === true;
 
+/**
+ * return true if the payment method has the payment feature and the payment flag disabled
+ */
 export const isDisabledToPay = (paymentMethod: PaymentMethod): boolean =>
   hasPaymentFeature(paymentMethod) && paymentMethod.pagoPA === false;
 
