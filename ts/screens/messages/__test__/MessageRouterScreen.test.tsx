@@ -1,3 +1,5 @@
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { CommonActions } from "@react-navigation/native";
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   FiscalCode,
@@ -5,14 +7,13 @@ import {
   NonEmptyString,
   WithinRangeString
 } from "italia-ts-commons/lib/strings";
-import { NavigationActions, NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
+import EUCOVIDCERT_ROUTES from "../../../features/euCovidCert/navigation/routes";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -102,6 +103,14 @@ const mockEUCovidMessage: pot.Pot<
 
 jest.mock("../../../config", () => ({ euCovidCertificateEnabled: true }));
 
+jest.mock("../../../navigation/NavigationService", () => ({
+  dispatchNavigationAction: jest.fn(),
+  setNavigationReady: jest.fn(),
+  navigationRef: {
+    current: jest.fn()
+  }
+}));
+
 describe("Test MessageRouterScreen", () => {
   jest.useFakeTimers();
   it("With the default state, the screen should be loading", () => {
@@ -118,6 +127,7 @@ describe("Test MessageRouterScreen", () => {
   it("With the messages allIds pot.some and byId some, default message, the navigation to MESSAGE_DETAIL should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
+    spy.mockClear();
 
     const routerScreen = renderComponentMockStore({
       ...globalState,
@@ -138,19 +148,22 @@ describe("Test MessageRouterScreen", () => {
 
     expect(routerScreen).not.toBeNull();
 
-    expect(spy).toHaveBeenCalledWith(NavigationActions.back());
-    expect(spy).toHaveBeenCalledWith(
-      NavigationActions.navigate({
-        params: {
-          messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
-        },
-        routeName: "MESSAGE_DETAIL"
-      })
-    );
+    expect(spy.mock.calls).toEqual([
+      [CommonActions.goBack()],
+      [
+        CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+          screen: ROUTES.MESSAGE_DETAIL,
+          params: {
+            messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
+          }
+        })
+      ]
+    ]);
   });
   it("With the euCovidCertificate feature flag enabled, messages allIds pot.some and byId some, EU Covid message, the navigation to EUCOVIDCERT_DETAILS should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
+    spy.mockClear();
 
     const routerScreen = renderComponentMockStore({
       ...globalState,
@@ -170,16 +183,21 @@ describe("Test MessageRouterScreen", () => {
     });
     expect(routerScreen).not.toBeNull();
 
-    expect(spy).toHaveBeenCalledWith(NavigationActions.back());
-    expect(spy).toHaveBeenCalledWith(
-      NavigationActions.navigate({
-        routeName: "EUCOVIDCERT_CERTIFICATE",
-        params: {
-          authCode: "eu_covid_cert",
-          messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
-        }
-      })
-    );
+    expect(spy.mock.calls).toEqual([
+      [CommonActions.goBack()],
+      [
+        CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+          screen: EUCOVIDCERT_ROUTES.MAIN,
+          params: {
+            screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
+            params: {
+              authCode: "eu_covid_cert",
+              messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
+            }
+          }
+        })
+      ]
+    ]);
   });
   it("With the messages allIds pot.noneLoading, the screen should be loading", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -348,7 +366,7 @@ const renderComponentMockStore = (state: GlobalState) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       MessageRouterScreen,
       ROUTES.MESSAGE_ROUTER,
       { messageId: "messageId" },
@@ -362,7 +380,7 @@ const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       MessageRouterScreen,
       ROUTES.MESSAGE_ROUTER,
       { messageId: "messageId" },

@@ -7,6 +7,7 @@ import {NativeModules} from "react-native";
 import mockAsyncStorage from "@react-native-community/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
+import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 
 // eslint-disable-next-line functional/immutable-data
 NativeModules.RNGestureHandlerModule = {
@@ -92,3 +93,5 @@ jest.mock("@gorhom/bottom-sheet", () => {
     }
   };
 });
+
+jest.mock("react-native-device-info", () => mockRNDeviceInfo);

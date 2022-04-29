@@ -1,5 +1,6 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
 import { ActiveBonusScreenNavigationParams } from "../screens/ActiveBonusScreen";
 import { BonusInformationScreenNavigationParams } from "../screens/BonusInformationScreen";
 import BONUSVACANZE_ROUTES from "./routes";
@@ -10,8 +11,11 @@ import BONUSVACANZE_ROUTES from "./routes";
  */
 export const navigateToBonusEligibilityLoading = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING
+      }
     })
   );
 
@@ -21,8 +25,11 @@ export const navigateToBonusEligibilityLoading = () =>
  */
 export const navigateToIseeNotEligible = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ISEE_NOT_ELIGIBLE
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ELIGIBILITY.ISEE_NOT_ELIGIBLE
+      }
     })
   );
 
@@ -32,8 +39,11 @@ export const navigateToIseeNotEligible = () =>
  */
 export const navigateToIseeNotAvailable = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ISEE_NOT_AVAILABLE
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ELIGIBILITY.ISEE_NOT_AVAILABLE
+      }
     })
   );
 
@@ -43,8 +53,11 @@ export const navigateToIseeNotAvailable = () =>
  */
 export const navigateToEligible = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ELIGIBLE
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ELIGIBILITY.ELIGIBLE
+      }
     })
   );
 
@@ -54,8 +67,11 @@ export const navigateToEligible = () =>
  */
 export const navigateToTimeoutEligibilityCheck = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT
+      }
     })
   );
 
@@ -65,8 +81,11 @@ export const navigateToTimeoutEligibilityCheck = () =>
  */
 export const navigateToBonusActivationPending = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.PENDING
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ELIGIBILITY.PENDING
+      }
     })
   );
 
@@ -76,8 +95,11 @@ export const navigateToBonusActivationPending = () =>
  */
 export const navigateToUnderage = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.UNDERAGE
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ELIGIBILITY.UNDERAGE
+      }
     })
   );
 
@@ -87,8 +109,11 @@ export const navigateToUnderage = () =>
  */
 export const navigateToAvailableBonusScreen = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST
+      }
     })
   );
 
@@ -100,9 +125,12 @@ export const navigateToBonusRequestInformation = (
   params?: BonusInformationScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.BONUS_REQUEST_INFORMATION,
-      params
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.BONUS_REQUEST_INFORMATION,
+        params
+      }
     })
   );
 
@@ -114,8 +142,8 @@ export const navigateToBonusActiveDetailScreen = (
   params?: ActiveBonusScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN,
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN,
       params
     })
   );
@@ -126,8 +154,11 @@ export const navigateToBonusActiveDetailScreen = (
  */
 export const navigateToBonusActivationLoading = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ACTIVATION.LOADING
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ACTIVATION.LOADING
+      }
     })
   );
 
@@ -137,8 +168,11 @@ export const navigateToBonusActivationLoading = () =>
  */
 export const navigateToBonusActivationTimeout = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ACTIVATION.TIMEOUT
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ACTIVATION.TIMEOUT
+      }
     })
   );
 
@@ -148,8 +182,11 @@ export const navigateToBonusActivationTimeout = () =>
  */
 export const navigateToBonusAlreadyExists = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ACTIVATION.EXISTS
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ACTIVATION.EXISTS
+      }
     })
   );
 
@@ -159,8 +196,11 @@ export const navigateToBonusAlreadyExists = () =>
  */
 export const navigateToEligibilityExpired = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ACTIVATION.ELIGIBILITY_EXPIRED
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ACTIVATION.ELIGIBILITY_EXPIRED
+      }
     })
   );
 
@@ -170,7 +210,10 @@ export const navigateToEligibilityExpired = () =>
  */
 export const navigateToBonusActivationCompleted = () =>
   NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: BONUSVACANZE_ROUTES.ACTIVATION.COMPLETED
+    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: BONUSVACANZE_ROUTES.MAIN,
+      params: {
+        screen: BONUSVACANZE_ROUTES.ACTIVATION.COMPLETED
+      }
     })
   );

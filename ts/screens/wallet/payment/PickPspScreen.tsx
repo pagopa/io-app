@@ -1,9 +1,9 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { H3, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -21,15 +21,23 @@ import { PspComponent } from "../../../components/wallet/payment/PspComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
+import { pspForPaymentV2 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { allPspsSelector } from "../../../store/reducers/wallet/payment";
+import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import customVariables from "../../../theme/variables";
-import { Psp, Wallet } from "../../../types/pagopa";
+import { Wallet } from "../../../types/pagopa";
 import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import {
+  getValueOrElse,
+  isError,
+  isLoading
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 export type PickPspScreenNavigationParams = Readonly<{
@@ -37,12 +45,16 @@ export type PickPspScreenNavigationParams = Readonly<{
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
   idPayment: string;
-  psps: ReadonlyArray<Psp>;
+  psps: ReadonlyArray<PspData>;
   wallet: Wallet;
   chooseToChange?: boolean;
 }>;
 
-type OwnProps = NavigationStackScreenProps<PickPspScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_PICK_PSP">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -69,9 +81,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class PickPspScreen extends React.Component<Props> {
   public componentDidMount() {
     // load all psp in order to offer to the user the complete psps list
-    const idWallet = this.props.navigation
-      .getParam("wallet")
-      .idWallet.toString();
+    const idWallet = this.props.navigation.getParam("wallet").idWallet;
     const idPayment = this.props.navigation.getParam("idPayment");
     this.props.loadAllPsp(idWallet, idPayment);
   }
@@ -106,7 +116,7 @@ class PickPspScreen extends React.Component<Props> {
             isLoading={this.props.isLoading}
             onRetry={() => {
               this.props.loadAllPsp(
-                this.props.navigation.getParam("wallet").idWallet.toString(),
+                this.props.navigation.getParam("wallet").idWallet,
                 this.props.navigation.getParam("idPayment")
               );
             }}
@@ -134,13 +144,11 @@ class PickPspScreen extends React.Component<Props> {
               ItemSeparatorComponent={() => <ItemSeparatorComponent />}
               removeClippedSubviews={false}
               data={availablePsps}
-              keyExtractor={item => item.id.toString()}
+              keyExtractor={item => item.idPsp}
               renderItem={({ item }) => (
                 <PspComponent
                   psp={item}
-                  onPress={() =>
-                    this.props.pickPsp(item.id, this.props.allPsps)
-                  }
+                  onPress={() => this.props.pickPsp(item, this.props.allPsps)}
                 />
               )}
               ListHeaderComponent={this.headerItem}
@@ -161,28 +169,28 @@ class PickPspScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const psps = allPspsSelector(state);
+  const psps = pspV2ListSelector(state);
   return {
     isLoading:
-      pot.isLoading(state.wallet.wallets.walletById) || pot.isLoading(psps),
-    hasError: pot.isError(state.wallet.wallets.walletById) || pot.isError(psps),
-    allPsps: pot.getOrElse(psps, [])
+      pot.isLoading(state.wallet.wallets.walletById) || isLoading(psps),
+    hasError: pot.isError(state.wallet.wallets.walletById) || isError(psps),
+    allPsps: getValueOrElse(psps, [])
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateBack: () => navigateBack(),
-  loadAllPsp: (idWallet: string, idPayment: string) => {
+  loadAllPsp: (idWallet: number, idPayment: string) => {
     dispatch(
-      paymentFetchAllPspsForPaymentId.request({
+      pspForPaymentV2.request({
         idWallet,
         idPayment
       })
     );
   },
-  pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
+  pickPsp: (psp: PspData, psps: ReadonlyArray<PspData>) =>
     dispatchUpdatePspForWalletAndConfirm(dispatch)(
-      idPsp,
+      psp,
       props.navigation.getParam("wallet"),
       props.navigation.getParam("rptId"),
       props.navigation.getParam("initialAmount"),

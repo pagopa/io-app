@@ -41,6 +41,22 @@ const unacceptedBottomSheetBody = () => (
   </>
 );
 
+const paymentDisabledBottomSheetTitle = () =>
+  I18n.t(
+    "wallet.payWith.pickPaymentMethod.notAvailable.payment_disabled.bottomSheetTitle"
+  );
+const paymentDisabledBottomSheetBody = () => (
+  <>
+    <View spacer={true} large={true} />
+    <H4 weight={"Regular"}>
+      {I18n.t(
+        "wallet.payWith.pickPaymentMethod.notAvailable.payment_disabled.bottomSheetDescription"
+      )}
+    </H4>
+    <View spacer={true} large={true} />
+  </>
+);
+
 const arrivingBottomSheetTitle = () =>
   I18n.t(
     "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetTitle"
@@ -63,6 +79,7 @@ type PaymentMethodInformation = {
   description: string;
   bottomSheetTitle: string;
   bottomSheetBody: JSX.Element;
+  snapPoint?: number;
 };
 
 const extractInfoFromPaymentMethod = (
@@ -80,8 +97,9 @@ const extractInfoFromPaymentMethod = (
           paymentMethod,
           nameSurname
         ),
-        bottomSheetTitle: unacceptedBottomSheetTitle(),
-        bottomSheetBody: unacceptedBottomSheetBody()
+        bottomSheetTitle: paymentDisabledBottomSheetTitle(),
+        bottomSheetBody: paymentDisabledBottomSheetBody(),
+        snapPoint: 360
       };
     case "Bancomat":
       return {
@@ -99,8 +117,9 @@ const extractInfoFromPaymentMethod = (
         logo: bancomatPayLogo,
         title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? "",
-        bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: arrivingBottomSheetBody()
+        bottomSheetTitle: paymentDisabledBottomSheetTitle(),
+        bottomSheetBody: paymentDisabledBottomSheetBody(),
+        snapPoint: 360
       };
     case "Satispay":
       return {
@@ -115,8 +134,9 @@ const extractInfoFromPaymentMethod = (
         logo: paymentMethod.icon,
         title: paymentMethod.kind,
         description: getPaypalAccountEmail(paymentMethod.info),
-        bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: arrivingBottomSheetBody()
+        bottomSheetTitle: paymentDisabledBottomSheetTitle(),
+        bottomSheetBody: paymentDisabledBottomSheetBody(),
+        snapPoint: 360
       };
     case "Privative":
       return {
@@ -135,13 +155,22 @@ const extractInfoFromPaymentMethod = (
 const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   props: Props
 ) => {
-  const { logo, title, description, bottomSheetTitle, bottomSheetBody } =
-    extractInfoFromPaymentMethod(props.paymentMethod, props.nameSurname ?? "");
+  const {
+    logo,
+    title,
+    description,
+    bottomSheetTitle,
+    bottomSheetBody,
+    snapPoint
+  } = extractInfoFromPaymentMethod(
+    props.paymentMethod,
+    props.nameSurname ?? ""
+  );
 
   const { present, bottomSheet } = useIOBottomSheetModal(
     bottomSheetBody,
     bottomSheetTitle,
-    300
+    snapPoint ?? 300
   );
   return (
     <>

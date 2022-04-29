@@ -1,11 +1,11 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
 import { isString } from "lodash";
 import React from "react";
+import { createStore } from "redux";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { LabelledItem, Props } from "../index";
-
-jest.mock("react-navigation", () => ({
-  NavigationEvents: "mockNavigationEvents"
-}));
 
 const textInputProps = {
   inputProps: { value: "value" }
@@ -31,15 +31,6 @@ describe("Test LabelledItem", () => {
     const component = renderComponent({ ...textInputProps, label });
     expect(component.queryByTestId("label")).not.toBeNull();
     expect(component.queryByText(label)).toBeTruthy();
-  });
-
-  it("should render NavigationEvents if hasNavigationEvents is true and onPress is defined", () => {
-    const component = renderComponent({
-      ...textInputProps,
-      hasNavigationEvents: true,
-      onPress
-    });
-    expect(component.queryByTestId("NavigationEvents")).not.toBeNull();
   });
 
   it("should render ButtonDefaultOpacity if iconPosition is left and icon is defined", () => {
@@ -174,4 +165,13 @@ describe("Test LabelledItem", () => {
   });
 });
 
-const renderComponent = (props: Props) => render(<LabelledItem {...props} />);
+const renderComponent = (props: Props) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  return renderScreenFakeNavRedux(
+    () => <LabelledItem {...props} />,
+    "DUMMY",
+    {},
+    store
+  );
+};
