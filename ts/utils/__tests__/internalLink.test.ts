@@ -1,18 +1,26 @@
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { none, some } from "fp-ts/lib/Option";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import {
   getInternalRoute,
   IO_FIMS_LINK_PREFIX,
   IO_INTERNAL_LINK_PREFIX,
   testableALLOWED_ROUTE_NAMES
 } from "../../components/ui/Markdown/handlers/internalLink";
+import ROUTES from "../../navigation/routes";
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
 
 describe("getInternalRoute", () => {
-  const allowedRoutes = testableALLOWED_ROUTE_NAMES!.map(r =>
-    Tuple2(`${IO_INTERNAL_LINK_PREFIX}${r}`, some({ routeName: r }))
+  const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(
+    ([r, v]) =>
+      Tuple2(
+        `${IO_INTERNAL_LINK_PREFIX}${r}`,
+        some({
+          navigationAction: v,
+          routeName: r
+        })
+      )
   );
-  const validRoute = testableALLOWED_ROUTE_NAMES![0];
+  const validRoute = Object.keys(testableALLOWED_ROUTE_NAMES!)[0];
   it("should recognize a valid internal route", () => {
     [
       ...allowedRoutes,
@@ -23,6 +31,15 @@ describe("getInternalRoute", () => {
         IO_INTERNAL_LINK_PREFIX + validRoute + "?param1=value1&param2=value2",
         some({
           routeName: validRoute,
+          navigationAction: {
+            payload: {
+              name: ROUTES.MAIN,
+              params: {
+                screen: ROUTES.MESSAGES_HOME
+              }
+            },
+            type: "NAVIGATE"
+          },
           params: {
             param1: "value1",
             param2: "value2"
@@ -33,25 +50,20 @@ describe("getInternalRoute", () => {
         IO_INTERNAL_LINK_PREFIX + validRoute + "?param1=&param2=value2",
         some({
           routeName: validRoute,
+          navigationAction: {
+            payload: {
+              name: ROUTES.MAIN,
+              params: {
+                screen: ROUTES.MESSAGES_HOME
+              }
+            },
+            type: "NAVIGATE"
+          },
           params: {
             param1: "",
             param2: "value2"
           }
         })
-      ),
-      Tuple2(
-        IO_FIMS_LINK_PREFIX + "https://foo.com",
-        some({
-          routeName: FIMS_ROUTES.WEBVIEW,
-          params: {
-            url: "https://foo.com"
-          }
-        })
-      ),
-      Tuple2("ioit:" + IO_FIMS_LINK_PREFIX + "https://foo.com", none),
-      Tuple2(
-        IO_INTERNAL_LINK_PREFIX + FIMS_ROUTES.WEBVIEW + "?url=https://foo.com",
-        none
       )
     ].forEach(tuple => {
       expect(getInternalRoute(tuple.e1)).toEqual(tuple.e2);

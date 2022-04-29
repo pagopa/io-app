@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { NavigationParams } from "react-navigation";
+
 import { Action, createStore, Store } from "redux";
 import { PrivativeServices } from "../../../../../../../../definitions/pagopa/privative/configuration/PrivativeServices";
 import { PrivativeServiceStatusEnum } from "../../../../../../../../definitions/pagopa/privative/configuration/PrivativeServiceStatus";
@@ -97,7 +97,7 @@ const getInitChoosePrivativeIssuersScreen = () => {
 };
 
 const renderPrivativeIssuersScreen = (store: Store<GlobalState, Action>) =>
-  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  renderScreenFakeNavRedux<GlobalState>(
     () => <ChoosePrivativeIssuerScreen />,
     WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER,
     {},

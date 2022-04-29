@@ -11,16 +11,13 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentFetchPspsForPaymentId,
   paymentUpdateWalletPsp,
-  pspForPaymentV2WithCallbacks
+  pspForPaymentV2WithCallbacks,
+  pspSelectedForPaymentV2
 } from "../../../store/actions/wallet/payment";
-import { isRawPayPal, Psp, Wallet } from "../../../types/pagopa";
-import {
-  pspsForLocale,
-  walletHasFavoriteAvailablePsp
-} from "../../../utils/payment";
-import { getPayPalPspIconUrl } from "../../../utils/paymentMethod";
+import { isRawPayPal, Wallet } from "../../../types/pagopa";
+import { walletHasFavoriteAvailablePspData } from "../../../utils/payment";
+import { PspData } from "../../../../definitions/pagopa/PspData";
 
 /**
  * Common action dispatchers for payment screens
@@ -28,33 +25,32 @@ import { getPayPalPspIconUrl } from "../../../utils/paymentMethod";
 export const dispatchUpdatePspForWalletAndConfirm =
   (dispatch: Dispatch) =>
   (
-    idPsp: number,
+    psp: PspData,
     wallet: Wallet,
     rptId: RptId,
     initialAmount: AmountInEuroCents,
     verifica: PaymentRequestsGetResponse,
     idPayment: string,
-    psps: ReadonlyArray<Psp>,
+    psps: ReadonlyArray<PspData>,
     onFailure: () => void
   ) =>
     dispatch(
       paymentUpdateWalletPsp.request({
-        idPsp,
+        psp,
         wallet,
+        idPayment,
         onSuccess: (
           action: ActionType<typeof paymentUpdateWalletPsp["success"]>
         ) => {
-          const psp = action.payload.updatedWallet.psp;
           if (psp !== undefined) {
-            dispatch(paymentFetchPspsForPaymentId.success([psp]));
+            dispatch(pspSelectedForPaymentV2(psp));
           }
-
           navigateToPaymentConfirmPaymentMethodScreen({
             rptId,
             initialAmount,
             verifica,
             idPayment,
-            wallet: action.payload.updatedWallet, // the updated wallet
+            wallet: { ...wallet, psp: action.payload.updatedWallet.psp }, // the updated wallet
             psps
           });
         },
@@ -106,65 +102,54 @@ export const dispatchPickPspOrConfirm =
                 verifica,
                 idPayment,
                 // there should exists only 1 psp that can handle Paypal transactions
-                psps: pspList
-                  .filter(pd => pd.defaultPsp)
-                  .map<Psp>(p => ({
-                    id: parseInt(p.idPsp, 10),
-                    logoPSP: getPayPalPspIconUrl(p.codiceAbi),
-                    fixedCost: {
-                      currency: "EUR",
-                      amount: p.fee,
-                      decimalDigits: 2
-                    }
-                  })),
+                psps: pspList.filter(pd => pd.defaultPsp),
                 wallet: maybeSelectedWallet.value
               });
             }
           })
         );
       } else {
-        // credit card
+        // credit card or bpay
         // the user has selected a wallet (either because it was the favourite one
         // or because he just added a new card he wants to use for the payment), so
         // there's no need to ask to select a wallet - we can ask pagopa for the
         // PSPs that we can use with this wallet.
         dispatch(
-          paymentFetchPspsForPaymentId.request({
+          pspForPaymentV2WithCallbacks({
             idPayment,
             idWallet: selectedWallet.idWallet,
             onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
-            onSuccess: successAction => {
-              // filter PSPs for the current locale only (the list will contain
-              // duplicates for all the supported languages)
-              const psps = pspsForLocale(successAction.payload);
-              if (psps.length === 0) {
+            onSuccess: pspList => {
+              const eligiblePsp = pspList.find(p => p.defaultPsp);
+              if (pspList.length === 0) {
                 // this payment method cannot be used!
                 onFailure("NO_PSPS_AVAILABLE");
-              } else if (walletHasFavoriteAvailablePsp(selectedWallet, psps)) {
+              } else if (
+                walletHasFavoriteAvailablePspData(selectedWallet, pspList)
+              ) {
                 // The user already selected a psp in the past for this wallet, and
                 // that PSP can be used for this payment, in this case we can
                 // proceed to the confirmation screen
-
                 navigateToPaymentConfirmPaymentMethodScreen({
                   rptId,
                   initialAmount,
                   verifica,
                   idPayment,
-                  psps,
+                  psps: pspList,
                   wallet: maybeSelectedWallet.value
                 });
-              } else if (psps.length === 1) {
+              } else if (eligiblePsp) {
                 // there is only one PSP available for this payment, we can go ahead
                 // and associate it to the current wallet without asking the user to
                 // select it
                 dispatchUpdatePspForWalletAndConfirm(dispatch)(
-                  psps[0].id,
+                  eligiblePsp,
                   selectedWallet,
                   rptId,
                   initialAmount,
                   verifica,
                   idPayment,
-                  psps,
+                  pspList,
                   () =>
                     // associating the only available psp to the wallet has failed, go
                     // to the psp selection screen anyway
@@ -174,7 +159,7 @@ export const dispatchPickPspOrConfirm =
                       initialAmount,
                       verifica,
                       wallet: selectedWallet,
-                      psps,
+                      psps: pspList,
                       idPayment
                     })
                 );
@@ -187,7 +172,7 @@ export const dispatchPickPspOrConfirm =
                   initialAmount,
                   verifica,
                   wallet: selectedWallet,
-                  psps,
+                  psps: pspList,
                   idPayment
                 });
               }

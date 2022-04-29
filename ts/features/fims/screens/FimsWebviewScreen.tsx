@@ -3,11 +3,11 @@ import { useCallback, useMemo } from "react";
 import { Alert, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
 import { fromNullable } from "fp-ts/lib/Option";
+import { useNavigation } from "@react-navigation/native";
 import FimsWebView from "../components/FimsWebView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
 import { resetInternalRouteNavigation } from "../../../store/actions/internalRouteNavigation";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
 import { FimsWebviewParams } from "../types/FimsWebviewParams";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -22,7 +22,7 @@ import {
 const FimsWebviewScreen = () => {
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
   const [cookieError, setCookieError] = React.useState(false);
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
 
   const dispatch = useIODispatch();
 
@@ -32,7 +32,7 @@ const FimsWebviewScreen = () => {
   const maybeSessionToken = fromNullable(useIOSelector(sessionTokenSelector));
 
   const goBackAndResetInternalNavigationInfo = useCallback(() => {
-    navigation.goBack(null);
+    navigation.goBack();
     dispatch(resetInternalRouteNavigation());
   }, [navigation, dispatch]);
 
@@ -73,7 +73,9 @@ const FimsWebviewScreen = () => {
       name: "token",
       value: maybeSessionToken.value,
       domain: url.hostname,
-      path: "/"
+      path: "/",
+      httpOnly: true,
+      secure: true
     };
 
     setCookie(

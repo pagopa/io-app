@@ -1,3 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
+import { Text, View } from "native-base";
 import React from "react";
 import {
   Image,
@@ -6,25 +8,23 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { View, Text } from "native-base";
-import I18n from "../../../../../i18n";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import dafaultLogo from "../../../../../../img/bonus/bpd/logo_cashback_blue.png";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
 import { H2 } from "../../../../../components/core/typography/H2";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_BPD_TYPE } from "../../../bonusVacanze/utils/bonus";
-import dafaultLogo from "../../../../../../img/bonus/bpd/logo_cashback_blue.png";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { navigateToOptInPaymentMethodsChoiceScreen } from "../../navigation/actions";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
+import I18n from "../../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
   getBPDMethodsSelector,
   paymentMethodsSelector
 } from "../../../../../store/reducers/wallet/wallets";
+import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
+import { ID_BPD_TYPE } from "../../../bonusVacanze/utils/bonus";
+import { navigateToOptInPaymentMethodsChoiceScreen } from "../../navigation/actions";
 import {
   optInPaymentMethodsCompleted,
   optInPaymentMethodsFailure
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   }
 });
 const OptInPaymentMethodsCashbackUpdateScreen = () => {
-  const navigation = useNavigationContext();
+  const navigation = useNavigation();
   const dispatch = useIODispatch();
   const bpdPaymentMethods = useIOSelector(getBPDMethodsSelector);
   const paymentMethods = useIOSelector(paymentMethodsSelector);
@@ -58,7 +58,7 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
 
   const handleOnContinuePress = () => {
     if (bpdPaymentMethods.length > 0) {
-      navigation.navigate(navigateToOptInPaymentMethodsChoiceScreen());
+      navigation.dispatch(navigateToOptInPaymentMethodsChoiceScreen());
     } else {
       dispatch(optInPaymentMethodsCompleted());
     }
