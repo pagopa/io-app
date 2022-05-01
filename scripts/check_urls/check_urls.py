@@ -229,7 +229,7 @@ if not run_test and __name__ == '__main__':
 		"https://www.trusttechnologies.it/contatti/#form",
 		"https://support.namirial.com/it/faq/faq-tsp/faq-tsp-spid",
 		"https://paytipper.com/wp-content/uploads/2021/02/logo.png",
-    "https://fims-dev-app-provider.azurewebsites.net/"}
+		"https://fims-dev-app-provider.azurewebsites.net/"}
 	locales = (abspath(join(dirname(__file__), "../..", "locales")), set())
 	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), files_black_list)
 	for directory, black_list in [locales, ts_dir]:
