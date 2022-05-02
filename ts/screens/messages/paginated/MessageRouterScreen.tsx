@@ -34,7 +34,6 @@ import {
   navigateBack,
   navigateToPaginatedMessageDetailScreenAction
 } from "../../../store/actions/navigation";
-import * as allPaginated from "../../../store/reducers/entities/messages/allPaginated";
 import {
   Cursor,
   getCursors
@@ -50,6 +49,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../../utils/pot";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -220,7 +220,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
-  const maybeMessage = allPaginated.getById(state, messageId);
+  const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
   const isServiceAvailable = O.fromNullable(maybeMessage?.serviceId)
     .map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none)
     .map(_ => Boolean(pot.toUndefined(_)))
