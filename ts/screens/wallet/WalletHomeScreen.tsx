@@ -234,9 +234,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
 
-    if (pot.isNone(this.props.potWallets)) {
-      this.props.loadWallets();
-    }
+    this.props.loadWallets();
 
     // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
     // load the bonus information on Wallet mount
