@@ -123,8 +123,7 @@ export const handleDownloadResult = async (
                 i18n.t(
                   "features.mvl.details.attachments.pdfPreview.savedAtLocation",
                   {
-                    name: attachment.displayName,
-                    location: destination
+                    name: attachment.displayName
                   }
                 ),
                 "success"
