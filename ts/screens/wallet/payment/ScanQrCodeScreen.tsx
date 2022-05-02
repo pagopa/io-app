@@ -318,6 +318,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
             <BarcodeCamera
               onBarcodeScanned={this.handleBarcodeScanned}
               disabled={!this.state.isFocused}
+              marker={
+                <CameraMarker
+                  screenWidth={screenWidth}
+                  state={this.state.scanningState}
+                />
+              }
             />
 
             <View>

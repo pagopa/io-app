@@ -37,6 +37,7 @@ function barcodeFormatToIOFormat(
 type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
   disabled?: boolean;
+  marker?: React.ReactNode;
 };
 
 const screenWidth = Dimensions.get("screen").width;
@@ -98,6 +99,7 @@ export const BarcodeCamera = (props: Props) => {
   return (
     <View
       style={{
+        position: "relative",
         width: "100%",
         height: screenWidth,
         backgroundColor: "#000"
@@ -105,13 +107,15 @@ export const BarcodeCamera = (props: Props) => {
     >
       {device && permissionsGranted && (
         <Camera
-          style={{ width: "100%", height: "100%" }}
+          style={{ position: "absolute", width: "100%", height: "100%" }}
           device={device}
           isActive={!disabled}
           frameProcessor={frameProcessor}
           frameProcessorFps={5}
         />
       )}
+
+      <View style={{ alignSelf: "center" }}>{props.marker}</View>
     </View>
   );
 };
