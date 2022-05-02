@@ -29,11 +29,22 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
+  const [walletExisted, setWalletExisted] = React.useState(false);
   const paramCreditCard: CreditCardPaymentMethod =
     props.navigation.getParam("creditCard");
   // We need to read the card from the store to receive the updates
   // TODO: to avoid this we need a store refactoring for the wallet section (all the component should receive the id and not the wallet, in order to update when needed)
   const storeCreditCard = props.creditCardById(paramCreditCard.idWallet);
+
+  // This will set the flag `walletExisted` to true
+  // if, during this component lifecycle, a card actually
+  // existed in the state and has been removed. It's used to
+  // prevent the show of the `WorkunitGenericFailure`.
+  React.useEffect(() => {
+    if (storeCreditCard) {
+      setWalletExisted(true);
+    }
+  }, [storeCreditCard, setWalletExisted]);
 
   return storeCreditCard ? (
     <BasePaymentMethodScreen
@@ -46,9 +57,9 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
       }
       content={<PaymentMethodFeatures paymentMethod={storeCreditCard} />}
     />
-  ) : (
+  ) : !walletExisted ? (
     <WorkunitGenericFailure />
-  );
+  ) : null;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});
