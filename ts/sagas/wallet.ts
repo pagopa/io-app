@@ -716,6 +716,8 @@ export function* watchWalletSaga(
     yield* put(fetchWalletsRequest());
   });
 
+  yield* put(fetchWalletsRequestWithExpBackoff());
+
   yield* takeLatest(
     getType(fetchWalletsRequest),
     getWallets,
