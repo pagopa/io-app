@@ -95,7 +95,6 @@ import {
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import NavigationService from "../navigation/NavigationService";
-import ROUTES from "../navigation/routes";
 import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
