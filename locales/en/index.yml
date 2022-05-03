@@ -1259,6 +1259,9 @@ wallet:
         unaccepted:
           bottomSheetTitle: "Why can't I pay with this card?"
           bottomSheetDescription: "This circuit allows you to pay in physical stores, but not online. If your card is enabled for online purchases, add it to your Wallet as a 'debit or credit card'."
+        payment_disabled:
+          bottomSheetTitle: "Why can't I pay with this method?"
+          bottomSheetDescription: "The “In app payments“ feature may be turned off.\nBefore trying to make the payment again, please do the following:\n\n1. go to the “Wallet“ section;\n2. select the payment method you want to use;\n3. enable “In app payments“."
   firstTransactionSummary:
     title: Payment information
     amount: Transaction amount
@@ -2902,6 +2905,9 @@ bonus:
         ko: "Problems saving the voucher"
   cdc:
     title: "Carta della cultura"
+    bonusRequest:
+      bonusRequested:
+        cta: "I understand!"
 
 features:
   mvl:
@@ -2936,6 +2942,11 @@ features:
           singleBtn: "Save, print, or share"
           open: "Open"
           save: "Save"
+          savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+          errors:
+            sharing: "An error occurred while sharing the document"
+            opening: "An error occurred while opening the document. You may not have a PDF reader installed."
+            saving: "An error occurred while saving the document"
       body:
         plain: "plain text"
         html: "html"

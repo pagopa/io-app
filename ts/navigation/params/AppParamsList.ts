@@ -14,6 +14,10 @@ import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
+import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
+import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
+import FIMS_ROUTES from "../../features/fims/navigation/routes";
+import { FimsParamsList } from "../../features/fims/navigation/params";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -42,6 +46,8 @@ export type AppParamsList = {
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
   [UADONATION_ROUTES.WEBVIEW]: undefined;
+  [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
+  [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
 };
 
 /**
