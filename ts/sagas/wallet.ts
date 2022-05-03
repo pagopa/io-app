@@ -1,7 +1,6 @@
 /* eslint-disable */
 
-import { StackActions } from "@react-navigation/compat";
-import { CommonActions } from "@react-navigation/native";
+import { NavigationActions, StackActions } from "@react-navigation/compat";
 /**
  * A saga that manages the Wallet.
  */
@@ -96,6 +95,7 @@ import {
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
 import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
@@ -1051,7 +1051,7 @@ export function* watchPaymentInitializeSaga(): Iterator<ReduxSagaEffect> {
 /**
  * This saga back to entrypoint payment if the payment was initiated from the message list or detail
  * otherwise if the payment starts in scan qr code screen or in Manual data insertion screen
- * it makes one or two supplementary step backs (the corresponding step to wallet home from these screens)
+ * it makes one or two supplementary step backs (the correspondant step to wallet home from these screens)
  */
 export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
   yield* takeEvery(getType(backToEntrypointPayment), function* () {
@@ -1060,7 +1060,10 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
     if (entrypointRoute !== undefined) {
       yield* call(
         NavigationService.dispatchNavigationAction,
-        CommonActions.goBack()
+        NavigationActions.navigate({
+          routeName: entrypointRoute.name,
+          key: entrypointRoute.key
+        })
       );
       yield* put(paymentInitializeState());
     }
