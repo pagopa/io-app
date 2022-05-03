@@ -2945,6 +2945,11 @@ features:
           singleBtn: "Save, print, or share"
           open: "Open"
           save: "Save"
+          savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+          errors:
+            sharing: "An error occurred while sharing the document"
+            opening: "An error occurred while opening the document. You may not have a PDF reader installed."
+            saving: "An error occurred while saving the document"
       body:
         plain: "plain text"
         html: "html"
