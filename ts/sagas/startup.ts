@@ -126,6 +126,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -492,6 +493,7 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
     yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
     yield* fork(watchReloadAllMessages, backendClient.getMessages);
+    yield* fork(watchLoadMessageById, backendClient.getMessages);
     yield* fork(watchLoadMessageDetails, backendClient.getMessage);
     yield* fork(
       watchUpsertMessageStatusAttribues,
