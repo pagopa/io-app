@@ -1,5 +1,5 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -9,10 +9,8 @@ import {
   WebViewErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
-import { TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -22,6 +20,8 @@ import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import {
   idpLoginUrlChanged,
   loginFailure,
@@ -33,6 +33,7 @@ import {
   isLoggedOutWithIdp,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
@@ -42,17 +43,18 @@ import {
   onLoginUriChanged
 } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
-import { getUrlBasepath } from "../../utils/url";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { getUrlBasepath } from "../../utils/url";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
-type Props = NavigationStackScreenProps &
-  ReturnType<typeof mapStateToProps> &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AuthenticationParamsList, "AUTHENTICATION_IDP_LOGIN">
+  >;
+} & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 enum ErrorType {
@@ -65,8 +67,6 @@ type State = {
   errorCode?: string;
   loginTrace?: string;
 };
-
-const loginFailureTag = "spid-login-failure";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -158,10 +158,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
     );
 
-    handleSendAssistanceLog(this.choosenTool, logText, TypeLogs.ERROR, "login");
-    if (this.choosenTool === ToolEnum.instabug) {
-      Instabug.appendTags([loginFailureTag]);
-    }
+    handleSendAssistanceLog(this.choosenTool, logText);
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
@@ -169,15 +166,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    handleSendAssistanceLog(
-      this.choosenTool,
-      `login success`,
-      TypeLogs.DEBUG,
-      "login"
-    );
-    if (this.choosenTool === ToolEnum.instabug) {
-      Instabug.resetTags();
-    }
+    handleSendAssistanceLog(this.choosenTool, `login success`);
     this.props.dispatchLoginSuccess(token, this.idp);
   };
 
@@ -319,9 +308,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        {!hasError && (
-          <View style={styles.webViewWrapper}>
+        <View style={styles.webViewWrapper}>
+          {!hasError && (
             <WebView
+              cacheEnabled={false}
               androidCameraAccessDisabled={true}
               androidMicrophoneAccessDisabled={true}
               textZoom={100}
@@ -332,18 +322,18 @@ class IdpLoginScreen extends React.Component<Props, State> {
               onNavigationStateChange={this.handleNavigationStateChange}
               onShouldStartLoadWithRequest={this.handleShouldStartLoading}
             />
-            {this.renderMask()}
-          </View>
-        )}
+          )}
+          {this.renderMask()}
+        </View>
       </BaseScreenComponent>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const selectedtIdp = selectedIdentityProviderSelector(state);
+  const selectedIdp = selectedIdentityProviderSelector(state);
 
-  const selectedIdpTextData = fromNullable(selectedtIdp).fold(none, idp =>
+  const selectedIdpTextData = fromNullable(selectedIdp).fold(none, idp =>
     idpContextualHelpDataFromIdSelector(idp.id)(state)
   );
 

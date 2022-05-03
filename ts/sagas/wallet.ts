@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+import { NavigationActions, StackActions } from "@react-navigation/compat";
 /**
  * A saga that manages the Wallet.
  */
@@ -9,7 +10,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import _ from "lodash";
-import { NavigationActions, StackActions } from "react-navigation";
 import {
   call,
   delay,
@@ -73,6 +73,7 @@ import {
   searchUserCoBadge,
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
+import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
 import { handleAddPrivativeToWallet } from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
 import { handleSearchUserPrivative } from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
 import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
@@ -98,18 +99,18 @@ import ROUTES from "../navigation/routes";
 import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
-import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
+import {
+  addCreditCardOutcomeCode,
+  paymentOutcomeCode
+} from "../store/actions/wallet/outcomeCode";
 import {
   abortRunningPayment,
   backToEntrypointPayment,
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
-  paymentFetchAllPspsForPaymentId,
-  paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
@@ -162,6 +163,7 @@ import {
   PaymentManagerToken
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
+import { ReduxSagaEffect } from "../types/utils";
 import { waitBackoffError } from "../utils/backoffError";
 import { isTestEnv } from "../utils/environment";
 
@@ -185,8 +187,6 @@ import {
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
   paymentDeletePaymentRequestHandler,
-  paymentFetchAllPspsForWalletRequestHandler,
-  paymentFetchPspsForWalletRequestHandler,
   paymentIdPollingRequestHandler,
   paymentStartRequest,
   paymentVerificaRequestHandler,
@@ -194,8 +194,6 @@ import {
   updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
-import { ReduxSagaEffect } from "../types/utils";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -250,10 +248,11 @@ function* startOrResumeAddCreditCardSaga(
           creditcard: creditCardWallet
         })
       );
-      const responseAction = yield* take([
-        getType(addWalletCreditCardSuccess),
-        getType(addWalletCreditCardFailure)
-      ]);
+      const responseAction = yield* take<
+        ActionType<
+          typeof addWalletCreditCardSuccess | typeof addWalletCreditCardFailure
+        >
+      >([addWalletCreditCardSuccess, addWalletCreditCardFailure]);
       if (isActionOf(addWalletCreditCardFailure, responseAction)) {
         // this step failed, exit the flow
         if (
@@ -310,7 +309,7 @@ function* startOrResumeAddCreditCardSaga(
         // store the pm session token
         yield* put(refreshPMTokenWhileAddCreditCard.success(pagoPaToken.value));
         // Wait until the outcome code from the webview is available
-        yield* take(getType(addCreditCardOutcomeCode));
+        yield* take(addCreditCardOutcomeCode);
 
         const maybeOutcomeCode: ReturnType<
           typeof lastPaymentOutcomeCodeSelector
@@ -326,10 +325,11 @@ function* startOrResumeAddCreditCardSaga(
 
             // Get all the wallets
             yield* put(fetchWalletsRequest());
-            const fetchWalletsResultAction = yield* take([
-              getType(fetchWalletsSuccess),
-              getType(fetchWalletsFailure)
-            ]);
+            const fetchWalletsResultAction = yield* take<
+              ActionType<
+                typeof fetchWalletsSuccess | typeof fetchWalletsFailure
+              >
+            >([fetchWalletsSuccess, fetchWalletsFailure]);
             if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
               const updatedWallets = fetchWalletsResultAction.payload;
               const maybeAddedWallet = updatedWallets.find(
@@ -471,10 +471,9 @@ function* startOrResumePaymentActivationSaga(
           verifica: action.payload.verifica
         })
       );
-      const responseAction = yield* take([
-        getType(paymentAttiva.success),
-        getType(paymentAttiva.failure)
-      ]);
+      const responseAction = yield* take<
+        ActionType<typeof paymentAttiva.success | typeof paymentAttiva.failure>
+      >([paymentAttiva.success, paymentAttiva.failure]);
       if (isActionOf(paymentAttiva.failure, responseAction)) {
         // this step failed, exit the flow
         return;
@@ -487,10 +486,11 @@ function* startOrResumePaymentActivationSaga(
     if (pot.isNone(paymentState.paymentId)) {
       // this step needs to be executed
       yield* put(paymentIdPolling.request(action.payload.verifica));
-      const responseAction = yield* take([
-        getType(paymentIdPolling.success),
-        getType(paymentIdPolling.failure)
-      ]);
+      const responseAction = yield* take<
+        ActionType<
+          typeof paymentIdPolling.success | typeof paymentIdPolling.failure
+        >
+      >([paymentIdPolling.success, paymentIdPolling.failure]);
       if (isActionOf(paymentIdPolling.failure, responseAction)) {
         // this step failed, exit the flow
         return;
@@ -503,10 +503,9 @@ function* startOrResumePaymentActivationSaga(
     if (pot.isNone(paymentState.check)) {
       // this step needs to be executed
       yield* put(paymentCheck.request(paymentState.paymentId.value));
-      const responseAction = yield* take([
-        getType(paymentCheck.success),
-        getType(paymentCheck.failure)
-      ]);
+      const responseAction = yield* take<
+        ActionType<typeof paymentCheck.success | typeof paymentCheck.failure>
+      >([paymentCheck.success, paymentCheck.failure]);
       if (isActionOf(paymentCheck.failure, responseAction)) {
         // this step failed, exit the flow
         return;
@@ -539,6 +538,24 @@ function* deleteActivePaymentSaga() {
     yield* put(
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
     );
+  }
+}
+
+/**
+ * this saga checks the outcome codes coming from a payment or from the payment-check done during the credit card onboarding
+ * if the outcome exits and it is different from "success" it tries to delete the payment activation
+ */
+function* deleteUnsuccessfulActivePaymentSaga() {
+  // it can be related to a payment or a payment check done during the credit card onboarding
+  const lastPaymentOutCome = yield* select(lastPaymentOutcomeCodeSelector);
+  if (
+    lastPaymentOutCome.outcomeCode.exists(({ status }) => status !== "success")
+  ) {
+    /**
+     * run the procedure to delete the payment activation
+     * even if there is no one running (that check is done by the relative saga)
+     */
+    yield* put(runDeleteActivePaymentSaga());
   }
 }
 
@@ -634,6 +651,11 @@ export function* watchWalletSaga(
   yield* takeLatest(
     getType(runDeleteActivePaymentSaga),
     deleteActivePaymentSaga
+  );
+
+  yield* takeLatest(
+    [paymentOutcomeCode, addCreditCardOutcomeCode],
+    deleteUnsuccessfulActivePaymentSaga
   );
 
   //
@@ -778,27 +800,13 @@ export function* watchWalletSaga(
   );
 
   yield* takeLatest(
-    getType(paymentFetchPspsForPaymentId.request),
-    paymentFetchPspsForWalletRequestHandler,
-    paymentManagerClient,
-    pmSessionManager
-  );
-
-  yield* takeLatest(
-    getType(paymentFetchAllPspsForPaymentId.request),
-    paymentFetchAllPspsForWalletRequestHandler,
-    paymentManagerClient,
-    pmSessionManager
-  );
-
-  yield* takeLatest(
     getType(paymentExecuteStart.request),
     paymentStartRequest,
     pmSessionManager
   );
 
   yield* takeLatest(
-    [getType(paymentDeletePayment.request), getType(paymentCompletedFailure)],
+    getType(paymentDeletePayment.request),
     paymentDeletePaymentRequestHandler,
     paymentManagerClient,
     pmSessionManager
@@ -1031,10 +1039,11 @@ export function* watchPaymentInitializeSaga(): Iterator<ReduxSagaEffect> {
    */
   yield* takeEvery(getType(paymentInitializeState), function* () {
     newLookUpId();
-    yield* take([
-      getType(paymentCompletedSuccess),
-      getType(runDeleteActivePaymentSaga)
-    ]);
+    yield* take<
+      ActionType<
+        typeof paymentCompletedSuccess | typeof runDeleteActivePaymentSaga
+      >
+    >([paymentCompletedSuccess, runDeleteActivePaymentSaga]);
     resetLookUpId();
   });
 }
@@ -1073,5 +1082,9 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
 
 // to keep solid code encapsulation
 export const testableWalletsSaga = isTestEnv
-  ? { startOrResumeAddCreditCardSaga, successScreenDelay }
+  ? {
+      startOrResumeAddCreditCardSaga,
+      successScreenDelay,
+      deleteUnsuccessfulActivePaymentSaga
+    }
   : undefined;

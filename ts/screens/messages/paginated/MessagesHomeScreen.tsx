@@ -1,9 +1,18 @@
-import React, { useContext, useEffect } from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
-import { NavigationContext } from "react-navigation";
-import { connect } from "react-redux";
+import { CompatNavigationProp } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import { Tab, Tabs } from "native-base";
+import React, { useEffect } from "react";
+import { Animated, Platform, StyleSheet, View } from "react-native";
+import { connect, useDispatch } from "react-redux";
+import { Dispatch } from "redux";
 
+import { createSelector } from "reselect";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import MessageList from "../../../components/messages/paginated/MessageList";
+import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
+import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -11,28 +20,49 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../../components/SectionStatus";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import I18n from "../../../i18n";
-import { reloadAllMessages } from "../../../store/actions/messages";
-import { Dispatch } from "../../../store/actions/types";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
+import ROUTES from "../../../navigation/routes";
+import {
+  migrateToPaginatedMessages,
+  resetMigrationStatus,
+  upsertMessageStatusAttributes
+} from "../../../store/actions/messages";
+import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
+import {
+  allArchiveMessagesSelector,
+  allInboxMessagesSelector,
+  allPaginatedSelector,
+  MessageOperation
+} from "../../../store/reducers/entities/messages/allPaginated";
+import {
+  MessagesStatus,
+  messagesStatusSelector
+} from "../../../store/reducers/entities/messages/messagesStatus";
+import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
-import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
-import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { allMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";
-import { pageSize } from "../../../config";
-import MessageList from "../../../components/messages/paginated/MessageList";
-import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
-import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import {
+  setAccessibilityFocus,
+  useScreenReaderEnabled
+} from "../../../utils/accessibility";
+import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { showToast } from "../../../utils/showToast";
+import MigratingMessage from "./MigratingMessage";
 
-type Props = NavigationStackScreenProps &
-  ReturnType<typeof mapStateToProps> &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MainTabParamsList, "MESSAGES_HOME">
+  >;
+} & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -40,27 +70,176 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "messages.contextualHelpContent"
 };
 
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    elevation: 0,
+    height: 40
+  },
+  tabBarUnderline: {
+    borderBottomColor: customVariables.tabUnderlineColor,
+    borderBottomWidth: customVariables.tabUnderlineHeight
+  },
+  tabBarUnderlineActive: {
+    height: customVariables.tabUnderlineHeight,
+    // borders do not overlap each other, but stack naturally
+    marginBottom: -customVariables.tabUnderlineHeight,
+    backgroundColor: customVariables.contentPrimaryBackground
+  },
+  activeTextStyle: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: Platform.OS === "android" ? 16 : undefined,
+    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    color: customVariables.brandPrimary
+  },
+  textStyle: {
+    color: customVariables.brandDarkGray
+  }
+});
+
+const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
+
+type AllTabsProps = {
+  navigateToMessageDetail: (message: UIMessage) => void;
+  inbox: ReadonlyArray<UIMessage>;
+  archive: ReadonlyArray<UIMessage>;
+  setArchived: (
+    isArchived: boolean,
+    messages: ReadonlyArray<UIMessage>
+  ) => void;
+};
+
+const AllTabs = ({
+  navigateToMessageDetail,
+  inbox,
+  archive,
+  setArchived
+}: AllTabsProps) => (
+  <View style={IOStyles.flex}>
+    <AnimatedTabs
+      tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+      tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+      initialPage={0}
+    >
+      <Tab
+        activeTextStyle={styles.activeTextStyle}
+        textStyle={styles.textStyle}
+        heading={I18n.t("messages.tab.inbox")}
+      >
+        <MessagesInbox
+          messages={inbox}
+          navigateToMessageDetail={navigateToMessageDetail}
+          archiveMessages={messages => setArchived(true, messages)}
+        />
+      </Tab>
+
+      <Tab
+        activeTextStyle={styles.activeTextStyle}
+        textStyle={styles.textStyle}
+        heading={I18n.t("messages.tab.archive")}
+      >
+        <MessagesArchive
+          messages={archive}
+          navigateToMessageDetail={navigateToMessageDetail}
+          unarchiveMessages={messages => setArchived(false, messages)}
+        />
+      </Tab>
+    </AnimatedTabs>
+  </View>
+);
+
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
  */
 const MessagesHomeScreen = ({
-  allMessages,
   isSearchEnabled,
   messageSectionStatusActive,
-  reloadFirstPage,
-  searchText
-}: Props) => {
-  const navigation = useContext(NavigationContext);
+  searchMessages,
+  searchText,
+  allInboxMessages,
+  allArchiveMessages,
 
-  const navigateToMessageDetail = (message: UIMessage) => {
-    navigation.dispatch(
-      navigateToPaginatedMessageRouterAction({ messageId: message.id })
-    );
-  };
+  // migration
+  messagesStatus,
+  migrateMessages,
+  migrationStatus,
+  resetMigrationStatus,
+  latestMessageOperation
+}: Props) => {
+  const navigation = useNavigation();
+  const needsMigration = Object.keys(messagesStatus).length > 0;
+
+  useOnFirstRender(() => {
+    if (needsMigration) {
+      migrateMessages(messagesStatus);
+    }
+  });
 
   useEffect(() => {
-    reloadFirstPage();
-  }, []);
+    if (!latestMessageOperation) {
+      return;
+    }
+
+    type toastData = {
+      operation: MessageOperation;
+      archive: string;
+      restore: string;
+      type: "success" | "danger";
+    };
+    pipe<typeof latestMessageOperation, toastData, void>(
+      lmo =>
+        lmo.fold<toastData>(
+          l => ({
+            operation: l.operation,
+            archive: I18n.t("messages.operations.archive.failure"),
+            restore: I18n.t("messages.operations.restore.failure"),
+            type: "danger"
+          }),
+          r => ({
+            operation: r,
+            archive: I18n.t("messages.operations.archive.success"),
+            restore: I18n.t("messages.operations.restore.success"),
+            type: "success"
+          })
+        ),
+      lmo => showToast(lmo[lmo.operation], lmo.type)
+    )(latestMessageOperation);
+  }, [latestMessageOperation]);
+
+  const navigateToMessageDetail = (message: UIMessage) => {
+    navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+      screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+      params: {
+        messageId: message.id,
+        isArchived: message.isArchived
+      }
+    });
+  };
+
+  const dispatch = useDispatch();
+
+  const setArchived = (
+    isArchived: boolean,
+    messages: ReadonlyArray<UIMessage>
+  ) =>
+    messages.forEach(message =>
+      dispatch(
+        upsertMessageStatusAttributes.request({
+          message,
+          update: { tag: "archiving", isArchived }
+        })
+      )
+    );
+
+  const isScreenReaderEnabled = useScreenReaderEnabled();
+
+  const statusComponent = (
+    <SectionStatusComponent
+      sectionKey={"messages"}
+      onSectionRef={v => {
+        setAccessibilityFocus(v, 100 as Millisecond);
+      }}
+    />
+  );
 
   return (
     <TopScreenComponent
@@ -78,19 +257,27 @@ const MessagesHomeScreen = ({
         barStyle={"dark-content"}
         backgroundColor={customVariables.colorWhite}
       />
-      <SectionStatusComponent
-        sectionKey={"messages"}
-        onSectionRef={v => {
-          setAccessibilityFocus(v, 100 as Millisecond);
-        }}
-      />
+      {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
           <ScreenContentHeader
             title={I18n.t("messages.contentTitle")}
             iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
           />
-          <MessagesInbox navigateToMessageDetail={navigateToMessageDetail} />
+          {needsMigration ? (
+            <MigratingMessage
+              status={migrationStatus}
+              onRetry={() => migrateMessages(messagesStatus)}
+              onEnd={resetMigrationStatus}
+            />
+          ) : (
+            <AllTabs
+              inbox={allInboxMessages}
+              archive={allArchiveMessages}
+              navigateToMessageDetail={navigateToMessageDetail}
+              setArchived={setArchived}
+            />
+          )}
         </React.Fragment>
       )}
 
@@ -101,10 +288,11 @@ const MessagesHomeScreen = ({
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
               <MessagesSearch
-                messages={allMessages}
+                messages={searchMessages}
                 searchText={_}
                 renderSearchResults={results => (
                   <MessageList
+                    filter={{}}
                     filteredMessages={results}
                     onPressItem={navigateToMessageDetail}
                   />
@@ -115,22 +303,31 @@ const MessagesHomeScreen = ({
           .getOrElse(
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
           )}
+      {!isScreenReaderEnabled && statusComponent}
     </TopScreenComponent>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  allMessages: allMessagesSelector(state),
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
-  searchText: searchTextSelector(state)
+  searchText: searchTextSelector(state),
+  searchMessages: createSelector(
+    [allInboxMessagesSelector, allArchiveMessagesSelector],
+    (inbox, archive) => inbox.concat(archive)
+  )(state),
+  allInboxMessages: allInboxMessagesSelector(state),
+  allArchiveMessages: allArchiveMessagesSelector(state),
+  messagesStatus: messagesStatusSelector(state),
+  migrationStatus: allPaginatedSelector(state).migration,
+  latestMessageOperation: allPaginatedSelector(state).latestMessageOperation
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // used for the first rendering only
-  reloadFirstPage: () => {
-    dispatch(reloadAllMessages.request({ pageSize }));
-  }
+  migrateMessages: (messageStatus: MessagesStatus) => {
+    dispatch(migrateToPaginatedMessages.request(messageStatus));
+  },
+  resetMigrationStatus: () => dispatch(resetMigrationStatus())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);

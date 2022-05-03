@@ -1,4 +1,5 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   bonusVacanzeEnabled,
   bpdEnabled,
@@ -9,14 +10,14 @@ import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/route
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
 import {
   BpdDetailsNavigator,
-  BpdIBANNavigator,
   BpdOnboardingNavigator,
   OptInPaymentMethodNavigator
 } from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import IbanCTAEditScreen from "../features/bonus/bpd/screens/iban/IbanCTAEditScreen";
+import MainIbanScreen from "../features/bonus/bpd/screens/iban/MainIbanScreen";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
-import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
+import { BPayDetailScreen } from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import CreditCardDetailScreen from "../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
@@ -38,6 +39,7 @@ import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboard
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import ActivateBpdOnNewSatispayScreen from "../features/wallet/onboarding/satispay/screens/ActivateBpdOnNewSatispayScreen";
 import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
+import PayPalPspUpdateScreen from "../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 import PrivativeDetailScreen from "../features/wallet/privative/screen/PrivativeDetailScreen";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
@@ -57,13 +59,9 @@ import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSumma
 import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
-import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
-  [ROUTES.WALLET_HOME]: {
-    screen: WalletHomeScreen
-  },
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {
     screen: AddPaymentMethodScreen
   },
@@ -81,6 +79,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_PAYPAL_DETAIL]: {
     screen: PaypalDetailScreen
+  },
+  [ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP]: {
+    screen: PayPalPspUpdateScreen
   },
   [ROUTES.WALLET_BPAY_DETAIL]: {
     screen: BPayDetailScreen
@@ -151,8 +152,8 @@ const bpdConfigMap = {
   [BPD_ROUTES.ONBOARDING.MAIN]: {
     screen: BpdOnboardingNavigator
   },
-  [BPD_ROUTES.IBAN_MAIN]: {
-    screen: BpdIBANNavigator
+  [BPD_ROUTES.IBAN]: {
+    screen: MainIbanScreen
   },
   [BPD_ROUTES.DETAILS_MAIN]: {
     screen: BpdDetailsNavigator
@@ -215,12 +216,15 @@ const routeConfig = {
   ...(bpdOptInPaymentMethodsEnabled ? optInPaymentMethodsConfigMap : {})
 };
 
-const WalletNavigator = createStackNavigator(routeConfig, {
-  // Let each screen handle the header and navigation
-  headerMode: "none",
-  defaultNavigationOptions: {
-    gesturesEnabled: false
+const WalletNavigator = createCompatNavigatorFactory(createStackNavigator)(
+  routeConfig,
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gestureEnabled: false
+    }
   }
-});
+);
 
 export default WalletNavigator;

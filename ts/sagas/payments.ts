@@ -1,5 +1,5 @@
 import { put, select, take } from "typed-redux-saga/macro";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { paymentsLastDeletedSet } from "../store/actions/payments";
 import {
   paymentDeletePayment,
@@ -25,10 +25,7 @@ export function* paymentsDeleteUncompletedSaga() {
         | typeof paymentDeletePayment.success
         | typeof paymentDeletePayment.failure
       >
-    >([
-      getType(paymentDeletePayment.success),
-      getType(paymentDeletePayment.failure)
-    ]);
+    >([paymentDeletePayment.success, paymentDeletePayment.failure]);
 
     if (isActionOf(paymentDeletePayment.success, resultAction)) {
       yield* put(

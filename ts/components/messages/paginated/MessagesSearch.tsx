@@ -29,12 +29,17 @@ const MessagesSearch = ({
   renderSearchResults,
   searchText
 }: Props) => {
-  const searchResults: ReadonlyArray<UIMessage> = messages.filter(message =>
-    isTextIncludedCaseInsensitive(
-      [message.title, message.organizationName, message.serviceName].join(" "),
-      searchText
+  const searchResults: ReadonlyArray<UIMessage> = messages
+    .filter(message =>
+      isTextIncludedCaseInsensitive(
+        [message.title, message.organizationName, message.serviceName].join(
+          " "
+        ),
+        searchText
+      )
     )
-  );
+    // sorted from newest to oldest
+    .sort((a, b) => b.id.localeCompare(a.id, "en"));
 
   return searchResults.length > 0 ? (
     <View style={styles.listWrapper}>{renderSearchResults(searchResults)}</View>

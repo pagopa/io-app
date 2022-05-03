@@ -34,12 +34,10 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 type State = {
-  calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>;
   calendarsByAccount: pot.Pot<CalendarsByAccount, ResourceError>;
 };
 
 const INITIAL_STATE: State = {
-  calendars: pot.none,
   calendarsByAccount: pot.none
 };
 

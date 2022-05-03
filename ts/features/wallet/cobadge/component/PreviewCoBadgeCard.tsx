@@ -21,6 +21,7 @@ const PreviewCoBadgeCard: React.FunctionComponent<Props> = props => {
       abi={props.abi}
       expiringDate={props.coBadge.expiringDate}
       blocked={isCoBadgeOrPrivativeBlocked(props.coBadge)}
+      brand={props.coBadge.paymentNetwork}
       brandLogo={brandLogo}
       caption={getTitleFromPaymentInstrument(props.coBadge)}
     />

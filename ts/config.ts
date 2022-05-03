@@ -46,7 +46,6 @@ export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
-export const instabugToken: string = Config.INSTABUG_TOKEN;
 
 export const bonusVacanzeEnabled: boolean =
   Config.BONUS_VACANZE_ENABLED === "YES";
@@ -89,6 +88,19 @@ export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
 // Opt-in payments method
 export const bpdOptInPaymentMethodsEnabled =
   Config.BPD_OPT_IN_PAYMENT_METHODS === "YES";
+
+// Ukraine donation
+export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
+
+// FIMS (Federated Identity Management System) Feature Flag
+export const fimsEnabled = Config.FIMS_ENABLED === "YES";
+
+// CdC (Carta della cultura) Feature Flag
+export const cdcEnabled = Config.CDC_ENABLED === "YES";
+
+// Premium Messages Opt-in/out Feature Flag
+export const premiumMessagesOptInEnabled =
+  Config.PREMIUM_MESSAGES_OPT_IN_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;

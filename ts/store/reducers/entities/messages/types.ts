@@ -28,6 +28,8 @@ export type UIMessage = WithUIMessageId<{
   fiscalCode: FiscalCode;
   category: MessageCategory;
   createdAt: Date;
+  isRead: boolean;
+  isArchived: boolean;
   serviceId: ServiceId;
   serviceName: string;
   organizationName: string;
@@ -49,6 +51,7 @@ export type UIMessageDetails = WithUIMessageId<{
   markdown: MessageBodyMarkdown;
   dueDate?: Date;
   paymentData?: PaymentData;
+
   euCovidCertificate?: EUCovidCertificate;
 
   // @deprecated please use it only for backward compatibility

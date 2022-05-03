@@ -8,6 +8,7 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
  */
 export const BlurredBackgroundComponent = (onPress: () => void) => (
   <TouchableDefaultOpacity
+    accessible={true}
     onPress={onPress}
     style={{
       ...StyleSheet.absoluteFillObject,

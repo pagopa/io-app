@@ -1,7 +1,7 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPayment";
@@ -10,10 +10,12 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import {
   loadMessageWithRelations,
   MessageReadType,
-  setMessageReadState
+  DEPRECATED_setMessageReadState
 } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
@@ -35,7 +37,11 @@ export type MessageDetailScreenNavigationParams = {
   messageId: string;
 };
 
-type OwnProps = NavigationStackScreenProps<MessageDetailScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL">
+  >;
+};
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -172,7 +178,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     messageId: string,
     isRead: boolean,
     messageType: MessageReadType
-  ) => dispatch(setMessageReadState(messageId, isRead, messageType)),
+  ) => dispatch(DEPRECATED_setMessageReadState(messageId, isRead, messageType)),
   navigateToServiceDetailsScreen: (
     params: ServiceDetailsScreenNavigationParams
   ) => navigateToServiceDetailsScreen(params)

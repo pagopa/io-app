@@ -38,7 +38,6 @@ const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => (
         type={"TwoButtonsInlineThird"}
         leftButton={{
           block: true,
-          light: true,
           bordered: true,
           onPress: props.onExit,
           title: I18n.t("global.buttons.exit")

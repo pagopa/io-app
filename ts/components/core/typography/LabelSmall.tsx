@@ -8,7 +8,7 @@ type AllowedColors = Extract<
   IOColorType,
   "blue" | "bluegrey" | "red" | "white"
 >;
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>

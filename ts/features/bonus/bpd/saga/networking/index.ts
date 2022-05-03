@@ -33,6 +33,7 @@ export function* executeAndDispatchV2(
         yield* put(
           action.success({
             enabled,
+            activationStatus: enabled ? "subscribed" : "unsubscribed",
             payoffInstr,
             technicalAccount,
             optInStatus
@@ -43,6 +44,7 @@ export function* executeAndDispatchV2(
         yield* put(
           action.success({
             enabled: false,
+            activationStatus: "never",
             payoffInstr: undefined,
             technicalAccount: undefined
           })

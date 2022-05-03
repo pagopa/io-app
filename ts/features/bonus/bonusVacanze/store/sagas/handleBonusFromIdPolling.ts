@@ -1,7 +1,7 @@
 import { SagaIterator } from "@redux-saga/core";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, put, race, take, delay } from "typed-redux-saga/macro";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import {
   cancelLoadBonusFromIdPolling,
   loadBonusVacanzeFromId,
@@ -17,10 +17,12 @@ const POLLING_FREQ_TIMEOUT = 5000 as Millisecond;
 export function* bonusFromIdWorker(bonusId: string): SagaIterator {
   while (true) {
     yield* put(loadBonusVacanzeFromId.request(bonusId));
-    const resultAction = yield* take([
-      getType(loadBonusVacanzeFromId.success),
-      getType(loadBonusVacanzeFromId.failure)
-    ]);
+    const resultAction = yield* take<
+      ActionType<
+        | typeof loadBonusVacanzeFromId.success
+        | typeof loadBonusVacanzeFromId.failure
+      >
+    >([loadBonusVacanzeFromId.success, loadBonusVacanzeFromId.failure]);
 
     if (isActionOf(loadBonusVacanzeFromId.failure, resultAction)) {
       yield* put(cancelLoadBonusFromIdPolling());

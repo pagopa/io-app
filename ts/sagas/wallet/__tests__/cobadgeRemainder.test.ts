@@ -54,8 +54,8 @@ describe("sendAddCobadgeMessageSaga", () => {
       .put(loadCoBadgeAbiConfiguration.request())
       .next()
       .take([
-        getType(loadCoBadgeAbiConfiguration.success),
-        getType(loadCoBadgeAbiConfiguration.failure)
+        loadCoBadgeAbiConfiguration.success,
+        loadCoBadgeAbiConfiguration.failure
       ])
       .next(getType(loadCoBadgeAbiConfiguration.success))
       .select(coBadgeAbiConfigurationSelector)

@@ -2,6 +2,283 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0-rc.2](https://github.com/pagopa/io-app/compare/2.8.0-rc.1...2.8.0-rc.2) (2022-04-28)
+
+
+### Chores
+
+* [[IA-787](https://pagopa.atlassian.net/browse/IA-787),[IA-789](https://pagopa.atlassian.net/browse/IA-789),[IA-835](https://pagopa.atlassian.net/browse/IA-835)] Upgrade psp list and update wallet API from v1 to v2 ([#3875](https://github.com/pagopa/io-app/issues/3875)) ([87484a8](https://github.com/pagopa/io-app/commit/87484a80085ce947d8a49b5ec7aee507380faf2b))
+* **Carta della cultura:** [[AP-6](https://pagopa.atlassian.net/browse/AP-6),[AP-9](https://pagopa.atlassian.net/browse/AP-9)] Add carta della cultura navigation and workunit ([#3911](https://github.com/pagopa/io-app/issues/3911)) ([22e19af](https://github.com/pagopa/io-app/commit/22e19af6db05b8744164430b1d7e6290973502b8))
+
+## [2.8.0-rc.1](https://github.com/pagopa/io-app/compare/2.8.0-rc.0...2.8.0-rc.1) (2022-04-27)
+
+
+### Chores
+
+* [[IAI-24](https://pagopa.atlassian.net/browse/IAI-24)] Upgrade `react-navigation` to `v5` ([#3836](https://github.com/pagopa/io-app/issues/3836)) ([83377e1](https://github.com/pagopa/io-app/commit/83377e150a0e00c718b1de5dcee6937c87a39474))
+
+## [2.8.0-rc.0](https://github.com/pagopa/io-app/compare/2.7.0-rc.6...2.8.0-rc.0) (2022-04-27)
+
+
+### Features
+
+* [[#178212559](https://www.pivotaltracker.com/story/show/178212559)] Added learn more CTA on OutcomeCodeMessageComponent ([#3057](https://github.com/pagopa/io-app/issues/3057)) ([8bb2e9e](https://github.com/pagopa/io-app/commit/8bb2e9e78cf6cd838cf47ef9f3ac189dfd137e29))
+
+
+### Chores
+
+* [[IAI-107](https://pagopa.atlassian.net/browse/IAI-107)] Upgrades @gorhom/bottom-sheet, react-native-gesture-handler and react-native-reanimated ([#3803](https://github.com/pagopa/io-app/issues/3803)) ([644a265](https://github.com/pagopa/io-app/commit/644a265e657940894f79c0dad4623b3d683543e2))
+* **Carta della cultura:** [[AP-11](https://pagopa.atlassian.net/browse/AP-11)] Carta della cultura ToS screen ([#3916](https://github.com/pagopa/io-app/issues/3916)) ([ff158db](https://github.com/pagopa/io-app/commit/ff158db001bd76779642d2e7c2389619535b2055))
+* **Carta Giovani Nazionale:** [[IOACGN-69](https://pagopa.atlassian.net/browse/IOACGN-69)] Implements e2e tests for CGN activation flows ([#3898](https://github.com/pagopa/io-app/issues/3898)) ([7c31e31](https://github.com/pagopa/io-app/commit/7c31e3121b14dd1a30eaae1568b198cd962aa600))
+
+## [2.7.0-rc.6](https://github.com/pagopa/io-app/compare/2.7.0-rc.5...2.7.0-rc.6) (2022-04-19)
+
+
+### Bug Fixes
+
+* [[IA-829](https://pagopa.atlassian.net/browse/IA-829)] Fix crash on press the support button on Android [#3918](https://github.com/pagopa/io-app/issues/3918) ([f2964f7](https://github.com/pagopa/io-app/commit/f2964f78acc8607ac6a5a3fe4268dcb620f5ac09))
+* [[IA-830](https://pagopa.atlassian.net/browse/IA-830)] Fix performance issue when rendering new message pages ([#3919](https://github.com/pagopa/io-app/issues/3919)) ([a98ccad](https://github.com/pagopa/io-app/commit/a98ccadf5ff8e04a2d4749a333e0b7d6094b5808))
+
+
+### Chores
+
+* **Carta della cultura:** [[AP-7](https://pagopa.atlassian.net/browse/AP-7)] Model types, actions and reducers of carta della cultura ([#3907](https://github.com/pagopa/io-app/issues/3907)) ([b5387ce](https://github.com/pagopa/io-app/commit/b5387ce37e18d3eec128ba487551159e08282aa6))
+
+## [2.7.0-rc.5](https://github.com/pagopa/io-app/compare/2.7.0-rc.4...2.7.0-rc.5) (2022-04-14)
+
+
+### Bug Fixes
+
+* [[IA-814](https://pagopa.atlassian.net/browse/IA-814)] An empty screen is shown when an error occurred in SPID login  ([#3896](https://github.com/pagopa/io-app/issues/3896)) ([9b34470](https://github.com/pagopa/io-app/commit/9b34470c7c444cbd3366fd634ade7ed4dcf4136d))
+* [[IA-820](https://pagopa.atlassian.net/browse/IA-820)] During a payment if the credit card insertions fails the payment remains `on-going` ([#3902](https://github.com/pagopa/io-app/issues/3902)) ([ace0b81](https://github.com/pagopa/io-app/commit/ace0b81c8fd0aeb71c9b2968cfccd827aef35ea0))
+* [[IABT-1369](https://pagopa.atlassian.net/browse/IABT-1369)] Check against service when entering the message detail view ([#3910](https://github.com/pagopa/io-app/issues/3910)) ([b1c991a](https://github.com/pagopa/io-app/commit/b1c991a6af30af36241b1850e55df04c9d3a9b4b))
+* [[IABT-1370](https://pagopa.atlassian.net/browse/IABT-1370)] Infinite loop if a payment is started from a message and then go back ([#3904](https://github.com/pagopa/io-app/issues/3904)) ([36a75cb](https://github.com/pagopa/io-app/commit/36a75cbcd3194c977ee5da348f1c3744cd33961b))
+* [[IABT-1371](https://pagopa.atlassian.net/browse/IABT-1371)] Make the loading indicator more visible while scrolling the message list [#3913](https://github.com/pagopa/io-app/issues/3913) ([26d8362](https://github.com/pagopa/io-app/commit/26d8362092eb3b2a3f6706dc9a2c328a6b10b7e0))
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[IOACGN-70](https://pagopa.atlassian.net/browse/IOACGN-70)] Changes on the Merchant detail screen and Discount display ([#3914](https://github.com/pagopa/io-app/issues/3914)) ([fb70bad](https://github.com/pagopa/io-app/commit/fb70bad0a7f966828f7361a2dc438c08d856b19e))
+* [[IAI-182](https://pagopa.atlassian.net/browse/IAI-182)] Enable iOS push notification in dev mode ([#3909](https://github.com/pagopa/io-app/issues/3909)) ([b3ac276](https://github.com/pagopa/io-app/commit/b3ac276bd62bd9f9c3de0ee7dea8ae92d49cad31))
+* **deps:** bump moment from 2.29.1 to 2.29.2 ([#3901](https://github.com/pagopa/io-app/issues/3901)) ([2ee2f89](https://github.com/pagopa/io-app/commit/2ee2f899138343540ebc128b6331c7e7e0d2c4ce))
+* **deps:** bump urijs from 1.19.10 to 1.19.11 ([#3906](https://github.com/pagopa/io-app/issues/3906)) ([9a23c42](https://github.com/pagopa/io-app/commit/9a23c424b34b3af47697998a3f0b9ea8e91c6e43))
+* [[IA-724](https://pagopa.atlassian.net/browse/IA-724)] Add unit tests for the payment checkout WebView data ([#3900](https://github.com/pagopa/io-app/issues/3900)) ([a537435](https://github.com/pagopa/io-app/commit/a5374351e538fb5f89fa6153dce288129fc195e9))
+* [[IA-778](https://pagopa.atlassian.net/browse/IA-778)] Move zendesk user identify after ask permission ([#3899](https://github.com/pagopa/io-app/issues/3899)) ([d9b4bed](https://github.com/pagopa/io-app/commit/d9b4bedc136edd76752b1fb01e60e4bd93b90652))
+* [[IAI-180](https://pagopa.atlassian.net/browse/IAI-180)] Update Podfile.lock with RNZendeskChat (0.3.21) ([#3903](https://github.com/pagopa/io-app/issues/3903)) ([6d390a1](https://github.com/pagopa/io-app/commit/6d390a1975b8fde6cbe8627c0e6bf0cacd87d927))
+
+## [2.7.0-rc.4](https://github.com/pagopa/io-app/compare/2.7.0-rc.3...2.7.0-rc.4) (2022-04-08)
+
+
+### Bug Fixes
+
+* [[IA-769](https://pagopa.atlassian.net/browse/IA-769)] Rptid custom field not filled or filled with wrong value ([#3864](https://github.com/pagopa/io-app/issues/3864)) ([431c7fe](https://github.com/pagopa/io-app/commit/431c7fe77d6f4c0f0ee132066a40b5b9258177a0))
+* [[IABT-1364](https://pagopa.atlassian.net/browse/IABT-1364)] Add accessibility fixes to the checkout page ([#3869](https://github.com/pagopa/io-app/issues/3869)) ([11bc32e](https://github.com/pagopa/io-app/commit/11bc32ea393bf5521bc508a61d3fc91e1e6ba124))
+* [[IABT-1368](https://pagopa.atlassian.net/browse/IABT-1368)] Wrong message router navigation from push notification ([#3897](https://github.com/pagopa/io-app/issues/3897)) ([fe1382f](https://github.com/pagopa/io-app/commit/fe1382fa846815d377f0a4df5184307e15cead98))
+
+
+### Chores
+
+* **Federated Identity Management System:** [[IAFIMS-10](https://pagopa.atlassian.net/browse/IAFIMS-10)] Upgrade io-services-metadata specifications [#3895](https://github.com/pagopa/io-app/issues/3895) ([58d2b8b](https://github.com/pagopa/io-app/commit/58d2b8b605c0592da104c60bdc311bcf53effddb))
+* [[IA-763](https://pagopa.atlassian.net/browse/IA-763)] Premium Messages Opt-In/Out onboarding stub screen ([#3877](https://github.com/pagopa/io-app/issues/3877)) ([4f5f126](https://github.com/pagopa/io-app/commit/4f5f1268a24f71e400a29a41d34f6d778fd93c43))
+* [[IA-805](https://pagopa.atlassian.net/browse/IA-805)] Update e2e tests ([#3889](https://github.com/pagopa/io-app/issues/3889)) ([2bfd702](https://github.com/pagopa/io-app/commit/2bfd702fcd6b78c25685af9978c4fe6cbc4345ac))
+* [[IA-806](https://pagopa.atlassian.net/browse/IA-806)] Show BPay in checkout payment screen ([#3884](https://github.com/pagopa/io-app/issues/3884)) ([3fa0b01](https://github.com/pagopa/io-app/commit/3fa0b01777df30886033332876e4921ad2775e64))
+* [[IA-812](https://pagopa.atlassian.net/browse/IA-812)] Fix euCovidCert e2e tests under paginated messages ([#3893](https://github.com/pagopa/io-app/issues/3893)) ([76bbef2](https://github.com/pagopa/io-app/commit/76bbef23ec9013e14de5f737cefdd681e583b11c))
+* **Carta della cultura:** [[AP-3](https://pagopa.atlassian.net/browse/AP-3)] Add remote carta della cultura feature flag ([#3888](https://github.com/pagopa/io-app/issues/3888)) ([06ddd26](https://github.com/pagopa/io-app/commit/06ddd2641a750ddfa0f89d3f9fd646d9f9388ecf))
+* [[IA-810](https://pagopa.atlassian.net/browse/IA-810)] Improve debug top overlay ([#3886](https://github.com/pagopa/io-app/issues/3886)) ([afc38c8](https://github.com/pagopa/io-app/commit/afc38c8660dc1b00bebdaf86c9c942e7d87577c1))
+* **Carta della cultura:** [[AP-2](https://pagopa.atlassian.net/browse/AP-2)] Add CDC local feature flag ([#3883](https://github.com/pagopa/io-app/issues/3883)) ([28ffffc](https://github.com/pagopa/io-app/commit/28ffffc2c313c1d2e414d29f91404cdac2e6fff7))
+
+## [2.7.0-rc.3](https://github.com/pagopa/io-app/compare/2.7.0-rc.2...2.7.0-rc.3) (2022-04-05)
+
+
+### Chores
+
+* [[IA-767](https://pagopa.atlassian.net/browse/IA-767),[IA-804](https://pagopa.atlassian.net/browse/IA-804),[IA-793](https://pagopa.atlassian.net/browse/IA-793)] Show a toast to inform the user when a message operation completes ([#3878](https://github.com/pagopa/io-app/issues/3878)) ([1a2636c](https://github.com/pagopa/io-app/commit/1a2636cb163dcf23d85d108570e0d9ae29ee0835))
+* [[IA-799](https://pagopa.atlassian.net/browse/IA-799)] Enable pagination ([#3882](https://github.com/pagopa/io-app/issues/3882)) ([b7e377c](https://github.com/pagopa/io-app/commit/b7e377cdde1b07a48b9628a7198fa441712f59a6))
+* [[IA-802](https://pagopa.atlassian.net/browse/IA-802)] Remove the button for (un)selecting all messages [#3879](https://github.com/pagopa/io-app/issues/3879) ([a8aa894](https://github.com/pagopa/io-app/commit/a8aa894ffce04e10368a24965cd263c9afe3ba63))
+* [[IAI-179](https://pagopa.atlassian.net/browse/IAI-179)] Remove "upload sourcemap to Instabug" build phase on iOS ([#3880](https://github.com/pagopa/io-app/issues/3880)) ([8076f9e](https://github.com/pagopa/io-app/commit/8076f9ed471c159223e0b24fa53ac4d203de220a))
+
+## [2.7.0-rc.2](https://github.com/pagopa/io-app/compare/2.7.0-rc.1...2.7.0-rc.2) (2022-04-04)
+
+
+### Bug Fixes
+
+* [[IA-783](https://pagopa.atlassian.net/browse/IA-783)] State handling on message loading ([#3873](https://github.com/pagopa/io-app/issues/3873)) ([e50cb17](https://github.com/pagopa/io-app/commit/e50cb1727427da1a6f3b178c06785ec4d79aa0b0))
+
+
+### Chores
+
+* [Snyk] Security upgrade cocoapods from 1.10.1 to 1.11.3 and fastlane from 2.191.0 to 2.205.1 ([#3876](https://github.com/pagopa/io-app/issues/3876)) ([953feb1](https://github.com/pagopa/io-app/commit/953feb1471186af0266dd892d3ae1fab6dc28a60))
+* **deps-dev:** bump plist from 3.0.4 to 3.0.5 ([#3858](https://github.com/pagopa/io-app/issues/3858)) ([6dabe3f](https://github.com/pagopa/io-app/commit/6dabe3f57c240747fb5d5d50a0badb24b113188a))
+* [[IA-736](https://pagopa.atlassian.net/browse/IA-736)] Remove instabug ([#3867](https://github.com/pagopa/io-app/issues/3867)) ([9b99669](https://github.com/pagopa/io-app/commit/9b99669e8bcf083d3290cfe5f00373757294dcac))
+* [[IA-770](https://pagopa.atlassian.net/browse/IA-770)] Create the Premium Messages opt-in/out selectors ([#3866](https://github.com/pagopa/io-app/issues/3866)) ([b3e42ee](https://github.com/pagopa/io-app/commit/b3e42eef7087a685231dca184b31fb37c450fe1a))
+* [[IA-794](https://pagopa.atlassian.net/browse/IA-794)] Add BancomatPay remote config ([#3872](https://github.com/pagopa/io-app/issues/3872)) ([ae09fa7](https://github.com/pagopa/io-app/commit/ae09fa7df3cac67fa9a212742aca52eb7a5b1f63))
+* [[IA-801](https://pagopa.atlassian.net/browse/IA-801)] Remove donation banner from archive and search [#3874](https://github.com/pagopa/io-app/issues/3874) ([93e694d](https://github.com/pagopa/io-app/commit/93e694dd0dff14e720bcdc00f3828f3ee0451133))
+* **Carta Giovani Nazionale:** [[IOACGN-65](https://pagopa.atlassian.net/browse/IOACGN-65)] Implements event tracking for landing page error events [#3842](https://github.com/pagopa/io-app/issues/3842) ([b69076f](https://github.com/pagopa/io-app/commit/b69076feaa15160f0c624ae6f888b01bb59c39fa))
+
+## [2.7.0-rc.1](https://github.com/pagopa/io-app/compare/2.7.0-rc.0...2.7.0-rc.1) (2022-03-31)
+
+
+### Features
+
+* [[IA-681](https://pagopa.atlassian.net/browse/IA-681)] Add archiving to messages with pagination ([#3856](https://github.com/pagopa/io-app/issues/3856)) ([6fffc56](https://github.com/pagopa/io-app/commit/6fffc56392e54d1f719394ff24c0f591bcc6ea81))
+
+
+### Chores
+
+* [[IA-754](https://pagopa.atlassian.net/browse/IA-754)] Track migration events ([#3865](https://github.com/pagopa/io-app/issues/3865)) ([7857bb7](https://github.com/pagopa/io-app/commit/7857bb7c07a36d6fc8e429a2e4089e3514e79894))
+
+## [2.7.0-rc.0](https://github.com/pagopa/io-app/compare/2.6.0-rc.3...2.7.0-rc.0) (2022-03-30)
+
+
+### Features
+
+* [[IA-711](https://pagopa.atlassian.net/browse/IA-711)] Refactored payment confirmation user interface ([#3840](https://github.com/pagopa/io-app/issues/3840)) ([686e5c8](https://github.com/pagopa/io-app/commit/686e5c8163b932d53c88a5b05a9e01aea5e21f8d))
+
+
+### Chores
+
+* [[IA-762](https://pagopa.atlassian.net/browse/IA-762)] Add a local Feature Flag for the Premium Messages Opt-In/Out feature ([#3861](https://github.com/pagopa/io-app/issues/3861)) ([564ddc5](https://github.com/pagopa/io-app/commit/564ddc5b54f10f369ec47b9d74daee6d92e6e233))
+* [[IA-765](https://pagopa.atlassian.net/browse/IA-765)] Migration messages: copy update ([#3862](https://github.com/pagopa/io-app/issues/3862)) ([619ce28](https://github.com/pagopa/io-app/commit/619ce285ae8e4a033d6bb4cd7dcbd6b966571bd0))
+* [[IA-766](https://pagopa.atlassian.net/browse/IA-766)] Enable pagination" [#3860](https://github.com/pagopa/io-app/issues/3860) ([34ef89c](https://github.com/pagopa/io-app/commit/34ef89cb603f1c39875d0425cc4a2d36b5ded8f7))
+
+## [2.6.0-rc.3](https://github.com/pagopa/io-app/compare/2.6.0-rc.2...2.6.0-rc.3) (2022-03-29)
+
+
+### Chores
+
+* [[IA-766](https://pagopa.atlassian.net/browse/IA-766)] Enable pagination [#3859](https://github.com/pagopa/io-app/issues/3859) ([82055ec](https://github.com/pagopa/io-app/commit/82055ecd2bdc69c7fd8a8978bd46990c0c6c2e2e))
+
+## [2.6.0-rc.2](https://github.com/pagopa/io-app/compare/2.6.0-rc.1...2.6.0-rc.2) (2022-03-29)
+
+
+### Features
+
+* [[IA-729](https://pagopa.atlassian.net/browse/IA-729)] Migration UI, loader, messages ([#3853](https://github.com/pagopa/io-app/issues/3853)) ([503722e](https://github.com/pagopa/io-app/commit/503722e0aba08695f0d55b19e7f664b0a8ef625b))
+
+
+### Bug Fixes
+
+* [[IA-735](https://pagopa.atlassian.net/browse/IA-735)] Fix payment method switch loader alignment on Android [#3855](https://github.com/pagopa/io-app/issues/3855) ([93d92db](https://github.com/pagopa/io-app/commit/93d92dbdd629223559a6607c4537b612ad8cc52b))
+
+## [2.6.0-rc.1](https://github.com/pagopa/io-app/compare/2.6.0-rc.0...2.6.0-rc.1) (2022-03-24)
+
+
+### Features
+
+* [[IA-728](https://pagopa.atlassian.net/browse/IA-728)] Saga and networking for upserting message attributes ([#3848](https://github.com/pagopa/io-app/issues/3848)) ([99f4ba1](https://github.com/pagopa/io-app/commit/99f4ba18e8e8275eec9822a7d406d5d4510d9d7e))
+
+
+### Chores
+
+* **deps:** bump minimist from 1.2.5 to 1.2.6 ([#3854](https://github.com/pagopa/io-app/issues/3854)) ([544d8fc](https://github.com/pagopa/io-app/commit/544d8fcaa8631430aaa97db9b3446948eb451df6))
+* [[IAI-178](https://pagopa.atlassian.net/browse/IAI-178)] Fix e2e tests on the CI ([#3852](https://github.com/pagopa/io-app/issues/3852)) ([2d43abc](https://github.com/pagopa/io-app/commit/2d43abc8bbbb5121d130c8d482a29a354765803f))
+* **Carta Giovani Nazionale:** [[IOACGN-68](https://pagopa.atlassian.net/browse/IOACGN-68)] Refactors bucket code request component to avoid huge bucket consuption ([#3849](https://github.com/pagopa/io-app/issues/3849)) ([dd48f11](https://github.com/pagopa/io-app/commit/dd48f11af636852795e547a5fd2802a1f6c88a4f))
+* [[IAI-177](https://pagopa.atlassian.net/browse/IAI-177)] Upgrade xcode version in circleCI config ([#3851](https://github.com/pagopa/io-app/issues/3851)) ([cda3160](https://github.com/pagopa/io-app/commit/cda3160390a55e98798447bc2e6ad53e66c4c379))
+
+## [2.6.0-rc.0](https://github.com/pagopa/io-app/compare/2.5.0-rc.3...2.6.0-rc.0) (2022-03-22)
+
+
+### Features
+
+* [[IA-679](https://pagopa.atlassian.net/browse/IA-679)] Implement 'Archive' tab with pagination ([#3805](https://github.com/pagopa/io-app/issues/3805)) ([c1ab548](https://github.com/pagopa/io-app/commit/c1ab5481ccd7de8206da837a3af9e11dfe24c103))
+* [[IA-726](https://pagopa.atlassian.net/browse/IA-726)] Implement the migration logic ([#3841](https://github.com/pagopa/io-app/issues/3841)) ([0f1c714](https://github.com/pagopa/io-app/commit/0f1c714f410ba80eb8782ceb8e2e964259f78e44))
+
+
+### Bug Fixes
+
+* [[IA-582](https://pagopa.atlassian.net/browse/IA-582)] Calendar permission denial is not handled correctly on Android ([#3825](https://github.com/pagopa/io-app/issues/3825)) ([17d8e82](https://github.com/pagopa/io-app/commit/17d8e82f759c855cb5e7fd971ac140f54df5d4a5))
+* [[IA-709](https://pagopa.atlassian.net/browse/IA-709)] Fix LGTM warnings ([#3822](https://github.com/pagopa/io-app/issues/3822)) ([115d7db](https://github.com/pagopa/io-app/commit/115d7db17ea425437f285fb153fceb5f3ba14df9))
+* [[IA-723](https://pagopa.atlassian.net/browse/IA-723)] Remove the green check when a valid QR code is scanned ([#3838](https://github.com/pagopa/io-app/issues/3838)) ([ffe60a3](https://github.com/pagopa/io-app/commit/ffe60a39e54800594c02ad47fa5c893fa4fb3455))
+* [[IA-741](https://pagopa.atlassian.net/browse/IA-741)] Test failing on MessageRouterScreen ([#3844](https://github.com/pagopa/io-app/issues/3844)) ([cddd21a](https://github.com/pagopa/io-app/commit/cddd21a05eef2f508a360df4a43347dcc1772fd1))
+
+
+### Chores
+
+* [[IA-695](https://pagopa.atlassian.net/browse/IA-695)] Search in paginated messages ([#3847](https://github.com/pagopa/io-app/issues/3847)) ([f2d1cf0](https://github.com/pagopa/io-app/commit/f2d1cf0fd9a7006eac46fcb315429c2085abe43c))
+* **Federated Identity Management System:** [[IAFIMS-1](https://pagopa.atlassian.net/browse/IAFIMS-1)] Adds Remote and Local feature flag for FIMS feature ([#3834](https://github.com/pagopa/io-app/issues/3834)) ([a6a28d5](https://github.com/pagopa/io-app/commit/a6a28d5be4867007777449af6d9d5d72d851fc05))
+* [[IA-715](https://pagopa.atlassian.net/browse/IA-715)] Cleanup in the Android main activity ([#3835](https://github.com/pagopa/io-app/issues/3835)) ([dee39e3](https://github.com/pagopa/io-app/commit/dee39e345d39769488a4757872b3afbd4ee002a1))
+* [[IAI-142](https://pagopa.atlassian.net/browse/IAI-142)] Update `react-native-flag-secure-android` and remove custom target ([#3846](https://github.com/pagopa/io-app/issues/3846)) ([d104a14](https://github.com/pagopa/io-app/commit/d104a141d50863e56026530ff4c4daef54814bcb))
+* checkurl - Add url to black list ([#3843](https://github.com/pagopa/io-app/issues/3843)) ([05e7b10](https://github.com/pagopa/io-app/commit/05e7b10e3e4192b83a127bb388eb317c65115fed))
+
+## [2.5.0-rc.3](https://github.com/pagopa/io-app/compare/2.5.0-rc.2...2.5.0-rc.3) (2022-03-15)
+
+
+### Bug Fixes
+
+* [[IA-733](https://pagopa.atlassian.net/browse/IA-733)] The email client is not open when the user denies consent to share information [#3837](https://github.com/pagopa/io-app/issues/3837) ([7705668](https://github.com/pagopa/io-app/commit/77056686d5a0a76adf7621e4a2aae2ba074888a7))
+
+
+### Chores
+
+* [[IA-142](https://pagopa.atlassian.net/browse/IA-142)] Update ToS screen during onboarding ([#3826](https://github.com/pagopa/io-app/issues/3826)) ([ca6cac7](https://github.com/pagopa/io-app/commit/ca6cac7290fd222a69e163fd3fb75652fdc033ff))
+* [[IA-730](https://pagopa.atlassian.net/browse/IA-730)] Copy update CGN ([#3830](https://github.com/pagopa/io-app/issues/3830)) ([0339629](https://github.com/pagopa/io-app/commit/0339629133fe8324b6f4657bae2f5119dc364751))
+* add publiccode.yml validation in CI ([#3831](https://github.com/pagopa/io-app/issues/3831)) ([803e382](https://github.com/pagopa/io-app/commit/803e38230073e6db044fe3e7df0cc488750cc95c))
+
+## [2.5.0-rc.2](https://github.com/pagopa/io-app/compare/2.5.0-rc.1...2.5.0-rc.2) (2022-03-11)
+
+
+### Chores
+
+* [[IA-731](https://pagopa.atlassian.net/browse/IA-731)] Turn ON UA Donation feature flag [#3832](https://github.com/pagopa/io-app/issues/3832) ([081ebef](https://github.com/pagopa/io-app/commit/081ebef1065760810c0e2e84c8e2068536b22586))
+
+## [2.5.0-rc.1](https://github.com/pagopa/io-app/compare/2.5.0-rc.0...2.5.0-rc.1) (2022-03-11)
+
+
+### Features
+
+* [[IA-349](https://pagopa.atlassian.net/browse/IA-349),[IA-394](https://pagopa.atlassian.net/browse/IA-394)] Added accessibility label for all the payment methods ([#3815](https://github.com/pagopa/io-app/issues/3815)) ([bc1acd1](https://github.com/pagopa/io-app/commit/bc1acd189cfcfe8063fa5073b676a90206afb4f8))
+* [[IA-366](https://pagopa.atlassian.net/browse/IA-366)] Link recognition by the screen reader on Android ([#3799](https://github.com/pagopa/io-app/issues/3799)) ([f1542a5](https://github.com/pagopa/io-app/commit/f1542a550da6ed2887da19f82e3c0b921df5ea99))
+* [[IA-653](https://pagopa.atlassian.net/browse/IA-653)] Update psp on payment checkout  ([#3718](https://github.com/pagopa/io-app/issues/3718)) ([89c7e0f](https://github.com/pagopa/io-app/commit/89c7e0fe26ddb29df1211e440dd48f0fc7473e32))
+* [[IA-668](https://pagopa.atlassian.net/browse/IA-668)] Open the email client instead of the web form if the user denies submitting their information ([#3801](https://github.com/pagopa/io-app/issues/3801)) ([93582fe](https://github.com/pagopa/io-app/commit/93582feb9fa82e7332d5624ed49b6de388399967))
+* [[IA-693](https://pagopa.atlassian.net/browse/IA-693)] Add Ukraine donations banner ([#3810](https://github.com/pagopa/io-app/issues/3810)) ([d055d9f](https://github.com/pagopa/io-app/commit/d055d9fa1a95a35b969359b929f6df729548968c))
+* [[IA-694](https://pagopa.atlassian.net/browse/IA-694)] Add webview to show and communicate with donation web page ([#3813](https://github.com/pagopa/io-app/issues/3813)) ([e87c0b3](https://github.com/pagopa/io-app/commit/e87c0b31aba48a9d33a37abd2c57be2b5f736cf5))
+* [[IA-699](https://pagopa.atlassian.net/browse/IA-699)] Update payment copy ([#3807](https://github.com/pagopa/io-app/issues/3807)) ([e5be94b](https://github.com/pagopa/io-app/commit/e5be94bfe43db05d924c28989a72a5a4dde18cdc))
+* [[IA-700](https://pagopa.atlassian.net/browse/IA-700)] Remove the transaction fee contextual help when there is not a fee to pay ([#3808](https://github.com/pagopa/io-app/issues/3808)) ([e066b34](https://github.com/pagopa/io-app/commit/e066b3409bb9cf2ea9d45d786bbd3aa311611524))
+* [[IA-704](https://pagopa.atlassian.net/browse/IA-704)] Update payment transaction summary UI ([#3814](https://github.com/pagopa/io-app/issues/3814)) ([9d6d358](https://github.com/pagopa/io-app/commit/9d6d358f9ebc23d8c8e74faf9ec658b4d3ea98b6))
+
+
+### Bug Fixes
+
+* [[IA-703](https://pagopa.atlassian.net/browse/IA-703)] Regression in the layout of the footer with a safe area ([#3809](https://github.com/pagopa/io-app/issues/3809)) ([cc12d1e](https://github.com/pagopa/io-app/commit/cc12d1e940cb6bd29bce99a2d3daaa8dfa620e56))
+* [[IA-705](https://pagopa.atlassian.net/browse/IA-705)] Payment banner shows incorrect total when transaction has no fee ([#3811](https://github.com/pagopa/io-app/issues/3811)) ([077ada1](https://github.com/pagopa/io-app/commit/077ada12fa9502d897b74f3ebdcceff95f00496f))
+* [[IA-721](https://pagopa.atlassian.net/browse/IA-721)] Payment data are not forwarded in the payment webview ([#3828](https://github.com/pagopa/io-app/issues/3828)) ([42e304d](https://github.com/pagopa/io-app/commit/42e304d7ce4c85662dbe32fe6ed316beef36e376))
+* [[IABT-1348](https://pagopa.atlassian.net/browse/IABT-1348)] Dismiss Zendesk views when app requires identification ([#3794](https://github.com/pagopa/io-app/issues/3794)) ([cf60632](https://github.com/pagopa/io-app/commit/cf606323d8262b39e256c920768a9d69a6de749f))
+* [Snyk] Security upgrade react-native-svg from 12.1.1 to 12.3.0 ([#3800](https://github.com/pagopa/io-app/issues/3800)) ([5d20cb0](https://github.com/pagopa/io-app/commit/5d20cb01633869e1eb91a92dab09714a823a7937))
+* UAWebViewScreen doesn't have SafeAreaView ([#3823](https://github.com/pagopa/io-app/issues/3823)) ([5cb54ae](https://github.com/pagopa/io-app/commit/5cb54ae9f2ebe11041fdc755dc4681c17df10cbb))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-143](https://pagopa.atlassian.net/browse/IAC-143)] Switch on local opt-in payment methods feature flag [#3829](https://github.com/pagopa/io-app/issues/3829) ([2717bcf](https://github.com/pagopa/io-app/commit/2717bcf81d7e8d94415b07457049ff1c016d1c04))
+* [[IA-701](https://pagopa.atlassian.net/browse/IA-701)] Implements analytics on ua donations ([#3821](https://github.com/pagopa/io-app/issues/3821)) ([406ffc1](https://github.com/pagopa/io-app/commit/406ffc1ed055ce9edd2956d53b76d9312b87be15))
+* [[IA-706](https://pagopa.atlassian.net/browse/IA-706)] Show error when url is empty or malformed ([#3824](https://github.com/pagopa/io-app/issues/3824)) ([43cc0ad](https://github.com/pagopa/io-app/commit/43cc0add6bf6c34e7c08d0b530485b5064b6016d))
+* Sync Podfile.lock for RNSVG ([#3827](https://github.com/pagopa/io-app/issues/3827)) ([7de7829](https://github.com/pagopa/io-app/commit/7de782931ad11955292267a2a84041c5c09f1ca9))
+* **Bonus Pagamenti Digitali:** [[IAC-136](https://pagopa.atlassian.net/browse/IAC-136)] Opt-in analytics ([#3786](https://github.com/pagopa/io-app/issues/3786)) ([f6897fa](https://github.com/pagopa/io-app/commit/f6897fa5e680364983326782aa90567cd0c94555))
+* [[IA-692](https://pagopa.atlassian.net/browse/IA-692)] Parse & handle messages coming from donation web page ([#3816](https://github.com/pagopa/io-app/issues/3816)) ([165369c](https://github.com/pagopa/io-app/commit/165369cbedf7fc9800d64e05784e662dc1e70211))
+* **deps:** bump urijs from 1.19.9 to 1.19.10 ([#3820](https://github.com/pagopa/io-app/issues/3820)) ([f5a803c](https://github.com/pagopa/io-app/commit/f5a803c566dbab4098073cc14857b1997e77cc8e))
+* [[IA-710](https://pagopa.atlassian.net/browse/IA-710)] UaDonationsBanner test refactoring ([#3819](https://github.com/pagopa/io-app/issues/3819)) ([890bde2](https://github.com/pagopa/io-app/commit/890bde26939588fa6caf4dc4c5b3c996700533df))
+* **Bonus Pagamenti Digitali:** [[IAC-140](https://pagopa.atlassian.net/browse/IAC-140)] Starts opt-in payment methods workunit ([#3785](https://github.com/pagopa/io-app/issues/3785)) ([408fb6f](https://github.com/pagopa/io-app/commit/408fb6f5b2d9eed6f37a325fff80c2cfab74a14d))
+* **Carta Giovani Nazionale:** [[IOACGN-63](https://pagopa.atlassian.net/browse/IOACGN-63)] Prevents the possibility to open media on full screen for CGN merchants landing page ([#3817](https://github.com/pagopa/io-app/issues/3817)) ([92d13c0](https://github.com/pagopa/io-app/commit/92d13c033e3b359838115c99c23cbf92901b603d))
+* **deps:** bump urijs from 1.19.8 to 1.19.9 ([#3804](https://github.com/pagopa/io-app/issues/3804)) ([e319022](https://github.com/pagopa/io-app/commit/e3190224452e6df2c044f0799a0b21ca9cdcbba7))
+* [[IA-687](https://pagopa.atlassian.net/browse/IA-687)] Disable SPID webview cache ([b9de481](https://github.com/pagopa/io-app/commit/b9de48148af386c051333b6c408c9775f0659b42))
+* [[IA-698](https://pagopa.atlassian.net/browse/IA-698)] Donation config selectors ([#3812](https://github.com/pagopa/io-app/issues/3812)) ([b37b62d](https://github.com/pagopa/io-app/commit/b37b62dc4a91036bd17012f6f73a3132971947b4))
+* [[IA-702](https://pagopa.atlassian.net/browse/IA-702)] Donations to Ukraine feature flag and foldering ([#3806](https://github.com/pagopa/io-app/issues/3806)) ([ed57c12](https://github.com/pagopa/io-app/commit/ed57c12e44879f2ac9eaebf0774b1e8f1c425284))
+* [[IAI-138](https://pagopa.atlassian.net/browse/IAI-138)] Fixed unsafe `take` effects ([#3795](https://github.com/pagopa/io-app/issues/3795)) ([984cc0f](https://github.com/pagopa/io-app/commit/984cc0f0554d98bb0da983512692ef64c790f04b))
+
+## [2.5.0-rc.0](https://github.com/pagopa/io-app/compare/2.4.0-rc.3...2.5.0-rc.0) (2022-03-03)
+
+
+### Bug Fixes
+
+* [[IA-308](https://pagopa.atlassian.net/browse/IA-308)] Status banner position in messages when the screen reader is OFF ([#3798](https://github.com/pagopa/io-app/issues/3798)) ([3519921](https://github.com/pagopa/io-app/commit/35199212c0f3968c7a29e7a6f19489f8891e8a1a))
+* [[IA-406](https://pagopa.atlassian.net/browse/IA-406)] Missing iOS accessibility internal translations ([#3791](https://github.com/pagopa/io-app/issues/3791)) ([1dbc41b](https://github.com/pagopa/io-app/commit/1dbc41b575b0aac4501edc4517c877f04267efb9))
+
+
+### Chores
+
+* Sync Podfile.lock ([#3797](https://github.com/pagopa/io-app/issues/3797)) ([f96bf83](https://github.com/pagopa/io-app/commit/f96bf83b2dd9aade4fd9e5cc019adce9e6864421))
+* **deps-dev:** bump plist from 3.0.1 to 3.0.4 ([#3796](https://github.com/pagopa/io-app/issues/3796)) ([211883f](https://github.com/pagopa/io-app/commit/211883f77d85e001a56088469d96b5c7816b3e6d))
+
 ## [2.4.0-rc.3](https://github.com/pagopa/io-app/compare/2.4.0-rc.2...2.4.0-rc.3) (2022-02-28)
 
 

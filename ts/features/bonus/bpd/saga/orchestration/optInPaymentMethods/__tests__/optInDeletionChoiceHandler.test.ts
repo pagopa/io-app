@@ -1,5 +1,4 @@
 import { testSaga } from "redux-saga-test-plan";
-import { getType } from "typesafe-actions";
 import { optInDeletionChoiceHandler } from "../optInDeletionChoiceHandler";
 import {
   DeleteAllByFunctionSuccess,
@@ -20,8 +19,8 @@ describe("optInDeletionChoiceHandler saga", () => {
       )
       .next()
       .take([
-        getType(deleteAllPaymentMethodsByFunction.success),
-        getType(deleteAllPaymentMethodsByFunction.failure)
+        deleteAllPaymentMethodsByFunction.success,
+        deleteAllPaymentMethodsByFunction.failure
       ])
       .next(deleteAllPaymentMethodsByFunction.failure({ error: new Error() }))
       .isDone();
@@ -35,8 +34,8 @@ describe("optInDeletionChoiceHandler saga", () => {
       )
       .next()
       .take([
-        getType(deleteAllPaymentMethodsByFunction.success),
-        getType(deleteAllPaymentMethodsByFunction.failure)
+        deleteAllPaymentMethodsByFunction.success,
+        deleteAllPaymentMethodsByFunction.failure
       ])
       .next(
         deleteAllPaymentMethodsByFunction.success(

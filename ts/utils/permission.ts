@@ -19,10 +19,7 @@ export const requestIOAndroidPermission = async (
   permission: Permission,
   rationale: Rationale
 ): Promise<boolean> => {
-  if (Platform.OS !== "android") {
-    return true;
-  }
-  const hasPermission = await PermissionsAndroid.check(permission);
+  const hasPermission = await checkIOAndroidPermission(permission);
   if (hasPermission) {
     return true;
   }
@@ -33,4 +30,13 @@ export const requestIOAndroidPermission = async (
 
   const status = await PermissionsAndroid.request(permission);
   return status === "granted";
+};
+
+export const checkIOAndroidPermission = async (
+  permission: Permission
+): Promise<boolean> => {
+  if (Platform.OS !== "android") {
+    return true;
+  }
+  return await PermissionsAndroid.check(permission);
 };

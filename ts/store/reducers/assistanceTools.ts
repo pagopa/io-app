@@ -21,7 +21,7 @@ const assistanceToolsReducer = combineReducers<AssistanceToolsState, Action>({
 });
 
 // This selector contains the logic to show or not the help button:
-// if remote FF is instabug or (zendesk + ff local + the profile is not potSome or the email is validated )
+// if remote FF is zendesk + ff local + the profile is not potSome or the email is validated
 export const canShowHelpSelector = createSelector(
   assistanceToolConfigSelector,
   profileSelector,

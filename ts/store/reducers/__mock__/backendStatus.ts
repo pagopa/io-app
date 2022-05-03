@@ -192,6 +192,30 @@ export const baseRawBackendStatus: BackendStatus = {
         "it-IT": "aggiornamento richiesto",
         "en-EN": "update required"
       }
+    },
+    cgn: {
+      is_visible: true,
+      level: LevelEnum.normal,
+      web_url: {
+        "it-IT": "",
+        "en-EN": ""
+      },
+      message: {
+        "it-IT": "aggiornamento richiesto",
+        "en-EN": "update required"
+      }
+    },
+    fims: {
+      is_visible: true,
+      level: LevelEnum.normal,
+      web_url: {
+        "it-IT": "",
+        "en-EN": ""
+      },
+      message: {
+        "it-IT": "aggiornamento richiesto",
+        "en-EN": "update required"
+      }
     }
   },
   config: {
@@ -209,9 +233,35 @@ export const baseRawBackendStatus: BackendStatus = {
     paypal: {
       enabled: false
     },
+    bancomatPay: {
+      display: true,
+      onboarding: true,
+      payment: false
+    },
     cgn: {
       enabled: true,
       merchants_v2: false
+    },
+    uaDonations: {
+      enabled: false,
+      banner: {
+        visible: false,
+        description: {
+          "it-IT": "descrizione mock banner",
+          "en-EN": "mock banner description"
+        },
+        url: "mockbannerurl"
+      }
+    },
+    fims: {
+      enabled: false,
+      domain: "mockFimsDomain"
+    },
+    premiumMessages: {
+      opt_in_out_enabled: false
+    },
+    cdc: {
+      enabled: false
     }
   }
 };
@@ -237,9 +287,35 @@ export const baseBackendConfig: Config = {
   paypal: {
     enabled: false
   },
+  bancomatPay: {
+    display: true,
+    onboarding: true,
+    payment: false
+  },
   cgn: {
     enabled: true,
     merchants_v2: false
+  },
+  uaDonations: {
+    enabled: false,
+    banner: {
+      visible: false,
+      description: {
+        "it-IT": "descrizione mock banner",
+        "en-EN": "mock banner description"
+      },
+      url: "mockbannerurl"
+    }
+  },
+  fims: {
+    enabled: false,
+    domain: "mockFimsDomain"
+  },
+  premiumMessages: {
+    opt_in_out_enabled: false
+  },
+  cdc: {
+    enabled: false
   }
 };
 

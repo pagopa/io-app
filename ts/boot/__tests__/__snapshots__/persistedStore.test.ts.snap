@@ -48,10 +48,23 @@ Object {
       "kind": "PotNone",
     },
     "allPaginated": Object {
-      "data": Object {
-        "kind": "PotNone",
+      "archive": Object {
+        "data": Object {
+          "kind": "PotNone",
+        },
+        "lastRequest": None {
+          "_tag": "None",
+        },
       },
-      "lastRequest": None {
+      "inbox": Object {
+        "data": Object {
+          "kind": "PotNone",
+        },
+        "lastRequest": None {
+          "_tag": "None",
+        },
+      },
+      "migration": None {
         "_tag": "None",
       },
     },

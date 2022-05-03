@@ -1,13 +1,13 @@
 /**
  * A screen that contains all the Tabs related to messages.
  */
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
@@ -19,14 +19,18 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../components/SectionStatus";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   DEPRECATED_loadMessages as loadMessages,
-  setMessagesArchivedState
+  DEPRECATED_setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
+import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import {
@@ -40,17 +44,22 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
+import {
+  isScreenReaderEnabled,
+  setAccessibilityFocus
+} from "../../utils/accessibility";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
-import { sectionStatusSelector } from "../../store/reducers/backendStatus";
-import { setAccessibilityFocus } from "../../utils/accessibility";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
-type Props = NavigationStackScreenProps &
-  ReturnType<typeof mapStateToProps> &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MainTabParamsList, "MESSAGES_HOME">
+  >;
+} & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   currentTab: number;
+  isScreenReaderEnabled: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -99,7 +108,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      isScreenReaderEnabled: false
     };
   }
 
@@ -124,12 +134,23 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  public componentDidMount() {
+  public async componentDidMount() {
     this.onRefreshMessages();
+    const srEnabled = await isScreenReaderEnabled();
+    this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
   public render() {
     const { isSearchEnabled } = this.props;
+
+    const statusComponent = (
+      <SectionStatusComponent
+        sectionKey={"messages"}
+        onSectionRef={v => {
+          setAccessibilityFocus(v, 100 as Millisecond);
+        }}
+      />
+    );
 
     return (
       <TopScreenComponent
@@ -148,12 +169,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           barStyle={"dark-content"}
           backgroundColor={customVariables.colorWhite}
         />
-        <SectionStatusComponent
-          sectionKey={"messages"}
-          onSectionRef={v => {
-            setAccessibilityFocus(v, 100 as Millisecond);
-          }}
-        />
+        {this.state.isScreenReaderEnabled && statusComponent}
         {!isSearchEnabled && (
           <React.Fragment>
             <AnimatedScreenContentHeader
@@ -165,6 +181,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           </React.Fragment>
         )}
         {isSearchEnabled && this.renderSearch()}
+        {!this.state.isScreenReaderEnabled && statusComponent}
       </TopScreenComponent>
     );
   }
@@ -343,7 +360,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean
-  ) => dispatch(setMessagesArchivedState(ids, archived))
+  ) => dispatch(DEPRECATED_setMessagesArchivedState(ids, archived))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);

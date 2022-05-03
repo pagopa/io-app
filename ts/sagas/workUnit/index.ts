@@ -1,9 +1,8 @@
-import { NavigationActions } from "react-navigation";
+import { CommonActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import {
   ActionCreator,
   ActionType,
-  getType,
   isActionOf,
   TypeConstant
 } from "typesafe-actions";
@@ -13,6 +12,7 @@ import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * The data model needed to run the workunit
+ * @deprecated
  */
 export type WorkUnit = {
   // The navigation action that will be used if the current screen isn't the `startScreenName`
@@ -31,11 +31,12 @@ export type WorkUnit = {
 
 /**
  * The result of the WorkUnit
+ * @deprecated
  */
 export type SagaResult = "cancel" | "completed" | "back" | "failure";
 
 /**
- *
+ * @deprecated
  */
 export type WorkUnitHandler<T = unknown> = (
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult>
@@ -45,6 +46,7 @@ export type WorkUnitHandler<T = unknown> = (
  * Ensure that the `startScreen` is the current screen or navigate to `startScreen` using `navigateTo`
  * @param navigateTo
  * @param startScreen
+ * @deprecated
  */
 function* ensureScreen(navigateTo: () => void, startScreen: string) {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
@@ -59,21 +61,19 @@ function* ensureScreen(navigateTo: () => void, startScreen: string) {
  * Ensure that after the execution of the saga `g`,
  * the navigation stack return to the screen from which the saga was invoked
  * @param g
+ * @deprecated
  */
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, T>
-) {
-  const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
-    yield* call(NavigationService.getCurrentRoute);
+): Generator<ReduxSagaEffect, T, any> {
+  const navigator = yield* call(NavigationService.getNavigator);
+  const initialState = navigator.current?.getRootState();
+
   const res: T = yield* call(g);
-  if (initialScreen?.routeName !== undefined) {
+  if (initialState !== undefined) {
     yield* call(
       NavigationService.dispatchNavigationAction,
-      NavigationActions.navigate({
-        routeName: initialScreen.routeName,
-        params: initialScreen?.params,
-        key: initialScreen?.key
-      })
+      CommonActions.reset(initialState)
     );
   }
   return res;
@@ -82,6 +82,7 @@ export function* withResetNavigationStack<T>(
 /**
  * TODO: Generic handling for the failure of a workunit, navigate to GenericFailureScren
  * @param g
+ * @deprecated
  */
 export function* withFailureHandling<T>(
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult, T>
@@ -96,6 +97,7 @@ export function* withFailureHandling<T>(
 /**
  * Execute the work unit, and wait for an action to complete
  * @param wu
+ * @deprecated
  */
 export function* executeWorkUnit(
   wu: WorkUnit
@@ -108,12 +110,11 @@ export function* executeWorkUnit(
 > {
   yield* call(ensureScreen, wu.startScreenNavigation, wu.startScreenName);
 
-  const result = yield* take([
-    getType(wu.complete),
-    getType(wu.cancel),
-    getType(wu.back),
-    getType(wu.failure)
-  ]);
+  const result = yield* take<
+    ActionType<
+      typeof wu.cancel | typeof wu.complete | typeof wu.back | typeof wu.failure
+    >
+  >([wu.complete, wu.cancel, wu.back, wu.failure]);
 
   if (isActionOf(wu.complete, result)) {
     return "completed";

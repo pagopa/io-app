@@ -1,7 +1,7 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { call, put, select, take } from "typed-redux-saga/macro";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
@@ -9,11 +9,8 @@ import { mixpanelTrack } from "../../mixpanel";
 import {
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentDeletePayment,
   paymentExecuteStart,
-  paymentFetchAllPspsForPaymentId,
-  paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentUpdateWalletPsp,
   paymentVerifica,
@@ -312,10 +309,11 @@ export function* updateWalletPspRequestHandler(
   // First update the selected wallet (walletId) with the
   // new PSP (action.payload); then request a new list
   // of wallets (which will contain the updated PSP)
-  const { wallet, idPsp } = action.payload;
+  const { wallet, psp, idPayment } = action.payload;
+  const { id: idPsp } = psp;
 
   const apiUpdateWalletPsp = pagoPaClient.updateWalletPsp(wallet.idWallet, {
-    data: { idPsp }
+    data: { idPsp, idPagamentoFromEC: idPayment }
   });
   const updateWalletPspWithRefresh =
     pmSessionManager.withRefresh(apiUpdateWalletPsp);
@@ -323,7 +321,6 @@ export function* updateWalletPspRequestHandler(
   try {
     const response: SagaCallReturnType<typeof updateWalletPspWithRefresh> =
       yield* call(updateWalletPspWithRefresh);
-
     if (response.isRight()) {
       if (response.value.status === 200) {
         const maybeWallets: SagaCallReturnType<typeof getWallets> = yield* call(
@@ -521,82 +518,6 @@ export function* addWalletCreditCardRequestHandler(
 }
 
 /**
- * Handles paymentFetchPspsForWalletRequest
- */
-export function* paymentFetchPspsForWalletRequestHandler(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentFetchPspsForPaymentId["request"]>
-) {
-  const apiGetPspSelected = pagoPaClient.getPspSelected(
-    action.payload.idPayment,
-    action.payload.idWallet.toString()
-  );
-  const apiGetPspSelectedWithRefresh =
-    pmSessionManager.withRefresh(apiGetPspSelected);
-  try {
-    const response: SagaCallReturnType<typeof apiGetPspSelectedWithRefresh> =
-      yield* call(apiGetPspSelectedWithRefresh);
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        const successAction = paymentFetchPspsForPaymentId.success(
-          response.value.value.data
-        );
-        yield* put(successAction);
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess(successAction);
-        }
-      } else {
-        throw Error(`response status ${response.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
-    }
-  } catch (e) {
-    const failureAction = paymentFetchPspsForPaymentId.failure(e);
-    yield* put(failureAction);
-    if (action.payload.onFailure) {
-      action.payload.onFailure(failureAction);
-    }
-  }
-}
-
-/**
- * load all psp for a specific wallet & payment id
- */
-export function* paymentFetchAllPspsForWalletRequestHandler(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentFetchAllPspsForPaymentId["request"]>
-) {
-  const apiGetAllPspList = pagoPaClient.getAllPspList(
-    action.payload.idPayment,
-    action.payload.idWallet
-  );
-  const getAllPspListWithRefresh =
-    pmSessionManager.withRefresh(apiGetAllPspList);
-  try {
-    const response: SagaCallReturnType<typeof getAllPspListWithRefresh> =
-      yield* call(getAllPspListWithRefresh);
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        const successAction = paymentFetchAllPspsForPaymentId.success(
-          response.value.value.data
-        );
-        yield* put(successAction);
-      } else {
-        throw Error(`response status ${response.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
-    }
-  } catch (e) {
-    const failureAction = paymentFetchAllPspsForPaymentId.failure(e);
-    yield* put(failureAction);
-  }
-}
-
-/**
  * Handles paymentCheckRequest
  */
 export function* paymentCheckRequestHandler(
@@ -661,9 +582,7 @@ export function* paymentStartRequest(
 export function* paymentDeletePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<
-    typeof paymentDeletePayment["request"] | typeof paymentCompletedFailure
-  >
+  action: ActionType<typeof paymentDeletePayment["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
@@ -857,10 +776,9 @@ export function* getPspV2WithCallbacks(
   action: ActionType<typeof pspForPaymentV2WithCallbacks>
 ) {
   yield* put(pspForPaymentV2.request(action.payload));
-  const result = yield* take([
-    getType(pspForPaymentV2.success),
-    getType(pspForPaymentV2.failure)
-  ]);
+  const result = yield* take<
+    ActionType<typeof pspForPaymentV2.success | typeof pspForPaymentV2.failure>
+  >([pspForPaymentV2.success, pspForPaymentV2.failure]);
   if (isActionOf(pspForPaymentV2.failure, result)) {
     action.payload.onFailure();
   } else if (isActionOf(pspForPaymentV2.success, result)) {

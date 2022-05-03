@@ -33,7 +33,6 @@ import {
 } from "../../../bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { formatDateAsLocal } from "../../../../../utils/dates";
-import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet";
@@ -41,6 +40,7 @@ import { fromVoucherToDestinationLabels } from "../../utils";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { showToast } from "../../../../../utils/showToast";
 import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -116,7 +116,36 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
     );
   }, [pdfVoucherState]);
 
-  const { present, dismiss } = useIOBottomSheetRaw(650);
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+    isReady(props.selectedVoucher) ? (
+      <VoucherDetailBottomSheet
+        barCode={props.selectedVoucher.value.barCode}
+        qrCode={props.selectedVoucher.value.qrCode}
+        pdfVoucherState={pdfVoucherState}
+      />
+    ) : null,
+    I18n.t("bonus.sv.components.voucherBottomsheet.title"),
+    650,
+    <FooterWithButtons
+      type={"TwoButtonsInlineHalf"}
+      leftButton={{
+        bordered: true,
+        onPress: () => dismiss(),
+        title: I18n.t("bonus.sv.components.voucherBottomsheet.cta.exit"),
+        onPressWithGestureHandler: true
+      }}
+      rightButton={{
+        primary: true,
+        onPress: () => {
+          dismiss();
+          props.stampaVoucher(selectedVoucher.id);
+        },
+        title: I18n.t("global.genericSave"),
+        onPressWithGestureHandler: true,
+        disabled: isLoading(props.pdfVoucherState)
+      }}
+    />
+  );
 
   // The selectedVoucherCode can't be undefined in this screen
   if (!isReady(props.selectedVoucher)) {
@@ -136,20 +165,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   }
 
   const selectedVoucher = props.selectedVoucher.value;
-  const openBottomSheet = () =>
-    present(
-      <VoucherDetailBottomSheet
-        barCode={selectedVoucher.barCode}
-        qrCode={selectedVoucher.qrCode}
-        onExit={dismiss}
-        onSaveVoucher={() => {
-          dismiss();
-          props.stampaVoucher(selectedVoucher.id);
-        }}
-        pdfVoucherState={pdfVoucherState}
-      />,
-      I18n.t("bonus.sv.components.voucherBottomsheet.title")
-    );
+
   const voucherRevocationButtonProps = {
     bordered: true,
     style: {
@@ -161,12 +177,6 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
         props.voucherRevocationRequest(selectedVoucher.id)
       ),
     title: I18n.t("bonus.sv.voucherList.details.cta.voucherRevocation")
-  };
-  const openQrButtonProps = {
-    primary: true,
-    bordered: false,
-    onPress: openBottomSheet,
-    title: I18n.t("bonus.sv.voucherList.details.cta.openQr")
   };
 
   const voucherId = selectedVoucher.id?.toString() ?? "";
@@ -187,6 +197,13 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       </BaseScreenComponent>
     );
   }
+
+  const openQrButtonProps = {
+    primary: true,
+    bordered: false,
+    onPress: present,
+    title: I18n.t("bonus.sv.voucherList.details.cta.openQr")
+  };
 
   return (
     <BaseScreenComponent
@@ -270,6 +287,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
           leftButton={voucherRevocationButtonProps}
           rightButton={openQrButtonProps}
         />
+        {bottomSheet}
       </SafeAreaView>
     </BaseScreenComponent>
   );

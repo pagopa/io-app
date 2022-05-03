@@ -14,7 +14,6 @@ const defaultProps: React.ComponentProps<typeof Item> = {
   category: { tag: "GENERIC" } as MessageCategory,
   hasPaidBadge: false,
   isRead: false,
-  isArchived: false,
   isSelected: false,
   isSelectionModeEnabled: false,
   message: messages[0],
@@ -75,17 +74,13 @@ describe("MessageList Item component", () => {
 
   const euCovidCertCategory = { tag: "EU_COVID_CERT" } as MessageCategory;
   [
-    { isArchived: false, hasPaidBadge: false, category: defaultProps.category },
-    { isArchived: true, hasPaidBadge: false, category: defaultProps.category },
-    { isArchived: true, hasPaidBadge: true, category: defaultProps.category },
-    { isArchived: false, hasPaidBadge: true, category: defaultProps.category },
+    { hasPaidBadge: false, category: defaultProps.category },
+    { hasPaidBadge: true, category: defaultProps.category },
     // with Green Pass
-    { isArchived: false, hasPaidBadge: false, category: euCovidCertCategory },
-    { isArchived: true, hasPaidBadge: false, category: euCovidCertCategory },
-    { isArchived: true, hasPaidBadge: true, category: euCovidCertCategory },
-    { isArchived: false, hasPaidBadge: true, category: euCovidCertCategory }
+    { hasPaidBadge: false, category: euCovidCertCategory },
+    { hasPaidBadge: true, category: euCovidCertCategory }
   ].forEach(testProps => {
-    describe(`when isArchived=${testProps.isArchived} hasPaidBadge=${testProps.hasPaidBadge} category=${testProps.category.tag}`, () => {
+    describe(`when hasPaidBadge=${testProps.hasPaidBadge} category=${testProps.category.tag}`, () => {
       it("should match the snapshot", () => {
         expect(
           render(<Item {...defaultProps} {...testProps} />).toJSON()

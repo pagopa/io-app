@@ -7,24 +7,30 @@ import {
   FlatList,
   RefreshControl,
   StyleSheet,
-  Vibration
+  Vibration,
+  View
 } from "react-native";
 import { connect } from "react-redux";
 
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import I18n from "../../../../i18n";
 import {
+  Filter,
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../../store/actions/messages";
 import { Dispatch } from "../../../../store/actions/types";
 import {
-  allPaginatedMessagesSelector,
+  allArchiveSelector,
+  allInboxSelector,
   Cursor,
-  isLoadingNextPage,
-  isLoadingPreviousPage,
-  isReloading
+  isLoadingArchiveNextPage,
+  isLoadingArchivePreviousPage,
+  isReloadingArchive,
+  isLoadingInboxNextPage,
+  isLoadingInboxPreviousPage,
+  isReloadingInbox
 } from "../../../../store/reducers/entities/messages/allPaginated";
 import { MessageState } from "../../../../store/reducers/entities/messages/messagesById";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
@@ -33,10 +39,9 @@ import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../../../theme/variables";
 import { showToast } from "../../../../utils/showToast";
-import { isIos } from "../../../../utils/platform";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import { isNoticePaid } from "../../../../store/reducers/entities/payments";
-import { getMessageStatus } from "../../../../store/reducers/entities/messages/messagesStatus";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   AnimatedFlatList,
   EmptyComponent,
@@ -76,13 +81,17 @@ const styles = StyleSheet.create({
   },
   activityIndicator: {
     padding: 12
+  },
+  bottomSpacer: {
+    height: 60
   }
 });
 
 type OwnProps = {
   ListEmptyComponent?: EmptyComponent;
+  ListHeaderComponent?: React.ReactElement;
 
-  /** This list is used instead of the messages from the store */
+  /** @deprecated This list is used instead of the messages from the store */
   filteredMessages?: ReadonlyArray<UIMessage>;
 
   onLongPressItem?: (id: string) => void;
@@ -90,6 +99,8 @@ type OwnProps = {
 
   /** An optional list of messages to mark as selected */
   selectedMessageIds?: ReadonlySet<string>;
+
+  filter: Filter;
 };
 
 const Loader = () => (
@@ -127,6 +138,7 @@ type Props = OwnProps &
  *
  * By default renders all the available Messages in the store, but this behavior can be overruled
  * via the optional parameter `filteredMessages`.
+ * Please note that once we filter on the BE the `filteredMessages` parameter will be removed.
  *
  * @param ListEmptyComponent
  * @param animated
@@ -138,6 +150,7 @@ type Props = OwnProps &
  */
 const MessageList = ({
   ListEmptyComponent,
+  ListHeaderComponent,
   filteredMessages,
   onLongPressItem,
   hasPaidBadge,
@@ -148,16 +161,20 @@ const MessageList = ({
   // extracted from the store
   allMessages,
   error,
-  getMessageStatus,
   isLoadingMore,
-  isRefreshing,
+  isLoadingPrevious,
   isReloadingAll,
+  didLoad,
   loadNextPage,
   loadPreviousPage,
   nextCursor,
   previousCursor,
-  reloadAll
+  reloadAll,
+  testID
 }: Props) => {
+  // when filteredMessage is defined, this component is used
+  // in search, so loading data on demand should be prevented
+  const shouldUseLoad = filteredMessages === undefined;
   const messages = filteredMessages ?? allMessages;
 
   const flatListRef: React.RefObject<FlatList> = useRef(null);
@@ -165,7 +182,20 @@ const MessageList = ({
   const [longPressedItemIndex, setLongPressedItemIndex] =
     useState<Option<number>>(none);
 
-  const [isFirstLoad, setIsFirstLoad] = useState(isIos);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  useEffect(() => {
+    if (!isLoadingPrevious && !isReloadingAll) {
+      setIsRefreshing(false);
+    }
+  }, [isLoadingPrevious, isReloadingAll]);
+
+  useOnFirstRender(
+    () => {
+      reloadAll();
+    },
+    () => shouldUseLoad && !didLoad
+  );
 
   useEffect(() => {
     if (error) {
@@ -200,12 +230,12 @@ const MessageList = ({
   };
 
   const onEndReached = () => {
-    if (nextCursor && !isLoadingMore) {
+    if (shouldUseLoad && nextCursor && !isLoadingMore) {
       loadNextPage(nextCursor);
     }
   };
 
-  const refreshControl = (
+  const refreshControl = shouldUseLoad ? (
     <RefreshControl
       refreshing={isRefreshing}
       onRefresh={() => {
@@ -213,9 +243,8 @@ const MessageList = ({
           return;
         }
 
-        if (isFirstLoad) {
-          setIsFirstLoad(false);
-        }
+        setIsRefreshing(true);
+
         if (messages.length === 0) {
           reloadAll();
         } else if (previousCursor !== undefined) {
@@ -223,32 +252,26 @@ const MessageList = ({
         }
       }}
     />
-  );
+  ) : undefined;
 
   const renderListFooter = () => {
-    if (isLoadingMore || isReloadingAll) {
+    if (isLoadingMore || (isReloadingAll && !didLoad)) {
       return <Loader />;
     }
     if (messages.length > 0 && !nextCursor) {
       return <EdgeBorderComponent />;
     }
-    return null;
+    return <View style={styles.bottomSpacer} />;
   };
 
   return (
     <>
-      {/* in iOS refresh indicator is shown only when user does pull to refresh on list
-          so only for iOS devices the ActivityIndicator is shown in place of RefreshControl
-          see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load
-          see https://github.com/facebook/react-native/issues/15892
-        */}
-      {isRefreshing && isFirstLoad && <Loader />}
-
       <AnimatedFlatList
+        ListHeaderComponent={ListHeaderComponent}
         ItemSeparatorComponent={ItemSeparator}
         ListEmptyComponent={renderEmptyList({
           error,
-          EmptyComponent: ListEmptyComponent
+          EmptyComponent: didLoad ? ListEmptyComponent : null
         })}
         data={messages}
         initialNumToRender={pageSize}
@@ -258,7 +281,6 @@ const MessageList = ({
         refreshing={isRefreshing}
         renderItem={renderItem({
           hasPaidBadge,
-          getMessageStatus,
           onLongPress,
           onPress: onPressItem,
           selectedMessageIds
@@ -274,15 +296,19 @@ const MessageList = ({
         }}
         onLayout={handleOnLayoutChange}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.25}
+        testID={testID}
         ListFooterComponent={renderListFooter}
       />
     </>
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
-  const paginatedState = allPaginatedMessagesSelector(state);
+const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
+  const isArchive = filter.getArchived;
+  const paginatedState = isArchive
+    ? allArchiveSelector(state)
+    : allInboxSelector(state);
   const error = pot.isError(paginatedState) ? paginatedState.error : undefined;
   const { allMessages, nextCursor, previousCursor } = pot.getOrElse(
     pot.map(paginatedState, ps => ({
@@ -296,31 +322,38 @@ const mapStateToProps = (state: GlobalState) => {
       previousCursor: undefined
     }
   );
-
+  const didLoad = pot.isSome(paginatedState);
   return {
     allMessages,
-    getMessageStatus: (id: string) => getMessageStatus(state, id),
+    testID: `MessageList_${isArchive ? "archive" : "inbox"}`,
     error,
     hasPaidBadge: (category: UIMessage["category"]) =>
       isNoticePaid(state, category),
-    isLoadingMore: isLoadingNextPage(state),
-    isRefreshing: isLoadingPreviousPage(state),
-    isReloadingAll: isReloading(state),
+    isLoadingMore: isArchive
+      ? isLoadingArchiveNextPage(state)
+      : isLoadingInboxNextPage(state),
+    isLoadingPrevious: isArchive
+      ? isLoadingArchivePreviousPage(state)
+      : isLoadingInboxPreviousPage(state),
+    isReloadingAll: isArchive
+      ? isReloadingArchive(state)
+      : isReloadingInbox(state),
+    didLoad,
     nextCursor,
     previousCursor
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch, { filter }: OwnProps) => ({
   /**
    * Perform a complete refresh of the page, discarding the existing state.
    */
   reloadAll: () => {
-    dispatch(reloadAllMessages.request({ pageSize }));
+    dispatch(reloadAllMessages.request({ pageSize, filter }));
   },
 
   loadNextPage: (cursor: Cursor) => {
-    dispatch(loadNextPageMessages.request({ pageSize, cursor }));
+    dispatch(loadNextPageMessages.request({ pageSize, cursor, filter }));
   },
 
   /**
@@ -331,7 +364,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       loadPreviousPageMessages.request({
         pageSize: maximumItemsFromAPI,
-        cursor
+        cursor,
+        filter
       })
     );
   }

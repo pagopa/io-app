@@ -4,6 +4,8 @@
  * TODO: when 100% is reached, the animation end
  */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import { CompatNavigationProp } from "@react-navigation/compat";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
@@ -14,9 +16,7 @@ import {
   StyleSheet,
   Vibration
 } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
@@ -26,7 +26,17 @@ import { ScreenContentHeader } from "../../../components/screens/ScreenContentHe
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
+import {
+  cieAuthenticationError,
+  CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason
+} from "../../../store/actions/cie";
+import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
+import { ReduxProps } from "../../../store/actions/types";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
@@ -34,16 +44,7 @@ import {
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../../../utils/accessibility";
-import { TypeLogs } from "../../../boot/configureInstabug";
-import {
-  cieAuthenticationError,
-  CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason
-} from "../../../store/actions/cie";
-import { ReduxProps } from "../../../store/actions/types";
 import { isIos } from "../../../utils/platform";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -54,8 +55,11 @@ export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
 };
 
-type Props = NavigationStackScreenProps<CieCardReaderScreenNavigationParams> &
-  ReduxProps &
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">
+  >;
+} & ReduxProps &
   ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
@@ -77,8 +81,7 @@ type State = {
 type setErrorParameter = {
   eventReason: CieAuthenticationErrorReason;
   errorDescription?: string;
-  navigationRoute?: string;
-  navigationParams?: Record<string, unknown>;
+  navigation?: () => void;
 };
 
 // A subset of Cie Events (errors) which is of interest to analytics
@@ -113,7 +116,6 @@ const analyticActions = new Map<CieAuthenticationErrorReason, string>([
   ["START_NFC_ERROR", ""]
 ]);
 
-const instabugTag = "cie";
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
@@ -204,8 +206,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private setError = ({
     eventReason,
     errorDescription,
-    navigationRoute,
-    navigationParams = {}
+    navigation
   }: setErrorParameter) => {
     const cieDescription =
       errorDescription ??
@@ -223,9 +224,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       },
       () => {
         Vibration.vibrate(VIBRATION);
-        if (navigationRoute !== undefined) {
-          this.props.navigation.navigate(navigationRoute, navigationParams);
-        }
+        navigation?.();
       }
     );
   };
@@ -235,12 +234,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieEvent = async (event: CEvent) => {
-    handleSendAssistanceLog(
-      this.choosenTool,
-      event.event,
-      TypeLogs.DEBUG,
-      instabugTag
-    );
+    handleSendAssistanceLog(this.choosenTool, event.event);
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -265,7 +259,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "ON_CARD_PIN_LOCKED":
         this.setError({
           eventReason: event.event,
-          navigationRoute: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+          navigation: () =>
+            this.props.navigation.navigate({
+              routeName: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+            })
         });
         break;
 
@@ -273,10 +270,13 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "ON_PIN_ERROR":
         this.setError({
           eventReason: event.event,
-          navigationRoute: ROUTES.CIE_WRONG_PIN_SCREEN,
-          navigationParams: {
-            remainingCount: event.attemptsLeft
-          }
+          navigation: () =>
+            this.props.navigation.navigate({
+              routeName: ROUTES.CIE_WRONG_PIN_SCREEN,
+              params: {
+                remainingCount: event.attemptsLeft
+              }
+            })
         });
         break;
 
@@ -285,7 +285,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "CERTIFICATE_REVOKED":
         this.setError({
           eventReason: event.event,
-          navigationRoute: ROUTES.CIE_EXPIRED_SCREEN
+          navigation: () =>
+            this.props.navigation.navigate({
+              routeName: ROUTES.CIE_EXPIRED_SCREEN
+            })
         });
         break;
 
@@ -315,20 +318,20 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       case ReadingState.error:
         this.setState(
-          getTextForState(ReadingState.error, this.state.errorMessage),
+          state => getTextForState(ReadingState.error, state.errorMessage),
           this.announceUpdate
         );
         break;
       case ReadingState.completed:
         this.setState(
-          {
+          state => ({
             title: I18n.t("global.buttons.ok2"),
             subtitle: I18n.t("authentication.cie.card.cieCardValid"),
             // duplicate message so screen reader can read the updated message
-            content: this.state.isScreenReaderEnabled
+            content: state.isScreenReaderEnabled
               ? I18n.t("authentication.cie.card.cieCardValid")
               : undefined
-          },
+          }),
           this.announceUpdate
         );
         break;
@@ -343,12 +346,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
-    handleSendAssistanceLog(
-      this.choosenTool,
-      error.message,
-      TypeLogs.DEBUG,
-      instabugTag
-    );
+    handleSendAssistanceLog(this.choosenTool, error.message);
     this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
 
@@ -356,18 +354,16 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     if (this.state.readingState === ReadingState.completed) {
       return;
     }
-    handleSendAssistanceLog(
-      this.choosenTool,
-      "authentication SUCCESS",
-      TypeLogs.DEBUG,
-      instabugTag
-    );
+    handleSendAssistanceLog(this.choosenTool, "authentication SUCCESS");
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
       setTimeout(
         async () => {
-          this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
-            cieConsentUri
+          this.props.navigation.navigate({
+            routeName: ROUTES.CIE_CONSENT_DATA_USAGE,
+            params: {
+              cieConsentUri
+            }
           });
           // if screen reader is enabled, give more time to read the success message
         },

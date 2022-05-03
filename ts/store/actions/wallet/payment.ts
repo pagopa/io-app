@@ -15,7 +15,6 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
 import {
   PaymentManagerToken,
-  Psp,
   RawPaymentMethod,
   Transaction,
   Wallet
@@ -38,7 +37,11 @@ import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
  * and make sure you understand it _before_ working on it.
  */
 
-export type PaymentStartOrigin = "message" | "qrcode_scan" | "manual_insertion";
+export type PaymentStartOrigin =
+  | "message"
+  | "qrcode_scan"
+  | "manual_insertion"
+  | "donation";
 
 /**
  * Resets the payment state before starting a new payment
@@ -127,44 +130,13 @@ export const paymentCheck = createAsyncAction(
 >();
 
 //
-// fetch psp list
-//
-
-type PaymentFetchPspsForPaymentIdRequestPayload = Readonly<{
-  idPayment: string;
-  idWallet: number;
-  onSuccess?: (
-    action: ActionType<typeof paymentFetchPspsForPaymentId["success"]>
-  ) => void;
-  onFailure?: (
-    action: ActionType<typeof paymentFetchPspsForPaymentId["failure"]>
-  ) => void;
-}>;
-
-export const paymentFetchPspsForPaymentId = createAsyncAction(
-  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_REQUEST",
-  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_SUCCESS",
-  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_FAILURE"
-)<PaymentFetchPspsForPaymentIdRequestPayload, ReadonlyArray<Psp>, Error>();
-
-type PaymentFetchAllPspsForPaymentIdRequestPayload = Readonly<{
-  idPayment: string;
-  idWallet: string;
-}>;
-
-export const paymentFetchAllPspsForPaymentId = createAsyncAction(
-  "PAYMENT_FETCH_ALL_PSPS_FOR_PAYMENT_ID_REQUEST",
-  "PAYMENT_FETCH_ALL_PSPS_FOR_PAYMENT_ID_SUCCESS",
-  "PAYMENT_FETCH_ALL_PSPS_FOR_PAYMENT_ID_FAILURE"
-)<PaymentFetchAllPspsForPaymentIdRequestPayload, ReadonlyArray<Psp>, Error>();
-
-//
 // Update Wallet PSP request and responses
 //
 
 type WalletUpdatePspRequestPayload = Readonly<{
-  idPsp: number;
+  psp: PspData;
   wallet: Wallet;
+  idPayment: string;
   onSuccess?: (
     action: ActionType<typeof paymentUpdateWalletPsp["success"]>
   ) => void;
@@ -282,6 +254,13 @@ export const runStartOrResumePaymentActivationSaga = createStandardAction(
 )<RunStartOrResumePaymentActivationSagaPayload>();
 
 /**
+ * the psp selected for the payment
+ */
+export const pspSelectedForPaymentV2 = createStandardAction(
+  "PAYMENT_PSP_V2_SELECTED"
+)<PspData>();
+
+/**
  * get the list of psp that can handle the payment with the given paymentMethod
  */
 export const pspForPaymentV2 = createAsyncAction(
@@ -321,15 +300,14 @@ export type PaymentActions =
   | ActionType<typeof paymentIdPolling>
   | ActionType<typeof paymentWebViewEnd>
   | ActionType<typeof paymentCheck>
-  | ActionType<typeof paymentFetchPspsForPaymentId>
   | ActionType<typeof paymentExecuteStart>
   | ActionType<typeof paymentCompletedSuccess>
   | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePayment>
   | ActionType<typeof runDeleteActivePaymentSaga>
   | ActionType<typeof abortRunningPayment>
-  | ActionType<typeof paymentFetchAllPspsForPaymentId>
   | ActionType<typeof paymentRedirectionUrls>
   | ActionType<typeof runStartOrResumePaymentActivationSaga>
   | ActionType<typeof pspForPaymentV2>
+  | ActionType<typeof pspSelectedForPaymentV2>
   | ActionType<typeof pspForPaymentV2WithCallbacks>;

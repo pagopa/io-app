@@ -1,10 +1,10 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
@@ -32,15 +32,21 @@ import {
 import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
 import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToWalletAddCreditCard
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { isPaypalEnabledSelector } from "../../store/reducers/backendStatus";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
 import { paypalSelector } from "../../store/reducers/wallet/wallets";
 import { AsyncAlert } from "../../utils/asyncAlert";
+import { isTestEnv } from "../../utils/environment";
 
 export type AddPaymentMethodScreenNavigationParams = Readonly<{
   inPayment: Option<{
@@ -54,12 +60,15 @@ export type AddPaymentMethodScreenNavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<AddPaymentMethodScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "WALLET_ADD_PAYMENT_METHOD">
+  >;
+};
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
+type Props = OwnProps &
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.newPaymentMethod.contextualHelpTitle",
@@ -72,6 +81,7 @@ const getPaymentMethods = (
     onlyPaymentMethodCanPay: boolean;
     isPaymentOnGoing: boolean;
     isPaypalEnabled: boolean;
+    canOnboardBPay: boolean;
   }
 ): ReadonlyArray<IPaymentMethod> => [
   {
@@ -122,7 +132,7 @@ const getPaymentMethods = (
     name: I18n.t("wallet.methods.bancomatPay.name"),
     description: I18n.t("wallet.methods.bancomatPay.description"),
     icon: BpayLogo,
-    status: !options.onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
+    status: options.canOnboardBPay ? "implemented" : "notImplemented",
     onPress: props.startBPayOnboarding,
     section: "digital_payments"
   },
@@ -213,7 +223,9 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
                 paymentMethods={getPaymentMethods(props, {
                   onlyPaymentMethodCanPay: true,
                   isPaymentOnGoing: inPayment.isSome(),
-                  isPaypalEnabled: props.isPaypalEnabled
+                  isPaypalEnabled: props.isPaypalEnabled,
+                  // can onboard bpay only when both FF are enabled
+                  canOnboardBPay: props.canOnboardBPay && props.canPayWithBPay
                 })}
               />
             </View>
@@ -225,7 +237,8 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
                 onlyPaymentMethodCanPay:
                   canAddOnlyPayablePaymentMethod === true,
                 isPaymentOnGoing: inPayment.isSome(),
-                isPaypalEnabled: props.isPaypalEnabled
+                isPaypalEnabled: props.isPaypalEnabled,
+                canOnboardBPay: props.canOnboardBPay
               })}
             />
           </Content>
@@ -254,12 +267,22 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     })
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  isPaypalAlreadyAdded: pot.isSome(paypalSelector(state)),
-  isPaypalEnabled: isPaypalEnabledSelector(state)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const bpayConfig = bancomatPayConfigSelector(state);
+  return {
+    isPaypalAlreadyAdded: pot.isSome(paypalSelector(state)),
+    isPaypalEnabled: isPaypalEnabledSelector(state),
+    canOnboardBPay: bpayConfig.onboarding,
+    canPayWithBPay: bpayConfig.payment
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AddPaymentMethodScreen);
+
+// to keep solid code encapsulation
+export const testableFunctions = {
+  getPaymentMethods: isTestEnv ? getPaymentMethods : undefined
+};

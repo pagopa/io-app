@@ -6,13 +6,13 @@ import {
   View as BaseView,
   ScrollView
 } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch, useSelector } from "react-redux";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import I18n from "../../i18n";
+import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import I18n from "../../i18n";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
@@ -30,18 +30,21 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
-import { TypeLogs } from "../../boot/configureInstabug";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { createPinSuccess } from "../../store/actions/pinset";
 import { isOnboardingCompleted } from "../../utils/navigation";
-import { AlertModal } from "../../components/ui/AlertModal";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
   body: "onboarding.unlockCode.contextualHelpContent"
 };
 
-type Props = NavigationStackScreenProps & LightModalContextInterface;
+type Props = IOStackNavigationRouteProps<AppParamsList> &
+  LightModalContextInterface;
 
 const styles = StyleSheet.create({
   flex: {
@@ -54,7 +57,6 @@ const styles = StyleSheet.create({
 });
 
 const pinLength = PIN_LENGTH_SIX;
-const instabuglogTag = "pin-creation";
 
 /**
  * A screen that allows the user to set the unlock code.
@@ -76,7 +78,7 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
 
   const handleGoBack = () => {
     if (isOnboardingCompleted()) {
-      navigation.goBack(null);
+      navigation.goBack();
     } else {
       onboardingAbortAlert.showAlert();
     }
@@ -118,23 +120,13 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
     void safeSetPin(typedPin)
       .fold(
         error => {
-          handleSendAssistanceLog(
-            assistanceTool,
-            `setPin error ${error}`,
-            TypeLogs.DEBUG,
-            instabuglogTag
-          );
+          handleSendAssistanceLog(assistanceTool, `setPin error ${error}`);
 
           // TODO: Here we should show an error to the
           // user probably.
         },
         () => {
-          handleSendAssistanceLog(
-            assistanceTool,
-            `createPinSuccess`,
-            TypeLogs.DEBUG,
-            instabuglogTag
-          );
+          handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
 
           dispatch(createPinSuccess(typedPin));
 

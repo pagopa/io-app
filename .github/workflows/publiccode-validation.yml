@@ -1,0 +1,10 @@
+on: [push, pull_request]
+
+jobs:
+  publiccode_validation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: italia/publiccode-parser-action@v0.0.2-alpha
+      with:
+        publiccode: 'publiccode.yml'

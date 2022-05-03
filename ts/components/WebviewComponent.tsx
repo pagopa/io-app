@@ -1,13 +1,18 @@
 import * as React from "react";
-import WebView from "react-native-webview";
 import { useState } from "react";
-import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
+import WebView from "react-native-webview";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent,
+  WebViewSourceUri
+} from "react-native-webview/lib/WebViewTypes";
+import { mixpanelTrack } from "../mixpanel";
 import GenericErrorComponent from "./screens/GenericErrorComponent";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {
-  source: WebViewSource;
+  source: WebViewSourceUri;
 };
 
 const WebviewComponent = (props: Props) => {
@@ -24,6 +29,14 @@ const WebviewComponent = (props: Props) => {
     }
   };
 
+  const handleError = (event: WebViewErrorEvent | WebViewHttpErrorEvent) => {
+    void mixpanelTrack("CGN_LANDING_PAGE_LOAD_ERROR", {
+      uri: props.source.uri,
+      ...event
+    });
+    setHasError(true);
+  };
+
   return (
     <>
       {hasError ? (
@@ -33,10 +46,12 @@ const WebviewComponent = (props: Props) => {
           <WebView
             androidCameraAccessDisabled={true}
             androidMicrophoneAccessDisabled={true}
+            allowsInlineMediaPlayback={true}
             style={IOStyles.flex}
             ref={ref}
             onLoadEnd={() => setLoading(false)}
-            onError={() => setHasError(true)}
+            onHttpError={handleError}
+            onError={handleError}
             source={props.source}
           />
         </LoadingSpinnerOverlay>

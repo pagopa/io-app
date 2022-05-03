@@ -5,6 +5,10 @@ import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import { sessionExpired } from "../../../store/actions/authentication";
 import { handleResponse, ResponseType } from "../utils";
 import { reloadAllMessages } from "../../../store/actions/messages";
+import {
+  defaultRequestError,
+  defaultRequestPayload
+} from "../../../__mocks__/messages";
 
 describe("`handleResponse` function", () => {
   describe("given a failure", () => {
@@ -42,7 +46,7 @@ describe("`handleResponse` function", () => {
       > = right({ status: 200, value: "حبيبتي" } as IResponseType<200, string>);
 
       it("should run `onSuccess` callback with the response and return its action", () => {
-        const expectedAction = reloadAllMessages.request({ pageSize: 8 });
+        const expectedAction = reloadAllMessages.request(defaultRequestPayload);
         const onSuccess = jest.fn(() => expectedAction);
         const action = handleResponse(success, onSuccess, jest.fn());
         expect(onSuccess).toHaveBeenNthCalledWith(1, "حبيبتي");
@@ -84,9 +88,7 @@ describe("`handleResponse` function", () => {
       });
 
       it("should run `onFailure` callback with the error and return its action", () => {
-        const expectedAction = reloadAllMessages.failure(
-          new Error("seriously?")
-        );
+        const expectedAction = reloadAllMessages.failure(defaultRequestError);
         const onFailure = jest.fn(() => expectedAction);
         const action = handleResponse(success, jest.fn(), onFailure);
         expect(onFailure).toHaveBeenNthCalledWith(1, new Error("seriously?"));

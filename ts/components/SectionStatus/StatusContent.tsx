@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = WithTestID<{
+  accessible?: boolean;
   accessibilityHint?: string;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
@@ -34,6 +35,7 @@ type Props = WithTestID<{
 }>;
 
 const StatusContent: React.FC<Props> = ({
+  accessible,
   accessibilityHint,
   accessibilityLabel,
   accessibilityRole,
@@ -48,7 +50,7 @@ const StatusContent: React.FC<Props> = ({
     accessibilityHint={accessibilityHint}
     accessibilityLabel={accessibilityLabel}
     accessibilityRole={accessibilityRole}
-    accessible={true}
+    accessible={accessible ?? true}
     ref={viewRef}
     style={[styles.container, { backgroundColor: IOColors[backgroundColor] }]}
     testID={"SectionStatusContent"}

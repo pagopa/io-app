@@ -1,4 +1,3 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
 import configureMockStore, { MockStore } from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -6,17 +5,11 @@ import { Action } from "../../../../store/actions/types";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { setMessageReadState } from "../../../../store/actions/messages";
+import { DEPRECATED_setMessageReadState } from "../../../../store/actions/messages";
 import MVL_ROUTES from "../../navigation/routes";
 import { mvlDetailsLoad } from "../../store/actions";
 import { mvlMock, mvlMockId } from "../../types/__mock__/mvlMock";
 import { MvlRouterScreen } from "../MvlRouterScreen";
-
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
 
 describe("MvlRouterScreen behaviour", () => {
   jest.useFakeTimers();
@@ -48,7 +41,7 @@ describe("MvlRouterScreen behaviour", () => {
     it("Should set the message ID as read", () => {
       const { store } = renderWithDefaultStore();
       expect(store.getActions()).toContainEqual(
-        setMessageReadState(mvlMockId, true, "unknown")
+        DEPRECATED_setMessageReadState(mvlMockId, true, "unknown")
       );
     });
 
@@ -147,7 +140,7 @@ describe("MvlRouterScreen behaviour", () => {
       const { store } = renderWithDefaultStore();
       store.dispatch(success);
       expect(store.getActions()).toContainEqual(
-        setMessageReadState(mvlMockId, true, "unknown")
+        DEPRECATED_setMessageReadState(mvlMockId, true, "unknown")
       );
     });
   });
@@ -161,7 +154,7 @@ const dispatchActionAndRenderComponent = (actions: ReadonlyArray<Action>) => {
 };
 
 const renderComponent = (store: MockStore<GlobalState> | Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  component: renderScreenFakeNavRedux<GlobalState>(
     MvlRouterScreen,
     MVL_ROUTES.DETAILS,
     { id: mvlMockId },

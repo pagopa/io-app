@@ -13,6 +13,7 @@ import {
   getFavoriteWalletId
 } from "../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../types/pagopa";
+import { isAndroid } from "../../utils/platform";
 import { handleSetFavourite } from "../../utils/wallet";
 import { IOStyleVariables } from "../core/variables/IOStyleVariables";
 import Switch from "../ui/Switch";
@@ -50,7 +51,12 @@ const FavoritePaymentMethodSwitch = (props: Props) => {
   );
 
   const rightElement = isLoading ? (
-    <View style={{ width: IOStyleVariables.switchWidth }}>
+    <View
+      style={{
+        width: IOStyleVariables.switchWidth,
+        alignSelf: isAndroid ? "center" : undefined
+      }}
+    >
       <ActivityIndicator
         color={"black"}
         accessible={false}

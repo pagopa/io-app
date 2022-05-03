@@ -1,24 +1,36 @@
-import { NavigationParams } from "react-navigation";
-import { createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
-import { appReducer } from "../../../../store/reducers";
+import { createStore, Store } from "redux";
+import { Zendesk } from "../../../../../definitions/content/Zendesk";
+import { ZendeskCategories } from "../../../../../definitions/content/ZendeskCategories";
+import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
+import { ZendeskSubCategories } from "../../../../../definitions/content/ZendeskSubCategories";
+import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
+import ZENDESK_ROUTES from "../../navigation/routes";
 import * as zendeskAction from "../../store/actions";
 import { getZendeskConfig } from "../../store/actions";
-import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import ZendeskChooseCategory from "../ZendeskChooseCategory";
-import { ZendeskCategories } from "../../../../../definitions/content/ZendeskCategories";
-import { ZendeskSubCategories } from "../../../../../definitions/content/ZendeskSubCategories";
-import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
-import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
-import * as navigationAction from "../../store/actions/navigation";
-import * as mixpanel from "../../../../mixpanel";
 
 jest.useFakeTimers();
+
+const mockedNavigation = jest.fn();
+
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      addListener: () => jest.fn(),
+      navigate: mockedNavigation,
+      dispatch: jest.fn()
+    })
+  };
+});
 
 const mockedZendeskConfig: Zendesk = {
   panicMode: false,
@@ -101,6 +113,9 @@ describe("the ZendeskChooseCategory screen", () => {
   });
 
   describe("if the Zendesk config is ready and there is at least a category", () => {
+    beforeEach(() => {
+      mockedNavigation.mockClear();
+    });
     it("should render the received categories", () => {
       const store: Store<GlobalState> = createStore(
         appReducer,
@@ -134,10 +149,6 @@ describe("the ZendeskChooseCategory screen", () => {
       ).toBeNull();
     });
     it("should call the addTicketCustomField and the navigateToZendeskChooseSubCategory functions when press the category if it has sub-categories", () => {
-      const navigateToZendeskChooseSubCategorySpy = jest.spyOn(
-        navigationAction,
-        "navigateToZendeskChooseSubCategory"
-      );
       const store: Store<GlobalState> = createStore(
         appReducer,
         globalState as any
@@ -162,14 +173,15 @@ describe("the ZendeskChooseCategory screen", () => {
       );
       fireEvent(categoryItem, "onPress");
       expect(MockZendesk.addTicketCustomField).toBeCalled();
-      expect(navigateToZendeskChooseSubCategorySpy).toBeCalled();
-    });
-    it("should call the openSupportTicket, the mixpanelTrack and the zendeskWorkunitCompleted functions when press the category if it has not sub-categories", () => {
-      const mixpanelTrackSpy = jest.spyOn(mixpanel, "mixpanelTrack");
-      const zendeskWorkunitCompletedSpy = jest.spyOn(
-        zendeskAction,
-        "zendeskSupportCompleted"
+      expect(mockedNavigation).toHaveBeenCalledTimes(1);
+      expect(mockedNavigation).toHaveBeenCalledWith(
+        ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY,
+        {
+          assistanceForPayment: undefined
+        }
       );
+    });
+    it("should call the navigateToZendeskAskPermissions action when press the category if it has not sub-categories", () => {
       const store: Store<GlobalState> = createStore(
         appReducer,
         globalState as any
@@ -180,15 +192,19 @@ describe("the ZendeskChooseCategory screen", () => {
         mockedZendeskConfig.zendeskCategories?.categories[0].value as string
       );
       fireEvent(categoryItem, "onPress");
-      expect(MockZendesk.openTicket).toBeCalled();
-      expect(mixpanelTrackSpy).toBeCalled();
-      expect(zendeskWorkunitCompletedSpy).toBeCalled();
+      expect(mockedNavigation).toHaveBeenCalledTimes(1);
+      expect(mockedNavigation).toHaveBeenCalledWith(
+        ZENDESK_ROUTES.ASK_PERMISSIONS,
+        {
+          assistanceForPayment: undefined
+        }
+      );
     });
   });
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     ZendeskChooseCategory,
     ROUTES.MAIN,
     {},

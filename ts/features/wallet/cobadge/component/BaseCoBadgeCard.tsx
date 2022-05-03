@@ -22,8 +22,10 @@ type Props = {
   expiringDate?: Date;
   isExpired?: boolean;
   abi: Abi;
+  brand?: string;
   brandLogo: ImageSourcePropType;
   blocked?: boolean;
+  accessibilityLabel?: string;
 };
 
 const styles = StyleSheet.create({
@@ -53,6 +55,30 @@ const styles = StyleSheet.create({
 const BASE_IMG_W = 160;
 const BASE_IMG_H = 40;
 
+/**
+ * Generate the accessibility label for the card.
+ */
+const getAccessibilityRepresentation = (
+  brand: string,
+  bankName: string,
+  expiringDate?: Date
+) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.coBadge", {
+    brand,
+    bankName
+  });
+
+  const computedValidity =
+    expiringDate !== undefined
+      ? `, ${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
+          expiringDate,
+          I18n.t("global.dateFormats.numericMonthYear")
+        )}`
+      : "";
+
+  return `${cardRepresentation}${computedValidity}`;
+};
+
 const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
   const imgDimensions = useImageResize(
     BASE_IMG_W,
@@ -70,6 +96,11 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
   );
   return (
     <BaseCardComponent
+      accessibilityLabel={getAccessibilityRepresentation(
+        props.brand ?? "",
+        props.abi.name ?? "",
+        props.expiringDate
+      )}
       topLeftCorner={
         <>
           <View

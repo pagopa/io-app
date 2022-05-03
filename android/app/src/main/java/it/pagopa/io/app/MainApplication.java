@@ -4,10 +4,11 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.reactnativecommunity.art.ARTPackage;
+import com.facebook.react.bridge.JSIModulePackage;
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
 import com.facebook.react.PackageList;
 
@@ -34,6 +35,11 @@ public class MainApplication extends Application implements ReactApplication {
     }
 
     @Override
+    protected JSIModulePackage getJSIModulePackage() {
+      return new ReanimatedJSIModulePackage();
+    }
+
+    @Override
     protected List<ReactPackage> getPackages() {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new RNPermissionsPackage());
@@ -52,10 +58,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
 
     super.onCreate();
-    new RNInstabugReactnativePackage
-      .Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
-      .setInvocationEvent("none")
-      .setPrimaryColor("#0073E6").build();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }

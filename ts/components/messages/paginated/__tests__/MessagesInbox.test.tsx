@@ -1,18 +1,17 @@
+import { pot } from "@pagopa/ts-commons";
+import { fireEvent } from "@testing-library/react-native";
+import { none } from "fp-ts/lib/Option";
 import React from "react";
 import configureMockStore from "redux-mock-store";
-import { NavigationParams } from "react-navigation";
-import { pot } from "@pagopa/ts-commons";
-import { none } from "fp-ts/lib/Option";
-import { fireEvent } from "@testing-library/react-native";
-
-import MessagesInbox from "../MessagesInbox";
-import { appReducer } from "../../../../store/reducers";
+import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
-import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
+
+import MessagesInbox from "../MessagesInbox";
 
 jest.useFakeTimers();
 
@@ -21,7 +20,11 @@ const messages = successReloadMessagesPayload.messages;
 describe("MessagesInbox component", () => {
   describe("when there at least one message and the user taps on it", () => {
     it("should call `navigateToMessageDetail` with the message", async () => {
-      const props = { navigateToMessageDetail: jest.fn() };
+      const props = {
+        messages: [],
+        navigateToMessageDetail: jest.fn(),
+        archiveMessages: jest.fn()
+      };
       const { component } = renderComponent(props);
       await fireEvent(component.getByText(messages[0].title), "onPress");
       expect(props.navigateToMessageDetail).toHaveBeenNthCalledWith(
@@ -34,7 +37,7 @@ describe("MessagesInbox component", () => {
 
 const renderComponent = (props: React.ComponentProps<typeof MessagesInbox>) => {
   const paginatedState: Partial<AllPaginated> = {
-    data: pot.some({ page: messages })
+    inbox: { data: pot.some({ page: messages }), lastRequest: none }
   };
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = { data: pot.none, lastRequest: none, ...paginatedState };
@@ -49,7 +52,7 @@ const renderComponent = (props: React.ComponentProps<typeof MessagesInbox>) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       () => <MessagesInbox {...props} />,
       ROUTES.MESSAGES_HOME,
       {},

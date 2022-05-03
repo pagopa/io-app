@@ -1,3 +1,6 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
+import { ListItem } from "native-base";
 import React from "react";
 import {
   FlatList,
@@ -6,45 +9,57 @@ import {
   ScrollView
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { ListItem } from "native-base";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import { H1 } from "../../../components/core/typography/H1";
+import { H4 } from "../../../components/core/typography/H4";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import IconFont from "../../../components/ui/IconFont";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
-import { useIOSelector } from "../../../store/hooks";
-import { zendeskConfigSelector } from "../store/reducers";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { toArray } from "../../../store/helpers/indexer";
-import { H4 } from "../../../components/core/typography/H4";
+import { useIOSelector } from "../../../store/hooks";
 import customVariables from "../../../theme/variables";
-import IconFont from "../../../components/ui/IconFont";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
-import { navigateToZendeskChooseSubCategory } from "../store/actions/navigation";
-import {
-  zendeskSelectedCategory,
-  zendeskSupportCompleted,
-  zendeskSupportFailure
-} from "../store/actions";
-import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
+import { getFullLocale } from "../../../utils/locale";
 import {
   addTicketCustomField,
-  hasSubCategories,
-  openSupportTicket
+  hasSubCategories
 } from "../../../utils/supportAssistance";
-import { getFullLocale } from "../../../utils/locale";
-import { mixpanelTrack } from "../../../mixpanel";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { ZendeskParamsList } from "../navigation/params";
+import ZENDESK_ROUTES from "../navigation/routes";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportFailure
+} from "../store/actions";
+import { zendeskConfigSelector } from "../store/reducers";
+
+export type ZendeskChooseCategoryNavigationParams = {
+  assistanceForPayment: boolean;
+};
+
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_CATEGORY">
+  >;
+};
 
 /**
  * this screen shows the categories for which the user can ask support with the assistance
  */
-const ZendeskChooseCategory = () => {
+const ZendeskChooseCategory = (props: Props) => {
   const dispatch = useDispatch();
-  const navigation = useNavigationContext();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_CATEGORY">
+    >();
+  const assistanceForPayment = props.navigation.getParam(
+    "assistanceForPayment"
+  );
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
   const selectedCategory = (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category));
-  const zendeskWorkunitComplete = () => dispatch(zendeskSupportCompleted());
   const zendeskWorkUnitFailure = (reason: string) =>
     dispatch(zendeskSupportFailure(reason));
 
@@ -78,11 +93,13 @@ const ZendeskChooseCategory = () => {
           // Set category as custom field
           addTicketCustomField(categoriesId, category.value);
           if (hasSubCategories(category)) {
-            navigation.navigate(navigateToZendeskChooseSubCategory());
+            navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
+              assistanceForPayment
+            });
           } else {
-            openSupportTicket();
-            void mixpanelTrack("ZENDESK_OPEN_TICKET");
-            zendeskWorkunitComplete();
+            navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
+              assistanceForPayment
+            });
           }
         }}
         first={listItem.index === 0}
@@ -122,7 +139,7 @@ const ZendeskChooseCategory = () => {
   // The void customRightIcon is needed to have a centered header title
   return (
     <BaseScreenComponent
-      showInstabugChat={false}
+      showChat={false}
       goBack={true}
       customRightIcon={{
         iconName: "",

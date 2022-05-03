@@ -2,24 +2,36 @@
  * The screen to display to the user the various types of errors that occurred during the transaction.
  * Inside the cancel and retry buttons are conditionally returned.
  */
-import * as t from "io-ts";
+import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Option } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
+import * as t from "io-ts";
+import { View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { View } from "native-base";
-import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import {
-  instabugLog,
-  openInstabugQuestionReport,
-  setInstabugUserAttribute,
-  TypeLogs
-} from "../../../boot/configureInstabug";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
+import CopyButtonComponent from "../../../components/CopyButtonComponent";
+import { H4 } from "../../../components/core/typography/H4";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
+import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -28,42 +40,29 @@ import {
   paymentIdPolling,
   paymentVerifica
 } from "../../../store/actions/wallet/payment";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import {
+  PaymentHistory,
+  paymentsHistorySelector
+} from "../../../store/reducers/payments/history";
 import { GlobalState } from "../../../store/reducers/types";
 import { PayloadForAction } from "../../../types/utils";
 import {
   ErrorTypes,
   getCodiceAvviso,
   getPaymentHistoryDetails,
-  getV2ErrorMainType,
-  paymentInstabugTag
+  getV2ErrorMainType
 } from "../../../utils/payment";
-import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { H4 } from "../../../components/core/typography/H4";
-import CopyButtonComponent from "../../../components/CopyButtonComponent";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
-import {
-  PaymentHistory,
-  paymentsHistorySelector
-} from "../../../store/reducers/payments/history";
-import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  resetCustomFields,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategoryValue
+  zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
-import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 
 export type TransactionErrorScreenNavigationParams = {
   error: Option<
@@ -77,8 +76,11 @@ export type TransactionErrorScreenNavigationParams = {
   onCancel: () => void;
 };
 
-type OwnProps =
-  NavigationStackScreenProps<TransactionErrorScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_ERROR">
+  >;
+};
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -97,32 +99,14 @@ const imageMapping: Record<ErrorTypes, ImageSourcePropType> = {
   TECHNICAL: require(baseIconPath + "servicesStatus/error-detail-icon.png")
 };
 
-// Save the rptId as attribute and open the Instabug chat.
-const requestAssistanceForPaymentFailure = (
-  rptId: RptId,
-  payment?: PaymentHistory
-) => {
-  Instabug.appendTags([paymentInstabugTag]);
-  setInstabugUserAttribute(
-    "blockedPaymentRptId",
-    RptIdFromString.encode(rptId)
-  );
-  if (payment) {
-    instabugLog(
-      getPaymentHistoryDetails(payment),
-      TypeLogs.INFO,
-      paymentInstabugTag
-    );
-  }
-  openInstabugQuestionReport();
-};
-
 const requestZendeskAssistanceForPaymentFailure = (
   rptId: RptId,
   payment?: PaymentHistory
 ) => {
+  resetCustomFields();
   // Set pagamenti_pagopa as category
-  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategoryValue);
+  addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+
   // Add rptId custom field
   addTicketCustomField(
     zendeskBlockedPaymentRptIdId,
@@ -187,9 +171,6 @@ export const errorTransactionUIElements = (
   }
   const requestAssistance = () => {
     switch (choosenTool) {
-      case ToolEnum.instabug:
-        requestAssistanceForPaymentFailure(rptId, paymentHistory);
-        break;
       case ToolEnum.zendesk:
         requestZendeskAssistanceForPaymentFailure(rptId, paymentHistory);
         handleZendeskRequestAssistance();
@@ -367,7 +348,10 @@ const TransactionErrorScreen = (props: Props) => {
     rptId,
     onCancel,
     choosenTool,
-    props.zendeskSupportWorkunitStart,
+    () => {
+      props.zendeskSupportWorkunitStart();
+      props.zendeskSelectedCategory(zendeskPaymentCategory);
+    },
     props.canShowHelp,
     paymentHistory
   );
@@ -405,7 +389,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   zendeskSupportWorkunitStart: () =>
     dispatch(
       zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
-    )
+    ),
+  zendeskSelectedCategory: (category: ZendeskCategory) =>
+    dispatch(zendeskSelectedCategory(category))
 });
 
 export default connect(

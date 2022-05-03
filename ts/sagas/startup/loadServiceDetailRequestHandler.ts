@@ -106,9 +106,8 @@ export function* watchServicesDetailLoadSaga(
     // Take the loadServicesDetail action and for each service id
     // put back a loadServiceDetail.request in the channel
     // to be processed by the handlers.
-    const action = yield* take<ActionType<typeof loadServicesDetail>>(
-      getType(loadServicesDetail)
-    );
+    const action = yield* take(loadServicesDetail);
+
     action.payload.forEach((serviceId: string) =>
       requestsChannel.put(loadServiceDetail.request(serviceId))
     );

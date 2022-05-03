@@ -9,7 +9,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
         "backgroundColor": "#E6E9F2",
         "flexDirection": "row",
         "justifyContent": "space-around",
-        "padding": 10,
+        "padding": 5,
         "zIndex": 1,
       },
     ]
@@ -55,6 +55,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
         "flexDirection": "row",
         "height": 45,
         "justifyContent": "center",
+        "margin": 5,
         "opacity": 1,
         "paddingBottom": 6,
         "paddingTop": 6,
@@ -122,8 +123,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
         "flexDirection": "row",
         "height": 45,
         "justifyContent": "center",
-        "marginLeft": 10,
-        "marginRight": 10,
+        "margin": 5,
         "opacity": 1,
         "paddingBottom": 6,
         "paddingTop": 6,
@@ -133,6 +133,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
         "shadowRadius": null,
       }
     }
+    testID="toggleAllSelection"
   >
     <Text
       style={
@@ -191,6 +192,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
         "flexDirection": "row",
         "height": 45,
         "justifyContent": "center",
+        "margin": 5,
         "opacity": 1,
         "paddingBottom": 6,
         "paddingTop": 6,

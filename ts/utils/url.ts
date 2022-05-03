@@ -53,7 +53,9 @@ export type ItemAction = "MAP" | "COPY" | "LINK";
  */
 export function handleItemOnPress(
   value: string,
-  valueType?: ItemAction
+  valueType?: ItemAction,
+  onSuccess: () => void = constNull,
+  onError: () => void = constNull
 ): () => void {
   switch (valueType) {
     case "MAP":
@@ -61,11 +63,11 @@ export function handleItemOnPress(
     case "COPY":
       return () => clipboardSetStringWithFeedback(value);
     default:
-      return () => Linking.openURL(value).then(constNull).catch(constNull);
+      return () => Linking.openURL(value).then(onSuccess).catch(onError);
   }
 }
 
-const isHttp = (url: string): boolean => {
+export const isHttp = (url: string): boolean => {
   const urlLower = url.trim().toLocaleLowerCase();
   return urlLower.match(/http(s)?:\/\//gm) !== null;
 };

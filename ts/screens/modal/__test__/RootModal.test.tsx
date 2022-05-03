@@ -1,5 +1,5 @@
 import DeviceInfo from "react-native-device-info";
-import { NavigationParams } from "react-navigation";
+
 import { createStore } from "redux";
 import {
   versionInfoLoadFailure,
@@ -15,11 +15,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import RootModal from "../RootModal";
 
-jest.mock("react-native-device-info", () => ({
-  getVersion: jest.fn(),
-  getReadableVersion: jest.fn()
-}));
-
 describe("RootModal", () => {
   describe("When the store is in initial state", () => {
     it("Shouldn't render the UpdateAppModal", () => {
@@ -32,10 +27,12 @@ describe("RootModal", () => {
       const store = createStore(appReducer, globalState as any);
       expect(store.getState().versionInfo).toStrictEqual(null);
 
-      const testComponent = renderScreenFakeNavRedux<
-        GlobalState,
-        NavigationParams
-      >(RootModal, ROUTES.INGRESS, {}, store);
+      const testComponent = renderScreenFakeNavRedux<GlobalState>(
+        RootModal,
+        ROUTES.INGRESS,
+        {},
+        store
+      );
       expect(testComponent).not.toBeNull();
 
       expect(testComponent.queryByText(I18n.t("titleUpdateApp"))).toBeNull();
@@ -53,10 +50,12 @@ describe("RootModal", () => {
       expect(store.getState().versionInfo).toStrictEqual(null);
       store.dispatch(versionInfoLoadFailure(new Error()));
 
-      const testComponent = renderScreenFakeNavRedux<
-        GlobalState,
-        NavigationParams
-      >(RootModal, ROUTES.INGRESS, {}, store);
+      const testComponent = renderScreenFakeNavRedux<GlobalState>(
+        RootModal,
+        ROUTES.INGRESS,
+        {},
+        store
+      );
       expect(testComponent).not.toBeNull();
 
       expect(testComponent.queryByText(I18n.t("titleUpdateApp"))).toBeNull();
@@ -73,10 +72,12 @@ describe("RootModal", () => {
         expect(store.getState().versionInfo).toStrictEqual(null);
         store.dispatch(versionInfoLoadFailure(new Error()));
 
-        const testComponent = renderScreenFakeNavRedux<
-          GlobalState,
-          NavigationParams
-        >(RootModal, ROUTES.INGRESS, {}, store);
+        const testComponent = renderScreenFakeNavRedux<GlobalState>(
+          RootModal,
+          ROUTES.INGRESS,
+          {},
+          store
+        );
         expect(testComponent).not.toBeNull();
 
         expect(testComponent.queryByText(I18n.t("titleUpdateApp"))).toBeNull();
@@ -130,7 +131,7 @@ const testRootModal = (
     android: minVersion
   });
 
-  const testComponent = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  const testComponent = renderScreenFakeNavRedux<GlobalState>(
     RootModal,
     ROUTES.INGRESS,
     {},

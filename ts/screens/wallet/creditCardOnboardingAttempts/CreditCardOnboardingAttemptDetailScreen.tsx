@@ -1,14 +1,9 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import {
-  instabugLog,
-  openInstabugQuestionReport,
-  TypeLogs
-} from "../../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
@@ -20,8 +15,13 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import IconFont from "../../../components/ui/IconFont";
 import { getPanDescription } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
-import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
@@ -34,16 +34,23 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  resetCustomFields,
   zendeskCategoryId,
-  zendeskPaymentMethodCategoryValue
+  zendeskPaymentMethodCategory
 } from "../../../utils/supportAssistance";
 
 export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;
 }>;
 
-type Props =
-  NavigationStackScreenProps<CreditCardOnboardingAttemptDetailScreenNavigationParams>;
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<
+      WalletParamsList,
+      "CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL"
+    >
+  >;
+};
 
 const styles = StyleSheet.create({
   row: {
@@ -71,7 +78,6 @@ const renderRow = (label: string, value: string) => (
     <Body>{value}</Body>
   </View>
 );
-const instabugTag = "credit-card-support";
 /**
  * This screen shows credit card onboarding attempt details and allows the user
  * to ask assistance about this attempts
@@ -84,25 +90,20 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const canShowHelp = useIOSelector(canShowHelpSelector);
 
-  const instabugLogAndOpenReport = () => {
-    instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
-    openInstabugQuestionReport();
-  };
   const zendeskAssistanceLogAndStart = () => {
+    resetCustomFields();
     // Set metodo_di_pagamento as category
-    addTicketCustomField(zendeskCategoryId, zendeskPaymentMethodCategoryValue);
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentMethodCategory.value);
     // Append the attempt in the log
     appendLog(JSON.stringify(attempt));
     dispatch(
       zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
     );
+    dispatch(zendeskSelectedCategory(zendeskPaymentMethodCategory));
   };
 
   const handleAskAssistance = () => {
     switch (choosenTool) {
-      case ToolEnum.instabug:
-        instabugLogAndOpenReport();
-        break;
       case ToolEnum.zendesk:
         zendeskAssistanceLogAndStart();
         break;
@@ -156,7 +157,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   return (
     <BaseScreenComponent
       goBack={() => props.navigation.goBack()}
-      showInstabugChat={false}
+      showChat={false}
       dark={true}
       headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
     >

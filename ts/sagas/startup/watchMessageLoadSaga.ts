@@ -1,6 +1,6 @@
 import { buffers, Channel, channel } from "redux-saga";
 import { call, fork, take } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { totMessageFetchWorkers } from "../../config";
 import { DEPRECATED_loadMessage as loadMessageAction } from "../../store/actions/messages";
@@ -31,7 +31,7 @@ export function* watchMessageLoadSaga(
   while (true) {
     // Take the loadMessage request action and put back in the channel
     // to be processed by the handlers.
-    const action = yield* take(getType(loadMessageAction.request));
+    const action = yield* take(loadMessageAction.request);
     requestsChannel.put(action);
   }
 }

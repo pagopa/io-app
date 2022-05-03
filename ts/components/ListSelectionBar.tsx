@@ -11,21 +11,20 @@ const styles = StyleSheet.create({
     zIndex: 1,
     justifyContent: "space-around",
     backgroundColor: customVariables.brandLightGray,
-    padding: 10
+    padding: 5
   },
   flex2: {
-    flex: 2
+    flex: 2,
+    margin: 5
   },
   buttonBarCenter: {
-    backgroundColor: customVariables.colorWhite,
-    marginLeft: 10,
-    marginRight: 10
+    backgroundColor: customVariables.colorWhite
   }
 });
 
 type Props = {
   onResetSelection: () => void;
-  onToggleAllSelection: () => void;
+  onToggleAllSelection?: () => void;
   onToggleSelection: () => void;
   primaryButtonText: string;
   selectedItems: number;
@@ -53,20 +52,23 @@ const ListSelectionBar = ({
     >
       <Text>{I18n.t("global.buttons.cancel")}</Text>
     </ButtonDefaultOpacity>
-    <ButtonDefaultOpacity
-      block={true}
-      bordered={true}
-      style={[styles.buttonBarCenter, styles.flex2]}
-      onPress={onToggleAllSelection}
-    >
-      <Text>
-        {I18n.t(
-          selectedItems === totalItems
-            ? "messages.cta.deselectAll"
-            : "messages.cta.selectAll"
-        )}
-      </Text>
-    </ButtonDefaultOpacity>
+    {onToggleAllSelection && (
+      <ButtonDefaultOpacity
+        block={true}
+        bordered={true}
+        style={[styles.buttonBarCenter, styles.flex2]}
+        onPress={onToggleAllSelection}
+        testID={"toggleAllSelection"}
+      >
+        <Text>
+          {I18n.t(
+            selectedItems === totalItems
+              ? "messages.cta.deselectAll"
+              : "messages.cta.selectAll"
+          )}
+        </Text>
+      </ButtonDefaultOpacity>
+    )}
     <ButtonDefaultOpacity
       block={true}
       style={styles.flex2}

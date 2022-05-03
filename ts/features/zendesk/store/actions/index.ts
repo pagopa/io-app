@@ -11,6 +11,7 @@ import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
+import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 
 export type ZendeskStartPayload = {
   contextualHelp?: ContextualHelpProps;
@@ -67,6 +68,11 @@ export const zendeskSelectedCategory = createStandardAction(
   "ZENDESK_SELECTED_CATEGORY"
 )<ZendeskCategory>();
 
+// user selected a subcategory
+export const zendeskSelectedSubcategory = createStandardAction(
+  "ZENDESK_SELECTED_SUBCATEGORY"
+)<ZendeskSubCategory>();
+
 /**
  * Request the ticket the user opened in Zendesk
  */
@@ -84,4 +90,5 @@ export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportFailure>
   | ActionType<typeof getZendeskConfig>
   | ActionType<typeof zendeskSelectedCategory>
-  | ActionType<typeof zendeskRequestTicketNumber>;
+  | ActionType<typeof zendeskRequestTicketNumber>
+  | ActionType<typeof zendeskSelectedSubcategory>;

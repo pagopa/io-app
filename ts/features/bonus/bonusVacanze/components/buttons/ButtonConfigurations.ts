@@ -32,13 +32,15 @@ export const confirmButtonProps = (
   onPress: () => void,
   title?: string,
   iconName?: string,
-  testID?: string
+  testID?: string,
+  disabled?: boolean
 ): BlockButtonProps => ({
   primary: true,
   title: title ? title : I18n.t("global.buttons.confirm"),
   iconName,
   onPress,
-  testID
+  testID,
+  disabled
 });
 
 /**

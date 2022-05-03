@@ -6,7 +6,7 @@ import { constNull } from "fp-ts/lib/function";
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
@@ -44,19 +44,21 @@ const NotificationPayload = t.partial({
 
 /**
  * Decide how to refresh the messages based on pagination.
+ * It only reloads Inbox since Archive is never changed server-side.
  */
 function handleMessageReload() {
-  const cursors = getCursors(store.getState());
+  const { inbox: cursors } = getCursors(store.getState());
   if (pot.isNone(cursors)) {
     // nothing in the collection, refresh
-    store.dispatch(reloadAllMessages.request({ pageSize }));
+    store.dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
   } else if (pot.isSome(cursors)) {
     // something in the collection, get the maximum amount of new ones only,
     // assuming that the message will be there
     store.dispatch(
       loadPreviousPageMessages.request({
         cursor: cursors.value.previous,
-        pageSize: maximumItemsFromAPI
+        pageSize: maximumItemsFromAPI,
+        filter: {}
       })
     );
   }
@@ -66,8 +68,8 @@ function handleMessageReload() {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function configurePushNotifications() {
-  // if isDevEnv, disable push notification to avoid crash for missing firebase settings
-  if (isDevEnv) {
+  // if isDevEnv is enabled and we are on Android, we need to disable the push notifications to avoid crash for missing firebase settings
+  if (isDevEnv && Platform.OS === "android") {
     return;
   }
 

@@ -1,11 +1,14 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { setMessageReadState } from "../../../store/actions/messages";
+import { usePaginatedMessages } from "../../../config";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
 import { GlobalState } from "../../../store/reducers/types";
+import { EUCovidCertParamsList } from "../navigation/params";
 import { euCovidCertificateGet } from "../store/actions";
 import {
   euCovidCertificateFromAuthCodeSelector,
@@ -32,8 +35,11 @@ export type EuCovidCertificateRouterScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<EuCovidCertificateRouterScreenNavigationParams>;
+  ReturnType<typeof mapStateToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<EUCovidCertParamsList, "EUCOVIDCERT_CERTIFICATE">
+    >;
+  };
 
 /**
  * Return the right screen based on the response value
@@ -105,8 +111,10 @@ const EuCovidCertificateRouterScreen = (
 
   useEffect(() => {
     if (firstLoading.current) {
-      // At the first rendering, set the message to read
-      setMessageRead(messageId);
+      if (!usePaginatedMessages) {
+        // TODO: remove once we publish pagination
+        setMessageRead(messageId);
+      }
       // check if a load is required
       if (shouldBeLoaded(authCode)) {
         loadCertificate(authCode);
@@ -152,7 +160,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCertificate: (authCode: EUCovidCertificateAuthCode) =>
     dispatch(euCovidCertificateGet.request(authCode)),
   setMessageRead: (messageId: string) =>
-    dispatch(setMessageReadState(messageId, true, "unknown"))
+    dispatch(DEPRECATED_setMessageReadState(messageId, true, "unknown"))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

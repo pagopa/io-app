@@ -770,7 +770,7 @@ onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
-    headerTitle: Activation
+    headerTitle: Configure IO
     accept: Accept
     error: Loading error
     alert:
@@ -942,6 +942,7 @@ wallet:
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
+    cardHolder: Card holder
     transactionListItem:
       payment:
         read: Transaction
@@ -1222,17 +1223,16 @@ wallet:
     contextualHelpTitle: Select a provider
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
-    header: Confirm transaction
+    header: Checkout
+    total: Total
+    paymentInformations: Payment informations
+    payWith: Pay with
+    transactionCosts: Transaction costs
+    edit: Edit
+    providedBy: Provided by
+    pay: Pay
     cancelPayment: Cancel the transaction
-    goToPay: Pay
-    askConfirm: Want to proceed with the transaction?
-    partialAmount: Amount to pay
     fee: Fee
-    why: Why?
-    info: 'After this step it will not be possible to come back.'
-    info2: You are using your favourite payment method.
-    changeMethod: Change the payment method
-    change: Change method
     identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: the payment has been completed!
     transactionFailure: There was an error with the payment, please retry!
@@ -1241,6 +1241,9 @@ wallet:
     confirmCancelPayment: Cancel this payment
     confirmContinuePayment: Continue with the payment
     cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
+    accessibility:
+      edit: "tap to edit"
+      transactionCosts: "{{cost}}, transaction {{psp}}"
   payWith:
     noWallets:
       title: No payment methods found
@@ -1263,9 +1266,11 @@ wallet:
         unaccepted:
           bottomSheetTitle: "Why can't I pay with this card?"
           bottomSheetDescription: "This circuit allows you to pay in physical stores, but not online. If your card is enabled for online purchases, add it to your Wallet as a 'debit or credit card'."
+        payment_disabled:
+          bottomSheetTitle: "Why can't I pay with this method?"
+          bottomSheetDescription: "The “In app payments“ feature may be turned off.\nBefore trying to make the payment again, please do the following:\n\n1. go to the “Wallet“ section;\n2. select the payment method you want to use;\n3. enable “In app payments“."
   firstTransactionSummary:
-    header: Transaction notice summary
-    title: Transaction notice
+    title: Payment information
     amount: Transaction amount
     total: Total paid
     expireDate: Expire date
@@ -1284,8 +1289,8 @@ wallet:
     updatedAmount: Updated amount
     updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
     loadingMessage:
-      activation: I'm alerting the entity, wait a few seconds...
-      verification: I am checking the status and the amount of your notice...
+      activation: We are contacting the entity, wait a few seconds
+      verification: We are verifying your payment information
       generic: I am finishing the verification operations of your notice, wait a few seconds...
       wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
@@ -1330,7 +1335,7 @@ wallet:
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add a method
-  continue: Pay this notice
+  continue: Go to payment
   backToPayments: Back to payments
   methods:
     comingSoon: upcoming
@@ -1507,6 +1512,7 @@ wallet:
   outcomeMessage:
     cta:
       close: Close
+      learnMore: Learn more
       visualizeCard: View card
     fallback:
       title: "Sorry, an unexpected error has occurred"
@@ -1682,6 +1688,18 @@ messages:
     barcodes: Barcodes
     nationalService: National Health Service
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
+  pagination:
+    migration:
+      started: Please wait, we are updating the Messages section.
+      succeeded: Done!
+      failed: We couldn't update the Messages section.
+  operations:
+    archive:
+      success: "Successfully archived!"
+      failure: "Failed to archive"
+    restore:
+      success: "Successfully unarchived."
+      failure: "Failed to unarchive"
 messageDetails:
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
@@ -1898,16 +1916,6 @@ contextualHelp:
     cta: Share your fiscal code, in order to make it easier to solve your problem.
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
-instabug:
-  overrideText:
-    commentFieldHintForQuestion: "Be as specific as possible. What should have happened and what happened instead?\nAs far as possible, please do not enter sensitive data in your reports"
-  contextualHelp:
-    title1: Do you need help?
-    descriptionBug: "If something **doesn't work** as it should or if you want to **suggest an improvement** or a new feature, write us! The IO team will get back to you directly via app."
-    buttonBug: Write to the IO team
-    descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
-    buttonChat: Reopen a report
-    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays.
 bottomSheets:
   ciePin:
       title: "Where can I find my PIN?"
@@ -2546,7 +2554,7 @@ bonus:
         suggestedOption: Recommended
         options:
           keepAll:
-            title: Keep all payment methods in the Wallet 
+            title: Keep all payment methods in the Wallet
             body: If supported, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. You can change your method preferences or delete them at any time.
           deleteAll:
             title: Delete all payment methods from the Wallet
@@ -2688,8 +2696,8 @@ bonus:
         title: "The Carta Giovani Nazionale service is not available at the moment."
         body: "We apologize for the issue.\nWe invite you to retry again later."
       ineligible:
-        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
-        body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."
+        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionale."
+        body: "The Carta Giovani Nazionale is available only to Italian and European citizens residing in Italy, aged 18 to 35."
       timeout:
         title: "We're processing your request."
         body: "We will send you an in-app message when your Carta Giovani will be activated."
@@ -2902,6 +2910,11 @@ bonus:
       toast:
         ok: "Voucher saved successfully"
         ko: "Problems saving the voucher"
+  cdc:
+    title: "Carta della cultura"
+    bonusRequest:
+      bonusRequested:
+        cta: "I understand!"
 
 features:
   mvl:
@@ -2936,6 +2949,11 @@ features:
           singleBtn: "Save, print, or share"
           open: "Open"
           save: "Save"
+          savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+          errors:
+            sharing: "An error occurred while sharing the document"
+            opening: "An error occurred while opening the document. You may not have a PDF reader installed."
+            saving: "An error occurred while saving the document"
       body:
         plain: "plain text"
         html: "html"
@@ -3002,6 +3020,12 @@ features:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
         cta: "Get support"
+  uaDonations:
+    webViewScreen:
+      headerTitle: Donation
+      errors:
+        data:
+          buttonTitle: Go back
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3044,6 +3068,8 @@ support:
     cta:
       allow: "Agree"
       denies: "Deny"
+    toast:
+      emailClientNotFound: "To get support write us: {{emailAddress}}"
   chooseCategory:
     header: "Write us"
     title:

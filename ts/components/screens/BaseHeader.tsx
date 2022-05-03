@@ -1,14 +1,16 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
 import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
+import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
@@ -16,15 +18,10 @@ import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
-import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
-import I18n from "../../i18n";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { assistanceToolRemoteConfig } from "../../utils/supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -52,6 +49,7 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
     )}
     style={styles.helpButton}
     accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
+    testID={"helpButton"}
   >
     <IconFont name={"io-question"} />
   </ButtonDefaultOpacity>
@@ -80,7 +78,7 @@ interface OwnProps {
     searchType?: SearchType;
     onSearchTap?: () => void;
   };
-  showInstabugChat?: boolean;
+  showChat?: boolean;
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
@@ -232,16 +230,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       isSearchEnabled,
       onShowHelp,
       isSearchAvailable,
-      showInstabugChat,
-      customRightIcon,
-      assistanceToolConfig
+      showChat,
+      customRightIcon
     } = this.props;
-
-    const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-    const hasInstabugChat =
-      !isSearchEnabled &&
-      showInstabugChat !== false &&
-      choosenTool === ToolEnum.instabug;
 
     return (
       <Right>
@@ -251,7 +242,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onSearchTap={isSearchAvailable.onSearchTap}
           />
         )}
-        {hasInstabugChat && <InstabugChatsComponent />}
 
         {onShowHelp && !isSearchEnabled && (
           <HelpButton onShowHelp={onShowHelp} />
@@ -271,15 +261,14 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
-        {!customRightIcon &&
-          !isSearchAvailable &&
-          !onShowHelp &&
-          !hasInstabugChat && <ButtonDefaultOpacity transparent={true} />}
+        {!customRightIcon && !isSearchAvailable && !onShowHelp && !showChat && (
+          <ButtonDefaultOpacity transparent={true} />
+        )}
 
         {fromNullable(this.props.accessibilityEvents).fold(
           true,
           ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
-        ) && <NavigationEvents onDidFocus={this.handleFocus} />}
+        ) && <NavigationEvents onWillFocus={this.handleFocus} />}
       </Right>
     );
   };

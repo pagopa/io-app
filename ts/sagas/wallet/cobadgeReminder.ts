@@ -1,6 +1,6 @@
 import { put, select, take } from "typed-redux-saga/macro";
 import * as pot from "italia-ts-commons/lib/pot";
-import { getType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import {
   bancomatListVisibleInWalletSelector,
   cobadgeListVisibleInWalletSelector
@@ -45,9 +45,14 @@ export function* sendAddCobadgeMessageSaga() {
     yield* put(loadCoBadgeAbiConfiguration.request());
 
     // Wait for the request results
-    const loadCoBadgeAbiRes = yield* take([
-      getType(loadCoBadgeAbiConfiguration.success),
-      getType(loadCoBadgeAbiConfiguration.failure)
+    const loadCoBadgeAbiRes = yield* take<
+      ActionType<
+        | typeof loadCoBadgeAbiConfiguration.success
+        | typeof loadCoBadgeAbiConfiguration.failure
+      >
+    >([
+      loadCoBadgeAbiConfiguration.success,
+      loadCoBadgeAbiConfiguration.failure
     ]);
 
     // If the request result is failure return

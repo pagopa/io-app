@@ -1,7 +1,6 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
-import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
   loadAllBonusActivations,
   loadAvailableBonuses
@@ -37,7 +36,6 @@ import {
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
 import { contentMunicipalityLoad } from "../actions/content";
-import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
@@ -51,7 +49,8 @@ import {
   DEPRECATED_loadMessage,
   DEPRECATED_loadMessages as loadMessages,
   removeMessages,
-  setMessageReadState
+  DEPRECATED_setMessageReadState,
+  migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
@@ -89,7 +88,6 @@ import {
   paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
-  paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeState,
   paymentUpdateWalletPsp,
@@ -247,18 +245,25 @@ const trackAction =
           messagesIdsToRemoveFromCache: action.payload
         });
       }
-      case getType(setMessageReadState): {
-        if (action.payload.read === true) {
-          setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
-        }
+      case getType(DEPRECATED_setMessageReadState): {
         return mp.track(action.type, action.payload);
       }
-
-      // instabug
-      case getType(instabugReportClosed):
-      case getType(instabugReportOpened):
-        return mp.track(action.type, action.payload);
-
+      case getType(migrateToPaginatedMessages.request): {
+        return mp.track("MESSAGES_MIGRATION_START", {
+          total: Object.keys(action.payload).length
+        });
+      }
+      case getType(migrateToPaginatedMessages.success): {
+        return mp.track("MESSAGES_MIGRATION_SUCCESS", {
+          total: action.payload
+        });
+      }
+      case getType(migrateToPaginatedMessages.failure): {
+        return mp.track("MESSAGES_MIGRATION_FAILURE", {
+          failed: action.payload.failed.length,
+          succeeded: action.payload.succeeded.length
+        });
+      }
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
@@ -281,7 +286,6 @@ const trackAction =
       case getType(deleteWalletFailure):
       case getType(setFavouriteWalletFailure):
       case getType(fetchTransactionsFailure):
-      case getType(paymentFetchPspsForPaymentId.failure):
       case getType(paymentDeletePayment.failure):
       case getType(paymentUpdateWalletPsp.failure):
       case getType(paymentExecuteStart.failure):
@@ -370,8 +374,6 @@ const trackAction =
       case getType(paymentIdPolling.success):
       case getType(paymentCheck.request):
       case getType(paymentCheck.success):
-      case getType(paymentFetchPspsForPaymentId.request):
-      case getType(paymentFetchPspsForPaymentId.success):
       case getType(paymentExecuteStart.request):
       case getType(paymentExecuteStart.success):
       case getType(paymentUpdateWalletPsp.request):

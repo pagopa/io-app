@@ -1,10 +1,9 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -25,7 +24,11 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  bpdOptInPaymentMethodsEnabled
+} from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -51,6 +54,8 @@ import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedC
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   navigateBack,
   navigateToPaymentScanQrCode,
@@ -90,6 +95,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -102,7 +108,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps<WalletHomeNavigationParams> &
+  IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME"> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
@@ -183,20 +189,13 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.state = { hasFocus: false };
   }
 
-  get newMethodAdded() {
-    return this.props.navigation.getParam("newMethodAdded");
-  }
-
-  get navigationKeyFrom() {
-    return this.props.navigation.getParam("keyFrom");
-  }
-
   private handleBackPress = () => {
+    const keyFrom = this.props.route.params?.keyFrom;
     const shouldPop =
-      this.newMethodAdded && this.navigationKeyFrom !== undefined;
+      this.props.route.params?.newMethodAdded && keyFrom !== undefined;
 
     if (shouldPop) {
-      this.props.navigateBack(this.navigationKeyFrom);
+      this.props.navigateBack();
       return true;
     }
     return false;
@@ -239,6 +238,14 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       this.props.loadWallets();
     }
 
+    // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
+    // load the bonus information on Wallet mount
+    if (
+      !this.props.bpdConfig?.opt_in_payment_methods ||
+      !bpdOptInPaymentMethodsEnabled
+    ) {
+      this.loadBonusBpd();
+    }
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
@@ -541,6 +548,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
+        <BpdOptInPaymentMethodsContainer />
         <>
           {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
           {transactionContent}
@@ -615,7 +623,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     validTo?: Date
   ) => navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }),
   navigateToBonusList: () => navigateToAvailableBonusScreen(),
-  navigateBack: (keyFrom?: string) => navigateBack({ key: keyFrom }),
+  navigateBack: () => navigateBack(),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),

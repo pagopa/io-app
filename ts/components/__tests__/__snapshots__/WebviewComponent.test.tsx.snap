@@ -92,6 +92,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
       }
     >
       <RNCWebView
+        allowsInlineMediaPlayback={true}
         androidCameraAccessDisabled={true}
         androidMicrophoneAccessDisabled={true}
         cacheEnabled={true}

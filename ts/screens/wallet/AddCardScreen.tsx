@@ -4,6 +4,7 @@
  */
 
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import {
   fromEither,
   fromPredicate,
@@ -17,7 +18,6 @@ import { Content, View } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -34,6 +34,8 @@ import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToWalletConfirmCardDetails
@@ -44,7 +46,7 @@ import variables from "../../theme/variables";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
-import { useIOBottomSheet } from "../../utils/bottomSheet";
+import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
@@ -75,7 +77,11 @@ export type AddCardScreenNavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = NavigationStackScreenProps<AddCardScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "WALLET_ADD_CARD">
+  >;
+};
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -233,7 +239,7 @@ const AddCardScreen: React.FC<Props> = props => {
   );
   const inPayment = props.navigation.getParam("inPayment");
 
-  const { present, dismiss } = useIOBottomSheet(
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <>
       <Body>{I18n.t("wallet.missingDataText.body")}</Body>
       <View spacer={true} large />
@@ -294,7 +300,6 @@ const AddCardScreen: React.FC<Props> = props => {
 
   return (
     <BaseScreenComponent
-      shouldAskForScreenshotWithInitialValue={false}
       goBack={true}
       headerTitle={I18n.t("wallet.addCardTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -455,6 +460,7 @@ const AddCardScreen: React.FC<Props> = props => {
             maybeCreditCardValidOrExpired(creditCard).toUndefined()
           )}
         />
+        {bottomSheet}
       </SafeAreaView>
     </BaseScreenComponent>
   );
