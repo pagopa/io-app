@@ -156,7 +156,9 @@ export const BarcodeCamera = (props: Props) => {
         />
       )}
 
-      <View style={{ alignSelf: "center" }}>{props.marker}</View>
+      {props.marker && (
+        <View style={{ alignSelf: "center" }}>{props.marker}</View>
+      )}
     </View>
   );
 };
