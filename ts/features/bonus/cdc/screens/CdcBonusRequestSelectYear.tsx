@@ -1,7 +1,9 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { View } from "native-base";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -16,15 +18,23 @@ import { useIOSelector } from "../../../../store/hooks";
 import { isReady } from "../../bpd/model/RemoteValue";
 import ROUTES from "../../../../navigation/routes";
 import { CheckBox } from "../../../../components/core/selection/checkbox/CheckBox";
-import { H5 } from "../../../../components/core/typography/H5";
+import { H4 } from "../../../../components/core/typography/H4";
+import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
+import { Anno } from "../../../../../definitions/cdc/Anno";
+import { cdcSelectedBonus } from "../store/actions/cdcBonusRequest";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 
 const CdcBonusRequestSelectYear = () => {
   const navigation =
     useNavigation<
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_BONUS_YEAR">
     >();
-
+  const dispatch = useDispatch();
   const cdcBonusList = useIOSelector(cdcBonusRequestListSelector);
+  const [years, setYears] = useState<ReadonlyArray<Anno>>([]);
 
   useEffect(() => {
     if (!isReady(cdcBonusList)) {
@@ -45,32 +55,47 @@ const CdcBonusRequestSelectYear = () => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>{"Per quale anno vuoi richiedere la Carta della Cultura?"}</H1>
-
-          {cdcBonusList.value.map(b => (
-            <CheckBox key={b.year}>
-              <H5>{b.year}</H5>
-            </CheckBox>
-          ))}
+          <H1>{I18n.t("bonus.cdc.bonusRequest.selectYear.header")}</H1>
+          <View spacer small />
+          <H4 weight={"Regular"}>
+            {I18n.t("bonus.cdc.bonusRequest.selectYear.body")}
+          </H4>
+          <View spacer large />
+          {cdcBonusList.value
+            .filter(b => b.status === StatoBeneficiarioEnum.ATTVABILE)
+            .map(b => (
+              <View key={b.year}>
+                <View style={{ flexDirection: "row" }}>
+                  <CheckBox
+                    onValueChange={(v: boolean) => {
+                      const updatedYears = v
+                        ? [...years, b.year]
+                        : years.filter(y => y !== b.year);
+                      setYears(updatedYears);
+                    }}
+                  />
+                  <View hspacer />
+                  <H4 weight={"Regular"}>{b.year}</H4>
+                </View>
+                <View spacer large />
+              </View>
+            ))}
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={{
-            block: true,
-            bordered: true,
-            onPress: () => {
-              navigation.getParent()?.goBack();
-            },
-            title: I18n.t("global.buttons.cancel")
-          }}
-          rightButton={{
-            block: true,
-            primary: true,
-            onPress: () => {
+          leftButton={cancelButtonProps(() => {
+            navigation.getParent()?.goBack();
+          })}
+          rightButton={confirmButtonProps(
+            () => {
+              dispatch(cdcSelectedBonus(years.map(y => ({ year: y }))));
               navigation.navigate(CDC_ROUTES.SELECT_RESIDENCE);
             },
-            title: I18n.t("global.buttons.continue")
-          }}
+            I18n.t("global.buttons.continue"),
+            undefined,
+            undefined,
+            years.length === 0
+          )}
         />
       </SafeAreaView>
     </BaseScreenComponent>
