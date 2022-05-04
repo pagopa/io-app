@@ -4,6 +4,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import {
+  loadMessageById,
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages,
@@ -34,6 +35,10 @@ export const reducer = (
   action: Action
 ): PaginatedById => {
   switch (action.type) {
+    case getType(loadMessageById.request):
+    case getType(loadMessageById.success):
+    case getType(loadMessageById.failure):
+      return reduceLoadMessageById(state, action);
     case getType(reloadAllMessages.success):
     case getType(loadNextPageMessages.success):
     case getType(loadPreviousPageMessages.success):
@@ -43,6 +48,34 @@ export const reducer = (
     case getType(clearCache):
       return INITIAL_STATE;
 
+    default:
+      return state;
+  }
+};
+
+const reduceLoadMessageById = (
+  state: PaginatedById = INITIAL_STATE,
+  action: Action
+): PaginatedById => {
+  switch (action.type) {
+    case getType(loadMessageById.request):
+      return {
+        ...state,
+        [action.payload.id]: pot.toLoading(state[action.payload.id] ?? pot.none)
+      };
+    case getType(loadMessageById.success):
+      return {
+        ...state,
+        [action.payload.id]: pot.some(action.payload)
+      };
+    case getType(loadMessageById.failure):
+      return {
+        ...state,
+        [action.payload.id]: pot.toError(
+          state[action.payload.id] ?? pot.none,
+          action.payload.error
+        )
+      };
     default:
       return state;
   }
