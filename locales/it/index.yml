@@ -1281,6 +1281,9 @@ wallet:
         unaccepted:
           bottomSheetTitle: "Perché non posso pagare con questa carta?"
           bottomSheetDescription: "Il circuito di questa carta consente di pagare nei punti vendita fisici, ma non online. Se la tua carta è abilitata ai pagamenti online, aggiungila al tuo Portafoglio come 'carta di debito o di credito'."
+        payment_disabled:
+          bottomSheetTitle: "Perché non riesco a pagare con questo metodo?"
+          bottomSheetDescription: "La funzionalità “Pagamenti in app” potrebbe essere disattivata.\nPrima di riprovare ad effettuare il pagamento, procedi come segue:\n\n1. vai nella sezione “Portafoglio”;\n2. seleziona il metodo di pagamento che vuoi utilizzare;\n3. abilita “Pagamenti in app”."
   firstTransactionSummary:
     title: Dati del pagamento
     amount: Importo pagamento
@@ -1523,6 +1526,7 @@ wallet:
   outcomeMessage:
     cta:
       close: Chiudi
+      learnMore: Scopri di più
       visualizeCard: Visualizza carta
     fallback:
       title: "Spiacenti, si è verificato un errore imprevisto"
@@ -2926,6 +2930,11 @@ bonus:
       toast:
         ok: "Voucher salvato con successo"
         ko: "Problemi durante il salvataggio del voucher"
+  cdc:
+    title: "Carta della cultura"
+    bonusRequest:
+      bonusRequested:
+        cta: "Ho capito!"
 
 features:
   mvl:
@@ -2960,6 +2969,11 @@ features:
           singleBtn: "Salva, stampa o condividi"
           open: "Apri"
           save: "Salva"
+          savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+          errors:
+            sharing: "Si è verificato un errore condividendo il documento."
+            opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
+            saving: "Si è verificato un errore salvando il documento."
       body:
         plain: "testo semplice"
         html: "html"
@@ -3083,4 +3097,5 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+
 

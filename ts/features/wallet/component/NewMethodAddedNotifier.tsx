@@ -20,7 +20,7 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
   const [lastNotifiedBancomatHash, setLastNotifiedBancomatHash] =
     useState<string>("");
 
-  const { present } = bancomatInformationBottomSheet(
+  const { present, bottomSheet } = bancomatInformationBottomSheet(
     props.startCoBadgeOnboarding
   );
 
@@ -36,7 +36,7 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
     }
   });
 
-  return null;
+  return bottomSheet;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({

@@ -1,6 +1,6 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
@@ -12,19 +12,25 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import { profileEmailSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
 import { paymentVerificaSelector } from "../../../store/reducers/wallet/payment";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { openWebUrl } from "../../../utils/url";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<PaymentOutcomeCodeMessageNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_OUTCOMECODE_MESSAGE">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -70,6 +76,8 @@ const successFooter = (onClose: () => void) => (
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   const outcomeCode = props.outcomeCode.outcomeCode.toNullable();
+  const learnMoreLink = "https://io.italia.it/faq/#pagamenti";
+  const onLearnMore = () => openWebUrl(learnMoreLink);
 
   const renderSuccessComponent = () => {
     if (pot.isSome(props.verifica)) {
@@ -92,6 +100,7 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
       onClose={props.navigateToWalletHome}
       successComponent={renderSuccessComponent}
       successFooter={() => successFooter(props.navigateToWalletHome)}
+      onLearnMore={onLearnMore}
     />
   ) : null;
 };
