@@ -75,3 +75,14 @@ const CdcBonusRequestSelectResidence = () => {
 };
 
 export default CdcBonusRequestSelectResidence;
+
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
+    >();
+            onPress: () => {
+              navigation.navigate(CDC_ROUTES.BONUS_REQUESTED);
+            },
+            onPress: () => {
+              navigation.getParent()?.goBack();
+            },

@@ -2,12 +2,13 @@ import React, { FC } from "react";
 import { ImageStyle, StyleProp, StyleSheet, View, Image } from "react-native";
 import { useImageResize } from "../../../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
 import customVariables from "../../../theme/variables";
-import { Psp } from "../../../types/pagopa";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { Body } from "../../core/typography/Body";
 import { H4 } from "../../core/typography/H4";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import IconFont from "../../ui/IconFont";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { getPspIconUrlFromAbi } from "../../../utils/paymentMethod";
 
 const ICON_SIZE = 24;
 const IMAGE_WIDTH = 100;
@@ -31,13 +32,14 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  psp: Psp;
+  psp: PspData;
   onPress: () => void;
 };
 
 export const PspComponent: FC<Props> = ({ psp, onPress }) => {
-  const imgDimensions = useImageResize(IMAGE_WIDTH, IMAGE_HEIGHT, psp.logoPSP);
-  const cost = formatNumberCentsToAmount(psp.fixedCost.amount);
+  const pspLogoUrl = getPspIconUrlFromAbi(psp.codiceAbi);
+  const imgDimensions = useImageResize(IMAGE_WIDTH, IMAGE_HEIGHT, pspLogoUrl);
+  const cost = formatNumberCentsToAmount(psp.fee);
 
   const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
     undefined,
@@ -52,17 +54,17 @@ export const PspComponent: FC<Props> = ({ psp, onPress }) => {
     <TouchableDefaultOpacity
       onPress={onPress}
       style={styles.itemContainer}
-      testID={`psp-${psp.id}`}
+      testID={`psp-${psp.idPsp}`}
     >
       <View style={styles.line1}>
         {imageStyle ? (
           <Image
-            source={{ uri: psp.logoPSP }}
+            source={{ uri: pspLogoUrl }}
             style={imageStyle}
             testID="logoPSP"
           />
         ) : (
-          <Body testID="businessName">{psp.businessName}</Body>
+          <Body testID="businessName">{psp.ragioneSociale}</Body>
         )}
         <View style={styles.feeContainer}>
           <H4 color="blue">{cost}</H4>

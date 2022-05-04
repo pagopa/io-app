@@ -1,11 +1,13 @@
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
@@ -21,8 +23,11 @@ export type BancomatDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  NavigationStackScreenProps<BancomatDetailScreenNavigationParams>;
+  ReturnType<typeof mapStateToProps> & {
+    navigation: CompatNavigationProp<
+      IOStackNavigationProp<WalletParamsList, "WALLET_BANCOMAT_DETAIL">
+    >;
+  };
 
 /**
  * Start the cobadge onboarding, if the abi is defined
