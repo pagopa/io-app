@@ -1,6 +1,7 @@
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { View } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -12,6 +13,13 @@ import {
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
 import { H4 } from "../../../../components/core/typography/H4";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { CdcBonusRequestParamsList } from "../navigation/params";
+import { CDC_ROUTES } from "../navigation/routes";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<boolean>> => [
   {
@@ -25,24 +33,14 @@ const getCheckResidencyItems = (): ReadonlyArray<RadioItem<boolean>> => [
 ];
 
 const CdcBonusRequestSelectResidence = () => {
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
+    >();
   const [isResidentInItaly, setIsResidentInItaly] = React.useState<
     boolean | undefined
   >();
 
-  const cancelButtonProps = {
-    block: true,
-    bordered: true,
-    onPress: () => true,
-    title: I18n.t("global.buttons.cancel")
-  };
-
-  const continueButtonProps = {
-    block: true,
-    primary: true,
-    onPress: () => true,
-    title: I18n.t("global.buttons.continue"),
-    disabled: !isResidentInItaly ?? false
-  };
   return (
     <BaseScreenComponent
       goBack={true}
@@ -66,8 +64,18 @@ const CdcBonusRequestSelectResidence = () => {
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
+          leftButton={cancelButtonProps(() => {
+            navigation.getParent()?.goBack();
+          })}
+          rightButton={confirmButtonProps(
+            () => {
+              navigation.navigate(CDC_ROUTES.BONUS_REQUESTED);
+            },
+            I18n.t("global.buttons.continue"),
+            undefined,
+            undefined,
+            !isResidentInItaly ?? false
+          )}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -75,14 +83,3 @@ const CdcBonusRequestSelectResidence = () => {
 };
 
 export default CdcBonusRequestSelectResidence;
-
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
-    >();
-            onPress: () => {
-              navigation.navigate(CDC_ROUTES.BONUS_REQUESTED);
-            },
-            onPress: () => {
-              navigation.getParent()?.goBack();
-            },
