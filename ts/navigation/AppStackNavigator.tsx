@@ -18,9 +18,18 @@ import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigato
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import IngressScreen from "../screens/ingress/IngressScreen";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
-import { useIODispatch } from "../store/hooks";
+import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isTestEnv } from "../utils/environment";
+import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
+import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
+import {
+  isCdcEnabledSelector,
+  isFIMSEnabledSelector
+} from "../store/reducers/backendStatus";
+import { fimsEnabled } from "../config";
+import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { FimsNavigator } from "../features/fims/navigation/navigator";
 import authenticationNavigator from "./AuthenticationNavigator";
 import messagesNavigator from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -34,63 +43,83 @@ import walletNavigator from "./WalletNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
-export const AppStackNavigator = () => (
-  <Stack.Navigator
-    initialRouteName={"INGRESS"}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: false }}
-  >
-    <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
-    <Stack.Screen
-      name={ROUTES.AUTHENTICATION}
-      component={authenticationNavigator}
-    />
-    <Stack.Screen name={ROUTES.ONBOARDING} component={onboardingNavigator} />
-    <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
+export const AppStackNavigator = () => {
+  const cdcEnabled = useIOSelector(isCdcEnabledSelector);
+  const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
 
-    <Stack.Screen
-      name={ROUTES.MESSAGES_NAVIGATOR}
-      component={messagesNavigator}
-    />
-    <Stack.Screen name={ROUTES.WALLET_NAVIGATOR} component={walletNavigator} />
-    <Stack.Screen
-      name={ROUTES.SERVICES_NAVIGATOR}
-      component={servicesNavigator}
-    />
-    <Stack.Screen
-      name={ROUTES.PROFILE_NAVIGATOR}
-      component={profileNavigator}
-    />
+  const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
+  return (
+    <Stack.Navigator
+      initialRouteName={"INGRESS"}
+      headerMode={"none"}
+      screenOptions={{ gestureEnabled: false }}
+    >
+      <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
+      <Stack.Screen
+        name={ROUTES.AUTHENTICATION}
+        component={authenticationNavigator}
+      />
+      <Stack.Screen name={ROUTES.ONBOARDING} component={onboardingNavigator} />
+      <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 
-    <Stack.Screen
-      name={CGN_ROUTES.ACTIVATION.MAIN}
-      component={CgnActivationNavigator}
-    />
+      <Stack.Screen
+        name={ROUTES.MESSAGES_NAVIGATOR}
+        component={messagesNavigator}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_NAVIGATOR}
+        component={walletNavigator}
+      />
+      <Stack.Screen
+        name={ROUTES.SERVICES_NAVIGATOR}
+        component={servicesNavigator}
+      />
+      <Stack.Screen
+        name={ROUTES.PROFILE_NAVIGATOR}
+        component={profileNavigator}
+      />
 
-    <Stack.Screen
-      name={CGN_ROUTES.DETAILS.MAIN}
-      component={CgnDetailsNavigator}
-    />
+      <Stack.Screen
+        name={CGN_ROUTES.ACTIVATION.MAIN}
+        component={CgnActivationNavigator}
+      />
 
-    <Stack.Screen
-      name={CGN_ROUTES.EYCA.ACTIVATION.MAIN}
-      component={CgnEYCAActivationNavigator}
-    />
+      <Stack.Screen
+        name={CGN_ROUTES.DETAILS.MAIN}
+        component={CgnDetailsNavigator}
+      />
 
-    <Stack.Screen
-      name={ROUTES.WORKUNIT_GENERIC_FAILURE}
-      component={workunitGenericFailure}
-    />
-    <Stack.Screen
-      name={ZENDESK_ROUTES.MAIN}
-      component={zendeskSupportNavigator}
-    />
-    <Stack.Screen
-      name={UADONATION_ROUTES.WEBVIEW}
-      component={UAWebViewScreen}
-    />
-  </Stack.Navigator>
-);
+      <Stack.Screen
+        name={CGN_ROUTES.EYCA.ACTIVATION.MAIN}
+        component={CgnEYCAActivationNavigator}
+      />
+
+      <Stack.Screen
+        name={ROUTES.WORKUNIT_GENERIC_FAILURE}
+        component={workunitGenericFailure}
+      />
+      <Stack.Screen
+        name={ZENDESK_ROUTES.MAIN}
+        component={zendeskSupportNavigator}
+      />
+      <Stack.Screen
+        name={UADONATION_ROUTES.WEBVIEW}
+        component={UAWebViewScreen}
+      />
+
+      {isFimsEnabled && (
+        <Stack.Screen name={FIMS_ROUTES.MAIN} component={FimsNavigator} />
+      )}
+
+      {cdcEnabled && (
+        <Stack.Screen
+          name={CDC_ROUTES.BONUS_REQUEST_MAIN}
+          component={CdcStackNavigator}
+        />
+      )}
+    </Stack.Navigator>
+  );
+};
 
 const IOTheme = {
   ...DefaultTheme,

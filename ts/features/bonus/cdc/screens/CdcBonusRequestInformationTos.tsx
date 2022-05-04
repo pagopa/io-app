@@ -1,5 +1,6 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -8,11 +9,18 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import TosWebviewComponent from "../../../../components/TosWebviewComponent";
 import { LoadingErrorComponent } from "../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
+import { CDC_ROUTES } from "../navigation/routes";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { CdcBonusRequestParamsList } from "../navigation/params";
 
 // TODO change with the ufficial TOS page see https://pagopa.atlassian.net/browse/AP-19
 const tosUrl = "https://io.italia.it/app-content/tos_privacy.html";
 
 const CdcBonusRequestInformationTos = () => {
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_INFORMATION_TOS">
+    >();
   const [tosLoadingState, setTosLoadingState] = React.useState<
     "loading" | "error" | "loaded"
   >("loading");
@@ -21,15 +29,17 @@ const CdcBonusRequestInformationTos = () => {
   const cancelButtonProps = {
     block: true,
     bordered: true,
-    // TODO: integrate with the navigation implemented in the PR: https://github.com/pagopa/io-app/pull/3911
-    onPress: () => true,
+    onPress: () => {
+      navigation.getParent()?.goBack();
+    },
     title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
     block: true,
     primary: true,
-    // TODO: integrate with the navigation implemented in the PR: https://github.com/pagopa/io-app/pull/3911
-    onPress: () => true,
+    onPress: () => {
+      navigation.navigate(CDC_ROUTES.SELECT_BONUS_YEAR);
+    },
     title: I18n.t("global.buttons.continue")
   };
 

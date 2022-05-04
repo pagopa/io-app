@@ -15,9 +15,15 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
+import {
+  isError,
+  isLoading as isRemoteLoading,
+  isUndefined
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -42,7 +48,10 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
@@ -50,7 +59,6 @@ import {
   getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
-import { isRawPayPal } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import {
@@ -63,7 +71,6 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
@@ -342,22 +349,27 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
 // eslint-disable-next-line complexity,sonarjs/cognitive-complexity
 const mapStateToProps = (state: GlobalState) => {
-  const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
+  const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;
   const isPaypalEnabled = isPaypalEnabledSelector(state);
+  const isBPayPaymentEnabled = bancomatPayConfigSelector(state).payment;
   const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
   /**
-   * if the favourite wallet is Paypal but the relative feature is not enabled,
-   * the favourite wallet will be undefined
+   * the favourite will be undefined if one of these condition is true
+   * - payment method is Paypal & the relative feature flag is not enabled
+   * - payment method is BPay & the relative feature flag is not enabled
    */
-  const maybeFavoriteWallet = fromNullable(
-    favouriteWallet &&
-      isRawPayPal(favouriteWallet.paymentMethod) &&
-      !isPaypalEnabled
-      ? undefined
-      : favouriteWallet
-  );
-
+  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
+    switch (fw.paymentMethod?.kind) {
+      case "PayPal":
+        return isPaypalEnabled;
+      case "BPay":
+        return isBPayPaymentEnabled;
+      default:
+        return true;
+    }
+  });
+  const psps = pspsV2.psps;
   const error: Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
@@ -370,7 +382,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? some(attiva.error)
     : pot.isError(paymentId)
     ? some(paymentId.error)
-    : pot.isError(check) || pot.isError(psps)
+    : pot.isError(check) || isError(psps)
     ? some(undefined)
     : none;
 
@@ -391,8 +403,8 @@ const mapStateToProps = (state: GlobalState) => {
     (maybeFavoriteWallet.isSome() &&
       error.isNone() &&
       pot.isSome(check) &&
-      pot.isNone(psps)) ||
-    (maybeFavoriteWallet.isSome() && pot.isLoading(psps));
+      isUndefined(psps)) ||
+    (maybeFavoriteWallet.isSome() && isRemoteLoading(psps));
 
   const loadingCaption = isLoadingVerifica
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.verification")
