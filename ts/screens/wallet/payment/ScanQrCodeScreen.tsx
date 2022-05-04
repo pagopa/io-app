@@ -111,21 +111,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent",
     width: screenWidth
-  },
-
-  notAuthorizedContainer: {
-    padding: customVariables.contentPadding,
-    flex: 1,
-    alignItems: "center",
-    alignSelf: "stretch",
-    marginBottom: 14
-  },
-  notAuthorizedText: {
-    marginBottom: 25
-  },
-  notAuthorizedBtn: {
-    flex: 1,
-    alignSelf: "stretch"
   }
 });
 

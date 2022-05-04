@@ -1,8 +1,13 @@
 import "react-native-reanimated";
 import React, { useEffect, useState } from "react";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, StyleSheet } from "react-native";
 import { useScanBarcodes, BarcodeFormat } from "vision-camera-code-scanner";
+import { Text } from "native-base";
+import I18n from "../i18n";
+import customVariables from "../theme/variables";
+import { openAppSettings } from "../utils/appSettings";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 
 /**
  * Type describing the supported barcodes in IO.
@@ -33,6 +38,25 @@ function barcodeFormatToIOFormat(
       return null;
   }
 }
+
+const styles = StyleSheet.create({
+  notAuthorizedContainer: {
+    padding: customVariables.contentPadding,
+    flex: 1,
+    alignItems: "center",
+    alignSelf: "stretch",
+    marginBottom: 14
+  },
+
+  notAuthorizedText: {
+    marginBottom: 25
+  },
+
+  notAuthorizedBtn: {
+    flex: 1,
+    alignSelf: "stretch"
+  }
+});
 
 type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
@@ -96,6 +120,23 @@ export const BarcodeCamera = (props: Props) => {
     });
   }, [barcodes, onBarcodeScanned]);
 
+  if (!permissionsGranted) {
+    return (
+      <View style={styles.notAuthorizedContainer}>
+        <Text style={styles.notAuthorizedText}>
+          {I18n.t("wallet.QRtoPay.enroll_cta")}
+        </Text>
+
+        <ButtonDefaultOpacity
+          onPress={openAppSettings}
+          style={styles.notAuthorizedBtn}
+        >
+          <Text>{I18n.t("global.buttons.settings")}</Text>
+        </ButtonDefaultOpacity>
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
@@ -105,7 +146,7 @@ export const BarcodeCamera = (props: Props) => {
         backgroundColor: "#000"
       }}
     >
-      {device && permissionsGranted && (
+      {device && (
         <Camera
           style={{ position: "absolute", width: "100%", height: "100%" }}
           device={device}
