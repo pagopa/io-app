@@ -95,7 +95,6 @@ import {
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import NavigationService from "../navigation/NavigationService";
-import ROUTES from "../navigation/routes";
 import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
@@ -1058,16 +1057,6 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
     const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] =
       yield* select(_ => _.wallet.payment.entrypointRoute);
     if (entrypointRoute !== undefined) {
-      // If the navigation starts outside the wallet stack, we need to reset
-      if (
-        entrypointRoute.name !== ROUTES.PAYMENT_MANUAL_DATA_INSERTION &&
-        entrypointRoute.name !== ROUTES.PAYMENT_SCAN_QR_CODE
-      ) {
-        yield* call(
-          NavigationService.dispatchNavigationAction,
-          StackActions.popToTop()
-        );
-      }
       yield* call(
         NavigationService.dispatchNavigationAction,
         NavigationActions.navigate({
