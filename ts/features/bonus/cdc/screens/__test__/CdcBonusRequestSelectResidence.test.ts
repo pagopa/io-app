@@ -1,5 +1,4 @@
 import configureMockStore from "redux-mock-store";
-import { NavigationParams } from "react-navigation";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -71,7 +70,7 @@ function renderComponent() {
   const mockStore = configureMockStore<GlobalState>();
   const store = mockStore(globalState);
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       CdcBonusRequestSelectResidence,
       ROUTES.MAIN,
       {},
