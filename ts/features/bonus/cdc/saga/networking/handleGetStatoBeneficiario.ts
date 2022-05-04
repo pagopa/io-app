@@ -43,8 +43,10 @@ export function* handleGetStatoBeneficiario(
       );
       return;
     }
-    cdcRequestBonusList.failure(
-      getGenericError(new Error("Invalid payload from getStatoBeneficiario"))
+    yield* put(
+      cdcRequestBonusList.failure(
+        getGenericError(new Error("Invalid payload from getStatoBeneficiario"))
+      )
     );
   } catch (e) {
     yield* put(cdcRequestBonusList.failure(getNetworkError(e)));

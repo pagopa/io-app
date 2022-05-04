@@ -43,24 +43,30 @@ export function* handlePostRegistraBeneficiario(
         return;
       }
       if (postRegistraBeneficiarioResult.value.status === 400) {
-        cdcEnrollUserToBonus.failure(
-          getGenericError(
-            new Error(postRegistraBeneficiarioResult.value.value.status)
+        yield* put(
+          cdcEnrollUserToBonus.failure(
+            getGenericError(
+              new Error(postRegistraBeneficiarioResult.value.value.status)
+            )
           )
         );
         return;
       }
       yield* put(
-        cdcEnrollUserToBonus.failure(
-          getGenericError(
-            new Error(postRegistraBeneficiarioResult.value.status.toString())
+        yield* put(
+          cdcEnrollUserToBonus.failure(
+            getGenericError(
+              new Error(postRegistraBeneficiarioResult.value.status.toString())
+            )
           )
         )
       );
       return;
     }
-    cdcEnrollUserToBonus.failure(
-      getGenericError(new Error("Invalid payload from getStatoBeneficiario"))
+    yield* put(
+      cdcEnrollUserToBonus.failure(
+        getGenericError(new Error("Invalid payload from getStatoBeneficiario"))
+      )
     );
   } catch (e) {
     yield* put(cdcEnrollUserToBonus.failure(getNetworkError(e)));
