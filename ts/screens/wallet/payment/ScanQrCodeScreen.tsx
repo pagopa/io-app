@@ -60,7 +60,7 @@ type Props = IOStackNavigationRouteProps<AppParamsList> &
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
   isFocused: boolean;
-  // The package react-native-qrcode-scanner automatically asks for android permission, but we have to display before an alert with
+  // The scanner package automatically asks for android permission, but we have to display before an alert with
   // the rationale
   permissionRationaleDisplayed: boolean;
 };
