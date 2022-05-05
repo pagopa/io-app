@@ -1,15 +1,23 @@
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import ReactNativeBlobUtil from "react-native-blob-util";
+import { CompatNavigationProp } from "@react-navigation/compat";
+import RNFS from "react-native-fs";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import I18n from "../../../../../../i18n";
 import customVariables from "../../../../../../theme/variables";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { isIos } from "../../../../../../utils/platform";
+import { showToast } from "../../../../../../utils/showToast";
+import I18n from "../../../../../../i18n";
+import { MvlAttachment } from "../../../../types/mvlData";
+import { share } from "../../../../../../utils/share";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import { MvlParamsList } from "../../../../navigation/params";
+import { mvlRemoveCachedAttachment } from "../../../../store/actions/downloads";
+import { useIODispatch } from "../../../../../../store/hooks";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +29,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderFooter = (path: string) =>
+const renderFooter = (attachment: MvlAttachment, path: string) =>
   isIos ? (
     <FooterWithButtons
       type={"SingleButton"}
@@ -32,34 +40,111 @@ const renderFooter = (path: string) =>
   ) : (
     <FooterWithButtons
       type={"ThreeButtonsInLine"}
-      leftButton={confirmButtonProps(() => {}, I18n.t("global.buttons.share"))}
-      midButton={confirmButtonProps(() => {},
-      I18n.t("features.mvl.details.attachments.pdfPreview.save"))}
-      rightButton={confirmButtonProps(() => {},
-      I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      leftButton={{
+        bordered: true,
+        primary: false,
+        onPress: () => {
+          share(`file://${path}`, undefined, false)
+            .run()
+            .catch(_ => {
+              showToast(
+                I18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.sharing"
+                )
+              );
+            });
+        },
+        title: I18n.t("global.buttons.share")
+      }}
+      midButton={{
+        bordered: true,
+        primary: false,
+        onPress: () => {
+          ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
+            {
+              name: attachment.displayName,
+              parentFolder: "",
+              mimeType: attachment.contentType
+            },
+            "Download",
+            path
+          )
+            .then(_ => {
+              showToast(
+                I18n.t(
+                  "features.mvl.details.attachments.pdfPreview.savedAtLocation",
+                  {
+                    name: attachment.displayName
+                  }
+                ),
+                "success"
+              );
+            })
+            .catch(_ => {
+              showToast(
+                I18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.saving"
+                )
+              );
+            });
+        },
+        title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
+      }}
+      rightButton={confirmButtonProps(() => {
+        ReactNativeBlobUtil.android
+          .actionViewIntent(path, attachment.contentType)
+          .catch(_ => {
+            showToast(
+              I18n.t(
+                "features.mvl.details.attachments.pdfPreview.errors.opening"
+              )
+            );
+          });
+      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
     />
   );
 
 export type MvlAttachmentPreviewNavigationParams = Readonly<{
+  attachment: MvlAttachment;
   path: string;
-  onError: () => void;
 }>;
 
-export const MvlAttachmentPreview = (
-  props: NavigationStackScreenProps<MvlAttachmentPreviewNavigationParams>
-): React.ReactElement => (
-  <BaseScreenComponent
-    goBack={true}
-    contextualHelp={emptyContextualHelp}
-    headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
-  >
-    <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
-      <Pdf
-        source={{ uri: props.navigation.getParam("path"), cache: true }}
-        style={styles.pdf}
-        onError={_ => props.navigation.getParam("onError")()}
-      />
-      {renderFooter(props.navigation.getParam("path"))}
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+type Props = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<MvlParamsList, "MVL_ATTACHMENT">
+  >;
+};
+
+export const MvlAttachmentPreview = (props: Props): React.ReactElement => {
+  const dispatch = useIODispatch();
+  const attachment = props.navigation.getParam("attachment");
+  const path = props.navigation.getParam("path");
+  return (
+    <BaseScreenComponent
+      goBack={true}
+      contextualHelp={emptyContextualHelp}
+      headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
+    >
+      <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
+        <Pdf
+          source={{ uri: path, cache: true }}
+          style={styles.pdf}
+          onError={_ => {
+            showToast(
+              I18n.t(
+                "features.mvl.details.attachments.bottomSheet.failing.details"
+              )
+            );
+            dispatch(
+              mvlRemoveCachedAttachment({
+                id: attachment.id,
+                path
+              })
+            );
+          }}
+        />
+        {renderFooter(attachment, path)}
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};

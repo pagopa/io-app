@@ -75,49 +75,52 @@ const AttachmentIcon = (props: {
  * @constructor
  */
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
-  const { downloadPot, openAttachment } = useMvlAttachmentDownload(
+  const { downloadPot, download, bottomSheet } = useMvlAttachmentDownload(
     props.attachment
   );
 
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={openAttachment}
-      disabled={pot.isLoading(downloadPot)}
-    >
-      <View style={styles.row}>
-        <AttachmentIcon contentType={props.attachment.contentType} />
-        <View style={styles.middleSection}>
-          <H3
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            ellipsizeMode={"middle"}
-            numberOfLines={2}
-          >
-            {props.attachment.displayName}
-          </H3>
-          {typeof props.attachment.size !== "undefined" && (
-            <H5 color={"bluegrey"} weight={"Regular"}>
-              {formatByte(props.attachment.size)}
-            </H5>
+    <>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={download}
+        disabled={pot.isLoading(downloadPot)}
+      >
+        <View style={styles.row}>
+          <AttachmentIcon contentType={props.attachment.contentType} />
+          <View style={styles.middleSection}>
+            <H3
+              color={"bluegrey"}
+              weight={"SemiBold"}
+              ellipsizeMode={"middle"}
+              numberOfLines={2}
+            >
+              {props.attachment.displayName}
+            </H3>
+            {typeof props.attachment.size !== "undefined" && (
+              <H5 color={"bluegrey"} weight={"Regular"}>
+                {formatByte(props.attachment.size)}
+              </H5>
+            )}
+          </View>
+          {pot.isLoading(downloadPot) ? (
+            <ActivityIndicator
+              accessibilityLabel={I18n.t("global.remoteStates.loading")}
+              color={IOColors.blue}
+              style={{ ...styles.icon, width: 24 }}
+            />
+          ) : (
+            <IconFont
+              name={"io-right"}
+              color={IOColors.blue}
+              size={24}
+              style={styles.icon}
+            />
           )}
         </View>
-        {pot.isLoading(downloadPot) ? (
-          <ActivityIndicator
-            accessibilityLabel={I18n.t("global.remoteStates.loading")}
-            color={IOColors.blue}
-            style={{ ...styles.icon, width: 24 }}
-          />
-        ) : (
-          <IconFont
-            name={"io-right"}
-            color={IOColors.blue}
-            size={24}
-            style={styles.icon}
-          />
-        )}
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      {bottomSheet}
+    </>
   );
 };
 
