@@ -20,7 +20,6 @@ import {
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
-import QRCodeScanner from "react-native-qrcode-scanner";
 import { connect } from "react-redux";
 import {
   BarcodeCamera,
@@ -126,7 +125,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private goBack = () => this.props.navigation.goBack();
-  private qrCodeScanner = React.createRef<QRCodeScanner>();
 
   /**
    * Handles valid pagoPA QR codes
@@ -144,16 +142,15 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.setState({
       scanningState: "INVALID"
     });
+
     // eslint-disable-next-line
     this.scannerReactivateTimeoutHandler = setTimeout(() => {
       // eslint-disable-next-line
       this.scannerReactivateTimeoutHandler = undefined;
-      if (this.qrCodeScanner.current) {
-        this.qrCodeScanner.current.reactivate();
-        this.setState({
-          scanningState: "SCANNING"
-        });
-      }
+
+      this.setState({
+        scanningState: "SCANNING"
+      });
     }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
   };
 
