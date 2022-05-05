@@ -2,21 +2,21 @@ import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { cancelled, put } from "typed-redux-saga/macro";
-import {
-  mvlAttachmentDownload,
-  mvlRemoveCachedAttachment
-} from "../../store/actions/downloads";
+import { mvlAttachmentDownload } from "../../store/actions/downloads";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { MvlAttachment } from "../../types/mvlData";
+
+export const MvlAttachmentsDirectoryPath =
+  RNFS.CachesDirectoryPath + "/mvl/attachments";
 
 /**
  * Builds the save path for the given attachment
  * @param attachment
  */
 const savePath = (attachment: MvlAttachment) =>
-  RNFS.CachesDirectoryPath +
-  "/mvl/attachments/" +
+  MvlAttachmentsDirectoryPath +
+  "/" +
   attachment.id +
   "/" +
   attachment.displayName;
@@ -62,20 +62,5 @@ export function* downloadMvlAttachment(
         })
       );
     }
-  }
-}
-
-/**
- * Clears any cached file of the attachment
- * @param action
- */
-export function* clearMvlAttachment(
-  action: ActionType<typeof mvlRemoveCachedAttachment>
-) {
-  const path = action.payload.path;
-  if (path) {
-    yield RNFS.exists(path).then(exists =>
-      exists ? RNFS.unlink(path) : Promise.resolve()
-    );
   }
 }

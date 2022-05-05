@@ -11,10 +11,8 @@ import {
   mvlRemoveCachedAttachment
 } from "../store/actions/downloads";
 import { handleGetMvl } from "./networking/handleGetMvlDetails";
-import {
-  clearMvlAttachment,
-  downloadMvlAttachment
-} from "./networking/downloadMvlAttachment";
+import { downloadMvlAttachment } from "./networking/downloadMvlAttachment";
+import { clearMvlAttachment } from "./mvlAttachments";
 
 /**
  * Handle the MVL Requests

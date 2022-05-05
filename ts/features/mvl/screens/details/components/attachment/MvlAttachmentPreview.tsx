@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import RNFS from "react-native-fs";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import customVariables from "../../../../../../theme/variables";
