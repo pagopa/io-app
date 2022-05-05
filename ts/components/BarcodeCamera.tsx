@@ -39,7 +39,22 @@ function barcodeFormatToIOFormat(
   }
 }
 
+const screenWidth = Dimensions.get("screen").width;
+
 const styles = StyleSheet.create({
+  cameraContainer: {
+    position: "relative",
+    width: "100%",
+    height: screenWidth,
+    backgroundColor: "#000"
+  },
+
+  camera: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
+
   notAuthorizedContainer: {
     padding: customVariables.contentPadding,
     flex: 1,
@@ -63,8 +78,6 @@ type Props = {
   disabled?: boolean;
   marker?: React.ReactNode;
 };
-
-const screenWidth = Dimensions.get("screen").width;
 
 /**
  * A Camera view which can scan different types of
@@ -138,17 +151,10 @@ export const BarcodeCamera = (props: Props) => {
   }
 
   return (
-    <View
-      style={{
-        position: "relative",
-        width: "100%",
-        height: screenWidth,
-        backgroundColor: "#000"
-      }}
-    >
+    <View style={styles.cameraContainer}>
       {device && (
         <Camera
-          style={{ position: "absolute", width: "100%", height: "100%" }}
+          style={styles.camera}
           device={device}
           isActive={!disabled}
           frameProcessor={frameProcessor}
