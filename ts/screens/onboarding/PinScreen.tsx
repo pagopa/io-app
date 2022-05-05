@@ -46,6 +46,7 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
 
   const handleGoBack = () => {
     if (isOnboardingCompleted()) {
+      console.log("BACK FROM PROFILE!");
       navigation.goBack();
     } else {
       onboardingAbortAlert.showAlert();
@@ -94,7 +95,7 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
       faqCategories={["onboarding_pin", "unlock"]}
       headerTitle={I18n.t("onboarding.pin.headerTitle")}
     >
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <PinCreationForm onSubmit={handleSubmit} />
       </SafeAreaView>
     </BaseScreenComponent>
