@@ -2911,6 +2911,12 @@ bonus:
       bonusRequested:
         cta: "I understand!"
 
+    selectResidence:
+      header: "Residence"
+      items:
+        residesInItaly: "I live in Italy"
+        residesAbroad: "I live abroad"
+      info: "Remember that the bonus is only available for citizens resident in Italy"
 features:
   mvl:
     title: "legal message"
