@@ -64,11 +64,13 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
     (pin: PinString) => {
       void safeSetPin(pin)
         .fold(
-          error => {
-            handleSendAssistanceLog(assistanceTool, `setPin error ${error}`);
+          () => {
+            // Here we are not logging the error because it could
+            // cointain sensitive informations.
+            handleSendAssistanceLog(assistanceTool, `setPin error`);
 
             // TODO: Here we should show an error to the
-            // user probably.
+            // end user probably.
           },
           () => {
             handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
