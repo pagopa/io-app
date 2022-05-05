@@ -5,6 +5,7 @@ import { cdcRequestBonusList } from "../../store/actions/cdcBonusRequest";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { ListaStatoPerAnno } from "../../../../../../definitions/cdc/ListaStatoPerAnno";
 import { CdcBonusRequestList } from "../../types/CdcBonusRequest";
+import { isTestEnv } from "../../../../../utils/environment";
 
 // convert a success response to the logical app representation of it
 const convertSuccess = (listaPerAnno: ListaStatoPerAnno): CdcBonusRequestList =>
@@ -52,3 +53,9 @@ export function* handleGetStatoBeneficiario(
     yield* put(cdcRequestBonusList.failure(getNetworkError(e)));
   }
 }
+
+export const testableFunctions = isTestEnv
+  ? {
+      convertSuccess
+    }
+  : {};
