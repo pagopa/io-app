@@ -1,7 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
-import { NavigationActions } from "@react-navigation/compat";
+import { CommonActions } from "@react-navigation/native";
 import { completeOnboardingSaga } from "../../../sagas/startup/completeOnboardingSaga";
 import OnboardingCompletedScreen from "../OnboardingCompletedScreen";
 import I18n from "../../../i18n";
@@ -36,8 +36,8 @@ describe("Given the completeOnboardingSaga", () => {
         .next()
         .call(
           NavigationService.dispatchNavigationAction,
-          NavigationActions.navigate({
-            routeName: ROUTES.ONBOARDING_COMPLETED
+          CommonActions.navigate(ROUTES.ONBOARDING, {
+            screen: ROUTES.ONBOARDING_COMPLETED
           })
         )
         .next()
