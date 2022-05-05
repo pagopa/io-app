@@ -1,23 +1,12 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
-import { InfoBox } from "../../components/box/InfoBox";
-import { IOColors } from "../../components/core/variables/IOColors";
-import { Label } from "../../components/core/typography/Label";
-import { H1 } from "../../components/core/typography/H1";
-import { Body } from "../../components/core/typography/Body";
-import { LabelledItem } from "../../components/LabelledItem";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { PIN_LENGTH_SIX } from "../../utils/constants";
 import { safeSetPin } from "../../utils/keychain";
 import { PinString } from "../../types/PinString";
 import {
@@ -26,12 +15,11 @@ import {
 } from "../../utils/supportAssistance";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { createPinSuccess } from "../../store/actions/pinset";
-import { isOnboardingCompleted } from "../../utils/navigation";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
-import { LabelSmall } from "../../components/core/typography/LabelSmall";
+import { PinCreationForm } from "../../components/PinCreationForm";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -41,27 +29,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   LightModalContextInterface;
 
-const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  },
-  header: {
-    fontSize: 20,
-    lineHeight: 22
-  }
-});
-
-const pinLength = PIN_LENGTH_SIX;
-
 /**
  * A screen that allows the user to set the unlock code.
  */
-const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
-  const [pin, setPin] = React.useState("");
-  const [isPinDirty, setIsPinDirty] = React.useState(false);
-  const [pinConfirmation, setPinConfirmation] = React.useState("");
-  const [isPinConfirmationDirty, setIsPinConfirmationDirty] =
-    React.useState(false);
+const PinScreen: React.FC<Props> = () => {
   const onboardingAbortAlert = useOnboardingAbortAlert();
   const assistanceToolConfig = useSelector(assistanceToolConfigSelector);
   const dispatch = useDispatch();
@@ -72,83 +43,27 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
   );
 
   const handleGoBack = () => {
-    if (isOnboardingCompleted()) {
-      navigation.goBack();
-    } else {
-      onboardingAbortAlert.showAlert();
-    }
+    onboardingAbortAlert.showAlert();
   };
 
-  const isPinValid = !isPinDirty || pin.length === pinLength;
+  const handleSubmit = React.useCallback(
+    (pin: PinString) => {
+      void safeSetPin(pin)
+        .fold(
+          error => {
+            handleSendAssistanceLog(assistanceTool, `setPin error ${error}`);
 
-  const isPinConfirmationValid =
-    !isPinConfirmationDirty || (pinConfirmation && pinConfirmation === pin);
-
-  const isFormValid =
-    pin.length === pinLength &&
-    pinConfirmation.length === pinLength &&
-    pinConfirmation === pin;
-
-  const handlePinBlur = React.useCallback(() => {
-    setIsPinDirty(true);
-  }, [setIsPinDirty]);
-
-  const handlePinConfirmationBlur = React.useCallback(() => {
-    setIsPinConfirmationDirty(true);
-  }, [setIsPinConfirmationDirty]);
-
-  const showRestartModal = React.useCallback(() => {
-    showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
-    );
-  }, [showModal]);
-
-  const handleSubmit = React.useCallback(() => {
-    if (!isFormValid) {
-      return;
-    }
-
-    const typedPin = pin as PinString;
-
-    void safeSetPin(typedPin)
-      .fold(
-        error => {
-          handleSendAssistanceLog(assistanceTool, `setPin error ${error}`);
-
-          // TODO: Here we should show an error to the
-          // user probably.
-        },
-        () => {
-          handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
-
-          dispatch(createPinSuccess(typedPin));
-
-          if (isOnboardingCompleted()) {
-            // We need to ask the user to restart the app
-            showRestartModal();
-            navigation.goBack();
+            // TODO: Here we should show an error to the
+            // user probably.
+          },
+          () => {
+            handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
+            dispatch(createPinSuccess(pin));
           }
-        }
-      )
-      .run();
-  }, [
-    pin,
-    assistanceTool,
-    isFormValid,
-    dispatch,
-    navigation,
-    showRestartModal
-  ]);
-
-  const computedConfirmButtonProps = React.useMemo(
-    () => ({
-      ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
-      disabled: !isFormValid,
-      onPress: handleSubmit
-    }),
-    [isFormValid, handleSubmit]
+        )
+        .run();
+    },
+    [assistanceTool, dispatch]
   );
 
   return (
@@ -158,87 +73,8 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
       faqCategories={["onboarding_pin", "unlock"]}
       headerTitle={I18n.t("onboarding.pin.headerTitle")}
     >
-      <SafeAreaView style={styles.flex}>
-        <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
-          <View style={{ marginTop: 10 }} />
-
-          <H1>{I18n.t("onboarding.pin.title")}</H1>
-
-          <View style={{ marginTop: 10 }} />
-
-          <Body>{I18n.t("onboarding.pin.subTitle")}</Body>
-
-          <View style={{ position: "relative", marginTop: 30 }}>
-            <LabelledItem
-              label={I18n.t("onboarding.pin.pinLabel")}
-              inputProps={{
-                value: pin,
-                onChangeText: setPin,
-                keyboardType: "number-pad",
-                maxLength: pinLength,
-                onEndEditing: handlePinBlur
-              }}
-              icon={isPinValid ? undefined : "io-warning"}
-              iconColor={IOColors.red}
-              iconPosition="right"
-              isValid={isPinValid ? undefined : false}
-              focusBorderColor={isPinValid ? undefined : IOColors.red}
-            />
-
-            {!isPinValid && (
-              <View style={{ position: "absolute", bottom: -25, left: 2 }}>
-                <LabelSmall weight="Regular" color="red">
-                  {I18n.t("onboarding.pin.errors.length")}
-                </LabelSmall>
-              </View>
-            )}
-          </View>
-
-          <View style={{ position: "relative", marginTop: 45 }}>
-            <LabelledItem
-              label={I18n.t("onboarding.pin.pinConfirmationLabel")}
-              inputProps={{
-                value: pinConfirmation,
-                onChangeText: setPinConfirmation,
-                keyboardType: "number-pad",
-                maxLength: pinLength,
-                onEndEditing: handlePinConfirmationBlur
-              }}
-              icon={isPinConfirmationValid ? undefined : "io-warning"}
-              iconColor={IOColors.red}
-              iconPosition="right"
-              isValid={isPinConfirmationValid ? undefined : false}
-              focusBorderColor={
-                isPinConfirmationValid ? undefined : IOColors.red
-              }
-            />
-
-            {!isPinConfirmationValid && (
-              <View style={{ position: "absolute", bottom: -25, left: 2 }}>
-                <LabelSmall weight="Regular" color="red">
-                  {I18n.t("onboarding.pin.errors.match")}
-                </LabelSmall>
-              </View>
-            )}
-          </View>
-        </ScrollView>
-
-        <>
-          <View style={IOStyles.horizontalContentPadding}>
-            <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
-              <Label color={"bluegrey"} weight={"Regular"}>
-                {I18n.t("onboarding.pin.tutorial")}
-              </Label>
-            </InfoBox>
-          </View>
-
-          <View style={{ marginTop: 20 }} />
-
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={computedConfirmButtonProps}
-          />
-        </>
+      <SafeAreaView>
+        <PinCreationForm onSubmit={handleSubmit} />
       </SafeAreaView>
     </BaseScreenComponent>
   );
