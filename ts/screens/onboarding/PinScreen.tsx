@@ -8,7 +8,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
-import { safeSetPin } from "../../utils/keychain";
+import { setPin } from "../../utils/keychain";
 import { PinString } from "../../types/PinString";
 import {
   assistanceToolRemoteConfig,
@@ -62,29 +62,26 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
 
   const handleSubmit = React.useCallback(
     (pin: PinString) => {
-      void safeSetPin(pin)
-        .fold(
-          () => {
-            // Here we are not logging the error because it could
-            // cointain sensitive informations.
-            handleSendAssistanceLog(assistanceTool, `setPin error`);
+      setPin(pin)
+        .then(() => {
+          handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
 
-            // TODO: Here we should show an error to the
-            // end user probably.
-          },
-          () => {
-            handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
+          dispatch(createPinSuccess(pin));
 
-            dispatch(createPinSuccess(pin));
-
-            if (isOnboardingCompleted()) {
-              // We need to ask the user to restart the app
-              showRestartModal();
-              navigation.goBack();
-            }
+          if (isOnboardingCompleted()) {
+            // We need to ask the user to restart the app
+            showRestartModal();
+            navigation.goBack();
           }
-        )
-        .run();
+        })
+        .catch(() => {
+          // Here we are not logging the error because it could
+          // cointain sensitive informations.
+          handleSendAssistanceLog(assistanceTool, `setPin error`);
+
+          // TODO: Here we should show an error to the
+          // end user probably.
+        });
     },
     [assistanceTool, dispatch, navigation, showRestartModal]
   );
