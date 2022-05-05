@@ -106,7 +106,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
             iconColor={IOColors.red}
             iconPosition="right"
             isValid={isPinValid ? undefined : false}
-            focusBorderColor={isPinValid ? undefined : IOColors.red}
+            overrideBorderColor={isPinValid ? undefined : IOColors.red}
           />
 
           {!isPinValid && (
@@ -132,7 +132,9 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
             iconColor={IOColors.red}
             iconPosition="right"
             isValid={isPinConfirmationValid ? undefined : false}
-            focusBorderColor={isPinConfirmationValid ? undefined : IOColors.red}
+            overrideBorderColor={
+              isPinConfirmationValid ? undefined : IOColors.red
+            }
           />
 
           {!isPinConfirmationValid && (

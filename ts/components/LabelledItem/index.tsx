@@ -58,6 +58,7 @@ type CommonProp = Readonly<{
   accessibilityLabelIcon?: string;
   description?: string;
   focusBorderColor?: string;
+  overrideBorderColor?: string;
   hasNavigationEvents?: boolean;
   icon?: string | ImageSourcePropType;
   iconColor?: string;
@@ -179,7 +180,9 @@ export const LabelledItem: React.FC<Props> = ({
         <Item
           style={{
             ...styles.bottomLine,
-            borderColor: borderColor || props.focusBorderColor
+            borderColor: props.overrideBorderColor
+              ? props.overrideBorderColor
+              : borderColor || props.focusBorderColor
           }}
           error={isNotValid}
           success={isValid}
