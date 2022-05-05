@@ -79,27 +79,6 @@ describe("PagoPaPaymentCapability", () => {
     expect(component.getByText("Arriving")).toBeTruthy();
   });
 
-  it("should render a badge with the text Arriving if passed a payment method of kind BPay", () => {
-    const aBPay = {} as SatispayPaymentMethod;
-    const aPaymentMethod = {
-      ...aBPay,
-      kind: "BPay",
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
-
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    const component = renderScreenFakeNavRedux<GlobalState>(
-      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    );
-
-    expect(component.getByText("Arriving")).toBeTruthy();
-  });
-
   it("should render a badge with the text Incompatible if passed a payment method of kind Bancomat", () => {
     const aBancomat = {} as BancomatPaymentMethod;
     const aPaymentMethod = {
