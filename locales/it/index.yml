@@ -2937,6 +2937,13 @@ bonus:
     bonusRequest:
       bonusRequested:
         cta: "Ho capito!"
+    selectResidence:
+      header: "Residenza"
+      items:
+        residesInItaly: "Risiedo in Italia"
+        residesAbroad: "Risiedo all’estero"
+      info: "Ricorda che il bonus è disponibile solo per i cittadini residenti in Italia"
+
 
 features:
   mvl:
