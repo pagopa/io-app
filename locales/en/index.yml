@@ -1251,6 +1251,8 @@ wallet:
     pickPaymentMethod:
       title: "What method do you want to pay with?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Disabled methods"
       notAvailable:
         title: "Incompatible methods"
         arriving:
