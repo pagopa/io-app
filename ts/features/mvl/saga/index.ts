@@ -10,9 +10,10 @@ import {
   mvlAttachmentDownload,
   mvlRemoveCachedAttachment
 } from "../store/actions/downloads";
+import { clearCache } from "../../../store/actions/profile";
 import { handleGetMvl } from "./networking/handleGetMvlDetails";
 import { downloadMvlAttachment } from "./networking/downloadMvlAttachment";
-import { clearMvlAttachment } from "./mvlAttachments";
+import { clearAllMvlAttachments, clearMvlAttachment } from "./mvlAttachments";
 
 /**
  * Handle the MVL Requests
@@ -46,4 +47,9 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
       yield* call(clearMvlAttachment, action);
     }
   );
+
+  // handle the request for clearing user profile cache
+  yield* takeEvery(clearCache, function* () {
+    yield* call(clearAllMvlAttachments);
+  });
 }
