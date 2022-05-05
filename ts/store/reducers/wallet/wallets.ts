@@ -203,7 +203,7 @@ export const paymentMethodsSelector = createSelector(
 );
 
 // return those payment methods that can pay with pagoPA
-export const getPayablePaymentMethodsSelector = createSelector(
+export const withPaymentFeatureSelector = createSelector(
   paymentMethodsSelector,
   (
     potPm: ReturnType<typeof paymentMethodsSelector>

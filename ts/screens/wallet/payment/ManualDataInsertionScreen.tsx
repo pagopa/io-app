@@ -41,7 +41,7 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { getPayablePaymentMethodsSelector } from "../../../store/reducers/wallet/wallets";
+import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import variables from "../../../theme/variables";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
@@ -263,7 +263,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  hasMethodsCanPay: getPayablePaymentMethodsSelector(state).length > 0
+  hasMethodsCanPay: withPaymentFeatureSelector(state).length > 0
 });
 
 export default connect(

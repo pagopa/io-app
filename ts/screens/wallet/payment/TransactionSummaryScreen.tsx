@@ -55,7 +55,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
-  getPayablePaymentMethodsSelector
+  withPaymentFeatureSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
@@ -406,7 +406,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
-  const hasPayableMethods = getPayablePaymentMethodsSelector(state).length > 0;
+  const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
   return {
     error,
     isLoading,

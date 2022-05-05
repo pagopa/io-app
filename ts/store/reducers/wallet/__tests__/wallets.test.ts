@@ -19,7 +19,7 @@ import {
   creditCardWalletV1Selector,
   getFavoriteWallet,
   getFavoriteWalletId,
-  getPayablePaymentMethodsSelector,
+  withPaymentFeatureSelector,
   getWalletsById,
   pagoPaCreditCardWalletV1Selector,
   satispayListSelector,
@@ -267,7 +267,7 @@ describe("updatePaymentStatus state changes", () => {
 describe("getPayablePaymentMethodsSelector", () => {
   it("should return false - no payable methods", () => {
     const withWallets = appReducer(undefined, fetchWalletsSuccess([]));
-    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toEqual(0);
   });
 
   it("should return false - empty wallet", () => {
@@ -281,7 +281,7 @@ describe("getPayablePaymentMethodsSelector", () => {
       fetchWalletsSuccess(updatedMethods)
     );
     expect(updatedMethods.length).toBeGreaterThan(0);
-    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toEqual(0);
   });
 
   it("should return true - one payable method", () => {
@@ -299,16 +299,14 @@ describe("getPayablePaymentMethodsSelector", () => {
       fetchWalletsSuccess(updatedMethods.map(convertWalletV2toWalletV1))
     );
     expect(updatedMethods.length).toBeGreaterThan(0);
-    expect(
-      getPayablePaymentMethodsSelector(withWallets).length
-    ).toBeGreaterThan(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toBeGreaterThan(0);
   });
 });
 
 describe("getPagoPAMethodsSelector", () => {
   it("should return false - no payable methods", () => {
     const withWallets = appReducer(undefined, fetchWalletsSuccess([]));
-    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toEqual(0);
   });
 
   it("should return true - one pagoPA method", () => {
@@ -325,9 +323,7 @@ describe("getPagoPAMethodsSelector", () => {
       fetchWalletsSuccess(updatedMethods.map(convertWalletV2toWalletV1))
     );
     expect(updatedMethods.length).toBeGreaterThan(0);
-    expect(
-      getPayablePaymentMethodsSelector(withWallets).length
-    ).toBeGreaterThan(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toBeGreaterThan(0);
   });
 });
 
