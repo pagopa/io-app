@@ -14,7 +14,7 @@ import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
 import { LabelSmall } from "../components/core/typography/LabelSmall";
 
-type Props = {
+export type Props = {
   onSubmit: (pin: PinString) => void;
 };
 
@@ -107,6 +107,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
             iconPosition="right"
             isValid={isPinValid ? undefined : false}
             overrideBorderColor={isPinValid ? undefined : IOColors.red}
+            testID="PinField"
           />
 
           {!isPinValid && (
@@ -135,6 +136,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
             overrideBorderColor={
               isPinConfirmationValid ? undefined : IOColors.red
             }
+            testID="PinConfirmationField"
           />
 
           {!isPinConfirmationValid && (

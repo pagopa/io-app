@@ -187,7 +187,7 @@
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
     "@react-native-community/eslint-config": "^3.0.1",
     "@testing-library/jest-native": "^3.4.3",
-    "@testing-library/react-native": "^7.1.0",
+    "@testing-library/react-native": "^8.0.0",
     "@types/chalk": "^2.2.0",
     "@types/color": "^3.0.0",
     "@types/fs-extra": "^5.0.4",
