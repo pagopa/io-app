@@ -20,7 +20,8 @@ import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 type Props = {
   isFirst: boolean;
   paymentMethod: PaymentMethod;
-  onPress: () => void;
+  rightElement?: JSX.Element;
+  onPress?: () => void;
 } & ReturnType<typeof mapStateToProps>;
 
 type PaymentMethodInformation = {
@@ -93,7 +94,9 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
       title={title}
       description={description}
       rightElement={
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        props.rightElement ?? (
+          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        )
       }
       onPress={props.onPress}
     />
