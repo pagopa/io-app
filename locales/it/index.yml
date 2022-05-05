@@ -819,6 +819,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: Configura IO
+  thankYouPage:
+    title: Configurazione terminata!
+    body: Ora puoi iniziare a usare IO
 forms:
   validators:
     required: Valore richiesto
@@ -1273,6 +1276,8 @@ wallet:
     pickPaymentMethod:
       title: "Con quale metodo vuoi pagare?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Metodi disattivati"
       notAvailable:
         title: "Metodi non compatibili"
         arriving:
@@ -2940,6 +2945,13 @@ bonus:
     bonusRequest:
       bonusRequested:
         cta: "Ho capito!"
+    selectResidence:
+      header: "Residenza"
+      items:
+        residesInItaly: "Risiedo in Italia"
+        residesAbroad: "Risiedo all’estero"
+      info: "Ricorda che il bonus è disponibile solo per i cittadini residenti in Italia"
+
 
 features:
   mvl:

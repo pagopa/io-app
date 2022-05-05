@@ -802,6 +802,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: "Configure IO"
+  thankYouPage:
+    title: Setup completed!
+    body: Now you can start using IO
 forms:
   validators:
     required: Required value
@@ -1251,6 +1254,8 @@ wallet:
     pickPaymentMethod:
       title: "What method do you want to pay with?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Disabled methods"
       notAvailable:
         title: "Incompatible methods"
         arriving:
@@ -2914,6 +2919,12 @@ bonus:
       bonusRequested:
         cta: "I understand!"
 
+    selectResidence:
+      header: "Residence"
+      items:
+        residesInItaly: "I live in Italy"
+        residesAbroad: "I live abroad"
+      info: "Remember that the bonus is only available for citizens resident in Italy"
 features:
   mvl:
     title: "legal message"

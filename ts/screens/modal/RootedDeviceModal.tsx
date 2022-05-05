@@ -139,7 +139,11 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
               </Text>
             </View>
             <View spacer={true} small={true} />
-            <Markdown cssStyle={CSS_STYLE} onLoadEnd={onMarkdownLoaded}>
+            <Markdown
+              cssStyle={CSS_STYLE}
+              onLoadEnd={onMarkdownLoaded}
+              extraBodyHeight={100}
+            >
               {body}
             </Markdown>
           </Content>
