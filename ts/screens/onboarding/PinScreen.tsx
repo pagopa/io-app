@@ -1,11 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View as BaseView,
-  ScrollView
-} from "react-native";
+import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -37,6 +31,7 @@ import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
+import { LabelSmall } from "../../components/core/typography/LabelSmall";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -165,61 +160,79 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
     >
       <SafeAreaView style={styles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
-          <View spacer small />
+          <View style={{ marginTop: 10 }} />
 
           <H1>{I18n.t("onboarding.pin.title")}</H1>
 
-          <View spacer small />
+          <View style={{ marginTop: 10 }} />
 
           <Body>{I18n.t("onboarding.pin.subTitle")}</Body>
 
-          <View spacer extralarge />
+          <View style={{ position: "relative", marginTop: 30 }}>
+            <LabelledItem
+              label={I18n.t("onboarding.pin.pinLabel")}
+              inputProps={{
+                value: pin,
+                onChangeText: setPin,
+                keyboardType: "number-pad",
+                maxLength: pinLength,
+                onEndEditing: handlePinBlur
+              }}
+              icon={isPinValid ? undefined : "io-warning"}
+              iconColor={IOColors.red}
+              iconPosition="right"
+              isValid={isPinValid ? undefined : false}
+              focusBorderColor={isPinValid ? undefined : IOColors.red}
+            />
 
-          <LabelledItem
-            label={I18n.t("onboarding.pin.pinLabel")}
-            inputProps={{
-              value: pin,
-              onChangeText: setPin,
-              keyboardType: "number-pad",
-              maxLength: pinLength,
-              onEndEditing: handlePinBlur
-            }}
-            icon={isPinValid ? undefined : "io-warning"}
-            iconColor={IOColors.red}
-            iconPosition="right"
-            isValid={isPinValid ? undefined : false}
-            focusBorderColor={isPinValid ? undefined : IOColors.red}
-          />
+            {!isPinValid && (
+              <View style={{ position: "absolute", bottom: -25, left: 2 }}>
+                <LabelSmall weight="Regular" color="red">
+                  {I18n.t("onboarding.pin.errors.length")}
+                </LabelSmall>
+              </View>
+            )}
+          </View>
 
-          <View spacer extralarge />
+          <View style={{ position: "relative", marginTop: 45 }}>
+            <LabelledItem
+              label={I18n.t("onboarding.pin.pinConfirmationLabel")}
+              inputProps={{
+                value: pinConfirmation,
+                onChangeText: setPinConfirmation,
+                keyboardType: "number-pad",
+                maxLength: pinLength,
+                onEndEditing: handlePinConfirmationBlur
+              }}
+              icon={isPinConfirmationValid ? undefined : "io-warning"}
+              iconColor={IOColors.red}
+              iconPosition="right"
+              isValid={isPinConfirmationValid ? undefined : false}
+              focusBorderColor={
+                isPinConfirmationValid ? undefined : IOColors.red
+              }
+            />
 
-          <LabelledItem
-            label={I18n.t("onboarding.pin.pinConfirmationLabel")}
-            inputProps={{
-              value: pinConfirmation,
-              onChangeText: setPinConfirmation,
-              keyboardType: "number-pad",
-              maxLength: pinLength,
-              onEndEditing: handlePinConfirmationBlur
-            }}
-            icon={isPinConfirmationValid ? undefined : "io-warning"}
-            iconColor={IOColors.red}
-            iconPosition="right"
-            isValid={isPinConfirmationValid ? undefined : false}
-            focusBorderColor={isPinConfirmationValid ? undefined : IOColors.red}
-          />
+            {!isPinConfirmationValid && (
+              <View style={{ position: "absolute", bottom: -25, left: 2 }}>
+                <LabelSmall weight="Regular" color="red">
+                  {I18n.t("onboarding.pin.errors.match")}
+                </LabelSmall>
+              </View>
+            )}
+          </View>
         </ScrollView>
 
         <>
-          <BaseView style={IOStyles.horizontalContentPadding}>
+          <View style={IOStyles.horizontalContentPadding}>
             <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
               <Label color={"bluegrey"} weight={"Regular"}>
                 {I18n.t("onboarding.pin.tutorial")}
               </Label>
             </InfoBox>
-          </BaseView>
+          </View>
 
-          <View spacer />
+          <View style={{ marginTop: 20 }} />
 
           <FooterWithButtons
             type="SingleButton"
