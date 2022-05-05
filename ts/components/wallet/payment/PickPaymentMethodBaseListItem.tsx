@@ -15,7 +15,7 @@ type Props = WithTestID<{
   title: string;
   description: string;
   rightElement: JSX.Element;
-  onPress: () => void;
+  onPress?: () => void;
 }>;
 
 const styles = StyleSheet.create({
