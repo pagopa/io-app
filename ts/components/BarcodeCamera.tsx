@@ -156,6 +156,7 @@ export const BarcodeCamera = (props: Props) => {
         <Camera
           style={styles.camera}
           device={device}
+          audio={false}
           isActive={!disabled}
           frameProcessor={frameProcessor}
           frameProcessorFps={5}
