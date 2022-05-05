@@ -22,6 +22,7 @@ import {
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
 import { PinCreationForm } from "../../components/PinCreationForm";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
@@ -100,4 +101,4 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
   );
 };
 
-export default PinScreen;
+export default withLightModalContext(PinScreen);
