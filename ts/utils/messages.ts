@@ -33,6 +33,7 @@ import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
+import { isCTAv2 } from "./navigation";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -293,6 +294,9 @@ export const isCtaActionValid = (
   cta: CTA,
   serviceMetadata?: ServiceMetadata
 ): boolean => {
+  if (isCTAv2(cta.action)) {
+    return true;
+  }
   // check if it is an internal navigation
   const maybeInternalRoute = getInternalRoute(cta.action);
   if (maybeInternalRoute.isSome()) {

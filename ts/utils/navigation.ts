@@ -12,3 +12,10 @@ export const isOnboardingCompleted = () => {
   }
   return route?.routes[0].name === ROUTES.MAIN;
 };
+
+export const appProtocolRouterV2 = "ioapp://";
+
+export const isCTAv2 = (path: string) => path.startsWith(appProtocolRouterV2);
+
+export const convertUrlToNavigationLink = (path: string) =>
+  path.replace(appProtocolRouterV2, "/");

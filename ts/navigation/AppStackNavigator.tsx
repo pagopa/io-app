@@ -1,5 +1,9 @@
 /* eslint-disable functional/immutable-data */
-import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import {
+  DefaultTheme,
+  LinkingOptions,
+  NavigationContainer
+} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { View } from "native-base";
 import * as React from "react";
@@ -9,7 +13,8 @@ import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
-  CgnEYCAActivationNavigator
+  CgnEYCAActivationNavigator,
+  cgnLinkingOptions
 } from "../features/bonus/cgn/navigation/navigator";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
@@ -25,11 +30,14 @@ import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import {
   isCdcEnabledSelector,
+  isCGNEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { fimsEnabled } from "../config";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
+import { appProtocolRouterV2 } from "../utils/navigation";
+import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import authenticationNavigator from "./AuthenticationNavigator";
 import messagesNavigator from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -46,6 +54,7 @@ const Stack = createStackNavigator<AppParamsList>();
 export const AppStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
+  const cgnEnabled = useIOSelector(isCGNEnabledSelector);
 
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
   return (
@@ -79,20 +88,26 @@ export const AppStackNavigator = () => {
         component={profileNavigator}
       />
 
-      <Stack.Screen
-        name={CGN_ROUTES.ACTIVATION.MAIN}
-        component={CgnActivationNavigator}
-      />
+      {cgnEnabled && (
+        <Stack.Screen
+          name={CGN_ROUTES.ACTIVATION.MAIN}
+          component={CgnActivationNavigator}
+        />
+      )}
 
-      <Stack.Screen
-        name={CGN_ROUTES.DETAILS.MAIN}
-        component={CgnDetailsNavigator}
-      />
+      {cgnEnabled && (
+        <Stack.Screen
+          name={CGN_ROUTES.DETAILS.MAIN}
+          component={CgnDetailsNavigator}
+        />
+      )}
 
-      <Stack.Screen
-        name={CGN_ROUTES.EYCA.ACTIVATION.MAIN}
-        component={CgnEYCAActivationNavigator}
-      />
+      {cgnEnabled && (
+        <Stack.Screen
+          name={CGN_ROUTES.EYCA.ACTIVATION.MAIN}
+          component={CgnEYCAActivationNavigator}
+        />
+      )}
 
       <Stack.Screen
         name={ROUTES.WORKUNIT_GENERIC_FAILURE}
@@ -133,10 +148,25 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const routeNameRef = useRef<string>();
   const dispatch = useIODispatch();
 
+  const cgnEnabled = useIOSelector(isCGNEnabledSelector);
+
+  const linking: LinkingOptions = {
+    enabled: false,
+    prefixes: [appProtocolRouterV2],
+    config: {
+      screens: {
+        ...(cgnEnabled ? cgnLinkingOptions : {}),
+        [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
+      }
+    }
+  };
+
   return (
     <NavigationContainer
       theme={IOTheme}
       ref={navigationRef}
+      linking={linking}
+      fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;

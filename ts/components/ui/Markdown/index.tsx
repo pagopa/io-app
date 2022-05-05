@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import * as RNFS from "react-native-fs";
 import { WebView } from "react-native-webview";
-import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import { filterXSS } from "xss";
 import I18n from "../../../i18n";
@@ -23,10 +22,9 @@ import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { WithTestID } from "../../../types/WithTestID";
 import { remarkProcessor } from "../../../utils/markdown";
-import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
-import { handleLinkMessage } from "./handlers/link";
+import { closeInjectedScript } from "../../../utils/webview";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
-import { WebViewMessage } from "./types";
+import MarkdownWebviewComponent from "./MarkdownWebviewComponent";
 
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_LINK_CLICK_SCRIPT}
@@ -329,27 +327,21 @@ class Markdown extends React.PureComponent<Props, State> {
         {html && (
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
-              <WebView
-                androidCameraAccessDisabled={true}
-                androidMicrophoneAccessDisabled={true}
+              <MarkdownWebviewComponent
+                injectedJavascript={INJECTED_JAVASCRIPT}
+                handleLoadEnd={this.handleLoadEnd}
+                shouldHandleLink={this.props.shouldHandleLink}
+                html={html}
+                webviewKey={this.state.webviewKey}
+                webViewRef={this.webViewRef}
+                setLoadingFalse={() => this.setState({ isLoading: false })}
+                setHtmlBodyHeight={(h: number) =>
+                  this.setState({ htmlBodyHeight: h })
+                }
+                webViewStyle={webViewStyle}
+                onLinkClicked={this.props.onLinkClicked}
+                letUserZoom={this.props.letUserZoom}
                 testID={this.props.testID}
-                accessible={false}
-                key={this.state.webviewKey}
-                textZoom={100}
-                ref={this.webViewRef}
-                scrollEnabled={false}
-                overScrollMode={"never"}
-                style={webViewStyle}
-                originWhitelist={["*"]}
-                source={{ html, baseUrl: "" }}
-                javaScriptEnabled={true}
-                injectedJavaScript={closeInjectedScript(
-                  INJECTED_JAVASCRIPT +
-                    (this.props.letUserZoom ? "" : AVOID_ZOOM_JS)
-                )}
-                onLoadEnd={this.handleLoadEnd}
-                onMessage={this.handleWebViewMessage}
-                showsVerticalScrollIndicator={false}
               />
             </View>
           </ScrollView>
@@ -372,40 +364,6 @@ class Markdown extends React.PureComponent<Props, State> {
         );
       }
     }, 100);
-  };
-
-  // A function that handles message sent by the WebView component
-  private handleWebViewMessage = (event: WebViewMessageEvent) => {
-    const { dispatch } = this.props;
-    const { shouldHandleLink = () => true } = this.props;
-    this.setState({
-      isLoading: false
-    });
-
-    // We validate the format of the message with io-ts
-    const messageOrErrors = WebViewMessage.decode(
-      JSON.parse(event.nativeEvent.data)
-    );
-
-    messageOrErrors.map(message => {
-      switch (message.type) {
-        case "LINK_MESSAGE":
-          if (!shouldHandleLink(message.payload.href)) {
-            break;
-          }
-          handleLinkMessage(dispatch, message.payload.href);
-          fromNullable(this.props.onLinkClicked).map(s =>
-            s(message.payload.href)
-          );
-          break;
-
-        case "RESIZE_MESSAGE":
-          this.setState({
-            htmlBodyHeight: message.payload.height
-          });
-          break;
-      }
-    });
   };
 
   // A function that uses remark to compile the markdown to html
