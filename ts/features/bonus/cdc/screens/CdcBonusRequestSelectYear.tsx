@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
@@ -36,14 +36,22 @@ const CdcBonusRequestSelectYear = () => {
   const cdcBonusList = useIOSelector(cdcBonusRequestListSelector);
   const [years, setYears] = useState<ReadonlyArray<Anno>>([]);
 
-  useEffect(() => {
-    if (!isReady(cdcBonusList)) {
-      navigation.getParent()?.goBack();
-      navigation.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE);
-    }
-  }, [cdcBonusList, navigation]);
+  const navigateToFailureScreen = () => {
+    navigation.getParent()?.goBack();
+    navigation.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE);
+  };
 
   if (!isReady(cdcBonusList)) {
+    navigateToFailureScreen();
+    return null;
+  }
+
+  const activableBonus = cdcBonusList.value.filter(
+    b => b.status === StatoBeneficiarioEnum.ATTVABILE
+  );
+
+  if (activableBonus.length === 0) {
+    navigateToFailureScreen();
     return null;
   }
 
@@ -53,7 +61,7 @@ const CdcBonusRequestSelectYear = () => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.cdc.title")}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"CdcBonusRequestSelectYear"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cdc.bonusRequest.selectYear.header")}</H1>
           <View spacer small />
@@ -61,25 +69,23 @@ const CdcBonusRequestSelectYear = () => {
             {I18n.t("bonus.cdc.bonusRequest.selectYear.body")}
           </H4>
           <View spacer large />
-          {cdcBonusList.value
-            .filter(b => b.status === StatoBeneficiarioEnum.ATTVABILE)
-            .map(b => (
-              <View key={b.year}>
-                <View style={{ flexDirection: "row" }}>
-                  <CheckBox
-                    onValueChange={(v: boolean) => {
-                      const updatedYears = v
-                        ? [...years, b.year]
-                        : years.filter(y => y !== b.year);
-                      setYears(updatedYears);
-                    }}
-                  />
-                  <View hspacer />
-                  <H4 weight={"Regular"}>{b.year}</H4>
-                </View>
-                <View spacer large />
+          {activableBonus.map(b => (
+            <View key={b.year}>
+              <View style={{ flexDirection: "row" }}>
+                <CheckBox
+                  onValueChange={(v: boolean) => {
+                    const updatedYears = v
+                      ? [...years, b.year]
+                      : years.filter(y => y !== b.year);
+                    setYears(updatedYears);
+                  }}
+                />
+                <View hspacer />
+                <H4 weight={"Regular"}>{b.year}</H4>
               </View>
-            ))}
+              <View spacer large />
+            </View>
+          ))}
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
@@ -93,7 +99,7 @@ const CdcBonusRequestSelectYear = () => {
             },
             I18n.t("global.buttons.continue"),
             undefined,
-            undefined,
+            "continueButton",
             years.length === 0
           )}
         />
