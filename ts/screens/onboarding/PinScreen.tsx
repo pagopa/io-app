@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
@@ -15,6 +16,7 @@ import {
 } from "../../utils/supportAssistance";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { createPinSuccess } from "../../store/actions/pinset";
+import { isOnboardingCompleted } from "../../utils/navigation";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -32,7 +34,7 @@ type Props = IOStackNavigationRouteProps<AppParamsList> &
 /**
  * A screen that allows the user to set the unlock code.
  */
-const PinScreen: React.FC<Props> = () => {
+const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
   const onboardingAbortAlert = useOnboardingAbortAlert();
   const assistanceToolConfig = useSelector(assistanceToolConfigSelector);
   const dispatch = useDispatch();
@@ -43,8 +45,20 @@ const PinScreen: React.FC<Props> = () => {
   );
 
   const handleGoBack = () => {
-    onboardingAbortAlert.showAlert();
+    if (isOnboardingCompleted()) {
+      navigation.goBack();
+    } else {
+      onboardingAbortAlert.showAlert();
+    }
   };
+
+  const showRestartModal = React.useCallback(() => {
+    showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
+  }, [showModal]);
 
   const handleSubmit = React.useCallback(
     (pin: PinString) => {
@@ -58,12 +72,19 @@ const PinScreen: React.FC<Props> = () => {
           },
           () => {
             handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
+
             dispatch(createPinSuccess(pin));
+
+            if (isOnboardingCompleted()) {
+              // We need to ask the user to restart the app
+              showRestartModal();
+              navigation.goBack();
+            }
           }
         )
         .run();
     },
-    [assistanceTool, dispatch]
+    [assistanceTool, dispatch, navigation, showRestartModal]
   );
 
   return (
