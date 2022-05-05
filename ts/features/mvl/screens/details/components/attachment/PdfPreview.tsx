@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Button, Left, Right, View } from "native-base";
 
+import * as Platform from "../../../../../../utils/platform";
 import customVariables from "../../../../../../theme/variables";
 import AppHeader from "../../../../../../components/ui/AppHeader";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -15,6 +16,10 @@ import { PreviewActionConfig } from "../../../../utils";
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  page: {
+    flex: 1,
+    backgroundColor: customVariables.colorWhite
   },
   pdf: {
     flex: 1,
@@ -39,14 +44,18 @@ const renderFooter = (actionConfig: PreviewActionConfig) =>
   ) : (
     <FooterWithButtons
       type={"ThreeButtonsInLine"}
-      leftButton={confirmButtonProps(
-        actionConfig.share,
-        I18n.t("global.buttons.share")
-      )}
-      midButton={confirmButtonProps(
-        actionConfig.save,
-        I18n.t("features.mvl.details.attachments.pdfPreview.save")
-      )}
+      leftButton={{
+        bordered: true,
+        primary: false,
+        onPress: actionConfig.share,
+        title: I18n.t("global.buttons.share")
+      }}
+      midButton={{
+        bordered: true,
+        primary: false,
+        onPress: actionConfig.save,
+        title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
+      }}
       rightButton={confirmButtonProps(
         actionConfig.open,
         I18n.t("features.mvl.details.attachments.pdfPreview.open")
@@ -62,7 +71,7 @@ type Props = {
 };
 
 const PdfPreview = ({ path, onClose, actionConfig, onError }: Props) => (
-  <>
+  <View style={styles.page}>
     <AppHeader style={styles.header}>
       <Left>
         <Button
@@ -103,8 +112,8 @@ const PdfPreview = ({ path, onClose, actionConfig, onError }: Props) => (
 
     {renderFooter(actionConfig)}
 
-    <View spacer={true} />
-  </>
+    {Platform.isIos && <View spacer={true} />}
+  </View>
 );
 
 export default PdfPreview;

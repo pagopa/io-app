@@ -15,18 +15,28 @@ type Props = ReturnType<typeof mapStateToProps>;
  * @constructor
  */
 const PaypalDetailScreen: React.FunctionComponent<Props> = props => {
+  const [walletExisted, setWalletExisted] = React.useState(false);
   const paypal = pot.toUndefined(props.paymentMethod);
-  // this should never happen since this screen is shown from a navigation that starts from a PayPal payment method
-  if (paypal === undefined) {
-    return <WorkunitGenericFailure />;
-  }
-  return (
+
+  // This will set the flag `walletExisted` to true
+  // if, during this component lifecycle, the PayPal wallet actually
+  // existed in the state and has been removed. It's used to
+  // prevent the show of the `WorkunitGenericFailure`.
+  React.useEffect(() => {
+    if (paypal) {
+      setWalletExisted(true);
+    }
+  }, [paypal, setWalletExisted]);
+
+  return paypal ? (
     <BasePaymentMethodScreen
       paymentMethod={paypal}
       card={<PaypalCard paypal={paypal} />}
       content={<PaymentMethodFeatures paymentMethod={paypal} />}
     />
-  );
+  ) : !walletExisted ? (
+    <WorkunitGenericFailure />
+  ) : null;
 };
 
 const mapStateToProps = (state: GlobalState) => ({

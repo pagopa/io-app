@@ -16,11 +16,13 @@ import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import variables from "../theme/variables";
+import { isIos } from "../utils/platform";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
+const hasiOSNotch = deviceInfoModule.hasNotch() && isIos;
 const styles = StyleSheet.create({
   tabBarStyle: {
     backgroundColor: variables.colorWhite,
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     paddingRight: 3,
     borderTopWidth: 0,
     paddingTop: 8,
-    height: 64 + (deviceInfoModule.hasNotch() ? 24 : 0),
+    height: 64 + (hasiOSNotch ? 24 : 0),
     // iOS shadow
     shadowColor: variables.footerShadowColor,
     shadowOffset: {
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     // Android shadow
     elevation: variables.footerElevation
   },
-  notchPadding: deviceInfoModule.hasNotch() ? {} : { paddingBottom: 10 }
+  notchPadding: hasiOSNotch ? {} : { paddingBottom: 10 }
 });
 
 export const MainTabNavigator = () => (
