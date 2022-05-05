@@ -1276,6 +1276,8 @@ wallet:
     pickPaymentMethod:
       title: "Con quale metodo vuoi pagare?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Metodi disattivati"
       notAvailable:
         title: "Metodi non compatibili"
         arriving:
@@ -2938,6 +2940,13 @@ bonus:
     bonusRequest:
       bonusRequested:
         cta: "Ho capito!"
+    selectResidence:
+      header: "Residenza"
+      items:
+        residesInItaly: "Risiedo in Italia"
+        residesAbroad: "Risiedo all’estero"
+      info: "Ricorda che il bonus è disponibile solo per i cittadini residenti in Italia"
+
 
 features:
   mvl:

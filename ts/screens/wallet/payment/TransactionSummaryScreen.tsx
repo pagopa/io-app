@@ -55,16 +55,12 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
-  getPagoPAMethodsSelector,
-  getPayablePaymentMethodsSelector
+  withPaymentFeatureSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
-import {
-  alertNoActivePayablePaymentMethods,
-  alertNoPayablePaymentMethods
-} from "../../../utils/paymentMethod";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
@@ -202,10 +198,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
         maybeFavoriteWallet,
         hasPayableMethods
       );
-      return;
-    }
-    if (this.props.hasPagoPaMethods) {
-      alertNoActivePayablePaymentMethods(this.props.navigateToWalletHome);
       return;
     }
     alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
@@ -414,9 +406,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
-  const hasPayableMethods = getPayablePaymentMethodsSelector(state).length > 0;
-  const hasPagoPaMethods = getPagoPAMethodsSelector(state).length > 0;
-
+  const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
   return {
     error,
     isLoading,
@@ -426,7 +416,6 @@ const mapStateToProps = (state: GlobalState) => {
     paymentId,
     maybeFavoriteWallet,
     hasPayableMethods,
-    hasPagoPaMethods,
     walletById
   };
 };
