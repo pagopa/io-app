@@ -5,7 +5,11 @@ import { cdcEnrollUserToBonus } from "../../store/actions/cdcBonusRequest";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { AnniRiferimento } from "../../../../../../definitions/cdc/AnniRiferimento";
 import { ListaEsitoRichiestaPerAnno } from "../../../../../../definitions/cdc/ListaEsitoRichiestaPerAnno";
-import { CdcBonusEnrollmentOutcomeList } from "../../types/CdcBonusRequest";
+import {
+  CdcBonusEnrollmentList,
+  CdcBonusEnrollmentOutcomeList
+} from "../../types/CdcBonusRequest";
+import { isTestEnv } from "../../../../../utils/environment";
 
 const convertSuccess = (
   listaEsitoRichiestaPerAnno: ListaEsitoRichiestaPerAnno
@@ -15,22 +19,24 @@ const convertSuccess = (
     outcome: o.esitoRichiesta
   }));
 
+const convertRequestPayload = (
+  actionPayload: CdcBonusEnrollmentList
+): { anniRiferimento: AnniRiferimento } => ({
+  anniRiferimento: {
+    anniRif: actionPayload.map(y => ({
+      anno: y.year
+    }))
+  }
+});
+
 export function* handlePostRegistraBeneficiario(
   postRegistraBeneficiario: BackendCdcClient["postRegistraBeneficiario"],
   action: ActionType<typeof cdcEnrollUserToBonus.request>
 ) {
-  const requestPayload: { anniRiferimento: AnniRiferimento } = {
-    anniRiferimento: {
-      anniRif: action.payload.map(y => ({
-        anno: y.year
-      }))
-    }
-  };
-
   try {
     const postRegistraBeneficiarioResult = yield* call(
       postRegistraBeneficiario,
-      requestPayload
+      convertRequestPayload(action.payload)
     );
 
     if (postRegistraBeneficiarioResult.isRight()) {
@@ -43,13 +49,16 @@ export function* handlePostRegistraBeneficiario(
         return;
       }
       if (postRegistraBeneficiarioResult.value.status === 400) {
-        cdcEnrollUserToBonus.failure(
-          getGenericError(
-            new Error(postRegistraBeneficiarioResult.value.value.status)
+        yield* put(
+          cdcEnrollUserToBonus.failure(
+            getGenericError(
+              new Error(postRegistraBeneficiarioResult.value.value.status)
+            )
           )
         );
         return;
       }
+
       yield* put(
         cdcEnrollUserToBonus.failure(
           getGenericError(
@@ -59,10 +68,21 @@ export function* handlePostRegistraBeneficiario(
       );
       return;
     }
-    cdcEnrollUserToBonus.failure(
-      getGenericError(new Error("Invalid payload from getStatoBeneficiario"))
+    yield* put(
+      cdcEnrollUserToBonus.failure(
+        getGenericError(
+          new Error("Invalid payload from postRegistraBeneficiario")
+        )
+      )
     );
   } catch (e) {
     yield* put(cdcEnrollUserToBonus.failure(getNetworkError(e)));
   }
 }
+
+export const testableFunctions = isTestEnv
+  ? {
+      convertSuccess,
+      convertRequestPayload
+    }
+  : {};
