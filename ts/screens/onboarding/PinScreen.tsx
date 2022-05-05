@@ -46,7 +46,6 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
 
   const handleGoBack = () => {
     if (isOnboardingCompleted()) {
-      console.log("BACK FROM PROFILE!");
       navigation.goBack();
     } else {
       onboardingAbortAlert.showAlert();
