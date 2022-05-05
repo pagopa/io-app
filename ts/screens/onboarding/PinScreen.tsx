@@ -184,10 +184,11 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
               maxLength: pinLength,
               onEndEditing: handlePinBlur
             }}
-            icon={!isPinValid ? "io-warning" : undefined}
+            icon={isPinValid ? undefined : "io-warning"}
             iconColor={IOColors.red}
             iconPosition="right"
             isValid={isPinValid ? undefined : false}
+            focusBorderColor={isPinValid ? undefined : IOColors.red}
           />
 
           <View spacer extralarge />
@@ -201,10 +202,11 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
               maxLength: pinLength,
               onEndEditing: handlePinConfirmationBlur
             }}
-            icon={!isPinConfirmationValid ? "io-warning" : undefined}
+            icon={isPinConfirmationValid ? undefined : "io-warning"}
             iconColor={IOColors.red}
             iconPosition="right"
             isValid={isPinConfirmationValid ? undefined : false}
+            focusBorderColor={isPinConfirmationValid ? undefined : IOColors.red}
           />
         </ScrollView>
 
