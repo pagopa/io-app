@@ -15,6 +15,8 @@ import { ThemeSimpleValue } from "./types";
 
 export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
+export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
+
 // eslint-disable-next-line
 const customVariables = Object.assign(materialVariables, {
   minTouchableAreaSize: 48,
