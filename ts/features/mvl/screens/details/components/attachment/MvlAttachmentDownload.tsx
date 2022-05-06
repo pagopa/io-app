@@ -25,6 +25,7 @@ import MVL_ROUTES from "../../../../navigation/routes";
 import { isIos } from "../../../../../../utils/platform";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
+import ROUTES from "../../../../../../navigation/routes";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -104,9 +105,15 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
       );
     } else if (path) {
       if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        navigate(MVL_ROUTES.ATTACHMENT, {
-          attachment,
-          path
+        navigate(ROUTES.MESSAGES_NAVIGATOR, {
+          screen: MVL_ROUTES.MAIN,
+          params: {
+            screen: MVL_ROUTES.ATTACHMENT,
+            params: {
+              attachment,
+              path
+            }
+          }
         });
       } else {
         if (isIos) {
@@ -160,7 +167,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
       }
     });
 
-  const download = () => {
+  const onAttachmentSelect = () => {
     if (showAlertForAttachments) {
       present();
     } else {
@@ -168,5 +175,9 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
     }
   };
 
-  return { downloadPot, download, bottomSheet };
+  return {
+    downloadPot,
+    onAttachmentSelect,
+    bottomSheet
+  };
 };

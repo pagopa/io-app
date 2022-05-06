@@ -15,7 +15,7 @@ import I18n from "../../../../../../i18n";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
 import { MvlAttachment, MvlData } from "../../../../types/mvlData";
-import { useMvlAttachmentDownload } from "./DownloadAttachmentConfirmationBottomSheet";
+import { useMvlAttachmentDownload } from "./MvlAttachmentDownload";
 
 type Props = {
   attachments: MvlData["attachments"];
@@ -75,15 +75,14 @@ const AttachmentIcon = (props: {
  * @constructor
  */
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
-  const { downloadPot, download, bottomSheet } = useMvlAttachmentDownload(
-    props.attachment
-  );
+  const { downloadPot, onAttachmentSelect, bottomSheet } =
+    useMvlAttachmentDownload(props.attachment);
 
   return (
     <>
       <TouchableOpacity
         style={styles.container}
-        onPress={download}
+        onPress={onAttachmentSelect}
         disabled={pot.isLoading(downloadPot)}
       >
         <View style={styles.row}>

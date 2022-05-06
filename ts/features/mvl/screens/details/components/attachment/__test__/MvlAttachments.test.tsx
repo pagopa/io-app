@@ -15,7 +15,7 @@ import {
 } from "../../../../../types/__mock__/mvlMock";
 import { MvlPreferences } from "../../../../../store/reducers/preferences";
 import { MvlAttachments } from "../MvlAttachments";
-import { useDownloadAttachmentConfirmationBottomSheet } from "../DownloadAttachmentConfirmationBottomSheet";
+import { useDownloadAttachmentConfirmationBottomSheet } from "../MvlAttachmentDownload";
 import * as platform from "../../../../../../../utils/platform";
 import { MvlAttachment } from "../../../../../types/mvlData";
 
