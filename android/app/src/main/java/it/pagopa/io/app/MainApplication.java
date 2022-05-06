@@ -5,7 +5,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
-import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.reactnativecommunity.art.ARTPackage;
 import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
