@@ -47,6 +47,7 @@ export function* cgnCategoriesSaga(
       throw new Error(
         `Expected a ProductCategoryWithNewDiscountsCount but received PublishedProductCategories`
       );
+      return;
     }
 
     throw new Error(
