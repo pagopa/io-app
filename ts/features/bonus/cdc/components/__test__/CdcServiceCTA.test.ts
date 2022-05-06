@@ -8,33 +8,30 @@ import CdcServiceCTA from "../CdcServiceCTA";
 import { cdcRequestBonusList } from "../../store/actions/cdcBonusRequest";
 import { CdcBonusRequest } from "../../types/CdcBonusRequest";
 import { getTimeoutError } from "../../../../../utils/errors";
+import { Anno } from "../../../../../../definitions/cdc/Anno";
+import { StatoBeneficiarioEnum } from "../../../../../../definitions/cdc/StatoBeneficiario";
 
 jest.useFakeTimers();
 
 const mockActivableBonus: CdcBonusRequest = {
-  id: "2018",
-  year: 2018,
-  status: "Activable"
+  year: "2018" as Anno,
+  status: StatoBeneficiarioEnum.ATTVABILE
 };
 const mockPendingBonus: CdcBonusRequest = {
-  id: "2018",
-  year: 2018,
-  status: "Pending"
+  year: "2018" as Anno,
+  status: StatoBeneficiarioEnum.VALUTAZIONE
 };
 const mockActiveBonus: CdcBonusRequest = {
-  id: "2018",
-  year: 2018,
-  status: "Active"
+  year: "2018" as Anno,
+  status: StatoBeneficiarioEnum.ATTIVO
 };
 const mockNotRequestableBonus: CdcBonusRequest = {
-  id: "2018",
-  year: 2018,
-  status: "NotRequestable"
+  year: "2018" as Anno,
+  status: StatoBeneficiarioEnum.INATTIVO
 };
 const mockExpiredBonus: CdcBonusRequest = {
-  id: "2018",
-  year: 2018,
-  status: "Expired"
+  year: "2018" as Anno,
+  status: StatoBeneficiarioEnum.INATTIVABILE
 };
 describe("CdcServiceCTA", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));

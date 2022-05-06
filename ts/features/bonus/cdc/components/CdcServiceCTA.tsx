@@ -13,6 +13,7 @@ import { fold } from "../../bpd/model/RemoteValue";
 import { CdcBonusRequestList } from "../types/CdcBonusRequest";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
+import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;
@@ -20,7 +21,7 @@ type ReadyButtonProp = {
 const ReadyButton = (props: ReadyButtonProp) => {
   // Check if at least one year can be activable
   const activableBonuses = props.bonusRequestList.filter(
-    b => b.status === "Activable"
+    b => b.status === StatoBeneficiarioEnum.ATTVABILE
   );
 
   if (activableBonuses.length > 0) {
@@ -41,7 +42,7 @@ const ReadyButton = (props: ReadyButtonProp) => {
 
   // Check if at least one year is in pending status
   const pendingBonuses = props.bonusRequestList.filter(
-    b => b.status === "Pending"
+    b => b.status === StatoBeneficiarioEnum.VALUTAZIONE
   );
   if (pendingBonuses.length > 0) {
     return (
