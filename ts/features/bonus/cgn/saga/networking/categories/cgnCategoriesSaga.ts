@@ -7,6 +7,15 @@ import {
   getNetworkError
 } from "../../../../../../utils/errors";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
+import { PublishedProductCategoriesWithNewDiscountsCount } from "../../../../../../../definitions/cgn/merchants/PublishedProductCategoriesWithNewDiscountsCount";
+import { PublishedProductCategories } from "../../../../../../../definitions/cgn/merchants/PublishedProductCategories";
+
+const checkIsCategoriesWithCount = (
+  cl:
+    | PublishedProductCategoriesWithNewDiscountsCount
+    | PublishedProductCategories
+): cl is PublishedProductCategoriesWithNewDiscountsCount =>
+  PublishedProductCategoriesWithNewDiscountsCount.decode(cl).isRight();
 
 // Saga aimed to call the API to retrieve the CGN benefits categories available
 export function* cgnCategoriesSaga(
@@ -17,7 +26,7 @@ export function* cgnCategoriesSaga(
   try {
     const publishedCategoriesResult: SagaCallReturnType<
       typeof getPublishedCategories
-    > = yield* call(getPublishedCategories, {});
+    > = yield* call(getPublishedCategories, { countNewDiscounts: true });
     if (publishedCategoriesResult.isLeft()) {
       yield* put(
         cgnCategories.failure(
@@ -30,10 +39,14 @@ export function* cgnCategoriesSaga(
     }
 
     if (publishedCategoriesResult.value.status === 200) {
-      yield* put(
-        cgnCategories.success(publishedCategoriesResult.value.value.items)
+      const apiResult = publishedCategoriesResult.value.value;
+      if (checkIsCategoriesWithCount(apiResult)) {
+        yield* put(cgnCategories.success(apiResult.items));
+        return;
+      }
+      throw new Error(
+        `Expected a ProductCategoryWithNewDiscountsCount but received PublishedProductCategories`
       );
-      return;
     }
 
     throw new Error(

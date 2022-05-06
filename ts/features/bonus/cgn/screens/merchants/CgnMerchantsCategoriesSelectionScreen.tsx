@@ -4,7 +4,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -24,6 +23,8 @@ import {
 } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
+import { IOWhiteBadge } from "../../../../../components/core/IOBadge";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const isFirstRender = useRef<boolean>(true);
@@ -51,22 +52,51 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   }, [isError]);
 
   const renderCategoryElement = (
-    info: ListRenderItemInfo<ProductCategoryEnum | "All">
+    info: ListRenderItemInfo<
+      | ProductCategoryWithNewDiscountsCount
+      | { productCategory: "All"; newDiscounts: number }
+    >
   ) => {
-    if (info.item === "All") {
+    if (info.item.productCategory === "All") {
       return (
         <CgnMerchantCategoryItem
           title={I18n.t("bonus.cgn.merchantDetail.categories.all")}
           colors={["#475A6D", "#E6E9F2"]}
           onPress={() => navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)}
+          child={
+            <View style={[{ alignItems: "flex-end" }, IOStyles.flex]}>
+              <View spacer />
+              <IOWhiteBadge
+                small
+                text={`${info.item.newDiscounts} ${I18n.t(
+                  "bonus.cgn.merchantsList.news"
+                )}`}
+              />
+            </View>
+          }
         />
       );
     }
-    const specs = getCategorySpecs(info.item);
-
+    const specs = getCategorySpecs(info.item.productCategory);
+    const countAvailable = info.item.newDiscounts > 0;
     return specs.fold(null, s => {
       const categoryIcon = (
-        <View style={[{ alignItems: "flex-end" }]}>
+        <View
+          style={[
+            countAvailable ? IOStyles.row : {},
+            { alignItems: "flex-end" }
+          ]}
+        >
+          {countAvailable && (
+            <View style={IOStyles.flex}>
+              <IOWhiteBadge
+                small
+                text={`${info.item.newDiscounts} ${I18n.t(
+                  "bonus.cgn.merchantsList.news"
+                )}`}
+              />
+            </View>
+          )}
           {s.icon({
             height: 32,
             width: 32,
@@ -90,8 +120,15 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     });
   };
 
-  const categoriesToArray: ReadonlyArray<ProductCategoryEnum | "All"> = [
-    "All",
+  const allNews = pot.isSome(potCategories)
+    ? potCategories.value.reduce((acc, val) => acc + val.newDiscounts, 0)
+    : 0;
+
+  const categoriesToArray: ReadonlyArray<
+    | ProductCategoryWithNewDiscountsCount
+    | { productCategory: "All"; newDiscounts: number }
+  > = [
+    { productCategory: "All", newDiscounts: allNews },
     ...(pot.isSome(potCategories) ? potCategories.value : [])
   ];
 
@@ -113,7 +150,11 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           onRefresh={loadCategories}
           renderItem={renderCategoryElement}
           numColumns={2}
-          keyExtractor={(item: ProductCategoryEnum | "All") => item}
+          keyExtractor={(
+            item:
+              | ProductCategoryWithNewDiscountsCount
+              | { productCategory: "All"; newDiscounts: number }
+          ) => item.productCategory}
           ListFooterComponent={<EdgeBorderComponent />}
         />
       </View>
