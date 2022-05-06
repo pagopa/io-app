@@ -7,7 +7,10 @@ import {
   RemoteValue
 } from "../../../bpd/model/RemoteValue";
 import { NetworkError } from "../../../../../utils/errors";
-import { CdcBonusRequestList } from "../../types/CdcBonusRequest";
+import {
+  CdcBonusEnrollmentOutcomeList,
+  CdcBonusRequestList
+} from "../../types/CdcBonusRequest";
 import { Action } from "../../../../../store/actions/types";
 import {
   cdcEnrollUserToBonus,
@@ -19,7 +22,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 export type CdcBonusRequestState = {
   bonusList: RemoteValue<CdcBonusRequestList, NetworkError>;
   selectedBonus?: CdcBonusRequestList;
-  enrolledBonus: RemoteValue<CdcBonusRequestList, NetworkError>;
+  enrolledBonus: RemoteValue<CdcBonusEnrollmentOutcomeList, NetworkError>;
 };
 
 const INITIAL_STATE: CdcBonusRequestState = {
