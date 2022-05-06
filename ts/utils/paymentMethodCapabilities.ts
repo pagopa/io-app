@@ -1,35 +1,27 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
-import {
-  CreditCardPaymentMethod,
-  CreditCardType,
-  isCreditCard,
-  PaymentMethod
-} from "../types/pagopa";
+import { CreditCardPaymentMethod, PaymentMethod } from "../types/pagopa";
 import { PaymentSupportStatus } from "../types/paymentMethodCapabilities";
 import { hasFunctionEnabled } from "./walletv2";
 
-export const brandsBlackList = new Set<CreditCardType>();
+/**
+ * return true if the payment method has the payment feature
+ */
+export const hasPaymentFeature = (paymentMethod: PaymentMethod): boolean =>
+  hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
 
 /**
- * check if a payment method is supported to make payment via pagaPA platform.
- * a credit card is supported if it isn't included in the brandsBlacklist or if its brand is not recognized.
- * @param paymentMethod
+ * return true if the payment method has the payment feature and the payment flag enabled
  */
-export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
-  if (paymentMethod.pagoPA === false) {
-    return false;
-  }
-  if (isCreditCard(paymentMethod)) {
-    return CreditCardType.decode(paymentMethod.info.brand).fold(
-      () => true,
-      // eslint-disable-next-line sonarjs/no-empty-collection
-      pm => !brandsBlackList.has(pm)
-    );
-  }
-  return paymentMethod.pagoPA;
-};
+export const isEnabledToPay = (paymentMethod: PaymentMethod): boolean =>
+  hasPaymentFeature(paymentMethod) && paymentMethod.pagoPA === true;
+
+/**
+ * return true if the payment method has the payment feature and the payment flag disabled
+ */
+export const isDisabledToPay = (paymentMethod: PaymentMethod): boolean =>
+  hasPaymentFeature(paymentMethod) && paymentMethod.pagoPA === false;
 
 export const isCobadge = (paymentMethod: CreditCardPaymentMethod) =>
   paymentMethod.info?.issuerAbiCode && paymentMethod.info.type !== TypeEnum.PRV;
@@ -43,7 +35,6 @@ const paymentNotSupportedCustomRepresentation = (
 ): PaymentSupportStatus => {
   switch (paymentMethod.kind) {
     case "Satispay":
-    case "BPay":
       return "arriving";
     default:
       return "notAvailable";
@@ -61,9 +52,8 @@ const paymentNotSupportedCustomRepresentation = (
 export const isPaymentSupported = (
   paymentMethod: PaymentMethod
 ): PaymentSupportStatus => {
-  const paymentSupported: Option<PaymentSupportStatus> = hasFunctionEnabled(
-    paymentMethod,
-    EnableableFunctionsEnum.pagoPA
+  const paymentSupported: Option<PaymentSupportStatus> = hasPaymentFeature(
+    paymentMethod
   )
     ? some("available")
     : none;

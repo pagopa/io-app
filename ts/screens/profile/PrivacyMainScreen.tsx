@@ -33,6 +33,7 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
+import { isPremiumMessagesOptInOutEnabledSelector } from "../../store/reducers/backendStatus";
 
 type Props = {
   navigation: CompatNavigationProp<
@@ -266,6 +267,20 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                   : undefined
               }
             />
+
+            {/* Premium Messages Opt-in/out */}
+            {this.props.isPremiumMessagesOptInOutEnabled && (
+              <ListItemComponent
+                title="Premium Messages Opt-in/out"
+                subTitle="Temporary screen for the Premium Messages opt-in/out feature"
+                onPress={() =>
+                  this.props.navigation.navigate({
+                    routeName: ROUTES.PROFILE_PREMIUM_MESSAGES_OPT_IN_OUT
+                  })
+                }
+                useExtendedSubTitle={true}
+              />
+            )}
           </List>
         </ScreenContent>
       </TopScreenComponent>
@@ -304,7 +319,9 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     userDataProcessing,
     isLoading,
-    isEmailValidated: isProfileEmailValidatedSelector(state)
+    isEmailValidated: isProfileEmailValidatedSelector(state),
+    isPremiumMessagesOptInOutEnabled:
+      isPremiumMessagesOptInOutEnabledSelector(state)
   };
 };
 

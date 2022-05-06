@@ -23,6 +23,7 @@ import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
   bpdEnabled,
+  cdcEnabled,
   euCovidCertificateEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
@@ -72,6 +73,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -126,6 +128,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -197,6 +200,7 @@ export function* initializeApplicationSaga(): Generator<
     apiUrlPrefix,
     sessionToken
   );
+
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(checkSession, backendClient.getSession);
@@ -326,6 +330,9 @@ export function* initializeApplicationSaga(): Generator<
       isProfileFirstOnBoarding(userProfile)
     );
 
+    // Show the thank-you screen for the onboarding
+    yield* call(completeOnboardingSaga);
+
     // Stop the watchAbortOnboardingSaga
     yield* cancel(watchAbortOnboardingSagaTask);
   } else {
@@ -373,6 +380,11 @@ export function* initializeApplicationSaga(): Generator<
   if (bpdEnabled) {
     // Start watching for bpd actions
     yield* fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
+  }
+
+  if (cdcEnabled) {
+    // Start watching for cdc actions
+    yield* fork(watchBonusCdcSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Start watching for cgn actions
