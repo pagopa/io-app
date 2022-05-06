@@ -137,7 +137,6 @@
     "react-native-mixpanel": "1.2.0",
     "react-native-modal-datetime-picker": "^10.2.0",
     "react-native-pdf": "^6.4.0",
-    "react-native-permissions": "^2.0.2",
     "react-native-popup-menu": "^0.15.11",
     "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^7.3.1",
