@@ -249,6 +249,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
       .mapNullable(_ => _.enteBeneficiario)
       .map(formatTextRecipient);
 
+    const organizationFiscalCode: string = pot
+      .toOption(potVerifica)
+      .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
+      .getOrElse("-");
+
     const currentAmount: string = pot.getOrElse(
       pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
         formatNumberAmount(
@@ -323,7 +328,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
             {standardRow(
               I18n.t("wallet.firstTransactionSummary.entityCode"),
-              rptId.organizationFiscalCode
+              organizationFiscalCode
             )}
             <View spacer={true} small={true} />
             {standardRow(
