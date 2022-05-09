@@ -94,12 +94,12 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
  */
 const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
   <TouchableDefaultOpacity
-    style={[IOStyles.horizontalContentPadding, styles.verticalPadding]}
+    style={[styles.verticalPadding]}
     accessibilityRole={"button"}
     onPress={props.onPress}
   >
-    <View style={[styles.categories, IOStyles.flex]}>
-      <H2>{props.name}</H2>
+    <View style={[styles.categories, { justifyContent: "space-between" }]}>
+      <H2 style={IOStyles.flex}>{props.name}</H2>
       {props.isNew && (
         <View style={styles.badgePosition}>
           <IOPrimaryBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />

@@ -68,9 +68,18 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       ).values()
     ];
 
-    return [...uniquesMerchants].sort((m1: MerchantsAll, m2: MerchantsAll) =>
-      m1.name.localeCompare(m2.name)
-    );
+    const merchantsWithNewDiscounts = [...uniquesMerchants]
+      .filter((m: MerchantsAll) => m.newDiscounts)
+      .sort((m1: MerchantsAll, m2: MerchantsAll) =>
+        m1.name.localeCompare(m2.name)
+      );
+    const merchantsWithoutNewDiscounts = [...uniquesMerchants]
+      .filter((m: MerchantsAll) => !m.newDiscounts)
+      .sort((m1: MerchantsAll, m2: MerchantsAll) =>
+        m1.name.localeCompare(m2.name)
+      );
+
+    return [...merchantsWithNewDiscounts, ...merchantsWithoutNewDiscounts];
   }, [props.onlineMerchants, props.offlineMerchants]);
 
   const performSearch = (
