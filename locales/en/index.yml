@@ -2919,7 +2919,7 @@ bonus:
       items:
         residesInItaly: "I live in Italy"
         residesAbroad: "I live abroad"
-      info: "Remember that the bonus is only available for citizens resident in Italy"
+      info: "Carta della Cultura is only available for citizens residing in Italy. Indicate your residence for each year."
 features:
   mvl:
     title: "legal message"

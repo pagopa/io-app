@@ -2945,9 +2945,7 @@ bonus:
       items:
         residesInItaly: "Risiedo in Italia"
         residesAbroad: "Risiedo all’estero"
-      info: "Ricorda che il bonus è disponibile solo per i cittadini residenti in Italia"
-
-
+      info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
 features:
   mvl:
     title: "messaggio a valore legale"

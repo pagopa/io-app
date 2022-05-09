@@ -20,6 +20,10 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
+import { useIOSelector } from "../../../../store/hooks";
+import { Anno } from "../../../../../definitions/cdc/Anno";
+import { RTron } from "../../../../boot/configureStoreAndPersistor";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<boolean>> => [
   {
@@ -38,8 +42,13 @@ const CdcBonusRequestSelectResidence = () => {
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
     >();
   const [isResidentInItaly, setIsResidentInItaly] = React.useState<
-    boolean | undefined
-  >();
+    Map<Anno, boolean>
+  >(new Map());
+  const cdcSelectedBonus = useIOSelector(cdcSelectedBonusSelector);
+
+  if (cdcSelectedBonus === undefined || cdcSelectedBonus.length === 0) {
+    return null;
+  }
 
   return (
     <BaseScreenComponent
@@ -51,16 +60,20 @@ const CdcBonusRequestSelectResidence = () => {
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cdc.selectResidence.header")}</H1>
           <View spacer={true} />
-
-          <RadioButtonList<boolean>
-            key="residentInItaly"
-            items={getCheckResidencyItems()}
-            selectedItem={isResidentInItaly}
-            onPress={setIsResidentInItaly}
-          />
-
-          <View spacer={true} />
           <H4 weight={"Regular"}>{I18n.t("bonus.cdc.selectResidence.info")}</H4>
+          <View spacer={true} />
+
+          {cdcSelectedBonus.map(b => (
+            <RadioButtonList<boolean>
+              key={b.year}
+              items={getCheckResidencyItems()}
+              selectedItem={isResidentInItaly.get(b.year)}
+              onPress={v => {
+                setIsResidentInItaly(isResidentInItaly.set(b.year, v));
+              }}
+              rightSideSelection={true}
+            />
+          ))}
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
