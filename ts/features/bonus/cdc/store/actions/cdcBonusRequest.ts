@@ -14,7 +14,7 @@ import { NetworkError } from "../../../../../utils/errors";
  * The user selects for which year would ask the bonus
  */
 export const cdcSelectedBonus =
-  createStandardAction("CDC_SELECTED_BONUS")<CdcBonusRequestList>();
+  createStandardAction("CDC_SELECTED_BONUS")<CdcBonusEnrollmentList>();
 
 /**
  * get and handle the list of the bonus
