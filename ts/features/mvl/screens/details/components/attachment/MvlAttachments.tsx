@@ -107,6 +107,7 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
               accessibilityLabel={I18n.t("global.remoteStates.loading")}
               color={IOColors.blue}
               style={{ ...styles.icon, width: 24 }}
+              testID={"attachmentActivityIndicator"}
             />
           ) : (
             <IconFont

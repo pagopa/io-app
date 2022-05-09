@@ -20,16 +20,16 @@ import { mvlPreferencesSetWarningForAttachments } from "../../../../store/action
 import { showToast } from "../../../../../../utils/showToast";
 import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
 import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
-import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
 import MVL_ROUTES from "../../../../navigation/routes";
 import { isIos } from "../../../../../../utils/platform";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import ROUTES from "../../../../../../navigation/routes";
+import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
-type Props = {
+type BottomSheetProps = Readonly<{
   /**
    * Called on right-button press with the user's selected preferences.
    */
@@ -39,12 +39,12 @@ type Props = {
    * The user canceled the action via the UI.
    */
   onCancel: () => void;
-};
+}>;
 
-export const useDownloadAttachmentConfirmationBottomSheet = ({
+const useDownloadAttachmentConfirmationBottomSheet = ({
   onConfirm,
   onCancel
-}: Props) => {
+}: BottomSheetProps) => {
   const [dontAskAgain, setDontAskAgain] = useState<boolean>(false);
 
   return useIOBottomSheetModal(
@@ -92,6 +92,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
   const { navigate } = useNavigation();
 
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
+
   const downloadPot = useIOSelector(state =>
     mvlAttachmentDownloadFromIdSelector(state, attachment.id)
   );

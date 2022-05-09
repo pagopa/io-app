@@ -2,145 +2,113 @@ import React from "react";
 
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import * as pot from "italia-ts-commons/lib/pot";
 import I18n from "../../../../../../../i18n";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { formatByte } from "../../../../../../../types/digitalInformationUnit";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
 import MVL_ROUTES from "../../../../../navigation/routes";
-import {
-  mvlMockOtherAttachment,
-  mvlMockPdfAttachment
-} from "../../../../../types/__mock__/mvlMock";
+import { mvlMockPdfAttachment } from "../../../../../types/__mock__/mvlMock";
 import { MvlPreferences } from "../../../../../store/reducers/preferences";
 import { MvlAttachments } from "../MvlAttachments";
-import { useDownloadAttachmentConfirmationBottomSheet } from "../MvlAttachmentDownload";
-import * as platform from "../../../../../../../utils/platform";
-import { MvlAttachment } from "../../../../../types/mvlData";
+import { MvlDownloads } from "../../../../../store/reducers/downloads";
 
-jest.mock("../../../../../../../utils/platform");
+const mockPresentBottomSheet = jest.fn();
 
-const mockBsConfig = (_: MvlAttachment) => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const react = require("react-native");
-
-  return {
-    present: jest.fn(),
-    bottomSheet: react.View,
-    dismiss: jest.fn()
-  };
-};
-
-const mockBottomSheetPresent = jest.fn<
-  ReturnType<typeof useDownloadAttachmentConfirmationBottomSheet>,
-  Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
->(mockBsConfig);
-jest.mock("../DownloadAttachmentConfirmationBottomSheet", () => ({
-  useDownloadAttachmentConfirmationBottomSheet: (
-    ...args: Parameters<typeof useDownloadAttachmentConfirmationBottomSheet>
-  ) => mockBottomSheetPresent(...args)
+jest.mock("../../../../../../../utils/hooks/bottomSheet", () => ({
+  useIOBottomSheetModal: () => ({
+    present: mockPresentBottomSheet,
+    bottomSheet: <></>
+  })
 }));
 
 describe("MvlAttachments", () => {
-  jest.useFakeTimers();
-
   beforeEach(() => {
-    mockBottomSheetPresent.mockReset();
-    mockBottomSheetPresent.mockImplementation(mockBsConfig);
+    mockPresentBottomSheet.mockReset();
   });
 
-  describe("When there are no attachments", () => {
-    it("Shouldn't be rendered", () => {
+  describe("given no attachments", () => {
+    it("it should NOT be rendered", () => {
       const res = renderComponent({ attachments: [] });
-
       expect(
         res.queryByText(I18n.t("features.mvl.details.attachments.title"))
       ).toBeNull();
     });
   });
 
-  describe("When there is at least one attachment", () => {
-    describe("And there are a pdf and another file as attachments", () => {
-      it("Should render the title", () => {
-        const res = renderComponent({
-          attachments: [mvlMockPdfAttachment, mvlMockOtherAttachment]
-        });
-        expect(
-          res.queryByText(I18n.t("features.mvl.details.attachments.title"))
-        ).not.toBeNull();
+  describe("given an attachment", () => {
+    it("it should be rendered", () => {
+      const res = renderComponent({
+        attachments: [mvlMockPdfAttachment]
       });
-      it("Should render two Items", () => {
+      expect(
+        res.queryByText(I18n.t("features.mvl.details.attachments.title"))
+      ).not.toBeNull();
+    });
+
+    describe("when tapping on it for the first time", () => {
+      it("it should present the bottom sheet", async () => {
         const res = renderComponent({
-          attachments: [mvlMockPdfAttachment, mvlMockOtherAttachment]
+          attachments: [mvlMockPdfAttachment]
         });
-        expect(
-          res.queryByText(mvlMockPdfAttachment.displayName)
-        ).not.toBeNull();
-        expect(mvlMockPdfAttachment.size).not.toBeNull();
-        if (mvlMockPdfAttachment.size) {
-          expect(
-            res.queryByText(formatByte(mvlMockPdfAttachment.size))
-          ).not.toBeNull();
-        }
-        expect(
-          res.queryByText(mvlMockOtherAttachment.displayName)
-        ).not.toBeNull();
-        expect(mvlMockOtherAttachment.size).not.toBeNull();
-        if (mvlMockOtherAttachment.size) {
-          expect(
-            res.queryByText(formatByte(mvlMockOtherAttachment.size))
-          ).not.toBeNull();
-        }
+        const item = res.getByText(mvlMockPdfAttachment.displayName);
+        await fireEvent(item, "onPress");
+
+        expect(mockPresentBottomSheet).toHaveBeenCalled();
       });
     });
 
-    [
-      { showAlertForAttachments: true, isAndroid: false },
-      { showAlertForAttachments: true, isAndroid: true },
-      { showAlertForAttachments: false, isAndroid: false },
-      { showAlertForAttachments: false, isAndroid: true }
-    ].forEach(scenario => {
-      describe.only(`Given the scenario ${JSON.stringify(scenario)}`, () => {
-        const preferences = {
-          showAlertForAttachments: scenario.showAlertForAttachments
-        };
-        const props = { attachments: [mvlMockPdfAttachment] };
-
-        it("Should pass the correct options to `useDownloadAttachmentConfirmationBottomSheet`", () => {
-          (platform as any).test_setPlatform(
-            scenario.isAndroid ? "android" : "ios"
-          );
-          renderComponent(props, preferences);
-          expect(mockBottomSheetPresent).toHaveBeenNthCalledWith(
-            1,
-            mvlMockPdfAttachment,
-            { Authorization: "Bearer undefined" },
+    describe("when tapping on it", () => {
+      describe("and showAlertForAttachments is false", () => {
+        it("it should NOT present the bottom sheet", async () => {
+          const res = renderComponent(
             {
-              dontAskAgain: !scenario.showAlertForAttachments,
-              showToastOnSuccess: scenario.isAndroid
-            }
+              attachments: [mvlMockPdfAttachment]
+            },
+            { showAlertForAttachments: false }
           );
+          const item = res.getByText(mvlMockPdfAttachment.displayName);
+          await fireEvent(item, "onPress");
+
+          expect(mockPresentBottomSheet).not.toHaveBeenCalled();
         });
+      });
+    });
 
-        describe("when the user taps on the attachment", () => {
-          it("Should open the bottom sheet", async () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            const react = require("react-native");
+    describe("when the pot is loading", () => {
+      it("it should show a loading indicator", async () => {
+        [pot.noneLoading, pot.someLoading("path")].forEach(loadingPot => {
+          const res = renderComponent(
+            {
+              attachments: [mvlMockPdfAttachment]
+            },
+            { showAlertForAttachments: false },
+            { [mvlMockPdfAttachment.id]: loadingPot }
+          );
+          expect(
+            res.queryByTestId("attachmentActivityIndicator")
+          ).not.toBeNull();
+        });
+      });
+    });
 
-            const mockPresent = jest.fn();
-            const mockDismiss = jest.fn();
-            mockBottomSheetPresent.mockImplementationOnce(_ => ({
-              present: mockPresent,
-              bottomSheet: react.View,
-              dismiss: mockDismiss
-            }));
-            const { getByText } = renderComponent(props, preferences);
-            const item = getByText(mvlMockPdfAttachment.displayName);
-            await fireEvent(item, "onPress");
-            expect(mockPresent).toHaveBeenCalled();
-            expect(mockDismiss).not.toHaveBeenCalled();
-          });
+    describe("when the pot is NOT loading", () => {
+      it("it should NOT show a loading indicator", async () => {
+        [
+          pot.none,
+          pot.noneError(new Error()),
+          pot.some("path"),
+          pot.someError("path", new Error())
+        ].forEach(notLoadingPot => {
+          const res = renderComponent(
+            {
+              attachments: [mvlMockPdfAttachment]
+            },
+            { showAlertForAttachments: false },
+            { [mvlMockPdfAttachment.id]: notLoadingPot }
+          );
+          expect(res.queryByTestId("attachmentActivityIndicator")).toBeNull();
         });
       });
     });
@@ -149,14 +117,19 @@ describe("MvlAttachments", () => {
 
 const renderComponent = (
   props: React.ComponentProps<typeof MvlAttachments>,
-  mvlPreferences: MvlPreferences = { showAlertForAttachments: true }
+  mvlPreferences: MvlPreferences = { showAlertForAttachments: true },
+  mvlDownloads: MvlDownloads = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, {
     ...globalState,
     features: {
       ...globalState.features,
-      mvl: { ...globalState.features.mvl, preferences: mvlPreferences }
+      mvl: {
+        ...globalState.features.mvl,
+        preferences: mvlPreferences,
+        downloads: mvlDownloads
+      }
     }
   } as any);
   return renderScreenFakeNavRedux<GlobalState>(
