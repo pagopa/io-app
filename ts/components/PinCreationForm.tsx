@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
 import I18n from "../i18n";
 import FooterWithButtons from "../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -13,10 +13,14 @@ import { IOStyles } from "../components/core/variables/IOStyles";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
 import { LabelSmall } from "../components/core/typography/LabelSmall";
+import { isAndroid } from "../utils/platform";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;
 };
+
+const screenHeight = Dimensions.get("screen").height;
+const platformFixer = isAndroid ? 0 : -40;
 
 const styles = StyleSheet.create({
   flex: {
@@ -147,24 +151,20 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
             </View>
           )}
         </View>
-      </ScrollView>
 
-      <>
-        <View style={IOStyles.horizontalContentPadding}>
+        <View style={{ marginTop: screenHeight - 580 + platformFixer }}>
           <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("onboarding.pin.tutorial")}
             </Label>
           </InfoBox>
         </View>
+      </ScrollView>
 
-        <View style={{ marginTop: 20 }} />
-
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={computedConfirmButtonProps}
-        />
-      </>
+      <FooterWithButtons
+        type="SingleButton"
+        leftButton={computedConfirmButtonProps}
+      />
     </View>
   );
 };
