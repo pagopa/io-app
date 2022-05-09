@@ -13,6 +13,8 @@ import { Label } from "../../../../../components/core/typography/Label";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { IOPrimaryBadge } from "../../../../../components/core/IOBadge";
+import I18n from "../../../../../i18n";
 
 type Props = {
   discount: Discount;
@@ -48,9 +50,15 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   return (
     <TouchableDefaultOpacity style={[styles.listItem]} onPress={present}>
       <View style={[IOStyles.row, styles.container]}>
-        <View style={IOStyles.flex}>
+        <View style={[IOStyles.flex, IOStyles.row]}>
           <Label weight={"SemiBold"} color={"bluegreyDark"}>
-            {discount.name}
+            {`${discount.name} `}
+            {discount.isNew && (
+              <IOPrimaryBadge
+                text={I18n.t("bonus.cgn.merchantsList.news")}
+                small
+              />
+            )}
           </Label>
         </View>
         <IconFont name={"io-right"} color={IOColors.blue} size={24} />
