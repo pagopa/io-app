@@ -1,6 +1,5 @@
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { expectSaga, testSaga } from "redux-saga-test-plan";
-import * as is from "@redux-saga/is";
+import { expectSaga } from "redux-saga-test-plan";
 import { cancel, fork } from "typed-redux-saga/macro";
 import { mvlMockPdfAttachment } from "../../types/__mock__/mvlMock";
 import { downloadMvlAttachment } from "../networking/downloadMvlAttachment";
