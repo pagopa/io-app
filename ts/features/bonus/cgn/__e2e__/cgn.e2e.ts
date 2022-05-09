@@ -15,6 +15,27 @@ const activateBonusSuccess = async () => {
   await waitFor(element(by.text(I18n.t("bonus.cgn.activation.success.title"))))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
+
+  // We should unsubscribe after the activation, in order to allow the next test run (we can remove this part when we will have the possibility
+  // to reset the dev-server with an API command.
+
+  // Go to bonus details
+  await element(by.text(I18n.t("bonus.cgn.cta.goToDetail"))).tap();
+
+  // wait for unsubscribe cta
+  const unsubscribeCgnCta = element(
+    by.text(I18n.t("bonus.cgn.cta.deactivateBonus"))
+  );
+  await waitFor(unsubscribeCgnCta)
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
+  // unsubscribe
+  await unsubscribeCgnCta.tap();
+
+  // confirm alert
+  const alertCTA = element(by.text(I18n.t("global.buttons.deactivate")));
+  await waitFor(alertCTA).toBeVisible().withTimeout(e2eWaitRenderTimeout);
+  await alertCTA.tap();
 };
 
 describe("CGN", () => {
@@ -39,6 +60,9 @@ describe("CGN", () => {
     });
   });
 
+  /*
+  TODO: we should deactivate atm this test because we cannot scroll in the WalletHome, since is used native-base and we cannot have a testID binded to the scrollview.
+
   describe("When the user want to start activation from card carousel", () => {
     it("Should complete activation", async () => {
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
@@ -46,6 +70,7 @@ describe("CGN", () => {
       await activateBonusSuccess();
     });
   });
+   */
 
   describe("When the user want to start activation from service detail", () => {
     it("Should complete activation", async () => {
@@ -64,24 +89,5 @@ describe("CGN", () => {
       await startActivationCta.tap();
       await activateBonusSuccess();
     });
-  });
-
-  afterEach(async () => {
-    await device.reloadReactNative();
-    await ensureLoggedIn();
-    await element(by.text(I18n.t("global.navigator.wallet"))).tap();
-    const cgnCardItem = element(by.id("cgn-card-component"));
-    await waitFor(cgnCardItem).toBeVisible().withTimeout(e2eWaitRenderTimeout);
-    await cgnCardItem.tap();
-    const unsubscribeCgnCta = element(
-      by.text(I18n.t("bonus.cgn.cta.deactivateBonus"))
-    );
-    await waitFor(unsubscribeCgnCta)
-      .toBeVisible()
-      .withTimeout(e2eWaitRenderTimeout);
-    await unsubscribeCgnCta.tap();
-    const alertCTA = element(by.text(I18n.t("global.buttons.deactivate")));
-    await waitFor(alertCTA).toBeVisible().withTimeout(e2eWaitRenderTimeout);
-    await alertCTA.tap();
   });
 });
