@@ -159,19 +159,18 @@ describe("getPaymentMethods", () => {
 
   const getMethodStatus = (
     methods: ReadonlyArray<IPaymentMethod>,
-    description: string
-  ): IPaymentMethod["status"] =>
-    methods.find(m => m.description === description)!.status;
+    name: string
+  ): IPaymentMethod["status"] => methods.find(m => m.name === name)!.status;
 
   it("credit card should be always implemented", () => {
     expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.card.description"))
+      getMethodStatus(methods, I18n.t("wallet.methods.card.name"))
     ).toEqual("implemented");
   });
 
   it("paypal should be always implemented when the FF is ON", () => {
     expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.paypal.description"))
+      getMethodStatus(methods, I18n.t("wallet.methods.paypal.name"))
     ).toEqual("implemented");
   });
 
@@ -184,13 +183,13 @@ describe("getPaymentMethods", () => {
       canOnboardBPay: true
     });
     expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.paypal.description"))
+      getMethodStatus(methods, I18n.t("wallet.methods.paypal.name"))
     ).toEqual("notImplemented");
   });
 
   it("satispay should be always notImplemented", () => {
     expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.satispay.description"))
+      getMethodStatus(methods, I18n.t("wallet.methods.satispay.name"))
     ).toEqual("notImplemented");
   });
 
@@ -203,7 +202,7 @@ describe("getPaymentMethods", () => {
       canOnboardBPay: false
     });
     expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.name"))
     ).toEqual("notImplemented");
   });
 
@@ -216,7 +215,7 @@ describe("getPaymentMethods", () => {
       canOnboardBPay: true
     });
     expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.name"))
     ).toEqual("implemented");
   });
 
@@ -234,7 +233,7 @@ describe("getPaymentMethods", () => {
       }
     );
     expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.name"))
     ).toEqual("notImplemented");
   });
 
@@ -252,7 +251,7 @@ describe("getPaymentMethods", () => {
       }
     );
     expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.description"))
+      getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.name"))
     ).toEqual("implemented");
   });
 });
