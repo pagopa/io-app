@@ -1,0 +1,95 @@
+import * as pot from "italia-ts-commons/lib/pot";
+import { MvlDownloads, mvlDownloadsReducer } from "../downloads";
+import {
+  mvlAttachmentDownload,
+  mvlRemoveCachedAttachment
+} from "../../actions/downloads";
+import { mvlMockPdfAttachment } from "../../../types/__mock__/mvlMock";
+
+const path = "/path/attachment.pdf";
+
+describe("mvlDownloadsReducer", () => {
+  describe("given no download", () => {
+    const initialState = {};
+
+    describe("when requesting an attachment", () => {
+      const attachment = mvlMockPdfAttachment;
+
+      const afterRequestState = mvlDownloadsReducer(
+        initialState,
+        mvlAttachmentDownload.request(attachment)
+      );
+
+      it("then it returns pot.loading", () => {
+        expect(
+          pot.isLoading(afterRequestState[attachment.id] ?? pot.none)
+        ).toBeTruthy();
+      });
+
+      describe("and the request succeeds", () => {
+        it("then it returns pot.some", () => {
+          expect(
+            pot.isSome(
+              mvlDownloadsReducer(
+                afterRequestState,
+                mvlAttachmentDownload.success({
+                  attachment,
+                  path
+                })
+              )[attachment.id] ?? pot.none
+            )
+          ).toBeTruthy();
+        });
+      });
+
+      describe("and the request fails", () => {
+        it("then it returns pot.error", () => {
+          expect(
+            pot.isError(
+              mvlDownloadsReducer(
+                afterRequestState,
+                mvlAttachmentDownload.failure({
+                  attachment,
+                  error: new Error()
+                })
+              )[attachment.id] ?? pot.none
+            )
+          ).toBeTruthy();
+        });
+      });
+
+      describe("and the request gets cancelled", () => {
+        it("then it returns pot.none", () => {
+          expect(
+            pot.isNone(
+              mvlDownloadsReducer(
+                afterRequestState,
+                mvlAttachmentDownload.failure({
+                  attachment
+                })
+              )[attachment.id] ?? pot.none
+            )
+          ).toBeTruthy();
+        });
+      });
+    });
+  });
+
+  describe("given a downloaded attachment", () => {
+    const attachment = mvlMockPdfAttachment;
+    const initialState: MvlDownloads = { [attachment.id]: pot.some(path) };
+
+    describe("when clearing the attachment", () => {
+      it("then it returns pot.none", () => {
+        expect(
+          pot.isNone(
+            mvlDownloadsReducer(
+              initialState,
+              mvlRemoveCachedAttachment({ id: attachment.id, path })
+            )[attachment.id] ?? pot.none
+          )
+        ).toBeTruthy();
+      });
+    });
+  });
+});
