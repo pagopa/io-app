@@ -249,6 +249,16 @@ class TransactionSummaryScreen extends React.Component<Props> {
       .mapNullable(_ => _.enteBeneficiario)
       .map(formatTextRecipient);
 
+    /**
+     * try to show the organization fiscal code coming from the 'verifica' API
+     * otherwise (it could be an issue with the API) it fallbacks on rptID coming from
+     * static data: message, qrcode, manual insertion
+     */
+    const organizationFiscalCode: string = pot
+      .toOption(potVerifica)
+      .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
+      .getOrElse(rptId.organizationFiscalCode);
+
     const currentAmount: string = pot.getOrElse(
       pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
         formatNumberAmount(
@@ -323,7 +333,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
             {standardRow(
               I18n.t("wallet.firstTransactionSummary.entityCode"),
-              rptId.organizationFiscalCode
+              organizationFiscalCode
             )}
             <View spacer={true} small={true} />
             {standardRow(
