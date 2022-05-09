@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0-rc.4](https://github.com/pagopa/io-app/compare/2.8.0-rc.3...2.8.0-rc.4) (2022-05-06)
+
+
+### Chores
+
+* [[IA-796](https://pagopa.atlassian.net/browse/IA-796)] BPay tracking events ([#3924](https://github.com/pagopa/io-app/issues/3924)) ([cfd4f1c](https://github.com/pagopa/io-app/commit/cfd4f1c11ca6e8c9ce40719b22db3b09cd3578e6))
+* [[IA-833](https://pagopa.atlassian.net/browse/IA-833)] New intro text for BANCOMAT Pay flow ([#3931](https://github.com/pagopa/io-app/issues/3931)) ([213f16c](https://github.com/pagopa/io-app/commit/213f16c19cd875d0194ab5400b56773aeb13b0ee))
+* **Carta della cultura:** [[AP-15](https://pagopa.atlassian.net/browse/AP-15)] Carta della cultura networking ([#3927](https://github.com/pagopa/io-app/issues/3927)) ([a87054d](https://github.com/pagopa/io-app/commit/a87054d7eab0ff655ca02a24a5b09b61c53a53af))
+* **Carta della cultura:** [[AP-19](https://pagopa.atlassian.net/browse/AP-19)] Modify TOS url [#3943](https://github.com/pagopa/io-app/issues/3943) ([d8c5a59](https://github.com/pagopa/io-app/commit/d8c5a59460662a58f52bd0aaf3d5d5716fc87305))
+* Sync Podfile.lock ([#3945](https://github.com/pagopa/io-app/issues/3945)) ([1ef5133](https://github.com/pagopa/io-app/commit/1ef51336ef546eddd18a87907a88c7f95071d5fc))
+
 ## [2.8.0-rc.3](https://github.com/pagopa/io-app/compare/2.8.0-rc.2...2.8.0-rc.3) (2022-05-05)
 
 
