@@ -25,6 +25,7 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
       categories={listItem.item.productCategories}
       name={listItem.item.name}
       onPress={() => props.onItemPress(listItem.item.id)}
+      isNew={listItem.item.newDiscounts}
     />
   );
 

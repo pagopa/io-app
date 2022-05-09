@@ -10,9 +10,11 @@ import { getCategorySpecs } from "../../utils/filters";
 import I18n from "../../../../../i18n";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { IOPrimaryBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
   categories: ReadonlyArray<ProductCategory>;
+  isNew: boolean;
   name: string;
   onPress: () => void;
 };
@@ -24,7 +26,8 @@ const styles = StyleSheet.create({
   },
   verticalPadding: {
     paddingVertical: 16
-  }
+  },
+  badgePosition: { alignSelf: "center", marginLeft: 8 }
 });
 
 export const renderCategoryElement = (category: ProductCategory) =>
@@ -95,7 +98,14 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
     accessibilityRole={"button"}
     onPress={props.onPress}
   >
-    <H2>{props.name}</H2>
+    <View style={[styles.categories, IOStyles.flex]}>
+      <H2>{props.name}</H2>
+      {props.isNew && (
+        <View style={styles.badgePosition}>
+          <IOPrimaryBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
+        </View>
+      )}
+    </View>
     <View spacer small />
     <CategoriesRow categories={props.categories} />
   </TouchableDefaultOpacity>

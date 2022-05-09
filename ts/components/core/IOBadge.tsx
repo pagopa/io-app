@@ -33,7 +33,17 @@ export const IOPrimaryBadge = ({ text, small }: IOBadgeCommonProps) => (
       small ? commonBadgeStyles.badgeSmall : {}
     ]}
   >
-    <LabelSmall color="white">{text}</LabelSmall>
+    {small ? (
+      <BaseTypography
+        weight={"SemiBold"}
+        color={"white"}
+        style={commonBadgeStyles.badgeSmallLabel}
+      >
+        {text}
+      </BaseTypography>
+    ) : (
+      <LabelSmall color="white">{text}</LabelSmall>
+    )}
   </Badge>
 );
 
