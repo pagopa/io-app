@@ -1,156 +1,99 @@
-import { TypeEnum } from "../../../definitions/pagopa/walletv2/CardInfo";
+import { CreditCardPaymentMethod, PaymentMethod } from "../../types/pagopa";
 import {
-  BancomatPaymentMethod,
-  CreditCardPaymentMethod,
-  PaymentMethod,
-  SatispayPaymentMethod
-} from "../../types/pagopa";
-import { isPaymentSupported, canMethodPay } from "../paymentMethodCapabilities";
+  hasPaymentFeature,
+  isDisabledToPay,
+  isEnabledToPay
+} from "../paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../definitions/pagopa/EnableableFunctions";
 
-describe("canMethodPay", () => {
-  it("should return true if the Credit card is of type CrediCardType", () => {
-    const aKnownCreditCard = {
-      kind: "CreditCard",
-      info: {
-        brand: "VISA"
+const aCreditCard = {
+  kind: "CreditCard",
+  info: {
+    brand: "VISA"
+  }
+} as CreditCardPaymentMethod;
+const paymentMethod = {
+  ...aCreditCard,
+  enableableFunctions: [],
+  pagoPA: true
+} as PaymentMethod;
+
+const testCases: ReadonlyArray<
+  [
+    {
+      pm: PaymentMethod;
+      expected: {
+        hasPaymentFeatureEnabled: boolean;
+        isEnabledToPay: boolean;
+        isDisabledToPay: boolean;
+      };
+    }
+  ]
+> = [
+  [
+    {
+      pm: {
+        ...paymentMethod,
+        enableableFunctions: [],
+        pagoPA: true
       },
-      pagoPA: true
-    } as CreditCardPaymentMethod;
-
-    expect(canMethodPay(aKnownCreditCard)).toBeTruthy();
-  });
-
-  it("should return false if the Credit card is of type CrediCardType but pagoPA is false", () => {
-    const aKnownCreditCard = {
-      kind: "CreditCard",
-      info: {
-        brand: "VISA"
-      },
-      pagoPA: false
-    } as CreditCardPaymentMethod;
-    expect(canMethodPay(aKnownCreditCard)).toBeFalsy();
-  });
-  it("should return true if the Credit card is not of type CrediCardType", () => {
-    const anUnKnownCreditCard = {
-      kind: "CreditCard",
-      info: {
-        brand: "UNKNOwN"
-      },
-      pagoPA: true
-    } as CreditCardPaymentMethod;
-
-    expect(canMethodPay(anUnKnownCreditCard)).toBeTruthy();
-  });
-  it("should return true if pagoPa is true but is not of type CrediCardType", () => {
-    const anNonCreditCardPaymentMethod = {
-      pagoPA: true
-    } as SatispayPaymentMethod;
-
-    expect(canMethodPay(anNonCreditCardPaymentMethod)).toBeTruthy();
-  });
-});
-
-describe("isPaymentMethodSupported", () => {
-  it("should return available if the payment method is of kind CreditCard, has capability pagoPa", () => {
-    const aNoMaestroCreditCard = {
-      kind: "CreditCard",
-      info: {
-        brand: "VISA"
-      },
-      pagoPA: true
-    } as CreditCardPaymentMethod;
-    const aPaymentMethod = {
-      ...aNoMaestroCreditCard,
-      kind: "CreditCard",
-      pagoPA: true,
-      enableableFunctions: [EnableableFunctionsEnum.pagoPA]
-    } as PaymentMethod;
-
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("available");
-  });
-  it("should return notAvailable if is a credit card and pagoPa is false", () => {
-    const aMaestroCreditCard = {
-      kind: "CreditCard",
-      info: {
-        brand: "MAESTRO"
+      expected: {
+        hasPaymentFeatureEnabled: false,
+        isEnabledToPay: false,
+        isDisabledToPay: false
       }
-    } as CreditCardPaymentMethod;
-    const aPaymentMethod = {
-      ...aMaestroCreditCard,
-      kind: "CreditCard",
-      pagoPA: false,
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
-
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
-  });
-  it("should return notAvailable if is a cobadge card", () => {
-    const aCreditCard = {
-      kind: "CreditCard",
-      info: {
-        brand: "MAESTRO",
-        issuerAbiCode: "123"
+    }
+  ],
+  [
+    {
+      pm: {
+        ...paymentMethod,
+        enableableFunctions: [EnableableFunctionsEnum.pagoPA],
+        pagoPA: false
+      },
+      expected: {
+        hasPaymentFeatureEnabled: true,
+        isEnabledToPay: false,
+        isDisabledToPay: true
       }
-    } as CreditCardPaymentMethod;
-    const aPaymentMethod = {
-      ...aCreditCard,
-      kind: "CreditCard",
-      pagoPA: false,
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
-
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
-  });
-
-  it("should return arriving if the payment method is of kind Satispay", () => {
-    const aSatispay = {} as SatispayPaymentMethod;
-    const aPaymentMethod = {
-      ...aSatispay,
-      kind: "Satispay",
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
-
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("arriving");
-  });
-  it("should return arriving if the payment method is of kind BPay", () => {
-    const aBPay = {} as SatispayPaymentMethod;
-    const aPaymentMethod = {
-      ...aBPay,
-      kind: "BPay",
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
-
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("arriving");
-  });
-
-  it("should return notAvailable if the payment method is of kind Bancomat", () => {
-    const aBancomat = {} as BancomatPaymentMethod;
-    const aPaymentMethod = {
-      ...aBancomat,
-      kind: "Bancomat",
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
-
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
-  });
-
-  it("should return notAvailable if is a privative card", () => {
-    const aCreditCard = {
-      kind: "CreditCard",
-      info: {
-        brand: "MAESTRO",
-        issuerAbiCode: "123",
-        type: TypeEnum.PRV
+    }
+  ],
+  [
+    {
+      pm: {
+        ...paymentMethod,
+        enableableFunctions: [EnableableFunctionsEnum.pagoPA],
+        pagoPA: true
+      },
+      expected: {
+        hasPaymentFeatureEnabled: true,
+        isEnabledToPay: true,
+        isDisabledToPay: false
       }
-    } as CreditCardPaymentMethod;
-    const aPaymentMethod = {
-      ...aCreditCard,
-      kind: "CreditCard",
-      pagoPA: false,
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
+    }
+  ],
+  [
+    {
+      pm: {
+        ...paymentMethod,
+        enableableFunctions: [EnableableFunctionsEnum.BPD],
+        pagoPA: true
+      },
+      expected: {
+        hasPaymentFeatureEnabled: false,
+        isEnabledToPay: false,
+        isDisabledToPay: false
+      }
+    }
+  ]
+];
+test.each(testCases)(
+  `given payment method with pagoPa=%j as argument, expect these results %s`,
+  ({ pm, expected }) => {
+    expect(hasPaymentFeature(pm)).toEqual(expected.hasPaymentFeatureEnabled);
 
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
-  });
-});
+    expect(isEnabledToPay(pm)).toEqual(expected.isEnabledToPay);
+
+    expect(isDisabledToPay(pm)).toEqual(expected.isDisabledToPay);
+  }
+);

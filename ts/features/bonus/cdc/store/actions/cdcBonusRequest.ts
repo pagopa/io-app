@@ -3,7 +3,11 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { CdcBonusRequestList } from "../../types/CdcBonusRequest";
+import {
+  CdcBonusEnrollmentList,
+  CdcBonusEnrollmentOutcomeList,
+  CdcBonusRequestList
+} from "../../types/CdcBonusRequest";
 import { NetworkError } from "../../../../../utils/errors";
 
 /**
@@ -28,7 +32,7 @@ export const cdcEnrollUserToBonus = createAsyncAction(
   "CDC_ENROLL_REQUEST",
   "CDC_ENROLL_SUCCESS",
   "CDC_ENROLL_FAILURE"
-)<void, CdcBonusRequestList, NetworkError>();
+)<CdcBonusEnrollmentList, CdcBonusEnrollmentOutcomeList, NetworkError>();
 
 export type CdcBonusRequestActions =
   | ActionType<typeof cdcSelectedBonus>

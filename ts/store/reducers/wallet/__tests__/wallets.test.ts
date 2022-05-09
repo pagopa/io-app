@@ -19,8 +19,7 @@ import {
   creditCardWalletV1Selector,
   getFavoriteWallet,
   getFavoriteWalletId,
-  getPagoPAMethodsSelector,
-  getPayablePaymentMethodsSelector,
+  withPaymentFeatureSelector,
   getWalletsById,
   pagoPaCreditCardWalletV1Selector,
   satispayListSelector,
@@ -268,47 +267,10 @@ describe("updatePaymentStatus state changes", () => {
 describe("getPayablePaymentMethodsSelector", () => {
   it("should return false - no payable methods", () => {
     const withWallets = appReducer(undefined, fetchWalletsSuccess([]));
-    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toEqual(0);
   });
 
   it("should return false - empty wallet", () => {
-    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
-      .value as PatchedWalletV2ListResponse;
-    const updatedMethods = paymentMethods.data!.map(w =>
-      convertWalletV2toWalletV1({ ...w, pagoPA: false })
-    );
-    const withWallets = appReducer(
-      undefined,
-      fetchWalletsSuccess(updatedMethods)
-    );
-    expect(updatedMethods.length).toBeGreaterThan(0);
-    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
-  });
-
-  it("should return true - one payable method", () => {
-    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
-      .value as PatchedWalletV2ListResponse;
-    const updatedMethods = [...paymentMethods.data!];
-    // eslint-disable-next-line functional/immutable-data
-    updatedMethods[0] = { ...updatedMethods[0], pagoPA: true };
-    const withWallets = appReducer(
-      undefined,
-      fetchWalletsSuccess(updatedMethods.map(convertWalletV2toWalletV1))
-    );
-    expect(updatedMethods.length).toBeGreaterThan(0);
-    expect(
-      getPayablePaymentMethodsSelector(withWallets).length
-    ).toBeGreaterThan(0);
-  });
-});
-
-describe("getPagoPAMethodsSelector", () => {
-  it("should return false - no payable methods", () => {
-    const withWallets = appReducer(undefined, fetchWalletsSuccess([]));
-    expect(getPagoPAMethodsSelector(withWallets).length).toEqual(0);
-  });
-
-  it("should return false - no pagoPA method", () => {
     const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
       .value as PatchedWalletV2ListResponse;
     const updatedMethods = paymentMethods.data!.map(w =>
@@ -319,7 +281,32 @@ describe("getPagoPAMethodsSelector", () => {
       fetchWalletsSuccess(updatedMethods)
     );
     expect(updatedMethods.length).toBeGreaterThan(0);
-    expect(getPagoPAMethodsSelector(withWallets).length).toEqual(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toEqual(0);
+  });
+
+  it("should return true - one payable method", () => {
+    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
+      .value as PatchedWalletV2ListResponse;
+    const updatedMethods = [...paymentMethods.data!];
+    // eslint-disable-next-line functional/immutable-data
+    updatedMethods[0] = {
+      ...updatedMethods[0],
+      pagoPA: true,
+      enableableFunctions: [EnableableFunctionsEnum.pagoPA]
+    };
+    const withWallets = appReducer(
+      undefined,
+      fetchWalletsSuccess(updatedMethods.map(convertWalletV2toWalletV1))
+    );
+    expect(updatedMethods.length).toBeGreaterThan(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toBeGreaterThan(0);
+  });
+});
+
+describe("getPagoPAMethodsSelector", () => {
+  it("should return false - no payable methods", () => {
+    const withWallets = appReducer(undefined, fetchWalletsSuccess([]));
+    expect(withPaymentFeatureSelector(withWallets).length).toEqual(0);
   });
 
   it("should return true - one pagoPA method", () => {
@@ -336,9 +323,7 @@ describe("getPagoPAMethodsSelector", () => {
       fetchWalletsSuccess(updatedMethods.map(convertWalletV2toWalletV1))
     );
     expect(updatedMethods.length).toBeGreaterThan(0);
-    expect(
-      getPayablePaymentMethodsSelector(withWallets).length
-    ).toBeGreaterThan(0);
+    expect(withPaymentFeatureSelector(withWallets).length).toBeGreaterThan(0);
   });
 });
 
