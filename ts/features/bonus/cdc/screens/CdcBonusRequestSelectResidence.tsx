@@ -22,28 +22,29 @@ import {
 } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
 import { useIOSelector } from "../../../../store/hooks";
-import { Anno } from "../../../../../definitions/cdc/Anno";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
+import { H3 } from "../../../../components/core/typography/H3";
+import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 
-const getCheckResidencyItems = (): ReadonlyArray<RadioItem<boolean>> => [
+const getCheckResidencyItems = (): ReadonlyArray<RadioItem<residentChoice>> => [
   {
     body: I18n.t("bonus.cdc.selectResidence.items.residesInItaly"),
-    id: true
+    id: "residentInItaly"
   },
   {
     body: I18n.t("bonus.cdc.selectResidence.items.residesAbroad"),
-    id: false
+    id: "residentAbroad"
   }
 ];
 
+type residentChoice = "residentAbroad" | "residentInItaly";
 const CdcBonusRequestSelectResidence = () => {
   const navigation =
     useNavigation<
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
     >();
   const [isResidentInItaly, setIsResidentInItaly] = React.useState<
-    Map<Anno, boolean>
-  >(new Map());
+    Record<string, residentChoice>
+  >({});
   const cdcSelectedBonus = useIOSelector(cdcSelectedBonusSelector);
 
   if (cdcSelectedBonus === undefined || cdcSelectedBonus.length === 0) {
@@ -61,18 +62,30 @@ const CdcBonusRequestSelectResidence = () => {
           <H1>{I18n.t("bonus.cdc.selectResidence.header")}</H1>
           <View spacer={true} />
           <H4 weight={"Regular"}>{I18n.t("bonus.cdc.selectResidence.info")}</H4>
-          <View spacer={true} />
 
           {cdcSelectedBonus.map(b => (
-            <RadioButtonList<boolean>
-              key={b.year}
-              items={getCheckResidencyItems()}
-              selectedItem={isResidentInItaly.get(b.year)}
-              onPress={v => {
-                setIsResidentInItaly(isResidentInItaly.set(b.year, v));
-              }}
-              rightSideSelection={true}
-            />
+            <>
+              <View spacer large />
+              <View
+                style={{ flex: 1, flexDirection: "row", alignItems: "center" }}
+              >
+                <BonusIcon width={20} height={20} />
+                <View hspacer />
+                <H3 weight={"SemiBold"} color={"bluegrey"}>
+                  {b.year}
+                </H3>
+              </View>
+              <RadioButtonList<residentChoice>
+                key={b.year}
+                items={getCheckResidencyItems()}
+                selectedItem={isResidentInItaly[b.year]}
+                onPress={v => {
+                  setIsResidentInItaly({ ...isResidentInItaly, [b.year]: v });
+                }}
+                rightSideSelection={true}
+                bordered={true}
+              />
+            </>
           ))}
         </ScrollView>
         <FooterWithButtons
@@ -87,7 +100,10 @@ const CdcBonusRequestSelectResidence = () => {
             I18n.t("global.buttons.continue"),
             undefined,
             undefined,
-            !isResidentInItaly ?? false
+            cdcSelectedBonus.length !==
+              cdcSelectedBonus.filter(
+                b => isResidentInItaly[b.year] === "residentInItaly"
+              ).length
           )}
         />
       </SafeAreaView>
