@@ -910,12 +910,12 @@ wallet:
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
-      title: "Search for your BANCOMAT Pay accounts"
+      title: "Pay on IO with BANCOMAT Pay"
       description:
-        text1: "By adding BANCOMAT Pay to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
+        text1: "Add your BANCOMAT Pay account to more easily pay pagoPA notices and join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
-        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
-        text4: by searching among those available
+        text3: "Choose “Continue” to search for accounts in your name. Alternatively, search for the bank on which you have an active BANCOMAT Pay account "
+        text4: among those available.
     cobadge:
       title: "Search for your international circuit cards"
       description:
@@ -1371,7 +1371,7 @@ wallet:
       description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
-      description: Link your BANCOMAT Pay account
+      description: Pay with your linked card or bank account
     postepayApp:
       name: Postepay
       description: your Postepay app
@@ -2913,13 +2913,15 @@ bonus:
     bonusRequest:
       bonusRequested:
         cta: "I understand!"
-
-    selectResidence:
-      header: "Residence"
-      items:
-        residesInItaly: "I live in Italy"
-        residesAbroad: "I live abroad"
-      info: "Remember that the bonus is only available for citizens resident in Italy"
+      selectResidence:
+        header: "Residence"
+        items:
+          residesInItaly: "I live in Italy"
+          residesAbroad: "I live abroad"
+        info: "Remember that the bonus is only available for citizens resident in Italy"
+      selectYear:
+        header: "For which year do you want to apply for the Carta della Cultura?"
+        body: "For each selected year, your ISEE must not exceed € 15,000 and your residence must be in the Italian territory."
 features:
   mvl:
     title: "legal message"

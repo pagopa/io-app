@@ -23,11 +23,11 @@ import {
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<boolean>> => [
   {
-    body: I18n.t("bonus.cdc.selectResidence.items.residesInItaly"),
+    body: I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesInItaly"),
     id: true
   },
   {
-    body: I18n.t("bonus.cdc.selectResidence.items.residesAbroad"),
+    body: I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesAbroad"),
     id: false
   }
 ];
@@ -49,7 +49,7 @@ const CdcBonusRequestSelectResidence = () => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("bonus.cdc.selectResidence.header")}</H1>
+          <H1>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H1>
           <View spacer={true} />
 
           <RadioButtonList<boolean>
@@ -60,7 +60,9 @@ const CdcBonusRequestSelectResidence = () => {
           />
 
           <View spacer={true} />
-          <H4 weight={"Regular"}>{I18n.t("bonus.cdc.selectResidence.info")}</H4>
+          <H4 weight={"Regular"}>
+            {I18n.t("bonus.cdc.bonusRequest.selectResidence.info")}
+          </H4>
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}

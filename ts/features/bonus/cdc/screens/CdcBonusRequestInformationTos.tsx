@@ -13,8 +13,7 @@ import { CDC_ROUTES } from "../navigation/routes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { CdcBonusRequestParamsList } from "../navigation/params";
 
-// TODO change with the ufficial TOS page see https://pagopa.atlassian.net/browse/AP-19
-const tosUrl = "https://io.italia.it/app-content/tos_privacy.html";
+const tosUrl = "https://io.italia.it/app-content/tos_privacy_cartacultura.html";
 
 const CdcBonusRequestInformationTos = () => {
   const navigation =
