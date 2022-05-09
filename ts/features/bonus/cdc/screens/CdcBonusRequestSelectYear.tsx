@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
@@ -36,22 +36,28 @@ const CdcBonusRequestSelectYear = () => {
   const cdcBonusList = useIOSelector(cdcBonusRequestListSelector);
   const [years, setYears] = useState<ReadonlyArray<Anno>>([]);
 
-  const navigateToFailureScreen = () => {
-    navigation.getParent()?.goBack();
-    navigation.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE);
-  };
-
-  if (!isReady(cdcBonusList)) {
-    navigateToFailureScreen();
-    return null;
-  }
-
-  const activableBonus = cdcBonusList.value.filter(
-    b => b.status === StatoBeneficiarioEnum.ATTVABILE
+  const activableBonus = React.useMemo(
+    () =>
+      isReady(cdcBonusList)
+        ? cdcBonusList.value.filter(
+            b => b.status === StatoBeneficiarioEnum.ATTVABILE
+          )
+        : [],
+    [cdcBonusList]
   );
 
-  if (activableBonus.length === 0) {
-    navigateToFailureScreen();
+  useEffect(() => {
+    const navigateToFailureScreen = () => {
+      navigation.getParent()?.goBack();
+      navigation.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE);
+    };
+
+    if (!isReady(cdcBonusList) || activableBonus.length === 0) {
+      navigateToFailureScreen();
+    }
+  }, [cdcBonusList, activableBonus, navigation]);
+
+  if (!isReady(cdcBonusList) || activableBonus.length === 0) {
     return null;
   }
 
