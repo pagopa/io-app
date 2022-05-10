@@ -7,60 +7,69 @@ import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import ROUTES from "../../../../../navigation/routes";
 import CdcBonusRequestSelectResidence from "../CdcBonusRequestSelectResidence";
 import I18n from "../../../../../i18n";
+import { Anno } from "../../../../../../definitions/cdc/Anno";
+import { CdcBonusEnrollmentList } from "../../types/CdcBonusRequest";
 
 jest.useFakeTimers();
 
+const mockSelectedBonus: CdcBonusEnrollmentList = [
+  { year: "2021" as Anno },
+  { year: "2022" as Anno }
+];
+
 describe("the CdcBonusRequestSelectResidence screen", () => {
-  it("should render the title", () => {
-    const { component } = renderComponent();
-    expect(component.getByText(I18n.t("bonus.cdc.title"))).toBeDefined();
-  });
-  it("should render the resident in Italy and resident abroad radio buttons", () => {
-    const { component } = renderComponent();
-    const itemResidentInItaly = component.getByText(
-      I18n.t("bonus.cdc.selectResidence.items.residesInItaly")
-    );
-    expect(itemResidentInItaly).toBeDefined();
-
-    const itemResidentAbroad = component.getByText(
-      I18n.t("bonus.cdc.selectResidence.items.residesAbroad")
-    );
-    expect(itemResidentAbroad).toBeDefined();
-  });
-
-  it("should render the information text", () => {
-    const { component } = renderComponent();
-    expect(
-      component.getByText(I18n.t("bonus.cdc.selectResidence.info"))
-    ).toBeDefined();
-  });
-
-  describe("when 'I live in Italy' is checked", () => {
-    it("the continue button should be enabled", () => {
+  describe("if selectedBonus is no undefined and greater than 0", () => {
+    it("should render the title", () => {
+      const { component } = renderComponent();
+      expect(component.getByText(I18n.t("bonus.cdc.title"))).toBeDefined();
+    });
+    it("should render the resident in Italy and resident abroad radio buttons", () => {
       const { component } = renderComponent();
       const itemResidentInItaly = component.getByText(
         I18n.t("bonus.cdc.selectResidence.items.residesInItaly")
       );
-      fireEvent(itemResidentInItaly, "onPress");
-      const continueButton = component.getByText(
-        I18n.t("global.buttons.continue")
-      );
+      expect(itemResidentInItaly).toBeDefined();
 
-      expect(continueButton).toBeEnabled();
-    });
-  });
-  describe("when 'I live abroad' is checked", () => {
-    it("the continue button should be disabled", () => {
-      const { component } = renderComponent();
       const itemResidentAbroad = component.getByText(
         I18n.t("bonus.cdc.selectResidence.items.residesAbroad")
       );
-      fireEvent(itemResidentAbroad, "onPress");
-      const continueButton = component.getByText(
-        I18n.t("global.buttons.continue")
-      );
+      expect(itemResidentAbroad).toBeDefined();
+    });
 
-      expect(continueButton).toBeDisabled();
+    it("should render the information text", () => {
+      const { component } = renderComponent();
+      expect(
+        component.getByText(I18n.t("bonus.cdc.selectResidence.info"))
+      ).toBeDefined();
+    });
+
+    describe("when 'I live in Italy' is checked", () => {
+      it("the continue button should be enabled", () => {
+        const { component } = renderComponent();
+        const itemResidentInItaly = component.getByText(
+          I18n.t("bonus.cdc.selectResidence.items.residesInItaly")
+        );
+        fireEvent(itemResidentInItaly, "onPress");
+        const continueButton = component.getByText(
+          I18n.t("global.buttons.continue")
+        );
+
+        expect(continueButton).toBeEnabled();
+      });
+    });
+    describe("when 'I live abroad' is checked", () => {
+      it("the continue button should be disabled", () => {
+        const { component } = renderComponent();
+        const itemResidentAbroad = component.getByText(
+          I18n.t("bonus.cdc.selectResidence.items.residesAbroad")
+        );
+        fireEvent(itemResidentAbroad, "onPress");
+        const continueButton = component.getByText(
+          I18n.t("global.buttons.continue")
+        );
+
+        expect(continueButton).toBeDisabled();
+      });
     });
   });
 });
