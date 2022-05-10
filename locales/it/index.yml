@@ -2947,6 +2947,11 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
+    serviceCta:
+      activable: "Attiva la carta"
+      pending: "Richiesta inviata"
+      error:
+        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
     bonusRequest:
       bonusRequested:
         cta: "Ho capito!"
