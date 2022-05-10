@@ -113,6 +113,14 @@ export const BarcodeCamera = (props: Props) => {
 
   // Hook that handles the `onBarcodeScanned` callback.
   useEffect(() => {
+    // If the component is `disabled` the `onBarcodeScanned`
+    // callback should not be called. This fix prevent
+    // possible leaks of this event even while this
+    // component is disabled.
+    if (disabled) {
+      return;
+    }
+
     // This is going to take only the first scanned
     // barcode. This could be improved or changed in relation
     // to the business decisions.
@@ -136,7 +144,7 @@ export const BarcodeCamera = (props: Props) => {
       format: barcodeFormat,
       value: barcodeValue
     });
-  }, [barcodes, onBarcodeScanned]);
+  }, [barcodes, onBarcodeScanned, disabled]);
 
   if (!permissionsGranted) {
     return (
