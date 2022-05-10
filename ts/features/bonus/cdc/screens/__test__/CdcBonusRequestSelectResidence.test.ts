@@ -26,12 +26,12 @@ describe("the CdcBonusRequestSelectResidence screen", () => {
     it("should render the resident in Italy and resident abroad radio buttons", () => {
       const { component } = renderComponent();
       const itemResidentInItaly = component.getByText(
-        I18n.t("bonus.cdc.selectResidence.items.residesInItaly")
+        I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesInItaly")
       );
       expect(itemResidentInItaly).toBeDefined();
 
       const itemResidentAbroad = component.getByText(
-        I18n.t("bonus.cdc.selectResidence.items.residesAbroad")
+        I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesAbroad")
       );
       expect(itemResidentAbroad).toBeDefined();
     });
