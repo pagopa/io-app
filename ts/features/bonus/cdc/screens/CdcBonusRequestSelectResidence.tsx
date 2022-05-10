@@ -27,11 +27,11 @@ import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<residentChoice>> => [
   {
-    body: I18n.t("bonus.cdc.selectResidence.items.residesInItaly"),
+    body: I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesInItaly"),
     id: "residentInItaly"
   },
   {
-    body: I18n.t("bonus.cdc.selectResidence.items.residesAbroad"),
+    body: I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesAbroad"),
     id: "residentAbroad"
   }
 ];
@@ -61,7 +61,9 @@ const CdcBonusRequestSelectResidence = () => {
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H1>
           <View spacer={true} />
-          <H4 weight={"Regular"}>{I18n.t("bonus.cdc.selectResidence.info")}</H4>
+          <H4 weight={"Regular"}>
+            {I18n.t("bonus.cdc.bonusRequest.selectResidence.info")}
+          </H4>
 
           {cdcSelectedBonus.map(b => (
             <>
