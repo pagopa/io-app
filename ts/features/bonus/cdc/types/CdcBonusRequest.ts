@@ -1,14 +1,24 @@
-export type CdcBonusRequestStatus =
-  | "Activable"
-  | "Active"
-  | "Pending"
-  | "Expired"
-  | "NotRequestable";
+import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
+import { Anno } from "../../../../../definitions/cdc/Anno";
+import { EsitoRichiesta } from "../../../../../definitions/cdc/EsitoRichiesta";
 
 export type CdcBonusRequest = {
-  id: string;
-  year: number;
-  status: CdcBonusRequestStatus;
+  year: Anno;
+  status: StatoBeneficiarioEnum;
 };
 
 export type CdcBonusRequestList = ReadonlyArray<CdcBonusRequest>;
+
+export type CdcBonusEnrollment = {
+  year: Anno;
+};
+
+export type CdcBonusEnrollmentList = ReadonlyArray<CdcBonusEnrollment>;
+
+export type CdcBonusEnrollmentOutcome = {
+  year: Anno;
+  outcome: EsitoRichiesta;
+};
+
+export type CdcBonusEnrollmentOutcomeList =
+  ReadonlyArray<CdcBonusEnrollmentOutcome>;
