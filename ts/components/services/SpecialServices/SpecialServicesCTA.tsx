@@ -7,9 +7,14 @@ import { openAppStoreUrl } from "../../../utils/url";
 import { Label } from "../../core/typography/Label";
 import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
 import { useIOSelector } from "../../../store/hooks";
-import { isCGNEnabledSelector } from "../../../store/reducers/backendStatus";
+import {
+  isCdcEnabledSelector,
+  isCGNEnabledSelector
+} from "../../../store/reducers/backendStatus";
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
+import { cdcEnabled } from "../../../config";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 
@@ -33,11 +38,17 @@ const SpecialServicesCTA = (props: Props) => {
   const { customSpecialFlow } = props;
 
   const isCGNEnabled = useIOSelector(isCGNEnabledSelector);
+  const cdcEnabledSelector = useIOSelector(isCdcEnabledSelector);
+
+  const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
   const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
     CustomSpecialFlow,
     boolean
-  >([["cgn" as CustomSpecialFlow, isCGNEnabled]]);
+  >([
+    ["cgn" as CustomSpecialFlow, isCGNEnabled],
+    ["cdc" as CustomSpecialFlow, isCdcEnabled]
+  ]);
 
   return fromNullable(customSpecialFlow).fold(null, csf =>
     fromNullable(mapFlowFeatureFlag.get(csf)).fold(
@@ -48,6 +59,8 @@ const SpecialServicesCTA = (props: Props) => {
             return isEnabled ? (
               <CgnServiceCTA serviceId={props.serviceId} />
             ) : null;
+          case "cdc":
+            return isEnabled ? <CdcServiceCTA /> : null;
           default:
             return <UpdateAppCTA />;
         }
