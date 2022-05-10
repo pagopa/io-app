@@ -2913,13 +2913,12 @@ bonus:
     bonusRequest:
       bonusRequested:
         cta: "I understand!"
-
-    selectResidence:
-      header: "Residence"
-      items:
-        residesInItaly: "I live in Italy"
-        residesAbroad: "I live abroad"
-      info: "Carta della Cultura is only available for citizens residing in Italy. Indicate your residence for each year."
+      selectResidence:
+        header: "Residence"
+        items:
+          residesInItaly: "I live in Italy"
+          residesAbroad: "I live abroad"
+        info: "Carta della Cultura is only available for citizens residing in Italy. Indicate your residence for each year."
       selectYear:
         header: "For which year do you want to apply for the Carta della Cultura?"
         body: "For each selected year, your ISEE must not exceed € 15,000 and your residence must be in the Italian territory."
