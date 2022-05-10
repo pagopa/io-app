@@ -8,6 +8,7 @@ import I18n from "../i18n";
 import customVariables, {
   VIBRATION_BARCODE_SCANNED_DURATION
 } from "../theme/variables";
+import { usePrevious } from "../utils/hooks/usePrevious";
 import { openAppSettings } from "../utils/appSettings";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 
@@ -87,10 +88,10 @@ type Props = {
  */
 export const BarcodeCamera = (props: Props) => {
   const { onBarcodeScanned, disabled } = props;
+  const prevDisabled = usePrevious(disabled);
   const devices = useCameraDevices();
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
-
   const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
     checkInverted: true
   });
@@ -113,25 +114,25 @@ export const BarcodeCamera = (props: Props) => {
 
   // Hook that handles the `onBarcodeScanned` callback.
   useEffect(() => {
-    // If the component is `disabled` the `onBarcodeScanned`
-    // callback should not be called. This fix prevent
-    // possible leaks of this event even while this
-    // component is disabled.
-    if (disabled) {
+    // This will fix a bug on lower-end devices
+    // in which the latest frame would be scanned
+    // multiple times due to races conditions during
+    // the camera disactivation.
+    if (prevDisabled || disabled) {
       return;
     }
 
     // This is going to take only the first scanned
     // barcode. This could be improved or changed in relation
     // to the business decisions.
-    const firstBarcode = barcodes[0];
+    const nextBarcode = barcodes[0];
 
-    if (!firstBarcode) {
+    if (!nextBarcode) {
       return;
     }
 
-    const barcodeValue = firstBarcode.content.data.toString();
-    const barcodeFormat = barcodeFormatToIOFormat(firstBarcode.format);
+    const barcodeValue = nextBarcode.content.data.toString();
+    const barcodeFormat = barcodeFormatToIOFormat(nextBarcode.format);
 
     if (barcodeFormat === null) {
       return;
@@ -144,7 +145,7 @@ export const BarcodeCamera = (props: Props) => {
       format: barcodeFormat,
       value: barcodeValue
     });
-  }, [barcodes, onBarcodeScanned, disabled]);
+  }, [barcodes, onBarcodeScanned, disabled, prevDisabled]);
 
   if (!permissionsGranted) {
     return (
