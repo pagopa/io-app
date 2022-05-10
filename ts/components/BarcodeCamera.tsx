@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 import { View, Dimensions, StyleSheet, Vibration } from "react-native";
 import { useScanBarcodes, BarcodeFormat } from "vision-camera-code-scanner";
-import { Text } from "native-base";
 import I18n from "../i18n";
 import customVariables, {
   VIBRATION_BARCODE_SCANNED_DURATION
@@ -11,6 +10,8 @@ import customVariables, {
 import { usePrevious } from "../utils/hooks/usePrevious";
 import { openAppSettings } from "../utils/appSettings";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { Label } from "./core/typography/Label";
+import { Body } from "./core/typography/Body";
 
 /**
  * Type describing the supported barcodes in IO.
@@ -150,15 +151,15 @@ export const BarcodeCamera = (props: Props) => {
   if (!permissionsGranted) {
     return (
       <View style={styles.notAuthorizedContainer}>
-        <Text style={styles.notAuthorizedText}>
+        <Body color="bluegrey" style={styles.notAuthorizedText}>
           {I18n.t("wallet.QRtoPay.enroll_cta")}
-        </Text>
+        </Body>
 
         <ButtonDefaultOpacity
           onPress={openAppSettings}
           style={styles.notAuthorizedBtn}
         >
-          <Text>{I18n.t("global.buttons.settings")}</Text>
+          <Label color="white">{I18n.t("global.buttons.settings")}</Label>
         </ButtonDefaultOpacity>
       </View>
     );
