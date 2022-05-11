@@ -28,15 +28,15 @@ import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<residentChoice>> => [
   {
     body: I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesInItaly"),
-    id: "residentInItaly"
+    id: "italy"
   },
   {
     body: I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesAbroad"),
-    id: "residentAbroad"
+    id: "notItaly"
   }
 ];
 
-type residentChoice = "residentAbroad" | "residentInItaly";
+type residentChoice = "italy" | "notItaly";
 const CdcBonusRequestSelectResidence = () => {
   const navigation =
     useNavigation<
@@ -47,7 +47,8 @@ const CdcBonusRequestSelectResidence = () => {
   >({});
   const cdcSelectedBonus = useIOSelector(cdcSelectedBonusSelector);
 
-  if (cdcSelectedBonus === undefined || cdcSelectedBonus.length === 0) {
+  // Should never happen that the user arrives in this screen without selecting any bonus
+  if (!cdcSelectedBonus?.length) {
     return null;
   }
 
@@ -102,10 +103,7 @@ const CdcBonusRequestSelectResidence = () => {
             I18n.t("global.buttons.continue"),
             undefined,
             undefined,
-            cdcSelectedBonus.length !==
-              cdcSelectedBonus.filter(
-                b => isResidentInItaly[b.year] === "residentInItaly"
-              ).length
+            cdcSelectedBonus.every(b => isResidentInItaly[b.year] === "italy")
           )}
         />
       </SafeAreaView>
