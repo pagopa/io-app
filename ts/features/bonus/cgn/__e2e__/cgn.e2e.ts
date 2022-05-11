@@ -1,6 +1,6 @@
+import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
-import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
 
 const CGN_TITLE = "Carta Giovani Nazionale";
 const CGN_BONUS_ITEM =
@@ -60,17 +60,18 @@ describe("CGN", () => {
     });
   });
 
-  /*
-  TODO: we should deactivate atm this test because we cannot scroll in the WalletHome, since is used native-base and we cannot have a testID binded to the scrollview.
-
   describe("When the user want to start activation from card carousel", () => {
     it("Should complete activation", async () => {
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
+      // TODO: This could be fail if we will add more e2e tests on the addition of a new payment method (just do a single swipe, not a scroll)
+      await waitFor(element(by.text(I18n.t("wallet.paymentMethods"))))
+        .toBeVisible()
+        .withTimeout(e2eWaitRenderTimeout);
+      await element(by.text(I18n.t("wallet.paymentMethods"))).swipe("up");
       await element(by.id("FeaturedCardCGNTestID")).tap();
       await activateBonusSuccess();
     });
   });
-   */
 
   describe("When the user want to start activation from service detail", () => {
     it("Should complete activation", async () => {
