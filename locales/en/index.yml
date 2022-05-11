@@ -2910,6 +2910,11 @@ bonus:
         ko: "Problems saving the voucher"
   cdc:
     title: "Carta della cultura"
+    serviceCta:
+      activable: "Activate your card"
+      pending: "Request sent"
+      error:
+        status: "The necessary information could not be retrieved. We ask you to try again."
     bonusRequest:
       bonusRequested:
         cta: "I understand!"
