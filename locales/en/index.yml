@@ -2915,6 +2915,8 @@ bonus:
       pending: "Request sent"
       error:
         status: "The necessary information could not be retrieved. We ask you to try again."
+    serviceEntryPoint:
+      notAvailable: "The service is not available at this time. Try later."
     bonusRequest:
       bonusRequested:
         cta: "I understand!"
