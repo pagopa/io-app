@@ -1,5 +1,8 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
+import { constUndefined } from "fp-ts/lib/function";
 import {
+  fold,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -19,6 +22,7 @@ import {
   cdcSelectedBonus
 } from "../actions/cdcBonusRequest";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { StatoBeneficiarioEnum } from "../../../../../../definitions/cdc/StatoBeneficiario";
 
 export type CdcBonusRequestState = {
   bonusList: RemoteValue<CdcBonusRequestList, NetworkError>;
@@ -70,3 +74,17 @@ export const cdcBonusRequestListSelector = (
   state: GlobalState
 ): RemoteValue<CdcBonusRequestList, NetworkError> =>
   state.bonus.cdc.bonusRequest.bonusList;
+
+export const isCdcEnrolledSelector = createSelector(
+  cdcBonusRequestListSelector,
+  (
+    bonusList: RemoteValue<CdcBonusRequestList, NetworkError>
+  ): boolean | undefined =>
+    fold(
+      bonusList,
+      constUndefined,
+      constUndefined,
+      bl => bl.every(b => b.status !== StatoBeneficiarioEnum.ATTVABILE),
+      constUndefined
+    )
+);
