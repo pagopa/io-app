@@ -15,7 +15,7 @@ const checkIsCategoriesWithCount = (
     | PublishedProductCategoriesWithNewDiscountsCount
     | PublishedProductCategories
 ): cl is PublishedProductCategoriesWithNewDiscountsCount =>
-  PublishedProductCategoriesWithNewDiscountsCount.decode(cl).isRight();
+  PublishedProductCategoriesWithNewDiscountsCount.is(cl);
 
 // Saga aimed to call the API to retrieve the CGN benefits categories available
 export function* cgnCategoriesSaga(
