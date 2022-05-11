@@ -11,6 +11,7 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -22,10 +23,14 @@ import GenericErrorComponent from "../../../../components/screens/GenericErrorCo
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
-import { navigateBack } from "../../../../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToServiceDetailsScreen
+} from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
 import {
   bpdRemoteConfigSelector,
+  isCdcEnabledSelector,
   isCGNEnabledSelector
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -52,8 +57,18 @@ import {
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE,
+  ID_CDC_TYPE,
   ID_CGN_TYPE
 } from "../utils/bonus";
+
+import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import {
+  loadServiceDetail,
+  showServiceDetails
+} from "../../../../store/actions/services";
+import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -121,7 +136,22 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (this.props.isCgnEnabled) {
       handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
     }
-
+    if (this.props.isCdcEnabled) {
+      handlersMap.set(ID_CDC_TYPE, (b: BonusAvailable) => {
+        ServiceId.decode(b.service_id)
+          .map(this.props.cdcService)
+          .map(sp => {
+            if (sp && pot.isSome(sp)) {
+              this.props.serviceDetailsLoad(sp.value);
+              this.props.navigateToServiceDetailsScreen({
+                service: { ...sp.value, service_id: "abc" as ServiceId }
+              });
+            } else {
+              showToast("Errore inaspettato");
+            }
+          });
+      });
+    }
     const handled = handlersMap.has(item.id_type);
     // if bonus is experimental but there is no handler, it won't be shown
     if (item.visibility === "experimental" && !handled) {
@@ -191,6 +221,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       onPress: this.props.navigateBack,
       title: I18n.t("global.buttons.cancel")
     };
+
     return isError ? (
       <GenericErrorComponent
         onRetry={this.props.loadAvailableBonuses}
@@ -238,7 +269,10 @@ const mapStateToProps = (state: GlobalState) => ({
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
-  isCgnEnabled: isCGNEnabledSelector(state)
+  isCgnEnabled: isCGNEnabledSelector(state),
+  isCdcEnabled: isCdcEnabledSelector(state),
+  cdcService: (cdcServiceId: ServiceId) =>
+    serviceByIdSelector(cdcServiceId)(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -249,7 +283,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToBonusRequestInformation({ bonusItem });
   },
   startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
-  startCgnActivation: () => dispatch(cgnActivationStart())
+  startCgnActivation: () => dispatch(cgnActivationStart()),
+  navigateToServiceDetailsScreen: (
+    params: ServiceDetailsScreenNavigationParams
+  ) => navigateToServiceDetailsScreen(params),
+  serviceDetailsLoad: (service: ServicePublic) => {
+    dispatch(loadServiceDetail.request(service.service_id));
+    dispatch(showServiceDetails(service));
+  }
 });
 
 export default connect(
