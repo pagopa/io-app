@@ -5,65 +5,94 @@ import {
 import { Locales } from "../../../../../../locales/locales";
 import { setLocale } from "../../../../../i18n";
 import { orderCategoriesByNameKey } from "../filters";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 
 const cases: ReadonlyArray<
-  [ReadonlyArray<ProductCategory>, ReadonlyArray<ProductCategory>, Locales]
+  [
+    ReadonlyArray<ProductCategoryWithNewDiscountsCount>,
+    ReadonlyArray<ProductCategoryWithNewDiscountsCount>,
+    Locales
+  ]
 > = [
   [
     [
-      ProductCategoryEnum.jobOffers,
-      ProductCategoryEnum.sustainableMobility,
-      ProductCategoryEnum.home
+      { productCategory: ProductCategoryEnum.jobOffers, newDiscounts: 0 },
+      {
+        productCategory: ProductCategoryEnum.sustainableMobility,
+        newDiscounts: 0
+      },
+      { productCategory: ProductCategoryEnum.home, newDiscounts: 0 }
     ],
     [
-      ProductCategoryEnum.home,
-      ProductCategoryEnum.jobOffers,
-      ProductCategoryEnum.sustainableMobility
-    ],
-    "it"
-  ],
-  [
-    [
-      ProductCategoryEnum.jobOffers,
-      ProductCategoryEnum.sustainableMobility,
-      ProductCategoryEnum.home,
-      "Unknown" as ProductCategory
-    ],
-    [
-      ProductCategoryEnum.home,
-      ProductCategoryEnum.jobOffers,
-      ProductCategoryEnum.sustainableMobility,
-      "Unknown" as ProductCategory
+      { productCategory: ProductCategoryEnum.home, newDiscounts: 0 },
+      { productCategory: ProductCategoryEnum.jobOffers, newDiscounts: 0 },
+      {
+        productCategory: ProductCategoryEnum.sustainableMobility,
+        newDiscounts: 0
+      }
     ],
     "it"
   ],
   [
     [
-      ProductCategoryEnum.jobOffers,
-      ProductCategoryEnum.sustainableMobility,
-      "Unknown 1" as ProductCategory,
-      ProductCategoryEnum.home,
-      "Unknown 2" as ProductCategory
+      { productCategory: ProductCategoryEnum.jobOffers, newDiscounts: 0 },
+      {
+        productCategory: ProductCategoryEnum.sustainableMobility,
+        newDiscounts: 0
+      },
+      { productCategory: ProductCategoryEnum.home, newDiscounts: 0 },
+      { productCategory: "Unknown" as ProductCategory, newDiscounts: 0 }
     ],
     [
-      ProductCategoryEnum.home,
-      ProductCategoryEnum.jobOffers,
-      ProductCategoryEnum.sustainableMobility,
-      "Unknown 1" as ProductCategory,
-      "Unknown 2" as ProductCategory
+      { productCategory: ProductCategoryEnum.home, newDiscounts: 0 },
+      { productCategory: ProductCategoryEnum.jobOffers, newDiscounts: 0 },
+      {
+        productCategory: ProductCategoryEnum.sustainableMobility,
+        newDiscounts: 0
+      },
+      { productCategory: "Unknown" as ProductCategory, newDiscounts: 0 }
     ],
     "it"
   ],
   [
     [
-      ProductCategoryEnum.home,
-      ProductCategoryEnum.bankingServices,
-      ProductCategoryEnum.cultureAndEntertainment
+      { productCategory: ProductCategoryEnum.jobOffers, newDiscounts: 0 },
+      {
+        productCategory: ProductCategoryEnum.sustainableMobility,
+        newDiscounts: 0
+      },
+      { productCategory: "Unknown 1" as ProductCategory, newDiscounts: 0 },
+      { productCategory: ProductCategoryEnum.home, newDiscounts: 0 },
+      { productCategory: "Unknown 2" as ProductCategory, newDiscounts: 0 }
     ],
     [
-      ProductCategoryEnum.bankingServices,
-      ProductCategoryEnum.cultureAndEntertainment,
-      ProductCategoryEnum.home
+      { productCategory: ProductCategoryEnum.home, newDiscounts: 0 },
+      { productCategory: ProductCategoryEnum.jobOffers, newDiscounts: 0 },
+      {
+        productCategory: ProductCategoryEnum.sustainableMobility,
+        newDiscounts: 0
+      },
+      { productCategory: "Unknown 1" as ProductCategory, newDiscounts: 0 },
+      { productCategory: "Unknown 2" as ProductCategory, newDiscounts: 0 }
+    ],
+    "it"
+  ],
+  [
+    [
+      { productCategory: ProductCategoryEnum.home, newDiscounts: 0 },
+      { productCategory: ProductCategoryEnum.bankingServices, newDiscounts: 0 },
+      {
+        productCategory: ProductCategoryEnum.cultureAndEntertainment,
+        newDiscounts: 0
+      }
+    ],
+    [
+      { productCategory: ProductCategoryEnum.bankingServices, newDiscounts: 0 },
+      {
+        productCategory: ProductCategoryEnum.cultureAndEntertainment,
+        newDiscounts: 0
+      },
+      { productCategory: ProductCategoryEnum.home, newDiscounts: 0 }
     ],
     "en"
   ]
@@ -74,7 +103,9 @@ describe("orderCategoriesByNameKey", () => {
     it(`should order categories ${i}`, () => {
       setLocale(c[2] as Locales);
       expect(
-        orderCategoriesByNameKey(c[0] as ReadonlyArray<ProductCategoryEnum>)
+        orderCategoriesByNameKey(
+          c[0] as ReadonlyArray<ProductCategoryWithNewDiscountsCount>
+        )
       ).toStrictEqual(c[1]);
     })
   );
