@@ -58,9 +58,10 @@ const getDiscountBucketCode: GetDiscountBucketCodeT = {
 
 const getPublishedCategories: GetPublishedProductCategoriesT = {
   method: "get",
-  url: params =>
-    `${BASE_URL}/published-product-categories?count_new_discounts=${params.countNewDiscounts}`,
-  query: _ => ({}),
+  url: () => `${BASE_URL}/published-product-categories`,
+  query: ({ countNewDiscounts }) => ({
+    count_new_discounts: countNewDiscounts
+  }),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getPublishedProductCategoriesDefaultDecoder()
 };
