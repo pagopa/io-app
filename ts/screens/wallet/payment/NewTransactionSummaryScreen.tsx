@@ -1,4 +1,4 @@
-import React, from "react";
+import React from "react";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
