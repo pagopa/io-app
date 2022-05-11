@@ -103,7 +103,7 @@ const CdcBonusRequestSelectResidence = () => {
             I18n.t("global.buttons.continue"),
             undefined,
             undefined,
-            cdcSelectedBonus.every(b => isResidentInItaly[b.year] === "italy")
+            !cdcSelectedBonus.every(b => isResidentInItaly[b.year] === "italy")
           )}
         />
       </SafeAreaView>
