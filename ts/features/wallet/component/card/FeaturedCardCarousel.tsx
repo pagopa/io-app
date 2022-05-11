@@ -14,14 +14,20 @@ import I18n from "../../../../i18n";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { supportedAvailableBonusSelector } from "../../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../../bonus/bonusVacanze/utils/bonus";
+import {
+  ID_CDC_TYPE,
+  ID_CGN_TYPE
+} from "../../../bonus/bonusVacanze/utils/bonus";
 import { bpdOnboardingStart } from "../../../bonus/bpd/store/actions/onboarding";
 import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/activation";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { useIOSelector } from "../../../../store/hooks";
-import { isCGNEnabledSelector } from "../../../../store/reducers/backendStatus";
+import {
+  isCdcEnabledSelector,
+  isCGNEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -45,6 +51,8 @@ const styles = StyleSheet.create({
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
   const isCgnEnabled = useIOSelector(isCGNEnabledSelector);
+  const isCdcEnabled = useIOSelector(isCdcEnabledSelector);
+
   if (isCgnEnabled) {
     bonusMap.set(ID_CGN_TYPE, {
       logo: cgnLogo,
@@ -88,6 +96,19 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
                     key={`featured_bonus_${i}`}
                     title={b[currentLocale].name}
                     image={logo}
+                    isNew={true}
+                    onPress={() => handler(b)}
+                  />
+                )
+              );
+            case ID_CDC_TYPE:
+              return (
+                isCdcEnabled && (
+                  <FeaturedCard
+                    testID={"FeaturedCardCDCTestID"}
+                    key={`featured_bonus_${i}`}
+                    title={b[currentLocale].name}
+                    image={{ uri: b.sponsorship_cover }}
                     isNew={true}
                     onPress={() => handler(b)}
                   />
