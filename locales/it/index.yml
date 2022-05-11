@@ -2937,17 +2937,23 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
+    serviceCta:
+      activable: "Attiva la carta"
+      pending: "Richiesta inviata"
+      error:
+        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
     bonusRequest:
       bonusRequested:
         cta: "Ho capito!"
-    selectResidence:
-      header: "Residenza"
-      items:
-        residesInItaly: "Risiedo in Italia"
-        residesAbroad: "Risiedo all’estero"
-      info: "Ricorda che il bonus è disponibile solo per i cittadini residenti in Italia"
-
-
+      selectResidence:
+        header: "Residenza"
+        items:
+          residesInItaly: "Risiedo in Italia"
+          residesAbroad: "Risiedo all’estero"
+        info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
+      selectYear:
+        header: "Per quale anno vuoi richiedere la Carta della Cultura?"
+        body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
 features:
   mvl:
     title: "messaggio a valore legale"
