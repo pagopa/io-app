@@ -44,6 +44,8 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { isCdcEnrolledSelector } from "../../../bonus/cdc/store/reducers/cdcBonusRequest";
+import { cdcRequestBonusList } from "../../../bonus/cdc/store/actions/cdcBonusRequest";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -64,6 +66,7 @@ const styles = StyleSheet.create({
  * an item represents a bonus that the app can handle (relative feature flag enabled and handler set) and its
  * visibility is 'visible' or 'experimental'
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -75,17 +78,24 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const cdcBonus = useIOSelector(
     availableBonusTypesSelectorFromId(ID_CDC_TYPE)
   );
+  const isCdcEnrolled = useIOSelector(isCdcEnrolledSelector);
 
   const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
 
   // If the cdc service is not loaded try to load it
   useEffect(() => {
     const cdcServiceId = cdcBonus?.service_id ?? undefined;
-
     if (isCdcEnabled && cdcService.isNone() && cdcServiceId) {
       dispatch(loadServiceDetail.request(cdcServiceId));
     }
   }, [cdcBonus, isCdcEnabled, cdcService, dispatch]);
+
+  // If the cdc data are not loaded load it
+  useEffect(() => {
+    if (isCdcEnrolled === undefined) {
+      dispatch(cdcRequestBonusList.request());
+    }
+  }, [isCdcEnrolled, dispatch]);
 
   if (isCgnEnabled) {
     bonusMap.set(ID_CGN_TYPE, {
@@ -115,7 +125,10 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   }
 
   // are there any bonus to activate?
-  const anyBonusNotActive = props.cgnActiveBonus === false && isCgnEnabled;
+  const anyBonusNotActive =
+    (props.cgnActiveBonus === false && isCgnEnabled) ||
+    (isCdcEnabled && isCdcEnrolled === false);
+
   return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
     <View style={styles.container} testID={"FeaturedCardCarousel"}>
       <View style={[IOStyles.horizontalContentPadding]}>
