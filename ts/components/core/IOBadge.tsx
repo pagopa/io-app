@@ -30,11 +30,7 @@ const mapForegroundBackgroundColor: Record<
  * A badge component styled with the
  * IO primary color.
  */
-export const IOPrimaryBadge = ({
-  text,
-  small,
-  labelColor
-}: IOBadgeCommonProps) => (
+export const IOBadge = ({ text, small, labelColor }: IOBadgeCommonProps) => (
   <Badge
     style={[
       commonBadgeStyles.badge,

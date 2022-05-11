@@ -13,7 +13,7 @@ import { Label } from "../../../../../components/core/typography/Label";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import { IOPrimaryBadge } from "../../../../../components/core/IOBadge";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import I18n from "../../../../../i18n";
 
 type Props = {
@@ -54,10 +54,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
           <Label weight={"SemiBold"} color={"bluegreyDark"}>
             {`${discount.name} `}
             {discount.isNew && (
-              <IOPrimaryBadge
-                text={I18n.t("bonus.cgn.merchantsList.news")}
-                small
-              />
+              <IOBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
             )}
           </Label>
         </View>

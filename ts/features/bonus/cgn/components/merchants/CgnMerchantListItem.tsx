@@ -10,7 +10,7 @@ import { getCategorySpecs } from "../../utils/filters";
 import I18n from "../../../../../i18n";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { IOPrimaryBadge } from "../../../../../components/core/IOBadge";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
   categories: ReadonlyArray<ProductCategory>;
@@ -102,7 +102,7 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
       <H2 style={IOStyles.flex}>{props.name}</H2>
       {props.isNew && (
         <View style={styles.badgePosition}>
-          <IOPrimaryBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
+          <IOBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
         </View>
       )}
     </View>
