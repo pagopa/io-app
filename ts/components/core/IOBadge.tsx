@@ -1,13 +1,13 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { ColorValue, StyleSheet } from "react-native";
 import { Badge } from "native-base";
 import { IOColors } from "./variables/IOColors";
 import { LabelSmall } from "./typography/LabelSmall";
-import { BaseTypography } from "./typography/BaseTypography";
 
 type IOBadgeCommonProps = {
   text: string;
   small?: boolean;
+  labelColor?: "white" | "blue";
 };
 
 const commonBadgeStyles = StyleSheet.create({
@@ -21,54 +21,36 @@ const commonBadgeStyles = StyleSheet.create({
   badgeSmallLabel: { fontSize: 12, lineHeight: 18 }
 });
 
+const mapForegroundBackgroundColor: Record<
+  NonNullable<IOBadgeCommonProps["labelColor"]>,
+  ColorValue
+> = { white: IOColors.blue, blue: IOColors.white };
+
 /**
  * A badge component styled with the
  * IO primary color.
  */
-export const IOPrimaryBadge = ({ text, small }: IOBadgeCommonProps) => (
+export const IOPrimaryBadge = ({
+  text,
+  small,
+  labelColor
+}: IOBadgeCommonProps) => (
   <Badge
     style={[
       commonBadgeStyles.badge,
-      { backgroundColor: IOColors.blue },
+      {
+        backgroundColor: labelColor
+          ? mapForegroundBackgroundColor[labelColor]
+          : IOColors.blue
+      },
       small ? commonBadgeStyles.badgeSmall : {}
     ]}
   >
-    {small ? (
-      <BaseTypography
-        weight={"SemiBold"}
-        color={"white"}
-        style={commonBadgeStyles.badgeSmallLabel}
-      >
-        {text}
-      </BaseTypography>
-    ) : (
-      <LabelSmall color="white">{text}</LabelSmall>
-    )}
-  </Badge>
-);
-
-/**
- * A badge component styled with the
- * IO white color.
- */
-export const IOWhiteBadge = ({ text, small }: IOBadgeCommonProps) => (
-  <Badge
-    style={[
-      commonBadgeStyles.badge,
-      { backgroundColor: IOColors.white },
-      small ? commonBadgeStyles.badgeSmall : {}
-    ]}
-  >
-    {small ? (
-      <BaseTypography
-        weight={"SemiBold"}
-        color={"blue"}
-        style={commonBadgeStyles.badgeSmallLabel}
-      >
-        {text}
-      </BaseTypography>
-    ) : (
-      <LabelSmall color="blue">{text}</LabelSmall>
-    )}
+    <LabelSmall
+      color={labelColor ?? "white"}
+      fontSize={small ? "small" : "regular"}
+    >
+      {text}
+    </LabelSmall>
   </Badge>
 );
