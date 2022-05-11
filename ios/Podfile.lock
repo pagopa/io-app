@@ -96,6 +96,8 @@ PODS:
     - RNPermissions
   - Permission-Reminders (2.2.2):
     - RNPermissions
+  - PromisesObjC (2.1.0)
+  - Protobuf (3.20.0)
   - QrCode (1.1.0):
     - React
   - RCT-Folly (2021.06.28.00-v2):
@@ -494,6 +496,13 @@ PODS:
     - ZendeskChatSDK (~> 2.11.1)
     - ZendeskMessagingAPISDK (~> 3.8.2)
     - ZendeskSupportSDK (~> 5.3.0)
+  - vision-camera-code-scanner (0.2.0):
+    - GoogleMLKit/BarcodeScanning
+    - React-Core
+  - VisionCamera (2.13.0):
+    - React
+    - React-callinvoker
+    - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -627,6 +636,8 @@ DEPENDENCIES:
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNZendeskChat (from `../node_modules/io-react-native-zendesk`)
+  - vision-camera-code-scanner (from `../node_modules/vision-camera-code-scanner`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -645,7 +656,14 @@ SPEC REPOS:
     - hermes-engine
     - libevent
     - Mixpanel
+    - MLImage
+    - MLKitBarcodeScanning
+    - MLKitCommon
+    - MLKitVision
+    - nanopb
     - OpenSSL-Universal
+    - PromisesObjC
+    - Protobuf
     - YogaKit
     - ZendeskAnswerBotProvidersSDK
     - ZendeskAnswerBotSDK
@@ -820,6 +838,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-vector-icons"
   RNZendeskChat:
     :path: "../node_modules/io-react-native-zendesk"
+  vision-camera-code-scanner:
+    :path: "../node_modules/vision-camera-code-scanner"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -854,6 +876,8 @@ SPEC CHECKSUMS:
   Permission-Notifications: 9c6b5cc4f0e6599e9fc3395b77cebddc48f1be41
   Permission-PhotoLibrary: 8227a6ed9f6a971537afe63742d54f5f23a38fe2
   Permission-Reminders: f1bddb60953645830289f9b00977b11e2b62fbf8
+  PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
+  Protobuf: 66e2f3b26a35e4cc379831f4ced538274ee4b923
   QrCode: 1212ff8b8fae1a0e2c698d1c42560abcc0c9019b
   RCT-Folly: 803a9cfd78114b2ec0f140cfa6fa2a6bafb2d685
   RCTRequired: 0aa6c1c27e1d65920df35ceea5341a5fe76bdb79

@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.8.0-rc.4",
+  "version": "2.9.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.37.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.37.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.12/definitions.yml",
@@ -144,7 +144,6 @@
     "react-native-popup-menu": "^0.15.11",
     "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^7.3.1",
-    "react-native-qrcode-scanner": "^1.5.3",
     "react-native-reanimated": "^2.7.0",
     "react-native-render-html": "^6.3.1",
     "react-native-responsive-screen": "^1.4.1",
@@ -157,6 +156,7 @@
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^7.0.0",
     "react-native-view-shot": "3.1.2",
+    "react-native-vision-camera": "2.13.0",
     "react-native-webview": "^11.13.0",
     "react-redux": "7.2.4",
     "reactotron-react-native": "^5.0.0",
@@ -183,6 +183,7 @@
     "url-parse": "^1.5.9",
     "uuid": "^8.3.2",
     "validator": "^13.7.0",
+    "vision-camera-code-scanner": "^0.2.0",
     "xss": "1.0.10"
   },
   "devDependencies": {
