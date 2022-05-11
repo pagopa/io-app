@@ -819,6 +819,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: Configura IO
+  thankYouPage:
+    title: Configurazione terminata!
+    body: Ora puoi iniziare a usare IO
 forms:
   validators:
     required: Valore richiesto
@@ -925,12 +928,12 @@ wallet:
         text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
         text4: cercando fra quelle disponibili
     bpay:
-      title: Ricerca dei tuoi account BANCOMAT Pay
+      title: Paga su IO con BANCOMAT Pay
       description:
-        text1: "Aggiungendo BANCOMAT Pay al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
+        text1: "Abbina BANCOMAT Pay per pagare più facilmente gli avvisi pagoPA e aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
         text2: informativa sul trattamento dei dati personali.
-        text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
-        text4: cercando fra quelle disponibili
+        text3: "Premi su “Continua” per cercare gli account a te intestati. In alternativa, cerca la banca su cui hai un account BANCOMAT Pay attivo "
+        text4: tra quelle disponibili.
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
@@ -1273,6 +1276,8 @@ wallet:
     pickPaymentMethod:
       title: "Con quale metodo vuoi pagare?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Metodi disattivati"
       notAvailable:
         title: "Metodi non compatibili"
         arriving:
@@ -1386,7 +1391,7 @@ wallet:
       description: L’app per pagare in modo smart
     bancomatPay:
       name: BANCOMAT Pay
-      description: Abbina il tuo account BANCOMAT Pay
+      description: Paga con carta o conto corrente collegati
     postepayApp:
       name: Postepay
       description: la tua app Postepay
@@ -2932,10 +2937,23 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
+    serviceCta:
+      activable: "Attiva la carta"
+      pending: "Richiesta inviata"
+      error:
+        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
     bonusRequest:
       bonusRequested:
         cta: "Ho capito!"
-
+      selectResidence:
+        header: "Residenza"
+        items:
+          residesInItaly: "Risiedo in Italia"
+          residesAbroad: "Risiedo all’estero"
+        info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
+      selectYear:
+        header: "Per quale anno vuoi richiedere la Carta della Cultura?"
+        body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
 features:
   mvl:
     title: "messaggio a valore legale"
@@ -2969,6 +2987,11 @@ features:
           singleBtn: "Salva, stampa o condividi"
           open: "Apri"
           save: "Salva"
+          savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+          errors:
+            sharing: "Si è verificato un errore condividendo il documento."
+            opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
+            saving: "Si è verificato un errore salvando il documento."
       body:
         plain: "testo semplice"
         html: "html"

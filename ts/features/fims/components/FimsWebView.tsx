@@ -57,6 +57,7 @@ const FimsWebView = (props: Props) => {
     ) {
       return;
     }
+      
     setHasError(true);
     setLoading(false);
   };

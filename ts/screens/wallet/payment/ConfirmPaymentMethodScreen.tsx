@@ -80,6 +80,7 @@ import {
   isCreditCard,
   isRawPayPal,
   PaymentMethod,
+  RawPaymentMethod,
   Wallet
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
@@ -208,6 +209,24 @@ const getPaymentMethodInfo = (
   }
 };
 
+/**
+ * return the type of the paying method
+ * atm only three methods can pay: credit card, paypal and bancomat pay
+ * @param paymentMethod
+ */
+const getPaymentMethodType = (
+  paymentMethod: RawPaymentMethod | undefined
+): PaymentMethodType => {
+  switch (paymentMethod?.kind) {
+    case "BPay":
+    case "CreditCard":
+    case "PayPal":
+      return paymentMethod.kind;
+    default:
+      return "Unknown";
+  }
+};
+
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
     // show a toast if we got an error while retrieving pm session token
@@ -229,7 +248,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
   const navigation = useNavigation<ConfirmPaymentNavigationProps>();
   // each payment method has its own psp fee
-  const paymentMethodType = isPayingWithPaypal ? "PayPal" : "CreditCard";
+  const paymentMethodType = getPaymentMethodType(wallet.paymentMethod);
   const fee: number | undefined = isPayingWithPaypal
     ? props.paypalSelectedPsp?.fee
     : maybePsp.fold(undefined, psp => psp.fixedCost.amount);

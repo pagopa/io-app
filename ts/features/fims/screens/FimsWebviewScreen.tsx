@@ -82,6 +82,7 @@ const FimsWebviewScreen = () => {
       return;
     }
     const url = new URLParse(maybeFimsDomain.value as string, true);
+
     const cookie: IOCookie = {
       name: "token",
       value: maybeSessionToken.value,

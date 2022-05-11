@@ -1,6 +1,9 @@
 import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
 
+import i18n from "../../i18n";
+import { showToast } from "../../utils/showToast";
+import { share } from "../../utils/share";
 import { fetchTimeout } from "../../config";
 import { ContentTypeValues } from "../../types/contentType";
 import { isIos } from "../../utils/platform";
@@ -61,25 +64,82 @@ export const handleDownloadResult = async (
     }
 
     const path = result.path();
-
-    if (isIos) {
-      if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        showPreview(path, {
-          _tag: "ios",
-          action: () => ReactNativeBlobUtil.ios.presentOptionsMenu(path)
-        });
-      } else {
+    if (attachment.contentType !== ContentTypeValues.applicationPdf) {
+      if (isIos) {
         ReactNativeBlobUtil.ios.presentOptionsMenu(result.path());
+        return Promise.resolve();
+      } else {
+        return ReactNativeBlobUtil.android.addCompleteDownload({
+          mime: attachment.contentType,
+          title: attachment.displayName,
+          showNotification: true,
+          description: attachment.displayName,
+          path: result.path()
+        });
       }
+    }
+
+    // PDF only
+    if (isIos) {
+      showPreview(path, {
+        _tag: "ios",
+        action: () => ReactNativeBlobUtil.ios.presentOptionsMenu(path)
+      });
     } else {
-      await ReactNativeBlobUtil.android.addCompleteDownload({
-        mime: attachment.contentType,
-        title: attachment.displayName,
-        showNotification: true,
-        description: attachment.displayName,
-        path: result.path()
+      showPreview(path, {
+        _tag: "android",
+        open: () => {
+          ReactNativeBlobUtil.android
+            .actionViewIntent(path, attachment.contentType)
+            .catch(_ => {
+              showToast(
+                i18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.opening"
+                )
+              );
+            });
+        },
+        share: () => {
+          share(
+            `file://${ReactNativeBlobUtil.fs.dirs.DownloadDir}/${attachment.displayName}`,
+            undefined,
+            false
+          )
+            .run()
+            .catch(_ => {
+              showToast(
+                i18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.sharing"
+                )
+              );
+            });
+        },
+        save: () => {
+          const destination = `${ReactNativeBlobUtil.fs.dirs.DownloadDir}/${attachment.displayName}`;
+          ReactNativeBlobUtil.fs
+            .cp(path, destination)
+            .then(_ => {
+              showToast(
+                i18n.t(
+                  "features.mvl.details.attachments.pdfPreview.savedAtLocation",
+                  {
+                    name: attachment.displayName
+                  }
+                ),
+                "success"
+              );
+            })
+            .catch(_ => {
+              showToast(
+                i18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.saving"
+                )
+              );
+            });
+        }
       });
     }
+    return Promise.resolve();
   } catch (e) {
     if (e instanceof Error) {
       return Promise.reject(e);

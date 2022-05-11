@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { H4 } from "../typography/H4";
 import { IOStyles } from "../variables/IOStyles";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
+import { IOColors } from "../variables/IOColors";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
 
@@ -23,6 +24,11 @@ type Props<T> = {
    * to the right and the label to the left.
    */
   rightSideSelection?: boolean;
+  /**
+   * This prop will add a border under the radio button item
+   * and modify the padding from {top=10, bottom=10} to {top=20, bottom=0}.
+   */
+  bordered?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -34,7 +40,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
+    borderColor: IOColors.greyLight
+  },
+  borderedItem: {
+    paddingTop: 20,
+    paddingBottom: 0,
+    borderBottomWidth: 1
   },
   rightSideItem: {
     flexDirection: "row-reverse"
@@ -102,7 +114,8 @@ export const RadioButtonList = <T,>(props: Props<T>) => (
           key={`radio_item_${item.id}`}
           style={[
             styles.item,
-            props.rightSideSelection && styles.rightSideItem
+            props.rightSideSelection && styles.rightSideItem,
+            props.bordered && styles.borderedItem
           ]}
           testID={`pspItemTestID_${item.id}`}
         >

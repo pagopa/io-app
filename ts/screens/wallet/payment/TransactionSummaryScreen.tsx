@@ -55,16 +55,12 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
-  getPagoPAMethodsSelector,
-  getPayablePaymentMethodsSelector
+  withPaymentFeatureSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
-import {
-  alertNoActivePayablePaymentMethods,
-  alertNoPayablePaymentMethods
-} from "../../../utils/paymentMethod";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
@@ -204,10 +200,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
       );
       return;
     }
-    if (this.props.hasPagoPaMethods) {
-      alertNoActivePayablePaymentMethods(this.props.navigateToWalletHome);
-      return;
-    }
     alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
   };
 
@@ -256,6 +248,16 @@ class TransactionSummaryScreen extends React.Component<Props> {
       .toOption(potVerifica)
       .mapNullable(_ => _.enteBeneficiario)
       .map(formatTextRecipient);
+
+    /**
+     * try to show the organization fiscal code coming from the 'verifica' API
+     * otherwise (it could be an issue with the API) it fallbacks on rptID coming from
+     * static data: message, qrcode, manual insertion
+     */
+    const organizationFiscalCode: string = pot
+      .toOption(potVerifica)
+      .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
+      .getOrElse(rptId.organizationFiscalCode);
 
     const currentAmount: string = pot.getOrElse(
       pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
@@ -331,7 +333,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
             {standardRow(
               I18n.t("wallet.firstTransactionSummary.entityCode"),
-              rptId.organizationFiscalCode
+              organizationFiscalCode
             )}
             <View spacer={true} small={true} />
             {standardRow(
@@ -414,9 +416,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
-  const hasPayableMethods = getPayablePaymentMethodsSelector(state).length > 0;
-  const hasPagoPaMethods = getPagoPAMethodsSelector(state).length > 0;
-
+  const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
   return {
     error,
     isLoading,
@@ -426,7 +426,6 @@ const mapStateToProps = (state: GlobalState) => {
     paymentId,
     maybeFavoriteWallet,
     hasPayableMethods,
-    hasPagoPaMethods,
     walletById
   };
 };

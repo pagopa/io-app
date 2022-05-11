@@ -802,6 +802,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: "Configure IO"
+  thankYouPage:
+    title: Setup completed!
+    body: Now you can start using IO
 forms:
   validators:
     required: Required value
@@ -907,12 +910,12 @@ wallet:
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
-      title: "Search for your BANCOMAT Pay accounts"
+      title: "Pay on IO with BANCOMAT Pay"
       description:
-        text1: "By adding BANCOMAT Pay to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
+        text1: "Add your BANCOMAT Pay account to more easily pay pagoPA notices and join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
-        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
-        text4: by searching among those available
+        text3: "Choose “Continue” to search for accounts in your name. Alternatively, search for the bank on which you have an active BANCOMAT Pay account "
+        text4: among those available.
     cobadge:
       title: "Search for your international circuit cards"
       description:
@@ -1251,6 +1254,8 @@ wallet:
     pickPaymentMethod:
       title: "What method do you want to pay with?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Disabled methods"
       notAvailable:
         title: "Incompatible methods"
         arriving:
@@ -1366,7 +1371,7 @@ wallet:
       description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
-      description: Link your BANCOMAT Pay account
+      description: Pay with your linked card or bank account
     postepayApp:
       name: Postepay
       description: your Postepay app
@@ -2905,10 +2910,23 @@ bonus:
         ko: "Problems saving the voucher"
   cdc:
     title: "Carta della cultura"
+    serviceCta:
+      activable: "Activate your card"
+      pending: "Request sent"
+      error:
+        status: "The necessary information could not be retrieved. We ask you to try again."
     bonusRequest:
       bonusRequested:
         cta: "I understand!"
-
+      selectResidence:
+        header: "Residence"
+        items:
+          residesInItaly: "I live in Italy"
+          residesAbroad: "I live abroad"
+        info: "Carta della Cultura is only available for citizens residing in Italy. Indicate your residence for each year."
+      selectYear:
+        header: "For which year do you want to apply for the Carta della Cultura?"
+        body: "For each selected year, your ISEE must not exceed € 15,000 and your residence must be in the Italian territory."
 features:
   mvl:
     title: "legal message"
@@ -2942,6 +2960,11 @@ features:
           singleBtn: "Save, print, or share"
           open: "Open"
           save: "Save"
+          savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+          errors:
+            sharing: "An error occurred while sharing the document"
+            opening: "An error occurred while opening the document. You may not have a PDF reader installed."
+            saving: "An error occurred while saving the document"
       body:
         plain: "plain text"
         html: "html"
