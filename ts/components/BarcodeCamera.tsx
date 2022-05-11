@@ -1,12 +1,10 @@
 import "react-native-reanimated";
 import React, { useEffect, useState } from "react";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
-import { View, Dimensions, StyleSheet, Vibration } from "react-native";
+import { View, Dimensions, StyleSheet } from "react-native";
 import { useScanBarcodes, BarcodeFormat } from "vision-camera-code-scanner";
 import I18n from "../i18n";
-import customVariables, {
-  VIBRATION_BARCODE_SCANNED_DURATION
-} from "../theme/variables";
+import customVariables from "../theme/variables";
 import { usePrevious } from "../utils/hooks/usePrevious";
 import { openAppSettings } from "../utils/appSettings";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -138,9 +136,6 @@ export const BarcodeCamera = (props: Props) => {
     if (barcodeFormat === null) {
       return;
     }
-
-    // Execute an haptic feedback
-    Vibration.vibrate(VIBRATION_BARCODE_SCANNED_DURATION);
 
     onBarcodeScanned({
       format: barcodeFormat,

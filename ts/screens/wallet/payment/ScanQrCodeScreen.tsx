@@ -15,7 +15,8 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
@@ -46,7 +47,9 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import customVariables from "../../../theme/variables";
+import customVariables, {
+  VIBRATION_BARCODE_SCANNED_DURATION
+} from "../../../theme/variables";
 import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
 import { AsyncAlert } from "../../../utils/asyncAlert";
@@ -181,6 +184,11 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   };
 
   private handleBarcodeScanned = (barcode: ScannedBarcode) => {
+    if (this.state.scanningState === "SCANNING") {
+      // Execute an haptic feedback
+      Vibration.vibrate(VIBRATION_BARCODE_SCANNED_DURATION);
+    }
+
     switch (barcode.format) {
       case "QRCODE":
         this.onQrCodeData(barcode.value);
