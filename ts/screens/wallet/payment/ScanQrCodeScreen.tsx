@@ -140,6 +140,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    * Handles invalid pagoPA QR codes
    */
   private onInvalidQrCode = () => {
+    if (this.state.scanningState === "INVALID") {
+      return;
+    }
+
     showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");
 
     this.setState({
