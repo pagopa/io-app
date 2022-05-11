@@ -123,8 +123,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   };
 
   const allNews = pot.isSome(potCategories)
-    ? potCategories.value.reduce(
-        (acc, val) => (acc + val.newDiscounts) as number,
+    ? potCategories.value.reduce<number>(
+        (acc, val) => acc + (val.newDiscounts as number),
         0
       )
     : 0;
