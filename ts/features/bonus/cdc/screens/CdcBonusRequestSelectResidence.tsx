@@ -24,8 +24,9 @@ import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
 import { useIOSelector } from "../../../../store/hooks";
 import { H3 } from "../../../../components/core/typography/H3";
 import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
+import { ResidentChoice } from "../types/CdcBonusRequest";
 
-const getCheckResidencyItems = (): ReadonlyArray<RadioItem<residentChoice>> => [
+const getCheckResidencyItems = (): ReadonlyArray<RadioItem<ResidentChoice>> => [
   {
     body: I18n.t("bonus.cdc.bonusRequest.selectResidence.items.residesInItaly"),
     id: "italy"
@@ -36,14 +37,13 @@ const getCheckResidencyItems = (): ReadonlyArray<RadioItem<residentChoice>> => [
   }
 ];
 
-type residentChoice = "italy" | "notItaly";
 const CdcBonusRequestSelectResidence = () => {
   const navigation =
     useNavigation<
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
     >();
   const [isResidentInItaly, setIsResidentInItaly] = React.useState<
-    Record<string, residentChoice>
+    Record<string, ResidentChoice>
   >({});
   const cdcSelectedBonus = useIOSelector(cdcSelectedBonusSelector);
 
@@ -78,7 +78,7 @@ const CdcBonusRequestSelectResidence = () => {
                   {b.year}
                 </H3>
               </View>
-              <RadioButtonList<residentChoice>
+              <RadioButtonList<ResidentChoice>
                 key={b.year}
                 items={getCheckResidencyItems()}
                 selectedItem={isResidentInItaly[b.year]}

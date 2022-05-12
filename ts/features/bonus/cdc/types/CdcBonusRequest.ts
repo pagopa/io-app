@@ -22,3 +22,5 @@ export type CdcBonusEnrollmentOutcome = {
 
 export type CdcBonusEnrollmentOutcomeList =
   ReadonlyArray<CdcBonusEnrollmentOutcome>;
+
+export type ResidentChoice = "italy" | "notItaly";
