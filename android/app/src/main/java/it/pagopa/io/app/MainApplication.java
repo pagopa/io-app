@@ -5,7 +5,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
-import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.reactnativecommunity.art.ARTPackage;
 import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
@@ -42,7 +41,6 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       List<ReactPackage> packages = new PackageList(this).getPackages();
-      packages.add(new RNPermissionsPackage());
       packages.add(new CiePackage());
       packages.add(new ARTPackage());
       return packages;

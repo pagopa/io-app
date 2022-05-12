@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0-rc.0](https://github.com/pagopa/io-app/compare/2.8.0-rc.4...2.9.0-rc.0) (2022-05-10)
+
+
+### Chores
+
+* **Carta della cultura:** [[AP-10](https://pagopa.atlassian.net/browse/AP-10)] Create carta della cultura entry point on service card ([#3921](https://github.com/pagopa/io-app/issues/3921)) ([3f56d1d](https://github.com/pagopa/io-app/commit/3f56d1df502bf9facf8071f76f3eae11bbe60b81))
+* **Carta della cultura:** [[AP-23](https://pagopa.atlassian.net/browse/AP-23)] Select year screen ([#3942](https://github.com/pagopa/io-app/issues/3942)) ([361054d](https://github.com/pagopa/io-app/commit/361054dbd30325e1f1195eed68779ea633556653))
+* [[IA-857](https://pagopa.atlassian.net/browse/IA-857)] Transaction summary screen should show the organization fiscal code comes from API ([#3946](https://github.com/pagopa/io-app/issues/3946)) ([2651b44](https://github.com/pagopa/io-app/commit/2651b44d74c8badbfd07560fb7769ae203edee17))
+
 ## [2.8.0-rc.4](https://github.com/pagopa/io-app/compare/2.8.0-rc.3...2.8.0-rc.4) (2022-05-06)
 
 

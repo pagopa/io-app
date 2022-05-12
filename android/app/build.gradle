@@ -128,7 +128,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1
-        versionName "2.8.0.4"
+        versionName "2.9.0.0"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -208,7 +208,6 @@ dependencies {
     implementation project(':jail-monkey')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-share')
-    implementation project(':react-native-permissions')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"

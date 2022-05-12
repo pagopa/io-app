@@ -61,6 +61,11 @@ const reducer = (
 export default reducer;
 
 // Selectors
+export const cdcSelectedBonusSelector = (
+  state: GlobalState
+): CdcBonusEnrollmentList | undefined =>
+  state.bonus.cdc.bonusRequest.selectedBonus;
+
 export const cdcBonusRequestListSelector = (
   state: GlobalState
 ): RemoteValue<CdcBonusRequestList, NetworkError> =>

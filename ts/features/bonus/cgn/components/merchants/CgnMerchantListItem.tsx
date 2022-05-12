@@ -10,9 +10,11 @@ import { getCategorySpecs } from "../../utils/filters";
 import I18n from "../../../../../i18n";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
   categories: ReadonlyArray<ProductCategory>;
+  isNew: boolean;
   name: string;
   onPress: () => void;
 };
@@ -24,7 +26,8 @@ const styles = StyleSheet.create({
   },
   verticalPadding: {
     paddingVertical: 16
-  }
+  },
+  badgePosition: { alignSelf: "center", marginLeft: 8 }
 });
 
 export const renderCategoryElement = (category: ProductCategory) =>
@@ -91,11 +94,18 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
  */
 const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
   <TouchableDefaultOpacity
-    style={[IOStyles.horizontalContentPadding, styles.verticalPadding]}
+    style={[styles.verticalPadding]}
     accessibilityRole={"button"}
     onPress={props.onPress}
   >
-    <H2>{props.name}</H2>
+    <View style={[styles.categories, { justifyContent: "space-between" }]}>
+      <H2 style={IOStyles.flex}>{props.name}</H2>
+      {props.isNew && (
+        <View style={styles.badgePosition}>
+          <IOBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
+        </View>
+      )}
+    </View>
     <View spacer small />
     <CategoriesRow categories={props.categories} />
   </TouchableDefaultOpacity>

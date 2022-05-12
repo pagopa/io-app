@@ -69,11 +69,6 @@ describe("CdcServiceCTA", () => {
     expect(component.queryByText("2023")).toBeNull();
   });
   it("Should add and remove the bonus from the list of bonus that the user want to request pressing the checkbox", () => {
-    // const cdcSelectedBonusSpy = jest
-    //   .spyOn(cdcActions, "cdcSelectedBonus")
-    //   .mockImplementation(
-    //     createStandardAction("CDC_SELECTED_BONUS")<CdcBonusEnrollmentList>()
-    //   );
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
