@@ -1941,8 +1941,8 @@ contextualHelp:
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 bottomSheets:
   ciePin:
-      title: Dove trovo il mio PIN?
-      content: !include bottomsheets/ciePin.md
+    title: Dove trovo il mio PIN?
+    content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "Cos'è SPID?"
@@ -2607,6 +2607,7 @@ bonus:
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
     merchantsList:
+      news: novità
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
