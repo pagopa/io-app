@@ -5,6 +5,7 @@ import { baseRawBackendStatus } from "../__mock__/backendStatus";
 import {
   areSystemsDeadReducer,
   BackendStatusState,
+  barcodesScannerConfigSelector,
   bpdRankingEnabledSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   isUaDonationsEnabledSelector,
@@ -351,6 +352,29 @@ describe("test selectors", () => {
       const output = isPremiumMessagesOptInOutEnabledSelector(customStore);
 
       expect(output).toBeTruthy();
+    });
+  });
+
+  describe("barcodes scanner remote config selectors", () => {
+    it("should return an all-false object if the remote flag is undefined", () => {
+      const output = barcodesScannerConfigSelector(noneStore);
+      expect(output.dataMatrixPosteEnabled).toBe(false);
+    });
+
+    it("should return the correct configuration", () => {
+      const customStore = {
+        backendStatus: {
+          status: some({
+            config: {
+              barcodesScanner: { dataMatrixPosteEnabled: true }
+            }
+          })
+        }
+      } as unknown as GlobalState;
+
+      const output = barcodesScannerConfigSelector(customStore);
+
+      expect(output.dataMatrixPosteEnabled).toBe(true);
     });
   });
 });
