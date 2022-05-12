@@ -44,8 +44,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { isCdcEnrolledSelector } from "../../../bonus/cdc/store/reducers/cdcBonusRequest";
-import { cdcRequestBonusList } from "../../../bonus/cdc/store/actions/cdcBonusRequest";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -78,7 +76,6 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const cdcBonus = useIOSelector(
     availableBonusTypesSelectorFromId(ID_CDC_TYPE)
   );
-  const isCdcEnrolled = useIOSelector(isCdcEnrolledSelector);
 
   const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
 
@@ -89,13 +86,6 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
       dispatch(loadServiceDetail.request(cdcServiceId));
     }
   }, [cdcBonus, isCdcEnabled, cdcService, dispatch]);
-
-  // If the cdc data are not loaded load it
-  useEffect(() => {
-    if (isCdcEnrolled === undefined) {
-      dispatch(cdcRequestBonusList.request());
-    }
-  }, [isCdcEnrolled, dispatch]);
 
   if (isCgnEnabled) {
     bonusMap.set(ID_CGN_TYPE, {
@@ -126,8 +116,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
   // are there any bonus to activate?
   const anyBonusNotActive =
-    (props.cgnActiveBonus === false && isCgnEnabled) ||
-    (isCdcEnabled && isCdcEnrolled === false);
+    (props.cgnActiveBonus === false && isCgnEnabled) || isCdcEnabled;
 
   return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
     <View style={styles.container} testID={"FeaturedCardCarousel"}>
