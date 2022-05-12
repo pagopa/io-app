@@ -2,6 +2,7 @@ import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { View } from "native-base";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -25,6 +26,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { H3 } from "../../../../components/core/typography/H3";
 import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 import { ResidentChoice } from "../types/CdcBonusRequest";
+import { cdcSelectedBonus as cdcSelectedBonusAction } from "../store/actions/cdcBonusRequest";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<ResidentChoice>> => [
   {
@@ -42,6 +44,7 @@ const CdcBonusRequestSelectResidence = () => {
     useNavigation<
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
     >();
+  const dispatch = useDispatch();
   const [isResidentInItaly, setIsResidentInItaly] = React.useState<
     Record<string, ResidentChoice>
   >({});
@@ -98,12 +101,22 @@ const CdcBonusRequestSelectResidence = () => {
           })}
           rightButton={confirmButtonProps(
             () => {
+              dispatch(
+                cdcSelectedBonusAction(
+                  cdcSelectedBonus?.map(b => ({
+                    year: b.year,
+                    residence: isResidentInItaly[b.year]
+                  }))
+                )
+              );
               navigation.navigate(CDC_ROUTES.BONUS_REQUESTED);
             },
             I18n.t("global.buttons.continue"),
             undefined,
             undefined,
-            !cdcSelectedBonus.every(b => isResidentInItaly[b.year] === "italy")
+            !cdcSelectedBonus.every(b =>
+              Object.keys(isResidentInItaly).includes(b.year)
+            )
           )}
         />
       </SafeAreaView>
