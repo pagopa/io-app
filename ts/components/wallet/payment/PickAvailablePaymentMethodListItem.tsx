@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ImageSourcePropType } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
@@ -16,7 +17,6 @@ import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import I18n from "../../../i18n";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
-import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = {
   isFirst: boolean;
