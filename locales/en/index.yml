@@ -2912,22 +2912,22 @@ bonus:
   cdc:
     title: "Carta della cultura"
     serviceCta:
-      activable: "Activate your card"
+      activable: "Request your card"
       pending: "Request sent"
       error:
-        status: "The necessary information could not be retrieved. We ask you to try again."
+        status: "The necessary information could not be retrieved. Please, try again."
     bonusRequest:
       bonusRequested:
-        cta: "I understand!"
+        cta: "I got it!"
       selectResidence:
-        header: "Residence"
+        header: "Residency"
         items:
           residesInItaly: "I live in Italy"
           residesAbroad: "I live abroad"
-        info: "Carta della Cultura is only available for citizens residing in Italy. Indicate your residence for each year."
+        info: "Carta della Cultura is only available for citizens residing in Italy. Please, select your residency for each year."
       selectYear:
-        header: "For which year do you want to apply for the Carta della Cultura?"
-        body: "For each selected year, your ISEE must not exceed € 15,000 and your residence must be in the Italian territory."
+        header: "Select for what years you want to request the Carta della Cultura"
+        body: "For each selected year, your ISEE needs to be below € 15,000 and your residency must be in Italy."
 features:
   mvl:
     title: "legal message"
