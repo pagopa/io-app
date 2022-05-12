@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0-rc.1](https://github.com/pagopa/io-app/compare/2.9.0-rc.0...2.9.0-rc.1) (2022-05-12)
+
+
+### Bug Fixes
+
+* [[IAI-194](https://pagopa.atlassian.net/browse/IAI-194)] E2E tests cannot complete spid onboarding ([#3944](https://github.com/pagopa/io-app/issues/3944)) ([aed5681](https://github.com/pagopa/io-app/commit/aed5681ce47ace9e2d35228955c1edfe21a1aec3))
+
+
+### Chores
+
+* [[IA-842](https://pagopa.atlassian.net/browse/IA-842)] Integrate React Native Vision Camera to scan QR Codes ([#3928](https://github.com/pagopa/io-app/issues/3928)) ([f5508c8](https://github.com/pagopa/io-app/commit/f5508c8de3080e86799fdf9a7c490811b4fffacc))
+* [[IAI-197](https://pagopa.atlassian.net/browse/IAI-197)] Fix E2E test build with `react-native-vision-camera` ([#3950](https://github.com/pagopa/io-app/issues/3950)) ([f3e74f1](https://github.com/pagopa/io-app/commit/f3e74f103d9a3ae549dbf31f1a0a66f9b59e59ce))
+* bump publiccode-parser-action to v1 [#3954](https://github.com/pagopa/io-app/issues/3954) ([9056bc3](https://github.com/pagopa/io-app/commit/9056bc3bcbf4bf756874caf441c28f7c0ff1595c))
+* Updated EN copy for Carta della Cultura ([#3951](https://github.com/pagopa/io-app/issues/3951)) ([b00ff10](https://github.com/pagopa/io-app/commit/b00ff1038b7c61431d72f8c77fc25a273514c9d4))
+* **Carta della cultura:** [[AP-24](https://pagopa.atlassian.net/browse/AP-24)] Update select residence screen ([#3949](https://github.com/pagopa/io-app/issues/3949)) ([dadb556](https://github.com/pagopa/io-app/commit/dadb5564b79f7e70ed399afb5965146ef45e7be5))
+* **Carta Giovani Nazionale:** [[IOACGN-71](https://pagopa.atlassian.net/browse/IOACGN-71)] Adds news badge for CGN discounts on category list, merchants list and discount items ([#3948](https://github.com/pagopa/io-app/issues/3948)) ([f654ed4](https://github.com/pagopa/io-app/commit/f654ed46a1fdb7de95d087e755e7c3ddfae49411))
+
 ## [2.9.0-rc.0](https://github.com/pagopa/io-app/compare/2.8.0-rc.4...2.9.0-rc.0) (2022-05-10)
 
 
