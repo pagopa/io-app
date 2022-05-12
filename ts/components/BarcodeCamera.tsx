@@ -2,7 +2,11 @@ import "react-native-reanimated";
 import React, { useEffect, useState } from "react";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 import { View, Dimensions, StyleSheet } from "react-native";
-import { useScanBarcodes, BarcodeFormat } from "vision-camera-code-scanner";
+import {
+  useScanBarcodes,
+  BarcodeFormat,
+  Barcode
+} from "vision-camera-code-scanner";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { usePrevious } from "../utils/hooks/usePrevious";
@@ -78,6 +82,42 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Retrieve the next barcode to handle from a list
+ * of scansioned barcodes. This could be improved or
+ * changed in relation to the business decisions.
+ *
+ * This function _should_ take performance in mind even
+ * though the `barcodes` array shouls be quite small. This is
+ * because in very low-end device the barcode scan is slower
+ * than the previous implementation. In the current state it has
+ * a complexity of ~O(n).
+ *
+ * At the moment the precedence order is:
+ *  1. QR Code
+ *  2. Data Matrix
+ */
+export const retrieveNextBarcode = (
+  barcodes: Array<Barcode>
+): Barcode | null => {
+  if (barcodes.length === 0) {
+    return null;
+  }
+
+  const choosenBarcodes: { [key in IOBarcodeFormat]?: Barcode } = {};
+
+  barcodes.forEach(barcode => {
+    const ioBarcodeFormat = barcodeFormatToIOFormat(barcode.format);
+
+    if (ioBarcodeFormat && !choosenBarcodes[ioBarcodeFormat]) {
+      // eslint-disable-next-line
+      choosenBarcodes[ioBarcodeFormat] = barcode;
+    }
+  });
+
+  return choosenBarcodes.QRCODE || choosenBarcodes.DATA_MATRIX || null;
+};
+
 type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
   disabled?: boolean;
@@ -127,10 +167,7 @@ export const BarcodeCamera = (props: Props) => {
       return;
     }
 
-    // This is going to take only the first scanned
-    // barcode. This could be improved or changed in relation
-    // to the business decisions.
-    const nextBarcode = barcodes[0];
+    const nextBarcode = retrieveNextBarcode(barcodes);
 
     if (!nextBarcode) {
       return;
