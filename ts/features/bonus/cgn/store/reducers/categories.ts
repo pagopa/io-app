@@ -7,10 +7,14 @@ import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants
 import { cgnCategories, cgnSelectedCategory } from "../actions/categories";
 import { NetworkError } from "../../../../../utils/errors";
 import { orderCategoriesByNameKey } from "../../utils/filters";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 
 export type CgnCategoriesState = {
   selectedCategory: ProductCategoryEnum | undefined;
-  list: pot.Pot<ReadonlyArray<ProductCategoryEnum>, NetworkError>;
+  list: pot.Pot<
+    ReadonlyArray<ProductCategoryWithNewDiscountsCount>,
+    NetworkError
+  >;
 };
 
 const INITIAL_STATE: CgnCategoriesState = {
