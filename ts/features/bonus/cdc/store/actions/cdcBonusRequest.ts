@@ -6,7 +6,8 @@ import {
 import {
   CdcBonusEnrollmentList,
   CdcBonusEnrollmentOutcomeList,
-  CdcBonusRequestList
+  CdcBonusRequestList,
+  CdcSelectedBonusList
 } from "../../types/CdcBonusRequest";
 import { NetworkError } from "../../../../../utils/errors";
 
@@ -14,7 +15,7 @@ import { NetworkError } from "../../../../../utils/errors";
  * The user selects for which year would ask the bonus
  */
 export const cdcSelectedBonus =
-  createStandardAction("CDC_SELECTED_BONUS")<CdcBonusEnrollmentList>();
+  createStandardAction("CDC_SELECTED_BONUS")<CdcSelectedBonusList>();
 
 /**
  * get and handle the list of the bonus

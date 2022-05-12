@@ -24,3 +24,10 @@ export type CdcBonusEnrollmentOutcomeList =
   ReadonlyArray<CdcBonusEnrollmentOutcome>;
 
 export type ResidentChoice = "italy" | "notItaly";
+
+export type CdcSelectedBonus = {
+  year: Anno;
+  residence?: ResidentChoice;
+};
+
+export type CdcSelectedBonusList = ReadonlyArray<CdcSelectedBonus>;
