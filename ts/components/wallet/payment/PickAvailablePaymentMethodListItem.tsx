@@ -16,6 +16,7 @@ import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import I18n from "../../../i18n";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
+import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = {
   isFirst: boolean;
@@ -51,7 +52,12 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: bancomatPayLogo,
         title: paymentMethod.caption,
-        description: paymentMethod.info.numberObfuscated ?? ""
+        description: fromNullable(paymentMethod.info.numberObfuscated).reduce(
+          paymentMethod.info.bankName
+            ? " · " + paymentMethod.info.bankName
+            : "",
+          (bank, numb) => `${numb}${bank}`
+        )
       };
     case "Satispay":
       return {
