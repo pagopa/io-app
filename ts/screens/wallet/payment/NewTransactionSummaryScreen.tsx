@@ -3,6 +3,7 @@ import { CompatNavigationProp } from "@react-navigation/compat";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
+import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -14,6 +15,7 @@ import { Dispatch } from "../../../store/actions/types";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
+import { TransactionSummary } from "./components/TransactionSummary";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +37,8 @@ const NewTransactionSummaryScreen = ({
   paymentVerification,
   verifyPayment,
   walletById,
-  loadWallets
+  loadWallets,
+  navigation
 }: Props): React.ReactElement => {
   useOnFirstRender(() => {
     if (pot.isNone(paymentVerification)) {
@@ -46,6 +49,22 @@ const NewTransactionSummaryScreen = ({
     }
   });
 
+  const rptId = navigation.getParam("rptId");
+
+  const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
+    rptId.paymentNoticeNumber
+  );
+
+  /**
+   * try to show the fiscal code coming from the 'verification' API
+   * otherwise (it could be an issue with the API) use the rptID coming from
+   * static data (e.g. message, qrcode, manual insertion, etc.)
+   */
+  const organizationFiscalCode = pot
+    .toOption(paymentVerification)
+    .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
+    .getOrElse(rptId.organizationFiscalCode);
+
   return (
     <BaseScreenComponent
       goBack={true}
@@ -53,7 +72,14 @@ const NewTransactionSummaryScreen = ({
       headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
     >
       <SafeAreaView style={styles.container}>
-        <ScrollView></ScrollView>
+        <ScrollView>
+          <TransactionSummary
+            paymentVerification={paymentVerification}
+            paymentNoticeNumber={paymentNoticeNumber}
+            organizationFiscalCode={organizationFiscalCode}
+            isPaid={true}
+          />
+        </ScrollView>
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
