@@ -52,12 +52,17 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: bancomatPayLogo,
         title: paymentMethod.caption,
-        description: fromNullable(paymentMethod.info.numberObfuscated).reduce(
-          paymentMethod.info.bankName
-            ? " · " + paymentMethod.info.bankName
-            : "",
-          (bank, numb) => `${numb}${bank}`
-        )
+        // phone number + bank name -> if both are defined
+        // phone number -> if bank is not defined
+        // bank -> if phone number is not defined
+        // empty -> if both are not defined
+        description: fromNullable(paymentMethod.info.numberObfuscated)
+          .map(numb =>
+            fromNullable(paymentMethod.info.bankName)
+              .map(bn => `${numb} · ${bn}`)
+              .getOrElse(numb)
+          )
+          .getOrElse(paymentMethod.info.bankName ?? "")
       };
     case "Satispay":
       return {
