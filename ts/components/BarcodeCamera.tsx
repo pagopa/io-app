@@ -14,7 +14,7 @@ import { Body } from "./core/typography/Body";
 /**
  * Type describing the supported barcodes in IO.
  */
-export type IOBarcodeFormat = "QRCODE";
+export type IOBarcodeFormat = "QRCODE" | "DATA_MATRIX";
 
 /**
  * The message sent through the `onBarcodeScanned`
@@ -35,6 +35,9 @@ function barcodeFormatToIOFormat(
   switch (format) {
     case BarcodeFormat.QR_CODE:
       return "QRCODE";
+
+    case BarcodeFormat.DATA_MATRIX:
+      return "DATA_MATRIX";
 
     default:
       return null;
