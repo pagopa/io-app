@@ -13,9 +13,12 @@ export const isOnboardingCompleted = () => {
   return route?.routes[0].name === ROUTES.MAIN;
 };
 
-export const appProtocolRouterV2 = "ioapp://";
+// Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
+export const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
+export const IO_INTERNAL_LINK_PREFIX = IO_INTERNAL_LINK_PROTOCOL + "//";
 
-export const isCTAv2 = (path: string) => path.startsWith(appProtocolRouterV2);
+export const isCTAv2 = (path: string) =>
+  path.startsWith(IO_INTERNAL_LINK_PREFIX);
 
 export const convertUrlToNavigationLink = (path: string) =>
-  path.replace(appProtocolRouterV2, "/");
+  path.replace(IO_INTERNAL_LINK_PREFIX, "/");

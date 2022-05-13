@@ -21,9 +21,15 @@ import CGN_ROUTES from "./routes";
 
 export const cgnLinkingOptions: PathConfigMap = {
   [CGN_ROUTES.DETAILS.MAIN]: {
-    path: "cgn",
+    path: "cgn-details",
     screens: {
       [CGN_ROUTES.DETAILS.DETAILS]: "detail"
+    }
+  },
+  [CGN_ROUTES.ACTIVATION.MAIN]: {
+    path: "cgn-activation",
+    screens: {
+      [CGN_ROUTES.ACTIVATION.CTA_START_CGN]: "start"
     }
   }
 };

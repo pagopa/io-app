@@ -33,11 +33,16 @@ import {
   isCGNEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
-import { fimsEnabled } from "../config";
+import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled } from "../config";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
-import { FimsNavigator } from "../features/fims/navigation/navigator";
-import { appProtocolRouterV2 } from "../utils/navigation";
+import {
+  fimsLinkingOptions,
+  FimsNavigator
+} from "../features/fims/navigation/navigator";
+import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
+import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
 import authenticationNavigator from "./AuthenticationNavigator";
 import messagesNavigator from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -149,18 +154,55 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const dispatch = useIODispatch();
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
+  const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
 
   const linking: LinkingOptions = {
     enabled: false,
-    prefixes: [appProtocolRouterV2],
+    prefixes: [IO_INTERNAL_LINK_PREFIX],
     config: {
       screens: {
+        [ROUTES.MAIN]: {
+          path: "main",
+          screens: {
+            [ROUTES.MESSAGES_HOME]: "messages",
+            [ROUTES.WALLET_HOME]: "wallet",
+            [ROUTES.SERVICES_HOME]: "services",
+            [ROUTES.PROFILE_MAIN]: "profile"
+          }
+        },
+        [ROUTES.PROFILE_NAVIGATOR]: {
+          path: "profile",
+          screens: {
+            [ROUTES.PROFILE_PREFERENCES_HOME]: "preferences",
+            [ROUTES.PROFILE_PRIVACY]: "privacy",
+            [ROUTES.PROFILE_PRIVACY_MAIN]: "privacy-main"
+          }
+        },
+        [ROUTES.WALLET_NAVIGATOR]: {
+          path: "wallet",
+          screens: {
+            [ROUTES.PAYMENTS_HISTORY_SCREEN]: "payments-history",
+            [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN]:
+              "card-onboarding-attempts",
+            ...(bpdEnabled
+              ? { [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: "bpd-iban-update" }
+              : {})
+          }
+        },
+        [ROUTES.SERVICES_NAVIGATOR]: {
+          path: "services",
+          screens: {
+            ...(myPortalEnabled ? { [ROUTES.SERVICE_WEBVIEW]: "webview" } : {}),
+            ...(svEnabled ? svLinkingOptions : {})
+          }
+        },
+        ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
+        [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
     }
   };
-
   return (
     <NavigationContainer
       theme={IOTheme}
