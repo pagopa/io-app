@@ -185,7 +185,7 @@ export const isCGNEnabledSelector = createSelector(
 
 /**
  * return the remote config about FIMS enabled/disabled
- * if there is no data, false is the default value -> (CGN disabled)
+ * if there is no data, false is the default value -> (FIMS disabled)
  */
 export const isFIMSEnabledSelector = createSelector(
   backendStatusSelector,
