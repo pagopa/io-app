@@ -262,6 +262,9 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     cdc: {
       enabled: false
+    },
+    barcodesScanner: {
+      dataMatrixPosteEnabled: false
     }
   }
 };
@@ -316,6 +319,9 @@ export const baseBackendConfig: Config = {
   },
   cdc: {
     enabled: false
+  },
+  barcodesScanner: {
+    dataMatrixPosteEnabled: false
   }
 };
 
