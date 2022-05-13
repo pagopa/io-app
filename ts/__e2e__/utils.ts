@@ -78,9 +78,19 @@ export const createE2EPin = async () => {
 
   await element(by.id("PinFieldInput")).typeText(pin);
   await element(by.id("PinConfirmationFieldInput")).typeText(wrongPin);
+
+  await element(by.text(I18n.t("onboarding.pin.title"))).tap();
+  await waitFor(element(by.text(I18n.t("global.buttons.continue"))))
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
   await element(by.text(I18n.t("global.buttons.continue"))).tap();
 
   await element(by.id("PinConfirmationFieldInput")).replaceText(pin);
+
+  await element(by.text(I18n.t("onboarding.pin.title"))).tap();
+  await waitFor(element(by.text(I18n.t("global.buttons.continue"))))
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
   await element(by.text(I18n.t("global.buttons.continue"))).tap();
 };
 
