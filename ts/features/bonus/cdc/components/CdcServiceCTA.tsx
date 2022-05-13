@@ -14,6 +14,7 @@ import { CdcBonusRequestList } from "../types/CdcBonusRequest";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
+import SectionStatusComponent from "../../../../components/SectionStatus";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;
@@ -93,7 +94,7 @@ const ErrorButton = () => {
   );
 };
 
-const CdcServiceCTA = () => {
+const CdcServiceCTAButton = () => {
   const dispatch = useIODispatch();
   const cdcBonusRequestList = useIOSelector(cdcBonusRequestListSelector);
 
@@ -109,4 +110,13 @@ const CdcServiceCTA = () => {
     _ => <ErrorButton />
   );
 };
+
+const CdcServiceCTA = () => (
+  <View>
+    <SectionStatusComponent sectionKey={"cdc"} />
+    <View spacer />
+    <CdcServiceCTAButton />
+  </View>
+);
+
 export default CdcServiceCTA;
