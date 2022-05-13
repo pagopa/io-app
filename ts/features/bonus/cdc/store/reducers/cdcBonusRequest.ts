@@ -10,7 +10,8 @@ import { NetworkError } from "../../../../../utils/errors";
 import {
   CdcBonusEnrollmentList,
   CdcBonusEnrollmentOutcomeList,
-  CdcBonusRequestList
+  CdcBonusRequestList,
+  CdcSelectedBonusList
 } from "../../types/CdcBonusRequest";
 import { Action } from "../../../../../store/actions/types";
 import {
@@ -22,7 +23,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 
 export type CdcBonusRequestState = {
   bonusList: RemoteValue<CdcBonusRequestList, NetworkError>;
-  selectedBonus?: CdcBonusEnrollmentList;
+  selectedBonus?: CdcSelectedBonusList;
   enrolledBonus: RemoteValue<CdcBonusEnrollmentOutcomeList, NetworkError>;
 };
 
