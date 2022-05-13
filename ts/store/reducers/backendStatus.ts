@@ -232,9 +232,7 @@ export const barcodesScannerConfigSelector = createSelector(
       .map(bs => bs.config.barcodesScanner)
       // If the local feature flag is disabled all the
       // configurations should be set as `false`.
-      .chain(barcodesScanner =>
-        scanAdditionalBarcodesEnabled ? some(barcodesScanner) : none
-      )
+      .filter(() => scanAdditionalBarcodesEnabled)
       .getOrElse({
         dataMatrixPosteEnabled: false
       })
