@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { View as RNView } from "react-native";
 import { View } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
@@ -14,11 +15,15 @@ import { CdcBonusRequestList } from "../types/CdcBonusRequest";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
+import { CDC_ROUTES } from "../navigation/routes";
+import SectionStatusComponent from "../../../../components/SectionStatus";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;
 };
 const ReadyButton = (props: ReadyButtonProp) => {
+  const navigation = useNavigation();
+
   // Check if at least one year can be activable
   const activableBonuses = props.bonusRequestList.filter(
     b => b.status === StatoBeneficiarioEnum.ATTVABILE
@@ -29,8 +34,11 @@ const ReadyButton = (props: ReadyButtonProp) => {
       <ButtonDefaultOpacity
         block
         primary
-        // TODO: dispatch the navigation to the first screen of the workunit
-        onPress={() => true}
+        onPress={() => {
+          navigation.navigate(CDC_ROUTES.BONUS_REQUEST_MAIN, {
+            screen: CDC_ROUTES.INFORMATION_TOS
+          });
+        }}
         testID={"activateCardButton"}
       >
         <Label color={"white"}>
@@ -93,7 +101,7 @@ const ErrorButton = () => {
   );
 };
 
-const CdcServiceCTA = () => {
+const CdcServiceCTAButton = () => {
   const dispatch = useIODispatch();
   const cdcBonusRequestList = useIOSelector(cdcBonusRequestListSelector);
 
@@ -109,4 +117,13 @@ const CdcServiceCTA = () => {
     _ => <ErrorButton />
   );
 };
+
+const CdcServiceCTA = () => (
+  <View>
+    <SectionStatusComponent sectionKey={"cdc"} />
+    <View spacer />
+    <CdcServiceCTAButton />
+  </View>
+);
+
 export default CdcServiceCTA;
