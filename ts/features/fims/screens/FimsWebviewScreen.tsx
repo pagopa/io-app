@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { Alert, SafeAreaView, View } from "react-native";
+import { Alert, Linking, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
 import { fromNullable } from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
@@ -71,7 +71,10 @@ const FimsWebviewScreen = () => {
       return;
     }
 
-    if (maybeFimsDomain.isNone()) {
+    if (
+      maybeFimsDomain.isNone() ||
+      (maybeFimsDomain.isSome() && !Linking.canOpenURL(maybeFimsDomain.value))
+    ) {
       Alert.alert(I18n.t("global.genericAlert"), "", [
         {
           text: I18n.t("global.buttons.exit"),
