@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { View as RNView } from "react-native";
 import { View } from "native-base";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
