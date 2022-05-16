@@ -7,17 +7,35 @@ import { AnniRiferimento } from "../../../../../../definitions/cdc/AnniRiferimen
 import { ListaEsitoRichiestaPerAnno } from "../../../../../../definitions/cdc/ListaEsitoRichiestaPerAnno";
 import {
   CdcBonusEnrollmentList,
-  CdcBonusEnrollmentOutcomeList
+  CdcBonusRequestResponse,
+  CdcBonusRequestResponseFailure,
+  CdcBonusRequestResponseSuccess
 } from "../../types/CdcBonusRequest";
 import { isTestEnv } from "../../../../../utils/environment";
+import { EsitoRichiestaEnum } from "../../../../../../definitions/cdc/EsitoRichiesta";
+
+const mapKinds: Record<number, CdcBonusRequestResponseFailure["kind"]> = {
+  400: "wrongFormat"
+};
 
 const convertSuccess = (
   listaEsitoRichiestaPerAnno: ListaEsitoRichiestaPerAnno
-): CdcBonusEnrollmentOutcomeList =>
-  listaEsitoRichiestaPerAnno.listaEsitoRichiestaPerAnno.map(o => ({
-    year: o.annoRiferimento,
-    outcome: o.esitoRichiesta
-  }));
+): CdcBonusRequestResponse => {
+  const kind: CdcBonusRequestResponseSuccess["kind"] =
+    listaEsitoRichiestaPerAnno.listaEsitoRichiestaPerAnno.some(
+      o => o.esitoRichiesta !== EsitoRichiestaEnum.OK
+    )
+      ? "partialSuccess"
+      : "success";
+
+  return {
+    kind,
+    value: listaEsitoRichiestaPerAnno.listaEsitoRichiestaPerAnno.map(o => ({
+      year: o.annoRiferimento,
+      outcome: o.esitoRichiesta
+    }))
+  };
+};
 
 const convertRequestPayload = (
   actionPayload: CdcBonusEnrollmentList
@@ -48,13 +66,12 @@ export function* handlePostRegistraBeneficiario(
         );
         return;
       }
-      if (postRegistraBeneficiarioResult.value.status === 400) {
+      if (mapKinds[postRegistraBeneficiarioResult.value.status] !== undefined) {
         yield* put(
-          cdcEnrollUserToBonus.failure(
-            getGenericError(
-              new Error(postRegistraBeneficiarioResult.value.value.status)
-            )
-          )
+          cdcEnrollUserToBonus.success({
+            kind: mapKinds[postRegistraBeneficiarioResult.value.status],
+            reason: postRegistraBeneficiarioResult.value.value?.status
+          })
         );
         return;
       }
