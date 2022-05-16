@@ -37,7 +37,11 @@ const reducer = (
 ): CdcBonusRequestState => {
   switch (action.type) {
     case getType(cdcRequestBonusList.request):
-      return { ...state, bonusList: remoteLoading };
+      return {
+        ...state,
+        bonusList: remoteLoading,
+        enrolledBonus: INITIAL_STATE.enrolledBonus
+      };
     case getType(cdcRequestBonusList.success):
       return { ...state, bonusList: remoteReady(action.payload) };
     case getType(cdcRequestBonusList.failure):
@@ -45,18 +49,17 @@ const reducer = (
     case getType(cdcEnrollUserToBonus.request):
       return {
         ...state,
+        bonusList: INITIAL_STATE.bonusList,
         enrolledBonus: remoteLoading
       };
     case getType(cdcEnrollUserToBonus.success):
       return {
         ...state,
-        bonusList: INITIAL_STATE.bonusList,
         enrolledBonus: remoteReady(action.payload)
       };
     case getType(cdcEnrollUserToBonus.failure):
       return {
         ...state,
-        bonusList: INITIAL_STATE.bonusList,
         enrolledBonus: remoteError(action.payload)
       };
     case getType(cdcSelectedBonus):
