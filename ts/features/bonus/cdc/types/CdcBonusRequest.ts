@@ -1,9 +1,6 @@
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { Anno } from "../../../../../definitions/cdc/Anno";
-import {
-  EsitoRichiesta,
-  EsitoRichiestaEnum
-} from "../../../../../definitions/cdc/EsitoRichiesta";
+import { EsitoRichiestaEnum } from "../../../../../definitions/cdc/EsitoRichiesta";
 import { RichiestaCartaErrataMotivoEnum } from "../../../../../definitions/cdc/RichiestaCartaErrataMotivo";
 
 export type CdcBonusRequest = {
@@ -21,7 +18,7 @@ export type CdcBonusEnrollmentList = ReadonlyArray<CdcBonusEnrollment>;
 
 export type CdcBonusEnrollmentOutcome = {
   year: Anno;
-  outcome: EsitoRichiesta;
+  outcome: RequestOutcomeEnum;
 };
 
 export type CdcBonusEnrollmentOutcomeList =
@@ -53,6 +50,20 @@ type CdcBonusRequestResponsePartialSuccess = {
 };
 
 /**
+ * The request is not sent, for all the requested bonus the user declare to be resident abroad
+ */
+type CdcBonusRequestResponseRequirementsError = {
+  kind: "requirementsError";
+};
+
+/**
+ * All the years in the response are different from OK
+ */
+type CdcBonusRequestResponseGenericError = {
+  kind: "genericError";
+};
+
+/**
  * Validations not passed (400)
  */
 type CdcBonusRequestResponseWrongFormat = {
@@ -70,18 +81,21 @@ export type CdcBonusRequestResponseSuccess =
 /**
  * Union of all the error case
  */
-export type CdcBonusRequestResponseFailure = CdcBonusRequestResponseWrongFormat;
+export type CdcBonusRequestResponseFailure =
+  | CdcBonusRequestResponseWrongFormat
+  | CdcBonusRequestResponseRequirementsError
+  | CdcBonusRequestResponseGenericError;
 
 /**
  * This type represents all the possible remote responses
  */
 export type CdcBonusRequestResponse =
   | CdcBonusRequestResponseSuccess
-  | CdcBonusRequestResponseWrongFormat;
+  | CdcBonusRequestResponseFailure;
 
 enum ResidenceAbroad {
   "RESIDENCE_ABROAD" = "RESIDENCE_ABROAD"
 }
 
 export type RequestOutcomeEnum = EsitoRichiestaEnum | ResidenceAbroad;
-export const RequestOutcome = { ...EsitoRichiestaEnum, ...ResidenceAbroad };
+export const RequestOutcomeEnum = { ...EsitoRichiestaEnum, ...ResidenceAbroad };
