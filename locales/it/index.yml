@@ -2945,7 +2945,13 @@ bonus:
         status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
     bonusRequest:
       bonusRequested:
-        cta: "Ho capito!"
+        loading:
+          title: "Stiamo inviando la tua richiesta di attivazione..."
+          subtitle: "Ti ricordiamo che sono valide solo le richieste per gli anni in cui hai dichiarato di essere residente in Italia. Ti preghiamo di attendere"
+        requestCompleted:
+          title: "La tua richiesta è stata inviata!"
+          body: "Riceverai un messaggio su IO quando le graduatorie saranno definitive."
+          cta: "Ho capito!"
         ko:
           requirementsError:
             title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
