@@ -8,7 +8,6 @@ import {
 } from "../../../bpd/model/RemoteValue";
 import { NetworkError } from "../../../../../utils/errors";
 import {
-  CdcBonusEnrollmentList,
   CdcBonusEnrollmentOutcomeList,
   CdcBonusRequestList,
   CdcSelectedBonusList
@@ -46,13 +45,20 @@ const reducer = (
     case getType(cdcEnrollUserToBonus.request):
       return {
         ...state,
-        enrolledBonus: remoteLoading,
-        bonusList: INITIAL_STATE.bonusList
+        enrolledBonus: remoteLoading
       };
     case getType(cdcEnrollUserToBonus.success):
-      return { ...state, enrolledBonus: remoteReady(action.payload) };
+      return {
+        ...state,
+        bonusList: INITIAL_STATE.bonusList,
+        enrolledBonus: remoteReady(action.payload)
+      };
     case getType(cdcEnrollUserToBonus.failure):
-      return { ...state, enrolledBonus: remoteError(action.payload) };
+      return {
+        ...state,
+        bonusList: INITIAL_STATE.bonusList,
+        enrolledBonus: remoteError(action.payload)
+      };
     case getType(cdcSelectedBonus):
       return { ...state, selectedBonus: action.payload };
   }
@@ -64,7 +70,7 @@ export default reducer;
 // Selectors
 export const cdcSelectedBonusSelector = (
   state: GlobalState
-): CdcBonusEnrollmentList | undefined =>
+): CdcSelectedBonusList | undefined =>
   state.bonus.cdc.bonusRequest.selectedBonus;
 
 export const cdcBonusRequestListSelector = (
