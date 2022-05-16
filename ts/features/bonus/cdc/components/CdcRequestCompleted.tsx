@@ -7,7 +7,7 @@ import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRe
 import image from "../../../../../img/pictograms/payment-completed.png";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -32,7 +32,7 @@ const CdcRequestCompleted = () => {
       />
       <FooterWithButtons
         type="SingleButton"
-        leftButton={cancelButtonProps(
+        leftButton={confirmButtonProps(
           onExitPress,
           I18n.t("bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta")
         )}
