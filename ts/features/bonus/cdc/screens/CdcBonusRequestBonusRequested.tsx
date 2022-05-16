@@ -20,7 +20,6 @@ import CdcRequestPartiallySuccess from "../components/CdcRequestPartiallySuccess
 import { Anno } from "../../../../../definitions/cdc/Anno";
 import { EsitoRichiestaEnum } from "../../../../../definitions/cdc/EsitoRichiesta";
 import CdcWrongFormat from "../components/CdcWrongFormat";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
 
 const LoadingComponent = () => (
   <LoadingErrorComponent
