@@ -2925,6 +2925,12 @@ bonus:
           title: "Your request has been sent!"
           body: "You will receive a message on IO when the rankings are final."
           cta: "I got it!"
+        partiallySuccess:
+          title: "Here is the outcome of your requests"
+          body:
+            success: "The request for {{successfulYears}} was successful."
+            fail: "There was a problem for the one relating to {{failedYears}}."
+            contactAssistance: "If you want to try again, contact Support."
         ko:
           requirementsError:
             title: "Unfortunately you do not have the requisites to apply for the Carta della Cultura."

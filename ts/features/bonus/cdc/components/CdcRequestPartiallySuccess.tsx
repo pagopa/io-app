@@ -4,39 +4,67 @@ import { SafeAreaView } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
-import image from "../../../../../img/pictograms/payment-completed.png";
+import image from "../../../../../img/wallet/errors/payment-unknown-icon.png";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { Anno } from "../../../../../definitions/cdc/Anno";
+import { cancelButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { cdcEnrollUserToBonusSelector } from "../store/reducers/cdcBonusRequest";
+import { useIOSelector } from "../../../../store/hooks";
+import { isReady } from "../../bpd/model/RemoteValue";
+import { RequestOutcomeEnum } from "../types/CdcBonusRequest";
+import CdcGenericError from "./CdcGenericError";
 
-type Props = {
-  successYears: ReadonlyArray<Anno>;
-  failedYears: ReadonlyArray<Anno>;
-};
-
-const CdcRequestPartiallySuccess = (_: Props) => {
+const CdcRequestPartiallySuccess = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const cdcEnrollUserToBonus = useIOSelector(cdcEnrollUserToBonusSelector);
 
   const onExitPress = () => {
     navigation.getParent()?.goBack();
   };
+
+  // Should never occurs
+  if (
+    !isReady(cdcEnrollUserToBonus) ||
+    cdcEnrollUserToBonus.value.kind !== "partialSuccess"
+  ) {
+    return <CdcGenericError />;
+  }
+
+  const receivedBonus = cdcEnrollUserToBonus.value.value;
+  const successfulYears = receivedBonus
+    .filter(b => b.outcome === RequestOutcomeEnum.OK)
+    .map(b => b.year)
+    .join(",");
+
+  const failedYears = receivedBonus
+    .filter(b => b.outcome !== RequestOutcomeEnum.OK)
+    .map(b => b.year)
+    .join(",");
+
   return (
     <SafeAreaView style={IOStyles.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
-        title={"Partial"}
-        body={I18n.t(
-          "bonus.cdc.bonusRequest.bonusRequested.requestCompleted.body"
+        title={I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.title"
         )}
+        body={`${I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.success",
+          { successfulYears }
+        )} ${I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail",
+          { failedYears }
+        )} ${I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.contactAssistance"
+        )}`}
       />
       <FooterWithButtons
         type="SingleButton"
-        leftButton={confirmButtonProps(
+        leftButton={cancelButtonProps(
           onExitPress,
           I18n.t("bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta")
         )}
