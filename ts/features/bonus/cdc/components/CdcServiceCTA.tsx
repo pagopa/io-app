@@ -1,8 +1,8 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { View as RNView } from "react-native";
 import { View } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
@@ -104,11 +104,13 @@ const CdcServiceCTA = () => {
   const dispatch = useIODispatch();
   const cdcBonusRequestList = useIOSelector(cdcBonusRequestListSelector);
 
-  useEffect(() => {
-    if (isUndefined(cdcBonusRequestList)) {
-      dispatch(cdcRequestBonusList.request());
-    }
-  }, [dispatch, cdcBonusRequestList]);
+  useFocusEffect(
+    useCallback(() => {
+      if (isUndefined(cdcBonusRequestList)) {
+        dispatch(cdcRequestBonusList.request());
+      }
+    }, [cdcBonusRequestList, dispatch])
+  );
 
   return fold(
     cdcBonusRequestList,
