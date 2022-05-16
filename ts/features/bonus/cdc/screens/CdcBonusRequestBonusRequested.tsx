@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { constNull } from "fp-ts/lib/function";
 import {
   cdcEnrollUserToBonusSelector,
@@ -17,9 +17,8 @@ import {
   CdcSelectedBonusList
 } from "../types/CdcBonusRequest";
 import CdcRequestPartiallySuccess from "../components/CdcRequestPartiallySuccess";
-import { Anno } from "../../../../../definitions/cdc/Anno";
-import { EsitoRichiestaEnum } from "../../../../../definitions/cdc/EsitoRichiesta";
 import CdcWrongFormat from "../components/CdcWrongFormat";
+import CdcGenericError from "../components/CdcGenericError";
 
 const LoadingComponent = () => (
   <LoadingErrorComponent
@@ -38,38 +37,17 @@ const SuccessComponent = (props: {
   selectedBonus: CdcSelectedBonusList;
   bonusResponse: CdcBonusRequestResponse;
 }) => {
-  const notInItalySelectedBonusYears: ReadonlyArray<Anno> = props.selectedBonus
-    .filter(b => b.residence === "notItaly")
-    .map(b => b.year);
-
   switch (props.bonusResponse.kind) {
     case "success":
-      // if the answer is "successful" but there is at least one year for which the user has declared to have "notItaly" residence
-      // return the PartialSuccessComponent
-      return notInItalySelectedBonusYears.length > 0 ? (
-        <CdcRequestPartiallySuccess
-          failedYears={notInItalySelectedBonusYears}
-          successYears={props.bonusResponse.value.map(b => b.year)}
-        />
-      ) : (
-        <CdcRequestCompleted />
-      );
+      return <CdcRequestCompleted />;
     case "partialSuccess":
-      return (
-        <CdcRequestPartiallySuccess
-          failedYears={[
-            ...notInItalySelectedBonusYears,
-            ...props.bonusResponse.value
-              .filter(b => b.outcome !== EsitoRichiestaEnum.OK)
-              .map(b => b.year)
-          ]}
-          successYears={props.bonusResponse.value
-            .filter(b => b.outcome === EsitoRichiestaEnum.OK)
-            .map(b => b.year)}
-        />
-      );
+      return <CdcRequestPartiallySuccess />;
+    case "requirementsError":
+      return <CdcRequirementsError />;
     case "wrongFormat":
       return <CdcWrongFormat />;
+    case "genericError":
+      return <CdcGenericError />;
   }
 };
 
@@ -80,23 +58,14 @@ const CdcBonusRequestBonusRequested = () => {
     cdcEnrollUserToBonusSelector
   );
 
-  const bonusWithRequirements = useMemo(
-    () => cdcSelectedBonus?.filter(b => b.residence === "italy"),
-    [cdcSelectedBonus]
-  );
-
   useEffect(() => {
-    if (bonusWithRequirements && bonusWithRequirements.length > 0) {
-      dispatch(
-        cdcEnrollUserToBonus.request(
-          bonusWithRequirements.map(b => ({ year: b.year }))
-        )
-      );
+    if (cdcSelectedBonus) {
+      dispatch(cdcEnrollUserToBonus.request(cdcSelectedBonus));
     }
-  }, [bonusWithRequirements, dispatch]);
+  }, [cdcSelectedBonus, dispatch]);
 
-  if (!bonusWithRequirements?.length) {
-    return <CdcRequirementsError />;
+  if (!cdcSelectedBonus?.length) {
+    return <CdcGenericError />;
   }
 
   return fold(
@@ -104,12 +73,9 @@ const CdcBonusRequestBonusRequested = () => {
     () => <LoadingComponent />,
     () => <LoadingComponent />,
     b => (
-      <SuccessComponent
-        bonusResponse={b}
-        selectedBonus={cdcSelectedBonus ?? []}
-      />
+      <SuccessComponent bonusResponse={b} selectedBonus={cdcSelectedBonus} />
     ),
-    _ => null
+    _ => <CdcGenericError />
   );
 };
 
