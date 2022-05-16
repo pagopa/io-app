@@ -38,7 +38,10 @@ import {
 } from "../../definitions/pagopa/walletv2/CardInfo";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
 import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
-import { IOTransaction } from "./IOTransaction";
+import {
+  Transaction as TransactionPagoPA,
+  Transaction as TTransactionPagoPA
+} from "../../definitions/pagopa/Transaction";
 
 /**
  * Union of all possible credit card types
@@ -313,8 +316,8 @@ export type NullableWallet = ReplaceProp1<Wallet, "idWallet", undefined>;
 /**
  * A refined Transaction
  */
-export type Transaction = IOTransaction;
-export const Transaction = IOTransaction;
+export type Transaction = TTransactionPagoPA;
+export const Transaction = TransactionPagoPA;
 
 export const isCompletedTransaction = (tx: Transaction) => tx.idStatus === 3;
 
