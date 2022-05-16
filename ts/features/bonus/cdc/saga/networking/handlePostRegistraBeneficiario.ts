@@ -7,9 +7,12 @@ import { AnniRiferimento } from "../../../../../../definitions/cdc/AnniRiferimen
 import { ListaEsitoRichiestaPerAnno } from "../../../../../../definitions/cdc/ListaEsitoRichiestaPerAnno";
 import {
   CdcBonusEnrollmentList,
+  CdcBonusEnrollmentOutcomeList,
   CdcBonusRequestResponse,
   CdcBonusRequestResponseFailure,
-  CdcBonusRequestResponseSuccess
+  CdcBonusRequestResponseSuccess,
+  CdcSelectedBonus,
+  RequestOutcomeEnum
 } from "../../types/CdcBonusRequest";
 import { isTestEnv } from "../../../../../utils/environment";
 import { EsitoRichiestaEnum } from "../../../../../../definitions/cdc/EsitoRichiesta";
@@ -19,22 +22,34 @@ const mapKinds: Record<number, CdcBonusRequestResponseFailure["kind"]> = {
 };
 
 const convertSuccess = (
-  listaEsitoRichiestaPerAnno: ListaEsitoRichiestaPerAnno
+  listaEsitoRichiestaPerAnno: ListaEsitoRichiestaPerAnno,
+  bonusWithoutRequirements: ReadonlyArray<CdcSelectedBonus>
 ): CdcBonusRequestResponse => {
+  const bonusWithoutRequirementsOutcome: CdcBonusEnrollmentOutcomeList =
+    bonusWithoutRequirements.map(b => ({
+      year: b.year,
+      outcome: RequestOutcomeEnum.RESIDENCE_ABROAD
+    }));
+
   const kind: CdcBonusRequestResponseSuccess["kind"] =
     listaEsitoRichiestaPerAnno.listaEsitoRichiestaPerAnno.some(
       o => o.esitoRichiesta !== EsitoRichiestaEnum.OK
-    )
+    ) || bonusWithoutRequirementsOutcome.length > 0
       ? "partialSuccess"
       : "success";
 
-  return {
-    kind,
-    value: listaEsitoRichiestaPerAnno.listaEsitoRichiestaPerAnno.map(o => ({
+  const convertedResponse =
+    listaEsitoRichiestaPerAnno.listaEsitoRichiestaPerAnno.map(o => ({
       year: o.annoRiferimento,
       outcome: o.esitoRichiesta
-    }))
-  };
+    }));
+
+  return convertedResponse.every(b => b.outcome !== RequestOutcomeEnum.OK)
+    ? { kind: "genericError" }
+    : {
+        kind,
+        value: [...convertedResponse, ...bonusWithoutRequirementsOutcome]
+      };
 };
 
 const convertRequestPayload = (
@@ -51,17 +66,35 @@ export function* handlePostRegistraBeneficiario(
   postRegistraBeneficiario: BackendCdcClient["postRegistraBeneficiario"],
   action: ActionType<typeof cdcEnrollUserToBonus.request>
 ) {
+  const requestedBonus = action.payload;
+
+  const bonusWithRequirements = requestedBonus.filter(
+    b => b.residence === "italy"
+  );
+  const bonusWithoutRequirements = requestedBonus.filter(
+    b => b.residence === "notItaly"
+  );
+
+  //
+  if (bonusWithoutRequirements.length === requestedBonus.length) {
+    yield* put(cdcEnrollUserToBonus.success({ kind: "requirementsError" }));
+    return;
+  }
+
   try {
     const postRegistraBeneficiarioResult = yield* call(
       postRegistraBeneficiario,
-      convertRequestPayload(action.payload)
+      convertRequestPayload(bonusWithRequirements)
     );
 
     if (postRegistraBeneficiarioResult.isRight()) {
       if (postRegistraBeneficiarioResult.value.status === 200) {
         yield* put(
           cdcEnrollUserToBonus.success(
-            convertSuccess(postRegistraBeneficiarioResult.value.value)
+            convertSuccess(
+              postRegistraBeneficiarioResult.value.value,
+              bonusWithoutRequirements
+            )
           )
         );
         return;
