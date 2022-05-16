@@ -350,13 +350,6 @@ describe("FeaturedCardCarousel", () => {
   });
 });
 
-// const getComponent = (store: MockStoreEnhanced) =>
-//   render(
-//     <Provider store={store}>
-//       <FeaturedCardCarousel />
-//     </Provider>
-//   );
-
 const getComponent = (mockStore: MockStoreEnhanced<GlobalState>) =>
   renderScreenFakeNavRedux<GlobalState>(
     () => <FeaturedCardCarousel />,
