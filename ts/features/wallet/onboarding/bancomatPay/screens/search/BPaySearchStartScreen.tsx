@@ -22,7 +22,7 @@ type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const tos_url = "https://io.italia.it/app-content/privacy_bancomat.html";
+const tos_url = "https://io.italia.it/app-content/privacy_bpay.html";
 
 /**
  * This screen allows the user to choose a specific bank to search for their Bancomat.

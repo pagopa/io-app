@@ -3,14 +3,18 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { CdcBonusRequestList } from "../../types/CdcBonusRequest";
+import {
+  CdcBonusEnrollmentList,
+  CdcBonusEnrollmentOutcomeList,
+  CdcBonusRequestList
+} from "../../types/CdcBonusRequest";
 import { NetworkError } from "../../../../../utils/errors";
 
 /**
  * The user selects for which year would ask the bonus
  */
 export const cdcSelectedBonus =
-  createStandardAction("CDC_SELECTED_BONUS")<CdcBonusRequestList>();
+  createStandardAction("CDC_SELECTED_BONUS")<CdcBonusEnrollmentList>();
 
 /**
  * get and handle the list of the bonus
@@ -28,7 +32,7 @@ export const cdcEnrollUserToBonus = createAsyncAction(
   "CDC_ENROLL_REQUEST",
   "CDC_ENROLL_SUCCESS",
   "CDC_ENROLL_FAILURE"
-)<void, CdcBonusRequestList, NetworkError>();
+)<CdcBonusEnrollmentList, CdcBonusEnrollmentOutcomeList, NetworkError>();
 
 export type CdcBonusRequestActions =
   | ActionType<typeof cdcSelectedBonus>
