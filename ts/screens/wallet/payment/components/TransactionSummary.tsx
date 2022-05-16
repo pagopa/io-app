@@ -1,15 +1,13 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Badge } from "native-base";
+import Placeholder from "rn-placeholder";
 import customVariables from "../../../../theme/variables";
 import { H5 } from "../../../../components/core/typography/H5";
 import { H4 } from "../../../../components/core/typography/H4";
 import I18n from "../../../../i18n";
-import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 import AmountIcon from "../../../../../img/features/payments/Amount.svg";
 import CalendarIcon from "../../../../../img/features/payments/calendar.svg";
@@ -22,7 +20,6 @@ import {
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
 
 const styles = StyleSheet.create({
@@ -63,16 +60,31 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: customVariables.itemSeparator,
     height: StyleSheet.hairlineWidth
+  },
+  spacer: {
+    height: customVariables.spacerExtrasmallHeight
   }
 });
 
 const iconProps = { color: IOColors.bluegrey };
+
+const LoadingPlaceholder = (props: { size: "full" | "half" }) => (
+  <Placeholder.Box
+    width={props.size === "full" ? 180 : 90}
+    height={16}
+    radius={8}
+    animate={"shine"}
+    color={IOColors.greyLight}
+  />
+);
 
 type RowProps = Readonly<{
   axis: "horizontal" | "vertical";
   title: string;
   subtitle?: string;
   icon?: React.ReactNode;
+  placeholder?: React.ReactNode;
+  isLoading?: boolean;
 }>;
 
 const TransactionSummaryRow = (
@@ -87,16 +99,17 @@ const TransactionSummaryRow = (
         <H5 weight="Regular" color={"bluegrey"} style={styles.title}>
           {props.title}
         </H5>
-        {props.axis === "horizontal" && props.subtitle && (
+        {!props.isLoading && props.axis === "horizontal" && props.subtitle && (
           <H5 color={"bluegreyDark"} weight={"Regular"}>
             {props.subtitle}
           </H5>
         )}
-        {props.axis === "vertical" && props.subtitle && (
+        {!props.isLoading && props.axis === "vertical" && props.subtitle && (
           <H4 color={"bluegreyDark"} weight={"SemiBold"}>
             {props.subtitle}
           </H4>
         )}
+        {props.isLoading && props.placeholder}
       </View>
       {props.children && <View style={styles.children}>{props.children}</View>}
     </View>
@@ -112,6 +125,8 @@ type Props = Readonly<{
 }>;
 
 export const TransactionSummary = (props: Props): React.ReactElement => {
+  const isLoading = pot.isLoading(props.paymentVerification);
+
   const recipient = pot
     .toOption(props.paymentVerification)
     .mapNullable(_ => _.enteBeneficiario)
@@ -132,40 +147,37 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     "-"
   );
 
-  const copyButton = (value: string) => (
-    <TouchableDefaultOpacity
-      accessible={true}
-      accessibilityRole={"button"}
-      accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
-      onPress={() => clipboardSetStringWithFeedback(value)}
-    >
-      <View style={{ justifyContent: "center" }}>
-        <IconFont name="io-copy" color={IOColors.blue} />
-      </View>
-    </TouchableDefaultOpacity>
-  );
-
   return (
     <>
-      {recipient && (
-        <TransactionSummaryRow
-          axis={"vertical"}
-          title={I18n.t("wallet.firstTransactionSummary.recipient")}
-          subtitle={recipient}
-          icon={<OrganizationIcon {...iconProps}></OrganizationIcon>}
-        />
-      )}
+      <TransactionSummaryRow
+        axis={"vertical"}
+        title={I18n.t("wallet.firstTransactionSummary.recipient")}
+        subtitle={recipient}
+        icon={<OrganizationIcon {...iconProps}></OrganizationIcon>}
+        placeholder={<LoadingPlaceholder size={"full"} />}
+        isLoading={isLoading}
+      />
       <TransactionSummaryRow
         axis={"vertical"}
         title={I18n.t("wallet.firstTransactionSummary.object")}
         subtitle={description}
         icon={<NoticeIcon {...iconProps}></NoticeIcon>}
+        placeholder={
+          <>
+            <LoadingPlaceholder size={"full"} />
+            <View style={styles.spacer} />
+            <LoadingPlaceholder size={"full"} />
+          </>
+        }
+        isLoading={isLoading}
       />
       <TransactionSummaryRow
         axis={"vertical"}
         title={I18n.t("wallet.firstTransactionSummary.amount")}
         subtitle={amount}
         icon={<AmountIcon {...iconProps}></AmountIcon>}
+        placeholder={<LoadingPlaceholder size={"half"} />}
+        isLoading={isLoading}
       >
         {props.isPaid && (
           <Badge style={styles.badgeInfo}>
@@ -179,26 +191,25 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
           </Badge>
         )}
       </TransactionSummaryRow>
-      <TransactionSummaryRow
-        axis={"vertical"}
-        title={I18n.t("wallet.firstTransactionSummary.expireDate")}
-        subtitle={props.paymentNoticeNumber}
-        icon={<CalendarIcon {...iconProps}></CalendarIcon>}
-      />
+      {undefined && (
+        <TransactionSummaryRow
+          axis={"vertical"}
+          title={I18n.t("wallet.firstTransactionSummary.expireDate")}
+          icon={<CalendarIcon {...iconProps}></CalendarIcon>}
+          placeholder={<LoadingPlaceholder size={"half"} />}
+          isLoading={isLoading}
+        />
+      )}
       <TransactionSummaryRow
         axis={"horizontal"}
         title={I18n.t("payment.noticeCode")}
         subtitle={props.paymentNoticeNumber}
-      >
-        {copyButton(props.paymentNoticeNumber)}
-      </TransactionSummaryRow>
+      />
       <TransactionSummaryRow
         axis={"horizontal"}
         title={I18n.t("wallet.firstTransactionSummary.entityCode")}
         subtitle={props.organizationFiscalCode}
-      >
-        {copyButton(props.organizationFiscalCode)}
-      </TransactionSummaryRow>
+      />
     </>
   );
 };

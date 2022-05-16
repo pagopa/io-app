@@ -77,7 +77,7 @@ const NewTransactionSummaryScreen = ({
             paymentVerification={paymentVerification}
             paymentNoticeNumber={paymentNoticeNumber}
             organizationFiscalCode={organizationFiscalCode}
-            isPaid={true}
+            isPaid={false}
           />
         </ScrollView>
         <FooterWithButtons
