@@ -4,7 +4,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import {
-  CdcBonusEnrollmentList,
   CdcBonusRequestList,
   CdcBonusRequestResponse,
   CdcSelectedBonusList
@@ -33,7 +32,7 @@ export const cdcEnrollUserToBonus = createAsyncAction(
   "CDC_ENROLL_REQUEST",
   "CDC_ENROLL_SUCCESS",
   "CDC_ENROLL_FAILURE"
-)<CdcBonusEnrollmentList, CdcBonusRequestResponse, NetworkError>();
+)<CdcSelectedBonusList, CdcBonusRequestResponse, NetworkError>();
 
 export type CdcBonusRequestActions =
   | ActionType<typeof cdcSelectedBonus>
