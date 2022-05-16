@@ -77,3 +77,8 @@ export const cdcBonusRequestListSelector = (
   state: GlobalState
 ): RemoteValue<CdcBonusRequestList, NetworkError> =>
   state.bonus.cdc.bonusRequest.bonusList;
+
+export const cdcEnrollUserToBonusSelector = (
+  state: GlobalState
+): RemoteValue<CdcBonusEnrollmentOutcomeList, NetworkError> =>
+  state.bonus.cdc.bonusRequest.enrolledBonus;
