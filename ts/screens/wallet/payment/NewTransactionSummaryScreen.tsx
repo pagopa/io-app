@@ -15,6 +15,7 @@ import { Dispatch } from "../../../store/actions/types";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { TransactionSummary } from "./components/TransactionSummary";
 
 const styles = StyleSheet.create({
@@ -22,6 +23,36 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+const renderFooter = (isLoading: boolean) => {
+  if (isLoading) {
+    return (
+      <FooterWithButtons
+        type="SingleButton"
+        leftButton={{
+          block: true,
+          onPress: undefined,
+          title: "",
+          disabled: true,
+          style: { backgroundColor: IOColors.greyLight, width: "100%" },
+          isLoading: true,
+          iconColor: IOColors.bluegreyDark
+        }}
+      />
+    );
+  }
+
+  return (
+    <FooterWithButtons
+      type="SingleButton"
+      leftButton={{
+        block: true,
+        onPress: () => {},
+        title: I18n.t("global.buttons.continue")
+      }}
+    />
+  );
+};
 
 type OwnProps = {
   navigation: CompatNavigationProp<
@@ -34,6 +65,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const NewTransactionSummaryScreen = ({
+  isLoading,
   paymentVerification,
   verifyPayment,
   walletById,
@@ -80,14 +112,7 @@ const NewTransactionSummaryScreen = ({
             isPaid={false}
           />
         </ScrollView>
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={{
-            block: true,
-            onPress: () => {},
-            title: I18n.t("global.buttons.continue")
-          }}
-        />
+        {renderFooter(isLoading)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
@@ -95,9 +120,11 @@ const NewTransactionSummaryScreen = ({
 
 const mapStateToProps = (state: GlobalState) => {
   const { verifica } = state.wallet.payment;
+  const isLoading = pot.isLoading(verifica);
   const walletById = state.wallet.wallets.walletById;
   return {
     paymentVerification: verifica,
+    isLoading,
     walletById
   };
 };
