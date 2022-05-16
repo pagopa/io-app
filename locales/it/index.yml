@@ -2958,10 +2958,10 @@ bonus:
             body: "La Carta della Cultura è disponibile solo per i cittadini residenti in Italia."
           wrongFormat:
             title: "Il servizio Carta della Cultura in questo momento non è disponibile."
-            body: "Ci scusiamo per il disagio./nTi invitiamo a riprovare più tardi."
+            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
           genericError:
             title: "Si è verificato un errore con la tua richiesta"
-            body: "Ci scusiamo per il disagio./nTi invitiamo a riprovare più tardi."
+            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       selectResidence:
         header: "Residenza"
         items:
