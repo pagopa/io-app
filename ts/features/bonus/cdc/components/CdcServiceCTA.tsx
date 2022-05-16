@@ -10,7 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
 import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
-import { fold } from "../../bpd/model/RemoteValue";
+import { fold, isUndefined } from "../../bpd/model/RemoteValue";
 import { CdcBonusRequestList } from "../types/CdcBonusRequest";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
@@ -105,8 +105,10 @@ const CdcServiceCTA = () => {
   const cdcBonusRequestList = useIOSelector(cdcBonusRequestListSelector);
 
   useEffect(() => {
-    dispatch(cdcRequestBonusList.request());
-  }, [dispatch]);
+    if (isUndefined(cdcBonusRequestList)) {
+      dispatch(cdcRequestBonusList.request());
+    }
+  }, [dispatch, cdcBonusRequestList]);
 
   return fold(
     cdcBonusRequestList,
