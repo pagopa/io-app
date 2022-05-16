@@ -2929,6 +2929,12 @@ bonus:
           requirementsError:
             title: "Unfortunately you do not have the requisites to apply for the Carta della Cultura."
             body: "The Carta della Cultura is only available for citizens residing in Italy."
+          wrongFormat:
+            title: "The Culture Charter service is not available at this time."
+            body: "We apologize for the inconvenience.\nPlease try again later."
+          genericError:
+            title: "There was an error with your request"
+            body: "We apologize for the inconvenience.\nPlease try again later."
       selectResidence:
         header: "Residency"
         items:
