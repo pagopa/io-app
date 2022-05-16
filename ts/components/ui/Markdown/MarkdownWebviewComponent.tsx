@@ -5,10 +5,9 @@ import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { fromNullable } from "fp-ts/lib/Option";
 import { StyleProp, ViewStyle } from "react-native";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
-import { useIODispatch } from "../../../store/hooks";
-import { convertUrlToNavigationLink, isCTAv2 } from "../../../utils/navigation";
-import { handleLinkMessage } from "./handlers/link";
+import { handleLinkMessage, isIoInternalLink } from "./handlers/link";
 import { WebViewMessage } from "./types";
+import { getInternalRoute } from "./handlers/internalLink";
 
 type Props = {
   injectedJavascript: string;
@@ -27,7 +26,6 @@ type Props = {
 
 const MarkdownWebviewComponent = (props: Props) => {
   const linkTo = useLinkTo();
-  const dispatch = useIODispatch();
 
   const handleWebViewMessage = (event: WebViewMessageEvent) => {
     const { shouldHandleLink = () => true } = props;
@@ -44,14 +42,11 @@ const MarkdownWebviewComponent = (props: Props) => {
           if (!shouldHandleLink(message.payload.href)) {
             break;
           }
-          if (isCTAv2(message.payload.href)) {
-            const internalPath = convertUrlToNavigationLink(
-              message.payload.href
-            );
-            linkTo(internalPath);
+          if (isIoInternalLink(message.payload.href)) {
+            linkTo(getInternalRoute(message.payload.href));
             break;
           }
-          handleLinkMessage(dispatch, message.payload.href);
+          handleLinkMessage(message.payload.href);
           fromNullable(props.onLinkClicked).map(s => s(message.payload.href));
           break;
 

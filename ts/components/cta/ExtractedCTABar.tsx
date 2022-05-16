@@ -1,13 +1,12 @@
 import { View } from "native-base";
 import React, { ReactElement, useMemo } from "react";
 import { Dispatch } from "redux";
+import { useLinkTo } from "@react-navigation/native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
 import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
-import { isCTAv2 } from "../../utils/navigation";
 import { ExtractedCtaButton } from "./ExtractedCtaButton";
-import { ExtractedCtaButtonV2 } from "./ExtractedCtaButtonV2";
 
 type Props = {
   ctas: CTAS;
@@ -20,28 +19,23 @@ type Props = {
 };
 
 const renderCtaButton = (
-  { xsmall, dispatch, service, serviceMetadata }: Props,
+  { xsmall, serviceMetadata }: Props,
+  linkTo: (path: string) => void,
   cta?: CTA
 ): React.ReactNode => {
   const handleCTAPress = (cta: CTA) => {
-    handleCtaAction(cta, dispatch, service);
+    handleCtaAction(cta, linkTo);
   };
 
-  if (cta !== undefined) {
-    if (isCTAv2(cta.action)) {
-      return <ExtractedCtaButtonV2 cta={cta} xsmall={xsmall} primary={false} />;
-    }
-
-    if (isCtaActionValid(cta, serviceMetadata)) {
-      return (
-        <ExtractedCtaButton
-          cta={cta}
-          xsmall={xsmall}
-          primary={false}
-          onCTAPress={handleCTAPress}
-        />
-      );
-    }
+  if (cta !== undefined && isCtaActionValid(cta, serviceMetadata)) {
+    return (
+      <ExtractedCtaButton
+        cta={cta}
+        xsmall={xsmall}
+        primary={false}
+        onCTAPress={handleCTAPress}
+      />
+    );
   }
 
   return null;
@@ -55,9 +49,16 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
   props: Props
 ): ReactElement => {
   const { ctas } = props;
+  const linkTo = useLinkTo();
 
-  const cta2 = useMemo(() => renderCtaButton(props, ctas.cta_2), [props]);
-  const cta1 = useMemo(() => renderCtaButton(props, ctas.cta_1), [props]);
+  const cta2 = useMemo(
+    () => renderCtaButton(props, linkTo, ctas.cta_2),
+    [ctas.cta_2, linkTo, props]
+  );
+  const cta1 = useMemo(
+    () => renderCtaButton(props, linkTo, ctas.cta_1),
+    [ctas.cta_1, linkTo, props]
+  );
 
   return (
     <>

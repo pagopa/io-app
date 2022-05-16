@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { connect } from "react-redux";
-import { View, Content } from "native-base";
+import { Content, View } from "native-base";
+import { useLinkTo } from "@react-navigation/native";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
-import { navigateBack } from "../../../store/actions/navigation";
 import { Label } from "../../../components/core/typography/Label";
-import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import Markdown from "../../../components/ui/Markdown";
 import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import {
@@ -20,7 +18,6 @@ import { CTA } from "../../../types/MessageCTA";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
-type Props = ReturnType<typeof mapDispatchToProps> & ReduxProps;
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
@@ -33,9 +30,15 @@ const styles = StyleSheet.create({
   contentCenter: { justifyContent: "center" }
 });
 
-const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
+const MarkdownPlayground = () => {
   const [markdownText, setMarkdownText] = React.useState("");
   const [inputText, setInputText] = React.useState("");
+
+  const linkTo = useLinkTo();
+  const handleCtaPress = useCallback(
+    (cta: CTA) => handleCtaAction(cta, linkTo),
+    [linkTo]
+  );
 
   const message: CreatedMessageWithContent = {
     content: {
@@ -91,7 +94,7 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
               <ExtractedCtaButton
                 cta={maybeCTA.value.cta_1}
                 xsmall={true}
-                onCTAPress={props.handleCTAPress}
+                onCTAPress={handleCtaPress}
               />
             </View>
           )}
@@ -102,7 +105,7 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
                 <ExtractedCtaButton
                   cta={maybeCTA.value.cta_2}
                   xsmall={true}
-                  onCTAPress={props.handleCTAPress}
+                  onCTAPress={handleCtaPress}
                 />
               </View>
             </>
@@ -121,9 +124,4 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  goBack: () => navigateBack(),
-  handleCTAPress: (cta: CTA) => handleCtaAction(cta, dispatch)
-});
-
-export default connect(undefined, mapDispatchToProps)(MarkdownPlayground);
+export default MarkdownPlayground;

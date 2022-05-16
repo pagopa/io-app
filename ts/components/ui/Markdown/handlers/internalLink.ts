@@ -1,8 +1,7 @@
 /**
  * An handler for application internal links
  */
-import { NavigationAction } from "@react-navigation/native";
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import URLParse from "url-parse";
 import {
   bpdEnabled,
@@ -15,13 +14,13 @@ import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
 import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
-import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
-import { addInternalRouteNavigation } from "../../../../store/actions/internalRouteNavigation";
-import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
 import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
-import { IO_INTERNAL_LINK_PROTOCOL } from "../../../../utils/navigation";
+import {
+  IO_INTERNAL_LINK_PREFIX,
+  IO_INTERNAL_LINK_PROTOCOL
+} from "../../../../utils/navigation";
 
 /**
  * This handling is used to convert old CTAs and links to current internal linking config
@@ -90,53 +89,31 @@ export const testableALLOWED_ROUTE_NAMES = isTestEnv
   ? allowedRoutes
   : undefined;
 
-type InternalRouteParams = Record<string, string | undefined>;
-export type InternalRoute = {
-  routeName: string;
-  params?: InternalRouteParams;
-  navigationAction: NavigationAction;
-};
-
-export function getInternalRoute(href: string): Option<InternalRoute> {
+export function getInternalRoute(href: string): string {
   // NOTE: URL built-in class seems not to be implemented in Android
   try {
     const url = new URLParse(href, true);
     if (url.protocol.toLowerCase() === IO_INTERNAL_LINK_PROTOCOL) {
-      return fromNullable(allowedRoutes[url.host.toUpperCase()]).map(
-        navigationAction => ({
-          routeName: url.host.toUpperCase(),
-          params: Object.keys(url.query).length === 0 ? undefined : url.query, // avoid empty object,
-          navigationAction
-        })
+      return fromNullable(allowedRoutes[url.host.toUpperCase()]).fold(
+        href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
+        internalUrl => internalUrl
       );
     }
-    return none;
+    return href;
   } catch (_) {
-    return none;
+    return href;
   }
 }
 
 /**
  * try to extract the internal route from href. If it is defined and allowed (white listed)
  * dispatch the navigation params (to store into the store) and dispatch the navigation action
- * @param dispatch
+ * @param linkTo
  * @param href
- * @param serviceId
  */
 export function handleInternalLink(
-  dispatch: Dispatch,
-  href: string,
-  serviceId?: string
+  linkTo: (path: string) => void,
+  href: string
 ) {
-  getInternalRoute(href).map(internalNavigation => {
-    dispatch(
-      addInternalRouteNavigation({
-        ...internalNavigation,
-        params: { ...internalNavigation.params, serviceId }
-      })
-    );
-    NavigationService.dispatchNavigationAction(
-      internalNavigation.navigationAction
-    );
-  });
+  linkTo(getInternalRoute(href));
 }

@@ -17,8 +17,5 @@ export const isOnboardingCompleted = () => {
 export const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
 export const IO_INTERNAL_LINK_PREFIX = IO_INTERNAL_LINK_PROTOCOL + "//";
 
-export const isCTAv2 = (path: string) =>
-  path.startsWith(IO_INTERNAL_LINK_PREFIX);
-
 export const convertUrlToNavigationLink = (path: string) =>
   path.replace(IO_INTERNAL_LINK_PREFIX, "/");
