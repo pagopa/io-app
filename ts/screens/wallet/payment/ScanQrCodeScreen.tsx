@@ -2,6 +2,7 @@
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { NavigationEvents } from "@react-navigation/compat";
 import { head } from "fp-ts/lib/Array";
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
@@ -14,15 +15,17 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
-import QRCodeScanner from "react-native-qrcode-scanner";
-import { NavigationEvents } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import {
+  BarcodeCamera,
+  ScannedBarcode
+} from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -33,7 +36,10 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import NavigationService from "../../../navigation/NavigationService";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../../navigation/params/AppParamsList";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen,
@@ -41,7 +47,9 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import customVariables from "../../../theme/variables";
+import customVariables, {
+  VIBRATION_BARCODE_SCANNED_DURATION
+} from "../../../theme/variables";
 import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
 import { AsyncAlert } from "../../../utils/asyncAlert";
@@ -49,14 +57,13 @@ import { decodePagoPaQrCode } from "../../../utils/payment";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 
-type OwnProps = NavigationStackScreenProps;
-
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = IOStackNavigationRouteProps<AppParamsList> &
+  ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
   isFocused: boolean;
-  // The package react-native-qrcode-scanner automatically asks for android permission, but we have to display before an alert with
+  // The scanner package automatically asks for android permission, but we have to display before an alert with
   // the rationale
   permissionRationaleDisplayed: boolean;
 };
@@ -106,21 +113,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent",
     width: screenWidth
-  },
-
-  notAuthorizedContainer: {
-    padding: customVariables.contentPadding,
-    flex: 1,
-    alignItems: "center",
-    alignSelf: "stretch",
-    marginBottom: 14
-  },
-  notAuthorizedText: {
-    marginBottom: 25
-  },
-  notAuthorizedBtn: {
-    flex: 1,
-    alignSelf: "stretch"
   }
 });
 
@@ -136,7 +128,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private goBack = () => this.props.navigation.goBack();
-  private qrCodeScanner = React.createRef<QRCodeScanner>();
 
   /**
    * Handles valid pagoPA QR codes
@@ -149,21 +140,24 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    * Handles invalid pagoPA QR codes
    */
   private onInvalidQrCode = () => {
+    if (this.state.scanningState === "INVALID") {
+      return;
+    }
+
     showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");
 
     this.setState({
       scanningState: "INVALID"
     });
+
     // eslint-disable-next-line
     this.scannerReactivateTimeoutHandler = setTimeout(() => {
       // eslint-disable-next-line
       this.scannerReactivateTimeoutHandler = undefined;
-      if (this.qrCodeScanner.current) {
-        this.qrCodeScanner.current.reactivate();
-        this.setState({
-          scanningState: "SCANNING"
-        });
-      }
+
+      this.setState({
+        scanningState: "SCANNING"
+      });
     }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
   };
 
@@ -191,6 +185,18 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       );
     }
     this.showImagePicker();
+  };
+
+  private handleBarcodeScanned = (barcode: ScannedBarcode) => {
+    if (this.state.scanningState === "SCANNING") {
+      // Execute an haptic feedback
+      Vibration.vibrate(VIBRATION_BARCODE_SCANNED_DURATION);
+    }
+
+    switch (barcode.format) {
+      case "QRCODE":
+        this.onQrCodeData(barcode.value);
+    }
   };
 
   /**
@@ -303,66 +309,33 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.colorWhite}
           />
           <ScrollView bounces={false}>
-            {this.state.isFocused && this.state.permissionRationaleDisplayed && (
-              <QRCodeScanner
-                onRead={(reading: { data: string }) =>
-                  this.onQrCodeData(reading.data)
-                }
-                ref={this.qrCodeScanner}
-                containerStyle={styles.cameraContainer as any}
-                showMarker={true}
-                cameraStyle={styles.camera as any}
-                customMarker={
-                  <CameraMarker
-                    screenWidth={screenWidth}
-                    state={this.state.scanningState}
-                  />
-                }
-                bottomContent={
-                  <View>
-                    <ButtonDefaultOpacity
-                      onPress={this.onShowImagePicker}
-                      style={styles.button}
-                      bordered={true}
-                    >
-                      <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
-                    </ButtonDefaultOpacity>
-                    <View style={styles.content}>
-                      <View spacer={true} />
-                      <Text style={[styles.padded, styles.bottomText]}>
-                        {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                      </Text>
-                      <View spacer={true} extralarge={true} />
-                    </View>
-                  </View>
-                }
-                // "captureAudio" enable/disable microphone permission
-                cameraProps={{ captureAudio: false }}
-                // "checkAndroid6Permissions" property enables permission checking for
-                // Android versions greater than 6.0 (23+).
-                checkAndroid6Permissions={true}
-                // "notAuthorizedView" is by default available on iOS systems ONLY.
-                // In order to make Android systems act the same as iOSs you MUST
-                // enable "checkAndroid6Permissions" property as well.
-                // On devices before SDK version 23, the permissions are automatically
-                // granted if they appear in the manifest, so message customization would
-                // be impossible.
-                notAuthorizedView={
-                  <View style={styles.notAuthorizedContainer}>
-                    <Text style={styles.notAuthorizedText}>
-                      {I18n.t("wallet.QRtoPay.enroll_cta")}
-                    </Text>
+            <BarcodeCamera
+              onBarcodeScanned={this.handleBarcodeScanned}
+              disabled={!this.state.isFocused}
+              marker={
+                <CameraMarker
+                  screenWidth={screenWidth}
+                  state={this.state.scanningState}
+                />
+              }
+            />
 
-                    <ButtonDefaultOpacity
-                      onPress={openAppSettings}
-                      style={styles.notAuthorizedBtn}
-                    >
-                      <Text>{I18n.t("global.buttons.settings")}</Text>
-                    </ButtonDefaultOpacity>
-                  </View>
-                }
-              />
-            )}
+            <View>
+              <ButtonDefaultOpacity
+                onPress={this.onShowImagePicker}
+                style={styles.button}
+                bordered={true}
+              >
+                <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+              </ButtonDefaultOpacity>
+              <View style={styles.content}>
+                <View spacer={true} />
+                <Text style={[styles.padded, styles.bottomText]}>
+                  {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
+                </Text>
+                <View spacer={true} extralarge={true} />
+              </View>
+            </View>
           </ScrollView>
           <FooterWithButtons
             type="TwoButtonsInlineThird"
@@ -391,8 +364,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "qrcode_scan",
-      startRoute: NavigationService.getCurrentRoute()
+      paymentStartOrigin: "qrcode_scan"
     });
   }
 });

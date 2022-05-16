@@ -7,9 +7,9 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
+import bancomatPayLogo from "../../../../img/wallet/payment-methods/bpay.png";
 import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
-import paypalLogo from "../../../../img/wallet/cards-icons/paypal_card.png";
+import paypalLogo from "../../../../img/wallet/payment-methods/paypal.png";
 import IconFont from "../../ui/IconFont";
 import { IOColors } from "../../core/variables/IOColors";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
@@ -20,7 +20,8 @@ import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 type Props = {
   isFirst: boolean;
   paymentMethod: PaymentMethod;
-  onPress: () => void;
+  rightElement?: JSX.Element;
+  onPress?: () => void;
 } & ReturnType<typeof mapStateToProps>;
 
 type PaymentMethodInformation = {
@@ -93,7 +94,9 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
       title={title}
       description={description}
       rightElement={
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        props.rightElement ?? (
+          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        )
       }
       onPress={props.onPress}
     />

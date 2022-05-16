@@ -1,7 +1,7 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
-import { useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
@@ -29,11 +29,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const EycaDetailComponent = (props: Props) => {
-  const { present } = useEycaInformationBottomSheet();
-
-  const openEycaBottomSheet = async () => {
-    await present();
-  };
+  const { present, bottomSheet } = useEycaInformationBottomSheet();
 
   const { eyca, getEycaActivationStatus } = props;
 
@@ -46,7 +42,7 @@ const EycaDetailComponent = (props: Props) => {
   const errorComponent = (
     <EycaErrorComponent
       onRetry={props.requestEycaActivation}
-      openBottomSheet={openEycaBottomSheet}
+      openBottomSheet={present}
     />
   );
 
@@ -58,7 +54,7 @@ const EycaDetailComponent = (props: Props) => {
         return (
           <EycaStatusDetailsComponent
             eycaCard={eyca}
-            openBottomSheet={openEycaBottomSheet}
+            openBottomSheet={present}
           />
         );
       case "PENDING":
@@ -68,7 +64,7 @@ const EycaDetailComponent = (props: Props) => {
             as === "ERROR" || as === "NOT_FOUND" ? (
               errorComponent
             ) : (
-              <EycaPendingComponent openBottomSheet={openEycaBottomSheet} />
+              <EycaPendingComponent openBottomSheet={present} />
             )
         );
       default:
@@ -87,6 +83,7 @@ const EycaDetailComponent = (props: Props) => {
       ) : (
         fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
       )}
+      {bottomSheet}
     </>
   );
 };

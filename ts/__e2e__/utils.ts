@@ -47,6 +47,7 @@ export const loginWithSPID = async () => {
   await insertE2EPin();
 
   await element(by.text(I18n.t("global.buttons.continue"))).tap();
+  await element(by.text(I18n.t("global.buttons.continue"))).tap();
 };
 
 export const insertE2EPin = async () => {

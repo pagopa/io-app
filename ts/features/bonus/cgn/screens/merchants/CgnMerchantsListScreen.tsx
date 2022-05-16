@@ -32,6 +32,7 @@ import {
   isReady
 } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { mixAndSortMerchants } from "../../utils/merchants";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -54,24 +55,14 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
 
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
-  const merchantsAll = useMemo(() => {
-    const onlineMerchants = getValueOrElse(props.onlineMerchants, []);
-    const offlineMerchants = getValueOrElse(props.offlineMerchants, []);
-
-    const merchantsAll = [...offlineMerchants, ...onlineMerchants];
-
-    // Removes possible duplicated merchant:
-    // a merchant can be both online and offline, or may have multiple result by offlineMerchant search API
-    const uniquesMerchants = [
-      ...new Map<OfflineMerchant["id"] | OnlineMerchant["id"], MerchantsAll>(
-        merchantsAll.map(m => [m.id, m])
-      ).values()
-    ];
-
-    return [...uniquesMerchants].sort((m1: MerchantsAll, m2: MerchantsAll) =>
-      m1.name.localeCompare(m2.name)
-    );
-  }, [props.onlineMerchants, props.offlineMerchants]);
+  const merchantsAll = useMemo(
+    () =>
+      mixAndSortMerchants(
+        getValueOrElse(props.onlineMerchants, []),
+        getValueOrElse(props.offlineMerchants, [])
+      ),
+    [props.onlineMerchants, props.offlineMerchants]
+  );
 
   const performSearch = (
     text: string,

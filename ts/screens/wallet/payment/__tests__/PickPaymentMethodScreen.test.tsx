@@ -2,7 +2,7 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fireEvent } from "@testing-library/react-native";
 import { some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationParams } from "react-navigation";
+
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -12,7 +12,6 @@ import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onbo
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as NavigationActions from "../../../../store/actions/navigation";
-import { paymentFetchPspsForPaymentId } from "../../../../store/actions/wallet/payment";
 import { toIndexed } from "../../../../store/helpers/indexer";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -23,6 +22,8 @@ import {
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
+import { pspForPaymentV2WithCallbacks } from "../../../../store/actions/wallet/payment";
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 
 const rptId = {} as RptId;
 const initialAmount = "300" as AmountInEuroCents;
@@ -37,6 +38,12 @@ const aCreditCard = {
     brand: "VISA",
     type: undefined
   },
+  enableableFunctions: [
+    EnableableFunctionsEnum.pagoPA,
+    EnableableFunctionsEnum.BPD
+  ],
+  caption: "",
+  icon: "",
   pagoPA: true,
   onboardingChannel: "IO"
 } as CreditCardPaymentMethod;
@@ -47,14 +54,26 @@ const aSatispay = {
   walletType: WalletTypeEnum.Satispay,
   pagoPA: false,
   onboardingChannel: "IO",
+  enableableFunctions: [EnableableFunctionsEnum.BPD],
+  caption: "",
+  icon: "",
   info: {}
 } as SatispayPaymentMethod;
 
 const mockPresentFn = jest.fn();
-jest.mock("../../../../utils/bottomSheet", () => ({
-  __esModule: true,
-  useIOBottomSheet: () => ({ present: mockPresentFn })
-}));
+
+jest.mock("../../../../utils/hooks/bottomSheet", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const react = require("react-native");
+
+  return {
+    __esModule: true,
+    useIOBottomSheetModal: () => ({
+      present: mockPresentFn,
+      bottomSheet: react.View
+    })
+  };
+});
 describe("PickPaymentMethodScreen", () => {
   jest.useFakeTimers();
 
@@ -167,7 +186,7 @@ describe("PickPaymentMethodScreen", () => {
       fireEvent.press(availablePaymentMethodList);
 
       expect(store.getActions()).toEqual([
-        paymentFetchPspsForPaymentId.request({
+        pspForPaymentV2WithCallbacks({
           idPayment,
           idWallet: aCreditCard.idWallet,
           onFailure: expect.any(Function),
@@ -230,7 +249,7 @@ describe("PickPaymentMethodScreen", () => {
 });
 
 const renderPickPaymentMethodScreen = (store: Store<GlobalState, Action>) =>
-  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  renderScreenFakeNavRedux<GlobalState>(
     PickPaymentMethodScreen,
     WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE,
     {

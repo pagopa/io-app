@@ -23,6 +23,7 @@ import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
   bpdEnabled,
+  cdcEnabled,
   euCovidCertificateEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
@@ -72,6 +73,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -80,15 +82,16 @@ import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
 import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
+import watchMigrateToPagination from "./messages/watchMigrateToPagination";
 import watchReloadAllMessages from "./messages/watchReloadAllMessages";
 import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStatusAttribues";
-import watchMigrateToPagination from "./messages/watchMigrateToPagination";
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
   initMixpanel
 } from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
+import { askPremiumMessagesOptInOut } from "./premiumMessages";
 import {
   loadProfile,
   watchProfile,
@@ -97,6 +100,7 @@ import {
 } from "./profile";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
+import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
@@ -124,8 +128,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
-import { askPremiumMessagesOptInOut } from "./premiumMessages";
+import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -197,6 +200,7 @@ export function* initializeApplicationSaga(): Generator<
     apiUrlPrefix,
     sessionToken
   );
+
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(checkSession, backendClient.getSession);
@@ -326,6 +330,9 @@ export function* initializeApplicationSaga(): Generator<
       isProfileFirstOnBoarding(userProfile)
     );
 
+    // Show the thank-you screen for the onboarding
+    yield* call(completeOnboardingSaga);
+
     // Stop the watchAbortOnboardingSaga
     yield* cancel(watchAbortOnboardingSagaTask);
   } else {
@@ -373,6 +380,11 @@ export function* initializeApplicationSaga(): Generator<
   if (bpdEnabled) {
     // Start watching for bpd actions
     yield* fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
+  }
+
+  if (cdcEnabled) {
+    // Start watching for cdc actions
+    yield* fork(watchBonusCdcSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Start watching for cgn actions
@@ -536,6 +548,8 @@ export function* initializeApplicationSaga(): Generator<
 
     // Remove the pending message from the notification state
     yield* put(clearNotificationPendingMessage());
+
+    yield* call(navigateToMainNavigatorAction);
     // Navigate to message router screen
     if (usePaginatedMessages) {
       NavigationService.dispatchNavigationAction(
@@ -558,8 +572,9 @@ export function* initializeApplicationSaga(): Generator<
  */
 function* waitForNavigatorServiceInitialization() {
   // eslint-disable-next-line functional/no-let
-  let navigator: ReturnType<typeof NavigationService.getNavigator> =
-    yield* call(NavigationService.getNavigator);
+  let isNavigatorReady: ReturnType<
+    typeof NavigationService.getIsNavigationReady
+  > = yield* call(NavigationService.getIsNavigationReady);
 
   // eslint-disable-next-line functional/no-let
   let timeoutLogged = false;
@@ -567,7 +582,7 @@ function* waitForNavigatorServiceInitialization() {
   const startTime = performance.now();
 
   // before continuing we must wait for the navigatorService to be ready
-  while (navigator === null || navigator === undefined) {
+  while (!isNavigatorReady) {
     const elapsedTime = performance.now() - startTime;
     if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
       timeoutLogged = true;
@@ -575,7 +590,7 @@ function* waitForNavigatorServiceInitialization() {
       yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
     }
     yield* delay(navigatorPollingTime);
-    navigator = yield* call(NavigationService.getNavigator);
+    isNavigatorReady = yield* call(NavigationService.getIsNavigationReady);
   }
 
   const initTime = performance.now() - startTime;

@@ -3,24 +3,30 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { NavigationLeafRoute, StackActions } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
+import {
+  isError,
+  isLoading as isRemoteLoading,
+  isUndefined
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
@@ -41,39 +47,39 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
-  getPagoPAMethodsSelector,
-  getPayablePaymentMethodsSelector
+  withPaymentFeatureSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
-import { isRawPayPal } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
-import {
-  alertNoActivePayablePaymentMethods,
-  alertNoPayablePaymentMethods
-} from "../../../utils/paymentMethod";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
-  startRoute: NavigationLeafRoute | undefined;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<TransactionSummaryScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -104,6 +110,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
     if (pot.isNone(this.props.potVerifica)) {
       // on component mount, fetch the payment summary if we haven't already
       this.props.dispatchPaymentVerificaRequest();
+    }
+    if (!pot.isSome(this.props.walletById)) {
+      this.props.loadWallets();
     }
   }
 
@@ -161,26 +170,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         }
       );
     } else {
-      /**
-       * Since the payment flow starts from the next screen, even though we are already
-       * in the payment flow, it is really difficult to make up for the static stack organization in a homogeneous way.
-       * The only solution that allows to avoid to heavily modify the existing logic is to distinguish based on the starting screen,
-       * in order to perform the right navigation actions if we are not in the wallet stack.
-       * TODO: This is a temporary (and not scalable) solution, a complete refactoring of the payment workflow is strongly recommended
-       */
-      const startRoute = this.props.navigation.getParam("startRoute");
-      if (startRoute !== undefined) {
-        // The payment flow is inside the wallet stack, if we start outside this stack we need to reset the stack
-        if (
-          startRoute.routeName === ROUTES.MESSAGE_DETAIL ||
-          startRoute.routeName === ROUTES.MESSAGE_DETAIL_PAGINATED
-        ) {
-          this.props.navigation.dispatch(StackActions.popToTop());
-        }
-        this.props.navigation.navigate(startRoute);
-      } else {
-        this.props.navigation.goBack();
-      }
+      this.props.navigation.goBack();
     }
   };
 
@@ -208,10 +198,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
         maybeFavoriteWallet,
         hasPayableMethods
       );
-      return;
-    }
-    if (this.props.hasPagoPaMethods) {
-      alertNoActivePayablePaymentMethods(this.props.navigateToWalletHome);
       return;
     }
     alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
@@ -262,6 +248,16 @@ class TransactionSummaryScreen extends React.Component<Props> {
       .toOption(potVerifica)
       .mapNullable(_ => _.enteBeneficiario)
       .map(formatTextRecipient);
+
+    /**
+     * try to show the organization fiscal code coming from the 'verifica' API
+     * otherwise (it could be an issue with the API) it fallbacks on rptID coming from
+     * static data: message, qrcode, manual insertion
+     */
+    const organizationFiscalCode: string = pot
+      .toOption(potVerifica)
+      .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
+      .getOrElse(rptId.organizationFiscalCode);
 
     const currentAmount: string = pot.getOrElse(
       pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
@@ -337,7 +333,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
             {standardRow(
               I18n.t("wallet.firstTransactionSummary.entityCode"),
-              rptId.organizationFiscalCode
+              organizationFiscalCode
             )}
             <View spacer={true} small={true} />
             {standardRow(
@@ -355,22 +351,27 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
 // eslint-disable-next-line complexity,sonarjs/cognitive-complexity
 const mapStateToProps = (state: GlobalState) => {
-  const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
+  const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;
   const isPaypalEnabled = isPaypalEnabledSelector(state);
+  const isBPayPaymentEnabled = bancomatPayConfigSelector(state).payment;
   const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
   /**
-   * if the favourite wallet is Paypal but the relative feature is not enabled,
-   * the favourite wallet will be undefined
+   * the favourite will be undefined if one of these condition is true
+   * - payment method is Paypal & the relative feature flag is not enabled
+   * - payment method is BPay & the relative feature flag is not enabled
    */
-  const maybeFavoriteWallet = fromNullable(
-    favouriteWallet &&
-      isRawPayPal(favouriteWallet.paymentMethod) &&
-      !isPaypalEnabled
-      ? undefined
-      : favouriteWallet
-  );
-
+  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
+    switch (fw.paymentMethod?.kind) {
+      case "PayPal":
+        return isPaypalEnabled;
+      case "BPay":
+        return isBPayPaymentEnabled;
+      default:
+        return true;
+    }
+  });
+  const psps = pspsV2.psps;
   const error: Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
@@ -383,7 +384,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? some(attiva.error)
     : pot.isError(paymentId)
     ? some(paymentId.error)
-    : pot.isError(check) || pot.isError(psps)
+    : pot.isError(check) || isError(psps)
     ? some(undefined)
     : none;
 
@@ -404,8 +405,8 @@ const mapStateToProps = (state: GlobalState) => {
     (maybeFavoriteWallet.isSome() &&
       error.isNone() &&
       pot.isSome(check) &&
-      pot.isNone(psps)) ||
-    (maybeFavoriteWallet.isSome() && pot.isLoading(psps));
+      isUndefined(psps)) ||
+    (maybeFavoriteWallet.isSome() && isRemoteLoading(psps));
 
   const loadingCaption = isLoadingVerifica
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.verification")
@@ -415,9 +416,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
-  const hasPayableMethods = getPayablePaymentMethodsSelector(state).length > 0;
-  const hasPagoPaMethods = getPagoPAMethodsSelector(state).length > 0;
-
+  const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
   return {
     error,
     isLoading,
@@ -427,7 +426,7 @@ const mapStateToProps = (state: GlobalState) => {
     paymentId,
     maybeFavoriteWallet,
     hasPayableMethods,
-    hasPagoPaMethods
+    walletById
   };
 };
 
@@ -507,6 +506,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     });
 
   return {
+    loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     navigateToWalletHome: () => navigateToWalletHome(),
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>

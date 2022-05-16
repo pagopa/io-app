@@ -819,6 +819,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: Configura IO
+  thankYouPage:
+    title: Configurazione terminata!
+    body: Ora puoi iniziare a usare IO
 forms:
   validators:
     required: Valore richiesto
@@ -925,12 +928,12 @@ wallet:
         text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
         text4: cercando fra quelle disponibili
     bpay:
-      title: Ricerca dei tuoi account BANCOMAT Pay
+      title: Paga su IO con BANCOMAT Pay
       description:
-        text1: "Aggiungendo BANCOMAT Pay al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
+        text1: "Abbina BANCOMAT Pay per pagare più facilmente gli avvisi pagoPA e aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
         text2: informativa sul trattamento dei dati personali.
-        text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
-        text4: cercando fra quelle disponibili
+        text3: "Premi su “Continua” per cercare gli account a te intestati. In alternativa, cerca la banca su cui hai un account BANCOMAT Pay attivo "
+        text4: tra quelle disponibili.
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
@@ -1273,6 +1276,8 @@ wallet:
     pickPaymentMethod:
       title: "Con quale metodo vuoi pagare?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Metodi disattivati"
       notAvailable:
         title: "Metodi non compatibili"
         arriving:
@@ -1281,6 +1286,9 @@ wallet:
         unaccepted:
           bottomSheetTitle: "Perché non posso pagare con questa carta?"
           bottomSheetDescription: "Il circuito di questa carta consente di pagare nei punti vendita fisici, ma non online. Se la tua carta è abilitata ai pagamenti online, aggiungila al tuo Portafoglio come 'carta di debito o di credito'."
+        payment_disabled:
+          bottomSheetTitle: "Perché non riesco a pagare con questo metodo?"
+          bottomSheetDescription: "La funzionalità “Pagamenti in app” potrebbe essere disattivata.\nPrima di riprovare ad effettuare il pagamento, procedi come segue:\n\n1. vai nella sezione “Portafoglio”;\n2. seleziona il metodo di pagamento che vuoi utilizzare;\n3. abilita “Pagamenti in app”."
   firstTransactionSummary:
     title: Dati del pagamento
     amount: Importo pagamento
@@ -1383,7 +1391,7 @@ wallet:
       description: L’app per pagare in modo smart
     bancomatPay:
       name: BANCOMAT Pay
-      description: Abbina il tuo account BANCOMAT Pay
+      description: Paga con carta o conto corrente collegati
     postepayApp:
       name: Postepay
       description: la tua app Postepay
@@ -1933,8 +1941,8 @@ contextualHelp:
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 bottomSheets:
   ciePin:
-      title: Dove trovo il mio PIN?
-      content: !include bottomsheets/ciePin.md
+    title: Dove trovo il mio PIN?
+    content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "Cos'è SPID?"
@@ -2599,6 +2607,7 @@ bonus:
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
     merchantsList:
+      news: novità
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
@@ -2927,7 +2936,25 @@ bonus:
       toast:
         ok: "Voucher salvato con successo"
         ko: "Problemi durante il salvataggio del voucher"
-
+  cdc:
+    title: "Carta della cultura"
+    serviceCta:
+      activable: "Attiva la carta"
+      pending: "Richiesta inviata"
+      error:
+        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
+    bonusRequest:
+      bonusRequested:
+        cta: "Ho capito!"
+      selectResidence:
+        header: "Residenza"
+        items:
+          residesInItaly: "Risiedo in Italia"
+          residesAbroad: "Risiedo all’estero"
+        info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
+      selectYear:
+        header: "Per quale anno vuoi richiedere la Carta della Cultura?"
+        body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
 features:
   mvl:
     title: "messaggio a valore legale"
@@ -2961,6 +2988,11 @@ features:
           singleBtn: "Salva, stampa o condividi"
           open: "Apri"
           save: "Salva"
+          savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+          errors:
+            sharing: "Si è verificato un errore condividendo il documento."
+            opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
+            saving: "Si è verificato un errore salvando il documento."
       body:
         plain: "testo semplice"
         html: "html"
@@ -3084,4 +3116,5 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+
 

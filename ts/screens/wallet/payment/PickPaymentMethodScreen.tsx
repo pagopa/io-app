@@ -2,13 +2,13 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -18,6 +18,8 @@ import BaseScreenComponent, {
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToWalletAddPaymentMethod
@@ -33,7 +35,11 @@ import {
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
-import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
+import {
+  hasPaymentFeature,
+  isDisabledToPay,
+  isEnabledToPay
+} from "../../../utils/paymentMethodCapabilities";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -45,10 +51,17 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
-import { isLoading as isLoadingRemote } from "../../../features/bonus/bpd/model/RemoteValue";
-import { isPaypalEnabledSelector } from "../../../store/reducers/backendStatus";
+import {
+  isLoading as isRemoteLoading,
+  isLoading as isLoadingRemote
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../store/reducers/backendStatus";
 import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
+import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type PickPaymentMethodScreenNavigationParams = Readonly<{
@@ -58,8 +71,11 @@ export type PickPaymentMethodScreenNavigationParams = Readonly<{
   idPayment: string;
 }>;
 
-type OwnProps =
-  NavigationStackScreenProps<PickPaymentMethodScreenNavigationParams>;
+type OwnProps = {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<WalletParamsList, "PAYMENT_PICK_PAYMENT_METHOD">
+  >;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -84,8 +100,7 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const payableWallets = props.payableWallets;
-  const notPayableWallets = props.notPayableWallets;
+  const { methodsCanPay, methodsCantPay, methodsCanPayButDisabled } = props;
 
   return (
     <BaseScreenComponent
@@ -99,7 +114,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
           <Content>
             <H1>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H1>
             <View spacer={true} />
-            {payableWallets.length > 0 ? (
+            {methodsCanPay.length > 0 ? (
               <>
                 <H4 weight={"Regular"} color={"bluegreyDark"}>
                   {I18n.t("wallet.payWith.text")}
@@ -107,7 +122,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 <FlatList
                   testID={"availablePaymentMethodList"}
                   removeClippedSubviews={false}
-                  data={payableWallets}
+                  data={methodsCanPay}
                   keyExtractor={item => item.idWallet.toString()}
                   ListFooterComponent={<View spacer />}
                   renderItem={i => (
@@ -136,7 +151,34 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
               </H4>
             )}
 
-            {notPayableWallets.length > 0 && (
+            {methodsCanPayButDisabled.length > 0 && (
+              <>
+                <View spacer={true} />
+                <H4 color={"bluegreyDark"}>
+                  {I18n.t("wallet.payWith.pickPaymentMethod.disabled.title")}
+                </H4>
+                <View spacer={true} />
+                <FlatList
+                  testID={"DisabledPaymentMethodList"}
+                  removeClippedSubviews={false}
+                  data={methodsCanPayButDisabled}
+                  keyExtractor={item => `disabled_payment_${item.idWallet}`}
+                  ListFooterComponent={<View spacer />}
+                  renderItem={i => (
+                    <PickAvailablePaymentMethodListItem
+                      rightElement={
+                        <PaymentStatusSwitch paymentMethod={i.item} />
+                      }
+                      isFirst={i.index === 0}
+                      paymentMethod={i.item}
+                      onPress={undefined}
+                    />
+                  )}
+                />
+              </>
+            )}
+
+            {methodsCantPay.length > 0 && (
               <>
                 <View spacer={true} />
                 <H4 color={"bluegreyDark"}>
@@ -148,7 +190,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 <FlatList
                   testID={"notPayablePaymentMethodList"}
                   removeClippedSubviews={false}
-                  data={notPayableWallets}
+                  data={methodsCantPay}
                   keyExtractor={item => item.idWallet.toString()}
                   ListFooterComponent={<View spacer />}
                   renderItem={i => (
@@ -168,26 +210,22 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   );
 };
 
-function getValueOrEmptyArray(
-  value: pot.Pot<ReadonlyArray<PaymentMethod>, unknown>
-): ReadonlyArray<PaymentMethod> {
-  return pot.getOrElse(value, []);
-}
-
 const mapStateToProps = (state: GlobalState) => {
   const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
   const potVisiblePaypal = isPaypalEnabledSelector(state)
     ? paypalListSelector(state)
     : pot.none;
   const potVisibleBancomat = bancomatListVisibleInWalletSelector(state);
-  const potVisibleBPay = bPayListVisibleInWalletSelector(state);
+  const potVisibleBPay = bancomatPayConfigSelector(state).payment
+    ? bPayListVisibleInWalletSelector(state)
+    : pot.none;
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
-  const potPsps = state.wallet.payment.psps;
+  const psps = state.wallet.payment.pspsV2.psps;
   const pspV2 = pspV2ListSelector(state);
   const isLoading =
     pot.isLoading(potVisibleCreditCard) ||
-    pot.isLoading(potPsps) ||
+    isRemoteLoading(psps) ||
     isLoadingRemote(pspV2);
 
   const visibleWallets = [
@@ -201,16 +239,13 @@ const mapStateToProps = (state: GlobalState) => {
     (
       acc: ReadonlyArray<PaymentMethod>,
       curr: pot.Pot<ReadonlyArray<PaymentMethod>, unknown>
-    ) => [...acc, ...getValueOrEmptyArray(curr)],
+    ) => [...acc, ...pot.getOrElse(curr, [])],
     [] as ReadonlyArray<PaymentMethod>
   );
-
   return {
-    // Considering that the creditCardListVisibleInWalletSelector return
-    // all the visible credit card we need to filter them in order to extract
-    // only the cards that can pay on IO.
-    payableWallets: visibleWallets.filter(vPW => canMethodPay(vPW)),
-    notPayableWallets: visibleWallets.filter(vPW => !canMethodPay(vPW)),
+    methodsCanPay: visibleWallets.filter(isEnabledToPay),
+    methodsCanPayButDisabled: visibleWallets.filter(isDisabledToPay),
+    methodsCantPay: visibleWallets.filter(v => !hasPaymentFeature(v)),
     isLoading,
     nameSurname: profileNameSurnameSelector(state)
   };
