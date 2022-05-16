@@ -2946,6 +2946,10 @@ bonus:
     bonusRequest:
       bonusRequested:
         cta: "Ho capito!"
+        ko:
+          requirementsError:
+            title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
+            body: "La Carta della Cultura è disponibile solo per i cittadini residenti in Italia."
       selectResidence:
         header: "Residenza"
         items:

@@ -2919,6 +2919,10 @@ bonus:
     bonusRequest:
       bonusRequested:
         cta: "I got it!"
+        ko:
+          requirementsError:
+            title: "Unfortunately you do not have the requisites to apply for the Carta della Cultura."
+            body: "The Carta della Cultura is only available for citizens residing in Italy."
       selectResidence:
         header: "Residency"
         items:
