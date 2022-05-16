@@ -75,7 +75,6 @@ export function* handlePostRegistraBeneficiario(
     b => b.residence === "notItaly"
   );
 
-  //
   if (bonusWithoutRequirements.length === requestedBonus.length) {
     yield* put(cdcEnrollUserToBonus.success({ kind: "requirementsError" }));
     return;
