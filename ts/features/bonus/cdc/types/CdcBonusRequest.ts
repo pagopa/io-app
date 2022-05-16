@@ -1,6 +1,9 @@
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { Anno } from "../../../../../definitions/cdc/Anno";
-import { EsitoRichiesta } from "../../../../../definitions/cdc/EsitoRichiesta";
+import {
+  EsitoRichiesta,
+  EsitoRichiestaEnum
+} from "../../../../../definitions/cdc/EsitoRichiesta";
 import { RichiestaCartaErrataMotivoEnum } from "../../../../../definitions/cdc/RichiestaCartaErrataMotivo";
 
 export type CdcBonusRequest = {
@@ -75,3 +78,10 @@ export type CdcBonusRequestResponseFailure = CdcBonusRequestResponseWrongFormat;
 export type CdcBonusRequestResponse =
   | CdcBonusRequestResponseSuccess
   | CdcBonusRequestResponseWrongFormat;
+
+enum ResidenceAbroad {
+  "RESIDENCE_ABROAD" = "RESIDENCE_ABROAD"
+}
+
+export type RequestOutcomeEnum = EsitoRichiestaEnum | ResidenceAbroad;
+export const RequestOutcome = { ...EsitoRichiestaEnum, ...ResidenceAbroad };
