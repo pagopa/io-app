@@ -1,7 +1,7 @@
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { cancelled, put } from "typed-redux-saga/macro";
+import { call, cancelled, put } from "typed-redux-saga/macro";
 import { mvlAttachmentDownload } from "../../store/actions/downloads";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -34,12 +34,18 @@ export function* downloadMvlAttachment(
   const attachment = action.payload;
 
   try {
-    const result = yield ReactNativeBlobUtil.config({
+    const config = yield* call(ReactNativeBlobUtil.config, {
       path: savePath(attachment),
       timeout: fetchTimeout
-    }).fetch("GET", attachment.resourceUrl.href, {
-      Authorization: `Bearer ${bearerToken}`
     });
+    const result = yield* call(
+      config.fetch,
+      "GET",
+      attachment.resourceUrl.href,
+      {
+        Authorization: `Bearer ${bearerToken}`
+      }
+    );
     const { status } = result.info();
     if (status !== 200) {
       const error = new Error(
