@@ -20,7 +20,7 @@ const CdcWrongFormat = () => {
     navigation.getParent()?.goBack();
   };
   return (
-    <SafeAreaView style={IOStyles.flex}>
+    <SafeAreaView style={IOStyles.flex} testID={"cdcWrongFormat"}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={I18n.t(
@@ -34,7 +34,9 @@ const CdcWrongFormat = () => {
         type="SingleButton"
         leftButton={cancelButtonProps(
           onExitPress,
-          I18n.t("global.buttons.close")
+          I18n.t("global.buttons.close"),
+          undefined,
+          "closeButton"
         )}
       />
     </SafeAreaView>

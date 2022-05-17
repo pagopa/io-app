@@ -20,7 +20,7 @@ const CdcRequestCompleted = () => {
     navigation.getParent()?.goBack();
   };
   return (
-    <SafeAreaView style={IOStyles.flex}>
+    <SafeAreaView style={IOStyles.flex} testID={"cdcRequestCompleted"}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={I18n.t(
@@ -34,7 +34,9 @@ const CdcRequestCompleted = () => {
         type="SingleButton"
         leftButton={confirmButtonProps(
           onExitPress,
-          I18n.t("bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta")
+          I18n.t("bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta"),
+          undefined,
+          "closeButton"
         )}
       />
     </SafeAreaView>
