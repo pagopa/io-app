@@ -19,12 +19,12 @@ type Props = {
 };
 
 const renderCtaButton = (
-  { xsmall, serviceMetadata }: Props,
+  { xsmall, service, serviceMetadata }: Props,
   linkTo: (path: string) => void,
   cta?: CTA
 ): React.ReactNode => {
   const handleCTAPress = (cta: CTA) => {
-    handleCtaAction(cta, linkTo);
+    handleCtaAction(cta, linkTo, service);
   };
 
   if (cta !== undefined && isCtaActionValid(cta, serviceMetadata)) {

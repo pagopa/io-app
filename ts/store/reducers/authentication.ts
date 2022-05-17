@@ -1,4 +1,4 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
@@ -167,11 +167,12 @@ export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
     : undefined;
 
 export const tokenFromNameSelector = (
-  tokenName: TokenName
+  tokenName?: TokenName
 ): ((state: GlobalState) => Option<string>) =>
   createSelector<GlobalState, Option<PublicSession>, Option<string>>(
     sessionInfoSelector,
-    maybeSessionInfo => maybeSessionInfo.map(si => si[tokenName])
+    maybeSessionInfo =>
+      fromNullable(tokenName).chain(tn => maybeSessionInfo.map(si => si[tn]))
   );
 
 export const selectedIdentityProviderSelector = (state: GlobalState) =>

@@ -4,7 +4,7 @@ import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
-import { fromEither, fromNullable } from "fp-ts/lib/Option";
+import { Route, useRoute } from "@react-navigation/native";
 import I18n from "../../i18n";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -14,14 +14,17 @@ import {
   tokenFromNameSelector,
   TokenName
 } from "../../store/reducers/authentication";
-import { internalRouteNavigationParamsSelector } from "../../store/reducers/internalRouteNavigation";
-import { GlobalState } from "../../store/reducers/types";
-import { ServicesWebviewParams } from "../../types/ServicesWebviewParams";
 import { resetInternalRouteNavigation } from "../../store/actions/internalRouteNavigation";
 import { serviceMetadataByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { useIOSelector } from "../../store/hooks";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+export type ServiceWebviewScreenNavigationParams = Readonly<{
+  serviceId: ServiceId;
+  url: string;
+}>;
+
+type Props = ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   flex: { flex: 1 }
@@ -30,6 +33,17 @@ const styles = StyleSheet.create({
 const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
+  const route =
+    useRoute<
+      Route<"SERVICES_NAVIGATOR", ServiceWebviewScreenNavigationParams>
+    >();
+  const maybeService = useIOSelector(
+    serviceMetadataByIdSelector(route.params.serviceId)
+  );
+  const token = useIOSelector(
+    tokenFromNameSelector(maybeService?.token_name as TokenName)
+  );
+
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
   const [cookieError, setCookieError] = React.useState(false);
 
@@ -44,10 +58,9 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
 
   // TODO: rewrite this hook following all the hooks rules
   React.useEffect(() => {
-    const { navigationParams, token } = props;
     // if params can't be decoded or the service has not a valid token name in its metadata (token is none)
     // show an alert and go back
-    if (navigationParams.isLeft() || token.isNone()) {
+    if (token.isNone()) {
       Alert.alert(
         I18n.t("global.genericAlert"),
         token.isNone()
@@ -63,7 +76,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
       );
       return;
     }
-    const url = new URLParse(navigationParams.value.url, true);
+    const url = new URLParse(route.params.url, true);
     const cookie: Cookie = {
       name: "token",
       value: token.value,
@@ -84,35 +97,16 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
     <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={styles.flex}>
         <Content contentContainerStyle={styles.flex}>
-          {!cookieError &&
-            isCookieAvailable &&
-            props.navigationParams.isRight() && (
-              <RegionServiceWebView
-                uri={props.navigationParams.value.url}
-                onWebviewClose={handleGoBack}
-              />
-            )}
+          {!cookieError && isCookieAvailable && token.isSome() && (
+            <RegionServiceWebView
+              uri={route.params.url}
+              onWebviewClose={handleGoBack}
+            />
+          )}
         </Content>
       </SafeAreaView>
     </BaseScreenComponent>
   );
-};
-const mapStateToProps = (state: GlobalState) => {
-  const maybeParams = ServicesWebviewParams.decode(
-    internalRouteNavigationParamsSelector(state)
-  );
-
-  const token = fromEither(maybeParams)
-    .chain(params =>
-      fromNullable(serviceMetadataByIdSelector(params.serviceId)(state))
-    )
-    .mapNullable(m => m.token_name)
-    .chain(t => tokenFromNameSelector(t as TokenName)(state));
-
-  return {
-    navigationParams: maybeParams,
-    token
-  };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -122,7 +116,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ServicesWebviewScreen);
+export default connect(undefined, mapDispatchToProps)(ServicesWebviewScreen);

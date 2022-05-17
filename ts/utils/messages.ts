@@ -30,6 +30,7 @@ import { ServiceId } from "../../definitions/backend/ServiceId";
 import { mixpanelTrack } from "../mixpanel";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
+import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -67,9 +68,16 @@ export function messageNeedsCTABar(
   );
 }
 
-export const handleCtaAction = (cta: CTA, linkTo: (path: string) => void) => {
+export const handleCtaAction = (
+  cta: CTA,
+  linkTo: (path: string) => void,
+  service?: ServicePublic
+) => {
   if (isIoInternalLink(cta.action)) {
-    handleInternalLink(linkTo, cta.action);
+    handleInternalLink(
+      linkTo,
+      `${cta.action}${service ? "&serviceId=" + service.service_id : ""}`
+    );
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
     if (maybeHandledAction.isRight()) {

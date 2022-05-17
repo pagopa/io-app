@@ -2,10 +2,10 @@ import { none, some } from "fp-ts/lib/Option";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import {
   getInternalRoute,
-  IO_INTERNAL_LINK_PREFIX,
   testableALLOWED_ROUTE_NAMES
 } from "../../components/ui/Markdown/handlers/internalLink";
 import ROUTES from "../../navigation/routes";
+import { IO_INTERNAL_LINK_PREFIX } from "../navigation";
 
 describe("getInternalRoute", () => {
   const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(
