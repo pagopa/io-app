@@ -107,10 +107,8 @@ const CdcServiceCTAButton = () => {
 
   useFocusEffect(
     useCallback(() => {
-      if (isUndefined(cdcBonusRequestList)) {
-        dispatch(cdcRequestBonusList.request());
-      }
-    }, [cdcBonusRequestList, dispatch])
+      dispatch(cdcRequestBonusList.request());
+    }, [dispatch])
   );
 
   return fold(
