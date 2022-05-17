@@ -64,9 +64,7 @@ describe("mvlDownloadsReducer", () => {
             pot.isNone(
               mvlDownloadsReducer(
                 afterRequestState,
-                mvlAttachmentDownload.failure({
-                  attachment
-                })
+                mvlAttachmentDownload.cancel(attachment)
               )[attachment.id] ?? pot.none
             )
           ).toBeTruthy();
