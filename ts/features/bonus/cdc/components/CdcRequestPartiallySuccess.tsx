@@ -46,7 +46,7 @@ const CdcRequestPartiallySuccess = () => {
     .join(",");
 
   return (
-    <SafeAreaView style={IOStyles.flex}>
+    <SafeAreaView style={IOStyles.flex} testID={"cdcRequestPartiallySuccess"}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={I18n.t(

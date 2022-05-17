@@ -30,6 +30,7 @@ const LoadingComponent = () => (
       "bonus.cdc.bonusRequest.bonusRequested.loading.subtitle"
     )}
     onRetry={constNull}
+    testID={"loadingComponent"}
   />
 );
 
