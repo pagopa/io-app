@@ -1,5 +1,5 @@
 import { View } from "native-base";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import * as pot from "italia-ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
@@ -101,7 +101,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
     mvlAttachmentDownloadFromIdSelector(state, attachment.id)
   );
 
-  const openAttachment = () => {
+  const openAttachment = useCallback(() => {
     const download = pot.toUndefined(downloadPot);
 
     if (pot.isError(downloadPot)) {
@@ -135,7 +135,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
         }
       }
     }
-  };
+  }, [downloadPot, navigate]);
 
   useEffect(() => {
     const wasLoading = isLoading;
@@ -145,7 +145,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
       openAttachment();
     }
     setIsLoading(isStillLoading);
-  }, [downloadPot, isLoading, setIsLoading]);
+  }, [downloadPot, isLoading, setIsLoading, openAttachment]);
 
   const downloadAttachmentIfNeeded = async () => {
     if (pot.isLoading(downloadPot)) {
