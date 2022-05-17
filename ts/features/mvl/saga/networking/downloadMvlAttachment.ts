@@ -70,11 +70,7 @@ export function* downloadMvlAttachment(
     );
   } finally {
     if (yield* cancelled()) {
-      yield* put(
-        mvlAttachmentDownload.failure({
-          attachment
-        })
-      );
+      yield* put(mvlAttachmentDownload.cancel(attachment));
     }
   }
 }

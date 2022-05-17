@@ -43,16 +43,10 @@ export const mvlDownloadsReducer = (
         path: action.payload.path
       });
     case getType(mvlAttachmentDownload.failure):
-      if (action.payload.error) {
-        return toError(
-          action.payload.attachment.id,
-          state,
-          action.payload.error
-        );
-      } else {
-        // the download was cancelled, so it goes back to none
-        return toNone(action.payload.attachment.id, state);
-      }
+      return toError(action.payload.attachment.id, state, action.payload.error);
+    case getType(mvlAttachmentDownload.cancel):
+      // the download was cancelled, so it goes back to none
+      return toNone(action.payload.id, state);
     case getType(mvlRemoveCachedAttachment):
       return toNone(action.payload.id, state);
   }

@@ -88,14 +88,8 @@ describe("downloadMvlAttachment", () => {
         yield* cancel(task);
       }
 
-      it("then it puts a failure action without error", () =>
-        expectSaga(saga)
-          .put(
-            mvlAttachmentDownload.failure({
-              attachment
-            })
-          )
-          .run());
+      it("then it puts a cancel action", () =>
+        expectSaga(saga).put(mvlAttachmentDownload.cancel(attachment)).run());
     });
   });
 });

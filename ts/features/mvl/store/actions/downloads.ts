@@ -9,11 +9,13 @@ import { MvlAttachment } from "../../types/mvlData";
 export const mvlAttachmentDownload = createAsyncAction(
   "MVL_ATTACHMENT_DOWNLOAD_REQUEST",
   "MVL_ATTACHMENT_DOWNLOAD_SUCCESS",
-  "MVL_ATTACHMENT_DOWNLOAD_FAILURE"
+  "MVL_ATTACHMENT_DOWNLOAD_FAILURE",
+  "MVL_ATTACHMENT_DOWNLOAD_CANCEL"
 )<
   MvlAttachment,
   { attachment: MvlAttachment; path: string },
-  { attachment: MvlAttachment; error?: Error }
+  { attachment: MvlAttachment; error: Error },
+  MvlAttachment
 >();
 
 /**
