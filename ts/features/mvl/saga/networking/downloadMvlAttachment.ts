@@ -6,6 +6,7 @@ import { mvlAttachmentDownload } from "../../store/actions/downloads";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { MvlAttachment } from "../../types/mvlData";
+import { getError } from "../../../../utils/errors";
 
 export const MvlAttachmentsDirectoryPath =
   RNFS.CachesDirectoryPath + "/mvl/attachments";
@@ -54,6 +55,13 @@ export function* downloadMvlAttachment(
     }
     const path = result.path();
     yield* put(mvlAttachmentDownload.success({ attachment, path }));
+  } catch (error) {
+    yield* put(
+      mvlAttachmentDownload.failure({
+        attachment,
+        error: getError(error)
+      })
+    );
   } finally {
     if (yield* cancelled()) {
       yield* put(
