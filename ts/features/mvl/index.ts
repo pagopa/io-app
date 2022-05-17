@@ -7,7 +7,7 @@ const CURRENT_REDUX_MVL_STORE_VERSION = 1;
 
 export type PersistedMvlState = MvlState & PersistPartial;
 
-const persistConfig: PersistConfig = {
+export const mvlPersistConfig: PersistConfig = {
   key: "mvl",
   storage: AsyncStorage,
   version: CURRENT_REDUX_MVL_STORE_VERSION,
@@ -15,6 +15,6 @@ const persistConfig: PersistConfig = {
 };
 
 export const mvlPersistor = persistReducer<MvlState, Action>(
-  persistConfig,
+  mvlPersistConfig,
   rootReducer
 );

@@ -11,6 +11,7 @@ import {
   mvlRemoveCachedAttachment
 } from "../store/actions/downloads";
 import { clearCache } from "../../../store/actions/profile";
+import { logoutSuccess } from "../../../store/actions/authentication";
 import { handleGetMvl } from "./networking/handleGetMvlDetails";
 import { downloadMvlAttachment } from "./networking/downloadMvlAttachment";
 import { clearAllMvlAttachments, clearMvlAttachment } from "./mvlAttachments";
@@ -52,4 +53,14 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
   yield* takeEvery(clearCache, function* () {
     yield* call(clearAllMvlAttachments);
   });
+
+  // clear cache when user explicitly logs out
+  yield* takeEvery(
+    logoutSuccess,
+    function* (action: ActionType<typeof logoutSuccess>) {
+      if (!action.payload.keepUserData) {
+        yield* call(clearAllMvlAttachments);
+      }
+    }
+  );
 }
