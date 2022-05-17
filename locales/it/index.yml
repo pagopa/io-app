@@ -2943,6 +2943,8 @@ bonus:
       pending: "Richiesta inviata"
       error:
         status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
+    serviceEntryPoint:
+      notAvailable: "Il servizio non è disponibile in questo momento. Riprova più tardi."
     bonusRequest:
       bonusRequested:
         cta: "Ho capito!"
