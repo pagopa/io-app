@@ -77,7 +77,9 @@ describe("mvlDownloadsReducer", () => {
 
   describe("given a downloaded attachment", () => {
     const attachment = mvlMockPdfAttachment;
-    const initialState: MvlDownloads = { [attachment.id]: pot.some(path) };
+    const initialState: MvlDownloads = {
+      [attachment.id]: pot.some({ attachment, path })
+    };
 
     describe("when clearing the attachment", () => {
       it("then it returns pot.none", () => {

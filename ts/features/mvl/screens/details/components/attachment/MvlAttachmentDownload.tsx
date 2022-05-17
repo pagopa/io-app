@@ -98,21 +98,22 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
   );
 
   const openAttachment = () => {
-    const path = pot.toUndefined(downloadPot);
+    const download = pot.toUndefined(downloadPot);
 
     if (pot.isError(downloadPot)) {
       showToast(
         i18n.t("features.mvl.details.attachments.bottomSheet.failing.details")
       );
-    } else if (path) {
+    } else if (download) {
+      const path = download.path;
+      const attachment = download.attachment;
       if (attachment.contentType === ContentTypeValues.applicationPdf) {
         navigate(ROUTES.MESSAGES_NAVIGATOR, {
           screen: MVL_ROUTES.MAIN,
           params: {
             screen: MVL_ROUTES.ATTACHMENT,
             params: {
-              attachment,
-              path
+              attachmentId: attachment.id
             }
           }
         });
@@ -147,7 +148,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
       return;
     }
 
-    const path = pot.toUndefined(downloadPot);
+    const path = pot.toUndefined(downloadPot)?.path;
     const fileExists = path !== undefined ? await RNFS.exists(path) : false;
     if (fileExists) {
       openAttachment();

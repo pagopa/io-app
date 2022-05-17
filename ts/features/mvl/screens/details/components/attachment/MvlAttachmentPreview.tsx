@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { CompatNavigationProp } from "@react-navigation/compat";
+import * as pot from "italia-ts-commons/lib/pot";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import customVariables from "../../../../../../theme/variables";
@@ -11,12 +12,16 @@ import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components
 import { isIos } from "../../../../../../utils/platform";
 import { showToast } from "../../../../../../utils/showToast";
 import I18n from "../../../../../../i18n";
-import { MvlAttachment } from "../../../../types/mvlData";
+import { MvlAttachmentId } from "../../../../types/mvlData";
 import { share } from "../../../../../../utils/share";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { MvlParamsList } from "../../../../navigation/params";
 import { mvlRemoveCachedAttachment } from "../../../../store/actions/downloads";
-import { useIODispatch } from "../../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
+import {
+  mvlAttachmentDownloadFromIdSelector,
+  MvlDownload
+} from "../../../../store/reducers/downloads";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,7 +33,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderFooter = (attachment: MvlAttachment, path: string) =>
+const renderFooter = ({ attachment, path }: MvlDownload) =>
   isIos ? (
     <FooterWithButtons
       type={"SingleButton"}
@@ -104,8 +109,7 @@ const renderFooter = (attachment: MvlAttachment, path: string) =>
   );
 
 export type MvlAttachmentPreviewNavigationParams = Readonly<{
-  attachment: MvlAttachment;
-  path: string;
+  attachmentId: MvlAttachmentId;
 }>;
 
 type Props = {
@@ -116,34 +120,39 @@ type Props = {
 
 export const MvlAttachmentPreview = (props: Props): React.ReactElement => {
   const dispatch = useIODispatch();
-  const attachment = props.navigation.getParam("attachment");
-  const path = props.navigation.getParam("path");
+  const attachmentId = props.navigation.getParam("attachmentId");
+  const downloadPot = useIOSelector(state =>
+    mvlAttachmentDownloadFromIdSelector(state, attachmentId)
+  );
+  const download = pot.toUndefined(downloadPot);
   return (
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
     >
-      <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
-        <Pdf
-          source={{ uri: path, cache: true }}
-          style={styles.pdf}
-          onError={_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.bottomSheet.failing.details"
-              )
-            );
-            dispatch(
-              mvlRemoveCachedAttachment({
-                id: attachment.id,
-                path
-              })
-            );
-          }}
-        />
-        {renderFooter(attachment, path)}
-      </SafeAreaView>
+      {download && (
+        <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
+          <Pdf
+            source={{ uri: download.path, cache: true }}
+            style={styles.pdf}
+            onError={_ => {
+              showToast(
+                I18n.t(
+                  "features.mvl.details.attachments.bottomSheet.failing.details"
+                )
+              );
+              dispatch(
+                mvlRemoveCachedAttachment({
+                  id: download.attachment.id,
+                  path: download.path
+                })
+              );
+            }}
+          />
+          {renderFooter(download)}
+        </SafeAreaView>
+      )}
     </BaseScreenComponent>
   );
 };

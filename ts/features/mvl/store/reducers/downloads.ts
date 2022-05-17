@@ -14,9 +14,14 @@ import {
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
-import { MvlAttachmentId } from "../../types/mvlData";
+import { MvlAttachment, MvlAttachmentId } from "../../types/mvlData";
 
-export type MvlDownloads = IndexedById<pot.Pot<string, Error>>;
+export type MvlDownload = {
+  attachment: MvlAttachment;
+  path: string;
+};
+
+export type MvlDownloads = IndexedById<pot.Pot<MvlDownload, Error>>;
 
 export const initialState: MvlDownloads = {};
 
@@ -33,7 +38,10 @@ export const mvlDownloadsReducer = (
     case getType(mvlAttachmentDownload.request):
       return toLoading(action.payload.id, state);
     case getType(mvlAttachmentDownload.success):
-      return toSome(action.payload.attachment.id, state, action.payload.path);
+      return toSome(action.payload.attachment.id, state, {
+        attachment: action.payload.attachment,
+        path: action.payload.path
+      });
     case getType(mvlAttachmentDownload.failure):
       if (action.payload.error) {
         return toError(
@@ -59,5 +67,5 @@ export const mvlAttachmentDownloadFromIdSelector = createSelector(
     (state: GlobalState) => state.features.mvl.downloads,
     (_: GlobalState, id: MvlAttachmentId) => id
   ],
-  (byId, id): pot.Pot<string, Error> => byId[id] ?? pot.none
+  (byId, id): pot.Pot<MvlDownload, Error> => byId[id] ?? pot.none
 );
