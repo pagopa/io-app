@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -14,6 +14,8 @@ import {
 import { loadAvailableBonuses } from "../actions/bonusVacanze";
 
 import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
+import { servicesByIdSelector } from "../../../../../store/reducers/entities/services/servicesById";
+import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 
 export type AvailableBonusTypesState = pot.Pot<BonusesAvailable, Error>;
 
@@ -103,6 +105,19 @@ export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
       undefined
     )
   );
+
+export const serviceFromAvailableBonusSelector = (idBonusType: number) =>
+  createSelector(
+    supportedAvailableBonusSelector,
+    servicesByIdSelector,
+    (supportedBonus, servicesById): Option<ServicePublic> =>
+      fromNullable(supportedBonus.find(sp => sp.id_type === idBonusType))
+        .mapNullable(bonus =>
+          bonus.service_id ? servicesById[bonus.service_id] : undefined
+        )
+        .mapNullable(pot.toUndefined)
+  );
+
 /**
  * Return the uri of the bonus vacanze image logo
  */
