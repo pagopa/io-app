@@ -26,6 +26,10 @@ import { ContentTypeValues } from "../../../../../../types/contentType";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import ROUTES from "../../../../../../navigation/routes";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../../navigation/params/AppParamsList";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -89,7 +93,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useIODispatch();
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
 
