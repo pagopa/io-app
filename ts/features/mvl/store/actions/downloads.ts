@@ -3,8 +3,6 @@ import { MvlAttachment } from "../../types/mvlData";
 
 /**
  * The user requests an MVL attachment download.
- *
- * In case of failure, when error is undefined the request has been cancelled.
  */
 export const mvlAttachmentDownload = createAsyncAction(
   "MVL_ATTACHMENT_DOWNLOAD_REQUEST",
