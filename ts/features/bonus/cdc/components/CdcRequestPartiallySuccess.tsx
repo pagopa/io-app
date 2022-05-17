@@ -66,7 +66,9 @@ const CdcRequestPartiallySuccess = () => {
         type="SingleButton"
         leftButton={cancelButtonProps(
           onExitPress,
-          I18n.t("bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta")
+          I18n.t("bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta"),
+          undefined,
+          "closeButton"
         )}
       />
     </SafeAreaView>
