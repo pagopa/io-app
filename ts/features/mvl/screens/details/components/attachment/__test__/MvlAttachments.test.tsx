@@ -78,7 +78,10 @@ describe("MvlAttachments", () => {
 
     describe("when the pot is loading", () => {
       it("it should show a loading indicator", async () => {
-        [pot.noneLoading, pot.someLoading("path")].forEach(loadingPot => {
+        [
+          pot.noneLoading,
+          pot.someLoading({ path: "path", attachment: mvlMockPdfAttachment })
+        ].forEach(loadingPot => {
           const res = renderComponent(
             {
               attachments: [mvlMockPdfAttachment]
@@ -98,8 +101,11 @@ describe("MvlAttachments", () => {
         [
           pot.none,
           pot.noneError(new Error()),
-          pot.some("path"),
-          pot.someError("path", new Error())
+          pot.some({ path: "path", attachment: mvlMockPdfAttachment }),
+          pot.someError(
+            { path: "path", attachment: mvlMockPdfAttachment },
+            new Error()
+          )
         ].forEach(notLoadingPot => {
           const res = renderComponent(
             {
