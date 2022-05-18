@@ -704,7 +704,10 @@ wallet:
     fee: Gebühr
     idTransaction: Transaktions-Identifikationscode
     updatedAmount: Aktualisierter Betrag
-    updateInfo: 'pagoPa aktualisiert automatisch den Betrag, um sicherzustellen, dass Sie den richtigen Betrag zahlen und um Verzugs- oder Strafzinsen zu vermeiden '
+    amountInfo:
+      title: Vedi un importo diverso?
+      message: pagoPa aktualisiert automatisch den Betrag, um sicherzustellen, dass Sie den richtigen Betrag zahlen und um Verzugs- oder Strafzinsen zu vermeiden
+      cta: Ok, va bene
     loadingMessage:
       activation: Benachrichtige die Körperschaft, warten Sie ein paar Sekunden...
       verification: Prüfe den Status und die Höhe Ihrer Zahlungsmitteilung...

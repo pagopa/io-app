@@ -21,6 +21,9 @@ import {
 } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
+import IconFont from "../../../../components/ui/IconFont";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
 
 const styles = StyleSheet.create({
   container: {
@@ -79,6 +82,12 @@ const LoadingPlaceholder = (props: { size: "full" | "half" }) => (
     animate={"shine"}
     color={IOColors.greyLight}
   />
+);
+
+const InfoButton = (props: { onPress: () => void }) => (
+  <TouchableDefaultOpacity onPress={props.onPress} style={{ padding: 10 }}>
+    <IconFont name={"io-info"} size={24} color={IOColors.blue} />
+  </TouchableDefaultOpacity>
 );
 
 type RowProps = Readonly<{
@@ -152,6 +161,9 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     "-"
   );
 
+  const { presentPaymentInfoBottomSheet, paymentInfoBottomSheet } =
+    usePaymentAmountInfoBottomSheet();
+
   return (
     <>
       <TransactionSummaryRow
@@ -184,7 +196,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         placeholder={<LoadingPlaceholder size={"half"} />}
         isLoading={isLoading}
       >
-        {props.isPaid && (
+        {props.isPaid && !isLoading && (
           <Badge style={styles.badgeInfo}>
             <BaseTypography
               fontStyle={{ fontSize: 12 }}
@@ -194,6 +206,9 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
               {I18n.t("messages.badge.paid")}
             </BaseTypography>
           </Badge>
+        )}
+        {!props.isPaid && !isLoading && (
+          <InfoButton onPress={presentPaymentInfoBottomSheet} />
         )}
       </TransactionSummaryRow>
       {undefined && (
@@ -215,6 +230,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         title={I18n.t("wallet.firstTransactionSummary.entityCode")}
         subtitle={props.organizationFiscalCode}
       />
+      {paymentInfoBottomSheet}
     </>
   );
 };

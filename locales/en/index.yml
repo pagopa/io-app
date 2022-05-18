@@ -1285,7 +1285,10 @@ wallet:
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
-    updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
+    amountInfo:
+      title: Vedi un importo diverso?
+      message: pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests
+      cta: Ok, va bene
     loadingMessage:
       activation: We are contacting the entity, wait a few seconds
       verification: We are verifying your payment information

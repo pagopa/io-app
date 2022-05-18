@@ -1307,9 +1307,10 @@ wallet:
     updatedAmount: Importo aggiornato
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
-    updateInfo:
-      pagoPA aggiorna automaticamente l'importo per assicurarti
-      di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
+    amountInfo:
+      title: Vedi un importo diverso?
+      message: pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
+      cta: Ok, va bene
     loadingMessage:
       activation: Stiamo contattando l'ente, attendi qualche secondo
       verification: Stiamo verificando i dati del tuo pagamento
