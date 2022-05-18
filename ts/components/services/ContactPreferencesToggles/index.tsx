@@ -26,7 +26,7 @@ import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
-type Item = "email" | "push" | "inbox" | "trackSeen";
+type Item = "email" | "push" | "inbox" | "sendReadMessageStatus";
 
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
@@ -150,10 +150,12 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
           <>
             <PreferenceToggleRow
               label={I18n.t("services.pushNotifications")}
-              onPress={(value: boolean) => onValueChange(value, "trackSeen")}
+              onPress={(value: boolean) =>
+                onValueChange(value, "sendReadMessageStatus")
+              }
               value={getChannelPreference(
                 props.servicePreferenceStatus,
-                "trackSeen"
+                "sendReadMessageStatus"
               )}
               graphicalState={graphicalState}
               onReload={loadPreferences}

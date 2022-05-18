@@ -105,17 +105,13 @@ export interface EnabledChannels {
   // FIXME: This is a temporary name that will
   // need to be changed as soon as we'll have
   // the backend specs.
-  trackSeen: boolean;
+  send_read_message_status: boolean;
 }
 
 const INBOX_CHANNEL = "INBOX";
 const EMAIL_CHANNEL = "EMAIL";
 const PUSH_CHANNEL = "WEBHOOK";
-
-// FIXME: This is a temporary name that will
-// need to be changed as soon as we'll have
-// the backend specs.
-const TRACK_SEEN_CHANNEL = "TRACK_SEEN";
+const SEND_READ_MESSAGE_STATUS_CHANNEL = "SEND_READ_MESSAGE_STATUS_CHANNEL";
 
 export function getChannelsforServicesList(
   servicesId: ReadonlyArray<string>,
@@ -200,7 +196,7 @@ export function getEnabledChannelsForService(
       inbox: _.indexOf(INBOX_CHANNEL) === -1,
       email: _.indexOf(EMAIL_CHANNEL) === -1,
       push: _.indexOf(PUSH_CHANNEL) === -1,
-      trackSeen: _.indexOf(TRACK_SEEN_CHANNEL) === -1
+      trackSeen: _.indexOf(SEND_READ_MESSAGE_STATUS_CHANNEL) === -1
     }))
     .getOrElse({
       inbox: true,
@@ -231,7 +227,7 @@ export const getBlockedChannels =
       !enabled.inbox ? INBOX_CHANNEL : "",
       !enabled.push ? PUSH_CHANNEL : "",
       !enabled.email ? EMAIL_CHANNEL : "",
-      !enabled.trackSeen ? TRACK_SEEN_CHANNEL : ""
+      !enabled.send_read_message_status ? SEND_READ_MESSAGE_STATUS_CHANNEL : ""
     ].filter(_ => _ !== "");
 
     if (blockedChannelsForService.length === 0) {

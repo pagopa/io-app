@@ -36,7 +36,7 @@ const calculateUpdatingPreference = (
       is_webhook_enabled: true,
       is_email_enabled: currentServicePreferenceState.value.value.email,
       is_allowed_send_read_message_status:
-        currentServicePreferenceState.value.value.trackSeen,
+        currentServicePreferenceState.value.value.send_read_message_status,
       settings_version: action.payload
         .settings_version as ServicePreference["settings_version"]
     };
@@ -46,7 +46,7 @@ const calculateUpdatingPreference = (
     is_webhook_enabled: action.payload.inbox ? action.payload.push : false,
     is_email_enabled: action.payload.inbox ? action.payload.email : false,
     is_allowed_send_read_message_status: action.payload.inbox
-      ? action.payload.trackSeen
+      ? action.payload.send_read_message_status
       : false,
     settings_version: action.payload
       .settings_version as ServicePreference["settings_version"]
@@ -89,7 +89,7 @@ export function* handleUpsertServicePreference(
               inbox: response.value.value.is_inbox_enabled,
               push: response.value.value.is_webhook_enabled,
               email: response.value.value.is_email_enabled,
-              trackSeen:
+              send_read_message_status:
                 response.value.value.is_allowed_send_read_message_status,
               settings_version: response.value.value.settings_version
             }
