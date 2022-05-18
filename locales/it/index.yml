@@ -2947,7 +2947,29 @@ bonus:
       notAvailable: "Il servizio non è disponibile in questo momento. Riprova più tardi."
     bonusRequest:
       bonusRequested:
-        cta: "Ho capito!"
+        loading:
+          title: "Stiamo inviando la tua richiesta di attivazione..."
+          subtitle: "Ti ricordiamo che sono valide solo le richieste per gli anni in cui hai dichiarato di essere residente in Italia. Ti preghiamo di attendere"
+        requestCompleted:
+          title: "La tua richiesta è stata inviata!"
+          body: "Riceverai un messaggio su IO quando le graduatorie saranno definitive."
+          cta: "Ho capito!"
+        partiallySuccess:
+          title: "Ecco l’esito delle tue richieste"
+          body:
+            success: "La richiesta per il {{successfulYears}} è andata a buon fine."
+            fail: "C’è stato un problema per quella relativa al {{failedYears}}."
+            contactAssistance: "Se vuoi riprovare, contatta l’Assistenza."
+        ko:
+          requirementsError:
+            title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
+            body: "La Carta della Cultura è disponibile solo per i cittadini residenti in Italia."
+          wrongFormat:
+            title: "Il servizio Carta della Cultura in questo momento non è disponibile."
+            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+          genericError:
+            title: "Si è verificato un errore con la tua richiesta"
+            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       selectResidence:
         header: "Residenza"
         items:
