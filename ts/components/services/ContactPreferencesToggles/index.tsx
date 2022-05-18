@@ -26,7 +26,7 @@ import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
-type Item = "email" | "push" | "inbox";
+type Item = "email" | "push" | "inbox" | "trackSeen";
 
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
