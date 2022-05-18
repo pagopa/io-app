@@ -26,9 +26,8 @@ const trackCdc =
           reason: action.payload
         });
       case getType(cdcEnrollUserToBonus.request):
-        return mp.track(action.type, { bonusYear: action.payload });
       case getType(cdcEnrollUserToBonus.success):
-        return mp.track(action.type);
+        return mp.track(action.type, { bonusYear: action.payload });
     }
     return Promise.resolve();
   };
