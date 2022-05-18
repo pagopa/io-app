@@ -85,7 +85,7 @@ export const isCdcEnrolledSelector = createSelector(
       bonusList,
       constUndefined,
       constUndefined,
-      bl => bl.every(b => b.status !== StatoBeneficiarioEnum.ATTVABILE),
+      bl => bl.every(b => b.status !== StatoBeneficiarioEnum.ATTIVABILE),
       constUndefined
     )
 );
