@@ -45,7 +45,7 @@ const CdcBonusRequestSelectYear = () => {
       navigation.isFocused() &&
       (!isReady(cdcBonusList) ||
         !cdcBonusList.value.some(
-          b => b.status === StatoBeneficiarioEnum.ATTVABILE
+          b => b.status === StatoBeneficiarioEnum.ATTIVABILE
         ))
     ) {
       navigateToFailureScreen();
@@ -56,7 +56,7 @@ const CdcBonusRequestSelectYear = () => {
     return null;
   }
   const activableBonus = cdcBonusList.value.filter(
-    b => b.status === StatoBeneficiarioEnum.ATTVABILE
+    b => b.status === StatoBeneficiarioEnum.ATTIVABILE
   );
 
   if (activableBonus.length === 0) {
