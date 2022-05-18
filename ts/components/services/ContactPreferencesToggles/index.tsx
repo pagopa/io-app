@@ -141,6 +141,27 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
             <ItemSeparatorComponent noPadded />
           </>
         )}
+      {hasChannel(
+        NotificationChannelEnum.ALLOWED_SEND_READ_MESSAGE_STATUS,
+        props.channels
+      ) &&
+        getChannelPreference(props.servicePreferenceStatus, "inbox") && (
+          // toggle is disabled if the inbox value is false to prevent inconsistent data
+          <>
+            <PreferenceToggleRow
+              label={I18n.t("services.pushNotifications")}
+              onPress={(value: boolean) => onValueChange(value, "trackSeen")}
+              value={getChannelPreference(
+                props.servicePreferenceStatus,
+                "trackSeen"
+              )}
+              graphicalState={graphicalState}
+              onReload={loadPreferences}
+              testID={"contact-preferences-trackSeen-switch"}
+            />
+            <ItemSeparatorComponent noPadded />
+          </>
+        )}
 
       {/* Email toggle is temporary removed until the feature will be enabled back from the backend */}
       {/* TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17 */}
