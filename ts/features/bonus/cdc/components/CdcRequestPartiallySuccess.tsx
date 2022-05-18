@@ -43,7 +43,7 @@ const CdcRequestPartiallySuccess = () => {
   const failedYears = receivedBonus
     .filter(b => b.outcome !== RequestOutcomeEnum.OK)
     .map(b => b.year)
-    .join(",");
+    .join(", ");
 
   return (
     <SafeAreaView style={IOStyles.flex} testID={"cdcRequestPartiallySuccess"}>

@@ -15,7 +15,7 @@ jest.useFakeTimers();
 
 const mockActivableBonus: CdcBonusRequest = {
   year: "2018" as Anno,
-  status: StatoBeneficiarioEnum.ATTVABILE
+  status: StatoBeneficiarioEnum.ATTIVABILE
 };
 const mockPendingBonus: CdcBonusRequest = {
   year: "2018" as Anno,
