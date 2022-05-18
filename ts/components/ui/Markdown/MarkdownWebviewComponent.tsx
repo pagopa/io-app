@@ -7,7 +7,7 @@ import { StyleProp, ViewStyle } from "react-native";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { handleLinkMessage, isIoInternalLink } from "./handlers/link";
 import { WebViewMessage } from "./types";
-import { getInternalRoute } from "./handlers/internalLink";
+import { handleInternalLink } from "./handlers/internalLink";
 
 type Props = {
   injectedJavascript: string;
@@ -43,7 +43,7 @@ const MarkdownWebviewComponent = (props: Props) => {
             break;
           }
           if (isIoInternalLink(message.payload.href)) {
-            linkTo(getInternalRoute(message.payload.href));
+            handleInternalLink(linkTo, message.payload.href);
             break;
           }
           handleLinkMessage(message.payload.href);

@@ -96,7 +96,11 @@ export function getInternalRoute(href: string): string {
     if (url.protocol.toLowerCase() === IO_INTERNAL_LINK_PROTOCOL) {
       return fromNullable(allowedRoutes[url.host.toUpperCase()]).fold(
         href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
-        internalUrl => internalUrl
+        internalUrl =>
+          href.replace(
+            `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
+            internalUrl
+          )
       );
     }
     return href;
@@ -115,5 +119,6 @@ export function handleInternalLink(
   linkTo: (path: string) => void,
   href: string
 ) {
+  console.log(getInternalRoute(href));
   linkTo(getInternalRoute(href));
 }
