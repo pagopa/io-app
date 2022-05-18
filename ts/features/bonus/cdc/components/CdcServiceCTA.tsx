@@ -1,8 +1,8 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { View as RNView } from "react-native";
 import { View } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
@@ -10,7 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
 import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
-import { fold } from "../../bpd/model/RemoteValue";
+import { fold, isUndefined } from "../../bpd/model/RemoteValue";
 import { CdcBonusRequestList } from "../types/CdcBonusRequest";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
@@ -105,9 +105,13 @@ const CdcServiceCTAButton = () => {
   const dispatch = useIODispatch();
   const cdcBonusRequestList = useIOSelector(cdcBonusRequestListSelector);
 
-  useEffect(() => {
-    dispatch(cdcRequestBonusList.request());
-  }, [dispatch]);
+  useFocusEffect(
+    useCallback(() => {
+      if (isUndefined(cdcBonusRequestList)) {
+        dispatch(cdcRequestBonusList.request());
+      }
+    }, [cdcBonusRequestList, dispatch])
+  );
 
   return fold(
     cdcBonusRequestList,

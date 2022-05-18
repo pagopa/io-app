@@ -36,28 +36,30 @@ const CdcBonusRequestSelectYear = () => {
   const cdcBonusList = useIOSelector(cdcBonusRequestListSelector);
   const [years, setYears] = useState<ReadonlyArray<Anno>>([]);
 
-  const activableBonus = React.useMemo(
-    () =>
-      isReady(cdcBonusList)
-        ? cdcBonusList.value.filter(
-            b => b.status === StatoBeneficiarioEnum.ATTIVABILE
-          )
-        : [],
-    [cdcBonusList]
-  );
-
   useEffect(() => {
     const navigateToFailureScreen = () => {
       navigation.getParent()?.goBack();
       navigation.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE);
     };
-
-    if (!isReady(cdcBonusList) || activableBonus.length === 0) {
+    if (
+      navigation.isFocused() &&
+      (!isReady(cdcBonusList) ||
+        !cdcBonusList.value.some(
+          b => b.status === StatoBeneficiarioEnum.ATTIVABILE
+        ))
+    ) {
       navigateToFailureScreen();
     }
-  }, [cdcBonusList, activableBonus, navigation]);
+  }, [cdcBonusList, navigation]);
 
-  if (!isReady(cdcBonusList) || activableBonus.length === 0) {
+  if (!isReady(cdcBonusList)) {
+    return null;
+  }
+  const activableBonus = cdcBonusList.value.filter(
+    b => b.status === StatoBeneficiarioEnum.ATTIVABILE
+  );
+
+  if (activableBonus.length === 0) {
     return null;
   }
 
