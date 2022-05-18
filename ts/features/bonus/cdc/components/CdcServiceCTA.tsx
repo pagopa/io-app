@@ -26,7 +26,7 @@ const ReadyButton = (props: ReadyButtonProp) => {
 
   // Check if at least one year can be activable
   const activableBonuses = props.bonusRequestList.filter(
-    b => b.status === StatoBeneficiarioEnum.ATTVABILE
+    b => b.status === StatoBeneficiarioEnum.ATTIVABILE
   );
 
   if (activableBonuses.length > 0) {

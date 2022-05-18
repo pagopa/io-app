@@ -24,7 +24,7 @@ import { Anno } from "../../../../../../../definitions/cdc/Anno";
 import { EsitoRichiestaEnum } from "../../../../../../../definitions/cdc/EsitoRichiesta";
 
 const mockBonusRequest: CdcBonusRequest = {
-  status: StatoBeneficiarioEnum.ATTVABILE,
+  status: StatoBeneficiarioEnum.ATTIVABILE,
   year: "2022" as Anno
 };
 

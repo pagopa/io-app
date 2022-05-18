@@ -40,7 +40,7 @@ const CdcBonusRequestSelectYear = () => {
     () =>
       isReady(cdcBonusList)
         ? cdcBonusList.value.filter(
-            b => b.status === StatoBeneficiarioEnum.ATTVABILE
+            b => b.status === StatoBeneficiarioEnum.ATTIVABILE
           )
         : [],
     [cdcBonusList]
