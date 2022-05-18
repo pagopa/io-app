@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: customVariables.spacerExtrasmallHeight
+  },
+  placeholder: {
+    paddingTop: 9
   }
 });
 
@@ -109,7 +112,9 @@ const TransactionSummaryRow = (
             {props.subtitle}
           </H4>
         )}
-        {props.isLoading && props.placeholder}
+        {props.isLoading && (
+          <View style={styles.placeholder}>{props.placeholder}</View>
+        )}
       </View>
       {props.children && <View style={styles.children}>{props.children}</View>}
     </View>
