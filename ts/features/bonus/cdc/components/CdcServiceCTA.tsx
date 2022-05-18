@@ -10,7 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
 import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
-import { fold, isUndefined } from "../../bpd/model/RemoteValue";
+import { fold } from "../../bpd/model/RemoteValue";
 import { CdcBonusRequestList } from "../types/CdcBonusRequest";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
