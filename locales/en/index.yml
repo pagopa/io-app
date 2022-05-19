@@ -2921,24 +2921,24 @@ bonus:
     bonusRequest:
       bonusRequested:
         loading:
-          title: "We are sending your activation request..."
-          subtitle: "We remind you that only the requests for the years in which you declared to be resident in Italy are valid. Please wait"
+          title: "We are sending your request..."
+          subtitle: "We remind you that only the requests for when your residency was in Italy are valid. Please wait."
         requestCompleted:
-          title: "Your request has been sent!"
+          title: "Your request was sent!"
           body: "You will receive a message on IO when the rankings are final."
           cta: "I got it!"
         partiallySuccess:
-          title: "Here is the outcome of your requests"
+          title: "Here is the result of your requests"
           body:
             success: "The request for {{successfulYears}} was successful."
             fail: "There was a problem for the one relating to {{failedYears}}."
             contactAssistance: "If you want to try again, contact Support."
         ko:
           requirementsError:
-            title: "Unfortunately you do not have the requisites to apply for the Carta della Cultura."
-            body: "The Carta della Cultura is only available for citizens residing in Italy."
+            title: "Unfortunately you don't have the requirements to apply for Carta della Cultura."
+            body: "Carta della Cultura is only available for citizens residing in Italy."
           wrongFormat:
-            title: "The Culture Charter service is not available at this time."
+            title: "Carta della Cultura is not available at the moment."
             body: "We apologize for the inconvenience.\nPlease try again later."
           genericError:
             title: "There was an error with your request"
@@ -2946,8 +2946,8 @@ bonus:
       selectResidence:
         header: "Residency"
         items:
-          residesInItaly: "I live in Italy"
-          residesAbroad: "I live abroad"
+          residesInItaly: "Italy"
+          residesAbroad: "Abroad"
         info: "Carta della Cultura is only available for citizens residing in Italy. Please, select your residency for each year."
       selectYear:
         header: "Select for what years you want to request the Carta della Cultura"
