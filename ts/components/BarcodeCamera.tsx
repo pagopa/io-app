@@ -104,18 +104,18 @@ export const retrieveNextBarcode = (
     return null;
   }
 
-  const choosenBarcodes: { [key in IOBarcodeFormat]?: Barcode } = {};
+  const chosenBarcodes: { [key in IOBarcodeFormat]?: Barcode } = {};
 
   barcodes.forEach(barcode => {
     const ioBarcodeFormat = barcodeFormatToIOFormat(barcode.format);
 
-    if (ioBarcodeFormat && !choosenBarcodes[ioBarcodeFormat]) {
+    if (ioBarcodeFormat && !chosenBarcodes[ioBarcodeFormat]) {
       // eslint-disable-next-line
-      choosenBarcodes[ioBarcodeFormat] = barcode;
+      chosenBarcodes[ioBarcodeFormat] = barcode;
     }
   });
 
-  return choosenBarcodes.QRCODE || choosenBarcodes.DATA_MATRIX || null;
+  return chosenBarcodes.QRCODE || chosenBarcodes.DATA_MATRIX || null;
 };
 
 type Props = {
