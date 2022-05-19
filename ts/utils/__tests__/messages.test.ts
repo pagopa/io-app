@@ -283,34 +283,6 @@ some noise`;
     }
   });
 
-  it("should not have a valid CTA for service (for the given route 'SERVICE_WEBVIEW' token_name must present in service metadata)", () => {
-    const validServiceMetadata: ServiceMetadata = {
-      ...serviceMetadataBase
-    };
-    const maybeCTAs = getCTA(
-      {
-        ...messageWithContent,
-        content: {
-          ...messageWithContent.content,
-          markdown: CTA_WEBVIEW as MessageBodyMarkdown
-        }
-      },
-      validServiceMetadata
-    );
-    expect(maybeCTAs.isSome()).toBeFalsy();
-  });
-
-  it("should not have a valid CTA without service", () => {
-    const maybeCTAs = getCTA({
-      ...messageWithContent,
-      content: {
-        ...messageWithContent.content,
-        markdown: CTA_WEBVIEW as MessageBodyMarkdown
-      }
-    });
-    expect(maybeCTAs.isSome()).toBeFalsy();
-  });
-
   it("should not have a valid CTA since the frontmatter is malformed", () => {
     const maybeCTAs = getCTA({
       ...messageWithContent,
@@ -377,25 +349,6 @@ en:
     const invalidServiceMetadata: ServiceMetadata = {
       ...serviceMetadataBase,
       token_name: "myPortalToken" as ServiceMetadata["token_name"]
-    };
-    const maybeCTA = getServiceCTA(invalidServiceMetadata);
-    expect(maybeCTA.isSome()).toBeFalsy();
-  });
-
-  it("Should not extract a CTA for the service without token_name attribute", () => {
-    const CTA_SERVICE = `---
-it:
-    cta_1:
-        text: "Interno con params"
-        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
-en:
-    cta_1:
-        text: "Internal with params"
-        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
----`;
-    const invalidServiceMetadata: ServiceMetadata = {
-      ...serviceMetadataBase,
-      cta: CTA_SERVICE as ServiceMetadata["cta"]
     };
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
