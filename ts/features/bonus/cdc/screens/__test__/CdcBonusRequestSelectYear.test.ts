@@ -20,8 +20,8 @@ const notActivableBonuses = [
 ];
 
 const activableBonuses = [
-  { year: "2021" as Anno, status: StatoBeneficiarioEnum.ATTVABILE },
-  { year: "2022" as Anno, status: StatoBeneficiarioEnum.ATTVABILE },
+  { year: "2021" as Anno, status: StatoBeneficiarioEnum.ATTIVABILE },
+  { year: "2022" as Anno, status: StatoBeneficiarioEnum.ATTIVABILE },
   { year: "2023" as Anno, status: StatoBeneficiarioEnum.VALUTAZIONE }
 ];
 
