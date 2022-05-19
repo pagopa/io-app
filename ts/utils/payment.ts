@@ -1,4 +1,11 @@
-import { fromEither, fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import {
+  fromEither,
+  fromNullable,
+  none,
+  Option,
+  some,
+  isNone
+} from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -9,9 +16,7 @@ import {
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
-
 import I18n from "../i18n";
-
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { PaymentHistory } from "../store/reducers/payments/history";
@@ -76,6 +81,38 @@ export function decodePagoPaQrCode(
       )
     )
   );
+}
+
+/**
+ * Decode a Data Matrix string from Poste returning
+ * a tuple with an `RptId` and an `AmountInEuroCents`
+ * or none.
+ */
+export function decodePosteDataMatrix(
+  data: string
+): Option<ITuple2<RptId, AmountInEuroCents>> {
+  if (!data.startsWith("codfase=NBPA;")) {
+    return none;
+  }
+
+  const paymentNoticeNumber = data.slice(15, 33);
+  const organizationFiscalCode = data.slice(66, 77);
+  const amount = data.slice(49, 59);
+
+  const decodedRpdId = fromEither(
+    RptId.decode({
+      organizationFiscalCode,
+      paymentNoticeNumber
+    })
+  );
+
+  const decodedAmount = fromEither(AmountInEuroCents.decode(amount));
+
+  if (isNone(decodedRpdId) || isNone(decodedAmount)) {
+    return none;
+  }
+
+  return some(Tuple2(decodedRpdId.value, decodedAmount.value));
 }
 
 /**
