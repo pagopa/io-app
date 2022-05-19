@@ -2932,7 +2932,6 @@ bonus:
           body:
             success: "The request for {{successfulYears}} was successful."
             fail: "There was a problem for the one relating to {{failedYears}}."
-            contactAssistance: "If you want to try again, contact Support."
         ko:
           requirementsError:
             title: "Unfortunately you don't have the requirements to apply for Carta della Cultura."
