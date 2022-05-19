@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -14,8 +15,16 @@ import { GlobalState } from "../../../store/reducers/types";
 import { Dispatch } from "../../../store/actions/types";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { paymentVerifica } from "../../../store/actions/wallet/payment";
+import {
+  abortRunningPayment,
+  paymentAttiva,
+  paymentCompletedSuccess,
+  paymentIdPolling,
+  paymentVerifica
+} from "../../../store/actions/wallet/payment";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { PayloadForAction } from "../../../types/utils";
+import { navigateToPaymentTransactionErrorScreen } from "../../../store/actions/navigation";
 import { TransactionSummary } from "./components/TransactionSummary";
 
 const styles = StyleSheet.create({
@@ -66,8 +75,11 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 const NewTransactionSummaryScreen = ({
   isLoading,
+  error,
   paymentVerification,
   verifyPayment,
+  onDuplicatedPayment,
+  navigateToPaymentTransactionError,
   walletById,
   loadWallets,
   navigation
@@ -80,6 +92,21 @@ const NewTransactionSummaryScreen = ({
       loadWallets();
     }
   });
+
+  const errorOrUndefined = error.toUndefined();
+  useEffect(() => {
+    if (errorOrUndefined === undefined) {
+      return;
+    }
+    if (errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO") {
+      onDuplicatedPayment();
+    }
+    navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
+  }, [
+    errorOrUndefined,
+    onDuplicatedPayment,
+    navigateToPaymentTransactionError
+  ]);
 
   const rptId = navigation.getParam("rptId");
 
@@ -120,11 +147,24 @@ const NewTransactionSummaryScreen = ({
 
 const mapStateToProps = (state: GlobalState) => {
   const { verifica } = state.wallet.payment;
+
   const isLoading = pot.isLoading(verifica);
+
+  // TODO: add other error cases
+  const error: Option<
+    PayloadForAction<
+      | typeof paymentVerifica["failure"]
+      | typeof paymentAttiva["failure"]
+      | typeof paymentIdPolling["failure"]
+    >
+  > = pot.isError(verifica) ? some(verifica.error) : none;
+
   const walletById = state.wallet.wallets.walletById;
+
   return {
     paymentVerification: verifica,
     isLoading,
+    error,
     walletById
   };
 };
@@ -138,9 +178,38 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       paymentVerifica.request({ rptId, startOrigin: paymentStartOrigin })
     );
 
+  const onDuplicatedPayment = () =>
+    dispatch(
+      paymentCompletedSuccess({
+        rptId,
+        kind: "DUPLICATED"
+      })
+    );
+
+  const onCancel = () => {
+    dispatch(abortRunningPayment());
+  };
+
+  const navigateToPaymentTransactionError = (
+    error: Option<
+      PayloadForAction<
+        | typeof paymentVerifica["failure"]
+        | typeof paymentAttiva["failure"]
+        | typeof paymentIdPolling["failure"]
+      >
+    >
+  ) =>
+    navigateToPaymentTransactionErrorScreen({
+      error,
+      onCancel,
+      rptId
+    });
+
   return {
     loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
-    verifyPayment
+    verifyPayment,
+    onDuplicatedPayment,
+    navigateToPaymentTransactionError
   };
 };
 
