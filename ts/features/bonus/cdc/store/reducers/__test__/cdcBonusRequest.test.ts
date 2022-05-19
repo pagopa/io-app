@@ -3,7 +3,8 @@ import {
   CdcBonusEnrollmentList,
   CdcBonusEnrollmentOutcomeList,
   CdcBonusRequest,
-  CdcBonusRequestList
+  CdcBonusRequestList,
+  CdcBonusRequestResponse
 } from "../../../types/CdcBonusRequest";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -24,15 +25,21 @@ import { Anno } from "../../../../../../../definitions/cdc/Anno";
 import { EsitoRichiestaEnum } from "../../../../../../../definitions/cdc/EsitoRichiesta";
 
 const mockBonusRequest: CdcBonusRequest = {
-  status: StatoBeneficiarioEnum.ATTVABILE,
+  status: StatoBeneficiarioEnum.ATTIVABILE,
   year: "2022" as Anno
 };
 
 const mockBonusRequestList: CdcBonusRequestList = [mockBonusRequest];
 
 const mockEnrollRequestOutcome: CdcBonusEnrollmentOutcomeList = [
-  { outcome: EsitoRichiestaEnum.CIT_REGISTRATO, year: "2022" as Anno }
+  { outcome: EsitoRichiestaEnum.CIT_REGISTRATO, year: "2022" as Anno },
+  { outcome: EsitoRichiestaEnum.OK, year: "2021" as Anno }
 ];
+
+const mockEnrollSuccessRequest: CdcBonusRequestResponse = {
+  kind: "success",
+  value: mockEnrollRequestOutcome
+};
 
 const genericError = getTimeoutError();
 
@@ -87,10 +94,10 @@ describe("CdcBonusRequestReducer", () => {
   it("The enrolledBonus should be remoteReady with action payload as value if the cdcEnrollUserToBonus.success is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(cdcEnrollUserToBonus.success(mockEnrollRequestOutcome));
+    store.dispatch(cdcEnrollUserToBonus.success(mockEnrollSuccessRequest));
     expect(store.getState().bonus.cdc.bonusRequest).toEqual({
       bonusList: remoteUndefined,
-      enrolledBonus: remoteReady(mockEnrollRequestOutcome)
+      enrolledBonus: remoteReady(mockEnrollSuccessRequest)
     });
   });
   it("The enrolledBonus should be remoteError with if the cdcEnrollUserToBonus.failure is dispatched", () => {

@@ -184,7 +184,7 @@ export const enhanceBPay = (
   ...rawBPay,
   info: {
     ...rawBPay.info,
-    numberObfuscated: rawBPay.info.numberObfuscated?.replace(/\*/g, "●")
+    numberObfuscated: `${rawBPay.info.numberObfuscated?.replace(/\*+/g, "●●●")}`
   },
   abiInfo: rawBPay.info.instituteCode
     ? abiList[rawBPay.info.instituteCode]
