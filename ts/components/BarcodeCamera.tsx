@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
  * changed in relation to the business decisions.
  *
  * This function _should_ take performance in mind even
- * though the `barcodes` array shouls be quite small. This is
+ * though the `barcodes` array should be quite small. This is
  * because in very low-end device the barcode scan is slower
  * than the previous implementation. In the current state it has
  * a complexity of ~O(n).
