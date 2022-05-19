@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as pot from "italia-ts-commons/lib/pot";
 import { useCallback } from "react";
 import { View as RNView } from "react-native";
 import { View } from "native-base";
@@ -17,6 +18,13 @@ import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { CDC_ROUTES } from "../navigation/routes";
 import SectionStatusComponent from "../../../../components/SectionStatus";
+import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
+import {
+  allAvailableBonusTypesSelector,
+  availableBonusTypesSelectorFromId
+} from "../../bonusVacanze/store/reducers/availableBonusesTypes";
+import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
+import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;
@@ -69,9 +77,11 @@ const ReadyButton = (props: ReadyButtonProp) => {
   return null;
 };
 
-const ErrorButton = () => {
+type ErrorButtonProp = {
+  onPress: () => void;
+};
+const ErrorButton = (props: ErrorButtonProp) => {
   const viewRef = React.createRef<RNView>();
-  const dispatch = useIODispatch();
 
   return (
     <View>
@@ -92,7 +102,7 @@ const ErrorButton = () => {
         block
         primary
         bordered
-        onPress={() => dispatch(cdcRequestBonusList.request())}
+        onPress={props.onPress}
         testID={"retryButton"}
       >
         <Label color={"blue"}>{I18n.t("global.buttons.retry")}</Label>
@@ -104,6 +114,16 @@ const ErrorButton = () => {
 const CdcServiceCTAButton = () => {
   const dispatch = useIODispatch();
   const cdcBonusRequestList = useIOSelector(cdcBonusRequestListSelector);
+  const allAvailableBonusTypes = useIOSelector(allAvailableBonusTypesSelector);
+  const cdcInfo = useIOSelector(availableBonusTypesSelectorFromId(ID_CDC_TYPE));
+
+  useFocusEffect(
+    useCallback(() => {
+      if (cdcInfo === undefined) {
+        dispatch(loadAvailableBonuses.request());
+      }
+    }, [cdcInfo, dispatch])
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -111,12 +131,38 @@ const CdcServiceCTAButton = () => {
     }, [dispatch])
   );
 
-  return fold(
-    cdcBonusRequestList,
+  return pot.fold(
+    allAvailableBonusTypes,
     () => null,
     () => <ActivityIndicator />,
-    bonusRequestList => <ReadyButton bonusRequestList={bonusRequestList} />,
-    _ => <ErrorButton />
+    () => <ActivityIndicator />,
+    () => (
+      <ErrorButton onPress={() => dispatch(loadAvailableBonuses.request())} />
+    ),
+    _ => {
+      if (
+        cdcInfo === undefined ||
+        cdcInfo.visibility === BonusVisibilityEnum.hidden
+      ) {
+        return null;
+      }
+      return fold(
+        cdcBonusRequestList,
+        () => null,
+        () => <ActivityIndicator />,
+        bonusRequestList => <ReadyButton bonusRequestList={bonusRequestList} />,
+        _ => (
+          <ErrorButton
+            onPress={() => dispatch(cdcRequestBonusList.request())}
+          />
+        )
+      );
+    },
+    () => <ActivityIndicator />,
+    () => <ActivityIndicator />,
+    _ => (
+      <ErrorButton onPress={() => dispatch(loadAvailableBonuses.request())} />
+    )
   );
 };
 
