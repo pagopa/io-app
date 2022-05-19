@@ -31,9 +31,7 @@ describe("BaseScreenComponent", () => {
     backendStatus: {
       status: some({
         config: {
-          assistanceTool: { tool: ToolEnum.none },
-          cgn: { enabled: true },
-          fims: { enabled: true }
+          assistanceTool: { tool: ToolEnum.none }
         } as Config
       } as BackendStatus)
     } as BackendStatusState
@@ -53,7 +51,11 @@ describe("BaseScreenComponent", () => {
           ...state,
           backendStatus: {
             status: some({
-              config: { assistanceTool: { tool } } as Config
+              config: {
+                assistanceTool: { tool },
+                cgn: { enabled: true },
+                fims: { enabled: true }
+              } as Config
             } as BackendStatus)
           } as BackendStatusState
         })

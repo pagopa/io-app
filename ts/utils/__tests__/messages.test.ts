@@ -370,19 +370,6 @@ describe("isCtaActionValid", () => {
     expect(isValid).toBeTruthy();
   });
 
-  it("should NOT be a valid action for service", () => {
-    const invalidServiceMetadata: ServiceMetadata = {
-      ...serviceMetadataBase
-    };
-    const CTA = {
-      text: "dummy",
-      action:
-        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
-    };
-    const isValid = isCtaActionValid(CTA, invalidServiceMetadata);
-    expect(isValid).toBeFalsy();
-  });
-
   it("should be a valid internal navigation action", async () => {
     const valid: CTA = { text: "dummy", action: "ioit://PROFILE_MAIN" };
     const isValid = isCtaActionValid(valid);
