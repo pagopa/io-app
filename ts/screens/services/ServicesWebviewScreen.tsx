@@ -14,7 +14,6 @@ import {
   tokenFromNameSelector,
   TokenName
 } from "../../store/reducers/authentication";
-import { resetInternalRouteNavigation } from "../../store/actions/internalRouteNavigation";
 import { serviceMetadataByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { useIOSelector } from "../../store/hooks";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
@@ -109,9 +108,8 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   goBackAndResetInternalNavigationInfo: () => {
-    dispatch(resetInternalRouteNavigation());
     navigateBack();
   }
 });
