@@ -2916,9 +2916,33 @@ bonus:
       pending: "Request sent"
       error:
         status: "The necessary information could not be retrieved. Please, try again."
+    serviceEntryPoint:
+      notAvailable: "The service is not available at this time. Try later."
     bonusRequest:
       bonusRequested:
-        cta: "I got it!"
+        loading:
+          title: "We are sending your activation request..."
+          subtitle: "We remind you that only the requests for the years in which you declared to be resident in Italy are valid. Please wait"
+        requestCompleted:
+          title: "Your request has been sent!"
+          body: "You will receive a message on IO when the rankings are final."
+          cta: "I got it!"
+        partiallySuccess:
+          title: "Here is the outcome of your requests"
+          body:
+            success: "The request for {{successfulYears}} was successful."
+            fail: "There was a problem for the one relating to {{failedYears}}."
+            contactAssistance: "If you want to try again, contact Support."
+        ko:
+          requirementsError:
+            title: "Unfortunately you do not have the requisites to apply for the Carta della Cultura."
+            body: "The Carta della Cultura is only available for citizens residing in Italy."
+          wrongFormat:
+            title: "The Culture Charter service is not available at this time."
+            body: "We apologize for the inconvenience.\nPlease try again later."
+          genericError:
+            title: "There was an error with your request"
+            body: "We apologize for the inconvenience.\nPlease try again later."
       selectResidence:
         header: "Residency"
         items:
