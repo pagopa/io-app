@@ -25,7 +25,18 @@ import {
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { PayloadForAction } from "../../../types/utils";
 import { navigateToPaymentTransactionErrorScreen } from "../../../store/actions/navigation";
+import { isError } from "../../../features/bonus/bpd/model/RemoteValue";
+import { PaymentState } from "../../../store/reducers/wallet/payment";
 import { TransactionSummary } from "./components/TransactionSummary";
+import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
+
+export type TransactionSummaryError = Option<
+  PayloadForAction<
+    | typeof paymentVerifica["failure"]
+    | typeof paymentAttiva["failure"]
+    | typeof paymentIdPolling["failure"]
+  >
+>;
 
 const styles = StyleSheet.create({
   container: {
@@ -80,6 +91,7 @@ const NewTransactionSummaryScreen = ({
   verifyPayment,
   onDuplicatedPayment,
   navigateToPaymentTransactionError,
+  shouldNavigateToPaymentTransactionError,
   walletById,
   loadWallets,
   navigation
@@ -101,11 +113,15 @@ const NewTransactionSummaryScreen = ({
     if (errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO") {
       onDuplicatedPayment();
     }
-    navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
+    if (shouldNavigateToPaymentTransactionError(paymentVerification)) {
+      navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
+    }
   }, [
     errorOrUndefined,
     onDuplicatedPayment,
-    navigateToPaymentTransactionError
+    navigateToPaymentTransactionError,
+    shouldNavigateToPaymentTransactionError,
+    paymentVerification
   ]);
 
   const rptId = navigation.getParam("rptId");
@@ -131,6 +147,7 @@ const NewTransactionSummaryScreen = ({
       headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
     >
       <SafeAreaView style={styles.container}>
+        <TransactionSummaryStatus error={error} />
         <ScrollView>
           <TransactionSummary
             paymentVerification={paymentVerification}
@@ -146,18 +163,19 @@ const NewTransactionSummaryScreen = ({
 };
 
 const mapStateToProps = (state: GlobalState) => {
-  const { verifica } = state.wallet.payment;
+  const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
 
   const isLoading = pot.isLoading(verifica);
 
-  // TODO: add other error cases
-  const error: Option<
-    PayloadForAction<
-      | typeof paymentVerifica["failure"]
-      | typeof paymentAttiva["failure"]
-      | typeof paymentIdPolling["failure"]
-    >
-  > = pot.isError(verifica) ? some(verifica.error) : none;
+  const error: TransactionSummaryError = pot.isError(verifica)
+    ? some(verifica.error)
+    : pot.isError(attiva)
+    ? some(attiva.error)
+    : pot.isError(paymentId)
+    ? some(paymentId.error)
+    : pot.isError(check) || isError(pspsV2.psps)
+    ? some(undefined)
+    : none;
 
   const walletById = state.wallet.wallets.walletById;
 
@@ -190,26 +208,26 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatch(abortRunningPayment());
   };
 
-  const navigateToPaymentTransactionError = (
-    error: Option<
-      PayloadForAction<
-        | typeof paymentVerifica["failure"]
-        | typeof paymentAttiva["failure"]
-        | typeof paymentIdPolling["failure"]
-      >
-    >
-  ) =>
+  const navigateToPaymentTransactionError = (error: TransactionSummaryError) =>
     navigateToPaymentTransactionErrorScreen({
       error,
       onCancel,
       rptId
     });
 
+  // We show inline error status only if the payment starts
+  // from a message and the verification fails. In all the other
+  // cases we present the fullscreen error message.
+  const shouldNavigateToPaymentTransactionError = (
+    paymentVerification: PaymentState["verifica"]
+  ) => !(paymentStartOrigin === "message" && pot.isError(paymentVerification));
+
   return {
     loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     verifyPayment,
     onDuplicatedPayment,
-    navigateToPaymentTransactionError
+    navigateToPaymentTransactionError,
+    shouldNavigateToPaymentTransactionError
   };
 };
 
