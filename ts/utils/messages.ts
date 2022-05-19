@@ -76,7 +76,9 @@ export const handleCtaAction = (
   if (isIoInternalLink(cta.action)) {
     handleInternalLink(
       linkTo,
-      `${cta.action}${service ? "&serviceId=" + service.service_id : ""}`
+      `${cta.action}${
+        service ? (("&serviceId=" + service.service_id) as string) : ""
+      }`
     );
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
