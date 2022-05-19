@@ -61,7 +61,7 @@ describe("the CdcBonusRequestSelectResidence screen", () => {
       );
       expect(itemResidentAbroad.length).toEqual(mockSelectedBonus.length);
     });
-    describe("when all the radio buttons with 'I live in Italy' are checked", () => {
+    describe("when all the radio buttons are checked", () => {
       it("the continue button should be enabled", () => {
         const store: Store<GlobalState> = createStore(
           appReducer,
@@ -83,7 +83,7 @@ describe("the CdcBonusRequestSelectResidence screen", () => {
         expect(continueButton).toBeEnabled();
       });
     });
-    describe("when at least a 'I live abroad' radio button is checked", () => {
+    describe("when not all the radio button are checked", () => {
       it("the continue button should be disabled", () => {
         const store: Store<GlobalState> = createStore(
           appReducer,
