@@ -119,6 +119,5 @@ export function handleInternalLink(
   linkTo: (path: string) => void,
   href: string
 ) {
-  console.log(getInternalRoute(href));
   linkTo(getInternalRoute(href));
 }
