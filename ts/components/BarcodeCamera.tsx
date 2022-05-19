@@ -11,6 +11,8 @@ import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { usePrevious } from "../utils/hooks/usePrevious";
 import { openAppSettings } from "../utils/appSettings";
+import { useIOSelector } from "../store/hooks";
+import { barcodesScannerConfigSelector } from "../store/reducers/backendStatus";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
 import { Body } from "./core/typography/Body";
@@ -134,6 +136,8 @@ export const BarcodeCamera = (props: Props) => {
   const devices = useCameraDevices();
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
+  const barcodeConfig = useIOSelector(barcodesScannerConfigSelector);
+
   const [frameProcessor, barcodes] = useScanBarcodes(
     [BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX],
     {
@@ -180,11 +184,21 @@ export const BarcodeCamera = (props: Props) => {
       return;
     }
 
+    // If the next barcode scanned is a Data Matrix
+    // but the feature flag is not enabled we avoid
+    // triggering the callback.
+    if (
+      !barcodeConfig.dataMatrixPosteEnabled &&
+      barcodeFormat === "DATA_MATRIX"
+    ) {
+      return;
+    }
+
     onBarcodeScanned({
       format: barcodeFormat,
       value: barcodeValue
     });
-  }, [barcodes, onBarcodeScanned, disabled, prevDisabled]);
+  }, [barcodes, barcodeConfig, onBarcodeScanned, disabled, prevDisabled]);
 
   if (!permissionsGranted) {
     return (
