@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { Alert, Linking, SafeAreaView, View } from "react-native";
+import { Alert, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none, some } from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
 import FimsWebView from "../components/FimsWebView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -71,10 +71,12 @@ const FimsWebviewScreen = () => {
       return;
     }
 
-    if (
-      maybeFimsDomain.isNone() ||
-      (maybeFimsDomain.isSome() && !Linking.canOpenURL(maybeFimsDomain.value))
-    ) {
+    const maybeParsedUrl = maybeFimsDomain.chain(domain => {
+      const parsed = new URLParse(domain as string, true);
+      return parsed.protocol ? some(parsed) : none;
+    });
+
+    if (maybeFimsDomain.isNone() || maybeParsedUrl.isNone()) {
       Alert.alert(I18n.t("global.genericAlert"), "", [
         {
           text: I18n.t("global.buttons.exit"),
