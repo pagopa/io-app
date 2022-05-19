@@ -24,6 +24,7 @@ import {
   availableBonusTypesSelectorFromId
 } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
+import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;
@@ -139,7 +140,10 @@ const CdcServiceCTAButton = () => {
       <ErrorButton onPress={() => dispatch(loadAvailableBonuses.request())} />
     ),
     _ => {
-      if (cdcInfo === undefined) {
+      if (
+        cdcInfo === undefined ||
+        cdcInfo.visibility === BonusVisibilityEnum.hidden
+      ) {
         return null;
       }
       return fold(
