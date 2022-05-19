@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   logo: {
     resizeMode: "contain",
     width: 48,
-    height: 46
+    height: 48
   },
   headerContainer: {
     ...IOStyles.row,
