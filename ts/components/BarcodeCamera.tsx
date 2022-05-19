@@ -2,11 +2,17 @@ import "react-native-reanimated";
 import React, { useEffect, useState } from "react";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 import { View, Dimensions, StyleSheet } from "react-native";
-import { useScanBarcodes, BarcodeFormat } from "vision-camera-code-scanner";
+import {
+  useScanBarcodes,
+  BarcodeFormat,
+  Barcode
+} from "vision-camera-code-scanner";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { usePrevious } from "../utils/hooks/usePrevious";
 import { openAppSettings } from "../utils/appSettings";
+import { useIOSelector } from "../store/hooks";
+import { barcodesScannerConfigSelector } from "../store/reducers/backendStatus";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
 import { Body } from "./core/typography/Body";
@@ -14,7 +20,7 @@ import { Body } from "./core/typography/Body";
 /**
  * Type describing the supported barcodes in IO.
  */
-export type IOBarcodeFormat = "QRCODE";
+export type IOBarcodeFormat = "QRCODE" | "DATA_MATRIX";
 
 /**
  * The message sent through the `onBarcodeScanned`
@@ -35,6 +41,9 @@ function barcodeFormatToIOFormat(
   switch (format) {
     case BarcodeFormat.QR_CODE:
       return "QRCODE";
+
+    case BarcodeFormat.DATA_MATRIX:
+      return "DATA_MATRIX";
 
     default:
       return null;
@@ -75,6 +84,42 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Retrieve the next barcode to handle from a list
+ * of scansioned barcodes. This could be improved or
+ * changed in relation to the business decisions.
+ *
+ * This function _should_ take performance in mind even
+ * though the `barcodes` array should be quite small. This is
+ * because in very low-end device the barcode scan is slower
+ * than the previous implementation. In the current state it has
+ * a complexity of ~O(n).
+ *
+ * At the moment the precedence order is:
+ *  1. QR Code
+ *  2. Data Matrix
+ */
+export const retrieveNextBarcode = (
+  barcodes: Array<Barcode>
+): Barcode | null => {
+  if (barcodes.length === 0) {
+    return null;
+  }
+
+  const chosenBarcodes: { [key in IOBarcodeFormat]?: Barcode } = {};
+
+  barcodes.forEach(barcode => {
+    const ioBarcodeFormat = barcodeFormatToIOFormat(barcode.format);
+
+    if (ioBarcodeFormat && !chosenBarcodes[ioBarcodeFormat]) {
+      // eslint-disable-next-line
+      chosenBarcodes[ioBarcodeFormat] = barcode;
+    }
+  });
+
+  return chosenBarcodes.QRCODE || chosenBarcodes.DATA_MATRIX || null;
+};
+
 type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
   disabled?: boolean;
@@ -91,9 +136,14 @@ export const BarcodeCamera = (props: Props) => {
   const devices = useCameraDevices();
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
-  const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
-    checkInverted: true
-  });
+  const barcodeConfig = useIOSelector(barcodesScannerConfigSelector);
+
+  const [frameProcessor, barcodes] = useScanBarcodes(
+    [BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX],
+    {
+      checkInverted: true
+    }
+  );
 
   // Hook that handles the permissions initialization.
   useEffect(() => {
@@ -121,10 +171,7 @@ export const BarcodeCamera = (props: Props) => {
       return;
     }
 
-    // This is going to take only the first scanned
-    // barcode. This could be improved or changed in relation
-    // to the business decisions.
-    const nextBarcode = barcodes[0];
+    const nextBarcode = retrieveNextBarcode(barcodes);
 
     if (!nextBarcode) {
       return;
@@ -137,11 +184,21 @@ export const BarcodeCamera = (props: Props) => {
       return;
     }
 
+    // If the next barcode scanned is a Data Matrix
+    // but the feature flag is not enabled we avoid
+    // triggering the callback.
+    if (
+      !barcodeConfig.dataMatrixPosteEnabled &&
+      barcodeFormat === "DATA_MATRIX"
+    ) {
+      return;
+    }
+
     onBarcodeScanned({
       format: barcodeFormat,
       value: barcodeValue
     });
-  }, [barcodes, onBarcodeScanned, disabled, prevDisabled]);
+  }, [barcodes, barcodeConfig, onBarcodeScanned, disabled, prevDisabled]);
 
   if (!permissionsGranted) {
     return (
