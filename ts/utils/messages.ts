@@ -77,7 +77,7 @@ export const handleCtaAction = (
     handleInternalLink(
       linkTo,
       `${cta.action}${
-        service ? (("&serviceId=" + service.service_id) as string) : ""
+        service ? "&serviceId=" + (service.service_id as string) : ""
       }`
     );
   } else {
