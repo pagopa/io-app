@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: italia/publiccode-parser-action@v0.0.2-alpha
+    - uses: italia/publiccode-parser-action@v1
       with:
         publiccode: 'publiccode.yml'

@@ -117,10 +117,10 @@ const renderLoading = () => (
 /**
  * A modal including a webview component.
  * It must be used to handle a payment.
- * A payment could start
- * - on credit card on-boarding
+ * A payment could happen
+ * - on credit card on-boarding (2cents fake payment as pre-authorization)
  * - on a regular payment
- * see https://docs.google.com/document/d/1FUkW7nwHlcmN2GrBWq1YnAzoNuvcvxa7WM0_VTkYV-I/edit#heading=h.v23dcgmq0ypp
+ * https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/404457605/Pagamento
  *
  * this is how this component works:
  * - at the start up, it creates a temporary html hidden form with all pre-set data (props.formFata)
@@ -129,7 +129,7 @@ const renderLoading = () => (
  * - on each page load request it checks the url
  *    - if it is the exit url
  *    - if it contains the outcome code
- * - when the the exit url is found, it doesn't load it and call the handler props.onFinish passing the found (maybe not) outcome value
+ * - when the exit url is found, it doesn't load it and call the handler props.onFinish passing the found (maybe not) outcome value
  */
 export const PayWebViewModal = (props: Props) => {
   const [outcomeCode, setOutcomeCode] = React.useState<string | undefined>(
