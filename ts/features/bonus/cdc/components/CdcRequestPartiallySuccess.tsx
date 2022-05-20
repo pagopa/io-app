@@ -38,7 +38,7 @@ const CdcRequestPartiallySuccess = () => {
   const successfulYears = receivedBonus
     .filter(b => b.outcome === RequestOutcomeEnum.OK)
     .map(b => b.year)
-    .join(",");
+    .join(", ");
 
   const failedYears = receivedBonus
     .filter(b => b.outcome !== RequestOutcomeEnum.OK)
@@ -58,8 +58,6 @@ const CdcRequestPartiallySuccess = () => {
         )} ${I18n.t(
           "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail",
           { failedYears }
-        )} ${I18n.t(
-          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.contactAssistance"
         )}`}
       />
       <FooterWithButtons

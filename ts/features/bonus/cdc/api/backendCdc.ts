@@ -13,7 +13,7 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
  */
 const GetStatoBeneficiario: GetStatoBeneficiarioT = {
   method: "get",
-  url: () => "/beneficiario/stato",
+  url: () => "/cdc/beneficiario/stato",
   query: _ => ({}),
   headers: p => ({ Authorization: `BearerAuth ${p.BearerAuth}` }),
   response_decoder: getStatoBeneficiarioDefaultDecoder()
@@ -24,7 +24,7 @@ const GetStatoBeneficiario: GetStatoBeneficiarioT = {
  */
 const PostRegistraBeneficiario: RegistraBeneficiarioT = {
   method: "post",
-  url: () => "/beneficiario/registrazione",
+  url: () => "/cdc/beneficiario/registrazione",
   query: _ => ({}),
   body: ({ anniRiferimento }) => JSON.stringify(anniRiferimento),
   headers: p => ({

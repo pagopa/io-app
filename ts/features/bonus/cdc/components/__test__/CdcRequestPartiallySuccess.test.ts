@@ -63,8 +63,6 @@ describe("CdcRequestPartiallySuccess", () => {
       )} ${I18n.t(
         "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail",
         { failedYears: "2022" }
-      )} ${I18n.t(
-        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.contactAssistance"
       )}`;
 
       expect(component.getByTestId("cdcRequestPartiallySuccess")).toBeDefined();

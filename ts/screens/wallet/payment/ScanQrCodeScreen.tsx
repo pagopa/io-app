@@ -47,18 +47,24 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import { GlobalState } from "../../../store/reducers/types";
+import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
 import customVariables, {
   VIBRATION_BARCODE_SCANNED_DURATION
 } from "../../../theme/variables";
 import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
 import { AsyncAlert } from "../../../utils/asyncAlert";
-import { decodePagoPaQrCode } from "../../../utils/payment";
+import {
+  decodePagoPaQrCode,
+  decodePosteDataMatrix
+} from "../../../utils/payment";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
@@ -169,6 +175,21 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
   };
 
+  private onDataMatrixData = (data: string) => {
+    const {
+      barcodesScannerConfig: { dataMatrixPosteEnabled }
+    } = this.props;
+
+    if (dataMatrixPosteEnabled) {
+      const maybePosteDataMatrix = decodePosteDataMatrix(data);
+
+      return maybePosteDataMatrix.foldL<void>(
+        this.onInvalidQrCode,
+        this.onValidQrCode
+      );
+    }
+  };
+
   private onShowImagePicker = async () => {
     // on Android we have to show a prominent disclosure on how we use READ_EXTERNAL_STORAGE permission
     // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/444727486/2021-11-18+Android#2021-12-08
@@ -196,6 +217,11 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     switch (barcode.format) {
       case "QRCODE":
         this.onQrCodeData(barcode.value);
+        break;
+
+      case "DATA_MATRIX":
+        this.onDataMatrixData(barcode.value);
+        break;
     }
   };
 
@@ -351,6 +377,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   }
 }
 
+const mapStateToProps = (state: GlobalState) => ({
+  barcodesScannerConfig: barcodesScannerConfigSelector(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => navigateToWalletHome(),
   navigateToPaymentManualDataInsertion: () =>
@@ -369,4 +399,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default connect(undefined, mapDispatchToProps)(ScanQrCodeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ScanQrCodeScreen);
