@@ -101,7 +101,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
     mvlAttachmentDownloadFromIdSelector(state, attachment.id)
   );
 
-  const openAttachment = useCallback(() => {
+  const openAttachment = useCallback(async () => {
     const download = pot.toUndefined(downloadPot);
 
     if (pot.isError(downloadPot)) {
@@ -125,13 +125,32 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
         if (isIos) {
           ReactNativeBlobUtil.ios.presentOptionsMenu(path);
         } else {
-          void ReactNativeBlobUtil.android.addCompleteDownload({
-            mime: attachment.contentType,
-            title: attachment.displayName,
-            showNotification: true,
-            description: attachment.displayName,
-            path
-          });
+          try {
+            const downloadFilePath =
+              await ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
+                {
+                  name: attachment.displayName,
+                  parentFolder: "",
+                  mimeType: attachment.contentType
+                },
+                "Download",
+                path
+              );
+
+            await ReactNativeBlobUtil.android.addCompleteDownload({
+              mime: attachment.contentType,
+              title: attachment.displayName,
+              showNotification: true,
+              description: attachment.displayName,
+              path: downloadFilePath
+            });
+          } catch (ex) {
+            showToast(
+              i18n.t(
+                "features.mvl.details.attachments.bottomSheet.failing.details"
+              )
+            );
+          }
         }
       }
     }
@@ -142,7 +161,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
     const isStillLoading = pot.isLoading(downloadPot);
 
     if (wasLoading && !isStillLoading) {
-      openAttachment();
+      void openAttachment();
     }
     setIsLoading(isStillLoading);
   }, [downloadPot, isLoading, setIsLoading, openAttachment]);
@@ -155,7 +174,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
     const path = pot.toUndefined(downloadPot)?.path;
     const fileExists = path !== undefined ? await RNFS.exists(path) : false;
     if (fileExists) {
-      openAttachment();
+      await openAttachment();
     } else {
       dispatch(mvlAttachmentDownload.request(attachment));
     }
