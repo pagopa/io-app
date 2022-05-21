@@ -44,7 +44,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderFooter = (isLoading: boolean) => {
+const renderFooter = (isLoading: boolean, error: TransactionSummaryError) => {
+  if (error.isSome()) {
+    return <></>;
+  }
   if (isLoading) {
     return (
       <FooterWithButtons
@@ -68,7 +71,7 @@ const renderFooter = (isLoading: boolean) => {
       leftButton={{
         block: true,
         onPress: () => {},
-        title: I18n.t("global.buttons.continue")
+        title: I18n.t("wallet.continue")
       }}
     />
   );
@@ -156,7 +159,7 @@ const NewTransactionSummaryScreen = ({
             isPaid={false}
           />
         </ScrollView>
-        {renderFooter(isLoading)}
+        {renderFooter(isLoading, error)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
