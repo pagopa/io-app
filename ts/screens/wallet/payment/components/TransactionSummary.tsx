@@ -101,35 +101,45 @@ type RowProps = Readonly<{
 
 const TransactionSummaryRow = (
   props: React.PropsWithChildren<RowProps>
-): React.ReactElement => (
-  <View style={styles.container}>
-    <View style={styles.row}>
-      {props.icon && <View style={styles.icon}>{props.icon}</View>}
-      <View
-        style={props.axis === "vertical" ? styles.vertical : styles.horizontal}
-      >
-        <H5 weight="Regular" color={"bluegrey"} style={styles.title}>
-          {props.title}
-        </H5>
-        {!props.isLoading && props.axis === "horizontal" && props.subtitle && (
-          <H5 color={"bluegreyDark"} weight={"Regular"}>
-            {props.subtitle}
+): React.ReactElement => {
+  if (!props.isLoading && !props.subtitle) {
+    return <></>;
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.row}>
+        {props.icon && <View style={styles.icon}>{props.icon}</View>}
+        <View
+          style={
+            props.axis === "vertical" ? styles.vertical : styles.horizontal
+          }
+        >
+          <H5 weight="Regular" color={"bluegrey"} style={styles.title}>
+            {props.title}
           </H5>
-        )}
-        {!props.isLoading && props.axis === "vertical" && props.subtitle && (
-          <H4 color={"bluegreyDark"} weight={"SemiBold"}>
-            {props.subtitle}
-          </H4>
-        )}
-        {props.isLoading && (
-          <View style={styles.placeholder}>{props.placeholder}</View>
+          {!props.isLoading && props.axis === "horizontal" && props.subtitle && (
+            <H5 color={"bluegreyDark"} weight={"Regular"}>
+              {props.subtitle}
+            </H5>
+          )}
+          {!props.isLoading && props.axis === "vertical" && props.subtitle && (
+            <H4 color={"bluegreyDark"} weight={"SemiBold"}>
+              {props.subtitle}
+            </H4>
+          )}
+          {props.isLoading && (
+            <View style={styles.placeholder}>{props.placeholder}</View>
+          )}
+        </View>
+        {props.children && (
+          <View style={styles.children}>{props.children}</View>
         )}
       </View>
-      {props.children && <View style={styles.children}>{props.children}</View>}
+      <View style={styles.separator} />
     </View>
-    <View style={styles.separator} />
-  </View>
-);
+  );
+};
 
 type Props = Readonly<{
   paymentNoticeNumber: string;
@@ -147,18 +157,16 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     .map(formatTextRecipient)
     .toUndefined();
 
-  const description = pot.getOrElse<string>(
+  const description = pot.toUndefined(
     pot.mapNullable(props.paymentVerification, _ =>
       cleanTransactionDescription(_.causaleVersamento)
-    ),
-    "-"
+    )
   );
 
-  const amount: string = pot.getOrElse(
+  const amount = pot.toUndefined(
     pot.map(props.paymentVerification, _ =>
       formatNumberAmount(centsToAmount(_.importoSingoloVersamento), true)
-    ),
-    "-"
+    )
   );
 
   const { presentPaymentInfoBottomSheet, paymentInfoBottomSheet } =
