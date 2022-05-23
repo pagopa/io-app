@@ -149,7 +149,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         // toggle is disabled if the inbox value is false to prevent inconsistent data
         <>
           <PreferenceToggleRow
-            label={"Spunta blu" /* FIXME: This should be translated */}
+            label={I18n.t("services.messageReadStatus")}
             onPress={(value: boolean) =>
               onValueChange(value, "send_read_message_status")
             }
