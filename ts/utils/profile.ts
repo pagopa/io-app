@@ -196,13 +196,14 @@ export function getEnabledChannelsForService(
       inbox: _.indexOf(INBOX_CHANNEL) === -1,
       email: _.indexOf(EMAIL_CHANNEL) === -1,
       push: _.indexOf(PUSH_CHANNEL) === -1,
-      trackSeen: _.indexOf(SEND_READ_MESSAGE_STATUS_CHANNEL) === -1
+      send_read_message_status:
+        _.indexOf(SEND_READ_MESSAGE_STATUS_CHANNEL) === -1
     }))
     .getOrElse({
       inbox: true,
       email: true,
       push: true,
-      trackSeen: true
+      send_read_message_status: true
     });
 }
 

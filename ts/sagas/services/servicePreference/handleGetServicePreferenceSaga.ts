@@ -41,7 +41,14 @@ export function* handleGetServicePreference(
               inbox: response.value.value.is_inbox_enabled,
               push: response.value.value.is_webhook_enabled,
               email: response.value.value.is_email_enabled,
-              settings_version: response.value.value.settings_version
+              settings_version: response.value.value.settings_version,
+
+              // This will handle the premium messages flag, and if
+              // it's `undefined` it will be considered with the same value
+              // as `is_inbox_enabled`.
+              send_read_message_status:
+                response.value.value.is_premium_message_read_status_enabled ??
+                response.value.value.is_inbox_enabled
             }
           })
         );
