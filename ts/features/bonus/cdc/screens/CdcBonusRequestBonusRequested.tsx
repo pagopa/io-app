@@ -1,48 +1,82 @@
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
+import { constNull } from "fp-ts/lib/function";
+import {
+  cdcEnrollUserToBonusSelector,
+  cdcSelectedBonusSelector
+} from "../store/reducers/cdcBonusRequest";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import CdcRequirementsError from "../components/CdcRequirementsError";
+import { cdcEnrollUserToBonus } from "../store/actions/cdcBonusRequest";
+import { fold } from "../../bpd/model/RemoteValue";
+import CdcRequestCompleted from "../components/CdcRequestCompleted";
+import { LoadingErrorComponent } from "../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../../i18n";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { CdcBonusRequestParamsList } from "../navigation/params";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import {
+  CdcBonusRequestResponse,
+  CdcSelectedBonusList
+} from "../types/CdcBonusRequest";
+import CdcRequestPartiallySuccess from "../components/CdcRequestPartiallySuccess";
+import CdcWrongFormat from "../components/CdcWrongFormat";
+import CdcGenericError from "../components/CdcGenericError";
+
+const LoadingComponent = () => (
+  <LoadingErrorComponent
+    isLoading={true}
+    loadingCaption={I18n.t(
+      "bonus.cdc.bonusRequest.bonusRequested.loading.title"
+    )}
+    loadingSubtitle={I18n.t(
+      "bonus.cdc.bonusRequest.bonusRequested.loading.subtitle"
+    )}
+    onRetry={constNull}
+    testID={"loadingComponent"}
+  />
+);
+
+const SuccessComponent = (props: {
+  selectedBonus: CdcSelectedBonusList;
+  bonusResponse: CdcBonusRequestResponse;
+}) => {
+  switch (props.bonusResponse.kind) {
+    case "success":
+      return <CdcRequestCompleted />;
+    case "partialSuccess":
+      return <CdcRequestPartiallySuccess />;
+    case "requirementsError":
+      return <CdcRequirementsError />;
+    case "wrongFormat":
+      return <CdcWrongFormat />;
+    case "genericError":
+      return <CdcGenericError />;
+  }
+};
 
 const CdcBonusRequestBonusRequested = () => {
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
-    >();
-  return (
-    <BaseScreenComponent
-      goBack={false}
-      customGoBack={<ButtonDefaultOpacity transparent={true} />}
-      headerTitle={I18n.t("bonus.cdc.title")}
-      customRightIcon={{
-        iconName: "io-close",
-        onPress: () => {
-          navigation.getParent()?.goBack();
-        }
-      }}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>{"CdcBonusRequestBonusRequested"}</H1>
-        </ScrollView>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            block: true,
-            onPress: () => {
-              navigation.getParent()?.goBack();
-            },
-            title: I18n.t("bonus.cdc.bonusRequest.bonusRequested.cta")
-          }}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
+  const dispatch = useIODispatch();
+  const cdcSelectedBonus = useIOSelector(cdcSelectedBonusSelector);
+  const cdcEnrollUserToBonusRequest = useIOSelector(
+    cdcEnrollUserToBonusSelector
+  );
+
+  useEffect(() => {
+    if (cdcSelectedBonus) {
+      dispatch(cdcEnrollUserToBonus.request(cdcSelectedBonus));
+    }
+  }, [cdcSelectedBonus, dispatch]);
+
+  if (!cdcSelectedBonus?.length) {
+    return <CdcGenericError />;
+  }
+
+  return fold(
+    cdcEnrollUserToBonusRequest,
+    () => <LoadingComponent />,
+    () => <LoadingComponent />,
+    b => (
+      <SuccessComponent bonusResponse={b} selectedBonus={cdcSelectedBonus} />
+    ),
+    _ => <CdcGenericError />
   );
 };
 

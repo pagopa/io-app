@@ -1,4 +1,4 @@
-import { none, some } from "fp-ts/lib/Option";
+import { none, some, isSome } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
@@ -9,6 +9,7 @@ import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
   decodePagoPaQrCode,
+  decodePosteDataMatrix,
   DetailV2Keys,
   ErrorTypes,
   getAmountFromPaymentAmount,
@@ -150,6 +151,40 @@ describe("decodePagoPaQrCode", () => {
     ].forEach(tuple => {
       expect(decodePagoPaQrCode(tuple.e1)).toEqual(tuple.e2);
     });
+  });
+});
+
+describe("decodePosteDataMatrix", () => {
+  it("should decode successfully a valid string", () => {
+    const input =
+      "codfase=NBPA;183007157000000000321200001630209310000000000138961P100085240950BSCMTT83A12L719RName Surname                           test                                                                                                                      A";
+
+    const output = decodePosteDataMatrix(input);
+
+    expect(isSome(output)).toBe(true);
+  });
+
+  it("should not decode an invalid string", () => {
+    const input =
+      "codfase=NBPA;1830071A7000000000321200E01630209310000000000138961P100085240950BSCMTT83A12L719RName Surname                           test                                                                                                                      A";
+
+    const output = decodePosteDataMatrix(input);
+
+    expect(isSome(output)).toBe(false);
+  });
+
+  it("should not decode a string encoded differently", () => {
+    const input = "PAGOPA|002|322201151398574181|810057500211|01";
+    const output = decodePosteDataMatrix(input);
+
+    expect(isSome(output)).toBe(false);
+  });
+
+  it("should not decode an empty string", () => {
+    const input = "";
+    const output = decodePosteDataMatrix(input);
+
+    expect(isSome(output)).toBe(false);
   });
 });
 

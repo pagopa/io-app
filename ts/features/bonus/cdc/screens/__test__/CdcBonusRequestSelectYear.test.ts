@@ -20,12 +20,12 @@ const notActivableBonuses = [
 ];
 
 const activableBonuses = [
-  { year: "2021" as Anno, status: StatoBeneficiarioEnum.ATTVABILE },
-  { year: "2022" as Anno, status: StatoBeneficiarioEnum.ATTVABILE },
+  { year: "2021" as Anno, status: StatoBeneficiarioEnum.ATTIVABILE },
+  { year: "2022" as Anno, status: StatoBeneficiarioEnum.ATTIVABILE },
   { year: "2023" as Anno, status: StatoBeneficiarioEnum.VALUTAZIONE }
 ];
 
-describe("CdcServiceCTA", () => {
+describe("CdcBonusRequestSelectYear", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   it("Shouldn't render the component if there cdcBonusRequestList is not ready", () => {
     const store: Store<GlobalState> = createStore(
