@@ -5,6 +5,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { ActionSheet } from "native-base";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -17,10 +18,13 @@ import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   abortRunningPayment,
+  backToEntrypointPayment,
   paymentAttiva,
   paymentCompletedSuccess,
   paymentIdPolling,
+  paymentInitializeState,
   paymentVerifica,
+  runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { IOColors } from "../../../components/core/variables/IOColors";
@@ -46,6 +50,7 @@ import {
   isPaypalEnabledSelector
 } from "../../../store/reducers/backendStatus";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
+import { showToast } from "../../../utils/showToast";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -124,7 +129,10 @@ const NewTransactionSummaryScreen = ({
   navigation,
   continueWithPayment,
   maybeFavoriteWallet,
-  hasPayableMethods
+  hasPayableMethods,
+  paymentId,
+  backToEntrypointPayment,
+  resetPayment
 }: Props): React.ReactElement => {
   useOnFirstRender(() => {
     if (pot.isNone(paymentVerification)) {
@@ -154,6 +162,36 @@ const NewTransactionSummaryScreen = ({
     paymentVerification
   ]);
 
+  const goBack = () => {
+    if (pot.isSome(paymentId)) {
+      // If we have a paymentId (payment check already done) we need to
+      // ask the user to cancel the payment and in case reset it
+      ActionSheet.show(
+        {
+          options: [
+            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+          ],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            backToEntrypointPayment();
+            resetPayment();
+            showToast(
+              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
+              "success"
+            );
+          }
+        }
+      );
+    } else {
+      navigation.goBack();
+    }
+  };
+
   const rptId = navigation.getParam("rptId");
 
   const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
@@ -172,7 +210,7 @@ const NewTransactionSummaryScreen = ({
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={goBack}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
     >
@@ -255,7 +293,8 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     walletById,
     maybeFavoriteWallet,
-    hasPayableMethods
+    hasPayableMethods,
+    paymentId
   };
 };
 
@@ -358,13 +397,20 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     );
   };
 
+  const resetPayment = () => {
+    dispatch(runDeleteActivePaymentSaga());
+    dispatch(paymentInitializeState());
+  };
+
   return {
     loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     verifyPayment,
     onDuplicatedPayment,
     navigateToPaymentTransactionError,
     shouldNavigateToPaymentTransactionError,
-    continueWithPayment
+    continueWithPayment,
+    resetPayment,
+    backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
   };
 };
 
