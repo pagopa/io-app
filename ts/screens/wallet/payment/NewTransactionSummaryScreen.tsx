@@ -20,15 +20,35 @@ import {
   paymentAttiva,
   paymentCompletedSuccess,
   paymentIdPolling,
-  paymentVerifica
+  paymentVerifica,
+  runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { PayloadForAction } from "../../../types/utils";
-import { navigateToPaymentTransactionErrorScreen } from "../../../store/actions/navigation";
-import { isError } from "../../../features/bonus/bpd/model/RemoteValue";
+import {
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen,
+  navigateToWalletAddPaymentMethod
+} from "../../../store/actions/navigation";
+import {
+  isError,
+  isLoading as isRemoteLoading,
+  isUndefined
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import { PaymentState } from "../../../store/reducers/wallet/payment";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import {
+  getFavoriteWallet,
+  withPaymentFeatureSelector
+} from "../../../store/reducers/wallet/wallets";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../store/reducers/backendStatus";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
+import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryError = Option<
   PayloadForAction<
@@ -44,7 +64,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderFooter = (isLoading: boolean, error: TransactionSummaryError) => {
+const renderFooter = (
+  isLoading: boolean,
+  error: TransactionSummaryError,
+  onContinue: () => void
+) => {
   if (error.isSome()) {
     return <></>;
   }
@@ -70,7 +94,7 @@ const renderFooter = (isLoading: boolean, error: TransactionSummaryError) => {
       type="SingleButton"
       leftButton={{
         block: true,
-        onPress: () => {},
+        onPress: onContinue,
         title: I18n.t("wallet.continue")
       }}
     />
@@ -97,7 +121,10 @@ const NewTransactionSummaryScreen = ({
   shouldNavigateToPaymentTransactionError,
   walletById,
   loadWallets,
-  navigation
+  navigation,
+  continueWithPayment,
+  maybeFavoriteWallet,
+  hasPayableMethods
 }: Props): React.ReactElement => {
   useOnFirstRender(() => {
     if (pot.isNone(paymentVerification)) {
@@ -159,16 +186,21 @@ const NewTransactionSummaryScreen = ({
             isPaid={false}
           />
         </ScrollView>
-        {renderFooter(isLoading, error)}
+        {renderFooter(isLoading, error, () =>
+          continueWithPayment(
+            paymentVerification,
+            maybeFavoriteWallet,
+            hasPayableMethods
+          )
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
   );
 };
 
+// eslint-disable-next-line complexity,sonarjs/cognitive-complexity
 const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
-
-  const isLoading = pot.isLoading(verifica);
 
   const error: TransactionSummaryError = pot.isError(verifica)
     ? some(verifica.error)
@@ -182,17 +214,55 @@ const mapStateToProps = (state: GlobalState) => {
 
   const walletById = state.wallet.wallets.walletById;
 
+  const isPaypalEnabled = isPaypalEnabledSelector(state);
+  const isBPayPaymentEnabled = bancomatPayConfigSelector(state).payment;
+  const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
+  /**
+   * the favourite will be undefined if one of these condition is true
+   * - payment method is PayPal & the relative feature flag is not enabled
+   * - payment method is BPay & the relative feature flag is not enabled
+   */
+  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
+    switch (fw.paymentMethod?.kind) {
+      case "PayPal":
+        return isPaypalEnabled;
+      case "BPay":
+        return isBPayPaymentEnabled;
+      default:
+        return true;
+    }
+  });
+
+  const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
+
+  const isLoading =
+    pot.isLoading(walletById) ||
+    pot.isLoading(verifica) ||
+    pot.isLoading(attiva) ||
+    (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    pot.isLoading(paymentId) ||
+    (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
+    pot.isLoading(check) ||
+    (maybeFavoriteWallet.isSome() &&
+      error.isNone() &&
+      pot.isSome(check) &&
+      isUndefined(pspsV2.psps)) ||
+    (maybeFavoriteWallet.isSome() && isRemoteLoading(pspsV2.psps));
+
   return {
     paymentVerification: verifica,
     isLoading,
     error,
-    walletById
+    walletById,
+    maybeFavoriteWallet,
+    hasPayableMethods
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const rptId = props.navigation.getParam("rptId");
   const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
+  const initialAmount = props.navigation.getParam("initialAmount");
 
   const verifyPayment = () =>
     dispatch(
@@ -225,12 +295,76 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     paymentVerification: PaymentState["verifica"]
   ) => !(paymentStartOrigin === "message" && pot.isError(paymentVerification));
 
+  const startOrResumePayment = (
+    paymentVerification: PaymentRequestsGetResponse,
+    maybeFavoriteWallet: ReturnType<
+      typeof mapStateToProps
+    >["maybeFavoriteWallet"],
+    hasPayableMethods: ReturnType<typeof mapStateToProps>["hasPayableMethods"]
+  ) =>
+    dispatch(
+      runStartOrResumePaymentActivationSaga({
+        rptId,
+        verifica: paymentVerification,
+        onSuccess: idPayment =>
+          dispatchPickPspOrConfirm(dispatch)(
+            rptId,
+            initialAmount,
+            paymentVerification,
+            idPayment,
+            maybeFavoriteWallet,
+            () => {
+              // either we cannot use the default payment method for this
+              // payment, or fetching the PSPs for this payment and the
+              // default wallet has failed, ask the user to pick a wallet
+
+              navigateToPaymentPickPaymentMethodScreen({
+                rptId,
+                initialAmount,
+                verifica: paymentVerification,
+                idPayment
+              });
+            },
+            hasPayableMethods
+          )
+      })
+    );
+
+  const continueWithPayment = (
+    paymentVerification: ReturnType<
+      typeof mapStateToProps
+    >["paymentVerification"],
+    maybeFavoriteWallet: ReturnType<
+      typeof mapStateToProps
+    >["maybeFavoriteWallet"],
+    hasPayableMethods: ReturnType<typeof mapStateToProps>["hasPayableMethods"]
+  ) => {
+    if (!pot.isSome(paymentVerification)) {
+      return;
+    }
+    if (hasPayableMethods) {
+      startOrResumePayment(
+        paymentVerification.value,
+        maybeFavoriteWallet,
+        hasPayableMethods
+      );
+      return;
+    }
+    alertNoPayablePaymentMethods(() =>
+      navigateToWalletAddPaymentMethod({
+        inPayment: none,
+        showOnlyPayablePaymentMethods: true
+      })
+    );
+  };
+
   return {
     loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     verifyPayment,
     onDuplicatedPayment,
     navigateToPaymentTransactionError,
-    shouldNavigateToPaymentTransactionError
+    shouldNavigateToPaymentTransactionError,
+    continueWithPayment
   };
 };
 
