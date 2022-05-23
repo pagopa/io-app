@@ -105,7 +105,7 @@ export interface EnabledChannels {
   // FIXME: This is a temporary name that will
   // need to be changed as soon as we'll have
   // the backend specs.
-  send_read_message_status: boolean;
+  send_read_message_status?: boolean;
 }
 
 const INBOX_CHANNEL = "INBOX";

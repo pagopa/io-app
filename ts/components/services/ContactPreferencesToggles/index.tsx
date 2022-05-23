@@ -26,7 +26,7 @@ import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
-type Item = "email" | "push" | "inbox" | "sendReadMessageStatus";
+type Item = "email" | "push" | "inbox" | "send_read_message_status";
 
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
@@ -55,7 +55,11 @@ const getChannelPreference = (
     pot.isSome(potServicePreference) &&
     isServicePreferenceResponseSuccess(potServicePreference.value)
   ) {
-    return potServicePreference.value.value[key];
+    if (key === "send_read_message_status") {
+      return potServicePreference.value.value[key] ?? true;
+    } else {
+      return potServicePreference.value.value[key];
+    }
   }
   return false;
 };
@@ -141,29 +145,25 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
             <ItemSeparatorComponent noPadded />
           </>
         )}
-      {hasChannel(
-        NotificationChannelEnum.ALLOWED_SEND_READ_MESSAGE_STATUS,
-        props.channels
-      ) &&
-        getChannelPreference(props.servicePreferenceStatus, "inbox") && (
-          // toggle is disabled if the inbox value is false to prevent inconsistent data
-          <>
-            <PreferenceToggleRow
-              label={I18n.t("services.pushNotifications")}
-              onPress={(value: boolean) =>
-                onValueChange(value, "sendReadMessageStatus")
-              }
-              value={getChannelPreference(
-                props.servicePreferenceStatus,
-                "sendReadMessageStatus"
-              )}
-              graphicalState={graphicalState}
-              onReload={loadPreferences}
-              testID={"contact-preferences-trackSeen-switch"}
-            />
-            <ItemSeparatorComponent noPadded />
-          </>
-        )}
+      {getChannelPreference(props.servicePreferenceStatus, "inbox") && (
+        // toggle is disabled if the inbox value is false to prevent inconsistent data
+        <>
+          <PreferenceToggleRow
+            label={"Spunta blu" /* FIXME: This should be translated */}
+            onPress={(value: boolean) =>
+              onValueChange(value, "send_read_message_status")
+            }
+            value={getChannelPreference(
+              props.servicePreferenceStatus,
+              "send_read_message_status"
+            )}
+            graphicalState={graphicalState}
+            onReload={loadPreferences}
+            testID={"contact-preferences-trackSeen-switch"}
+          />
+          <ItemSeparatorComponent noPadded />
+        </>
+      )}
 
       {/* Email toggle is temporary removed until the feature will be enabled back from the backend */}
       {/* TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17 */}
