@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.10.0-rc.1](https://github.com/pagopa/io-app/compare/2.10.0-rc.0...2.10.0-rc.1) (2022-05-19)
+
+
+### Bug Fixes
+
+* [[IA-847](https://pagopa.atlassian.net/browse/IA-847)] Bottomsheet randomly glitching on present ([#3969](https://github.com/pagopa/io-app/issues/3969)) ([f372378](https://github.com/pagopa/io-app/commit/f3723780d4c61c3ab118f9f173f81067e452439b))
+
+
+### Chores
+
+* **Carta della cultura:** [[AP-13](https://pagopa.atlassian.net/browse/AP-13)] Cdc requested bonus screen ([#3964](https://github.com/pagopa/io-app/issues/3964)) ([dd8a4a3](https://github.com/pagopa/io-app/commit/dd8a4a3a90a70cf647ffa3abd36944d57025c5d4))
+* **Carta della cultura:** [[AP-14](https://pagopa.atlassian.net/browse/AP-14)] Cdc monitoring ([#3966](https://github.com/pagopa/io-app/issues/3966)) ([022639a](https://github.com/pagopa/io-app/commit/022639a51793d8d13429c4b4d72c38747df0f513))
+* **Carta della cultura:** [[AP-27](https://pagopa.atlassian.net/browse/AP-27)] Update url path ([#3965](https://github.com/pagopa/io-app/issues/3965)) ([e62d75f](https://github.com/pagopa/io-app/commit/e62d75f301f3e20766ba5d4f741a29b06fdcea87))
+* **Carta della cultura:** [[AP-33](https://pagopa.atlassian.net/browse/AP-33)] Update cdc swagger ([#3967](https://github.com/pagopa/io-app/issues/3967)) ([b7f7726](https://github.com/pagopa/io-app/commit/b7f77264e960c39c2f309a629061433c50557835))
+* **Carta della cultura:** [[AP-34](https://pagopa.atlassian.net/browse/AP-34)] Update cdc bonus description screen ([#3970](https://github.com/pagopa/io-app/issues/3970)) ([7a28864](https://github.com/pagopa/io-app/commit/7a2886495390d883be396740763ecb6a4afefa8e))
+* **Carta della cultura:** [[AP-36](https://pagopa.atlassian.net/browse/AP-36)] Activate local cdc feature flag ([#3972](https://github.com/pagopa/io-app/issues/3972)) ([efb0f82](https://github.com/pagopa/io-app/commit/efb0f82022a077884a23678ca90cce0b87fc6954))
+* [[IA-858](https://pagopa.atlassian.net/browse/IA-858)] Add Poste Data Matrix implementation ([#3956](https://github.com/pagopa/io-app/issues/3956)) ([7fb456b](https://github.com/pagopa/io-app/commit/7fb456bb71acb5eb28190a395a440be29de90276))
+
 ## [2.10.0-rc.0](https://github.com/pagopa/io-app/compare/2.9.0-rc.1...2.10.0-rc.0) (2022-05-18)
 
 

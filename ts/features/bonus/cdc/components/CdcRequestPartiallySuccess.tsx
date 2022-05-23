@@ -58,8 +58,6 @@ const CdcRequestPartiallySuccess = () => {
         )} ${I18n.t(
           "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail",
           { failedYears }
-        )} ${I18n.t(
-          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.contactAssistance"
         )}`}
       />
       <FooterWithButtons

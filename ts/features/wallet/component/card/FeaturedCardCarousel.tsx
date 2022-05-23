@@ -164,7 +164,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
                     testID={"FeaturedCardCDCTestID"}
                     key={`featured_bonus_${i}`}
                     title={b[currentLocale].name}
-                    image={{ uri: b.sponsorship_cover }}
+                    image={{ uri: b.cover }}
                     isNew={true}
                     onPress={() => handler(b)}
                   />
