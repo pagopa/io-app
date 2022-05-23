@@ -788,15 +788,15 @@ onboarding:
     contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
   pin:
-    headerTitle: Configura IO
-    title: Codice di sblocco
-    subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
-    pinLabel: Crea codice di sblocco
-    pinConfirmationLabel: Ripeti codice di sblocco
-    tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
+    headerTitle: IO Settings
+    title: Unlock code
+    subTitle: It's a six-digit code that you need to access IO and authorize certain in-app transations.
+    pinLabel: Create unlock code
+    pinConfirmationLabel: Repeat unlock code
+    tutorial: You can change the code at any time under Profile > Security
     errors:
-      length: Il codice non ha 6 cifre
-      match: Il codice non coincide
+      length: The code must have six digits
+      match: The code doesn’t match 
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
