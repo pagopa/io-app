@@ -74,7 +74,7 @@ export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
-  messageId?: UIMessageId;
+  messageId?: string;
 }>;
 
 type OwnProps = {
