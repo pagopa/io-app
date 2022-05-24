@@ -6,7 +6,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler, StyleSheet } from "react-native";
+import {
+  Alert,
+  BackHandler,
+  NativeEventSubscription,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
@@ -93,6 +98,7 @@ const emailCtaKey = "email.validate.cta";
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private idTimeout?: number;
   private idPolling?: number;
+  private subscription: NativeEventSubscription | undefined;
 
   constructor(props: Props) {
     super(props);
@@ -114,7 +120,11 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleHardwareBack);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleHardwareBack
+    );
     // Periodically check if the user validate his own email address
     // eslint-disable-next-line
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
@@ -124,10 +134,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener(
-      "hardwareBackPress",
-      this.handleHardwareBack
-    );
+    this.subscription?.remove();
     // if a timeout is running we have to stop it
     if (this.idTimeout !== undefined) {
       clearTimeout(this.idTimeout);

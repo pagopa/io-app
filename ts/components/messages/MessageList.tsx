@@ -45,7 +45,7 @@ type AnimatedProps = {
 };
 
 type OwnProps = {
-  messageStates: ReadonlyArray<MessageState>;
+  messageStates: ReadonlyArray<MessagesStateAndStatus>;
   servicesById: ServicesByIdState;
   paymentsByRptId: PaymentByRptIdState;
   refreshing: boolean;
@@ -178,8 +178,6 @@ const MessageListItemPlaceholder = (
 
 const ItemSeparator = () => <ItemSeparatorComponent noPadded={true} />;
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
 class MessageList extends React.Component<Props, State> {
   private flatListRef = React.createRef<FlatList>();
 
@@ -272,7 +270,7 @@ class MessageList extends React.Component<Props, State> {
   };
 
   private getItemLayout = (
-    _: ReadonlyArray<MessageState> | null,
+    _: ReadonlyArray<MessagesStateAndStatus> | null | undefined,
     index: number
   ) => this.state.itemLayouts[index];
 
@@ -333,7 +331,7 @@ class MessageList extends React.Component<Props, State> {
             style={styles.activityIndicator}
           />
         )}
-        <AnimatedFlatList
+        <Animated.FlatList
           ListHeaderComponent={<UaDonationsBanner />}
           ref={this.flatListRef}
           style={styles.padded}
