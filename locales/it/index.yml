@@ -1318,6 +1318,11 @@ wallet:
       wallet: Sto verificando se esistono metodi di pagamento salvati...
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
+    errorDetails:
+      title: Dettagli errore
+      errorCode: Codice errore
+      messageId: ID messaggio
+      copyToClipboard: Copia dati per l'assistenza
   errorTransaction:
     submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
   insertManually:

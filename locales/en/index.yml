@@ -1296,6 +1296,11 @@ wallet:
       wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
+    errorDetails:
+      title: Dettagli errore
+      errorCode: Codice errore
+      messageId: ID messaggio
+      copyToClipboard: Copia dati per l'assistenza
   insertManually:
     header: Enter notice data
     title: What do you have to pay for?

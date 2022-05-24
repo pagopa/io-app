@@ -97,9 +97,10 @@ type RowProps = Readonly<{
   icon?: React.ReactNode;
   placeholder?: React.ReactNode;
   isLoading?: boolean;
+  hideSeparator?: boolean;
 }>;
 
-const TransactionSummaryRow = (
+export const TransactionSummaryRow = (
   props: React.PropsWithChildren<RowProps>
 ): React.ReactElement => {
   if (!props.isLoading && !props.subtitle) {
@@ -136,7 +137,7 @@ const TransactionSummaryRow = (
           <View style={styles.children}>{props.children}</View>
         )}
       </View>
-      <View style={styles.separator} />
+      {props.hideSeparator !== true && <View style={styles.separator} />}
     </View>
   );
 };

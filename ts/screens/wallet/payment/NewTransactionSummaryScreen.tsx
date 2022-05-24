@@ -54,6 +54,7 @@ import { showToast } from "../../../utils/showToast";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
+import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
 
 export type TransactionSummaryError = Option<
   PayloadForAction<
@@ -193,6 +194,7 @@ const NewTransactionSummaryScreen = ({
   };
 
   const rptId = navigation.getParam("rptId");
+  const messageId = navigation.getParam("messageId");
 
   const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
     rptId.paymentNoticeNumber
@@ -221,8 +223,16 @@ const NewTransactionSummaryScreen = ({
             paymentVerification={paymentVerification}
             paymentNoticeNumber={paymentNoticeNumber}
             organizationFiscalCode={organizationFiscalCode}
-            isPaid={false}
+            isPaid={errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO"}
           />
+          {pot.isError(paymentVerification) && (
+            <TransactionSummaryErrorDetails
+              error={error}
+              paymentNoticeNumber={paymentNoticeNumber}
+              organizationFiscalCode={organizationFiscalCode}
+              messageId={messageId}
+            />
+          )}
         </ScrollView>
         {renderFooter(isLoading, error, () =>
           continueWithPayment(
