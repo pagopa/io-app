@@ -6,6 +6,7 @@ import {
   AppStateStatus,
   InteractionManager,
   LayoutAnimation,
+  NativeEventSubscription,
   Platform,
   ScrollView,
   StyleProp,
@@ -228,6 +229,7 @@ type State = {
  */
 class Markdown extends React.PureComponent<Props, State> {
   private webViewRef = React.createRef<WebView>();
+  private subscription: NativeEventSubscription | undefined;
 
   constructor(props: Props) {
     super(props);
@@ -259,7 +261,11 @@ class Markdown extends React.PureComponent<Props, State> {
       avoidTextSelection
     );
 
-    AppState.addEventListener("change", this.handleAppStateChange);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = AppState.addEventListener(
+      "change",
+      this.handleAppStateChange
+    );
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -281,7 +287,7 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount(): void {
-    AppState.removeEventListener("change", this.handleAppStateChange);
+    this.subscription?.remove();
   }
 
   public handleAppStateChange = (nextAppState: AppStateStatus) => {
