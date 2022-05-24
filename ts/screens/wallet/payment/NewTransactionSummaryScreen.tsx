@@ -51,6 +51,7 @@ import {
 } from "../../../store/reducers/backendStatus";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
+import { DetailV2Keys, getV2ErrorMainType } from "../../../utils/payment";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -73,10 +74,29 @@ const styles = StyleSheet.create({
 const renderFooter = (
   isLoading: boolean,
   error: TransactionSummaryError,
-  onContinue: () => void
+  onContinue: () => void,
+  onHelp: () => void
 ) => {
   if (error.isSome()) {
-    return <></>;
+    const errorOrUndefined = error.toUndefined();
+    const errorType = getV2ErrorMainType(errorOrUndefined as DetailV2Keys);
+    switch (errorType) {
+      case "TECHNICAL":
+      case "DATA":
+      case "UNCOVERED":
+        return (
+          <FooterWithButtons
+            type="SingleButton"
+            leftButton={{
+              block: true,
+              onPress: onHelp,
+              title: I18n.t("payment.details.info.buttons.help")
+            }}
+          />
+        );
+      default:
+        return <></>;
+    }
   }
   if (isLoading) {
     return (
@@ -234,12 +254,16 @@ const NewTransactionSummaryScreen = ({
             />
           )}
         </ScrollView>
-        {renderFooter(isLoading, error, () =>
-          continueWithPayment(
-            paymentVerification,
-            maybeFavoriteWallet,
-            hasPayableMethods
-          )
+        {renderFooter(
+          isLoading,
+          error,
+          () =>
+            continueWithPayment(
+              paymentVerification,
+              maybeFavoriteWallet,
+              hasPayableMethods
+            ),
+          () => {}
         )}
       </SafeAreaView>
     </BaseScreenComponent>
