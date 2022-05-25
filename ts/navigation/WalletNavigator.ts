@@ -3,7 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {
   bonusVacanzeEnabled,
   bpdEnabled,
-  bpdOptInPaymentMethodsEnabled
+  bpdOptInPaymentMethodsEnabled,
+  newTransactionSummaryEnabled
 } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
@@ -59,6 +60,8 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import NewTransactionSummaryScreen from "../screens/wallet/payment/NewTransactionSummaryScreen";
+import { TransactionSummary } from "../screens/wallet/payment/components/TransactionSummary";
+import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -105,7 +108,9 @@ const baseRouteConfigMap = {
     screen: ManualDataInsertionScreen
   },
   [ROUTES.PAYMENT_TRANSACTION_SUMMARY]: {
-    screen: NewTransactionSummaryScreen
+    screen: newTransactionSummaryEnabled
+      ? NewTransactionSummaryScreen
+      : TransactionSummaryScreen
   },
   [ROUTES.PAYMENT_TRANSACTION_ERROR]: {
     screen: TransactionErrorScreen
