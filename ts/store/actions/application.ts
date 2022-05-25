@@ -1,3 +1,4 @@
+import { AppStateStatus } from "react-native";
 import {
   ActionType,
   createAction,
@@ -12,11 +13,9 @@ export const startApplicationInitialization = createAction(
   "START_APPLICATION_INITIALIZATION"
 );
 
-export type ApplicationState = "background" | "inactive" | "active";
-
 export const applicationChangeState = createStandardAction(
   "APP_STATE_CHANGE_ACTION"
-)<ApplicationState>();
+)<AppStateStatus>();
 
 export type ApplicationActions =
   | ActionType<typeof startApplicationInitialization>

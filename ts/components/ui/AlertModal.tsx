@@ -1,6 +1,11 @@
 import { Text } from "native-base";
 import React from "react";
-import { BackHandler, StyleSheet, View } from "react-native";
+import {
+  BackHandler,
+  NativeEventSubscription,
+  StyleSheet,
+  View
+} from "react-native";
 import variables from "../../theme/variables";
 import { Overlay } from "./Overlay";
 
@@ -30,16 +35,21 @@ type Props = Readonly<{
  * A custom alert to show a message
  */
 export class AlertModal extends React.PureComponent<Props> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
   }
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPressed);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.onBackPressed
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPressed);
+    this.subscription?.remove();
   }
 
   private onBackPressed() {

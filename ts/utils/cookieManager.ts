@@ -1,4 +1,4 @@
-import CookieManager, { Cookie } from "@react-native-community/cookies";
+import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 
 export const ioClearCookie = (cb: () => void) => {
   CookieManager.clearAll().catch(cb);

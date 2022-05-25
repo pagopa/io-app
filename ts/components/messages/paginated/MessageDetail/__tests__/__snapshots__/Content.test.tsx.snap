@@ -25,6 +25,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       Date and time sending:
     </Text>
@@ -42,6 +43,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           },
         ]
       }
+      uppercase={false}
     >
        18/10/2021, 16:00
     </Text>
@@ -62,6 +64,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       Sender:
     </Text>
@@ -79,6 +82,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           },
         ]
       }
+      uppercase={false}
     >
        Ċentru tas-Saħħa
     </Text>
@@ -99,6 +103,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       Service: 
     </Text>

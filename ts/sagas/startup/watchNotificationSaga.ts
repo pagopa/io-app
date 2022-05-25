@@ -1,6 +1,6 @@
+import { AppStateStatus } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
-import { ApplicationState } from "../../store/actions/application";
 import {
   navigateToMessageRouterScreen,
   navigateToPaginatedMessageRouterAction
@@ -19,8 +19,8 @@ import { UIMessageId } from "../../store/reducers/entities/messages/types";
  * @param newState  current application state
  */
 export function* watchNotificationSaga(
-  lastState: ApplicationState,
-  newState: ApplicationState
+  lastState: AppStateStatus,
+  newState: AppStateStatus
 ): SagaIterator {
   if (lastState !== "active" && newState === "active") {
     // Check if there is a payment ongoing
