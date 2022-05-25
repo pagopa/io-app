@@ -22,7 +22,7 @@ NativeModules.RNGestureHandlerModule = {
 
 jest.mock("@react-native-community/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", jest.fn());
-jest.mock("@react-native-community/cookies", jest.fn());
+jest.mock("@react-native-cookies/cookies", jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 
@@ -71,7 +71,8 @@ jest.mock("rehype-format", jest.fn());
 jest.mock("unist-util-visit", jest.fn());
 jest.mock("hastscript", jest.fn());
 
-// eslint-disable-next-line functional/immutable-data,no-underscore-dangle
+jest.mock("react-native-device-info", () => mockRNDeviceInfo);
+
 global.__reanimatedWorkletInit = jest.fn();
 
 jest.mock("@gorhom/bottom-sheet", () => {
