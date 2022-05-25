@@ -73,7 +73,9 @@ const FimsWebviewScreen = () => {
 
     const maybeParsedUrl = maybeFimsDomain.chain(domain => {
       const parsed = new URLParse(domain as string, true);
-      return parsed.protocol ? some(parsed) : none;
+      return parsed.protocol && parsed.protocol === "https"
+        ? some(parsed)
+        : none;
     });
 
     if (maybeFimsDomain.isNone() || maybeParsedUrl.isNone()) {
@@ -86,19 +88,18 @@ const FimsWebviewScreen = () => {
       ]);
       return;
     }
-    const url = new URLParse(maybeFimsDomain.value as string, true);
 
     const cookie: IOCookie = {
       name: "token",
       value: maybeSessionToken.value,
-      domain: url.hostname,
+      domain: maybeParsedUrl.value.hostname,
       path: "/",
       httpOnly: true,
       secure: true
     };
 
     setCookie(
-      url.origin,
+      maybeParsedUrl.value.origin,
       cookie,
       () => setIsCookieAvailable(true),
       () => setCookieError(true)
