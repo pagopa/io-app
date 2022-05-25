@@ -43,9 +43,6 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
       }
     >
       <ActivityIndicator
-        animating={true}
-        color="#999999"
-        hidesWhenStopped={true}
         size="large"
       />
       <Text
@@ -63,6 +60,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
             },
           ]
         }
+        uppercase={false}
       >
         Wait a few seconds..
       </Text>

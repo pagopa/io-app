@@ -12,6 +12,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
     accessibilityLabel="Label"
     accessibilityRole="button"
     accessible={true}
+    collapsable={false}
     focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}

@@ -7,6 +7,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
   . "
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -107,6 +108,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -131,6 +133,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
@@ -225,6 +228,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
   . "
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -325,6 +329,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -349,6 +354,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
@@ -540,6 +546,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
   . "
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -640,6 +647,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -664,6 +672,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
@@ -855,6 +864,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
   . "
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -960,6 +970,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -984,6 +995,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
@@ -1129,6 +1141,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
   . "
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -1229,6 +1242,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -1255,6 +1269,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
@@ -1427,6 +1442,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
   . "
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -1527,6 +1543,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -1551,6 +1568,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
@@ -1696,6 +1714,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
   . Paid"
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -1796,6 +1815,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -1822,6 +1842,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
@@ -2026,6 +2047,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
   . Paid"
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -2126,6 +2148,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -2150,6 +2173,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
@@ -2352,6 +2376,7 @@ exports[`MessageList Item component with all the flags set to false should match
   . "
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -2452,6 +2477,7 @@ exports[`MessageList Item component with all the flags set to false should match
             },
           ]
         }
+        uppercase={false}
       >
         10/18/21
       </Text>
@@ -2476,6 +2502,7 @@ exports[`MessageList Item component with all the flags set to false should match
           "fontSize": 16,
         }
       }
+      uppercase={false}
     >
       health
     </Text>
