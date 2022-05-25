@@ -67,7 +67,6 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
