@@ -11,7 +11,6 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 
 import AmountIcon from "../../../../../img/features/payments/Amount.svg";
 import CalendarIcon from "../../../../../img/features/payments/calendar.svg";
-import OrganizationIcon from "../../../../../img/features/payments/organization.svg";
 import NoticeIcon from "../../../../../img/features/payments/Giacenza.svg";
 import { PaymentState } from "../../../../store/reducers/wallet/payment";
 import { formatTextRecipient } from "../../../../utils/strings";
@@ -24,6 +23,8 @@ import { BaseTypography } from "../../../../components/core/typography/BaseTypog
 import IconFont from "../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
+import { getLogoForOrganization } from "../../../../utils/organizations";
+import { MultiImage } from "../../../../components/ui/MultiImage";
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +48,10 @@ const styles = StyleSheet.create({
   icon: {
     width: customVariables.iconSizeBase,
     marginEnd: customVariables.spacerWidth
+  },
+  organizationIcon: {
+    width: customVariables.iconSizeBase,
+    height: customVariables.iconSizeBase
   },
   title: {
     flex: 1
@@ -158,6 +163,11 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     .map(formatTextRecipient)
     .toUndefined();
 
+  const organizationIcon = [
+    ...getLogoForOrganization(props.organizationFiscalCode),
+    require("../../../../../img/features/payments/Institution.png")
+  ];
+
   const description = pot.toUndefined(
     pot.mapNullable(props.paymentVerification, _ =>
       cleanTransactionDescription(_.causaleVersamento)
@@ -179,7 +189,12 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         axis={"vertical"}
         title={I18n.t("wallet.firstTransactionSummary.recipient")}
         subtitle={recipient}
-        icon={<OrganizationIcon {...iconProps}></OrganizationIcon>}
+        icon={
+          <MultiImage
+            style={styles.organizationIcon}
+            source={organizationIcon}
+          />
+        }
         placeholder={<LoadingPlaceholder size={"full"} />}
         isLoading={isLoading}
       />
