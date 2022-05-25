@@ -27,7 +27,6 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { PayloadForAction } from "../../../types/utils";
 import {
   navigateToPaymentPickPaymentMethodScreen,
@@ -56,6 +55,11 @@ import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
 import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
+import {
+  continueButtonProps,
+  helpButtonProps,
+  loadingButtonProps
+} from "./components/TransactionSummaryButtonConfigurations";
 
 export type TransactionSummaryError = Option<
   PayloadForAction<
@@ -74,8 +78,8 @@ const styles = StyleSheet.create({
 const renderFooter = (
   isLoading: boolean,
   error: TransactionSummaryError,
-  onContinue: () => void,
-  onHelp: () => void
+  continuePayment: () => void,
+  help: () => void
 ) => {
   if (error.isSome()) {
     const errorOrUndefined = error.toUndefined();
@@ -87,11 +91,7 @@ const renderFooter = (
         return (
           <FooterWithButtons
             type="SingleButton"
-            leftButton={{
-              block: true,
-              onPress: onHelp,
-              title: I18n.t("payment.details.info.buttons.help")
-            }}
+            leftButton={helpButtonProps(help)}
           />
         );
       default:
@@ -102,15 +102,7 @@ const renderFooter = (
     return (
       <FooterWithButtons
         type="SingleButton"
-        leftButton={{
-          block: true,
-          onPress: undefined,
-          title: "",
-          disabled: true,
-          style: { backgroundColor: IOColors.greyLight, width: "100%" },
-          isLoading: true,
-          iconColor: IOColors.bluegreyDark
-        }}
+        leftButton={loadingButtonProps()}
       />
     );
   }
@@ -118,11 +110,7 @@ const renderFooter = (
   return (
     <FooterWithButtons
       type="SingleButton"
-      leftButton={{
-        block: true,
-        onPress: onContinue,
-        title: I18n.t("wallet.continue")
-      }}
+      leftButton={continueButtonProps(continuePayment)}
     />
   );
 };
