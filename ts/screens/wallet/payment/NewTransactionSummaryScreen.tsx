@@ -41,7 +41,6 @@ import {
   isLoading as isRemoteLoading,
   isUndefined
 } from "../../../features/bonus/bpd/model/RemoteValue";
-import { PaymentState } from "../../../store/reducers/wallet/payment";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   getFavoriteWallet,
@@ -147,7 +146,6 @@ const NewTransactionSummaryScreen = ({
   verifyPayment,
   onDuplicatedPayment,
   navigateToPaymentTransactionError,
-  shouldNavigateToPaymentTransactionError,
   walletById,
   loadWallets,
   navigation,
@@ -168,6 +166,12 @@ const NewTransactionSummaryScreen = ({
     }
   });
 
+  // We show inline error status only if the payment starts
+  // from a message and the verification fails. In all the other
+  // cases we present the fullscreen error message.
+  const paymentStartOrigin = navigation.getParam("paymentStartOrigin");
+  const showsInlineError = paymentStartOrigin === "message";
+
   const errorOrUndefined = error.toUndefined();
   useEffect(() => {
     if (errorOrUndefined === undefined) {
@@ -176,14 +180,14 @@ const NewTransactionSummaryScreen = ({
     if (errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO") {
       onDuplicatedPayment();
     }
-    if (shouldNavigateToPaymentTransactionError(paymentVerification)) {
+    if (pot.isError(paymentVerification) && !showsInlineError) {
       navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
     }
   }, [
     errorOrUndefined,
     onDuplicatedPayment,
     navigateToPaymentTransactionError,
-    shouldNavigateToPaymentTransactionError,
+    showsInlineError,
     paymentVerification
   ]);
 
@@ -241,7 +245,7 @@ const NewTransactionSummaryScreen = ({
       headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
     >
       <SafeAreaView style={styles.container}>
-        <TransactionSummaryStatus error={error} />
+        {showsInlineError && <TransactionSummaryStatus error={error} />}
         <ScrollView>
           <TransactionSummary
             paymentVerification={paymentVerification}
@@ -249,7 +253,7 @@ const NewTransactionSummaryScreen = ({
             organizationFiscalCode={organizationFiscalCode}
             isPaid={errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO"}
           />
-          {pot.isError(paymentVerification) && (
+          {showsInlineError && pot.isError(paymentVerification) && (
             <TransactionSummaryErrorDetails
               error={error}
               paymentNoticeNumber={paymentNoticeNumber}
@@ -365,13 +369,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       rptId
     });
 
-  // We show inline error status only if the payment starts
-  // from a message and the verification fails. In all the other
-  // cases we present the fullscreen error message.
-  const shouldNavigateToPaymentTransactionError = (
-    paymentVerification: PaymentState["verifica"]
-  ) => !(paymentStartOrigin === "message" && pot.isError(paymentVerification));
-
   const startOrResumePayment = (
     paymentVerification: PaymentRequestsGetResponse,
     maybeFavoriteWallet: ReturnType<
@@ -467,7 +464,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     verifyPayment,
     onDuplicatedPayment,
     navigateToPaymentTransactionError,
-    shouldNavigateToPaymentTransactionError,
     continueWithPayment,
     resetPayment,
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
