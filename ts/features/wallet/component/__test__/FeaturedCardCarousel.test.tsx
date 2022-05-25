@@ -1,7 +1,5 @@
-import { render } from "@testing-library/react-native";
 import * as React from "react";
 import configureMockStore, { MockStoreEnhanced } from "redux-mock-store";
-import { Provider } from "react-redux";
 import FeaturedCardCarousel from "../card/FeaturedCardCarousel";
 import { appReducer } from "../../../../store/reducers";
 import { bpdLoadActivationStatus } from "../../../bonus/bpd/store/actions/details";
@@ -16,6 +14,8 @@ import {
 } from "../../../bonus/bonusVacanze/utils/bonus";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ROUTES from "../../../../navigation/routes";
 
 jest.mock("react-native-share", () => jest.fn());
 describe("FeaturedCardCarousel", () => {
@@ -350,9 +350,10 @@ describe("FeaturedCardCarousel", () => {
   });
 });
 
-const getComponent = (store: MockStoreEnhanced) =>
-  render(
-    <Provider store={store}>
-      <FeaturedCardCarousel />
-    </Provider>
+const getComponent = (mockStore: MockStoreEnhanced<GlobalState>) =>
+  renderScreenFakeNavRedux<GlobalState>(
+    () => <FeaturedCardCarousel />,
+    ROUTES.MESSAGE_DETAIL,
+    {},
+    mockStore
   );

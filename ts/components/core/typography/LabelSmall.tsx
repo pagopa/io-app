@@ -9,13 +9,16 @@ type AllowedColors = Extract<
   "blue" | "bluegrey" | "bluegreyDark" | "red" | "white"
 >;
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
-
+type FontSize = "regular" | "small";
+type AllowedFontSize = { fontSize?: FontSize };
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
->;
+> &
+  AllowedFontSize;
 
 const fontName: IOFontFamily = "TitilliumWeb";
-const fontSize = 14;
+
+const fontSizeMapping: Record<FontSize, number> = { regular: 14, small: 12 };
 
 /**
  * Typography component to render `LabelSmall` text with font size {@link fontSize} and fontFamily {@link fontName}.
@@ -29,5 +32,9 @@ export const LabelSmall: React.FunctionComponent<OwnProps> = props =>
     defaultWeight: "Bold",
     defaultColor: "blue",
     font: fontName,
-    fontStyle: { fontSize }
+    fontStyle: {
+      fontSize: props.fontSize
+        ? fontSizeMapping[props.fontSize]
+        : fontSizeMapping.regular
+    }
   });

@@ -6,8 +6,6 @@ import { useMemo } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -35,7 +33,7 @@ import {
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
 import { CATEGORY_GRADIENT_ANGLE, getCategorySpecs } from "../../utils/filters";
-import { MerchantsAll } from "./CgnMerchantsListScreen";
+import { mixAndSortMerchants } from "../../utils/merchants";
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -86,24 +84,14 @@ const CgnMerchantsListByCategory = () => {
 
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
-  const merchantsAll = useMemo(() => {
-    const onlineMerchantsValue = getValueOrElse(onlineMerchants, []);
-    const offlineMerchantsValue = getValueOrElse(offlineMerchants, []);
-
-    const merchantsAll = [...onlineMerchantsValue, ...offlineMerchantsValue];
-
-    // Removes possible duplicated merchant:
-    // a merchant can be both online and offline, or may have multiple result by offlineMerchant search API
-    const uniquesMerchants = [
-      ...new Map<OfflineMerchant["id"] | OnlineMerchant["id"], MerchantsAll>(
-        merchantsAll.map(m => [m.id, m])
-      ).values()
-    ];
-
-    return [...uniquesMerchants].sort((m1: MerchantsAll, m2: MerchantsAll) =>
-      m1.name.localeCompare(m2.name)
-    );
-  }, [onlineMerchants, offlineMerchants]);
+  const merchantsAll = useMemo(
+    () =>
+      mixAndSortMerchants(
+        getValueOrElse(onlineMerchants, []),
+        getValueOrElse(offlineMerchants, [])
+      ),
+    [onlineMerchants, offlineMerchants]
+  );
 
   const onItemPress = (id: Merchant["id"]) => {
     navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {

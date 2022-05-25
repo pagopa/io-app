@@ -4,7 +4,7 @@ import * as React from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
-import CookieManager, { Cookie } from "@react-native-community/cookies";
+import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Switch from "../../components/ui/Switch";

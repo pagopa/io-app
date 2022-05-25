@@ -164,7 +164,7 @@ index 52fe472..6bccb4a 100644
 +  accessibilityRole?: AccessibilityProps['accessibilityRole'] | null;
 +}
 diff --git a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx
-index 0f5ac23..920251e 100644
+index 0f5ac23..d372e07 100644
 --- a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx
 +++ b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx
 @@ -6,7 +6,7 @@ import React, {
@@ -184,7 +184,7 @@ index 0f5ac23..920251e 100644
  } from '../../constants';
  import {
    animate,
-@@ -71,6 +72,11 @@ import {
+@@ -71,10 +72,16 @@ import {
    INITIAL_SNAP_POINT,
    DEFAULT_ENABLE_PAN_DOWN_TO_CLOSE,
    INITIAL_CONTAINER_OFFSET,
@@ -196,7 +196,12 @@ index 0f5ac23..920251e 100644
  } from './constants';
  import type { BottomSheetMethods, Insets } from '../../types';
  import type { BottomSheetProps, AnimateToPositionType } from './types';
-@@ -152,6 +158,19 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+ import { styles } from './styles';
++import ReText from '../bottomSheetDebugView/ReText';
+ 
+ Animated.addWhitelistedUIProps({
+   decelerationRate: true,
+@@ -152,6 +159,19 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
        backgroundComponent,
        footerComponent,
        children,
@@ -216,7 +221,7 @@ index 0f5ac23..920251e 100644
      } = props;
      //#endregion
  
-@@ -587,8 +606,42 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+@@ -587,8 +607,42 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
          if (_providedOnChange) {
            _providedOnChange(index);
          }
@@ -260,7 +265,7 @@ index 0f5ac23..920251e 100644
      );
      const handleOnAnimate = useCallback(
        function handleOnAnimate(toPoint: number) {
-@@ -1578,6 +1631,10 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+@@ -1578,6 +1632,10 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
                  />
                  <Animated.View
                    pointerEvents="box-none"
@@ -271,7 +276,7 @@ index 0f5ac23..920251e 100644
                    style={contentMaskContainerStyle}
                  >
                    <BottomSheetDraggableView
-@@ -1608,6 +1665,13 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+@@ -1608,8 +1666,16 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
                    handleComponent={handleComponent}
                    handleStyle={_providedHandleStyle}
                    handleIndicatorStyle={_providedHandleIndicatorStyle}
@@ -284,7 +289,10 @@ index 0f5ac23..920251e 100644
 +                  }
                  />
                </Animated.View>
++              <ReText style={{ position: 'absolute', opacity: 0, marginLeft: -10000, display: "none" }} text={""} value={animatedSheetState} />
                {/* <BottomSheetDebugView
+                 values={{
+                   // topInset,
 diff --git a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/constants.ts b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/constants.ts
 index a30aaae..0785f19 100644
 --- a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/constants.ts
