@@ -3,7 +3,10 @@ import { CompatNavigationProp } from "@react-navigation/compat";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
-import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import {
+  PaymentNoticeNumberFromString,
+  RptIdFromString
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { ActionSheet } from "native-base";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
@@ -51,6 +54,18 @@ import {
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import { DetailV2Keys, getV2ErrorMainType } from "../../../utils/payment";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
+import {
+  addTicketCustomField,
+  appendLog,
+  resetCustomFields,
+  zendeskBlockedPaymentRptIdId,
+  zendeskCategoryId,
+  zendeskPaymentCategory
+} from "../../../utils/supportAssistance";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -78,7 +93,7 @@ const styles = StyleSheet.create({
 const renderFooter = (
   isLoading: boolean,
   error: TransactionSummaryError,
-  continuePayment: () => void,
+  continueWithPayment: () => void,
   help: () => void
 ) => {
   if (error.isSome()) {
@@ -110,7 +125,7 @@ const renderFooter = (
   return (
     <FooterWithButtons
       type="SingleButton"
-      leftButton={continueButtonProps(continuePayment)}
+      leftButton={continueButtonProps(continueWithPayment)}
     />
   );
 };
@@ -141,7 +156,8 @@ const NewTransactionSummaryScreen = ({
   hasPayableMethods,
   paymentId,
   backToEntrypointPayment,
-  resetPayment
+  resetPayment,
+  startAssistanceRequest
 }: Props): React.ReactElement => {
   useOnFirstRender(() => {
     if (pot.isNone(paymentVerification)) {
@@ -251,7 +267,7 @@ const NewTransactionSummaryScreen = ({
               maybeFavoriteWallet,
               hasPayableMethods
             ),
-          () => {}
+          () => startAssistanceRequest(error, messageId)
         )}
       </SafeAreaView>
     </BaseScreenComponent>
@@ -424,6 +440,28 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatch(paymentInitializeState());
   };
 
+  const startAssistanceRequest = (
+    error: TransactionSummaryError,
+    messageId: string | undefined
+  ) => {
+    resetCustomFields();
+    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+    addTicketCustomField(
+      zendeskBlockedPaymentRptIdId,
+      RptIdFromString.encode(rptId)
+    );
+    appendLog(
+      JSON.stringify({
+        error,
+        messageId
+      })
+    );
+    dispatch(
+      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+    );
+    dispatch(zendeskSelectedCategory(zendeskPaymentCategory));
+  };
+
   return {
     loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     verifyPayment,
@@ -432,7 +470,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     shouldNavigateToPaymentTransactionError,
     continueWithPayment,
     resetPayment,
-    backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
+    backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
+    startAssistanceRequest
   };
 };
 
