@@ -60,7 +60,6 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import NewTransactionSummaryScreen from "../screens/wallet/payment/NewTransactionSummaryScreen";
-import { TransactionSummary } from "../screens/wallet/payment/components/TransactionSummary";
 import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import ROUTES from "./routes";
 
