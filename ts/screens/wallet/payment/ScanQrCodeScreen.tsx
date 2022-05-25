@@ -186,7 +186,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
       return maybePosteDataMatrix.foldL<void>(
         () => {
-          void mixpanelTrack("WALLET_SCAN_BARCODE_DATAMATRIX_FAILURE");
+          if (this.state.scanningState !== "INVALID") {
+            void mixpanelTrack("WALLET_SCAN_BARCODE_DATAMATRIX_FAILURE");
+          }
+
           this.onInvalidQrCode();
         },
         data => {
