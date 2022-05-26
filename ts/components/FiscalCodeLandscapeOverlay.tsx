@@ -57,9 +57,12 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
   };
 
   React.useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleBackPress
+    );
     return () => {
-      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+      subscription.remove();
       // if there is an active timeout, clear it!
       if (scrollTimeout !== undefined) {
         clearTimeout(scrollTimeout);

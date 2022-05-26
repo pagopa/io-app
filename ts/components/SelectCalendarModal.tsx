@@ -1,6 +1,6 @@
 import { Container, Content, Text, View } from "native-base";
 import React from "react";
-import { BackHandler, StyleSheet } from "react-native";
+import { BackHandler, NativeEventSubscription, StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendar-events";
 
 import { connect } from "react-redux";
@@ -30,6 +30,7 @@ type State = {
  * A modal that allow the user to select one of the device available Calendars
  */
 class SelectCalendarModal extends React.PureComponent<Props, State> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -86,11 +87,15 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.onBackPress
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    this.subscription?.remove();
   }
 }
 

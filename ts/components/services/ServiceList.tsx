@@ -14,7 +14,6 @@ import {
   StyleSheet
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { ServicesSectionState } from "../../store/reducers/entities/services";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -36,7 +35,6 @@ type OwnProps = {
   ListEmptyComponent?: React.ComponentProps<
     typeof SectionList
   >["ListEmptyComponent"];
-  renderRightIcon?: (selectedOrgId: ServicesSectionState) => React.ReactNode;
 };
 
 type Props = OwnProps & AnimatedProps;
@@ -52,7 +50,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 class ServiceList extends React.Component<Props> {
   private sectionListRef = React.createRef<SectionList>();
 
@@ -79,13 +76,12 @@ class ServiceList extends React.Component<Props> {
     );
 
   private renderServiceSectionHeader = (info: {
-    section: ServicesSectionState;
+    section: SectionListData<pot.Pot<ServicePublic, Error>>;
   }): React.ReactNode => (
     <SectionHeaderComponent
       sectionHeader={info.section.organizationName}
       style={styles.padded}
       logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
-      rightItem={this.props.renderRightIcon?.(info.section)}
       accessibilityRole={"header"}
     />
   );
@@ -99,7 +95,7 @@ class ServiceList extends React.Component<Props> {
     );
 
     return (
-      <AnimatedSectionList
+      <Animated.SectionList
         ref={this.sectionListRef}
         scrollEnabled={true}
         scrollEventThrottle={
