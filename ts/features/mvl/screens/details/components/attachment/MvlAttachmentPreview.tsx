@@ -22,6 +22,7 @@ import {
   mvlAttachmentDownloadFromIdSelector,
   MvlDownload
 } from "../../../../store/reducers/downloads";
+import WorkunitGenericFailure from "../../../../../../components/error/WorkunitGenericFailure";
 
 const styles = StyleSheet.create({
   container: {
@@ -125,34 +126,34 @@ export const MvlAttachmentPreview = (props: Props): React.ReactElement => {
     mvlAttachmentDownloadFromIdSelector(state, attachmentId)
   );
   const download = pot.toUndefined(downloadPot);
-  return (
+  return download ? (
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
     >
-      {download && (
-        <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
-          <Pdf
-            source={{ uri: download.path, cache: true }}
-            style={styles.pdf}
-            onError={_ => {
-              showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.bottomSheet.failing.details"
-                )
-              );
-              dispatch(
-                mvlRemoveCachedAttachment({
-                  id: download.attachment.id,
-                  path: download.path
-                })
-              );
-            }}
-          />
-          {renderFooter(download)}
-        </SafeAreaView>
-      )}
+      <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
+        <Pdf
+          source={{ uri: download.path, cache: true }}
+          style={styles.pdf}
+          onError={_ => {
+            showToast(
+              I18n.t(
+                "features.mvl.details.attachments.bottomSheet.failing.details"
+              )
+            );
+            dispatch(
+              mvlRemoveCachedAttachment({
+                id: download.attachment.id,
+                path: download.path
+              })
+            );
+          }}
+        />
+        {renderFooter(download)}
+      </SafeAreaView>
     </BaseScreenComponent>
+  ) : (
+    <WorkunitGenericFailure />
   );
 };
