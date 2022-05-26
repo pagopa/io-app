@@ -8,6 +8,7 @@ import BlockButtons from "../../../../components/ui/BlockButtons";
 import I18n from "../../../../i18n";
 import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { TransactionSummaryRow } from "./TransactionSummary";
 
 type Props = Readonly<{
@@ -36,7 +37,8 @@ export const TransactionSummaryErrorDetails = ({
   const errorOrUndefined = error.toUndefined();
   if (
     errorOrUndefined === undefined ||
-    errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO"
+    errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
+    !Object.keys(Detail_v2Enum).includes(errorOrUndefined)
   ) {
     return <></>;
   }
