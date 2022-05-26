@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0-rc.1](https://github.com/pagopa/io-app/compare/2.11.0-rc.0...2.11.0-rc.1) (2022-05-26)
+
+
+### Chores
+
+* [[IAI-36](https://pagopa.atlassian.net/browse/IAI-36)] Update react native to `0.67.4` ([#3915](https://github.com/pagopa/io-app/issues/3915)) ([7df0557](https://github.com/pagopa/io-app/commit/7df0557dbaa40e1c1f738f8527ede070c4b1909d))
+
 ## [2.11.0-rc.0](https://github.com/pagopa/io-app/compare/2.10.0-rc.1...2.11.0-rc.0) (2022-05-24)
 
 
