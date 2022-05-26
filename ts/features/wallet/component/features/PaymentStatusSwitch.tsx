@@ -94,12 +94,12 @@ const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
       testID={"PaymentStatusSwitch"}
       value={val}
       onRetry={props.loadWallets}
-      onValueChange={newVal =>
+      onValueChange={newVal => {
         props.updatePaymentStatus({
           paymentEnabled: newVal,
           idWallet: props.paymentMethod.idWallet
-        })
-      }
+        });
+      }}
     />
   ));
 };

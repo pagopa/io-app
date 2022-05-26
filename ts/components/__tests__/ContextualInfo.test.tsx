@@ -1,6 +1,6 @@
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import React from "react";
-import { BackHandler, Text } from "react-native";
+import { Text } from "react-native";
 import { createStore } from "redux";
 import ROUTES from "../../navigation/routes";
 
@@ -65,21 +65,6 @@ describe("ContextualInfo component", () => {
   it("should render the title", () => {
     const component = renderComponent(options);
     expect(component.getByText(options.title)).toBeDefined();
-  });
-
-  it("should listen for the `hardwareBackPress` event and clean it up on unmount", () => {
-    const addEventSpy = jest.spyOn(BackHandler, "addEventListener");
-    const removeEventSpy = jest.spyOn(BackHandler, "removeEventListener");
-    const component = renderComponent(options);
-    expect(addEventSpy).toHaveBeenLastCalledWith(
-      "hardwareBackPress",
-      expect.any(Function)
-    );
-    component.unmount();
-    expect(removeEventSpy).toHaveBeenLastCalledWith(
-      "hardwareBackPress",
-      expect.any(Function)
-    );
   });
 });
 
