@@ -2,6 +2,7 @@
  * A reducer to store the organization names and fiscal codes
  */
 import { getType } from "typesafe-actions";
+import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
 import { loadServiceDetail } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -40,6 +41,9 @@ const reducer = (
         ];
       }
       return state;
+    case getType(logoutSuccess):
+    case getType(sessionExpired):
+      return INITIAL_STATE;
 
     default:
       return state;
