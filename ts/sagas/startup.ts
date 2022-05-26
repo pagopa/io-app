@@ -74,6 +74,8 @@ import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
+import { differentProfileLoggedIn } from "../store/actions/crossSessions";
+import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -167,6 +169,12 @@ export function* initializeApplicationSaga(): Generator<
   if (zendeskEnabled) {
     yield* fork(watchZendeskSupportSaga);
   }
+
+  if (mvlEnabled) {
+    // clear cached downloads when the logged user changes
+    yield* takeEvery(differentProfileLoggedIn, clearAllMvlAttachments);
+  }
+
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield* select(profileSelector);

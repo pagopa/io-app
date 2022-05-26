@@ -43,6 +43,7 @@ import {
   INSTALLATION_INITIAL_STATE,
   InstallationState
 } from "../store/reducers/installation";
+import { mvlPersistConfig } from "../features/mvl";
 import { configureReactotron } from "./configureRectotron";
 
 /**
@@ -339,7 +340,8 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
     rootPersistConfig,
     authenticationPersistConfig,
     walletsPersistConfig,
-    entitiesPersistConfig
+    entitiesPersistConfig,
+    mvlPersistConfig
   ])
 );
 
