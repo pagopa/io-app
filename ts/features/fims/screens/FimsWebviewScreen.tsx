@@ -73,7 +73,7 @@ const FimsWebviewScreen = () => {
 
     const maybeParsedUrl = maybeFimsDomain.chain(domain => {
       const parsed = new URLParse(domain as string, true);
-      return parsed.protocol && parsed.protocol === "https"
+      return parsed.protocol && parsed.protocol === "https:"
         ? some(parsed)
         : none;
     });
