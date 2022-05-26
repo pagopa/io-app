@@ -90,7 +90,15 @@ const LoadingPlaceholder = (props: { size: "full" | "half" }) => (
 );
 
 const InfoButton = (props: { onPress: () => void }) => (
-  <TouchableDefaultOpacity onPress={props.onPress} style={{ padding: 10 }}>
+  <TouchableDefaultOpacity
+    onPress={props.onPress}
+    style={{ padding: 10 }}
+    accessible={true}
+    accessibilityLabel={I18n.t(
+      "wallet.firstTransactionSummary.amountInfo.title"
+    )}
+    accessibilityRole={"button"}
+  >
     <IconFont name={"io-info"} size={24} color={IOColors.blue} />
   </TouchableDefaultOpacity>
 );
@@ -120,6 +128,12 @@ export const TransactionSummaryRow = (
           style={
             props.axis === "vertical" ? styles.vertical : styles.horizontal
           }
+          accessible={true}
+          accessibilityLabel={`${props.title}: ${
+            props.isLoading
+              ? I18n.t("global.accessibility.activityIndicator.label")
+              : props.subtitle
+          }`}
         >
           <H5 weight="Regular" color={"bluegrey"} style={styles.title}>
             {props.title}

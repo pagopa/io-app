@@ -19,6 +19,7 @@ type StatusContentProps = {
 
 export const renderStatusContent = (props: StatusContentProps) => (
   <StatusContent
+    accessibilityRole={"alert"}
     backgroundColor={props.backgroundColor}
     iconColor={props.iconColor}
     iconName={props.iconName}

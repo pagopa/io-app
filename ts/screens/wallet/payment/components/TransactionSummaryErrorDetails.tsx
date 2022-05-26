@@ -84,6 +84,9 @@ export const TransactionSummaryErrorDetails = ({
           paddingTop: customVariables.spacerLargeHeight,
           paddingBottom: customVariables.spacerSmallHeight
         }}
+        accessibilityLabel={I18n.t(
+          "wallet.firstTransactionSummary.errorDetails.title"
+        )}
       >
         <View>
           <Separator />
