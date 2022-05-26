@@ -7,6 +7,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { PaginatedServiceTupleCollection } from "../../../../../definitions/backend/PaginatedServiceTupleCollection";
+import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
 import { loadVisibleServices } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -31,6 +32,10 @@ export const visibleServicesReducer = (
 
     case getType(loadVisibleServices.failure):
       return pot.toError(state, action.payload);
+
+    case getType(logoutSuccess):
+    case getType(sessionExpired):
+      return INITIAL_STATE;
 
     default:
       return state;

@@ -31,6 +31,7 @@ import {
   createRootReducer
 } from "../store/reducers";
 import { ContentState } from "../store/reducers/content";
+import { entitiesPersistConfig } from "../store/reducers/entities";
 import { NotificationsState } from "../store/reducers/notifications";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
@@ -338,7 +339,7 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   createRootReducer([
     rootPersistConfig,
     authenticationPersistConfig,
-    walletsPersistConfig,
+    entitiesPersistConfig
     mvlPersistConfig
   ])
 );
