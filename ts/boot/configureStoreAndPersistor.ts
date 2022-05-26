@@ -339,7 +339,8 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   createRootReducer([
     rootPersistConfig,
     authenticationPersistConfig,
-    entitiesPersistConfig
+    walletsPersistConfig,
+    entitiesPersistConfig,
     mvlPersistConfig
   ])
 );
