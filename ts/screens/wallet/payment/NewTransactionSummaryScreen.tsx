@@ -240,6 +240,7 @@ const NewTransactionSummaryScreen = ({
 
   return (
     <BaseScreenComponent
+      backButtonTestID={"back-button-transaction-summary"}
       goBack={goBack}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
