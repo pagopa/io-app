@@ -238,7 +238,7 @@ dependencies {
 
     implementation project(':react-native-cie')
 
-    implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
+    implementation ("com.squareup.okhttp3:okhttp:4.9.2"){
         force = true
     }
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
