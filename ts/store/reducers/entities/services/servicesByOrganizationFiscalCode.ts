@@ -6,6 +6,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
 import {
   loadServiceDetail,
   removeServiceTuples
@@ -49,6 +50,10 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
         ...state,
         [organization_fiscal_code]: updatedServicesForOrganization
       };
+
+    case getType(logoutSuccess):
+    case getType(sessionExpired):
+      return INITIAL_STATE;
 
     case getType(removeServiceTuples): {
       const serviceTuples = action.payload;
