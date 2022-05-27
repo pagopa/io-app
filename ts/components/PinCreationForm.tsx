@@ -100,7 +100,8 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               onChangeText: setPin,
               keyboardType: "number-pad",
               maxLength: pinLength,
-              onEndEditing: handlePinBlur
+              onEndEditing: handlePinBlur,
+              secureTextEntry: true
             }}
             icon={isPinValid ? undefined : "io-warning"}
             iconColor={IOColors.red}
@@ -127,7 +128,8 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               onChangeText: setPinConfirmation,
               keyboardType: "number-pad",
               maxLength: pinLength,
-              onEndEditing: handlePinConfirmationBlur
+              onEndEditing: handlePinConfirmationBlur,
+              secureTextEntry: true
             }}
             icon={isPinConfirmationValid ? undefined : "io-warning"}
             iconColor={IOColors.red}
