@@ -6,6 +6,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
 import {
   loadServiceDetail,
   removeServiceTuples
@@ -46,6 +47,9 @@ const reducer = (
         ...state,
         [action.payload.service_id]: pot.some(action.payload)
       };
+    case getType(logoutSuccess):
+    case getType(sessionExpired):
+      return INITIAL_STATE;
 
     case getType(loadServiceDetail.failure):
       // when a request to load a previously loaded service detail fails its state is updated

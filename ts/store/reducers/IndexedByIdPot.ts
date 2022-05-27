@@ -60,7 +60,7 @@ export const toError = <T, E>(
 });
 
 /**
- * Return a new IndexedById<pot.Pot<T, E>>, updating the the entry with id to updating
+ * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with id to updating
  * @param id
  * @param data
  * @param value
@@ -72,4 +72,17 @@ export const toUpdating = <T, E>(
 ): IndexedById<pot.Pot<T, E>> => ({
   ...data,
   [id]: pot.toUpdating(readPot(id, data), value)
+});
+
+/**
+ * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with id to none
+ * @param id
+ * @param data
+ */
+export const toNone = <T, E>(
+  id: string | number,
+  data: IndexedById<pot.Pot<T, E>>
+): IndexedById<pot.Pot<T, E>> => ({
+  ...data,
+  [id]: pot.none
 });
