@@ -4,6 +4,7 @@
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
+import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
 
 import { updateOrganizations } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";
@@ -29,6 +30,10 @@ const reducer = (
         [action.payload.organization_fiscal_code]:
           action.payload.organization_name
       };
+
+    case getType(logoutSuccess):
+    case getType(sessionExpired):
+      return INITIAL_STATE;
 
     default:
       return state;
