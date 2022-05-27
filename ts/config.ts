@@ -106,8 +106,7 @@ export const scanAdditionalBarcodesEnabled =
   Config.SCAN_ADDITIONAL_BARCODES_ENABLED === "YES";
 
 // PN (Piattaforma Notifiche) Feature Flag
-export const pnEnabled =
-  Config.PN_ENABLED === "YES";
+export const pnEnabled = Config.PN_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
