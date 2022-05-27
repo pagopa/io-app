@@ -18,6 +18,7 @@ import Bank from "../../../../../img/bonus/cgn/categories/financialServices.svg"
 import SustainableMobility from "../../../../../img/bonus/cgn/categories/sustainableMobility.svg";
 import Job from "../../../../../img/bonus/cgn/categories/job.svg";
 import I18n from "../../../../i18n";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 
 export type Category = {
   type: ProductCategory;
@@ -122,11 +123,11 @@ export const orders: Record<string, OrderType> = {
 export const CATEGORY_GRADIENT_ANGLE = 57.23;
 
 export const orderCategoriesByNameKey = (
-  categories: ReadonlyArray<ProductCategoryEnum>
-): ReadonlyArray<ProductCategoryEnum> =>
+  categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
+): ReadonlyArray<ProductCategoryWithNewDiscountsCount> =>
   [...categories].sort((c1, c2) => {
-    const c1Specs = getCategorySpecs(c1);
-    const c2Specs = getCategorySpecs(c2);
+    const c1Specs = getCategorySpecs(c1.productCategory);
+    const c2Specs = getCategorySpecs(c2.productCategory);
     if (c1Specs.isNone() && c2Specs.isSome()) {
       return 1;
     } else if (c1Specs.isSome() && c2Specs.isNone()) {

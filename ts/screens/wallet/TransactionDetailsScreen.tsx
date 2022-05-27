@@ -6,7 +6,12 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Image,
+  NativeEventSubscription,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
@@ -109,17 +114,22 @@ type State = {
  * specific transaction.
  */
 class TransactionDetailsScreen extends React.Component<Props, State> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
     this.state = { showFullReason: false };
   }
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackPress
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    this.subscription?.remove();
   }
 
   private handleBackPress = () => {

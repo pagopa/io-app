@@ -15,13 +15,17 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
-import QRCodeScanner from "react-native-qrcode-scanner";
 import { connect } from "react-redux";
+import {
+  BarcodeCamera,
+  ScannedBarcode
+} from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -43,21 +47,30 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import customVariables from "../../../theme/variables";
+import { GlobalState } from "../../../store/reducers/types";
+import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+import customVariables, {
+  VIBRATION_BARCODE_SCANNED_DURATION
+} from "../../../theme/variables";
 import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
 import { AsyncAlert } from "../../../utils/asyncAlert";
-import { decodePagoPaQrCode } from "../../../utils/payment";
+import {
+  decodePagoPaQrCode,
+  decodePosteDataMatrix
+} from "../../../utils/payment";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
+import { mixpanelTrack } from "../../../mixpanel";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
   isFocused: boolean;
-  // The package react-native-qrcode-scanner automatically asks for android permission, but we have to display before an alert with
+  // The scanner package automatically asks for android permission, but we have to display before an alert with
   // the rationale
   permissionRationaleDisplayed: boolean;
 };
@@ -107,21 +120,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent",
     width: screenWidth
-  },
-
-  notAuthorizedContainer: {
-    padding: customVariables.contentPadding,
-    flex: 1,
-    alignItems: "center",
-    alignSelf: "stretch",
-    marginBottom: 14
-  },
-  notAuthorizedText: {
-    marginBottom: 25
-  },
-  notAuthorizedBtn: {
-    flex: 1,
-    alignSelf: "stretch"
   }
 });
 
@@ -137,7 +135,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private goBack = () => this.props.navigation.goBack();
-  private qrCodeScanner = React.createRef<QRCodeScanner>();
 
   /**
    * Handles valid pagoPA QR codes
@@ -150,21 +147,24 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    * Handles invalid pagoPA QR codes
    */
   private onInvalidQrCode = () => {
+    if (this.state.scanningState === "INVALID") {
+      return;
+    }
+
     showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");
 
     this.setState({
       scanningState: "INVALID"
     });
+
     // eslint-disable-next-line
     this.scannerReactivateTimeoutHandler = setTimeout(() => {
       // eslint-disable-next-line
       this.scannerReactivateTimeoutHandler = undefined;
-      if (this.qrCodeScanner.current) {
-        this.qrCodeScanner.current.reactivate();
-        this.setState({
-          scanningState: "SCANNING"
-        });
-      }
+
+      this.setState({
+        scanningState: "SCANNING"
+      });
     }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
   };
 
@@ -174,6 +174,30 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   private onQrCodeData = (data: string) => {
     const resultOrError = decodePagoPaQrCode(data);
     resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
+  };
+
+  private onDataMatrixData = (data: string) => {
+    const {
+      barcodesScannerConfig: { dataMatrixPosteEnabled }
+    } = this.props;
+
+    if (dataMatrixPosteEnabled) {
+      const maybePosteDataMatrix = decodePosteDataMatrix(data);
+
+      return maybePosteDataMatrix.foldL<void>(
+        () => {
+          if (this.state.scanningState !== "INVALID") {
+            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
+          }
+
+          this.onInvalidQrCode();
+        },
+        data => {
+          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+          this.onValidQrCode(data);
+        }
+      );
+    }
   };
 
   private onShowImagePicker = async () => {
@@ -192,6 +216,23 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       );
     }
     this.showImagePicker();
+  };
+
+  private handleBarcodeScanned = (barcode: ScannedBarcode) => {
+    if (this.state.scanningState === "SCANNING") {
+      // Execute an haptic feedback
+      Vibration.vibrate(VIBRATION_BARCODE_SCANNED_DURATION);
+    }
+
+    switch (barcode.format) {
+      case "QRCODE":
+        this.onQrCodeData(barcode.value);
+        break;
+
+      case "DATA_MATRIX":
+        this.onDataMatrixData(barcode.value);
+        break;
+    }
   };
 
   /**
@@ -304,66 +345,33 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.colorWhite}
           />
           <ScrollView bounces={false}>
-            {this.state.isFocused && this.state.permissionRationaleDisplayed && (
-              <QRCodeScanner
-                onRead={(reading: { data: string }) =>
-                  this.onQrCodeData(reading.data)
-                }
-                ref={this.qrCodeScanner}
-                containerStyle={styles.cameraContainer as any}
-                showMarker={true}
-                cameraStyle={styles.camera as any}
-                customMarker={
-                  <CameraMarker
-                    screenWidth={screenWidth}
-                    state={this.state.scanningState}
-                  />
-                }
-                bottomContent={
-                  <View>
-                    <ButtonDefaultOpacity
-                      onPress={this.onShowImagePicker}
-                      style={styles.button}
-                      bordered={true}
-                    >
-                      <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
-                    </ButtonDefaultOpacity>
-                    <View style={styles.content}>
-                      <View spacer={true} />
-                      <Text style={[styles.padded, styles.bottomText]}>
-                        {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                      </Text>
-                      <View spacer={true} extralarge={true} />
-                    </View>
-                  </View>
-                }
-                // "captureAudio" enable/disable microphone permission
-                cameraProps={{ captureAudio: false }}
-                // "checkAndroid6Permissions" property enables permission checking for
-                // Android versions greater than 6.0 (23+).
-                checkAndroid6Permissions={true}
-                // "notAuthorizedView" is by default available on iOS systems ONLY.
-                // In order to make Android systems act the same as iOSs you MUST
-                // enable "checkAndroid6Permissions" property as well.
-                // On devices before SDK version 23, the permissions are automatically
-                // granted if they appear in the manifest, so message customization would
-                // be impossible.
-                notAuthorizedView={
-                  <View style={styles.notAuthorizedContainer}>
-                    <Text style={styles.notAuthorizedText}>
-                      {I18n.t("wallet.QRtoPay.enroll_cta")}
-                    </Text>
+            <BarcodeCamera
+              onBarcodeScanned={this.handleBarcodeScanned}
+              disabled={!this.state.isFocused}
+              marker={
+                <CameraMarker
+                  screenWidth={screenWidth}
+                  state={this.state.scanningState}
+                />
+              }
+            />
 
-                    <ButtonDefaultOpacity
-                      onPress={openAppSettings}
-                      style={styles.notAuthorizedBtn}
-                    >
-                      <Text>{I18n.t("global.buttons.settings")}</Text>
-                    </ButtonDefaultOpacity>
-                  </View>
-                }
-              />
-            )}
+            <View>
+              <ButtonDefaultOpacity
+                onPress={this.onShowImagePicker}
+                style={styles.button}
+                bordered={true}
+              >
+                <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+              </ButtonDefaultOpacity>
+              <View style={styles.content}>
+                <View spacer={true} />
+                <Text style={[styles.padded, styles.bottomText]}>
+                  {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
+                </Text>
+                <View spacer={true} extralarge={true} />
+              </View>
+            </View>
           </ScrollView>
           <FooterWithButtons
             type="TwoButtonsInlineThird"
@@ -378,6 +386,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState) => ({
+  barcodesScannerConfig: barcodesScannerConfigSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => navigateToWalletHome(),
@@ -397,4 +409,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default connect(undefined, mapDispatchToProps)(ScanQrCodeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ScanQrCodeScreen);

@@ -697,8 +697,8 @@ authentication:
     network:
       title: Access problem
       body: The selected identity provider is not available at this time, you can try again later.
-            If you have another SPID, choose an alternative provider.
-            You can report the problem with the '?' icon at the top right of the screen.
+        If you have another SPID, choose an alternative provider.
+        You can report the problem with the '?' icon at the top right of the screen.
     login:
       title: Login error
       body: There was an error with the login, please retry!
@@ -802,6 +802,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: "Configure IO"
+  thankYouPage:
+    title: Setup completed!
+    body: Now you can start using IO
 forms:
   validators:
     required: Required value
@@ -870,8 +873,8 @@ payment:
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
       empty:
-          title: No payment attempts
-          description: IO didn't store any payment attempts. Here you can find last payment attempts
+        title: No payment attempts
+        description: IO didn't store any payment attempts. Here you can find last payment attempts
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
@@ -907,12 +910,12 @@ wallet:
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
-      title: "Search for your BANCOMAT Pay accounts"
+      title: "Pay on IO with BANCOMAT Pay"
       description:
-        text1: "By adding BANCOMAT Pay to your Wallet, you’ll be able to join the initiatives available on IO.\nBy continuing you accept the "
+        text1: "Add your BANCOMAT Pay account to more easily pay pagoPA notices and join the initiatives available on IO.\nBy continuing you accept the "
         text2: privacy policy.
-        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
-        text4: by searching among those available
+        text3: "Choose “Continue” to search for accounts in your name. Alternatively, search for the bank on which you have an active BANCOMAT Pay account "
+        text4: among those available.
     cobadge:
       title: "Search for your international circuit cards"
       description:
@@ -1251,6 +1254,8 @@ wallet:
     pickPaymentMethod:
       title: "What method do you want to pay with?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Disabled methods"
       notAvailable:
         title: "Incompatible methods"
         arriving:
@@ -1366,7 +1371,7 @@ wallet:
       description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
-      description: Link your BANCOMAT Pay account
+      description: Pay with your linked card or bank account
     postepayApp:
       name: Postepay
       description: your Postepay app
@@ -1597,7 +1602,7 @@ messages:
   yesterday: yesterday
   errorLoading:
     details: Error loading message details
-    senderInfo:  Sender service unknown
+    senderInfo: Sender service unknown
     serviceInfo: Service info unknown
     departmentInfo: Department info unknown
     noTitle: No title
@@ -1611,8 +1616,8 @@ messages:
       expired: Payment expired
       paid: This notice is paid. Show the receipt in your
       addMemo:
-          block1: Add a reminder for the
-          block2: at
+        block1: Add a reminder for the
+        block2: at
       expiringOrValidAlert:
         block1: This notice will expire on
       expiredAlert:
@@ -1622,8 +1627,8 @@ messages:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
       expiredAlert:
-          block1: The prescription expired at
-          block2: "on"
+        block1: The prescription expired at
+        block2: "on"
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
@@ -1668,7 +1673,7 @@ messages:
   deadlines:
     emptyMessage:
       title: You haven't any scheduled deadline.
-      subtitle:  Use the button above to check out past deadlines.
+      subtitle: Use the button above to check out past deadlines.
   medical:
     not_available: "n/a"
     prescription: Electronic prescription
@@ -1911,8 +1916,8 @@ contextualHelp:
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 bottomSheets:
   ciePin:
-      title: "Where can I find my PIN?"
-      content: !include bottomsheets/ciePin.md
+    title: "Where can I find my PIN?"
+    content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "What is SPID?"
@@ -1958,7 +1963,7 @@ faq:
     content: !include faq/faq15.md
   16:
     title: "Does your phone have the NFC reader?"
-    content:  !include faq/faq16.md
+    content: !include faq/faq16.md
   17:
     title: "What is the unlock code for?"
     content: !include faq/faq17.md
@@ -2575,6 +2580,7 @@ bonus:
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
     merchantsList:
+      news: new
       online: Online
       places: Places
       navigationTitle: Benefits
@@ -2905,10 +2911,46 @@ bonus:
         ko: "Problems saving the voucher"
   cdc:
     title: "Carta della cultura"
+    serviceCta:
+      activable: "Request your card"
+      pending: "Request sent"
+      error:
+        status: "The necessary information could not be retrieved. Please, try again."
+    serviceEntryPoint:
+      notAvailable: "The service is not available at this time. Try later."
     bonusRequest:
       bonusRequested:
-        cta: "I understand!"
-
+        loading:
+          title: "We are sending your request..."
+          subtitle: "We remind you that only the requests for when your residency was in Italy are valid. Please wait."
+        requestCompleted:
+          title: "Your request was sent!"
+          body: "You will receive a message on IO when the rankings are final."
+          cta: "I got it!"
+        partiallySuccess:
+          title: "Here is the result of your requests"
+          body:
+            success: "The request for {{successfulYears}} was successful."
+            fail: "There was a problem for the one relating to {{failedYears}}."
+        ko:
+          requirementsError:
+            title: "Unfortunately you don't have the requirements to apply for Carta della Cultura."
+            body: "Carta della Cultura is only available for citizens residing in Italy."
+          wrongFormat:
+            title: "Carta della Cultura is not available at the moment."
+            body: "We apologize for the inconvenience.\nPlease try again later."
+          genericError:
+            title: "There was an error with your request"
+            body: "We apologize for the inconvenience.\nPlease try again later."
+      selectResidence:
+        header: "Residency"
+        items:
+          residesInItaly: "Italy"
+          residesAbroad: "Abroad"
+        info: "Carta della Cultura is only available for citizens residing in Italy. Please, select your residency for each year."
+      selectYear:
+        header: "Select for what years you want to request the Carta della Cultura"
+        body: "For each selected year, your ISEE needs to be below € 15,000 and your residency must be in Italy."
 features:
   mvl:
     title: "legal message"
@@ -2942,6 +2984,11 @@ features:
           singleBtn: "Save, print, or share"
           open: "Open"
           save: "Save"
+          savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+          errors:
+            sharing: "An error occurred while sharing the document"
+            opening: "An error occurred while opening the document. You may not have a PDF reader installed."
+            saving: "An error occurred while saving the document"
       body:
         plain: "plain text"
         html: "html"

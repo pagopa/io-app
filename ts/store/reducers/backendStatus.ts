@@ -16,6 +16,7 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   premiumMessagesOptInEnabled,
+  scanAdditionalBarcodesEnabled,
   uaDonationsEnabled
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
@@ -23,6 +24,7 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
+import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -182,13 +184,19 @@ export const isCGNEnabledSelector = createSelector(
 );
 
 /**
- * return the remote config about CGN enabled/disabled
- * if there is no data, false is the default value -> (CGN disabled)
+ * return the remote config about FIMS enabled/disabled
+ * if there is no data, false is the default value -> (FIMS disabled)
  */
 export const isFIMSEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
     backendStatus.map(bs => bs.config.fims.enabled).toUndefined() ?? false
+);
+
+export const fimsDomainSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): string | undefined =>
+    backendStatus.map(bs => bs.config.fims.domain).toUndefined()
 );
 
 /**
@@ -216,6 +224,24 @@ export const isCdcEnabledSelector = createSelector(
   (backendStatus): boolean =>
     cdcEnabled &&
     backendStatus.map(bs => bs.config.cdc.enabled).getOrElse(false)
+);
+
+/**
+ * Return the remote config about the barcodes scanner.
+ * If no data is available or the local feature flag is falsy
+ * the default is considering all flags set to false.
+ */
+export const barcodesScannerConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): BarcodesScannerConfig =>
+    backendStatus
+      .map(bs => bs.config.barcodesScanner)
+      // If the local feature flag is disabled all the
+      // configurations should be set as `false`.
+      .filter(() => scanAdditionalBarcodesEnabled)
+      .getOrElse({
+        dataMatrixPosteEnabled: false
+      })
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
