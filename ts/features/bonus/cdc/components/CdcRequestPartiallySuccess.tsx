@@ -15,8 +15,26 @@ import { cancelButtonProps } from "../../bonusVacanze/components/buttons/ButtonC
 import { cdcEnrollUserToBonusSelector } from "../store/reducers/cdcBonusRequest";
 import { useIOSelector } from "../../../../store/hooks";
 import { isReady } from "../../bpd/model/RemoteValue";
-import { RequestOutcomeEnum } from "../types/CdcBonusRequest";
+import {
+  CdcBonusEnrollmentOutcomeList,
+  RequestOutcomeEnum
+} from "../types/CdcBonusRequest";
+import { Anno } from "../../../../../definitions/cdc/Anno";
 import CdcGenericError from "./CdcGenericError";
+
+const extractYearsPerOutcome = (
+  receivedBonus: CdcBonusEnrollmentOutcomeList
+): Record<RequestOutcomeEnum, ReadonlyArray<Anno>> =>
+  receivedBonus.reduce<Record<RequestOutcomeEnum, ReadonlyArray<Anno>>>(
+    (acc, cur) => ({ ...acc, [cur.outcome]: [...acc[cur.outcome], cur.year] }),
+    {
+      [RequestOutcomeEnum.OK]: [],
+      [RequestOutcomeEnum.INIZIATIVA_TERMINATA]: [],
+      [RequestOutcomeEnum.CIT_REGISTRATO]: [],
+      [RequestOutcomeEnum.ANNO_NON_AMMISSIBILE]: [],
+      [RequestOutcomeEnum.RESIDENCE_ABROAD]: []
+    }
+  );
 
 const CdcRequestPartiallySuccess = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -35,15 +53,48 @@ const CdcRequestPartiallySuccess = () => {
   }
 
   const receivedBonus = cdcEnrollUserToBonus.value.value;
-  const successfulYears = receivedBonus
-    .filter(b => b.outcome === RequestOutcomeEnum.OK)
-    .map(b => b.year)
-    .join(", ");
 
-  const failedYears = receivedBonus
-    .filter(b => b.outcome !== RequestOutcomeEnum.OK)
-    .map(b => b.year)
-    .join(", ");
+  const yearPerOutcome: Record<
+    RequestOutcomeEnum,
+    ReadonlyArray<Anno>
+  > = extractYearsPerOutcome(receivedBonus);
+
+  const possibleOutcomes: ReadonlyArray<RequestOutcomeEnum> = Object.keys(
+    yearPerOutcome
+  ) as ReadonlyArray<RequestOutcomeEnum>;
+
+  const outcomeMessageBody = possibleOutcomes.reduce((acc, cur) => {
+    if (yearPerOutcome[cur].length === 0) {
+      return acc;
+    }
+    switch (cur) {
+      case RequestOutcomeEnum.OK:
+        return `${acc}${I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.success",
+          { successfulYears: yearPerOutcome[cur].join(", ") }
+        )} `;
+      case RequestOutcomeEnum.INIZIATIVA_TERMINATA:
+        return `${acc}${I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.initiativeFinished",
+          { failedYears: yearPerOutcome[cur].join(", ") }
+        )} `;
+      case RequestOutcomeEnum.CIT_REGISTRATO:
+        return `${acc}${I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.alreadyRegistered",
+          { failedYears: yearPerOutcome[cur].join(", ") }
+        )} `;
+      case RequestOutcomeEnum.ANNO_NON_AMMISSIBILE:
+        return `${acc}${I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.notEligible",
+          { failedYears: yearPerOutcome[cur].join(", ") }
+        )} `;
+      case RequestOutcomeEnum.RESIDENCE_ABROAD:
+        return `${acc}${I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.residenceAbroad",
+          { failedYears: yearPerOutcome[cur].join(", ") }
+        )} `;
+    }
+  }, "");
 
   return (
     <SafeAreaView style={IOStyles.flex} testID={"cdcRequestPartiallySuccess"}>
@@ -52,13 +103,7 @@ const CdcRequestPartiallySuccess = () => {
         title={I18n.t(
           "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.title"
         )}
-        body={`${I18n.t(
-          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.success",
-          { successfulYears }
-        )} ${I18n.t(
-          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail",
-          { failedYears }
-        )}`}
+        body={outcomeMessageBody}
       />
       <FooterWithButtons
         type="SingleButton"
