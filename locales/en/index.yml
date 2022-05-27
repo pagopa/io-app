@@ -2931,7 +2931,11 @@ bonus:
           title: "Here is the result of your requests"
           body:
             success: "The request for {{successfulYears}} was successful."
-            fail: "There was a problem for the one relating to {{failedYears}}."
+            fail:
+              residenceAbroad: "There was a problem for the one relating to {{failedYears}}, perché non residente in Italia."
+              notEligible: "There was a problem for the one relating to {{failedYears}}, perché non è possibile richiedere Carta della Cultura per l’anno selezionato."
+              alreadyRegistered: "There was a problem for the one relating to {{failedYears}}, perché hai già inviato una richiesta di attivazione per quell’anno."
+              initiativeFinished: "There was a problem for the one relating to {{failedYears}}, perché il periodo di richiesta è terminato."
         ko:
           requirementsError:
             title: "Unfortunately you don't have the requirements to apply for Carta della Cultura."
