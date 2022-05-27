@@ -34,10 +34,22 @@ jest.mock("@react-navigation/native", () => {
 });
 
 const mockedMixedBonusResponse: CdcBonusEnrollmentOutcomeList = [
-  { year: "2021" as Anno, outcome: RequestOutcomeEnum.OK },
+  { year: "2018" as Anno, outcome: RequestOutcomeEnum.OK },
+  {
+    year: "2019" as Anno,
+    outcome: RequestOutcomeEnum.RESIDENCE_ABROAD
+  },
+  {
+    year: "2020" as Anno,
+    outcome: RequestOutcomeEnum.CIT_REGISTRATO
+  },
+  {
+    year: "2021" as Anno,
+    outcome: RequestOutcomeEnum.ANNO_NON_AMMISSIBILE
+  },
   {
     year: "2022" as Anno,
-    outcome: RequestOutcomeEnum.RESIDENCE_ABROAD
+    outcome: RequestOutcomeEnum.INIZIATIVA_TERMINATA
   }
 ];
 describe("CdcRequestPartiallySuccess", () => {
@@ -59,13 +71,23 @@ describe("CdcRequestPartiallySuccess", () => {
 
       const expectedBody = `${I18n.t(
         "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.success",
-        { successfulYears: "2021" }
+        { successfulYears: "2018" }
       )} ${I18n.t(
-        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail",
+        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.initiativeFinished",
         { failedYears: "2022" }
-      )}`;
+      )} ${I18n.t(
+        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.alreadyRegistered",
+        { failedYears: "2020" }
+      )} ${I18n.t(
+        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.notEligible",
+        { failedYears: "2021" }
+      )} ${I18n.t(
+        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.residenceAbroad",
+        { failedYears: "2019" }
+      )} `;
 
       expect(component.getByTestId("cdcRequestPartiallySuccess")).toBeDefined();
+
       expect(
         component.getByText(
           I18n.t("bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.title")
@@ -74,6 +96,36 @@ describe("CdcRequestPartiallySuccess", () => {
       expect(component.getByText(expectedBody)).toBeDefined();
 
       expect(component.getByTestId("closeButton")).toBeDefined();
+    });
+    it("should not show a body row if the problem is not present in the response", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+
+      store.dispatch(
+        cdcEnrollUserToBonus.success({
+          kind: "partialSuccess",
+          value: [mockedMixedBonusResponse[0]]
+        })
+      );
+      const component = renderComponent(store);
+      expect(
+        component.getByText(
+          `${I18n.t(
+            "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.success",
+            { successfulYears: "2018" }
+          )} `
+        )
+      ).toBeDefined();
+      expect(
+        component.queryByText(
+          `${I18n.t(
+            "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.initiativeFinished",
+            { failedYears: "2022" }
+          )}`
+        )
+      ).toBeNull();
     });
     it("should be called a navigation back when the button is pressed", () => {
       const store: Store<GlobalState> = createStore(
