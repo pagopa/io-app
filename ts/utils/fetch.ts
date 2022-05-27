@@ -20,6 +20,16 @@ import {
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 
+// FIXME: This is a temporary type created to avoid
+// a compilation error caused by the `toFetch` function
+// not returning a function with the `input` parameter
+// typed as `RequestInfo | URL`, which is the correct
+// type for the `fetch` method.
+type FixedFetch = (
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined
+) => Promise<Response>;
+
 /**
  * Wrapper for the Fetch API configured by default with a short timeout and
  * an exponential backoff retrying strategy.
@@ -35,7 +45,9 @@ export function defaultRetryingFetch(
 ): typeof fetch {
   const fetchApi = (global as any).fetch;
   const abortableFetch = AbortableFetch(fetchApi);
-  const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
+  const timeoutFetch = toFetch(
+    setFetchTimeout(timeout, abortableFetch)
+  ) as FixedFetch;
   // configure retry logic with default exponential backoff
   // @see https://github.com/pagopa/io-ts-commons/blob/master/src/backoff.ts
   const exponentialBackoff = calculateExponentialBackoffInterval();
@@ -87,7 +99,9 @@ export const constantPollingFetch = (
   timeout: Millisecond = fetchTimeout
 ): typeof fetch => {
   const abortableFetch = AbortableFetch((global as any).fetch);
-  const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
+  const timeoutFetch = toFetch(
+    setFetchTimeout(timeout, abortableFetch)
+  ) as FixedFetch;
   const constantBackoff = () => delay as Millisecond;
   const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
   // makes the retry logic map 404s to transient errors (by default only
