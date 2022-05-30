@@ -115,6 +115,7 @@ class ServiceList extends React.Component<Props> {
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
         ListEmptyComponent={ListEmptyComponent}
+        testID="services-list"
       />
     );
   }
