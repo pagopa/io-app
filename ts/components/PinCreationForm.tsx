@@ -81,6 +81,24 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
     [isFormValid, handleSubmit]
   );
 
+  const pinFieldA11yLabel = React.useMemo(
+    () =>
+      `${I18n.t("onboarding.pin.pinLabel")}${
+        !isPinValid ? ", " + I18n.t("onboarding.pin.errors.length") : ""
+      }`,
+    [isPinValid]
+  );
+
+  const pinConfirmationFieldA11yLabel = React.useMemo(
+    () =>
+      `${I18n.t("onboarding.pin.pinConfirmationLabel")}${
+        !isPinConfirmationValid
+          ? ", " + I18n.t("onboarding.pin.errors.match")
+          : ""
+      }`,
+    [isPinConfirmationValid]
+  );
+
   return (
     <View style={styles.flex}>
       <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
@@ -95,7 +113,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
         <View style={{ position: "relative", marginTop: 30 }}>
           <LabelledItem
             label={I18n.t("onboarding.pin.pinLabel")}
-            accessibilityLabel={I18n.t("onboarding.pin.pinLabel")}
+            accessibilityLabel={pinFieldA11yLabel}
             inputProps={{
               value: pin,
               onChangeText: setPin,
@@ -114,7 +132,11 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
           />
 
           {!isPinValid && (
-            <View style={{ position: "absolute", bottom: -25, left: 2 }}>
+            <View
+              style={{ position: "absolute", bottom: -25, left: 2 }}
+              accessibilityElementsHidden={true}
+              importantForAccessibility="no-hide-descendants"
+            >
               <LabelSmall weight="Regular" color="red">
                 {I18n.t("onboarding.pin.errors.length")}
               </LabelSmall>
@@ -125,7 +147,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
         <View style={{ position: "relative", marginTop: 45 }}>
           <LabelledItem
             label={I18n.t("onboarding.pin.pinConfirmationLabel")}
-            accessibilityLabel={I18n.t("onboarding.pin.pinConfirmationLabel")}
+            accessibilityLabel={pinConfirmationFieldA11yLabel}
             inputProps={{
               value: pinConfirmation,
               onChangeText: setPinConfirmation,
@@ -146,7 +168,11 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
           />
 
           {!isPinConfirmationValid && (
-            <View style={{ position: "absolute", bottom: -25, left: 2 }}>
+            <View
+              style={{ position: "absolute", bottom: -25, left: 2 }}
+              accessibilityElementsHidden={true}
+              importantForAccessibility="no-hide-descendants"
+            >
               <LabelSmall weight="Regular" color="red">
                 {I18n.t("onboarding.pin.errors.match")}
               </LabelSmall>
