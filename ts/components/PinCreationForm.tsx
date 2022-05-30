@@ -1,18 +1,18 @@
 import * as React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import I18n from "../i18n";
-import FooterWithButtons from "../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { InfoBox } from "../components/box/InfoBox";
-import { IOColors } from "../components/core/variables/IOColors";
-import { Label } from "../components/core/typography/Label";
-import { H1 } from "../components/core/typography/H1";
-import { Body } from "../components/core/typography/Body";
-import { LabelledItem } from "../components/LabelledItem";
-import { IOStyles } from "../components/core/variables/IOStyles";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
-import { LabelSmall } from "../components/core/typography/LabelSmall";
+import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import FooterWithButtons from "./ui/FooterWithButtons";
+import { InfoBox } from "./box/InfoBox";
+import { IOColors } from "./core/variables/IOColors";
+import { Label } from "./core/typography/Label";
+import { H1 } from "./core/typography/H1";
+import { Body } from "./core/typography/Body";
+import { LabelledItem } from "./LabelledItem";
+import { IOStyles } from "./core/variables/IOStyles";
+import { LabelSmall } from "./core/typography/LabelSmall";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;
