@@ -18,7 +18,8 @@
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
     "skipLibCheck": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "useUnknownInCatchVariables": false
   },
   "exclude": [
     "android",

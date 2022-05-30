@@ -24,7 +24,7 @@ import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 const validCreditCard: CreditCard = {
   id: 1464,
   holder: "Mario Rossi",
-  pan: "************0111" as string & IPatternStringTag<string>,
+  pan: "************0111" as string & IPatternStringTag<"^[0-9\\*]{12,19}$">,
   securityCode: "345" as string & IPatternStringTag<"^[0-9]{3,4}$">,
   expireMonth: "05" as string & CreditCardExpirationMonth,
   expireYear: "22" as string & CreditCardExpirationYear,
