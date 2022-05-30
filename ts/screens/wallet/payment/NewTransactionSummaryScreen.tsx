@@ -226,7 +226,10 @@ const NewTransactionSummaryScreen = ({
 
   const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
     rptId.paymentNoticeNumber
-  );
+  )
+    .split(/(\d{4})/)
+    .join(" ")
+    .trim();
 
   /**
    * try to show the fiscal code coming from the 'verification' API
