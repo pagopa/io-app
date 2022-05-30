@@ -1,5 +1,4 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Tab, Tabs } from "native-base";
@@ -24,7 +23,6 @@ import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
-import ROUTES from "../../../navigation/routes";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus,
@@ -56,6 +54,7 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
+import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = {
@@ -165,7 +164,6 @@ const MessagesHomeScreen = ({
   resetMigrationStatus,
   latestMessageOperation
 }: Props) => {
-  const navigation = useNavigation();
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
   useOnFirstRender(() => {
@@ -205,15 +203,7 @@ const MessagesHomeScreen = ({
     )(latestMessageOperation);
   }, [latestMessageOperation]);
 
-  const navigateToMessageDetail = (message: UIMessage) => {
-    navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
-      params: {
-        messageId: message.id,
-        isArchived: message.isArchived
-      }
-    });
-  };
+  const navigateToMessageDetail = useMessageOpening();
 
   const dispatch = useDispatch();
 
