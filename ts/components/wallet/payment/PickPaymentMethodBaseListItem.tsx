@@ -15,7 +15,7 @@ type Props = WithTestID<{
   title: string;
   description: string;
   rightElement: JSX.Element;
-  onPress: () => void;
+  onPress?: () => void;
 }>;
 
 const styles = StyleSheet.create({
@@ -58,7 +58,7 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
           <H4 weight={"SemiBold"} color={"bluegreyDark"} numberOfLines={1}>
             {title}
           </H4>
-          <H5 weight={"Regular"} color={"bluegreyDark"}>
+          <H5 weight={"Regular"} color={"bluegreyDark"} numberOfLines={2}>
             {description}
           </H5>
         </View>

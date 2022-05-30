@@ -1,3 +1,16 @@
+### 2022-05-27
+- Created a new structure `TransactionAmount` used to replace the generic `Amount` definition inside `Transaction`. This new structure differs from the normal `Amount` just on the `amount` property which is now **required**.
+- Marked fields as **required** in the `Transaction` structure in order to replace the changes made manually in the code (take a look at https://github.com/pagopa/io-app/pull/3963):
+  - `created`
+  - `description`
+  - `id`
+  - `idPayment`
+  - `idWallet`
+  - `merchant`
+  - `statusMessage`
+  - `grandTotal`
+  - `amount`
+
 ### 2021-12-03
 - ignored `payPals` field in `Wallet` since the relative model is different from the one returned by the API and the app doesn't use it
 

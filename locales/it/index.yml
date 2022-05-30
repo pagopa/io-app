@@ -794,16 +794,19 @@ onboarding:
       title: Attenzione
       message: Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare.
   unlockCode:
-    headerTitle: Attivazione
-    contentTitle: Scegli un codice di sblocco
-    contentSubtitle: inserisci un codice di 6 cifre
-    contentTitleConfirm: Ripeti il codice di sblocco
-    contentTitleConfirmSubtitle: inserisci di nuovo il codice di 6 cifre
-    pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive. Potrai cambiarlo in ogni momento dopo l'autenticazione.
     reset: Modifica il codice
-    confirmInvalid: I due codici non coincidono
     contextualHelpTitle: Qual è il tuo codice di sblocco
     contextualHelpContent: !include onboarding/onboarding_pin.md
+  pin:
+    headerTitle: Configura IO
+    title: Codice di sblocco
+    subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
+    pinLabel: Crea codice di sblocco
+    pinConfirmationLabel: Ripeti codice di sblocco
+    tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
+    errors:
+      length: Il codice non ha 6 cifre
+      match: Il codice non coincide
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
@@ -819,6 +822,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: Configura IO
+  thankYouPage:
+    title: Configurazione terminata!
+    body: Ora puoi iniziare a usare IO
 forms:
   validators:
     required: Valore richiesto
@@ -925,12 +931,12 @@ wallet:
         text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
         text4: cercando fra quelle disponibili
     bpay:
-      title: Ricerca dei tuoi account BANCOMAT Pay
+      title: Paga su IO con BANCOMAT Pay
       description:
-        text1: "Aggiungendo BANCOMAT Pay al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
+        text1: "Abbina BANCOMAT Pay per pagare più facilmente gli avvisi pagoPA e aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
         text2: informativa sul trattamento dei dati personali.
-        text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
-        text4: cercando fra quelle disponibili
+        text3: "Premi su “Continua” per cercare gli account a te intestati. In alternativa, cerca la banca su cui hai un account BANCOMAT Pay attivo "
+        text4: tra quelle disponibili.
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
@@ -1273,6 +1279,8 @@ wallet:
     pickPaymentMethod:
       title: "Con quale metodo vuoi pagare?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Metodi disattivati"
       notAvailable:
         title: "Metodi non compatibili"
         arriving:
@@ -1386,7 +1394,7 @@ wallet:
       description: L’app per pagare in modo smart
     bancomatPay:
       name: BANCOMAT Pay
-      description: Abbina il tuo account BANCOMAT Pay
+      description: Paga con carta o conto corrente collegati
     postepayApp:
       name: Postepay
       description: la tua app Postepay
@@ -1936,8 +1944,8 @@ contextualHelp:
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 bottomSheets:
   ciePin:
-      title: Dove trovo il mio PIN?
-      content: !include bottomsheets/ciePin.md
+    title: Dove trovo il mio PIN?
+    content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "Cos'è SPID?"
@@ -2602,6 +2610,7 @@ bonus:
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
     merchantsList:
+      news: novità
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
@@ -2932,10 +2941,46 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
+    serviceCta:
+      activable: "Attiva la carta"
+      pending: "Richiesta inviata"
+      error:
+        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
+    serviceEntryPoint:
+      notAvailable: "Il servizio non è disponibile in questo momento. Riprova più tardi."
     bonusRequest:
       bonusRequested:
-        cta: "Ho capito!"
-
+        loading:
+          title: "Stiamo inviando la tua richiesta di attivazione..."
+          subtitle: "Ti ricordiamo che sono valide solo le richieste per gli anni in cui hai dichiarato di essere residente in Italia. Ti preghiamo di attendere"
+        requestCompleted:
+          title: "La tua richiesta è stata inviata!"
+          body: "Riceverai un messaggio su IO quando le graduatorie saranno definitive."
+          cta: "Ho capito!"
+        partiallySuccess:
+          title: "Ecco l’esito delle tue richieste"
+          body:
+            success: "La richiesta per il {{successfulYears}} è andata a buon fine."
+            fail: "C’è stato un problema per quella relativa al {{failedYears}}."
+        ko:
+          requirementsError:
+            title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
+            body: "La Carta della Cultura è disponibile solo per i cittadini residenti in Italia."
+          wrongFormat:
+            title: "Il servizio Carta della Cultura in questo momento non è disponibile."
+            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+          genericError:
+            title: "Si è verificato un errore con la tua richiesta"
+            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      selectResidence:
+        header: "Residenza"
+        items:
+          residesInItaly: "Risiedo in Italia"
+          residesAbroad: "Risiedo all’estero"
+        info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
+      selectYear:
+        header: "Per quale anno vuoi richiedere la Carta della Cultura?"
+        body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
 features:
   mvl:
     title: "messaggio a valore legale"
@@ -2969,6 +3014,11 @@ features:
           singleBtn: "Salva, stampa o condividi"
           open: "Apri"
           save: "Salva"
+          savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+          errors:
+            sharing: "Si è verificato un errore condividendo il documento."
+            opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
+            saving: "Si è verificato un errore salvando il documento."
       body:
         plain: "testo semplice"
         html: "html"

@@ -1,7 +1,10 @@
 import { createStore } from "redux";
 import {
+  CdcBonusEnrollmentList,
+  CdcBonusEnrollmentOutcomeList,
   CdcBonusRequest,
-  CdcBonusRequestList
+  CdcBonusRequestList,
+  CdcBonusRequestResponse
 } from "../../../types/CdcBonusRequest";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -17,14 +20,27 @@ import {
   cdcSelectedBonus
 } from "../../actions/cdcBonusRequest";
 import { getTimeoutError } from "../../../../../../utils/errors";
+import { StatoBeneficiarioEnum } from "../../../../../../../definitions/cdc/StatoBeneficiario";
+import { Anno } from "../../../../../../../definitions/cdc/Anno";
+import { EsitoRichiestaEnum } from "../../../../../../../definitions/cdc/EsitoRichiesta";
 
 const mockBonusRequest: CdcBonusRequest = {
-  id: "mockId",
-  status: "Activable",
-  year: 2022
+  status: StatoBeneficiarioEnum.ATTIVABILE,
+  year: "2022" as Anno
 };
 
 const mockBonusRequestList: CdcBonusRequestList = [mockBonusRequest];
+
+const mockEnrollRequestOutcome: CdcBonusEnrollmentOutcomeList = [
+  { outcome: EsitoRichiestaEnum.CIT_REGISTRATO, year: "2022" as Anno },
+  { outcome: EsitoRichiestaEnum.OK, year: "2021" as Anno }
+];
+
+const mockEnrollSuccessRequest: CdcBonusRequestResponse = {
+  kind: "success",
+  value: mockEnrollRequestOutcome
+};
+
 const genericError = getTimeoutError();
 
 describe("CdcBonusRequestReducer", () => {
@@ -64,9 +80,12 @@ describe("CdcBonusRequestReducer", () => {
   });
   it("The enrolledBonus should be remoteLoading and the bonusList remoteUndefined if the cdcEnrollUserToBonus.request is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
+    const enrollUserPayload: CdcBonusEnrollmentList = [
+      { year: "2022" as Anno }
+    ];
     const store = createStore(appReducer, globalState as any);
     store.dispatch(cdcRequestBonusList.success(mockBonusRequestList));
-    store.dispatch(cdcEnrollUserToBonus.request());
+    store.dispatch(cdcEnrollUserToBonus.request(enrollUserPayload));
     expect(store.getState().bonus.cdc.bonusRequest).toEqual({
       bonusList: remoteUndefined,
       enrolledBonus: remoteLoading
@@ -75,10 +94,10 @@ describe("CdcBonusRequestReducer", () => {
   it("The enrolledBonus should be remoteReady with action payload as value if the cdcEnrollUserToBonus.success is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(cdcEnrollUserToBonus.success(mockBonusRequestList));
+    store.dispatch(cdcEnrollUserToBonus.success(mockEnrollSuccessRequest));
     expect(store.getState().bonus.cdc.bonusRequest).toEqual({
       bonusList: remoteUndefined,
-      enrolledBonus: remoteReady(mockBonusRequestList)
+      enrolledBonus: remoteReady(mockEnrollSuccessRequest)
     });
   });
   it("The enrolledBonus should be remoteError with if the cdcEnrollUserToBonus.failure is dispatched", () => {

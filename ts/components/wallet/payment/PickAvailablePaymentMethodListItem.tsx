@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ImageSourcePropType } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
@@ -20,7 +21,8 @@ import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 type Props = {
   isFirst: boolean;
   paymentMethod: PaymentMethod;
-  onPress: () => void;
+  rightElement?: JSX.Element;
+  onPress?: () => void;
 } & ReturnType<typeof mapStateToProps>;
 
 type PaymentMethodInformation = {
@@ -50,7 +52,17 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: bancomatPayLogo,
         title: paymentMethod.caption,
-        description: paymentMethod.info.numberObfuscated ?? ""
+        // phone number + bank name -> if both are defined
+        // phone number -> if bank is not defined
+        // bank -> if phone number is not defined
+        // empty -> if both are not defined
+        description: fromNullable(paymentMethod.info.numberObfuscated)
+          .map(numb =>
+            fromNullable(paymentMethod.info.bankName)
+              .map(bn => `${numb} · ${bn}`)
+              .getOrElse(numb)
+          )
+          .getOrElse(paymentMethod.info.bankName ?? "")
       };
     case "Satispay":
       return {
@@ -93,7 +105,9 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
       title={title}
       description={description}
       rightElement={
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        props.rightElement ?? (
+          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        )
       }
       onPress={props.onPress}
     />

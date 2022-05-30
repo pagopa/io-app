@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { createStore } from "redux";
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -19,7 +20,6 @@ import {
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PagoPaPaymentCapability from "../features/PagoPaPaymentCapability";
-import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 
 jest.mock("../../../../config", () => ({ pmActivatePaymentEnabled: true }));
 
@@ -76,27 +76,6 @@ describe("PagoPaPaymentCapability", () => {
       {},
       store
     );
-    expect(component.getByText("Arriving")).toBeTruthy();
-  });
-
-  it("should render a badge with the text Arriving if passed a payment method of kind BPay", () => {
-    const aBPay = {} as SatispayPaymentMethod;
-    const aPaymentMethod = {
-      ...aBPay,
-      kind: "BPay",
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
-
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    const component = renderScreenFakeNavRedux<GlobalState>(
-      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    );
-
     expect(component.getByText("Arriving")).toBeTruthy();
   });
 

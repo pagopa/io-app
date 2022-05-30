@@ -37,7 +37,9 @@ export function* handleSearchUserSatispay(
         // even if the user doesn't own satispay the response is 200 but the payload is empty
         // FIXME 200 must always contain a non-empty payload
         return yield* put(
-          searchUserSatispay.success(_.isEmpty(value.data) ? null : value.data)
+          searchUserSatispay.success(
+            !value.data || _.isEmpty(value.data) ? null : value.data
+          )
         );
       } else if (statusCode === 404) {
         // the user doesn't own any satispay
@@ -88,10 +90,11 @@ export function* handleAddUserSatispayToWallet(
     > = yield* call(addSatispayToWalletWithRefresh);
     if (addSatispayToWalletWithRefreshResult.isRight()) {
       const statusCode = addSatispayToWalletWithRefreshResult.value.status;
+      const wallet = addSatispayToWalletWithRefreshResult.value.value.data;
       if (statusCode === 200) {
-        const newSatispay = fromPatchedWalletV2ToRawSatispay(
-          addSatispayToWalletWithRefreshResult.value.value.data
-        );
+        const newSatispay = wallet
+          ? fromPatchedWalletV2ToRawSatispay(wallet)
+          : undefined;
         if (newSatispay) {
           // satispay has been added to the user wallet
           return yield* put(addSatispayToWallet.success(newSatispay));

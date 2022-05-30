@@ -2086,6 +2086,26 @@
       },
       "title": "Amount"
     },
+    "TransactionAmount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "currencyNumber": {
+          "type": "string"
+        },
+        "decimalDigits": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Amount",
+      "required": ["amount"]
+    },
     "BPay": {
       "type": "object",
       "properties": {
@@ -3017,7 +3037,7 @@
           "format": "int64"
         },
         "amount": {
-          "$ref": "#/definitions/Amount"
+          "$ref": "#/definitions/TransactionAmount"
         },
         "authorizationCode": {
           "type": "string"
@@ -3042,10 +3062,10 @@
           "type": "boolean"
         },
         "fee": {
-          "$ref": "#/definitions/Amount"
+          "$ref": "#/definitions/TransactionAmount"
         },
         "grandTotal": {
-          "$ref": "#/definitions/Amount"
+          "$ref": "#/definitions/TransactionAmount"
         },
         "id": {
           "type": "integer",
@@ -3117,7 +3137,18 @@
           "type": "string"
         }
       },
-      "title": "Transaction"
+      "title": "Transaction",
+      "required": [
+        "created", 
+        "description", 
+        "id", 
+        "idPayment", 
+        "idWallet", 
+        "merchant", 
+        "statusMessage", 
+        "grandTotal", 
+        "amount"
+      ]
     },
     "TransactionListResponse": {
       "type": "object",
