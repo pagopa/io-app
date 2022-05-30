@@ -95,6 +95,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
         <View style={{ position: "relative", marginTop: 30 }}>
           <LabelledItem
             label={I18n.t("onboarding.pin.pinLabel")}
+            accessibilityLabel={I18n.t("onboarding.pin.pinLabel")}
             inputProps={{
               value: pin,
               onChangeText: setPin,
@@ -123,6 +124,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
         <View style={{ position: "relative", marginTop: 45 }}>
           <LabelledItem
             label={I18n.t("onboarding.pin.pinConfirmationLabel")}
+            accessibilityLabel={I18n.t("onboarding.pin.pinConfirmationLabel")}
             inputProps={{
               value: pinConfirmation,
               onChangeText: setPinConfirmation,
