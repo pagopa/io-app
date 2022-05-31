@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback } from "react";
 import { View } from "native-base";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
@@ -11,9 +12,13 @@ import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import Eye from "../../../../../../../img/icons/Eye.svg";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { H3 } from "../../../../../../components/core/typography/H3";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 
 type Props = {
   staticCode: Discount["staticCode"];
+  userAgeRange: string;
+  operatorName: string;
+  categories: Discount["productCategories"];
 };
 
 const styles = StyleSheet.create({
@@ -31,7 +36,10 @@ const FEEDBACK_TIMEOUT = 3000 as Millisecond;
 const COPY_ICON_SIZE = 24;
 
 const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
-  staticCode
+  staticCode,
+  userAgeRange,
+  operatorName,
+  categories
 }: Props) => {
   const [isTap, setIsTap] = React.useState(false);
   const [isCodeVisible, setIsCodeVisible] = React.useState(false);
@@ -44,14 +52,23 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
     []
   );
 
-  const handleCopyPress = () => {
+  const handleCopyPress = useCallback(() => {
     if (staticCode) {
       setIsTap(true);
       clipboardSetStringWithFeedback(staticCode);
       // eslint-disable-next-line functional/immutable-data
       timerRetry.current = setTimeout(() => setIsTap(false), FEEDBACK_TIMEOUT);
     }
-  };
+  }, [staticCode]);
+
+  const requestStaticCode = useCallback(() => {
+    void mixpanelTrack("CGN_STATIC_CODE_REQUEST", {
+      userAge: userAgeRange,
+      categories,
+      operator_name: operatorName
+    });
+    setIsCodeVisible(true);
+  }, [userAgeRange, categories, operatorName]);
 
   return (
     <>
@@ -59,7 +76,7 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
         {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
       </H3>
       <TouchableWithoutFeedback
-        onPress={isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)}
+        onPress={isCodeVisible ? handleCopyPress : requestStaticCode}
         accessible={true}
         accessibilityRole={"button"}
         accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}

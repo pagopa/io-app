@@ -15,6 +15,8 @@ import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../../components/core/typography/H4";
+import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 import { OtpCodeComponent } from "./OtpCodeComponent";
 
 const styles = StyleSheet.create({
@@ -30,12 +32,27 @@ const styles = StyleSheet.create({
 
 const COPY_ICON_SIZE = 24;
 
-const CgnOTPCodeContent = () => {
+type Props = {
+  userAgeRange: string;
+  operatorName: string;
+  categories: Discount["productCategories"];
+};
+
+const CgnOTPCodeContent = ({
+  userAgeRange,
+  operatorName,
+  categories
+}: Props) => {
   const [isCodeVisible, setIsCodeVisible] = React.useState(false);
   const dispatch = useIODispatch();
   const otp = useIOSelector(cgnOtpDataSelector);
 
   const requestOtp = () => {
+    void mixpanelTrack("CGN_OTP_START_REQUEST", {
+      userAge: userAgeRange,
+      categories,
+      operator_name: operatorName
+    });
     dispatch(cgnGenerateOtp.request());
     setIsCodeVisible(true);
   };
@@ -109,12 +126,12 @@ const CgnOTPCodeContent = () => {
   );
 };
 
-const CgnOTPCodeComponent = () => (
+const CgnOTPCodeComponent = (props: Props) => (
   <View testID={"otp-code-component"}>
     <H3 accessible={true} accessibilityRole={"header"}>
       {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
     </H3>
-    <CgnOTPCodeContent />
+    <CgnOTPCodeContent {...props} />
   </View>
 );
 
