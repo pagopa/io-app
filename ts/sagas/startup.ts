@@ -513,7 +513,7 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
     yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
     yield* fork(watchReloadAllMessages, backendClient.getMessages);
-    yield* fork(watchLoadMessageById, backendClient.getMessages);
+    yield* fork(watchLoadMessageById, backendClient.getMessage);
     yield* fork(watchLoadMessageDetails, backendClient.getMessage);
     yield* fork(
       watchUpsertMessageStatusAttribues,

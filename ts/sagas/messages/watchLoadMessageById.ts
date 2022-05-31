@@ -4,42 +4,31 @@ import { SagaIterator } from "redux-saga";
 import { BackendClient } from "../../api/backend";
 import { loadMessageById } from "../../store/actions/messages";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
-import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<typeof loadMessageById["request"]>;
-type LocalBeClient = ReturnType<typeof BackendClient>["getMessages"];
+type LocalBeClient = ReturnType<typeof BackendClient>["getMessage"];
 
-export function* watchLoadMessageById(
-  getMessages: LocalBeClient
-): SagaIterator {
-  yield* takeEvery(loadMessageById.request, handleLoadMessageById, getMessages);
+export function* watchLoadMessageById(getMessage: LocalBeClient): SagaIterator {
+  yield* takeEvery(loadMessageById.request, handleLoadMessageById, getMessage);
 }
 
 function* handleLoadMessageById(
-  getMessages: LocalBeClient,
+  getMessage: LocalBeClient,
   action: LocalActionType
 ): SagaIterator {
   const id = action.payload.id;
 
   try {
-    const response = yield* call(getMessages, {
-      enrich_result_data: true,
-      page_size: 1,
-      maximum_id: id,
-      minimum_id: id
+    const response = yield* call(getMessage, {
+      id,
+      public_message: true
     });
     const nextAction = handleResponse(
       response,
-      ({ items }: PaginatedPublicMessagesCollection) => {
-        if (items.length > 0) {
-          return loadMessageById.success(toUIMessage(items[0]));
-        }
-        return loadMessageById.failure({
-          id,
-          error: new Error("No message with the provided id")
-        });
-      },
+      (message: CreatedMessageWithContentAndAttachments) =>
+        loadMessageById.success(toUIMessage(message)),
       error => loadMessageById.failure({ id, error })
     );
     yield* put(nextAction);
