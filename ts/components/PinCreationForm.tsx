@@ -121,7 +121,8 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               maxLength: pinLength,
               onEndEditing: handlePinBlur,
               secureTextEntry: true,
-              returnKeyType: "done"
+              returnKeyType: "done",
+              contextMenuHidden: true
             }}
             icon={isPinValid ? undefined : "io-warning"}
             iconColor={IOColors.red}
@@ -155,7 +156,8 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               maxLength: pinLength,
               onEndEditing: handlePinConfirmationBlur,
               secureTextEntry: true,
-              returnKeyType: "done"
+              returnKeyType: "done",
+              contextMenuHidden: true
             }}
             icon={isPinConfirmationValid ? undefined : "io-warning"}
             iconColor={IOColors.red}
