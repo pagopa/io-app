@@ -20,6 +20,7 @@ import {
   RequestOutcomeEnum
 } from "../types/CdcBonusRequest";
 import { Anno } from "../../../../../definitions/cdc/Anno";
+import { getCurrentLocale } from "../../../../utils/locale";
 import CdcGenericError from "./CdcGenericError";
 
 const extractYearsPerOutcome = (
@@ -63,6 +64,7 @@ const CdcRequestPartiallySuccess = () => {
     yearPerOutcome
   ) as ReadonlyArray<RequestOutcomeEnum>;
 
+  const separator = getCurrentLocale() === "it" ? ", " : " and ";
   const outcomeMessageBody = possibleOutcomes.reduce((acc, cur) => {
     if (yearPerOutcome[cur].length === 0) {
       return acc;
@@ -71,27 +73,27 @@ const CdcRequestPartiallySuccess = () => {
       case RequestOutcomeEnum.OK:
         return `${acc}${I18n.t(
           "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.success",
-          { successfulYears: yearPerOutcome[cur].join(", ") }
+          { successfulYears: yearPerOutcome[cur].join(separator) }
         )} `;
       case RequestOutcomeEnum.INIZIATIVA_TERMINATA:
         return `${acc}${I18n.t(
           "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.initiativeFinished",
-          { failedYears: yearPerOutcome[cur].join(", ") }
+          { failedYears: yearPerOutcome[cur].join(separator) }
         )} `;
       case RequestOutcomeEnum.CIT_REGISTRATO:
         return `${acc}${I18n.t(
           "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.alreadyRegistered",
-          { failedYears: yearPerOutcome[cur].join(", ") }
+          { failedYears: yearPerOutcome[cur].join(separator) }
         )} `;
       case RequestOutcomeEnum.ANNO_NON_AMMISSIBILE:
         return `${acc}${I18n.t(
           "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.notEligible",
-          { failedYears: yearPerOutcome[cur].join(", ") }
+          { failedYears: yearPerOutcome[cur].join(separator) }
         )} `;
       case RequestOutcomeEnum.RESIDENCE_ABROAD:
         return `${acc}${I18n.t(
           "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.residenceAbroad",
-          { failedYears: yearPerOutcome[cur].join(", ") }
+          { failedYears: yearPerOutcome[cur].join(separator) }
         )} `;
     }
   }, "");
