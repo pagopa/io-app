@@ -15,8 +15,6 @@ import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import { mixpanelTrack } from "../../../../../../mixpanel";
 import { OtpCodeComponent } from "./OtpCodeComponent";
 
 const styles = StyleSheet.create({
@@ -33,26 +31,16 @@ const styles = StyleSheet.create({
 const COPY_ICON_SIZE = 24;
 
 type Props = {
-  userAgeRange: string;
-  operatorName: string;
-  categories: Discount["productCategories"];
+  onCodePress: (eventName: string) => void;
 };
 
-const CgnOTPCodeContent = ({
-  userAgeRange,
-  operatorName,
-  categories
-}: Props) => {
+const CgnOTPCodeContent = ({ onCodePress }: Props) => {
   const [isCodeVisible, setIsCodeVisible] = React.useState(false);
   const dispatch = useIODispatch();
   const otp = useIOSelector(cgnOtpDataSelector);
 
   const requestOtp = () => {
-    void mixpanelTrack("CGN_OTP_START_REQUEST", {
-      userAge: userAgeRange,
-      categories,
-      operator_name: operatorName
-    });
+    onCodePress("CGN_OTP_START_REQUEST");
     dispatch(cgnGenerateOtp.request());
     setIsCodeVisible(true);
   };

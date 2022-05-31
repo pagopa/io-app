@@ -24,13 +24,10 @@ import { isDiscountBucketCodeResponseSuccess } from "../../../types/DiscountBuck
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { mixpanelTrack } from "../../../../../../mixpanel";
 
 type Props = {
   discountId: Discount["id"];
-  userAgeRange: string;
-  operatorName: string;
-  categories: Discount["productCategories"];
+  onCodePress: (eventName: string) => void;
 };
 
 const styles = StyleSheet.create({
@@ -183,20 +180,11 @@ const CgnBucketCodeContent = (props: ContentProps) => {
     />
   );
 };
-const CgnBucketCodeComponent = ({
-  discountId,
-  operatorName,
-  userAgeRange,
-  categories
-}: Props) => {
+const CgnBucketCodeComponent = ({ discountId, onCodePress }: Props) => {
   const dispatch = useIODispatch();
 
   const requestBucketCode = () => {
-    void mixpanelTrack("CGN_BUCKET_CODE_START_REQUEST", {
-      userAge: userAgeRange,
-      categories,
-      operator_name: operatorName
-    });
+    onCodePress("CGN_BUCKET_CODE_START_REQUEST");
     dispatch(cgnCodeFromBucket.request(discountId));
   };
   useEffect(

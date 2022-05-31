@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
@@ -74,6 +74,16 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
     [profile]
   );
 
+  const mixpanelCgnEvent = useCallback(
+    (eventName: string) =>
+      void mixpanelTrack(eventName, {
+        userAge: cgnUserAgeRange,
+        categories: discount.productCategories,
+        operator_name: operatorName
+      }),
+    [cgnUserAgeRange, discount, operatorName]
+  );
+
   return (
     <View style={[styles.container, IOStyles.flex]} testID={"discount-detail"}>
       <View style={[styles.row, IOStyles.flex, { flexWrap: "wrap" }]}>
@@ -121,9 +131,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       )}
       <CgnDiscountCodeComponent
         discount={discount}
-        userAgeRange={cgnUserAgeRange}
-        operatorName={operatorName}
-        merchantType={merchantType}
+        onCodePress={mixpanelCgnEvent}
       />
       <H3 accessible={true} accessibilityRole={"header"}>
         {I18n.t("bonus.cgn.merchantDetail.title.validity")}
@@ -151,11 +159,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         <ButtonDefaultOpacity
           style={{ width: "100%" }}
           onPress={() => {
-            void mixpanelTrack("CGN_LANDING_PAGE_REQUEST", {
-              userAge: cgnUserAgeRange,
-              categories: discount.productCategories,
-              operator_name: operatorName
-            });
+            mixpanelCgnEvent("CGN_LANDING_PAGE_REQUEST");
             onLandingCtaPress?.(
               discount.landingPageUrl as string,
               discount.landingPageReferrer as string
@@ -173,11 +177,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
           <ButtonDefaultOpacity
             style={{ width: "100%" }}
             onPress={() => {
-              void mixpanelTrack("CGN_DISCOUNT_URL_REQUEST", {
-                userAge: cgnUserAgeRange,
-                categories: discount.productCategories,
-                operator_name: operatorName
-              });
+              mixpanelCgnEvent("CGN_DISCOUNT_URL_REQUEST");
               openWebUrl(discount.discountUrl, () =>
                 showToast(I18n.t("bonus.cgn.generic.linkError"))
               );

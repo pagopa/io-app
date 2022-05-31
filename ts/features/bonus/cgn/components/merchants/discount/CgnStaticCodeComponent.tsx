@@ -12,13 +12,10 @@ import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import Eye from "../../../../../../../img/icons/Eye.svg";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { H3 } from "../../../../../../components/core/typography/H3";
-import { mixpanelTrack } from "../../../../../../mixpanel";
 
 type Props = {
   staticCode: Discount["staticCode"];
-  userAgeRange: string;
-  operatorName: string;
-  categories: Discount["productCategories"];
+  onCodePress: (eventName: string) => void;
 };
 
 const styles = StyleSheet.create({
@@ -37,9 +34,7 @@ const COPY_ICON_SIZE = 24;
 
 const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
   staticCode,
-  userAgeRange,
-  operatorName,
-  categories
+  onCodePress
 }: Props) => {
   const [isTap, setIsTap] = React.useState(false);
   const [isCodeVisible, setIsCodeVisible] = React.useState(false);
@@ -62,13 +57,9 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
   }, [staticCode]);
 
   const requestStaticCode = useCallback(() => {
-    void mixpanelTrack("CGN_STATIC_CODE_REQUEST", {
-      userAge: userAgeRange,
-      categories,
-      operator_name: operatorName
-    });
+    onCodePress("CGN_STATIC_CODE_REQUEST");
     setIsCodeVisible(true);
-  }, [userAgeRange, categories, operatorName]);
+  }, [onCodePress]);
 
   return (
     <>

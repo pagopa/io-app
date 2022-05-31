@@ -8,45 +8,33 @@ import CgnBucketCodeComponent from "./CgnBucketCodeComponent";
 
 type Props = {
   discount: Discount;
-  userAgeRange: string;
-  operatorName: string;
+  onCodePress: (eventName: string) => void;
   merchantType?: DiscountCodeType;
 };
 
 const CgnDiscountCodeComponent = ({
   discount,
   merchantType,
-  operatorName,
-  userAgeRange
+  onCodePress
 }: Props) => {
   const shouldNotRender =
     merchantType === "landingpage" || merchantType === undefined;
   const renderProperCodeVisualization = (discount: Discount) => {
     switch (merchantType) {
       case "api":
-        return (
-          <CgnOTPCodeComponent
-            operatorName={operatorName}
-            userAgeRange={userAgeRange}
-            categories={discount.productCategories}
-          />
-        );
+        return <CgnOTPCodeComponent onCodePress={onCodePress} />;
       case "static":
         return (
           <CgnStaticCodeComponent
             staticCode={discount.staticCode}
-            userAgeRange={userAgeRange}
-            categories={discount.productCategories}
-            operatorName={operatorName}
+            onCodePress={onCodePress}
           />
         );
       case "bucket":
         return (
           <CgnBucketCodeComponent
             discountId={discount.id}
-            userAgeRange={userAgeRange}
-            categories={discount.productCategories}
-            operatorName={operatorName}
+            onCodePress={onCodePress}
           />
         );
       case "landingpage":
