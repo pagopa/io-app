@@ -58,6 +58,7 @@ type CommonProp = Readonly<{
   accessibilityLabelIcon?: string;
   description?: string;
   focusBorderColor?: string;
+  overrideBorderColor?: string;
   hasNavigationEvents?: boolean;
   icon?: string | ImageSourcePropType;
   iconColor?: string;
@@ -88,18 +89,20 @@ function getColorsByProps({
   isDisabledTextInput,
   hasFocus,
   isEmpty,
-  isValid
+  isValid,
+  iconColor
 }: {
   isDisabledTextInput: boolean;
   hasFocus: boolean;
   isEmpty: boolean;
   isValid?: boolean;
+  iconColor?: string;
 }): ColorByProps {
   if (isDisabledTextInput) {
     return {
       borderColor: IOColors.greyLight,
       descriptionColor: "bluegreyLight",
-      iconColor: IOColors.bluegreyLight,
+      iconColor: iconColor ?? IOColors.bluegreyLight,
       labelColor: "bluegreyLight",
       placeholderTextColor: IOColors.bluegreyLight
     };
@@ -108,7 +111,7 @@ function getColorsByProps({
     borderColor:
       hasFocus && isEmpty ? variables.itemBorderDefaultColor : undefined,
     descriptionColor: isValid === false ? "red" : "bluegreyDark",
-    iconColor: variables.brandDarkGray,
+    iconColor: iconColor ?? variables.brandDarkGray,
     placeholderTextColor: brandGrayDarken,
     labelColor: "bluegreyDark"
   };
@@ -134,7 +137,8 @@ export const LabelledItem: React.FC<Props> = ({
     isDisabledTextInput: Boolean(props.inputProps && props.inputProps.disabled),
     hasFocus,
     isEmpty,
-    isValid: props.isValid
+    isValid: props.isValid,
+    iconColor: props.iconColor
   });
 
   const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
@@ -176,7 +180,9 @@ export const LabelledItem: React.FC<Props> = ({
         <Item
           style={{
             ...styles.bottomLine,
-            borderColor: borderColor || props.focusBorderColor
+            borderColor: props.overrideBorderColor
+              ? props.overrideBorderColor
+              : borderColor || props.focusBorderColor
           }}
           error={isNotValid}
           success={isValid}
