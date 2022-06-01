@@ -11,25 +11,26 @@ import {
 } from "fp-ts/lib/Option";
 import FM from "front-matter";
 import { Linking } from "react-native";
-import { Dispatch } from "redux";
 import { Predicate } from "fp-ts/lib/function";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
-import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import {
   getInternalRoute,
   handleInternalLink
 } from "../components/ui/Markdown/handlers/internalLink";
-import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
+import {
+  deriveCustomHandledLink,
+  isIoInternalLink
+} from "../components/ui/Markdown/handlers/link";
 import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
-import ROUTES from "../navigation/routes";
 import { localeFallback } from "../i18n";
 import { Locales } from "../../locales/locales";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { mixpanelTrack } from "../mixpanel";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
+import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -69,15 +70,15 @@ export function messageNeedsCTABar(
 
 export const handleCtaAction = (
   cta: CTA,
-  dispatch: Dispatch,
+  linkTo: (path: string) => void,
   service?: ServicePublic
 ) => {
-  const maybeInternalLink = getInternalRoute(cta.action);
-  if (maybeInternalLink.isSome()) {
+  if (isIoInternalLink(cta.action)) {
     handleInternalLink(
-      dispatch,
-      cta.action,
-      service ? service.service_id : undefined
+      linkTo,
+      `${cta.action}${
+        service ? "&serviceId=" + (service.service_id as string) : ""
+      }`
     );
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
@@ -206,7 +207,7 @@ const internalRoutePredicates: Map<
   string,
   Predicate<ServiceMetadata | undefined>
 > = new Map<string, Predicate<ServiceMetadata | undefined>>([
-  [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
+  ["/services/webview", hasMetadataTokenName]
 ]);
 
 /**
@@ -294,11 +295,9 @@ export const isCtaActionValid = (
   serviceMetadata?: ServiceMetadata
 ): boolean => {
   // check if it is an internal navigation
-  const maybeInternalRoute = getInternalRoute(cta.action);
-  if (maybeInternalRoute.isSome()) {
-    return fromNullable(
-      internalRoutePredicates.get(maybeInternalRoute.value.routeName)
-    )
+  if (isIoInternalLink(cta.action)) {
+    const internalRoute = getInternalRoute(cta.action);
+    return fromNullable(internalRoutePredicates.get(internalRoute))
       .map(f => f(serviceMetadata))
       .getOrElse(true);
   }

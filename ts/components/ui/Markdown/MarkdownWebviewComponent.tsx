@@ -1,0 +1,84 @@
+import { WebView } from "react-native-webview";
+import React from "react";
+import { useLinkTo } from "@react-navigation/native";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+import { fromNullable } from "fp-ts/lib/Option";
+import { StyleProp, ViewStyle } from "react-native";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
+import { handleLinkMessage, isIoInternalLink } from "./handlers/link";
+import { WebViewMessage } from "./types";
+import { handleInternalLink } from "./handlers/internalLink";
+
+type Props = {
+  injectedJavascript: string;
+  handleLoadEnd: () => void;
+  html: string;
+  webviewKey: number;
+  webViewRef: React.RefObject<WebView>;
+  setLoadingFalse: () => void;
+  setHtmlBodyHeight: (h: number) => void;
+  shouldHandleLink?: (link: string) => boolean;
+  onLinkClicked?: (url: string) => void;
+  letUserZoom?: boolean;
+  webViewStyle?: StyleProp<ViewStyle>;
+  testID?: string;
+};
+
+const MarkdownWebviewComponent = (props: Props) => {
+  const linkTo = useLinkTo();
+
+  const handleWebViewMessage = (event: WebViewMessageEvent) => {
+    const { shouldHandleLink = () => true } = props;
+    props.setLoadingFalse();
+
+    // We validate the format of the message with io-ts
+    const messageOrErrors = WebViewMessage.decode(
+      JSON.parse(event.nativeEvent.data)
+    );
+
+    messageOrErrors.map(message => {
+      switch (message.type) {
+        case "LINK_MESSAGE":
+          if (!shouldHandleLink(message.payload.href)) {
+            break;
+          }
+          if (isIoInternalLink(message.payload.href)) {
+            handleInternalLink(linkTo, message.payload.href);
+            break;
+          }
+          handleLinkMessage(message.payload.href);
+          fromNullable(props.onLinkClicked).map(s => s(message.payload.href));
+          break;
+
+        case "RESIZE_MESSAGE":
+          props.setHtmlBodyHeight(message.payload.height);
+          break;
+      }
+    });
+  };
+
+  return (
+    <WebView
+      androidCameraAccessDisabled={true}
+      androidMicrophoneAccessDisabled={true}
+      testID={props.testID}
+      accessible={false}
+      key={props.webviewKey}
+      textZoom={100}
+      ref={props.webViewRef}
+      scrollEnabled={false}
+      overScrollMode={"never"}
+      style={props.webViewStyle}
+      originWhitelist={["*"]}
+      source={{ html: props.html, baseUrl: "" }}
+      javaScriptEnabled={true}
+      injectedJavaScript={closeInjectedScript(
+        props.injectedJavascript + (props.letUserZoom ? "" : AVOID_ZOOM_JS)
+      )}
+      onLoadEnd={props.handleLoadEnd}
+      onMessage={handleWebViewMessage}
+      showsVerticalScrollIndicator={false}
+    />
+  );
+};
+export default MarkdownWebviewComponent;
