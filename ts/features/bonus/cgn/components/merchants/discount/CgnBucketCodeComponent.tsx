@@ -27,6 +27,7 @@ import { InfoBox } from "../../../../../../components/box/InfoBox";
 
 type Props = {
   discountId: Discount["id"];
+  onCodePress: (eventName: string) => void;
 };
 
 const styles = StyleSheet.create({
@@ -179,12 +180,13 @@ const CgnBucketCodeContent = (props: ContentProps) => {
     />
   );
 };
-const CgnBucketCodeComponent = ({ discountId }: Props) => {
+const CgnBucketCodeComponent = ({ discountId, onCodePress }: Props) => {
   const dispatch = useIODispatch();
 
-  const requestBucketCode = () =>
+  const requestBucketCode = () => {
+    onCodePress("CGN_BUCKET_CODE_START_REQUEST");
     dispatch(cgnCodeFromBucket.request(discountId));
-
+  };
   useEffect(
     () => () => {
       dispatch(cgnCodeFromBucketReset());

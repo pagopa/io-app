@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0-rc.3](https://github.com/pagopa/io-app/compare/2.11.0-rc.2...2.11.0-rc.3) (2022-06-01)
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[IOACGN-73](https://pagopa.atlassian.net/browse/IOACGN-73)] Adds event tracing for CGN  ([#3991](https://github.com/pagopa/io-app/issues/3991)) ([fe2fd13](https://github.com/pagopa/io-app/commit/fe2fd138afec1bce0f6060698f77f8c9cba192e5))
+* [[IA-873](https://pagopa.atlassian.net/browse/IA-873)] Improve the new Pin Screen's a11y ([#3989](https://github.com/pagopa/io-app/issues/3989)) ([268a485](https://github.com/pagopa/io-app/commit/268a485e3c9012d25e9ca20657606e66159d42bf))
+
 ## [2.11.0-rc.2](https://github.com/pagopa/io-app/compare/2.11.0-rc.1...2.11.0-rc.2) (2022-05-30)
 
 
