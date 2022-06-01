@@ -28,7 +28,6 @@ import {
   navigateBack,
   navigateToPaginatedMessageDetailScreenAction
 } from "../../../store/actions/navigation";
-import { getCursors } from "../../../store/reducers/entities/messages/allPaginated";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import {
   UIMessage,
@@ -93,7 +92,6 @@ const navigateToScreenHandler =
  */
 const MessageRouterScreen = ({
   cancel,
-  cursors,
   isServiceAvailable,
   loadMessageById,
   loadMessageDetails,
@@ -114,7 +112,7 @@ const MessageRouterScreen = ({
       loadMessageById(messageId);
     }
     loadMessageDetails(messageId);
-  }, [maybeMessage, cursors, messageId, loadMessageById, loadMessageDetails]);
+  }, [maybeMessage, messageId, loadMessageById, loadMessageDetails]);
 
   useOnFirstRender(() => {
     if (maybeMessage !== undefined && !maybeMessage.isRead) {
@@ -185,16 +183,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
-  const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
   const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
   const isServiceAvailable = O.fromNullable(maybeMessage?.serviceId)
     .map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none)
     .map(_ => Boolean(pot.toUndefined(_)))
     .getOrElse(false);
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
-  const { archive, inbox } = getCursors(state);
   return {
-    cursors: isArchived ? archive : inbox,
     isServiceAvailable,
     maybeMessage,
     maybeMessageDetails,
