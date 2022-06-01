@@ -5,7 +5,7 @@ import URLParse from "url-parse";
 import { fromNullable, none, some } from "fp-ts/lib/Option";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import FimsWebView from "../components/FimsWebView";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -27,14 +27,13 @@ const FimsWebviewScreen = () => {
   const navigation = useNavigation();
   const route =
     useRoute<Route<"FIMS_WEBVIEW", FimsWebviewScreenNavigationParams>>();
-  const dispatch = useIODispatch();
 
   const maybeSessionToken = fromNullable(useIOSelector(sessionTokenSelector));
   const maybeFimsDomain = fromNullable(useIOSelector(fimsDomainSelector));
 
   const goBackAndResetInternalNavigationInfo = useCallback(() => {
     navigation.goBack();
-  }, [navigation, dispatch]);
+  }, [navigation]);
 
   const clearCookie = () => {
     ioClearCookie(() => setCookieError(true));
@@ -106,7 +105,6 @@ const FimsWebviewScreen = () => {
     return clearCookie;
   }, [
     goBackAndResetInternalNavigationInfo,
-    maybeParams,
     maybeSessionToken,
     maybeFimsDomain,
     navigation
