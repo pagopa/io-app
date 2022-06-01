@@ -1,10 +1,9 @@
 import * as t from "io-ts";
 import { Either, left, right } from "fp-ts/lib/Either";
 import I18n from "../../../../i18n";
-import { Dispatch } from "../../../../store/actions/types";
 import { showToast } from "../../../../utils/showToast";
 import { openWebUrl } from "../../../../utils/url";
-import { handleInternalLink, IO_INTERNAL_LINK_PREFIX } from "./internalLink";
+import { IO_INTERNAL_LINK_PREFIX } from "../../../../utils/navigation";
 
 export const isIoInternalLink = (href: string): boolean =>
   href.startsWith(IO_INTERNAL_LINK_PREFIX);
@@ -62,21 +61,16 @@ export const deriveCustomHandledLink = (
 
 /**
  * Handles links clicked in the Markdown (webview) component.
- * Internal links handling is demanded to the `handleInternalLink` function.
  */
-export function handleLinkMessage(dispatch: Dispatch, href: string) {
+export function handleLinkMessage(href: string) {
   if (isIoInternalLink(href)) {
-    handleInternalLink(dispatch, href);
+    return;
   } else {
     // External urls must be opened with the OS browser.
     // FIXME: Whitelist allowed domains: https://www.pivotaltracker.com/story/show/158470128
     openWebUrl(href);
   }
 }
-
-// remove protocol from a link
-export const removeProtocol = (link: string): string =>
-  link.replace(new RegExp(/https?:\/\//gi), "");
 
 // try to open the given url. If it fails an error toast will shown
 export function openLink(url: string, customError?: string) {

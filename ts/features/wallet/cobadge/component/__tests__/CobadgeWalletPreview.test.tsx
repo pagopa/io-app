@@ -4,12 +4,15 @@ import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { CreditCardPaymentMethod } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import CobadgeWalletPreview from "../CobadgeWalletPreview";
+import { Config } from "../../../../../../definitions/content/Config";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 
 jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
 describe("CobadgeWalletPreview component", () => {
@@ -46,7 +49,17 @@ describe("CobadgeWalletPreview component", () => {
   } as CreditCardPaymentMethod;
 
   beforeEach(() => {
-    store = mockStore();
+    store = mockStore({
+      backendStatus: {
+        status: some({
+          config: {
+            assistanceTool: { tool: ToolEnum.none },
+            cgn: { enabled: true },
+            fims: { enabled: true }
+          } as Config
+        } as BackendStatus)
+      }
+    });
   });
   it("should show the caption if useImageResize return none", () => {
     const myspy = jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
