@@ -12,6 +12,9 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
 import { IOColors } from "../../core/variables/IOColors";
 import SectionStatusComponent from "../index";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../definitions/content/Config";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 
 jest.mock("../../../utils/url");
 
@@ -32,7 +35,16 @@ const mockSectionStatusState = (
   sectionKey: SectionStatusKey,
   sectionStatus: SectionStatus
 ) => ({
-  backendStatus: { status: some({ sections: { [sectionKey]: sectionStatus } }) }
+  backendStatus: {
+    status: some({
+      sections: { [sectionKey]: sectionStatus },
+      config: {
+        assistanceTool: { tool: ToolEnum.none },
+        cgn: { enabled: true },
+        fims: { enabled: true }
+      } as Config
+    } as BackendStatus)
+  }
 });
 const mockStore = configureMockStore();
 
