@@ -72,6 +72,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
     isReady(merchantDetail) ? (
       <CgnMerchantDiscountItem
         discount={item}
+        operatorName={merchantDetail.value.name}
         merchantType={merchantDetail.value.discountCodeType}
       />
     ) : null;
