@@ -18,6 +18,7 @@ import I18n from "../../../../../i18n";
 
 type Props = {
   discount: Discount;
+  operatorName: string;
   merchantType?: DiscountCodeType;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -38,12 +39,14 @@ const styles = StyleSheet.create({
 
 const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   discount,
+  operatorName,
   merchantType,
   navigateToLandingWebview
 }: Props) => {
   const { present, bottomSheet: cgnDiscountDetail } =
     useCgnDiscountDetailBottomSheet(
       discount,
+      operatorName,
       merchantType,
       navigateToLandingWebview
     );

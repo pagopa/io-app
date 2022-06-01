@@ -5,6 +5,7 @@ import I18n from "../../../../i18n";
 const CGN_TITLE = "Carta Giovani Nazionale";
 const CGN_BONUS_ITEM =
   "Carta Giovani Nazionale (CGN) è l’incentivo per i giovani che favorisce la partecipazione ad attività culturali, sportive e ricreative, su tutto il territorio nazionale";
+const SERVICES_LIST = "services-list";
 
 const activateBonusSuccess = async () => {
   const startActivationCta = element(by.id("activate-bonus-button"));
@@ -76,11 +77,17 @@ describe("CGN", () => {
   describe("When the user want to start activation from service detail", () => {
     it("Should complete activation", async () => {
       await element(by.text(I18n.t("global.navigator.services"))).tap();
-      const cgnServiceItem = element(by.id(CGN_TITLE));
-      await waitFor(cgnServiceItem)
+
+      await waitFor(element(by.id(SERVICES_LIST)))
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
-      await cgnServiceItem.tap();
+
+      await waitFor(element(by.id(CGN_TITLE)))
+        .toBeVisible()
+        .whileElement(by.id(SERVICES_LIST))
+        .scroll(300, "down");
+
+      await element(by.id(CGN_TITLE)).tap();
       const startActivationCta = element(
         by.text(I18n.t("bonus.cgn.cta.activeBonus"))
       );
