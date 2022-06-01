@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.11.0-rc.0",
+  "version": "2.11.0-rc.3",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.40.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.40.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.14/definitions.yml",
@@ -100,7 +100,7 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "detox": "^19.5.7",
+    "detox": "^19.7.0",
     "fbjs": "^3.0.2",
     "fp-ts": "1.17.4",
     "front-matter": "^4.0.2",
@@ -193,7 +193,7 @@
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
     "@react-native-community/eslint-config": "^3.0.1",
     "@testing-library/jest-native": "^3.4.3",
-    "@testing-library/react-native": "^7.1.0",
+    "@testing-library/react-native": "^8.0.0",
     "@types/chalk": "^2.2.0",
     "@types/color": "^3.0.0",
     "@types/fs-extra": "^5.0.4",
@@ -262,7 +262,7 @@
     "rn-nodeify": "^10.0.1",
     "standard-version": "^8.0.2",
     "ts-node": "^7.0.1",
-    "typescript": "^4.1.0"
+    "typescript": "^4.7.2"
   },
   "resolutions": {
     "@codler/react-native-keyboard-aware-scroll-view": "2.0.1",

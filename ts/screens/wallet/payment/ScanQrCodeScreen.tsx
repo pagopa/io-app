@@ -61,6 +61,7 @@ import {
 } from "../../../utils/payment";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
+import { mixpanelTrack } from "../../../mixpanel";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps> &
@@ -184,8 +185,17 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       const maybePosteDataMatrix = decodePosteDataMatrix(data);
 
       return maybePosteDataMatrix.foldL<void>(
-        this.onInvalidQrCode,
-        this.onValidQrCode
+        () => {
+          if (this.state.scanningState !== "INVALID") {
+            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
+          }
+
+          this.onInvalidQrCode();
+        },
+        data => {
+          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+          this.onValidQrCode(data);
+        }
       );
     }
   };
