@@ -30,6 +30,7 @@ export const CdcStackNavigator = () => (
     <Stack.Screen
       name={CDC_ROUTES.BONUS_REQUESTED}
       component={CdcBonusRequestBonusRequested}
+      options={{ gestureEnabled: false }}
     />
   </Stack.Navigator>
 );
