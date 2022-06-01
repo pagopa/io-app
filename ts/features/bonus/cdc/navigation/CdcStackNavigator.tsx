@@ -13,7 +13,7 @@ export const CdcStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={CDC_ROUTES.INFORMATION_TOS}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: false }}
+    screenOptions={{ gestureEnabled: true }}
   >
     <Stack.Screen
       name={CDC_ROUTES.INFORMATION_TOS}
