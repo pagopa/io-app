@@ -43,7 +43,6 @@ import { getMessageById } from "../../../store/reducers/entities/messages/pagina
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
-  isArchived: boolean;
 };
 
 type OwnProps = {
