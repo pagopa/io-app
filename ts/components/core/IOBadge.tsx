@@ -57,25 +57,29 @@ const borderStyle = (color: NonNullable<IOBadgeCommonProps["labelColor"]>) => {
  * A badge component styled with the
  * IO primary color.
  */
-export const IOBadge = ({ text, small, labelColor }: IOBadgeCommonProps) => (
-  <Badge
-    style={[
-      commonBadgeStyles.badge,
-      {
-        backgroundColor: labelColor
-          ? mapForegroundBackgroundColor[labelColor]
-          : IOColors.blue
-      },
-      borderStyle(labelColor ?? "white"),
-      small ? commonBadgeStyles.badgeSmall : {}
-    ]}
-  >
-    <LabelSmall
-      color={labelColor ?? "white"}
-      fontSize={small ? "small" : "regular"}
-      weight={"SemiBold"}
+export const IOBadge = ({ text, small, labelColor }: IOBadgeCommonProps) => {
+  const lColor = labelColor ?? "white";
+
+  return (
+    <Badge
+      style={[
+        commonBadgeStyles.badge,
+        {
+          backgroundColor: lColor
+            ? mapForegroundBackgroundColor[lColor]
+            : IOColors.blue
+        },
+        borderStyle(lColor ?? "white"),
+        small ? commonBadgeStyles.badgeSmall : {}
+      ]}
     >
-      {text}
-    </LabelSmall>
-  </Badge>
-);
+      <LabelSmall
+        color={lColor}
+        fontSize={small ? "small" : "regular"}
+        weight={"SemiBold"}
+      >
+        {text}
+      </LabelSmall>
+    </Badge>
+  );
+};
