@@ -11,6 +11,9 @@ import { PrivativePaymentMethod } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import PrivativeWalletPreview from "../PrivativeWalletPreview";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../definitions/content/Config";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 
 describe("PrivativeWalletPreview", () => {
   it("should show the caption", () => {
@@ -75,7 +78,17 @@ describe("PrivativeWalletPreview", () => {
 });
 const getComponent = (privative: PrivativePaymentMethod) => {
   const mockStore = configureMockStore();
-  const store = mockStore();
+  const store = mockStore({
+    backendStatus: {
+      status: some({
+        config: {
+          assistanceTool: { tool: ToolEnum.none },
+          cgn: { enabled: true },
+          fims: { enabled: true }
+        } as Config
+      } as BackendStatus)
+    }
+  });
   return {
     component: renderScreenFakeNavRedux(
       () => <PrivativeWalletPreview privative={privative} />,
