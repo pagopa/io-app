@@ -1,19 +1,19 @@
+import { Badge } from "native-base";
 import React from "react";
 import { ColorValue, StyleSheet } from "react-native";
-import { Badge } from "native-base";
-import { IOColors } from "./variables/IOColors";
 import { LabelSmall } from "./typography/LabelSmall";
+import { IOColors, IOColorType } from "./variables/IOColors";
 
 type IOBadgeCommonProps = {
   text: string;
   small?: boolean;
-  labelColor?: "white" | "blue";
+  labelColor?: Extract<IOColorType, "bluegreyDark" | "blue" | "white" | "red">;
 };
 
 const commonBadgeStyles = StyleSheet.create({
   badge: {
-    paddingLeft: 15,
-    paddingRight: 15
+    paddingLeft: 8,
+    paddingRight: 8
   },
   badgeSmall: {
     height: 18
@@ -24,7 +24,34 @@ const commonBadgeStyles = StyleSheet.create({
 const mapForegroundBackgroundColor: Record<
   NonNullable<IOBadgeCommonProps["labelColor"]>,
   ColorValue
-> = { white: IOColors.blue, blue: IOColors.white };
+> = {
+  white: IOColors.blue,
+  blue: IOColors.white,
+  bluegreyDark: IOColors.aqua,
+  red: IOColors.white
+};
+
+const mapForegroundBorderColor: Record<
+  NonNullable<IOBadgeCommonProps["labelColor"]>,
+  ColorValue | null
+> = {
+  white: null,
+  blue: IOColors.blue,
+  bluegreyDark: null,
+  red: IOColors.red
+};
+
+const borderStyle = (color: NonNullable<IOBadgeCommonProps["labelColor"]>) => {
+  const borderColor = mapForegroundBorderColor[color];
+  if (borderColor === null) {
+    return null;
+  } else {
+    return {
+      borderColor,
+      borderWidth: 1
+    };
+  }
+};
 
 /**
  * A badge component styled with the
@@ -39,12 +66,14 @@ export const IOBadge = ({ text, small, labelColor }: IOBadgeCommonProps) => (
           ? mapForegroundBackgroundColor[labelColor]
           : IOColors.blue
       },
+      borderStyle(labelColor ?? "white"),
       small ? commonBadgeStyles.badgeSmall : {}
     ]}
   >
     <LabelSmall
       color={labelColor ?? "white"}
       fontSize={small ? "small" : "regular"}
+      weight={"SemiBold"}
     >
       {text}
     </LabelSmall>
