@@ -19,6 +19,7 @@ import {
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { convertUnknownToError } from "../utils/errors";
 
 const contentClient = ContentClient();
 
@@ -59,8 +60,8 @@ function* fetchMunicipalityMetadata(
       throw Error(`response status ${response.value.status}`);
     }
     return right<Error, MunicipalityMedadata>(response.value.value);
-  } catch (error) {
-    return left<Error, MunicipalityMedadata>(error);
+  } catch (e) {
+    return left<Error, MunicipalityMedadata>(convertUnknownToError(e));
   }
 }
 
@@ -92,7 +93,7 @@ function* watchContentMunicipalityLoadSaga(
   } catch (e) {
     yield* put(
       contentMunicipalityLoad.failure({
-        error: e,
+        error: convertUnknownToError(e),
         codiceCatastale
       })
     );
@@ -115,7 +116,7 @@ function* watchLoadContextualHelp(): SagaIterator {
     }
     throw Error(readableReport(response.value));
   } catch (e) {
-    yield* put(loadContextualHelpData.failure(e));
+    yield* put(loadContextualHelpData.failure(convertUnknownToError(e)));
   }
 }
 
@@ -139,7 +140,7 @@ function* watchLoadIdps(
       throw Error(readableReport(idpsListResponse.value));
     }
   } catch (e) {
-    yield* put(loadIdps.failure(e));
+    yield* put(loadIdps.failure(convertUnknownToError(e)));
   }
 }
 
@@ -160,7 +161,7 @@ function* handleLoadAvailableBonus(
       throw Error(readableReport(bonusListReponse.value));
     }
   } catch (e) {
-    yield* put(loadAvailableBonuses.failure(e));
+    yield* put(loadAvailableBonuses.failure(convertUnknownToError(e)));
   }
 }
 
