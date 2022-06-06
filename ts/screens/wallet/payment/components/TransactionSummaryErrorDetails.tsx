@@ -33,14 +33,14 @@ export const TransactionSummaryErrorDetails = ({
   paymentNoticeNumber,
   organizationFiscalCode,
   messageId
-}: React.PropsWithChildren<Props>): React.ReactElement => {
+}: React.PropsWithChildren<Props>): React.ReactElement | null => {
   const errorOrUndefined = error.toUndefined();
   if (
     errorOrUndefined === undefined ||
     errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
     !Object.keys(Detail_v2Enum).includes(errorOrUndefined)
   ) {
-    return <></>;
+    return null;
   }
 
   const messageData: ReadonlyArray<{ key: string; value?: string }> = [
