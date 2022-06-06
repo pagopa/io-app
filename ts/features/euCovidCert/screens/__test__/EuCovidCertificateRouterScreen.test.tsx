@@ -2,10 +2,7 @@ import { createStore, Store } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  renderScreenFakeNavRedux,
-  renderScreenWithNavigationStoreContext
-} from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { navigateToEuCovidCertificateDetailScreen } from "../../navigation/actions";
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import { euCovidCertificateGet } from "../../store/actions";
