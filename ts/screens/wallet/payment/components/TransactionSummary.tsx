@@ -244,6 +244,12 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
           <InfoButton onPress={presentPaymentInfoBottomSheet} />
         )}
       </TransactionSummaryRow>
+      {/*
+      This undefined will be removed once the backend will return
+      the data needed to render the row. We're keeping it "deactivated"
+      in order to have a reference for both the string and the icon
+      of the final design that we're going to use.
+      */}
       {undefined && (
         <TransactionSummaryRow
           axis={"vertical"}
