@@ -216,7 +216,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         axis={"vertical"}
         title={I18n.t("wallet.firstTransactionSummary.object")}
         subtitle={description}
-        icon={<NoticeIcon {...iconProps}></NoticeIcon>}
+        icon={<NoticeIcon {...iconProps} />}
         placeholder={
           <>
             <LoadingPlaceholder size={"full"} />
