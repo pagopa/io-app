@@ -10,14 +10,14 @@ describe("Payment", () => {
   });
 
   describe("When the user want to pay starting from a message", () => {
-    describe("And press cancel in the payment transaction summary screen", () => {
+    describe("And press back in the payment transaction summary screen", () => {
       it("Should return to the message details screen", async () => {
         await openPaymentFromMessage();
-        const cancelButton = element(by.text(I18n.t("global.buttons.cancel")));
-        await waitFor(cancelButton)
+        const backButton = element(by.id("back-button-transaction-summary"));
+        await waitFor(backButton)
           .toBeVisible()
           .withTimeout(e2eWaitRenderTimeout);
-        await cancelButton.tap();
+        await backButton.tap();
         await waitFor(element(by.text(I18n.t("messageDetails.headerTitle"))))
           .toBeVisible()
           .withTimeout(e2eWaitRenderTimeout);
@@ -27,19 +27,17 @@ describe("Payment", () => {
         it("then the wallet root screen should be visible", async () => {
           await openPaymentFromMessage();
 
-          const cancelButton = element(
-            by.text(I18n.t("global.buttons.cancel"))
-          );
-          await waitFor(cancelButton)
+          const backButton1 = element(by.id("back-button-transaction-summary"));
+          await waitFor(backButton1)
             .toBeVisible()
             .withTimeout(e2eWaitRenderTimeout);
-          await cancelButton.tap();
+          await backButton1.tap();
 
-          const backButton = element(by.id("back-button"));
-          await waitFor(backButton)
+          const backButton2 = element(by.id("back-button"));
+          await waitFor(backButton2)
             .toBeVisible()
             .withTimeout(e2eWaitRenderTimeout);
-          await backButton.tap();
+          await backButton2.tap();
 
           const walletButton = element(
             by.text(I18n.t("global.navigator.wallet"))
@@ -60,7 +58,7 @@ describe("Payment", () => {
       it("Should return to the message details screen", async () => {
         await openPaymentFromMessage();
         await waitFor(element(by.text(I18n.t("wallet.continue"))))
-          .toExist()
+          .toBeVisible()
           .withTimeout(e2eWaitRenderTimeout);
         await element(by.text(I18n.t("wallet.continue"))).tap();
 

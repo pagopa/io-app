@@ -28,6 +28,7 @@ type OwnProps = {
   organizationFiscalCode: OrganizationFiscalCode;
   noticeNumber: PaymentNoticeNumber;
   amount: PaymentAmount;
+  messageId?: string;
 };
 
 type Props = OwnProps &
@@ -52,7 +53,8 @@ const PaymentButton = ({
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHomeScreen,
   noticeNumber,
-  organizationFiscalCode
+  organizationFiscalCode,
+  messageId
 }: Props) => {
   const dispatch = useIODispatch();
   const handleOnPress = () => {
@@ -70,7 +72,8 @@ const PaymentButton = ({
         navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
           initialAmount: amount.value,
-          paymentStartOrigin: "message"
+          paymentStartOrigin: "message",
+          messageId
         });
       } else {
         // Navigating to Wallet home, having the email address is not validated,
