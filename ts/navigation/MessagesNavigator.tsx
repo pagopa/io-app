@@ -47,7 +47,7 @@ export const MessagesStackNavigator = () => (
       component={EuCovidCertNavigator}
     />
 
-    {mvlEnabled ?? (
+    {mvlEnabled && (
       <Stack.Screen name={MVL_ROUTES.MAIN} component={MvlNavigator} />
     )}
   </Stack.Navigator>
