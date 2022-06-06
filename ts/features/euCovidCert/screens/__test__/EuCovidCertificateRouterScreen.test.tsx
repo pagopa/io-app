@@ -2,7 +2,10 @@ import { createStore, Store } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import {
+  renderScreenFakeNavRedux,
+  renderScreenWithNavigationStoreContext
+} from "../../../../utils/testWrapper";
 import { navigateToEuCovidCertificateDetailScreen } from "../../navigation/actions";
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import { euCovidCertificateGet } from "../../store/actions";
@@ -208,7 +211,7 @@ describe("Test EuCovidCertificateRouterScreen", () => {
 });
 
 const renderComponent = (store: Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenWithNavigationStoreContext<GlobalState>(
     EuCovidCertificateRouterScreen,
     EUCOVIDCERT_ROUTES.CERTIFICATE,
     { authCode, messageId: "messageId" },
