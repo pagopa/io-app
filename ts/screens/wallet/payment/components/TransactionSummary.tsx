@@ -253,7 +253,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         <TransactionSummaryRow
           axis={"vertical"}
           title={I18n.t("wallet.firstTransactionSummary.expireDate")}
-          icon={<CalendarIcon {...iconProps}></CalendarIcon>}
+          icon={<CalendarIcon {...iconProps} />}
           placeholder={<LoadingPlaceholder size={"half"} />}
           isLoading={isLoading}
         />
