@@ -15,13 +15,13 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../../store/actions/messages";
-import { loadServiceDetail } from "../../../../store/actions/services";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
+import { loadServiceDetail } from "../../../../store/actions/services";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
 import { DetailsById } from "../../../../store/reducers/entities/messages/detailsById";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
 
 jest.useFakeTimers();
@@ -238,7 +238,7 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
   } as GlobalState);
   const spyStoreDispatch = spyOn(store, "dispatch");
 
-  const component = renderScreenFakeNavRedux(
+  const component = renderScreenWithNavigationStoreContext(
     MessageRouterScreen,
     ROUTES.MESSAGE_ROUTER,
     { messageId },
