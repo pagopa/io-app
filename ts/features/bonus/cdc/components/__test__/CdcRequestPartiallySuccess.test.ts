@@ -97,6 +97,45 @@ describe("CdcRequestPartiallySuccess", () => {
 
       expect(component.getByTestId("closeButton")).toBeDefined();
     });
+    it("should show the separator if more then one year has the same outcome", () => {
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+
+      store.dispatch(
+        cdcEnrollUserToBonus.success({
+          kind: "partialSuccess",
+          value: [
+            { ...mockedMixedBonusResponse[0] },
+            { ...mockedMixedBonusResponse[0], year: "2020" as Anno },
+            { ...mockedMixedBonusResponse[1] },
+            { ...mockedMixedBonusResponse[1], year: "2021" as Anno }
+          ]
+        })
+      );
+      const component = renderComponent(store);
+
+      const expectedBody = `${I18n.t(
+        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.success",
+        {
+          successfulYears: ["2018", "2020"].join(
+            I18n.t("bonus.cdc.bonusRequest.misc.conjunction")
+          )
+        }
+      )} ${I18n.t(
+        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.body.fail.residenceAbroad",
+        {
+          failedYears: ["2019", "2021"].join(
+            I18n.t("bonus.cdc.bonusRequest.misc.conjunction")
+          )
+        }
+      )} `;
+
+      expect(component.getByTestId("cdcRequestPartiallySuccess")).toBeDefined();
+
+      expect(component.getByText(expectedBody)).toBeDefined();
+    });
     it("should not show a body row if the problem is not present in the response", () => {
       const store: Store<GlobalState> = createStore(
         appReducer,
