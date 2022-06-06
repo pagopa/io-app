@@ -37,7 +37,6 @@ import entitiesReducer, {
 } from "./entities";
 import identificationReducer, { IdentificationState } from "./identification";
 import installationReducer from "./installation";
-import internalRouteNavigationReducer from "./internalRouteNavigation";
 import { navigationReducer } from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
@@ -95,7 +94,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,
-  internalRouteNavigation: internalRouteNavigationReducer,
   assistanceTools: assistanceToolsReducer,
   //
   // persisted state
