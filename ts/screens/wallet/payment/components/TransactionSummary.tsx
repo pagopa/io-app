@@ -115,9 +115,9 @@ type RowProps = Readonly<{
 
 export const TransactionSummaryRow = (
   props: React.PropsWithChildren<RowProps>
-): React.ReactElement => {
+): React.ReactElement | null => {
   if (!props.isLoading && !props.subtitle) {
-    return <></>;
+    return null;
   }
 
   return (
