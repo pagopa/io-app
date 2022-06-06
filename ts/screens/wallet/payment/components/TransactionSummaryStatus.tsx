@@ -51,7 +51,7 @@ export const TransactionSummaryStatus = (props: {
     errorOrUndefined === "PAYMENT_ID_TIMEOUT" ||
     errorOrUndefined === undefined
   ) {
-    return <></>;
+    return null;
   }
 
   const errorType = getV2ErrorMainType(errorOrUndefined);
