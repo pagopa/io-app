@@ -66,8 +66,8 @@ export function* checkSession(
       }
       return response.value.status;
     }
-  } catch (error) {
-    yield* put(checkCurrentSession.failure(error));
+  } catch (e) {
+    yield* put(checkCurrentSession.failure(convertUnknownToError(e)));
     return undefined;
   }
 }
