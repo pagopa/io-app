@@ -1,7 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Badge } from "native-base";
 import Placeholder from "rn-placeholder";
 import customVariables from "../../../../theme/variables";
 import { H5 } from "../../../../components/core/typography/H5";
@@ -19,12 +18,12 @@ import {
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
-import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
 import IconFont from "../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
 import { getLogoForOrganization } from "../../../../utils/organizations";
 import { MultiImage } from "../../../../components/ui/MultiImage";
+import { IOBadge } from "../../../../components/core/IOBadge";
 
 const styles = StyleSheet.create({
   container: {
@@ -235,15 +234,11 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         isLoading={isLoading}
       >
         {props.isPaid && !isLoading && (
-          <Badge style={styles.badgeInfo}>
-            <BaseTypography
-              fontStyle={{ fontSize: 12 }}
-              weight={"SemiBold"}
-              color={"bluegreyDark"}
-            >
-              {I18n.t("messages.badge.paid")}
-            </BaseTypography>
-          </Badge>
+          <IOBadge
+            text={I18n.t("messages.badge.paid")}
+            small
+            labelColor={"bluegreyDark"}
+          />
         )}
         {!props.isPaid && !isLoading && (
           <InfoButton onPress={presentPaymentInfoBottomSheet} />
