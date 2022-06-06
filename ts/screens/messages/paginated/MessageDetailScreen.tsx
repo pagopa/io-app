@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import React from "react";
@@ -10,7 +9,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import { loadMessageDetails } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
@@ -47,11 +46,10 @@ export type MessageDetailScreenPaginatedNavigationParams = {
   message: UIMessage;
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL_PAGINATED">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  MessagesParamsList,
+  "MESSAGE_DETAIL_PAGINATED"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -147,7 +145,7 @@ const MessageDetailScreen = ({
 };
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const message: UIMessage = ownProps.navigation.getParam("message");
+  const message: UIMessage = ownProps.route.params.message;
   const messageDetails = getDetailsByMessageId(state, message.id);
   const goBack = () => ownProps.navigation.goBack();
   const service = pot
