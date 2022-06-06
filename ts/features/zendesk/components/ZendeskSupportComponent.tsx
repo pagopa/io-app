@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -31,7 +31,6 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   zendeskRequestTicketNumber,
   zendeskSupportCompleted
@@ -40,6 +39,7 @@ import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
 } from "../store/reducers";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
 
 type Props = {
   assistanceForPayment: boolean;
@@ -133,7 +133,7 @@ const ZendeskSupportComponent = (props: Props) => {
 
   // If the user opened at least at ticket show the "Show tickets" button
   const showAlreadyOpenedTicketButton: boolean =
-    getValueOrElse(ticketsNumber, 0) > 0;
+    pot.getOrElse(ticketsNumber, 0) > 0;
 
   return (
     <>
