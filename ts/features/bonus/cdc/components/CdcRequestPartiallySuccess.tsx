@@ -20,7 +20,6 @@ import {
   RequestOutcomeEnum
 } from "../types/CdcBonusRequest";
 import { Anno } from "../../../../../definitions/cdc/Anno";
-import { getCurrentLocale } from "../../../../utils/locale";
 import CdcGenericError from "./CdcGenericError";
 
 const extractYearsPerOutcome = (
@@ -64,7 +63,7 @@ const CdcRequestPartiallySuccess = () => {
     yearPerOutcome
   ) as ReadonlyArray<RequestOutcomeEnum>;
 
-  const separator = getCurrentLocale() === "it" ? ", " : " and ";
+  const separator = I18n.t("bonus.cdc.bonusRequest.misc.conjunction");
   const outcomeMessageBody = possibleOutcomes.reduce((acc, cur) => {
     if (yearPerOutcome[cur].length === 0) {
       return acc;

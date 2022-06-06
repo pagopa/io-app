@@ -789,7 +789,7 @@ onboarding:
     tutorial: You can change the code at any time under Profile > Security
     errors:
       length: The code must have six digits
-      match: The code doesn’t match 
+      match: The code doesn’t match
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -2958,6 +2958,8 @@ bonus:
       selectYear:
         header: "Select for what years you want to request the Carta della Cultura"
         body: "For each selected year, your ISEE needs to be below € 15,000 and your residency must be in Italy."
+      misc:
+        conjunction: " and "
 features:
   mvl:
     title: "legal message"
