@@ -9,7 +9,7 @@ module.exports = {
   moduleNameMapper: {
     "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js"
   },
-  setupFilesAfterEnv: ["./e2e/globalSetup.js"],
+  setupFilesAfterEnv: ["./e2e/globalSetup.js", "./jestSetupDevServer.js"],
   testMatch: ["**/__e2e__/*.e2e.ts?(x)"],
   forceExit: true,
   verbose: true,
