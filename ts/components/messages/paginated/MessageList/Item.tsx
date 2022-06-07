@@ -5,7 +5,8 @@ import * as O from "fp-ts/lib/Option";
 import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import I18n from "../../../../i18n";
 import {
   convertDateToWordDistance,
@@ -187,7 +188,8 @@ const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
 
 function getTopIcon(category: MessageCategory) {
   switch (category.tag) {
-    case TagEnum.LEGAL_MESSAGE:
+    case TagEnumBase.LEGAL_MESSAGE:
+    case TagEnumPN.PN:
       return (
         <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
       );
