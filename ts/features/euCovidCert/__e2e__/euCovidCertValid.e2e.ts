@@ -1,5 +1,6 @@
 import { device } from "detox";
 import I18n from "../../../i18n";
+import { startDevServer, teardownDevServer } from "../../../utils/devServer";
 import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../__e2e__/utils";
 
@@ -13,8 +14,13 @@ const fullScreenQrCodeTestId = "fullScreenQRCode";
 
 describe("EuCovidCert Valid", () => {
   beforeAll(async () => {
+    await startDevServer();
     await device.reloadReactNative();
     await ensureLoggedIn();
+  });
+
+  afterAll(() => {
+    teardownDevServer();
   });
 
   it("should find the valid EuCovidCert message and open it", async () => {

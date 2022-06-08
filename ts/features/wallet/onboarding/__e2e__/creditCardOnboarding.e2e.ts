@@ -1,11 +1,17 @@
 import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
+import { startDevServer, teardownDevServer } from "../../../../utils/devServer";
 
 describe("Credit Card onboarding", () => {
   beforeEach(async () => {
+    await startDevServer();
     await device.reloadReactNative();
     await ensureLoggedIn();
+  });
+
+  afterEach(() => {
+    teardownDevServer();
   });
 
   describe("when the user inserts all the required valid data", () => {

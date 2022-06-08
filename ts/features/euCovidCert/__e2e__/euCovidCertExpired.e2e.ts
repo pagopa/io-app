@@ -1,4 +1,5 @@
 import { device } from "detox";
+import { startDevServer, teardownDevServer } from "../../../utils/devServer";
 import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../__e2e__/utils";
 
@@ -11,8 +12,13 @@ const learnMoreLinkTestId = "euCovidCertLearnMoreLink";
 
 describe("EuCovidCert Expired", () => {
   beforeAll(async () => {
+    await startDevServer();
     await device.reloadReactNative();
     await ensureLoggedIn();
+  });
+
+  afterAll(async () => {
+    teardownDevServer();
   });
 
   it("should find the expired EuCovidCert message and open it", async () => {

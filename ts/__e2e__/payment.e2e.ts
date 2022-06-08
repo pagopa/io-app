@@ -1,12 +1,18 @@
 import I18n from "../i18n";
+import { startDevServer, teardownDevServer } from "../utils/devServer";
 import { formatNumberCentsToAmount } from "../utils/stringBuilder";
 import { e2eWaitRenderTimeout } from "./config";
 import { ensureLoggedIn } from "./utils";
 
 describe("Payment", () => {
   beforeEach(async () => {
+    await startDevServer();
     await device.reloadReactNative();
     await ensureLoggedIn();
+  });
+
+  afterEach(() => {
+    teardownDevServer();
   });
 
   describe("When the user want to pay starting from a message", () => {

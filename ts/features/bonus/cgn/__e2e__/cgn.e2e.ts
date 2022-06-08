@@ -1,6 +1,7 @@
 import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
+import { startDevServer, teardownDevServer } from "../../../../utils/devServer";
 
 const CGN_TITLE = "Carta Giovani Nazionale";
 const CGN_BONUS_ITEM =
@@ -41,8 +42,13 @@ const activateBonusSuccess = async () => {
 
 describe("CGN", () => {
   beforeEach(async () => {
+    await startDevServer();
     await device.reloadReactNative();
     await ensureLoggedIn();
+  });
+
+  afterEach(() => {
+    teardownDevServer();
   });
 
   describe("When the user want to start activation from bonus list", () => {
