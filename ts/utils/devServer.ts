@@ -2,6 +2,11 @@ import { ChildProcess, spawn } from "child_process";
 import cwd from "cwd";
 import { isTestEnv } from "./environment";
 
+// This is the string the `startDevServer` will wait
+// in the `stdout` stream to assure that the development
+// server is actually ready and listening.
+const readyString = "IO App - dev server is running on";
+
 // eslint-disable-next-line
 let server: ChildProcess | null = null;
 
@@ -35,8 +40,10 @@ export function startDevServer(): Promise<void> {
       }
     );
 
-    server.stdout.on("data", () => {
-      resolve();
+    server.stdout.on("data", data => {
+      if (data.toString().includes(readyString)) {
+        resolve();
+      }
     });
 
     server.stderr.on("data", data => {
