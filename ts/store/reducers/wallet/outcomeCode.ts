@@ -1,5 +1,10 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+import doubtImage from "../../../../img/pictograms/doubt.png";
+import authorizationDenied from "../../../../img/servicesStatus/error-detail-icon.png";
+import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
+import paymentUnavailableIcon from "../../../../img/wallet/errors/payment-unavailable-icon.png";
+import cardProblemOrOperationCanceled from "../../../../img/wallet/errors/payment-unknown-icon.png";
 import I18n from "../../../i18n";
 import {
   OutcomeCode,
@@ -12,12 +17,6 @@ import {
   paymentOutcomeCode,
   resetLastPaymentOutcomeCode
 } from "../../actions/wallet/outcomeCode";
-import authorizationDenied from "../../../../img/servicesStatus/error-detail-icon.png";
-import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
-import sessionExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
-import cardProblemOrOperationCanceled from "../../../../img/wallet/errors/payment-unknown-icon.png";
-import paymentUnavailableIcon from "../../../../img/wallet/errors/payment-unavailable-icon.png";
-import doubtImage from "../../../../img/pictograms/doubt.png";
 import { GlobalState } from "../types";
 
 export type OutcomeCodeState = {
