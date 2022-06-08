@@ -16,6 +16,7 @@ import authorizationDenied from "../../../../img/servicesStatus/error-detail-ico
 import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
 import sessionExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import cardProblemOrOperationCanceled from "../../../../img/wallet/errors/payment-unknown-icon.png";
+import paymentUnavailableIcon from "../../../../img/wallet/errors/payment-unavailable-icon.png";
 import doubtImage from "../../../../img/pictograms/doubt.png";
 import { GlobalState } from "../types";
 
@@ -77,7 +78,7 @@ const OutcomeCodesPrintable = (): OutcomeCodes => ({
       "en-EN": I18n.t("wallet.outcomeMessage.code4.description"),
       "it-IT": I18n.t("wallet.outcomeMessage.code4.description")
     },
-    icon: sessionExpired,
+    icon: paymentUnavailableIcon,
     status: "errorBlocking"
   },
   "7": {
