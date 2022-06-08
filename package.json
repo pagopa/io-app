@@ -238,7 +238,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-sonarjs": "^0.11.0",
     "fs-extra": "^7.0.0",
-    "io-dev-api-server": "https://github.com/pagopa/io-dev-api-server.git",
+    "io-dev-api-server": "https://github.com/pagopa/io-dev-api-server.git#test/available-as-a-package",
     "italia-utils": "^4.1.1",
     "jest": "^26.6.3",
     "jest-circus": "^26.6.3",
@@ -270,9 +270,19 @@
     "@codler/react-native-keyboard-aware-scroll-view": "2.0.1",
     "@types/react": "16.7.18",
     "@types/prop-types": "15.5.5",
-    "fp-ts": "1.17.4",
-    "io-ts": "1.8.5",
-    "react-devtools-core": "4.13.0"
+    "react-devtools-core": "4.13.0",
+
+    "@pagopa/ts-commons/fp-ts": "1.17.4",
+    "@pagopa/ts-io-pagopa-commons/../fp-ts": "1.17.4",
+    "italia-ts-commons/fp-ts": "1.17.4",
+    "italia-utils/../fp-ts": "1.17.4",
+    "io-ts/fp-ts": "1.17.4",
+
+    "@pagopa/ts-commons/io-ts": "1.8.5",
+    "@pagopa/ts-io-pagopa-commons/../io-ts": "1.8.5",
+    "italia-ts-commons/io-ts": "1.8.5",
+    "italia-utils/../io-ts": "1.8.5",
+    "io-ts/io-ts": "1.8.5"
   },
   "react-native": {
     "path": "path-browserify"
