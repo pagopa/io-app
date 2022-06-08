@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { fromEither, fromNullable } from "fp-ts/lib/Option";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
+import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
 import { IORenderHtml } from "../../../components/core/IORenderHtml";
 import { RawCheckBox } from "../../../components/core/selection/checkbox/RawCheckBox";
 import { Body } from "../../../components/core/typography/Body";
@@ -7,6 +9,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import i18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { formatDateAsLocal } from "../../../utils/dates";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
@@ -27,23 +30,57 @@ type BottomSheetProps = Readonly<{
   onCancel: () => void;
 }>;
 
+type HTMLParams = Readonly<{
+  sender: string;
+  subject: string;
+  date: string;
+  iun: string;
+}>;
+
+const emptyHTMLParams: HTMLParams = {
+  sender: "-",
+  subject: "-",
+  date: "-",
+  iun: "-"
+};
 export const usePnOpenConfirmationBottomSheet = ({
   onConfirm,
   onCancel
 }: BottomSheetProps) => {
-  const [message, setMessage] = useState<UIMessage | null>(null);
+  const [message, setMessage] = useState<UIMessage | undefined>(undefined);
   const [dontAskAgain, setDontAskAgain] = useState<boolean>(false);
+  const [params, setParams] = useState<HTMLParams | undefined>(undefined);
+
+  useEffect(() => {
+    const params = fromEither(MessageCategoryPN.decode(message?.category))
+      .map(
+        category =>
+          ({
+            sender: category.original_sender ?? emptyHTMLParams.sender,
+            subject: category.summary ?? emptyHTMLParams.subject,
+            date: fromNullable(category.original_receipt_date)
+              .map(timestamp => new Date(timestamp))
+              .map(
+                date =>
+                  `${formatDateAsLocal(
+                    date,
+                    true,
+                    true
+                  )} - ${date.toLocaleTimeString()}`
+              )
+              .getOrElse(emptyHTMLParams.date),
+            iun: category.id
+          } as HTMLParams)
+      )
+      .getOrElse(emptyHTMLParams);
+    setParams(params);
+  }, [message, setParams]);
 
   const useBottomSheet = useIOBottomSheetModal(
     <>
       <IORenderHtml
         source={{
-          html: i18n.t("features.pn.open.warning.body", {
-            sender: "Comune di Milano",
-            subject: "Infrazione al codice della strada",
-            date: "12 Luglio 2022 - 12.36",
-            iun: "YYYYMM-1-ABCD-EFGH-X"
-          })
+          html: i18n.t("features.pn.open.warning.body", params)
         }}
         tagsStyles={{
           p: {
@@ -91,7 +128,10 @@ export const usePnOpenConfirmationBottomSheet = ({
       setMessage(message);
       useBottomSheet.present();
     },
-    dismiss: useBottomSheet.dismiss,
+    dismiss: () => {
+      setMessage(undefined);
+      useBottomSheet.dismiss();
+    },
     bottomSheet: useBottomSheet.bottomSheet
   };
 };
