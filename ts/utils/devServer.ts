@@ -1,5 +1,4 @@
 import { ChildProcess, spawn } from "child_process";
-import cwd from "cwd";
 import { isTestEnv } from "./environment";
 
 // This is the string the `startDevServer` will wait
@@ -26,19 +25,12 @@ export function startDevServer(): Promise<void> {
   console.log("🚀 Starting the development server in a child process");
 
   return new Promise<void>((resolve, reject) => {
-    server = spawn(
-      "yarn",
-      [
-        "--cwd",
-        "./node_modules/io-dev-api-server",
-        "node",
-        "./build/src/start.js"
-      ],
-      {
-        cwd: cwd(),
-        shell: "/bin/zsh"
-      }
-    );
+    server = spawn("yarn", [
+      "--cwd",
+      "./node_modules/io-dev-api-server",
+      "node",
+      "./build/src/start.js"
+    ]);
 
     server.stdout.on("data", data => {
       if (data.toString().includes(readyString)) {
