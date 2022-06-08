@@ -454,15 +454,6 @@ jobs:
       - run:
           name: Run E2E tests with io-dev-api server
           command: |
-            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
-            cd _io-dev-api-server_
-            cp ../scripts/api-config.json config/config.json
-            yarn
-            yarn generate:all
-            yarn start &> /tmp/io-dev-api-server.log &
-            # wait for the server to be up and running
-            sleep 10
-            cd ..
             yarn detox clean-framework-cache
             yarn detox build-framework-cache
             yarn detox test \
