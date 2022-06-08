@@ -203,7 +203,7 @@ const MessagesHomeScreen = ({
     )(latestMessageOperation);
   }, [latestMessageOperation]);
 
-  const navigateToMessageDetail = useMessageOpening();
+  const messageOpening = useMessageOpening();
 
   const dispatch = useDispatch();
 
@@ -264,7 +264,7 @@ const MessagesHomeScreen = ({
             <AllTabs
               inbox={allInboxMessages}
               archive={allArchiveMessages}
-              navigateToMessageDetail={navigateToMessageDetail}
+              navigateToMessageDetail={messageOpening.open}
               setArchived={setArchived}
             />
           )}
@@ -284,7 +284,7 @@ const MessagesHomeScreen = ({
                   <MessageList
                     filter={{}}
                     filteredMessages={results}
-                    onPressItem={navigateToMessageDetail}
+                    onPressItem={messageOpening.open}
                   />
                 )}
               />
@@ -294,6 +294,7 @@ const MessagesHomeScreen = ({
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
           )}
       {!isScreenReaderEnabled && statusComponent}
+      {messageOpening.bottomSheets.map(_ => _)}
     </TopScreenComponent>
   );
 };

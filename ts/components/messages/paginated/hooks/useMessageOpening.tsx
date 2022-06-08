@@ -3,11 +3,12 @@ import { useCallback } from "react";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import ROUTES from "../../../../navigation/routes";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { usePnOpenConfirmationBottomSheet } from "../../../../features/pn/components/PnOpenConfirmationBottomSheet";
 
 export const useMessageOpening = () => {
   const navigation = useNavigation();
 
-  const open = useCallback(
+  const navigate = useCallback(
     (message: UIMessage) => {
       navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
         screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
@@ -20,21 +21,35 @@ export const useMessageOpening = () => {
     [navigation]
   );
 
+  const pnBottomSheet = usePnOpenConfirmationBottomSheet({
+    onConfirm: (message: UIMessage, dontAskAgain: boolean) => {
+      pnBottomSheet.dismiss();
+      navigate(message);
+    },
+    onCancel: () => {
+      pnBottomSheet.dismiss();
+    }
+  });
+
   const alertFor = (message: UIMessage) => {
     if (message.category.tag === TagEnum.PN) {
       // show the bottomsheet if needed
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      return () => {};
+      return () => pnBottomSheet.present(message);
     }
     return undefined;
   };
 
-  return (message: UIMessage) => {
+  const open = (message: UIMessage) => {
     const alert = alertFor(message);
     if (alert) {
       alert();
     } else {
-      open(message);
+      navigate(message);
     }
+  };
+
+  return {
+    open,
+    bottomSheets: [pnBottomSheet.bottomSheet]
   };
 };
