@@ -24,6 +24,7 @@ import { SatispayActions } from "../../features/wallet/onboarding/satispay/store
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
 import { CdcActions } from "../../features/bonus/cdc/store/actions";
+import { PnActions } from "../../features/pn/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -98,7 +99,8 @@ export type Action =
   | SvActions
   | MvlActions
   | ZendeskSupportActions
-  | CdcActions;
+  | CdcActions
+  | PnActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
