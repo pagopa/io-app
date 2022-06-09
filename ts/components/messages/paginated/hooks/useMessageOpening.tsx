@@ -4,9 +4,18 @@ import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import ROUTES from "../../../../navigation/routes";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { usePnOpenConfirmationBottomSheet } from "../../../../features/pn/components/PnOpenConfirmationBottomSheet";
+import { pnEnabled } from "../../../../config";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { pnPreferencesSelector } from "../../../../features/pn/store/reducers/preferences";
+import { pnPreferencesSetWarningForMessageOpening } from "../../../../features/pn/store/actions";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 
 export const useMessageOpening = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const dispatch = useIODispatch();
 
   const navigate = useCallback(
     (message: UIMessage) => {
@@ -23,6 +32,7 @@ export const useMessageOpening = () => {
 
   const pnBottomSheet = usePnOpenConfirmationBottomSheet({
     onConfirm: (message: UIMessage, dontAskAgain: boolean) => {
+      dispatch(pnPreferencesSetWarningForMessageOpening(!dontAskAgain));
       pnBottomSheet.dismiss();
       navigate(message);
     },
@@ -31,25 +41,35 @@ export const useMessageOpening = () => {
     }
   });
 
-  const alertFor = (message: UIMessage) => {
-    if (message.category.tag === TagEnum.PN) {
-      // show the bottomsheet if needed
-      return () => pnBottomSheet.present(message);
-    }
-    return undefined;
-  };
+  const { showAlertForMessageOpening } = useIOSelector(pnPreferencesSelector);
 
-  const open = (message: UIMessage) => {
-    const alert = alertFor(message);
-    if (alert) {
-      alert();
-    } else {
-      navigate(message);
-    }
-  };
+  const showAlertFor = useCallback(
+    (message: UIMessage) => {
+      if (
+        message.category.tag === TagEnum.PN &&
+        showAlertForMessageOpening &&
+        pnEnabled
+      ) {
+        // show the bottomsheet if needed
+        pnBottomSheet.present(message);
+        return true;
+      }
+      return false;
+    },
+    [pnBottomSheet, showAlertForMessageOpening]
+  );
+
+  const openMessage = useCallback(
+    (message: UIMessage) => {
+      if (!showAlertFor(message)) {
+        navigate(message);
+      }
+    },
+    [navigate, showAlertFor]
+  );
 
   return {
-    open,
+    openMessage,
     bottomSheets: [pnBottomSheet.bottomSheet]
   };
 };
