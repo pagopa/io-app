@@ -21,6 +21,7 @@ import IconFont from "../../../ui/IconFont";
 import customVariables from "../../../../theme/variables";
 import { IOColors } from "../../../core/variables/IOColors";
 import QrCode from "../../../../../img/messages/qr-code.svg";
+import { mvlEnabled, pnEnabled } from "../../../../config";
 
 const ICON_WIDTH = 24;
 
@@ -189,10 +190,13 @@ const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
 function getTopIcon(category: MessageCategory) {
   switch (category.tag) {
     case TagEnum.LEGAL_MESSAGE:
-    case TagEnumPN.PN:
-      return (
+      return mvlEnabled ? (
         <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
-      );
+      ) : null;
+    case TagEnumPN.PN:
+      return pnEnabled ? (
+        <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
+      ) : null;
     default:
       return null;
   }
