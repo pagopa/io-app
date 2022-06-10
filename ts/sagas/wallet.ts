@@ -419,8 +419,13 @@ function* startOrResumeAddCreditCardSaga(
         break;
       }
     } catch (e) {
+      const error = convertUnknownToError(e).message;
+
       if (action.payload.onFailure) {
-        action.payload.onFailure(convertUnknownToError(e).message);
+        action.payload.onFailure(
+          // This cast should be safe enough conceptually.
+          convertUnknownToError(e).message as "ALREADY_EXISTS" | undefined
+        );
       }
     }
     break;
