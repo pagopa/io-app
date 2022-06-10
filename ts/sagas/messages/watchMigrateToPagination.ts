@@ -14,6 +14,7 @@ import migrateToPagination from "../../boot/migrateToPagination";
 
 import { MessageStatus } from "../../store/reducers/entities/messages/messagesStatus";
 import { readablePrivacyReport } from "../../utils/reporters";
+import { ValidationError } from "io-ts";
 
 type LocalActionType = ActionType<typeof migrateToPaginatedMessages["request"]>;
 type LocalBeClient = ReturnType<
@@ -99,13 +100,15 @@ function tryMigration(putMessages: LocalBeClient) {
       } else {
         yield* put(migrateToPaginatedMessages.failure({ succeeded, failed }));
       }
-    } catch (error) {
+    } catch (e) {
       // assuming the worst, no messages were migrated because of an unexpected failure
       const errorPayload = {
         succeeded: [],
         failed: Object.keys(action.payload).map(id => ({
           messageId: id,
-          error: readablePrivacyReport(error)
+
+          // FIXME: This is potentially unsafe.
+          error: readablePrivacyReport(e as Array<ValidationError>)
         }))
       };
       yield* put(migrateToPaginatedMessages.failure(errorPayload));

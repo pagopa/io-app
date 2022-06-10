@@ -1,4 +1,3 @@
-import { ValidationError } from "io-ts";
 import { Detail_v2Enum } from "../../definitions/backend/PaymentProblemJson";
 import { MessagesFailurePayload } from "../store/actions/messages";
 

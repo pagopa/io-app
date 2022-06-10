@@ -419,8 +419,6 @@ function* startOrResumeAddCreditCardSaga(
         break;
       }
     } catch (e) {
-      const error = convertUnknownToError(e).message;
-
       if (action.payload.onFailure) {
         action.payload.onFailure(
           // This cast should be safe enough conceptually.
