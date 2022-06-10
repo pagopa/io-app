@@ -1,6 +1,12 @@
 import { Body, Container, Right } from "native-base";
 import * as React from "react";
-import { BackHandler, Dimensions, Image, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Dimensions,
+  Image,
+  NativeEventSubscription,
+  StyleSheet
+} from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 
@@ -32,17 +38,22 @@ const styles = StyleSheet.create({
 });
 
 class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
+  private subscription: NativeEventSubscription | undefined;
   private handleBackPress = () => {
     this.props.onCancel();
     return true;
   };
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackPress
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    this.subscription?.remove();
   }
 
   public render() {

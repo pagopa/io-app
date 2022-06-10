@@ -1,7 +1,8 @@
 import { View } from "native-base";
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 import Svg from "react-native-svg";
+import * as pot from "italia-ts-commons/lib/pot";
 import Default from "../../../../../../../img/features/mvl/attachmentsIcon/default.svg";
 import Pdf from "../../../../../../../img/features/mvl/attachmentsIcon/pdf.svg";
 import { H2 } from "../../../../../../components/core/typography/H2";
@@ -13,12 +14,8 @@ import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
-import * as platform from "../../../../../../utils/platform";
 import { MvlAttachment, MvlData } from "../../../../types/mvlData";
-import { useIOSelector } from "../../../../../../store/hooks";
-import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
-import { ioBackendAuthenticationHeaderSelector } from "../../../../../../store/reducers/authentication";
-import { useDownloadAttachmentConfirmationBottomSheet } from "./DownloadAttachmentConfirmationBottomSheet";
+import { useMvlAttachmentDownload } from "./MvlAttachmentDownload";
 
 type Props = {
   attachments: MvlData["attachments"];
@@ -78,20 +75,16 @@ const AttachmentIcon = (props: {
  * @constructor
  */
 const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
-  const authHeader = useIOSelector(ioBackendAuthenticationHeaderSelector);
-  const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
-  const { present, bottomSheet } = useDownloadAttachmentConfirmationBottomSheet(
-    props.attachment,
-    authHeader,
-    {
-      dontAskAgain: !showAlertForAttachments,
-      showToastOnSuccess: platform.isAndroid
-    }
-  );
+  const { downloadPot, onAttachmentSelect, bottomSheet } =
+    useMvlAttachmentDownload(props.attachment);
 
   return (
     <>
-      <TouchableOpacity style={styles.container} onPress={present}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={onAttachmentSelect}
+        disabled={pot.isLoading(downloadPot)}
+      >
         <View style={styles.row}>
           <AttachmentIcon contentType={props.attachment.contentType} />
           <View style={styles.middleSection}>
@@ -109,12 +102,21 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
               </H5>
             )}
           </View>
-          <IconFont
-            name={"io-right"}
-            color={IOColors.blue}
-            size={24}
-            style={styles.icon}
-          />
+          {pot.isLoading(downloadPot) ? (
+            <ActivityIndicator
+              accessibilityLabel={I18n.t("global.remoteStates.loading")}
+              color={IOColors.blue}
+              style={{ ...styles.icon, width: 24 }}
+              testID={"attachmentActivityIndicator"}
+            />
+          ) : (
+            <IconFont
+              name={"io-right"}
+              color={IOColors.blue}
+              size={24}
+              style={styles.icon}
+            />
+          )}
         </View>
       </TouchableOpacity>
       {bottomSheet}

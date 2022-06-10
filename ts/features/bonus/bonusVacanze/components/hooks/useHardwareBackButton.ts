@@ -4,10 +4,13 @@ import * as React from "react";
 
 export const useHardwareBackButton = (handler: () => boolean) => {
   useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", handler);
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handler
+    );
 
     return () => {
-      BackHandler.removeEventListener("hardwareBackPress", handler);
+      subscription.remove();
     };
   }, [handler]);
 };

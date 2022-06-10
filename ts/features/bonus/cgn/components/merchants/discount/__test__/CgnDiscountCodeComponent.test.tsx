@@ -4,6 +4,8 @@ import CgnDiscountCodeComponent from "../CgnDiscountCodeComponent";
 import { DiscountCodeTypeEnum } from "../../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { mockDiscount } from "../../../../__mock__/discount";
 
+const mockFunc = (_: string) => jest.fn();
+
 describe("when rendering", () => {
   it("should match the snapshot", () => {
     expect(
@@ -11,6 +13,7 @@ describe("when rendering", () => {
         <CgnDiscountCodeComponent
           discount={mockDiscount}
           merchantType={DiscountCodeTypeEnum.static}
+          onCodePress={mockFunc}
         />
       ).toJSON()
     ).toMatchSnapshot();
@@ -24,6 +27,7 @@ describe("when should not render", () => {
         <CgnDiscountCodeComponent
           discount={mockDiscount}
           merchantType={DiscountCodeTypeEnum.landingpage}
+          onCodePress={mockFunc}
         />
       ).toJSON()
     ).toMatchSnapshot();

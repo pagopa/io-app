@@ -5,7 +5,7 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler } from "react-native";
+import { Alert, BackHandler, NativeEventSubscription } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewHttpErrorEvent,
@@ -55,6 +55,7 @@ const loaderComponent = (
 );
 
 class CieConsentDataUsageScreen extends React.Component<Props, State> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -88,11 +89,15 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.showAbortAlert);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.showAbortAlert
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.showAbortAlert);
+    this.subscription?.remove();
   }
 
   get cieAuthorizationUri(): string {

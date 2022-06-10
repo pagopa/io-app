@@ -16,7 +16,6 @@ import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
 import { InstallationState } from "./installation";
-import { InternalRouteNavigationState } from "./internalRouteNavigation";
 import { NavigationState } from "./navigation";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
@@ -55,7 +54,6 @@ export type GlobalState = Readonly<{
   cie: CieState;
   bonus: BonusState;
   features: PersistedFeaturesState;
-  internalRouteNavigation: InternalRouteNavigationState;
   crossSessions: CrossSessionsState;
   assistanceTools: AssistanceToolsState;
 }>;

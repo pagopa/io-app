@@ -44,7 +44,16 @@ export default async function init(
                 } as Failure)
             )
             .chain<string>(data => {
-              if (data.status === 200) {
+              // If the backend returns 403 or 404, it means that the client
+              // is trying to migrate a message that doesn't exist for the user
+              // (e.g. dirty state in the client). In this case, as the error
+              // is not recoverable by the user, we consider the migration
+              // successful (i.e. nothing to migrate).
+              if (
+                data.status === 200 ||
+                data.status === 403 ||
+                data.status === 404
+              ) {
                 return Either.right<Failure, string>(id);
               }
 

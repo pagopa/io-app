@@ -1,5 +1,6 @@
 import { createCompatNavigatorFactory } from "@react-navigation/compat";
 import { createStackNavigator } from "@react-navigation/stack";
+import { PathConfigMap } from "@react-navigation/core";
 import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
 import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
@@ -16,8 +17,22 @@ import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerch
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
 import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
-
 import CGN_ROUTES from "./routes";
+
+export const cgnLinkingOptions: PathConfigMap = {
+  [CGN_ROUTES.DETAILS.MAIN]: {
+    path: "cgn-details",
+    screens: {
+      [CGN_ROUTES.DETAILS.DETAILS]: "detail"
+    }
+  },
+  [CGN_ROUTES.ACTIVATION.MAIN]: {
+    path: "cgn-activation",
+    screens: {
+      [CGN_ROUTES.ACTIVATION.CTA_START_CGN]: "start"
+    }
+  }
+};
 
 export const CgnActivationNavigator = createCompatNavigatorFactory(
   createStackNavigator

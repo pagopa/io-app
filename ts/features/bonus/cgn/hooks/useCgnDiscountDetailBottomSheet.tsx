@@ -29,6 +29,7 @@ const calculateBottomSheetHeight = (
   );
 export const useCgnDiscountDetailBottomSheet = (
   discount: Discount,
+  operatorName: string,
   merchantType?: DiscountCodeType,
   landingPageHandler?: (url: string, referer: string) => void
 ) => {
@@ -41,6 +42,7 @@ export const useCgnDiscountDetailBottomSheet = (
     <CgnDiscountDetail
       discount={discount}
       merchantType={merchantType}
+      operatorName={operatorName}
       onLandingCtaPress={(url: string, referer: string) => {
         landingPageHandler?.(url, referer);
         dismiss();

@@ -3,7 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {
   bonusVacanzeEnabled,
   bpdEnabled,
-  bpdOptInPaymentMethodsEnabled
+  bpdOptInPaymentMethodsEnabled,
+  newTransactionSummaryEnabled
 } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
@@ -55,10 +56,11 @@ import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethod
 import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
 import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import TransactionErrorScreen from "../screens/wallet/payment/TransactionErrorScreen";
-import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
+import NewTransactionSummaryScreen from "../screens/wallet/payment/NewTransactionSummaryScreen";
+import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -105,7 +107,9 @@ const baseRouteConfigMap = {
     screen: ManualDataInsertionScreen
   },
   [ROUTES.PAYMENT_TRANSACTION_SUMMARY]: {
-    screen: TransactionSummaryScreen
+    screen: newTransactionSummaryEnabled
+      ? NewTransactionSummaryScreen
+      : TransactionSummaryScreen
   },
   [ROUTES.PAYMENT_TRANSACTION_ERROR]: {
     screen: TransactionErrorScreen
