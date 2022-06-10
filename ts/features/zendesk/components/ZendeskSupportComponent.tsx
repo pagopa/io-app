@@ -57,7 +57,7 @@ const getDisplayedButtons = (
     v => (v > 0 ? "Both" : "OpenRequest"),
     _ => "OpenRequest",
     v => (v > 0 ? "Both" : "OpenRequest"),
-    v => (v > 0 ? "Both" : "OpenRequest"),
+    v => (v > 0 ? "Both" : "None"),
     (_, v) => (v > 0 ? "Both" : "OpenRequest"),
     (v, _) => (v > 0 ? "Both" : "OpenRequest")
   );
@@ -122,10 +122,7 @@ const ZendeskSupportComponent = (props: Props) => {
 
     setUserIdentity(zendeskIdentity);
 
-    // Dispatch the request only if the showed buttons are not both
-    // if (getDisplayedButtons(ticketsNumber) !== "Both") {
     dispatch(zendeskRequestTicketNumber.request());
-    // }
   }, [dispatch, zendeskConfig, zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
