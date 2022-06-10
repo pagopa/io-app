@@ -31,6 +31,7 @@ import { mixpanelTrack } from "../mixpanel";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
+import ROUTES from "../navigation/routes";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -74,12 +75,19 @@ export const handleCtaAction = (
   service?: ServicePublic
 ) => {
   if (isIoInternalLink(cta.action)) {
-    handleInternalLink(
-      linkTo,
-      `${cta.action}${
-        service ? "&serviceId=" + (service.service_id as string) : ""
-      }`
-    );
+    const convertedLink = getInternalRoute(cta.action);
+    // the service ID is specifically required for MyPortal webview usage,
+    // not required for other internal screens
+    if (cta.action.indexOf(ROUTES.SERVICE_WEBVIEW) !== -1) {
+      handleInternalLink(
+        linkTo,
+        `${convertedLink}${
+          service ? "&serviceId=" + (service.service_id as string) : ""
+        }`
+      );
+      return;
+    }
+    handleInternalLink(linkTo, `${convertedLink}`);
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
     if (maybeHandledAction.isRight()) {
