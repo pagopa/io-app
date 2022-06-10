@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
+import { ValidationError } from "io-ts";
 import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
 import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
 import { BackendClient } from "../../api/backend";
@@ -11,10 +11,8 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import migrateToPagination from "../../boot/migrateToPagination";
-
 import { MessageStatus } from "../../store/reducers/entities/messages/messagesStatus";
 import { readablePrivacyReport } from "../../utils/reporters";
-import { ValidationError } from "io-ts";
 
 type LocalActionType = ActionType<typeof migrateToPaginatedMessages["request"]>;
 type LocalBeClient = ReturnType<
