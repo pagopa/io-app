@@ -1,4 +1,6 @@
+import { ValidationError } from "io-ts";
 import { Detail_v2Enum } from "../../definitions/backend/PaymentProblemJson";
+import { MessagesFailurePayload } from "../store/actions/messages";
 
 export type TimeoutError = { readonly kind: "timeout" };
 export type GenericError = { readonly kind: "generic"; value: Error };
@@ -66,4 +68,22 @@ export const getWalletError = (e: unknown): Detail_v2Enum => {
   return message && message in Detail_v2Enum
     ? (message as Detail_v2Enum)
     : Detail_v2Enum.GENERIC_ERROR;
+};
+
+/**
+ * Convert an `unknown` variable to a `MessagesFailurePayload`.
+ */
+export const convertUnknownToMessagesFailure = (
+  e: unknown
+): MessagesFailurePayload => {
+  // If this is actually a `MessagesFailurePayload` then return it.
+  if (typeof e === "object" && e !== null && "error" in e && "filter" in e) {
+    return e as MessagesFailurePayload;
+  }
+
+  // Otherwise create a new `MessagesFailurePayload` ad-hoc.
+  return {
+    error: convertUnknownToError(e),
+    filter: {}
+  };
 };
