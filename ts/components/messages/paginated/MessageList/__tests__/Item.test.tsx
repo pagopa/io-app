@@ -6,6 +6,7 @@ import { successReloadMessagesPayload } from "../../../../../__mocks__/messages"
 import Item from "../Item";
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 
+jest.mock("../../../../../config", () => ({ mvlEnabled: true }));
 jest.useFakeTimers();
 
 const messages = successReloadMessagesPayload.messages;
