@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
@@ -23,7 +24,7 @@ import { ZendeskSubCategory } from "../../../../../../definitions/content/Zendes
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: remoteUndefined
+  ticketNumber: pot.none
 };
 
 const mockCategory: ZendeskCategory = {
