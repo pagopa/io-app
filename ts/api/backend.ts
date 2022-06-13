@@ -169,7 +169,7 @@ export function BackendClient(
     url: params => `/api/v1/services/${params.service_id}/preferences`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
-    body: body => JSON.stringify(body.servicePreference),
+    body: body => JSON.stringify(body.upsertServicePreference),
     response_decoder: upsertServicePreferencesDefaultDecoder()
   };
 

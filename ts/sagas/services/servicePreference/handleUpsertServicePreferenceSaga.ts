@@ -35,8 +35,9 @@ const calculateUpdatingPreference = (
       is_inbox_enabled: action.payload.inbox,
       is_webhook_enabled: true,
       is_email_enabled: currentServicePreferenceState.value.value.email,
-      is_premium_message_read_status_enabled:
-        currentServicePreferenceState.value.value.send_read_message_status,
+      can_access_message_read_status:
+        currentServicePreferenceState.value.value
+          .can_access_message_read_status,
       settings_version: action.payload
         .settings_version as ServicePreference["settings_version"]
     };
@@ -45,8 +46,8 @@ const calculateUpdatingPreference = (
     is_inbox_enabled: action.payload.inbox,
     is_webhook_enabled: action.payload.inbox ? action.payload.push : false,
     is_email_enabled: action.payload.inbox ? action.payload.email : false,
-    is_premium_message_read_status_enabled: action.payload.inbox
-      ? action.payload.send_read_message_status
+    can_access_message_read_status: action.payload.inbox
+      ? action.payload.can_access_message_read_status
       : false,
     settings_version: action.payload
       .settings_version as ServicePreference["settings_version"]
@@ -76,7 +77,7 @@ export function* handleUpsertServicePreference(
     const response: SagaCallReturnType<typeof upsertServicePreferences> =
       yield* call(upsertServicePreferences, {
         service_id: action.payload.id,
-        servicePreference: updatingPreference
+        upsertServicePreference: updatingPreference
       });
 
     if (response.isRight()) {
@@ -92,8 +93,8 @@ export function* handleUpsertServicePreference(
 
               // If the optional flag does not exists it will be set
               // as the value of `inbox`.
-              send_read_message_status:
-                response.value.value.is_premium_message_read_status_enabled ??
+              can_access_message_read_status:
+                response.value.value.can_access_message_read_status ??
                 response.value.value.is_inbox_enabled,
               settings_version: response.value.value.settings_version
             }

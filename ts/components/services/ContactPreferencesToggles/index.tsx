@@ -26,7 +26,7 @@ import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
-type Item = "email" | "push" | "inbox" | "send_read_message_status";
+type Item = "email" | "push" | "inbox" | "can_access_message_read_status";
 
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
@@ -55,7 +55,7 @@ const getChannelPreference = (
     pot.isSome(potServicePreference) &&
     isServicePreferenceResponseSuccess(potServicePreference.value)
   ) {
-    if (key === "send_read_message_status") {
+    if (key === "can_access_message_read_status") {
       return potServicePreference.value.value[key] ?? true;
     } else {
       return potServicePreference.value.value[key];
@@ -151,11 +151,11 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
           <PreferenceToggleRow
             label={I18n.t("services.messageReadStatus")}
             onPress={(value: boolean) =>
-              onValueChange(value, "send_read_message_status")
+              onValueChange(value, "can_access_message_read_status")
             }
             value={getChannelPreference(
               props.servicePreferenceStatus,
-              "send_read_message_status"
+              "can_access_message_read_status"
             )}
             graphicalState={graphicalState}
             onReload={loadPreferences}

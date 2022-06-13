@@ -44,8 +44,8 @@ export function* handleGetServicePreference(
               settings_version: response.value.value.settings_version,
 
               // This will handle the premium messages flag.
-              send_read_message_status:
-                response.value.value.is_premium_message_read_status_enabled
+              can_access_message_read_status:
+                response.value.value.can_access_message_read_status
             }
           })
         );

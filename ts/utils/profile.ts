@@ -101,11 +101,7 @@ export interface EnabledChannels {
   inbox: boolean;
   email: boolean;
   push: boolean;
-
-  // FIXME: This is a temporary name that will
-  // need to be changed as soon as we'll have
-  // the backend specs.
-  send_read_message_status?: boolean;
+  can_access_message_read_status: boolean;
 }
 
 const INBOX_CHANNEL = "INBOX";
@@ -196,14 +192,14 @@ export function getEnabledChannelsForService(
       inbox: _.indexOf(INBOX_CHANNEL) === -1,
       email: _.indexOf(EMAIL_CHANNEL) === -1,
       push: _.indexOf(PUSH_CHANNEL) === -1,
-      send_read_message_status:
+      can_access_message_read_status:
         _.indexOf(SEND_READ_MESSAGE_STATUS_CHANNEL) === -1
     }))
     .getOrElse({
       inbox: true,
       email: true,
       push: true,
-      send_read_message_status: true
+      can_access_message_read_status: true
     });
 }
 
@@ -228,7 +224,9 @@ export const getBlockedChannels =
       !enabled.inbox ? INBOX_CHANNEL : "",
       !enabled.push ? PUSH_CHANNEL : "",
       !enabled.email ? EMAIL_CHANNEL : "",
-      !enabled.send_read_message_status ? SEND_READ_MESSAGE_STATUS_CHANNEL : ""
+      !enabled.can_access_message_read_status
+        ? SEND_READ_MESSAGE_STATUS_CHANNEL
+        : ""
     ].filter(_ => _ !== "");
 
     if (blockedChannelsForService.length === 0) {
