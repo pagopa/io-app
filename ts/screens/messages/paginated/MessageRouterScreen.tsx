@@ -6,14 +6,16 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import * as O from "fp-ts/lib/Option";
 
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 import {
   euCovidCertificateEnabled,
   maximumItemsFromAPI,
   mvlEnabled,
-  pageSize
+  pageSize,
+  pnEnabled
 } from "../../../config";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
@@ -50,6 +52,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../../utils/pot";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -81,10 +84,18 @@ const navigateToScreenHandler =
           .authCode as EUCovidCertificateAuthCode,
         messageId: message.id
       });
-    } else if (mvlEnabled && message.category.tag === TagEnum.LEGAL_MESSAGE) {
+    } else if (
+      mvlEnabled &&
+      message.category.tag === TagEnumBase.LEGAL_MESSAGE
+    ) {
       navigateBack();
       NavigationService.dispatchNavigationAction(
         navigateToMvlDetailsScreen({ id: message.id })
+      );
+    } else if (pnEnabled && message.category.tag === TagEnumPN.PN) {
+      navigateBack();
+      NavigationService.dispatchNavigationAction(
+        navigateToPnMessageDetailsScreen({ id: message.id })
       );
     } else {
       navigateBack();

@@ -1,10 +1,12 @@
 import { createCompatNavigatorFactory } from "@react-navigation/compat";
 import { createStackNavigator } from "@react-navigation/stack";
-import { euCovidCertificateEnabled, mvlEnabled } from "../config";
+import { euCovidCertificateEnabled, mvlEnabled, pnEnabled } from "../config";
 import EuCovidCertNavigator from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import MvlNavigator from "../features/mvl/navigation/navigator";
 import MVL_ROUTES from "../features/mvl/navigation/routes";
+import { PnStackNavigator } from "../features/pn/navigation/navigator";
+import PN_ROUTES from "../features/pn/navigation/routes";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageDetailScreen";
@@ -38,10 +40,18 @@ const mvlRouteConfig = {
     screen: MvlNavigator
   }
 };
+
+const pnRouteConfig = {
+  [PN_ROUTES.MAIN]: {
+    screen: PnStackNavigator
+  }
+};
+
 const messageRouteConfig = {
   ...baseMessageRouteConfig,
   ...(euCovidCertificateEnabled ? euCovidCertificateRouteConfig : {}),
-  ...(mvlEnabled ? mvlRouteConfig : {})
+  ...(mvlEnabled ? mvlRouteConfig : {}),
+  ...(pnEnabled ? pnRouteConfig : {})
 };
 
 const MessagesNavigator = createCompatNavigatorFactory(createStackNavigator)(
