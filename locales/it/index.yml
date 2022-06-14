@@ -2967,7 +2967,11 @@ bonus:
           title: "Ecco l’esito delle tue richieste"
           body:
             success: "La richiesta per il {{successfulYears}} è andata a buon fine."
-            fail: "C’è stato un problema per quella relativa al {{failedYears}}."
+            fail:
+              residenceAbroad: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non residente in Italia."
+              notEligible: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non è possibile richiedere Carta della Cultura per l’anno selezionato."
+              alreadyRegistered: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché hai già inviato una richiesta di attivazione per quell’anno."
+              initiativeFinished: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché il periodo di richiesta è terminato."
         ko:
           requirementsError:
             title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
@@ -2987,6 +2991,8 @@ bonus:
       selectYear:
         header: "Per quale anno vuoi richiedere la Carta della Cultura?"
         body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
+      misc:
+        conjunction: ", "
 features:
   mvl:
     title: "messaggio a valore legale"

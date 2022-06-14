@@ -789,7 +789,7 @@ onboarding:
     tutorial: You can change the code at any time under Profile > Security
     errors:
       length: The code must have six digits
-      match: The code doesn’t match 
+      match: The code doesn’t match
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -2942,7 +2942,11 @@ bonus:
           title: "Here is the result of your requests"
           body:
             success: "The request for {{successfulYears}} was successful."
-            fail: "There was a problem for the one relating to {{failedYears}}."
+            fail:
+              residenceAbroad: "The request for {{failedYears}} could not be sent because you are not a resident of Italy."
+              notEligible: "The request for {{failedYears}} could not be sent because you cannot apply for Carta della Cultura for the selected year."
+              alreadyRegistered: "The request for {{failedYears}} could not be sent because you have already submitted a request for that year."
+              initiativeFinished: "The request for {{failedYears}} could not be sent because the request period is over."
         ko:
           requirementsError:
             title: "Unfortunately you don't have the requirements to apply for Carta della Cultura."
@@ -2962,6 +2966,8 @@ bonus:
       selectYear:
         header: "Select for what years you want to request the Carta della Cultura"
         body: "For each selected year, your ISEE needs to be below € 15,000 and your residency must be in Italy."
+      misc:
+        conjunction: " and "
 features:
   mvl:
     title: "legal message"
