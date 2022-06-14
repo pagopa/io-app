@@ -147,19 +147,7 @@ const ZendeskSupportComponent = (props: Props) => {
         text={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
       />
       <View spacer={true} />
-      <ButtonDefaultOpacity
-        style={{
-          alignSelf: "stretch"
-        }}
-        onPress={handleContactSupportPress}
-        disabled={false}
-        testID={"contactSupportButton"}
-      >
-        <Label color={"white"}>
-          {I18n.t("support.helpCenter.cta.contactSupport")}
-        </Label>
-      </ButtonDefaultOpacity>
-      <View spacer={true} />
+
       {showAlreadyOpenedTicketButton && (
         <>
           <ButtonDefaultOpacity
@@ -180,6 +168,18 @@ const ZendeskSupportComponent = (props: Props) => {
           <View spacer={true} />
         </>
       )}
+      <ButtonDefaultOpacity
+        style={{
+          alignSelf: "stretch"
+        }}
+        onPress={handleContactSupportPress}
+        disabled={false}
+        testID={"contactSupportButton"}
+      >
+        <Label color={"white"}>
+          {I18n.t("support.helpCenter.cta.contactSupport")}
+        </Label>
+      </ButtonDefaultOpacity>
     </>
   );
 };
