@@ -37,18 +37,6 @@ export const loginWithSPID = async () => {
     .withTimeout(e2eWaitRenderTimeout);
 
   await createE2EPin();
-
-  await waitFor(element(by.text(I18n.t("onboarding.thankYouPage.body"))))
-    .toBeVisible()
-    .withTimeout(e2eWaitRenderTimeout);
-
-  await element(by.text(I18n.t("global.buttons.continue")))
-    // Here we are going to take the second element
-    // because during the screen transition, inside the
-    // hierarchy we are gonna have two continue buttons, one
-    // from the current screen and one from the previous.
-    .atIndex(1)
-    .tap();
 };
 
 /**
