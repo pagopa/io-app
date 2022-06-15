@@ -47,6 +47,7 @@ const WebviewComponent = (props: Props) => {
             androidCameraAccessDisabled={true}
             androidMicrophoneAccessDisabled={true}
             allowsInlineMediaPlayback={true}
+            mediaPlaybackRequiresUserAction={true}
             style={IOStyles.flex}
             ref={ref}
             onLoadEnd={() => setLoading(false)}
