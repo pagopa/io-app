@@ -333,13 +333,14 @@ export function* initializeApplicationSaga(): Generator<
 
     yield* call(checkAcknowledgedEmailSaga, userProfile);
 
-    yield* call(
-      askServicesPreferencesModeOptin,
-      isProfileFirstOnBoarding(userProfile)
-    );
+    const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
+
+    yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
 
     // Show the thank-you screen for the onboarding
-    yield* call(completeOnboardingSaga);
+    if (isFirstOnboarding) {
+      yield* call(completeOnboardingSaga);
+    }
 
     // Stop the watchAbortOnboardingSaga
     yield* cancel(watchAbortOnboardingSagaTask);
