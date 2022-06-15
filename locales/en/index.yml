@@ -2952,11 +2952,12 @@ bonus:
         header: "Select for what years you want to request the Carta della Cultura"
         body: "For each selected year, your ISEE needs to be below € 15,000 and your residency must be in Italy."
 features:
-  mvl:
-    title: "legal message"
+  messages:
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
+  mvl:
+    title: "legal message"
     ko:
       genericError:
         title: "There was an error retrieving the message"

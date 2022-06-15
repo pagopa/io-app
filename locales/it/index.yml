@@ -2979,11 +2979,12 @@ bonus:
         header: "Per quale anno vuoi richiedere la Carta della Cultura?"
         body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
 features:
-  mvl:
-    title: "messaggio a valore legale"
+  messages:
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
+  mvl:
+    title: "messaggio a valore legale"
     ko:
       genericError:
         title: "Si è verificato un errore nel recupero del messaggio"
