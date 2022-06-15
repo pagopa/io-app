@@ -4,7 +4,8 @@ import { NavigationActions, StackActions } from "@react-navigation/compat";
 /**
  * A saga that manages the Wallet.
  */
-import { isSome, none, Option, some } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
@@ -193,6 +194,7 @@ import {
   updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { pipe } from "fp-ts/lib/function";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -301,21 +303,21 @@ function* startOrResumeAddCreditCardSaga(
       yield* put(refreshPMTokenWhileAddCreditCard.request({ idWallet }));
       // Request a new token to the PM. This prevent expired token during the webview navigation.
       // If the request for the new token fails a new Error is caught, the step fails and we exit the flow.
-      const pagoPaToken: Option<PaymentManagerToken> = yield* call(
+      const pagoPaToken: O.Option<PaymentManagerToken> = yield* call(
         pmSessionManager.getNewToken
       );
-      if (pagoPaToken.isSome()) {
+      if (O.isSome(pagoPaToken)) {
         // store the pm session token
         yield* put(refreshPMTokenWhileAddCreditCard.success(pagoPaToken.value));
         // Wait until the outcome code from the webview is available
         yield* take(addCreditCardOutcomeCode);
 
-        const maybeOutcomeCode: ReturnType<typeof lastPaymentOutcomeCodeSelector> = yield* select(
-          lastPaymentOutcomeCodeSelector
-        );
+        const maybeOutcomeCode: ReturnType<
+          typeof lastPaymentOutcomeCodeSelector
+        > = yield* select(lastPaymentOutcomeCodeSelector);
         // Since we wait the dispatch of the addCreditCardOutcomeCode action,
         // the else case can't happen, because the action in every case set a some value in the store.
-        if (isSome(maybeOutcomeCode.outcomeCode)) {
+        if (O.isSome(maybeOutcomeCode.outcomeCode)) {
           const outcomeCode = maybeOutcomeCode.outcomeCode.value;
 
           // The credit card was added successfully
@@ -340,18 +342,17 @@ function* startOrResumeAddCreditCardSaga(
                 yield* delay(successScreenDelay);
                 // check if the new method is compliant with bpd
                 if (bpdEnabled) {
-                  const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield* select(
-                    bpdEnabledSelector
-                  );
+                  const bpdEnroll: ReturnType<typeof bpdEnabledSelector> =
+                    yield* select(bpdEnabledSelector);
                   const hasBpdFeature = hasFunctionEnabled(
                     maybeAddedWallet.paymentMethod,
                     EnableableFunctionsEnum.BPD
                   );
                   // if the method is bpd compliant check if we have info about bpd activation
                   if (hasBpdFeature && pot.isSome(bpdEnroll)) {
-                    const bpdRemoteConfig: ReturnType<typeof bpdRemoteConfigSelector> = yield* select(
-                      bpdRemoteConfigSelector
-                    );
+                    const bpdRemoteConfig: ReturnType<
+                      typeof bpdRemoteConfigSelector
+                    > = yield* select(bpdRemoteConfigSelector);
                     // if bdp is active navigate to a screen where it asked to enroll that method in bpd
                     // otherwise navigate to a screen where is asked to join bpd
                     if (
@@ -534,7 +535,7 @@ function* deleteActivePaymentSaga() {
   const maybePaymentId = pot.toOption(potPaymentId);
   // stop polling
   shouldAbortPaymentIdPollingRequest.e2(true);
-  if (maybePaymentId.isSome()) {
+  if (O.isSome(maybePaymentId)) {
     yield* put(
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
     );
@@ -549,7 +550,10 @@ function* deleteUnsuccessfulActivePaymentSaga() {
   // it can be related to a payment or a payment check done during the credit card onboarding
   const lastPaymentOutCome = yield* select(lastPaymentOutcomeCodeSelector);
   if (
-    lastPaymentOutCome.outcomeCode.exists(({ status }) => status !== "success")
+    pipe(
+      lastPaymentOutCome.outcomeCode,
+      O.exists(({ status }) => status !== "success")
+    )
   ) {
     /**
      * run the procedure to delete the payment activation
@@ -616,12 +620,12 @@ export function* watchWalletSaga(
   const getPaymentManagerSession = async () => {
     try {
       const response = await paymentManagerClient.getSession(walletToken);
-      if (response.isRight() && response.value.status === 200) {
-        return some(response.value.value.data.sessionToken);
+      if (E.isRight(response) && response.right.status === 200) {
+        return O.some(response.right.value.data.sessionToken);
       }
-      return none;
+      return O.none;
     } catch {
-      return none;
+      return O.none;
     }
   };
 
@@ -672,12 +676,15 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
-  yield* takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
-    action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
-  ) {
-    yield* call(waitBackoffError, fetchTransactionsFailure);
-    yield* put(fetchTransactionsRequest(action.payload));
-  });
+  yield* takeLatest(
+    getType(fetchTransactionsRequestWithExpBackoff),
+    function* (
+      action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
+    ) {
+      yield* call(waitBackoffError, fetchTransactionsFailure);
+      yield* put(fetchTransactionsRequest(action.payload));
+    }
+  );
 
   /**
    * watch when all transactions are been loaded
@@ -685,21 +692,21 @@ export function* watchWalletSaga(
    * it could contain transactions different from the loaded ones
    * This scenario could happen when same app instance is used across multiple users
    */
-  yield* takeLatest(getType(fetchTransactionsLoadComplete), function* (
-    action: ActionType<typeof fetchTransactionsLoadComplete>
-  ) {
-    const transactionRead: ReturnType<typeof getTransactionsRead> = yield* select(
-      getTransactionsRead
-    );
-    const transactionReadId = Object.keys(transactionRead).map(
-      k => transactionRead[k]
-    );
-    const allTransactionsId = action.payload.map(t => t.id);
-    const toDelete = _.difference(transactionReadId, allTransactionsId);
-    if (toDelete.length > 0) {
-      yield* put(deleteReadTransaction(toDelete));
+  yield* takeLatest(
+    getType(fetchTransactionsLoadComplete),
+    function* (action: ActionType<typeof fetchTransactionsLoadComplete>) {
+      const transactionRead: ReturnType<typeof getTransactionsRead> =
+        yield* select(getTransactionsRead);
+      const transactionReadId = Object.keys(transactionRead).map(
+        k => transactionRead[k]
+      );
+      const allTransactionsId = action.payload.map(t => t.id);
+      const toDelete = _.difference(transactionReadId, allTransactionsId);
+      if (toDelete.length > 0) {
+        yield* put(deleteReadTransaction(toDelete));
+      }
     }
-  });
+  );
 
   yield* takeLatest(
     getType(fetchTransactionRequest),
@@ -777,16 +784,17 @@ export function* watchWalletSaga(
     pagopaNodoClient.postAttivaRpt
   );
 
-  yield* takeLatest(getType(paymentIdPolling.request), function* (
-    action: ActionType<typeof paymentIdPolling["request"]>
-  ) {
-    // getPaymentId is a tuple2
-    // e1: deferredPromise, used to abort the constantPollingFetch
-    // e2: the fetch to execute
-    const getPaymentId = pollingPagopaNodoClient.getPaymentId();
-    shouldAbortPaymentIdPollingRequest = getPaymentId.e1;
-    yield* call(paymentIdPollingRequestHandler, getPaymentId, action);
-  });
+  yield* takeLatest(
+    getType(paymentIdPolling.request),
+    function* (action: ActionType<typeof paymentIdPolling["request"]>) {
+      // getPaymentId is a tuple2
+      // e1: deferredPromise, used to abort the constantPollingFetch
+      // e2: the fetch to execute
+      const getPaymentId = pollingPagopaNodoClient.getPaymentId();
+      shouldAbortPaymentIdPollingRequest = getPaymentId.e1;
+      yield* call(paymentIdPollingRequestHandler, getPaymentId, action);
+    }
+  );
 
   yield* takeLatest(
     getType(paymentCheck.request),
@@ -1051,9 +1059,8 @@ export function* watchPaymentInitializeSaga(): Iterator<ReduxSagaEffect> {
  */
 export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
   yield* takeEvery(getType(backToEntrypointPayment), function* () {
-    const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] = yield* select(
-      _ => _.wallet.payment.entrypointRoute
-    );
+    const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] =
+      yield* select(_ => _.wallet.payment.entrypointRoute);
     if (entrypointRoute !== undefined) {
       yield* call(
         NavigationService.dispatchNavigationAction,
