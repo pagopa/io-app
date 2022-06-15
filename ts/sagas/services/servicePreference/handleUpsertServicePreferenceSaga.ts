@@ -35,9 +35,12 @@ const calculateUpdatingPreference = (
       is_inbox_enabled: action.payload.inbox,
       is_webhook_enabled: true,
       is_email_enabled: currentServicePreferenceState.value.value.email,
-      can_access_message_read_status:
-        currentServicePreferenceState.value.value
-          .can_access_message_read_status,
+
+      // When the `inbox` preference will be re-enabled (from false to true),
+      // by default the `can_access_message_read_status` should
+      // be enabled too, just like the `is_webhook_enabled`.
+      can_access_message_read_status: true,
+
       settings_version: action.payload
         .settings_version as ServicePreference["settings_version"]
     };
