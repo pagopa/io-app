@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0-rc.6](https://github.com/pagopa/io-app/compare/2.11.0-rc.5...2.11.0-rc.6) (2022-06-15)
+
+
+### Chores
+
+* [[IA-886](https://pagopa.atlassian.net/browse/IA-886)] Change UADonations on iOS ([#4016](https://github.com/pagopa/io-app/issues/4016)) ([7aef49c](https://github.com/pagopa/io-app/commit/7aef49cace7692ab68bb8a8292d2b16e662e1e02))
+
 ## [2.11.0-rc.5](https://github.com/pagopa/io-app/compare/2.11.0-rc.4...2.11.0-rc.5) (2022-06-09)
 
 
