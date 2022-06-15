@@ -1,10 +1,10 @@
 import { flip } from "fp-ts/lib/function";
-import { Omit } from "italia-ts-commons/lib/types";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
   createFetchRequestForApi
-} from "italia-ts-commons/lib/requests";
+} from "@pagopa/ts-commons/lib/requests";
 import {
   getMitVoucherTokenDefaultDecoder,
   GetMitVoucherTokenT
@@ -164,13 +164,12 @@ const GetStampaVoucher: GetPdfT = {
   response_decoder: getPdfDefaultDecoder()
 };
 
-const withSiciliaVolaToken =
-  <P extends { Bearer: string }, R>(f: (p: P) => Promise<R>) =>
-  (token: MitVoucherToken) =>
-  async (po: Omit<P, "Bearer">): Promise<R> => {
-    const params = Object.assign({ Bearer: String(token.token) }, po) as P;
-    return f(params);
-  };
+const withSiciliaVolaToken = <P extends { Bearer: string }, R>(
+  f: (p: P) => Promise<R>
+) => (token: MitVoucherToken) => async (po: Omit<P, "Bearer">): Promise<R> => {
+  const params = Object.assign({ Bearer: String(token.token) }, po) as P;
+  return f(params);
+};
 
 // client for SiciliaVola to handle API communications
 export const BackendSiciliaVolaClient = (

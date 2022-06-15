@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { DeepPartial } from "redux";
 import { Transaction } from "../../../../types/pagopa";
 import { ProfileState } from "../../profile";
@@ -34,7 +34,7 @@ describe("readTransaction", () => {
       };
 
       const output = getSafeUnreadTransactionsNumSelector(
-        state as unknown as GlobalState
+        (state as unknown) as GlobalState
       );
 
       expect(output).toBe(2);
@@ -50,7 +50,7 @@ describe("readTransaction", () => {
       };
 
       const output = getSafeUnreadTransactionsNumSelector(
-        state as unknown as GlobalState
+        (state as unknown) as GlobalState
       );
 
       expect(output).toBe(0);

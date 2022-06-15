@@ -1,8 +1,8 @@
 import { none, some, isSome } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
 import { Transaction } from "../../types/pagopa";

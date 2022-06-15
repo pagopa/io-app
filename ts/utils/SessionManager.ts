@@ -4,8 +4,8 @@ import { Mutex } from "async-mutex";
 import { Function1, Lazy } from "fp-ts/lib/function";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
-import { IResponseType } from "italia-ts-commons/lib/requests";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { IResponseType } from "@pagopa/ts-commons/lib/requests";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { delayAsync } from "./timer";
 
 const waitRetry = 8000 as Millisecond;

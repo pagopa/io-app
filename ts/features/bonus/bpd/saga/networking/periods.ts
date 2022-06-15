@@ -1,7 +1,8 @@
-import { Either, left, right } from "fp-ts/lib/Either";
-import { fromNullable } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call } from "typed-redux-saga/macro";
+import { pipe } from "fp-ts/lib/function";
 import { AwardPeriodResource } from "../../../../../../definitions/bpd/award_periods/AwardPeriodResource";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import {
@@ -34,8 +35,10 @@ const convertPeriod = (
   ...networkPeriod,
   awardPeriodId: networkPeriod.awardPeriodId as AwardPeriodId,
   superCashbackAmount: networkPeriod.maxAmount,
-  status: fromNullable(periodStatusMap.get(networkPeriod.status)).getOrElse(
-    statusFallback
+  status: pipe(
+    periodStatusMap.get(networkPeriod.status),
+    O.fromNullable,
+    O.getOrElse(() => statusFallback)
   )
 });
 
@@ -51,33 +54,33 @@ export function* bpdLoadPeriodsSaga(
   awardPeriods: ReturnType<typeof BackendBpdClient>["awardPeriods"]
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, ReadonlyArray<BpdPeriod>>,
+  E.Either<Error, ReadonlyArray<BpdPeriod>>,
   SagaCallReturnType<typeof awardPeriods>
 > {
   void mixpanelTrack(mixpanelActionRequest);
   try {
     const awardPeriodsResult: SagaCallReturnType<typeof awardPeriods> =
       yield* call(awardPeriods, {} as any);
-    if (awardPeriodsResult.isRight()) {
-      if (awardPeriodsResult.value.status === 200) {
-        const periods = awardPeriodsResult.value.value;
+    if (E.isRight(awardPeriodsResult)) {
+      if (awardPeriodsResult.right.status === 200) {
+        const periods = awardPeriodsResult.right.value;
         void mixpanelTrack(mixpanelActionSuccess, {
           count: periods.length
         });
         // convert data into app domain model
-        return right<Error, ReadonlyArray<BpdPeriod>>(
+        return E.right<Error, ReadonlyArray<BpdPeriod>>(
           periods.map<BpdPeriod>(p => convertPeriod(p))
         );
       } else {
-        throw new Error(`response status ${awardPeriodsResult.value.status}`);
+        throw new Error(`response status ${awardPeriodsResult.right.status}`);
       }
     } else {
-      throw new Error(readableReport(awardPeriodsResult.value));
+      throw new Error(readableReport(awardPeriodsResult.left));
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
       reason: e.message
     });
-    return left<Error, ReadonlyArray<BpdPeriod>>(getError(e));
+    return E.left<Error, ReadonlyArray<BpdPeriod>>(getError(e));
   }
 }

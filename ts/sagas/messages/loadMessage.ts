@@ -1,5 +1,5 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { call, put, select } from "typed-redux-saga/macro";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
@@ -23,8 +23,9 @@ export function* loadMessage(
   any
 > {
   // Load the messages already in the redux store
-  const cachedMessage: ReturnType<ReturnType<typeof messageStateByIdSelector>> =
-    yield* select(messageStateByIdSelector(meta.id));
+  const cachedMessage: ReturnType<ReturnType<
+    typeof messageStateByIdSelector
+  >> = yield* select(messageStateByIdSelector(meta.id));
 
   // If we already have the message in the store just return it
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {

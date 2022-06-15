@@ -3,7 +3,7 @@
  */
 
 import { Option } from "fp-ts/lib/Option";
-import { Omit } from "italia-ts-commons/lib/types";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   ActionType,
   createAction,
@@ -17,9 +17,9 @@ export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 export const profileLoadRequest = createStandardAction(
   "PROFILE_LOAD_REQUEST"
 )();
-export const profileLoadSuccess = createStandardAction(
-  "PROFILE_LOAD_SUCCESS"
-)<InitializedProfile>();
+export const profileLoadSuccess = createStandardAction("PROFILE_LOAD_SUCCESS")<
+  InitializedProfile
+>();
 
 export const profileLoadFailure = createAction(
   "PROFILE_LOAD_FAILURE",

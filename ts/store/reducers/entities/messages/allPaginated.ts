@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";

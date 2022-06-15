@@ -1,5 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 

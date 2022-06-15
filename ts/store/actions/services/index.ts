@@ -2,7 +2,7 @@
  * Action types and action creator related to Services.
  */
 
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import {
   ActionType,
   createAsyncAction,
@@ -62,17 +62,17 @@ export const loadServicesDetail = createStandardAction(
 //  mark service as read
 //
 
-export const markServiceAsRead = createStandardAction(
-  "MARK_SERVICE_AS_READ"
-)<ServiceId>();
+export const markServiceAsRead = createStandardAction("MARK_SERVICE_AS_READ")<
+  ServiceId
+>();
 
 //
 // show service detail
 //
 
-export const showServiceDetails = createStandardAction(
-  "SERVICE_SHOW_DETAILS"
-)<ServicePublic>();
+export const showServiceDetails = createStandardAction("SERVICE_SHOW_DETAILS")<
+  ServicePublic
+>();
 
 // Remove services passing a list of tuples with serviceId and organizationFiscalCode
 export const removeServiceTuples = createStandardAction(

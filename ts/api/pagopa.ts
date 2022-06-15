@@ -2,11 +2,11 @@
  * pagoPA backend client, with functions
  * to call the different API available
  */
-import { flip } from "fp-ts/lib/function";
-import { fromNullable } from "fp-ts/lib/Option";
+import { flip, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 
 import * as t from "io-ts";
-import * as r from "italia-ts-commons/lib/requests";
+import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   AddResponseType,
   ApiHeaderJson,
@@ -20,8 +20,8 @@ import {
   RequestHeaderProducer,
   RequestHeaders,
   TypeofApiParams
-} from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
+} from "@pagopa/ts-commons/lib/requests";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import _ from "lodash";
 import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
@@ -408,7 +408,7 @@ const getAbi: GetAbiListUsingGETT = {
 const getPans: GetPansUsingGETT = {
   method: "get",
   url: ({ abi }) => {
-    const abiParameter = fromNullable(abi)
+    const abiParameter = O.fromNullable(abi)
       .map(a => `?abi=${a}`)
       .getOrElse("");
     return `/v1/bancomat/pans${abiParameter}`;
@@ -474,9 +474,12 @@ const addSatispayToWallet: AddWalletSatispayUsingPOSTTExtra = {
 const searchBPay: GetBpayListUsingGETT = {
   method: "get",
   url: ({ abi }) => {
-    const abiParameter = fromNullable(abi)
-      .map(a => `?abi=${a}`)
-      .getOrElse("");
+    const abiParameter = pipe(
+      abi,
+      O.fromNullable,
+      O.map(a => `?abi=${a}`),
+      O.getOrElse(() => "")
+    );
     return `/v1/bpay/list${abiParameter}`;
   },
   query: () => ({}),
@@ -487,9 +490,12 @@ const searchBPay: GetBpayListUsingGETT = {
 const getCobadgePans: GetCobadgesUsingGETT = {
   method: "get",
   url: ({ abiCode }) => {
-    const abiParameter = fromNullable(abiCode)
-      .map(a => `?abiCode=${a}`)
-      .getOrElse("");
+    const abiParameter = pipe(
+      abiCode,
+      O.fromNullable,
+      O.map(a => `?abiCode=${a}`),
+      O.getOrElse(() => "")
+    );
     return `/v1/cobadge/pans${abiParameter}`;
   },
   query: () => ({}),

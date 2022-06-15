@@ -1,7 +1,7 @@
 /**
  * this saga checks at regular intervals the backend status
  */
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { call, fork, put, select } from "typed-redux-saga/macro";
 import { CdnBackendStatusClient } from "../api/backendPublic";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
@@ -48,8 +48,9 @@ export function* backendStatusWatcherLoop(
       backendStatusSaga,
       getStatus
     );
-    const currentState: ReturnType<typeof backendServicesStatusSelector> =
-      yield* select(backendServicesStatusSelector);
+    const currentState: ReturnType<typeof backendServicesStatusSelector> = yield* select(
+      backendServicesStatusSelector
+    );
 
     // if we have no information increase rate
     if (response === false) {

@@ -1,7 +1,7 @@
 import { right } from "fp-ts/lib/Either";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { put } from "redux-saga/effects";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
@@ -32,8 +32,7 @@ const testMessageWithContent1: CreatedMessageWithContentAndAttachments = {
   fiscal_code: "" as any,
   created_at: new Date(),
   content: {
-    markdown:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
+    markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
     subject: "Lorem ipsum..." as any
   },
   sender_service_id: testServiceId1 as NonEmptyString
@@ -54,8 +53,7 @@ const testMessageWithContent2: CreatedMessageWithContentAndAttachments = {
   fiscal_code: "" as any,
   created_at: new Date(),
   content: {
-    markdown:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
+    markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
     subject: "Lorem ipsum..." as any
   },
   sender_service_id: testServiceId1 as NonEmptyString

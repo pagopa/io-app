@@ -7,7 +7,7 @@
 
 /* eslint-disable no-invalid-this */
 
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";

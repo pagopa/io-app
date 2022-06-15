@@ -1,5 +1,5 @@
 import * as t from "io-ts";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { readablePrivacyReport } from "../reporters";
 
 const Person = t.type({ name: t.string, age: t.number, secret: t.string });

@@ -1,5 +1,5 @@
 import { right } from "fp-ts/lib/Either";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { DepartmentName } from "../../../../definitions/backend/DepartmentName";

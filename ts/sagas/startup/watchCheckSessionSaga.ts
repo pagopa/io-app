@@ -1,8 +1,8 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-import { TypeOfApiResponseStatus } from "italia-ts-commons/lib/requests";
+import { TypeOfApiResponseStatus } from "@pagopa/ts-commons/lib/requests";
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,

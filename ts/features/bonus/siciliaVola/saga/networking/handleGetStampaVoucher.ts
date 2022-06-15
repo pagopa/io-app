@@ -2,7 +2,7 @@ import { ActionType } from "typesafe-actions";
 import { call, put } from "typed-redux-saga/macro";
 import { Platform } from "react-native";
 import RNFS from "react-native-fs";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -34,8 +34,9 @@ export function* handleGetStampaVoucher(
     const request = svSessionManager.withRefresh(
       getStampaVoucher({ codiceVoucher: action.payload })
     );
-    const getStampaVoucherResult: SagaCallReturnType<typeof request> =
-      yield* call(request);
+    const getStampaVoucherResult: SagaCallReturnType<typeof request> = yield* call(
+      request
+    );
 
     if (getStampaVoucherResult.isRight()) {
       if (getStampaVoucherResult.value.status === 200) {

@@ -1,5 +1,5 @@
 import { call, put } from "typed-redux-saga/macro";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BackendCGN } from "../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { cgnDetails } from "../../../store/actions/details";
@@ -9,8 +9,10 @@ export function* cgnGetInformationSaga(
   getCgnStatus: ReturnType<typeof BackendCGN>["getCgnStatus"]
 ) {
   try {
-    const cgnInformationResult: SagaCallReturnType<typeof getCgnStatus> =
-      yield* call(getCgnStatus, {});
+    const cgnInformationResult: SagaCallReturnType<typeof getCgnStatus> = yield* call(
+      getCgnStatus,
+      {}
+    );
     if (cgnInformationResult.isLeft()) {
       yield* put(
         cgnDetails.failure({

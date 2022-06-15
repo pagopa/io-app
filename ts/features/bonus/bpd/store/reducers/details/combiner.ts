@@ -1,6 +1,7 @@
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
+import { pipe } from "fp-ts/lib/function";
 import { cardIcons } from "../../../../../../components/wallet/card/Logo";
 import { paymentMethodsSelector } from "../../../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../../../types/pagopa";
@@ -99,14 +100,14 @@ export const bpdPeriodsAmountSnappedListSelector = createSelector(
 export const pickPaymentMethodFromHashpan = (
   hashPan: string,
   potPaymentMethods: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
-): Option<PaymentMethod> =>
+): O.Option<PaymentMethod> =>
   pot.getOrElse(
     pot.map(potPaymentMethods, paymentMethods =>
-      fromNullable(
+      O.fromNullable(
         paymentMethods.find(w => getPaymentMethodHash(w) === hashPan)
       )
     ),
-    none
+    O.none
   );
 
 const getId = (transaction: BpdTransaction) =>
@@ -132,12 +133,16 @@ export const bpdDisplayTransactionsSelector = createSelector(
         t =>
           ({
             ...t,
-            image: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
-              .map(pm => pm.icon)
-              .getOrElse(cardIcons.UNKNOWN),
-            title: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
-              .map(pm => pm.caption)
-              .getOrElse(FOUR_UNICODE_CIRCLES),
+            image: pipe(
+              pickPaymentMethodFromHashpan(t.hashPan, paymentMethod),
+              O.map(pm => pm.icon),
+              O.getOrElse(() => cardIcons.UNKNOWN)
+            ),
+            title: pipe(
+              pickPaymentMethodFromHashpan(t.hashPan, paymentMethod),
+              O.map(pm => pm.caption),
+              O.getOrElse(() => FOUR_UNICODE_CIRCLES)
+            ),
             keyId: getId(t),
             maxCashbackForTransactionAmount: period?.maxTransactionCashback
           } as EnhancedBpdTransaction)
@@ -154,15 +159,18 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
     pot.getOrElse(
       pot.map(paymentMethodsPot, paymentMethods =>
         paymentMethods.some(pm =>
-          fromNullable(getPaymentMethodHash(pm))
-            .map(hpan => bpdActivations[hpan])
-            .map(
+          pipe(
+            getPaymentMethodHash(pm),
+            O.fromNullable,
+            O.map(hpan => bpdActivations[hpan]),
+            O.map(
               potActivation =>
                 potActivation &&
                 pot.isSome(potActivation) &&
                 potActivation.value.activationStatus === "active"
-            )
-            .getOrElse(false)
+            ),
+            O.getOrElse(() => false)
+          )
         )
       ),
       false
@@ -182,8 +190,8 @@ export const paymentMethodsWithActivationStatusSelector = createSelector(
     pot.map(paymentMethodsPot, paymentMethods =>
       paymentMethods.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus = fromNullable(getPaymentMethodHash(pm))
-          .chain(hp => fromNullable(bpdActivations[hp]))
+        const activationStatus = O.fromNullable(getPaymentMethodHash(pm))
+          .chain(hp => O.fromNullable(bpdActivations[hp]))
           .map(paymentMethodActivation =>
             pot.getOrElse(
               pot.map(

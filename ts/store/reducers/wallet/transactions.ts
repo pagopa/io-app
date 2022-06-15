@@ -1,7 +1,7 @@
 /**
  * Reducers, states, selectors and guards for the transactions
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -44,9 +44,9 @@ export const getTransactions = createSelector(
     pot.map(
       potTransactions,
       txs =>
-        values(txs).filter(_ =>
-          isSuccessTransaction(_)
-        ) as ReadonlyArray<Transaction>
+        values(txs).filter(_ => isSuccessTransaction(_)) as ReadonlyArray<
+          Transaction
+        >
     )
 );
 

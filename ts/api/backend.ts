@@ -1,7 +1,7 @@
 import * as t from "io-ts";
 
-import { DeferredPromise } from "italia-ts-commons/lib/promises";
-import * as r from "italia-ts-commons/lib/requests";
+import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
+import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -12,9 +12,9 @@ import {
   IPostApiRequestType,
   IResponseType,
   ResponseDecoder
-} from "italia-ts-commons/lib/requests";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { Millisecond } from "italia-ts-commons/lib/units";
+} from "@pagopa/ts-commons/lib/requests";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import _ from "lodash";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";

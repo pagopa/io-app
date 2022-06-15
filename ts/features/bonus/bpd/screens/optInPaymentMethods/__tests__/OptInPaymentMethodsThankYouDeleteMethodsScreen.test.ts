@@ -1,5 +1,5 @@
 import { createStore, Store } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RenderAPI } from "@testing-library/react-native";
 
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -20,12 +20,10 @@ import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
 import * as showToast from "../../../../../../utils/showToast";
 import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
 
-const loadingCases: ReadonlyArray<
-  [
-    deletePaymentMethodsStatus: WalletsState["deleteAllByFunction"],
-    optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>
-  ]
-> = [
+const loadingCases: ReadonlyArray<[
+  deletePaymentMethodsStatus: WalletsState["deleteAllByFunction"],
+  optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>
+]> = [
   [remoteUndefined, pot.none],
   [remoteUndefined, pot.noneLoading],
   [remoteUndefined, pot.noneUpdating(CitizenOptInStatusEnum.DENIED)],

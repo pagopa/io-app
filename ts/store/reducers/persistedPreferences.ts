@@ -2,7 +2,7 @@
  * A reducer for persisted preferences.
  */
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";

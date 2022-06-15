@@ -1,4 +1,4 @@
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import {
   getInternalRoute,
   testableALLOWED_ROUTE_NAMES
@@ -6,9 +6,9 @@ import {
 import { IO_INTERNAL_LINK_PREFIX } from "../navigation";
 
 describe("getInternalRoute", () => {
-  const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(
-    ([r, v]) => Tuple2(`${IO_INTERNAL_LINK_PREFIX}${r}`, v)
-  );
+  const allowedRoutes = Object.entries(
+    testableALLOWED_ROUTE_NAMES!
+  ).map(([r, v]) => Tuple2(`${IO_INTERNAL_LINK_PREFIX}${r}`, v));
   const validRoute = Object.keys(testableALLOWED_ROUTE_NAMES!)[0];
   it("should recognize a valid internal route", () => {
     [

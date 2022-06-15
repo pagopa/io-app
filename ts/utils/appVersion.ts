@@ -1,5 +1,5 @@
 import { Either, fromNullable, toError } from "fp-ts/lib/Either";
-import { PatternString } from "italia-ts-commons/lib/strings";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver, { SemVer } from "semver";

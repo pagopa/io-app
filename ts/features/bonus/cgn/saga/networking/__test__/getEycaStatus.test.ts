@@ -1,7 +1,7 @@
 import { expectSaga } from "redux-saga-test-plan";
 import { right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ValidationError } from "io-ts";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

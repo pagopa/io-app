@@ -2,8 +2,8 @@ import {
   createFetchRequestForApi,
   RequestHeaderProducer,
   RequestHeaders
-} from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
+} from "@pagopa/ts-commons/lib/requests";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   getAllBonusActivationsDefaultDecoder,
   GetAllBonusActivationsT,
@@ -53,12 +53,12 @@ export function BackendBonusVacanze(
 
   // withBearerToken injects the field 'Baerer' with value token into the parameter P
   // of the f function
-  const withBearerToken =
-    <P extends { Bearer: string }, R>(f: (p: P) => Promise<R>) =>
-    async (po: Omit<P, "Bearer">): Promise<R> => {
-      const params = Object.assign({ Bearer: String(token) }, po) as P;
-      return f(params);
-    };
+  const withBearerToken = <P extends { Bearer: string }, R>(
+    f: (p: P) => Promise<R>
+  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
+    const params = Object.assign({ Bearer: String(token) }, po) as P;
+    return f(params);
+  };
 
   return {
     getLatestBonusVacanzeFromId: withBearerToken(

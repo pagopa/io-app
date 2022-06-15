@@ -1,7 +1,7 @@
 /**
  * A saga to manage notifications
  */
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Platform } from "react-native";
 import { call, put, select } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
@@ -15,12 +15,13 @@ import { notificationsInstallationSelector } from "../store/reducers/notificatio
 import { SagaCallReturnType } from "../types/utils";
 import { mixpanelTrack } from "../mixpanel";
 
-export const notificationsPlatform: PlatformEnum =
-  Platform.select<PlatformEnum>({
-    ios: PlatformEnum.apns,
-    android: PlatformEnum.gcm,
-    default: PlatformEnum.gcm
-  });
+export const notificationsPlatform: PlatformEnum = Platform.select<
+  PlatformEnum
+>({
+  ios: PlatformEnum.apns,
+  android: PlatformEnum.gcm,
+  default: PlatformEnum.gcm
+});
 
 /**
  * This generator function calls the ProxyApi `installation` endpoint
@@ -31,9 +32,9 @@ export function* updateInstallationSaga(
   >["createOrUpdateInstallation"]
 ): SagaIterator {
   // Get the notifications installation data from the store
-  const notificationsInstallation: ReturnType<
-    typeof notificationsInstallationSelector
-  > = yield* select(notificationsInstallationSelector);
+  const notificationsInstallation: ReturnType<typeof notificationsInstallationSelector> = yield* select(
+    notificationsInstallationSelector
+  );
   // Check if the notification server token is available (non available on iOS simulator)
   if (notificationsInstallation.token === undefined) {
     return undefined;
@@ -48,14 +49,16 @@ export function* updateInstallationSaga(
   }
   try {
     // Send the request to the backend
-    const response: SagaCallReturnType<typeof createOrUpdateInstallation> =
-      yield* call(createOrUpdateInstallation, {
+    const response: SagaCallReturnType<typeof createOrUpdateInstallation> = yield* call(
+      createOrUpdateInstallation,
+      {
         installationID: notificationsInstallation.id,
         installation: {
           platform: notificationsPlatform,
           pushChannel: notificationsInstallation.token
         }
-      });
+      }
+    );
     /**
      * If the response isLeft (got an error) dispatch a failure action
      */

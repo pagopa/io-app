@@ -1,5 +1,5 @@
 import { call, put } from "typed-redux-saga/macro";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { cgnCategories } from "../../../store/actions/categories";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
@@ -24,9 +24,10 @@ export function* cgnCategoriesSaga(
   >["getPublishedCategories"]
 ) {
   try {
-    const publishedCategoriesResult: SagaCallReturnType<
-      typeof getPublishedCategories
-    > = yield* call(getPublishedCategories, { countNewDiscounts: true });
+    const publishedCategoriesResult: SagaCallReturnType<typeof getPublishedCategories> = yield* call(
+      getPublishedCategories,
+      { countNewDiscounts: true }
+    );
     if (publishedCategoriesResult.isLeft()) {
       yield* put(
         cgnCategories.failure(

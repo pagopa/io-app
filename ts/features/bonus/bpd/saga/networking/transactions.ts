@@ -1,7 +1,9 @@
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { fromNullable } from "fp-ts/lib/Option";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import {
   BpdTransaction,
   BpdTransactions,
@@ -38,7 +40,11 @@ const mapNetworkCircuitType: Map<string, CircuitType> = new Map<
 ]);
 
 export const convertCircuitTypeCode = (code: string): CircuitType =>
-  fromNullable(mapNetworkCircuitType.get(code)).getOrElse("Unknown");
+  pipe(
+    mapNetworkCircuitType.get(code),
+    O.fromNullable,
+    O.getOrElseW(() => "Unknown" as const)
+  );
 
 // convert a network payload amount into the relative app domain model
 const convertTransactions = (
@@ -74,20 +80,20 @@ export function* bpdLoadTransactionsSaga(
     const winningTransactionsResult: SagaCallReturnType<
       typeof winningTransactions
     > = yield* call(winningTransactions, { awardPeriodId } as any);
-    if (winningTransactionsResult.isRight()) {
-      if (winningTransactionsResult.value.status === 200) {
+    if (E.isRight(winningTransactionsResult)) {
+      if (winningTransactionsResult.right.status === 200) {
         const transactions = convertTransactions(
-          winningTransactionsResult.value.value,
+          winningTransactionsResult.right.value,
           awardPeriodId
         );
         yield* put(bpdTransactionsLoad.success(transactions));
       } else {
         throw new Error(
-          `response status ${winningTransactionsResult.value.status}`
+          `response status ${winningTransactionsResult.right.status}`
         );
       }
     } else {
-      throw new Error(readableReport(winningTransactionsResult.value));
+      throw new Error(readableReport(winningTransactionsResult.left));
     }
   } catch (e) {
     yield* put(

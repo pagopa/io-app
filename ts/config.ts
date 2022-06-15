@@ -1,14 +1,13 @@
 // Main config file. Mostly read the configuration from .env files
 
 import * as t from "io-ts";
-import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { Millisecond, Second } from "italia-ts-commons/lib/units";
+import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { Millisecond, Second } from "@pagopa/ts-commons/lib/units";
 import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL =
-  "https://assets.cdn.io.italia.it" as NonEmptyString;
+const DEFAULT_CONTENT_REPO_URL = "https://assets.cdn.io.italia.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;

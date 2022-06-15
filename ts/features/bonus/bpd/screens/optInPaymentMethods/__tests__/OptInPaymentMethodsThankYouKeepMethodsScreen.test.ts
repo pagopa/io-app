@@ -1,5 +1,5 @@
 import { createStore, Store } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RenderAPI } from "@testing-library/react-native";
 
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -13,9 +13,9 @@ import * as showToast from "../../../../../../utils/showToast";
 import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
 import OptInPaymentMethodsThankYouKeepMethodsScreen from "../OptInPaymentMethodsThankYouKeepMethodsScreen";
 
-const loadingCases: ReadonlyArray<
-  [optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>]
-> = [
+const loadingCases: ReadonlyArray<[
+  optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>
+]> = [
   [pot.none],
   [pot.noneLoading],
   [pot.noneUpdating(CitizenOptInStatusEnum.DENIED)],

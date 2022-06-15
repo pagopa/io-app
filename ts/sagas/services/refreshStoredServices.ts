@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "typed-redux-saga/macro";
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
@@ -16,8 +16,9 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 export function* refreshStoredServices(
   visibleServices: PaginatedServiceTupleCollection["items"]
 ): SagaIterator {
-  const storedServicesById: ReturnType<typeof servicesByIdSelector> =
-    yield* select(servicesByIdSelector);
+  const storedServicesById: ReturnType<typeof servicesByIdSelector> = yield* select(
+    servicesByIdSelector
+  );
 
   const serviceDetailIdsToLoad = visibleServices
     .filter(service => {

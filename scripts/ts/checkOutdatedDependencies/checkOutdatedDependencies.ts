@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import { exec } from "child_process";
 import * as util from "util";
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as semver from "semver";
+import { pipe } from "fp-ts/lib/function";
 import { slackPostMessage } from "../common/slack/postMessage";
 import { generateSlackMessage } from "./generateSlackMessage";
 import { initOutdatedStats } from "./types/defaultValues";
@@ -40,12 +41,14 @@ const readOutdatedJson = async (): Promise<string> => {
  * Try to extract the second section of the stdout. The first section describe the table header, the second section the content.
  * @param stdout
  */
-const extractStdoutSection = (stdout: string): Either<Error | Errors, any> => {
+const extractStdoutSection = (
+  stdout: string
+): E.Either<Error | Errors, any> => {
   const splittedErrorStdout = stdout.split("\n");
   if (splittedErrorStdout.length > 1) {
-    return right(JSON.parse(splittedErrorStdout[1]));
+    return E.right(JSON.parse(splittedErrorStdout[1]));
   }
-  return left(new Error("stdout splitting has the wrong size"));
+  return E.left(new Error("stdout splitting has the wrong size"));
 };
 
 /**
@@ -103,23 +106,25 @@ const main = async () => {
     const rawJSON = await readOutdatedJson();
     console.log("Convert the json to OutdatedStats");
 
-    const outdatedPackages = extractStdoutSection(rawJSON)
-      .chain(DependenciesTable.decode)
-      .map(extractGroupByType);
+    const outdatedPackages = pipe(
+      extractStdoutSection(rawJSON),
+      E.chainW(DependenciesTable.decode),
+      E.map(extractGroupByType)
+    );
 
-    if (outdatedPackages.isRight()) {
+    if (E.isRight(outdatedPackages)) {
       console.log(`Send slack message to ${destinationChannel}`);
       await Promise.all(
-        generateSlackMessage(outdatedPackages.value).map(line =>
+        generateSlackMessage(outdatedPackages.right).map(line =>
           slackPostMessage(line, destinationChannel, false)
         )
       );
     } else {
       console.log("Error while decoding the command output:");
       const report =
-        outdatedPackages.value instanceof Error
-          ? outdatedPackages.value.message
-          : readableReport(outdatedPackages.value);
+        outdatedPackages.left instanceof Error
+          ? outdatedPackages.left.message
+          : readableReport(outdatedPackages.left);
       console.log(report);
     }
   } catch (e) {

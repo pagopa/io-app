@@ -1,5 +1,5 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
@@ -19,10 +19,9 @@ import {
 } from "../../types/EUCovidCertificateResponse";
 import { euCovidCertificateGet } from "../actions";
 
-export type EUCovidCertificateResponseWithTimestamp =
-  EUCovidCertificateResponse & {
-    lastUpdate: Date;
-  };
+export type EUCovidCertificateResponseWithTimestamp = EUCovidCertificateResponse & {
+  lastUpdate: Date;
+};
 
 export type EuCovidCertByIdState = IndexedById<
   pot.Pot<EUCovidCertificateResponseWithTimestamp, Error>

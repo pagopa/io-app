@@ -2,7 +2,7 @@ import { Option, none } from "fp-ts/lib/Option";
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as _ from "lodash";
-import { PatternString } from "italia-ts-commons/lib/strings";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { CreditCard } from "../types/pagopa";
 import I18n from "../i18n";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
@@ -122,8 +122,9 @@ export function getCreditCardFromState(
   }
 
   if (!CreditCardCVC.is(securityCode.value)) {
-    const detectedBrand: SupportedBrand =
-      CreditCardDetector.validate(securityCode);
+    const detectedBrand: SupportedBrand = CreditCardDetector.validate(
+      securityCode
+    );
 
     // invalid cvc
     return left(

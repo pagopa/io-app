@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "typed-redux-saga/macro";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
@@ -12,9 +12,9 @@ export function* handleForceBonusServiceActivation(
   bonusTypeId: number
 ): SagaIterator {
   // first: check if we have data about bonus type
-  const bonusVacanze: ReturnType<
-    ReturnType<typeof availableBonusTypesSelectorFromId>
-  > = yield* select(availableBonusTypesSelectorFromId(bonusTypeId));
+  const bonusVacanze: ReturnType<ReturnType<
+    typeof availableBonusTypesSelectorFromId
+  >> = yield* select(availableBonusTypesSelectorFromId(bonusTypeId));
   // no data
   if (bonusVacanze === undefined) {
     return;

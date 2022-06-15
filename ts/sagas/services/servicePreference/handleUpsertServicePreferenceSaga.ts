@@ -1,5 +1,5 @@
 import { call, put, select } from "typed-redux-saga/macro";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
 import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
 import { BackendClient } from "../../../api/backend";
@@ -59,8 +59,9 @@ export function* handleUpsertServicePreference(
   >["upsertServicePreference"],
   action: ActionType<typeof upsertServicePreference.request>
 ) {
-  const currentPreferences: ReturnType<typeof servicePreferenceSelector> =
-    yield* select(servicePreferenceSelector);
+  const currentPreferences: ReturnType<typeof servicePreferenceSelector> = yield* select(
+    servicePreferenceSelector
+  );
 
   const updatingPreference = calculateUpdatingPreference(
     currentPreferences,
@@ -68,11 +69,13 @@ export function* handleUpsertServicePreference(
   );
 
   try {
-    const response: SagaCallReturnType<typeof upsertServicePreferences> =
-      yield* call(upsertServicePreferences, {
+    const response: SagaCallReturnType<typeof upsertServicePreferences> = yield* call(
+      upsertServicePreferences,
+      {
         service_id: action.payload.id,
         servicePreference: updatingPreference
-      });
+      }
+    );
 
     if (response.isRight()) {
       if (response.value.status === 200) {

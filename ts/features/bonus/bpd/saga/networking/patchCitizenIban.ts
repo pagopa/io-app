@@ -1,7 +1,9 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { Iban } from "../../../../../../definitions/backend/Iban";
@@ -31,8 +33,10 @@ const successCases = new Set<IbanStatus>([
 
 // convert the validation code coming from response to an internal logic status
 const fromValidationToStatus = (ibanOutcome: string): IbanStatus =>
-  fromNullable(ibanStatusMapping.get(ibanOutcome)).getOrElse(
-    IbanStatus.UNKNOWN
+  pipe(
+    ibanStatusMapping.get(ibanOutcome),
+    O.fromNullable,
+    O.getOrElseW(() => IbanStatus.UNKNOWN)
   );
 
 const transformIbanOutCome = (
@@ -65,11 +69,11 @@ export function* patchCitizenIban(
     const updatePaymentMethodResult: SagaCallReturnType<
       ReturnType<typeof updatePaymentMethod>
     > = yield* call(updatePaymentMethod(iban, profileState.value), {});
-    if (updatePaymentMethodResult.isRight()) {
-      const statusCode = updatePaymentMethodResult.value.status;
-      if (statusCode === 200 && updatePaymentMethodResult.value.value) {
+    if (E.isRight(updatePaymentMethodResult)) {
+      const statusCode = updatePaymentMethodResult.right.status;
+      if (statusCode === 200 && updatePaymentMethodResult.right.value) {
         const validationStatus =
-          updatePaymentMethodResult.value.value.validationStatus;
+          updatePaymentMethodResult.right.value.validationStatus;
         yield* put(
           bpdUpsertIban.success(
             transformIbanOutCome(fromValidationToStatus(validationStatus), iban)
@@ -87,10 +91,10 @@ export function* patchCitizenIban(
         return;
       }
       throw new Error(
-        `response status ${updatePaymentMethodResult.value.status}`
+        `response status ${updatePaymentMethodResult.right.status}`
       );
     } else {
-      throw new Error(readablePrivacyReport(updatePaymentMethodResult.value));
+      throw new Error(readablePrivacyReport(updatePaymentMethodResult.left));
     }
   } catch (e) {
     yield* put(bpdUpsertIban.failure(e));

@@ -1,6 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { tryCatch } from "fp-ts/lib/Task";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {

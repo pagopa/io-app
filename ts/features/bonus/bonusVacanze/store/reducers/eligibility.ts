@@ -1,5 +1,5 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
@@ -38,7 +38,7 @@ export type EligibilityState = Readonly<{
 const INITIAL_STATE: EligibilityState = {
   checkRequest: {
     status: EligibilityRequestProgressEnum.UNDEFINED,
-    check: pot.none
+    check: pot.O.none
   }
 };
 
@@ -88,17 +88,17 @@ const reducer = (
 export const eligibilitySelector = (state: GlobalState): EligibilityState =>
   state.bonus.bonusVacanze.eligibility;
 
-// return some if the eligibility check is eligibile
+// return O.some if the eligibility check is eligibile
 export const eligibilityEligibleSelector = createSelector<
   GlobalState,
   EligibilityState,
-  Option<EligibilityCheckSuccessEligible>
+  O.Option<EligibilityCheckSuccessEligible>
 >(eligibilitySelector, eligibility =>
   pot.getOrElse(
     pot.map(eligibility.checkRequest.check, c =>
-      EligibilityCheckSuccessEligible.is(c) ? some(c) : none
+      EligibilityCheckSuccessEligible.is(c) ? O.some(c) : O.none
     ),
-    none
+    O.none
   )
 );
 

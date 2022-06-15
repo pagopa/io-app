@@ -1,5 +1,5 @@
 import { none, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType, getType } from "typesafe-actions";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -78,8 +78,9 @@ const aCreditCardWallet: NullableWallet = {
 describe("startOrResumeAddCreditCardSaga", () => {
   it("should add a card if all the 4 steps run sucessfully", () => {
     const aPMToken = "1234" as PaymentManagerToken;
-    const aPmSessionManager: SessionManager<PaymentManagerToken> =
-      new SessionManager(jest.fn(() => Promise.resolve(some(aPMToken))));
+    const aPmSessionManager: SessionManager<PaymentManagerToken> = new SessionManager(
+      jest.fn(() => Promise.resolve(some(aPMToken)))
+    );
     const aNewPMToken = "5678" as PaymentManagerToken;
     jest
       .spyOn(aPmSessionManager, "getNewToken")

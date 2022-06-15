@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import {
   cancel,
@@ -31,9 +31,9 @@ export function* watchEmailNotificationPreferencesSaga(): Generator<
   void,
   any
 > {
-  const isCustomEmailChannelEnabled: ReturnType<
-    typeof isCustomEmailChannelEnabledSelector
-  > = yield* select(isCustomEmailChannelEnabledSelector);
+  const isCustomEmailChannelEnabled: ReturnType<typeof isCustomEmailChannelEnabledSelector> = yield* select(
+    isCustomEmailChannelEnabledSelector
+  );
 
   // if we know about user choice do nothing
   if (pot.isSome(isCustomEmailChannelEnabled)) {

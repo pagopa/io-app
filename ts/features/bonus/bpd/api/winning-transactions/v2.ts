@@ -1,5 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as r from "italia-ts-commons/lib/requests";
+import * as O from "fp-ts/lib/Option";
+import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   findWinningTransactionsUsingGETDecoder,
   getCountByDayGETDefaultDecoder,
@@ -7,6 +7,7 @@ import {
 } from "../../../../../../definitions/bpd/winning_transactions_v2/requestTypes";
 import { bpdHeadersProducers } from "../common";
 import { PatchedWinningTransactionPageResource } from "./patchedWinningTransactionPageResource";
+import { pipe } from "fp-ts/lib/function";
 
 export const winningTransactionsV2CountByDayGET: GetCountByDayGETT = {
   method: "get",
@@ -42,11 +43,12 @@ export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT =
   {
     method: "get",
     url: ({ awardPeriodId, nextCursor }) =>
-      `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${fromNullable(
-        nextCursor
-      )
-        .map(cursorToQueryString)
-        .getOrElse("")}`,
+      `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${pipe(
+        nextCursor,
+        O.fromNullable,
+        O.map(cursorToQueryString),
+        O.getOrElse(() => "")
+      )}`,
     query: _ => ({}),
     headers: bpdHeadersProducers(),
     response_decoder: findWinningTransactionsUsingGETDecoder(

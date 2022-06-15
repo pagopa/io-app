@@ -14,8 +14,8 @@ import {
   rptIdFromPaymentNoticeQrCode,
   RptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
-import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import I18n from "../i18n";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";

@@ -1,10 +1,10 @@
 /**
  * This module implements the sagas to retrive data from the content client:
  */
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
@@ -31,7 +31,7 @@ function getContextualHelpData(): Promise<
   return new Promise((resolve, _) =>
     contentClient
       .getContextualHelp()
-      .then(resolve, e => resolve(left([{ context: [], value: e }])))
+      .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
   );
 }
 
@@ -43,7 +43,7 @@ function* fetchMunicipalityMetadata(
   codiceCatastale: CodiceCatastale
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, MunicipalityMedadata>,
+  E.Either<Error, MunicipalityMedadata>,
   SagaCallReturnType<typeof getMunicipality>
 > {
   try {
@@ -52,15 +52,15 @@ function* fetchMunicipalityMetadata(
       { codiceCatastale }
     );
     // Can't decode response
-    if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
     }
-    if (response.value.status !== 200) {
-      throw Error(`response status ${response.value.status}`);
+    if (response.right.status !== 200) {
+      throw Error(`response status ${response.right.status}`);
     }
-    return right<Error, MunicipalityMedadata>(response.value.value);
+    return E.right<Error, MunicipalityMedadata>(response.right.value);
   } catch (error) {
-    return left<Error, MunicipalityMedadata>(error);
+    return E.left<Error, MunicipalityMedadata>(error);
   }
 }
 
@@ -79,15 +79,15 @@ function* watchContentMunicipalityLoadSaga(
         codiceCatastale
       );
 
-    if (response.isRight()) {
+    if (E.isRight(response)) {
       yield* put(
         contentMunicipalityLoad.success({
           codiceCatastale,
-          data: response.value
+          data: response.right
         })
       );
     } else {
-      throw response.value;
+      throw response.left;
     }
   } catch (e) {
     yield* put(
@@ -106,14 +106,14 @@ function* watchLoadContextualHelp(): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof getContextualHelpData> =
       yield* call(getContextualHelpData);
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        yield* put(loadContextualHelpData.success(response.value.value));
+    if (E.isRight(response)) {
+      if (response.right.status === 200) {
+        yield* put(loadContextualHelpData.success(response.right.value));
         return;
       }
-      throw Error(`response status ${response.value.status}`);
+      throw Error(`response status ${response.right.status}`);
     }
-    throw Error(readableReport(response.value));
+    throw Error(readableReport(response.left));
   } catch (e) {
     yield* put(loadContextualHelpData.failure(e));
   }
@@ -129,14 +129,14 @@ function* watchLoadIdps(
     const idpsListResponse: SagaCallReturnType<typeof getIdps> = yield* call(
       getIdps
     );
-    if (idpsListResponse.isRight()) {
-      if (idpsListResponse.value.status === 200) {
-        yield* put(loadIdps.success(idpsListResponse.value.value));
+    if (E.isRight(idpsListResponse)) {
+      if (idpsListResponse.right.status === 200) {
+        yield* put(loadIdps.success(idpsListResponse.right.value));
         return;
       }
-      throw Error(`response status ${idpsListResponse.value.status}`);
+      throw Error(`response status ${idpsListResponse.right.status}`);
     } else {
-      throw Error(readableReport(idpsListResponse.value));
+      throw Error(readableReport(idpsListResponse.left));
     }
   } catch (e) {
     yield* put(loadIdps.failure(e));
@@ -150,14 +150,14 @@ function* handleLoadAvailableBonus(
   try {
     const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> =
       yield* call(getBonusAvailable, {});
-    if (bonusListReponse.isRight()) {
-      if (bonusListReponse.value.status === 200) {
-        yield* put(loadAvailableBonuses.success(bonusListReponse.value.value));
+    if (E.isRight(bonusListReponse)) {
+      if (bonusListReponse.right.status === 200) {
+        yield* put(loadAvailableBonuses.success(bonusListReponse.right.value));
         return;
       }
-      throw Error(`response status ${bonusListReponse.value.status}`);
+      throw Error(`response status ${bonusListReponse.right.status}`);
     } else {
-      throw Error(readableReport(bonusListReponse.value));
+      throw Error(readableReport(bonusListReponse.left));
     }
   } catch (e) {
     yield* put(loadAvailableBonuses.failure(e));

@@ -1,5 +1,5 @@
 import { none, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { Version } from "../../../../definitions/backend/Version";
 import {

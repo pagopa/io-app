@@ -1,7 +1,7 @@
 import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { AccessToken } from "../../definitions/backend/AccessToken";
@@ -36,15 +36,17 @@ function* handleTestLogin({
     );
   }
   try {
-    const testLoginResponse: SagaCallReturnType<typeof postTestLogin> =
-      yield* call(postTestLogin, payload);
+    const testLoginResponse: SagaCallReturnType<typeof postTestLogin> = yield* call(
+      postTestLogin,
+      payload
+    );
 
     if (testLoginResponse.isRight()) {
       if (testLoginResponse.value.status === 200) {
         yield* put(
           loginSuccess({
-            token: testLoginResponse.value.value
-              .token as string as SessionToken,
+            token: (testLoginResponse.value.value
+              .token as string) as SessionToken,
             idp: "idp"
           })
         );
@@ -58,6 +60,8 @@ function* handleTestLogin({
   }
 }
 
-export function* watchTestLoginRequestSaga(): IterableIterator<ReduxSagaEffect> {
+export function* watchTestLoginRequestSaga(): IterableIterator<
+  ReduxSagaEffect
+> {
   yield* takeLatest(getType(testLoginRequest), handleTestLogin);
 }

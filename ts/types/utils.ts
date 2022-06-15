@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { Pot } from "italia-ts-commons/lib/pot";
+import { Pot } from "@pagopa/ts-commons/lib/pot";
 import { Effect } from "redux-saga/effects";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 
@@ -58,11 +58,14 @@ type Tuplize<T extends any[]> = Pick<
   Exclude<keyof T, Extract<keyof any[], string> | number>
 >;
 
-type _OneOf<T extends {}> = Values<{
-  [K in keyof T]: T[K] & {
-    [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined;
-  };
-}>;
+type _OneOf<T extends {}> = Values<
+  {
+    [K in keyof T]: T[K] &
+      {
+        [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined;
+      };
+  }
+>;
 
 /**
  * Ensure that the types T extends any[] are mutually exclusive

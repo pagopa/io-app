@@ -1,7 +1,7 @@
 import {
   OmitStatusFromResponse,
   TypeofApiResponse
-} from "italia-ts-commons/lib/requests";
+} from "@pagopa/ts-commons/lib/requests";
 import {
   ActionType,
   createAsyncAction,

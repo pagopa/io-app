@@ -1,6 +1,7 @@
 /* TOTAL CASHBACK  */
-import { fromNullable } from "fp-ts/lib/Option";
-import * as r from "italia-ts-commons/lib/requests";
+import * as O from "fp-ts/lib/Option";
+import * as r from "@pagopa/ts-commons/lib/requests";
+import { pipe } from "fp-ts/lib/function";
 import {
   findWinningTransactionsUsingGETDecoder,
   getTotalScoreUsingGETDefaultDecoder,
@@ -39,11 +40,12 @@ const hPanToQueryString = (hPan: string) => `&hpan=${hPan}`;
 export const winningTransactionsGET: FindWinningTransactionsUsingGETTExtra = {
   method: "get",
   url: ({ awardPeriodId, hpan }) =>
-    `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${fromNullable(
-      hpan
-    )
-      .map(hPanToQueryString)
-      .getOrElse("")}`,
+    `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${pipe(
+      hpan,
+      O.fromNullable,
+      O.map(hPanToQueryString),
+      O.getOrElse(() => "")
+    )}`,
   query: _ => ({}),
   headers: bpdHeadersProducers(),
   response_decoder: findWinningTransactionsUsingGETDecoder(

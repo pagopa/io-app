@@ -1,5 +1,5 @@
 import { call, put } from "typed-redux-saga/macro";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
@@ -19,10 +19,12 @@ export function* cgnOnlineMerchantsSaga(
   cgnOnlineMerchantRequest: ReturnType<typeof cgnOnlineMerchants.request>
 ) {
   try {
-    const onlineMerchantsResult: SagaCallReturnType<typeof getOnlineMerchants> =
-      yield* call(getOnlineMerchants, {
+    const onlineMerchantsResult: SagaCallReturnType<typeof getOnlineMerchants> = yield* call(
+      getOnlineMerchants,
+      {
         onlineMerchantSearchRequest: cgnOnlineMerchantRequest.payload
-      });
+      }
+    );
 
     if (onlineMerchantsResult.isLeft()) {
       yield* put(
@@ -55,11 +57,12 @@ export function* cgnOfflineMerchantsSaga(
   cgnOfflineMerchantRequest: ReturnType<typeof cgnOfflineMerchants.request>
 ) {
   try {
-    const offlineMerchantsResult: SagaCallReturnType<
-      typeof getOfflineMerchants
-    > = yield* call(getOfflineMerchants, {
-      offlineMerchantSearchRequest: cgnOfflineMerchantRequest.payload
-    });
+    const offlineMerchantsResult: SagaCallReturnType<typeof getOfflineMerchants> = yield* call(
+      getOfflineMerchants,
+      {
+        offlineMerchantSearchRequest: cgnOfflineMerchantRequest.payload
+      }
+    );
 
     if (offlineMerchantsResult.isLeft()) {
       yield* put(
@@ -92,8 +95,10 @@ export function* cgnMerchantDetail(
   merchantSelected: ReturnType<typeof cgnSelectedMerchant["request"]>
 ) {
   try {
-    const merchantDetailResult: SagaCallReturnType<typeof getMerchant> =
-      yield* call(getMerchant, { merchantId: merchantSelected.payload });
+    const merchantDetailResult: SagaCallReturnType<typeof getMerchant> = yield* call(
+      getMerchant,
+      { merchantId: merchantSelected.payload }
+    );
     if (merchantDetailResult.isLeft()) {
       yield* put(
         cgnSelectedMerchant.failure(

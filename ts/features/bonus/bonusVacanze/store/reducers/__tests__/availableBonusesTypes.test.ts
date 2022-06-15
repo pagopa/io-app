@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   AvailableBonusTypesState,
   isAvailableBonusErrorSelector,
@@ -182,9 +182,10 @@ describe("availableBonusesTypes with FF enabled", () => {
   });
 });
 
-const loadingCases: ReadonlyArray<
-  [input: AvailableBonusTypesState, expectedResult: boolean]
-> = [
+const loadingCases: ReadonlyArray<[
+  input: AvailableBonusTypesState,
+  expectedResult: boolean
+]> = [
   [pot.noneLoading, true],
   [pot.none, false],
   [pot.some([mockBonus]), false],
@@ -202,9 +203,10 @@ describe("isAvailableBonusLoadingSelector selector", () => {
   );
 });
 
-const errorCases: ReadonlyArray<
-  [input: AvailableBonusTypesState, expectedResult: boolean]
-> = [
+const errorCases: ReadonlyArray<[
+  input: AvailableBonusTypesState,
+  expectedResult: boolean
+]> = [
   [pot.noneLoading, false],
   [pot.none, false],
   [pot.some([mockBonus]), false],
@@ -221,13 +223,11 @@ describe("isAvailableBonusErrorSelector selector", () => {
   );
 });
 
-const noneErrorCases: ReadonlyArray<
-  [
-    firstInput: AvailableBonusTypesState,
-    secondInput: boolean,
-    expectedResult: boolean
-  ]
-> = [
+const noneErrorCases: ReadonlyArray<[
+  firstInput: AvailableBonusTypesState,
+  secondInput: boolean,
+  expectedResult: boolean
+]> = [
   [pot.noneLoading, true, true],
   [pot.noneLoading, false, false],
   [pot.none, true, true],

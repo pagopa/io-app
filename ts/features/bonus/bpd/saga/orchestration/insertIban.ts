@@ -1,5 +1,5 @@
 import { NavigationActions } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
@@ -36,8 +36,9 @@ export const isMainScreen = (screenName: string) =>
   screenName === BPD_ROUTES.IBAN;
 
 function* ensureMainScreen() {
-  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield* call(NavigationService.getCurrentRouteName);
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> = yield* call(
+    NavigationService.getCurrentRouteName
+  );
 
   if (currentRoute !== undefined && !isMainScreen(currentRoute)) {
     yield* call(navigateToBpdIbanInsertion);
@@ -49,8 +50,9 @@ function* ensureMainScreen() {
  * @deprecated
  */
 export function* bpdIbanInsertionWorker() {
-  const onboardingOngoing: ReturnType<typeof isBpdOnboardingOngoing> =
-    yield* select(isBpdOnboardingOngoing);
+  const onboardingOngoing: ReturnType<typeof isBpdOnboardingOngoing> = yield* select(
+    isBpdOnboardingOngoing
+  );
   // ensure the first screen of the saga is the iban main screen.
   yield* call(ensureMainScreen);
 
@@ -62,8 +64,9 @@ export function* bpdIbanInsertionWorker() {
     yield* call(onboardingOngoing ? navigateToWalletHome : navigateBack);
   } else {
     if (onboardingOngoing) {
-      const paymentMethods: ReturnType<typeof paymentMethodsSelector> =
-        yield* select(paymentMethodsSelector);
+      const paymentMethods: ReturnType<typeof paymentMethodsSelector> = yield* select(
+        paymentMethodsSelector
+      );
 
       // Error while loading the wallet, display a message that informs the user about the error
       if (paymentMethods.kind === "PotNoneError") {

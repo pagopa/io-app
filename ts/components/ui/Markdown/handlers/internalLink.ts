@@ -1,7 +1,7 @@
 /**
  * An handler for application internal links
  */
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import URLParse from "url-parse";
 import {
   bpdEnabled,
@@ -21,6 +21,7 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_INTERNAL_LINK_PROTOCOL
 } from "../../../../utils/navigation";
+import { pipe } from "fp-ts/lib/function";
 
 /**
  * This handling is used to convert old CTAs and links to current internal linking config
@@ -94,13 +95,17 @@ export function getInternalRoute(href: string): string {
   try {
     const url = new URLParse(href, true);
     if (url.protocol.toLowerCase() === IO_INTERNAL_LINK_PROTOCOL) {
-      return fromNullable(allowedRoutes[url.host.toUpperCase()]).fold(
-        href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
-        internalUrl =>
-          href.replace(
-            `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
-            internalUrl
-          )
+      return pipe(
+        allowedRoutes[url.host.toUpperCase()],
+        O.fromNullable,
+        O.fold(
+          () => href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
+          internalUrl =>
+            href.replace(
+              `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
+              internalUrl
+            )
+        )
       );
     }
     return href;

@@ -1,5 +1,5 @@
-import { Either, left, right } from "fp-ts/lib/Either";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
@@ -34,7 +34,7 @@ export function* bpdLoadTransactionsPage(
   cursor?: number
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, BpdTransactionPageSuccessPayload>,
+  E.Either<Error, BpdTransactionPageSuccessPayload>,
   SagaCallReturnType<typeof getTransactionPage>
 > {
   try {
@@ -43,27 +43,27 @@ export function* bpdLoadTransactionsPage(
       awardPeriodId,
       nextCursor: cursor
     } as any);
-    if (getTransactionsPageResults.isRight()) {
-      if (getTransactionsPageResults.value.status === 200) {
+    if (E.isRight(getTransactionsPageResults)) {
+      if (getTransactionsPageResults.right.status === 200) {
         void mixpanelTrack(mixpanelActionSuccess, {
           awardPeriodId,
           cursor,
-          count: getTransactionsPageResults.value.value?.transactions.length
+          count: getTransactionsPageResults.right.value?.transactions.length
         });
-        return right<Error, BpdTransactionPageSuccessPayload>({
+        return E.right<Error, BpdTransactionPageSuccessPayload>({
           awardPeriodId,
-          results: getTransactionsPageResults.value.value
+          results: getTransactionsPageResults.right.value
         });
       } else {
-        return left<Error, BpdTransactionPageSuccessPayload>(
+        return E.left<Error, BpdTransactionPageSuccessPayload>(
           new Error(
-            `response status ${getTransactionsPageResults.value.status}`
+            `response status ${getTransactionsPageResults.right.status}`
           )
         );
       }
     } else {
-      return left<Error, BpdTransactionPageSuccessPayload>(
-        new Error(readableReport(getTransactionsPageResults.value))
+      return E.left<Error, BpdTransactionPageSuccessPayload>(
+        new Error(readableReport(getTransactionsPageResults.left))
       );
     }
   } catch (e) {
@@ -72,7 +72,7 @@ export function* bpdLoadTransactionsPage(
       cursor,
       reason: getError(e).message
     });
-    return left<Error, BpdTransactionPageSuccessPayload>(getError(e));
+    return E.left<Error, BpdTransactionPageSuccessPayload>(getError(e));
   }
 }
 
@@ -98,13 +98,13 @@ export function* handleTransactionsPage(
     );
 
   // dispatch the related action
-  if (result.isRight()) {
-    yield* put(bpdTransactionsLoadPage.success(result.value));
+  if (E.isRight(result)) {
+    yield* put(bpdTransactionsLoadPage.success(result.right));
   } else {
     yield* put(
       bpdTransactionsLoadPage.failure({
         awardPeriodId: action.payload.awardPeriodId,
-        error: result.value
+        error: result.left
       })
     );
   }

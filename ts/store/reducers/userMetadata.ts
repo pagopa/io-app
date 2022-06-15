@@ -1,6 +1,6 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { UserMetadata as BackendUserMetadata } from "../../../definitions/backend/UserMetadata";
 import { Action } from "../actions/types";

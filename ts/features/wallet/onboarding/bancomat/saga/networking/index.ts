@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
@@ -18,6 +19,7 @@ import {
   loadAbi,
   searchUserPans
 } from "../../store/actions";
+import { pipe } from "fp-ts/lib/function";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -26,16 +28,16 @@ export function* handleLoadAbi(
   try {
     const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbi> =
       yield* call(getAbi);
-    if (getAbiWithRefreshResult.isRight()) {
-      if (getAbiWithRefreshResult.value.status === 200) {
-        yield* put(loadAbi.success(getAbiWithRefreshResult.value.value));
+    if (E.isRight(getAbiWithRefreshResult)) {
+      if (getAbiWithRefreshResult.right.status === 200) {
+        yield* put(loadAbi.success(getAbiWithRefreshResult.right.value));
       } else {
         throw new Error(
-          `response status ${getAbiWithRefreshResult.value.status}`
+          `response status ${getAbiWithRefreshResult.right.status}`
         );
       }
     } else {
-      throw new Error(readablePrivacyReport(getAbiWithRefreshResult.value));
+      throw new Error(readablePrivacyReport(getAbiWithRefreshResult.left));
     }
   } catch (e) {
     yield* put(loadAbi.failure(e));
@@ -56,15 +58,18 @@ export function* handleLoadPans(
     const getPansWithRefreshResult: SagaCallReturnType<
       typeof getPansWithRefresh
     > = yield* call(getPansWithRefresh);
-    if (getPansWithRefreshResult.isRight()) {
-      if (getPansWithRefreshResult.value.status === 200) {
-        const response = getPansWithRefreshResult.value.value.data;
+    if (E.isRight(getPansWithRefreshResult)) {
+      if (getPansWithRefreshResult.right.status === 200) {
+        const response = getPansWithRefreshResult.right.value.data;
         return yield* put(
           searchUserPans.success(
-            fromNullable({
-              cards: response?.data ?? [],
-              messages: response?.messages ?? []
-            }).getOrElse({ cards: [], messages: [] })
+            pipe(
+              O.fromNullable({
+                cards: response?.data ?? [],
+                messages: response?.messages ?? []
+              }),
+              O.getOrElse(() => ({ cards: [], messages: [] }))
+            )
           )
         );
       } else {
@@ -72,7 +77,7 @@ export function* handleLoadPans(
           searchUserPans.failure(
             getGenericError(
               new Error(
-                `response status ${getPansWithRefreshResult.value.status}`
+                `response status ${getPansWithRefreshResult.right.status}`
               )
             )
           )
@@ -82,7 +87,7 @@ export function* handleLoadPans(
       return yield* put(
         searchUserPans.failure(
           getGenericError(
-            new Error(readablePrivacyReport(getPansWithRefreshResult.value))
+            new Error(readablePrivacyReport(getPansWithRefreshResult.left))
           )
         )
       );
@@ -112,21 +117,23 @@ export function* handleAddPan(
     const addPansWithRefreshResult: SagaCallReturnType<
       typeof addPansWithRefresh
     > = yield* call(addPansWithRefresh);
-    if (addPansWithRefreshResult.isRight()) {
-      if (addPansWithRefreshResult.value.status === 200) {
-        const wallets = (addPansWithRefreshResult.value.value.data ?? []).map(
+    if (E.isRight(addPansWithRefreshResult)) {
+      if (addPansWithRefreshResult.right.status === 200) {
+        const wallets = (addPansWithRefreshResult.right.value.data ?? []).map(
           convertWalletV2toWalletV1
         );
         // search for the added bancomat.
-        const maybeWallet = fromNullable(
-          wallets.find(
-            w =>
-              w.paymentMethod &&
-              getPaymentMethodHash(w.paymentMethod) === action.payload.hpan
+        const maybeWallet = pipe(
+          O.fromNullable(
+            wallets.find(
+              w =>
+                w.paymentMethod &&
+                getPaymentMethodHash(w.paymentMethod) === action.payload.hpan
+            )
           )
         );
         if (
-          maybeWallet.isSome() &&
+          O.isSome(maybeWallet) &&
           isRawBancomat(maybeWallet.value.paymentMethod)
         ) {
           yield* put(
@@ -140,11 +147,11 @@ export function* handleAddPan(
         }
       } else {
         throw new Error(
-          `response status ${addPansWithRefreshResult.value.status}`
+          `response status ${addPansWithRefreshResult.right.status}`
         );
       }
     } else {
-      throw new Error(readablePrivacyReport(addPansWithRefreshResult.value));
+      throw new Error(readablePrivacyReport(addPansWithRefreshResult.left));
     }
   } catch (e) {
     yield* put(addBancomatToWallet.failure(e));

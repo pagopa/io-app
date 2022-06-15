@@ -1,7 +1,7 @@
 /**
  * this state / reducer represents and handles all those data should be kept across multiple users sessions
  */
-import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
+import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { isActionOf } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { fromNullable } from "fp-ts/lib/Option";

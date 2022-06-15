@@ -1,5 +1,5 @@
 import { left, right } from "fp-ts/lib/Either";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { UserMetadata as BackendUserMetadata } from "../../../../definitions/backend/UserMetadata";
 import {

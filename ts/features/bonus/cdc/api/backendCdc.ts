@@ -1,5 +1,5 @@
-import { createFetchRequestForApi } from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
+import { createFetchRequestForApi } from "@pagopa/ts-commons/lib/requests";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   getStatoBeneficiarioDefaultDecoder,
   GetStatoBeneficiarioT,
@@ -34,13 +34,12 @@ const PostRegistraBeneficiario: RegistraBeneficiarioT = {
   response_decoder: registraBeneficiarioDefaultDecoder()
 };
 
-const withCdcToken =
-  (token: string) =>
-  <P extends { BearerAuth: string }, R>(f: (p: P) => Promise<R>) =>
-  async (po: Omit<P, "BearerAuth">): Promise<R> => {
-    const params = Object.assign({ BearerAuth: String(token) }, po) as P;
-    return f(params);
-  };
+const withCdcToken = (token: string) => <P extends { BearerAuth: string }, R>(
+  f: (p: P) => Promise<R>
+) => async (po: Omit<P, "BearerAuth">): Promise<R> => {
+  const params = Object.assign({ BearerAuth: String(token) }, po) as P;
+  return f(params);
+};
 
 // client for Cdc to handle API communications
 export const BackendCdcClient = (

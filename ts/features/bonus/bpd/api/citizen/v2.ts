@@ -2,7 +2,7 @@ import {
   ApiHeaderJson,
   composeHeaderProducers,
   MapResponseType
-} from "italia-ts-commons/lib/requests";
+} from "@pagopa/ts-commons/lib/requests";
 import {
   enrollmentDecoder,
   EnrollmentT as EnrollmentTV2,

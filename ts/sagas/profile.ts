@@ -1,8 +1,9 @@
 /**
  * A saga that manages the Profile.
  */
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   all,
   call,
@@ -12,6 +13,7 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
@@ -63,37 +65,37 @@ export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Generator<
   ReduxSagaEffect,
-  Option<InitializedProfile>,
+  O.Option<InitializedProfile>,
   SagaCallReturnType<typeof getProfile>
 > {
   try {
     const response = yield* call(getProfile, {});
     // we got an error, throw it
-    if (response.isLeft()) {
-      throw Error(readablePrivacyReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readablePrivacyReport(response.left));
     }
-    if (response.value.status === 200) {
+    if (response.right.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
       // eslint-disable-next-line
       yield* put(
-        profileLoadSuccess(response.value.value as InitializedProfile)
+        profileLoadSuccess(response.right.value as InitializedProfile)
       );
-      return some(response.value.value);
+      return O.some(response.right.value);
     }
-    if (response.value.status === 401) {
+    if (response.right.status === 401) {
       // in case we got an expired session while loading the profile, we reset
       // the session
       yield* put(sessionExpired());
     }
     throw response
-      ? Error(`response status ${response.value.status}`)
+      ? Error(`response status ${response.right.status}`)
       : Error(I18n.t("profile.errors.load"));
   } catch (error) {
     yield* put(profileLoadFailure(error));
   }
-  return none;
+  return O.none;
 }
 
 // A saga to update the Profile.
@@ -152,33 +154,33 @@ function* createOrUpdateProfileSaga(
         profile: newProfile
       });
 
-    if (response.isLeft()) {
-      throw new Error(readablePrivacyReport(response.value));
+    if (E.isLeft(response)) {
+      throw new Error(readablePrivacyReport(response.left));
     }
 
-    if (response.value.status === 409) {
+    if (response.right.status === 409) {
       // It could happen that profile update fails due to version number mismatch
       // app has a different version of profile compared to that one owned by the backend
       // so we force profile reloading (see https://www.pivotaltracker.com/n/projects/2048617/stories/171994417)
       yield* put(profileLoadRequest());
-      throw new Error(response.value.value.title);
+      throw new Error(response.right.value.title);
     }
 
-    if (response.value.status === 401) {
+    if (response.right.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield* put(sessionExpired());
       throw new Error(I18n.t("profile.errors.upsert"));
     }
 
-    if (response.value.status !== 200) {
+    if (response.right.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      throw new Error(response.value.value.title);
+      throw new Error(response.right.value.title);
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield* put(
         profileUpsert.success({
           value: currentProfile,
-          newValue: response.value.value
+          newValue: response.right.value
         })
       );
     }
@@ -266,19 +268,19 @@ function* startEmailValidationProcessSaga(
   try {
     const response = yield* call(startEmailValidationProcess, {});
     // we got an error, throw it
-    if (response.isLeft()) {
-      throw Error(readablePrivacyReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readablePrivacyReport(response.left));
     }
-    if (response.value.status === 202) {
+    if (response.right.status === 202) {
       yield* put(startEmailValidation.success());
     }
-    if (response.value.status === 401) {
+    if (response.right.status === 401) {
       // in case we got an expired session while loading the profile, we reset
       // the session
       yield* put(sessionExpired());
     }
     throw response
-      ? Error(`response status ${response.value.status}`)
+      ? Error(`response status ${response.right.status}`)
       : Error(I18n.t("profile.errors.load"));
   } catch (error) {
     yield* put(startEmailValidation.failure(error));
@@ -288,15 +290,16 @@ function* startEmailValidationProcessSaga(
 // check if the current device language matches the one saved in the profile
 function* checkPreferredLanguage(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
-): Generator<ReduxSagaEffect, any, Option<Locales>> {
+): Generator<ReduxSagaEffect, any, O.Option<Locales>> {
   // check if the preferred_languages is up to date
   const preferredLanguages =
     profileLoadSuccessAction.payload.preferred_languages;
   const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> =
     yield* select(preferredLanguageSelector);
   // deviceLocale could be the one stored or the one retrieved from the running device
-  const deviceLocale = currentStoredLocale.getOrElse(
-    getLocalePrimaryWithFallback()
+  const deviceLocale = pipe(
+    currentStoredLocale,
+    O.getOrElse(() => getLocalePrimaryWithFallback())
   );
   // if the preferred language isn't set, update it with the current device locale
   if (!preferredLanguages || preferredLanguages.length === 0) {
@@ -313,7 +316,7 @@ function* checkPreferredLanguage(
   // if there is not value stored about preferred language or
   // the stored value is different from one into the profile, update it
   if (
-    currentStoredLocale.isNone() ||
+    O.isNone(currentStoredLocale) ||
     currentStoredLocale.value !== currentLocale
   ) {
     yield* put(

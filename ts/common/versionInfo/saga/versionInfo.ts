@@ -1,8 +1,9 @@
-import { left } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import { call, fork, put } from "typed-redux-saga/macro";
+import { pipe } from "fp-ts/lib/function";
 import { VersionInfo } from "../../../../definitions/content/VersionInfo";
 import { ContentClient } from "../../../api/content";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
@@ -27,7 +28,7 @@ function* versionInfoWatcher(): Generator<ReduxSagaEffect, void, any> {
     return new Promise((resolve, _) =>
       contentClient
         .getVersionInfo()
-        .then(resolve, e => resolve(left([{ context: [], value: e }])))
+        .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
     );
   }
 
@@ -36,15 +37,15 @@ function* versionInfoWatcher(): Generator<ReduxSagaEffect, void, any> {
       const versionInfoResponse: SagaCallReturnType<typeof getVersionInfo> =
         yield* call(getVersionInfo);
       if (
-        versionInfoResponse.isRight() &&
-        versionInfoResponse.value.status === 200
+        E.isRight(versionInfoResponse) &&
+        versionInfoResponse.right.status === 200
       ) {
-        yield* put(versionInfoLoadSuccess(versionInfoResponse.value.value));
+        yield* put(versionInfoLoadSuccess(versionInfoResponse.right.value));
         yield* call(startTimer, VERSION_INFO_LOAD_INTERVAL);
       } else {
-        const errorDescription = versionInfoResponse.fold(
-          readableReport,
-          ({ status }) => `response status ${status}`
+        const errorDescription = pipe(
+          versionInfoResponse,
+          E.fold(readableReport, ({ status }) => `response status ${status}`)
         );
 
         yield* put(versionInfoLoadFailure(new Error(errorDescription)));

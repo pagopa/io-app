@@ -5,19 +5,19 @@
 
 import { left, right } from "fp-ts/lib/Either";
 import { fromEither, TaskEither } from "fp-ts/lib/TaskEither";
-import { calculateExponentialBackoffInterval } from "italia-ts-commons/lib/backoff";
+import { calculateExponentialBackoffInterval } from "@pagopa/ts-commons/lib/backoff";
 import {
   AbortableFetch,
   retriableFetch,
   setFetchTimeout,
   toFetch
-} from "italia-ts-commons/lib/fetch";
+} from "@pagopa/ts-commons/lib/fetch";
 import {
   RetriableTask,
   TransientError,
   withRetries
-} from "italia-ts-commons/lib/tasks";
-import { Millisecond } from "italia-ts-commons/lib/units";
+} from "@pagopa/ts-commons/lib/tasks";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 
 // FIXME: This is a temporary type created to avoid
