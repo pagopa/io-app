@@ -22,7 +22,6 @@ printf "%14s $PAGOPA_API_URL_PREFIX_TEST$PAGOPA_API_URL_SUFFIX\n" "test:"
 
 
 SEND_MSG="✅ pagopa production and test specifications have no differences"
-SEND_EXIT=0
 # mention here on channel
 MENTION_SLACK="<!here>"
 
@@ -47,10 +46,9 @@ else
     KO_MSG="[PagoPa API check] ⚠️ $MENTION_SLACK It seems *PROD* and *DEV* pagoPa specifications are different"
     echo "⚠️  It seems PROD and DEV pagoPa specifications are different"
     SEND_MSG=$KO_MSG
-    SEND_EXIT=1
     #send slack notification
     channel="#io_dev_app_status"
     res=$(curl -s -X POST -H 'Content-type: application/json' -H 'Authorization: Bearer '${IO_APP_SLACK_HELPER_BOT_TOKEN:-}'' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' https://slack.com/api/chat.postMessage)
 fi
 
-exit $SEND_EXIT
+exit 0
