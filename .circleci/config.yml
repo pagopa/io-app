@@ -492,6 +492,7 @@ workflows:
       - run-tests
       - run-eslint
       - run-prettier
+      - pagopa_specs_diff
 
       - run-danger:
           filters:
