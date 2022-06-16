@@ -8,7 +8,8 @@ import { useIODispatch } from "../../../../../store/hooks";
 import {
   getPaymentExpirationInfo,
   PaymentData,
-  UIMessageDetails
+  UIMessageDetails,
+  UIMessageId
 } from "../../../../../store/reducers/entities/messages/types";
 import { UIService } from "../../../../../store/reducers/entities/services/types";
 import variables from "../../../../../theme/variables";
@@ -46,7 +47,10 @@ const styles = StyleSheet.create({
 });
 
 // return a payment button only when the advice is not paid and the payment_data is defined
-const renderPaymentButton = (paymentData?: PaymentData) => {
+const renderPaymentButton = (
+  paymentData?: PaymentData,
+  messageId?: UIMessageId
+) => {
   if (paymentData === undefined) {
     return null;
   }
@@ -56,6 +60,7 @@ const renderPaymentButton = (paymentData?: PaymentData) => {
       amount={amount}
       noticeNumber={noticeNumber}
       organizationFiscalCode={payee.fiscalCode}
+      messageId={messageId}
     />
   );
 };
@@ -96,7 +101,7 @@ const CtaBar = ({
   const expirationInfo = getPaymentExpirationInfo(messageDetails);
   const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
 
-  const paymentButton = renderPaymentButton(paymentData);
+  const paymentButton = renderPaymentButton(paymentData, messageDetails.id);
   const calendarButton = renderCalendarEventButton(
     isPaid,
     expirationInfo,

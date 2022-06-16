@@ -1,9 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import I18n from "../../i18n";
 import IconFont from "./IconFont";
 
 const styles = StyleSheet.create({
@@ -26,6 +27,7 @@ type OwnButtonProps = {
   iconName?: string;
   iconColor?: string;
   labelColor?: string;
+  isLoading?: boolean;
 };
 
 type CommonProps = Readonly<{
@@ -133,6 +135,21 @@ export default class BlockButtons extends React.Component<Props, never> {
     style: ComponentProps<typeof ButtonDefaultOpacity>["style"]
   ) => (
     <ButtonDefaultOpacity style={style} {...props}>
+      {props.isLoading && (
+        <ActivityIndicator
+          animating={true}
+          size={"small"}
+          color={props.iconColor}
+          accessible={true}
+          accessibilityHint={I18n.t(
+            "global.accessibility.activityIndicator.hint"
+          )}
+          accessibilityLabel={I18n.t(
+            "global.accessibility.activityIndicator.label"
+          )}
+          importantForAccessibility={"no-hide-descendants"}
+        />
+      )}
       {props.iconName && (
         <IconFont
           name={props.iconName}

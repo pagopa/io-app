@@ -21,6 +21,7 @@ type Props = {
 const renderCtaButton = (
   { xsmall, service, serviceMetadata }: Props,
   linkTo: (path: string) => void,
+  primary: boolean,
   cta?: CTA
 ): React.ReactNode => {
   const handleCTAPress = (cta: CTA) => {
@@ -32,7 +33,7 @@ const renderCtaButton = (
       <ExtractedCtaButton
         cta={cta}
         xsmall={xsmall}
-        primary={false}
+        primary={primary}
         onCTAPress={handleCTAPress}
       />
     );
@@ -52,11 +53,11 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
   const linkTo = useLinkTo();
 
   const cta2 = useMemo(
-    () => renderCtaButton(props, linkTo, ctas.cta_2),
+    () => renderCtaButton(props, linkTo, false, ctas.cta_2),
     [ctas.cta_2, linkTo, props]
   );
   const cta1 = useMemo(
-    () => renderCtaButton(props, linkTo, ctas.cta_1),
+    () => renderCtaButton(props, linkTo, true, ctas.cta_1),
     [ctas.cta_1, linkTo, props]
   );
 

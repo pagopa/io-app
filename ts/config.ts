@@ -105,6 +105,10 @@ export const premiumMessagesOptInEnabled =
 export const scanAdditionalBarcodesEnabled =
   Config.SCAN_ADDITIONAL_BARCODES_ENABLED === "YES";
 
+// Redesign of the transaction summary screen
+export const newTransactionSummaryEnabled =
+  Config.NEW_TRANSACTION_SUMMARY_ENABLED === "YES";
+
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
 

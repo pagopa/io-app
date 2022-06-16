@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0-rc.5](https://github.com/pagopa/io-app/compare/2.11.0-rc.4...2.11.0-rc.5) (2022-06-09)
+
+
+### Bug Fixes
+
+* [[IAI-208](https://pagopa.atlassian.net/browse/IAI-208)] Fixes the CTAs conversion from old to new linking system ([#4007](https://github.com/pagopa/io-app/issues/4007)) ([1e3f029](https://github.com/pagopa/io-app/commit/1e3f029e0a55a817937c91af3745e2d016c89135))
+
+## [2.11.0-rc.4](https://github.com/pagopa/io-app/compare/2.11.0-rc.3...2.11.0-rc.4) (2022-06-07)
+
+
+### Features
+
+* [[IIP-12](https://pagopa.atlassian.net/browse/IIP-12)] Redesign the transaction summary screen ([#3976](https://github.com/pagopa/io-app/issues/3976)) ([b84c1fa](https://github.com/pagopa/io-app/commit/b84c1fa7d8149cf053ac80f8ac5a20cc3d7607e8))
+
+
+### Bug Fixes
+
+* **Carta Giovani Nazionale:** [[IOACGN-75](https://pagopa.atlassian.net/browse/IOACGN-75)] Fixes discount code not showing on discount detail ([#4003](https://github.com/pagopa/io-app/issues/4003)) ([9743351](https://github.com/pagopa/io-app/commit/97433514ce7aca66cfe46b98ad99efa870753d9e))
+
+
+### Chores
+
+* [[IA-840](https://pagopa.atlassian.net/browse/IA-840)] Changes to Help flow ([#3932](https://github.com/pagopa/io-app/issues/3932)) ([a7c4762](https://github.com/pagopa/io-app/commit/a7c4762f79883aef5b755070a2a3efab7c735437))
+* [[IAI-206](https://pagopa.atlassian.net/browse/IAI-206)] Add missing styles to `IOBadge` ([#3996](https://github.com/pagopa/io-app/issues/3996)) ([6271c9c](https://github.com/pagopa/io-app/commit/6271c9c7c68bc216d47f4bbe6932919af304f4f1))
+* **Carta della cultura:** [[AP-38](https://pagopa.atlassian.net/browse/AP-38)] Restore swipe back for cdc navigator ([#3994](https://github.com/pagopa/io-app/issues/3994)) ([96a5577](https://github.com/pagopa/io-app/commit/96a5577eaadab77f0af1bb1d0d768e55f0c08e42))
+* **deps:** bump simple-plist from 1.1.0 to 1.3.1 ([#3995](https://github.com/pagopa/io-app/issues/3995)) ([28fce22](https://github.com/pagopa/io-app/commit/28fce222e28fef937f72c7b9e8f8e837410c8b91))
+* [[IA-874](https://pagopa.atlassian.net/browse/IA-874)] Switch support CTA order ([#3992](https://github.com/pagopa/io-app/issues/3992)) ([99a23ae](https://github.com/pagopa/io-app/commit/99a23aee6402ac590073f2f1a06291b89498b906))
+* [[IAI-193](https://pagopa.atlassian.net/browse/IAI-193)] Implements internal link navigation based on `react-navigation` v5 ([#3968](https://github.com/pagopa/io-app/issues/3968)) ([5257326](https://github.com/pagopa/io-app/commit/5257326d5a9fc857a183fcf07d201c8de854ec4c))
+
 ## [2.11.0-rc.3](https://github.com/pagopa/io-app/compare/2.11.0-rc.2...2.11.0-rc.3) (2022-06-01)
 
 

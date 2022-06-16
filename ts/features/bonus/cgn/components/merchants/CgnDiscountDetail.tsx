@@ -131,6 +131,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       )}
       <CgnDiscountCodeComponent
         discount={discount}
+        merchantType={merchantType}
         onCodePress={mixpanelCgnEvent}
       />
       <H3 accessible={true} accessibilityRole={"header"}>
