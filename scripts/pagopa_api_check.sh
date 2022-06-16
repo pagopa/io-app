@@ -51,4 +51,4 @@ else
     res=$(curl -s -X POST -H 'Content-type: application/json' -H 'Authorization: Bearer '${IO_APP_SLACK_HELPER_BOT_TOKEN:-}'' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' https://slack.com/api/chat.postMessage)
 fi
 
-exit $SEND_EXIT
+exit 0
