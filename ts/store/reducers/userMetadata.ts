@@ -1,4 +1,4 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
@@ -28,9 +28,9 @@ export type UserMetadataState = pot.Pot<UserMetadata, Error>;
 
 export function backendUserMetadataToUserMetadata(
   backendUserMetadata: BackendUserMetadata
-): Either<Error, UserMetadata> {
+): E.Either<Error, UserMetadata> {
   if (backendUserMetadata.metadata === "") {
-    return right({
+    return E.right({
       version: backendUserMetadata.version,
       metadata: {}
     });
@@ -45,17 +45,17 @@ export function backendUserMetadataToUserMetadata(
       backendUserMetadataMetadataParsed
     );
 
-    if (metadataOrError.isLeft()) {
+    if (E.isLeft(metadataOrError)) {
       // TODO: Add proper error (https://www.pivotaltracker.com/story/show/170819415)
-      return left(new Error());
+      return E.left(new Error());
     }
 
-    return right({
+    return E.right({
       version: backendUserMetadata.version,
-      metadata: metadataOrError.value
+      metadata: metadataOrError.right
     });
   } catch (e) {
-    return left(e);
+    return E.left(e);
   }
 }
 

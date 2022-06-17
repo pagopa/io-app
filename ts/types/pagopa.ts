@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import {
   enumType,
@@ -8,6 +8,7 @@ import {
   tag
 } from "@pagopa/ts-commons/lib/types";
 import { ImageSourcePropType, ImageURISource } from "react-native";
+import { pipe } from "fp-ts/lib/function";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
@@ -330,14 +331,21 @@ const idStatusSuccessTransaction: ReadonlyArray<number> = [8, 9];
  * ref: https://www.pivotaltracker.com/story/show/173850410
  */
 export const isSuccessTransaction = (tx?: Transaction): boolean =>
-  fromNullable(tx)
-    .map(tsx =>
-      fromNullable(tsx.accountingStatus).foldL(
-        () => idStatusSuccessTransaction.some(ids => ids === tsx.idStatus),
-        as => as === 1
+  pipe(
+    tx,
+    O.fromNullable,
+    O.map(tsx =>
+      pipe(
+        tsx.accountingStatus,
+        O.fromNullable,
+        O.fold(
+          () => idStatusSuccessTransaction.some(ids => ids === tsx.idStatus),
+          as => as === 1
+        )
       )
-    )
-    .getOrElse(false);
+    ),
+    O.getOrElse(() => false)
+  );
 
 /**
  * A refined TransactionListResponse

@@ -1,7 +1,8 @@
-import { Either } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
+import { pipe } from "fp-ts/lib/function";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import {
   CreditCard,
@@ -49,21 +50,23 @@ import {
 describe("walletV2 selectors", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
   const indexedWallets = toIndexed(
-    (maybeWalletsV2.value as PatchedWalletV2ListResponse).data!.map(
-      convertWalletV2toWalletV1
+    pipe(
+      maybeWalletsV2,
+      E.map(walletsV2 => walletsV2.data!.map(convertWalletV2toWalletV1)),
+      E.getOrElseW(() => [])
     ),
     w => w.idWallet
   );
-  const globalState = ({
+  const globalState = {
     wallet: {
       wallets: {
         walletById: pot.some(indexedWallets)
       },
       abi: remoteUndefined
     }
-  } as any) as GlobalState;
+  } as any as GlobalState;
   it("should decode walletv2 list", () => {
-    expect(maybeWalletsV2.isRight()).toBeTruthy();
+    expect(E.isRight(maybeWalletsV2)).toBeTruthy();
   });
 
   it("should return credit cards", () => {
@@ -166,20 +169,26 @@ describe("walletV2 favoriteId Selector", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
   // set all method to not favourite
   const indexedWallets = toIndexed(
-    (maybeWalletsV2.value as PatchedWalletV2ListResponse)
-      .data!.map(convertWalletV2toWalletV1)
-      .map(w => ({ ...w, favourite: false })),
+    pipe(
+      maybeWalletsV2,
+      E.map(walletsV2 =>
+        walletsV2
+          .data!.map(convertWalletV2toWalletV1)
+          .map(w => ({ ...w, favourite: false }))
+      ),
+      E.getOrElseW(() => [])
+    ),
     w => w.idWallet
   );
 
   it("should return pot none - no wallets", () => {
-    const noWallets = ({
+    const noWallets = {
       wallet: {
         wallets: {
           walletById: pot.none
         }
       }
-    } as any) as GlobalState;
+    } as any as GlobalState;
     expect(getFavoriteWalletId(noWallets)).toEqual(pot.none);
     expect(getFavoriteWallet(noWallets)).toEqual(pot.none);
   });
@@ -224,8 +233,11 @@ describe("walletV2 favoriteId Selector", () => {
 });
 
 describe("updatePaymentStatus state changes", () => {
-  const walletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1)
-    .value as PatchedWalletV2ListResponse;
+  const walletsV2 = pipe(
+    walletsV2_1,
+    PatchedWalletV2ListResponse.decode,
+    E.getOrElseW(() => [] as PatchedWalletV2ListResponse)
+  );
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const withWallets = appReducer(
     globalState,
@@ -271,8 +283,12 @@ describe("getPayablePaymentMethodsSelector", () => {
   });
 
   it("should return false - empty wallet", () => {
-    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
-      .value as PatchedWalletV2ListResponse;
+    const paymentMethods = pipe(
+      walletsV2_1,
+      PatchedWalletV2ListResponse.decode,
+      E.getOrElseW(() => [] as PatchedWalletV2ListResponse)
+    );
+
     const updatedMethods = paymentMethods.data!.map(w =>
       convertWalletV2toWalletV1({ ...w, enableableFunctions: [] })
     );
@@ -285,8 +301,11 @@ describe("getPayablePaymentMethodsSelector", () => {
   });
 
   it("should return true - one payable method", () => {
-    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
-      .value as PatchedWalletV2ListResponse;
+    const paymentMethods = pipe(
+      walletsV2_1,
+      PatchedWalletV2ListResponse.decode,
+      E.getOrElseW(() => [] as PatchedWalletV2ListResponse)
+    );
     const updatedMethods = [...paymentMethods.data!];
     // eslint-disable-next-line functional/immutable-data
     updatedMethods[0] = {
@@ -310,8 +329,11 @@ describe("getPagoPAMethodsSelector", () => {
   });
 
   it("should return true - one pagoPA method", () => {
-    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
-      .value as PatchedWalletV2ListResponse;
+    const paymentMethods = pipe(
+      walletsV2_1,
+      PatchedWalletV2ListResponse.decode,
+      E.getOrElseW(() => [] as PatchedWalletV2ListResponse)
+    );
     const updatedMethods = [...paymentMethods.data!];
     // eslint-disable-next-line functional/immutable-data
     updatedMethods[0] = {
@@ -408,12 +430,14 @@ describe("walletV2 reducer - deleteAllByFunction", () => {
         w.enableableFunctions.includes(EnableableFunctionsEnum.BPD)
       )
     });
-    const convertedWallets = (maybeWalletsV2.value as PatchedWalletV2ListResponse).data!.map(
-      convertWalletV2toWalletV1
-    );
-    const convertedWalletsExceptBPD = (maybeWalletsExceptBPDV2.value as PatchedWalletV2ListResponse).data!.map(
-      convertWalletV2toWalletV1
-    );
+    const convertedWallets = (
+      E.getOrElseW(() => [])(maybeWalletsV2) as PatchedWalletV2ListResponse
+    ).data!.map(convertWalletV2toWalletV1);
+    const convertedWalletsExceptBPD = (
+      E.getOrElseW(() => [])(
+        maybeWalletsExceptBPDV2
+      ) as PatchedWalletV2ListResponse
+    ).data!.map(convertWalletV2toWalletV1);
 
     const globalState: GlobalState = appReducer(
       undefined,
@@ -444,12 +468,12 @@ describe("walletV2 reducer - deleteAllByFunction", () => {
 });
 
 const mockWalletState = (
-  walletResponse: Either<Errors, PatchedWalletV2ListResponse>
+  walletResponse: E.Either<Errors, PatchedWalletV2ListResponse>
 ) => {
   const indexedWallets = toIndexed(
-    (walletResponse.value as PatchedWalletV2ListResponse).data!.map(
-      convertWalletV2toWalletV1
-    ),
+    E.getOrElseW(() => [] as PatchedWalletV2ListResponse)(
+      walletResponse
+    ).data!.map(convertWalletV2toWalletV1),
     w => w.idWallet
   );
   return {

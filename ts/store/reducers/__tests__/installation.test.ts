@@ -1,4 +1,4 @@
-import { range } from "fp-ts/lib/Array";
+import * as AR from "fp-ts/lib/Array";
 import reducer, { MAX_APP_VERSION_HISTORY_SIZE } from "../installation";
 import { applicationChangeState } from "../../actions/application";
 import {
@@ -65,7 +65,7 @@ describe("installation reducer", () => {
 
     describe("given multiple appVersionHistory (> size allowed)", () => {
       it("should return the state updated with the size <= max allowed", () => {
-        const versions = range(1, MAX_APP_VERSION_HISTORY_SIZE + 10).reduce(
+        const versions = AR.range(1, MAX_APP_VERSION_HISTORY_SIZE + 10).reduce(
           (acc: Array<string>, curr: number) =>
             reducer(
               {

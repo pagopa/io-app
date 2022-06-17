@@ -1,4 +1,5 @@
-import { some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { BackendStatusState } from "../backendStatus";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
@@ -270,7 +271,7 @@ export const baseRawBackendStatus: BackendStatus = {
 };
 
 export const baseBackendState: BackendStatusState = {
-  status: some(baseRawBackendStatus),
+  status: O.some(baseRawBackendStatus),
   areSystemsDead: false,
   deadsCounter: 0
 };
@@ -330,8 +331,11 @@ export const withBpdRankingConfig = (
   newConfig: Config
 ): BackendStatusState => ({
   ...baseState,
-  status: baseState.status.map(s => ({
-    ...s,
-    config: { ...newConfig }
-  }))
+  status: pipe(
+    baseState.status,
+    O.map(s => ({
+      ...s,
+      config: { ...newConfig }
+    }))
+  )
 });

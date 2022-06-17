@@ -1,11 +1,5 @@
-import {
-  fromEither,
-  fromNullable,
-  none,
-  Option,
-  some,
-  isNone
-} from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -16,6 +10,7 @@ import {
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../i18n";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
@@ -50,9 +45,15 @@ import { maybeNotNullyString } from "./strings";
 export function getRptIdFromNoticeNumber(
   organizationFiscalCode: OrganizationFiscalCode,
   noticeNumber: PaymentNoticeNumber
-): Option<RptId> {
-  return fromEither(
-    RptIdFromString.decode(`${organizationFiscalCode}${noticeNumber}`)
+): O.Option<RptId> {
+  return pipe(
+    `${organizationFiscalCode}${noticeNumber}`,
+    RptIdFromString.decode,
+    rptIdFromStringDecodeResult =>
+      rptIdFromStringDecodeResult.isLeft()
+        ? E.left(rptIdFromStringDecodeResult.value)
+        : E.right(rptIdFromStringDecodeResult.value),
+    O.fromEither
   );
 }
 
@@ -64,22 +65,44 @@ export function getRptIdFromNoticeNumber(
  */
 export function getAmountFromPaymentAmount(
   paymentAmount: PaymentAmount
-): Option<AmountInEuroCents> {
+): O.Option<AmountInEuroCents> {
   // PaymentAmount is in EURO cents but AmountInEuroCentsFromNumber expects
   // the amount to be in EUROs, thus we must divide by 100
-  return fromEither(AmountInEuroCentsFromNumber.decode(paymentAmount / 100.0));
+  return pipe(
+    paymentAmount / 100.0,
+    AmountInEuroCentsFromNumber.decode,
+    amountInEuroCentsFromNumberDecodeResult =>
+      amountInEuroCentsFromNumberDecodeResult.isLeft()
+        ? E.left(amountInEuroCentsFromNumberDecodeResult.value)
+        : E.right(amountInEuroCentsFromNumberDecodeResult.value),
+    O.fromEither
+  );
 }
 
 export function decodePagoPaQrCode(
   data: string
-): Option<ITuple2<RptId, AmountInEuroCents>> {
-  const paymentNoticeOrError = PaymentNoticeQrCodeFromString.decode(data);
-  return fromEither(
-    paymentNoticeOrError.chain(paymentNotice =>
-      rptIdFromPaymentNoticeQrCode(paymentNotice).map(rptId =>
-        Tuple2(rptId, paymentNotice.amount)
+): O.Option<ITuple2<RptId, AmountInEuroCents>> {
+  const paymentNoticeOrError = pipe(
+    data,
+    PaymentNoticeQrCodeFromString.decode,
+    paymentNoticeQrCodeFromStringDecodeResult =>
+      paymentNoticeQrCodeFromStringDecodeResult.isLeft()
+        ? E.left(paymentNoticeQrCodeFromStringDecodeResult.value)
+        : E.right(paymentNoticeQrCodeFromStringDecodeResult.value)
+  );
+  return pipe(
+    paymentNoticeOrError,
+    E.chain(paymentNotice =>
+      pipe(
+        rptIdFromPaymentNoticeQrCode(paymentNotice),
+        rptIdFromPaymentNoticeQrCodeRes =>
+          rptIdFromPaymentNoticeQrCodeRes.isLeft()
+            ? E.left(rptIdFromPaymentNoticeQrCodeRes.value)
+            : E.right(rptIdFromPaymentNoticeQrCodeRes.value),
+        E.map(rptId => Tuple2(rptId, paymentNotice.amount))
       )
-    )
+    ),
+    O.fromEither
   );
 }
 
@@ -90,29 +113,43 @@ export function decodePagoPaQrCode(
  */
 export function decodePosteDataMatrix(
   data: string
-): Option<ITuple2<RptId, AmountInEuroCents>> {
+): O.Option<ITuple2<RptId, AmountInEuroCents>> {
   if (!data.startsWith("codfase=NBPA;")) {
-    return none;
+    return O.none;
   }
 
   const paymentNoticeNumber = data.slice(15, 33);
   const organizationFiscalCode = data.slice(66, 77);
   const amount = data.slice(49, 59);
 
-  const decodedRpdId = fromEither(
-    RptId.decode({
+  const decodedRpdId = pipe(
+    {
       organizationFiscalCode,
       paymentNoticeNumber
-    })
+    },
+    RptId.decode,
+    rptIdDecodeRes =>
+      rptIdDecodeRes.isLeft()
+        ? E.left(rptIdDecodeRes.value)
+        : E.right(rptIdDecodeRes.value),
+    O.fromEither
   );
 
-  const decodedAmount = fromEither(AmountInEuroCents.decode(amount));
+  const decodedAmount = pipe(
+    amount,
+    AmountInEuroCents.decode,
+    amountInEuroCentsDecodeRes =>
+      amountInEuroCentsDecodeRes.isLeft()
+        ? E.left(amountInEuroCentsDecodeRes.value)
+        : E.right(amountInEuroCentsDecodeRes.value),
+    O.fromEither
+  );
 
-  if (isNone(decodedRpdId) || isNone(decodedAmount)) {
-    return none;
+  if (O.isNone(decodedRpdId) || O.isNone(decodedAmount)) {
+    return O.none;
   }
 
-  return some(Tuple2(decodedRpdId.value, decodedAmount.value));
+  return O.some(Tuple2(decodedRpdId.value, decodedAmount.value));
 }
 
 /**
@@ -177,10 +214,12 @@ export const cleanTransactionDescription = (description: string): string => {
 
   return descriptionParts.length > 1
     ? descriptionParts[descriptionParts.length - 1].trim()
-    : getTransactionIUV(description) // try to extract codice avviso from description
-        .chain(maybeNotNullyString)
-        .map(ca => `${I18n.t("payment.IUV")} ${ca}`)
-        .getOrElse(description);
+    : pipe(
+        getTransactionIUV(description), // try to extract codice avviso from description
+        O.chain(maybeNotNullyString),
+        O.map(ca => `${I18n.t("payment.IUV")} ${ca}`),
+        O.getOrElse(() => description)
+      );
 };
 
 export const getErrorDescription = (
@@ -281,7 +320,14 @@ export const getV2ErrorMainType = (
   }
 
   const errorInMap = [...v2ErrorMacrosMap.keys()].find(k =>
-    fromNullable(v2ErrorMacrosMap.get(k)).fold(false, s => s.has(error))
+    pipe(
+      v2ErrorMacrosMap.get(k),
+      O.fromNullable,
+      O.fold(
+        () => false,
+        s => s.has(error)
+      )
+    )
   );
 
   if (errorInMap !== undefined) {
@@ -326,26 +372,30 @@ export const getTransactionFee = (
   transaction?: Transaction,
   formatFunc: (fee: number) => string = (f: number) =>
     formatNumberCentsToAmount(f, true)
-): string | null => {
-  const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
-    transaction,
-    "fee",
-    m => (m ? m.amount : undefined)
-  ).getOrElse(undefined);
-  return fromNullable(maybeFee).map(formatFunc).toNullable();
-};
+): string | null =>
+  pipe(
+    maybeInnerProperty<Transaction, "fee", number | undefined>(
+      transaction,
+      "fee",
+      m => (m ? m.amount : undefined)
+    ),
+    O.getOrElseW(() => undefined),
+    O.fromNullable,
+    O.map(formatFunc),
+    O.toNullable
+  );
 
 // try to extract IUV from transaction description
 // see https://docs.italia.it/pagopa/pagopa_docs/pagopa-codici-docs/it/v1.4.0/_docs/Capitolo3.html
 export const getTransactionIUV = (
   transactionDescription: string
-): Option<string> => {
+): O.Option<string> => {
   const description = transactionDescription.trim();
   if (!hasDescriptionPrefix(description)) {
-    return none;
+    return O.none;
   }
   const splitted = description.split("/").filter(i => i.trim().length > 0);
-  return splitted.length > 1 ? some(splitted[1]) : none;
+  return splitted.length > 1 ? O.some(splitted[1]) : O.none;
 };
 
 /**
@@ -403,23 +453,29 @@ export const isPaymentOutcomeCodeSuccessfully = (
   outcomeCodes: OutcomeCodes
 ): boolean => {
   const maybeValidCode = OutcomeCodesKey.decode(code);
-  return maybeValidCode.fold(
-    _ => false,
-    c => outcomeCodes[c].status === "success"
+  return pipe(
+    maybeValidCode,
+    E.fold(
+      _ => false,
+      c => outcomeCodes[c].status === "success"
+    )
   );
 };
 
 export const getPaymentOutcomeCodeDescription = (
   outcomeCode: string,
   outcomeCodes: OutcomeCodes
-): Option<string> => {
-  const maybeOutcomeCodeKey = OutcomeCodesKey.decode(outcomeCode);
-  if (maybeOutcomeCodeKey.isRight()) {
-    return fromNullable<OutcomeCode>(outcomeCodes[maybeOutcomeCodeKey.value])
-      .mapNullable(oc => oc.description)
-      .map(description => description[getFullLocale()]);
+): O.Option<string> => {
+  const maybeOutcomeCodeKey = pipe(outcomeCode, OutcomeCodesKey.decode);
+  if (E.isRight(maybeOutcomeCodeKey)) {
+    return pipe(
+      outcomeCodes[maybeOutcomeCodeKey.right] as OutcomeCode,
+      O.fromNullable,
+      O.chainNullableK(oc => oc.description),
+      O.map(description => description[getFullLocale()])
+    );
   }
-  return none;
+  return O.none;
 };
 
 export const getPickPaymentMethodDescription = (
@@ -438,5 +494,9 @@ export const getPickPaymentMethodDescription = (
         firstElement: translatedExpireDate,
         secondElement: paymentMethod.info.holder ?? defaultHolder
       })
-    : fromNullable(paymentMethod.info.holder).getOrElse(defaultHolder);
+    : pipe(
+        paymentMethod.info.holder,
+        O.fromNullable,
+        O.getOrElse(() => defaultHolder)
+      );
 };

@@ -1,4 +1,4 @@
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { Version } from "../../../../definitions/backend/Version";
@@ -12,7 +12,7 @@ import {
 
 describe("email profile selector", () => {
   const potProfile: ProfileState = pot.some(mockedProfile);
-  const someEmail = some(mockedProfile.email);
+  const someEmail = O.some(mockedProfile.email);
   it("should return the user's email address", () => {
     expect(profileEmailSelector.resultFunc(potProfile)).toStrictEqual(
       someEmail
@@ -26,7 +26,7 @@ describe("email profile selector", () => {
   it("should return the user's email address", () => {
     expect(
       profileEmailSelector.resultFunc(potProfileWithNoEmail)
-    ).toStrictEqual(none);
+    ).toStrictEqual(O.none);
   });
 
   it("should return true when user has an email", () => {

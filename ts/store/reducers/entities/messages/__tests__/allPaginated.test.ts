@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { pot } from "@pagopa/ts-commons";
 
 import {
@@ -45,7 +45,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          some("all")
+          O.some("all")
         );
       });
 
@@ -70,7 +70,7 @@ describe("allPaginated reducer", () => {
         });
         it("should set the Archive lastRequest to 'none'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            none
+            O.none
           );
         });
       });
@@ -95,7 +95,7 @@ describe("allPaginated reducer", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should set the Inbox lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          some("all")
+          O.some("all")
         );
       });
 
@@ -119,7 +119,9 @@ describe("allPaginated reducer", () => {
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
         it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
+            O.none
+          );
         });
       });
     });
@@ -146,7 +148,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          some("next")
+          O.some("next")
         );
       });
 
@@ -182,7 +184,7 @@ describe("allPaginated reducer", () => {
         // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Archive lastRequest to 'none'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            none
+            O.none
           );
         });
       });
@@ -209,7 +211,7 @@ describe("allPaginated reducer", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          some("next")
+          O.some("next")
         );
       });
 
@@ -242,8 +244,11 @@ describe("allPaginated reducer", () => {
           );
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
+        // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
+            O.none
+          );
         });
       });
     });
@@ -270,7 +275,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          some("previous")
+          O.some("previous")
         );
       });
 
@@ -334,7 +339,7 @@ describe("allPaginated reducer", () => {
         // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Archive lastRequest to 'none'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            none
+            O.none
           );
         });
       });
@@ -361,7 +366,7 @@ describe("allPaginated reducer", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          some("previous")
+          O.some("previous")
         );
       });
 
@@ -422,8 +427,11 @@ describe("allPaginated reducer", () => {
           });
         });
 
+        // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
+            O.none
+          );
         });
       });
     });
@@ -438,7 +446,7 @@ describe("allPaginated reducer", () => {
           previous: "abcde",
           next: "12345"
         }),
-        lastRequest: none
+        lastRequest: O.none
       }
     };
 
@@ -507,9 +515,9 @@ describe("allPaginated reducer", () => {
 });
 
 const defaultState: AllPaginated = {
-  inbox: { data: pot.none, lastRequest: none },
-  archive: { data: pot.none, lastRequest: none },
-  migration: none
+  inbox: { data: pot.none, lastRequest: O.none },
+  archive: { data: pot.none, lastRequest: O.none },
+  migration: O.none
 };
 
 function toGlobalState(localState: AllPaginated): GlobalState {
@@ -524,7 +532,7 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: none,
+      lastRequest: O.none,
       expectedArchive: false,
       expectedInbox: false
     },
@@ -532,7 +540,7 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.none,
       inbox: pot.none,
-      lastRequest: none,
+      lastRequest: O.none,
       expectedArchive: false,
       expectedInbox: false
     },
@@ -540,7 +548,7 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("previous"),
+      lastRequest: O.some("previous"),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -548,7 +556,7 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.none,
-      lastRequest: some("previous"),
+      lastRequest: O.some("previous"),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -556,14 +564,14 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("next"),
+      lastRequest: O.some("next"),
       expectedArchive: false,
       expectedInbox: false
     },
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("all"),
+      lastRequest: O.some("all"),
       expectedArchive: false,
       expectedInbox: false
     }
@@ -622,7 +630,7 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: none,
+      lastRequest: O.none,
       expectedArchive: false,
       expectedInbox: false
     },
@@ -630,7 +638,7 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.none,
       inbox: pot.none,
-      lastRequest: none,
+      lastRequest: O.none,
       expectedArchive: false,
       expectedInbox: false
     },
@@ -638,7 +646,7 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("next"),
+      lastRequest: O.some("next"),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -646,7 +654,7 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.none,
-      lastRequest: some("next"),
+      lastRequest: O.some("next"),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -654,14 +662,14 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("previous"),
+      lastRequest: O.some("previous"),
       expectedArchive: false,
       expectedInbox: false
     },
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("all"),
+      lastRequest: O.some("all"),
       expectedArchive: false,
       expectedInbox: false
     }
