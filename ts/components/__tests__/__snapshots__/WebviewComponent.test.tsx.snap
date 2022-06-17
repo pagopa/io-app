@@ -97,6 +97,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
         injectedJavaScriptForMainFrameOnly={true}
         javaScriptEnabled={true}
+        mediaPlaybackRequiresUserAction={true}
         messagingEnabled={false}
         onContentProcessDidTerminate={[Function]}
         onError={[Function]}
