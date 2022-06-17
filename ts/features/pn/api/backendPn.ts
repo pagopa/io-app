@@ -35,7 +35,7 @@ export const BackendPN = (
   };
   const withBearerToken = withToken(token);
   return {
-    getUserLegalMessage: withBearerToken(
+    getThirdPartyMessage: withBearerToken(
       createFetchRequestForApi(getThirdPartyMessage, options)
     )
   };
