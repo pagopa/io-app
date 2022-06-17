@@ -1,5 +1,5 @@
-import { Either, left, right } from "fp-ts/lib/Either";
-import { none, Option, some } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
@@ -28,32 +28,32 @@ export function* fetchUserMetadata(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, BackendUserMetadata>,
+  E.Either<Error, BackendUserMetadata>,
   SagaCallReturnType<typeof getUserMetadata>
 > {
   try {
     const response = yield* call(getUserMetadata, {});
 
     // Can't decode response
-    if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
     }
 
-    if (response.value.status !== 200) {
-      if (response.value.status === 204) {
+    if (response.right.status !== 200) {
+      if (response.right.status === 204) {
         // Return an empty object cause profile has no metadata yet (204 === No Content)
-        return right<Error, BackendUserMetadata>(emptyUserMetadata);
+        return E.right<Error, BackendUserMetadata>(emptyUserMetadata);
       }
 
       const error =
-        response.value.status === 500 ? response.value.value.title : undefined;
+        response.right.status === 500 ? response.right.value.title : undefined;
       // Return the error
-      return left<Error, BackendUserMetadata>(Error(error));
+      return E.left<Error, BackendUserMetadata>(Error(error));
     }
 
-    return right<Error, BackendUserMetadata>(response.value.value);
+    return E.right<Error, BackendUserMetadata>(response.right.value);
   } catch (error) {
-    return left<Error, BackendUserMetadata>(error);
+    return E.left<Error, BackendUserMetadata>(error);
   }
 }
 
@@ -66,7 +66,7 @@ export function* loadUserMetadata(
   setLoading: boolean = false
 ): Generator<
   ReduxSagaEffect,
-  Option<UserMetadata>,
+  O.Option<UserMetadata>,
   SagaCallReturnType<typeof fetchUserMetadata>
 > {
   if (setLoading) {
@@ -78,25 +78,24 @@ export function* loadUserMetadata(
     getUserMetadata
   );
 
-  if (backendUserMetadataOrError.isLeft()) {
-    yield* put(userMetadataLoad.failure(backendUserMetadataOrError.value));
-    return none;
+  if (E.isLeft(backendUserMetadataOrError)) {
+    yield* put(userMetadataLoad.failure(backendUserMetadataOrError.left));
+    return O.none;
   }
 
-  const backendUserMetadata = backendUserMetadataOrError.value;
+  const backendUserMetadata = backendUserMetadataOrError.right;
 
-  const userMetadataOrError = backendUserMetadataToUserMetadata(
-    backendUserMetadata
-  );
+  const userMetadataOrError =
+    backendUserMetadataToUserMetadata(backendUserMetadata);
 
-  if (userMetadataOrError.isLeft()) {
-    yield* put(userMetadataLoad.failure(userMetadataOrError.value));
-    return none;
+  if (E.isLeft(userMetadataOrError)) {
+    yield* put(userMetadataLoad.failure(userMetadataOrError.left));
+    return O.none;
   }
 
-  yield* put(userMetadataLoad.success(userMetadataOrError.value));
+  yield* put(userMetadataLoad.success(userMetadataOrError.right));
 
-  return some(userMetadataOrError.value);
+  return O.some(userMetadataOrError.right);
 }
 
 /**
@@ -131,7 +130,7 @@ export function* postUserMetadata(
   backendUserMetadata: BackendUserMetadata
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, BackendUserMetadata>,
+  E.Either<Error, BackendUserMetadata>,
   SagaCallReturnType<typeof createOrUpdateUserMetadata>
 > {
   try {
@@ -140,20 +139,20 @@ export function* postUserMetadata(
     });
 
     // Can't decode response
-    if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
     }
 
-    if (response.value.status !== 200) {
+    if (response.right.status !== 200) {
       const error =
-        response.value.status === 500 ? response.value.value.title : undefined;
+        response.right.status === 500 ? response.right.value.title : undefined;
       // Return the error
-      return left<Error, BackendUserMetadata>(Error(error));
+      return E.left<Error, BackendUserMetadata>(Error(error));
     }
 
-    return right<Error, BackendUserMetadata>(response.value.value);
+    return E.right<Error, BackendUserMetadata>(response.right.value);
   } catch (error) {
-    return left<Error, BackendUserMetadata>(error);
+    return E.left<Error, BackendUserMetadata>(error);
   }
 }
 
@@ -167,14 +166,13 @@ export function* upsertUserMetadata(
   >["createOrUpdateUserMetadata"],
   userMetadata: UserMetadata,
   setLoading: boolean = false
-): Generator<ReduxSagaEffect, Option<UserMetadata>, any> {
+): Generator<ReduxSagaEffect, O.Option<UserMetadata>, any> {
   if (setLoading) {
     yield* put(userMetadataUpsert.request(userMetadata));
   }
 
-  const currentUserMetadata: ReturnType<typeof userMetadataSelector> = yield* select(
-    userMetadataSelector
-  );
+  const currentUserMetadata: ReturnType<typeof userMetadataSelector> =
+    yield* select(userMetadataSelector);
 
   // The version of the new userMetadata must be one more
   // the old one.
@@ -189,11 +187,13 @@ export function* upsertUserMetadata(
         new Error(TypedI18n.t("userMetadata.errors.upsertVersion"))
       )
     );
-    return none;
+    return O.none;
   }
 
   // Call the saga that perform the API request.
-  const updatedBackendUserMetadataOrError: SagaCallReturnType<typeof postUserMetadata> = yield* call(
+  const updatedBackendUserMetadataOrError: SagaCallReturnType<
+    typeof postUserMetadata
+  > = yield* call(
     postUserMetadata,
     createOrUpdateUserMetadata,
     // Backend stores the metadata as a plain string
@@ -201,27 +201,27 @@ export function* upsertUserMetadata(
     userMetadataToBackendUserMetadata(userMetadata)
   );
 
-  if (updatedBackendUserMetadataOrError.isLeft()) {
+  if (E.isLeft(updatedBackendUserMetadataOrError)) {
     yield* put(
-      userMetadataUpsert.failure(updatedBackendUserMetadataOrError.value)
+      userMetadataUpsert.failure(updatedBackendUserMetadataOrError.left)
     );
-    return none;
+    return O.none;
   }
 
-  const updatedBackendUserMetadata = updatedBackendUserMetadataOrError.value;
+  const updatedBackendUserMetadata = updatedBackendUserMetadataOrError.right;
 
   // Trasform back the metadata from plain string to an object.
   const updatedUserMetadataOrError = backendUserMetadataToUserMetadata(
     updatedBackendUserMetadata
   );
 
-  if (updatedUserMetadataOrError.isLeft()) {
-    yield* put(userMetadataUpsert.failure(updatedUserMetadataOrError.value));
-    return none;
+  if (E.isLeft(updatedUserMetadataOrError)) {
+    yield* put(userMetadataUpsert.failure(updatedUserMetadataOrError.left));
+    return O.none;
   }
 
-  yield* put(userMetadataUpsert.success(updatedUserMetadataOrError.value));
-  return some(updatedUserMetadataOrError.value);
+  yield* put(userMetadataUpsert.success(updatedUserMetadataOrError.right));
+  return O.some(updatedUserMetadataOrError.right);
 }
 
 /**

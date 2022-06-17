@@ -2,7 +2,7 @@
  * Action types and action creator related to the Profile.
  */
 
-import { Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   ActionType,
@@ -17,9 +17,9 @@ export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 export const profileLoadRequest = createStandardAction(
   "PROFILE_LOAD_REQUEST"
 )();
-export const profileLoadSuccess = createStandardAction("PROFILE_LOAD_SUCCESS")<
-  InitializedProfile
->();
+export const profileLoadSuccess = createStandardAction(
+  "PROFILE_LOAD_SUCCESS"
+)<InitializedProfile>();
 
 export const profileLoadFailure = createAction(
   "PROFILE_LOAD_FAILURE",
@@ -47,7 +47,7 @@ export const startEmailValidation = createAsyncAction(
 
 export const acknowledgeOnEmailValidation = createStandardAction(
   "ACKNOWLEDGE_ON_EMAIL_VALIDATION"
-)<Option<boolean>>();
+)<O.Option<boolean>>();
 
 export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 

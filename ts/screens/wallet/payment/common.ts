@@ -1,4 +1,4 @@
-import { Option, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ActionType } from "typesafe-actions";
 
@@ -74,14 +74,14 @@ export const dispatchPickPspOrConfirm =
     initialAmount: AmountInEuroCents,
     verifica: PaymentRequestsGetResponse,
     idPayment: string,
-    maybeSelectedWallet: Option<Wallet>,
+    maybeSelectedWallet: O.Option<Wallet>,
     // NO_PSPS_AVAILABLE: the wallet cannot be used for this payment
     // FETCH_PSPS_FAILURE: fetching the PSPs for this wallet has failed
     onFailure: (reason: "NO_PSPS_AVAILABLE" | "FETCH_PSPS_FAILURE") => void,
     hasWallets: boolean = true
     // eslint-disable-next-line sonarjs/cognitive-complexity
   ) => {
-    if (maybeSelectedWallet.isSome()) {
+    if (O.isSome(maybeSelectedWallet)) {
       const selectedWallet = maybeSelectedWallet.value;
       // if the paying method is paypal retrieve psp from new API
       // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/445844411/Modifiche+al+flusso+di+pagamento
@@ -194,7 +194,7 @@ export const dispatchPickPspOrConfirm =
         // the user never add a wallet, ask the user to add a new one
 
         navigateToWalletAddPaymentMethod({
-          inPayment: some({
+          inPayment: O.some({
             rptId,
             initialAmount,
             verifica,

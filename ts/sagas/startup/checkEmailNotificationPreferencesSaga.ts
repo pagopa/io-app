@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import {
@@ -10,6 +10,7 @@ import {
   takeEvery
 } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
 import { profileLoadSuccess } from "../../store/actions/profile";
@@ -31,9 +32,9 @@ export function* watchEmailNotificationPreferencesSaga(): Generator<
   void,
   any
 > {
-  const isCustomEmailChannelEnabled: ReturnType<typeof isCustomEmailChannelEnabledSelector> = yield* select(
-    isCustomEmailChannelEnabledSelector
-  );
+  const isCustomEmailChannelEnabled: ReturnType<
+    typeof isCustomEmailChannelEnabledSelector
+  > = yield* select(isCustomEmailChannelEnabledSelector);
 
   // if we know about user choice do nothing
   if (pot.isSome(isCustomEmailChannelEnabled)) {
@@ -72,9 +73,11 @@ export function* emailNotificationPreferencesSaga(): SagaIterator {
         if (profile.is_email_enabled === false) {
           return false;
         }
-        const blockedChannels: BlockedInboxOrChannels = fromNullable(
-          profile.blocked_inbox_or_channels
-        ).getOrElse({});
+        const blockedChannels: BlockedInboxOrChannels = pipe(
+          profile.blocked_inbox_or_channels,
+          O.fromNullable,
+          O.getOrElse(() => ({}))
+        );
         return (
           visibleService.findIndex(
             service =>

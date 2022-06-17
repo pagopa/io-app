@@ -1,4 +1,4 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { call, put, select } from "typed-redux-saga/macro";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -19,17 +19,16 @@ export function* loadMessage(
   meta: CreatedMessageWithoutContent
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, CreatedMessageWithContentAndAttachments>,
+  E.Either<Error, CreatedMessageWithContentAndAttachments>,
   any
 > {
   // Load the messages already in the redux store
-  const cachedMessage: ReturnType<ReturnType<
-    typeof messageStateByIdSelector
-  >> = yield* select(messageStateByIdSelector(meta.id));
+  const cachedMessage: ReturnType<ReturnType<typeof messageStateByIdSelector>> =
+    yield* select(messageStateByIdSelector(meta.id));
 
   // If we already have the message in the store just return it
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
-    return right<Error, CreatedMessageWithContentAndAttachments>(
+    return E.right<Error, CreatedMessageWithContentAndAttachments>(
       cachedMessage.message.value
     );
   }
@@ -41,10 +40,10 @@ export function* loadMessage(
       meta
     );
 
-    if (maybeMessage.isLeft()) {
-      throw maybeMessage.value;
+    if (E.isLeft(maybeMessage)) {
+      throw maybeMessage.left;
     } else {
-      yield* put(loadMessageAction.success(maybeMessage.value));
+      yield* put(loadMessageAction.success(maybeMessage.right));
     }
     return maybeMessage;
   } catch (error) {
@@ -54,7 +53,7 @@ export function* loadMessage(
         error
       })
     );
-    return left<Error, CreatedMessageWithContentAndAttachments>(error);
+    return E.left<Error, CreatedMessageWithContentAndAttachments>(error);
   }
 }
 
@@ -66,7 +65,7 @@ function* fetchMessage(
   meta: CreatedMessageWithoutContent
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, CreatedMessageWithContentAndAttachments>,
+  E.Either<Error, CreatedMessageWithContentAndAttachments>,
   any
 > {
   try {
@@ -74,24 +73,26 @@ function* fetchMessage(
       getMessage,
       { id: meta.id }
     );
-    if (response.isLeft()) {
-      throw Error(readablePrivacyReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readablePrivacyReport(response.left));
     }
-    if (response.value.status !== 200) {
+    if (response.right.status !== 200) {
       const error =
-        response.value.status === 500
-          ? response.value.value.title
-          : `response status ${response.value.status}`;
+        response.right.status === 500
+          ? response.right.value.title
+          : `response status ${response.right.status}`;
       // Return the error
-      return left<Error, CreatedMessageWithContentAndAttachments>(Error(error));
+      return E.left<Error, CreatedMessageWithContentAndAttachments>(
+        Error(error)
+      );
     }
 
-    return right<Error, CreatedMessageWithContentAndAttachments>(
-      response.value.value
+    return E.right<Error, CreatedMessageWithContentAndAttachments>(
+      response.right.value
     );
   } catch (error) {
     // Return the error
-    return left<Error, CreatedMessageWithContentAndAttachments>(error);
+    return E.left<Error, CreatedMessageWithContentAndAttachments>(error);
   }
 }
 

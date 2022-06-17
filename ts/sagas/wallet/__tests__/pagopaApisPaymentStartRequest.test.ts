@@ -1,5 +1,5 @@
 import { testSaga } from "redux-saga-test-plan";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { paymentStartRequest } from "../pagopaApis";
 import { SessionManager } from "../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../types/pagopa";
@@ -24,11 +24,11 @@ describe("paymentStartRequest", () => {
       new SessionManager(jest.fn());
     jest
       .spyOn(aPmSessionManager, "getNewToken")
-      .mockReturnValue(Promise.resolve(some(mockToken)));
+      .mockReturnValue(Promise.resolve(O.some(mockToken)));
     testSaga(paymentStartRequest, aPmSessionManager)
       .next()
       .call(aPmSessionManager.getNewToken)
-      .next(some(mockToken))
+      .next(O.some(mockToken))
       .put(paymentExecuteStart.success(mockToken))
       .next();
   });
@@ -38,11 +38,11 @@ describe("paymentStartRequest", () => {
       new SessionManager(jest.fn());
     jest
       .spyOn(aPmSessionManager, "getNewToken")
-      .mockReturnValue(Promise.resolve(none));
+      .mockReturnValue(Promise.resolve(O.none));
     testSaga(paymentStartRequest, aPmSessionManager)
       .next()
       .call(aPmSessionManager.getNewToken)
-      .next(none)
+      .next(O.none)
       .put(
         paymentExecuteStart.failure(
           new Error("cannot retrieve a valid PM session token")

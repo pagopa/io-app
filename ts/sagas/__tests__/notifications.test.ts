@@ -1,6 +1,6 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { Action } from "redux";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
@@ -56,7 +56,7 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
@@ -106,7 +106,7 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
@@ -135,7 +135,7 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
@@ -159,7 +159,7 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
@@ -189,7 +189,7 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {

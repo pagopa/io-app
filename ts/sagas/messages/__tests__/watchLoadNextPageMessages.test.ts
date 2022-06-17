@@ -1,4 +1,4 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
 
@@ -31,7 +31,7 @@ describe("tryLoadNextPageMessages", () => {
       )
         .next()
         .call(getMessages, getMessagesPayload)
-        .next(right({ status: 200, value: apiPayload }))
+        .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successLoadNextPageMessagesPayload))
         .next()
         .isDone();
@@ -47,7 +47,7 @@ describe("tryLoadNextPageMessages", () => {
       )
         .next()
         .call(getMessages, getMessagesPayload)
-        .next(right({ status: 500, value: { title: "Backend error" } }))
+        .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(
           action.failure({
             error: new Error("Backend error"),

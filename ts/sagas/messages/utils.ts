@@ -1,7 +1,8 @@
-import { Either } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { ValidationError } from "io-ts";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 
+import { pipe } from "fp-ts/lib/function";
 import { sessionExpired } from "../../store/actions/authentication";
 import { Action } from "../../store/actions/types";
 import { readablePrivacyReport } from "../../utils/reporters";
@@ -23,27 +24,30 @@ export type ResponseType<T> =
  * @param onFailure
  */
 export function handleResponse<T>(
-  response: Either<Array<ValidationError>, ResponseType<T>>,
+  response: E.Either<Array<ValidationError>, ResponseType<T>>,
   onSuccess: (payload: T) => Action,
   onFailure: (e: Error) => Action
 ): Action {
-  return response.fold(
-    error => onFailure(new Error(readablePrivacyReport(error))),
-    data => {
-      if (data.status === 200) {
-        return onSuccess(data.value);
-      }
+  return pipe(
+    response,
+    E.fold(
+      error => onFailure(new Error(readablePrivacyReport(error))),
+      data => {
+        if (data.status === 200) {
+          return onSuccess(data.value);
+        }
 
-      if (data.status === 401) {
-        return sessionExpired();
-      }
+        if (data.status === 401) {
+          return sessionExpired();
+        }
 
-      if (data.status === 500) {
-        // TODO: provide status code along with message in error
-        //  see https://www.pivotaltracker.com/story/show/170819193
-        return onFailure(new Error(data.value?.title ?? "UNKNOWN"));
+        if (data.status === 500) {
+          // TODO: provide status code along with message in error
+          //  see https://www.pivotaltracker.com/story/show/170819193
+          return onFailure(new Error(data.value?.title ?? "UNKNOWN"));
+        }
+        return onFailure(new Error("UNKNOWN"));
       }
-      return onFailure(new Error("UNKNOWN"));
-    }
+    )
   );
 }

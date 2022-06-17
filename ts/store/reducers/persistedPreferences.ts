@@ -1,7 +1,7 @@
 /**
  * A reducer for persisted preferences.
  */
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { createSelector } from "reselect";
@@ -159,5 +159,5 @@ export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
 export const preferredLanguageSelector = createSelector<
   GlobalState,
   PersistedPreferencesState,
-  Option<Locales>
->(persistedPreferencesSelector, pps => fromNullable(pps.preferredLanguage));
+  O.Option<Locales>
+>(persistedPreferencesSelector, pps => O.fromNullable(pps.preferredLanguage));

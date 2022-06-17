@@ -1,4 +1,4 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
@@ -33,7 +33,7 @@ describe("loadServiceDetailRequestHandler", () => {
     testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
       .call(getService, { service_id: mockedServiceId })
-      .next(right({ status: 500, value: "generic error" }))
+      .next(E.right({ status: 500, value: "generic error" }))
       .put(
         loadServiceDetail.failure({
           service_id: mockedServiceId,
@@ -48,7 +48,7 @@ describe("loadServiceDetailRequestHandler", () => {
     testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
       .call(getService, { service_id: mockedServiceId })
-      .next(right({ status: 200, value: mockedService }))
+      .next(E.right({ status: 200, value: mockedService }))
       .put(loadServiceDetail.success(mockedService))
       .next()
       .call(handleServiceReadabilitySaga, mockedServiceId)

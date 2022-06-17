@@ -1,4 +1,4 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { UserDataProcessing } from "../../../../definitions/backend/UserDataProcessing";
@@ -23,7 +23,7 @@ describe("loadUserDataProcessingSaga", () => {
   };
 
   it("if response is 404, the user never submit the kind of request specified as the payload choice", () => {
-    const get404Response = right({ status: 404 });
+    const get404Response = E.right({ status: 404 });
     testSaga(
       loadUserDataProcessingSaga,
       getUserDataProcessingRequest,
@@ -50,7 +50,7 @@ describe("loadUserDataProcessingSaga", () => {
       status: UserDataProcessingStatusEnum.PENDING,
       version: 2
     };
-    const get200Response = right({ status: 200, value: mokedStatus });
+    const get200Response = E.right({ status: 200, value: mokedStatus });
 
     testSaga(
       loadUserDataProcessingSaga,
@@ -76,7 +76,7 @@ describe("loadUserDataProcessingSaga", () => {
     const mokedError = new Error(
       "loadUserDataProcessingSaga response status 500"
     );
-    const get500Response = right({ status: 500, value: mokedError });
+    const get500Response = E.right({ status: 500, value: mokedError });
     testSaga(
       loadUserDataProcessingSaga,
       getUserDataProcessingRequest,
@@ -112,7 +112,7 @@ describe("upsertUserDataProcessingSaga", () => {
   };
 
   it("if response is 200, the requrest has been submitted", () => {
-    const post200Response = right({ status: 200, value: mokedNewStatus });
+    const post200Response = E.right({ status: 200, value: mokedNewStatus });
     testSaga(
       upsertUserDataProcessingSaga,
       postUserDataProcessingRequest,
@@ -133,7 +133,7 @@ describe("upsertUserDataProcessingSaga", () => {
     const mokedError = new Error(
       `Error: An error occurred while submitting a request to ${choice} the profile`
     );
-    const get500Response = right({ status: 500 });
+    const get500Response = E.right({ status: 500 });
 
     testSaga(
       upsertUserDataProcessingSaga,
@@ -170,7 +170,7 @@ describe("deleteUserDataProcessingSaga", () => {
     payload: UserDataProcessingChoiceEnum.DOWNLOAD
   };
   it("if response is 202, the request has been submitted", () => {
-    const post202Response = right({ status: 202 });
+    const post202Response = E.right({ status: 202 });
     testSaga(
       deleteUserDataProcessingSaga,
       deleteUserDataProcessingRequest,
@@ -193,7 +193,7 @@ describe("deleteUserDataProcessingSaga", () => {
     const mokedError = new Error(
       `response status ${409} with choice ${choice}`
     );
-    const get409Response = right({ status: 409 });
+    const get409Response = E.right({ status: 409 });
 
     testSaga(
       deleteUserDataProcessingSaga,

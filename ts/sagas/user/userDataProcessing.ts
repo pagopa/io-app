@@ -1,4 +1,4 @@
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
@@ -26,28 +26,26 @@ export function* loadUserDataProcessingSaga(
 ): SagaIterator {
   const choice = action.payload;
   try {
-    const response: SagaCallReturnType<typeof getUserDataProcessingRequest> = yield* call(
-      getUserDataProcessingRequest,
-      {
+    const response: SagaCallReturnType<typeof getUserDataProcessingRequest> =
+      yield* call(getUserDataProcessingRequest, {
         userDataProcessingChoiceParam: choice
-      }
-    );
-    if (response.isRight()) {
-      if (response.value.status === 404 || response.value.status === 200) {
+      });
+    if (E.isRight(response)) {
+      if (response.right.status === 404 || response.right.status === 200) {
         yield* put(
           loadUserDataProcessing.success({
             choice,
             value:
-              response.value.status === 200 ? response.value.value : undefined
+              response.right.status === 200 ? response.right.value : undefined
           })
         );
       } else {
         throw new Error(
-          `loadUserDataProcessingSaga response status ${response.value.status}`
+          `loadUserDataProcessingSaga response status ${response.right.status}`
         );
       }
     } else {
-      throw new Error(readableReport(response.value));
+      throw new Error(readableReport(response.left));
     }
   } catch (e) {
     yield* put(
@@ -67,16 +65,14 @@ export function* upsertUserDataProcessingSaga(
 ): SagaIterator {
   const choice = action.payload;
   try {
-    const response: SagaCallReturnType<typeof postUserDataProcessingRequest> = yield* call(
-      postUserDataProcessingRequest,
-      {
+    const response: SagaCallReturnType<typeof postUserDataProcessingRequest> =
+      yield* call(postUserDataProcessingRequest, {
         userDataProcessingChoiceRequest: { choice }
-      }
-    );
+      });
 
-    if (response.isRight() && response.value.status === 200) {
-      yield* put(upsertUserDataProcessing.success(response.value.value));
-      return right(response.value.value);
+    if (E.isRight(response) && response.right.status === 200) {
+      yield* put(upsertUserDataProcessing.success(response.right.value));
+      return E.right(response.right.value);
     } else {
       throw new Error(
         `An error occurred while submitting a request to ${choice} the profile`
@@ -86,7 +82,7 @@ export function* upsertUserDataProcessingSaga(
     yield* put(
       upsertUserDataProcessing.failure({ choice, error: new Error(e) })
     );
-    return left(e);
+    return E.left(e);
   }
 }
 
@@ -99,14 +95,12 @@ export function* deleteUserDataProcessingSaga(
   const choice = action.payload;
 
   try {
-    const response: SagaCallReturnType<typeof deleteUserDataProcessingRequest> = yield* call(
-      deleteUserDataProcessingRequest,
-      {
+    const response: SagaCallReturnType<typeof deleteUserDataProcessingRequest> =
+      yield* call(deleteUserDataProcessingRequest, {
         userDataProcessingChoiceParam: choice
-      }
-    );
-    if (response.isRight()) {
-      if (response.value.status === 202) {
+      });
+    if (E.isRight(response)) {
+      if (response.right.status === 202) {
         yield* put(
           deleteUserDataProcessing.success({
             choice
@@ -118,11 +112,11 @@ export function* deleteUserDataProcessingSaga(
         );
       } else {
         throw new Error(
-          `response status ${response.value.status} with choice ${choice}`
+          `response status ${response.right.status} with choice ${choice}`
         );
       }
     } else {
-      throw new Error(readableReport(response.value));
+      throw new Error(readableReport(response.left));
     }
   } catch (e) {
     yield* put(

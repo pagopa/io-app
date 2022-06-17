@@ -1,4 +1,4 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
 
@@ -26,7 +26,7 @@ describe("tryReloadAllMessages", () => {
       testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
         .next()
         .call(getMessage, getMessagesPayload)
-        .next(right({ status: 200, value: apiPayload }))
+        .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successLoadMessageDetails))
         .next()
         .isDone();
@@ -39,7 +39,7 @@ describe("tryReloadAllMessages", () => {
       testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
         .next()
         .call(getMessage, getMessagesPayload)
-        .next(right({ status: 500, value: { title: "Backend error" } }))
+        .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(action.failure({ id, error: Error("Backend error") }))
         .next()
         .isDone();

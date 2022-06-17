@@ -1,4 +1,4 @@
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
@@ -64,7 +64,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next()
       .put(resetProfileState())
       .next()
@@ -75,8 +75,8 @@ describe("initializeApplicationSaga", () => {
       .next(200) // checkSession
       .next() // updateInstallationSaga
       .select(sessionInfoSelector)
-      .next(none)
-      .next(none) // loadSessionInformationSaga
+      .next(O.none)
+      .next(O.none) // loadSessionInformationSaga
       .put(startApplicationInitialization());
   });
 
@@ -96,7 +96,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
@@ -124,7 +124,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
@@ -136,7 +136,7 @@ describe("initializeApplicationSaga", () => {
       .next() // updateInstallationSaga
       .select(sessionInfoSelector)
       .next(
-        some({
+        O.some({
           spidLevel: "https://www.spid.gov.it/SpidL2",
           walletToken: "wallet_token"
         })

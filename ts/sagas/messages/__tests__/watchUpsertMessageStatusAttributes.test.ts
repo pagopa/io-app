@@ -1,4 +1,4 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
 
@@ -41,7 +41,7 @@ describe("tryUpsertMessageStatusAttributes", () => {
       )
         .next()
         .call(putMessage, callPayload)
-        .next(right({ status: 200, value: {} }))
+        .next(E.right({ status: 200, value: {} }))
         .put(action.success(actionPayload))
         .next()
         .isDone();
@@ -58,7 +58,7 @@ describe("tryUpsertMessageStatusAttributes", () => {
         .next()
         .call(putMessage, callPayload)
         .next(
-          right({
+          E.right({
             status: 500,
             value: { title: "462e5dffdb46435995d545999bed6b11" }
           })

@@ -1,4 +1,4 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
@@ -32,7 +32,8 @@ const testMessageWithContent1: CreatedMessageWithContentAndAttachments = {
   fiscal_code: "" as any,
   created_at: new Date(),
   content: {
-    markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
+    markdown:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
     subject: "Lorem ipsum..." as any
   },
   sender_service_id: testServiceId1 as NonEmptyString
@@ -53,7 +54,8 @@ const testMessageWithContent2: CreatedMessageWithContentAndAttachments = {
   fiscal_code: "" as any,
   created_at: new Date(),
   content: {
-    markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
+    markdown:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
     subject: "Lorem ipsum..." as any
   },
   sender_service_id: testServiceId1 as NonEmptyString
@@ -113,7 +115,7 @@ describe("watchLoadMessages", () => {
         .next()
         .call(getMessages, {})
         // Return an error message as getMessages response
-        .next(right({ status: 500, value: { title: "Backend error" } }))
+        .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(loadMessagesAction.failure(Error("Backend error")))
         .next()
         .next()
@@ -126,7 +128,7 @@ describe("watchLoadMessages", () => {
         .next()
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
-        .next(right({ status: 200, value: testMessages }))
+        .next(E.right({ status: 200, value: testMessages }))
         .put(loadMessagesAction.success(testMessages.items.map(_ => _.id)))
         .next()
         .select(messagesAllIdsSelector)
@@ -140,7 +142,7 @@ describe("watchLoadMessages", () => {
         .select(servicesByIdSelector)
         .next({})
         .all([put(loadServiceDetail.request("5a563817fcc896087002ea46c49a"))])
-        .next(right({ status: 200, value: testServicePublic }))
+        .next(E.right({ status: 200, value: testServicePublic }))
         .all([
           put(loadMessageAction.request(testMessages.items[1] as any)),
           put(loadMessageAction.request(testMessages.items[0] as any))
@@ -153,7 +155,7 @@ describe("watchLoadMessages", () => {
         .next()
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
-        .next(right({ status: 200, value: testMessages }))
+        .next(E.right({ status: 200, value: testMessages }))
         .put(loadMessagesAction.success(testMessages.items.map(_ => _.id)))
         .next()
         .select(messagesAllIdsSelector)
@@ -182,7 +184,7 @@ describe("watchLoadMessages", () => {
         .next()
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
-        .next(right({ status: 200, value: testOneMessage }))
+        .next(E.right({ status: 200, value: testOneMessage }))
         .put(loadMessagesAction.success(testOneMessage.items.map(_ => _.id)))
         .next()
         .select(messagesAllIdsSelector)

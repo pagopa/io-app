@@ -1,4 +1,4 @@
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType, getType } from "typesafe-actions";
@@ -49,7 +49,7 @@ const walletState = {
 };
 
 const anOutcomeCode: OutcomeCodeState = {
-  outcomeCode: some({ status: "success" } as OutcomeCode)
+  outcomeCode: O.some({ status: "success" } as OutcomeCode)
 };
 
 const aCreditCard = {
@@ -78,13 +78,12 @@ const aCreditCardWallet: NullableWallet = {
 describe("startOrResumeAddCreditCardSaga", () => {
   it("should add a card if all the 4 steps run sucessfully", () => {
     const aPMToken = "1234" as PaymentManagerToken;
-    const aPmSessionManager: SessionManager<PaymentManagerToken> = new SessionManager(
-      jest.fn(() => Promise.resolve(some(aPMToken)))
-    );
+    const aPmSessionManager: SessionManager<PaymentManagerToken> =
+      new SessionManager(jest.fn(() => Promise.resolve(O.some(aPMToken))));
     const aNewPMToken = "5678" as PaymentManagerToken;
     jest
       .spyOn(aPmSessionManager, "getNewToken")
-      .mockReturnValue(Promise.resolve(some(aNewPMToken)));
+      .mockReturnValue(Promise.resolve(O.some(aNewPMToken)));
     const anIdWallet = 123456;
 
     const walletStateCardAdded = {
@@ -115,7 +114,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       .put(refreshPMTokenWhileAddCreditCard.request({ idWallet: anIdWallet }))
       .next()
       .call(aPmSessionManager.getNewToken)
-      .next(some(aNewPMToken))
+      .next(O.some(aNewPMToken))
       .put(refreshPMTokenWhileAddCreditCard.success(aNewPMToken))
       .next()
       .take(addCreditCardOutcomeCode)
@@ -142,7 +141,7 @@ describe("deleteUnsuccessfulActivePaymentSaga", () => {
       testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
         .next()
         .select(lastPaymentOutcomeCodeSelector)
-        .next({ outcomeCode: none })
+        .next({ outcomeCode: O.none })
         .isDone();
     });
   });
@@ -152,7 +151,7 @@ describe("deleteUnsuccessfulActivePaymentSaga", () => {
       testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
         .next()
         .select(lastPaymentOutcomeCodeSelector)
-        .next({ outcomeCode: some({ status: "errorBlocking" }) })
+        .next({ outcomeCode: O.some({ status: "errorBlocking" }) })
         .put(runDeleteActivePaymentSaga())
         .next()
         .isDone();
@@ -160,7 +159,7 @@ describe("deleteUnsuccessfulActivePaymentSaga", () => {
       testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
         .next()
         .select(lastPaymentOutcomeCodeSelector)
-        .next({ outcomeCode: some({ status: "errorTryAgain" }) })
+        .next({ outcomeCode: O.some({ status: "errorTryAgain" }) })
         .put(runDeleteActivePaymentSaga())
         .next()
         .isDone();
@@ -172,7 +171,7 @@ describe("deleteUnsuccessfulActivePaymentSaga", () => {
       testSaga(testableWalletsSaga!.deleteUnsuccessfulActivePaymentSaga)
         .next()
         .select(lastPaymentOutcomeCodeSelector)
-        .next({ outcomeCode: some({ status: "success" }) })
+        .next({ outcomeCode: O.some({ status: "success" }) })
         .isDone();
     });
   });

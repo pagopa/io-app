@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
 import { IndexedById } from "../helpers/indexer";
 
 /**
@@ -14,7 +15,12 @@ import { IndexedById } from "../helpers/indexer";
 export const readPot = <T, E>(
   id: string | number,
   data: IndexedById<pot.Pot<T, E>>
-): pot.Pot<T, E> => fromNullable(data[id]).getOrElse(pot.none);
+): pot.Pot<T, E> =>
+  pipe(
+    data[id],
+    O.fromNullable,
+    O.getOrElseW(() => pot.none)
+  );
 
 /**
  * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with key id to pot.loading
