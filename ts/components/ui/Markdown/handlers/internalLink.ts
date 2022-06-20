@@ -1,6 +1,7 @@
 /**
  * An handler for application internal links
  */
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import URLParse from "url-parse";
 import {
@@ -13,15 +14,14 @@ import {
 import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
+import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { isTestEnv } from "../../../../utils/environment";
-import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_INTERNAL_LINK_PROTOCOL
 } from "../../../../utils/navigation";
-import { pipe } from "fp-ts/lib/function";
 
 /**
  * This handling is used to convert old CTAs and links to current internal linking config
