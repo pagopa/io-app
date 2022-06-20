@@ -19,9 +19,10 @@ import {
 } from "../../types/EUCovidCertificateResponse";
 import { euCovidCertificateGet } from "../actions";
 
-export type EUCovidCertificateResponseWithTimestamp = EUCovidCertificateResponse & {
-  lastUpdate: Date;
-};
+export type EUCovidCertificateResponseWithTimestamp =
+  EUCovidCertificateResponse & {
+    lastUpdate: Date;
+  };
 
 export type EuCovidCertByIdState = IndexedById<
   pot.Pot<EUCovidCertificateResponseWithTimestamp, Error>

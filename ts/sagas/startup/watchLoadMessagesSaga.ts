@@ -68,9 +68,9 @@ function* loadMessages(
         yield* put(loadMessagesAction.success(responseItemsIds));
 
         // Load already cached messages ids from the store
-        const potCachedMessagesAllIds: ReturnType<typeof messagesAllIdsSelector> = yield* select(
-          messagesAllIdsSelector
-        );
+        const potCachedMessagesAllIds: ReturnType<
+          typeof messagesAllIdsSelector
+        > = yield* select(messagesAllIdsSelector);
         const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
 
         // Calculate the ids of the message no more visible that we need
@@ -80,9 +80,8 @@ function* loadMessages(
         );
 
         // Load already cached messages status ids from the store
-        const messagesStatusMapping: ReturnType<typeof messagesStatusSelector> = yield* select(
-          messagesStatusSelector
-        );
+        const messagesStatusMapping: ReturnType<typeof messagesStatusSelector> =
+          yield* select(messagesStatusSelector);
         const messagesStatusIds = Object.keys(messagesStatusMapping).filter(
           _ => responseItemsIds.indexOf(_) < 0
         );
@@ -106,9 +105,8 @@ function* loadMessages(
         const reversedItems = [...response.value.value.items].reverse();
 
         // Load already cached messages from the store
-        const cachedMessagesById: ReturnType<typeof messagesStateByIdSelector> = yield* select(
-          messagesStateByIdSelector
-        );
+        const cachedMessagesById: ReturnType<typeof messagesStateByIdSelector> =
+          yield* select(messagesStateByIdSelector);
 
         // TODO: with the enrichment, we don't need to discern which messages to reload
         const shouldLoadMessage = (message: { id: string }) => {
@@ -124,9 +122,8 @@ function* loadMessages(
         const pendingMessages = reversedItems.filter(shouldLoadMessage);
 
         // Load already cached services from the store
-        const cachedServicesById: ReturnType<typeof servicesByIdSelector> = yield* select(
-          servicesByIdSelector
-        );
+        const cachedServicesById: ReturnType<typeof servicesByIdSelector> =
+          yield* select(servicesByIdSelector);
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
