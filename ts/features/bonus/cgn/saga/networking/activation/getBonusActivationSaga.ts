@@ -47,10 +47,9 @@ export const cgnActivationSaga = (
     any
   > {
     try {
-      const startCgnActivationResult: SagaCallReturnType<typeof startCgnActivation> = yield* call(
-        startCgnActivation,
-        {}
-      );
+      const startCgnActivationResult: SagaCallReturnType<
+        typeof startCgnActivation
+      > = yield* call(startCgnActivation, {});
 
       if (startCgnActivationResult.isRight()) {
         const status = startCgnActivationResult.value.status;
@@ -95,10 +94,8 @@ export const handleCgnStatusPolling = (
   > {
     const startPollingTime = new Date().getTime();
     while (true) {
-      const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> = yield* call(
-        getCgnActivation,
-        {}
-      );
+      const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> =
+        yield* call(getCgnActivation, {});
       // blocking error -> stop polling
       if (cgnActivationResult.isLeft()) {
         throw cgnActivationResult.value;

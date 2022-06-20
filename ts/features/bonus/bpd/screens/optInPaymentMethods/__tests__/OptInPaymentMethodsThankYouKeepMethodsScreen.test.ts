@@ -13,9 +13,9 @@ import * as showToast from "../../../../../../utils/showToast";
 import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
 import OptInPaymentMethodsThankYouKeepMethodsScreen from "../OptInPaymentMethodsThankYouKeepMethodsScreen";
 
-const loadingCases: ReadonlyArray<[
-  optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>
-]> = [
+const loadingCases: ReadonlyArray<
+  [optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>]
+> = [
   [pot.none],
   [pot.noneLoading],
   [pot.noneUpdating(CitizenOptInStatusEnum.DENIED)],

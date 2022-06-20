@@ -24,10 +24,9 @@ export function* cgnCategoriesSaga(
   >["getPublishedCategories"]
 ) {
   try {
-    const publishedCategoriesResult: SagaCallReturnType<typeof getPublishedCategories> = yield* call(
-      getPublishedCategories,
-      { countNewDiscounts: true }
-    );
+    const publishedCategoriesResult: SagaCallReturnType<
+      typeof getPublishedCategories
+    > = yield* call(getPublishedCategories, { countNewDiscounts: true });
     if (publishedCategoriesResult.isLeft()) {
       yield* put(
         cgnCategories.failure(

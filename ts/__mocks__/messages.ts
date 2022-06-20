@@ -22,7 +22,7 @@ export const defaultRequestError = {
   filter: defaultRequestPayload.filter
 };
 
-const timeToLive = (3600 as unknown) as TimeToLiveSeconds;
+const timeToLive = 3600 as unknown as TimeToLiveSeconds;
 
 export const messageId_1 = "PMT00003" as UIMessageId;
 export const messageId_2 = "PMT00002" as UIMessageId;
@@ -143,18 +143,20 @@ export const successReloadMessagesPayload: ReloadMessagesPayload = {
   filter: defaultRequestPayload.filter
 };
 
-export const successLoadNextPageMessagesPayload: NextPageMessagesSuccessPayload = {
-  messages: successPayloadMessages,
-  pagination: {
-    next: successPayloadMessages[2].id
-  },
-  filter: defaultRequestPayload.filter
-};
+export const successLoadNextPageMessagesPayload: NextPageMessagesSuccessPayload =
+  {
+    messages: successPayloadMessages,
+    pagination: {
+      next: successPayloadMessages[2].id
+    },
+    filter: defaultRequestPayload.filter
+  };
 
-export const successLoadPreviousPageMessagesPayload: PreviousPageMessagesSuccessPayload = {
-  messages: successPayloadMessages,
-  pagination: {
-    previous: successPayloadMessages[0].id
-  },
-  filter: defaultRequestPayload.filter
-};
+export const successLoadPreviousPageMessagesPayload: PreviousPageMessagesSuccessPayload =
+  {
+    messages: successPayloadMessages,
+    pagination: {
+      previous: successPayloadMessages[0].id
+    },
+    filter: defaultRequestPayload.filter
+  };

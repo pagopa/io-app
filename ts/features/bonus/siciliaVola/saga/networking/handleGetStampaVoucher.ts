@@ -34,9 +34,8 @@ export function* handleGetStampaVoucher(
     const request = svSessionManager.withRefresh(
       getStampaVoucher({ codiceVoucher: action.payload })
     );
-    const getStampaVoucherResult: SagaCallReturnType<typeof request> = yield* call(
-      request
-    );
+    const getStampaVoucherResult: SagaCallReturnType<typeof request> =
+      yield* call(request);
 
     if (getStampaVoucherResult.isRight()) {
       if (getStampaVoucherResult.value.status === 200) {

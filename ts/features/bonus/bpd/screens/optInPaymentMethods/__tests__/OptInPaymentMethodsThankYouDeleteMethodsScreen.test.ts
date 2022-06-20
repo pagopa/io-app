@@ -20,10 +20,12 @@ import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
 import * as showToast from "../../../../../../utils/showToast";
 import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
 
-const loadingCases: ReadonlyArray<[
-  deletePaymentMethodsStatus: WalletsState["deleteAllByFunction"],
-  optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>
-]> = [
+const loadingCases: ReadonlyArray<
+  [
+    deletePaymentMethodsStatus: WalletsState["deleteAllByFunction"],
+    optInStatus: pot.Pot<CitizenOptInStatusEnum, Error>
+  ]
+> = [
   [remoteUndefined, pot.none],
   [remoteUndefined, pot.noneLoading],
   [remoteUndefined, pot.noneUpdating(CitizenOptInStatusEnum.DENIED)],
