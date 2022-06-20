@@ -56,17 +56,66 @@ jest.useFakeTimers();
 
 describe("the ZendeskSupportComponent", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  it("should render the zendesk open ticket button", () => {
+  it("shouldn't render the CTA if ticketNumber is pot.noneLoading", () => {
     const store = createStore(appReducer, globalState as any);
     const component = renderComponent(store, false);
-    expect(component.getByTestId("contactSupportButton")).toBeDefined();
+    expect(component.queryByTestId("contactSupportButton")).toBeNull();
+    expect(component.queryByTestId("showTicketsButton")).toBeNull();
   });
-  it("should render the zendesk show tickets button, if the user already open a ticket", () => {
+  it("should render only the the open ticket button if ticketNumber is pot.noneError", () => {
     const store = createStore(appReducer, globalState as any);
     const component = renderComponent(store, false);
-    store.dispatch(zendeskRequestTicketNumber.success(1));
+    store.dispatch(zendeskRequestTicketNumber.failure(new Error()));
+    expect(component.queryByTestId("contactSupportButton")).toBeDefined();
+    expect(component.queryByTestId("showTicketsButton")).toBeNull();
+  });
+  it("should render the open ticket button and the show tickets button if the ticketNumber is pot.some and the value is greater that 0", () => {
+    const store = createStore(appReducer, globalState as any);
+    const component = renderComponent(store, false);
+    store.dispatch(zendeskRequestTicketNumber.success(3));
+    expect(component.getByTestId("contactSupportButton")).toBeDefined();
     expect(component.getByTestId("showTicketsButton")).toBeDefined();
   });
+  it("should render only the the open ticket button if ticketNumber pot.some and the value is 0", () => {
+    const store = createStore(appReducer, globalState as any);
+    const component = renderComponent(store, false);
+    store.dispatch(zendeskRequestTicketNumber.success(0));
+    expect(component.getByTestId("contactSupportButton")).toBeDefined();
+    expect(component.queryByTestId("showTicketsButton")).toBeNull();
+  });
+  it("should render the open ticket button and the show tickets button if the ticketNumber is pot.someError and the value is greater that 0", () => {
+    const store = createStore(appReducer, globalState as any);
+    const component = renderComponent(store, false);
+    store.dispatch(zendeskRequestTicketNumber.success(3));
+    store.dispatch(zendeskRequestTicketNumber.failure(new Error()));
+    expect(component.getByTestId("contactSupportButton")).toBeDefined();
+    expect(component.getByTestId("showTicketsButton")).toBeDefined();
+  });
+  it("should render only the the open ticket button if ticketNumber pot.someError and the value is 0", () => {
+    const store = createStore(appReducer, globalState as any);
+    const component = renderComponent(store, false);
+    store.dispatch(zendeskRequestTicketNumber.success(0));
+    store.dispatch(zendeskRequestTicketNumber.failure(new Error()));
+    expect(component.getByTestId("contactSupportButton")).toBeDefined();
+    expect(component.queryByTestId("showTicketsButton")).toBeNull();
+  });
+  it("should render the open ticket button and the show tickets button if the ticketNumber is pot.someLoading and the value is greater that 0", () => {
+    const store = createStore(appReducer, globalState as any);
+    const component = renderComponent(store, false);
+    store.dispatch(zendeskRequestTicketNumber.success(3));
+    store.dispatch(zendeskRequestTicketNumber.request());
+    expect(component.getByTestId("contactSupportButton")).toBeDefined();
+    expect(component.getByTestId("showTicketsButton")).toBeDefined();
+  });
+  it("shouldn't render the CTA if ticketNumber is pot.someLoading and the value is 0", () => {
+    const store = createStore(appReducer, globalState as any);
+    const component = renderComponent(store, false);
+    store.dispatch(zendeskRequestTicketNumber.success(0));
+    store.dispatch(zendeskRequestTicketNumber.request());
+    expect(component.queryByTestId("contactSupportButton")).toBeNull();
+    expect(component.queryByTestId("showTicketsButton")).toBeNull();
+  });
+
   describe("when the user is authenticated with session info", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(idpSelected({} as SpidIdp));
@@ -95,6 +144,7 @@ describe("the ZendeskSupportComponent", () => {
       it("if the assistanceForPayment is true should navigate to the ZendeskAskPermissions screen", () => {
         const store = createStore(appReducer, globalState as any);
         const component = renderComponent(store, true);
+        store.dispatch(zendeskRequestTicketNumber.success(3));
         const zendeskButton = component.getByTestId("contactSupportButton");
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
@@ -106,6 +156,7 @@ describe("the ZendeskSupportComponent", () => {
       it("if the zendeskRemoteConfig is not remoteReady should navigate to the ZendeskAskPermissions screen", () => {
         const store = createStore(appReducer, globalState as any);
         const component = renderComponent(store, false);
+        store.dispatch(zendeskRequestTicketNumber.success(3));
         const zendeskButton = component.getByTestId("contactSupportButton");
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
@@ -133,6 +184,7 @@ describe("the ZendeskSupportComponent", () => {
       it("if the assistanceForPayment is false and the zendeskRemoteConfig is remoteReady should navigate to the navigateToZendeskChooseCategory screen", () => {
         const store = createStore(appReducer, globalState as any);
         const component = renderComponent(store, false);
+        store.dispatch(zendeskRequestTicketNumber.success(3));
         store.dispatch(getZendeskConfig.success(mockZendeskConfig));
         const zendeskButton = component.getByTestId("contactSupportButton");
         fireEvent(zendeskButton, "onPress");
@@ -147,6 +199,7 @@ describe("the ZendeskSupportComponent", () => {
     it("if panic mode is true, should navigate to the ZendeskAskPermissions screen", () => {
       const store = createStore(appReducer, globalState as any);
       const component = renderComponent(store, false);
+      store.dispatch(zendeskRequestTicketNumber.success(3));
       store.dispatch(getZendeskConfig.success(mockZendeskPanicModeConfig));
       const zendeskButton = component.getByTestId("contactSupportButton");
       fireEvent(zendeskButton, "onPress");
