@@ -16,7 +16,6 @@ import {
 import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import _ from "lodash";
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
   AbortUserDataProcessingT,
@@ -43,7 +42,6 @@ import {
   GetUserMessageT,
   getUserMetadataDefaultDecoder,
   GetUserMetadataT,
-  getUserProfileDecoder,
   GetUserProfileT,
   getVisibleServicesDefaultDecoder,
   GetVisibleServicesT,
@@ -57,7 +55,8 @@ import {
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT,
   upsertMessageStatusAttributesDefaultDecoder,
-  UpsertMessageStatusAttributesT
+  UpsertMessageStatusAttributesT,
+  getUserProfileDefaultDecoder
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
@@ -169,7 +168,7 @@ export function BackendClient(
     url: params => `/api/v1/services/${params.service_id}/preferences`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
-    body: body => JSON.stringify(body.servicePreference),
+    body: body => JSON.stringify(body.body),
     response_decoder: upsertServicePreferencesDefaultDecoder()
   };
 
@@ -241,7 +240,7 @@ export function BackendClient(
     method: "put",
     url: params => `/api/v1/messages/${params.id}/message-status`,
     query: _ => ({}),
-    body: params => JSON.stringify(params.messageStatusChange),
+    body: params => JSON.stringify(params.body),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: upsertMessageStatusAttributesDefaultDecoder()
   };
@@ -251,7 +250,7 @@ export function BackendClient(
     url: () => "/api/v1/profile",
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: getUserProfileDecoder(InitializedProfile)
+    response_decoder: getUserProfileDefaultDecoder()
   };
 
   const createOrUpdateProfileT: UpdateProfileT = {
@@ -259,7 +258,7 @@ export function BackendClient(
     url: () => "/api/v1/profile",
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
-    body: p => JSON.stringify(p.profile),
+    body: p => JSON.stringify(p.body),
     response_decoder: updateProfileDefaultDecoder()
   };
 
@@ -321,14 +320,13 @@ export function BackendClient(
     url: () => "/api/v1/user-metadata",
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    body: p => JSON.stringify(p.userMetadata),
+    body: p => JSON.stringify(p.body),
     response_decoder: upsertUserMetadataDefaultDecoder()
   };
 
   const getUserDataProcessingT: GetUserDataProcessingT = {
     method: "get",
-    url: ({ userDataProcessingChoiceParam }) =>
-      `/api/v1/user-data-processing/${userDataProcessingChoiceParam}`,
+    url: ({ choice }) => `/api/v1/user-data-processing/${choice}`,
     query: _ => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getUserDataProcessingDefaultDecoder()
@@ -339,7 +337,7 @@ export function BackendClient(
     url: () => `/api/v1/user-data-processing`,
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    body: _ => JSON.stringify(_.userDataProcessingChoiceRequest),
+    body: _ => JSON.stringify(_.body),
     response_decoder: upsertUserDataProcessingDefaultDecoder()
   };
 
@@ -381,8 +379,7 @@ export function BackendClient(
 
   const deleteUserDataProcessingT: AbortUserDataProcessingT = {
     method: "delete",
-    url: ({ userDataProcessingChoiceParam }) =>
-      `/api/v1/user-data-processing/${userDataProcessingChoiceParam}`,
+    url: ({ choice }) => `/api/v1/user-data-processing/${choice}`,
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: abortUserDataProcessingDecoderTest()
@@ -393,7 +390,7 @@ export function BackendClient(
     url: params => `/api/v1/installations/${params.installationID}`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
-    body: p => JSON.stringify(p.installation),
+    body: p => JSON.stringify(p.body),
     response_decoder: createOrUpdateInstallationDefaultDecoder()
   };
 
@@ -419,8 +416,7 @@ export function BackendClient(
     url: ({ test }) => `/api/v1/payment-activations?test=${test}`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: () => ({}),
-    body: ({ paymentActivationsPostRequest }) =>
-      JSON.stringify(paymentActivationsPostRequest),
+    body: ({ body }) => JSON.stringify(body),
     response_decoder: activatePaymentDefaultDecoder()
   };
 

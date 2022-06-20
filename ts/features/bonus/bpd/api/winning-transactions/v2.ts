@@ -1,5 +1,6 @@
-import * as O from "fp-ts/lib/Option";
 import * as r from "@pagopa/ts-commons/lib/requests";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   findWinningTransactionsUsingGETDecoder,
   getCountByDayGETDefaultDecoder,
@@ -7,7 +8,6 @@ import {
 } from "../../../../../../definitions/bpd/winning_transactions_v2/requestTypes";
 import { bpdHeadersProducers } from "../common";
 import { PatchedWinningTransactionPageResource } from "./patchedWinningTransactionPageResource";
-import { pipe } from "fp-ts/lib/function";
 
 export const winningTransactionsV2CountByDayGET: GetCountByDayGETT = {
   method: "get",
@@ -39,6 +39,11 @@ export type PatchedFindWinningTransactionsUsingGETT = r.IGetApiRequestType<
 
 const cursorToQueryString = (cursor: number) => `&nextCursor=${cursor}`;
 
+const findWinningTransactionsUsingGETCustomDecoder =
+  findWinningTransactionsUsingGETDecoder({
+    200: PatchedWinningTransactionPageResource
+  });
+
 export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT =
   {
     method: "get",
@@ -51,7 +56,5 @@ export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT =
       )}`,
     query: _ => ({}),
     headers: bpdHeadersProducers(),
-    response_decoder: findWinningTransactionsUsingGETDecoder(
-      PatchedWinningTransactionPageResource
-    )
+    response_decoder: findWinningTransactionsUsingGETCustomDecoder
   };

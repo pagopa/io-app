@@ -26,7 +26,7 @@ const PostRegistraBeneficiario: RegistraBeneficiarioT = {
   method: "post",
   url: () => "/cdc/beneficiario/registrazione",
   query: _ => ({}),
-  body: ({ anniRiferimento }) => JSON.stringify(anniRiferimento),
+  body: ({ body }) => JSON.stringify(body.anniRif),
   headers: p => ({
     Authorization: `BearerAuth ${p.BearerAuth}`,
     "Content-Type": "application/json"
@@ -34,12 +34,13 @@ const PostRegistraBeneficiario: RegistraBeneficiarioT = {
   response_decoder: registraBeneficiarioDefaultDecoder()
 };
 
-const withCdcToken = (token: string) => <P extends { BearerAuth: string }, R>(
-  f: (p: P) => Promise<R>
-) => async (po: Omit<P, "BearerAuth">): Promise<R> => {
-  const params = Object.assign({ BearerAuth: String(token) }, po) as P;
-  return f(params);
-};
+const withCdcToken =
+  (token: string) =>
+  <P extends { BearerAuth: string }, R>(f: (p: P) => Promise<R>) =>
+  async (po: Omit<P, "BearerAuth">): Promise<R> => {
+    const params = Object.assign({ BearerAuth: String(token) }, po) as P;
+    return f(params);
+  };
 
 // client for Cdc to handle API communications
 export const BackendCdcClient = (

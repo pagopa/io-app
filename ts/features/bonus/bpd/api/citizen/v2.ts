@@ -20,12 +20,16 @@ type FindV2UsingGETTExtra = MapResponseType<
   PatchedCitizenV2Resource
 >;
 
+const findUsingGETCustomDecoder = findUsingGETDecoder({
+  200: PatchedCitizenV2Resource
+});
+
 export const citizenV2FindGET: FindV2UsingGETTExtra = {
   method: "get",
   url: () => `/bpd/io/citizen/v2`,
   query: _ => ({}),
   headers: bpdHeadersProducers(),
-  response_decoder: findUsingGETDecoder(PatchedCitizenV2Resource)
+  response_decoder: findUsingGETCustomDecoder
 };
 
 type EnrollmentV2TTExtra = MapResponseType<
@@ -34,16 +38,17 @@ type EnrollmentV2TTExtra = MapResponseType<
   PatchedCitizenV2Resource
 >;
 
+const enrollmentCustomDecoder = enrollmentDecoder({
+  200: PatchedCitizenV2Resource
+});
+
 export const citizenV2EnrollPUT: EnrollmentV2TTExtra = {
   method: "put",
   url: () => `/bpd/io/citizen/v2`,
   query: _ => ({}),
-  body: ({ citizenOptInStatus }) =>
-    JSON.stringify(
-      citizenOptInStatus ? { optInStatus: citizenOptInStatus } : {}
-    ),
+  body: ({ optInStatus }) => JSON.stringify(optInStatus ? { optInStatus } : {}),
   headers: composeHeaderProducers(bpdHeadersProducers(), ApiHeaderJson),
-  response_decoder: enrollmentDecoder(PatchedCitizenV2Resource)
+  response_decoder: enrollmentCustomDecoder
 };
 
 /**

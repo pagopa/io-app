@@ -2,10 +2,6 @@
  * pagoPA backend client, with functions
  * to call the different API available
  */
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
-import * as t from "io-ts";
 import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   AddResponseType,
@@ -22,25 +18,10 @@ import {
   TypeofApiParams
 } from "@pagopa/ts-commons/lib/requests";
 import { Omit } from "@pagopa/ts-commons/lib/types";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as t from "io-ts";
 import _ from "lodash";
-import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
-import {
-  addWalletsBancomatCardUsingPOSTDecoder,
-  addWalletsBPayUsingPOSTDecoder,
-  addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder,
-  getAbiListUsingGETDefaultDecoder,
-  GetAbiListUsingGETT,
-  getBpayListUsingGETDefaultDecoder,
-  GetBpayListUsingGETT,
-  getCobadgeByRequestIdUsingGETDefaultDecoder,
-  GetCobadgeByRequestIdUsingGETT,
-  getCobadgesUsingGETDefaultDecoder,
-  GetCobadgesUsingGETT,
-  GetConsumerUsingGETT,
-  getPansUsingGETDefaultDecoder,
-  GetPansUsingGETT,
-  getWalletsV2UsingGETDecoder
-} from "../../definitions/pagopa/walletv2/requestTypes";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -72,6 +53,28 @@ import {
   updateWalletUsingPUTV2Decoder,
   UpdateWalletUsingPUTV2T
 } from "../../definitions/pagopa/requestTypes";
+import { WalletPaymentStatusRequest } from "../../definitions/pagopa/WalletPaymentStatusRequest";
+import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
+import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
+import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
+import {
+  addWalletsBancomatCardUsingPOSTDecoder,
+  addWalletsBPayUsingPOSTDecoder,
+  addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder,
+  getAbiListUsingGETDefaultDecoder,
+  GetAbiListUsingGETT,
+  getBpayListUsingGETDefaultDecoder,
+  GetBpayListUsingGETT,
+  getCobadgeByRequestIdUsingGETDefaultDecoder,
+  GetCobadgeByRequestIdUsingGETT,
+  getCobadgesUsingGETDefaultDecoder,
+  GetCobadgesUsingGETT,
+  GetConsumerUsingGETT,
+  getPansUsingGETDefaultDecoder,
+  GetPansUsingGETT,
+  getWalletsV2UsingGETDecoder
+} from "../../definitions/pagopa/walletv2/requestTypes";
+import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
 import {
   NullableWallet,
   PagoPAErrorResponse,
@@ -87,14 +90,10 @@ import {
   WalletListResponse,
   WalletResponse
 } from "../types/pagopa";
-import { getLocalePrimaryWithFallback } from "../utils/locale";
-import { fixWalletPspTagsValues } from "../utils/wallet";
-import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
-import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
-import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import { format } from "../utils/dates";
+import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
-import { WalletPaymentStatusRequest } from "../../definitions/pagopa/WalletPaymentStatusRequest";
+import { fixWalletPspTagsValues } from "../utils/wallet";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -110,13 +109,17 @@ const constantEmptyDecoder = composeResponseDecoders(
   constantResponseDecoder<undefined, 403>(403, undefined)
 );
 
+const startSessionUsingGETDecoderCustom = startSessionUsingGETDecoder({
+  200: SessionResponse
+});
+
 const getSession: MapResponseType<StartSessionUsingGETT, 200, SessionResponse> =
   {
     method: "get",
     url: _ => "/v1/users/actions/start-session",
     query: _ => _,
     headers: () => ({}),
-    response_decoder: startSessionUsingGETDecoder(SessionResponse)
+    response_decoder: startSessionUsingGETDecoderCustom
   };
 
 // to support 'start' param in query string we re-define the type GetTransactionsUsingGETT
@@ -157,13 +160,16 @@ const ParamAuthorizationBearerHeaderProducer =
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 const transactionsSliceLength = 10;
+const getTransactionsUsingGETDecoderCustom = getTransactionsUsingGETDecoder({
+  200: TransactionListResponse
+});
 const getTransactions: GetTransactionsUsingGETTExtra = {
   method: "get",
   url: ({ start }) =>
     `/v1/transactions?start=${start}&size=${transactionsSliceLength}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
+  response_decoder: getTransactionsUsingGETDecoderCustom
 };
 
 type GetTransactionUsingGETTExtra = MapResponseType<
@@ -172,12 +178,16 @@ type GetTransactionUsingGETTExtra = MapResponseType<
   TransactionResponse
 >;
 
+const getTransactionUsingGETDecoderCustom = getTransactionUsingGETDecoder({
+  200: TransactionResponse
+});
+
 const getTransaction: GetTransactionUsingGETTExtra = {
   method: "get",
   url: ({ id }) => `/v1/transactions/${id}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getTransactionUsingGETDecoder(TransactionResponse)
+  response_decoder: getTransactionUsingGETDecoderCustom
 };
 
 type GetWalletsUsingGETExtraT = MapResponseType<
@@ -232,6 +242,9 @@ const getWallets: GetWalletsUsingGETExtraT = {
   response_decoder: getPatchedWalletsUsingGETDecoder(WalletListResponse)
 };
 
+const getWalletsV2UsingGETDecoderCustom = getWalletsV2UsingGETDecoder({
+  200: PatchedWalletV2ListResponse
+});
 export type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
   { readonly Bearer: string },
   "Authorization",
@@ -248,7 +261,7 @@ const getWalletsV2: GetWalletsV2UsingGETTExtra = {
   url: () => "/v3/wallet",
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getWalletsV2UsingGETDecoder(PatchedWalletV2ListResponse)
+  response_decoder: getWalletsV2UsingGETDecoderCustom
 };
 
 const checkPayment: CheckPaymentUsingGETT = {
@@ -272,6 +285,9 @@ type GetPspListUsingGETTExtra = MapResponseType<
   PspListResponse
 >;
 
+const getPspListUsingGETDecoderCustom = getPspListUsingGETDecoder({
+  200: PspListResponse
+});
 const getPspList: GetPspListUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps",
@@ -289,7 +305,7 @@ const getPspList: GetPspListUsingGETTExtra = {
           language
         },
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getPspListUsingGETDecoder(PspListResponse)
+  response_decoder: getPspListUsingGETDecoderCustom
 };
 
 type PspParams = {
@@ -319,17 +335,17 @@ const getAllPspList: GetAllPspListUsingGETTExtra = {
   url: () => "/v1/psps/all",
   query: getPspQuery,
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getPspListUsingGETDecoder(PspListResponse)
+  response_decoder: getPspListUsingGETDecoderCustom
 };
 
 type GetPspUsingGETTExtra = MapResponseType<GetPspUsingGETT, 200, PspResponse>;
-
+const getPspUsingGETDecoderCustom = getPspUsingGETDecoder({ 200: PspResponse });
 const getPsp: GetPspUsingGETTExtra = {
   method: "get",
   url: ({ id }) => `/v1/psps/${id}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getPspUsingGETDecoder(PspResponse)
+  response_decoder: getPspUsingGETDecoderCustom
 };
 
 type UpdateWalletUsingPUTTExtra = MapResponseType<
@@ -337,14 +353,16 @@ type UpdateWalletUsingPUTTExtra = MapResponseType<
   200,
   WalletResponse
 >;
-
+const updateWalletUsingPUTV2DecoderCustom = updateWalletUsingPUTV2Decoder({
+  200: WalletResponse
+});
 const updateWalletPsp: UpdateWalletUsingPUTTExtra = {
   method: "put",
   url: ({ id }) => `/v2/wallet/${id}`,
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: updateWalletUsingPUTV2Decoder(WalletResponse)
+  response_decoder: updateWalletUsingPUTV2DecoderCustom
 };
 
 type FavouriteWalletUsingPOSTTExtra = MapResponseType<
@@ -353,13 +371,16 @@ type FavouriteWalletUsingPOSTTExtra = MapResponseType<
   WalletResponse
 >;
 
+const favouriteWalletUsingPOSTDecoderCustom = favouriteWalletUsingPOSTDecoder({
+  200: WalletResponse
+});
 const favouriteWallet: FavouriteWalletUsingPOSTTExtra = {
   method: "post",
   url: ({ id }) => `/v1/wallet/${id}/actions/favourite`,
   query: () => ({}),
   body: () => "",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: favouriteWalletUsingPOSTDecoder(WalletResponse)
+  response_decoder: favouriteWalletUsingPOSTDecoderCustom
 };
 
 // Remove this patch once SIA has fixed the spec.
@@ -369,6 +390,8 @@ type AddWalletCreditCardUsingPOSTTExtra = MapResponseType<
   WalletResponse
 >;
 
+const addWalletCreditCardUsingPOSTDecoderCustom =
+  addWalletCreditCardUsingPOSTDecoder({ 200: WalletResponse });
 const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
   method: "post",
   url: () => "/v1/wallet/cc",
@@ -376,7 +399,7 @@ const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: composeResponseDecoders(
-    addWalletCreditCardUsingPOSTDecoder(WalletResponse),
+    addWalletCreditCardUsingPOSTDecoderCustom,
     ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
   )
 };
@@ -408,9 +431,12 @@ const getAbi: GetAbiListUsingGETT = {
 const getPans: GetPansUsingGETT = {
   method: "get",
   url: ({ abi }) => {
-    const abiParameter = O.fromNullable(abi)
-      .map(a => `?abi=${a}`)
-      .getOrElse("");
+    const abiParameter = pipe(
+      abi,
+      O.fromNullable,
+      O.map(a => `?abi=${a}`),
+      O.getOrElse(() => "")
+    );
     return `/v1/bancomat/pans${abiParameter}`;
   },
   query: () => ({}),
@@ -432,15 +458,15 @@ export type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
+const addWalletsBancomatCardUsingPOSTDecoderCustom =
+  addWalletsBancomatCardUsingPOSTDecoder({ 200: PatchedWalletV2ListResponse });
 const addPans: AddWalletsBancomatCardUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/bancomat/add-wallets`,
   query: () => ({}),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   body: p => JSON.stringify(p.bancomatCardsRequest),
-  response_decoder: addWalletsBancomatCardUsingPOSTDecoder(
-    PatchedWalletV2ListResponse
-  )
+  response_decoder: addWalletsBancomatCardUsingPOSTDecoderCustom
 };
 
 const searchSatispay: GetConsumerUsingGETT = {
@@ -462,13 +488,15 @@ export type AddWalletSatispayUsingPOSTTExtra = r.IPostApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
+const addWalletSatispayUsingPOSTDecoderCustom =
+  addWalletSatispayUsingPOSTDecoder({ 200: PatchedWalletV2Response });
 const addSatispayToWallet: AddWalletSatispayUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/satispay/add-wallet`,
   query: () => ({}),
   body: ({ satispayRequest }) => JSON.stringify(satispayRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletSatispayUsingPOSTDecoder(PatchedWalletV2Response)
+  response_decoder: addWalletSatispayUsingPOSTDecoderCustom
 };
 
 const searchBPay: GetBpayListUsingGETT = {
@@ -538,7 +566,10 @@ const cobadgeInstrumentReplacer = (key: string | number, value: any) => {
   }
   return format(date, "YYYY-MM-DD");
 };
-
+const addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoderCustom =
+  addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder({
+    200: PatchedWalletV2ListResponse
+  });
 const addCobadgeToWallet: AddWalletsCobadge = {
   method: "post",
   url: () => `/v1/cobadge/add-wallets`,
@@ -549,9 +580,7 @@ const addCobadgeToWallet: AddWalletsCobadge = {
     JSON.stringify(cobadegPaymentInstrumentsRequest, cobadgeInstrumentReplacer),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder:
-    addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder(
-      PatchedWalletV2ListResponse
-    )
+    addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoderCustom
 };
 
 export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
@@ -565,13 +594,16 @@ export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
+const addWalletsBPayUsingPOSTDecoderCustom = addWalletsBPayUsingPOSTDecoder({
+  200: PatchedWalletV2ListResponse
+});
 const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/bpay/add-wallets`,
   query: () => ({}),
   body: ({ bPayRequest }) => JSON.stringify(bPayRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
+  response_decoder: addWalletsBPayUsingPOSTDecoderCustom
 };
 
 // Request type definition
@@ -589,6 +621,9 @@ export type ChangePayOptionT = r.IPutApiRequestType<
   | r.IResponseType<500, undefined>
 >;
 
+const changePayOptionDecoderCustom = changePayOptionDecoder({
+  200: PatchedWalletV2Response
+});
 const updatePaymentStatus: ChangePayOptionT = {
   method: "put",
   url: ({ idWallet }) => `/v2/wallet/${idWallet}/payment-status`,
@@ -596,7 +631,7 @@ const updatePaymentStatus: ChangePayOptionT = {
   body: ({ walletPaymentStatusRequest }) =>
     JSON.stringify(walletPaymentStatusRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: changePayOptionDecoder(PatchedWalletV2Response)
+  response_decoder: changePayOptionDecoderCustom
 };
 
 export type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
@@ -609,14 +644,16 @@ export type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
   | r.IResponseType<403, undefined>
 >;
 
+const deleteWalletsByServiceUsingDELETEDecoderCustom =
+  deleteWalletsByServiceUsingDELETEDecoder({
+    200: PatchedDeleteWalletResponse
+  });
 const deleteWallets: DeleteWalletsByServiceUsingDELETETExtra = {
   method: "delete",
   url: () => `/v2/wallet/delete-wallets`,
   query: ({ service }) => ({ service }),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: deleteWalletsByServiceUsingDELETEDecoder(
-    PatchedDeleteWalletResponse
-  )
+  response_decoder: deleteWalletsByServiceUsingDELETEDecoderCustom
 };
 
 const searchPayPalPsp: GetPaypalPspsUsingGETT = {
@@ -659,12 +696,6 @@ export function PaymentManagerClient(
     ...options,
     fetchApi: altFetchApi
   };
-
-  const test = pipe(
-    createFetchRequestForApi(getWallets, options),
-    withPaymentManagerToken,
-    fn => (token: PaymentManagerToken) => fn(token)({}) // fn({})(token)
-  );
 
   return {
     walletToken,

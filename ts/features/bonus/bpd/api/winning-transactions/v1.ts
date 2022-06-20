@@ -34,6 +34,10 @@ export type FindWinningTransactionsUsingGETTExtra = r.IGetApiRequestType<
 
 const hPanToQueryString = (hPan: string) => `&hpan=${hPan}`;
 
+const findWinningTransactionsUsingGETCustomDecoder =
+  findWinningTransactionsUsingGETDecoder({
+    200: PatchedBpdWinningTransactions
+  });
 /**
  * @deprecated
  */
@@ -48,7 +52,5 @@ export const winningTransactionsGET: FindWinningTransactionsUsingGETTExtra = {
     )}`,
   query: _ => ({}),
   headers: bpdHeadersProducers(),
-  response_decoder: findWinningTransactionsUsingGETDecoder(
-    PatchedBpdWinningTransactions
-  )
+  response_decoder: findWinningTransactionsUsingGETCustomDecoder
 };
