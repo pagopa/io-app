@@ -1,6 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
@@ -65,10 +66,10 @@ export function* handleLoadPans(
           searchUserPans.success(
             pipe(
               O.fromNullable({
-                cards: response?.data ?? [],
-                messages: response?.messages ?? []
+                cards: response?.data ?? RA.empty,
+                messages: response?.messages ?? RA.empty
               }),
-              O.getOrElse(() => ({ cards: [], messages: [] }))
+              O.getOrElseW(() => ({ cards: [], messages: [] }))
             )
           )
         );
