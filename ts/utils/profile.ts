@@ -1,5 +1,7 @@
-import { format as dateFnsFormat } from "date-fns";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { format as dateFnsFormat } from "date-fns";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -180,57 +182,57 @@ export function getEnabledChannelsForService(
   potProfile: ProfileState,
   serviceId: ServiceId
 ): EnabledChannels {
-  return pot
-    .toOption(potProfile)
-    .mapNullable(profile =>
+  return pipe(
+    pot.toOption(potProfile),
+    O.chainNullableK(profile =>
       InitializedProfile.is(profile) ? profile.blocked_inbox_or_channels : null
-    )
-    .mapNullable(blockedChannels => blockedChannels[serviceId])
-    .map(_ => ({
+    ),
+    O.chainNullableK(blockedChannels => blockedChannels[serviceId]),
+    O.map(_ => ({
       inbox: _.indexOf(INBOX_CHANNEL) === -1,
       email: _.indexOf(EMAIL_CHANNEL) === -1,
       push: _.indexOf(PUSH_CHANNEL) === -1
-    }))
-    .getOrElse({
+    })),
+    O.getOrElseW(() => ({
       inbox: true,
       email: true,
       push: true
-    });
+    }))
+  );
 }
 
 /**
  * Returns a function that generates updated blocked channels from the
  * enabled channels of one service
  */
-export const getBlockedChannels = (
-  potProfile: ProfileState,
-  serviceId: ServiceId
-) => (enabled: EnabledChannels): BlockedInboxOrChannels => {
-  // get the current blocked channels from the profile
-  const profileBlockedChannels = pot.getOrElse(
-    pot.mapNullable(
-      potProfile,
-      userProfile => userProfile.blocked_inbox_or_channels
-    ),
-    {} as BlockedInboxOrChannels
-  );
+export const getBlockedChannels =
+  (potProfile: ProfileState, serviceId: ServiceId) =>
+  (enabled: EnabledChannels): BlockedInboxOrChannels => {
+    // get the current blocked channels from the profile
+    const profileBlockedChannels = pot.getOrElse(
+      pot.mapNullable(
+        potProfile,
+        userProfile => userProfile.blocked_inbox_or_channels
+      ),
+      {} as BlockedInboxOrChannels
+    );
 
-  // compute the blocked channels array for this service
-  const blockedChannelsForService = [
-    !enabled.inbox ? INBOX_CHANNEL : "",
-    !enabled.push ? PUSH_CHANNEL : "",
-    !enabled.email ? EMAIL_CHANNEL : ""
-  ].filter(_ => _ !== "");
+    // compute the blocked channels array for this service
+    const blockedChannelsForService = [
+      !enabled.inbox ? INBOX_CHANNEL : "",
+      !enabled.push ? PUSH_CHANNEL : "",
+      !enabled.email ? EMAIL_CHANNEL : ""
+    ].filter(_ => _ !== "");
 
-  if (blockedChannelsForService.length === 0) {
-    // eslint-disable-next-line functional/immutable-data
-    delete profileBlockedChannels[serviceId];
-  } else {
-    // eslint-disable-next-line functional/immutable-data
-    profileBlockedChannels[serviceId] = blockedChannelsForService;
-  }
+    if (blockedChannelsForService.length === 0) {
+      // eslint-disable-next-line functional/immutable-data
+      delete profileBlockedChannels[serviceId];
+    } else {
+      // eslint-disable-next-line functional/immutable-data
+      profileBlockedChannels[serviceId] = blockedChannelsForService;
+    }
 
-  return {
-    ...profileBlockedChannels
+    return {
+      ...profileBlockedChannels
+    };
   };
-};

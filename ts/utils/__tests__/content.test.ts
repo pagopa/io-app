@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import {
@@ -90,35 +91,35 @@ describe("idpContextualHelpDataFromIdSelector", () => {
     const idpData = idpContextualHelpDataFromIdSelector("arubaid").resultFunc(
       pot.some(chData)
     );
-    expect(idpData.isSome()).toBeTruthy();
+    expect(O.isSome(idpData)).toBeTruthy();
   });
 
   it("should not return data for not-existing idp", async () => {
     const idpData = idpContextualHelpDataFromIdSelector("timid").resultFunc(
       pot.some(chData)
     );
-    expect(idpData.isNone()).toBeTruthy();
+    expect(O.isNone(idpData)).toBeTruthy();
   });
 
   it("should not return data is store is empty", async () => {
     const idpData = idpContextualHelpDataFromIdSelector("timid").resultFunc(
       pot.none
     );
-    expect(idpData.isNone()).toBeTruthy();
+    expect(O.isNone(idpData)).toBeTruthy();
   });
 
   it("should not return data is store is in error & empty", async () => {
     const idpData = idpContextualHelpDataFromIdSelector("timid").resultFunc(
       pot.noneError(new Error())
     );
-    expect(idpData.isNone()).toBeTruthy();
+    expect(O.isNone(idpData)).toBeTruthy();
   });
 
   it("should return data is store is in error with value", async () => {
     const idpData = idpContextualHelpDataFromIdSelector("arubaid").resultFunc(
       pot.someError(chData, new Error())
     );
-    expect(idpData.isSome()).toBeTruthy();
+    expect(O.isSome(idpData)).toBeTruthy();
   });
 
   it("should not return data if it's not available for the set language", async () => {
@@ -127,7 +128,7 @@ describe("idpContextualHelpDataFromIdSelector", () => {
       pot.some(chData)
     );
     setLocale("it" as Locales); // restore default
-    expect(idpData.isNone()).toBeTruthy();
+    expect(O.isNone(idpData)).toBeTruthy();
   });
 
   it("should return data for the set language (it)", async () => {
@@ -148,8 +149,8 @@ describe("idpContextualHelpDataFromIdSelector", () => {
     const idpData = idpContextualHelpDataFromIdSelector("cie").resultFunc(
       pot.some(chData)
     );
-    expect(idpData.isSome()).toBeTruthy();
-    if (idpData.isSome()) {
+    expect(O.isSome(idpData)).toBeTruthy();
+    if (O.isSome(idpData)) {
       expect(idpData.value.description).toEqual(description);
       expect(idpData.value.phone).toEqual(phone);
     }
@@ -162,7 +163,7 @@ describe("screenContextualHelpDataSelector", () => {
       pot.some(chData),
       ""
     );
-    expect(pot.isSome(screenData) && screenData.value.isNone()).toBeTruthy();
+    expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
   });
 
   it("should return data (italian) if the current screen is present as key", async () => {
@@ -185,7 +186,7 @@ describe("screenContextualHelpDataSelector", () => {
       pot.some(chData),
       "AUTHENTICATION_IDP_LOGIN"
     );
-    if (pot.isSome(screenData) && screenData.value.isSome()) {
+    if (pot.isSome(screenData) && O.isSome(screenData.value)) {
       expect(screenData.value.value.title).toEqual(title);
       expect(screenData.value.value.content).toEqual(content);
     }
@@ -196,6 +197,6 @@ describe("screenContextualHelpDataSelector", () => {
       pot.some(chData),
       "NO_KEY"
     );
-    expect(pot.isSome(screenData) && screenData.value.isNone()).toBeTruthy();
+    expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
   });
 });
