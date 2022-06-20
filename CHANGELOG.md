@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.12.0-rc.0](https://github.com/pagopa/io-app/compare/2.11.0-rc.5...2.12.0-rc.0) (2022-06-20)
+
+
+### Bug Fixes
+
+* [[IA-870](https://pagopa.atlassian.net/browse/IA-870)] Show the welcome screen only the first time for the user ([#3990](https://github.com/pagopa/io-app/issues/3990)) ([e921885](https://github.com/pagopa/io-app/commit/e921885cfa8e80cd2e918eed36da7eb77f73da09))
+* [[IA-881](https://pagopa.atlassian.net/browse/IA-881)] Wrong message for Outcome code 4 ([#4006](https://github.com/pagopa/io-app/issues/4006)) ([0f912b4](https://github.com/pagopa/io-app/commit/0f912b44301e0c243d19018c5996c1603b193746))
+
+
+### Chores
+
+* [[IA-876](https://pagopa.atlassian.net/browse/IA-876)] Enable the feature flag for the new transaction summary screen ([#4009](https://github.com/pagopa/io-app/issues/4009)) ([75b3187](https://github.com/pagopa/io-app/commit/75b318751048d36d5e034c5693fce96aae5cb4f4))
+* [[IA-886](https://pagopa.atlassian.net/browse/IA-886)] Change UADonations on iOS ([#4016](https://github.com/pagopa/io-app/issues/4016)) ([faf1e54](https://github.com/pagopa/io-app/commit/faf1e54747fa2caa13aeece8f250bfb6b4a71012))
+* [[IAI-209](https://pagopa.atlassian.net/browse/IAI-209)] The `pagopa_specs_diff` job must not fail if the UAT and PROD specs are different ([#4017](https://github.com/pagopa/io-app/issues/4017)) ([cc881bb](https://github.com/pagopa/io-app/commit/cc881bb882025302830285e2ffb437b2598c6349))
+* Improve check_urls files exclusion ([#4015](https://github.com/pagopa/io-app/issues/4015)) ([9b7b21c](https://github.com/pagopa/io-app/commit/9b7b21c46fb7f369de969005956576053349ea0f))
+* **Carta della cultura:** [[AP-37](https://pagopa.atlassian.net/browse/AP-37)] Update outcome message on CDC partially success screen ([#3985](https://github.com/pagopa/io-app/issues/3985)) ([72f9993](https://github.com/pagopa/io-app/commit/72f99935c8502cfad82c1be3f8df10badeef55c6))
+* **Carta Giovani Nazionale:** [[IOACGN-78](https://pagopa.atlassian.net/browse/IOACGN-78)] Fixes landing page to open automatically media playback ([#4013](https://github.com/pagopa/io-app/issues/4013)) ([c3e9735](https://github.com/pagopa/io-app/commit/c3e97355fc6afe76972eef186a2f8ed4b17e1fd5))
+
 ## [2.11.0-rc.5](https://github.com/pagopa/io-app/compare/2.11.0-rc.4...2.11.0-rc.5) (2022-06-09)
 
 

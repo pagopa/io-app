@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -31,7 +31,6 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import { getValueOrElse, isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   zendeskRequestTicketNumber,
   zendeskSupportCompleted
@@ -40,10 +39,29 @@ import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
 } from "../store/reducers";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
 
 type Props = {
   assistanceForPayment: boolean;
 };
+
+type DisplayedButtons = "None" | "OpenRequest" | "Both";
+
+const getDisplayedButtons = (
+  ticketsNumber: pot.Pot<number, Error>
+): DisplayedButtons =>
+  pot.fold(
+    ticketsNumber,
+    () => "None",
+    () => "None",
+    v => (v > 0 ? "Both" : "OpenRequest"),
+    _ => "OpenRequest",
+    v => (v > 0 ? "Both" : "OpenRequest"),
+    v => (v > 0 ? "Both" : "None"),
+    (_, v) => (v > 0 ? "Both" : "OpenRequest"),
+    (v, _) => (v > 0 ? "Both" : "OpenRequest")
+  );
+
 /**
  * This component represents the entry point for the Zendesk workflow.
  * It has 2 buttons that respectively allow a user to open a ticket and see the already opened tickets.
@@ -103,6 +121,7 @@ const ZendeskSupportComponent = (props: Props) => {
       .getOrElse({});
 
     setUserIdentity(zendeskIdentity);
+
     dispatch(zendeskRequestTicketNumber.request());
   }, [dispatch, zendeskConfig, zendeskToken, profile]);
 
@@ -131,9 +150,7 @@ const ZendeskSupportComponent = (props: Props) => {
     }
   };
 
-  // If the user opened at least at ticket show the "Show tickets" button
-  const showAlreadyOpenedTicketButton: boolean =
-    getValueOrElse(ticketsNumber, 0) > 0;
+  const displayedButton: DisplayedButtons = getDisplayedButtons(ticketsNumber);
 
   return (
     <>
@@ -148,7 +165,7 @@ const ZendeskSupportComponent = (props: Props) => {
       />
       <View spacer={true} />
 
-      {showAlreadyOpenedTicketButton && (
+      {displayedButton === "Both" && (
         <>
           <ButtonDefaultOpacity
             onPress={() => {
@@ -168,18 +185,22 @@ const ZendeskSupportComponent = (props: Props) => {
           <View spacer={true} />
         </>
       )}
-      <ButtonDefaultOpacity
-        style={{
-          alignSelf: "stretch"
-        }}
-        onPress={handleContactSupportPress}
-        disabled={false}
-        testID={"contactSupportButton"}
-      >
-        <Label color={"white"}>
-          {I18n.t("support.helpCenter.cta.contactSupport")}
-        </Label>
-      </ButtonDefaultOpacity>
+      {displayedButton !== "None" && (
+        <>
+          <ButtonDefaultOpacity
+            style={{
+              alignSelf: "stretch"
+            }}
+            onPress={handleContactSupportPress}
+            disabled={false}
+            testID={"contactSupportButton"}
+          >
+            <Label color={"white"}>
+              {I18n.t("support.helpCenter.cta.contactSupport")}
+            </Label>
+          </ButtonDefaultOpacity>
+        </>
+      )}
     </>
   );
 };

@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
@@ -23,7 +24,7 @@ import { ZendeskSubCategory } from "../../../../../../definitions/content/Zendes
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: remoteUndefined
+  ticketNumber: pot.none
 };
 
 const mockCategory: ZendeskCategory = {
@@ -76,29 +77,62 @@ describe("Zendesk reducer", () => {
       store.getState().assistanceTools.zendesk.selectedSubcategory
     ).toStrictEqual(mockSubcategory);
   });
-  it("ticketNumber should be remoteLoading if zendeskRequestTicketNumber.request is dispatched", () => {
+  it("ticketNumber should be pot.noneLoading if zendeskRequestTicketNumber.request is dispatched and the state was pot.none", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(zendeskRequestTicketNumber.request());
     expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
-      remoteLoading
+      pot.noneLoading
     );
   });
-  it("ticketNumber should be remoteError if zendeskRequestTicketNumber.failure is dispatched", () => {
+  it("ticketNumber should be pot.someLoading if zendeskRequestTicketNumber.request is dispatched and the state was pot.some", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, {
+      ...globalState,
+      assistanceTools: {
+        ...globalState.assistanceTools,
+        zendesk: {
+          ...globalState.assistanceTools.zendesk,
+          ticketNumber: pot.some(3)
+        }
+      }
+    } as any);
+    store.dispatch(zendeskRequestTicketNumber.request());
+    expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
+      pot.someLoading(3)
+    );
+  });
+  it("ticketNumber should be pot.someError if zendeskRequestTicketNumber.failure is dispatched and the state was pot.some", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, {
+      ...globalState,
+      assistanceTools: {
+        ...globalState.assistanceTools,
+        zendesk: {
+          ...globalState.assistanceTools.zendesk,
+          ticketNumber: pot.some(3)
+        }
+      }
+    } as any);
+    store.dispatch(zendeskRequestTicketNumber.failure(genericError));
+    expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
+      pot.someError(3, genericError)
+    );
+  });
+  it("ticketNumber should be pot.noneError if zendeskRequestTicketNumber.failure is dispatched and the state was pot.none", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(zendeskRequestTicketNumber.failure(genericError));
     expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
-      remoteError(genericError)
+      pot.noneError(genericError)
     );
   });
-  it("ticketNumber should be remoteReady if zendeskRequestTicketNumber.success is dispatched", () => {
-    const mockTicketNumber = 1;
+  it("ticketNumber should be pot.some if zendeskRequestTicketNumber.success", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(zendeskRequestTicketNumber.success(mockTicketNumber));
+    store.dispatch(zendeskRequestTicketNumber.success(3));
     expect(store.getState().assistanceTools.zendesk.ticketNumber).toStrictEqual(
-      remoteReady(mockTicketNumber)
+      pot.some(3)
     );
   });
   it("zendeskConfig should be remoteUndefined, selectedCategory and selectedSubcategory undefined if zendeskSupportStart is dispatched", () => {

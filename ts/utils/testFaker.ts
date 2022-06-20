@@ -244,6 +244,7 @@ export const AuthSeq: ReadonlyArray<Action> = [
     spidLevel: "https://www.spid.gov.it/SpidL2" as SpidLevelEnum,
     walletToken:
       "666666635248824960766f96115b59ac1c2ca700c7e68192e4a7c26e1e17ca4fcc2a66e158295390624f87f05f53235e",
-    zendeskToken: "AAAAAAAAAAAAA4"
+    zendeskToken: "AAAAAAAAAAAAA4",
+    fimsToken: "AAAAAAAAAAAAA5"
   })
 ];
