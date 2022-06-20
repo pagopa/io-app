@@ -1,4 +1,5 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import { connect } from "react-redux";
@@ -75,7 +76,7 @@ const successFooter = (onClose: () => void) => (
  * If the outcome code is of type success the render a single buttons footer that allow the user to go to the wallet home.
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
-  const outcomeCode = props.outcomeCode.outcomeCode.toNullable();
+  const outcomeCode = O.toNullable(props.outcomeCode.outcomeCode);
   const learnMoreLink = "https://io.italia.it/faq/#pagamenti";
   const onLearnMore = () => openWebUrl(learnMoreLink);
 
@@ -86,11 +87,11 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
         (props.navigation.getParam("fee") as number);
 
       return successComponent(
-        props.profileEmail.getOrElse(""),
+        O.getOrElse(() => "")(props.profileEmail),
         formatNumberCentsToAmount(totalAmount, true)
       );
     } else {
-      return successComponent(props.profileEmail.getOrElse(""));
+      return successComponent(O.getOrElse(() => "")(props.profileEmail));
     }
   };
 

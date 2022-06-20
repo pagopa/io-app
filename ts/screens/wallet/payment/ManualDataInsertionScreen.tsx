@@ -7,8 +7,9 @@ import {
   CompatNavigationProp,
   NavigationEvents
 } from "@react-navigation/compat";
-import { Either, isRight } from "fp-ts/lib/Either";
-import { fromEither, none, Option, some } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   NonEmptyString,
   OrganizationFiscalCode
@@ -62,10 +63,10 @@ type Props = OwnProps &
   LightModalContextInterface;
 
 type State = Readonly<{
-  paymentNoticeNumber: Option<
+  paymentNoticeNumber: O.Option<
     ReturnType<typeof PaymentNoticeNumberFromString.decode>
   >;
-  organizationFiscalCode: Option<
+  organizationFiscalCode: O.Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
 }>;
@@ -76,9 +77,9 @@ const styles = StyleSheet.create({
   }
 });
 
-// helper to translate Option<Either> to true|false|void semantics
-const unwrapOptionalEither = (o: Option<Either<unknown, unknown>>) =>
-  o.map<boolean | undefined>(e => e.isRight()).getOrElse(undefined);
+// helper to translate O.Option<Either> to true|false|void semantics
+const unwrapOptionalEither = (o: O.Option<E.Either<unknown, unknown>>) =>
+  pipe(o, O.map(E.isRight), O.toUndefined);
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",
@@ -98,8 +99,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      paymentNoticeNumber: none,
-      organizationFiscalCode: none
+      paymentNoticeNumber: O.none,
+      organizationFiscalCode: O.none
     };
   }
 
@@ -110,8 +111,16 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 
   private isFormValid = () =>
-    this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
-    this.state.organizationFiscalCode.map(isRight).getOrElse(false);
+    pipe(
+      this.state.paymentNoticeNumber,
+      O.map(_ => _.isRight()),
+      O.getOrElseW(() => false)
+    ) &&
+    pipe(
+      this.state.organizationFiscalCode,
+      O.map(_ => _.isRight()),
+      O.getOrElseW(() => false)
+    );
 
   /**
    * This method collects the data from the form and,
@@ -121,24 +130,31 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   private proceedToSummary = () => {
     // first make sure all the elements have been entered correctly
 
-    this.state.paymentNoticeNumber
-      .chain(fromEither)
-      .chain(paymentNoticeNumber =>
-        this.state.organizationFiscalCode
-          .chain(fromEither)
-          .chain(organizationFiscalCode =>
-            fromEither(
-              RptId.decode({
+    pipe(
+      this.state.paymentNoticeNumber,
+      O.chain(_ => (_.isRight() ? O.some(_.value) : O.none)),
+      O.chain(paymentNoticeNumber =>
+        pipe(
+          this.state.organizationFiscalCode,
+          O.chain(_ => (_.isRight() ? O.some(_.value) : O.none)),
+          O.chain(organizationFiscalCode =>
+            pipe(
+              {
                 paymentNoticeNumber,
                 organizationFiscalCode
+              },
+              RptId.decode,
+              _ => (_.isRight() ? O.some(_.value) : O.none),
+              O.map(rptId => {
+                // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
+                const initialAmount = "1" as AmountInEuroCents;
+                this.props.navigateToTransactionSummary(rptId, initialAmount);
               })
-            ).map(rptId => {
-              // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
-              const initialAmount = "1" as AmountInEuroCents;
-              this.props.navigateToTransactionSummary(rptId, initialAmount);
-            })
+            )
           )
-      );
+        )
+      )
+    );
   };
 
   public render(): React.ReactNode {
@@ -172,7 +188,14 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <View spacer />
               <Form>
                 <LabelledItem
-                  isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
+                  isValid={unwrapOptionalEither(
+                    pipe(
+                      this.state.paymentNoticeNumber,
+                      O.map(_ =>
+                        _.isRight() ? E.right(_.value) : E.left(_.value)
+                      )
+                    )
+                  )}
                   label={I18n.t("wallet.insertManually.noticeCode")}
                   accessibilityLabel={I18n.t(
                     "wallet.insertManually.noticeCode"
@@ -184,9 +207,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     maxLength: 18,
                     onChangeText: value => {
                       this.setState({
-                        paymentNoticeNumber: some(value)
-                          .filter(NonEmptyString.is)
-                          .map(_ => PaymentNoticeNumberFromString.decode(_))
+                        paymentNoticeNumber: pipe(
+                          O.some(value),
+                          O.filter(NonEmptyString.is),
+                          O.map(_ => PaymentNoticeNumberFromString.decode(_))
+                        )
                       });
                     }
                   }}
@@ -194,7 +219,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <View spacer />
                 <LabelledItem
                   isValid={unwrapOptionalEither(
-                    this.state.organizationFiscalCode
+                    pipe(
+                      this.state.organizationFiscalCode,
+                      O.map(_ =>
+                        _.isRight() ? E.right(_.value) : E.left(_.value)
+                      )
+                    )
                   )}
                   label={I18n.t("wallet.insertManually.entityCode")}
                   accessibilityLabel={I18n.t(
@@ -207,9 +237,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     maxLength: 11,
                     onChangeText: value => {
                       this.setState({
-                        organizationFiscalCode: some(value)
-                          .filter(NonEmptyString.is)
-                          .map(_ => OrganizationFiscalCode.decode(_))
+                        organizationFiscalCode: pipe(
+                          O.some(value),
+                          O.filter(NonEmptyString.is),
+                          O.map(_ => OrganizationFiscalCode.decode(_))
+                        )
                       });
                     }
                   }}
@@ -244,7 +276,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => navigateToWalletHome(),
   navigateToWalletAddPaymentMethod: () =>
     navigateToWalletAddPaymentMethod({
-      inPayment: none,
+      inPayment: O.none,
       showOnlyPayablePaymentMethods: true
     }),
   navigateToTransactionSummary: (

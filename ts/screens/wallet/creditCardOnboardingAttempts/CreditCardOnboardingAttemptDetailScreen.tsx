@@ -1,4 +1,5 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -190,7 +191,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
             <View spacer={true} />
           </>
         )}
-        {errorDescription && errorDescription.isSome() && (
+        {errorDescription && O.isSome(errorDescription) && (
           <>
             <Label color={"bluegrey"} weight={"Regular"}>
               {errorDescription.value}

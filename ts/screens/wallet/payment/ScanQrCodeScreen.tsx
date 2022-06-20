@@ -3,8 +3,9 @@
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { NavigationEvents } from "@react-navigation/compat";
-import { head } from "fp-ts/lib/Array";
-import { fromNullable, isSome } from "fp-ts/lib/Option";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -36,6 +37,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -47,8 +49,8 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { GlobalState } from "../../../store/reducers/types";
 import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../store/reducers/types";
 import customVariables, {
   VIBRATION_BARCODE_SCANNED_DURATION
 } from "../../../theme/variables";
@@ -61,7 +63,6 @@ import {
 } from "../../../utils/payment";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
-import { mixpanelTrack } from "../../../mixpanel";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps> &
@@ -173,7 +174,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    */
   private onQrCodeData = (data: string) => {
     const resultOrError = decodePagoPaQrCode(data);
-    resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
+    return pipe(
+      resultOrError,
+      O.foldW(
+        () => this.onInvalidQrCode,
+        _ => this.onValidQrCode(_)
+      )
+    );
   };
 
   private onDataMatrixData = (data: string) => {
@@ -184,18 +191,21 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     if (dataMatrixPosteEnabled) {
       const maybePosteDataMatrix = decodePosteDataMatrix(data);
 
-      return maybePosteDataMatrix.foldL<void>(
-        () => {
-          if (this.state.scanningState !== "INVALID") {
-            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
-          }
+      return pipe(
+        maybePosteDataMatrix,
+        O.fold(
+          () => {
+            if (this.state.scanningState !== "INVALID") {
+              void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
+            }
 
-          this.onInvalidQrCode();
-        },
-        data => {
-          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-          this.onValidQrCode(data);
-        }
+            this.onInvalidQrCode();
+          },
+          data => {
+            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+            this.onValidQrCode(data);
+          }
+        )
       );
     }
   };
@@ -245,10 +255,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     // Open Image Library
     ImagePicker.launchImageLibrary(options, response => {
       // With the current settings the user is allowed to pick only one image
-      const maybePickedImage = fromNullable(response.assets).chain(assets =>
-        head([...assets])
+      const maybePickedImage = pipe(
+        response.assets,
+        O.fromNullable,
+        O.chain(assets => AR.head([...assets]))
       );
-      if (isSome(maybePickedImage)) {
+      if (O.isSome(maybePickedImage)) {
         ReaderQR.readerQR(maybePickedImage.value.uri)
           .then((data: string) => {
             this.onQrCodeData(data);

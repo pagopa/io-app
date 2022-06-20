@@ -11,15 +11,19 @@
  * - "transaction" coming from payment manager when we ask for info about latest transaction
  * - "failure" coming from the failure of a verification (paymentVerifica.failure)
  */
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
-import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Transaction } from "../../../types/pagopa";
+import { getLookUpId } from "../../../utils/pmLookUpId";
+import { differentProfileLoggedIn } from "../../actions/crossSessions";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
+import { paymentOutcomeCode } from "../../actions/wallet/outcomeCode";
 import {
   paymentCompletedSuccess,
   paymentIdPolling,
@@ -29,11 +33,8 @@ import {
   paymentWebViewEnd,
   PaymentWebViewEndReason
 } from "../../actions/wallet/payment";
-import { GlobalState } from "../types";
-import { paymentOutcomeCode } from "../../actions/wallet/outcomeCode";
 import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
-import { getLookUpId } from "../../../utils/pmLookUpId";
-import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import { GlobalState } from "../types";
 
 export type PaymentHistory = {
   started_at: string;
@@ -132,7 +133,7 @@ const reducer = (
     case getType(paymentOutcomeCode):
       const updateOutcome: PaymentHistory = {
         ...state[state.length - 1],
-        outcomeCode: action.payload.outcome.getOrElse("n/a")
+        outcomeCode: O.getOrElse(() => "n/a")(action.payload.outcome)
       };
       return replaceLastItem(state, updateOutcome);
     case getType(paymentRedirectionUrls):

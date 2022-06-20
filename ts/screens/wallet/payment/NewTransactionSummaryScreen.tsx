@@ -1,24 +1,36 @@
-import React, { useEffect } from "react";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
-import { connect } from "react-redux";
 import {
   PaymentNoticeNumberFromString,
   RptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { CompatNavigationProp } from "@react-navigation/compat";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet } from "native-base";
+import React, { useEffect } from "react";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import {
+  isError,
+  isLoading as isRemoteLoading,
+  isUndefined
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
+import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import I18n from "../../../i18n";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { GlobalState } from "../../../store/reducers/types";
+import {
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen,
+  navigateToWalletAddPaymentMethod
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   abortRunningPayment,
   backToEntrypointPayment,
@@ -30,33 +42,22 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
-import { PayloadForAction } from "../../../types/utils";
-import {
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen,
-  navigateToWalletAddPaymentMethod
-} from "../../../store/actions/navigation";
-import {
-  isError,
-  isLoading as isRemoteLoading,
-  isUndefined
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  getFavoriteWallet,
-  withPaymentFeatureSelector
-} from "../../../store/reducers/wallet/wallets";
+import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
 } from "../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../store/reducers/types";
+import {
+  getFavoriteWallet,
+  withPaymentFeatureSelector
+} from "../../../store/reducers/wallet/wallets";
+import { PayloadForAction } from "../../../types/utils";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { DetailV2Keys, getV2ErrorMainType } from "../../../utils/payment";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
-import { DetailV2Keys, getV2ErrorMainType } from "../../../utils/payment";
-import {
-  zendeskSelectedCategory,
-  zendeskSupportStart
-} from "../../../features/zendesk/store/actions";
 import {
   addTicketCustomField,
   appendLog,
@@ -65,17 +66,17 @@ import {
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
-import { TransactionSummary } from "./components/TransactionSummary";
-import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
-import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
+import { TransactionSummary } from "./components/TransactionSummary";
 import {
   continueButtonProps,
   helpButtonProps,
   loadingButtonProps
 } from "./components/TransactionSummaryButtonConfigurations";
+import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
+import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 
-export type TransactionSummaryError = Option<
+export type TransactionSummaryError = O.Option<
   PayloadForAction<
     | typeof paymentVerifica["failure"]
     | typeof paymentAttiva["failure"]
@@ -95,8 +96,8 @@ const renderFooter = (
   continueWithPayment: () => void,
   help: () => void
 ) => {
-  if (error.isSome()) {
-    const errorOrUndefined = error.toUndefined();
+  if (O.isSome(error)) {
+    const errorOrUndefined = O.toUndefined(error);
     const errorType = getV2ErrorMainType(errorOrUndefined as DetailV2Keys);
     switch (errorType) {
       case "TECHNICAL":
@@ -172,7 +173,7 @@ const NewTransactionSummaryScreen = ({
   const paymentStartOrigin = navigation.getParam("paymentStartOrigin");
   const showsInlineError = paymentStartOrigin === "message";
 
-  const errorOrUndefined = error.toUndefined();
+  const errorOrUndefined = O.toUndefined(error);
   useEffect(() => {
     if (errorOrUndefined === undefined) {
       return;
@@ -181,7 +182,7 @@ const NewTransactionSummaryScreen = ({
       onDuplicatedPayment();
     }
     if (pot.isError(paymentVerification) && !showsInlineError) {
-      navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
+      navigateToPaymentTransactionError(O.fromNullable(errorOrUndefined));
     }
   }, [
     errorOrUndefined,
@@ -286,14 +287,14 @@ const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
 
   const error: TransactionSummaryError = pot.isError(verifica)
-    ? some(verifica.error)
+    ? O.some(verifica.error)
     : pot.isError(attiva)
-    ? some(attiva.error)
+    ? O.some(attiva.error)
     : pot.isError(paymentId)
-    ? some(paymentId.error)
+    ? O.some(paymentId.error)
     : pot.isError(check) || isError(pspsV2.psps)
-    ? some(undefined)
-    : none;
+    ? O.some(undefined)
+    : O.none;
 
   const walletById = state.wallet.wallets.walletById;
 
@@ -305,16 +306,20 @@ const mapStateToProps = (state: GlobalState) => {
    * - payment method is PayPal & the relative feature flag is not enabled
    * - payment method is BPay & the relative feature flag is not enabled
    */
-  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
-    switch (fw.paymentMethod?.kind) {
-      case "PayPal":
-        return isPaypalEnabled;
-      case "BPay":
-        return isBPayPaymentEnabled;
-      default:
-        return true;
-    }
-  });
+  const maybeFavoriteWallet = pipe(
+    favouriteWallet,
+    O.fromNullable,
+    O.filter(fw => {
+      switch (fw.paymentMethod?.kind) {
+        case "PayPal":
+          return isPaypalEnabled;
+        case "BPay":
+          return isBPayPaymentEnabled;
+        default:
+          return true;
+      }
+    })
+  );
 
   const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
 
@@ -322,15 +327,15 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(walletById) ||
     pot.isLoading(verifica) ||
     pot.isLoading(attiva) ||
-    (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    (O.isNone(error) && pot.isSome(attiva) && pot.isNone(paymentId)) ||
     pot.isLoading(paymentId) ||
-    (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
+    (O.isNone(error) && pot.isSome(paymentId) && pot.isNone(check)) ||
     pot.isLoading(check) ||
-    (maybeFavoriteWallet.isSome() &&
-      error.isNone() &&
+    (O.isSome(maybeFavoriteWallet) &&
+      O.isNone(error) &&
       pot.isSome(check) &&
       isUndefined(pspsV2.psps)) ||
-    (maybeFavoriteWallet.isSome() && isRemoteLoading(pspsV2.psps));
+    (O.isSome(maybeFavoriteWallet) && isRemoteLoading(pspsV2.psps));
 
   return {
     paymentVerification: verifica,
@@ -429,7 +434,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     }
     alertNoPayablePaymentMethods(() =>
       navigateToWalletAddPaymentMethod({
-        inPayment: none,
+        inPayment: O.none,
         showOnlyPayablePaymentMethods: true
       })
     );

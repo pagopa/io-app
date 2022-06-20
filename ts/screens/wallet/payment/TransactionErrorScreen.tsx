@@ -4,7 +4,9 @@
  */
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { Option } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { View } from "native-base";
 import * as React from "react";
@@ -65,7 +67,7 @@ import {
 } from "../../../utils/supportAssistance";
 
 export type TransactionErrorScreenNavigationParams = {
-  error: Option<
+  error: O.Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
       | typeof paymentAttiva["failure"]
@@ -160,7 +162,7 @@ export const errorTransactionUIElements = (
   canShowHelpButton: boolean,
   paymentHistory?: PaymentHistory
 ): ScreenUIContents => {
-  const errorORUndefined = maybeError.toUndefined();
+  const errorORUndefined = O.toUndefined(maybeError);
 
   if (errorORUndefined === "PAYMENT_ID_TIMEOUT") {
     return {
@@ -183,13 +185,16 @@ export const errorTransactionUIElements = (
   const errorMacro = getV2ErrorMainType(errorORUndefined);
   const validError = t.keyof(Detail_v2Enum).decode(errorORUndefined);
   const genericErrorSubTestID = "generic-error-subtitle";
-  const subtitle = validError.fold(
-    _ => (
-      <H4 weight={"Regular"} testID={genericErrorSubTestID}>
-        {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
-      </H4>
-    ),
-    error => <ErrorCodeCopyComponent error={error} />
+  const subtitle = pipe(
+    validError,
+    E.fold(
+      _ => (
+        <H4 weight={"Regular"} testID={genericErrorSubTestID}>
+          {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
+        </H4>
+      ),
+      error => <ErrorCodeCopyComponent error={error} />
+    )
   );
 
   const image = errorMacro

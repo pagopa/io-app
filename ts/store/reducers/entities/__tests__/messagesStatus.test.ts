@@ -2,18 +2,19 @@ import { createStandardAction } from "typesafe-actions";
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageContent } from "../../../../../definitions/backend/MessageContent";
+import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
+import { differentProfileLoggedIn } from "../../../actions/crossSessions";
 import {
   DEPRECATED_loadMessage,
-  removeMessages,
   DEPRECATED_setMessageReadState,
-  DEPRECATED_setMessagesArchivedState
+  DEPRECATED_setMessagesArchivedState,
+  removeMessages
 } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import reducer, {
   EMPTY_MESSAGE_STATUS,
   MessagesStatus
 } from "../messages/messagesStatus";
-import { differentProfileLoggedIn } from "../../../actions/crossSessions";
 
 export const dymmyAction = createStandardAction("DUMMY")();
 
@@ -22,7 +23,7 @@ const messageWithContent = {
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
   id: "93726BD8-D29C-48F2-AE6D-2F",
   sender_service_id: "dev-service_0",
-  time_to_live: 3600,
+  time_to_live: 3600 as TimeToLiveSeconds,
   content: {
     subject: "Subject - test 1",
     markdown: "markdown",

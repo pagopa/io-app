@@ -4,8 +4,8 @@
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { constNull } from "fp-ts/lib/function";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
@@ -72,7 +72,7 @@ import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type ConfirmCardDetailsScreenNavigationParams = Readonly<{
   creditCard: CreditCard;
-  inPayment: Option<{
+  inPayment: O.Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
     verifica: PaymentRequestsGetResponse;
@@ -142,7 +142,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const creditCard = this.props.navigation.getParam("creditCard");
-    const isInPayment = this.props.navigation.getParam("inPayment").isSome();
+    const isInPayment = O.isSome(this.props.navigation.getParam("inPayment"));
 
     // WebView parameters
     const payUrlSuffix = "/v3/webview/transactions/cc/verify";
@@ -172,7 +172,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
     const payWebViewPayload =
       isReady(this.props.pmSessionToken) &&
-      this.props.creditCardTempWallet.isSome() &&
+      O.isSome(this.props.creditCardTempWallet) &&
       creditCard.securityCode
         ? {
             formData: {
@@ -239,7 +239,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         isLoading={false}
         loadingCaption={""}
         errorSubText={I18n.t("wallet.saveCard.temporarySubError")}
-        errorText={this.props.error.getOrElse("")}
+        errorText={O.getOrElse(() => "")(this.props.error)}
         onRetry={this.props.onRetry ?? constNull}
         onAbort={this.goBack}
       />
@@ -249,12 +249,15 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       ? walletsInErrorContent
       : creditCardErrorContent;
 
-    const formData = fromNullable(payWebViewPayload?.formData)
-      .map<Record<string, string | number>>(payload => ({
+    const formData = pipe(
+      payWebViewPayload?.formData,
+      O.fromNullable,
+      O.map(payload => ({
         ...payload,
         ...getLookUpIdPO()
-      }))
-      .getOrElse({});
+      })),
+      O.getOrElse(() => ({}))
+    );
 
     const noErrorContent = (
       <SafeAreaView style={IOStyles.flex}>
@@ -304,7 +307,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         />
 
         {/*
-         * When the first step is finished (creditCardAddWallet === some) show the webview
+         * When the first step is finished (creditCardAddWallet === O.some) show the webview
          * for the payment component.
          */}
         {payWebViewPayload && (
@@ -329,7 +332,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         )}
       </SafeAreaView>
     );
-    const error = this.props.error.isSome() || this.props.areWalletsInError;
+    const error = O.isSome(this.props.error) || this.props.areWalletsInError;
     return (
       <BaseScreenComponent
         goBack={true}
@@ -369,12 +372,12 @@ const mapStateToProps = (state: GlobalState) => {
     (pot.isError(creditCardAddWallet) &&
       creditCardAddWallet.error.kind !== "ALREADY_EXISTS") ||
     isError(pspsV2.psps)
-      ? some(I18n.t("wallet.saveCard.temporaryError"))
-      : none;
+      ? O.some(I18n.t("wallet.saveCard.temporaryError"))
+      : O.none;
 
   // Props needed to create the form for the payment web view
   const allWallets = getAllWallets(state);
-  const creditCardTempWallet: Option<Wallet> = pot
+  const creditCardTempWallet: O.Option<Wallet> = pot
     .toOption(allWallets.creditCardAddWallet)
     .map(c => c.data);
 
@@ -391,9 +394,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const navigateToNextScreen = (maybeWallet: Option<Wallet>) => {
+  const navigateToNextScreen = (maybeWallet: O.Option<Wallet>) => {
     const inPayment = props.navigation.getParam("inPayment");
-    if (inPayment.isSome()) {
+    if (O.isSome(inPayment)) {
       const { rptId, initialAmount, verifica, idPayment } = inPayment.value;
       dispatchPickPspOrConfirm(dispatch)(
         rptId,
@@ -425,7 +428,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       );
     } else {
       navigateToWalletHome({
-        newMethodAdded: maybeWallet.isSome(),
+        newMethodAdded: O.isSome(maybeWallet),
         keyFrom: props.navigation.getParam("keyFrom")
       });
     }
@@ -443,7 +446,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           creditCard,
           setAsFavorite,
           onSuccess: addedWallet => {
-            navigateToNextScreen(some(addedWallet));
+            navigateToNextScreen(O.some(addedWallet));
           },
           onFailure: error => {
             showToast(
@@ -454,12 +457,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
               ),
               "danger"
             );
-            navigateToNextScreen(none);
+            navigateToNextScreen(O.none);
           }
         })
       ),
     onCancel: () => props.navigation.goBack(),
-    storeCreditCardOutcome: (outcomeCode: Option<string>) =>
+    storeCreditCardOutcome: (outcomeCode: O.Option<string>) =>
       dispatch(addCreditCardOutcomeCode(outcomeCode)),
     goToAddCreditCardOutcomeCode: (creditCard: Wallet) =>
       navigateToAddCreditCardOutcomeCode({ selectedWallet: creditCard }),
@@ -483,7 +486,7 @@ const mergeProps = (
 ) => {
   const maybeError = stateProps.error;
   const isRetriableError =
-    maybeError.isNone() || maybeError.value !== "ALREADY_EXISTS";
+    O.isNone(maybeError) || maybeError.value !== "ALREADY_EXISTS";
   const onRetry = isRetriableError
     ? () => {
         dispatchProps.runStartOrResumeAddCreditCardSaga(

@@ -2,7 +2,8 @@ import {
   CompatNavigationProp,
   NavigationEvents
 } from "@react-navigation/compat";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -165,20 +166,21 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
       .concat(" - ")
       .concat(transaction.created.toLocaleTimeString());
 
-    const paymentMethodIcon = fromNullable(
+    const paymentMethodIcon = pipe(
       transactionWallet &&
         transactionWallet.creditCard &&
-        transactionWallet.creditCard.brandLogo
-    )
-      .map(logo => (logo.trim().length > 0 ? logo.trim() : undefined))
-      .getOrElse(undefined);
+        transactionWallet.creditCard.brandLogo,
+      O.fromNullable,
+      O.map(logo => (logo.trim().length > 0 ? logo.trim() : undefined)),
+      O.toUndefined
+    );
 
     const paymentMethodBrand =
       transactionWallet &&
       transactionWallet.creditCard &&
       transactionWallet.creditCard.brand;
 
-    const iuv = getTransactionIUV(transaction.description).toUndefined();
+    const iuv = pipe(getTransactionIUV(transaction.description), O.toUndefined);
 
     const idTransaction = transaction.id;
     return {
@@ -359,8 +361,12 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const transaction = ownProps.navigation.getParam("transaction");
   const idPsp = String(transaction.idPsp);
 
-  const maybePotPspState = fromNullable(pspStateByIdSelector(idPsp)(state));
-  const potPsp = maybePotPspState.map(_ => _.psp).getOrElse(pot.none);
+  const potPsp = pipe(
+    pspStateByIdSelector(idPsp)(state),
+    O.fromNullable,
+    O.map(_ => _.psp),
+    O.getOrElseW(() => pot.none)
+  );
   const isLoading = pot.isLoading(potPsp);
 
   return {

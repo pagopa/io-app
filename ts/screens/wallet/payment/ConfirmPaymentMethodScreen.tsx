@@ -1,7 +1,8 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ActionSheet, Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet, Text } from "react-native";
@@ -157,7 +158,7 @@ type ComputedPaymentMethodInfo = {
 const getPaymentMethodInfo = (
   paymentMethod: PaymentMethod | undefined,
   options: { isPaypalEnabled: boolean; isBPayPaymentEnabled: boolean }
-): Option<ComputedPaymentMethodInfo> => {
+): O.Option<ComputedPaymentMethodInfo> => {
   switch (paymentMethod?.kind) {
     case "CreditCard":
       const holder = paymentMethod.info.holder ?? "";
@@ -167,7 +168,7 @@ const getPaymentMethodInfo = (
           paymentMethod.info.expireMonth
         ) ?? "";
 
-      return some({
+      return O.some({
         logo: (
           <BrandImage
             image={getCardIconFromBrandLogo(paymentMethod.info)}
@@ -188,24 +189,30 @@ const getPaymentMethodInfo = (
 
     case "PayPal":
       const paypalEmail = getPaypalAccountEmail(paymentMethod.info);
-      return some({
-        logo: <PaypalLogo width={24} height={24} />,
-        subject: paypalEmail,
-        caption: I18n.t("wallet.onboarding.paypal.name"),
-        accessibilityLabel: `${I18n.t(
-          "wallet.onboarding.paypal.name"
-        )}, ${paypalEmail}`
-      }).filter(() => options.isPaypalEnabled);
+      return pipe(
+        O.some({
+          logo: <PaypalLogo width={24} height={24} />,
+          subject: paypalEmail,
+          caption: I18n.t("wallet.onboarding.paypal.name"),
+          accessibilityLabel: `${I18n.t(
+            "wallet.onboarding.paypal.name"
+          )}, ${paypalEmail}`
+        }),
+        O.filter(() => options.isPaypalEnabled)
+      );
     case "BPay":
-      return some({
-        logo: <BancomatPayLogo width={24} height={24} />,
-        subject: paymentMethod?.caption,
-        caption: paymentMethod.info.numberObfuscated ?? "",
-        accessibilityLabel: `${I18n.t("wallet.methods.bancomatPay.name")}`
-      }).filter(() => options.isBPayPaymentEnabled);
+      return pipe(
+        O.some({
+          logo: <BancomatPayLogo width={24} height={24} />,
+          subject: paymentMethod?.caption,
+          caption: paymentMethod.info.numberObfuscated ?? "",
+          accessibilityLabel: `${I18n.t("wallet.methods.bancomatPay.name")}`
+        }),
+        O.filter(() => options.isBPayPaymentEnabled)
+      );
 
     default:
-      return none;
+      return O.none;
   }
 };
 
@@ -230,7 +237,7 @@ const getPaymentMethodType = (
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
     // show a toast if we got an error while retrieving pm session token
-    if (props.retrievingSessionTokenError.isSome()) {
+    if (O.isSome(props.retrievingSessionTokenError)) {
       showToast(I18n.t("global.actions.retry"));
     }
   }, [props.retrievingSessionTokenError]);
@@ -244,24 +251,30 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const wallet: Wallet = props.navigation.getParam("wallet");
   const idPayment: string = props.navigation.getParam("idPayment");
   const paymentReason = verifica.causaleVersamento;
-  const maybePsp = fromNullable(wallet.psp);
+  const maybePsp = O.fromNullable(wallet.psp);
   const isPayingWithPaypal = isRawPayPal(wallet.paymentMethod);
   const navigation = useNavigation<ConfirmPaymentNavigationProps>();
   // each payment method has its own psp fee
   const paymentMethodType = getPaymentMethodType(wallet.paymentMethod);
   const fee: number | undefined = isPayingWithPaypal
     ? props.paypalSelectedPsp?.fee
-    : maybePsp.fold(undefined, psp => psp.fixedCost.amount);
+    : pipe(
+        maybePsp,
+        O.fold(
+          () => undefined,
+          psp => psp.fixedCost.amount
+        )
+      );
 
   const totalAmount =
     (verifica.importoSingoloVersamento as number) + (fee ?? 0);
 
   // emit an event to inform the pay web view finished
   // dispatch the outcome code and navigate to payment outcome code screen
-  const handlePaymentOutcome = (maybeOutcomeCode: Option<string>) => {
+  const handlePaymentOutcome = (maybeOutcomeCode: O.Option<string>) => {
     // the outcome is a payment done successfully
     if (
-      maybeOutcomeCode.isSome() &&
+      O.isSome(maybeOutcomeCode) &&
       isPaymentOutcomeCodeSuccessfully(
         maybeOutcomeCode.value,
         props.outcomeCodes
@@ -275,7 +288,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       props.loadTransactions();
     } else {
       props.dispatchPaymentFailure(
-        maybeOutcomeCode.filter(OutcomeCodesKey.is).toUndefined(),
+        pipe(maybeOutcomeCode, O.filter(OutcomeCodesKey.is), O.toUndefined),
         idPayment
       );
     }
@@ -315,12 +328,14 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ? handleOnEditPaypalPsp
     : props.pickPsp;
 
-  const formData = props.payStartWebviewPayload
-    .map<Record<string, string | number>>(payload => ({
+  const formData = pipe(
+    props.payStartWebviewPayload,
+    O.map(payload => ({
       ...payload,
       ...getLookUpIdPO()
-    }))
-    .getOrElse({});
+    })),
+    O.getOrElse(() => ({}))
+  );
 
   const paymentMethod = props.getPaymentMethodById(wallet.idWallet);
   const isPaymentMethodCreditCard =
@@ -336,15 +351,18 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   // Retrieve all the informations needed by the
   // user interface based on the payment method
   // selected by the user.
-  const paymentMethodInfo = getPaymentMethodInfo(paymentMethod, {
-    isPaypalEnabled: props.isPaypalEnabled,
-    isBPayPaymentEnabled: props.isBPayPaymentEnabled
-  }).getOrElse({
-    subject: "",
-    caption: "",
-    logo: <View />,
-    accessibilityLabel: ""
-  });
+  const paymentMethodInfo = pipe(
+    getPaymentMethodInfo(paymentMethod, {
+      isPaypalEnabled: props.isPaypalEnabled,
+      isBPayPaymentEnabled: props.isBPayPaymentEnabled
+    }),
+    O.getOrElse(() => ({
+      subject: "",
+      caption: "",
+      logo: <View />,
+      accessibilityLabel: ""
+    }))
+  );
 
   // It should be possible to change PSP only when the user
   // is not paying using PayPal or the relative flag is
@@ -358,13 +376,14 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   // Retrieve the PSP name checking if the user is
   // paying using PayPal or another method. The PSP
   // could always be `undefined`.
-  const pspName = fromNullable(
+  const pspName = pipe(
     isPayingWithPaypal
       ? props.paypalSelectedPsp?.ragioneSociale
-      : wallet.psp?.businessName
-  )
-    .map(name => `${I18n.t("wallet.ConfirmPayment.providedBy")} ${name}`)
-    .getOrElse(I18n.t("payment.noPsp"));
+      : wallet.psp?.businessName,
+    O.fromNullable,
+    O.map(name => `${I18n.t("wallet.ConfirmPayment.providedBy")} ${name}`),
+    O.getOrElse(() => I18n.t("payment.noPsp"))
+  );
 
   return (
     <BaseScreenComponent
@@ -516,7 +535,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           </View>
         </Content>
 
-        {props.payStartWebviewPayload.isSome() && (
+        {O.isSome(props.payStartWebviewPayload) && (
           <PayWebViewModal
             postUri={urlPrefix + payUrlSuffix}
             formData={formData}
@@ -541,7 +560,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             `${I18n.t("wallet.ConfirmPayment.pay")} ${formattedTotal}`,
             undefined,
             undefined,
-            props.payStartWebviewPayload.isSome()
+            O.isSome(props.payStartWebviewPayload)
           )}
         />
       </SafeAreaView>
@@ -555,10 +574,10 @@ const mapStateToProps = (state: GlobalState) => {
   const paypalSelectedPsp: PspData | undefined =
     pspSelectedV2ListSelector(state) ||
     getValueOrElse(pspV2ListSelector(state), []).find(psp => psp.defaultPsp);
-  const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
+  const payStartWebviewPayload: O.Option<PaymentStartWebViewPayload> =
     isReady(pmSessionToken) && paymentStartPayload
-      ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
-      : none;
+      ? O.some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
+      : O.none;
   return {
     paypalSelectedPsp,
     getPaymentMethodById: (idWallet: number) =>
@@ -570,8 +589,8 @@ const mapStateToProps = (state: GlobalState) => {
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
     retrievingSessionTokenError: isError(pmSessionToken)
-      ? some(pmSessionToken.error.message)
-      : none
+      ? O.some(pmSessionToken.error.message)
+      : O.none
   };
 };
 
@@ -627,7 +646,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     },
     dispatchCancelPayment,
     dispatchPaymentOutCome: (
-      outComeCode: Option<string>,
+      outComeCode: O.Option<string>,
       paymentMethodType: PaymentMethodType
     ) =>
       dispatch(paymentOutcomeCode({ outcome: outComeCode, paymentMethodType })),
