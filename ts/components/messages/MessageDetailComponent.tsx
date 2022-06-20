@@ -1,9 +1,11 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, H3, Text, View } from "native-base";
-import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import DeviceInfo from "react-native-device-info";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -14,7 +16,6 @@ import {
 } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import OrganizationHeader from "../OrganizationHeader";
-import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
@@ -90,20 +91,20 @@ export default class MessageDetailComponent extends React.PureComponent<
   };
 
   get maybeMedicalData() {
-    return fromNullable(this.props.message.content.prescription_data);
+    return O.fromNullable(this.props.message.content.prescription_data);
   }
 
   get attachments() {
-    return fromNullable(this.props.message.content.attachments);
+    return O.fromNullable(this.props.message.content.attachments);
   }
 
   get paymentExpirationInfo() {
     return paymentExpirationInfo(this.props.message);
   }
 
-  get service(): Option<ServicePublic> {
+  get service(): O.Option<ServicePublic> {
     const { serviceDetail } = this.props;
-    return fromNullable(serviceDetail);
+    return O.fromNullable(serviceDetail);
   }
 
   get payment() {
@@ -115,13 +116,16 @@ export default class MessageDetailComponent extends React.PureComponent<
   }
 
   private getTitle = () =>
-    this.maybeMedicalData.fold(
-      <H3>{this.props.message.content.subject}</H3>,
-      _ => (
-        <React.Fragment>
-          <H3>{I18n.t("messages.medical.prescription")}</H3>
-          <Text>{I18n.t("messages.medical.memo")}</Text>
-        </React.Fragment>
+    pipe(
+      this.maybeMedicalData,
+      O.fold(
+        () => <H3>{this.props.message.content.subject}</H3>,
+        _ => (
+          <React.Fragment>
+            <H3>{I18n.t("messages.medical.prescription")}</H3>
+            <Text>{I18n.t("messages.medical.memo")}</Text>
+          </React.Fragment>
+        )
       )
     );
 
@@ -136,7 +140,7 @@ export default class MessageDetailComponent extends React.PureComponent<
           {/** Header */}
           <View style={styles.padded}>
             <View spacer={true} />
-            {service.isSome() && (
+            {O.isSome(service) && (
               <React.Fragment>
                 <OrganizationHeader
                   serviceName={service.value.service_name}
@@ -151,14 +155,23 @@ export default class MessageDetailComponent extends React.PureComponent<
             <View spacer={true} />
           </View>
 
-          {maybeMedicalData.fold(undefined, md => (
-            <MedicalPrescriptionIdentifiersComponent prescriptionData={md} />
-          ))}
+          {pipe(
+            maybeMedicalData,
+            O.fold(
+              () => undefined,
+              md => (
+                <MedicalPrescriptionIdentifiersComponent
+                  prescriptionData={md}
+                />
+              )
+            )
+          )}
 
-          {this.maybeMedicalData.fold(
-            <MessageDueDateBar message={message} payment={payment} />,
-            _ => (
-              <MedicalPrescriptionDueDateBar message={message} />
+          {pipe(
+            this.maybeMedicalData,
+            O.fold(
+              () => <MessageDueDateBar message={message} payment={payment} />,
+              _ => <MedicalPrescriptionDueDateBar message={message} />
             )
           )}
 
@@ -170,14 +183,16 @@ export default class MessageDetailComponent extends React.PureComponent<
           </MessageMarkdown>
 
           <View spacer={true} large={true} />
-          {this.attachments.isSome() && this.state.isContentLoadCompleted && (
+          {O.isSome(this.attachments) && this.state.isContentLoadCompleted && (
             <React.Fragment>
               <MedicalPrescriptionAttachments
-                prescriptionData={this.maybeMedicalData.toUndefined()}
+                prescriptionData={O.toUndefined(this.maybeMedicalData)}
                 attachments={this.attachments.value}
-                organizationName={this.service
-                  .map(s => s.organization_name)
-                  .toUndefined()}
+                organizationName={pipe(
+                  this.service,
+                  O.map(s => s.organization_name),
+                  O.toUndefined
+                )}
               />
               <View spacer={true} large={true} />
             </React.Fragment>
@@ -187,7 +202,7 @@ export default class MessageDetailComponent extends React.PureComponent<
             <React.Fragment>
               <MessageDetailData
                 message={message}
-                serviceDetail={fromNullable(serviceDetail)}
+                serviceDetail={O.fromNullable(serviceDetail)}
                 serviceMetadata={serviceMetadata}
                 goToServiceDetail={onServiceLinkPress}
               />
@@ -200,13 +215,18 @@ export default class MessageDetailComponent extends React.PureComponent<
             <View spacer={true} small={true} />
           </React.Fragment>
         )}
-        {this.maybeMedicalData.fold(
-          <MessageDetailCTABar
-            message={message}
-            service={service.toUndefined()}
-            payment={this.payment}
-          />,
-          _ => undefined
+        {pipe(
+          this.maybeMedicalData,
+          O.fold(
+            () => (
+              <MessageDetailCTABar
+                message={message}
+                service={O.toUndefined(service)}
+                payment={this.payment}
+              />
+            ),
+            _ => undefined
+          )
         )}
       </React.Fragment>
     );

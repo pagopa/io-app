@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
@@ -56,13 +57,19 @@ const extractInfoFromPaymentMethod = (
         // phone number -> if bank is not defined
         // bank -> if phone number is not defined
         // empty -> if both are not defined
-        description: fromNullable(paymentMethod.info.numberObfuscated)
-          .map(numb =>
-            fromNullable(paymentMethod.info.bankName)
-              .map(bn => `${numb} · ${bn}`)
-              .getOrElse(numb)
-          )
-          .getOrElse(paymentMethod.info.bankName ?? "")
+        description: pipe(
+          paymentMethod.info.numberObfuscated,
+          O.fromNullable,
+          O.map(numb =>
+            pipe(
+              paymentMethod.info.bankName,
+              O.fromNullable,
+              O.map(bn => `${numb} · ${bn}`),
+              O.getOrElse(() => numb)
+            )
+          ),
+          O.getOrElse(() => paymentMethod.info.bankName ?? "")
+        )
       };
     case "Satispay":
       return {

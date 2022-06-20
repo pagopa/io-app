@@ -4,7 +4,8 @@
  * and adding the messages selection and archiving management.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
@@ -56,7 +57,7 @@ type State = {
   filteredMessageStates: ReturnType<
     typeof generateMessagesStateNotArchivedArray
   >;
-  allMessageIdsState: Option<Set<string>>;
+  allMessageIdsState: O.Option<Set<string>>;
 };
 
 /**
@@ -99,7 +100,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       return {
         filteredMessageStates: messagesStateNotArchived,
         lastMessagesState: nextProps.messagesState,
-        allMessageIdsState: some(new Set(allMessagesIdsArray))
+        allMessageIdsState: O.some(new Set(allMessagesIdsArray))
       };
     }
 
@@ -112,7 +113,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     this.state = {
       lastMessagesState: pot.none,
       filteredMessageStates: [],
-      allMessageIdsState: none
+      allMessageIdsState: O.none
     };
   }
 
@@ -144,10 +145,18 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             animated={animated}
           />
         </View>
-        {selectedItemIds.isSome() && allMessageIdsState.isSome() && (
+        {O.isSome(selectedItemIds) && O.isSome(allMessageIdsState) && (
           <ListSelectionBar
-            selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
-            totalItems={allMessageIdsState.map(_ => _.size).getOrElse(0)}
+            selectedItems={pipe(
+              selectedItemIds,
+              O.map(_ => _.size),
+              O.getOrElse(() => 0)
+            )}
+            totalItems={pipe(
+              allMessageIdsState,
+              O.map(_ => _.size),
+              O.getOrElse(() => 0)
+            )}
             onToggleSelection={this.archiveMessages}
             onToggleAllSelection={this.toggleAllMessagesSelection}
             onResetSelection={resetSelection}
@@ -159,7 +168,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   }
 
   private handleOnPressItem = (id: string) => {
-    if (this.props.selectedItemIds.isSome()) {
+    if (O.isSome(this.props.selectedItemIds)) {
       // Is the selection mode is active a simple "press" must act as
       // a "longPress" (select the item).
       this.handleOnLongPressItem(id);
@@ -175,10 +184,10 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   private toggleAllMessagesSelection = () => {
     const { allMessageIdsState } = this.state;
     const { selectedItemIds } = this.props;
-    if (allMessageIdsState.isSome() && selectedItemIds.isSome()) {
+    if (O.isSome(allMessageIdsState) && O.isSome(selectedItemIds)) {
       this.props.setSelectedItemIds(
         allMessageIdsState.value.size === selectedItemIds.value.size
-          ? some(new Set())
+          ? O.some(new Set())
           : allMessageIdsState
       );
     }
@@ -187,7 +196,11 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   private archiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
-      this.props.selectedItemIds.map(_ => Array.from(_)).getOrElse([]),
+      pipe(
+        this.props.selectedItemIds,
+        O.map(_ => Array.from(_)),
+        O.getOrElseW(() => [])
+      ),
       true
     );
   };

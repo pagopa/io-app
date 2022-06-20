@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useIsFocused } from "@react-navigation/native";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { NotificationChannelEnum } from "../../../../definitions/backend/NotificationChannel";
@@ -39,9 +40,12 @@ const hasChannel = (
   channel: NotificationChannelEnum,
   channels?: ReadonlyArray<NotificationChannelEnum>
 ) =>
-  fromNullable(channels)
-    .map(anc => anc.indexOf(channel) !== -1)
-    .getOrElse(true);
+  pipe(
+    channels,
+    O.fromNullable,
+    O.map(anc => anc.indexOf(channel) !== -1),
+    O.getOrElse(() => true)
+  );
 
 /**
  * Utility function to get the user preference value for a specific channel

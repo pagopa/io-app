@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
-import { isSome, Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import startCase from "lodash/startCase";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
@@ -167,10 +168,10 @@ type OwnProps = {
   onPressItem: (id: string) => void;
   onLongPressItem: (id: string) => void;
   onMoreDataRequest: () => void;
-  selectedMessageIds: Option<Set<string>>;
+  selectedMessageIds: O.Option<Set<string>>;
   isContinuosScrollEnabled: boolean;
-  lastDeadlineId: Option<string>;
-  nextDeadlineId: Option<string>;
+  lastDeadlineId: O.Option<string>;
+  nextDeadlineId: O.Option<string>;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -365,7 +366,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     const isFake = info.section.fake;
 
-    const nextDeadlineId = isSome(this.props.nextDeadlineId)
+    const nextDeadlineId = O.isSome(this.props.nextDeadlineId)
       ? this.props.nextDeadlineId.value
       : undefined;
 
@@ -440,10 +441,12 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           payment={payment}
           onPress={onPressItem}
           onLongPress={onLongPressItem}
-          isSelectionModeEnabled={selectedMessageIds.isSome()}
-          isSelected={selectedMessageIds
-            .map(_ => _.has(message.id))
-            .getOrElse(false)}
+          isSelectionModeEnabled={O.isSome(selectedMessageIds)}
+          isSelected={pipe(
+            selectedMessageIds,
+            O.map(_ => _.has(message.id)),
+            O.getOrElse(() => false)
+          )}
         />
       </View>
     );
@@ -535,7 +538,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           }
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
           ListEmptyComponent={
-            sections.length === 0 && lastDeadlineId.isNone()
+            sections.length === 0 && O.isNone(lastDeadlineId)
               ? ListEmptySectionsComponent
               : ListEmptyComponent
           }

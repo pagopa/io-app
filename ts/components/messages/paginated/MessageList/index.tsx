@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { none, Option, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -177,8 +177,9 @@ const MessageList = ({
 
   const flatListRef: React.RefObject<FlatList> = useRef(null);
 
-  const [longPressedItemIndex, setLongPressedItemIndex] =
-    useState<Option<number>>(none);
+  const [longPressedItemIndex, setLongPressedItemIndex] = useState<
+    O.Option<number>
+  >(O.none);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -208,9 +209,9 @@ const MessageList = ({
   };
 
   const handleOnLayoutChange = () => {
-    if (longPressedItemIndex.isSome()) {
+    if (O.isSome(longPressedItemIndex)) {
       scrollTo(longPressedItemIndex.value, true);
-      setLongPressedItemIndex(none);
+      setLongPressedItemIndex(O.none);
     }
   };
 
@@ -223,7 +224,7 @@ const MessageList = ({
     const lastIndex = messages.length - 1;
     const lastMessageId = messages[lastIndex].id;
     if (id === lastMessageId) {
-      setLongPressedItemIndex(some(lastIndex));
+      setLongPressedItemIndex(O.some(lastIndex));
     }
   };
 

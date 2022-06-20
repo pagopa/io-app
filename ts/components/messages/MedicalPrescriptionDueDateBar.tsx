@@ -3,11 +3,13 @@
 // - it shoudn't be optional!!!
 // - if due date is different, check what to pass to CalendarEventButton (it is NO more message or check in the component what to check to consider the proper due date)
 
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import {
@@ -21,7 +23,6 @@ import {
   ExpireStatus,
   getMessagePaymentExpirationInfo
 } from "../../utils/messages";
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
@@ -53,25 +54,41 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
   get paymentExpirationInfo() {
     const { message } = this.props;
     const { payment_data, due_date } = message.content;
-    return fromNullable(payment_data).map(paymentData =>
-      getMessagePaymentExpirationInfo(paymentData, due_date)
+    return pipe(
+      payment_data,
+      O.fromNullable,
+      O.map(paymentData =>
+        getMessagePaymentExpirationInfo(paymentData, due_date)
+      )
     );
   }
 
   get dueDate() {
-    return fromNullable(this.props.message.content.due_date);
+    return O.fromNullable(this.props.message.content.due_date);
   }
 
-  get expirationStatus(): Option<ExpireStatus> {
-    return this.dueDate.fold(none, d => some(getExpireStatus(d)));
+  get expirationStatus(): O.Option<ExpireStatus> {
+    return pipe(this.dueDate, O.map(getExpireStatus));
   }
 
   get isPrescriptionExpired() {
-    return this.expirationStatus.fold(false, es => es === "EXPIRED");
+    return pipe(
+      this.expirationStatus,
+      O.fold(
+        () => false,
+        es => es === "EXPIRED"
+      )
+    );
   }
 
   get isPrescriptionExpiring() {
-    return this.expirationStatus.fold(false, es => es === "EXPIRING");
+    return pipe(
+      this.expirationStatus,
+      O.fold(
+        () => false,
+        es => es === "EXPIRING"
+      )
+    );
   }
 
   get bannerStyle(): ViewStyle {
@@ -86,7 +103,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
 
   get textContent() {
     const { dueDate } = this;
-    if (dueDate.isNone()) {
+    if (O.isNone(dueDate)) {
       return undefined;
     }
     const date = formatDateAsLocal(dueDate.value, true, true);
@@ -123,27 +140,33 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
   // - the message has a due date
   private renderCalendarIcon = () => {
     const { dueDate } = this;
-    return dueDate.fold(null, dd => {
-      const iconBackgoundColor =
-        this.isPrescriptionExpiring || this.isPrescriptionExpired
-          ? customVariables.colorWhite
-          : customVariables.brandDarkGray;
+    return pipe(
+      dueDate,
+      O.fold(
+        () => null,
+        dd => {
+          const iconBackgoundColor =
+            this.isPrescriptionExpiring || this.isPrescriptionExpired
+              ? customVariables.colorWhite
+              : customVariables.brandDarkGray;
 
-      const textColor = this.isPrescriptionExpiring
-        ? customVariables.calendarExpirableColor
-        : this.isPrescriptionExpired
-        ? customVariables.brandDarkGray
-        : customVariables.colorWhite;
+          const textColor = this.isPrescriptionExpiring
+            ? customVariables.calendarExpirableColor
+            : this.isPrescriptionExpired
+            ? customVariables.brandDarkGray
+            : customVariables.colorWhite;
 
-      return (
-        <CalendarIconComponent
-          month={capitalize(formatDateAsMonth(dd))}
-          day={formatDateAsDay(dd)}
-          backgroundColor={iconBackgoundColor}
-          textColor={textColor}
-        />
-      );
-    });
+          return (
+            <CalendarIconComponent
+              month={capitalize(formatDateAsMonth(dd))}
+              day={formatDateAsDay(dd)}
+              backgroundColor={iconBackgoundColor}
+              textColor={textColor}
+            />
+          );
+        }
+      )
+    );
   };
 
   /**
@@ -151,27 +174,35 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
    */
   public render() {
     const { dueDate } = this;
-    return dueDate.fold(null, _ =>
-      !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
-        <View style={[styles.container, this.bannerStyle]}>
-          <Text style={styles.text} white={false}>
-            {this.textContent}
-          </Text>
-          <View spacer={true} xsmall={true} />
-          <View style={styles.row}>
-            {this.renderCalendarIcon()}
-            <View hspacer={true} small={true} />
-            <CalendarEventButton message={this.props.message} medium={true} />
-          </View>
-        </View>
-      ) : (
-        <View style={[styles.container, styles.row, this.bannerStyle]}>
-          {this.renderCalendarIcon()}
-          <View hspacer={true} small={true} />
-          <Text style={styles.text} white={true}>
-            {this.textContent}
-          </Text>
-        </View>
+    return pipe(
+      dueDate,
+      O.fold(
+        () => null,
+        _ =>
+          !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
+            <View style={[styles.container, this.bannerStyle]}>
+              <Text style={styles.text} white={false}>
+                {this.textContent}
+              </Text>
+              <View spacer={true} xsmall={true} />
+              <View style={styles.row}>
+                {this.renderCalendarIcon()}
+                <View hspacer={true} small={true} />
+                <CalendarEventButton
+                  message={this.props.message}
+                  medium={true}
+                />
+              </View>
+            </View>
+          ) : (
+            <View style={[styles.container, styles.row, this.bannerStyle]}>
+              {this.renderCalendarIcon()}
+              <View hspacer={true} small={true} />
+              <Text style={styles.text} white={true}>
+                {this.textContent}
+              </Text>
+            </View>
+          )
       )
     );
   }

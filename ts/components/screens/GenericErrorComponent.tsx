@@ -1,5 +1,6 @@
 import { NavigationEvents } from "@react-navigation/compat";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
@@ -70,9 +71,13 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
 
   public render() {
     // accessible if undefined (default error subtext) or text length > 0
-    const subTextAccessible = fromNullable(this.props.subText).fold(
-      true,
-      text => text.length > 0
+    const subTextAccessible = pipe(
+      this.props.subText,
+      O.fromNullable,
+      O.fold(
+        () => true,
+        text => text.length > 0
+      )
     );
 
     return (

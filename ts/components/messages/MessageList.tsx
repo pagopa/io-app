@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
 import {
@@ -52,7 +53,7 @@ type OwnProps = {
   onRefresh: () => void;
   onPressItem: (id: string) => void;
   onLongPressItem: (id: string) => void;
-  selectedMessageIds: Option<Set<string>>;
+  selectedMessageIds: O.Option<Set<string>>;
   ListEmptyComponent?: React.ComponentProps<
     typeof FlatList
   >["ListEmptyComponent"];
@@ -63,7 +64,7 @@ type Props = OwnProps & AnimatedProps;
 type State = {
   prevMessageStates?: ReadonlyArray<MessageState>;
   itemLayouts: ReadonlyArray<ItemLayout>;
-  longPressedItemIndex: Option<number>;
+  longPressedItemIndex: O.Option<number>;
   isFirstLoad: boolean;
 };
 
@@ -191,7 +192,7 @@ class MessageList extends React.Component<Props, State> {
     super(props);
     this.state = {
       itemLayouts: [],
-      longPressedItemIndex: none,
+      longPressedItemIndex: O.none,
       isFirstLoad: Platform.OS === "ios" // considering firstLoad only when running device is iOS
     };
   }
@@ -234,8 +235,8 @@ class MessageList extends React.Component<Props, State> {
           content: { subject: I18n.t("messages.errorLoading.details") }
           // CreatedMessageWithContent cast is needed because of the lack of
           // "markdown" required property. It is not passed because it's not
-          // needed for giving feedback in the messsage list
-        } as CreatedMessageWithContentAndAttachments)
+          // needed for giving feedback in the message list
+        } as any as CreatedMessageWithContentAndAttachments)
       : potMessage.value;
 
     const service =
@@ -261,10 +262,12 @@ class MessageList extends React.Component<Props, State> {
         payment={payment}
         onPress={onPressItem}
         onLongPress={this.onLongPress}
-        isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
-        isSelected={this.props.selectedMessageIds
-          .map(_ => _.has(info.item.meta.id))
-          .getOrElse(false)}
+        isSelectionModeEnabled={O.isSome(this.props.selectedMessageIds)}
+        isSelected={pipe(
+          this.props.selectedMessageIds,
+          O.map(_ => _.has(info.item.meta.id)),
+          O.getOrElse(() => false)
+        )}
       />
     );
   };
@@ -281,17 +284,17 @@ class MessageList extends React.Component<Props, State> {
     const lastIndex = messageStates.length - 1;
     if (id === messageStates[lastIndex].meta.id) {
       this.setState({
-        longPressedItemIndex: some(lastIndex)
+        longPressedItemIndex: O.some(lastIndex)
       });
     }
   };
 
   private handleOnLayoutChange = () => {
     const { longPressedItemIndex } = this.state;
-    if (longPressedItemIndex.isSome()) {
+    if (O.isSome(longPressedItemIndex)) {
       this.scrollTo(longPressedItemIndex.value, true);
       this.setState({
-        longPressedItemIndex: none
+        longPressedItemIndex: O.none
       });
     }
   };

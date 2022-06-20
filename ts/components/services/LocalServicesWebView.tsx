@@ -1,5 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
@@ -68,9 +70,11 @@ const LocalServicesWebView = (props: Props) => {
   const { servicesById, onServiceSelect } = props;
 
   React.useEffect(() => {
-    fromNullable(serviceIdToLoad)
-      .mapNullable(sid => servicesById[sid])
-      .map(servicePot => {
+    pipe(
+      serviceIdToLoad,
+      O.fromNullable,
+      O.chainNullableK(sid => servicesById[sid]),
+      O.map(servicePot => {
         // if service has been loaded
         if (isStrictSome(servicePot)) {
           onServiceSelect(servicePot.value);
@@ -80,7 +84,8 @@ const LocalServicesWebView = (props: Props) => {
         if (pot.isError(servicePot)) {
           showToast(I18n.t("global.genericError"));
         }
-      });
+      })
+    );
   }, [servicesById, onServiceSelect, serviceIdToLoad]);
 
   const reloadWebView = () => {
@@ -96,16 +101,23 @@ const LocalServicesWebView = (props: Props) => {
    * @param event
    */
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
-    ServiceId.decode(event.nativeEvent.data).map(sId => {
-      setServiceIdToLoad(sId);
-      // request loading service
-      props.loadService(sId);
-    });
+    pipe(
+      event.nativeEvent.data,
+      ServiceId.decode,
+      E.map(sId => {
+        setServiceIdToLoad(sId);
+        // request loading service
+        props.loadService(sId);
+      })
+    );
   };
 
-  const isLoadingServiceLoading = fromNullable(serviceIdToLoad)
-    .mapNullable(sid => props.servicesById[sid])
-    .fold(false, pot.isLoading);
+  const isLoadingServiceLoading = pipe(
+    serviceIdToLoad,
+    O.fromNullable,
+    O.chainNullableK(sid => props.servicesById[sid]),
+    O.fold(() => false, pot.isLoading)
+  );
   return (
     <>
       {isLoadingServiceLoading && renderLoading()}
