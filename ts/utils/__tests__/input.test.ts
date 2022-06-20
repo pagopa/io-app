@@ -1,5 +1,5 @@
-import { fromNullable, isSome, none, some } from "fp-ts/lib/Option";
-import { right } from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import MockDate from "mockdate";
 import {
   CreditCardCVC,
@@ -30,7 +30,7 @@ describe("CreditCardPan", () => {
   });
 
   it("should accept valid PANs, round 2", () => {
-    validPANs.forEach(d => expect(isValidPan(some(d))).toBeTruthy());
+    validPANs.forEach(d => expect(isValidPan(O.some(d))).toBeTruthy());
   });
 
   const invalidPANs: ReadonlyArray<string> = [
@@ -45,11 +45,11 @@ describe("CreditCardPan", () => {
   });
 
   it("should reject invalid PANs, round 2", () => {
-    invalidPANs.forEach(d => expect(isValidPan(some(d))).toBeFalsy());
+    invalidPANs.forEach(d => expect(isValidPan(O.some(d))).toBeFalsy());
   });
 
   it("should be undefined", () => {
-    expect(isValidPan(none)).not.toBeDefined();
+    expect(isValidPan(O.none)).not.toBeDefined();
   });
 });
 
@@ -104,62 +104,62 @@ describe("CreditCardExpirationDate", () => {
   MockDate.set("2020-01-01");
   it("should be false since it is not expired", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("03/20"))
-    ).toEqual(some(false));
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("03/20"))
+    ).toEqual(O.some(false));
   });
 
   it("should be true since it is expired", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("12/19"))
-    ).toEqual(some(true));
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("12/19"))
+    ).toEqual(O.some(true));
   });
 
   it("should be true since it is not in a valid format", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("aa/bb"))
-    ).toEqual(some(true));
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("aa/bb"))
+    ).toEqual(O.some(true));
   });
 
   it("should be true since it is not in a valid format", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("1/b"))
-    ).toEqual(some(true));
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("1/b"))
+    ).toEqual(O.some(true));
   });
 
   it("should be true since it is not in a valid format", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("3/21"))
-    ).toEqual(some(true));
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("3/21"))
+    ).toEqual(O.some(true));
   });
 
   it("should be true since it is not in a valid format", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("03/2"))
-    ).toEqual(some(true));
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("03/2"))
+    ).toEqual(O.some(true));
   });
 
   it("should be true since it is not in a valid format", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("a/27"))
-    ).toEqual(some(true));
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("a/27"))
+    ).toEqual(O.some(true));
   });
 
   it("should be true since it is not in a valid format", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("01/"))
-    ).toEqual(some(true));
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("01/"))
+    ).toEqual(O.some(true));
   });
 
   it("should be none since it is incomplete", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("01"))
-    ).toEqual(none);
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.some("01"))
+    ).toEqual(O.none);
   });
 
   it("should be none", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(none)
-    ).toEqual(none);
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(O.none)
+    ).toEqual(O.none);
   });
 });
 
@@ -172,7 +172,7 @@ describe("CreditCardCVC", () => {
 
   it("should accept valid CVCs, round 2", () => {
     validCVCs.forEach(d =>
-      expect(isValidSecurityCode(fromNullable(d))).toBeTruthy()
+      expect(isValidSecurityCode(O.fromNullable(d))).toBeTruthy()
     );
   });
 
@@ -183,7 +183,9 @@ describe("CreditCardCVC", () => {
   });
 
   it("should reject invalid CVCs, round 2", () => {
-    invalidCVCs.forEach(d => expect(isValidSecurityCode(some(d))).toBeFalsy());
+    invalidCVCs.forEach(d =>
+      expect(isValidSecurityCode(O.some(d))).toBeFalsy()
+    );
   });
 });
 
@@ -208,12 +210,12 @@ describe("isValidCardHolder", () => {
     "û"
   ].forEach(accentedCardHolder =>
     it(`should return false if the input string contains the accented character ${accentedCardHolder}`, () => {
-      expect(isValidCardHolder(some(accentedCardHolder))).toBeFalsy();
+      expect(isValidCardHolder(O.some(accentedCardHolder))).toBeFalsy();
     })
   );
 
   it("should return false if the input string is none", () => {
-    expect(isValidCardHolder(none)).toBeFalsy();
+    expect(isValidCardHolder(O.none)).toBeFalsy();
   });
 
   [
@@ -222,7 +224,7 @@ describe("isValidCardHolder", () => {
     "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
   ].forEach(notAccentedCardHolder =>
     it(`should return true if the input string is composed by character different from accented character: ${notAccentedCardHolder}`, () => {
-      expect(isValidCardHolder(some(notAccentedCardHolder))).toBeTruthy();
+      expect(isValidCardHolder(O.some(notAccentedCardHolder))).toBeTruthy();
     })
   );
 });
@@ -238,15 +240,15 @@ describe("getCreditCardFromState", () => {
   const anInvalidSecurityCode = "1";
 
   it.each`
-    pan                   | expirationDate                   | securityCode                   | holder
-    ${none}               | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${none}                          | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${none}                        | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${none}
-    ${some(anInvalidPan)} | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(anInvalidExpirationDate)} | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(anInvalidSecurityCode)} | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(anInvalidCardHolder)}
+    pan                     | expirationDate                     | securityCode                     | holder
+    ${O.none}               | ${O.some(aValidExpirationDate)}    | ${O.some(aValidSecurityCode)}    | ${O.some(aValidCardHolder)}
+    ${O.some(aValidPan)}    | ${O.none}                          | ${O.some(aValidSecurityCode)}    | ${O.some(aValidCardHolder)}
+    ${O.some(aValidPan)}    | ${O.some(aValidExpirationDate)}    | ${O.none}                        | ${O.some(aValidCardHolder)}
+    ${O.some(aValidPan)}    | ${O.some(aValidExpirationDate)}    | ${O.some(aValidSecurityCode)}    | ${O.none}
+    ${O.some(anInvalidPan)} | ${O.some(aValidExpirationDate)}    | ${O.some(aValidSecurityCode)}    | ${O.some(aValidCardHolder)}
+    ${O.some(aValidPan)}    | ${O.some(anInvalidExpirationDate)} | ${O.some(aValidSecurityCode)}    | ${O.some(aValidCardHolder)}
+    ${O.some(aValidPan)}    | ${O.some(aValidExpirationDate)}    | ${O.some(anInvalidSecurityCode)} | ${O.some(aValidCardHolder)}
+    ${O.some(aValidPan)}    | ${O.some(aValidExpirationDate)}    | ${O.some(aValidSecurityCode)}    | ${O.some(anInvalidCardHolder)}
   `(
     "should return left<string> if at least one field of the credit card is none or is invalid",
     async ({ pan, expirationDate, securityCode, holder }) => {
@@ -256,22 +258,25 @@ describe("getCreditCardFromState", () => {
         securityCode,
         holder
       };
-      expect(getCreditCardFromState(cardState).isLeft()).toBeTruthy();
-      expect(
-        typeof getCreditCardFromState(cardState).value === "string"
-      ).toBeTruthy();
+      const getCreditCardFromStateResult = getCreditCardFromState(cardState);
+      expect(E.isLeft(getCreditCardFromStateResult)).toBeTruthy();
+      if (E.isLeft(getCreditCardFromStateResult)) {
+        expect(
+          typeof getCreditCardFromStateResult.left === "string"
+        ).toBeTruthy();
+      }
     }
   );
 
   it("should return a credit card if all the field are correctly filled ", () => {
     const cardState: CreditCardState = {
-      pan: some(aValidPan),
-      expirationDate: some(aValidExpirationDate),
-      securityCode: some(aValidSecurityCode),
-      holder: some(aValidCardHolder)
+      pan: O.some(aValidPan),
+      expirationDate: O.some(aValidExpirationDate),
+      securityCode: O.some(aValidSecurityCode),
+      holder: O.some(aValidCardHolder)
     };
 
-    if (isSome(cardState.expirationDate)) {
+    if (O.isSome(cardState.expirationDate)) {
       const [expireMonth, expireYear] =
         cardState.expirationDate.value.split("/");
 
@@ -283,7 +288,7 @@ describe("getCreditCardFromState", () => {
         holder: aValidCardHolder
       };
       expect(getCreditCardFromState(cardState)).toStrictEqual(
-        right(expectedCreditCard)
+        E.right(expectedCreditCard)
       );
     }
   });

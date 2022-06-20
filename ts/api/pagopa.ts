@@ -2,7 +2,7 @@
  * pagoPA backend client, with functions
  * to call the different API available
  */
-import { flip, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 import * as t from "io-ts";
@@ -660,29 +660,40 @@ export function PaymentManagerClient(
     fetchApi: altFetchApi
   };
 
+  const test = pipe(
+    createFetchRequestForApi(getWallets, options),
+    withPaymentManagerToken,
+    fn => (token: PaymentManagerToken) => fn(token)({}) // fn({})(token)
+  );
+
   return {
     walletToken,
     getSession: (
       wt: string // wallet token
     ) => createFetchRequestForApi(getSession, options)({ token: wt }),
-    getWallets: flip(
-      withPaymentManagerToken(createFetchRequestForApi(getWallets, options))
-    )({}),
-    getWalletsV2: flip(
-      withPaymentManagerToken(createFetchRequestForApi(getWalletsV2, options))
-    )({}),
+    getWallets: pipe(
+      createFetchRequestForApi(getWallets, options),
+      withPaymentManagerToken,
+      fn => (token: PaymentManagerToken) => fn(token)({})
+    ),
+    getWalletsV2: pipe(
+      createFetchRequestForApi(getWalletsV2, options),
+      withPaymentManagerToken,
+      fn => (token: PaymentManagerToken) => fn(token)({})
+    ),
+    // (a: A) => (b: B) => C
     getTransactions: (start: number) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(getTransactions, options)
-        )
-      )({ start }),
+      pipe(
+        createFetchRequestForApi(getTransactions, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) => fn(token)({ start })
+      ),
     getTransaction: (id: TypeofApiParams<GetTransactionUsingGETT>["id"]) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(getTransaction, options)
-        )
-      )({ id }),
+      pipe(
+        createFetchRequestForApi(getTransaction, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) => fn(token)({ id })
+      ),
     checkPayment: (id: TypeofApiParams<CheckPaymentUsingGETT>["id"]) =>
       createFetchRequestForApi(
         checkPayment,
@@ -694,165 +705,204 @@ export function PaymentManagerClient(
       idPayment: TypeofApiParams<GetPspListUsingGETTExtra>["idPayment"],
       idWallet?: TypeofApiParams<GetPspListUsingGETTExtra>["idWallet"]
     ) =>
-      flip(
-        withPaymentManagerToken(createFetchRequestForApi(getPspList, options))
-      )(
-        idWallet
-          ? {
-              idPayment,
-              idWallet,
-              language: getLocalePrimaryWithFallback()
-            }
-          : { idPayment, language: getLocalePrimaryWithFallback() }
+      pipe(
+        createFetchRequestForApi(getPspList, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)(
+            idWallet
+              ? {
+                  idPayment,
+                  idWallet,
+                  language: getLocalePrimaryWithFallback()
+                }
+              : { idPayment, language: getLocalePrimaryWithFallback() }
+          )
       ),
     getAllPspList: (
       idPayment: TypeofApiParams<GetAllPspsUsingGETT>["idPayment"],
       idWallet: TypeofApiParams<GetAllPspsUsingGETT>["idWallet"]
     ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(getAllPspList, options)
-        )
-      )({
-        idPayment,
-        idWallet,
-        language: getLocalePrimaryWithFallback()
-      }),
+      pipe(
+        createFetchRequestForApi(getAllPspList, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            idPayment,
+            idWallet,
+            language: getLocalePrimaryWithFallback()
+          })
+      ),
     getPsp: (id: TypeofApiParams<GetPspUsingGETT>["id"]) =>
-      flip(withPaymentManagerToken(createFetchRequestForApi(getPsp, options)))({
-        id
-      }),
+      pipe(
+        createFetchRequestForApi(getPsp, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            id
+          })
+      ),
     updateWalletPsp: (
       id: TypeofApiParams<UpdateWalletUsingPUTV2T>["id"],
       walletRequest: TypeofApiParams<UpdateWalletUsingPUTV2T>["walletRequest"]
     ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(updateWalletPsp, options)
-        )
-      )({
-        id,
-        walletRequest
-      }),
+      pipe(
+        createFetchRequestForApi(updateWalletPsp, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            id,
+            walletRequest
+          })
+      ),
     favouriteWallet: (
       id: TypeofApiParams<FavouriteWalletUsingPOSTTExtra>["id"]
     ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(favouriteWallet, options)
-        )
-      )({
-        id
-      }),
+      pipe(
+        createFetchRequestForApi(favouriteWallet, options),
+        withPaymentManagerToken,
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            id
+          })
+      ),
     deletePayment: (
       id: TypeofApiParams<DeleteBySessionCookieExpiredUsingDELETET>["id"]
     ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(deletePayment, options)
-        )
-      )({
-        id
-      }),
+      pipe(
+        createFetchRequestForApi(deletePayment, options),
+        withPaymentManagerToken,
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            id
+          })
+      ),
     addWalletCreditCard: (wallet: NullableWallet) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(addWalletCreditCard, options)
-        )
-      )({
-        walletRequest: { data: wallet }
-      }),
+      pipe(
+        createFetchRequestForApi(addWalletCreditCard, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            walletRequest: { data: wallet }
+          })
+      ),
     deleteWallet: (id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]) =>
-      flip(
-        withPaymentManagerToken(createFetchRequestForApi(deleteWallet, options))
-      )({
-        id
-      }),
-    getAbi: flip(
-      withPaymentManagerToken(createFetchRequestForApi(getAbi, altOptions))
-    )({}),
+      pipe(
+        createFetchRequestForApi(deleteWallet, options),
+        withPaymentManagerToken,
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            id
+          })
+      ),
+    getAbi: pipe(
+      createFetchRequestForApi(getAbi, options),
+      withPaymentManagerToken,
+      fn => (token: PaymentManagerToken) => fn(token)({})
+    ),
     getPans: (abi?: string) =>
-      flip(
-        withPaymentManagerToken(createFetchRequestForApi(getPans, altOptions))
-      )({ abi }),
+      pipe(
+        createFetchRequestForApi(getPans, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) => fn(token)({ abi })
+      ),
     addPans: (cards: BancomatCardsRequest) =>
-      flip(
-        withPaymentManagerToken(createFetchRequestForApi(addPans, altOptions))
-      )({ bancomatCardsRequest: cards }),
-    searchSatispay: flip(
-      withPaymentManagerToken(
-        createFetchRequestForApi(searchSatispay, altOptions)
-      )
+      pipe(
+        createFetchRequestForApi(addPans, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({ bancomatCardsRequest: cards })
+      ),
+    searchSatispay: pipe(
+      createFetchRequestForApi(searchSatispay, altOptions),
+      withPaymentManagerToken
     ),
     addSatispayToWallet: (satispayRequest: SatispayRequest) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(addSatispayToWallet, altOptions)
-        )
-      )({ satispayRequest }),
+      pipe(
+        createFetchRequestForApi(addSatispayToWallet, altOptions),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) => fn(token)({ satispayRequest })
+      ),
     searchBPay: (abi?: string) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(searchBPay, altOptions)
-        )
-      )({ abi }),
+      pipe(
+        createFetchRequestForApi(searchBPay, altOptions),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) => fn(token)({ abi })
+      ),
     addBPayToWallet: (bPayRequest: BPayRequest) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(addBPayToWallet, altOptions)
-        )
-      )({ bPayRequest }),
+      pipe(
+        createFetchRequestForApi(addBPayToWallet, altOptions),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) => fn(token)({ bPayRequest })
+      ),
     getCobadgePans: (abiCode: string | undefined, panCode?: string) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(getCobadgePans, altOptions)
-        )
-      )({ abiCode, PanCode: panCode }),
+      pipe(
+        createFetchRequestForApi(getCobadgePans, altOptions),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({ abiCode, PanCode: panCode })
+      ),
     searchCobadgePans: (searchRequestId: string) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(searchCobadgePans, altOptions)
-        )
-      )({ searchRequestId }),
+      pipe(
+        createFetchRequestForApi(searchCobadgePans, altOptions),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) => fn(token)({ searchRequestId })
+      ),
     addCobadgeToWallet: (
       cobadegPaymentInstrumentsRequest: CobadegPaymentInstrumentsRequest
     ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(addCobadgeToWallet, altOptions)
-        )
-      )({ cobadegPaymentInstrumentsRequest }),
+      pipe(
+        createFetchRequestForApi(addCobadgeToWallet, altOptions),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({ cobadegPaymentInstrumentsRequest })
+      ),
     updatePaymentStatus: (payload: {
       idWallet: number;
       paymentEnabled: boolean;
     }) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(updatePaymentStatus, altOptions)
-        )
-      )({
-        idWallet: payload.idWallet,
-        walletPaymentStatusRequest: { data: { pagoPA: payload.paymentEnabled } }
-      }),
+      pipe(
+        createFetchRequestForApi(updatePaymentStatus, altOptions),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            idWallet: payload.idWallet,
+            walletPaymentStatusRequest: {
+              data: { pagoPA: payload.paymentEnabled }
+            }
+          })
+      ),
     deleteAllPaymentMethodsByFunction: (service: string) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(deleteWallets, altOptions)
-        )
-      )({ service }),
-    searchPayPalPsp: flip(
-      withPaymentManagerToken(
-        createFetchRequestForApi(searchPayPalPsp, options)
-      )
-    )({ language: getLocalePrimaryWithFallback() }),
+      pipe(
+        createFetchRequestForApi(deleteWallets, altOptions),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            service
+          })
+      ),
+    searchPayPalPsp: pipe(
+      createFetchRequestForApi(searchPayPalPsp, options),
+      withPaymentManagerToken,
+      fn => (token: PaymentManagerToken) =>
+        fn(token)({
+          language: getLocalePrimaryWithFallback()
+        })
+    ),
     getPspV2: (payload: { idWallet: number; idPayment: string }) =>
-      flip(
-        withPaymentManagerToken(createFetchRequestForApi(getPspListV2, options))
-      )({
-        language: getLocalePrimaryWithFallback(),
-        idWallet: payload.idWallet.toString(),
-        idPayment: payload.idPayment
-      })
+      pipe(
+        createFetchRequestForApi(getPspListV2, options),
+        withPaymentManagerToken,
+        fn => (token: PaymentManagerToken) =>
+          fn(token)({
+            language: getLocalePrimaryWithFallback(),
+            idWallet: payload.idWallet.toString(),
+            idPayment: payload.idPayment
+          })
+      )
   };
 }
 

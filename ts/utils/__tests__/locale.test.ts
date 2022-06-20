@@ -1,4 +1,4 @@
-import { some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { Locales } from "../../../locales/locales";
 import I18n, { localeFallback, setLocale } from "../../i18n";
 import {
@@ -16,7 +16,7 @@ describe("getLocalePrimary", () => {
   ].forEach(t => {
     const [input, expected] = t;
     it("getLocalePrimary should return the expected output", () => {
-      expect(getLocalePrimary(input)).toStrictEqual(some(expected));
+      expect(getLocalePrimary(input)).toStrictEqual(O.some(expected));
     });
   });
 });
