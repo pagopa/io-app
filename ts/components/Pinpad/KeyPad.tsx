@@ -1,5 +1,5 @@
+import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { Either } from "fp-ts/lib/Either";
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";

@@ -5,8 +5,8 @@
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, SafeAreaView, StyleSheet } from "react-native";

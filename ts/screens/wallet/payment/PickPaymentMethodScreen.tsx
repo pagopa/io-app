@@ -2,9 +2,9 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
@@ -17,6 +17,20 @@ import BaseScreenComponent, {
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
+import { H1 } from "../../../components/core/typography/H1";
+import { H4 } from "../../../components/core/typography/H4";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
+import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  isLoading as isLoadingRemote,
+  isLoading as isRemoteLoading
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -25,7 +39,13 @@ import {
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../store/reducers/backendStatus";
+import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
+import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
@@ -40,28 +60,8 @@ import {
   isDisabledToPay,
   isEnabledToPay
 } from "../../../utils/paymentMethodCapabilities";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { H1 } from "../../../components/core/typography/H1";
-import { H4 } from "../../../components/core/typography/H4";
-import { profileNameSurnameSelector } from "../../../store/reducers/profile";
-import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
-import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
-import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
-import {
-  isLoading as isRemoteLoading,
-  isLoading as isLoadingRemote
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import {
-  bancomatPayConfigSelector,
-  isPaypalEnabledSelector
-} from "../../../store/reducers/backendStatus";
 import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
-import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type PickPaymentMethodScreenNavigationParams = Readonly<{

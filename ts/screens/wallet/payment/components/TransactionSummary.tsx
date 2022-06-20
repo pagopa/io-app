@@ -1,29 +1,29 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
+import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import customVariables from "../../../../theme/variables";
-import { H5 } from "../../../../components/core/typography/H5";
 import { H4 } from "../../../../components/core/typography/H4";
-import I18n from "../../../../i18n";
+import { H5 } from "../../../../components/core/typography/H5";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import I18n from "../../../../i18n";
+import customVariables from "../../../../theme/variables";
 
 import AmountIcon from "../../../../../img/features/payments/Amount.svg";
 import CalendarIcon from "../../../../../img/features/payments/calendar.svg";
 import NoticeIcon from "../../../../../img/features/payments/Giacenza.svg";
+import { IOBadge } from "../../../../components/core/IOBadge";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import IconFont from "../../../../components/ui/IconFont";
+import { MultiImage } from "../../../../components/ui/MultiImage";
 import { PaymentState } from "../../../../store/reducers/wallet/payment";
-import { formatTextRecipient } from "../../../../utils/strings";
+import { getLogoForOrganization } from "../../../../utils/organizations";
+import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { cleanTransactionDescription } from "../../../../utils/payment";
-import IconFont from "../../../../components/ui/IconFont";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { formatTextRecipient } from "../../../../utils/strings";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
-import { getLogoForOrganization } from "../../../../utils/organizations";
-import { MultiImage } from "../../../../components/ui/MultiImage";
-import { IOBadge } from "../../../../components/core/IOBadge";
 
 const styles = StyleSheet.create({
   container: {

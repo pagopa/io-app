@@ -1,31 +1,31 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import * as pot from "italia-ts-commons/lib/pot";
-import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import I18n from "../../../../../i18n";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { H3 } from "../../../../../components/core/typography/H3";
-import { H5 } from "../../../../../components/core/typography/H5";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { getCategorySpecs } from "../../utils/filters";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../../components/core/typography/Label";
 import {
   DiscountCodeType,
   DiscountCodeTypeEnum
 } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { localeDateFormat } from "../../../../../utils/locale";
-import { openWebUrl } from "../../../../../utils/url";
-import { showToast } from "../../../../../utils/showToast";
+import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { H3 } from "../../../../../components/core/typography/H3";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { Label } from "../../../../../components/core/typography/Label";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
+import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { profileSelector } from "../../../../../store/reducers/profile";
+import { localeDateFormat } from "../../../../../utils/locale";
+import { showToast } from "../../../../../utils/showToast";
+import { openWebUrl } from "../../../../../utils/url";
 import { getCgnUserAgeRange } from "../../utils/dates";
-import { mixpanelTrack } from "../../../../../mixpanel";
-import CgnDiscountCodeComponent from "./discount/CgnDiscountCodeComponent";
+import { getCategorySpecs } from "../../utils/filters";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
+import CgnDiscountCodeComponent from "./discount/CgnDiscountCodeComponent";
 
 type Props = {
   discount: Discount;

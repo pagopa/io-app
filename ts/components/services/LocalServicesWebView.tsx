@@ -1,23 +1,23 @@
-import { StyleSheet, View } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
+import { StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { fromNullable } from "fp-ts/lib/Option";
-import { RefreshIndicator } from "../ui/RefreshIndicator";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { withLightModalContext } from "../helpers/withLightModalContext";
-import { GlobalState } from "../../store/reducers/types";
+import { localServicesWebUrl } from "../../config";
+import I18n from "../../i18n";
 import { loadServiceDetail } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { GlobalState } from "../../store/reducers/types";
 import { isStrictSome } from "../../utils/pot";
-import I18n from "../../i18n";
 import { showToast } from "../../utils/showToast";
-import { localServicesWebUrl } from "../../config";
-import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { withLightModalContext } from "../helpers/withLightModalContext";
+import GenericErrorComponent from "../screens/GenericErrorComponent";
+import { RefreshIndicator } from "../ui/RefreshIndicator";
 
 type Props = {
   onServiceSelect: (service: ServicePublic) => void;

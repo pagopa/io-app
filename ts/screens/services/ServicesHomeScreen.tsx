@@ -21,8 +21,8 @@
  * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  *
  */
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import {

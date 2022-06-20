@@ -1,4 +1,5 @@
-import { Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -6,8 +7,8 @@ import { Image, StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { Overlay } from "../ui/Overlay";
 import { H1 } from "../core/typography/H1";
+import { Overlay } from "../ui/Overlay";
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
 export function withErrorModal<
   E,
   P extends Readonly<{
-    error: Option<E>;
+    error: O.Option<E>;
     onCancel: () => void;
     onRetry?: () => void;
   }>
@@ -64,12 +65,18 @@ export function withErrorModal<
     public render() {
       const { error } = this.props;
 
-      const errorMessage = error.fold("", e => errorMapping(e));
+      const errorMessage = pipe(
+        error,
+        O.fold(
+          () => "",
+          e => errorMapping(e)
+        )
+      );
 
       return (
         <Overlay
           foreground={
-            error.isSome() ? this.renderContent(errorMessage) : undefined
+            O.isSome(error) ? this.renderContent(errorMessage) : undefined
           }
         >
           <WrappedComponent {...this.props} />

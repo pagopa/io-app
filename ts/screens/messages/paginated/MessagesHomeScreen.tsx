@@ -1,7 +1,7 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { Tab, Tabs } from "native-base";
 import React, { useEffect } from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";

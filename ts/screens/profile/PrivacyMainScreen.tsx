@@ -5,8 +5,8 @@
  * - send a request to delete his profile
  * - send a request to export all his data (receiving them by email)
  */
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, AlertButton } from "react-native";
@@ -29,11 +29,11 @@ import {
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
+import { isPremiumMessagesOptInOutEnabledSelector } from "../../store/reducers/backendStatus";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
-import { isPremiumMessagesOptInOutEnabledSelector } from "../../store/reducers/backendStatus";
 
 type Props = {
   navigation: CompatNavigationProp<

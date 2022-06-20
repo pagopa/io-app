@@ -1,17 +1,19 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { WalletTypeEnum } from "../../../../../definitions/pagopa/WalletV2";
 
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onboarding/privative/navigation/routes";
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as NavigationActions from "../../../../store/actions/navigation";
+import { pspForPaymentV2WithCallbacks } from "../../../../store/actions/wallet/payment";
 import { toIndexed } from "../../../../store/helpers/indexer";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -22,8 +24,6 @@ import {
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
-import { pspForPaymentV2WithCallbacks } from "../../../../store/actions/wallet/payment";
-import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 
 const rptId = {} as RptId;
 const initialAmount = "300" as AmountInEuroCents;

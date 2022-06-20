@@ -1,5 +1,5 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { fromNullable } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
@@ -17,6 +17,7 @@ import {
   identificationSuccess
 } from "../../store/actions/identification";
 import { appCurrentStateSelector } from "../../store/reducers/appState";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   freeAttempts,
   IdentificationCancelData,
@@ -24,8 +25,8 @@ import {
   maxAttempts,
   progressSelector
 } from "../../store/reducers/identification";
-import { profileNameSelector } from "../../store/reducers/profile";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { profileNameSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
@@ -36,7 +37,6 @@ import {
   isBiometricsValidType
 } from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapDispatchToProps> &

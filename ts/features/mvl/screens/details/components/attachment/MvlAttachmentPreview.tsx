@@ -1,28 +1,28 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { CompatNavigationProp } from "@react-navigation/compat";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
+import Pdf from "react-native-pdf";
+import WorkunitGenericFailure from "../../../../../../components/error/WorkunitGenericFailure";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import customVariables from "../../../../../../theme/variables";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { isIos } from "../../../../../../utils/platform";
-import { showToast } from "../../../../../../utils/showToast";
 import I18n from "../../../../../../i18n";
-import { MvlAttachmentId } from "../../../../types/mvlData";
-import { share } from "../../../../../../utils/share";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
+import customVariables from "../../../../../../theme/variables";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import { isIos } from "../../../../../../utils/platform";
+import { share } from "../../../../../../utils/share";
+import { showToast } from "../../../../../../utils/showToast";
+import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { MvlParamsList } from "../../../../navigation/params";
 import { mvlRemoveCachedAttachment } from "../../../../store/actions/downloads";
-import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import {
   mvlAttachmentDownloadFromIdSelector,
   MvlDownload
 } from "../../../../store/reducers/downloads";
-import WorkunitGenericFailure from "../../../../../../components/error/WorkunitGenericFailure";
+import { MvlAttachmentId } from "../../../../types/mvlData";
 
 const styles = StyleSheet.create({
   container: {

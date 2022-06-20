@@ -1,10 +1,10 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   CompatNavigationProp,
   NavigationEvents
 } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {

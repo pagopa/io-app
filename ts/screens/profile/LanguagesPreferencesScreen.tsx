@@ -1,32 +1,32 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { fromNullable } from "fp-ts/lib/Option";
 import { List } from "native-base";
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { Alert, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
 import { Locales, TranslationKeys } from "../../../locales/locales";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n, { availableTranslations } from "../../i18n";
 import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
+import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
-import { profileUpsert } from "../../store/actions/profile";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import { profileSelector } from "../../store/reducers/profile";
 import { showToast } from "../../utils/showToast";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import SectionStatusComponent from "../../components/SectionStatus";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &

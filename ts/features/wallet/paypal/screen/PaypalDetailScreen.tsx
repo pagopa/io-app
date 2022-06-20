@@ -1,12 +1,12 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
+import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
+import { GlobalState } from "../../../../store/reducers/types";
+import { paypalSelector } from "../../../../store/reducers/wallet/wallets";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import PaypalCard from "../PaypalCard";
-import { GlobalState } from "../../../../store/reducers/types";
-import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { paypalSelector } from "../../../../store/reducers/wallet/wallets";
 
 type Props = ReturnType<typeof mapStateToProps>;
 

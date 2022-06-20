@@ -1,18 +1,18 @@
 import React from "react";
 
-import { createStore } from "redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
-import * as pot from "italia-ts-commons/lib/pot";
+import { createStore } from "redux";
 import I18n from "../../../../../../../i18n";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
 import MVL_ROUTES from "../../../../../navigation/routes";
-import { mvlMockPdfAttachment } from "../../../../../types/__mock__/mvlMock";
-import { MvlPreferences } from "../../../../../store/reducers/preferences";
-import { MvlAttachments } from "../MvlAttachments";
 import { MvlDownloads } from "../../../../../store/reducers/downloads";
+import { MvlPreferences } from "../../../../../store/reducers/preferences";
+import { mvlMockPdfAttachment } from "../../../../../types/__mock__/mvlMock";
+import { MvlAttachments } from "../MvlAttachments";
 
 const mockPresentBottomSheet = jest.fn();
 

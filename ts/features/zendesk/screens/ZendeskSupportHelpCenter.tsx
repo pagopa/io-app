@@ -1,7 +1,7 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { constNull } from "fp-ts/lib/function";
 import { fromNullable, none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";

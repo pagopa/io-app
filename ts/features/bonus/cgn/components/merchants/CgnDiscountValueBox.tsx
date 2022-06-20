@@ -1,10 +1,10 @@
-import { WithinRangeInteger } from "italia-ts-commons/lib/numbers";
+import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { H3 } from "../../../../../components/core/typography/H3";
 
 type ValueBoxProps = {
   value: number;

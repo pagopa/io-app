@@ -108,7 +108,6 @@
     "hoist-non-react-statics": "^3.0.1",
     "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.21",
     "io-ts": "^2.2.16",
-    "italia-ts-commons": "8.6.0",
     "jail-monkey": "^2.3.2",
     "lodash": "^4.17.21",
     "native-base": "^2.15.2",

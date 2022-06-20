@@ -1,12 +1,12 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
+import I18n from "../../../../i18n";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
 import {
   defaultRequestPayload,
   successLoadNextPageMessagesPayload
 } from "../../../../__mocks__/messages";
-import I18n from "../../../../i18n";
 
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -15,8 +15,8 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../../store/actions/messages";
-import { loadServiceDetail } from "../../../../store/actions/services";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
+import { loadServiceDetail } from "../../../../store/actions/services";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
 import { DetailsById } from "../../../../store/reducers/entities/messages/detailsById";

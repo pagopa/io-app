@@ -1,6 +1,7 @@
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { isLeft, isRight } from "fp-ts/lib/Either";
-import { fromNullable, none } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { flow, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   allStoriesSameType,
   getChangelogPrefixByStories,
@@ -25,11 +26,11 @@ const atLeastOneLeftTicket =
 export const updatePrTitleForChangelog = async (
   tickets: GenericTicketRetrievalResults
 ) => {
-  if (tickets.some(isLeft)) {
+  if (tickets.some(E.isLeft)) {
     warn(atLeastOneLeftTicket);
   }
 
-  const foundTicket = tickets.filter(isRight).map(x => x.value);
+  const foundTicket = tickets.filter(E.isRight).map(x => x.right);
 
   if (!allStoriesSameType(foundTicket)) {
     warn(multipleTypesWarning);
@@ -37,18 +38,28 @@ export const updatePrTitleForChangelog = async (
   const maybePrTag = getChangelogPrefixByStories(foundTicket);
   const eitherScope = getChangelogScope(foundTicket);
 
-  if (eitherScope.isLeft()) {
-    eitherScope.value.map(err => warn(err.message));
+  if (E.isLeft(eitherScope)) {
+    eitherScope.left.map(err => warn(err.message));
   }
-  const scope = eitherScope
-    .getOrElse(none)
-    .map(s => `(${s})`)
-    .getOrElse("");
+  const scope = pipe(
+    eitherScope,
+    E.map(
+      flow(
+        O.map(s => `(${s})`),
+        O.getOrElse(() => "")
+      )
+    ),
+    E.getOrElseW(() => "")
+  );
 
-  const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
-  const title = fromNullable(danger.github.pr.title.match(cleanChangelogRegex))
-    .map(matches => matches.pop() || danger.github.pr.title)
-    .getOrElse(danger.github.pr.title);
+  const cleanChangelogRegex =
+    /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
+  const title = pipe(
+    danger.github.pr.title.match(cleanChangelogRegex),
+    O.fromNullable,
+    O.map(matches => matches.pop() || danger.github.pr.title),
+    O.getOrElse(() => danger.github.pr.title)
+  );
 
   const labelScope = scope.replace("(", "").replace(")", "");
   await danger.github.utils.createOrAddLabel({
@@ -70,12 +81,12 @@ export const updatePrTitleForChangelog = async (
         }`
       : title;
 
-  maybePrTag.map(tag =>
+  O.map(tag =>
     danger.github.api.pulls.update({
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
       pull_number: danger.github.thisPR.number,
       title: `${tag}${scope}: ${upperCaseTitle}`
     })
-  );
+  )(maybePrTag);
 };

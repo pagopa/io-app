@@ -1,5 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -44,8 +44,8 @@ import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import {
   EmptyComponent,
   generateItemLayout,
-  ITEM_HEIGHT,
   ItemSeparator,
+  ITEM_HEIGHT,
   renderEmptyList,
   renderItem
 } from "./helpers";

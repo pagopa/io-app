@@ -3,7 +3,8 @@
  * with different appearences based on
  * the props passed
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { some } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Image } from "react-native";
@@ -13,18 +14,17 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { some } from "fp-ts/lib/Option";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCard, CreditCardType, Wallet } from "../../../types/pagopa";
+import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";
+import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
-import IconFont from "../../ui/IconFont";
 import { H5 } from "../../core/typography/H5";
-import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
-import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";
+import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo, { cardIcons } from "./Logo";
 import { CreditCardStyles } from "./style";

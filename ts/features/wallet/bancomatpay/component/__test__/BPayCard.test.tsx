@@ -1,14 +1,14 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
-import * as React from "react";
-import { Store } from "redux";
-import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
-import * as pot from "italia-ts-commons/lib/pot";
 import { none, some } from "fp-ts/lib/Option";
-import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
-import BPayCard from "../BPayCard";
+import * as React from "react";
+import { Provider } from "react-redux";
+import { Store } from "redux";
+import configureMockStore from "redux-mock-store";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 import mockedProfile from "../../../../../__mocks__/initializedProfile";
+import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import BPayCard from "../BPayCard";
 
 const aBankName = "Bank Name";
 const aPhone = "+39 34*******0000";

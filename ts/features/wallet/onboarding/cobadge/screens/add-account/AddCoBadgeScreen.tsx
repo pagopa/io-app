@@ -1,6 +1,6 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { index } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";

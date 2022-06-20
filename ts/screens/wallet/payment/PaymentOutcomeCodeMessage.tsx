@@ -1,6 +1,6 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import * as O from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";

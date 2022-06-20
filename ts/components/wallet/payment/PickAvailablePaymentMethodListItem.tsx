@@ -1,21 +1,21 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
-import { ImageSourcePropType } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fromNullable } from "fp-ts/lib/Option";
-import { GlobalState } from "../../../store/reducers/types";
+import * as React from "react";
+import { ImageSourcePropType } from "react-native";
+import { connect } from "react-redux";
+import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
+import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
+import bancomatPayLogo from "../../../../img/wallet/payment-methods/bpay.png";
+import paypalLogo from "../../../../img/wallet/payment-methods/paypal.png";
+import I18n from "../../../i18n";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
-import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bpay.png";
-import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
-import paypalLogo from "../../../../img/wallet/payment-methods/paypal.png";
-import IconFont from "../../ui/IconFont";
-import { IOColors } from "../../core/variables/IOColors";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
+import { IOColors } from "../../core/variables/IOColors";
+import IconFont from "../../ui/IconFont";
 import { getCardIconFromBrandLogo } from "../card/Logo";
-import I18n from "../../../i18n";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {

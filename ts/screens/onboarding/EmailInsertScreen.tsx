@@ -2,10 +2,10 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
 import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import {

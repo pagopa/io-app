@@ -1,6 +1,6 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import React, {
   useCallback,

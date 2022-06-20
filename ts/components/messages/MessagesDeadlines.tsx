@@ -1,4 +1,6 @@
 /* eslint-disable functional/immutable-data */
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import {
   compareAsc,
   differenceInMonths,
@@ -10,8 +12,6 @@ import {
   subMonths
 } from "date-fns";
 import { isNone, none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
 import React from "react";
 import { SectionListScrollParams, StyleSheet } from "react-native";

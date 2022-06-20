@@ -4,8 +4,8 @@
  * has to accept the new version of ToS.
  * This screen is used also as Privacy screen From Profile section.
  */
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, SafeAreaView, StyleSheet } from "react-native";

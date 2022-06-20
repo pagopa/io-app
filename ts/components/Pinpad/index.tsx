@@ -1,7 +1,7 @@
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { range } from "fp-ts/lib/Array";
 import { left, right } from "fp-ts/lib/Either";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce, shuffle } from "lodash";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -9,10 +9,10 @@ import { Alert, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
+import { BiometricsValidType } from "../../utils/biometrics";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { Link } from "../core/typography/Link";
-import { BiometricsValidType } from "../../utils/biometrics";
 import InputPlaceHolder from "./InputPlaceholder";
 import { DigitRpr, KeyPad } from "./KeyPad";
 

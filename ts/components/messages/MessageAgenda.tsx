@@ -1,6 +1,6 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { isSome, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import startCase from "lodash/startCase";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";

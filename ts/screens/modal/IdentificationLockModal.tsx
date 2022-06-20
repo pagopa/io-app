@@ -1,6 +1,6 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { format } from "date-fns";
 import { fromNullable } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";

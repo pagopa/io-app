@@ -1,12 +1,13 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { index } from "fp-ts/lib/Array";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { fromNullable } from "fp-ts/lib/Option";
-import { index } from "fp-ts/lib/Array";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { profileSelector } from "../../../../../../store/reducers/profile";
-import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   getValueOrElse,
   isError,
@@ -14,16 +15,15 @@ import {
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import {
+  addBancomatToWallet,
   walletAddBancomatCancel,
-  walletAddBancomatCompleted,
-  addBancomatToWallet
+  walletAddBancomatCompleted
 } from "../../store/actions";
 import {
   onboardingBancomatAddingResultSelector,
   onboardingBancomatChosenPanSelector
 } from "../../store/reducers/addingPans";
-import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
-import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import AddBancomatComponent from "./AddBancomatComponent";
 import LoadAddBancomatComponent from "./LoadAddBancomatComponent";
 

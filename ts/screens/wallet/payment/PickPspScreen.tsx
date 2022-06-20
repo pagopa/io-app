@@ -1,12 +1,13 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
 import { H3, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PspData } from "../../../../definitions/pagopa/PspData";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -20,6 +21,11 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { PspComponent } from "../../../components/wallet/payment/PspComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import {
+  getValueOrElse,
+  isError,
+  isLoading
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -32,12 +38,6 @@ import customVariables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
-import { PspData } from "../../../../definitions/pagopa/PspData";
-import {
-  getValueOrElse,
-  isError,
-  isLoading
-} from "../../../features/bonus/bpd/model/RemoteValue";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 export type PickPspScreenNavigationParams = Readonly<{

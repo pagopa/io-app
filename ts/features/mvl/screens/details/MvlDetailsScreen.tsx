@@ -1,10 +1,11 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import CtaBar from "../../../../components/messages/paginated/MessageDetail/common/CtaBar";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { loadServiceDetail } from "../../../../store/actions/services";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   serviceByIdSelector,
@@ -13,7 +14,6 @@ import {
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { loadServiceDetail } from "../../../../store/actions/services";
 import { Mvl } from "../../types/mvlData";
 import { MvlAttachments } from "./components/attachment/MvlAttachments";
 import { MvlBody } from "./components/MvlBody";

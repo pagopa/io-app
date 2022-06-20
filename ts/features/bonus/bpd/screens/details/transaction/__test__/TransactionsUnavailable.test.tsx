@@ -1,5 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 
 import { Store } from "redux";
