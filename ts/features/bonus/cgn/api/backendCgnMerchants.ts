@@ -3,7 +3,6 @@ import {
   composeHeaderProducers,
   createFetchRequestForApi
 } from "@pagopa/ts-commons/lib/requests";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   getDiscountBucketCodeDefaultDecoder,
   GetDiscountBucketCodeT,
@@ -17,6 +16,7 @@ import {
   GetPublishedProductCategoriesT
 } from "../../../../../definitions/cgn/merchants/requestTypes";
 import { tokenHeaderProducer, withBearerToken } from "../../../../utils/api";
+import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 const BASE_URL = "/api/v1/cgn/operator-search";
 
@@ -24,8 +24,7 @@ const getOnlineMerchants: GetOnlineMerchantsT = {
   method: "post",
   url: () => `${BASE_URL}/online-merchants`,
   query: _ => ({}),
-  body: ({ onlineMerchantSearchRequest }) =>
-    JSON.stringify(onlineMerchantSearchRequest),
+  body: ({ body }) => JSON.stringify(body),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getOnlineMerchantsDefaultDecoder()
 };
@@ -34,8 +33,7 @@ const getOfflineMerchants: GetOfflineMerchantsT = {
   method: "post",
   url: () => `${BASE_URL}/offline-merchants`,
   query: _ => ({}),
-  body: ({ offlineMerchantSearchRequest }) =>
-    JSON.stringify(offlineMerchantSearchRequest),
+  body: ({ body }) => JSON.stringify(body),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getOfflineMerchantsDefaultDecoder()
 };
@@ -59,8 +57,8 @@ const getDiscountBucketCode: GetDiscountBucketCodeT = {
 const getPublishedCategories: GetPublishedProductCategoriesT = {
   method: "get",
   url: () => `${BASE_URL}/published-product-categories`,
-  query: ({ countNewDiscounts }) => ({
-    count_new_discounts: countNewDiscounts
+  query: ({ count_new_discounts }) => ({
+    count_new_discounts
   }),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getPublishedProductCategoriesDefaultDecoder()

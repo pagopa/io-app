@@ -1,25 +1,26 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Badge, Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Badge, Text, View } from "native-base";
-import * as O from "fp-ts/lib/Option";
-import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
+import QrCode from "../../../../../img/messages/qr-code.svg";
 import I18n from "../../../../i18n";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import customVariables from "../../../../theme/variables";
 import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
 } from "../../../../utils/convertDateToWordDistance";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
-import TouchableDefaultOpacity from "../../../TouchableDefaultOpacity";
-import { H5 } from "../../../core/typography/H5";
 import { H3 } from "../../../core/typography/H3";
-import { BadgeComponent } from "../../../screens/BadgeComponent";
-import IconFont from "../../../ui/IconFont";
-import customVariables from "../../../../theme/variables";
+import { H5 } from "../../../core/typography/H5";
 import { IOColors } from "../../../core/variables/IOColors";
-import QrCode from "../../../../../img/messages/qr-code.svg";
+import { BadgeComponent } from "../../../screens/BadgeComponent";
+import TouchableDefaultOpacity from "../../../TouchableDefaultOpacity";
+import IconFont from "../../../ui/IconFont";
 
 const ICON_WIDTH = 24;
 
@@ -226,7 +227,11 @@ const announceMessage = (
     serviceName: message.serviceName,
     subject: message.title,
     receivedAt: convertReceivedDateToAccessible(message.createdAt),
-    state: maybeItemBadge.map(itemBadgeToAccessibilityLabel).getOrElse("")
+    state: pipe(
+      maybeItemBadge,
+      O.map(itemBadgeToAccessibilityLabel),
+      O.getOrElse(() => "")
+    )
   });
 
 /**
@@ -312,7 +317,11 @@ const MessageListItem = ({
             />
           </View>
         ) : (
-          maybeItemBadge.map(itemBadgeToTagOrIcon).getOrElse(undefined)
+          pipe(
+            maybeItemBadge,
+            O.map(itemBadgeToTagOrIcon),
+            O.getOrElseW(() => undefined)
+          )
         )}
       </View>
     </TouchableDefaultOpacity>

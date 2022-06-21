@@ -1,4 +1,5 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import * as React from "react";
 import {
@@ -61,13 +62,13 @@ import {
   ID_CGN_TYPE
 } from "../utils/bonus";
 
-import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
   loadServiceDetail,
   showServiceDetails
 } from "../../../../store/actions/services";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -149,18 +150,21 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     }
     if (this.props.isCdcEnabled) {
       handlersMap.set(ID_CDC_TYPE, _ => {
-        this.props.cdcService().fold(
-          () => {
-            // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
-            showToast(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
-          },
-          s => () => {
-            this.props.showServiceDetails(s);
-            this.props.navigateToServiceDetailsScreen({
-              service: s
-            });
-          }
-        )();
+        pipe(
+          this.props.cdcService(),
+          O.fold(
+            () => {
+              // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
+              showToast(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
+            },
+            s => () => {
+              this.props.showServiceDetails(s);
+              this.props.navigateToServiceDetailsScreen({
+                service: s
+              });
+            }
+          )
+        );
       });
     }
     const handled = handlersMap.has(item.id_type);
@@ -175,44 +179,50 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
      */
     const onItemPress = () => {
       // if the bonus is active ask for app update
-      fromNullable(handlersMap.get(item.id_type)).foldL(
-        () =>
-          actionWithAlert({
-            title: I18n.t("titleUpdateAppAlert"),
-            body: I18n.t("messageUpdateAppAlert", {
-              storeName: Platform.select({
-                ios: "App Store",
-                default: "Play Store"
-              })
+      pipe(
+        handlersMap.get(item.id_type),
+        O.fromNullable,
+        O.fold(
+          () =>
+            actionWithAlert({
+              title: I18n.t("titleUpdateAppAlert"),
+              body: I18n.t("messageUpdateAppAlert", {
+                storeName: Platform.select({
+                  ios: "App Store",
+                  default: "Play Store"
+                })
+              }),
+              cancelText: I18n.t("global.buttons.cancel"),
+              confirmText: I18n.t("openStore", {
+                storeName: Platform.select({
+                  ios: "App Store",
+                  default: "Play Store"
+                })
+              }),
+              onConfirmAction: this.openAppStore
             }),
-            cancelText: I18n.t("global.buttons.cancel"),
-            confirmText: I18n.t("openStore", {
-              storeName: Platform.select({
-                ios: "App Store",
-                default: "Play Store"
-              })
-            }),
-            onConfirmAction: this.openAppStore
-          }),
-        h => h(item)
+          h => h(item)
+        )
       );
     };
 
     // TODO: this behavior with the current implementation never occurs!
     // when the bonus is visible but this app version cant handle it
-    const maybeIncoming: Option<AvailableBonusItemState> =
-      item.visibility === "visible" && !handled ? some("incoming") : none;
+    const maybeIncoming: O.Option<AvailableBonusItemState> =
+      item.visibility === "visible" && !handled ? O.some("incoming") : O.none;
 
     // TODO: Atm only a custom case for the cashback, using the remote bpdConfiguration to choose if is finished
     // see https://pagopa.atlassian.net/browse/IAI-22 for the complete bonus refactoring
-    const maybeFinished: Option<AvailableBonusItemState> =
+    const maybeFinished: O.Option<AvailableBonusItemState> =
       info.item.id_type === ID_BPD_TYPE && !bpdConfig?.program_active
-        ? some("completed")
-        : none;
+        ? O.some("completed")
+        : O.none;
 
-    const state: AvailableBonusItemState = maybeIncoming
-      .alt(maybeFinished)
-      .getOrElse("active");
+    const state: AvailableBonusItemState = pipe(
+      maybeIncoming,
+      O.alt(() => maybeFinished),
+      O.getOrElseW(() => "active" as const)
+    );
 
     return (
       <AvailableBonusItem

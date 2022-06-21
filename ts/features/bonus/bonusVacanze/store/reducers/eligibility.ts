@@ -1,5 +1,5 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
@@ -38,7 +38,7 @@ export type EligibilityState = Readonly<{
 const INITIAL_STATE: EligibilityState = {
   checkRequest: {
     status: EligibilityRequestProgressEnum.UNDEFINED,
-    check: pot.O.none
+    check: pot.none
   }
 };
 

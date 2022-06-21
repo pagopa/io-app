@@ -1,10 +1,13 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { AnniRiferimento } from "../../../../../../definitions/cdc/AnniRiferimento";
+import { EsitoRichiestaEnum } from "../../../../../../definitions/cdc/EsitoRichiesta";
+import { ListaEsitoRichiestaPerAnno } from "../../../../../../definitions/cdc/ListaEsitoRichiestaPerAnno";
+import { isTestEnv } from "../../../../../utils/environment";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { BackendCdcClient } from "../../api/backendCdc";
 import { cdcEnrollUserToBonus } from "../../store/actions/cdcBonusRequest";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
-import { AnniRiferimento } from "../../../../../../definitions/cdc/AnniRiferimento";
-import { ListaEsitoRichiestaPerAnno } from "../../../../../../definitions/cdc/ListaEsitoRichiestaPerAnno";
 import {
   CdcBonusEnrollmentList,
   CdcBonusEnrollmentOutcomeList,
@@ -14,8 +17,6 @@ import {
   CdcSelectedBonus,
   RequestOutcomeEnum
 } from "../../types/CdcBonusRequest";
-import { isTestEnv } from "../../../../../utils/environment";
-import { EsitoRichiestaEnum } from "../../../../../../definitions/cdc/EsitoRichiesta";
 
 const mapKinds: Record<number, CdcBonusRequestResponseFailure["kind"]> = {
   400: "wrongFormat"
@@ -86,23 +87,23 @@ export function* handlePostRegistraBeneficiario(
       convertRequestPayload(bonusWithRequirements)
     );
 
-    if (postRegistraBeneficiarioResult.isRight()) {
-      if (postRegistraBeneficiarioResult.value.status === 200) {
+    if (E.isRight(postRegistraBeneficiarioResult)) {
+      if (postRegistraBeneficiarioResult.right.status === 200) {
         yield* put(
           cdcEnrollUserToBonus.success(
             convertSuccess(
-              postRegistraBeneficiarioResult.value.value,
+              postRegistraBeneficiarioResult.right.value,
               bonusWithoutRequirements
             )
           )
         );
         return;
       }
-      if (mapKinds[postRegistraBeneficiarioResult.value.status] !== undefined) {
+      if (mapKinds[postRegistraBeneficiarioResult.right.status] !== undefined) {
         yield* put(
           cdcEnrollUserToBonus.success({
-            kind: mapKinds[postRegistraBeneficiarioResult.value.status],
-            reason: postRegistraBeneficiarioResult.value.value?.status
+            kind: mapKinds[postRegistraBeneficiarioResult.right.status],
+            reason: postRegistraBeneficiarioResult.right.value?.status
           })
         );
         return;
@@ -111,7 +112,7 @@ export function* handlePostRegistraBeneficiario(
       yield* put(
         cdcEnrollUserToBonus.failure(
           getGenericError(
-            new Error(postRegistraBeneficiarioResult.value.status.toString())
+            new Error(postRegistraBeneficiarioResult.right.status.toString())
           )
         )
       );

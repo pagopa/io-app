@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "typed-redux-saga/macro";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
@@ -21,7 +22,7 @@ export function* handleForceBonusServiceActivation(
   }
   const serviceId = ServiceId.decode(bonusVacanze.service_id);
   // no service id
-  if (serviceId.isLeft()) {
+  if (E.isLeft(serviceId)) {
     return;
   }
   // retrieve profile from store
@@ -32,12 +33,12 @@ export function* handleForceBonusServiceActivation(
   const newBlockedInboxOrChannel = pot.getOrElse(
     pot.map(profile, p => {
       const isBlocked = Object.keys(p.blocked_inbox_or_channels || {}).some(
-        s => s === serviceId.value
+        s => s === serviceId.right
       );
       if (isBlocked) {
         return getBlockedChannels(
           profile,
-          serviceId.value
+          serviceId.right
         )({
           email: true,
           inbox: true,

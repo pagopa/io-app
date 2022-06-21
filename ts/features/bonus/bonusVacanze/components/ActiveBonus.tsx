@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -85,7 +86,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       onPress={() => props.onPress(props.bonus, props.validFrom, props.validTo)}
     >
       <View style={styles.spaced}>
-        {bonusValidityInterval.isSome() && (
+        {O.isSome(bonusValidityInterval) && (
           <Text>{`${I18n.t("bonus.bonusVacanze.validity")} ${
             bonusValidityInterval.value.e1
           } - ${bonusValidityInterval.value.e2}`}</Text>

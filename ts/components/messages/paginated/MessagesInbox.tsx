@@ -1,14 +1,16 @@
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React, { useCallback } from "react";
 import { StyleSheet } from "react-native";
 
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
+import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import { EmptyListComponent } from "../EmptyListComponent";
 
+import { UaDonationsBanner } from "../../../features/uaDonations/components/UaDonationsBanner";
 import { useItemsSelection } from "../../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../../ListSelectionBar";
-import { UaDonationsBanner } from "../../../features/uaDonations/components/UaDonationsBanner";
 import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
@@ -43,13 +45,13 @@ const MessagesInbox = ({
 }: Props) => {
   const { selectedItems, toggleItem, resetSelection } = useItemsSelection();
 
-  const isSelecting = selectedItems.isSome();
-  const selectedItemsCount = selectedItems.toUndefined()?.size ?? 0;
+  const isSelecting = O.isSome(selectedItems);
+  const selectedItemsCount = O.toUndefined(selectedItems)?.size ?? 0;
   const allItemsCount = messages.length;
 
   const onPressItem = useCallback(
     (message: UIMessage) => {
-      if (selectedItems.isSome()) {
+      if (O.isSome(selectedItems)) {
         toggleItem(message.id);
       } else {
         navigateToMessageDetail(message);
@@ -77,7 +79,7 @@ const MessagesInbox = ({
           filter={{ getArchived: false }}
           onPressItem={onPressItem}
           onLongPressItem={onLongPressItem}
-          selectedMessageIds={selectedItems.toUndefined()}
+          selectedMessageIds={O.toUndefined(selectedItems)}
           ListEmptyComponent={ListEmptyComponent}
           ListHeaderComponent={<UaDonationsBanner />}
         />
@@ -88,7 +90,12 @@ const MessagesInbox = ({
           totalItems={allItemsCount}
           onToggleSelection={() => {
             archiveMessages(
-              messages.filter(_ => selectedItems.getOrElse(new Set()).has(_.id))
+              messages.filter(_ =>
+                pipe(
+                  selectedItems,
+                  O.getOrElseW(() => new Set())
+                ).has(_.id)
+              )
             );
             resetSelection();
           }}

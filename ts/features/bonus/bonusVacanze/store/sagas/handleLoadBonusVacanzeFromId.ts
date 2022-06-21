@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
@@ -17,16 +18,16 @@ export function* handleLoadBonusVacanzeFromId(
     const bonusVacanzeResponse: SagaCallReturnType<
       typeof getLatestBonusVacanzeFromId
     > = yield* call(getLatestBonusVacanzeFromId, { bonus_id: action.payload });
-    if (bonusVacanzeResponse.isRight()) {
-      if (bonusVacanzeResponse.value.status === 200) {
+    if (E.isRight(bonusVacanzeResponse)) {
+      if (bonusVacanzeResponse.right.status === 200) {
         yield* put(
-          loadBonusVacanzeFromId.success(bonusVacanzeResponse.value.value)
+          loadBonusVacanzeFromId.success(bonusVacanzeResponse.right.value)
         );
         return;
       }
-      throw Error(`response status ${bonusVacanzeResponse.value.status}`);
+      throw Error(`response status ${bonusVacanzeResponse.right.status}`);
     } else {
-      throw Error(readablePrivacyReport(bonusVacanzeResponse.value));
+      throw Error(readablePrivacyReport(bonusVacanzeResponse.left));
     }
   } catch (e) {
     yield* put(

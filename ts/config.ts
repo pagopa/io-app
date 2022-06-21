@@ -1,9 +1,11 @@
 // Main config file. Mostly read the configuration from .env files
 
-import * as t from "io-ts";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond, Second } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as t from "io-ts";
 import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
@@ -115,48 +117,68 @@ export const pnEnabled = Config.PN_ENABLED === "YES";
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 
-export const fetchTimeout = t.Integer.decode(
-  parseInt(Config.FETCH_TIMEOUT_MS, 10)
-).getOrElse(DEFAULT_FETCH_TIMEOUT_MS) as Millisecond;
+export const fetchTimeout = pipe(
+  parseInt(Config.FETCH_TIMEOUT_MS, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_FETCH_TIMEOUT_MS)
+) as Millisecond;
 
-export const fetchMaxRetries = t.Integer.decode(
-  parseInt(Config.FETCH_MAX_RETRIES, 10)
-).getOrElse(DEFAULT_FETCH_MAX_RETRIES);
+export const fetchMaxRetries = pipe(
+  parseInt(Config.FETCH_MAX_RETRIES, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_FETCH_MAX_RETRIES)
+);
 
-export const fetchPagoPaTimeout = t.Integer.decode(
-  parseInt(Config.FETCH_PAGOPA_TIMEOUT_MS, 10)
-).getOrElse(DEFAULT_FETCH_PAGOPA_TIMEOUT_MS) as Millisecond;
+export const fetchPagoPaTimeout = pipe(
+  parseInt(Config.FETCH_PAGOPA_TIMEOUT_MS, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_FETCH_PAGOPA_TIMEOUT_MS)
+) as Millisecond;
 
-export const fetchPaymentManagerLongTimeout = t.Integer.decode(
-  parseInt(Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS, 10)
-).getOrElse(DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS) as Millisecond;
+export const fetchPaymentManagerLongTimeout = pipe(
+  parseInt(Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS)
+) as Millisecond;
 
-export const backgroundActivityTimeout = t.Integer.decode(
-  parseInt(Config.BACKGROUND_ACTIVITY_TIMEOUT_S, 10)
-).getOrElse(DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S) as Second;
+export const backgroundActivityTimeout = pipe(
+  parseInt(Config.BACKGROUND_ACTIVITY_TIMEOUT_S, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S)
+) as Second;
 
-export const contentRepoUrl = NonEmptyString.decode(
-  Config.CONTENT_REPO_URL
-).getOrElse(DEFAULT_CONTENT_REPO_URL);
+export const contentRepoUrl = pipe(
+  Config.CONTENT_REPO_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => DEFAULT_CONTENT_REPO_URL)
+);
 
-export const totMessageFetchWorkers = t.Integer.decode(
-  parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10)
-).getOrElse(DEFAULT_TOT_MESSAGE_FETCH_WORKERS);
+export const totMessageFetchWorkers = pipe(
+  parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_TOT_MESSAGE_FETCH_WORKERS)
+);
 
-export const totServiceFetchWorkers = t.Integer.decode(
-  parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10)
-).getOrElse(DEFAULT_TOT_SERVICE_FETCH_WORKERS);
+export const totServiceFetchWorkers = pipe(
+  parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_TOT_SERVICE_FETCH_WORKERS)
+);
 
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
 
-export const privacyUrl: string = t.string
-  .decode(Config.PRIVACY_URL)
-  .getOrElse("https://io.italia.it/app-content/tos_privacy.html");
+export const privacyUrl: string = pipe(
+  Config.PRIVACY_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it/app-content/tos_privacy.html")
+);
 
-export const localServicesWebUrl: string = t.string
-  .decode(Config.LOCAL_SERVICE_WEB_URL)
-  .getOrElse("https://io.italia.it");
+export const localServicesWebUrl: string = pipe(
+  Config.LOCAL_SERVICE_WEB_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it")
+);
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 

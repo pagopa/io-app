@@ -1,7 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
 import { cardIcons } from "../../../../../../components/wallet/card/Logo";
 import { paymentMethodsSelector } from "../../../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../../../types/pagopa";
@@ -169,7 +169,7 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
                 pot.isSome(potActivation) &&
                 potActivation.value.activationStatus === "active"
             ),
-            O.getOrElse(() => false)
+            O.getOrElseW(() => false)
           )
         )
       ),
@@ -190,9 +190,11 @@ export const paymentMethodsWithActivationStatusSelector = createSelector(
     pot.map(paymentMethodsPot, paymentMethods =>
       paymentMethods.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus = O.fromNullable(getPaymentMethodHash(pm))
-          .chain(hp => O.fromNullable(bpdActivations[hp]))
-          .map(paymentMethodActivation =>
+        const activationStatus = pipe(
+          getPaymentMethodHash(pm),
+          O.fromNullable,
+          O.chain(hp => O.fromNullable(bpdActivations[hp])),
+          O.map(paymentMethodActivation =>
             pot.getOrElse(
               pot.map(
                 paymentMethodActivation,
@@ -200,8 +202,9 @@ export const paymentMethodsWithActivationStatusSelector = createSelector(
               ),
               undefined
             )
-          )
-          .getOrElse(undefined);
+          ),
+          O.toUndefined
+        );
         return { ...pm, activationStatus };
       })
     )
