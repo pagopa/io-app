@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView } from "react-native";
@@ -52,9 +53,11 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
 
   private isAlreadyPreferred = (language: Locales) =>
     // if the preferred Lanuage is not set, we check if language is the same in use
-    this.props.preferredLanguage
-      .map(l => l === language)
-      .getOrElse(getLocalePrimaryWithFallback() === language);
+    pipe(
+      this.props.preferredLanguage,
+      O.map(l => l === language),
+      O.getOrElse(() => getLocalePrimaryWithFallback() === language)
+    );
 
   private onLanguageSelected = (language: Locales) => {
     if (!this.isAlreadyPreferred(language)) {
@@ -94,8 +97,10 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
     // update completed
     if (pot.isUpdating(prevProps.profile) && pot.isSome(this.props.profile)) {
       this.setState({ isLoading: false });
-      fromNullable(this.state.selectedLocale).map(
-        this.props.preferredLanguageSaveSuccess
+      pipe(
+        this.state.selectedLocale,
+        O.fromNullable,
+        O.map(this.props.preferredLanguageSaveSuccess)
       );
       this.showModal();
       return;

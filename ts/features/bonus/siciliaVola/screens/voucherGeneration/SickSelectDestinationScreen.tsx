@@ -1,25 +1,25 @@
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useRef } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView } from "react-native";
-import { isSome } from "fp-ts/lib/Option";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherFailure,
   svGenerateVoucherSelectHospital
 } from "../../store/actions/voucherGeneration";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { Hospital } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
-import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
-import I18n from "../../../../../i18n";
+import { Hospital } from "../../types/SvVoucherRequest";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -42,7 +42,7 @@ const SickSelectDestinationScreen = (
   };
 
   if (
-    isSome(props.selectedBeneficiaryCategory) &&
+    O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "sick"
   ) {
     props.failure("The selected category is not Sick");

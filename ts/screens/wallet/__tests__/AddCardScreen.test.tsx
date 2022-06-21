@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { createStore } from "redux";
 import { IPaymentMethod } from "../../../components/wallet/PaymentMethodsList";
@@ -128,7 +128,7 @@ describe("AddCardScreen", () => {
       I18n.t("wallet.dummyCard.labels.holder.description.error")
     );
 
-    expect(isValidCardHolder(some(anInvalidCardHolder))).toBeFalsy();
+    expect(isValidCardHolder(O.some(anInvalidCardHolder))).toBeFalsy();
     expect(errorMessage).not.toBeNull();
     expect(continueButton).toBeDisabled();
   });
@@ -259,7 +259,7 @@ describe("getPaymentMethods", () => {
 const getComponent = () => {
   type NavigationParams = AddCardScreenNavigationParams;
   const params: NavigationParams = {
-    inPayment: none
+    inPayment: O.none
   } as NavigationParams;
 
   const ToBeTested: React.FunctionComponent<

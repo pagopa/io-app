@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { index } from "fp-ts/lib/Array";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -73,15 +74,17 @@ const AddCoBadgeScreen = (props: Props): React.ReactElement | null => {
     nextPan(false);
   };
 
-  const currentPan = index(currentIndex, [...props.coBadgeList]);
+  const currentPan = AR.lookup(currentIndex, [...props.coBadgeList]);
 
   return props.loading || props.isAddingResultError ? (
     <LoadAddCoBadgeComponent
       isLoading={!props.isAddingResultError}
       onCancel={props.onCancel}
-      onRetry={() => fromNullable(props.selectedCoBadge).map(props.onRetry)}
+      onRetry={() =>
+        pipe(props.selectedCoBadge, O.fromNullable, O.map(props.onRetry))
+      }
     />
-  ) : currentPan.isSome() ? (
+  ) : O.isSome(currentPan) ? (
     <AddCobadgeComponent
       pan={currentPan.value}
       pansNumber={props.coBadgeList.length}
@@ -105,11 +108,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const remoteCoBadge = onboardingCoBadgeFoundSelector(state);
   const addingResult = onboardingCobadgeAddingResultSelector(state);
-  const coBadgeList: ReadonlyArray<PaymentInstrument> = fromNullable(
-    getValueOrElse(remoteCoBadge, undefined)
-  )
-    .mapNullable(response => response.payload?.paymentInstruments)
-    .getOrElse([]);
+  const coBadgeList: ReadonlyArray<PaymentInstrument> = pipe(
+    getValueOrElse(remoteCoBadge, undefined),
+    O.fromNullable,
+    O.chainNullableK(response => response.payload?.paymentInstruments),
+    O.getOrElseW(() => [])
+  );
   return {
     isAddingReady: isReady(addingResult),
     loading: isLoading(addingResult),

@@ -1,4 +1,4 @@
-import { reverse } from "fp-ts/lib/Array";
+import * as AR from "fp-ts/lib/Array";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -64,7 +64,7 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
       >
         <PaymentHistoryList
           title={I18n.t("wallet.latestTransactions")}
-          payments={reverse([...historyPayments])}
+          payments={AR.reverse([...historyPayments])}
           ListEmptyComponent={ListEmptyComponent}
           navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
             this.props.navigateToPaymentHistoryDetail({

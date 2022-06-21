@@ -1,19 +1,19 @@
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { isSome } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { svGenerateVoucherFailure } from "../../store/actions/voucherGeneration";
-import { navigateToSvWorkerSelectDestinationScreen } from "../../navigation/actions";
-import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import CheckIncomeComponent from "../../components/CheckIncomeComponent";
+import { navigateToSvWorkerSelectDestinationScreen } from "../../navigation/actions";
+import { svGenerateVoucherFailure } from "../../store/actions/voucherGeneration";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
   if (
-    isSome(props.selectedBeneficiaryCategory) &&
+    O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "worker"
   ) {
     props.failure("The selected category is not Worker");

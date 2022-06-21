@@ -1,5 +1,6 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect } from "react";
@@ -15,6 +16,7 @@ import { connect } from "react-redux";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import OpenWeb from "../../../../../../img/icons/openweburl.svg";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -29,15 +31,14 @@ import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { showToast } from "../../../../../utils/showToast";
+import { openWebUrl } from "../../../../../utils/url";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
-import { openWebUrl } from "../../../../../utils/url";
-import { showToast } from "../../../../../utils/showToast";
-import OpenWeb from "../../../../../../img/icons/openweburl.svg";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -136,30 +137,34 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                 <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
                 <View spacer />
                 <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
-                {fromNullable(merchantDetail.value.websiteUrl).fold(
-                  undefined,
-                  url => (
-                    <TouchableDefaultOpacity
-                      style={[
-                        IOStyles.row,
-                        styles.spaced,
-                        { paddingVertical: 10 }
-                      ]}
-                      onPress={() =>
-                        openWebUrl(url, () =>
-                          showToast(I18n.t("bonus.cgn.generic.linkError"))
-                        )
-                      }
-                    >
-                      <H4 weight={"Regular"} style={IOStyles.flex}>
-                        {url}
-                      </H4>
-                      <OpenWeb
-                        height={COPY_ICON_SIZE}
-                        width={COPY_ICON_SIZE}
-                        fill={IOColors.blue}
-                      />
-                    </TouchableDefaultOpacity>
+                {pipe(
+                  merchantDetail.value.websiteUrl,
+                  O.fromNullable,
+                  O.fold(
+                    () => undefined,
+                    url => (
+                      <TouchableDefaultOpacity
+                        style={[
+                          IOStyles.row,
+                          styles.spaced,
+                          { paddingVertical: 10 }
+                        ]}
+                        onPress={() =>
+                          openWebUrl(url, () =>
+                            showToast(I18n.t("bonus.cgn.generic.linkError"))
+                          )
+                        }
+                      >
+                        <H4 weight={"Regular"} style={IOStyles.flex}>
+                          {url}
+                        </H4>
+                        <OpenWeb
+                          height={COPY_ICON_SIZE}
+                          width={COPY_ICON_SIZE}
+                          fill={IOColors.blue}
+                        />
+                      </TouchableDefaultOpacity>
+                    )
                   )
                 )}
                 {merchantDetail.value.addresses &&

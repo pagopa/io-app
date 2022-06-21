@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -198,9 +199,9 @@ const ServiceDetailsScreen = (props: Props) => {
           )}
         </Content>
 
-        {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) && (
+        {(O.isSome(maybeCTA) || SpecialServiceMetadata.is(metadata)) && (
           <FooterTopShadow>
-            {maybeCTA.isSome() && (
+            {O.isSome(maybeCTA) && (
               <View style={[styles.flexRow]}>
                 <ExtractedCTABar
                   ctas={maybeCTA.value}
@@ -232,9 +233,12 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => {
 
   return {
     serviceId,
-    service: fromNullable(serviceByIdSelector(serviceId)(state))
-      .chain(pot.toOption)
-      .toUndefined(),
+    service: pipe(
+      serviceByIdSelector(serviceId)(state),
+      O.fromNullable,
+      O.chain(pot.toOption),
+      O.toUndefined
+    ),
     isInboxEnabled: isInboxEnabledSelector(state),
     isEmailEnabled: isEmailEnabledSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),

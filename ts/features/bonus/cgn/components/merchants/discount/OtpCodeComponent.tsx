@@ -1,5 +1,6 @@
 import { Millisecond, Second } from "@pagopa/ts-commons/lib/units";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
 import { Otp } from "../../../../../../../definitions/cgn/Otp";
@@ -94,8 +95,10 @@ const getOtpTTL = (otp: Otp): Millisecond => {
 const getRemainingTimeRepr = (
   expirationtime: ExpirationTime
 ): string | undefined =>
-  fromNullable(expirationtime)
-    .map<string | undefined>(rt => {
+  pipe(
+    expirationtime,
+    O.fromNullable,
+    O.map(rt => {
       const minutes =
         rt.minutes === 0
           ? ""
@@ -114,8 +117,9 @@ const getRemainingTimeRepr = (
         seconds: rt.seconds
       });
       return `${I18n.t("bonus.cgn.otp.code.validUntil")} ${minutes}${seconds}`;
-    })
-    .getOrElse(undefined);
+    }),
+    O.toUndefined
+  );
 
 export const OtpCodeComponent = (props: Props) => {
   const { startPercentage, endPercentage } = props.progressConfig ?? {

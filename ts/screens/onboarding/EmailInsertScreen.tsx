@@ -5,7 +5,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
-import { none, Option, some } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
 const EMPTY_EMAIL = "";
 
 type State = Readonly<{
-  email: Option<string>;
+  email: O.Option<string>;
   isMounted: boolean;
 }>;
 
@@ -125,18 +127,20 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
    * LabelledItem Component and it used for style pourposes ONLY.
    */
   private isValidEmail = () =>
-    this.state.email
-      .map(value => {
+    pipe(
+      this.state.email,
+      O.map(value => {
         if (EMPTY_EMAIL === value) {
           return undefined;
         }
-        return EmailString.decode(value).isRight();
-      })
-      .toUndefined();
+        return E.isRight(EmailString.decode(value));
+      }),
+      O.toUndefined
+    );
 
   private handleOnChangeEmailText = (value: string) => {
     this.setState({
-      email: value !== EMPTY_EMAIL ? some(value) : none
+      email: value !== EMPTY_EMAIL ? O.some(value) : O.none
     });
   };
 
@@ -147,7 +151,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     }
     // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
     // see https://www.pivotaltracker.com/story/show/171424350
-    else if (this.props.optionEmail.isSome()) {
+    else if (O.isSome(this.props.optionEmail)) {
       this.setState({ isMounted: false }, () => {
         this.navigateToEmailReadScreen();
       });
@@ -179,7 +183,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     if (isOnboardingCompleted()) {
-      this.setState({ email: some(EMPTY_EMAIL) });
+      this.setState({ email: O.some(EMPTY_EMAIL) });
     }
   }
 
@@ -200,7 +204,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         // user is inserting his email from onboarding phase
         // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
         // and he has not an email
-        if (!isOnboardingCompleted() && prevProps.optionEmail.isNone()) {
+        if (!isOnboardingCompleted() && O.isNone(prevProps.optionEmail)) {
           // since this screen is mounted from saga it won't be unmounted because on saga
           // we have a direct navigation instead of back
           // so we have to force a reset (to get this screen unmounted) and navigate to emailReadScreen
@@ -230,9 +234,12 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         true
       );
       if (!isTheSameEmail) {
-        this.state.email.map(e => {
-          this.props.updateEmail(e as EmailString);
-        });
+        pipe(
+          this.state.email,
+          O.map(e => {
+            this.props.updateEmail(e as EmailString);
+          })
+        );
       } else {
         Alert.alert(I18n.t("email.insert.alert"));
       }
@@ -272,7 +279,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   : I18n.t("email.insert.subtitle")}
                 {isFromProfileSection && (
                   <Text style={styles.darkestGray}>
-                    {` ${this.props.optionEmail.getOrElse("")}`}
+                    {` ${pipe(
+                      this.props.optionEmail,
+                      O.getOrElse(() => "")
+                    )}`}
                   </Text>
                 )}
               </Text>
@@ -293,7 +303,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                     onSubmitEditing: this.continueOnPress,
                     autoCapitalize: "none",
                     keyboardType: "email-address",
-                    value: this.state.email.getOrElse(EMPTY_EMAIL),
+                    value: pipe(
+                      this.state.email,
+                      O.getOrElse(() => EMPTY_EMAIL)
+                    ),
                     onChangeText: this.handleOnChangeEmailText
                   }}
                   iconStyle={styles.icon}

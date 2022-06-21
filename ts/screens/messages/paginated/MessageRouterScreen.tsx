@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat/src/types";
 import { useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as O from "fp-ts/lib/Option";
 
+import { pipe } from "fp-ts/lib/function";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -29,11 +30,11 @@ import {
   reloadAllMessages,
   upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
-import { loadServiceDetail } from "../../../store/actions/services";
 import {
   navigateBack,
   navigateToPaginatedMessageDetailScreenAction
 } from "../../../store/actions/navigation";
+import { loadServiceDetail } from "../../../store/actions/services";
 import * as allPaginated from "../../../store/reducers/entities/messages/allPaginated";
 import {
   Cursor,
@@ -48,8 +49,8 @@ import {
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { isStrictSome } from "../../../utils/pot";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { isStrictSome } from "../../../utils/pot";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -221,10 +222,13 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
   const maybeMessage = allPaginated.getById(state, messageId);
-  const isServiceAvailable = O.fromNullable(maybeMessage?.serviceId)
-    .map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none)
-    .map(_ => Boolean(pot.toUndefined(_)))
-    .getOrElse(false);
+  const isServiceAvailable = pipe(
+    maybeMessage?.serviceId,
+    O.fromNullable,
+    O.map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none),
+    O.map(_ => Boolean(pot.toUndefined(_))),
+    O.getOrElse(() => false)
+  );
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
   const { archive, inbox } = getCursors(state);
   return {

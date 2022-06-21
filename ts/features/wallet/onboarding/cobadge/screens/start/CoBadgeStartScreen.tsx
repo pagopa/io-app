@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import { useEffect, useRef } from "react";
@@ -94,9 +95,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => {
   const maybeAbiSelected = onboardingCoBadgeAbiSelectedSelector(state);
-  const abiSelectedConfiguration = fromNullable(maybeAbiSelected)
-    .map(abiSelected => getCoBadgeAbiConfigurationSelector(state, abiSelected))
-    .getOrElse(pot.some(StatusEnum.disabled));
+  const abiSelectedConfiguration = pipe(
+    maybeAbiSelected,
+    O.fromNullable,
+    O.map(abiSelected =>
+      getCoBadgeAbiConfigurationSelector(state, abiSelected)
+    ),
+    O.getOrElseW(() => pot.some(StatusEnum.disabled))
+  );
   return { maybeAbiSelected, abiSelectedConfiguration };
 };
 

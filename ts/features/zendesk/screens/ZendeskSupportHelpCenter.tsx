@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { constNull } from "fp-ts/lib/function";
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
@@ -63,7 +63,7 @@ const FaqManager = (props: FaqManagerProps) => {
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)
   );
-  const maybeContextualData = pot.getOrElse(potContextualData, none);
+  const maybeContextualData = pot.getOrElse(potContextualData, O.none);
 
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
@@ -85,19 +85,21 @@ const FaqManager = (props: FaqManagerProps) => {
     }
   }, [dispatch, lastContextualDataUpdate, potContextualData]);
 
-  const defaultData: ContextualHelpData = fromNullable(
-    contextualHelpConfig
-  ).fold(
-    {
-      title: "",
-      faqs: getFAQsFromCategories(faqCategories ?? []),
-      content: constNull
-    },
-    cHC => ({
-      title: cHC.title,
-      faqs: getFAQsFromCategories(faqCategories ?? []),
-      content: cHC.body()
-    })
+  const defaultData: ContextualHelpData = pipe(
+    contextualHelpConfig,
+    O.fromNullable,
+    O.fold(
+      () => ({
+        title: "",
+        faqs: getFAQsFromCategories(faqCategories ?? []),
+        content: constNull
+      }),
+      cHC => ({
+        title: cHC.title,
+        faqs: getFAQsFromCategories(faqCategories ?? []),
+        content: cHC.body()
+      })
+    )
   );
   const contextualHelpData: ContextualHelpData = getContextualHelpData(
     maybeContextualData,
@@ -109,9 +111,12 @@ const FaqManager = (props: FaqManagerProps) => {
    - provided one from props is loaded or
    - when the remote one is loaded
    */
-  const isContentLoaded = maybeContextualData.fold(
-    contentLoaded,
-    _ => contentHasLoaded
+  const isContentLoaded = pipe(
+    maybeContextualData,
+    O.fold(
+      () => contentLoaded,
+      _ => contentHasLoaded
+    )
   );
 
   const isContentLoading = contextualHelpData.content === undefined;

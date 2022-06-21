@@ -1,9 +1,13 @@
-import { none } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { createStore } from "redux";
-import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
+import {
+  addWalletCreditCardWithBackoffRetryRequest,
+  fetchWalletsRequest
+} from "../../../store/actions/wallet/wallets";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { CreditCard, NullableWallet } from "../../../types/pagopa";
@@ -12,10 +16,6 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ConfirmCardDetailsScreen, {
   ConfirmCardDetailsScreenNavigationParams
 } from "../ConfirmCardDetailsScreen";
-import {
-  addWalletCreditCardWithBackoffRetryRequest,
-  fetchWalletsRequest
-} from "../../../store/actions/wallet/wallets";
 
 jest.mock("react-native-share", () => ({
   open: jest.fn()
@@ -63,7 +63,7 @@ const getComponent = () => {
       pan: "123456789" as CreditCardPan,
       holder: "tester"
     } as CreditCard,
-    inPayment: none
+    inPayment: O.none
   } as ConfirmCardDetailsScreenNavigationParams;
   const ToBeTested: React.FunctionComponent<
     React.ComponentProps<typeof ConfirmCardDetailsScreen>

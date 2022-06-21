@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useMemo } from "react";
@@ -52,7 +53,13 @@ const CgnMerchantsListByCategory = () => {
   const offlineMerchants = useIOSelector(cgnOfflineMerchantsSelector);
 
   const categorySpecs = useMemo(
-    () => fromNullable(currentCategory).chain(getCategorySpecs).toUndefined(),
+    () =>
+      pipe(
+        currentCategory,
+        O.fromNullable,
+        O.chain(getCategorySpecs),
+        O.toUndefined
+      ),
     [currentCategory]
   );
 
@@ -103,9 +110,13 @@ const CgnMerchantsListByCategory = () => {
     <BaseScreenComponent
       goBack
       headerTitle={I18n.t(
-        fromNullable(categorySpecs).fold(
-          "bonus.cgn.merchantsList.navigationTitle",
-          cs => cs.nameKey
+        pipe(
+          categorySpecs,
+          O.fromNullable,
+          O.fold(
+            () => "bonus.cgn.merchantsList.navigationTitle",
+            cs => cs.nameKey
+          )
         )
       )}
       contextualHelp={emptyContextualHelp}

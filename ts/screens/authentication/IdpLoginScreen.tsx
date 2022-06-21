@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
@@ -152,10 +153,14 @@ class IdpLoginScreen extends React.Component<Props, State> {
       new Error(`login failure with code ${errorCode || "n/a"}`),
       this.idp
     );
-    const logText = fromNullable(errorCode).fold(
-      "login failed with no error code available",
-      ec =>
-        `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
+    const logText = pipe(
+      errorCode,
+      O.fromNullable,
+      O.fold(
+        () => "login failed with no error code available",
+        ec =>
+          `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
+      )
     );
 
     handleSendAssistanceLog(this.choosenTool, logText);
@@ -181,9 +186,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
         this.updateLoginTrace(urlChanged);
       }
     }
-    const isAssertion = fromNullable(event.url).fold(
-      false,
-      s => s.indexOf("/assertionConsumerService") > -1
+    const isAssertion = pipe(
+      event.url,
+      O.fromNullable,
+      O.fold(
+        () => false,
+        s => s.indexOf("/assertionConsumerService") > -1
+      )
     );
     this.setState({
       requestState:
@@ -195,7 +204,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
     const url = event.url;
     // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
     const idpIntent = getIntentFallbackUrl(url);
-    if (idpIntent.isSome()) {
+    if (O.isSome(idpIntent)) {
       void mixpanelTrack("SPID_LOGIN_INTENT", {
         idp: this.props.loggedOutWithIdpAuth?.idp
       });
@@ -271,7 +280,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   get contextualHelp() {
     const { selectedIdpTextData } = this.props;
 
-    if (selectedIdpTextData.isNone()) {
+    if (O.isNone(selectedIdpTextData)) {
       return {
         title: I18n.t("authentication.idp_login.contextualHelpTitle"),
         body: () => (
@@ -333,8 +342,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const selectedIdp = selectedIdentityProviderSelector(state);
 
-  const selectedIdpTextData = fromNullable(selectedIdp).fold(none, idp =>
-    idpContextualHelpDataFromIdSelector(idp.id)(state)
+  const selectedIdpTextData = pipe(
+    selectedIdp,
+    O.fromNullable,
+    O.chain(idp => idpContextualHelpDataFromIdSelector(idp.id)(state))
   );
 
   return {

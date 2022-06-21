@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react-native";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { ImageSourcePropType, ImageURISource } from "react-native";
-import { Store } from "redux";
 import { Provider } from "react-redux";
+import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { none, some } from "fp-ts/lib/Option";
 import * as hooks from "../../../../onboarding/bancomat/screens/hooks/useImageResize";
 import BasePrivativeCard from "../BasePrivativeCard";
 
@@ -27,7 +27,7 @@ describe("PrivativeWalletPreview component", () => {
     store = mockStore();
   });
   it("should show the loyaltyLogo if is of type ImageURISource and if useImageResize return some value", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const component = getComponent(store, aLoyaltyLogo);
     const loyaltyLogoComponent = component.queryByTestId("loyaltyLogo");
 
@@ -35,7 +35,7 @@ describe("PrivativeWalletPreview component", () => {
     expect(loyaltyLogoComponent).toHaveProp("source", aLoyaltyLogo);
   });
   it("should show the fallback loyaltyLogo if the loyaltyLogo prop is not of type ImageURISource", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const notAnImageURISourceLogo = 3;
     const component = getComponent(store, notAnImageURISourceLogo);
     const unknownLoyaltyLogo = component.queryByTestId("unknownLoyaltyLogo");
@@ -47,7 +47,7 @@ describe("PrivativeWalletPreview component", () => {
   });
 
   it("should show the fallback loyaltyLogo if useImageResize return none", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const component = getComponent(store, aLoyaltyLogo);
     const unknownLoyaltyLogo = component.queryByTestId("unknownLoyaltyLogo");
 
@@ -58,7 +58,7 @@ describe("PrivativeWalletPreview component", () => {
   });
 
   it("should show the caption if is defined", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const component = getComponent(store, aLoyaltyLogo, aCaption);
     const caption = component.queryByTestId("caption");
 
@@ -67,7 +67,7 @@ describe("PrivativeWalletPreview component", () => {
   });
 
   it("should show the gdoLogo if there is a gdoLogo and useImageResize return some value", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const component = getComponent(store, aLoyaltyLogo, aCaption, aGdoLogo);
     const loyaltyLogo = component.queryByTestId("gdoLogo");
 
@@ -76,7 +76,7 @@ describe("PrivativeWalletPreview component", () => {
   });
 
   it("should show the blocked badge if is blocked prop is true", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const component = getComponent(
       store,
       aLoyaltyLogo,

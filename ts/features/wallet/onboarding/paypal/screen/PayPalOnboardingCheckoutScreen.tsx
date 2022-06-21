@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
@@ -49,7 +49,7 @@ const LoadingOrError = (loadingProps: {
 
 const CheckoutContent = (
   props: Props & {
-    onCheckoutCompleted: (outcode: Option<string>) => void;
+    onCheckoutCompleted: (outcode: O.Option<string>) => void;
     onGoBack: () => void;
   }
 ) => {
@@ -111,7 +111,7 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
     refreshPMtoken();
   }, [refreshPMtoken]);
 
-  const handleCheckoutCompleted = (outcomeCode: Option<string>) => {
+  const handleCheckoutCompleted = (outcomeCode: O.Option<string>) => {
     props.setOutcomeCode(outcomeCode);
     navigation.dispatch(navigateToPayPalCheckoutCompleted());
   };
@@ -148,7 +148,8 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(walletAddPaypalBack()),
-  setOutcomeCode: (oc: Option<string>) => dispatch(walletAddPaypalOutcome(oc)),
+  setOutcomeCode: (oc: O.Option<string>) =>
+    dispatch(walletAddPaypalOutcome(oc)),
   refreshPMtoken: () => dispatch(walletAddPaypalRefreshPMToken.request())
 });
 const mapStateToProps = (state: GlobalState) => ({

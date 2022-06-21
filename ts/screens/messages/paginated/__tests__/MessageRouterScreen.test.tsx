@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { none } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../i18n";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
@@ -94,7 +94,7 @@ describe("MessageRouterScreen", () => {
           page: successLoadNextPageMessagesPayload.messages,
           previous: previousCursor
         }),
-        lastRequest: none
+        lastRequest: O.none
       }
     };
 
@@ -222,8 +222,8 @@ type InputState = {
 const renderComponent = (messageId: string, state: InputState = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const allPaginated = {
-    inbox: { data: pot.none, lastRequest: none },
-    archive: { data: pot.none, lastRequest: none },
+    inbox: { data: pot.none, lastRequest: O.none },
+    archive: { data: pot.none, lastRequest: O.none },
     ...state.allPaginated
   };
   const detailsById = state.detailsById ?? {};

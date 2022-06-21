@@ -1,7 +1,9 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Tab, Tabs } from "native-base";
 import React, { useEffect } from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
@@ -34,8 +36,7 @@ import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
 import {
   allArchiveMessagesSelector,
   allInboxMessagesSelector,
-  allPaginatedSelector,
-  MessageOperation
+  allPaginatedSelector
 } from "../../../store/reducers/entities/messages/allPaginated";
 import {
   MessagesStatus,
@@ -179,30 +180,24 @@ const MessagesHomeScreen = ({
       return;
     }
 
-    type toastData = {
-      operation: MessageOperation;
-      archive: string;
-      restore: string;
-      type: "success" | "danger";
-    };
-    pipe<typeof latestMessageOperation, toastData, void>(
-      lmo =>
-        lmo.fold<toastData>(
-          l => ({
-            operation: l.operation,
-            archive: I18n.t("messages.operations.archive.failure"),
-            restore: I18n.t("messages.operations.restore.failure"),
-            type: "danger"
-          }),
-          r => ({
-            operation: r,
-            archive: I18n.t("messages.operations.archive.success"),
-            restore: I18n.t("messages.operations.restore.success"),
-            type: "success"
-          })
-        ),
+    pipe(
+      latestMessageOperation,
+      E.foldW(
+        l => ({
+          operation: l.operation,
+          archive: I18n.t("messages.operations.archive.failure"),
+          restore: I18n.t("messages.operations.restore.failure"),
+          type: "danger" as const
+        }),
+        r => ({
+          operation: r,
+          archive: I18n.t("messages.operations.archive.success"),
+          restore: I18n.t("messages.operations.restore.success"),
+          type: "success" as const
+        })
+      ),
       lmo => showToast(lmo[lmo.operation], lmo.type)
-    )(latestMessageOperation);
+    );
   }, [latestMessageOperation]);
 
   const navigateToMessageDetail = (message: UIMessage) => {
@@ -282,8 +277,9 @@ const MessagesHomeScreen = ({
       )}
 
       {isSearchEnabled &&
-        searchText
-          .map(_ =>
+        pipe(
+          searchText,
+          O.map(_ =>
             _.length < MIN_CHARACTER_SEARCH_TEXT ? (
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
@@ -299,10 +295,11 @@ const MessagesHomeScreen = ({
                 )}
               />
             )
-          )
-          .getOrElse(
+          ),
+          O.getOrElse(() => (
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
-          )}
+          ))
+        )}
       {!isScreenReaderEnabled && statusComponent}
     </TopScreenComponent>
   );

@@ -1,23 +1,23 @@
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { isSome } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
+import CheckIncomeComponent from "../../components/CheckIncomeComponent";
+import { navigateToSvSickSelectDestinationScreen } from "../../navigation/actions";
 import {
   svGenerateVoucherFailure,
   svGenerateVoucherSelectCategory
 } from "../../store/actions/voucherGeneration";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
-import { navigateToSvSickSelectDestinationScreen } from "../../navigation/actions";
-import CheckIncomeComponent from "../../components/CheckIncomeComponent";
+import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
   if (
-    isSome(props.selectedBeneficiaryCategory) &&
+    O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "sick"
   ) {
     props.failure("The selected category is not Sick");

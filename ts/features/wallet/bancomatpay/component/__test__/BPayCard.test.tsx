@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
@@ -22,7 +22,7 @@ describe("BPayWalletPreview component", () => {
     store = mockStore(mockProfileNameSurnameState(mockedProfile));
   });
   it("should show the bankName if there isn't the abiLogo", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const component = getComponent(store, aBankName);
     const bankName = component.queryByTestId("bankName");
 
@@ -31,7 +31,7 @@ describe("BPayWalletPreview component", () => {
   });
 
   it("should show the abiLog if there is an abiLogo and useImageResize return some value", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const component = getComponent(store, aBankName, anAbiLogo);
     const abiLogo = component.queryByTestId("abiLogo");
 
@@ -40,7 +40,7 @@ describe("BPayWalletPreview component", () => {
   });
 
   it("should show the phone in is defined", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const component = getComponent(store, aBankName, anAbiLogo, aPhone);
     const phone = component.queryByTestId("phone");
 
@@ -48,7 +48,7 @@ describe("BPayWalletPreview component", () => {
     expect(phone).toHaveTextContent(aPhone);
   });
   it("should show the uppercase name surname in is defined", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const component = getComponent(store, aBankName);
     const nameSurname = component.queryByTestId("nameSurname");
 

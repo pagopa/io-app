@@ -4,7 +4,7 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
@@ -259,7 +259,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
       props.navigation.getParam("initialAmount"),
       props.navigation.getParam("verifica"),
       props.navigation.getParam("idPayment"),
-      some(wallet),
+      O.some(wallet),
       failureReason => {
         // selecting the payment method has failed, show a toast and stay in
         // this screen
@@ -278,7 +278,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   },
   navigateToAddPaymentMethod: () =>
     navigateToWalletAddPaymentMethod({
-      inPayment: some({
+      inPayment: O.some({
         rptId: props.navigation.getParam("rptId"),
         initialAmount: props.navigation.getParam("initialAmount"),
         verifica: props.navigation.getParam("verifica"),

@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect } from "react";
 import WorkunitGenericFailure from "../../../../../components/error/WorkunitGenericFailure";
 import OutcomeCodeMessageComponent from "../../../../../components/wallet/OutcomeCodeMessageComponent";
@@ -38,9 +38,9 @@ const PayPalOnboardingCheckoutCompletedScreen = () =>
     if (paypalOutcomeCode === undefined) {
       return <WorkunitGenericFailure />;
     }
-    const outcomeCode = extractOutcomeCode(some(paypalOutcomeCode));
+    const outcomeCode = extractOutcomeCode(O.some(paypalOutcomeCode));
     // it should never happen (the outcome code is not recognized as valid)
-    if (outcomeCode.isNone()) {
+    if (O.isNone(outcomeCode)) {
       return <WorkunitGenericFailure />;
     }
     // show a loading or error component to handle the wallet reload

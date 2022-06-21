@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { index } from "fp-ts/lib/Array";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -69,15 +70,17 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
     nextPan(false);
   };
 
-  const currentPan = index(currentIndex, [...props.cards]);
+  const currentPan = AR.lookup(currentIndex, [...props.cards]);
 
   return props.loading || props.isAddingResultError ? (
     <LoadAddBancomatComponent
       isLoading={!props.isAddingResultError}
       onCancel={props.onCancel}
-      onRetry={() => fromNullable(props.selectedPan).map(props.onRetry)}
+      onRetry={() =>
+        pipe(props.selectedPan, O.fromNullable, O.map(props.onRetry))
+      }
     />
-  ) : currentPan.isSome() ? (
+  ) : O.isSome(currentPan) ? (
     <AddBancomatComponent
       pan={currentPan.value}
       profile={props.profile}
@@ -101,9 +104,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const remotePans = onboardingBancomatFoundPansSelector(state);
   const addingResult = onboardingBancomatAddingResultSelector(state);
-  const cards = fromNullable(getValueOrElse(remotePans, undefined))
-    .map(p => p.cards)
-    .getOrElse([]);
+  const cards = pipe(
+    getValueOrElse(remotePans, undefined),
+    O.fromNullable,
+    O.map(p => p.cards),
+    O.getOrElseW(() => [])
+  );
   return {
     isAddingReady: isReady(addingResult),
     loading: isLoading(addingResult),
