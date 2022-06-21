@@ -39,11 +39,11 @@ const PayPalOnboardingCheckoutCompletedScreen = () =>
       return <WorkunitGenericFailure />;
     }
     const outcomeCode = extractOutcomeCode(some(paypalOutcomeCode));
-    // it should not never happen (the outcome code is not recognized as valid)
+    // it should never happen (the outcome code is not recognized as valid)
     if (outcomeCode.isNone()) {
       return <WorkunitGenericFailure />;
     }
-    // show a loding or error component to handle the wallet reload
+    // show a loading or error component to handle the wallet reload
     if (
       pot.isLoading(paypalPaymentMethod) ||
       pot.isError(paypalPaymentMethod)

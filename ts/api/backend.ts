@@ -40,7 +40,6 @@ import {
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
   getUserMessagesDefaultDecoder,
-  GetUserMessageT,
   getUserMetadataDefaultDecoder,
   GetUserMetadataT,
   getUserProfileDecoder,
@@ -66,6 +65,7 @@ import {
   withBearerToken as withToken
 } from "../utils/api";
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
+import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -229,10 +229,37 @@ export function BackendClient(
     response_decoder: getUserMessagesDefaultDecoder()
   };
 
-  const getMessageT: GetUserMessageT = {
+  // TODO: this is a temporary fix due to a bug in openapi-codegen-ts
+  // https://github.com/pagopa/openapi-codegen-ts/pull/265
+  // Please remove it once we upgrade
+  type GetUserMessageTCustom = r.IGetApiRequestType<
+    {
+      readonly id: string;
+      readonly public_message?: boolean;
+      readonly Bearer: string;
+    },
+    "Authorization",
+    never,
+    | r.IResponseType<200, CreatedMessageWithContentAndAttachments>
+    | r.IResponseType<400, ProblemJson>
+    | r.IResponseType<401, undefined>
+    | r.IResponseType<404, ProblemJson>
+    | r.IResponseType<429, ProblemJson>
+    | r.IResponseType<500, ProblemJson>
+  >;
+
+  const getMessageT: GetUserMessageTCustom = {
     method: "get",
     url: params => `/api/v1/messages/${params.id}`,
-    query: _ => ({}),
+    query: params => {
+      const { public_message } = params;
+      return _.pickBy(
+        {
+          public_message
+        },
+        v => !_.isUndefined(v)
+      );
+    },
     headers: tokenHeaderProducer,
     response_decoder: getUserMessageDefaultDecoder()
   };
