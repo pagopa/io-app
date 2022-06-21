@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -10,11 +8,23 @@ import {
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import I18n from "../i18n";
+import * as O from "fp-ts/lib/Option";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
+import {
+  DetailEnum,
+  Detail_v2Enum
+} from "../../definitions/backend/PaymentProblemJson";
+import { PspData } from "../../definitions/pagopa/PspData";
+import I18n from "../i18n";
 import { PaymentHistory } from "../store/reducers/payments/history";
+import {
+  OutcomeCode,
+  OutcomeCodes,
+  OutcomeCodesKey
+} from "../types/outcomeCode";
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
@@ -23,16 +33,6 @@ import {
   Transaction,
   Wallet
 } from "../types/pagopa";
-import {
-  OutcomeCode,
-  OutcomeCodes,
-  OutcomeCodesKey
-} from "../types/outcomeCode";
-import {
-  Detail_v2Enum,
-  DetailEnum
-} from "../../definitions/backend/PaymentProblemJson";
-import { PspData } from "../../definitions/pagopa/PspData";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
@@ -49,10 +49,6 @@ export function getRptIdFromNoticeNumber(
   return pipe(
     `${organizationFiscalCode}${noticeNumber}`,
     RptIdFromString.decode,
-    rptIdFromStringDecodeResult =>
-      rptIdFromStringDecodeResult.isLeft()
-        ? E.left(rptIdFromStringDecodeResult.value)
-        : E.right(rptIdFromStringDecodeResult.value),
     O.fromEither
   );
 }
@@ -71,10 +67,6 @@ export function getAmountFromPaymentAmount(
   return pipe(
     paymentAmount / 100.0,
     AmountInEuroCentsFromNumber.decode,
-    amountInEuroCentsFromNumberDecodeResult =>
-      amountInEuroCentsFromNumberDecodeResult.isLeft()
-        ? E.left(amountInEuroCentsFromNumberDecodeResult.value)
-        : E.right(amountInEuroCentsFromNumberDecodeResult.value),
     O.fromEither
   );
 }
@@ -82,23 +74,12 @@ export function getAmountFromPaymentAmount(
 export function decodePagoPaQrCode(
   data: string
 ): O.Option<ITuple2<RptId, AmountInEuroCents>> {
-  const paymentNoticeOrError = pipe(
-    data,
-    PaymentNoticeQrCodeFromString.decode,
-    paymentNoticeQrCodeFromStringDecodeResult =>
-      paymentNoticeQrCodeFromStringDecodeResult.isLeft()
-        ? E.left(paymentNoticeQrCodeFromStringDecodeResult.value)
-        : E.right(paymentNoticeQrCodeFromStringDecodeResult.value)
-  );
+  const paymentNoticeOrError = pipe(data, PaymentNoticeQrCodeFromString.decode);
   return pipe(
     paymentNoticeOrError,
     E.chain(paymentNotice =>
       pipe(
         rptIdFromPaymentNoticeQrCode(paymentNotice),
-        rptIdFromPaymentNoticeQrCodeRes =>
-          rptIdFromPaymentNoticeQrCodeRes.isLeft()
-            ? E.left(rptIdFromPaymentNoticeQrCodeRes.value)
-            : E.right(rptIdFromPaymentNoticeQrCodeRes.value),
         E.map(rptId => Tuple2(rptId, paymentNotice.amount))
       )
     ),
@@ -128,22 +109,10 @@ export function decodePosteDataMatrix(
       paymentNoticeNumber
     },
     RptId.decode,
-    rptIdDecodeRes =>
-      rptIdDecodeRes.isLeft()
-        ? E.left(rptIdDecodeRes.value)
-        : E.right(rptIdDecodeRes.value),
     O.fromEither
   );
 
-  const decodedAmount = pipe(
-    amount,
-    AmountInEuroCents.decode,
-    amountInEuroCentsDecodeRes =>
-      amountInEuroCentsDecodeRes.isLeft()
-        ? E.left(amountInEuroCentsDecodeRes.value)
-        : E.right(amountInEuroCentsDecodeRes.value),
-    O.fromEither
-  );
+  const decodedAmount = pipe(amount, AmountInEuroCents.decode, O.fromEither);
 
   if (O.isNone(decodedRpdId) || O.isNone(decodedAmount)) {
     return O.none;

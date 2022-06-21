@@ -1,11 +1,12 @@
-import * as O from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as O from "fp-ts/lib/Option";
 
 import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { pipe } from "fp-ts/lib/function";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
+import I18n from "../../i18n";
 import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
@@ -21,7 +22,6 @@ import {
   getTransactionIUV,
   getV2ErrorMainType
 } from "../payment";
-import I18n from "../../i18n";
 
 describe("getAmountFromPaymentAmount", () => {
   const aPaymentAmount = 1 as PaymentAmount;
@@ -37,7 +37,7 @@ describe("getAmountFromPaymentAmount", () => {
 describe("getRptIdFromNoticeNumber", () => {
   const anOrganizationFiscalCode = "00000123456" as OrganizationFiscalCode;
   const aNoticeNumber = "002160020399398578" as PaymentNoticeNumber;
-  const anRptId = RptId.decode({
+  const anRptId = {
     organizationFiscalCode: "00000123456",
     paymentNoticeNumber: {
       applicationCode: "02",
@@ -45,7 +45,7 @@ describe("getRptIdFromNoticeNumber", () => {
       checkDigit: "78",
       iuv13: "1600203993985"
     }
-  }).value as RptId;
+  };
   it("should convert a PaymentNoticeNumber into an RptId", () => {
     const rptId = pipe(
       getRptIdFromNoticeNumber(anOrganizationFiscalCode, aNoticeNumber),
@@ -263,7 +263,7 @@ describe("getCodiceAvviso", () => {
   const organizationFiscalCode = "00000123456";
   [
     Tuple2<RptId, string>(
-      RptId.decode({
+      {
         organizationFiscalCode,
         paymentNoticeNumber: {
           applicationCode: "02",
@@ -271,32 +271,32 @@ describe("getCodiceAvviso", () => {
           checkDigit: "78",
           iuv13: "1600203993985"
         }
-      }).value as RptId,
+      } as RptId,
       `002160020399398578`
     ),
     Tuple2<RptId, string>(
-      RptId.decode({
+      {
         organizationFiscalCode,
         paymentNoticeNumber: {
           auxDigit: "1",
           iuv17: "16002039939851111"
         }
-      }).value as RptId,
+      } as RptId,
       `116002039939851111`
     ),
     Tuple2<RptId, string>(
-      RptId.decode({
+      {
         organizationFiscalCode,
         paymentNoticeNumber: {
           checkDigit: "78",
           auxDigit: "2",
           iuv15: "160020399398511"
         }
-      }).value as RptId,
+      } as RptId,
       `216002039939851178`
     ),
     Tuple2<RptId, string>(
-      RptId.decode({
+      {
         organizationFiscalCode,
         paymentNoticeNumber: {
           checkDigit: "78",
@@ -304,7 +304,7 @@ describe("getCodiceAvviso", () => {
           segregationCode: "55",
           iuv13: "1600203993985"
         }
-      }).value as RptId,
+      } as RptId,
       `355160020399398578`
     )
   ].forEach(tuple => {

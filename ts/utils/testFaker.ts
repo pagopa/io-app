@@ -1,24 +1,24 @@
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import {
   IPatternStringTag,
   IWithinRangeStringTag
 } from "@pagopa/ts-commons/lib/strings";
-import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Action } from "redux";
 
-import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
-import { TypeEnum } from "../../definitions/pagopa/Wallet";
-import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
-import { CreditCard, PatchedWalletV2, Psp, Wallet } from "../types/pagopa";
-import {
-  loginSuccess,
-  idpSelected,
-  sessionInformationLoadSuccess
-} from "../store/actions/authentication";
-import { SessionToken } from "../types/SessionToken";
+import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { SpidLevelEnum } from "../../definitions/backend/SpidLevel";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
+import { TypeEnum } from "../../definitions/pagopa/Wallet";
+import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
+import {
+  idpSelected,
+  loginSuccess,
+  sessionInformationLoadSuccess
+} from "../store/actions/authentication";
+import { CreditCard, PatchedWalletV2, Psp, Wallet } from "../types/pagopa";
+import { SessionToken } from "../types/SessionToken";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 const validCreditCard: CreditCard = {
@@ -237,6 +237,8 @@ export const AuthSeq: ReadonlyArray<Action> = [
     idp: "posteid"
   }),
   sessionInformationLoadSuccess({
+    fimsToken:
+      "h7890416477432ecbde1f94dfe59f2d6350f716cb2cf523d8cad36fa18d71fa9924e0ea6d372ecab86447abe93d99c456",
     bpdToken:
       "h7890416477432ecbde1f94dfe59f2d6350f716cb2cf523d8cad36fa18d71fa9924e0ea6d372ecab86447abe93d99cd5",
     myPortalToken:

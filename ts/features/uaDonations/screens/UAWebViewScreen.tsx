@@ -139,10 +139,12 @@ const handleOnMessage = (
         organizationFiscalCode: cf
       });
       const maybeAmount = AmountInEuroCents.decode(amount.toString());
-      if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
-        const reason = maybeRptId.isLeft()
-          ? maybeRptId.value
-          : maybeAmount.value;
+      if (E.isLeft(maybeRptId) || E.isLeft(maybeAmount)) {
+        const reason = E.isLeft(maybeRptId)
+          ? maybeRptId.left
+          : E.isLeft(maybeAmount)
+          ? maybeAmount.left
+          : maybeAmount.right;
         void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_ERROR", {
           reason
         });
@@ -150,13 +152,13 @@ const handleOnMessage = (
         return;
       }
       void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_SUCCESS", {
-        organizationFiscalCode: maybeRptId.value.organizationFiscalCode,
+        organizationFiscalCode: maybeRptId.right.organizationFiscalCode,
         paymentNoticeNumber: PaymentNoticeNumber.encode(
-          maybeRptId.value.paymentNoticeNumber
+          maybeRptId.right.paymentNoticeNumber
         ),
-        amount: maybeAmount.value
+        amount: maybeAmount.right
       });
-      onPaymentPayload(maybeRptId.value, maybeAmount.value);
+      onPaymentPayload(maybeRptId.right, maybeAmount.right);
       break;
     case "error":
       const error = maybeMessage.right.payload;

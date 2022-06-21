@@ -2764,13 +2764,12 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-pagopa-commons@^2.0.2":
+"@pagopa/io-pagopa-commons@../io-pagopa-commons":
   version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-pagopa-commons/-/io-pagopa-commons-2.0.2.tgz#d00f61cf86aec65adf97ab727864fae305e2c980"
-  integrity sha512-yIuj+ZsAPYOBHlb2noWxJY+JT3boPebX5GBo/py7IlYb2CfFr1DK1S/r3x+DvjUcWQQbvYt9R9wT+rQpS3qDDw==
   dependencies:
-    io-ts "1.8.5"
-    italia-ts-commons "5.1.1"
+    "@pagopa/ts-commons" "^10.5.0"
+    fp-ts "^2.12.1"
+    io-ts "^2.2.16"
 
 "@pagopa/openapi-codegen-ts@^11.0.0":
   version "11.0.0"
@@ -7989,16 +7988,6 @@ forwarded@0.2.0:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
 
-fp-ts@1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.12.0.tgz#d333310e4ac104cdcb6bea47908e381bb09978e7"
-  integrity sha512-fWwnAgVlTsV26Ruo9nx+fxNHIm6l1puE1VJ/C0XJ3nRQJJJIgRHYw6sigB3MuNFZL1o4fpGlhwFhcbxHK0RsOA==
-
-fp-ts@^1.0.0:
-  version "1.17.4"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.17.4.tgz#f41eeeb2a8924b51b11521f93f5f59d28d0503be"
-  integrity sha512-OaIM5w0FceJm6zO0OjMY05Rdg02nlFCpilTrMitzGnHORh/8neP0NH9OcRvnGQdOEh2T5xjtcutzzctvWOQtCQ==
-
 fp-ts@^2.11.0, fp-ts@^2.12.1:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.12.1.tgz#e389488bfd1507af06bd5965e97367edcd4fabad"
@@ -9004,13 +8993,6 @@ invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   version "0.3.21"
   resolved "https://github.com/pagopa/io-react-native-zendesk.git#6b8ab1aa5eb485feeb2dfe9f09aa0c37773e9a0c"
 
-io-ts@1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.8.5.tgz#2e102f7f518abe17b0f7e7ede0db54a4c4ddc188"
-  integrity sha512-4HzDeg7mTygFjFIKh7ajBSanoVaFryYSFI0ocdwndSWl3eWQXhg3wVR0WI+Li5Vq11TIsoIngQszVbN4dy//9A==
-  dependencies:
-    fp-ts "^1.0.0"
-
 io-ts@^2.2.16:
   version "2.2.16"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.16.tgz#597dffa03db1913fc318c9c6df6931cb4ed808b2"
@@ -9530,16 +9512,6 @@ istanbul-reports@^3.0.2:
   dependencies:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
-
-italia-ts-commons@5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-5.1.1.tgz#a4b66158286b8472ae36b685323d71841059524a"
-  integrity sha512-sTWo7U5e0VRRTjxZH7CrmTEhpsVzzCDp/FS8neiDZy/lBRohHtRAosrgqqYzhNZpUMraY5Hko8K51Ggxfb02zQ==
-  dependencies:
-    fp-ts "1.12.0"
-    io-ts "1.8.5"
-    json-set-map "^1.0.2"
-    validator "^10.1.0"
 
 iterall@^1.2.1, iterall@^1.3.0:
   version "1.3.0"
@@ -10227,7 +10199,7 @@ json-schema@0.2.3:
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
   integrity sha1-tIDIkuWaLwWVTOcnvT8qTogvnhM=
 
-json-set-map@^1.0.2, json-set-map@^1.1.2:
+json-set-map@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/json-set-map/-/json-set-map-1.1.2.tgz#536cbc6549d06e8af11f76cb4fbd441ed2389e6e"
   integrity sha512-x0TGwgcOG21jOa8wV1PWXDpSXUAKa1WuhMSHPBQhXU5Pb+4DdMrxOw5HMAWztVLP8KhSG5Kl5BoAOVF0aW63wA==
@@ -16113,11 +16085,6 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
-
-validator@^10.1.0:
-  version "10.11.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-10.11.0.tgz#003108ea6e9a9874d31ccc9e5006856ccd76b228"
-  integrity sha512-X/p3UZerAIsbBfN/IwahhYaBbY68EN/UQBWHtsbXGT5bfrH/p4NQzUCG1kF/rtKaNpnJ7jAu6NGTdSNtyNIXMw==
 
 validator@^13.7.0:
   version "13.7.0"

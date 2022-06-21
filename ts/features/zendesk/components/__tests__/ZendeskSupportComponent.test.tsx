@@ -4,7 +4,6 @@ import { PublicSession } from "../../../../../definitions/backend/PublicSession"
 import { SpidLevelEnum } from "../../../../../definitions/backend/SpidLevel";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
-import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import {
@@ -17,6 +16,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import ZENDESK_ROUTES from "../../navigation/routes";
 import {
   getZendeskConfig,
@@ -26,6 +26,7 @@ import ZendeskSupportComponent from "../ZendeskSupportComponent";
 
 const mockPublicSession: PublicSession = {
   bpdToken: "bpdToken",
+  fimsToken: "fimsToken",
   myPortalToken: "myPortalToken",
   spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"],
   walletToken: "walletToken",

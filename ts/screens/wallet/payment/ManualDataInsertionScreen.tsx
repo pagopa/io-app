@@ -113,7 +113,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   private isFormValid = () =>
     pipe(
       this.state.paymentNoticeNumber,
-      O.map(_ => _.isRight()),
+      O.map(E.isRight),
       O.getOrElseW(() => false)
     ) &&
     pipe(
@@ -132,7 +132,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
     pipe(
       this.state.paymentNoticeNumber,
-      O.chain(_ => (_.isRight() ? O.some(_.value) : O.none)),
+      O.chain(O.fromEither),
       O.chain(paymentNoticeNumber =>
         pipe(
           this.state.organizationFiscalCode,
@@ -144,7 +144,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 organizationFiscalCode
               },
               RptId.decode,
-              _ => (_.isRight() ? O.some(_.value) : O.none),
+              O.fromEither,
               O.map(rptId => {
                 // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
                 const initialAmount = "1" as AmountInEuroCents;
@@ -188,14 +188,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <View spacer />
               <Form>
                 <LabelledItem
-                  isValid={unwrapOptionalEither(
-                    pipe(
-                      this.state.paymentNoticeNumber,
-                      O.map(_ =>
-                        _.isRight() ? E.right(_.value) : E.left(_.value)
-                      )
-                    )
-                  )}
+                  isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
                   label={I18n.t("wallet.insertManually.noticeCode")}
                   accessibilityLabel={I18n.t(
                     "wallet.insertManually.noticeCode"

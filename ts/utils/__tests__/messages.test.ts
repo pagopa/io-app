@@ -1,10 +1,16 @@
-import * as O from "fp-ts/lib/Option";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as O from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
+import { MessageSubject } from "../../../definitions/backend/MessageSubject";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
+import { ServiceScope } from "../../../definitions/backend/ServiceScope";
+import { StandardServiceCategoryEnum } from "../../../definitions/backend/StandardServiceCategory";
+import { TimeToLiveSeconds } from "../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
@@ -18,10 +24,6 @@ import {
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../messages";
-import { ServiceScope } from "../../../definitions/backend/ServiceScope";
-import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
-import { StandardServiceCategoryEnum } from "../../../definitions/backend/StandardServiceCategory";
-import { TimeToLiveSeconds } from "../../../definitions/backend/TimeToLiveSeconds";
 
 const messageBody = `### this is a message
 
@@ -75,11 +77,11 @@ const messageWithoutPaymentData: CreatedMessageWithContent = {
   created_at: new Date(),
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
   id: "93726BD8-D29C-48F2-AE6D-2F",
-  sender_service_id: "dev-service_0",
+  sender_service_id: "dev-service_0" as ServiceId,
   time_to_live: 3600 as TimeToLiveSeconds,
   content: {
-    subject: "Subject - test 1",
-    markdown: CTA_2
+    subject: "Subject - test 1" as MessageSubject,
+    markdown: CTA_2 as MessageBodyMarkdown
   }
 };
 

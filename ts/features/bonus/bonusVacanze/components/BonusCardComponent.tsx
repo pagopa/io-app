@@ -169,7 +169,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           value: props.bonus.dsu_request.max_amount,
           status: pipe(
             maybeStatusDescription,
-            O.getOrElse(() => props.bonus.status)
+            O.getOrElseW(() => props.bonus.status)
           )
         })}
       >
