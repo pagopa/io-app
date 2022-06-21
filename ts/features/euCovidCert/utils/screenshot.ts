@@ -1,11 +1,12 @@
-import path from "path";
-import { CaptureOptions, captureRef } from "react-native-view-shot";
+import * as E from "fp-ts/lib/Either";
+import * as path from "path";
 import { ReactInstance, RefObject } from "react";
 import { Dimensions } from "react-native";
 import RNFS from "react-native-fs";
-import { saveImageToGallery } from "../../../utils/share";
+import { CaptureOptions, captureRef } from "react-native-view-shot";
 import I18n from "../../../i18n";
 import { isIos } from "../../../utils/platform";
+import { saveImageToGallery } from "../../../utils/share";
 
 type CaptureScreenshotEvents = {
   onSuccess?: () => void; // invoked on success
@@ -41,13 +42,13 @@ export const captureScreenshot = <T>(
     .then(screenshotUri => {
       const imagePath = savePath(screenshotUri, options);
       void rename(screenshotUri, imagePath)
-        .then(imagePath => saveImageToGallery(imagePath, options?.album).run())
-        .then(maybeSaved => {
-          maybeSaved.fold(
+        .then(imagePath => saveImageToGallery(imagePath, options?.album)())
+        .then(
+          E.fold(
             () => onEvent?.onNoPermissions?.(),
             () => onEvent?.onSuccess?.()
-          );
-        })
+          )
+        )
         .catch(onEvent?.onError);
     })
     .catch(onEvent?.onError)

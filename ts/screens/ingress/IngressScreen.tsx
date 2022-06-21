@@ -2,6 +2,7 @@
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Body, Container, List, ListItem, Spinner, Text } from "native-base";
 import * as React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
@@ -104,7 +105,7 @@ function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
     hasSessionToken: maybeSessionToken !== undefined,
-    hasSessionInfo: maybeSessionInfo.isSome(),
+    hasSessionInfo: O.isSome(maybeSessionInfo),
     hasProfile: potProfile !== null,
     isProfileEnabled:
       pot.isSome(potProfile) &&

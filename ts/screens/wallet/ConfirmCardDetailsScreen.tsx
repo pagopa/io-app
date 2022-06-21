@@ -377,9 +377,10 @@ const mapStateToProps = (state: GlobalState) => {
 
   // Props needed to create the form for the payment web view
   const allWallets = getAllWallets(state);
-  const creditCardTempWallet: O.Option<Wallet> = pot
-    .toOption(allWallets.creditCardAddWallet)
-    .map(c => c.data);
+  const creditCardTempWallet: O.Option<Wallet> = pipe(
+    pot.toOption(allWallets.creditCardAddWallet),
+    O.map(c => c.data)
+  );
 
   return {
     isLoading,

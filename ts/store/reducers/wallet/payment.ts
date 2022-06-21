@@ -1,7 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { Locales } from "../../../../locales/locales";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import { walletAddPaypalRefreshPMToken } from "../../../features/wallet/onboarding/paypal/store/actions";
+import { PaymentManagerToken } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
+import { getError } from "../../../utils/errors";
 import { Action } from "../../actions/types";
 import {
   paymentAttiva,
@@ -15,23 +28,11 @@ import {
   pspForPaymentV2,
   pspSelectedForPaymentV2
 } from "../../actions/wallet/payment";
-import { GlobalState } from "../types";
-import {
-  remoteError,
-  remoteLoading,
-  remoteReady,
-  remoteUndefined,
-  RemoteValue
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import { Locales } from "../../../../locales/locales";
-import { PaymentManagerToken } from "../../../types/pagopa";
 import {
   addCreditCardWebViewEnd,
   refreshPMTokenWhileAddCreditCard
 } from "../../actions/wallet/wallets";
-import { walletAddPaypalRefreshPMToken } from "../../../features/wallet/onboarding/paypal/store/actions";
-import { PspData } from "../../../../definitions/pagopa/PspData";
-import { getError } from "../../../utils/errors";
+import { GlobalState } from "../types";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -108,7 +109,7 @@ export const pspSelectedV2ListSelector = createSelector(
 );
 
 export const isPaymentOngoingSelector = (state: GlobalState) =>
-  getPaymentIdFromGlobalState(state).isSome();
+  O.isSome(getPaymentIdFromGlobalState(state));
 
 export const entrypointRouteSelector = (state: GlobalState) =>
   state.wallet.payment.entrypointRoute;

@@ -1,7 +1,7 @@
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
@@ -135,7 +135,7 @@ export function* postUserMetadata(
 > {
   try {
     const response = yield* call(createOrUpdateUserMetadata, {
-      userMetadata: backendUserMetadata
+      body: backendUserMetadata
     });
 
     // Can't decode response

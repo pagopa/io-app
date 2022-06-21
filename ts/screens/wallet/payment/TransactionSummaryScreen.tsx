@@ -253,20 +253,24 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
     const { potVerifica } = this.props;
 
-    const recipient = pot
-      .toOption(potVerifica)
-      .mapNullable(_ => _.enteBeneficiario)
-      .map(formatTextRecipient);
+    const recipient = pipe(
+      pot.toOption(potVerifica),
+      O.chainNullableK(_ => _.enteBeneficiario),
+      O.map(formatTextRecipient)
+    );
 
     /**
      * try to show the organization fiscal code coming from the 'verifica' API
      * otherwise (it could be an issue with the API) it fallbacks on rptID coming from
      * static data: message, qrcode, manual insertion
      */
-    const organizationFiscalCode: string = pot
-      .toOption(potVerifica)
-      .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
-      .getOrElse(rptId.organizationFiscalCode);
+    const organizationFiscalCode: string = pipe(
+      pot.toOption(potVerifica),
+      O.chainNullableK(
+        _ => _.enteBeneficiario?.identificativoUnivocoBeneficiario
+      ),
+      O.getOrElse(() => rptId.organizationFiscalCode)
+    );
 
     const currentAmount: string = pot.getOrElse(
       pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
@@ -310,7 +314,13 @@ class TransactionSummaryScreen extends React.Component<Props> {
               dark={true}
               title={I18n.t("wallet.firstTransactionSummary.title")}
               description={transactionDescription}
-              recipient={recipient.fold("-", r => r)}
+              recipient={pipe(
+                recipient,
+                O.fold(
+                  () => "-",
+                  r => r
+                )
+              )}
             />
 
             <View spacer={true} large={true} />

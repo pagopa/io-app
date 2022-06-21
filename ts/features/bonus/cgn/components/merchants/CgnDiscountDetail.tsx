@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
@@ -88,33 +90,39 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
     <View style={[styles.container, IOStyles.flex]} testID={"discount-detail"}>
       <View style={[styles.row, IOStyles.flex, { flexWrap: "wrap" }]}>
         {discount.productCategories.map(categoryKey =>
-          getCategorySpecs(categoryKey).fold(undefined, c => (
-            <View
-              key={c.nameKey}
-              style={[
-                styles.row,
-                {
-                  paddingRight: 8,
-                  paddingBottom: 2,
-                  marginRight: 8
-                }
-              ]}
-            >
-              {c.icon({
-                height: CATEGORY_ICON_SIZE,
-                width: CATEGORY_ICON_SIZE,
-                fill: IOColors.bluegrey
-              })}
-              <View hspacer small />
-              <H5
-                weight={"SemiBold"}
-                color={"bluegrey"}
-                testID={"category-name"}
-              >
-                {I18n.t(c.nameKey).toLocaleUpperCase()}
-              </H5>
-            </View>
-          ))
+          pipe(
+            getCategorySpecs(categoryKey),
+            O.fold(
+              () => undefined,
+              c => (
+                <View
+                  key={c.nameKey}
+                  style={[
+                    styles.row,
+                    {
+                      paddingRight: 8,
+                      paddingBottom: 2,
+                      marginRight: 8
+                    }
+                  ]}
+                >
+                  {c.icon({
+                    height: CATEGORY_ICON_SIZE,
+                    width: CATEGORY_ICON_SIZE,
+                    fill: IOColors.bluegrey
+                  })}
+                  <View hspacer small />
+                  <H5
+                    weight={"SemiBold"}
+                    color={"bluegrey"}
+                    testID={"category-name"}
+                  >
+                    {I18n.t(c.nameKey).toLocaleUpperCase()}
+                  </H5>
+                </View>
+              )
+            )
+          )
         )}
       </View>
       <View spacer />

@@ -3,8 +3,8 @@
  */
 
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
 /* eslint-disable-next-line */
 import { put as basePut } from "redux-saga/effects";
 import { all, call, put, select, takeLatest } from "typed-redux-saga/macro";
@@ -45,25 +45,25 @@ function* loadMessages(
       {}
     );
 
-    if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
     }
 
-    if (response.isRight()) {
-      if (response.value.status === 401) {
+    if (E.isRight(response)) {
+      if (response.right.status === 401) {
         // on 401, expire the current session and restart the authentication flow
         yield* put(sessionExpired());
         return;
-      } else if (response.value.status !== 200) {
+      } else if (response.right.status !== 200) {
         // TODO: provide status code along with message in error https://www.pivotaltracker.com/story/show/170819193
         const error =
-          response.value.status === 500 && response.value.value.title
-            ? response.value.value.title
+          response.right.status === 500 && response.right.value.title
+            ? response.right.value.title
             : "";
         yield* put(loadMessagesAction.failure(Error(error)));
       } else {
         // 200 ok
-        const responseItemsIds = response.value.value.items.map(_ => _.id);
+        const responseItemsIds = response.right.value.items.map(_ => _.id);
 
         yield* put(loadMessagesAction.success(responseItemsIds));
 
@@ -102,7 +102,7 @@ function* loadMessages(
         // but we want to process them from latest to oldest so we
         // reverse the order.
         // TODO: we will rely on API sorting since we use pagination
-        const reversedItems = [...response.value.value.items].reverse();
+        const reversedItems = [...response.right.value.items].reverse();
 
         // Load already cached messages from the store
         const cachedMessagesById: ReturnType<typeof messagesStateByIdSelector> =

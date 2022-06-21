@@ -1,5 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
@@ -150,10 +152,11 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const message: UIMessage = ownProps.navigation.getParam("message");
   const messageDetails = getDetailsByMessageId(state, message.id);
   const goBack = () => ownProps.navigation.goBack();
-  const service = pot
-    .toOption(serviceByIdSelector(message.serviceId)(state) || pot.none)
-    .map(toUIService)
-    .toUndefined();
+  const service = pipe(
+    pot.toOption(serviceByIdSelector(message.serviceId)(state) || pot.none),
+    O.map(toUIService),
+    O.toUndefined
+  );
   // Map the potential message to the potential service
   const maybeServiceMetadata = serviceMetadataByIdSelector(message.serviceId)(
     state

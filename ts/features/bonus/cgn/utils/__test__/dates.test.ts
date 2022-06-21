@@ -1,4 +1,3 @@
-import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import { getCgnUserAgeRange } from "../dates";
 
 describe("getCgnUserAgeRange", () => {
@@ -9,9 +8,9 @@ describe("getCgnUserAgeRange", () => {
 
   it.each([
     [undefined, "unrecognized"],
-    [DateFromString.decode("1991-01-06").value as Date, "31-35"],
-    [DateFromString.decode("1994-01-06").value as Date, "26-30"],
-    [DateFromString.decode("1999-01-06").value as Date, "18-25"]
+    [new Date("1991-01-06"), "31-35"],
+    [new Date("1994-01-06"), "26-30"],
+    [new Date("1999-01-06"), "18-25"]
   ])(
     "when the birthdate is $birthDate the range should be $ageRange",
     (birthDate, ageRange) => {

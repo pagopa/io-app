@@ -2,18 +2,19 @@
  * A saga to manage notifications
  */
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
-import { call, put, select } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
+import { call, put, select } from "typed-redux-saga/macro";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { BackendClient } from "../api/backend";
+import { mixpanelTrack } from "../mixpanel";
 import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure
 } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
-import { mixpanelTrack } from "../mixpanel";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -51,7 +52,7 @@ export function* updateInstallationSaga(
     const response: SagaCallReturnType<typeof createOrUpdateInstallation> =
       yield* call(createOrUpdateInstallation, {
         installationID: notificationsInstallation.id,
-        installation: {
+        body: {
           platform: notificationsPlatform,
           pushChannel: notificationsInstallation.token
         }
@@ -59,10 +60,10 @@ export function* updateInstallationSaga(
     /**
      * If the response isLeft (got an error) dispatch a failure action
      */
-    if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
     }
-    if (response.value.status === 200) {
+    if (response.right.status === 200) {
       yield* put(
         notificationsInstallationTokenRegistered(
           notificationsInstallation.token
@@ -71,7 +72,7 @@ export function* updateInstallationSaga(
     } else {
       yield* put(
         updateNotificationInstallationFailure(
-          new Error(`response status code ${response.value.status}`)
+          new Error(`response status code ${response.right.status}`)
         )
       );
     }

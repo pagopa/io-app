@@ -1,4 +1,7 @@
 import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
+
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -34,10 +37,11 @@ const PERCENTAGE_SYMBOL = "%";
 const MINUS_SYMBOL = "-";
 
 const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
-  const normalizedValue = WithinRangeInteger(0, 100)
-    .decode(value)
-    .map(v => v.toString())
-    .getOrElse("-");
+  const normalizedValue = pipe(
+    WithinRangeInteger(0, 100).decode(value),
+    E.map(v => v.toString()),
+    E.getOrElse(() => "-")
+  );
   const percentage = (
     <H5 weight={"SemiBold"} color={"white"}>
       {PERCENTAGE_SYMBOL}

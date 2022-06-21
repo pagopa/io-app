@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
@@ -170,11 +172,12 @@ type Props = Readonly<{
 export const TransactionSummary = (props: Props): React.ReactElement => {
   const isLoading = pot.isLoading(props.paymentVerification);
 
-  const recipient = pot
-    .toOption(props.paymentVerification)
-    .mapNullable(_ => _.enteBeneficiario)
-    .map(formatTextRecipient)
-    .toUndefined();
+  const recipient = pipe(
+    pot.toOption(props.paymentVerification),
+    O.chainNullableK(_ => _.enteBeneficiario),
+    O.map(formatTextRecipient),
+    O.toUndefined
+  );
 
   const organizationIcon = [
     ...getLogoForOrganization(props.organizationFiscalCode),

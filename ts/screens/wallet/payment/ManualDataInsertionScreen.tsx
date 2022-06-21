@@ -118,7 +118,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     ) &&
     pipe(
       this.state.organizationFiscalCode,
-      O.map(_ => _.isRight()),
+      O.map(E.isRight),
       O.getOrElseW(() => false)
     );
 
@@ -136,7 +136,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       O.chain(paymentNoticeNumber =>
         pipe(
           this.state.organizationFiscalCode,
-          O.chain(_ => (_.isRight() ? O.some(_.value) : O.none)),
+          O.chain(O.fromEither),
           O.chain(organizationFiscalCode =>
             pipe(
               {
@@ -219,12 +219,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <View spacer />
                 <LabelledItem
                   isValid={unwrapOptionalEither(
-                    pipe(
-                      this.state.organizationFiscalCode,
-                      O.map(_ =>
-                        _.isRight() ? E.right(_.value) : E.left(_.value)
-                      )
-                    )
+                    this.state.organizationFiscalCode
                   )}
                   label={I18n.t("wallet.insertManually.entityCode")}
                   accessibilityLabel={I18n.t(

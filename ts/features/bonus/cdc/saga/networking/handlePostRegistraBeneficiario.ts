@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { AnniRiferimento } from "../../../../../../definitions/cdc/AnniRiferimento";
 import { EsitoRichiestaEnum } from "../../../../../../definitions/cdc/EsitoRichiesta";
 import { ListaEsitoRichiestaPerAnno } from "../../../../../../definitions/cdc/ListaEsitoRichiestaPerAnno";
 import { isTestEnv } from "../../../../../utils/environment";
@@ -53,10 +52,8 @@ const convertSuccess = (
       };
 };
 
-const convertRequestPayload = (
-  actionPayload: CdcBonusEnrollmentList
-): { anniRiferimento: AnniRiferimento } => ({
-  anniRiferimento: {
+const convertRequestPayload = (actionPayload: CdcBonusEnrollmentList) => ({
+  body: {
     anniRif: actionPayload.map(y => ({
       anno: y.year
     }))

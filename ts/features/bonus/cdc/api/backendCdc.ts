@@ -26,7 +26,7 @@ const PostRegistraBeneficiario: RegistraBeneficiarioT = {
   method: "post",
   url: () => "/cdc/beneficiario/registrazione",
   query: _ => ({}),
-  body: ({ body }) => JSON.stringify(body.anniRif),
+  body: ({ body }) => JSON.stringify(body),
   headers: p => ({
     Authorization: `BearerAuth ${p.BearerAuth}`,
     "Content-Type": "application/json"

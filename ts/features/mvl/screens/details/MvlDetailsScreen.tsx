@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -73,12 +75,13 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
 };
 
 const selectServiceState = (state: GlobalState, props: Props) => {
-  const service = pot
-    .toOption(
+  const service = pipe(
+    pot.toOption(
       serviceByIdSelector(props.mvl.message.serviceId)(state) || pot.none
-    )
-    .map(toUIService)
-    .toUndefined();
+    ),
+    O.map(toUIService),
+    O.toUndefined
+  );
 
   const serviceMetadata = serviceMetadataByIdSelector(
     props.mvl.message.serviceId

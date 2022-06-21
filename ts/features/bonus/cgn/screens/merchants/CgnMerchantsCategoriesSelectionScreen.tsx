@@ -1,9 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -23,8 +27,6 @@ import {
 } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { IOBadge } from "../../../../../components/core/IOBadge";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const isFirstRender = useRef<boolean>(true);
@@ -80,46 +82,54 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     }
     const specs = getCategorySpecs(info.item.productCategory);
     const countAvailable = info.item.newDiscounts > 0;
-    return specs.fold(null, s => {
-      const categoryIcon = (
-        <View
-          style={[
-            countAvailable ? IOStyles.row : {},
-            { alignItems: "flex-end" }
-          ]}
-        >
-          {countAvailable && (
-            <View style={IOStyles.flex}>
-              <IOBadge
-                small
-                text={`${info.item.newDiscounts} ${I18n.t(
-                  "bonus.cgn.merchantsList.news"
-                )}`}
-                labelColor={"blue"}
-              />
+    return pipe(
+      specs,
+      O.fold(
+        () => null,
+        s => {
+          const categoryIcon = (
+            <View
+              style={[
+                countAvailable ? IOStyles.row : {},
+                { alignItems: "flex-end" }
+              ]}
+            >
+              {countAvailable && (
+                <View style={IOStyles.flex}>
+                  <IOBadge
+                    small
+                    text={`${info.item.newDiscounts} ${I18n.t(
+                      "bonus.cgn.merchantsList.news"
+                    )}`}
+                    labelColor={"blue"}
+                  />
+                </View>
+              )}
+              {s.icon({
+                height: 32,
+                width: 32,
+                fill: IOColors.white,
+                style: { justifyContent: "flex-end" }
+              })}
             </View>
-          )}
-          {s.icon({
-            height: 32,
-            width: 32,
-            fill: IOColors.white,
-            style: { justifyContent: "flex-end" }
-          })}
-        </View>
-      );
+          );
 
-      return (
-        <CgnMerchantCategoryItem
-          title={I18n.t(s.nameKey)}
-          colors={s.colors}
-          onPress={() => {
-            dispatch(cgnSelectedCategory(s.type));
-            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY);
-          }}
-          child={categoryIcon}
-        />
-      );
-    });
+          return (
+            <CgnMerchantCategoryItem
+              title={I18n.t(s.nameKey)}
+              colors={s.colors}
+              onPress={() => {
+                dispatch(cgnSelectedCategory(s.type));
+                navigation.navigate(
+                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY
+                );
+              }}
+              child={categoryIcon}
+            />
+          );
+        }
+      )
+    );
   };
 
   const allNews = pot.isSome(potCategories)

@@ -1,25 +1,16 @@
-import { flip } from "fp-ts/lib/function";
-import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
   createFetchRequestForApi
 } from "@pagopa/ts-commons/lib/requests";
+import { Omit } from "@pagopa/ts-commons/lib/types";
+import { pipe } from "fp-ts/lib/function";
+import { AeroportiAmmessiInputBean } from "../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 import {
-  getMitVoucherTokenDefaultDecoder,
-  GetMitVoucherTokenT
-} from "../../../../../definitions/io_sicilia_vola_token/requestTypes";
-import {
-  tokenHeaderProducer,
-  withBearerToken as withToken
-} from "../../../../utils/api";
-import { SessionToken } from "../../../../types/SessionToken";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
-import {
+  annullaVoucherDefaultDecoder,
+  AnnullaVoucherT,
   getAeroportiAmmessiDefaultDecoder,
   GetAeroportiAmmessiT,
-  AnnullaVoucherT,
-  annullaVoucherDefaultDecoder,
   getListaComuniBySiglaProvinciaDefaultDecoder,
   GetListaComuniBySiglaProvinciaT,
   getListaProvinceByIdRegioneDefaultDecoder,
@@ -35,10 +26,19 @@ import {
   getVoucherBeneficiarioDefaultDecoder,
   GetVoucherBeneficiarioT
 } from "../../../../../definitions/api_sicilia_vola/requestTypes";
-import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { VoucherBeneficiarioInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
-import { AeroportiAmmessiInputBean } from "../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 import { VoucherCodeInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherCodeInputBean";
+import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
+import {
+  getMitVoucherTokenDefaultDecoder,
+  GetMitVoucherTokenT
+} from "../../../../../definitions/io_sicilia_vola_token/requestTypes";
+import { SessionToken } from "../../../../types/SessionToken";
+import {
+  tokenHeaderProducer,
+  withBearerToken as withToken
+} from "../../../../utils/api";
+import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 /**
  * Get the Sicilia Vola session token
@@ -105,8 +105,7 @@ const GetAeroportiAmmessi: GetAeroportiAmmessiT = {
   url: _ =>
     `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiAmmessi`,
   query: _ => ({}),
-  body: ({ aeroportiAmmessiInputBean }) =>
-    JSON.stringify({ aeroportiAmmessiInputBean }),
+  body: ({ body }) => JSON.stringify({ body }),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getAeroportiAmmessiDefaultDecoder()
 };
@@ -119,7 +118,7 @@ const PostAnnullaVoucher: AnnullaVoucherT = {
   method: "post",
   url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/annullaVoucher`,
   query: _ => ({}),
-  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
+  body: ({ body }) => JSON.stringify(body),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: annullaVoucherDefaultDecoder()
 };
@@ -159,7 +158,7 @@ const GetStampaVoucher: GetPdfT = {
   method: "post",
   url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/stampaVoucher`,
   query: _ => ({}),
-  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
+  body: ({ body }) => JSON.stringify(body),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getPdfDefaultDecoder()
 };
@@ -200,11 +199,12 @@ export const BackendSiciliaVolaClient = (
     getAeroportiAmmessi: (
       avilableDestinationRequest: AeroportiAmmessiInputBean
     ) =>
-      flip(
-        withSiciliaVolaToken(
-          createFetchRequestForApi(GetAeroportiAmmessi, options)
-        )
-      )({ aeroportiAmmessiInputBean: avilableDestinationRequest }),
+      pipe(
+        createFetchRequestForApi(GetAeroportiAmmessi, options),
+        withSiciliaVolaToken,
+        fn => (token: MitVoucherToken) =>
+          fn(token)({ body: avilableDestinationRequest })
+      ),
     getVoucherBeneficiario: (
       voucherListRequest: VoucherBeneficiarioInputBean
     ) =>
@@ -212,20 +212,20 @@ export const BackendSiciliaVolaClient = (
       createFetchRequestForApi(
         GetVoucherBeneficiario,
         options
-      )({ voucherBeneficiarioInputBean: voucherListRequest }),
+      )({ body: voucherListRequest }),
     getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options),
     getStampaVoucher: (voucherCode: VoucherCodeInputBean) =>
-      flip(
-        withSiciliaVolaToken(
-          createFetchRequestForApi(GetStampaVoucher, options)
-        )
-      )({ voucherCodeInputBean: voucherCode }),
+      pipe(
+        createFetchRequestForApi(GetStampaVoucher, options),
+        withSiciliaVolaToken,
+        fn => (token: MitVoucherToken) => fn(token)({ body: voucherCode })
+      ),
     postAnnullaVoucher: (voucherCode: VoucherCodeInputBean) =>
-      flip(
-        withSiciliaVolaToken(
-          createFetchRequestForApi(PostAnnullaVoucher, options)
-        )
-      )({ voucherCodeInputBean: voucherCode })
+      pipe(
+        createFetchRequestForApi(PostAnnullaVoucher, options),
+        withSiciliaVolaToken,
+        fn => (token: MitVoucherToken) => fn(token)({ body: voucherCode })
+      )
   };
 };
 

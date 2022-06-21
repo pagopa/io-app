@@ -1,3 +1,5 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { Attachment } from "../../../../../definitions/backend/Attachment";
@@ -75,11 +77,15 @@ const convertMvlDetail = (
         id: msgId as MvlId,
         timestamp: certData.data.timestamp,
         subject: eml.subject,
-        sender: EmailAddress.decode(certDataHeader.sender).getOrElse(
-          valueNotAvailable as EmailAddress
+        sender: pipe(
+          certDataHeader.sender,
+          EmailAddress.decode,
+          E.getOrElse(() => valueNotAvailable as EmailAddress)
         ),
-        receiver: EmailAddress.decode(certDataHeader.recipients).getOrElse(
-          valueNotAvailable as EmailAddress
+        receiver: pipe(
+          certDataHeader.recipients,
+          EmailAddress.decode,
+          E.getOrElse(() => valueNotAvailable as EmailAddress)
         ),
         // missing field in remote payload
         cc: [],
@@ -105,11 +111,11 @@ export function* handleGetMvl(
     const getUserLegalMessageRequest: SagaCallReturnType<
       typeof getUserLegalMessage
     > = yield* call(getUserLegalMessage, { id: messageId });
-    if (getUserLegalMessageRequest.isRight()) {
-      if (getUserLegalMessageRequest.value.status === 200) {
+    if (E.isRight(getUserLegalMessageRequest)) {
+      if (getUserLegalMessageRequest.right.status === 200) {
         yield* put(
           mvlDetailsLoad.success(
-            convertMvlDetail(getUserLegalMessageRequest.value.value, messageId)
+            convertMvlDetail(getUserLegalMessageRequest.right.value, messageId)
           )
         );
         return;
@@ -119,7 +125,7 @@ export function* handleGetMvl(
         mvlDetailsLoad.failure({
           ...getGenericError(
             new Error(
-              `response status ${getUserLegalMessageRequest.value.status}`
+              `response status ${getUserLegalMessageRequest.right.status}`
             )
           ),
           id: action.payload
@@ -129,7 +135,7 @@ export function* handleGetMvl(
       yield* put(
         mvlDetailsLoad.failure({
           ...getGenericError(
-            new Error(readablePrivacyReport(getUserLegalMessageRequest.value))
+            new Error(readablePrivacyReport(getUserLegalMessageRequest.left))
           ),
           id: action.payload
         })

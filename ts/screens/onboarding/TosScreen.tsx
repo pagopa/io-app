@@ -6,6 +6,8 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, SafeAreaView, StyleSheet } from "react-native";
@@ -157,11 +159,15 @@ class TosScreen extends React.PureComponent<Props, State> {
 
   // A function that handles message sent by the WebView component
   private handleWebViewMessage = (event: WebViewMessageEvent) =>
-    WebViewMessage.decode(JSON.parse(event.nativeEvent.data)).map(m => {
-      if (m.type === "LINK_MESSAGE") {
-        void openWebUrl(m.payload.href);
-      }
-    });
+    pipe(
+      JSON.parse(event.nativeEvent.data),
+      WebViewMessage.decode,
+      E.map(m => {
+        if (m.type === "LINK_MESSAGE") {
+          void openWebUrl(m.payload.href);
+        }
+      })
+    );
 
   public render() {
     const { dispatch } = this.props;

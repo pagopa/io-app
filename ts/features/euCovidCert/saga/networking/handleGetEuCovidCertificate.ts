@@ -1,11 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { Certificate } from "../../../../../definitions/eu_covid_cert/Certificate";
+import { HeaderInfo } from "../../../../../definitions/eu_covid_cert/HeaderInfo";
+import { contentRepoUrl } from "../../../../config";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { profileSelector } from "../../../../store/reducers/profile";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -19,10 +23,6 @@ import {
   EUCovidCertificateResponse,
   EUCovidCertificateResponseFailure
 } from "../../types/EUCovidCertificateResponse";
-import { profileSelector } from "../../../../store/reducers/profile";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import { HeaderInfo } from "../../../../../definitions/eu_covid_cert/HeaderInfo";
-import { contentRepoUrl } from "../../../../config";
 
 const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   400: "wrongFormat",
@@ -111,7 +111,7 @@ export function* handleGetEuCovidCertificate(
   try {
     const getCertificateResult: SagaCallReturnType<typeof getCertificate> =
       yield* call(getCertificate, {
-        getCertificateParams: {
+        accessData: {
           auth_code: authCode,
           preferred_languages: pot.getOrElse(
             pot.mapNullable(profile, p => p.preferred_languages),

@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -71,7 +73,10 @@ const topLeft = (
   favorite: pot.Pot<boolean, Error>
 ) => {
   const expirationDate = buildExpirationDate(creditCard.info);
-  const isCardExpired = isPaymentMethodExpired(creditCard).getOrElse(false);
+  const isCardExpired = pipe(
+    isPaymentMethodExpired(creditCard),
+    E.getOrElse(() => false)
+  );
 
   return (
     <View style={styles.row}>

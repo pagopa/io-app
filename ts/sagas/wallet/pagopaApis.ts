@@ -1,12 +1,14 @@
-import * as O from "fp-ts/lib/Option";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { call, put, select, take } from "typed-redux-saga/macro";
-import { ActionType, isActionOf } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { call, put, select, take } from "typed-redux-saga/macro";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { mixpanelTrack } from "../../mixpanel";
+import { checkCurrentSession } from "../../store/actions/authentication";
+import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
 import {
   paymentAttiva,
   paymentCheck,
@@ -44,9 +46,6 @@ import {
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { PaymentManagerToken, Wallet } from "../../types/pagopa";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { readablePrivacyReport } from "../../utils/reporters";
-import { SessionManager } from "../../utils/SessionManager";
-import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import {
   getError,
   getErrorFromNetworkError,
@@ -54,8 +53,9 @@ import {
   getNetworkError,
   isTimeoutError
 } from "../../utils/errors";
-import { checkCurrentSession } from "../../store/actions/authentication";
-import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
+import { readablePrivacyReport } from "../../utils/reporters";
+import { SessionManager } from "../../utils/SessionManager";
+import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 
 //
 // Payment Manager APIs
@@ -666,7 +666,7 @@ export function* paymentAttivaRequestHandler(
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield* call(
       postAttivaRpt,
       {
-        paymentActivationsPostRequest: {
+        body: {
           rptId: RptIdFromString.encode(action.payload.rptId),
           codiceContestoPagamento:
             action.payload.verifica.codiceContestoPagamento,

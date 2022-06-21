@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Root } from "native-base";
 import * as React from "react";
 import {
@@ -15,7 +17,6 @@ import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { testOverlayCaption } from "./config";
-
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
@@ -68,9 +69,12 @@ class RootContainer extends React.PureComponent<Props> {
    * otherwise it continues using the default locale set from the SO
    */
   private updateLocale = () =>
-    this.props.preferredLanguage.map(l => {
-      setLocale(l);
-    });
+    pipe(
+      this.props.preferredLanguage,
+      O.map(l => {
+        setLocale(l);
+      })
+    );
 
   public componentWillUnmount() {
     this.subscription?.remove();

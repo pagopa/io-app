@@ -1,9 +1,10 @@
 /**
  * A saga that manages the Profile.
  */
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   all,
   call,
@@ -13,9 +14,9 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { Locales } from "../../locales/locales";
 import { BackendClient } from "../api/backend";
@@ -24,8 +25,15 @@ import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/ac
 import { allBonusActiveSelector } from "../features/bonus/bonusVacanze/store/reducers/allActive";
 import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
+import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
+import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
 import I18n from "../i18n";
+import { mixpanelTrack } from "../mixpanel";
 import { sessionExpired } from "../store/actions/authentication";
+import {
+  differentProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../store/actions/crossSessions";
 import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
 import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import {
@@ -38,27 +46,19 @@ import {
   startEmailValidation
 } from "../store/actions/profile";
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
+import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
+import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
+import { isTestEnv } from "../utils/environment";
+import { deletePin } from "../utils/keychain";
 import {
   fromLocaleToPreferredLanguage,
   fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
-import {
-  differentProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../store/actions/crossSessions";
-import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
-import { isTestEnv } from "../utils/environment";
-import { deletePin } from "../utils/keychain";
-import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
-import { mixpanelTrack } from "../mixpanel";
 import { readablePrivacyReport } from "../utils/reporters";
-import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
-import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
-import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -151,7 +151,7 @@ function* createOrUpdateProfileSaga(
   try {
     const response: SagaCallReturnType<typeof createOrUpdateProfile> =
       yield* call(createOrUpdateProfile, {
-        profile: newProfile
+        body: newProfile
       });
 
     if (E.isLeft(response)) {

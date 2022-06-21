@@ -1,9 +1,14 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
+import { buffers, channel, Channel } from "redux-saga";
 import { call, fork, put, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { buffers, channel, Channel } from "redux-saga";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { BackendClient } from "../../api/backend";
+import { totServiceFetchWorkers } from "../../config";
+import { mixpanelTrack } from "../../mixpanel";
+import { applicationChangeState } from "../../store/actions/application";
 import {
   loadServiceDetail,
   loadServiceDetailNotFound,
@@ -12,10 +17,6 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { handleOrganizationNameUpdateSaga } from "../services/handleOrganizationNameUpdateSaga";
 import { handleServiceReadabilitySaga } from "../services/handleServiceReadabilitySaga";
-import { totServiceFetchWorkers } from "../../config";
-import { applicationChangeState } from "../../store/actions/application";
-import { mixpanelTrack } from "../../mixpanel";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 /**
  * A generator to load the service details from the Backend
@@ -31,24 +32,24 @@ export function* loadServiceDetailRequestHandler(
   try {
     const response = yield* call(getService, { service_id: action.payload });
 
-    if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
     }
 
-    if (response.value.status === 200) {
-      yield* put(loadServiceDetail.success(response.value.value));
+    if (response.right.status === 200) {
+      yield* put(loadServiceDetail.success(response.right.value));
 
       // If it is occurring during the first load of serivces,
       // mark the service as read (it will not display the badge on the list item)
       yield* call(handleServiceReadabilitySaga, action.payload);
 
       // Update, if needed, the name of the organization that provides the service
-      yield* call(handleOrganizationNameUpdateSaga, response.value.value);
+      yield* call(handleOrganizationNameUpdateSaga, response.right.value);
     } else {
-      if (response.value.status === 404) {
+      if (response.right.status === 404) {
         yield* put(loadServiceDetailNotFound(action.payload as ServiceId));
       }
-      throw Error(`response status ${response.value.status}`);
+      throw Error(`response status ${response.right.status}`);
     }
   } catch (error) {
     yield* put(

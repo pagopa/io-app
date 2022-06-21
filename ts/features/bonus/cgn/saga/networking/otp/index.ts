@@ -1,9 +1,10 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-import { BackendCGN } from "../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
-import { cgnGenerateOtp as cgnGenerateOtpAction } from "../../../store/actions/otp";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
+import { BackendCGN } from "../../../api/backendCgn";
+import { cgnGenerateOtp as cgnGenerateOtpAction } from "../../../store/actions/otp";
 
 // handle the request for CGN Otp code generation
 export function* cgnGenerateOtp(
@@ -12,14 +13,14 @@ export function* cgnGenerateOtp(
   try {
     const generateOtpResult: SagaCallReturnType<typeof generateOtp> =
       yield* call(generateOtp, {});
-    if (generateOtpResult.isRight()) {
-      if (generateOtpResult.value.status === 200) {
-        yield* put(cgnGenerateOtpAction.success(generateOtpResult.value.value));
+    if (E.isRight(generateOtpResult)) {
+      if (generateOtpResult.right.status === 200) {
+        yield* put(cgnGenerateOtpAction.success(generateOtpResult.right.value));
       } else {
         yield* put(
           cgnGenerateOtpAction.failure(
             getNetworkError(
-              new Error(`response status ${generateOtpResult.value.status}`)
+              new Error(`response status ${generateOtpResult.right.status}`)
             )
           )
         );
@@ -28,7 +29,7 @@ export function* cgnGenerateOtp(
       yield* put(
         cgnGenerateOtpAction.failure(
           getNetworkError(
-            new Error(readablePrivacyReport(generateOtpResult.value))
+            new Error(readablePrivacyReport(generateOtpResult.left))
           )
         )
       );

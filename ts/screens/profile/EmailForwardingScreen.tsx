@@ -4,6 +4,8 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { List, Text } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -224,9 +226,12 @@ const mapStateToProps = (state: GlobalState) => {
   // : pot.getOrElse(potIsCustomEmailChannelEnabled, false);
 
   const potUserEmail = profileEmailSelector(state);
-  const userEmail = potUserEmail.fold(
-    I18n.t("global.remoteStates.notAvailable"),
-    (i: string) => i
+  const userEmail = pipe(
+    potUserEmail,
+    O.fold(
+      () => I18n.t("global.remoteStates.notAvailable"),
+      (i: string) => i
+    )
   );
 
   return {

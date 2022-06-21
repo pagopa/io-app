@@ -1,8 +1,10 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { TypeOfApiResponseStatus } from "@pagopa/ts-commons/lib/requests";
+import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-import { TypeOfApiResponseStatus } from "@pagopa/ts-commons/lib/requests";
+import { GetSessionStateT } from "../../../definitions/backend/requestTypes";
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
@@ -12,7 +14,6 @@ import {
 } from "../../store/actions/authentication";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
-import { GetSessionStateT } from "../../../definitions/backend/requestTypes";
 
 // load the support token useful for user assistance
 function* handleLoadSupportToken(
@@ -23,13 +24,13 @@ function* handleLoadSupportToken(
       getSupportToken,
       {}
     );
-    if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
     } else {
-      if (response.value.status === 200) {
-        yield* put(loadSupportToken.success(response.value.value));
+      if (response.right.status === 200) {
+        yield* put(loadSupportToken.success(response.right.value));
       } else {
-        throw Error(`response status code ${response.value.status}`);
+        throw Error(`response status code ${response.right.status}`);
       }
     }
   } catch (error) {
@@ -49,21 +50,21 @@ export function* checkSession(
       getSessionValidity,
       {}
     );
-    if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readableReport(response.left));
     } else {
       // On response we check the current status if 401 the session is invalid
       // the result will be false and then put the session expired action
       yield* put(
         checkCurrentSession.success({
-          isSessionValid: response.value.status !== 401
+          isSessionValid: response.right.status !== 401
         })
       );
 
-      if (response.value.status === 200) {
-        yield* put(sessionInformationLoadSuccess(response.value.value));
+      if (response.right.status === 200) {
+        yield* put(sessionInformationLoadSuccess(response.right.value));
       }
-      return response.value.status;
+      return response.right.status;
     }
   } catch (error) {
     yield* put(checkCurrentSession.failure(error));

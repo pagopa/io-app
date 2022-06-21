@@ -4,6 +4,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CompatNavigationProp } from "@react-navigation/compat";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
@@ -307,8 +309,9 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       navigateToMessageDetail
     } = this.props;
 
-    return this.props.searchText
-      .map(_ =>
+    return pipe(
+      this.props.searchText,
+      O.map(_ =>
         _.length < MIN_CHARACTER_SEARCH_TEXT ? (
           <SearchNoResultMessage errorType="InvalidSearchBarText" />
         ) : (
@@ -321,8 +324,11 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             searchText={_}
           />
         )
-      )
-      .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
+      ),
+      O.getOrElse(() => (
+        <SearchNoResultMessage errorType="InvalidSearchBarText" />
+      ))
+    );
   };
 }
 

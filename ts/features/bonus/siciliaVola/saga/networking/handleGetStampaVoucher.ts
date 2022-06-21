@@ -1,16 +1,17 @@
-import { ActionType } from "typesafe-actions";
-import { call, put } from "typed-redux-saga/macro";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
 import RNFS from "react-native-fs";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { SessionManager } from "../../../../../utils/SessionManager";
+import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { waitBackoffError } from "../../../../../utils/backoffError";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { SessionManager } from "../../../../../utils/SessionManager";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { svPossibleVoucherStateGet } from "../../store/actions/voucherList";
-import { waitBackoffError } from "../../../../../utils/backoffError";
 
 /**
  * Handle the remote call that allows the user to download and save the voucher
@@ -37,13 +38,13 @@ export function* handleGetStampaVoucher(
     const getStampaVoucherResult: SagaCallReturnType<typeof request> =
       yield* call(request);
 
-    if (getStampaVoucherResult.isRight()) {
-      if (getStampaVoucherResult.value.status === 200) {
+    if (E.isRight(getStampaVoucherResult)) {
+      if (getStampaVoucherResult.right.status === 200) {
         try {
           yield* call(
             RNFS.writeFile,
             `${fPath}/${voucherFilename}.pdf`,
-            getStampaVoucherResult.value.value.data,
+            getStampaVoucherResult.right.value.data,
             "base64"
           );
           yield* put(svGetPdfVoucher.success(fPath));
@@ -57,7 +58,7 @@ export function* handleGetStampaVoucher(
       yield* put(
         svGetPdfVoucher.failure(
           getGenericError(
-            new Error(`response status ${getStampaVoucherResult.value.status}`)
+            new Error(`response status ${getStampaVoucherResult.right.status}`)
           )
         )
       );
@@ -65,7 +66,7 @@ export function* handleGetStampaVoucher(
     }
     yield* put(
       svPossibleVoucherStateGet.failure(
-        getGenericError(new Error(readableReport(getStampaVoucherResult.value)))
+        getGenericError(new Error(readableReport(getStampaVoucherResult.left)))
       )
     );
   } catch (e) {

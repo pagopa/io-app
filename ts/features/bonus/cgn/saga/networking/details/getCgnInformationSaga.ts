@@ -1,9 +1,10 @@
-import { call, put } from "typed-redux-saga/macro";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { BackendCGN } from "../../../api/backendCgn";
+import * as E from "fp-ts/lib/Either";
+import { call, put } from "typed-redux-saga/macro";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { cgnDetails } from "../../../store/actions/details";
 import { getNetworkError } from "../../../../../../utils/errors";
+import { BackendCGN } from "../../../api/backendCgn";
+import { cgnDetails } from "../../../store/actions/details";
 
 export function* cgnGetInformationSaga(
   getCgnStatus: ReturnType<typeof BackendCGN>["getCgnStatus"]
@@ -11,24 +12,24 @@ export function* cgnGetInformationSaga(
   try {
     const cgnInformationResult: SagaCallReturnType<typeof getCgnStatus> =
       yield* call(getCgnStatus, {});
-    if (cgnInformationResult.isLeft()) {
+    if (E.isLeft(cgnInformationResult)) {
       yield* put(
         cgnDetails.failure({
           kind: "generic",
-          value: new Error(readableReport(cgnInformationResult.value))
+          value: new Error(readableReport(cgnInformationResult.left))
         })
       );
     } else if (
-      cgnInformationResult.isRight() &&
-      cgnInformationResult.value.status === 200
+      E.isRight(cgnInformationResult) &&
+      cgnInformationResult.right.status === 200
     ) {
-      yield* put(cgnDetails.success(cgnInformationResult.value.value));
+      yield* put(cgnDetails.success(cgnInformationResult.right.value));
     } else {
       yield* put(
         cgnDetails.failure({
           kind: "generic",
           value: new Error(
-            `response status ${cgnInformationResult.value.status}`
+            `response status ${cgnInformationResult.right.status}`
           )
         })
       );

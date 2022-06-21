@@ -236,10 +236,13 @@ const NewTransactionSummaryScreen = ({
    * otherwise (it could be an issue with the API) use the rptID coming from
    * static data (e.g. message, qrcode, manual insertion, etc.)
    */
-  const organizationFiscalCode = pot
-    .toOption(paymentVerification)
-    .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
-    .getOrElse(rptId.organizationFiscalCode);
+  const organizationFiscalCode = pipe(
+    pot.toOption(paymentVerification),
+    O.chainNullableK(
+      _ => _.enteBeneficiario?.identificativoUnivocoBeneficiario
+    ),
+    O.getOrElse(() => rptId.organizationFiscalCode)
+  );
 
   return (
     <BaseScreenComponent

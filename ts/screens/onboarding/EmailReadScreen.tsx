@@ -7,6 +7,7 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, SafeAreaView, StyleSheet } from "react-native";
@@ -172,7 +173,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                   size={24}
                   style={styles.icon}
                 />
-                {this.props.optionEmail.isSome() && (
+                {O.isSome(this.props.optionEmail) && (
                   <Text style={styles.email}>
                     {this.props.optionEmail.value}
                   </Text>

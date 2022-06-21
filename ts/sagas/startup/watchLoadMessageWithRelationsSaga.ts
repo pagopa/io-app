@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
@@ -30,11 +31,11 @@ export function* watchLoadMessageWithRelationsSaga(
       messageId
     );
 
-    if (messageOrError.isLeft()) {
-      throw new Error(messageOrError.value.message);
+    if (E.isLeft(messageOrError)) {
+      throw new Error(messageOrError.left.message);
     }
 
-    const message = messageOrError.value;
+    const message = messageOrError.right;
     yield* put(loadMessageWithRelations.success());
 
     const serviceById = serviceByIdSelector(message.sender_service_id);

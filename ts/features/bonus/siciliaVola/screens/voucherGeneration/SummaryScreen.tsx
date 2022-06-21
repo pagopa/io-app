@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
@@ -74,7 +75,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
   } = props;
   useEffect(() => {
     if (
-      maybeVoucherRequest.isSome() &&
+      O.isSome(maybeVoucherRequest) &&
       isVoucherRequest(maybeVoucherRequest.value) &&
       maybeVoucherRequest.value.category !== "disabled"
     ) {
@@ -84,7 +85,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
     }
   }, [maybeVoucherRequest, requestAvailableDestinations]);
 
-  if (!maybeVoucherRequest.isSome()) {
+  if (!O.isSome(maybeVoucherRequest)) {
     props.failure();
     return null;
   }

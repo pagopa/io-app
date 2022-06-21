@@ -1,17 +1,17 @@
-import * as E from "fp-ts/lib/Either";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { BackendClient } from "../../api/backend";
 import {
+  deleteUserDataProcessing,
   loadUserDataProcessing,
-  upsertUserDataProcessing,
-  deleteUserDataProcessing
+  upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
 import { getError } from "../../utils/errors";
-import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 
 /**
  * The following logic:
@@ -28,7 +28,7 @@ export function* loadUserDataProcessingSaga(
   try {
     const response: SagaCallReturnType<typeof getUserDataProcessingRequest> =
       yield* call(getUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: choice
+        choice
       });
     if (E.isRight(response)) {
       if (response.right.status === 404 || response.right.status === 200) {
@@ -67,7 +67,7 @@ export function* upsertUserDataProcessingSaga(
   try {
     const response: SagaCallReturnType<typeof postUserDataProcessingRequest> =
       yield* call(postUserDataProcessingRequest, {
-        userDataProcessingChoiceRequest: { choice }
+        body: { choice }
       });
 
     if (E.isRight(response) && response.right.status === 200) {
@@ -97,7 +97,7 @@ export function* deleteUserDataProcessingSaga(
   try {
     const response: SagaCallReturnType<typeof deleteUserDataProcessingRequest> =
       yield* call(deleteUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: choice
+        choice
       });
     if (E.isRight(response)) {
       if (response.right.status === 202) {
