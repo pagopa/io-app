@@ -1,5 +1,5 @@
-import * as E from "fp-ts/lib/Either";
 import * as path from "path";
+import * as E from "fp-ts/lib/Either";
 import { ReactInstance, RefObject } from "react";
 import { Dimensions } from "react-native";
 import RNFS from "react-native-fs";
