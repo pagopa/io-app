@@ -12,10 +12,10 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageLoading } from "../../messages/components/MessageLoading";
 import { PnParamsList } from "../navigation/params";
-import { pnContentFromIdSelector } from "../store/reducers/contentById";
 import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
 import I18n from "../../../i18n";
 import { loadThirdPartyMessage } from "../../messages/store/actions";
+import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
   id: UIMessageId;
@@ -44,7 +44,7 @@ export const PnMessageDetailsScreen = (
   const dispatch = useIODispatch();
 
   const content = useIOSelector(state =>
-    pnContentFromIdSelector(state, messageId)
+    thirdPartyFromIdSelector(state, messageId)
   );
 
   const loadContent = React.useCallback(() => {
