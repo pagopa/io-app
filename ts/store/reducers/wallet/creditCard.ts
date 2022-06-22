@@ -1,9 +1,13 @@
-import { getType } from "typesafe-actions";
-import sha from "sha.js";
-import * as O from "fp-ts/lib/Option";
 import * as AR from "fp-ts/lib/Array";
-import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
+import sha from "sha.js";
+import { getType } from "typesafe-actions";
+import { getLookUpId } from "../../../utils/pmLookUpId";
+import { clearCache } from "../../actions/profile";
+import { Action } from "../../actions/types";
+import { addCreditCardOutcomeCode } from "../../actions/wallet/outcomeCode";
 import {
   addCreditCardWebViewEnd,
   AddCreditCardWebViewEndReason,
@@ -14,11 +18,7 @@ import {
   CreditCardFailure,
   creditCardPaymentNavigationUrls
 } from "../../actions/wallet/wallets";
-import { Action } from "../../actions/types";
-import { clearCache } from "../../actions/profile";
 import { GlobalState } from "../types";
-import { addCreditCardOutcomeCode } from "../../actions/wallet/outcomeCode";
-import { getLookUpId } from "../../../utils/pmLookUpId";
 
 export type CreditCardInsertion = {
   startDate: Date;
@@ -68,7 +68,7 @@ const updateStateHead = (
       () => state,
       updateItem => {
         const [, ...tail] = state;
-        return trimState([updateItem, ...AR.dropLeft(tail.length)(tail)]);
+        return trimState([updateItem, ...AR.takeRight(tail.length)(tail)]);
       }
     )
   );

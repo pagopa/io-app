@@ -1,10 +1,10 @@
 import * as AR from "fp-ts/lib/Array";
-import reducer, { MAX_APP_VERSION_HISTORY_SIZE } from "../installation";
 import { applicationChangeState } from "../../actions/application";
 import {
   appVersionHistory,
   previousInstallationDataDeleteSuccess
 } from "../../actions/installation";
+import reducer, { MAX_APP_VERSION_HISTORY_SIZE } from "../installation";
 
 describe("installation reducer", () => {
   describe("when the store is empty", () => {

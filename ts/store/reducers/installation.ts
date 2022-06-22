@@ -51,7 +51,7 @@ const reducer = (
         ...state,
         appVersionHistory: pipe(
           [...state.appVersionHistory, action.payload],
-          AR.dropLeft(MAX_APP_VERSION_HISTORY_SIZE)
+          AR.takeRight(MAX_APP_VERSION_HISTORY_SIZE)
         )
       };
     default:
