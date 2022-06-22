@@ -26,6 +26,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { compareSelectedBonusByYear } from "../utils/bonusRequest";
 
 const CdcBonusRequestSelectYear = () => {
   const navigation =
@@ -77,7 +78,7 @@ const CdcBonusRequestSelectYear = () => {
             {I18n.t("bonus.cdc.bonusRequest.selectYear.body")}
           </H4>
           <View spacer large />
-          {activableBonus.map(b => (
+          {[...activableBonus].sort(compareSelectedBonusByYear).map(b => (
             <View key={b.year}>
               <View style={{ flexDirection: "row" }}>
                 <CheckBox

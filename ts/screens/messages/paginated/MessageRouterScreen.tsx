@@ -10,12 +10,7 @@ import { pipe } from "fp-ts/lib/function";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
-import {
-  euCovidCertificateEnabled,
-  maximumItemsFromAPI,
-  mvlEnabled,
-  pageSize
-} from "../../../config";
+import { euCovidCertificateEnabled, mvlEnabled } from "../../../config";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/EUCovidCertificate";
@@ -25,9 +20,8 @@ import NavigationService from "../../../navigation/NavigationService";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import {
+  loadMessageById,
   loadMessageDetails,
-  loadPreviousPageMessages,
-  reloadAllMessages,
   upsertMessageStatusAttributes
 } from "../../../store/actions/messages";
 import {
@@ -51,10 +45,10 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
+import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
-  isArchived: boolean;
 };
 
 type OwnProps = {
@@ -103,12 +97,10 @@ const navigateToScreenHandler =
  */
 const MessageRouterScreen = ({
   cancel,
-  cursors,
   isServiceAvailable,
+  loadMessageById,
   loadMessageDetails,
-  loadPreviousPage,
   loadServiceDetail,
-  reloadPage,
   maybeMessage,
   maybeMessageDetails,
   messageId,
@@ -122,23 +114,10 @@ const MessageRouterScreen = ({
 
   const tryLoadMessageDetails = useCallback(() => {
     if (maybeMessage === undefined) {
-      if (pot.isNone(cursors)) {
-        // nothing in the collection, refresh
-        reloadPage();
-      } else if (pot.isSome(cursors)) {
-        // something in the collection, get the new ones only
-        loadPreviousPage(cursors.value.previous);
-      }
+      loadMessageById(messageId);
     }
     loadMessageDetails(messageId);
-  }, [
-    maybeMessage,
-    cursors,
-    messageId,
-    loadMessageDetails,
-    loadPreviousPage,
-    reloadPage
-  ]);
+  }, [maybeMessage, messageId, loadMessageById, loadMessageDetails]);
 
   useOnFirstRender(() => {
     if (maybeMessage !== undefined && !maybeMessage.isRead) {
@@ -188,39 +167,27 @@ const MessageRouterScreen = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
-  const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
-  const filter = { getArchived: isArchived };
-
-  return {
-    cancel: () => navigateBack(),
-    loadMessageDetails: (id: UIMessageId) => {
-      dispatch(loadMessageDetails.request({ id }));
-    },
-    loadPreviousPage: (cursor?: Cursor) =>
-      dispatch(
-        loadPreviousPageMessages.request({
-          cursor,
-          pageSize: maximumItemsFromAPI,
-          filter
-        })
-      ),
-    reloadPage: () => dispatch(reloadAllMessages.request({ pageSize, filter })),
-    loadServiceDetail: (serviceId: string) =>
-      dispatch(loadServiceDetail.request(serviceId)),
-    setMessageReadState: (message: UIMessage) =>
-      dispatch(
-        upsertMessageStatusAttributes.request({
-          message,
-          update: { tag: "reading" }
-        })
-      )
-  };
-};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  cancel: () => navigateBack(),
+  loadMessageById: (id: UIMessageId) => {
+    dispatch(loadMessageById.request({ id }));
+  },
+  loadMessageDetails: (id: UIMessageId) => {
+    dispatch(loadMessageDetails.request({ id }));
+  },
+  loadServiceDetail: (serviceId: string) =>
+    dispatch(loadServiceDetail.request(serviceId)),
+  setMessageReadState: (message: UIMessage) =>
+    dispatch(
+      upsertMessageStatusAttributes.request({
+        message,
+        update: { tag: "reading" }
+      })
+    )
+});
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
-  const isArchived = Boolean(ownProps.navigation.getParam("isArchived"));
   const maybeMessage = allPaginated.getById(state, messageId);
   const isServiceAvailable = pipe(
     maybeMessage?.serviceId,
@@ -230,9 +197,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     O.getOrElse(() => false)
   );
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
-  const { archive, inbox } = getCursors(state);
   return {
-    cursors: isArchived ? archive : inbox,
     isServiceAvailable,
     maybeMessage,
     maybeMessageDetails,

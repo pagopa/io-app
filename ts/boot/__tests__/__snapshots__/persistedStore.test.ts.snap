@@ -71,6 +71,7 @@ Object {
     "byId": Object {},
     "detailsById": Object {},
     "idsByServiceId": Object {},
+    "paginatedById": Object {},
   },
   "messagesStatus": Object {},
   "organizations": Object {

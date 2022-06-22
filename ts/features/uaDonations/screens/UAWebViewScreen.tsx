@@ -9,7 +9,7 @@ import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { View } from "native-base";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Linking, Platform, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
@@ -31,6 +31,7 @@ import {
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch } from "../../../store/hooks";
+import { checkoutUADonationsUrl } from "../../../urls";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { showToast } from "../../../utils/showToast";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
@@ -194,6 +195,13 @@ export const UAWebViewScreen = () => {
   const [errorType, setErrorType] = useState<"webview" | "data" | undefined>();
 
   useEffect(() => {
+    if (Platform.OS === "ios") {
+      Linking.openURL(checkoutUADonationsUrl).catch(_ =>
+        showToast(I18n.t("genericError"))
+      );
+      navigation.goBack();
+    }
+
     if (uri === undefined) {
       setErrorType("data");
     } else {
@@ -203,7 +211,7 @@ export const UAWebViewScreen = () => {
         setErrorType("data");
       }
     }
-  }, [uri]);
+  }, [uri, navigation]);
 
   // trigger the payment flow within the given data
   const startDonationPayment = (
