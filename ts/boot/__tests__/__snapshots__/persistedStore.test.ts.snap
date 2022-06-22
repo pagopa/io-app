@@ -52,7 +52,7 @@ Object {
         "data": Object {
           "kind": "PotNone",
         },
-        "lastRequest": None {
+        "lastRequest": Object {
           "_tag": "None",
         },
       },
@@ -60,11 +60,11 @@ Object {
         "data": Object {
           "kind": "PotNone",
         },
-        "lastRequest": None {
+        "lastRequest": Object {
           "_tag": "None",
         },
       },
-      "migration": None {
+      "migration": Object {
         "_tag": "None",
       },
     },

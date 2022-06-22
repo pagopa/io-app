@@ -1,15 +1,15 @@
 import * as E from "fp-ts/lib/Either";
-import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 
 import { loadMessageDetails as action } from "../../../store/actions/messages";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
 import {
   apiPayload,
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
 } from "../../../__mocks__/message";
+import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
 
 const tryLoadMessageDetails = testTryLoadMessageDetails!;
 
@@ -58,7 +58,7 @@ describe("tryReloadAllMessages", () => {
         .put(
           action.failure({
             id,
-            error: TypeError("Cannot read property 'fold' of undefined")
+            error: TypeError("Cannot read property '_tag' of undefined")
           })
         )
         .next()
