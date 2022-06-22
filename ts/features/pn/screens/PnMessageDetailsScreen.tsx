@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { SafeAreaView } from "react-native";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -15,14 +14,15 @@ import { PnParamsList } from "../navigation/params";
 import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
 import I18n from "../../../i18n";
 import { loadThirdPartyMessage } from "../../messages/store/actions";
-import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
+import { pnMessageFromIdSelector } from "../store/reducers";
+import { PNMessage } from "../store/types/PNMessage";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
   id: UIMessageId;
 }>;
 
 const renderContent = (
-  content: pot.Pot<ThirdPartyMessageWithContent, Error>,
+  content: pot.Pot<PNMessage, Error>,
   onRetry: () => void
 ) =>
   pot.fold(
@@ -44,7 +44,7 @@ export const PnMessageDetailsScreen = (
   const dispatch = useIODispatch();
 
   const content = useIOSelector(state =>
-    thirdPartyFromIdSelector(state, messageId)
+    pnMessageFromIdSelector(state, messageId)
   );
 
   const loadContent = React.useCallback(() => {
