@@ -57,7 +57,9 @@ import {
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT,
   upsertMessageStatusAttributesDefaultDecoder,
-  UpsertMessageStatusAttributesT
+  UpsertMessageStatusAttributesT,
+  GetThirdPartyMessageT,
+  getThirdPartyMessageDefaultDecoder
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
@@ -235,6 +237,14 @@ export function BackendClient(
     query: _ => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getUserMessageDefaultDecoder()
+  };
+
+  const getThirdPartyMessage: GetThirdPartyMessageT = {
+    method: "get",
+    url: ({ id }) => `/api/v1/third-party-messages/${id}`,
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    query: _ => ({}),
+    response_decoder: getThirdPartyMessageDefaultDecoder()
   };
 
   const upsertMessageStatusAttributesT: UpsertMessageStatusAttributesT = {
@@ -457,6 +467,9 @@ export function BackendClient(
       createFetchRequestForApi(getMessagesT, options)
     ),
     getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
+    getThirdPartyMessage: withBearerToken(
+      createFetchRequestForApi(getThirdPartyMessage, options)
+    ),
     upsertMessageStatusAttributes: withBearerToken(
       createFetchRequestForApi(upsertMessageStatusAttributesT, options)
     ),

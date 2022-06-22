@@ -77,6 +77,7 @@ import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
+import { watchPnSaga } from "../features/pn/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -132,7 +133,6 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
-import { watchPnSaga } from "../features/pn/saga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -416,7 +416,7 @@ export function* initializeApplicationSaga(): Generator<
   }
 
   if (pnEnabled) {
-    yield* fork(watchPnSaga, sessionToken);
+    yield* fork(watchPnSaga, backendClient.getThirdPartyMessage);
   }
 
   // Load the user metadata
