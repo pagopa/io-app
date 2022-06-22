@@ -29,12 +29,8 @@ import {
   navigateToPaginatedMessageDetailScreenAction
 } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
-import * as allPaginated from "../../../store/reducers/entities/messages/allPaginated";
-import {
-  Cursor,
-  getCursors
-} from "../../../store/reducers/entities/messages/allPaginated";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
+import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import {
   UIMessage,
   UIMessageDetails,
@@ -45,7 +41,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -188,7 +183,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
-  const maybeMessage = allPaginated.getById(state, messageId);
+  const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
   const isServiceAvailable = pipe(
     maybeMessage?.serviceId,
     O.fromNullable,
