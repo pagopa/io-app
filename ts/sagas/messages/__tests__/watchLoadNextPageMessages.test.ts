@@ -1,14 +1,14 @@
 import * as E from "fp-ts/lib/Either";
-import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 
 import { loadNextPageMessages as action } from "../../../store/actions/messages";
-import { testTryLoadNextPageMessages } from "../watchLoadNextPageMessages";
 import {
   apiPayload,
   defaultRequestPayload,
   successLoadNextPageMessagesPayload
 } from "../../../__mocks__/messages";
+import { testTryLoadNextPageMessages } from "../watchLoadNextPageMessages";
 
 const tryLoadNextPageMessages = testTryLoadNextPageMessages!;
 
@@ -73,7 +73,7 @@ describe("tryLoadNextPageMessages", () => {
         .next()
         .put(
           action.failure({
-            error: new TypeError("Cannot read property 'fold' of undefined"),
+            error: new TypeError("Cannot read property '_tag' of undefined"),
             filter: defaultRequestPayload.filter
           })
         )

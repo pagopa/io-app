@@ -1,23 +1,23 @@
-import { expectSaga } from "redux-saga-test-plan";
-import * as matchers from "redux-saga-test-plan/matchers";
 import * as E from "fp-ts/lib/Either";
 import { Action } from "redux";
-import { appReducer } from "../../store/reducers";
+import { expectSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
 import { applicationChangeState } from "../../store/actions/application";
+import { appReducer } from "../../store/reducers";
 import {
   notificationsPlatform,
   updateInstallationSaga
 } from "../notifications";
 
 import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationsInstallationToken
-} from "../../store/actions/notifications";
-import {
   logoutRequest,
   sessionExpired,
   sessionInvalid
 } from "../../store/actions/authentication";
+import {
+  notificationsInstallationTokenRegistered,
+  updateNotificationsInstallationToken
+} from "../../store/actions/notifications";
 
 const installationId = "installationId";
 jest.mock("../../utils/installation", () => ({
@@ -61,7 +61,7 @@ describe("updateInstallationSaga", () => {
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: pushNotificationToken
             }
@@ -111,7 +111,7 @@ describe("updateInstallationSaga", () => {
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: newPushNotificationToken
             }
@@ -140,7 +140,7 @@ describe("updateInstallationSaga", () => {
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: pushNotificationToken
             }
@@ -164,7 +164,7 @@ describe("updateInstallationSaga", () => {
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: pushNotificationToken
             }
@@ -194,7 +194,7 @@ describe("updateInstallationSaga", () => {
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: pushNotificationToken
             }

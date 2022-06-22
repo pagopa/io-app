@@ -1,15 +1,15 @@
 import * as E from "fp-ts/lib/Either";
-import { getType } from "typesafe-actions";
 import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 
 import { reloadAllMessages as action } from "../../../store/actions/messages";
-import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
 import {
-  defaultRequestPayload,
-  defaultRequestError,
   apiPayload,
+  defaultRequestError,
+  defaultRequestPayload,
   successReloadMessagesPayload
 } from "../../../__mocks__/messages";
+import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
 
 const tryReloadAllMessages = testTryLoadPreviousPageMessages!;
 
@@ -73,7 +73,7 @@ describe("tryReloadAllMessages", () => {
         .next()
         .put(
           action.failure({
-            error: new TypeError("Cannot read property 'fold' of undefined"),
+            error: new TypeError("Cannot read property '_tag' of undefined"),
             filter: defaultRequestPayload.filter
           })
         )
