@@ -1,19 +1,18 @@
-import { ActionType } from "typesafe-actions";
-import { call, put } from "typed-redux-saga/macro";
+import { SagaIterator } from "redux-saga";
+import { ActionType, getType } from "typesafe-actions";
+import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { getError } from "../../../../utils/errors";
-import { loadThirdPartyMessage } from "../../../messages/store/actions";
-import { BackendClient } from "../../../../api/backend";
+import { BackendClient } from "../../api/backend";
+import { loadThirdPartyMessage } from "../../features/messages/store/actions";
+import { getError } from "../../utils/errors";
 
-export function* getPnMessageSaga(
-  getThirdPartyMessage: ReturnType<
-    typeof BackendClient
-  >["getThirdPartyMessage"],
+function* getThirdPartyMessage(
+  client: ReturnType<typeof BackendClient>,
   action: ActionType<typeof loadThirdPartyMessage.request>
 ) {
   const id = action.payload;
   try {
-    const result = yield* call(getThirdPartyMessage, { id });
+    const result = yield* call(client.getThirdPartyMessage, { id });
     if (result.isLeft()) {
       yield* put(
         loadThirdPartyMessage.failure({
@@ -36,4 +35,14 @@ export function* getPnMessageSaga(
   } catch (e) {
     yield* put(loadThirdPartyMessage.failure({ id, error: getError(e) }));
   }
+}
+
+export function* watchThirdPartyMessageSaga(
+  client: ReturnType<typeof BackendClient>
+): SagaIterator {
+  yield* takeLatest(
+    getType(loadThirdPartyMessage.request),
+    getThirdPartyMessage,
+    client
+  );
 }
