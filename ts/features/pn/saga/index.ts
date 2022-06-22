@@ -1,8 +1,8 @@
 import { SagaIterator } from "redux-saga";
 import { getType } from "typesafe-actions";
 import { takeLatest } from "typed-redux-saga/macro";
-import { loadPnContent } from "../store/actions";
 import { BackendClient } from "../../../api/backend";
+import { loadThirdPartyMessage } from "../../messages/store/actions";
 import { getPnMessageSaga } from "./networking/getPnMessageSaga";
 
 /**
@@ -13,7 +13,7 @@ export function* watchPnSaga(
   getThirdPartyMessage: ReturnType<typeof BackendClient>["getThirdPartyMessage"]
 ): SagaIterator {
   yield* takeLatest(
-    getType(loadPnContent.request),
+    getType(loadThirdPartyMessage.request),
     getPnMessageSaga,
     getThirdPartyMessage
   );

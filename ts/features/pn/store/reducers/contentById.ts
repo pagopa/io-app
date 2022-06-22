@@ -11,7 +11,7 @@ import {
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
-import { loadPnContent } from "../actions";
+import { loadThirdPartyMessage } from "../../../messages/store/actions";
 
 export type PnContentByIdState = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>
@@ -29,11 +29,11 @@ export const pnContentByIdReducer = (
   action: Action
 ): PnContentByIdState => {
   switch (action.type) {
-    case getType(loadPnContent.request):
+    case getType(loadThirdPartyMessage.request):
       return toLoading(action.payload, state);
-    case getType(loadPnContent.success):
+    case getType(loadThirdPartyMessage.success):
       return toSome(action.payload.id, state, action.payload.content);
-    case getType(loadPnContent.failure):
+    case getType(loadThirdPartyMessage.failure):
       return toError(action.payload.id, state, action.payload.error);
   }
   return state;
