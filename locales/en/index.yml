@@ -1536,8 +1536,8 @@ wallet:
       title: "The card details are incorrect"
       description: "Delete the card from your Wallet and add it again. Make sure to enter the details exactly as they appear on the card."
     code4:
-      title: "The session has expired"
-      description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
+      title: "Check your email"
+      description: "The outcome of the payment could not be verified. If it has been successful, you will receive an email with the receipt shortly. If you do not receive the email, please contact Support."
     code7:
       title: "There's a problem with your card"
       description: "No charges were made. For more information, contact your bank."

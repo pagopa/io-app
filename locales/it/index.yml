@@ -1555,8 +1555,8 @@ wallet:
       title: "I dati della carta non sono corretti"
       description: "Elimina la carta dal tuo Portafoglio e prova ad aggiungerla di nuovo. Assicurati che i dati inseriti siano riportati esattamente come sulla carta."
     code4:
-      title: "La sessione è scaduta"
-      description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
+      title: "Controlla la tua email"
+      description: "Non è stato possibile verificare l’esito del pagamento. Se è andato a buon fine, riceverai a breve un’email con la ricevuta. Se non ricevi l’email, contatta l’Assistenza."
     code7:
       title: "C’è un problema con la tua carta"
       description: "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."

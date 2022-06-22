@@ -60,9 +60,10 @@ def scan_directory(path, file_black_list, black_list_url, ext_set={'*.ts*'}):
 	black_list_files = tuple(file_black_list)
 	# exclude test files
 	for f in files:
-		name = basename(f)
-		if name.endswith(("test.ts", "test.tsx", "tsx.snap")) or str(f).endswith(black_list_files):
+		# exclude all those files that are included in the blacklist or are tests, mocks, or snaps
+		if re.search(r'(__tests?__|__mocks?__|tsx.snap)', abspath(f), re.IGNORECASE)  or str(f).endswith(black_list_files):
 			to_remove.append(f)
+			continue
 	for tr in to_remove:
 		files.remove(tr)
 	return read_file(files, black_list_url)
