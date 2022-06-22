@@ -30,8 +30,7 @@ const mockPublicSession: PublicSession = {
   myPortalToken: "myPortalToken",
   spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"],
   walletToken: "walletToken",
-  zendeskToken: "zendeskToken",
-  fimsToken: "fimsToken"
+  zendeskToken: "zendeskToken"
 };
 const mockZendeskConfig: Zendesk = {
   panicMode: false

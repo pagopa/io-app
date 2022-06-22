@@ -1,10 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../i18n";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
 import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
-import I18n from "../../../../i18n";
 
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -16,10 +14,10 @@ import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/
 import { loadServiceDetail } from "../../../../store/actions/services";
 import { appReducer } from "../../../../store/reducers";
 import { DetailsById } from "../../../../store/reducers/entities/messages/detailsById";
+import { PaginatedById } from "../../../../store/reducers/entities/messages/paginatedById";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
-import { PaginatedById } from "../../../../store/reducers/entities/messages/paginatedById";
 
 jest.useFakeTimers();
 
