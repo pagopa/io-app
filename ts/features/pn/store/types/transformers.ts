@@ -1,14 +1,20 @@
-import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { PNMessage } from "./PNMessage";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { PNMessage, FullReceivedNotification } from "./types";
 
 export const toPNMessage = (
-  messageFromApi: CreatedMessageWithContent
-): PNMessage => ({
-  id: messageFromApi.id as UIMessageId,
-  sender: "string",
-  subject: "string",
-  markdown: messageFromApi.content.markdown,
-  attachments: undefined,
-  paymentData: undefined
-});
+  messageFromApi: ThirdPartyMessageWithContent
+): PNMessage | undefined => {
+  const maybeNotification = FullReceivedNotification.decode(
+    messageFromApi.third_party_message.details
+  );
+
+  if (maybeNotification.isRight()) {
+    return {
+      ...maybeNotification.value,
+      serviceId: messageFromApi.sender_service_id,
+      attachments: undefined,
+      paymentData: undefined
+    };
+  }
+  return undefined;
+};

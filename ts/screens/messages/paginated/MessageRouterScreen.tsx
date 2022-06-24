@@ -95,7 +95,10 @@ const navigateToScreenHandler =
     } else if (pnEnabled && message.category.tag === TagEnumPN.PN) {
       navigateBack();
       NavigationService.dispatchNavigationAction(
-        navigateToPnMessageDetailsScreen({ id: message.id })
+        navigateToPnMessageDetailsScreen({
+          messageId: message.id,
+          serviceId: message.serviceId
+        })
       );
     } else {
       navigateBack();

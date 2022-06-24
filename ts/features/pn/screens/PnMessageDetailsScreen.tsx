@@ -15,24 +15,35 @@ import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
 import I18n from "../../../i18n";
 import { loadThirdPartyMessage } from "../../messages/store/actions";
 import { pnMessageFromIdSelector } from "../store/reducers";
-import { PNMessage } from "../store/types/PNMessage";
+import { PNMessage } from "../store/types/types";
+import { PnMessageDetails } from "../components/PnMessageDetails";
+import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
-  id: UIMessageId;
+  messageId: UIMessageId;
+  serviceId: ServiceId;
 }>;
 
-const renderContent = (
-  content: pot.Pot<PNMessage, Error>,
+const renderMessage = (
+  message: pot.Pot<PNMessage | undefined, Error>,
+  service: ServicePublic | undefined,
   onRetry: () => void
 ) =>
   pot.fold(
-    content,
+    message,
     () => <></>,
     () => <MessageLoading />,
     () => <MessageLoading />,
     () => <PnMessageDetailsError onRetry={onRetry} />,
-    () => <></>,
-    () => <></>,
+    message =>
+      message ? (
+        <PnMessageDetails message={message} service={service} />
+      ) : (
+        <PnMessageDetailsError onRetry={onRetry} />
+      ),
+    () => <MessageLoading />,
     () => <></>,
     () => <></>
   );
@@ -40,10 +51,16 @@ const renderContent = (
 export const PnMessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
 ): React.ReactElement => {
-  const messageId = props.route.params.id;
+  const messageId = props.route.params.messageId;
+  const serviceId = props.route.params.serviceId;
+
   const dispatch = useIODispatch();
 
-  const content = useIOSelector(state =>
+  const service = pot.toUndefined(
+    useIOSelector(state => serviceByIdSelector(serviceId)(state)) ?? pot.none
+  );
+
+  const message = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
 
@@ -62,7 +79,7 @@ export const PnMessageDetailsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {renderContent(content, loadContent)}
+        {renderMessage(message, service, loadContent)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
