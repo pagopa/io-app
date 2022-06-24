@@ -89,7 +89,8 @@ const navigateToScreenHandler =
       navigateBack();
       dispatch(
         navigateToPaginatedMessageDetailScreenAction({
-          message
+          messageId: message.id,
+          serviceId: message.serviceId
         })
       );
     }
