@@ -131,6 +131,7 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
+import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -513,6 +514,7 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
     yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
     yield* fork(watchReloadAllMessages, backendClient.getMessages);
+    yield* fork(watchLoadMessageById, backendClient.getMessage);
     yield* fork(watchLoadMessageDetails, backendClient.getMessage);
     yield* fork(
       watchUpsertMessageStatusAttribues,
@@ -563,8 +565,7 @@ export function* initializeApplicationSaga(): Generator<
     if (usePaginatedMessages) {
       NavigationService.dispatchNavigationAction(
         navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          isArchived: false
+          messageId: messageId as UIMessageId
         })
       );
     } else {
