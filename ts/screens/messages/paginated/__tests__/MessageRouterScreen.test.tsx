@@ -161,7 +161,8 @@ describe("MessageRouterScreen", () => {
           });
           expect(mockNavDispatch).toHaveBeenCalledWith(
             navigateToPaginatedMessageDetailScreenAction({
-              message: targetMessage
+              messageId: targetMessage.id,
+              serviceId: targetMessage.serviceId
             })
           );
         });
