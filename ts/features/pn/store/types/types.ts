@@ -5,12 +5,20 @@ import {
   PaymentData
 } from "../../../../store/reducers/entities/messages/types";
 
-export const FullReceivedNotification = t.interface({
+export const FullReceivedNotificationR = t.interface({
   subject: t.string,
+  iun: t.string
+});
+
+export const FullReceivedNotificationO = t.partial({
   abstract: t.string,
-  iun: t.string,
   senderDenomination: t.string
 });
+
+export const FullReceivedNotification = t.intersection(
+  [FullReceivedNotificationR, FullReceivedNotificationO],
+  "FullReceivedNotification"
+);
 
 export type FullReceivedNotification = t.TypeOf<
   typeof FullReceivedNotification

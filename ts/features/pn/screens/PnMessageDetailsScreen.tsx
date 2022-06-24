@@ -41,6 +41,7 @@ const renderMessage = (
       message ? (
         <PnMessageDetails message={message} service={service} />
       ) : (
+        // decoding error
         <PnMessageDetailsError onRetry={onRetry} />
       ),
     () => <MessageLoading />,
