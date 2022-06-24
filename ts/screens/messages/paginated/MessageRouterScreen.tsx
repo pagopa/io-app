@@ -27,11 +27,6 @@ import {
   navigateToPaginatedMessageDetailScreenAction
 } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
-import * as allPaginated from "../../../store/reducers/entities/messages/allPaginated";
-import {
-  Cursor,
-  getCursors
-} from "../../../store/reducers/entities/messages/allPaginated";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
 import {
   UIMessage,
@@ -128,7 +123,7 @@ const MessageRouterScreen = ({
     if (!isServiceAvailable && maybeMessage) {
       loadServiceDetail(maybeMessage.serviceId);
     }
-  }, [isServiceAvailable, loadServiceDetail]);
+  }, [isServiceAvailable, loadServiceDetail, maybeMessage]);
 
   useEffect(() => {
     // message in the list and its details loaded: green light
@@ -185,8 +180,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const messageId = ownProps.navigation.getParam("messageId");
+const mapStateToProps = (state: GlobalState, ownProps: NavigationProps) => {
+  const messageId = ownProps.route.params.messageId;
   const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
   const isServiceAvailable = O.fromNullable(maybeMessage?.serviceId)
     .map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none)
