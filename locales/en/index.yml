@@ -1797,7 +1797,7 @@ services:
   serviceIsEnabled: Contact you in app
   serviceNotEnabled: The service is not enabled
   pushNotifications: Send you push notifications
-  messageReadStatus: Sapere se hai letto un suo messaggio
+  messageReadStatus: TBD
   emailForwarding: Send you e-mail
   tosAndPrivacy: Terms of use and Privacy
   tosLink: Terms and conditions
