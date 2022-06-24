@@ -73,7 +73,9 @@ describe("tryLoadPreviousPageMessages", () => {
         .next()
         .put(
           action.failure({
-            error: new TypeError("Cannot read property '_tag' of undefined"),
+            error: new TypeError(
+              "Cannot read properties of undefined (reading '_tag')"
+            ),
             filter: defaultRequestPayload.filter
           })
         )
