@@ -471,7 +471,9 @@ export function* upsertAppVersionSaga(
   >["createOrUpdateProfile"]
 ) {
   const maybeStoredVersion = fromNullable(userProfile.last_app_version);
-  const maybeAppVersion = fromEither(AppVersion.decode(getAppVersion()));
+
+  const rawAppVersion = yield* call(getAppVersion);
+  const maybeAppVersion = fromEither(AppVersion.decode(rawAppVersion));
 
   // There was a problem decoding the local app version
   // using the regex from the backend. The upsert won't be
