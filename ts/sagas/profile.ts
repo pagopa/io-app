@@ -488,11 +488,11 @@ export function* upsertAppVersionSaga(
     return;
   }
 
-  yield* call(
-    createOrUpdateProfileSaga,
-    createOrUpdateProfile,
-    profileUpsert.request({ last_app_version: maybeAppVersion.value })
-  );
+  const requestAction = yield* call(profileUpsert.request, {
+    last_app_version: maybeAppVersion.value
+  });
+
+  yield* call(createOrUpdateProfileSaga, createOrUpdateProfile, requestAction);
 }
 
 // to ensure right code encapsulation we export functions/variables just for tests purposes
@@ -502,6 +502,7 @@ export const profileSagaTestable = isTestEnv
       checkLoadedProfile,
       handleLoadBonusBeforeRemoveAccount,
       handleRemoveAccount,
-      checkStoreHashedFiscalCode
+      checkStoreHashedFiscalCode,
+      createOrUpdateProfileSaga
     }
   : undefined;
