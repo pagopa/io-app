@@ -26,41 +26,17 @@ import {
   isPanicModeActive,
   JwtIdentity,
   setUserIdentity,
-  showSupportTickets,
   ZendeskAppConfig,
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import {
-  zendeskRequestTicketNumber,
-  zendeskSupportCompleted
-} from "../store/actions";
-import {
-  zendeskConfigSelector,
-  zendeskTicketNumberSelector
-} from "../store/reducers";
+import { zendeskRequestTicketNumber } from "../store/actions";
+import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 
 type Props = {
   assistanceForPayment: boolean;
 };
-
-type DisplayedButtons = "None" | "OpenRequest" | "Both";
-
-const getDisplayedButtons = (
-  ticketsNumber: pot.Pot<number, Error>
-): DisplayedButtons =>
-  pot.fold(
-    ticketsNumber,
-    () => "None",
-    () => "None",
-    v => (v > 0 ? "Both" : "OpenRequest"),
-    _ => "OpenRequest",
-    v => (v > 0 ? "Both" : "OpenRequest"),
-    v => (v > 0 ? "Both" : "None"),
-    (_, v) => (v > 0 ? "Both" : "OpenRequest"),
-    (v, _) => (v > 0 ? "Both" : "OpenRequest")
-  );
 
 /**
  * This component represents the entry point for the Zendesk workflow.
@@ -77,8 +53,6 @@ const ZendeskSupportComponent = (props: Props) => {
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useDispatch();
-  const ticketsNumber = useIOSelector(zendeskTicketNumberSelector);
-  const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
     zendeskToken
       ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
@@ -150,8 +124,6 @@ const ZendeskSupportComponent = (props: Props) => {
     }
   };
 
-  const displayedButton: DisplayedButtons = getDisplayedButtons(ticketsNumber);
-
   return (
     <>
       <H3>{I18n.t("support.helpCenter.supportComponent.title")}</H3>
@@ -165,42 +137,37 @@ const ZendeskSupportComponent = (props: Props) => {
       />
       <View spacer={true} />
 
-      {displayedButton === "Both" && (
-        <>
-          <ButtonDefaultOpacity
-            onPress={() => {
-              void mixpanelTrack("ZENDESK_SHOW_TICKETS");
-              showSupportTickets();
-              workUnitCompleted();
-            }}
-            style={{
-              alignSelf: "stretch"
-            }}
-            disabled={false}
-            bordered={true}
-            testID={"showTicketsButton"}
-          >
-            <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
-          </ButtonDefaultOpacity>
-          <View spacer={true} />
-        </>
-      )}
-      {displayedButton !== "None" && (
-        <>
-          <ButtonDefaultOpacity
-            style={{
-              alignSelf: "stretch"
-            }}
-            onPress={handleContactSupportPress}
-            disabled={false}
-            testID={"contactSupportButton"}
-          >
-            <Label color={"white"}>
-              {I18n.t("support.helpCenter.cta.contactSupport")}
-            </Label>
-          </ButtonDefaultOpacity>
-        </>
-      )}
+      <ButtonDefaultOpacity
+        onPress={() => {
+          void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
+          navigation.navigate("ZENDESK_MAIN", {
+            screen: "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS",
+            params: { assistanceForPayment }
+          });
+        }}
+        style={{
+          alignSelf: "stretch"
+        }}
+        disabled={false}
+        bordered={true}
+        testID={"showTicketsButton"}
+      >
+        <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
+      </ButtonDefaultOpacity>
+      <View spacer={true} />
+
+      <ButtonDefaultOpacity
+        style={{
+          alignSelf: "stretch"
+        }}
+        onPress={handleContactSupportPress}
+        disabled={false}
+        testID={"contactSupportButton"}
+      >
+        <Label color={"white"}>
+          {I18n.t("support.helpCenter.cta.contactSupport")}
+        </Label>
+      </ButtonDefaultOpacity>
     </>
   );
 };
