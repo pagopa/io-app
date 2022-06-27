@@ -93,7 +93,6 @@ import {
   initMixpanel
 } from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
-import { askPremiumMessagesOptInOut } from "./premiumMessages";
 import {
   loadProfile,
   watchProfile,
@@ -324,10 +323,6 @@ export function* initializeApplicationSaga(): Generator<
     // check if the user expressed preference about mixpanel, if not ask for it
     yield* call(askMixpanelOptIn);
 
-    // Check if the user has expressed a preference
-    // about the Premium Messages.
-    yield* call(askPremiumMessagesOptInOut);
-
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
@@ -366,10 +361,6 @@ export function* initializeApplicationSaga(): Generator<
 
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
-
-      // Check if the user has expressed a preference
-      // about the Premium Messages.
-      yield* call(askPremiumMessagesOptInOut);
 
       yield* call(askServicesPreferencesModeOptin, false);
 
