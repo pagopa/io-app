@@ -24,6 +24,7 @@ import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBo
 import { getLogoForOrganization } from "../../../../utils/organizations";
 import { MultiImage } from "../../../../components/ui/MultiImage";
 import { IOBadge } from "../../../../components/core/IOBadge";
+import { Body } from "../../../../components/core/typography/Body";
 
 const styles = StyleSheet.create({
   container: {
@@ -134,9 +135,9 @@ export const TransactionSummaryRow = (
               : props.subtitle
           }`}
         >
-          <H5 weight="Regular" color={"bluegrey"} style={styles.title}>
+          <Body weight="Regular" color={"bluegrey"} style={styles.title}>
             {props.title}
-          </H5>
+          </Body>
           {!props.isLoading && props.axis === "horizontal" && props.subtitle && (
             <H5 color={"bluegreyDark"} weight={"Regular"}>
               {props.subtitle}
