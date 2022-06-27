@@ -5,6 +5,7 @@ import ZendeskAskPermissions from "../screens/ZendeskAskPermissions";
 import ZendeskChooseCategory from "../screens/ZendeskChooseCategory";
 import ZendeskChooseSubCategory from "../screens/ZendeskChooseSubCategory";
 import ZendeskPanicMode from "../screens/ZendeskPanicMode";
+import ZendeskAskSeeReportsPermissions from "../screens/ZendeskAskSeeReportsPermissions";
 import ZENDESK_ROUTES from "./routes";
 
 export const zendeskSupportNavigator = createCompatNavigatorFactory(
@@ -14,6 +15,9 @@ export const zendeskSupportNavigator = createCompatNavigatorFactory(
     [ZENDESK_ROUTES.HELP_CENTER]: { screen: ZendeskSupportHelpCenter },
     [ZENDESK_ROUTES.PANIC_MODE]: { screen: ZendeskPanicMode },
     [ZENDESK_ROUTES.ASK_PERMISSIONS]: { screen: ZendeskAskPermissions },
+    [ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS]: {
+      screen: ZendeskAskSeeReportsPermissions
+    },
     [ZENDESK_ROUTES.CHOOSE_CATEGORY]: { screen: ZendeskChooseCategory },
     [ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY]: { screen: ZendeskChooseSubCategory }
   },
