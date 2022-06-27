@@ -3,7 +3,6 @@ import { View, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import Placeholder from "rn-placeholder";
 import customVariables from "../../../../theme/variables";
-import { H5 } from "../../../../components/core/typography/H5";
 import { H4 } from "../../../../components/core/typography/H4";
 import I18n from "../../../../i18n";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -25,6 +24,7 @@ import { getLogoForOrganization } from "../../../../utils/organizations";
 import { MultiImage } from "../../../../components/ui/MultiImage";
 import { IOBadge } from "../../../../components/core/IOBadge";
 import { Body } from "../../../../components/core/typography/Body";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 const styles = StyleSheet.create({
   container: {
@@ -111,6 +111,7 @@ type RowProps = Readonly<{
   placeholder?: React.ReactNode;
   isLoading?: boolean;
   hideSeparator?: boolean;
+  onPress?: () => void;
 }>;
 
 export const TransactionSummaryRow = (
@@ -121,43 +122,45 @@ export const TransactionSummaryRow = (
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        {props.icon && <View style={styles.icon}>{props.icon}</View>}
-        <View
-          style={
-            props.axis === "vertical" ? styles.vertical : styles.horizontal
-          }
-          accessible={true}
-          accessibilityLabel={`${props.title}: ${
-            props.isLoading
-              ? I18n.t("global.accessibility.activityIndicator.label")
-              : props.subtitle
-          }`}
-        >
-          <Body weight="Regular" color={"bluegrey"} style={styles.title}>
-            {props.title}
-          </Body>
-          {!props.isLoading && props.axis === "horizontal" && props.subtitle && (
-            <H5 color={"bluegreyDark"} weight={"Regular"}>
-              {props.subtitle}
-            </H5>
-          )}
-          {!props.isLoading && props.axis === "vertical" && props.subtitle && (
-            <H4 color={"bluegreyDark"} weight={"SemiBold"}>
-              {props.subtitle}
-            </H4>
-          )}
-          {props.isLoading && (
-            <View style={styles.placeholder}>{props.placeholder}</View>
+    <TouchableDefaultOpacity onPress={props.onPress} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          {props.icon && <View style={styles.icon}>{props.icon}</View>}
+          <View
+            style={
+              props.axis === "vertical" ? styles.vertical : styles.horizontal
+            }
+            accessible={true}
+            accessibilityLabel={`${props.title}: ${
+              props.isLoading
+                ? I18n.t("global.accessibility.activityIndicator.label")
+                : props.subtitle
+            }`}
+          >
+            <Body weight="Regular" color={"bluegrey"} style={styles.title}>
+              {props.title}
+            </Body>
+            {!props.isLoading && props.axis === "horizontal" && props.subtitle && (
+              <H4 color={"blue"} weight={"SemiBold"}>
+                {props.subtitle}
+              </H4>
+            )}
+            {!props.isLoading && props.axis === "vertical" && props.subtitle && (
+              <H4 color={"bluegreyDark"} weight={"SemiBold"}>
+                {props.subtitle}
+              </H4>
+            )}
+            {props.isLoading && (
+              <View style={styles.placeholder}>{props.placeholder}</View>
+            )}
+          </View>
+          {props.children && (
+            <View style={styles.children}>{props.children}</View>
           )}
         </View>
-        {props.children && (
-          <View style={styles.children}>{props.children}</View>
-        )}
+        {props.hideSeparator !== true && <View style={styles.separator} />}
       </View>
-      {props.hideSeparator !== true && <View style={styles.separator} />}
-    </View>
+    </TouchableDefaultOpacity>
   );
 };
 
@@ -264,11 +267,17 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         axis={"horizontal"}
         title={I18n.t("payment.noticeCode")}
         subtitle={props.paymentNoticeNumber}
+        onPress={() =>
+          clipboardSetStringWithFeedback(props.paymentNoticeNumber)
+        }
       />
       <TransactionSummaryRow
         axis={"horizontal"}
         title={I18n.t("wallet.firstTransactionSummary.entityCode")}
         subtitle={props.organizationFiscalCode}
+        onPress={() =>
+          clipboardSetStringWithFeedback(props.organizationFiscalCode)
+        }
       />
       {paymentInfoBottomSheet}
     </>
