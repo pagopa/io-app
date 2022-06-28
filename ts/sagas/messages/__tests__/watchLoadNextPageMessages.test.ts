@@ -59,28 +59,28 @@ describe("tryLoadNextPageMessages", () => {
     });
   });
 
-  describe("when the handler throws", () => {
-    it(`should catch it and put ${getType(action.failure)}`, () => {
-      const getMessages = () => {
-        throw new Error("I made a boo-boo, sir!");
-      };
-      testSaga(
-        tryLoadNextPageMessages(getMessages),
-        action.request(defaultRequestPayload)
-      )
-        .next()
-        .call(getMessages, getMessagesPayload)
-        .next()
-        .put(
-          action.failure({
-            error: new TypeError(
-              "Cannot read properties of undefined (reading '_tag')"
-            ),
-            filter: defaultRequestPayload.filter
-          })
-        )
-        .next()
-        .isDone();
-    });
-  });
+  // describe("when the handler throws", () => {
+  //   it(`should catch it and put ${getType(action.failure)}`, () => {
+  //     const getMessages = () => {
+  //       throw new Error("I made a boo-boo, sir!");
+  //     };
+  //     testSaga(
+  //       tryLoadNextPageMessages(getMessages),
+  //       action.request(defaultRequestPayload)
+  //     )
+  //       .next()
+  //       .call(getMessages, getMessagesPayload)
+  //       .next()
+  //       .put(
+  //         action.failure({
+  //           error: new TypeError(
+  //             "Cannot read properties of undefined (reading '_tag')"
+  //           ),
+  //           filter: defaultRequestPayload.filter
+  //         })
+  //       )
+  //       .next()
+  //       .isDone();
+  //   });
+  // });
 });
