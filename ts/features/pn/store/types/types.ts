@@ -1,9 +1,6 @@
 import * as t from "io-ts";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import {
-  Attachment,
-  PaymentData
-} from "../../../../store/reducers/entities/messages/types";
+import { Attachment } from "../../../../store/reducers/entities/messages/types";
 
 export const NotificationPaymentInfoR = t.interface({
   noticeNumber: t.string,
