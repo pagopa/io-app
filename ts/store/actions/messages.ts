@@ -23,6 +23,15 @@ import { TagEnum } from "../../../definitions/backend/MessageCategoryPayment";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 
 /**
+ * Load a single message given its ID
+ */
+export const loadMessageById = createAsyncAction(
+  "MESSAGE_BY_ID_LOAD_REQUEST",
+  "MESSAGE_BY_ID_LOAD_SUCCESS",
+  "MESSAGE_BY_ID_LOAD_FAILURE"
+)<{ id: UIMessageId }, UIMessage, { id: UIMessageId; error: Error }>();
+
+/**
  * Load a single message's details given its ID
  */
 export const loadMessageDetails = createAsyncAction(
@@ -203,4 +212,5 @@ export type MessagesActions =
   | ActionType<typeof removeMessages>
   | ActionType<typeof DEPRECATED_setMessageReadState>
   | ActionType<typeof upsertMessageStatusAttributes>
-  | ActionType<typeof DEPRECATED_setMessagesArchivedState>;
+  | ActionType<typeof DEPRECATED_setMessagesArchivedState>
+  | ActionType<typeof loadMessageById>;

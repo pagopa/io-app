@@ -1,3 +1,4 @@
+import { PathConfigMap } from "@react-navigation/core";
 import CheckStatusRouterScreen from "../screens/voucherGeneration/CheckStatusRouterScreen";
 import SelectBeneficiaryCategoryScreen from "../screens/voucherGeneration/SelectBeneficiaryCategoryScreen";
 import StudentSelectDestinationScreen from "../screens/voucherGeneration/StudentSelectDestinationScreen";
@@ -16,6 +17,11 @@ import SvGeneratedVoucherTimeoutScreen from "../screens/voucherGeneration/ko/SvG
 import VoucherListScreen from "../screens/voucherList/VoucherListScreen";
 import VoucherDetailsScreen from "../screens/voucherList/VoucherDetailsScreen";
 import SV_ROUTES from "./routes";
+
+export const svLinkingOptions: PathConfigMap = {
+  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]: "sv-check-status",
+  [SV_ROUTES.VOUCHER_LIST.LIST]: "vouchers-list"
+};
 
 export const SvVoucherListNavigator = {
   [SV_ROUTES.VOUCHER_LIST.LIST]: {
