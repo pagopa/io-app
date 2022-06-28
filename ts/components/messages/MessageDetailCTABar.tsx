@@ -76,11 +76,13 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     }
     const paymentData = this.props.message.content.payment_data;
     const { amount, notice_number } = paymentData;
+    const messageId = this.props.message.id;
     return (
       <PaymentButton
         amount={amount}
         noticeNumber={notice_number}
         organizationFiscalCode={paymentData.payee.fiscal_code}
+        messageId={messageId}
       />
     );
   }

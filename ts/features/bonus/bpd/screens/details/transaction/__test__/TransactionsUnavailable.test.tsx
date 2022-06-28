@@ -34,7 +34,11 @@ describe("TransactionsUnavailable component", () => {
       },
       backendStatus: {
         status: some({
-          config: { assistanceTool: { tool: ToolEnum.none } } as Config
+          config: {
+            assistanceTool: { tool: ToolEnum.none },
+            cgn: { enabled: true },
+            fims: { enabled: true }
+          } as Config
         } as BackendStatus)
       },
       profile: pot.some({ is_email_validated: true })
