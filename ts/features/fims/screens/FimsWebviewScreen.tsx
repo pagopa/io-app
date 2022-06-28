@@ -3,13 +3,10 @@ import { useCallback, useMemo } from "react";
 import { Alert, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
 import { fromNullable, none, some } from "fp-ts/lib/Option";
-import { useNavigation } from "@react-navigation/native";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import FimsWebView from "../components/FimsWebView";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
-import { resetInternalRouteNavigation } from "../../../store/actions/internalRouteNavigation";
+import { useIOSelector } from "../../../store/hooks";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
-import { FimsWebviewParams } from "../types/FimsWebviewParams";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
@@ -20,23 +17,23 @@ import {
 } from "../../../utils/cookieManager";
 import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
 
+export type FimsWebviewScreenNavigationParams = Readonly<{
+  url: string;
+}>;
+
 const FimsWebviewScreen = () => {
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
   const [cookieError, setCookieError] = React.useState(false);
   const navigation = useNavigation();
+  const route =
+    useRoute<Route<"FIMS_WEBVIEW", FimsWebviewScreenNavigationParams>>();
 
-  const dispatch = useIODispatch();
-
-  const maybeParams = FimsWebviewParams.decode(
-    useIOSelector(internalRouteNavigationParamsSelector)
-  );
   const maybeSessionToken = fromNullable(useIOSelector(sessionTokenSelector));
   const maybeFimsDomain = fromNullable(useIOSelector(fimsDomainSelector));
 
   const goBackAndResetInternalNavigationInfo = useCallback(() => {
     navigation.goBack();
-    dispatch(resetInternalRouteNavigation());
-  }, [navigation, dispatch]);
+  }, [navigation]);
 
   const clearCookie = () => {
     ioClearCookie(() => setCookieError(true));
@@ -54,7 +51,7 @@ const FimsWebviewScreen = () => {
       return;
     }
 
-    if (maybeParams.isLeft() || maybeSessionToken.isNone()) {
+    if (maybeSessionToken.isNone()) {
       Alert.alert(
         I18n.t("global.genericAlert"),
         maybeSessionToken.isNone()
@@ -108,7 +105,6 @@ const FimsWebviewScreen = () => {
     return clearCookie;
   }, [
     goBackAndResetInternalNavigationInfo,
-    maybeParams,
     maybeSessionToken,
     maybeFimsDomain,
     navigation
@@ -122,10 +118,10 @@ const FimsWebviewScreen = () => {
     <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          {showWebview && maybeParams.isRight() && (
+          {showWebview && maybeSessionToken.isSome() && (
             <FimsWebView
               onWebviewClose={handleGoBack}
-              uri={maybeParams.value.url}
+              uri={route.params.url}
               fimsDomain={maybeFimsDomain.toUndefined()}
             />
           )}

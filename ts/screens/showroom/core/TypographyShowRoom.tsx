@@ -1,6 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
+import { IOBadge } from "../../../components/core/IOBadge";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
 import { H2 } from "../../../components/core/typography/H2";
@@ -39,6 +40,7 @@ export const TypographyShowroom = () => (
     <View spacer={true} extralarge={true} />
     <Monospace>MonoSpace</Monospace>
     <View spacer={true} extralarge={true} />
+    <IOBadgeRow />
   </ShowroomSection>
 );
 
@@ -190,6 +192,35 @@ export const LabelRow = () => (
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <Label color={"white"}>Label</Label>
       </View>
+    </View>
+    <View spacer={true} extralarge={true} />
+  </>
+);
+
+export const IOBadgeRow = () => (
+  <>
+    <Label>{"<IOBadge />"}</Label>
+    <View spacer={true} />
+    <View style={styles.row}>
+      <IOBadge text={"Badge"} small={true} labelColor={"white"} />
+      <View hspacer={true} />
+      <IOBadge text={"Badge"} small={true} labelColor={"bluegreyDark"} />
+      <View hspacer={true} />
+      <IOBadge text={"Badge"} small={true} labelColor={"blue"} />
+      <View hspacer={true} />
+      <IOBadge text={"Badge"} small={true} labelColor={"red"} />
+      <View hspacer={true} />
+    </View>
+    <View spacer={true} />
+    <View style={styles.row}>
+      <IOBadge text={"Badge"} labelColor={"white"} />
+      <View hspacer={true} />
+      <IOBadge text={"Badge"} labelColor={"bluegreyDark"} />
+      <View hspacer={true} />
+      <IOBadge text={"Badge"} labelColor={"blue"} />
+      <View hspacer={true} />
+      <IOBadge text={"Badge"} labelColor={"red"} />
+      <View hspacer={true} />
     </View>
     <View spacer={true} extralarge={true} />
   </>

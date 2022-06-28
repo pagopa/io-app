@@ -516,14 +516,7 @@ onboarding:
       title: Achtung
       message: Bitte lesen Sie den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzrichtlinie, um fortzufahren
   unlockCode:
-    headerTitle: Aktivierung
-    contentTitle: Wählen Sie einen Freischaltcode
-    contentSubtitle: Geben Sie einen 6-stelligen Code ein
-    contentTitleConfirm: Fügen Sie Ihren Code erneut ein
-    contentTitleConfirmSubtitle: Geben Sie erneut den 6-stelligen Code ein
-    pinInfo: Dieser Code wird jedes Mal abgefragt, wenn Sie die IO-App öffnen und wenn Sie sensible Daten anzeigen oder dispositive Transaktionen durchführen müssen. Sie können ihn jederzeit ändern, indem Sie sich authentifizieren.
     reset: Ändern Sie den Code
-    confirmInvalid: Die beiden PINs stimmen nicht überein
     contextualHelpTitle: Wie lautet Ihr Freischaltcode?
   alert:
     title: Wollen Sie sich wirklich abmelden?
@@ -704,7 +697,8 @@ wallet:
     fee: Gebühr
     idTransaction: Transaktions-Identifikationscode
     updatedAmount: Aktualisierter Betrag
-    updateInfo: 'pagoPa aktualisiert automatisch den Betrag, um sicherzustellen, dass Sie den richtigen Betrag zahlen und um Verzugs- oder Strafzinsen zu vermeiden '
+    amountInfo:
+      message: pagoPa aktualisiert automatisch den Betrag, um sicherzustellen, dass Sie den richtigen Betrag zahlen und um Verzugs- oder Strafzinsen zu vermeiden
     loadingMessage:
       activation: Benachrichtige die Körperschaft, warten Sie ein paar Sekunden...
       verification: Prüfe den Status und die Höhe Ihrer Zahlungsmitteilung...

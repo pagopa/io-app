@@ -5,10 +5,10 @@ import {
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { useNavigation } from "@react-navigation/native";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { View } from "native-base";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Linking, Platform, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
@@ -29,14 +29,18 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { internalRouteNavigationParamsSelector } from "../../../store/reducers/internalRouteNavigation";
+import { useIODispatch } from "../../../store/hooks";
+import { checkoutUADonationsUrl } from "../../../urls";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { showToast } from "../../../utils/showToast";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import { isHttp, openWebUrl } from "../../../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { UADonationWebViewMessage } from "../types";
+
+export type UAWebviewScreenNavigationParams = Readonly<{
+  urlToLoad: string;
+}>;
 
 const styles = StyleSheet.create({
   loading: {
@@ -172,10 +176,13 @@ const injectedJavascript = closeInjectedScript(AVOID_ZOOM_JS);
  * @constructor
  */
 export const UAWebViewScreen = () => {
-  const navigationParams = useIOSelector(internalRouteNavigationParamsSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const route =
+    useRoute<
+      Route<"UADONATION_ROUTES_WEBVIEW", UAWebviewScreenNavigationParams>
+    >();
   const dispatch = useIODispatch();
-  const uri = navigationParams?.urlToLoad;
+  const uri = route.params.urlToLoad;
   const ref = React.createRef<WebView>();
   /**
    * errors type
@@ -185,6 +192,13 @@ export const UAWebViewScreen = () => {
   const [errorType, setErrorType] = useState<"webview" | "data" | undefined>();
 
   useEffect(() => {
+    if (Platform.OS === "ios") {
+      Linking.openURL(checkoutUADonationsUrl).catch(_ =>
+        showToast(I18n.t("genericError"))
+      );
+      navigation.goBack();
+    }
+
     if (uri === undefined) {
       setErrorType("data");
     } else {
@@ -194,7 +208,7 @@ export const UAWebViewScreen = () => {
         setErrorType("data");
       }
     }
-  }, [uri]);
+  }, [uri, navigation]);
 
   // trigger the payment flow within the given data
   const startDonationPayment = (

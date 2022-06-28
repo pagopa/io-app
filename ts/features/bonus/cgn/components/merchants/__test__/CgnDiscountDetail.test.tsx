@@ -13,15 +13,24 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 
+const OPERATOR_NAME = "Operator FOO";
 describe("when rendering", () => {
   it("on match snapshot for static code", () => {
     expect(
-      getComponent(mockDiscount, DiscountCodeTypeEnum.static).toJSON()
+      getComponent(
+        mockDiscount,
+        OPERATOR_NAME,
+        DiscountCodeTypeEnum.static
+      ).toJSON()
     ).toMatchSnapshot();
   });
 
   it("on render static discount", () => {
-    const component = getComponent(mockDiscount, DiscountCodeTypeEnum.static);
+    const component = getComponent(
+      mockDiscount,
+      OPERATOR_NAME,
+      DiscountCodeTypeEnum.static
+    );
     expect(component.queryByTestId("discount-detail")).toBeDefined();
     expect(component.queryByTestId("static-code-component")).toBeDefined();
     expect(component.queryByTestId("otp-code-component")).toBeNull();
@@ -30,12 +39,20 @@ describe("when rendering", () => {
 
   it("on match snapshot for OTP discount", () => {
     expect(
-      getComponent(mockDiscount, DiscountCodeTypeEnum.api).toJSON()
+      getComponent(
+        mockDiscount,
+        OPERATOR_NAME,
+        DiscountCodeTypeEnum.api
+      ).toJSON()
     ).toMatchSnapshot();
   });
 
   it("on render otp discount", () => {
-    const component = getComponent(mockDiscount, DiscountCodeTypeEnum.api);
+    const component = getComponent(
+      mockDiscount,
+      OPERATOR_NAME,
+      DiscountCodeTypeEnum.api
+    );
     expect(component.queryByTestId("discount-detail")).toBeDefined();
     expect(component.queryByTestId("static-code-component")).toBeNull();
     expect(component.queryByTestId("otp-code-component")).toBeDefined();
@@ -49,7 +66,11 @@ describe("when rendering", () => {
   });
 
   it("on render bucket discount", () => {
-    const component = getComponent(mockDiscount, DiscountCodeTypeEnum.bucket);
+    const component = getComponent(
+      mockDiscount,
+      OPERATOR_NAME,
+      DiscountCodeTypeEnum.bucket
+    );
     expect(component.queryByTestId("discount-detail")).toBeDefined();
     expect(component.queryByTestId("static-code-component")).toBeNull();
     expect(component.queryByTestId("otp-code-component")).toBeNull();
@@ -58,13 +79,18 @@ describe("when rendering", () => {
 
   it("on match snapshot for landing page discount", () => {
     expect(
-      getComponent(mockDiscount, DiscountCodeTypeEnum.landingpage).toJSON()
+      getComponent(
+        mockDiscount,
+        OPERATOR_NAME,
+        DiscountCodeTypeEnum.landingpage
+      ).toJSON()
     ).toMatchSnapshot();
   });
 
   it("on render landing discount", () => {
     const component = getComponent(
       mockDiscount,
+      OPERATOR_NAME,
       DiscountCodeTypeEnum.landingpage
     );
 
@@ -82,7 +108,11 @@ describe("check discount info rendering", () => {
       condition: "A discount condition" as Discount["condition"],
       productCategories: []
     };
-    const component = getComponent(testDiscount, DiscountCodeTypeEnum.static);
+    const component = getComponent(
+      testDiscount,
+      OPERATOR_NAME,
+      DiscountCodeTypeEnum.static
+    );
     expect(component.queryByTestId("discount-detail")).toBeDefined();
     expect(component.getByTestId("discount-condition")).toBeDefined();
     expect(component.getByTestId("discount-condition")).toHaveTextContent(
@@ -95,7 +125,11 @@ describe("check discount info rendering", () => {
   });
 });
 
-const getComponent = (discount: Discount, merchantType?: DiscountCodeType) => {
+const getComponent = (
+  discount: Discount,
+  operatorName: string,
+  merchantType?: DiscountCodeType
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
   const store = mockStore({
@@ -104,7 +138,11 @@ const getComponent = (discount: Discount, merchantType?: DiscountCodeType) => {
 
   return render(
     <Provider store={store}>
-      <CgnDiscountDetail discount={discount} merchantType={merchantType} />
+      <CgnDiscountDetail
+        discount={discount}
+        merchantType={merchantType}
+        operatorName={operatorName}
+      />
     </Provider>
   );
 };

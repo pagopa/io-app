@@ -5,7 +5,6 @@ import { MessageCategory } from "../../../../../definitions/backend/MessageCateg
 import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 
-import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import {
   Attachment,
   EUCovidCertificate,
@@ -22,7 +21,9 @@ import {
  *
  * @param messageFromApi
  */
-export const toUIMessage = (messageFromApi: PublicMessage): UIMessage => {
+export const toUIMessage = (
+  messageFromApi: PublicMessage | CreatedMessageWithContentAndAttachments
+): UIMessage => {
   const enriched = messageFromApi as EnrichedMessage;
   const category: MessageCategory = enriched.category || {
     tag: TagEnum.GENERIC
@@ -106,7 +107,7 @@ const getEUCovidCertificate = ({
  * @param messageFromApi
  */
 export const toUIMessageDetails = (
-  messageFromApi: CreatedMessageWithContent
+  messageFromApi: CreatedMessageWithContentAndAttachments
 ): UIMessageDetails => {
   const { id, content } = messageFromApi;
   const dueDate = content.due_date ? new Date(content.due_date) : undefined;
