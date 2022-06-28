@@ -5,9 +5,35 @@ import {
   PaymentData
 } from "../../../../store/reducers/entities/messages/types";
 
+export const NotificationPaymentInfoR = t.interface({
+  noticeNumber: t.string,
+  creditorTaxId: t.string
+});
+export const NotificationPaymentInfoO = t.partial({});
+
+export const NotificationPaymentInfo = t.intersection(
+  [NotificationPaymentInfoR, NotificationPaymentInfoO],
+  "NotificationPaymentInfo"
+);
+
+export const NotificationRecipientR = t.interface({
+  denomination: t.string,
+  taxId: t.string
+});
+
+export const NotificationRecipientO = t.partial({
+  payment: NotificationPaymentInfo
+});
+
+export const NotificationRecipient = t.intersection(
+  [NotificationRecipientR, NotificationRecipientO],
+  "NotificationRecipient"
+);
+
 export const FullReceivedNotificationR = t.interface({
   subject: t.string,
-  iun: t.string
+  iun: t.string,
+  recipients: t.array(NotificationRecipient)
 });
 
 export const FullReceivedNotificationO = t.partial({
@@ -28,5 +54,4 @@ export type PNMessage = FullReceivedNotification &
   Readonly<{
     serviceId: ServiceId;
     attachments?: ReadonlyArray<Attachment>;
-    paymentData?: PaymentData;
   }>;

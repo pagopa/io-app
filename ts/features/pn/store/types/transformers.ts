@@ -12,8 +12,7 @@ export const toPNMessage = (
     return {
       ...maybeNotification.value,
       serviceId: messageFromApi.sender_service_id,
-      attachments: undefined,
-      paymentData: undefined
+      attachments: undefined
     };
   }
   return undefined;
