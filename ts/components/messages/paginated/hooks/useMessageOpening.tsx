@@ -22,8 +22,7 @@ export const useMessageOpening = () => {
       navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
         screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
         params: {
-          messageId: message.id,
-          isArchived: message.isArchived
+          messageId: message.id
         }
       });
     },
