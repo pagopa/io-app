@@ -1821,6 +1821,7 @@ services:
   serviceIsEnabled: Contattarti in app
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Inviarti notifiche push
+  messageReadStatus: Ricevere conferme di lettura
   emailForwarding: Inviarti e-mail
   tosAndPrivacy: Termini e Privacy
   tosLink: Termini e condizioni d'uso

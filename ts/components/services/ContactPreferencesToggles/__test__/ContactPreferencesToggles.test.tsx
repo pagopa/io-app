@@ -19,7 +19,13 @@ describe("ContactPreferencesToggles component", () => {
     const store = mockState({
       id: "some_id" as ServiceId,
       kind: "success",
-      value: { inbox: true, email: true, push: false, settings_version: 0 }
+      value: {
+        inbox: true,
+        email: true,
+        push: false,
+        can_access_message_read_status: false,
+        settings_version: 0
+      }
     });
     const component = renderComponent(store, {});
     expect(
@@ -31,7 +37,13 @@ describe("ContactPreferencesToggles component", () => {
       const store = mockState({
         id: "some_id" as ServiceId,
         kind: "success",
-        value: { inbox: true, email: true, push: false, settings_version: 0 }
+        value: {
+          inbox: true,
+          email: true,
+          push: false,
+          can_access_message_read_status: false,
+          settings_version: 0
+        }
       });
       const component = renderComponent(store, {});
       expect(
@@ -52,7 +64,13 @@ describe("ContactPreferencesToggles component", () => {
       const store = mockState({
         id: "some_id" as ServiceId,
         kind: "success",
-        value: { inbox: true, email: true, push: false, settings_version: 0 }
+        value: {
+          inbox: true,
+          email: true,
+          push: false,
+          can_access_message_read_status: false,
+          settings_version: 0
+        }
       });
       const component = renderComponent(store, { channels: [] });
       expect(
@@ -63,7 +81,13 @@ describe("ContactPreferencesToggles component", () => {
       const store = mockState({
         id: "some_id" as ServiceId,
         kind: "success",
-        value: { inbox: true, email: true, push: false, settings_version: 0 }
+        value: {
+          inbox: true,
+          email: true,
+          push: false,
+          can_access_message_read_status: false,
+          settings_version: 0
+        }
       });
       const component = renderComponent(store, { channels: [] });
       expect(
@@ -80,7 +104,13 @@ describe("ContactPreferencesToggles component", () => {
       const store = mockState({
         id: "some_id" as ServiceId,
         kind: "success",
-        value: { inbox: true, email: true, push: false, settings_version: 0 }
+        value: {
+          inbox: true,
+          email: true,
+          push: false,
+          can_access_message_read_status: false,
+          settings_version: 0
+        }
       });
       const component = renderComponent(store, {
         channels: [
@@ -108,7 +138,13 @@ describe("ContactPreferencesToggles component", () => {
         loadServicePreference.success({
           id: "some_id" as ServiceId,
           kind: "success",
-          value: { inbox: true, email: true, push: true, settings_version: 0 }
+          value: {
+            inbox: true,
+            email: true,
+            push: true,
+            can_access_message_read_status: false,
+            settings_version: 0
+          }
         })
       );
       // the store will be in someLoading
