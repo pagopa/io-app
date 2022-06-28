@@ -58,9 +58,7 @@ describe("tryReloadAllMessages", () => {
         .put(
           action.failure({
             id,
-            error: TypeError(
-              "Cannot read properties of undefined (reading '_tag')"
-            )
+            error: new Error("Response is undefined")
           })
         )
         .next()

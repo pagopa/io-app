@@ -1,11 +1,11 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
+import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { BackendClient } from "../../api/backend";
 import { loadNextPageMessages as loadNextPageMessagesAction } from "../../store/actions/messages";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
-import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { getError } from "../../utils/errors";
 

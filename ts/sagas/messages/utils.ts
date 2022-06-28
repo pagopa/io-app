@@ -1,8 +1,7 @@
-import * as E from "fp-ts/lib/Either";
-import { ValidationError } from "io-ts";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
-
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import { ValidationError } from "io-ts";
 import { sessionExpired } from "../../store/actions/authentication";
 import { Action } from "../../store/actions/types";
 import { readablePrivacyReport } from "../../utils/reporters";
@@ -14,6 +13,8 @@ export type ResponseType<T> =
       { title?: string } | undefined
     >;
 
+const checkIsError = (e: Error | Array<ValidationError>): e is Error =>
+  e instanceof Error;
 /**
  * Discern between Either.Right/Left, and status codes.
  * Will call onSuccess if and only if response is _Right with status 200_.
@@ -30,8 +31,13 @@ export function handleResponse<T>(
 ): Action {
   return pipe(
     response,
+    E.fromNullable(new Error("Response is undefined")),
+    E.flattenW,
     E.fold(
-      error => onFailure(new Error(readablePrivacyReport(error))),
+      error =>
+        onFailure(
+          checkIsError(error) ? error : new Error(readablePrivacyReport(error))
+        ),
       data => {
         if (data.status === 200) {
           return onSuccess(data.value);

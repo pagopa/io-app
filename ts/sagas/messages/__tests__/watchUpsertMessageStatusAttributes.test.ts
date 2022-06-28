@@ -88,9 +88,7 @@ describe("tryUpsertMessageStatusAttributes", () => {
         .next()
         .put(
           action.failure({
-            error: new TypeError(
-              "Cannot read properties of undefined (reading '_tag')"
-            ),
+            error: new Error("Response is undefined"),
             payload: actionPayload
           })
         )
