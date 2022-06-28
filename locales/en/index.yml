@@ -519,7 +519,7 @@ spid:
     demo mode
   loginErrorAlert:
     title: Login error
-    message: Sorry, there was an error while logging in, could you try again?
+    message: There was an error while logging in, could you try again?
   subscription:
     line1: SPID is the digital identity to access online services of the Public Administration.
     line2: Insert your email address to enable it.
@@ -777,16 +777,19 @@ onboarding:
       title: Attention
       message: Please, read the full content of the Terms of Service and Privacy Policy to continue
   unlockCode:
-    headerTitle: Activation
-    contentTitle: Choose an unlock code
-    contentSubtitle: insert a code of 6 digits
-    contentTitleConfirm: Insert your code again
-    contentTitleConfirmSubtitle: insert again the code of 6 digits
-    pinInfo: This code will be requested each time you open the app and when you need to view sensitive data or make dispositive transactions. You can change it at any time by authenticating yourself.
     reset: Change the code
-    confirmInvalid: The two pins do not match
     contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
+  pin:
+    headerTitle: IO Settings
+    title: Unlock code
+    subTitle: It's a six-digit code that you need to access IO and authorize certain in-app transations.
+    pinLabel: Create unlock code
+    pinConfirmationLabel: Repeat unlock code
+    tutorial: You can change the code at any time under Profile > Security
+    errors:
+      length: The code must have six digits
+      match: The code doesn’t match
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -951,10 +954,10 @@ wallet:
         title: "We're unable to retrieve your PagoBANCOMAT cards"
         body: "Please retry"
       koNotFound:
-        title: "Sorry, we couldn't find any card"
+        title: "We couldn't find any card"
         body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
       koNotFoundSingleBank:
-        title: "Sorry, we couldn't find any card on this bank"
+        title: "We couldn't find any card on this bank"
         body: "There are no PagoBANCOMAT cards registered to you.\nIf you wish, IO can search between all banks."
         continue: "Continue"
       koServicesError:
@@ -983,7 +986,7 @@ wallet:
         title: "Unable to recover your data"
         body: "Please retry"
       koNotFound:
-        title: "Sorry, we haven't found any active BANCOMAT Pay service"
+        title: "We haven't found any active BANCOMAT Pay service"
         body: "Contact your bank to activate BANCOMAT Pay!"
     satispay:
       name: "Satispay"
@@ -1002,7 +1005,7 @@ wallet:
         title: "We were unable to contact Satispay"
         body: "Retry please"
       koNotFound:
-        title: "Sorry, we do not know that you have activated Satispay yet"
+        title: "We do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
     paypal:
       name: "PayPal"
@@ -1063,16 +1066,16 @@ wallet:
       search:
         loading: "We are retrieving your card list\n\nPlease wait a few seconds"
         koTimeout:
-          title: "Sorry, we're unable to retrieve your cards"
+          title: "We're unable to retrieve your cards"
           body: "Please try again"
         koNotFound:
-          title: "Sorry, we haven't found any card among the participating banks"
+          title: "We haven't found any card among the participating banks"
           body: "There are no cards with an international circuit registered to you: contact your bank for further information."
         koSingleBankNotFound:
-          title: "Sorry, we couldn't find any card on this bank"
+          title: "We couldn't find any card on this bank"
           body: "There are no cards with an international circuit registered to you. If you'd like, IO can search among all the participating banks."
         koServiceError:
-          title: "Sorry, we're unable to retrieve your cards"
+          title: "We're unable to retrieve your cards"
           body: "Please try again later."
       add:
         screenTitle: "Do you want to add this card?"
@@ -1118,12 +1121,12 @@ wallet:
           title: "It is currently impossible to verify your card"
           body: "Please try again"
         koNotFound:
-          title: "Sorry, there is an issue with this card"
+          title: "There is an issue with this card"
           body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
           cta:
             modifyCardNumber: "Change card number"
         koServiceError:
-          title: "Sorry, we're unable to retrieve your card"
+          title: "We're unable to retrieve your card"
           body: "Please try again later."
       add:
         screenTitle: "Do you want to add this card?"
@@ -1285,7 +1288,10 @@ wallet:
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
-    updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
+    amountInfo:
+      title: Vedi un importo diverso?
+      message: pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests
+      cta: Ok, va bene
     loadingMessage:
       activation: We are contacting the entity, wait a few seconds
       verification: We are verifying your payment information
@@ -1293,6 +1299,11 @@ wallet:
       wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
+    errorDetails:
+      title: Dettagli errore
+      errorCode: Codice errore
+      messageId: ID messaggio
+      copyToClipboard: Copia dati per l'assistenza
   insertManually:
     header: Enter notice data
     title: What do you have to pay for?
@@ -1454,14 +1465,14 @@ wallet:
     title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
-    TECHNICAL: Sorry, a technical problem has occurred with this notice
-    DATA: Sorry, the payment information is incorrect
-    EC: Sorry, Payee is having problems in responding
+    TECHNICAL: A technical problem has occurred with this notice
+    DATA: The payment information is incorrect
+    EC: The Payee is having problems in responding
     ONGOING: This payment is still ongoing, please try again in a few minutes
     ONGOING_SUBTITLE: If it has been too long, please let us know!
-    REVOKED: Sorry, the Payee has revoked this notice
-    EXPIRED: Sorry, the notice has expired, it is not possible to pay it
-    GENERIC_ERROR: Sorry, an unexpected error has occurred
+    REVOKED: The Payee has revoked this notice
+    EXPIRED: The notice has expired, you can't pay it
+    GENERIC_ERROR: An unexpected error has occurred
     GENERIC_ERROR_SUBTITLE: You can try again, or contact us to get support.
     DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
@@ -1513,10 +1524,10 @@ wallet:
       learnMore: Learn more
       visualizeCard: View card
     fallback:
-      title: "Sorry, an unexpected error has occurred"
+      title: "An unexpected error has occurred"
       description: "If this problem persists, please contact support."
     code1:
-      title: "Sorry, an unexpected error has occurred"
+      title: "An unexpected error has occurred"
       description: "If this problem persists, please contact support."
     code2:
       title: "Authorization declined"
@@ -1525,8 +1536,8 @@ wallet:
       title: "The card details are incorrect"
       description: "Delete the card from your Wallet and add it again. Make sure to enter the details exactly as they appear on the card."
     code4:
-      title: "Sorry, the session has expired"
-      description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
+      title: "Check your email"
+      description: "The outcome of the payment could not be verified. If it has been successful, you will receive an email with the receipt shortly. If you do not receive the email, please contact Support."
     code7:
       title: "There's a problem with your card"
       description: "No charges were made. For more information, contact your bank."
@@ -1536,7 +1547,7 @@ wallet:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
     code18:
-      title: "Sorry, an unexpected error has occurred"
+      title: "An unexpected error has occurred"
       description: "If this problem persists, please contact support."
     code19:
       title: "Authorization declined"
@@ -1786,6 +1797,7 @@ services:
   serviceIsEnabled: Contact you in app
   serviceNotEnabled: The service is not enabled
   pushNotifications: Send you push notifications
+  messageReadStatus: Receive read receipts
   emailForwarding: Send you e-mail
   tosAndPrivacy: Terms of use and Privacy
   tosLink: Terms and conditions
@@ -2569,7 +2581,7 @@ bonus:
           title: "Done!"
           body: "We’ve saved your choice."
         retryAfterDeletion:
-          title: "Sorry, an unexpected error has occurred"
+          title: "An unexpected error has occurred"
           body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
         toast: "Your choice was not saved. Try again later."
   cgn:
@@ -2821,13 +2833,13 @@ bonus:
         subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."
       ko:
         checkIncome:
-          title: "Sorry, you do not have the features to access the discounts."
+          title: "You do not have the features to access the discounts."
           body: "Sicilia Vola discounts are dedicated only to those with a gross personal income of less than € 25,000."
         selectBeneficiaryCategory:
-          title: "Sorry, you do not have the features to access the discounts."
+          title: "You do not have the features to access the discounts."
           body: "Sicilia Vola discounts are dedicated only to the categories presented in the previous screen."
         checkResidence:
-          title: "Sorry, you do not have the features to access the discounts."
+          title: "You do not have the features to access the discounts."
           body: "Sicilia Vola discounts are dedicated only to residents of Sicily."
         timeout:
           title: "Your Sicilia Vola discount code is being generated."
@@ -2931,7 +2943,11 @@ bonus:
           title: "Here is the result of your requests"
           body:
             success: "The request for {{successfulYears}} was successful."
-            fail: "There was a problem for the one relating to {{failedYears}}."
+            fail:
+              residenceAbroad: "The request for {{failedYears}} could not be sent because you are not a resident of Italy."
+              notEligible: "The request for {{failedYears}} could not be sent because you cannot apply for Carta della Cultura for the selected year."
+              alreadyRegistered: "The request for {{failedYears}} could not be sent because you have already submitted a request for that year."
+              initiativeFinished: "The request for {{failedYears}} could not be sent because the request period is over."
         ko:
           requirementsError:
             title: "Unfortunately you don't have the requirements to apply for Carta della Cultura."
@@ -2951,6 +2967,8 @@ bonus:
       selectYear:
         header: "Select for what years you want to request the Carta della Cultura"
         body: "For each selected year, your ISEE needs to be below € 15,000 and your residency must be in Italy."
+      misc:
+        conjunction: " and "
 features:
   messages:
     loading:
@@ -3081,14 +3099,14 @@ support:
   helpCenter:
     header: "Support"
     cta:
-      contactSupport: "Write us"
-      seeReports: "See your requests"
+      contactSupport: "Submit a request"
+      seeReports: "Current requests"
     supportComponent:
       title: "Need help?"
-      subtitle: "If you need support or want to suggest an improvement, please write to us: we will get back to you as soon as possible."
-      adviceMessage: "If your problem concerns the content of a message or the service of an Institution, contact the latter. You will find the contact details within the message or in the tab of the service concerned."
+      subtitle: "Take a look at the FAQs: if you don't find the answer you're looking for, submit a request. If you've already submitted a request and want to check its status or add details, select “Current requests“."
+      adviceMessage: "If your problem concerns the content of a message or the service of an institution, contact the latter. You can find the contact details within the message or in the tab of the service concerned."
   panicMode:
-    title: "Sorry, we cannot help you at the moment"
+    title: "We cannot help you at the moment"
     body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
   askPermissions:
     nameSurname: "Name and Surname"
@@ -3103,7 +3121,7 @@ support:
     navigationDataValue: "Such as the the last screen or message displayed in IO."
     stock: "Payment Notice details"
     stockValue: "Including the error you just received"
-    header: "Write us"
+    header: "Submit a request"
     title: "Do you give us your consent?"
     body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
     listHeader: "If you consent, we'll access this data:"
@@ -3117,7 +3135,7 @@ support:
     toast:
       emailClientNotFound: "To get support write us: {{emailAddress}}"
   chooseCategory:
-    header: "Write us"
+    header: "Submit a request"
     title:
       category: "Select a topic"
       subCategory: "Can you give us more details?"

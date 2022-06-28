@@ -27,6 +27,7 @@ import {
 } from "./messagesStatus";
 import allPaginatedReducer, { AllPaginated } from "./allPaginated";
 import detailsByIdReducer, { DetailsById } from "./detailsById";
+import paginatedByIdReducer, { PaginatedById } from "./paginatedById";
 import { thirdPartyByIdReducer, ThirdPartyById } from "./thirdPartyById";
 
 export type MessagesState = Readonly<{
@@ -34,6 +35,7 @@ export type MessagesState = Readonly<{
   allIds: MessagesAllIdsState; // FIXME: is this used?
   idsByServiceId: MessagesIdsByServiceId;
   allPaginated: AllPaginated;
+  paginatedById: PaginatedById;
   detailsById: DetailsById;
   thirdPartyById: ThirdPartyById;
 }>;
@@ -43,6 +45,7 @@ const reducer = combineReducers<MessagesState, Action>({
   allIds: messagesAllIdsReducer,
   idsByServiceId: messagesIdsByServiceIdReducer,
   allPaginated: allPaginatedReducer,
+  paginatedById: paginatedByIdReducer,
   detailsById: detailsByIdReducer,
   thirdPartyById: thirdPartyByIdReducer
 });

@@ -41,7 +41,11 @@ export function* handleGetServicePreference(
               inbox: response.value.value.is_inbox_enabled,
               push: response.value.value.is_webhook_enabled,
               email: response.value.value.is_email_enabled,
-              settings_version: response.value.value.settings_version
+              settings_version: response.value.value.settings_version,
+
+              // This will handle the premium messages flag.
+              can_access_message_read_status:
+                response.value.value.can_access_message_read_status
             }
           })
         );

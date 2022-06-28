@@ -73,6 +73,7 @@ export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   paymentStartOrigin: PaymentStartOrigin;
+  messageId?: string;
 }>;
 
 type OwnProps = {
@@ -323,7 +324,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
             <React.Fragment>
               <View spacer={true} small={true} />
               <Text style={styles.lighterGray}>
-                {I18n.t("wallet.firstTransactionSummary.updateInfo")}
+                {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
               </Text>
             </React.Fragment>
             <View spacer={true} large={true} />

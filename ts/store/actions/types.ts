@@ -36,7 +36,6 @@ import { CrossSessionsActions } from "./crossSessions";
 import { DebugActions } from "./debug";
 import { IdentificationActions } from "./identification";
 import { InstallationActions } from "./installation";
-import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 import { MessagesActions } from "./messages";
 import { MixpanelActions } from "./mixpanel";
 import { NotificationsActions } from "./notifications";
@@ -81,7 +80,6 @@ export type Action =
   | SearchActions
   | PaymentsActions
   | OrganizationsActions
-  | InternalRouteNavigationActions
   | UserDataProcessingActions
   | ProfileEmailValidationAction
   | BonusActions
