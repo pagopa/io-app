@@ -82,7 +82,6 @@ export const TransactionSummaryErrorDetails = ({
           <H4>{I18n.t("wallet.firstTransactionSummary.errorDetails.title")}</H4>
         }
         headerStyle={{
-          ...IOStyles.horizontalContentPadding,
           paddingTop: customVariables.spacerLargeHeight,
           paddingBottom: customVariables.spacerSmallHeight
         }}
@@ -103,7 +102,7 @@ export const TransactionSummaryErrorDetails = ({
               />
             ) : undefined
           )}
-          <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+          <View>
             <BlockButtons
               type={"SingleButton"}
               leftButton={{

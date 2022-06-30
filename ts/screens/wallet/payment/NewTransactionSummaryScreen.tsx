@@ -75,6 +75,7 @@ import {
   helpButtonProps,
   loadingButtonProps
 } from "./components/TransactionSummaryButtonConfigurations";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 export type TransactionSummaryError = Option<
   PayloadForAction<
@@ -86,7 +87,6 @@ export type TransactionSummaryError = Option<
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     marginHorizontal: customVariables.contentPadding
   }
 });
@@ -249,9 +249,9 @@ const NewTransactionSummaryScreen = ({
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
     >
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={IOStyles.flex}>
         {showsInlineError && <TransactionSummaryStatus error={error} />}
-        <ScrollView>
+        <ScrollView style={styles.container}>
           <TransactionSummary
             paymentVerification={paymentVerification}
             paymentNoticeNumber={paymentNoticeNumber}
