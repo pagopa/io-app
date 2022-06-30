@@ -1,30 +1,23 @@
-import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import React from "react";
-import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
-import {
-  defaultRequestPayload,
-  successLoadNextPageMessagesPayload
-} from "../../../../__mocks__/messages";
+import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
 import I18n from "../../../../i18n";
 
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import {
-  loadMessageDetails,
-  loadPreviousPageMessages,
-  reloadAllMessages
+  loadMessageById,
+  loadMessageDetails
 } from "../../../../store/actions/messages";
-import { loadServiceDetail } from "../../../../store/actions/services";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
+import { loadServiceDetail } from "../../../../store/actions/services";
 import { appReducer } from "../../../../store/reducers";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
 import { DetailsById } from "../../../../store/reducers/entities/messages/detailsById";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
+import { PaginatedById } from "../../../../store/reducers/entities/messages/paginatedById";
 
 jest.useFakeTimers();
 
@@ -35,11 +28,25 @@ jest.mock("../../../../config", () => ({
   pageSize: 8,
   maximumItemsFromAPI: 8
 }));
-jest.mock("../../../../utils/hooks/useOnFocus", () => ({
-  useNavigationContext: () => ({
-    dispatch: mockNavDispatch,
-    state: { routeName: "test-route" }
-  })
+
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: mockNavDispatch,
+      addListener: () => jest.fn()
+    })
+  };
+});
+
+jest.mock("../../../../navigation/NavigationService", () => ({
+  dispatchNavigationAction: jest.fn(),
+  setNavigationReady: jest.fn(),
+  navigationRef: {
+    current: jest.fn()
+  }
 }));
 
 describe("MessageRouterScreen", () => {
@@ -55,10 +62,10 @@ describe("MessageRouterScreen", () => {
         component.queryByTestId("LoadingErrorComponentLoading")
       ).not.toBeNull();
     });
-    it("should dispatch `reloadPage`", () => {
+    it("should dispatch `loadMessageById`", () => {
       const { spyStoreDispatch } = renderComponent(id);
       expect(spyStoreDispatch).toHaveBeenCalledWith(
-        reloadAllMessages.request(defaultRequestPayload)
+        loadMessageById.request({ id })
       );
     });
     it("should dispatch `loadMessageDetails`", () => {
@@ -74,75 +81,66 @@ describe("MessageRouterScreen", () => {
   });
 
   describe("when is already running, with a populated messages state", () => {
-    const previousCursor = successLoadNextPageMessagesPayload.messages[0].id;
     const serviceId = successLoadNextPageMessagesPayload.messages[0].serviceId;
-    const allPaginated = {
-      inbox: {
-        data: pot.some({
-          page: successLoadNextPageMessagesPayload.messages,
-          previous: previousCursor
-        }),
-        lastRequest: none
-      }
-    };
+    const paginatedById = successLoadNextPageMessagesPayload.messages.reduce(
+      (acc, message) => ({ ...acc, [message.id]: pot.some(message) }),
+      {}
+    );
 
-    describe("and the desired message is not in the page", () => {
+    describe("and the desired message is not in the store", () => {
       const id = successLoadMessageDetails.id;
 
       it("should render the loader", () => {
-        const { component } = renderComponent(id, { allPaginated });
+        const { component } = renderComponent(id, { paginatedById });
         expect(
           component.queryByTestId("LoadingErrorComponentLoading")
         ).not.toBeNull();
       });
-      it("should dispatch `loadPreviousPage` with the current cursor", () => {
-        const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+      it("should dispatch `loadMessageById`", () => {
+        const { spyStoreDispatch } = renderComponent(id, { paginatedById });
         expect(spyStoreDispatch).toHaveBeenCalledWith(
-          loadPreviousPageMessages.request({
-            ...defaultRequestPayload,
-            cursor: previousCursor
-          })
+          loadMessageById.request({ id })
         );
       });
       it("should dispatch `loadMessageDetails`", () => {
-        const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+        const { spyStoreDispatch } = renderComponent(id, { paginatedById });
         expect(spyStoreDispatch).toHaveBeenCalledWith(
           loadMessageDetails.request({ id })
         );
       });
       it("should not dispatch any other action", () => {
-        const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+        const { spyStoreDispatch } = renderComponent(id, { paginatedById });
         expect(spyStoreDispatch).toHaveBeenCalledTimes(2);
       });
     });
 
-    describe("and the desired message is in the page", () => {
+    describe("and the desired message is in the store", () => {
       const targetMessage = successLoadNextPageMessagesPayload.messages[0];
       const id = targetMessage.id;
 
       describe("but doesn't have its details", () => {
         // eslint-disable-next-line sonarjs/no-identical-functions
         it("should render the loader", () => {
-          const { component } = renderComponent(id, { allPaginated });
+          const { component } = renderComponent(id, { paginatedById });
           expect(
             component.queryByTestId("LoadingErrorComponentLoading")
           ).not.toBeNull();
         });
         // eslint-disable-next-line sonarjs/no-identical-functions
         it("should dispatch `loadMessageDetails`", () => {
-          const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+          const { spyStoreDispatch } = renderComponent(id, { paginatedById });
           expect(spyStoreDispatch).toHaveBeenCalledWith(
             loadMessageDetails.request({ id })
           );
         });
         it("should dispatch `loadServiceDetail`", () => {
-          const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+          const { spyStoreDispatch } = renderComponent(id, { paginatedById });
           expect(spyStoreDispatch).toHaveBeenCalledWith(
             loadServiceDetail.request(serviceId)
           );
         });
         it("should not dispatch any other action", () => {
-          const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+          const { spyStoreDispatch } = renderComponent(id, { paginatedById });
           expect(spyStoreDispatch).toHaveBeenCalledTimes(2);
         });
       });
@@ -158,25 +156,26 @@ describe("MessageRouterScreen", () => {
 
         it("should navigate to the MessageDetail screen", () => {
           renderComponent(id, {
-            allPaginated,
+            paginatedById,
             detailsById
           });
           expect(mockNavDispatch).toHaveBeenCalledWith(
             navigateToPaginatedMessageDetailScreenAction({
-              message: targetMessage
+              messageId: targetMessage.id,
+              serviceId: targetMessage.serviceId
             })
           );
         });
         // eslint-disable-next-line sonarjs/no-identical-functions
         it("should dispatch `loadServiceDetail`", () => {
-          const { spyStoreDispatch } = renderComponent(id, { allPaginated });
+          const { spyStoreDispatch } = renderComponent(id, { paginatedById });
           expect(spyStoreDispatch).toHaveBeenCalledWith(
             loadServiceDetail.request(serviceId)
           );
         });
         it("should not dispatch any other action", () => {
           const { spyStoreDispatch } = renderComponent(id, {
-            allPaginated,
+            paginatedById,
             detailsById
           });
           expect(spyStoreDispatch).toHaveBeenCalledTimes(1);
@@ -203,17 +202,14 @@ describe("MessageRouterScreen", () => {
 });
 
 type InputState = {
-  allPaginated?: Partial<AllPaginated>;
+  paginatedById?: PaginatedById;
   detailsById?: DetailsById;
 };
 
 const renderComponent = (messageId: string, state: InputState = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const allPaginated = {
-    inbox: { data: pot.none, lastRequest: none },
-    archive: { data: pot.none, lastRequest: none },
-    ...state.allPaginated
-  };
+
+  const paginatedById = state.paginatedById ?? {};
   const detailsById = state.detailsById ?? {};
 
   const mockStore = configureMockStore<GlobalState>();
@@ -221,25 +217,13 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
     ...globalState,
     entities: {
       ...globalState.entities,
-      messages: { ...globalState.entities.messages, allPaginated, detailsById }
+      messages: { ...globalState.entities.messages, paginatedById, detailsById }
     }
   } as GlobalState);
   const spyStoreDispatch = spyOn(store, "dispatch");
-  const navParams = { messageId } as any;
-  const navigation = {
-    state: {},
-    dispatch: jest.fn(),
-    getParam: (key: string) => navParams[key]
-  } as any;
 
-  const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    () => (
-      <MessageRouterScreen
-        navigation={navigation as any}
-        theme={"light"}
-        screenProps={undefined}
-      />
-    ),
+  const component = renderScreenWithNavigationStoreContext(
+    MessageRouterScreen,
     ROUTES.MESSAGE_ROUTER,
     { messageId },
     store
@@ -248,7 +232,6 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
   return {
     component,
     store,
-    spyStoreDispatch,
-    navigation
+    spyStoreDispatch
   };
 };

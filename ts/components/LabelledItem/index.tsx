@@ -9,7 +9,9 @@
  * icon  |
  *       input
  */
-import { Item, View, Input as InputNativeBase } from "native-base";
+import { NavigationEvents } from "@react-navigation/compat";
+import color from "color";
+import { Input as InputNativeBase, Item, View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -19,15 +21,13 @@ import {
   TextInputFocusEventData,
   TextInputProps
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
-import color from "color";
 import { TextInputMaskProps } from "react-native-masked-text";
-
-import { isStringNullyOrEmpty } from "../../utils/strings";
-import { makeFontStyleObject } from "../core/fonts";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
+
+import { isStringNullyOrEmpty } from "../../utils/strings";
+import { makeFontStyleObject } from "../core/fonts";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
 import TextInputMask from "../ui/MaskedInput";
@@ -58,6 +58,7 @@ type CommonProp = Readonly<{
   accessibilityLabelIcon?: string;
   description?: string;
   focusBorderColor?: string;
+  overrideBorderColor?: string;
   hasNavigationEvents?: boolean;
   icon?: string | ImageSourcePropType;
   iconColor?: string;
@@ -88,18 +89,20 @@ function getColorsByProps({
   isDisabledTextInput,
   hasFocus,
   isEmpty,
-  isValid
+  isValid,
+  iconColor
 }: {
   isDisabledTextInput: boolean;
   hasFocus: boolean;
   isEmpty: boolean;
   isValid?: boolean;
+  iconColor?: string;
 }): ColorByProps {
   if (isDisabledTextInput) {
     return {
       borderColor: IOColors.greyLight,
       descriptionColor: "bluegreyLight",
-      iconColor: IOColors.bluegreyLight,
+      iconColor: iconColor ?? IOColors.bluegreyLight,
       labelColor: "bluegreyLight",
       placeholderTextColor: IOColors.bluegreyLight
     };
@@ -108,7 +111,7 @@ function getColorsByProps({
     borderColor:
       hasFocus && isEmpty ? variables.itemBorderDefaultColor : undefined,
     descriptionColor: isValid === false ? "red" : "bluegreyDark",
-    iconColor: variables.brandDarkGray,
+    iconColor: iconColor ?? variables.brandDarkGray,
     placeholderTextColor: brandGrayDarken,
     labelColor: "bluegreyDark"
   };
@@ -134,7 +137,8 @@ export const LabelledItem: React.FC<Props> = ({
     isDisabledTextInput: Boolean(props.inputProps && props.inputProps.disabled),
     hasFocus,
     isEmpty,
-    isValid: props.isValid
+    isValid: props.isValid,
+    iconColor: props.iconColor
   });
 
   const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
@@ -176,17 +180,16 @@ export const LabelledItem: React.FC<Props> = ({
         <Item
           style={{
             ...styles.bottomLine,
-            borderColor: borderColor || props.focusBorderColor
+            borderColor: props.overrideBorderColor
+              ? props.overrideBorderColor
+              : borderColor || props.focusBorderColor
           }}
           error={isNotValid}
           success={isValid}
           testID="Item"
         >
           {props.hasNavigationEvents && props.onPress && (
-            <NavigationEvents
-              onWillBlur={props.onPress}
-              testID="NavigationEvents"
-            />
+            <NavigationEvents onWillBlur={props.onPress} />
           )}
 
           {iconPosition === "left" && props.icon && (

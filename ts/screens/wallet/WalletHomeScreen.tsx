@@ -1,10 +1,14 @@
+import { NavigationEvents } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
+import {
+  BackHandler,
+  Image,
+  NativeEventSubscription,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -55,6 +59,8 @@ import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedC
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   navigateBack,
   navigateToPaymentScanQrCode,
@@ -107,7 +113,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationStackScreenProps<WalletHomeNavigationParams> &
+  IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME"> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
@@ -183,25 +189,19 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * a "pay notice" button and payment methods info/button to add new ones
  */
 class WalletHomeScreen extends React.PureComponent<Props, State> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
     this.state = { hasFocus: false };
   }
 
-  get newMethodAdded() {
-    return this.props.navigation.getParam("newMethodAdded");
-  }
-
-  get navigationKeyFrom() {
-    return this.props.navigation.getParam("keyFrom");
-  }
-
   private handleBackPress = () => {
+    const keyFrom = this.props.route.params?.keyFrom;
     const shouldPop =
-      this.newMethodAdded && this.navigationKeyFrom !== undefined;
+      this.props.route.params?.newMethodAdded && keyFrom !== undefined;
 
     if (shouldPop) {
-      this.props.navigateBack(this.navigationKeyFrom);
+      this.props.navigateBack();
       return true;
     }
     return false;
@@ -240,9 +240,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
 
-    if (pot.isNone(this.props.potWallets)) {
-      this.props.loadWallets();
-    }
+    this.props.loadWallets();
 
     // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
     // load the bonus information on Wallet mount
@@ -254,7 +252,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackPress
+    );
 
     // Dispatch the action associated to the saga responsible to remind a user
     // to add the co-badge card.
@@ -263,7 +265,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    this.subscription?.remove();
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>) {
@@ -629,7 +631,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     validTo?: Date
   ) => navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }),
   navigateToBonusList: () => navigateToAvailableBonusScreen(),
-  navigateBack: (keyFrom?: string) => navigateBack({ key: keyFrom }),
+  navigateBack: () => navigateBack(),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),

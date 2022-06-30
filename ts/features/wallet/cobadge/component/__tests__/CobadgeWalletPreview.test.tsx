@@ -1,15 +1,18 @@
-import { render, fireEvent } from "@testing-library/react-native";
+import { NavigationAction } from "@react-navigation/native";
+import { fireEvent } from "@testing-library/react-native";
+import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
 import { Store } from "redux";
-import { Provider } from "react-redux";
-import { NavigationAction, NavigationActions } from "react-navigation";
 import configureMockStore from "redux-mock-store";
-import { none, some } from "fp-ts/lib/Option";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import NavigationService from "../../../../../navigation/NavigationService";
-import { CreditCardPaymentMethod } from "../../../../../types/pagopa";
-import CobadgeWalletPreview from "../CobadgeWalletPreview";
-import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import ROUTES from "../../../../../navigation/routes";
+import { CreditCardPaymentMethod } from "../../../../../types/pagopa";
+import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import CobadgeWalletPreview from "../CobadgeWalletPreview";
+import { Config } from "../../../../../../definitions/content/Config";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 
 jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
 describe("CobadgeWalletPreview component", () => {
@@ -46,7 +49,17 @@ describe("CobadgeWalletPreview component", () => {
   } as CreditCardPaymentMethod;
 
   beforeEach(() => {
-    store = mockStore();
+    store = mockStore({
+      backendStatus: {
+        status: some({
+          config: {
+            assistanceTool: { tool: ToolEnum.none },
+            cgn: { enabled: true },
+            fims: { enabled: true }
+          } as Config
+        } as BackendStatus)
+      }
+    });
   });
   it("should show the caption if useImageResize return none", () => {
     const myspy = jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
@@ -136,10 +149,15 @@ describe("CobadgeWalletPreview component", () => {
     const component = getComponent(aCobadgeCard, store);
     const cardComponent = component.queryByTestId("cardPreview");
     const expectedPayload: NavigationAction = {
-      type: NavigationActions.NAVIGATE,
-      routeName: ROUTES.WALLET_COBADGE_DETAIL,
-      params: {
-        cobadge: aCobadgeCard
+      type: "NAVIGATE",
+      payload: {
+        name: ROUTES.WALLET_NAVIGATOR,
+        params: {
+          screen: ROUTES.WALLET_COBADGE_DETAIL,
+          params: {
+            cobadge: aCobadgeCard
+          }
+        }
       }
     };
     if (cardComponent) {
@@ -153,8 +171,9 @@ const getComponent = (
   cobadge: CreditCardPaymentMethod,
   store: Store<unknown>
 ) =>
-  render(
-    <Provider store={store}>
-      <CobadgeWalletPreview cobadge={cobadge} />
-    </Provider>
+  renderScreenFakeNavRedux(
+    () => <CobadgeWalletPreview cobadge={cobadge} />,
+    "WALLET_HOME",
+    {},
+    store
   );

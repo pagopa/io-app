@@ -1,8 +1,8 @@
+import { CommonActions } from "@react-navigation/native";
 import * as React from "react";
-import { BackHandler } from "react-native";
-import { withNavigation } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
+import { BackHandler, NativeEventSubscription } from "react-native";
 import I18n from "../i18n";
+import NavigationService from "../navigation/NavigationService";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
@@ -13,19 +13,24 @@ interface OwnProps {
   white?: boolean;
 }
 
-type Props = NavigationStackScreenProps & OwnProps;
+type Props = OwnProps;
 
 class GoBackButton extends React.PureComponent<Props> {
+  private subscription: NativeEventSubscription | undefined;
   public static defaultProps: Partial<Props> = {
     white: false
   };
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackPress
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    this.subscription?.remove();
   }
 
   private handleBackPress = () => {
@@ -34,7 +39,8 @@ class GoBackButton extends React.PureComponent<Props> {
     return true;
   };
 
-  private handleOnPressDefault = () => this.props.navigation.goBack(null);
+  private handleOnPressDefault = () =>
+    NavigationService.dispatchNavigationAction(CommonActions.goBack());
 
   private getOnPressHandler = () =>
     typeof this.props.onPress === "function"
@@ -64,4 +70,4 @@ class GoBackButton extends React.PureComponent<Props> {
   }
 }
 
-export default withNavigation(GoBackButton);
+export default GoBackButton;

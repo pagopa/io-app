@@ -65,9 +65,11 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
   const [isLoadEnd, setOnLoadEnd] = React.useState(false);
   const [hasError, setHasError] = React.useState(false);
   React.useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", handleBackPressed);
-    return () =>
-      BackHandler.removeEventListener("hardwareBackPress", handleBackPressed);
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleBackPressed
+    );
+    return () => subscription.remove();
   });
 
   const closeButtonProps = {

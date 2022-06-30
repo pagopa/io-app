@@ -219,6 +219,9 @@ export const baseRawBackendStatus: BackendStatus = {
     }
   },
   config: {
+    premiumMessages: {
+      opt_in_out_enabled: false
+    },
     bpd: {
       enroll_bpd_after_add_payment_method: false,
       program_active: true,
@@ -257,11 +260,11 @@ export const baseRawBackendStatus: BackendStatus = {
       enabled: false,
       domain: "mockFimsDomain"
     },
-    premiumMessages: {
-      opt_in_out_enabled: false
-    },
     cdc: {
       enabled: false
+    },
+    barcodesScanner: {
+      dataMatrixPosteEnabled: false
     }
   }
 };
@@ -273,6 +276,9 @@ export const baseBackendState: BackendStatusState = {
 };
 
 export const baseBackendConfig: Config = {
+  premiumMessages: {
+    opt_in_out_enabled: false
+  },
   bpd: {
     enroll_bpd_after_add_payment_method: false,
     program_active: true,
@@ -311,11 +317,11 @@ export const baseBackendConfig: Config = {
     enabled: false,
     domain: "mockFimsDomain"
   },
-  premiumMessages: {
-    opt_in_out_enabled: false
-  },
   cdc: {
     enabled: false
+  },
+  barcodesScanner: {
+    dataMatrixPosteEnabled: false
   }
 };
 

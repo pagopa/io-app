@@ -1,14 +1,13 @@
-import React from "react";
-import { NavigationParams } from "react-navigation";
-import { BackHandler, Text } from "react-native";
-import { createStore } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
+import React from "react";
+import { Text } from "react-native";
+import { createStore } from "redux";
+import ROUTES from "../../navigation/routes";
 
 import { applicationChangeState } from "../../store/actions/application";
+import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
-import ROUTES from "../../navigation/routes";
-import { appReducer } from "../../store/reducers";
 import ContextualInfo from "../ContextualInfo";
 
 jest.useFakeTimers();
@@ -67,26 +66,11 @@ describe("ContextualInfo component", () => {
     const component = renderComponent(options);
     expect(component.getByText(options.title)).toBeDefined();
   });
-
-  it("should listen for the `hardwareBackPress` event and clean it up on unmount", () => {
-    const addEventSpy = jest.spyOn(BackHandler, "addEventListener");
-    const removeEventSpy = jest.spyOn(BackHandler, "removeEventListener");
-    const component = renderComponent(options);
-    expect(addEventSpy).toHaveBeenLastCalledWith(
-      "hardwareBackPress",
-      expect.any(Function)
-    );
-    component.unmount();
-    expect(removeEventSpy).toHaveBeenLastCalledWith(
-      "hardwareBackPress",
-      expect.any(Function)
-    );
-  });
 });
 
 function renderComponent(props: React.ComponentProps<typeof ContextualInfo>) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  return renderScreenFakeNavRedux<GlobalState>(
     () => <ContextualInfo {...props} />,
     ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
     {},

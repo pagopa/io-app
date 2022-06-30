@@ -2,16 +2,15 @@ import { View } from "native-base";
 import * as React from "react";
 
 import { Platform, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { useLinkTo } from "@react-navigation/native";
 import Heart from "../../../../img/features/uaDonations/heart.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
 import { mixpanelTrack } from "../../../mixpanel";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { uaDonationsBannerSelector } from "../../../store/reducers/backendStatus";
 import { getFullLocale } from "../../../utils/locale";
-import UADONATION_ROUTES from "../navigation/routes";
 
 const styles = StyleSheet.create({
   background: {
@@ -73,20 +72,18 @@ const BaseDonationsBanner = (props: BaseProps): React.ReactElement => (
  */
 export const UaDonationsBanner = () => {
   const locale = getFullLocale();
-  const dispatch = useIODispatch();
   const uaDonationsBannerData = useIOSelector(state =>
     uaDonationsBannerSelector(state, locale)
   );
+
+  const linkTo = useLinkTo();
 
   return uaDonationsBannerData.fold(null, uaDonationsData => (
     <BaseDonationsBanner
       text={uaDonationsData.description[locale]}
       onPress={() => {
         void mixpanelTrack("UADONATIONS_BANNER_HANDLER_SUCCESS");
-        handleInternalLink(
-          dispatch,
-          `ioit://${UADONATION_ROUTES.WEBVIEW}?urlToLoad=${uaDonationsData.url}`
-        );
+        linkTo(`/uadonations-webview?urlToLoad=${uaDonationsData.url}`);
       }}
     />
   ));

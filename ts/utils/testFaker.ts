@@ -24,7 +24,7 @@ import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 const validCreditCard: CreditCard = {
   id: 1464,
   holder: "Mario Rossi",
-  pan: "************0111" as string & IPatternStringTag<string>,
+  pan: "************0111" as string & IPatternStringTag<"^[0-9\\*]{12,19}$">,
   securityCode: "345" as string & IPatternStringTag<"^[0-9]{3,4}$">,
   expireMonth: "05" as string & CreditCardExpirationMonth,
   expireYear: "22" as string & CreditCardExpirationYear,
@@ -244,6 +244,7 @@ export const AuthSeq: ReadonlyArray<Action> = [
     spidLevel: "https://www.spid.gov.it/SpidL2" as SpidLevelEnum,
     walletToken:
       "666666635248824960766f96115b59ac1c2ca700c7e68192e4a7c26e1e17ca4fcc2a66e158295390624f87f05f53235e",
-    zendeskToken: "AAAAAAAAAAAAA4"
+    zendeskToken: "AAAAAAAAAAAAA4",
+    fimsToken: "AAAAAAAAAAAAA5"
   })
 ];

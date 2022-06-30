@@ -1,13 +1,13 @@
-import React from "react";
-import { NavigationParams } from "react-navigation";
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
-import { appReducer } from "../../../../../../store/reducers";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
-import OptInPaymentMethodsChoiceScreen from "../OptInPaymentMethodsChoiceScreen";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import BPD_ROUTES from "../../../navigation/routes";
+import React from "react";
+
+import { createStore } from "redux";
 import I18n from "../../../../../../i18n";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import BPD_ROUTES from "../../../navigation/routes";
+import OptInPaymentMethodsChoiceScreen from "../OptInPaymentMethodsChoiceScreen";
 
 jest.useFakeTimers();
 
@@ -35,7 +35,7 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
 });
 
 const renderComponent = () =>
-  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+  renderScreenFakeNavRedux<GlobalState>(
     () => <OptInPaymentMethodsChoiceScreen />,
     BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE,
     {},

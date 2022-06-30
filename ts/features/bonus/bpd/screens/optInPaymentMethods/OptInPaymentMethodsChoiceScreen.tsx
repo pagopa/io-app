@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useMemo, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { View } from "native-base";
@@ -19,14 +20,13 @@ import {
 } from "../../../../../components/core/selection/RadioButtonList";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Body } from "../../../../../components/core/typography/Body";
-import { IOPrimaryBadge } from "../../../../../components/core/IOBadge";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import {
   navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen,
   navigateToOptInPaymentMethodsThankYouKeepMethodsScreen
 } from "../../navigation/actions";
-import { useNavigationContext } from "../../../../../utils/hooks/useOnFocus";
 
 type PaymentMethodsChoiceOptions =
   | "keepPaymentMethods"
@@ -40,7 +40,7 @@ const generateOptionBody = (
   <>
     {showBadge && (
       <>
-        <IOPrimaryBadge
+        <IOBadge
           text={I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
         />
         <View spacer xsmall />
@@ -82,11 +82,13 @@ const disabledButtonProps = disablePrimaryButtonProps(
 const OptInPaymentMethodsChoiceScreen = () => {
   const [selectedMethod, setSelectedMethod] =
     useState<PaymentMethodsChoiceOptions | null>(null);
-  const { navigate } = useNavigationContext();
+  const navigation = useNavigation();
 
   const { presentBottomSheet, bottomSheet } = useBottomSheetMethodsToDelete({
     onDeletePress: () =>
-      navigate(navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen())
+      navigation.dispatch(
+        navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen()
+      )
   });
 
   const bottomButtons: {
@@ -95,7 +97,9 @@ const OptInPaymentMethodsChoiceScreen = () => {
     () => ({
       keepPaymentMethods: confirmButtonProps(
         () =>
-          navigate(navigateToOptInPaymentMethodsThankYouKeepMethodsScreen()),
+          navigation.dispatch(
+            navigateToOptInPaymentMethodsThankYouKeepMethodsScreen()
+          ),
         I18n.t("global.buttons.continue"),
         undefined,
         "continueButton"
@@ -107,7 +111,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
         undefined
       )
     }),
-    [navigate, presentBottomSheet]
+    [navigation, presentBottomSheet]
   );
 
   const computedBottomButtonProps =

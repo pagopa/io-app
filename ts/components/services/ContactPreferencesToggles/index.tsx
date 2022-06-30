@@ -1,32 +1,34 @@
+import { useIsFocused } from "@react-navigation/native";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
-import { GlobalState } from "../../../store/reducers/types";
-import I18n from "../../../i18n";
-import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import { NotificationChannelEnum } from "../../../../definitions/backend/NotificationChannel";
-import { Dispatch } from "../../../store/actions/types";
-import {
-  servicePreferenceSelector,
-  ServicePreferenceState
-} from "../../../store/reducers/entities/services/servicePreference";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import I18n from "../../../i18n";
 import {
   loadServicePreference,
   upsertServicePreference
 } from "../../../store/actions/services/servicePreference";
+import { Dispatch } from "../../../store/actions/types";
+import { useIOSelector } from "../../../store/hooks";
+import { isPremiumMessagesOptInOutEnabledSelector } from "../../../store/reducers/backendStatus";
+import {
+  servicePreferenceSelector,
+  ServicePreferenceState
+} from "../../../store/reducers/entities/services/servicePreference";
+import { GlobalState } from "../../../store/reducers/types";
 import {
   isServicePreferenceResponseSuccess,
   ServicePreference
 } from "../../../types/services/ServicePreferenceResponse";
 import { isStrictSome } from "../../../utils/pot";
 import { showToast } from "../../../utils/showToast";
+import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
-type Item = "email" | "push" | "inbox";
+type Item = "email" | "push" | "inbox" | "can_access_message_read_status";
 
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
@@ -70,9 +72,11 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
     [serviceId, loadServicePreference]
   );
 
-  const nav = useNavigationContext();
+  const isFocused = useIsFocused();
 
-  const isFocused = nav?.isFocused();
+  const isPremiumMessagesOptInOutEnabled = useIOSelector(
+    isPremiumMessagesOptInOutEnabledSelector
+  );
 
   useEffect(() => {
     loadPreferences();
@@ -139,6 +143,26 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
               graphicalState={graphicalState}
               onReload={loadPreferences}
               testID={"contact-preferences-webhook-switch"}
+            />
+            <ItemSeparatorComponent noPadded />
+          </>
+        )}
+      {isPremiumMessagesOptInOutEnabled &&
+        getChannelPreference(props.servicePreferenceStatus, "inbox") && (
+          // toggle is disabled if the inbox value is false to prevent inconsistent data
+          <>
+            <PreferenceToggleRow
+              label={I18n.t("services.messageReadStatus")}
+              onPress={(value: boolean) =>
+                onValueChange(value, "can_access_message_read_status")
+              }
+              value={getChannelPreference(
+                props.servicePreferenceStatus,
+                "can_access_message_read_status"
+              )}
+              graphicalState={graphicalState}
+              onReload={loadPreferences}
+              testID={"contact-preferences-trackSeen-switch"}
             />
             <ItemSeparatorComponent noPadded />
           </>

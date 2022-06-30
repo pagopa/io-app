@@ -5,6 +5,8 @@ import { View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import cashbackLogo from "../../../../../img/bonus/bpd/logo_cashback_blue.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
@@ -13,15 +15,35 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { supportedAvailableBonusSelector } from "../../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../../bonus/bonusVacanze/utils/bonus";
+import {
+  availableBonusTypesSelectorFromId,
+  serviceFromAvailableBonusSelector,
+  supportedAvailableBonusSelector
+} from "../../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import {
+  ID_CDC_TYPE,
+  ID_CGN_TYPE
+} from "../../../bonus/bonusVacanze/utils/bonus";
 import { bpdOnboardingStart } from "../../../bonus/bpd/store/actions/onboarding";
 import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/activation";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import { getRemoteLocale } from "../../../../utils/messages";
-import { useIOSelector } from "../../../../store/hooks";
-import { isCGNEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  isCdcEnabledSelector,
+  isCGNEnabledSelector
+} from "../../../../store/reducers/backendStatus";
+import {
+  loadServiceDetail,
+  showServiceDetails
+} from "../../../../store/actions/services";
+import { showToast } from "../../../../utils/showToast";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -42,9 +64,29 @@ const styles = StyleSheet.create({
  * an item represents a bonus that the app can handle (relative feature flag enabled and handler set) and its
  * visibility is 'visible' or 'experimental'
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
-  const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
+  const dispatch = useIODispatch();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const isCgnEnabled = useIOSelector(isCGNEnabledSelector);
+  const isCdcEnabled = useIOSelector(isCdcEnabledSelector);
+  const cdcService = useIOSelector(
+    serviceFromAvailableBonusSelector(ID_CDC_TYPE)
+  );
+  const cdcBonus = useIOSelector(
+    availableBonusTypesSelectorFromId(ID_CDC_TYPE)
+  );
+
+  const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
+
+  // If the cdc service is not loaded try to load it
+  useEffect(() => {
+    const cdcServiceId = cdcBonus?.service_id ?? undefined;
+    if (isCdcEnabled && cdcService.isNone() && cdcServiceId) {
+      dispatch(loadServiceDetail.request(cdcServiceId));
+    }
+  }, [cdcBonus, isCdcEnabled, cdcService, dispatch]);
+
   if (isCgnEnabled) {
     bonusMap.set(ID_CGN_TYPE, {
       logo: cgnLogo,
@@ -52,8 +94,30 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
     });
   }
 
+  if (isCdcEnabled) {
+    bonusMap.set(ID_CDC_TYPE, {
+      handler: _ => {
+        cdcService.fold(
+          () => {
+            // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
+            showToast(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
+          },
+          s => () => {
+            dispatch(showServiceDetails(s));
+            navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+              screen: ROUTES.SERVICE_DETAIL,
+              params: { service: s }
+            });
+          }
+        )();
+      }
+    });
+  }
+
   // are there any bonus to activate?
-  const anyBonusNotActive = props.cgnActiveBonus === false && isCgnEnabled;
+  const anyBonusNotActive =
+    (props.cgnActiveBonus === false && isCgnEnabled) || isCdcEnabled;
+
   return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
     <View style={styles.container} testID={"FeaturedCardCarousel"}>
       <View style={[IOStyles.horizontalContentPadding]}>
@@ -88,6 +152,19 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
                     key={`featured_bonus_${i}`}
                     title={b[currentLocale].name}
                     image={logo}
+                    isNew={true}
+                    onPress={() => handler(b)}
+                  />
+                )
+              );
+            case ID_CDC_TYPE:
+              return (
+                isCdcEnabled && (
+                  <FeaturedCard
+                    testID={"FeaturedCardCDCTestID"}
+                    key={`featured_bonus_${i}`}
+                    title={b[currentLocale].name}
+                    image={{ uri: b.cover }}
                     isNew={true}
                     onPress={() => handler(b)}
                   />

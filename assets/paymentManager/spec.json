@@ -1500,52 +1500,13 @@
         ]
       }
     },
-    "/v1/wallet/{id}": {
-      "get": {
-        "tags": [
-          "wallet-controller"
-        ],
-        "summary": "getWallet",
-        "operationId": "getWalletUsingGET",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "id",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/WalletResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      },
+    "/v2/wallet/{id}": {
       "put": {
         "tags": [
-          "wallet-controller"
+          "wallet-v-2-controller"
         ],
-        "summary": "updateWallet",
-        "operationId": "updateWalletUsingPUT",
+        "summary": "updateWalletV2",
+        "operationId": "updateWalletUsingPUTV2",
         "consumes": [
           "application/json"
         ],
@@ -1577,6 +1538,47 @@
           },
           "201": {
             "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/wallet/{id}": {
+      "get": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "getWallet",
+        "operationId": "getWalletUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletResponse"
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -2083,6 +2085,26 @@
         }
       },
       "title": "Amount"
+    },
+    "TransactionAmount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "currencyNumber": {
+          "type": "string"
+        },
+        "decimalDigits": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Amount",
+      "required": ["amount"]
     },
     "BPay": {
       "type": "object",
@@ -2780,9 +2802,9 @@
         "codiceAbi",
         "defaultPsp",
         "fee",
+        "id",
         "idPsp",
         "onboard",
-        "privacyUrl",
         "ragioneSociale"
       ],
       "properties": {
@@ -2797,6 +2819,11 @@
         },
         "fee": {
           "type": "integer",
+          "allowEmptyValue": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
           "allowEmptyValue": false
         },
         "idPsp": {
@@ -3010,7 +3037,7 @@
           "format": "int64"
         },
         "amount": {
-          "$ref": "#/definitions/Amount"
+          "$ref": "#/definitions/TransactionAmount"
         },
         "authorizationCode": {
           "type": "string"
@@ -3035,10 +3062,10 @@
           "type": "boolean"
         },
         "fee": {
-          "$ref": "#/definitions/Amount"
+          "$ref": "#/definitions/TransactionAmount"
         },
         "grandTotal": {
-          "$ref": "#/definitions/Amount"
+          "$ref": "#/definitions/TransactionAmount"
         },
         "id": {
           "type": "integer",
@@ -3110,7 +3137,18 @@
           "type": "string"
         }
       },
-      "title": "Transaction"
+      "title": "Transaction",
+      "required": [
+        "created", 
+        "description", 
+        "id", 
+        "idPayment", 
+        "idWallet", 
+        "merchant", 
+        "statusMessage", 
+        "grandTotal", 
+        "amount"
+      ]
     },
     "TransactionListResponse": {
       "type": "object",

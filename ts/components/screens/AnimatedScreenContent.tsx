@@ -3,18 +3,17 @@
  * - scroll to top on its focus
  * - provide a dynanic subheader appearing on scroll
  */
+import { NavigationEvents } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
 import {
   Animated,
   LayoutChangeEvent,
   Platform,
-  RefreshControlProps,
   StyleProp,
   StyleSheet,
   ViewStyle
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
 
 import { isIphoneX } from "react-native-iphone-x-helper";
 import customVariables from "../../theme/variables";
@@ -27,7 +26,6 @@ type OwnProps = Readonly<{
   animationOffset: number;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
-  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
@@ -140,7 +138,6 @@ export default class AnimatedScreenContent extends React.Component<
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
             { useNativeDriver: true }
           )}
-          refreshControl={this.props.contentRefreshControl}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
 

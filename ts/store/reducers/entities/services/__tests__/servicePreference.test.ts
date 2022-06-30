@@ -37,6 +37,7 @@ describe("servicePreferenceReducer", () => {
         inbox: true,
         push: true,
         email: false,
+        can_access_message_read_status: false,
         settings_version: 0
       }
     };
@@ -56,6 +57,7 @@ describe("servicePreferenceReducer", () => {
         inbox: true,
         push: true,
         email: false,
+        can_access_message_read_status: false,
         settings_version: 0
       }
     });
@@ -65,6 +67,7 @@ describe("servicePreferenceReducer", () => {
       inbox: true,
       push: true,
       email: true,
+      can_access_message_read_status: true,
       settings_version: 0
     };
 
@@ -80,6 +83,7 @@ describe("servicePreferenceReducer", () => {
           inbox: true,
           push: true,
           email: true,
+          can_access_message_read_status: true,
           settings_version: 0
         }
       })
@@ -92,6 +96,7 @@ describe("servicePreferenceReducer", () => {
         inbox: true,
         push: true,
         email: true,
+        can_access_message_read_status: true,
         settings_version: 0
       }
     });
@@ -106,6 +111,7 @@ describe("servicePreferenceReducer", () => {
           inbox: true,
           push: true,
           email: true,
+          can_access_message_read_status: true,
           settings_version: 0
         }
       })

@@ -2,21 +2,22 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
+import { CompatNavigationProp } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler } from "react-native";
+import { Alert, BackHandler, NativeEventSubscription } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import {
   loginFailure,
   loginSuccess
@@ -41,10 +42,11 @@ type State = {
   isLoginSuccess?: boolean;
 };
 
-type Props = NavigationScreenProp<NavigationState> &
-  OwnProps &
-  NavigationStackScreenProps<CieConsentDataUsageScreenNavigationParams> &
-  ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps & {
+  navigation: CompatNavigationProp<
+    IOStackNavigationProp<AuthenticationParamsList, "CIE_CONSENT_DATA_USAGE">
+  >;
+} & ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
@@ -53,6 +55,7 @@ const loaderComponent = (
 );
 
 class CieConsentDataUsageScreen extends React.Component<Props, State> {
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -86,11 +89,15 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.showAbortAlert);
+    // eslint-disable-next-line functional/immutable-data
+    this.subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.showAbortAlert
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.showAbortAlert);
+    this.subscription?.remove();
   }
 
   get cieAuthorizationUri(): string {

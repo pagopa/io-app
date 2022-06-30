@@ -5,7 +5,7 @@ import { ProfileState } from "../../profile";
 import { GlobalState } from "../../types";
 import { getSafeUnreadTransactionsNumSelector } from "../readTransactions";
 
-const transactionsState: DeepPartial<GlobalState> = {
+const transactionsState = {
   wallet: {
     transactions: {
       transactions: pot.some({
@@ -25,7 +25,7 @@ const transactionsState: DeepPartial<GlobalState> = {
 describe("readTransaction", () => {
   describe("getSafeUnreadTransactionsNumSelector", () => {
     it("should return the correct unread transaction number", () => {
-      const state: DeepPartial<GlobalState> = {
+      const state = {
         profile: pot.some({
           is_email_validated: true,
           email: "test@email.it"
@@ -41,7 +41,7 @@ describe("readTransaction", () => {
     });
 
     it("should return the 0 because the email is not validated", () => {
-      const state: DeepPartial<GlobalState> = {
+      const state = {
         profile: pot.some({
           is_email_validated: false,
           email: "test@email.it"

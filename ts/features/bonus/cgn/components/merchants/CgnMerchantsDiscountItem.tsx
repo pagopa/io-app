@@ -13,9 +13,12 @@ import { Label } from "../../../../../components/core/typography/Label";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { IOBadge } from "../../../../../components/core/IOBadge";
+import I18n from "../../../../../i18n";
 
 type Props = {
   discount: Discount;
+  operatorName: string;
   merchantType?: DiscountCodeType;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -36,21 +39,26 @@ const styles = StyleSheet.create({
 
 const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   discount,
+  operatorName,
   merchantType,
   navigateToLandingWebview
 }: Props) => {
   const { present, bottomSheet: cgnDiscountDetail } =
     useCgnDiscountDetailBottomSheet(
       discount,
+      operatorName,
       merchantType,
       navigateToLandingWebview
     );
   return (
     <TouchableDefaultOpacity style={[styles.listItem]} onPress={present}>
       <View style={[IOStyles.row, styles.container]}>
-        <View style={IOStyles.flex}>
+        <View style={[IOStyles.flex, IOStyles.row]}>
           <Label weight={"SemiBold"} color={"bluegreyDark"}>
-            {discount.name}
+            {`${discount.name} `}
+            {discount.isNew && (
+              <IOBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
+            )}
           </Label>
         </View>
         <IconFont name={"io-right"} color={IOColors.blue} size={24} />

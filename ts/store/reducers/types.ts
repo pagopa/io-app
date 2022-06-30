@@ -12,12 +12,10 @@ import { CieState } from "./cie";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
 import { DebugState } from "./debug";
-import { DeepLinkState } from "./deepLink";
 import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
 import { InstallationState } from "./installation";
-import { InternalRouteNavigationState } from "./internalRouteNavigation";
 import { NavigationState } from "./navigation";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
@@ -36,7 +34,6 @@ export type GlobalState = Readonly<{
   authentication: PersistedAuthenticationState;
   backendStatus: BackendStatusState;
   versionInfo: VersionInfoState;
-  deepLink: DeepLinkState;
   entities: PersistedEntitiesState;
   backoffError: BackoffErrorState;
   notifications: NotificationsState;
@@ -57,7 +54,6 @@ export type GlobalState = Readonly<{
   cie: CieState;
   bonus: BonusState;
   features: PersistedFeaturesState;
-  internalRouteNavigation: InternalRouteNavigationState;
   crossSessions: CrossSessionsState;
   assistanceTools: AssistanceToolsState;
 }>;

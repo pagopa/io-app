@@ -4,8 +4,10 @@ import { View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
-import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
-import { MessageState } from "../../store/reducers/entities/messages/messagesById";
+import {
+  lexicallyOrderedMessagesStateSelector,
+  MessagesStateAndStatus
+} from "../../store/reducers/entities/messages";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { messageContainsText } from "../../utils/messages";
 import { serviceContainsText } from "../../utils/services";
@@ -31,7 +33,10 @@ type Props = Pick<
   OwnProps;
 
 type State = {
-  potFilteredMessageStates: pot.Pot<ReadonlyArray<MessageState>, Error>;
+  potFilteredMessageStates: pot.Pot<
+    ReadonlyArray<MessagesStateAndStatus>,
+    Error
+  >;
 };
 
 /**
@@ -39,10 +44,10 @@ type State = {
  * The searchText is checked both in message and in service properties.
  */
 const generateMessagesStateMatchingSearchTextArrayAsync = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>,
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>,
   servicesById: ServicesByIdState,
   searchText: string
-): Promise<ReadonlyArray<MessageState>> =>
+): Promise<ReadonlyArray<MessagesStateAndStatus>> =>
   new Promise(resolve => {
     const result = pot.getOrElse(
       pot.map(potMessagesState, _ =>

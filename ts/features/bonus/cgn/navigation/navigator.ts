@@ -1,4 +1,6 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createCompatNavigatorFactory } from "@react-navigation/compat";
+import { createStackNavigator } from "@react-navigation/stack";
+import { PathConfigMap } from "@react-navigation/core";
 import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
 import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
@@ -15,10 +17,29 @@ import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerch
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
 import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
-
 import CGN_ROUTES from "./routes";
 
-export const CgnActivationNavigator = createStackNavigator(
+export const cgnLinkingOptions: PathConfigMap = {
+  [CGN_ROUTES.DETAILS.MAIN]: {
+    path: "cgn-details",
+    screens: {
+      [CGN_ROUTES.DETAILS.DETAILS]: "detail",
+      [CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES]: "categories",
+      [CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY]:
+        "categories-merchant/:category"
+    }
+  },
+  [CGN_ROUTES.ACTIVATION.MAIN]: {
+    path: "cgn-activation",
+    screens: {
+      [CGN_ROUTES.ACTIVATION.CTA_START_CGN]: "start"
+    }
+  }
+};
+
+export const CgnActivationNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [CGN_ROUTES.ACTIVATION.INFORMATION_TOS]: {
       screen: CgnInformationScreen
@@ -49,12 +70,14 @@ export const CgnActivationNavigator = createStackNavigator(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );
 
-export const CgnDetailsNavigator = createStackNavigator(
+export const CgnDetailsNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [CGN_ROUTES.DETAILS.DETAILS]: {
       screen: CgnDetailScreen
@@ -82,12 +105,14 @@ export const CgnDetailsNavigator = createStackNavigator(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );
 
-export const CgnEYCAActivationNavigator = createStackNavigator(
+export const CgnEYCAActivationNavigator = createCompatNavigatorFactory(
+  createStackNavigator
+)(
   {
     [CGN_ROUTES.EYCA.ACTIVATION.LOADING]: {
       screen: EycaActivationLoading
@@ -97,7 +122,7 @@ export const CgnEYCAActivationNavigator = createStackNavigator(
     // Let each screen handle the header and navigation
     headerMode: "none",
     defaultNavigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   }
 );

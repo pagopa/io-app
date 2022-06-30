@@ -32,23 +32,18 @@ export const loginWithSPID = async () => {
     by.text(I18n.t("profile.main.privacy.shareData.screen.cta.shareData"))
   ).tap();
 
-  await waitFor(element(by.text(I18n.t("onboarding.unlockCode.contentTitle"))))
+  await waitFor(element(by.text(I18n.t("onboarding.pin.title"))))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
 
-  await insertE2EPin();
-
-  await waitFor(
-    element(by.text(I18n.t("onboarding.unlockCode.contentTitleConfirm")))
-  )
-    .toBeVisible()
-    .withTimeout(e2eWaitRenderTimeout);
-
-  await insertE2EPin();
-
-  await element(by.text(I18n.t("global.buttons.continue"))).tap();
+  await createE2EPin();
 };
 
+/**
+ * This utility should be used during the authentication
+ * step in the pin screen. It will leverage the IO Pinpad
+ * to insert the pin.
+ */
 export const insertE2EPin = async () => {
   await element(by.text(e2ePinChar)).tap();
   await element(by.text(e2ePinChar)).tap();
@@ -56,6 +51,35 @@ export const insertE2EPin = async () => {
   await element(by.text(e2ePinChar)).tap();
   await element(by.text(e2ePinChar)).tap();
   await element(by.text(e2ePinChar)).tap();
+};
+
+/**
+ * This utility should be used during the onboarding in the
+ * pin creation screen, or in the same screen in the Profile section.
+ * It will fill the two inputs with a pin and submit the form also
+ * trying to insert wrong data during the process.
+ */
+export const createE2EPin = async () => {
+  const pin =
+    e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar;
+  const wrongPin = "123456";
+
+  await element(by.id("PinFieldInput")).typeText(pin);
+  await element(by.id("PinConfirmationFieldInput")).typeText(wrongPin);
+
+  await element(by.text(I18n.t("onboarding.pin.title"))).tap();
+  await waitFor(element(by.text(I18n.t("global.buttons.continue"))))
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
+  await element(by.text(I18n.t("global.buttons.continue"))).tap();
+
+  await element(by.id("PinConfirmationFieldInput")).replaceText(pin);
+
+  await element(by.text(I18n.t("onboarding.pin.title"))).tap();
+  await waitFor(element(by.text(I18n.t("global.buttons.continue"))))
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
+  await element(by.text(I18n.t("global.buttons.continue"))).tap();
 };
 
 /**

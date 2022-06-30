@@ -1,17 +1,16 @@
 import React from "react";
-import configureMockStore from "redux-mock-store";
-import { render } from "@testing-library/react-native";
-import { Provider } from "react-redux";
 import { Store } from "redux";
+import configureMockStore from "redux-mock-store";
 import { NotificationChannelEnum } from "../../../../../definitions/backend/NotificationChannel";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { GlobalState } from "../../../../store/reducers/types";
-import { appReducer } from "../../../../store/reducers";
-import ContactPreferencesToggles from "../index";
-import { ServicePreferenceResponse } from "../../../../types/services/ServicePreferenceResponse";
-import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import I18n from "../../../../i18n";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { ServicePreferenceResponse } from "../../../../types/services/ServicePreferenceResponse";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ContactPreferencesToggles from "../index";
 
 jest.useFakeTimers();
 
@@ -20,7 +19,13 @@ describe("ContactPreferencesToggles component", () => {
     const store = mockState({
       id: "some_id" as ServiceId,
       kind: "success",
-      value: { inbox: true, email: true, push: false, settings_version: 0 }
+      value: {
+        inbox: true,
+        email: true,
+        push: false,
+        can_access_message_read_status: false,
+        settings_version: 0
+      }
     });
     const component = renderComponent(store, {});
     expect(
@@ -32,7 +37,13 @@ describe("ContactPreferencesToggles component", () => {
       const store = mockState({
         id: "some_id" as ServiceId,
         kind: "success",
-        value: { inbox: true, email: true, push: false, settings_version: 0 }
+        value: {
+          inbox: true,
+          email: true,
+          push: false,
+          can_access_message_read_status: false,
+          settings_version: 0
+        }
       });
       const component = renderComponent(store, {});
       expect(
@@ -53,7 +64,13 @@ describe("ContactPreferencesToggles component", () => {
       const store = mockState({
         id: "some_id" as ServiceId,
         kind: "success",
-        value: { inbox: true, email: true, push: false, settings_version: 0 }
+        value: {
+          inbox: true,
+          email: true,
+          push: false,
+          can_access_message_read_status: false,
+          settings_version: 0
+        }
       });
       const component = renderComponent(store, { channels: [] });
       expect(
@@ -64,7 +81,13 @@ describe("ContactPreferencesToggles component", () => {
       const store = mockState({
         id: "some_id" as ServiceId,
         kind: "success",
-        value: { inbox: true, email: true, push: false, settings_version: 0 }
+        value: {
+          inbox: true,
+          email: true,
+          push: false,
+          can_access_message_read_status: false,
+          settings_version: 0
+        }
       });
       const component = renderComponent(store, { channels: [] });
       expect(
@@ -81,7 +104,13 @@ describe("ContactPreferencesToggles component", () => {
       const store = mockState({
         id: "some_id" as ServiceId,
         kind: "success",
-        value: { inbox: true, email: true, push: false, settings_version: 0 }
+        value: {
+          inbox: true,
+          email: true,
+          push: false,
+          can_access_message_read_status: false,
+          settings_version: 0
+        }
       });
       const component = renderComponent(store, {
         channels: [
@@ -109,7 +138,13 @@ describe("ContactPreferencesToggles component", () => {
         loadServicePreference.success({
           id: "some_id" as ServiceId,
           kind: "success",
-          value: { inbox: true, email: true, push: true, settings_version: 0 }
+          value: {
+            inbox: true,
+            email: true,
+            push: true,
+            can_access_message_read_status: false,
+            settings_version: 0
+          }
         })
       );
       // the store will be in someLoading
@@ -179,12 +214,15 @@ const renderComponent = (
     channels?: ReadonlyArray<NotificationChannelEnum>;
   }
 ) =>
-  render(
-    <Provider store={store}>
+  renderScreenFakeNavRedux(
+    () => (
       <ContactPreferencesToggles
         {...options}
         isSpecialService={false}
         serviceId={"aServiceID" as ServiceId}
       />
-    </Provider>
+    ),
+    "route",
+    {},
+    store
   );

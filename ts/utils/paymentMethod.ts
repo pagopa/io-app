@@ -74,7 +74,7 @@ export const getTitleFromCard = (
 export const getBancomatAbiIconUrl = (abi: string) =>
   `${contentRepoUrl}/logos/abi/${abi}.png`;
 
-export const getPayPalPspIconUrl = (abi: string) =>
+export const getPspIconUrlFromAbi = (abi: string) =>
   `${contentRepoUrl}/logos/abi/${abi}.png`;
 
 export const getPrivativeGdoLogoUrl = (abi: string): ImageURISource => ({
@@ -184,12 +184,12 @@ export const enhanceBPay = (
   ...rawBPay,
   info: {
     ...rawBPay.info,
-    numberObfuscated: rawBPay.info.numberObfuscated?.replace(/\*/g, "●")
+    numberObfuscated: `${rawBPay.info.numberObfuscated?.replace(/\*+/g, "●●●")}`
   },
   abiInfo: rawBPay.info.instituteCode
     ? abiList[rawBPay.info.instituteCode]
     : undefined,
-  caption: getTitleFromPaymentMethod(rawBPay, abiList),
+  caption: I18n.t("wallet.methods.bancomatPay.name"),
   icon: getImageFromPaymentMethod(rawBPay)
 });
 

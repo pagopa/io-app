@@ -794,16 +794,19 @@ onboarding:
       title: Attenzione
       message: Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare.
   unlockCode:
-    headerTitle: Attivazione
-    contentTitle: Scegli un codice di sblocco
-    contentSubtitle: inserisci un codice di 6 cifre
-    contentTitleConfirm: Ripeti il codice di sblocco
-    contentTitleConfirmSubtitle: inserisci di nuovo il codice di 6 cifre
-    pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive. Potrai cambiarlo in ogni momento dopo l'autenticazione.
     reset: Modifica il codice
-    confirmInvalid: I due codici non coincidono
     contextualHelpTitle: Qual è il tuo codice di sblocco
     contextualHelpContent: !include onboarding/onboarding_pin.md
+  pin:
+    headerTitle: Configura IO
+    title: Codice di sblocco
+    subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
+    pinLabel: Crea codice di sblocco
+    pinConfirmationLabel: Ripeti codice di sblocco
+    tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
+    errors:
+      length: Il codice non ha 6 cifre
+      match: Il codice non coincide
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
@@ -819,6 +822,9 @@ onboarding:
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   shareData:
     title: Configura IO
+  thankYouPage:
+    title: Configurazione terminata!
+    body: Ora puoi iniziare a usare IO
 forms:
   validators:
     required: Valore richiesto
@@ -925,12 +931,12 @@ wallet:
         text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
         text4: cercando fra quelle disponibili
     bpay:
-      title: Ricerca dei tuoi account BANCOMAT Pay
+      title: Paga su IO con BANCOMAT Pay
       description:
-        text1: "Aggiungendo BANCOMAT Pay al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
+        text1: "Abbina BANCOMAT Pay per pagare più facilmente gli avvisi pagoPA e aderire alle iniziative disponibili su IO.\nProseguendo accetti l'"
         text2: informativa sul trattamento dei dati personali.
-        text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
-        text4: cercando fra quelle disponibili
+        text3: "Premi su “Continua” per cercare gli account a te intestati. In alternativa, cerca la banca su cui hai un account BANCOMAT Pay attivo "
+        text4: tra quelle disponibili.
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
@@ -966,10 +972,10 @@ wallet:
         title: "Non siamo riusciti a recuperare le tue carte PagoBancomat"
         body: "Riprova per favore"
       koNotFound:
-        title: "Spiacenti, non abbiamo trovato nessuna carta"
+        title: "Non abbiamo trovato nessuna carta"
         body: "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
       koNotFoundSingleBank:
-        title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
+        title: "Non abbiamo trovato nessuna carta su questa banca"
         body: "Non risultano carte PagoBANCOMAT a te intestate.\nSe lo desideri, IO può effettuare una ricerca tra tutte le banche."
         continue: "Continua"
       koServicesError:
@@ -998,7 +1004,7 @@ wallet:
         title: "Impossibile recuperare i tuoi dati"
         body: "Riprova per favore"
       koNotFound:
-        title: "Spiacenti, non abbiamo trovato nessun BANCOMAT Pay attivo"
+        title: "Non abbiamo trovato nessun BANCOMAT Pay attivo"
         body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
     satispay:
       name: "Satispay"
@@ -1017,7 +1023,7 @@ wallet:
         title: "Non siamo riusciti a contattare Satispay"
         body: "Riprova per favore"
       koNotFound:
-        title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
+        title: "Non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
     paypal:
       name: "PayPal"
@@ -1081,10 +1087,10 @@ wallet:
           title: "Non riusciamo a recuperare le tue carte"
           body: "Riprova per favore"
         koNotFound:
-          title: "Spiacenti, non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
+          title: "Non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
           body: "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni."
         koSingleBankNotFound:
-          title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
+          title: "Non abbiamo trovato nessuna carta su questa banca"
           body: "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
         koServiceError:
           title: "Non riusciamo a recuperare le tue carte"
@@ -1133,7 +1139,7 @@ wallet:
           title: "Al momento è impossibile verificare la tua carta"
           body: "Riprova per favore"
         koNotFound:
-          title: "Spiacenti, c'è un problema con questa carta"
+          title: "C'è un problema con questa carta"
           body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
           cta:
             modifyCardNumber: "Modifica numero carta"
@@ -1273,6 +1279,8 @@ wallet:
     pickPaymentMethod:
       title: "Con quale metodo vuoi pagare?"
       description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Metodi disattivati"
       notAvailable:
         title: "Metodi non compatibili"
         arriving:
@@ -1281,9 +1289,12 @@ wallet:
         unaccepted:
           bottomSheetTitle: "Perché non posso pagare con questa carta?"
           bottomSheetDescription: "Il circuito di questa carta consente di pagare nei punti vendita fisici, ma non online. Se la tua carta è abilitata ai pagamenti online, aggiungila al tuo Portafoglio come 'carta di debito o di credito'."
+        payment_disabled:
+          bottomSheetTitle: "Perché non riesco a pagare con questo metodo?"
+          bottomSheetDescription: "La funzionalità “Pagamenti in app” potrebbe essere disattivata.\nPrima di riprovare ad effettuare il pagamento, procedi come segue:\n\n1. vai nella sezione “Portafoglio”;\n2. seleziona il metodo di pagamento che vuoi utilizzare;\n3. abilita “Pagamenti in app”."
   firstTransactionSummary:
     title: Dati del pagamento
-    amount: Importo pagamento
+    amount: Importo
     total: Totale pagato
     expireDate: Scadenza
     tranche: Rata
@@ -1291,17 +1302,18 @@ wallet:
     tel: "Tel:"
     email: "Email:"
     PEC: "PEC:"
-    recipient: Ente creditore
-    object: Causale
+    recipient: Ente Creditore
+    object: Oggetto del pagamento
     date: Data e ora
     iuv: Codice IUV
-    entityCode: Codice Fiscale Ente Creditore
+    entityCode: Codice Fiscale Ente
     updatedAmount: Importo aggiornato
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
-    updateInfo:
-      pagoPA aggiorna automaticamente l'importo per assicurarti
-      di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
+    amountInfo:
+      title: Vedi un importo diverso?
+      message: pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
+      cta: Ok, va bene
     loadingMessage:
       activation: Stiamo contattando l'ente, attendi qualche secondo
       verification: Stiamo verificando i dati del tuo pagamento
@@ -1309,6 +1321,11 @@ wallet:
       wallet: Sto verificando se esistono metodi di pagamento salvati...
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
+    errorDetails:
+      title: Dettagli errore
+      errorCode: Codice errore
+      messageId: ID messaggio
+      copyToClipboard: Copia dati per l'assistenza
   errorTransaction:
     submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
   insertManually:
@@ -1383,7 +1400,7 @@ wallet:
       description: L’app per pagare in modo smart
     bancomatPay:
       name: BANCOMAT Pay
-      description: Abbina il tuo account BANCOMAT Pay
+      description: Paga con carta o conto corrente collegati
     postepayApp:
       name: Postepay
       description: la tua app Postepay
@@ -1467,15 +1484,15 @@ wallet:
     title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
-    TECHNICAL: Spiacenti, c’è un problema tecnico con questo avviso
-    DATA: Spiacenti, i dati dell’avviso non sono corretti
-    EC: Spiacenti, l’Ente Creditore sta avendo problemi nella risposta
+    TECHNICAL: C’è un problema tecnico con questo avviso
+    DATA: I dati dell’avviso non sono corretti
+    EC: L’Ente Creditore sta avendo problemi nella risposta
     ONGOING: Il pagamento è già in corso, riprova tra qualche minuto
     ONGOING_SUBTITLE: Se è passato troppo tempo, segnalacelo!
-    REVOKED: Spiacenti, l’Ente Creditore ha revocato questo avviso
-    EXPIRED: Spiacenti, l’avviso è scaduto e non è più possibile pagarlo
-    GENERIC_ERROR: Spiacenti, si è verificato un errore imprevisto
-    GENERIC_ERROR_SUBTITLE: Prova di nuovo o contattaci per ricevere assistenza.
+    REVOKED: L’Ente Creditore ha revocato questo avviso
+    EXPIRED: L’avviso è scaduto e non è più possibile pagarlo
+    GENERIC_ERROR: Si è verificato un errore imprevisto
+    GENERIC_ERROR_SUBTITLE: Riprova o contattaci per ricevere assistenza.
     DUPLICATED: Questo avviso è stato già pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
@@ -1526,10 +1543,10 @@ wallet:
       learnMore: Scopri di più
       visualizeCard: Visualizza carta
     fallback:
-      title: "Spiacenti, si è verificato un errore imprevisto"
+      title: "Si è verificato un errore imprevisto"
       description: "Se il problema persiste, contatta l’assistenza."
     code1:
-      title: "Spiacenti, si è verificato un errore imprevisto"
+      title: "Si è verificato un errore imprevisto"
       description: "Se il problema persiste, contatta l’assistenza."
     code2:
       title: "Autorizzazione negata"
@@ -1538,8 +1555,8 @@ wallet:
       title: "I dati della carta non sono corretti"
       description: "Elimina la carta dal tuo Portafoglio e prova ad aggiungerla di nuovo. Assicurati che i dati inseriti siano riportati esattamente come sulla carta."
     code4:
-      title: "Spiacenti, la sessione è scaduta"
-      description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
+      title: "Controlla la tua email"
+      description: "Non è stato possibile verificare l’esito del pagamento. Se è andato a buon fine, riceverai a breve un’email con la ricevuta. Se non ricevi l’email, contatta l’Assistenza."
     code7:
       title: "C’è un problema con la tua carta"
       description: "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
@@ -1552,7 +1569,7 @@ wallet:
       title: "Abilita il metodo per effettuare pagamenti in app"
       description: "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
     code18:
-      title: "Spiacenti, si è verificato un errore imprevisto"
+      title: "Si è verificato un errore imprevisto"
       description: "Se il problema persiste, contatta l’assistenza."
     code19:
       title: "Autorizzazione negata"
@@ -1804,6 +1821,7 @@ services:
   serviceIsEnabled: Contattarti in app
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Inviarti notifiche push
+  messageReadStatus: Ricevere conferme di lettura
   emailForwarding: Inviarti e-mail
   tosAndPrivacy: Termini e Privacy
   tosLink: Termini e condizioni d'uso
@@ -1933,8 +1951,8 @@ contextualHelp:
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 bottomSheets:
   ciePin:
-      title: Dove trovo il mio PIN?
-      content: !include bottomsheets/ciePin.md
+    title: Dove trovo il mio PIN?
+    content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "Cos'è SPID?"
@@ -2587,7 +2605,7 @@ bonus:
           title: "Fatto!"
           body: "Abbiamo salvato la tua scelta"
         retryAfterDeletion:
-          title: "Spiacenti, si è verificato un errore imprevisto"
+          title: "Si è verificato un errore imprevisto"
           body: "I tuoi metodi non sono stati eliminati. Riprova, oppure vai al Portafoglio ed eliminali manualmente."
         toast: "La tua scelta non è stata salvata. Riprova più tardi."
 
@@ -2599,6 +2617,7 @@ bonus:
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
     merchantsList:
+      news: novità
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
@@ -2929,6 +2948,52 @@ bonus:
         ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
+    serviceCta:
+      activable: "Attiva la carta"
+      pending: "Richiesta inviata"
+      error:
+        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
+    serviceEntryPoint:
+      notAvailable: "Il servizio non è disponibile in questo momento. Riprova più tardi."
+    bonusRequest:
+      bonusRequested:
+        loading:
+          title: "Stiamo inviando la tua richiesta di attivazione..."
+          subtitle: "Ti ricordiamo che sono valide solo le richieste per gli anni in cui hai dichiarato di essere residente in Italia. Ti preghiamo di attendere"
+        requestCompleted:
+          title: "La tua richiesta è stata inviata!"
+          body: "Riceverai un messaggio su IO quando le graduatorie saranno definitive."
+          cta: "Ho capito!"
+        partiallySuccess:
+          title: "Ecco l’esito delle tue richieste"
+          body:
+            success: "La richiesta per il {{successfulYears}} è andata a buon fine."
+            fail:
+              residenceAbroad: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non residente in Italia."
+              notEligible: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non è possibile richiedere Carta della Cultura per l’anno selezionato."
+              alreadyRegistered: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché hai già inviato una richiesta di attivazione per quell’anno."
+              initiativeFinished: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché il periodo di richiesta è terminato."
+        ko:
+          requirementsError:
+            title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
+            body: "La Carta della Cultura è disponibile solo per i cittadini residenti in Italia."
+          wrongFormat:
+            title: "Il servizio Carta della Cultura in questo momento non è disponibile."
+            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+          genericError:
+            title: "Si è verificato un errore con la tua richiesta"
+            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      selectResidence:
+        header: "Residenza"
+        items:
+          residesInItaly: "Risiedo in Italia"
+          residesAbroad: "Risiedo all’estero"
+        info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
+      selectYear:
+        header: "Per quale anno vuoi richiedere la Carta della Cultura?"
+        body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
+      misc:
+        conjunction: ", "
 features:
   mvl:
     title: "messaggio a valore legale"
@@ -2962,6 +3027,11 @@ features:
           singleBtn: "Salva, stampa o condividi"
           open: "Apri"
           save: "Salva"
+          savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+          errors:
+            sharing: "Si è verificato un errore condividendo il documento."
+            opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
+            saving: "Si è verificato un errore salvando il documento."
       body:
         plain: "testo semplice"
         html: "html"
@@ -3043,12 +3113,12 @@ support:
   helpCenter:
     header: "Assistenza"
     cta:
-      contactSupport: "Scrivici"
-      seeReports: "Vedi le tue richieste"
+      contactSupport: "Apri una richiesta"
+      seeReports: "Richieste in corso"
     supportComponent:
       title: "Hai bisogno d’aiuto?"
-      subtitle: "Per richiedere assistenza o suggerire un miglioramento, scrivici: ti risponderemo il prima possibile."
-      adviceMessage: "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un Ente, contatta quest’ultimo. Troverai i riferimenti all’interno del messaggio o nella scheda del servizio in questione."
+      subtitle: "Dai un’occhiata alle FAQ: se non trovi la risposta che cerchi, apri una richiesta. Se hai già aperto una richiesta e vuoi verificarne lo stato o aggiungere dettagli, seleziona “Richieste in corso”."
+      adviceMessage: "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un ente, contatta quest’ultimo: trovi i riferimenti nel messaggio o nella scheda del servizio."
   panicMode:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
@@ -3069,7 +3139,7 @@ support:
     stockValue: "Incluso l’errore che hai appena ricevuto"
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
-    header: "Scrivici"
+    header: "Apri una richiesta"
     title: "Ci dai il tuo consenso?"
     body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
     listHeader: "Se dai il consenso, riceveremo questi dati:"
@@ -3079,10 +3149,11 @@ support:
     toast:
       emailClientNotFound: "Per ricevere assistenza scrivici a: {{emailAddress}}"
   chooseCategory:
-    header: "Scrivici"
+    header: "Apri una richiesta"
     title:
       category: "Seleziona un argomento"
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+
 

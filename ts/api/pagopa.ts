@@ -63,15 +63,14 @@ import {
   GetPspListV2UsingGETT,
   getPspUsingGETDecoder,
   GetPspUsingGETT,
-  getSelectedPspUsingGETDecoder,
   getTransactionsUsingGETDecoder,
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
   GetWalletsUsingGETT,
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
-  updateWalletUsingPUTDecoder,
-  UpdateWalletUsingPUTT
+  updateWalletUsingPUTV2Decoder,
+  UpdateWalletUsingPUTV2T
 } from "../../definitions/pagopa/requestTypes";
 import {
   NullableWallet,
@@ -299,15 +298,7 @@ type PspParams = {
   readonly idPayment: string;
   readonly language: string;
 };
-export type GetSelectedPspUsingGETTExtra = r.IGetApiRequestType<
-  PspParams,
-  "Authorization",
-  never,
-  | r.IResponseType<200, PspListResponse>
-  | r.IResponseType<401, undefined>
-  | r.IResponseType<403, undefined>
-  | r.IResponseType<404, undefined>
->;
+
 const getPspQuery = (params: PspParams) => {
   const { idPayment, idWallet, language } = params;
   return {
@@ -315,13 +306,6 @@ const getPspQuery = (params: PspParams) => {
     idWallet,
     language
   };
-};
-const getPspSelected: GetSelectedPspUsingGETTExtra = {
-  method: "get",
-  url: () => "/v1/psps/selected",
-  query: getPspQuery,
-  headers: ParamAuthorizationBearerHeader,
-  response_decoder: getSelectedPspUsingGETDecoder(PspListResponse)
 };
 
 type GetAllPspListUsingGETTExtra = MapResponseType<
@@ -349,18 +333,18 @@ const getPsp: GetPspUsingGETTExtra = {
 };
 
 type UpdateWalletUsingPUTTExtra = MapResponseType<
-  UpdateWalletUsingPUTT,
+  UpdateWalletUsingPUTV2T,
   200,
   WalletResponse
 >;
 
 const updateWalletPsp: UpdateWalletUsingPUTTExtra = {
   method: "put",
-  url: ({ id }) => `/v1/wallet/${id}`,
+  url: ({ id }) => `/v2/wallet/${id}`,
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
+  response_decoder: updateWalletUsingPUTV2Decoder(WalletResponse)
 };
 
 type FavouriteWalletUsingPOSTTExtra = MapResponseType<
@@ -640,7 +624,7 @@ const searchPayPalPsp: GetPaypalPspsUsingGETT = {
 const getPspListV2: GetPspListV2UsingGETT = {
   method: "get",
   url: ({ idPayment }) => `/v2/payments/${idPayment}/psps`,
-  query: ({ language, idWallet }) => ({ language, idWallet }),
+  query: ({ language, idWallet }) => ({ language, idWallet, isList: true }),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListV2UsingGETDefaultDecoder()
 };
@@ -728,26 +712,13 @@ export function PaymentManagerClient(
         idWallet,
         language: getLocalePrimaryWithFallback()
       }),
-    getPspSelected: (
-      idPayment: TypeofApiParams<GetAllPspsUsingGETT>["idPayment"],
-      idWallet: TypeofApiParams<GetAllPspsUsingGETT>["idWallet"]
-    ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(getPspSelected, options)
-        )
-      )({
-        idPayment,
-        idWallet,
-        language: getLocalePrimaryWithFallback()
-      }),
     getPsp: (id: TypeofApiParams<GetPspUsingGETT>["id"]) =>
       flip(withPaymentManagerToken(createFetchRequestForApi(getPsp, options)))({
         id
       }),
     updateWalletPsp: (
-      id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],
-      walletRequest: TypeofApiParams<UpdateWalletUsingPUTT>["walletRequest"]
+      id: TypeofApiParams<UpdateWalletUsingPUTV2T>["id"],
+      walletRequest: TypeofApiParams<UpdateWalletUsingPUTV2T>["walletRequest"]
     ) =>
       flip(
         withPaymentManagerToken(

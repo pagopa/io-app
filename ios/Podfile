@@ -1,21 +1,13 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-platform :ios, '10.0'
+platform :ios, '11.0'
+
+# This env is used to check whether
+# we are in a CI environment or not.
+IS_CI = ENV['CI']
 
 target 'ItaliaApp' do
   config = use_native_modules!
-
-  permissions_path = '../node_modules/react-native-permissions/ios'
-
-  pod 'RNPermissions', :path => '../node_modules/react-native-permissions/'
-  pod 'Permission-Calendars', :path => "#{permissions_path}/Calendars.podspec"
-  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
-  pod 'Permission-Contacts', :path => "#{permissions_path}/Contacts.podspec"
-  pod 'Permission-FaceID', :path => "#{permissions_path}/FaceID.podspec"
-  pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary.podspec"
-  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
-  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
-  pod 'Permission-Reminders', :path => "#{permissions_path}/Reminders.podspec"
 
   pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
   pod 'ReactNativeART', :podspec => '../node_modules/@react-native-community/art/ReactNativeART.podspec'
@@ -33,7 +25,10 @@ target 'ItaliaApp' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-  use_flipper!()
+  if not IS_CI
+    use_flipper!()
+  end
+
   post_install do |installer|
     react_native_post_install(installer)
   end

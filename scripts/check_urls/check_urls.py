@@ -60,9 +60,10 @@ def scan_directory(path, file_black_list, black_list_url, ext_set={'*.ts*'}):
 	black_list_files = tuple(file_black_list)
 	# exclude test files
 	for f in files:
-		name = basename(f)
-		if name.endswith(("test.ts", "test.tsx", "tsx.snap")) or str(f).endswith(black_list_files):
+		# exclude all those files that are included in the blacklist or are tests, mocks, or snaps
+		if re.search(r'(__tests?__|__mocks?__|tsx.snap)', abspath(f), re.IGNORECASE)  or str(f).endswith(black_list_files):
 			to_remove.append(f)
+			continue
 	for tr in to_remove:
 		files.remove(tr)
 	return read_file(files, black_list_url)
@@ -228,7 +229,8 @@ if not run_test and __name__ == '__main__':
 		"https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
 		"https://www.trusttechnologies.it/contatti/#form",
 		"https://support.namirial.com/it/faq/faq-tsp/faq-tsp-spid",
-		"https://paytipper.com/wp-content/uploads/2021/02/logo.png"}
+		"https://paytipper.com/wp-content/uploads/2021/02/logo.png",
+		"https://fims-dev-app-provider.azurewebsites.net/"}
 	locales = (abspath(join(dirname(__file__), "../..", "locales")), set())
 	ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), files_black_list)
 	for directory, black_list in [locales, ts_dir]:

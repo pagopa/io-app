@@ -1,22 +1,20 @@
-import React from "react";
-import { NavigationParams } from "react-navigation";
 import { fireEvent } from "@testing-library/react-native";
-
-import configureMockStore from "redux-mock-store";
 import { some } from "fp-ts/lib/Option";
+import React from "react";
 import { Store } from "redux";
-import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { applicationChangeState } from "../../../../store/actions/application";
-import ROUTES from "../../../../navigation/routes";
-
-import BaseScreenComponent, { Props } from "../index";
-import { BackendStatusState } from "../../../../store/reducers/backendStatus";
-import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
+import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../definitions/content/Config";
 import * as zendeskActions from "../../../../features/zendesk/store/actions";
+import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { BackendStatusState } from "../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+
+import BaseScreenComponent, { Props } from "../index";
 
 jest.useFakeTimers();
 
@@ -32,7 +30,9 @@ describe("BaseScreenComponent", () => {
     ...globalState,
     backendStatus: {
       status: some({
-        config: { assistanceTool: { tool: ToolEnum.none } } as Config
+        config: {
+          assistanceTool: { tool: ToolEnum.none }
+        } as Config
       } as BackendStatus)
     } as BackendStatusState
   };
@@ -51,7 +51,11 @@ describe("BaseScreenComponent", () => {
           ...state,
           backendStatus: {
             status: some({
-              config: { assistanceTool: { tool } } as Config
+              config: {
+                assistanceTool: { tool },
+                cgn: { enabled: true },
+                fims: { enabled: true }
+              } as Config
             } as BackendStatus)
           } as BackendStatusState
         })
@@ -67,7 +71,11 @@ describe("BaseScreenComponent", () => {
         ...state,
         backendStatus: {
           status: some({
-            config: { assistanceTool: { tool: ToolEnum.zendesk } } as Config
+            config: {
+              assistanceTool: { tool: ToolEnum.zendesk },
+              cgn: { enabled: true },
+              fims: { enabled: true }
+            } as Config
           } as BackendStatus)
         } as BackendStatusState
       })
@@ -91,7 +99,7 @@ describe("BaseScreenComponent", () => {
 
 function renderComponent(props = defaultProps, store: Store<GlobalState>) {
   return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    component: renderScreenFakeNavRedux<GlobalState>(
       () => <BaseScreenComponent {...props} ref={undefined} />,
       ROUTES.MESSAGES_HOME,
       {},

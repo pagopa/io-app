@@ -1,4 +1,11 @@
-import { fromEither, fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import {
+  fromEither,
+  fromNullable,
+  none,
+  Option,
+  some,
+  isNone
+} from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -9,9 +16,7 @@ import {
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
-
 import I18n from "../i18n";
-
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { PaymentHistory } from "../store/reducers/payments/history";
@@ -32,20 +37,12 @@ import {
   Detail_v2Enum,
   DetailEnum
 } from "../../definitions/backend/PaymentProblemJson";
+import { PspData } from "../../definitions/pagopa/PspData";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
-
-/**
- * A method to convert an payment amount in a proper formatted string
- * @param amount In euro-cents
- */
-export function formatPaymentAmount(amount: number): string {
-  // We need to divide by 100 to get euro from euro-cents
-  return I18n.toNumber(amount / 100, { precision: 2 });
-}
 
 /**
  * Converts a NoticeNumber coming from a Message to an RptId needed by PagoPA
@@ -87,6 +84,38 @@ export function decodePagoPaQrCode(
 }
 
 /**
+ * Decode a Data Matrix string from Poste returning
+ * a tuple with an `RptId` and an `AmountInEuroCents`
+ * or none.
+ */
+export function decodePosteDataMatrix(
+  data: string
+): Option<ITuple2<RptId, AmountInEuroCents>> {
+  if (!data.startsWith("codfase=NBPA;")) {
+    return none;
+  }
+
+  const paymentNoticeNumber = data.slice(15, 33);
+  const organizationFiscalCode = data.slice(66, 77);
+  const amount = data.slice(49, 59);
+
+  const decodedRpdId = fromEither(
+    RptId.decode({
+      organizationFiscalCode,
+      paymentNoticeNumber
+    })
+  );
+
+  const decodedAmount = fromEither(AmountInEuroCents.decode(amount));
+
+  if (isNone(decodedRpdId) || isNone(decodedAmount)) {
+    return none;
+  }
+
+  return some(Tuple2(decodedRpdId.value, decodedAmount.value));
+}
+
+/**
  * The PaymentManager returns a PSP entry for each supported language, so
  * we need to skip PSPs that have the language different from the current
  * locale.
@@ -120,6 +149,14 @@ export function walletHasFavoriteAvailablePsp(
   // select it
   return walletPspInPsps !== undefined;
 }
+
+/**
+ * return true if the given wallet has a psp set and it is included in the given psp list
+ */
+export const walletHasFavoriteAvailablePspData = (
+  wallet: Wallet,
+  psps: ReadonlyArray<PspData>
+): boolean => psps.find(psp => psp.idPsp === wallet.psp?.idPsp) !== undefined;
 
 /**
  * This tags are defined in PagoPA specs for transaction description.
@@ -314,11 +351,11 @@ export const getTransactionIUV = (
 /**
  * Order the list of PSPs by fixed cost amount: from lower to higher
  */
-export const orderPspByAmount = (pspList: ReadonlyArray<Psp>) =>
-  pspList.concat().sort((pspA: Psp, pspB: Psp) => {
-    if (pspA.fixedCost.amount < pspB.fixedCost.amount) {
+export const orderPspByAmount = (pspList: ReadonlyArray<PspData>) =>
+  pspList.concat().sort((pspA: PspData, pspB: PspData) => {
+    if (pspA.fee < pspB.fee) {
       return -1;
-    } else if (pspA.fixedCost.amount > pspB.fixedCost.amount) {
+    } else if (pspA.fee > pspB.fee) {
       return 1;
     }
     return 0;

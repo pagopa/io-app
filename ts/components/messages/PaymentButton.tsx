@@ -9,7 +9,6 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { isPagoPaSupportedSelector } from "../../common/versionInfo/store/reducers/versionInfo";
 
 import I18n from "../../i18n";
-import NavigationService from "../../navigation/NavigationService";
 import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -29,6 +28,7 @@ type OwnProps = {
   organizationFiscalCode: OrganizationFiscalCode;
   noticeNumber: PaymentNoticeNumber;
   amount: PaymentAmount;
+  messageId?: string;
 };
 
 type Props = OwnProps &
@@ -53,7 +53,8 @@ const PaymentButton = ({
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHomeScreen,
   noticeNumber,
-  organizationFiscalCode
+  organizationFiscalCode,
+  messageId
 }: Props) => {
   const dispatch = useIODispatch();
   const handleOnPress = () => {
@@ -72,7 +73,7 @@ const PaymentButton = ({
           rptId: rptId.value,
           initialAmount: amount.value,
           paymentStartOrigin: "message",
-          startRoute: NavigationService.getCurrentRoute()
+          messageId
         });
       } else {
         // Navigating to Wallet home, having the email address is not validated,
