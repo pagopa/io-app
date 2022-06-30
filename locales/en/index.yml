@@ -3096,6 +3096,7 @@ features:
         title: Allegati
       infoSection:
         title: Informazioni sulla notifica
+        iun: Codice IUN
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

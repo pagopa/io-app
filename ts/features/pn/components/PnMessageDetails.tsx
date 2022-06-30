@@ -9,12 +9,16 @@ import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
-import { TransactionSummary } from "../../../screens/wallet/payment/components/TransactionSummary";
+import {
+  TransactionSummary,
+  TransactionSummaryRow
+} from "../../../screens/wallet/payment/components/TransactionSummary";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
+import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
@@ -107,7 +111,14 @@ export const PnMessageDetails = (props: Props) => {
         )}
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
-        />
+        >
+          <TransactionSummaryRow
+            axis="horizontal"
+            title={I18n.t("features.pn.details.infoSection.iun")}
+            subtitle={props.message.iun}
+            onPress={() => clipboardSetStringWithFeedback(props.message.iun)}
+          />
+        </PnMessageDetailsSection>
         <View style={styles.spacer} />
       </ScrollView>
     </>
