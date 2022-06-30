@@ -32,6 +32,7 @@ type Props = WithTestID<{
   iconName: string;
   viewRef: React.RefObject<View>;
   labelColor: ComponentProps<typeof Label>["color"];
+  labelPaddingVertical?: number;
 }>;
 
 const StatusContent: React.FC<Props> = ({
@@ -44,7 +45,8 @@ const StatusContent: React.FC<Props> = ({
   iconColor,
   iconName,
   viewRef,
-  labelColor
+  labelColor,
+  labelPaddingVertical
 }) => (
   <View
     accessibilityHint={accessibilityHint}
@@ -61,7 +63,14 @@ const StatusContent: React.FC<Props> = ({
       size={iconSize}
       style={styles.alignCenter}
     />
-    <Label color={labelColor} style={styles.text} weight={"Regular"}>
+    <Label
+      color={labelColor}
+      style={[
+        styles.text,
+        labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}
+      ]}
+      weight={"Regular"}
+    >
       {children}
     </Label>
   </View>
