@@ -3,7 +3,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Attachment } from "../../../../store/reducers/entities/messages/types";
 
 export const NotificationPaymentInfoR = t.interface({
-  noticeNumber: t.string,
+  noticeCode: t.string,
   creditorTaxId: t.string
 });
 export const NotificationPaymentInfoO = t.partial({});

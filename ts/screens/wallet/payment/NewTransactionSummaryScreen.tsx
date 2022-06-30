@@ -65,6 +65,7 @@ import {
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
+import customVariables from "../../../theme/variables";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -85,7 +86,8 @@ export type TransactionSummaryError = Option<
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    marginHorizontal: customVariables.contentPadding
   }
 });
 

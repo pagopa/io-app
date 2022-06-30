@@ -3115,6 +3115,12 @@ features:
       loadError:
         title: Qualcosa è andato storto
         body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
+      paymentSection:
+        title: Avviso di pagamento
+      attachmentsSection:
+        title: Allegati
+      infoSection:
+        title: Informazioni sulla notifica
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

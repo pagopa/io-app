@@ -26,9 +26,6 @@ import { MultiImage } from "../../../../components/ui/MultiImage";
 import { IOBadge } from "../../../../components/core/IOBadge";
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: customVariables.contentPadding
-  },
   row: {
     flex: 1,
     flexDirection: "row",
@@ -120,7 +117,7 @@ export const TransactionSummaryRow = (
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.row}>
         {props.icon && <View style={styles.icon}>{props.icon}</View>}
         <View
