@@ -73,10 +73,13 @@ exports[`StatusContent should match the snapshot 1`] = `
     }
     style={
       Array [
-        Object {
-          "flex": 1,
-          "marginLeft": 16,
-        },
+        Array [
+          Object {
+            "flex": 1,
+            "marginLeft": 16,
+          },
+          Object {},
+        ],
         Object {
           "fontSize": 16,
         },
