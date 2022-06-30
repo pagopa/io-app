@@ -194,6 +194,10 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     )
   );
 
+  const formattedPaymentNoticeNumber = props.paymentNoticeNumber
+    .replace(/(\d{4})/g, "$1  ")
+    .trim();
+
   const { presentPaymentInfoBottomSheet, paymentInfoBottomSheet } =
     usePaymentAmountInfoBottomSheet();
 
@@ -263,9 +267,9 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
       <TransactionSummaryRow
         axis={"horizontal"}
         title={I18n.t("payment.noticeCode")}
-        subtitle={props.paymentNoticeNumber}
+        subtitle={formattedPaymentNoticeNumber}
         onPress={() =>
-          clipboardSetStringWithFeedback(props.paymentNoticeNumber)
+          clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
         }
       />
       <TransactionSummaryRow
