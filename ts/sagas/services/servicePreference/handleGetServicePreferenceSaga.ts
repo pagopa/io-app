@@ -43,7 +43,7 @@ export function* handleGetServicePreference(
               push: response.right.value.is_webhook_enabled,
               email: response.right.value.is_email_enabled,
               settings_version: response.right.value.settings_version,
-              
+
               // This will handle the premium messages flag.
               can_access_message_read_status:
                 response.right.value.can_access_message_read_status

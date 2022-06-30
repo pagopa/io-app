@@ -94,7 +94,7 @@ export function* handleUpsertServicePreference(
               inbox: response.right.value.is_inbox_enabled,
               push: response.right.value.is_webhook_enabled,
               email: response.right.value.is_email_enabled,
-              
+
               // If the optional flag does not exists it will be set
               // as the value of `inbox`.
               can_access_message_read_status:

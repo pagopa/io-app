@@ -63,12 +63,7 @@ const CgnMerchantsListByCategory = () => {
   const offlineMerchants = useIOSelector(cgnOfflineMerchantsSelector);
 
   const categorySpecs = useMemo(
-    () =>
-      pipe(
-        route.params.category,
-        getCategorySpecs,
-        O.toUndefined
-      ),
+    () => pipe(route.params.category, getCategorySpecs, O.toUndefined),
     [route]
   );
 
