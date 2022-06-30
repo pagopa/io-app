@@ -4,21 +4,20 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import customVariables from "../../../../theme/variables";
-import { H4 } from "../../../../components/core/typography/H4";
-import { H5 } from "../../../../components/core/typography/H5";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
-
 import AmountIcon from "../../../../../img/features/payments/Amount.svg";
 import CalendarIcon from "../../../../../img/features/payments/calendar.svg";
 import NoticeIcon from "../../../../../img/features/payments/Giacenza.svg";
 import { IOBadge } from "../../../../components/core/IOBadge";
+import { Body } from "../../../../components/core/typography/Body";
+import { H4 } from "../../../../components/core/typography/H4";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
 import { MultiImage } from "../../../../components/ui/MultiImage";
+import I18n from "../../../../i18n";
 import { PaymentState } from "../../../../store/reducers/wallet/payment";
+import customVariables from "../../../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getLogoForOrganization } from "../../../../utils/organizations";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
@@ -27,11 +26,6 @@ import {
 } from "../../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../../utils/strings";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
-import { getLogoForOrganization } from "../../../../utils/organizations";
-import { MultiImage } from "../../../../components/ui/MultiImage";
-import { IOBadge } from "../../../../components/core/IOBadge";
-import { Body } from "../../../../components/core/typography/Body";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 const styles = StyleSheet.create({
   container: {

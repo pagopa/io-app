@@ -40,7 +40,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;

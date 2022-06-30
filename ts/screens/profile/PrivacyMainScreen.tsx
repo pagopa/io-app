@@ -29,7 +29,6 @@ import {
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
-import { isPremiumMessagesOptInOutEnabledSelector } from "../../store/reducers/backendStatus";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
