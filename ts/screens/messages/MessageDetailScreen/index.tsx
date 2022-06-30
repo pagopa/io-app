@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
@@ -11,7 +10,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
 import {
   DEPRECATED_setMessageReadState,
@@ -38,11 +37,10 @@ export type MessageDetailScreenNavigationParams = {
   messageId: string;
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  MessagesParamsList,
+  "MESSAGE_DETAIL"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -137,7 +135,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const messageId = ownProps.navigation.getParam("messageId");
+  const messageId = ownProps.route.params.messageId;
   const isRead = isMessageRead(state, messageId);
   const paymentsByRptId = paymentsByRptIdSelector(state);
   const goBack = () => ownProps.navigation.goBack();

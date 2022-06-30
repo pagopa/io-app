@@ -42,7 +42,8 @@ export function* handleForceBonusServiceActivation(
         )({
           email: true,
           inbox: true,
-          push: true
+          push: true,
+          can_access_message_read_status: true
         });
       }
       return undefined;

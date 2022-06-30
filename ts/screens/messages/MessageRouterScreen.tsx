@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
@@ -11,7 +10,7 @@ import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovid
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
 import { DEPRECATED_loadMessages as loadMessages } from "../../store/actions/messages";
 import {
@@ -28,12 +27,8 @@ export type MessageRouterScreenNavigationParams =
   MessageDetailScreenNavigationParams;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<MessagesParamsList, "MESSAGE_ROUTER">
-    >;
-  };
-
+  ReturnType<typeof mapStateToProps> &
+  IOStackNavigationRouteProps<MessagesParamsList, "MESSAGE_ROUTER">;
 /**
  * In order to have the final CreatedMessageWithContentAndAttachments, these conditions should be verified:
  * - props.allMessages should be pot.some (it means messages are refreshed: loadMessages triggers the loading of the single message in that list)
@@ -47,7 +42,7 @@ const getLoadingState = (
   CreatedMessageWithContentAndAttachments | undefined,
   string | undefined
 > => {
-  const messageId = props.navigation.getParam("messageId");
+  const messageId = props.route.params.messageId;
   if (!isStrictSome(props.allMessages)) {
     void mixpanelTrack("MESSAGE_ROUTING_FAILURE", {
       reason: "all Messages is not some"

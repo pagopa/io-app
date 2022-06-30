@@ -1,6 +1,5 @@
 import { createCompatNavigatorFactory } from "@react-navigation/compat";
 import { createStackNavigator } from "@react-navigation/stack";
-import { ParamListBase } from "@react-navigation/native";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
@@ -23,20 +22,7 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
-import { PremiumMessagesOptInOutProfileScreen } from "../screens/profile/premiumMessages/PremiumMessagesOptInOutProfileScreen";
-import { premiumMessagesOptInEnabled } from "../config";
 import ROUTES from "./routes";
-
-/**
- * The routes used for the premium messages feature.
- */
-const premiumMessagesRoutes: ParamListBase = premiumMessagesOptInEnabled
-  ? {
-      [ROUTES.PROFILE_PREMIUM_MESSAGES_OPT_IN_OUT]: {
-        screen: PremiumMessagesOptInOutProfileScreen
-      }
-    }
-  : {};
 
 /**
  * A navigator for all the screens of the Profile section
@@ -108,9 +94,7 @@ const ProfileNavigator = createCompatNavigatorFactory(createStackNavigator)(
     },
     [ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS]: {
       screen: RemoveAccountSuccess
-    },
-
-    ...premiumMessagesRoutes
+    }
   },
   {
     // Let each screen handle the header and navigation

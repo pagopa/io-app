@@ -36,6 +36,12 @@ const calculateUpdatingPreference = (
       is_inbox_enabled: action.payload.inbox,
       is_webhook_enabled: true,
       is_email_enabled: currentServicePreferenceState.value.value.email,
+
+      // When the `inbox` preference will be re-enabled (from false to true),
+      // by default the `can_access_message_read_status` should
+      // be enabled too, just like the `is_webhook_enabled`.
+      can_access_message_read_status: true,
+
       settings_version: action.payload
         .settings_version as ServicePreference["settings_version"]
     };
@@ -44,6 +50,9 @@ const calculateUpdatingPreference = (
     is_inbox_enabled: action.payload.inbox,
     is_webhook_enabled: action.payload.inbox ? action.payload.push : false,
     is_email_enabled: action.payload.inbox ? action.payload.email : false,
+    can_access_message_read_status: action.payload.inbox
+      ? action.payload.can_access_message_read_status
+      : false,
     settings_version: action.payload
       .settings_version as ServicePreference["settings_version"]
   };
@@ -85,6 +94,12 @@ export function* handleUpsertServicePreference(
               inbox: response.right.value.is_inbox_enabled,
               push: response.right.value.is_webhook_enabled,
               email: response.right.value.is_email_enabled,
+              
+              // If the optional flag does not exists it will be set
+              // as the value of `inbox`.
+              can_access_message_read_status:
+                response.right.value.can_access_message_read_status ??
+                response.right.value.is_inbox_enabled,
               settings_version: response.right.value.settings_version
             }
           })

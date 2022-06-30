@@ -16,7 +16,7 @@ import { appReducer } from "../../../../store/reducers";
 import { DetailsById } from "../../../../store/reducers/entities/messages/detailsById";
 import { PaginatedById } from "../../../../store/reducers/entities/messages/paginatedById";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
 
 jest.useFakeTimers();
@@ -161,7 +161,8 @@ describe("MessageRouterScreen", () => {
           });
           expect(mockNavDispatch).toHaveBeenCalledWith(
             navigateToPaginatedMessageDetailScreenAction({
-              message: targetMessage
+              messageId: targetMessage.id,
+              serviceId: targetMessage.serviceId
             })
           );
         });
@@ -220,7 +221,7 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
   } as GlobalState);
   const spyStoreDispatch = spyOn(store, "dispatch");
 
-  const component = renderScreenFakeNavRedux(
+  const component = renderScreenWithNavigationStoreContext(
     MessageRouterScreen,
     ROUTES.MESSAGE_ROUTER,
     { messageId },

@@ -114,22 +114,20 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
             </View>
           );
 
-          return (
-            <CgnMerchantCategoryItem
-              title={I18n.t(s.nameKey)}
-              colors={s.colors}
-              onPress={() => {
-                dispatch(cgnSelectedCategory(s.type));
-                navigation.navigate(
-                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY
-                );
-              }}
-              child={categoryIcon}
-            />
-          );
-        }
-      )
-    );
+      return (
+        <CgnMerchantCategoryItem
+          title={I18n.t(s.nameKey)}
+          colors={s.colors}
+          onPress={() => {
+            dispatch(cgnSelectedCategory(s.type));
+            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
+              category: s.type
+            });
+          }}
+          child={categoryIcon}
+        />
+      );
+    });
   };
 
   const allNews = pot.isSome(potCategories)

@@ -96,7 +96,7 @@ export const TransactionSummaryErrorDetails = ({
           {detailsData.map((row, index, array) =>
             row.value !== undefined ? (
               <TransactionSummaryRow
-                axis={"horizontal"}
+                axis={"vertical"}
                 title={row.key}
                 subtitle={row.value}
                 hideSeparator={index === array.length - 1}
