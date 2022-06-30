@@ -3,6 +3,8 @@ import { Text, View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
 import MessageDetailComponent from "../../../components/messages/paginated/MessageDetail";
 
 import BaseScreenComponent, {
@@ -16,10 +18,7 @@ import { navigateToServiceDetailsScreen } from "../../../store/actions/navigatio
 import { loadServiceDetail } from "../../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
-import {
-  UIMessage,
-  UIMessageId
-} from "../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
@@ -29,6 +28,7 @@ import { toUIService } from "../../../store/reducers/entities/services/transform
 import { GlobalState } from "../../../store/reducers/types";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import ErrorState from "../MessageDetailScreen/ErrorState";
+import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
 });
 
 export type MessageDetailScreenPaginatedNavigationParams = {
-  message: UIMessage;
+  messageId: UIMessageId;
+  serviceId: ServiceId;
 };
 
 type OwnProps = IOStackNavigationRouteProps<
@@ -75,6 +76,8 @@ const MessageDetailScreen = ({
   hasPaidBadge,
   loadMessageDetails,
   maybeServiceMetadata,
+  messageId,
+  serviceId,
   message,
   messageDetails,
   refreshService,
@@ -85,7 +88,7 @@ const MessageDetailScreen = ({
       pot.isError(messageDetails) ||
       (pot.isNone(messageDetails) && !pot.isLoading(messageDetails))
     ) {
-      loadMessageDetails(message.id);
+      loadMessageDetails(messageId);
     }
   });
 
@@ -99,66 +102,73 @@ const MessageDetailScreen = ({
 
   const onRetry = () => {
     // we try to reload both the message content and the service
-    const { id, serviceId } = message;
     refreshService(serviceId);
-    loadMessageDetails(id);
+    loadMessageDetails(messageId);
   };
 
   const renderErrorState = () => (
-    <ErrorState messageId={message.id} onRetry={onRetry} goBack={goBack} />
+    <ErrorState messageId={messageId} onRetry={onRetry} goBack={goBack} />
   );
 
-  return pot.fold(
-    messageDetails,
-    () => (
-      <View style={styles.notFullStateContainer}>
-        <Text style={styles.notFullStateMessageText}>
-          {I18n.t("messageDetails.emptyMessage")}
-        </Text>
-      </View>
-    ),
-    () => renderLoadingState(),
-    () => renderLoadingState(),
-    () => renderErrorState(),
-    details => (
-      <BaseScreenComponent
-        headerTitle={I18n.t("messageDetails.headerTitle")}
-        goBack={goBack}
-        backButtonTestID={"back-button"}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["messages_detail"]}
-      >
-        <MessageDetailComponent
-          hasPaidBadge={hasPaidBadge}
-          message={message}
-          messageDetails={details}
-          service={service}
-          serviceMetadata={maybeServiceMetadata}
-          onServiceLinkPress={onServiceLinkPressHandler}
-        />
-      </BaseScreenComponent>
-    ),
-    () => renderLoadingState(),
-    () => renderLoadingState(),
-    () => renderErrorState()
+  return message ? (
+    pot.fold(
+      messageDetails,
+      () => (
+        <View style={styles.notFullStateContainer}>
+          <Text style={styles.notFullStateMessageText}>
+            {I18n.t("messageDetails.emptyMessage")}
+          </Text>
+        </View>
+      ),
+      () => renderLoadingState(),
+      () => renderLoadingState(),
+      () => renderErrorState(),
+      details => (
+        <BaseScreenComponent
+          headerTitle={I18n.t("messageDetails.headerTitle")}
+          goBack={goBack}
+          backButtonTestID={"back-button"}
+          contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["messages_detail"]}
+        >
+          <MessageDetailComponent
+            hasPaidBadge={hasPaidBadge}
+            message={message}
+            messageDetails={details}
+            service={service}
+            serviceMetadata={maybeServiceMetadata}
+            onServiceLinkPress={onServiceLinkPressHandler}
+          />
+        </BaseScreenComponent>
+      ),
+      () => renderLoadingState(),
+      () => renderLoadingState(),
+      () => renderErrorState()
+    )
+  ) : (
+    <WorkunitGenericFailure />
   );
 };
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const message: UIMessage = ownProps.route.params.message;
-  const messageDetails = getDetailsByMessageId(state, message.id);
+  const messageId = ownProps.route.params.messageId;
+  const serviceId = ownProps.route.params.serviceId;
+  const message = pot.toUndefined(getMessageById(state, messageId));
+  const messageDetails = getDetailsByMessageId(state, messageId);
   const goBack = () => ownProps.navigation.goBack();
   const service = pot
-    .toOption(serviceByIdSelector(message.serviceId)(state) || pot.none)
+    .toOption(serviceByIdSelector(serviceId)(state) || pot.none)
     .map(toUIService)
     .toUndefined();
   // Map the potential message to the potential service
-  const maybeServiceMetadata = serviceMetadataByIdSelector(message.serviceId)(
-    state
-  );
-  const hasPaidBadge = isNoticePaid(state, message.category);
+  const maybeServiceMetadata = serviceMetadataByIdSelector(serviceId)(state);
+  const hasPaidBadge: boolean = message
+    ? isNoticePaid(state, message.category)
+    : false;
 
   return {
+    messageId,
+    serviceId,
     goBack,
     hasPaidBadge,
     message,
