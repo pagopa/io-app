@@ -80,12 +80,10 @@ const navigateToScreenHandler =
       message.category.tag === TagEnumBase.LEGAL_MESSAGE
     ) {
       navigateBack();
-      NavigationService.dispatchNavigationAction(
-        navigateToMvlDetailsScreen({ id: message.id })
-      );
+      dispatch(navigateToMvlDetailsScreen({ id: message.id }));
     } else if (pnEnabled && message.category.tag === TagEnumPN.PN) {
       navigateBack();
-      NavigationService.dispatchNavigationAction(
+      dispatch(
         navigateToPnMessageDetailsScreen({
           messageId: message.id,
           serviceId: message.serviceId
