@@ -1294,7 +1294,7 @@ wallet:
           bottomSheetDescription: "La funzionalità “Pagamenti in app” potrebbe essere disattivata.\nPrima di riprovare ad effettuare il pagamento, procedi come segue:\n\n1. vai nella sezione “Portafoglio”;\n2. seleziona il metodo di pagamento che vuoi utilizzare;\n3. abilita “Pagamenti in app”."
   firstTransactionSummary:
     title: Dati del pagamento
-    amount: Importo pagamento
+    amount: Importo
     total: Totale pagato
     expireDate: Scadenza
     tranche: Rata
@@ -1302,11 +1302,11 @@ wallet:
     tel: "Tel:"
     email: "Email:"
     PEC: "PEC:"
-    recipient: Ente creditore
-    object: Causale
+    recipient: Ente Creditore
+    object: Oggetto del pagamento
     date: Data e ora
     iuv: Codice IUV
-    entityCode: Codice Fiscale Ente Creditore
+    entityCode: Codice Fiscale Ente
     updatedAmount: Importo aggiornato
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
