@@ -23,7 +23,7 @@ import {
 } from "../../../store/actions/messages";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
 
 const mockMeta: CreatedMessageWithoutContent = {
@@ -366,7 +366,7 @@ const renderComponentMockStore = (state: GlobalState) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       MessageRouterScreen,
       ROUTES.MESSAGE_ROUTER,
       { messageId: "messageId" },
@@ -380,7 +380,7 @@ const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       MessageRouterScreen,
       ROUTES.MESSAGE_ROUTER,
       { messageId: "messageId" },

@@ -1272,7 +1272,7 @@ wallet:
           bottomSheetDescription: "The “In app payments“ feature may be turned off.\nBefore trying to make the payment again, please do the following:\n\n1. go to the “Wallet“ section;\n2. select the payment method you want to use;\n3. enable “In app payments“."
   firstTransactionSummary:
     title: Payment information
-    amount: Transaction amount
+    amount: Amount
     total: Total paid
     expireDate: Expire date
     tranche: Tranche
@@ -1280,8 +1280,8 @@ wallet:
     tel: 'Tel:'
     email: 'Email:'
     PEC: 'PEC:'
-    recipient: Recipient
-    object: Reason
+    recipient: Payee
+    object: Payment details
     date: Date and Time
     iuv: IUV code
     entityCode: Payee Fiscal Code
@@ -1797,7 +1797,7 @@ services:
   serviceIsEnabled: Contact you in app
   serviceNotEnabled: The service is not enabled
   pushNotifications: Send you push notifications
-  messageReadStatus: TBD
+  messageReadStatus: Receive read receipts
   emailForwarding: Send you e-mail
   tosAndPrivacy: Terms of use and Privacy
   tosLink: Terms and conditions

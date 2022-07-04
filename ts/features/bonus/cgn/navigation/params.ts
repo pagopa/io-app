@@ -1,5 +1,6 @@
 import { CgnMerchantDetailScreenNavigationParams } from "../screens/merchants/CgnMerchantDetailScreen";
 import { CgnMerchantLandingWebviewNavigationParams } from "../screens/merchants/CgnMerchantLandingWebview";
+import { CgnMerchantListByCategoryScreenNavigationParams } from "../screens/merchants/CgnMerchantsListByCategory";
 import CGN_ROUTES from "./routes";
 
 export type CgnActivationParamsList = {
@@ -17,7 +18,8 @@ export type CgnDetailsParamsList = {
   [CGN_ROUTES.DETAILS.DETAILS]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS.LIST]: undefined;
-  [CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY]: undefined;
+  [CGN_ROUTES.DETAILS.MERCHANTS
+    .LIST_BY_CATEGORY]: CgnMerchantListByCategoryScreenNavigationParams;
   [CGN_ROUTES.DETAILS.MERCHANTS.TABS]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS
     .DETAIL]: CgnMerchantDetailScreenNavigationParams;
