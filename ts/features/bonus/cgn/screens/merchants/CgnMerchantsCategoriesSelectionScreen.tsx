@@ -114,7 +114,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           colors={s.colors}
           onPress={() => {
             dispatch(cgnSelectedCategory(s.type));
-            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY);
+            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
+              category: s.type
+            });
           }}
           child={categoryIcon}
         />

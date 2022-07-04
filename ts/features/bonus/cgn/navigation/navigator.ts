@@ -23,7 +23,10 @@ export const cgnLinkingOptions: PathConfigMap = {
   [CGN_ROUTES.DETAILS.MAIN]: {
     path: "cgn-details",
     screens: {
-      [CGN_ROUTES.DETAILS.DETAILS]: "detail"
+      [CGN_ROUTES.DETAILS.DETAILS]: "detail",
+      [CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES]: "categories",
+      [CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY]:
+        "categories-merchant/:category"
     }
   },
   [CGN_ROUTES.ACTIVATION.MAIN]: {
