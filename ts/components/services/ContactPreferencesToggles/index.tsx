@@ -57,11 +57,7 @@ const getChannelPreference = (
     pot.isSome(potServicePreference) &&
     isServicePreferenceResponseSuccess(potServicePreference.value)
   ) {
-    if (key === "can_access_message_read_status") {
-      return potServicePreference.value.value[key] ?? true;
-    } else {
-      return potServicePreference.value.value[key];
-    }
+    return potServicePreference.value.value[key];
   }
   return false;
 };
