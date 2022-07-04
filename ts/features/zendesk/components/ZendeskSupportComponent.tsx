@@ -1,9 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { isNone, Option } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";
@@ -18,19 +16,8 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import { profileSelector } from "../../../store/reducers/profile";
-import {
-  AnonymousIdentity,
-  initSupportAssistance,
-  isPanicModeActive,
-  JwtIdentity,
-  setUserIdentity,
-  ZendeskAppConfig,
-  zendeskDefaultAnonymousConfig,
-  zendeskDefaultJwtConfig
-} from "../../../utils/supportAssistance";
-import { zendeskRequestTicketNumber } from "../store/actions";
+import { isPanicModeActive } from "../../../utils/supportAssistance";
 import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 
@@ -48,56 +35,10 @@ type Props = {
  */
 const ZendeskSupportComponent = (props: Props) => {
   const { assistanceForPayment } = props;
-  const zendeskToken = useIOSelector(zendeskTokenSelector);
   const profile = useIOSelector(profileSelector);
+  const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const dispatch = useDispatch();
-  const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
-    zendeskToken
-      ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
-      : zendeskDefaultAnonymousConfig
-  );
-
-  useEffect(() => {
-    setZendeskConfig(
-      zendeskToken
-        ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
-        : zendeskDefaultAnonymousConfig
-    );
-  }, [zendeskToken]);
-
-  useEffect(() => {
-    const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
-
-    initSupportAssistance(zendeskConfig);
-
-    // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
-    // The AnonymousConfig is used both for the users authenticated with name and email and for the anonymous user.
-    // Since the zendesk session token and the profile are provided by two different endpoint
-    // we sequentially check both:
-    // - if the zendeskToken is present the user will be authenticated via jwt
-    // - if the zendeskToken is not present but there is the profile,
-    //   the user will be authenticated, in anonymous mode, with the profile data (if available)
-    // - as last nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = fromNullable(zendeskToken)
-      .map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      }))
-      .alt(
-        maybeProfile.map(
-          (mP: InitializedProfile): AnonymousIdentity => ({
-            name: mP.name,
-            email: mP.email
-          })
-        )
-      )
-      .getOrElse({});
-
-    setUserIdentity(zendeskIdentity);
-
-    dispatch(zendeskRequestTicketNumber.request());
-  }, [dispatch, zendeskConfig, zendeskToken, profile]);
 
   const handleContactSupportPress = () => {
     const canSkipCategoryChoice: boolean =
@@ -131,6 +72,7 @@ const ZendeskSupportComponent = (props: Props) => {
       <H4 weight={"Regular"}>
         {I18n.t("support.helpCenter.supportComponent.subtitle")}
       </H4>
+      {isNone(maybeProfile) && <H4>{"Informativa privacy"}</H4>}
       <View spacer={true} large={true} />
       <AdviceComponent
         text={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
@@ -140,10 +82,17 @@ const ZendeskSupportComponent = (props: Props) => {
       <ButtonDefaultOpacity
         onPress={() => {
           void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
-          navigation.navigate("ZENDESK_MAIN", {
-            screen: "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS",
-            params: { assistanceForPayment }
-          });
+          if (isNone(maybeProfile)) {
+            navigation.navigate("ZENDESK_MAIN", {
+              screen: "ZENDESK_SEE_REPORTS_ROUTERS",
+              params: { assistanceForPayment }
+            });
+          } else {
+            navigation.navigate("ZENDESK_MAIN", {
+              screen: "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS",
+              params: { assistanceForPayment }
+            });
+          }
         }}
         style={{
           alignSelf: "stretch"
