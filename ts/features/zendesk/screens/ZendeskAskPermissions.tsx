@@ -1,9 +1,10 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -28,7 +29,8 @@ import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList"
 import { useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
-  isLoggedIn
+  isLoggedIn,
+  zendeskTokenSelector
 } from "../../../store/reducers/authentication";
 import { appVersionHistorySelector } from "../../../store/reducers/installation";
 import {
@@ -46,8 +48,15 @@ import {
   addTicketTag,
   anonymousAssistanceAddress,
   anonymousAssistanceAddressWithSubject,
+  AnonymousIdentity,
+  initSupportAssistance,
+  JwtIdentity,
   openSupportTicket,
+  setUserIdentity,
+  ZendeskAppConfig,
   zendeskCurrentAppVersionId,
+  zendeskDefaultAnonymousConfig,
+  zendeskDefaultJwtConfig,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
@@ -221,6 +230,40 @@ const ZendeskAskPermissions = (props: Props) => {
   const zendeskSelectedSubcategory = useIOSelector(
     zendeskSelectedSubcategorySelector
   );
+  const zendeskToken = useIOSelector(zendeskTokenSelector);
+
+  const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
+    zendeskToken
+      ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
+      : zendeskDefaultAnonymousConfig
+  );
+
+  useEffect(() => {
+    setZendeskConfig(
+      zendeskToken
+        ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
+        : zendeskDefaultAnonymousConfig
+    );
+  }, [zendeskToken]);
+
+  useEffect(() => {
+    initSupportAssistance(zendeskConfig);
+
+    // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
+    // The AnonymousConfig is used for the anonymous user.
+    // Since the zendesk session token and the profile are provided by two different endpoint
+    // we sequentially check both:
+    // - if the zendeskToken is present the user will be authenticated via jwt
+    // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
+    const zendeskIdentity = fromNullable(zendeskToken)
+      .map((zT: string): JwtIdentity | AnonymousIdentity => ({
+        token: zT
+      }))
+      .getOrElse({});
+
+    setUserIdentity(zendeskIdentity);
+  }, [dispatch, zendeskConfig, zendeskToken]);
+
   const currentVersion = getAppVersion();
 
   const itemsProps: ItemProps = {
