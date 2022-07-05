@@ -11,6 +11,7 @@ import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
+import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
@@ -53,6 +54,10 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING}
       component={EmailForwardingScreen}
+    />
+    <Stack.Screen
+      name={ROUTES.PROFILE_PREFERENCES_HOME}
+      component={PreferencesScreen}
     />
     <Stack.Screen
       name={ROUTES.PROFILE_PREFERENCES_CALENDAR}
