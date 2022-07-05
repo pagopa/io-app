@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
@@ -27,13 +27,17 @@ import {
   cgnOfflineMerchants,
   cgnOnlineMerchants
 } from "../../store/actions/merchants";
-import { cgnSelectedCategorySelector } from "../../store/reducers/categories";
 import {
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
 import { CATEGORY_GRADIENT_ANGLE, getCategorySpecs } from "../../utils/filters";
 import { mixAndSortMerchants } from "../../utils/merchants";
+import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
+
+export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
+  category: ProductCategoryEnum;
+}>;
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -47,13 +51,19 @@ const styles = StyleSheet.create({
 
 const CgnMerchantsListByCategory = () => {
   const dispatch = useIODispatch();
-  const currentCategory = useIOSelector(cgnSelectedCategorySelector);
+  const route =
+    useRoute<
+      Route<
+        "CGN_MERCHANTS_LIST_BY_CATEGORY",
+        CgnMerchantListByCategoryScreenNavigationParams
+      >
+    >();
   const onlineMerchants = useIOSelector(cgnOnlineMerchantsSelector);
   const offlineMerchants = useIOSelector(cgnOfflineMerchantsSelector);
 
   const categorySpecs = useMemo(
-    () => fromNullable(currentCategory).chain(getCategorySpecs).toUndefined(),
-    [currentCategory]
+    () => getCategorySpecs(route.params.category).toUndefined(),
+    [route]
   );
 
   const navigation =
@@ -63,12 +73,12 @@ const CgnMerchantsListByCategory = () => {
 
   const categoryFilter = useMemo(
     () =>
-      currentCategory
+      route.params.category
         ? {
-            productCategories: [currentCategory]
+            productCategories: [route.params.category]
           }
         : {},
-    [currentCategory]
+    [route]
   );
 
   const initLoadingLists = () => {
@@ -76,11 +86,7 @@ const CgnMerchantsListByCategory = () => {
     dispatch(cgnOnlineMerchants.request(categoryFilter));
   };
 
-  React.useEffect(initLoadingLists, [
-    currentCategory,
-    categoryFilter,
-    dispatch
-  ]);
+  React.useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
 
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
