@@ -19,6 +19,7 @@ import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
@@ -93,7 +94,9 @@ export const PnMessageDetails = (props: Props) => {
         {props.message.attachments && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
-          />
+          >
+            <MvlAttachments attachments={props.message.attachments} />
+          </PnMessageDetailsSection>
         )}
         {maybePayment && (
           <PnMessageDetailsSection

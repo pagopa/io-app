@@ -15,6 +15,9 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { loadServiceDetail } from "../../../../store/actions/services";
 import { Mvl } from "../../types/mvlData";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import I18n from "../../../../i18n";
+import { H2 } from "../../../../components/core/typography/H2";
 import { MvlAttachments } from "./components/attachment/MvlAttachments";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
@@ -56,6 +59,9 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
           />
           <MvlBody body={props.mvl.legalMessage.body} />
           <View spacer={true} large={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} large={true} />
+          <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
           <MvlAttachments attachments={props.mvl.legalMessage.attachments} />
           <View spacer={true} />
           <MvlMetadataComponent metadata={props.mvl.legalMessage.metadata} />
