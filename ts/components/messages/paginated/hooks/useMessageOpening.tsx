@@ -4,6 +4,7 @@ import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import ROUTES from "../../../../navigation/routes";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { usePnOpenConfirmationBottomSheet } from "../../../../features/pn/components/PnOpenConfirmationBottomSheet";
+import { pnEnabled } from "../../../../config";
 
 export const useMessageOpening = () => {
   const navigation = useNavigation();
@@ -31,7 +32,7 @@ export const useMessageOpening = () => {
   });
 
   const alertFor = (message: UIMessage) => {
-    if (message.category.tag === TagEnum.PN) {
+    if (message.category.tag === TagEnum.PN && pnEnabled) {
       // show the bottomsheet if needed
       return () => pnBottomSheet.present(message);
     }
