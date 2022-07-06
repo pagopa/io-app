@@ -1,7 +1,15 @@
 /**
  * A saga that manages the Profile.
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import {
+  none,
+  Option,
+  some,
+  fromNullable,
+  isNone,
+  fromEither
+} from "fp-ts/lib/Option";
+import { setoidString } from "fp-ts/lib/Setoid";
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   all,
@@ -57,6 +65,8 @@ import { readablePrivacyReport } from "../utils/reporters";
 import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
+import { getAppVersion } from "../utils/appVersion";
+import { AppVersion } from "../../definitions/backend/AppVersion";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -450,6 +460,41 @@ export function* watchProfile(
   yield* takeLatest(removeAccountMotivation, handleRemoveAccount);
 }
 
+/**
+ * Upsert the user's latest app version, only if it's different
+ * from the one stored in the backend.
+ */
+export function* upsertAppVersionSaga(
+  userProfile: InitializedProfile,
+  createOrUpdateProfile: ReturnType<
+    typeof BackendClient
+  >["createOrUpdateProfile"]
+) {
+  const maybeStoredVersion = fromNullable(userProfile.last_app_version);
+
+  const rawAppVersion = yield* call(getAppVersion);
+  const maybeAppVersion = fromEither(AppVersion.decode(rawAppVersion));
+
+  // There was a problem decoding the local app version
+  // using the regex from the backend. The upsert won't be
+  // triggered in this case.
+  if (isNone(maybeAppVersion)) {
+    return;
+  }
+
+  // If the stored app version is the same as the
+  // current one, we are going to skip the upsert.
+  if (maybeStoredVersion.contains(setoidString, maybeAppVersion.value)) {
+    return;
+  }
+
+  const requestAction = yield* call(profileUpsert.request, {
+    last_app_version: maybeAppVersion.value
+  });
+
+  yield* call(createOrUpdateProfileSaga, createOrUpdateProfile, requestAction);
+}
+
 // to ensure right code encapsulation we export functions/variables just for tests purposes
 export const profileSagaTestable = isTestEnv
   ? {
@@ -457,6 +502,7 @@ export const profileSagaTestable = isTestEnv
       checkLoadedProfile,
       handleLoadBonusBeforeRemoveAccount,
       handleRemoveAccount,
-      checkStoreHashedFiscalCode
+      checkStoreHashedFiscalCode,
+      createOrUpdateProfileSaga
     }
   : undefined;
