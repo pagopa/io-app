@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { ColorValue, StyleSheet } from "react-native";
+import { View, ColorValue, StyleSheet } from "react-native";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ShowroomSection } from "../ShowroomSection";
