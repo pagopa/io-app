@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
@@ -17,8 +16,9 @@ import {
 import { Dispatch } from "../../store/actions/types";
 
 type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ProfileParamsList, "PROFILE_PREFERENCES_CALENDAR">
+  navigation: IOStackNavigationProp<
+    ProfileParamsList,
+    "PROFILE_PREFERENCES_CALENDAR"
   >;
 };
 
