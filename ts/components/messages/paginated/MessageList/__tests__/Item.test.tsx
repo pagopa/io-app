@@ -4,9 +4,13 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 import { successReloadMessagesPayload } from "../../../../../__mocks__/messages";
 import Item from "../Item";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumPN } from "../../../../../../definitions/backend/MessageCategoryPN";
 
-jest.mock("../../../../../config", () => ({ mvlEnabled: true }));
+jest.mock("../../../../../config", () => ({
+  mvlEnabled: true,
+  pnEnabled: true
+}));
 jest.useFakeTimers();
 
 const messages = successReloadMessagesPayload.messages;
@@ -43,6 +47,19 @@ describe("MessageList Item component", () => {
       expect(
         render(
           <Item {...defaultProps} category={{ tag: TagEnum.LEGAL_MESSAGE }} />
+        ).toJSON()
+      ).toMatchSnapshot();
+    });
+  });
+
+  describe(`when category is ${TagEnumPN.PN}`, () => {
+    it("should match the snapshot", () => {
+      expect(
+        render(
+          <Item
+            {...defaultProps}
+            category={{ tag: TagEnumPN.PN } as MessageCategory}
+          />
         ).toJSON()
       ).toMatchSnapshot();
     });

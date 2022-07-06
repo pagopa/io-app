@@ -1,3 +1,4 @@
+import { useLinkTo } from "@react-navigation/native";
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
@@ -7,6 +8,7 @@ import { RawCheckBox } from "../../../components/core/selection/checkbox/RawChec
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
 import i18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import { formatDateAsLocal } from "../../../utils/dates";
@@ -51,6 +53,12 @@ export const usePnOpenConfirmationBottomSheet = ({
   const [dontAskAgain, setDontAskAgain] = useState<boolean>(false);
   const [params, setParams] = useState<HTMLParams | undefined>(undefined);
 
+  const linkTo = useLinkTo();
+  const handleLink = (href: string) => {
+    onCancel();
+    handleInternalLink(linkTo, href);
+  };
+
   useEffect(() => {
     const params = fromEither(MessageCategoryPN.decode(message?.category))
       .map(
@@ -89,6 +97,9 @@ export const usePnOpenConfirmationBottomSheet = ({
         }}
         classesStyles={{
           container: { marginVertical: 20 }
+        }}
+        renderersProps={{
+          a: { onPress: (_, href) => handleLink(href) }
         }}
       />
       <View style={{ ...IOStyles.row, marginBottom: 20 }}>
