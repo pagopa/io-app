@@ -5,6 +5,12 @@ function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
   return arg;
 }
 
+function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
+  arg: T
+): T {
+  return arg;
+}
+
 export const IOColors = asIOColors({
   black: "#000000",
   white: "#FFFFFF",
@@ -22,6 +28,11 @@ export const IOColors = asIOColors({
   greyGradientBottom: "#42484F",
   yellowGradientTop: "#FEC709",
   yellowGradientBottom: "#FAA01F"
+});
+
+export const IOColorGradients = asIOColorGradients({
+  grey: ["#475A6D", "#42484F"],
+  yellow: ["#FEC709", "#FAA01F"]
 });
 
 export type IOColorType = keyof typeof IOColors;
