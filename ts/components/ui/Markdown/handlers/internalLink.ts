@@ -97,7 +97,10 @@ export function getInternalRoute(href: string): string {
       return fromNullable(allowedRoutes[url.host.toUpperCase()]).fold(
         href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
         internalUrl =>
-          href.replace(`${IO_INTERNAL_LINK_PREFIX}${url.host}`, internalUrl)
+          href.replace(
+            `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
+            internalUrl
+          )
       );
     }
     return href;
