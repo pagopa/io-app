@@ -32,13 +32,10 @@ export const TypographyShowroom = () => (
     <H4Row />
     <H5Row />
     <Body>Body</Body>
-    <View spacer={true} extralarge={true} />
     <LabelSmallRow />
     <LabelRow />
     <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
-    <View spacer={true} extralarge={true} />
     <Monospace>MonoSpace</Monospace>
-    <View spacer={true} extralarge={true} />
     <IOBadgeRow />
   </ShowroomSection>
 );

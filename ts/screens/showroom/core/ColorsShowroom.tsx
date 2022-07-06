@@ -5,25 +5,25 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { ShowroomSection } from "../ShowroomSection";
 
 const styles = StyleSheet.create({
-  alignCenter: {
-    alignItems: "center"
-  },
-  content: {
-    flex: 1,
-    width: "100%",
+  colorBoxWrapper: {
     flexDirection: "row",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    marginLeft: 8 * -1,
+    marginRight: 8 * -1,
+    marginBottom: 16
   },
-  colorBox: {
-    height: 60,
+  colorBoxItem: {
     width: "50%",
-    padding: 2
+    justifyContent: "flex-start",
+    marginBottom: 16,
+    paddingHorizontal: 8
   }
 });
 
 export const ColorsShowroom = () => (
   <ShowroomSection title={"Color palette"}>
-    <View style={styles.content}>
+    <View style={styles.colorBoxWrapper}>
       {Object.entries(IOColors).map(colorEntry => (
         <ColorBox
           key={colorEntry[0]}
@@ -41,7 +41,26 @@ type ColorBoxProps = {
 };
 
 const ColorBox = (props: ColorBoxProps) => (
-  <View style={[styles.colorBox, styles.alignCenter]}>
+  <View style={styles.colorBoxItem}>
+    <View
+      style={{
+        backgroundColor: props.color,
+        width: "100%",
+        height: 50
+      }}
+    />
+    {props.name && (
+      <H5 color={"bluegrey"} weight={"SemiBold"}>
+        {props.name}
+      </H5>
+    )}
+    {props.color && (
+      <H5 color={"bluegrey"} weight={"Regular"}>
+        {props.color}
+      </H5>
+    )}
+  </View>
+);
     <View
       style={{
         backgroundColor: props.color,
