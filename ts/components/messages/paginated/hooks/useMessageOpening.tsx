@@ -21,7 +21,7 @@ export const useMessageOpening = () => {
   );
 
   const pnBottomSheet = usePnOpenConfirmationBottomSheet({
-    onConfirm: (message: UIMessage, dontAskAgain: boolean) => {
+    onConfirm: (message: UIMessage, _: boolean) => {
       pnBottomSheet.dismiss();
       navigate(message);
     },
