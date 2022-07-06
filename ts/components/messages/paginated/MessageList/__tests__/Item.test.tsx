@@ -4,7 +4,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 import { successReloadMessagesPayload } from "../../../../../__mocks__/messages";
 import Item from "../Item";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../../../definitions/backend/MessageCategoryPN";
 
 jest.mock("../../../../../config", () => ({
@@ -56,7 +56,10 @@ describe("MessageList Item component", () => {
     it("should match the snapshot", () => {
       expect(
         render(
-          <Item {...defaultProps} category={{ tag: TagEnumPN.PN }} />
+          <Item
+            {...defaultProps}
+            category={{ tag: TagEnumPN.PN } as MessageCategory}
+          />
         ).toJSON()
       ).toMatchSnapshot();
     });
