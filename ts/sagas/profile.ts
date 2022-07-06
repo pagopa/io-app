@@ -5,6 +5,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as S from "fp-ts/lib/string";
 import {
   all,
   call,
@@ -59,6 +60,8 @@ import {
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
+import { getAppVersion } from "../utils/appVersion";
+import { AppVersion } from "../../definitions/backend/AppVersion";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -453,6 +456,46 @@ export function* watchProfile(
   yield* takeLatest(removeAccountMotivation, handleRemoveAccount);
 }
 
+/**
+ * Upsert the user's latest app version, only if it's different
+ * from the one stored in the backend.
+ */
+export function* upsertAppVersionSaga(
+  userProfile: InitializedProfile,
+  createOrUpdateProfile: ReturnType<
+    typeof BackendClient
+  >["createOrUpdateProfile"]
+) {
+  const maybeStoredVersion = O.fromNullable(userProfile.last_app_version);
+
+  const rawAppVersion = yield* call(getAppVersion);
+  const maybeAppVersion = O.fromEither(AppVersion.decode(rawAppVersion));
+
+  // There was a problem decoding the local app version
+  // using the regex from the backend. The upsert won't be
+  // triggered in this case.
+  if (O.isNone(maybeAppVersion)) {
+    return;
+  }
+
+  // If the stored app version is the same as the
+  // current one, we are going to skip the upsert.
+  const isSameVersion = pipe(
+    maybeStoredVersion,
+    O.elem(S.Eq)(maybeAppVersion.value)
+  );
+
+  if (isSameVersion) {
+    return;
+  }
+
+  const requestAction = yield* call(profileUpsert.request, {
+    last_app_version: maybeAppVersion.value
+  });
+
+  yield* call(createOrUpdateProfileSaga, createOrUpdateProfile, requestAction);
+}
+
 // to ensure right code encapsulation we export functions/variables just for tests purposes
 export const profileSagaTestable = isTestEnv
   ? {
@@ -460,6 +503,7 @@ export const profileSagaTestable = isTestEnv
       checkLoadedProfile,
       handleLoadBonusBeforeRemoveAccount,
       handleRemoveAccount,
-      checkStoreHashedFiscalCode
+      checkStoreHashedFiscalCode,
+      createOrUpdateProfileSaga
     }
   : undefined;
