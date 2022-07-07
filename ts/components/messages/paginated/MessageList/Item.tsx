@@ -8,6 +8,7 @@ import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase"
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
 import QrCode from "../../../../../img/messages/qr-code.svg";
+import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import I18n from "../../../../i18n";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import customVariables from "../../../../theme/variables";
@@ -21,6 +22,10 @@ import { IOColors } from "../../../core/variables/IOColors";
 import { BadgeComponent } from "../../../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../../../TouchableDefaultOpacity";
 import IconFont from "../../../ui/IconFont";
+import customVariables from "../../../../theme/variables";
+import { IOColors } from "../../../core/variables/IOColors";
+import QrCode from "../../../../../img/messages/qr-code.svg";
+import { mvlEnabled, pnEnabled } from "../../../../config";
 
 const ICON_WIDTH = 24;
 
@@ -189,9 +194,13 @@ const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
 function getTopIcon(category: MessageCategory) {
   switch (category.tag) {
     case TagEnum.LEGAL_MESSAGE:
-      return (
+      return mvlEnabled ? (
         <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
-      );
+      ) : null;
+    case TagEnumPN.PN:
+      return pnEnabled ? (
+        <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
+      ) : null;
     default:
       return null;
   }

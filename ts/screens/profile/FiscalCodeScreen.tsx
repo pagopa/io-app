@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { Text, View } from "native-base";
@@ -31,9 +30,7 @@ import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
 type Props = ReturnType<typeof mapStateToProps> & {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">
-  >;
+  navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">;
 } & ReturnType<typeof mapDispatchToProps> &
   LightModalContextInterface;
 

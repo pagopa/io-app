@@ -3,7 +3,6 @@
  * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { List, Text } from "native-base";
@@ -39,11 +38,9 @@ import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
-      ProfileParamsList,
-      "PROFILE_PREFERENCES_EMAIL_FORWARDING"
-    >
+  navigation: IOStackNavigationProp<
+    ProfileParamsList,
+    "PROFILE_PREFERENCES_EMAIL_FORWARDING"
   >;
 };
 

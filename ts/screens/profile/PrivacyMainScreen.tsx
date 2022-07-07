@@ -6,7 +6,6 @@
  * - send a request to export all his data (receiving them by email)
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, AlertButton } from "react-native";
@@ -35,9 +34,7 @@ import { userDataProcessingSelector } from "../../store/reducers/userDataProcess
 import { showToast } from "../../utils/showToast";
 
 type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">
-  >;
+  navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
 } & ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -88,9 +85,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
       // if user asks for download, navigate to a screen to inform about the process
       // there he/she can request to download his/her data
       if (choice === UserDataProcessingChoiceEnum.DOWNLOAD) {
-        this.props.navigation.navigate({
-          routeName: ROUTES.PROFILE_DOWNLOAD_DATA
-        });
+        this.props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
         return;
       }
     } else {
@@ -202,9 +197,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.privacyPolicy.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate({
-                  routeName: ROUTES.PROFILE_PRIVACY
-                })
+                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY)
               }
               useExtendedSubTitle={true}
             />
@@ -215,9 +208,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.shareData.listItem.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate({
-                  routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
-                })
+                this.props.navigation.navigate(
+                  ROUTES.PROFILE_PRIVACY_SHARE_DATA
+                )
               }
               useExtendedSubTitle={true}
             />
@@ -254,9 +247,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                     UserDataProcessingChoiceEnum.DELETE
                   );
                 } else {
-                  this.props.navigation.navigate({
-                    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
-                  });
+                  this.props.navigation.navigate(
+                    ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
+                  );
                 }
               }}
               useExtendedSubTitle={true}

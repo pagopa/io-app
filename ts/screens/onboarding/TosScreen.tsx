@@ -5,7 +5,6 @@
  * This screen is used also as Privacy screen From Profile section.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { Text, View } from "native-base";
@@ -38,9 +37,7 @@ import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 
 type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<OnboardingParamsList, "ONBOARDING_TOS">
-  >;
+  navigation: IOStackNavigationProp<OnboardingParamsList, "ONBOARDING_TOS">;
 };
 
 type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
