@@ -180,7 +180,14 @@ const NewTransactionSummaryScreen = ({
     if (errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO") {
       onDuplicatedPayment();
     }
-    if (pot.isError(paymentVerification) && !showsInlineError) {
+
+    // in case of a payment verification error we should navigate
+    // to the error screen only if showsInlineError is false
+    // in any other case we should always navigate to the error screen
+    if (
+      (pot.isError(paymentVerification) && !showsInlineError) ||
+      (!pot.isError(paymentVerification) && errorOrUndefined)
+    ) {
       navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
     }
   }, [
