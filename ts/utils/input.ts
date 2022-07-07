@@ -1,10 +1,10 @@
-import { Option, none } from "fp-ts/lib/Option";
 import { Either, left, right } from "fp-ts/lib/Either";
+import { none, Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
-import * as _ from "lodash";
 import { PatternString } from "italia-ts-commons/lib/strings";
-import { CreditCard } from "../types/pagopa";
+import * as _ from "lodash";
 import I18n from "../i18n";
+import { CreditCard } from "../types/pagopa";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
 
 export const MIN_PAN_DIGITS = 12;
@@ -20,6 +20,9 @@ export const CreditCardPan = PatternString(
 );
 export type CreditCardPan = t.TypeOf<typeof CreditCardPan>;
 
+export const CreditCardHolder = PatternString(`^([\x20-\x5f\x61-\x7d]*)$`);
+
+export type CreditCardHolder = t.TypeOf<typeof CreditCardHolder>;
 /**
  * A string that matches a two digits month number (00-12)
  */
@@ -157,5 +160,8 @@ export function getCreditCardFromState(
 export const isValidCardHolder = (cardHolder: Option<string>): boolean =>
   cardHolder.fold(false, cH => {
     const cardHolderWithoutDiacriticalMarks = _.deburr(cH);
-    return cH === cardHolderWithoutDiacriticalMarks;
+    if (cH === cardHolderWithoutDiacriticalMarks) {
+      return CreditCardHolder.is(cH);
+    }
+    return false;
   });
