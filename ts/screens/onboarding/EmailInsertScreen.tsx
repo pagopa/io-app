@@ -2,7 +2,7 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
-import { CompatNavigationProp, StackActions } from "@react-navigation/compat";
+import { StackActions } from "@react-navigation/native";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
@@ -49,8 +49,9 @@ import { showToast } from "../../utils/showToast";
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<OnboardingParamsList, "INSERT_EMAIL_SCREEN">
+    navigation: IOStackNavigationProp<
+      OnboardingParamsList,
+      "INSERT_EMAIL_SCREEN"
     >;
   };
 

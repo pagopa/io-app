@@ -4,7 +4,6 @@
  * has to accept the new version of ToS.
  * This screen is used also as Privacy screen From Profile section.
  */
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -36,9 +35,7 @@ import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 
 type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<OnboardingParamsList, "ONBOARDING_TOS">
-  >;
+  navigation: IOStackNavigationProp<OnboardingParamsList, "ONBOARDING_TOS">;
 };
 
 type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
