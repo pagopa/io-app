@@ -243,7 +243,7 @@ describe("isValidCardHolder", () => {
   [
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "0123456789",
-    "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+    "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}"
   ].forEach(notAccentedCardHolder =>
     it(`should return true if the input string is composed by character different from accented character: ${notAccentedCardHolder}`, () => {
       expect(isValidCardHolder(some(notAccentedCardHolder))).toBeTruthy();
