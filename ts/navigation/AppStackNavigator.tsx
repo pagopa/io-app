@@ -48,7 +48,7 @@ import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
 import onboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
-import profileNavigator from "./ProfileNavigator";
+import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import servicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
@@ -90,7 +90,7 @@ export const AppStackNavigator = () => {
       />
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
-        component={profileNavigator}
+        component={ProfileStackNavigator}
       />
 
       {cgnEnabled && (
