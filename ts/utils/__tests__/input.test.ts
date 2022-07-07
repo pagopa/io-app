@@ -29,7 +29,11 @@ describe("CreditCardHolder", () => {
     validHolders.forEach(h => expect(CreditCardHolder.is(h)).toBeTruthy());
   });
 
-  const invalidHolders: ReadonlyArray<string> = ["VALID ~", "invalid ’"];
+  const invalidHolders: ReadonlyArray<string> = [
+    "VALID ~",
+    "invalid ’",
+    "! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | }"
+  ];
 
   it("should NOT accept valid holders", () => {
     invalidHolders.forEach(h => {
@@ -242,8 +246,7 @@ describe("isValidCardHolder", () => {
 
   [
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    "0123456789",
-    "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}"
+    "0123456789"
   ].forEach(notAccentedCardHolder =>
     it(`should return true if the input string is composed by character different from accented character: ${notAccentedCardHolder}`, () => {
       expect(isValidCardHolder(some(notAccentedCardHolder))).toBeTruthy();
