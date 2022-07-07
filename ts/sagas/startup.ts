@@ -28,6 +28,7 @@ import {
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
+  pnEnabled,
   svEnabled,
   usePaginatedMessages,
   zendeskEnabled
@@ -133,6 +134,7 @@ import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValid
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
+import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -415,6 +417,11 @@ export function* initializeApplicationSaga(): Generator<
   if (mvlEnabled) {
     // Start watching for MVL actions
     yield* fork(watchMvlSaga, sessionToken);
+  }
+
+  if (mvlEnabled || pnEnabled) {
+    // Start watching for message attachments actions
+    yield* fork(watchMessageAttachmentsSaga, sessionToken);
   }
 
   // Load the user metadata
