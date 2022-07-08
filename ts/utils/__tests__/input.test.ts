@@ -22,7 +22,7 @@ describe("CreditCardHolder", () => {
     "Val1d H0lder",
     "Valid holder",
     "Valid @",
-    "@ [ \\ ] ^ _ ' { | } - . , + * ( ) & % # \" ! : ; <> = ? "
+    "@ [ \\ ] ^ _ ' { | } - . , + * ( ) & % # \" ! : ; <> = ?"
   ];
 
   it("should accept valid holders", () => {
@@ -33,7 +33,7 @@ describe("CreditCardHolder", () => {
     "VALID ~",
     "invalid ’",
     "! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | }",
-    "  "
+    ""
   ];
 
   it("should NOT accept valid holders", () => {
@@ -234,7 +234,8 @@ describe("isValidCardHolder", () => {
     "ô",
     "ú",
     "ù",
-    "û"
+    "û",
+    "  "
   ].forEach(accentedCardHolder =>
     it(`should return false if the input string contains the accented character ${accentedCardHolder}`, () => {
       expect(isValidCardHolder(some(accentedCardHolder))).toBeFalsy();

@@ -6,6 +6,7 @@ import * as _ from "lodash";
 import I18n from "../i18n";
 import { CreditCard } from "../types/pagopa";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
+import { isStringNullyOrEmpty } from "./strings";
 
 export const MIN_PAN_DIGITS = 12;
 const MAX_PAN_DIGITS = 19;
@@ -20,8 +21,10 @@ export const CreditCardPan = PatternString(
 );
 export type CreditCardPan = t.TypeOf<typeof CreditCardPan>;
 
-// eslint-disable-next-line no-useless-escape
-export const CreditCardHolder = PatternString(`^(?!\s*$)[\x20-\x5f\x61-\x7d]+`);
+export const CreditCardHolder = PatternString(
+  // eslint-disable-next-line no-useless-escape
+  `^([\x20-\x5f\x61-\x7d]+)$`
+);
 
 export type CreditCardHolder = t.TypeOf<typeof CreditCardHolder>;
 /**
@@ -162,7 +165,7 @@ export const isValidCardHolder = (cardHolder: Option<string>): boolean =>
   cardHolder.fold(false, cH => {
     const cardHolderWithoutDiacriticalMarks = _.deburr(cH);
     if (cH === cardHolderWithoutDiacriticalMarks) {
-      return CreditCardHolder.is(cH);
+      return CreditCardHolder.is(cH) && !isStringNullyOrEmpty(cH);
     }
     return false;
   });
