@@ -32,7 +32,8 @@ describe("CreditCardHolder", () => {
   const invalidHolders: ReadonlyArray<string> = [
     "VALID ~",
     "invalid ’",
-    "! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | }"
+    "! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | }",
+    "  "
   ];
 
   it("should NOT accept valid holders", () => {
