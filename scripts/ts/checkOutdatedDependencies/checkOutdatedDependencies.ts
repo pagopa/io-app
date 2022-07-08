@@ -6,7 +6,6 @@ import { Errors } from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import * as semver from "semver";
 import { slackPostMessage } from "../common/slack/postMessage";
-import { convertUnknownToError } from "../../../ts/utils/errors";
 import { generateSlackMessage } from "./generateSlackMessage";
 import { initOutdatedStats } from "./types/defaultValues";
 import { DependenciesTable } from "./types/DependeciesTable";
