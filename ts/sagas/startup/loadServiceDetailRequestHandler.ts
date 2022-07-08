@@ -16,6 +16,7 @@ import { totServiceFetchWorkers } from "../../config";
 import { applicationChangeState } from "../../store/actions/application";
 import { mixpanelTrack } from "../../mixpanel";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { convertUnknownToError } from "../../utils/errors";
 
 /**
  * A generator to load the service details from the Backend
@@ -50,9 +51,12 @@ export function* loadServiceDetailRequestHandler(
       }
       throw Error(`response status ${response.value.status}`);
     }
-  } catch (error) {
+  } catch (e) {
     yield* put(
-      loadServiceDetail.failure({ service_id: action.payload, error })
+      loadServiceDetail.failure({
+        service_id: action.payload,
+        error: convertUnknownToError(e)
+      })
     );
   }
 }
