@@ -21,6 +21,7 @@ import * as fs from "fs-extra";
 import * as yaml from "js-yaml";
 import * as prettier from "prettier";
 import * as _ from "lodash";
+import { convertUnknownToError } from "../ts/utils/errors";
 
 interface LocaleDoc {
   locale: string;
@@ -242,12 +243,11 @@ async function run(rootPath: string): Promise<void> {
     const otherLocaleKeys = localeKeys.slice(1);
     // compare keys of locales with master keys
     console.log(chalk.gray("[3/4]"), "Comparing keys...");
-    const checkedLocaleKeys: ReadonlyArray<LocaleDocWithCheckedKeys> = otherLocaleKeys.map(
-      l => ({
+    const checkedLocaleKeys: ReadonlyArray<LocaleDocWithCheckedKeys> =
+      otherLocaleKeys.map(l => ({
         ...l,
         ...compareLocaleKeys(masterKeys.keys, l.keys)
-      })
-    );
+      }));
 
     // look for locales that have missing or extra keys
     const badLocales = checkedLocaleKeys
@@ -304,7 +304,7 @@ async function run(rootPath: string): Promise<void> {
 
     await emitTsDefinitions(localeKeys, emitPath);
   } catch (e) {
-    console.log(chalk.red(e.message));
+    console.log(chalk.red(convertUnknownToError(e).message));
   }
 }
 

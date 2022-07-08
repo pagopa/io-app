@@ -32,11 +32,7 @@ export const useMessageOpening = () => {
   const pnBottomSheet = usePnOpenConfirmationBottomSheet({
     onConfirm: (message: UIMessage, dontAskAgain: boolean) => {
       dispatch(pnPreferencesSetWarningForMessageOpening(!dontAskAgain));
-      pnBottomSheet.dismiss();
       navigate(message);
-    },
-    onCancel: () => {
-      pnBottomSheet.dismiss();
     }
   });
 
