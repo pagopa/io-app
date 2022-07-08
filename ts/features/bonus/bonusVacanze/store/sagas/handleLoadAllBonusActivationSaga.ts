@@ -1,5 +1,6 @@
 import { all, call, put } from "typed-redux-saga/macro";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { convertUnknownToError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
@@ -33,6 +34,6 @@ export function* handleLoadAllBonusActivations(
       throw Error(readablePrivacyReport(allBonusActivationsResponse.value));
     }
   } catch (e) {
-    yield* put(loadAllBonusActivations.failure(e));
+    yield* put(loadAllBonusActivations.failure(convertUnknownToError(e)));
   }
 }
