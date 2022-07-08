@@ -14,6 +14,7 @@ import {
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
 import { mixpanelTrack } from "../mixpanel";
+import { convertUnknownToError } from "../utils/errors";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -75,7 +76,7 @@ export function* updateInstallationSaga(
         )
       );
     }
-  } catch (error) {
-    yield* put(updateNotificationInstallationFailure(error));
+  } catch (e) {
+    yield* put(updateNotificationInstallationFailure(convertUnknownToError(e)));
   }
 }
