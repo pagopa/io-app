@@ -6,7 +6,6 @@ import { Errors } from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import * as semver from "semver";
 import { slackPostMessage } from "../common/slack/postMessage";
-import { convertUnknownToError } from "../../../ts/utils/errors";
 import { generateSlackMessage } from "./generateSlackMessage";
 import { initOutdatedStats } from "./types/defaultValues";
 import { DependenciesTable } from "./types/DependeciesTable";
@@ -131,7 +130,9 @@ const main = async () => {
     }
   } catch (e) {
     console.log("Generic error while executing the script:");
-    console.log(convertUnknownToError(e).message);
+    // We don't use convertUnknownToError because this script is executed in isolated mode and doesn't have access to the app codebase
+    const error = e as Error;
+    console.log(error.message);
   }
 };
 
