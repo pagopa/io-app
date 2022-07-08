@@ -2,7 +2,6 @@
  * A screens to express the preferences related to email forwarding.
  * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { List, Text } from "native-base";
 import * as React from "react";
@@ -37,11 +36,9 @@ import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
-      ProfileParamsList,
-      "PROFILE_PREFERENCES_EMAIL_FORWARDING"
-    >
+  navigation: IOStackNavigationProp<
+    ProfileParamsList,
+    "PROFILE_PREFERENCES_EMAIL_FORWARDING"
   >;
 };
 

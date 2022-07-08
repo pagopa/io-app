@@ -13,6 +13,7 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { GetSessionStateT } from "../../../definitions/backend/requestTypes";
+import { convertUnknownToError } from "../../utils/errors";
 
 // load the support token useful for user assistance
 function* handleLoadSupportToken(
@@ -32,8 +33,8 @@ function* handleLoadSupportToken(
         throw Error(`response status code ${response.value.status}`);
       }
     }
-  } catch (error) {
-    yield* put(loadSupportToken.failure(error));
+  } catch (e) {
+    yield* put(loadSupportToken.failure(convertUnknownToError(e)));
   }
 }
 
@@ -65,8 +66,8 @@ export function* checkSession(
       }
       return response.value.status;
     }
-  } catch (error) {
-    yield* put(checkCurrentSession.failure(error));
+  } catch (e) {
+    yield* put(checkCurrentSession.failure(convertUnknownToError(e)));
     return undefined;
   }
 }
