@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
+import { ValidationError } from "io-ts";
 import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
 import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
 import { BackendClient } from "../../api/backend";
@@ -11,7 +11,6 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import migrateToPagination from "../../boot/migrateToPagination";
-
 import { MessageStatus } from "../../store/reducers/entities/messages/messagesStatus";
 import { readablePrivacyReport } from "../../utils/reporters";
 
@@ -99,13 +98,15 @@ function tryMigration(putMessages: LocalBeClient) {
       } else {
         yield* put(migrateToPaginatedMessages.failure({ succeeded, failed }));
       }
-    } catch (error) {
+    } catch (e) {
       // assuming the worst, no messages were migrated because of an unexpected failure
       const errorPayload = {
         succeeded: [],
         failed: Object.keys(action.payload).map(id => ({
           messageId: id,
-          error: readablePrivacyReport(error)
+
+          // FIXME: This is potentially unsafe.
+          error: readablePrivacyReport(e as Array<ValidationError>)
         }))
       };
       yield* put(migrateToPaginatedMessages.failure(errorPayload));
