@@ -25,11 +25,6 @@ type BottomSheetProps = Readonly<{
    * Called on right-button press with the user's selected message and preferences.
    */
   onConfirm: (message: UIMessage, dontAskAgain: boolean) => void;
-
-  /**
-   * The user canceled the action via the UI.
-   */
-  onCancel: () => void;
 }>;
 
 type HTMLParams = Readonly<{
@@ -124,11 +119,14 @@ export const usePnOpenConfirmationBottomSheet = ({
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}
       leftButton={{
-        ...cancelButtonProps(onCancel),
+        ...cancelButtonProps(() => {
+          bsDismiss();
+        }),
         onPressWithGestureHandler: true
       }}
       rightButton={{
         ...confirmButtonProps(() => {
+          bsDismiss();
           if (message) {
             onConfirm(message, dontAskAgain);
           }

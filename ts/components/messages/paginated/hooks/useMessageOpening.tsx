@@ -23,11 +23,7 @@ export const useMessageOpening = () => {
 
   const pnBottomSheet = usePnOpenConfirmationBottomSheet({
     onConfirm: (message: UIMessage, _: boolean) => {
-      pnBottomSheet.dismiss();
       navigate(message);
-    },
-    onCancel: () => {
-      pnBottomSheet.dismiss();
     }
   });
 
