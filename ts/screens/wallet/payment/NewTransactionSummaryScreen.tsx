@@ -108,6 +108,12 @@ const renderFooter = (
             leftButton={helpButtonProps(help)}
           />
         );
+      // There's a strange case where error is 'some' but
+      // its value is undefined (e.g. network error).
+      // In this case we fallback to the 'continue' CTA
+      // so that the user can eventually retry.
+      case undefined:
+        break;
       default:
         return <></>;
     }
