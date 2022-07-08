@@ -173,24 +173,25 @@ const NewTransactionSummaryScreen = ({
   const showsInlineError = paymentStartOrigin === "message";
 
   const errorOrUndefined = error.toUndefined();
+  const isError = error.isSome();
   useEffect(() => {
-    if (errorOrUndefined === undefined) {
+    if (!isError) {
       return;
     }
     if (errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO") {
       onDuplicatedPayment();
     }
-
     // in case of a payment verification error we should navigate
     // to the error screen only if showsInlineError is false
     // in any other case we should always navigate to the error screen
     if (
       (pot.isError(paymentVerification) && !showsInlineError) ||
-      (!pot.isError(paymentVerification) && errorOrUndefined)
+      (!pot.isError(paymentVerification) && isError)
     ) {
       navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
     }
   }, [
+    isError,
     errorOrUndefined,
     onDuplicatedPayment,
     navigateToPaymentTransactionError,
