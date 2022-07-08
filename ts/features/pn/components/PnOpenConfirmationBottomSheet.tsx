@@ -41,8 +41,7 @@ const emptyHTMLParams: HTMLParams = {
   iun: "-"
 };
 export const usePnOpenConfirmationBottomSheet = ({
-  onConfirm,
-  onCancel
+  onConfirm
 }: BottomSheetProps) => {
   const [message, setMessage] = useState<UIMessage | undefined>(undefined);
   const [dontAskAgain, setDontAskAgain] = useState<boolean>(false);
@@ -50,7 +49,6 @@ export const usePnOpenConfirmationBottomSheet = ({
 
   const linkTo = useLinkTo();
   const handleLink = (href: string) => {
-    onCancel();
     handleInternalLink(linkTo, href);
   };
 
@@ -98,7 +96,12 @@ export const usePnOpenConfirmationBottomSheet = ({
           container: { marginVertical: 20 }
         }}
         renderersProps={{
-          a: { onPress: (_, href) => handleLink(href) }
+          a: {
+            onPress: (_, href) => {
+              bsDismiss();
+              handleLink(href);
+            }
+          }
         }}
       />
       <View style={{ ...IOStyles.row, marginBottom: 20 }}>
