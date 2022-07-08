@@ -67,6 +67,7 @@ import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 import { getAppVersion } from "../utils/appVersion";
 import { AppVersion } from "../../definitions/backend/AppVersion";
+import { convertUnknownToError } from "../utils/errors";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -100,8 +101,8 @@ export function* loadProfile(
     throw response
       ? Error(`response status ${response.value.status}`)
       : Error(I18n.t("profile.errors.load"));
-  } catch (error) {
-    yield* put(profileLoadFailure(error));
+  } catch (e) {
+    yield* put(profileLoadFailure(convertUnknownToError(e)));
   }
   return none;
 }
@@ -193,7 +194,10 @@ function* createOrUpdateProfileSaga(
       );
     }
   } catch (e) {
-    const error: Error = e || Error(I18n.t("profile.errors.upsert"));
+    const error = e
+      ? convertUnknownToError(e)
+      : Error(I18n.t("profile.errors.upsert"));
+
     yield* put(profileUpsert.failure(error));
   }
 }
@@ -290,8 +294,8 @@ function* startEmailValidationProcessSaga(
     throw response
       ? Error(`response status ${response.value.status}`)
       : Error(I18n.t("profile.errors.load"));
-  } catch (error) {
-    yield* put(startEmailValidation.failure(error));
+  } catch (e) {
+    yield* put(startEmailValidation.failure(convertUnknownToError(e)));
   }
 }
 

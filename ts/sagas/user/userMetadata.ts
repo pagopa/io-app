@@ -20,6 +20,7 @@ import {
   userMetadataToBackendUserMetadata
 } from "../../store/reducers/userMetadata";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
+import { convertUnknownToError } from "../../utils/errors";
 
 /**
  * A saga to fetch user metadata from the Backend
@@ -52,8 +53,8 @@ export function* fetchUserMetadata(
     }
 
     return right<Error, BackendUserMetadata>(response.value.value);
-  } catch (error) {
-    return left<Error, BackendUserMetadata>(error);
+  } catch (e) {
+    return left<Error, BackendUserMetadata>(convertUnknownToError(e));
   }
 }
 
@@ -151,8 +152,8 @@ export function* postUserMetadata(
     }
 
     return right<Error, BackendUserMetadata>(response.value.value);
-  } catch (error) {
-    return left<Error, BackendUserMetadata>(error);
+  } catch (e) {
+    return left<Error, BackendUserMetadata>(convertUnknownToError(e));
   }
 }
 

@@ -131,7 +131,7 @@ describe("upsertUserDataProcessingSaga", () => {
   it("return a generic error if the backend returns 500", () => {
     const choice = UserDataProcessingChoiceEnum.DOWNLOAD;
     const mokedError = new Error(
-      `Error: An error occurred while submitting a request to ${choice} the profile`
+      `An error occurred while submitting a request to ${choice} the profile`
     );
     const get500Response = right({ status: 500 });
 

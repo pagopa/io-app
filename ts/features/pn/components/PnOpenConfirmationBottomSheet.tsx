@@ -25,11 +25,6 @@ type BottomSheetProps = Readonly<{
    * Called on right-button press with the user's selected message and preferences.
    */
   onConfirm: (message: UIMessage, dontAskAgain: boolean) => void;
-
-  /**
-   * The user canceled the action via the UI.
-   */
-  onCancel: () => void;
 }>;
 
 type HTMLParams = Readonly<{
@@ -46,8 +41,7 @@ const emptyHTMLParams: HTMLParams = {
   iun: "-"
 };
 export const usePnOpenConfirmationBottomSheet = ({
-  onConfirm,
-  onCancel
+  onConfirm
 }: BottomSheetProps) => {
   const [message, setMessage] = useState<UIMessage | undefined>(undefined);
   const [dontAskAgain, setDontAskAgain] = useState<boolean>(false);
@@ -55,7 +49,6 @@ export const usePnOpenConfirmationBottomSheet = ({
 
   const linkTo = useLinkTo();
   const handleLink = (href: string) => {
-    onCancel();
     handleInternalLink(linkTo, href);
   };
 
@@ -84,7 +77,11 @@ export const usePnOpenConfirmationBottomSheet = ({
     setParams(params);
   }, [message, setParams]);
 
-  const useBottomSheet = useIOBottomSheetModal(
+  const {
+    present: bsPresent,
+    dismiss: bsDismiss,
+    bottomSheet
+  } = useIOBottomSheetModal(
     <>
       <IORenderHtml
         source={{
@@ -99,7 +96,12 @@ export const usePnOpenConfirmationBottomSheet = ({
           container: { marginVertical: 20 }
         }}
         renderersProps={{
-          a: { onPress: (_, href) => handleLink(href) }
+          a: {
+            onPress: (_, href) => {
+              bsDismiss();
+              handleLink(href);
+            }
+          }
         }}
       />
       <View style={{ ...IOStyles.row, marginBottom: 20 }}>
@@ -120,11 +122,14 @@ export const usePnOpenConfirmationBottomSheet = ({
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}
       leftButton={{
-        ...cancelButtonProps(onCancel),
+        ...cancelButtonProps(() => {
+          bsDismiss();
+        }),
         onPressWithGestureHandler: true
       }}
       rightButton={{
         ...confirmButtonProps(() => {
+          bsDismiss();
           if (message) {
             onConfirm(message, dontAskAgain);
           }
@@ -138,12 +143,12 @@ export const usePnOpenConfirmationBottomSheet = ({
     present: (message: UIMessage) => {
       setDontAskAgain(false);
       setMessage(message);
-      useBottomSheet.present();
+      bsPresent();
     },
     dismiss: () => {
       setMessage(undefined);
-      useBottomSheet.dismiss();
+      bsDismiss();
     },
-    bottomSheet: useBottomSheet.bottomSheet
+    bottomSheet
   };
 };
