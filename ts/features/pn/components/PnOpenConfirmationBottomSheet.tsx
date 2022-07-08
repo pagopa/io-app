@@ -84,7 +84,11 @@ export const usePnOpenConfirmationBottomSheet = ({
     setParams(params);
   }, [message, setParams]);
 
-  const useBottomSheet = useIOBottomSheetModal(
+  const {
+    present: bsPresent,
+    dismiss: bsDismiss,
+    bottomSheet
+  } = useIOBottomSheetModal(
     <>
       <IORenderHtml
         source={{
@@ -137,12 +141,12 @@ export const usePnOpenConfirmationBottomSheet = ({
   return {
     present: (message: UIMessage) => {
       setMessage(message);
-      useBottomSheet.present();
+      bsPresent();
     },
     dismiss: () => {
       setMessage(undefined);
-      useBottomSheet.dismiss();
+      bsDismiss();
     },
-    bottomSheet: useBottomSheet.bottomSheet
+    bottomSheet
   };
 };
