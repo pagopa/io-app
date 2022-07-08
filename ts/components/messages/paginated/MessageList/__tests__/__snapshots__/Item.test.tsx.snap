@@ -1134,6 +1134,283 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
 </View>
 `;
 
+exports[`MessageList Item component when category is PN should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+        ]
+      }
+    >
+      <SvgMock
+        fill="#CCD4DC"
+        height={20}
+        width={20}
+      />
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#000",
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
+            Object {
+              "fontWeight": "bold",
+              "lineHeight": 20,
+              "marginLeft": 7,
+              "overflow": "hidden",
+              "textAlign": "right",
+            },
+          ]
+        }
+        uppercase={false}
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "height": 4,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 0,
+              "flexBasis": "auto",
+              "flexGrow": 0,
+              "flexShrink": 0,
+              "paddingRight": 8,
+              "paddingTop": 6.5,
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup>
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={4278219750}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {},
+            Object {
+              "flexBasis": "100%",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+          ]
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CERT should match the snapshot 1`] = `
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 

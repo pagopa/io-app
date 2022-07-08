@@ -5,7 +5,6 @@
  * - send a request to delete his profile
  * - send a request to export all his data (receiving them by email)
  */
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
@@ -33,12 +32,9 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
-import { isPremiumMessagesOptInOutEnabledSelector } from "../../store/reducers/backendStatus";
 
 type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">
-  >;
+  navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
 } & ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -89,9 +85,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
       // if user asks for download, navigate to a screen to inform about the process
       // there he/she can request to download his/her data
       if (choice === UserDataProcessingChoiceEnum.DOWNLOAD) {
-        this.props.navigation.navigate({
-          routeName: ROUTES.PROFILE_DOWNLOAD_DATA
-        });
+        this.props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
         return;
       }
     } else {
@@ -203,9 +197,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.privacyPolicy.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate({
-                  routeName: ROUTES.PROFILE_PRIVACY
-                })
+                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY)
               }
               useExtendedSubTitle={true}
             />
@@ -216,9 +208,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.shareData.listItem.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate({
-                  routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
-                })
+                this.props.navigation.navigate(
+                  ROUTES.PROFILE_PRIVACY_SHARE_DATA
+                )
               }
               useExtendedSubTitle={true}
             />
@@ -255,9 +247,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                     UserDataProcessingChoiceEnum.DELETE
                   );
                 } else {
-                  this.props.navigation.navigate({
-                    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
-                  });
+                  this.props.navigation.navigate(
+                    ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
+                  );
                 }
               }}
               useExtendedSubTitle={true}
@@ -267,20 +259,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                   : undefined
               }
             />
-
-            {/* Premium Messages Opt-in/out */}
-            {this.props.isPremiumMessagesOptInOutEnabled && (
-              <ListItemComponent
-                title="Premium Messages Opt-in/out"
-                subTitle="Temporary screen for the Premium Messages opt-in/out feature"
-                onPress={() =>
-                  this.props.navigation.navigate({
-                    routeName: ROUTES.PROFILE_PREMIUM_MESSAGES_OPT_IN_OUT
-                  })
-                }
-                useExtendedSubTitle={true}
-              />
-            )}
           </List>
         </ScreenContent>
       </TopScreenComponent>
@@ -319,9 +297,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     userDataProcessing,
     isLoading,
-    isEmailValidated: isProfileEmailValidatedSelector(state),
-    isPremiumMessagesOptInOutEnabled:
-      isPremiumMessagesOptInOutEnabledSelector(state)
+    isEmailValidated: isProfileEmailValidatedSelector(state)
   };
 };
 

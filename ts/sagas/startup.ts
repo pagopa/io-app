@@ -93,9 +93,9 @@ import {
   initMixpanel
 } from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
-import { askPremiumMessagesOptInOut } from "./premiumMessages";
 import {
   loadProfile,
+  upsertAppVersionSaga,
   watchProfile,
   watchProfileRefreshRequestsSaga,
   watchProfileUpsertRequestsSaga
@@ -279,6 +279,15 @@ export function* initializeApplicationSaga(): Generator<
 
   const userProfile = maybeUserProfile.value;
 
+  // This saga will upsert the `last_app_version` value in the
+  // profile only if it actually changed from the one stored in
+  // the backend.
+  yield* call(
+    upsertAppVersionSaga,
+    userProfile,
+    backendClient.createOrUpdateProfile
+  );
+
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
   // logged in)
@@ -324,10 +333,6 @@ export function* initializeApplicationSaga(): Generator<
     // check if the user expressed preference about mixpanel, if not ask for it
     yield* call(askMixpanelOptIn);
 
-    // Check if the user has expressed a preference
-    // about the Premium Messages.
-    yield* call(askPremiumMessagesOptInOut);
-
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
@@ -366,10 +371,6 @@ export function* initializeApplicationSaga(): Generator<
 
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
-
-      // Check if the user has expressed a preference
-      // about the Premium Messages.
-      yield* call(askPremiumMessagesOptInOut);
 
       yield* call(askServicesPreferencesModeOptin, false);
 

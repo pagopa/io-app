@@ -10,6 +10,11 @@ import * as React from "react";
 import { useRef } from "react";
 import { IOColors } from "../components/core/variables/IOColors";
 import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
+import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
+import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled } from "../config";
+import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
+import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
@@ -17,6 +22,12 @@ import {
   cgnLinkingOptions
 } from "../features/bonus/cgn/navigation/navigator";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
+import {
+  fimsLinkingOptions,
+  FimsNavigator
+} from "../features/fims/navigation/navigator";
+import FIMS_ROUTES from "../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
@@ -25,30 +36,19 @@ import IngressScreen from "../screens/ingress/IngressScreen";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
-import { isTestEnv } from "../utils/environment";
-import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
-import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
-import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled } from "../config";
-import FIMS_ROUTES from "../features/fims/navigation/routes";
-import {
-  fimsLinkingOptions,
-  FimsNavigator
-} from "../features/fims/navigation/navigator";
+import { isTestEnv } from "../utils/environment";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
-import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
-import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
 import authenticationNavigator from "./AuthenticationNavigator";
-import messagesNavigator from "./MessagesNavigator";
+import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
 import onboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
-import profileNavigator from "./ProfileNavigator";
+import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import servicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
@@ -78,7 +78,7 @@ export const AppStackNavigator = () => {
 
       <Stack.Screen
         name={ROUTES.MESSAGES_NAVIGATOR}
-        component={messagesNavigator}
+        component={MessagesStackNavigator}
       />
       <Stack.Screen
         name={ROUTES.WALLET_NAVIGATOR}
@@ -90,7 +90,7 @@ export const AppStackNavigator = () => {
       />
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
-        component={profileNavigator}
+        component={ProfileStackNavigator}
       />
 
       {cgnEnabled && (
