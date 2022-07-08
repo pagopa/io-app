@@ -492,7 +492,6 @@ workflows:
       - run-tests
       - run-eslint
       - run-prettier
-      - check-outdated-dependencies
 
       - run-danger:
           filters:
