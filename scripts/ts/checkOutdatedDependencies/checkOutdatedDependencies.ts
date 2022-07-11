@@ -5,16 +5,16 @@ import * as E2 from "fp-ts2/lib/Either";
 import { Errors } from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import * as semver from "semver";
+import { pipe } from "fp-ts2/lib/function";
 import { slackPostMessage } from "../common/slack/postMessage";
+import { eitherToV2 } from "../../../ts/migration/fp-ts-converters";
 import { generateSlackMessage } from "./generateSlackMessage";
 import { initOutdatedStats } from "./types/defaultValues";
 import { DependenciesTable } from "./types/DependeciesTable";
 import { getSeverityType } from "./types/GroupBySeverity";
 import { getDependencyType, increaseSeverityAmount } from "./types/GroupByType";
 import { OutdatedStats, toOutdatedPackage } from "./types/OutdatedStats";
-import { pipe } from "fp-ts2/lib/function";
 
-import { eitherToV2 } from "../../../ts/migration/fp-ts-converters";
 
 const execAsync = util.promisify(exec);
 
@@ -117,7 +117,7 @@ const main = async () => {
       DependenciesTable.decode,
       eitherToV2,
       E2.map(extractGroupByType)
-    )
+    );
 
     if (E2.isRight(outdatedPackages)) {
       console.log(`Send slack message to ${destinationChannel}`);

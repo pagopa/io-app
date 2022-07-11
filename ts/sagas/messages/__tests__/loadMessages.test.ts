@@ -4,11 +4,11 @@ import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import * as E2 from "fp-ts2/Either";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { DEPRECATED_loadMessage as loadMessageAction } from "../../../store/actions/messages";
 import { testFetchMessage, loadMessage } from "../loadMessage";
 
-import * as E2 from "fp-ts2/Either";
 
 const fetchMessage = testFetchMessage!;
 

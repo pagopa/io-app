@@ -1,6 +1,7 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { call, put, select } from "typed-redux-saga/macro";
+import * as E2 from "fp-ts2/Either";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { BackendClient } from "../../api/backend";
@@ -11,7 +12,6 @@ import { readablePrivacyReport } from "../../utils/reporters";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError } from "../../utils/errors";
 
-import * as E2 from "fp-ts2/Either";
 import { eitherToV2 } from "../../migration/fp-ts-converters";
 
 /**
@@ -45,12 +45,12 @@ export function* loadMessage(
     const maybeMessage = eitherToV2(maybeMessageV1);
 
     if(E2.isLeft(maybeMessage)) {
-      throw maybeMessage.left
+      throw maybeMessage.left;
     } else {
       yield* put(loadMessageAction.success(maybeMessage.right));
     }
 
-    return maybeMessage
+    return maybeMessage;
   } catch (e) {
     const error = convertUnknownToError(e);
 
