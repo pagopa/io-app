@@ -26,11 +26,8 @@ export function* watchLoadMessageWithRelationsSaga(
   const messageId = messageWithRelationsLoadRequest.payload;
 
   try {
-    const messageOrErrorv2: SagaCallReturnType<typeof loadMessage> = yield* call(
-      loadMessage,
-      getMessage,
-      messageId
-    );
+    const messageOrErrorv2: SagaCallReturnType<typeof loadMessage> =
+      yield* call(loadMessage, getMessage, messageId);
 
     const messageOrError = eitherToV1(messageOrErrorv2);
 

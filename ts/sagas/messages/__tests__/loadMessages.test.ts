@@ -9,7 +9,6 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../definitions
 import { DEPRECATED_loadMessage as loadMessageAction } from "../../../store/actions/messages";
 import { testFetchMessage, loadMessage } from "../loadMessage";
 
-
 const fetchMessage = testFetchMessage!;
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";

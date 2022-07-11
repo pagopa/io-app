@@ -44,7 +44,7 @@ export function* loadMessage(
 
     const maybeMessage = eitherToV2(maybeMessageV1);
 
-    if(E2.isLeft(maybeMessage)) {
+    if (E2.isLeft(maybeMessage)) {
       throw maybeMessage.left;
     } else {
       yield* put(loadMessageAction.success(maybeMessage.right));
