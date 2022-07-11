@@ -95,7 +95,9 @@ function* fetchMessage(
     );
   } catch (e) {
     // Return the error
-    return E.left<Error, CreatedMessageWithContentAndAttachments>(convertUnknownToError(error));
+    return E.left<Error, CreatedMessageWithContentAndAttachments>(
+      convertUnknownToError(error)
+    );
   }
 }
 
