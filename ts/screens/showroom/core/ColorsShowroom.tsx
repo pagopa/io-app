@@ -29,22 +29,28 @@ const styles = StyleSheet.create({
   colorItem: {
     width: "100%",
     height: 50,
-    borderRadius: 8
+    padding: 8,
+    borderRadius: 4,
+    alignItems: "flex-end",
+    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderWidth: 1
+  },
+  gradientItem: {
+    aspectRatio: 16 / 9,
+    borderRadius: 8,
+    padding: 12,
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderWidth: 1
   },
   colorPill: {
     overflow: "hidden",
     color: "#FFFFFF",
-    fontSize: 12,
+    fontSize: 9,
     backgroundColor: "rgba(0, 0, 0, 0.3)",
     padding: 4,
     borderRadius: 4
-  },
-  gradientItem: {
-    aspectRatio: 1,
-    borderRadius: 8,
-    padding: 12,
-    alignItems: "flex-start",
-    justifyContent: "space-between"
   }
 });
 
@@ -94,15 +100,12 @@ const ColorBox = (props: ColorBoxProps) => (
         ...styles.colorItem,
         backgroundColor: props.color
       }}
-    />
+    >
+      {props.color && <Text style={styles.colorPill}>{props.color}</Text>}
+    </View>
     {props.name && (
       <H5 color={"bluegrey"} weight={"SemiBold"}>
         {props.name}
-      </H5>
-    )}
-    {props.color && (
-      <H5 color={"bluegrey"} weight={"Regular"}>
-        {props.color}
       </H5>
     )}
   </View>

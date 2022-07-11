@@ -115,6 +115,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           ) : (
             <>
               <ScrollView style={[IOStyles.flex]} bounces={false}>
+                {/* cgn gradient */}
                 <LinearGradient
                   colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}
                 >
