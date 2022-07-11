@@ -24,13 +24,17 @@ const readOutdatedJson = async (): Promise<string> => {
   try {
     const std = await execAsync("yarn outdated --json");
     return std.stdout;
-  } catch (error) {
+  } catch (e) {
+    const code = (e as any).code;
+    const stdout = (e as any).stdout;
+    const message = (e as any).message;
+
     // When the command finds outdated packages, return with exit code 1
-    if (error.code === 1) {
-      return error.stdout;
+    if (code === 1) {
+      return stdout;
     } else {
       throw new Error(
-        `Error ${error.code} while executing 'yarn outdated --json': ${error.message}`
+        `Error ${code} while executing 'yarn outdated --json': ${message}`
       );
     }
   }
@@ -71,7 +75,9 @@ const extractGroupByType = (deps: DependenciesTable): OutdatedStats =>
             : acc.mostOutdated
       };
     } catch (e) {
-      if (e.name === "TypeError") {
+      const name = (e as any).name;
+
+      if (name === "TypeError") {
         // We use some packages with no standard sem ver, in this case we increment the "unknown" severity
         return {
           ...acc,
@@ -124,7 +130,9 @@ const main = async () => {
     }
   } catch (e) {
     console.log("Generic error while executing the script:");
-    console.log(e.message);
+    // We don't use convertUnknownToError because this script is executed in isolated mode and doesn't have access to the app codebase
+    const error = e as Error;
+    console.log(error.message);
   }
 };
 
