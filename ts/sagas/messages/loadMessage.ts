@@ -9,6 +9,7 @@ import { messageStateByIdSelector } from "../../store/reducers/entities/messages
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { isTestEnv } from "../../utils/environment";
+import { convertUnknownToError } from "../../utils/errors";
 
 /**
  * A saga to fetch a message from the Backend and save it in the redux store.
@@ -46,7 +47,9 @@ export function* loadMessage(
       yield* put(loadMessageAction.success(maybeMessage.right));
     }
     return maybeMessage;
-  } catch (error) {
+  } catch (e) {
+    const error = convertUnknownToError(e);
+
     yield* put(
       loadMessageAction.failure({
         id: meta.id,
@@ -90,9 +93,9 @@ function* fetchMessage(
     return E.right<Error, CreatedMessageWithContentAndAttachments>(
       response.right.value
     );
-  } catch (error) {
+  } catch (e) {
     // Return the error
-    return E.left<Error, CreatedMessageWithContentAndAttachments>(error);
+    return E.left<Error, CreatedMessageWithContentAndAttachments>(convertUnknownToError(error));
   }
 }
 

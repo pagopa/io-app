@@ -62,6 +62,7 @@ import {
 import { readablePrivacyReport } from "../utils/reporters";
 import { getAppVersion } from "../utils/appVersion";
 import { AppVersion } from "../../definitions/backend/AppVersion";
+import { convertUnknownToError } from "../utils/errors";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -95,8 +96,8 @@ export function* loadProfile(
     throw response
       ? Error(`response status ${response.right.status}`)
       : Error(I18n.t("profile.errors.load"));
-  } catch (error) {
-    yield* put(profileLoadFailure(error));
+  } catch (e) {
+    yield* put(profileLoadFailure(convertUnknownToError(e)));
   }
   return O.none;
 }
@@ -188,7 +189,10 @@ function* createOrUpdateProfileSaga(
       );
     }
   } catch (e) {
-    const error: Error = e || Error(I18n.t("profile.errors.upsert"));
+    const error = e
+      ? convertUnknownToError(e)
+      : Error(I18n.t("profile.errors.upsert"));
+
     yield* put(profileUpsert.failure(error));
   }
 }
@@ -285,8 +289,8 @@ function* startEmailValidationProcessSaga(
     throw response
       ? Error(`response status ${response.right.status}`)
       : Error(I18n.t("profile.errors.load"));
-  } catch (error) {
-    yield* put(startEmailValidation.failure(error));
+  } catch (e) {
+    yield* put(startEmailValidation.failure(convertUnknownToError(e)));
   }
 }
 

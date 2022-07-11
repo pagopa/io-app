@@ -11,7 +11,8 @@ import {
   upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
-import { getError } from "../../utils/errors";
+import { convertUnknownToError, getError } from "../../utils/errors";
+import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 
 /**
  * The following logic:
@@ -51,7 +52,7 @@ export function* loadUserDataProcessingSaga(
     yield* put(
       loadUserDataProcessing.failure({
         choice,
-        error: e
+        error: convertUnknownToError(e)
       })
     );
   }
@@ -80,7 +81,10 @@ export function* upsertUserDataProcessingSaga(
     }
   } catch (e) {
     yield* put(
-      upsertUserDataProcessing.failure({ choice, error: new Error(e) })
+      upsertUserDataProcessing.failure({
+        choice,
+        error: convertUnknownToError(e)
+      })
     );
     return E.left(e);
   }

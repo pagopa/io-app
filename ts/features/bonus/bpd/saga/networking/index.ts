@@ -12,6 +12,10 @@ import {
   bpdEnrollUserToProgram,
   bpdUpdateOptInStatusMethod
 } from "../../store/actions/onboarding";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { BackendBpdClient } from "../../api/backendBpdClient";
+import { bpdLoadActivationStatus } from "../../store/actions/details";
+import { convertUnknownToError, getError } from "../../../../../utils/errors";
 
 export function* executeAndDispatchV2(
   remoteCall:
@@ -57,7 +61,7 @@ export function* executeAndDispatchV2(
       throw new Error(readableReport(enrollCitizenIOResult.left));
     }
   } catch (e) {
-    yield* put(action.failure(e));
+    yield* put(action.failure(convertUnknownToError(e)));
   }
 }
 
@@ -141,6 +145,6 @@ export function* deleteCitizen(
       throw new Error(readableReport(deleteCitizenIOResult.left));
     }
   } catch (e) {
-    yield* put(bpdDeleteUserFromProgram.failure(e));
+    yield* put(bpdDeleteUserFromProgram.failure(convertUnknownToError(e)));
   }
 }

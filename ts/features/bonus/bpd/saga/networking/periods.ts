@@ -9,7 +9,7 @@ import {
   ReduxSagaEffect,
   SagaCallReturnType
 } from "../../../../../types/utils";
-import { getError } from "../../../../../utils/errors";
+import { convertUnknownToError, getError } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import {
   AwardPeriodId,
@@ -79,7 +79,7 @@ export function* bpdLoadPeriodsSaga(
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
-      reason: e.message
+      reason: convertUnknownToError(e).message
     });
     return E.left<Error, ReadonlyArray<BpdPeriod>>(getError(e));
   }

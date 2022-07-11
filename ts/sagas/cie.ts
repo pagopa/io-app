@@ -9,6 +9,7 @@ import {
   nfcIsEnabled
 } from "../store/actions/cie";
 import { SagaCallReturnType } from "../types/utils";
+import { convertUnknownToError } from "../utils/errors";
 import { startTimer } from "../utils/timer";
 
 export function* watchCieAuthenticationSaga(): SagaIterator {
@@ -46,7 +47,7 @@ export function* checkHasApiLevelSupportSaga(
       yield* call(hasApiLevelSupported);
     yield* put(hasApiLevelSupport.success(response));
   } catch (e) {
-    yield* put(hasApiLevelSupport.failure(new Error(e)));
+    yield* put(hasApiLevelSupport.failure(convertUnknownToError(e)));
   }
 }
 
@@ -62,7 +63,7 @@ export function* checkHasNfcFeatureSaga(
       yield* call(hasNfcFeatureSupported);
     yield* put(hasNFCFeature.success(response));
   } catch (e) {
-    yield* put(hasNFCFeature.failure(new Error(e)));
+    yield* put(hasNFCFeature.failure(convertUnknownToError(e)));
   }
 }
 
@@ -78,7 +79,7 @@ export function* checkCieAvailabilitySaga(
       yield* call(isCIEAuthenticationSupported);
     yield* put(cieIsSupported.success(response));
   } catch (e) {
-    yield* put(cieIsSupported.failure(new Error(e)));
+    yield* put(cieIsSupported.failure(convertUnknownToError(e)));
   }
 }
 const CIE_NFC_STATUS_INTERVAL = 1500 as Millisecond;
@@ -100,6 +101,6 @@ export function* checkNfcEnablementSaga(): SagaIterator {
       yield* call(startTimer, CIE_NFC_STATUS_INTERVAL);
     }
   } catch (e) {
-    yield* put(nfcIsEnabled.failure(new Error(e))); // TODO: check e type
+    yield* put(nfcIsEnabled.failure(convertUnknownToError(e))); // TODO: check e type
   }
 }

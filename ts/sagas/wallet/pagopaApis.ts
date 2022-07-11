@@ -47,10 +47,12 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { PaymentManagerToken, Wallet } from "../../types/pagopa";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import {
+  convertUnknownToError,
   getError,
   getErrorFromNetworkError,
   getGenericError,
   getNetworkError,
+  getWalletError,
   isTimeoutError
 } from "../../utils/errors";
 import { readablePrivacyReport } from "../../utils/reporters";
@@ -100,21 +102,24 @@ export function* getWalletsV2(
     } else {
       throw Error(readablePrivacyReport(getResponse.left));
     }
-  } catch (error) {
+  } catch (e) {
+    const computedError = convertUnknownToError(e);
+
     // this is required to handle 401 response from PM
     // On 401 response sessionManager retries for X attempts to get a valid session
     // If it exceeds a fixed threshold of attempts a max retries error will be dispatched
 
     void mixpanelTrack("WALLETS_LOAD_FAILURE", {
-      reason: error.message
+      reason: computedError.message
     });
 
-    if (isTimeoutError(getNetworkError(error))) {
+    if (isTimeoutError(getNetworkError(e))) {
       // check if also the IO session is expired
       yield* put(checkCurrentSession.request());
     }
-    yield* put(fetchWalletsFailure(error));
-    return E.left<Error, ReadonlyArray<Wallet>>(error);
+
+    yield* put(fetchWalletsFailure(computedError));
+    return E.left<Error, ReadonlyArray<Wallet>>(computedError);
   }
 }
 
@@ -145,8 +150,8 @@ export function* fetchTransactionsRequestHandler(
     } else {
       throw Error(readablePrivacyReport(response.left));
     }
-  } catch (error) {
-    yield* put(fetchTransactionsFailure(error));
+  } catch (e) {
+    yield* put(fetchTransactionsFailure(convertUnknownToError(e)));
   }
 }
 
@@ -172,8 +177,8 @@ export function* fetchTransactionRequestHandler(
     } else {
       throw Error(readablePrivacyReport(response.left));
     }
-  } catch (error) {
-    yield* put(fetchTransactionFailure(error));
+  } catch (e) {
+    yield* put(fetchTransactionFailure(convertUnknownToError(e)));
   }
 }
 
@@ -208,10 +213,10 @@ export function* fetchPspRequestHandler(
     } else {
       throw Error(readablePrivacyReport(response.left));
     }
-  } catch (error) {
+  } catch (e) {
     const failureAction = fetchPsp.failure({
       idPsp: action.payload.idPsp,
-      error
+      error: convertUnknownToError(e)
     });
     yield* put(failureAction);
     if (action.payload.onFailure) {
@@ -291,8 +296,8 @@ export function* setFavouriteWalletRequestHandler(
     } else {
       throw Error(readablePrivacyReport(response.left));
     }
-  } catch (error) {
-    yield* put(setFavouriteWalletFailure(error));
+  } catch (e) {
+    yield* put(setFavouriteWalletFailure(convertUnknownToError(e)));
   }
 }
 
@@ -360,8 +365,10 @@ export function* updateWalletPspRequestHandler(
     } else {
       throw Error(readablePrivacyReport(response.left));
     }
-  } catch (error) {
-    const failureAction = paymentUpdateWalletPsp.failure(error.message);
+  } catch (e) {
+    const failureAction = paymentUpdateWalletPsp.failure(
+      convertUnknownToError(e)
+    );
     yield* put(failureAction);
     if (action.payload.onFailure) {
       // signal the callee if requested
@@ -474,7 +481,9 @@ export function* deleteWalletRequestHandler(
       );
     }
   } catch (e) {
-    const failureAction = deleteWalletFailure(e);
+    const failureAction = deleteWalletFailure(
+      e instanceof Error ? e : new Error()
+    );
     yield* put(failureAction);
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
@@ -555,8 +564,8 @@ export function* paymentCheckRequestHandler(
     } else {
       throw Error(readablePrivacyReport(response.left));
     }
-  } catch (error) {
-    yield* put(paymentCheck.failure(error));
+  } catch (e) {
+    yield* put(paymentCheck.failure(e instanceof Error ? e : new Error()));
   }
 }
 
@@ -606,7 +615,9 @@ export function* paymentDeletePaymentRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
-    yield* put(paymentDeletePayment.failure(e));
+    yield* put(
+      paymentDeletePayment.failure(e instanceof Error ? e : new Error())
+    );
   }
 }
 
@@ -648,7 +659,7 @@ export function* paymentVerificaRequestHandler(
     }
   } catch (e) {
     // Probably a timeout
-    yield* put(paymentVerifica.failure(e.message));
+    yield* put(paymentVerifica.failure(getWalletError(e)));
   }
 }
 
@@ -691,7 +702,7 @@ export function* paymentAttivaRequestHandler(
     }
   } catch (e) {
     // Probably a timeout
-    yield* put(paymentAttiva.failure(e.message));
+    yield* put(paymentAttiva.failure(getWalletError(e)));
   }
 }
 
@@ -733,7 +744,7 @@ export function* paymentIdPollingRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
-    yield* put(paymentIdPolling.failure(e.message));
+    yield* put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
   }
 }
 

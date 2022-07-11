@@ -11,7 +11,10 @@ import {
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getGenericError } from "../../../../../../utils/errors";
+import {
+  convertUnknownToError,
+  getGenericError
+} from "../../../../../../utils/errors";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
@@ -41,7 +44,7 @@ export function* handleLoadAbi(
       throw new Error(readablePrivacyReport(getAbiWithRefreshResult.left));
     }
   } catch (e) {
-    yield* put(loadAbi.failure(e));
+    yield* put(loadAbi.failure(convertUnknownToError(e)));
   }
 }
 
@@ -100,7 +103,9 @@ export function* handleLoadPans(
     if (typeof e === "string") {
       return yield* put(searchUserPans.failure(getGenericError(new Error(e))));
     }
-    return yield* put(searchUserPans.failure(getGenericError(e)));
+    return yield* put(
+      searchUserPans.failure(getGenericError(convertUnknownToError(e)))
+    );
   }
 }
 
@@ -155,6 +160,6 @@ export function* handleAddPan(
       throw new Error(readablePrivacyReport(addPansWithRefreshResult.left));
     }
   } catch (e) {
-    yield* put(addBancomatToWallet.failure(e));
+    yield* put(addBancomatToWallet.failure(convertUnknownToError(e)));
   }
 }

@@ -166,6 +166,7 @@ import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect } from "../types/utils";
 import { waitBackoffError } from "../utils/backoffError";
 import { isTestEnv } from "../utils/environment";
+import { convertUnknownToError } from "../utils/errors";
 
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getTitleFromCard } from "../utils/paymentMethod";
@@ -421,7 +422,10 @@ function* startOrResumeAddCreditCardSaga(
       }
     } catch (e) {
       if (action.payload.onFailure) {
-        action.payload.onFailure(e.message);
+        action.payload.onFailure(
+          // This cast should be safe enough conceptually.
+          convertUnknownToError(e).message as "ALREADY_EXISTS" | undefined
+        );
       }
     }
     break;

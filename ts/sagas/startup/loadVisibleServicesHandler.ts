@@ -5,6 +5,7 @@ import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import { loadVisibleServices } from "../../store/actions/services";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
+import { convertUnknownToError } from "../../utils/errors";
 import { refreshStoredServices } from "../services/refreshStoredServices";
 import { removeUnusedStoredServices } from "../services/removeUnusedStoredServices";
 
@@ -41,7 +42,7 @@ export function* loadVisibleServicesRequestHandler(
     } else {
       throw Error("An error occurred loading visible services");
     }
-  } catch (error) {
-    yield* put(loadVisibleServices.failure(error));
+  } catch (e) {
+    yield* put(loadVisibleServices.failure(convertUnknownToError(e)));
   }
 }

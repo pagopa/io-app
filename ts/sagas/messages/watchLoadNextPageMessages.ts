@@ -7,7 +7,7 @@ import { loadNextPageMessages as loadNextPageMessagesAction } from "../../store/
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
-import { getError } from "../../utils/errors";
+import { convertUnknownToError, getError } from "../../utils/errors";
 
 import { handleResponse } from "./utils";
 
@@ -52,8 +52,13 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
       );
 
       yield* put(nextAction);
-    } catch (error) {
-      yield* put(loadNextPageMessagesAction.failure({ error, filter }));
+    } catch (e) {
+      yield* put(
+        loadNextPageMessagesAction.failure({
+          error: convertUnknownToError(e),
+          filter
+        })
+      );
     }
   };
 }

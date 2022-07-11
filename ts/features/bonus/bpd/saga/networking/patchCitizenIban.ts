@@ -10,6 +10,7 @@ import { Iban } from "../../../../../../definitions/backend/Iban";
 import { bpdUpsertIban, IbanUpsertResult } from "../../store/actions/iban";
 import { profileSelector } from "../../../../../store/reducers/profile";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { convertUnknownToError } from "../../../../../utils/errors";
 // representation of iban status
 export enum IbanStatus {
   "OK" = "OK",
@@ -97,6 +98,6 @@ export function* patchCitizenIban(
       throw new Error(readablePrivacyReport(updatePaymentMethodResult.left));
     }
   } catch (e) {
-    yield* put(bpdUpsertIban.failure(e));
+    yield* put(bpdUpsertIban.failure(convertUnknownToError(e)));
   }
 }

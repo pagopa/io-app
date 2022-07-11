@@ -12,6 +12,7 @@ import {
 } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SagaCallReturnType } from "../../types/utils";
+import { convertUnknownToError } from "../../utils/errors";
 import { resetAssistanceData } from "../../utils/supportAssistance";
 
 export function* logoutSaga(
@@ -42,9 +43,9 @@ export function* logoutSaga(
       };
       yield* put(logoutFailure(logoutError));
     }
-  } catch (error) {
+  } catch (e) {
     const logoutError = {
-      error,
+      error: convertUnknownToError(e),
       options: action.payload
     };
     yield* put(logoutFailure(logoutError));

@@ -15,6 +15,7 @@ import {
 } from "../store/actions/authentication";
 import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
+import { convertUnknownToError } from "../utils/errors";
 
 // Started by redux action
 function* handleTestLogin({
@@ -54,7 +55,9 @@ function* handleTestLogin({
     }
     throw new Error(readableReport(testLoginResponse.left));
   } catch (e) {
-    yield* put(loginFailure({ error: e, idp: "testIdp" }));
+    yield* put(
+      loginFailure({ error: convertUnknownToError(e), idp: "testIdp" })
+    );
   }
 }
 

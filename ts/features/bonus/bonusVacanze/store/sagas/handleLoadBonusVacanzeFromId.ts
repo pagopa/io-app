@@ -3,6 +3,7 @@ import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { convertUnknownToError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
@@ -31,7 +32,10 @@ export function* handleLoadBonusVacanzeFromId(
     }
   } catch (e) {
     yield* put(
-      loadBonusVacanzeFromId.failure({ error: e, id: action.payload })
+      loadBonusVacanzeFromId.failure({
+        error: convertUnknownToError(e),
+        id: action.payload
+      })
     );
   }
 }

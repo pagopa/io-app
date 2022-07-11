@@ -11,6 +11,7 @@ import {
 
 import { BackendClient } from "../../api/backend";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
+import { convertUnknownToError } from "../../utils/errors";
 
 /**
  * Load session info from the Backend
@@ -47,7 +48,7 @@ export function* loadSessionInformationSaga(
       ? response.right.value.title || errorMsgDefault
       : errorMsgDefault;
   } catch (e) {
-    yield* put(sessionInformationLoadFailure(Error(e)));
+    yield* put(sessionInformationLoadFailure(convertUnknownToError(e)));
     return O.none;
   }
 }
