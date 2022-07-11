@@ -32,6 +32,7 @@ import { MvlAttachmentId } from "../../mvl/types/mvlData";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
+import { PnMessageTimeline } from "./PnMessageTimeline";
 
 const styles = StyleSheet.create({
   content: {
@@ -167,6 +168,9 @@ export const PnMessageDetails = (props: Props) => {
             subtitle={props.message.iun}
             onPress={() => clipboardSetStringWithFeedback(props.message.iun)}
           />
+        </PnMessageDetailsSection>
+        <PnMessageDetailsSection title="">
+          <PnMessageTimeline message={props.message} />
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
       </ScrollView>
