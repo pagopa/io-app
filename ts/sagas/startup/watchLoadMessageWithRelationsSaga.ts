@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
+import { eitherToV1 } from "../../migration/fp-ts-converters";
 import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -25,11 +26,13 @@ export function* watchLoadMessageWithRelationsSaga(
   const messageId = messageWithRelationsLoadRequest.payload;
 
   try {
-    const messageOrError: SagaCallReturnType<typeof loadMessage> = yield* call(
+    const messageOrErrorv2: SagaCallReturnType<typeof loadMessage> = yield* call(
       loadMessage,
       getMessage,
       messageId
     );
+
+    const messageOrError = eitherToV1(messageOrErrorv2);
 
     if (messageOrError.isLeft()) {
       throw new Error(messageOrError.value.message);
