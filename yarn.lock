@@ -7966,6 +7966,11 @@ forwarded@0.2.0:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
 
+"fp-ts2@npm:fp-ts@2.12.1":
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.12.1.tgz#e389488bfd1507af06bd5965e97367edcd4fabad"
+  integrity sha512-oxvgqUYR6O9VkKXrxkJ0NOyU0FrE705MeqgBUMEPWyTu6Pwn768cJbHChw2XOBlgFLKfIHxjr2OOBFpv2mUGZw==
+
 fp-ts@1.12.0, fp-ts@1.17.4, fp-ts@^1.0.0:
   version "1.17.4"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.17.4.tgz#f41eeeb2a8924b51b11521f93f5f59d28d0503be"
@@ -8980,6 +8985,11 @@ invert-kv@^2.0.0:
 "io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.21":
   version "0.3.21"
   resolved "https://github.com/pagopa/io-react-native-zendesk.git#6b8ab1aa5eb485feeb2dfe9f09aa0c37773e9a0c"
+
+"io-ts2@npm:io-ts@2.2.16":
+  version "2.2.16"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.16.tgz#597dffa03db1913fc318c9c6df6931cb4ed808b2"
+  integrity sha512-y5TTSa6VP6le0hhmIyN0dqEXkrZeJLeC5KApJq6VLci3UEKF80lZ+KuoUs02RhBxNWlrqSNxzfI7otLX1Euv8Q==
 
 io-ts@1.8.5:
   version "1.8.5"

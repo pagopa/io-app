@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { exec } from "child_process";
 import * as util from "util";
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E2 from "fp-ts2/lib/Either";
 import { Errors } from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import * as semver from "semver";
@@ -12,6 +12,9 @@ import { DependenciesTable } from "./types/DependeciesTable";
 import { getSeverityType } from "./types/GroupBySeverity";
 import { getDependencyType, increaseSeverityAmount } from "./types/GroupByType";
 import { OutdatedStats, toOutdatedPackage } from "./types/OutdatedStats";
+import { pipe } from "fp-ts2/lib/function";
+
+import { eitherToV2 } from "../../../ts/migration/fp-ts-converters";
 
 const execAsync = util.promisify(exec);
 
@@ -44,12 +47,12 @@ const readOutdatedJson = async (): Promise<string> => {
  * Try to extract the second section of the stdout. The first section describe the table header, the second section the content.
  * @param stdout
  */
-const extractStdoutSection = (stdout: string): Either<Error | Errors, any> => {
+const extractStdoutSection = (stdout: string): E2.Either<Error | Errors, any> => {
   const splittedErrorStdout = stdout.split("\n");
   if (splittedErrorStdout.length > 1) {
-    return right(JSON.parse(splittedErrorStdout[1]));
+    return E2.right(JSON.parse(splittedErrorStdout[1]));
   }
-  return left(new Error("stdout splitting has the wrong size"));
+  return E2.left(new Error("stdout splitting has the wrong size"));
 };
 
 /**
@@ -109,23 +112,26 @@ const main = async () => {
     const rawJSON = await readOutdatedJson();
     console.log("Convert the json to OutdatedStats");
 
-    const outdatedPackages = extractStdoutSection(rawJSON)
-      .chain(DependenciesTable.decode)
-      .map(extractGroupByType);
+    const outdatedPackages = pipe(
+      extractStdoutSection(rawJSON),
+      DependenciesTable.decode,
+      eitherToV2,
+      E2.map(extractGroupByType)
+    )
 
-    if (outdatedPackages.isRight()) {
+    if (E2.isRight(outdatedPackages)) {
       console.log(`Send slack message to ${destinationChannel}`);
       await Promise.all(
-        generateSlackMessage(outdatedPackages.value).map(line =>
+        generateSlackMessage(outdatedPackages.right).map(line =>
           slackPostMessage(line, destinationChannel, false)
         )
       );
     } else {
       console.log("Error while decoding the command output:");
       const report =
-        outdatedPackages.value instanceof Error
-          ? outdatedPackages.value.message
-          : readableReport(outdatedPackages.value);
+        outdatedPackages.left instanceof Error
+          ? outdatedPackages.left.message
+          : readableReport(outdatedPackages.left);
       console.log(report);
     }
   } catch (e) {
