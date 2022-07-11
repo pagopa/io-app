@@ -3,8 +3,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { none, some } from "fp-ts/lib/Option";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { PNMessage } from "../store/types/types";
 import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
@@ -22,6 +22,10 @@ import { OrganizationFiscalCode } from "../../../../definitions/backend/Organiza
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import ROUTES from "../../../navigation/routes";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
+import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
+import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
@@ -34,6 +38,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
+  messageId: UIMessageId;
   message: PNMessage;
   service: ServicePublic | undefined;
 }>;
@@ -66,11 +71,11 @@ export const PnMessageDetails = (props: Props) => {
     state => state.wallet.payment.verifica
   );
 
-  const paymentError = pot.toUndefined(
-    pot.isError(paymentVerification)
-      ? pot.some(paymentVerification.error)
-      : pot.none
-  );
+  const paymentVerificationError: TransactionSummaryError = pot.isError(
+    paymentVerification
+  )
+    ? some(paymentVerification.error)
+    : none;
 
   const verifyPaymentIfNeeded = useCallback(() => {
     if (rptId) {
@@ -97,7 +102,10 @@ export const PnMessageDetails = (props: Props) => {
 
   return (
     <>
-      <ScrollView style={[IOStyles.horizontalContentPadding]}>
+      {firstLoadingRequest && paymentVerificationError.isSome() && (
+        <TransactionSummaryStatus error={paymentVerificationError} />
+      )}
+      <ScrollView style={{ padding: customVariables.contentPadding }}>
         {props.service && <PnMessageDetailsHeader service={props.service} />}
         <PnMessageDetailsContent
           style={styles.content}
@@ -113,12 +121,25 @@ export const PnMessageDetails = (props: Props) => {
             title={I18n.t("features.pn.details.paymentSection.title")}
           >
             {firstLoadingRequest && (
-              <TransactionSummary
-                paymentVerification={paymentVerification}
-                paymentNoticeNumber={maybePayment.noticeCode}
-                organizationFiscalCode={maybePayment.creditorTaxId}
-                isPaid={paymentError === "PAA_PAGAMENTO_DUPLICATO"}
-              />
+              <>
+                <TransactionSummary
+                  paymentVerification={paymentVerification}
+                  paymentNoticeNumber={maybePayment.noticeCode}
+                  organizationFiscalCode={maybePayment.creditorTaxId}
+                  isPaid={
+                    paymentVerificationError.toUndefined() ===
+                    "PAA_PAGAMENTO_DUPLICATO"
+                  }
+                />
+                {paymentVerificationError.isSome() && (
+                  <TransactionSummaryErrorDetails
+                    error={paymentVerificationError}
+                    paymentNoticeNumber={maybePayment.noticeCode}
+                    organizationFiscalCode={maybePayment.creditorTaxId}
+                    messageId={props.messageId}
+                  />
+                )}
+              </>
             )}
           </PnMessageDetailsSection>
         )}
