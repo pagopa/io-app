@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { PNMessage } from "../store/types/types";
@@ -18,6 +19,8 @@ import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import ROUTES from "../../../navigation/routes";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
@@ -39,6 +42,7 @@ export const PnMessageDetails = (props: Props) => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
 
   const dispatch = useIODispatch();
+  const navigation = useNavigation();
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
 
   const maybePayment = props.message.recipients.find(
@@ -79,6 +83,15 @@ export const PnMessageDetails = (props: Props) => {
       setFirstLoadingRequest(true);
     }
   }, [rptId, dispatch, setFirstLoadingRequest]);
+
+  const startPayment = useCallback(() => {
+    if (rptId) {
+      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+        screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+        rptId
+      });
+    }
+  }, [rptId, navigation]);
 
   useOnFirstRender(verifyPaymentIfNeeded);
 
@@ -121,6 +134,19 @@ export const PnMessageDetails = (props: Props) => {
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
       </ScrollView>
+
+      {firstLoadingRequest &&
+        !pot.isLoading(paymentVerification) &&
+        pot.isSome(paymentVerification) && (
+          <FooterWithButtons
+            type="SingleButton"
+            leftButton={{
+              block: true,
+              onPress: startPayment,
+              title: I18n.t("wallet.continue")
+            }}
+          />
+        )}
     </>
   );
 };
