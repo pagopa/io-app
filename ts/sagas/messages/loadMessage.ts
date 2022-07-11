@@ -11,6 +11,9 @@ import { readablePrivacyReport } from "../../utils/reporters";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError } from "../../utils/errors";
 
+import * as E2 from "fp-ts2/Either";
+import { eitherToV2 } from "../../migration/fp-ts-converters";
+
 /**
  * A saga to fetch a message from the Backend and save it in the redux store.
  * Can be called directly without dispatching a redux action.
@@ -20,7 +23,7 @@ export function* loadMessage(
   meta: CreatedMessageWithoutContent
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, CreatedMessageWithContentAndAttachments>,
+  E2.Either<Error, CreatedMessageWithContentAndAttachments>,
   any
 > {
   // Load the messages already in the redux store
@@ -29,24 +32,25 @@ export function* loadMessage(
 
   // If we already have the message in the store just return it
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
-    return right<Error, CreatedMessageWithContentAndAttachments>(
-      cachedMessage.message.value
-    );
+    return E2.right(cachedMessage.message.value);
   }
   try {
     // Fetch the message from the Backend
-    const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield* call(
+    const maybeMessageV1: SagaCallReturnType<typeof fetchMessage> = yield* call(
       fetchMessage,
       getMessage,
       meta
     );
 
-    if (maybeMessage.isLeft()) {
-      throw maybeMessage.value;
+    const maybeMessage = eitherToV2(maybeMessageV1);
+
+    if(E2.isLeft(maybeMessage)) {
+      throw maybeMessage.left
     } else {
-      yield* put(loadMessageAction.success(maybeMessage.value));
+      yield* put(loadMessageAction.success(maybeMessage.right));
     }
-    return maybeMessage;
+
+    return maybeMessage
   } catch (e) {
     const error = convertUnknownToError(e);
 
@@ -56,7 +60,7 @@ export function* loadMessage(
         error
       })
     );
-    return left<Error, CreatedMessageWithContentAndAttachments>(error);
+    return E2.left<Error, CreatedMessageWithContentAndAttachments>(error);
   }
 }
 

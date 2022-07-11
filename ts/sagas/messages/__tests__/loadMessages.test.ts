@@ -8,6 +8,8 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../definitions
 import { DEPRECATED_loadMessage as loadMessageAction } from "../../../store/actions/messages";
 import { testFetchMessage, loadMessage } from "../loadMessage";
 
+import * as E2 from "fp-ts2/Either";
+
 const fetchMessage = testFetchMessage!;
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
@@ -91,7 +93,7 @@ describe("messages", () => {
           })
         )
         .next()
-        .returns(left(Error("Error")));
+        .returns(E2.left(Error("Error")));
     });
 
     it("should put MESSAGE_LOAD_SUCCESS and return the message if the message is fetched successfully", () => {
@@ -104,7 +106,7 @@ describe("messages", () => {
         .next(right(testMessageWithContent1))
         .put(loadMessageAction.success(testMessageWithContent1))
         .next()
-        .returns(right(testMessageWithContent1));
+        .returns(E2.right(testMessageWithContent1));
     });
   });
 });
