@@ -14,7 +14,6 @@ import {
 } from "../../store/actions/authentication";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
-import { GetSessionStateT } from "../../../definitions/backend/requestTypes";
 import { convertUnknownToError } from "../../utils/errors";
 
 // load the support token useful for user assistance

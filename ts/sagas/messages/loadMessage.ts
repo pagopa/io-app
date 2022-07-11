@@ -1,5 +1,5 @@
-import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
@@ -7,9 +7,9 @@ import { BackendClient } from "../../api/backend";
 import { DEPRECATED_loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { readablePrivacyReport } from "../../utils/reporters";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError } from "../../utils/errors";
+import { readablePrivacyReport } from "../../utils/reporters";
 
 /**
  * A saga to fetch a message from the Backend and save it in the redux store.
@@ -93,7 +93,7 @@ function* fetchMessage(
     return E.right<Error, CreatedMessageWithContentAndAttachments>(
       response.right.value
     );
-  } catch (e) {
+  } catch (error) {
     // Return the error
     return E.left<Error, CreatedMessageWithContentAndAttachments>(
       convertUnknownToError(error)

@@ -4,7 +4,7 @@ import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import { getError } from "../../../../../utils/errors";
+import { convertUnknownToError, getError } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import {
@@ -12,10 +12,6 @@ import {
   bpdEnrollUserToProgram,
   bpdUpdateOptInStatusMethod
 } from "../../store/actions/onboarding";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { BackendBpdClient } from "../../api/backendBpdClient";
-import { bpdLoadActivationStatus } from "../../store/actions/details";
-import { convertUnknownToError, getError } from "../../../../../utils/errors";
 
 export function* executeAndDispatchV2(
   remoteCall:

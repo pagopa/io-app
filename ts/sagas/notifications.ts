@@ -15,7 +15,6 @@ import {
 } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
-import { mixpanelTrack } from "../mixpanel";
 import { convertUnknownToError } from "../utils/errors";
 
 export const notificationsPlatform: PlatformEnum =

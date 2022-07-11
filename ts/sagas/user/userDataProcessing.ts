@@ -12,7 +12,6 @@ import {
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError, getError } from "../../utils/errors";
-import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 
 /**
  * The following logic:
