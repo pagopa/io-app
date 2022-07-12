@@ -1,5 +1,4 @@
-import { CompatNavigationProp } from "@react-navigation/compat/src/types";
-import { useNavigation } from "@react-navigation/native";
+import { Route, useRoute } from "@react-navigation/core";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -14,23 +13,31 @@ export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
 }>;
 
 type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_LANDING_WEBVIEW">
+  navigation: IOStackNavigationProp<
+    CgnDetailsParamsList,
+    "CGN_MERCHANTS_LANDING_WEBVIEW"
   >;
 };
 
 const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const navigation = useNavigation();
-  const landingPageUrl = props.navigation.getParam("landingPageUrl");
-  const landingPageReferrer = props.navigation.getParam("landingPageReferrer");
+  const route =
+    useRoute<
+      Route<
+        "CGN_MERCHANTS_LANDING_WEBVIEW",
+        CgnMerchantLandingWebviewNavigationParams
+      >
+    >();
+
+  const landingPageUrl = route.params.landingPageUrl;
+  const landingPageReferrer = route.params.landingPageReferrer;
 
   return (
     <BaseScreenComponent
       customRightIcon={{
         iconName: "io-close",
-        onPress: () => navigation.goBack()
+        onPress: () => props.navigation.goBack()
       }}
     >
       <SafeAreaView style={IOStyles.flex}>

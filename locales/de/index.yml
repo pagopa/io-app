@@ -987,7 +987,7 @@ services:
   loading:
     title: Laden der Dienstleistungsliste
     subtitle: nur einige Sekunden...
-  enableAll: Schnelleinrichtung verwenden
+  enableAll: Schnell Konfiguration verwenden
   disableAll: Manuelle Konfiguration verwenden
   updatingServiceMode: Bitte warten...
   disableAllTitle: "Wollen Sie wirklich alle Dienste deaktivieren?"
