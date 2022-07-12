@@ -85,8 +85,7 @@ const styles = StyleSheet.create({
   },
 
   white: {
-    /* Replace "brandPrimaryInverted" with white color */
-    backgroundColor: customVariables.brandPrimaryInverted
+    backgroundColor: customVariables.colorWhite
   },
 
   bottomText: {

@@ -47,7 +47,6 @@ const customVariables = Object.assign(materialVariables, {
 
   // Color
   brandPrimary: "#0066CC",
-  brandPrimaryInverted: "#FFFFFF",
   brandGray: "#F5F6F7",
   brandLight: "#FCFDFF",
   brandSuccess: "#007005",
