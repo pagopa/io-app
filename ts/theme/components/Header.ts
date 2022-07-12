@@ -95,6 +95,7 @@ export default (): Theme => ({
     "NativeBase.Right": {
       "NativeBase.Button": {
         "UIComponent.IconFont": {
+          /* Replace "brandPrimaryInverted" with white color */
           color: variables.brandPrimaryInverted
         }
       }
@@ -106,6 +107,7 @@ export default (): Theme => ({
     "NativeBase.Right": {
       "NativeBase.Button": {
         "UIComponent.IconFont": {
+          /* Replace "brandPrimaryInverted" with white color */
           color: variables.brandPrimaryInverted
         }
       }

@@ -104,7 +104,7 @@ const ColorBox = (props: ColorBoxProps) => (
       {props.color && <Text style={styles.colorPill}>{props.color}</Text>}
     </View>
     {props.name && (
-      <H5 color={"bluegrey"} weight={"SemiBold"}>
+      <H5 color={"bluegrey"} weight={"Regular"}>
         {props.name}
       </H5>
     )}
@@ -125,7 +125,7 @@ const GradientBox = (props: GradientBoxProps) => {
         {last && <Text style={styles.colorPill}>{last}</Text>}
       </LinearGradient>
       {props.name && (
-        <H5 color={"bluegrey"} weight={"SemiBold"}>
+        <H5 color={"bluegrey"} weight={"Regular"}>
           {props.name}
         </H5>
       )}

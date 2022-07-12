@@ -48,6 +48,7 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
     smallBorded: {
       height: borderLength,
       width: borderLength,
+      /* Replace "brandPrimaryInverted" with white color */
       borderColor: variables.brandPrimaryInverted,
       backgroundColor: "transparent",
       position: "absolute"
