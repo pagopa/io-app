@@ -4,7 +4,10 @@ import {
   LinkingOptions,
   NavigationContainer
 } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets
+} from "@react-navigation/stack";
 import { View } from "native-base";
 import * as React from "react";
 import { useRef } from "react";
@@ -121,6 +124,7 @@ export const AppStackNavigator = () => {
       <Stack.Screen
         name={ZENDESK_ROUTES.MAIN}
         component={ZendeskStackNavigator}
+        options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}
       />
       <Stack.Screen
         name={UADONATION_ROUTES.WEBVIEW}
