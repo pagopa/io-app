@@ -1788,8 +1788,8 @@ services:
         body:
           text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
         bottomSheet:
-          title: "Do you really want to setup services one by one?"
-          body: "**On IO you will only be contacted by the services that have something important to tell you.** If you choose this option, you will need to setup the services you are interest in manually. All the services that will come in future will not be able to contact you."
+          title: "If you confirm, you won't receive any message"
+          body: "With manual configuration, neither present nor future services can contact you. To allow the services you are interested in to contact you, you will have to change their settings one by one in the corresponding service detail pages."
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section

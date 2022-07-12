@@ -1812,8 +1812,8 @@ services:
         body:
           text1: "Nessun servizio potrà contattarti. Per ricevere messaggi dovrai configurarli uno a uno."
         bottomSheet:
-          title: "Vuoi davvero configurare i servizi uno ad uno?"
-          body: "**Su IO ti contattano solo i servizi che hanno qualcosa di importante da dirti.** Se scegli questa opzione, dovrai configurare manualmente i servizi che ti interessano. Tutti i servizi che arriveranno in futuro non potranno inviarti messaggi."
+          title: "Se confermi, non riceverai alcun messaggio"
+          body: "Con la configurazione manuale, nessun servizio di IO, presente o futuro, potrà inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno dalle relative schede servizio."
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   contextualHelpTitle: Cosa puoi fare nei tuoi Servizi
