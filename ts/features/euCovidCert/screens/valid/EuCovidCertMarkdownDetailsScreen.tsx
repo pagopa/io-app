@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
@@ -10,7 +9,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -39,11 +38,12 @@ const styles = StyleSheet.create({
 const showToastError = (error: string = I18n.t("global.genericError")) =>
   showToast(error);
 
-export const EuCovidCertMarkdownDetailsScreen = (props: {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<EUCovidCertParamsList, "EUCOVIDCERT_MARKDOWN_DETAILS">
-  >;
-}): React.ReactElement => {
+export const EuCovidCertMarkdownDetailsScreen = (
+  props: IOStackNavigationRouteProps<
+    EUCovidCertParamsList,
+    "EUCOVIDCERT_MARKDOWN_DETAILS"
+  >
+): React.ReactElement => {
   const [loadMarkdownComplete, setLoadMarkdownComplete] = useState(false);
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
   const [flashAnimationState, setFlashAnimationState] =
@@ -110,7 +110,7 @@ export const EuCovidCertMarkdownDetailsScreen = (props: {
               extraBodyHeight={60}
               onLoadEnd={() => setLoadMarkdownComplete(true)}
             >
-              {props.navigation.getParam("markdownDetails")}
+              {props.route.params.markdownDetails}
             </MarkdownHandleCustomLink>
             {canShowButton && (
               <>
