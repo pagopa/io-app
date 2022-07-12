@@ -1403,8 +1403,8 @@ wallet:
       holder:
         label: Card holder
         description:
-          base: "Enter as shown on the card"
-          error: "Enter exactly as shown on the card"
+          base: "Follow the order on your card"
+          error: "Do not use accented characters or symbols"
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
@@ -1417,8 +1417,8 @@ wallet:
       securityCode4D: "••••"
     accessibility:
       holder:
-        base: "Card holder, enter as shown on the card"
-        error: "Card holder. Please, do not use accented letters"
+        base: "Card holder, follow the order on your card"
+        error: "Card holder, do not use accented characters or symbols"
       pan:
         base: "Card number"
         error: "Card number. Please, enter at least {{minLength}} digits"
