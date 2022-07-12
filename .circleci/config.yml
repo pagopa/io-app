@@ -498,12 +498,14 @@ workflows:
             branches:
               ignore: master
 
-      - alpha-release-android:
+      # TODO: Native Android e2e tests
+      # TODO: Slack integration
+      - run-e2e-test-IOS:
           requires:
             - compile-typescript
-            - run-tests
-            - run-eslint
-            - run-prettier
+          filters:
+            branches:
+              only: master
 
   # Release workflow triggered only when a new release tag is pushed
   release:
