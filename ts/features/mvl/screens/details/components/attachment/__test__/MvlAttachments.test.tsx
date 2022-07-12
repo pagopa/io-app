@@ -3,7 +3,6 @@ import React from "react";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import * as pot from "italia-ts-commons/lib/pot";
-import I18n from "../../../../../../../i18n";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
@@ -33,7 +32,7 @@ describe("MvlAttachments", () => {
       it("it should present the bottom sheet", async () => {
         const res = renderComponent({
           attachments: [mvlMockPdfAttachment],
-          openPreview: _ => {}
+          openPreview: jest.fn()
         });
         const item = res.getByText(mvlMockPdfAttachment.displayName);
         await fireEvent(item, "onPress");
@@ -48,7 +47,7 @@ describe("MvlAttachments", () => {
           const res = renderComponent(
             {
               attachments: [mvlMockPdfAttachment],
-              openPreview: _ => {}
+              openPreview: jest.fn()
             },
             { showAlertForAttachments: false }
           );
@@ -69,7 +68,7 @@ describe("MvlAttachments", () => {
           const res = renderComponent(
             {
               attachments: [mvlMockPdfAttachment],
-              openPreview: _ => {}
+              openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
             { [mvlMockPdfAttachment.id]: loadingPot }
@@ -95,7 +94,7 @@ describe("MvlAttachments", () => {
           const res = renderComponent(
             {
               attachments: [mvlMockPdfAttachment],
-              openPreview: _ => {}
+              openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
             { [mvlMockPdfAttachment.id]: notLoadingPot }
