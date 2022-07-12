@@ -1813,7 +1813,7 @@ services:
           text1: "Nessun servizio potrà contattarti. Per ricevere messaggi dovrai configurarli uno a uno."
         bottomSheet:
           title: "Se confermi, non riceverai alcun messaggio"
-          body: "Con la configurazione manuale, nessun servizio di IO, presente o futuro, potrà inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno dalle relative schede servizio."
+          body: "Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio."
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   contextualHelpTitle: Cosa puoi fare nei tuoi Servizi
