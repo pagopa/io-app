@@ -1,5 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { useNavigation } from "@react-navigation/native";
 import { ListItem } from "native-base";
 import React from "react";
 import {
@@ -17,7 +15,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import IconFont from "../../../components/ui/IconFont";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import customVariables from "../../../theme/variables";
 import { getFullLocale } from "../../../utils/locale";
@@ -36,11 +34,10 @@ export type ZendeskChooseSubCategoryNavigationParams = {
   assistanceForPayment: boolean;
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_SUB_CATEGORY">
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  ZendeskParamsList,
+  "ZENDESK_CHOOSE_SUB_CATEGORY"
+>;
 
 /**
  * this screen shows the sub-categories for which the user can ask support with the assistance
@@ -49,10 +46,7 @@ type Props = {
 const ZendeskChooseSubCategory = (props: Props) => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useDispatch();
-  const navigation = useNavigation<IOStackNavigationProp<ZendeskParamsList>>();
-  const assistanceForPayment = props.navigation.getParam(
-    "assistanceForPayment"
-  );
+  const assistanceForPayment = props.route.params.assistanceForPayment;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
     dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
@@ -86,7 +80,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
           selectedSubcategory(subCategory);
           // Set sub-category as custom field
           addTicketCustomField(subCategoriesId, subCategory.value);
-          navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
+          props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
             assistanceForPayment
           });
         }}
