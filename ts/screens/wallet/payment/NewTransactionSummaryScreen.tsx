@@ -66,6 +66,7 @@ import {
   zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
 import customVariables from "../../../theme/variables";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -75,7 +76,6 @@ import {
   helpButtonProps,
   loadingButtonProps
 } from "./components/TransactionSummaryButtonConfigurations";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 export type TransactionSummaryError = Option<
   PayloadForAction<

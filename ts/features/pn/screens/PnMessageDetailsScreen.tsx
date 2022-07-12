@@ -27,6 +27,7 @@ export type PnMessageDetailsScreenNavigationParams = Readonly<{
 }>;
 
 const renderMessage = (
+  messageId: UIMessageId,
   message: pot.Pot<PNMessage | undefined, Error>,
   service: ServicePublic | undefined,
   onRetry: () => void
@@ -39,7 +40,11 @@ const renderMessage = (
     () => <PnMessageDetailsError onRetry={onRetry} />,
     message =>
       message ? (
-        <PnMessageDetails message={message} service={service} />
+        <PnMessageDetails
+          messageId={messageId}
+          message={message}
+          service={service}
+        />
       ) : (
         // decoding error
         <PnMessageDetailsError onRetry={onRetry} />
@@ -80,7 +85,7 @@ export const PnMessageDetailsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {renderMessage(message, service, loadContent)}
+        {renderMessage(messageId, message, service, loadContent)}
       </SafeAreaView>
     </BaseScreenComponent>
   );

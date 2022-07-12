@@ -2,8 +2,9 @@ import React, { useCallback, useState } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { none, some } from "fp-ts/lib/Option";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { PNMessage } from "../store/types/types";
 import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
@@ -18,8 +19,14 @@ import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import ROUTES from "../../../navigation/routes";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
+import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
+import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
 import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
@@ -32,6 +39,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
+  messageId: UIMessageId;
   message: PNMessage;
   service: ServicePublic | undefined;
 }>;
@@ -40,6 +48,7 @@ export const PnMessageDetails = (props: Props) => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
 
   const dispatch = useIODispatch();
+  const navigation = useNavigation();
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
 
   const maybePayment = props.message.recipients.find(
@@ -63,11 +72,11 @@ export const PnMessageDetails = (props: Props) => {
     state => state.wallet.payment.verifica
   );
 
-  const paymentError = pot.toUndefined(
-    pot.isError(paymentVerification)
-      ? pot.some(paymentVerification.error)
-      : pot.none
-  );
+  const paymentVerificationError: TransactionSummaryError = pot.isError(
+    paymentVerification
+  )
+    ? some(paymentVerification.error)
+    : none;
 
   const verifyPaymentIfNeeded = useCallback(() => {
     if (rptId) {
@@ -81,11 +90,23 @@ export const PnMessageDetails = (props: Props) => {
     }
   }, [rptId, dispatch, setFirstLoadingRequest]);
 
+  const startPayment = useCallback(() => {
+    if (rptId) {
+      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+        screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+        rptId
+      });
+    }
+  }, [rptId, navigation]);
+
   useOnFirstRender(verifyPaymentIfNeeded);
 
   return (
     <>
-      <ScrollView style={[IOStyles.horizontalContentPadding]}>
+      {firstLoadingRequest && paymentVerificationError.isSome() && (
+        <TransactionSummaryStatus error={paymentVerificationError} />
+      )}
+      <ScrollView style={{ padding: customVariables.contentPadding }}>
         {props.service && <PnMessageDetailsHeader service={props.service} />}
         <PnMessageDetailsContent
           style={styles.content}
@@ -103,12 +124,25 @@ export const PnMessageDetails = (props: Props) => {
             title={I18n.t("features.pn.details.paymentSection.title")}
           >
             {firstLoadingRequest && (
-              <TransactionSummary
-                paymentVerification={paymentVerification}
-                paymentNoticeNumber={maybePayment.noticeCode}
-                organizationFiscalCode={maybePayment.creditorTaxId}
-                isPaid={paymentError === "PAA_PAGAMENTO_DUPLICATO"}
-              />
+              <>
+                <TransactionSummary
+                  paymentVerification={paymentVerification}
+                  paymentNoticeNumber={maybePayment.noticeCode}
+                  organizationFiscalCode={maybePayment.creditorTaxId}
+                  isPaid={
+                    paymentVerificationError.toUndefined() ===
+                    "PAA_PAGAMENTO_DUPLICATO"
+                  }
+                />
+                {paymentVerificationError.isSome() && (
+                  <TransactionSummaryErrorDetails
+                    error={paymentVerificationError}
+                    paymentNoticeNumber={maybePayment.noticeCode}
+                    organizationFiscalCode={maybePayment.creditorTaxId}
+                    messageId={props.messageId}
+                  />
+                )}
+              </>
             )}
           </PnMessageDetailsSection>
         )}
@@ -124,6 +158,19 @@ export const PnMessageDetails = (props: Props) => {
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
       </ScrollView>
+
+      {firstLoadingRequest &&
+        !pot.isLoading(paymentVerification) &&
+        pot.isSome(paymentVerification) && (
+          <FooterWithButtons
+            type="SingleButton"
+            leftButton={{
+              block: true,
+              onPress: startPayment,
+              title: I18n.t("wallet.continue")
+            }}
+          />
+        )}
     </>
   );
 };
