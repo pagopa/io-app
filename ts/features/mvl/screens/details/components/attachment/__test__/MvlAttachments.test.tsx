@@ -28,29 +28,12 @@ describe("MvlAttachments", () => {
     mockPresentBottomSheet.mockReset();
   });
 
-  describe("given no attachments", () => {
-    it("it should NOT be rendered", () => {
-      const res = renderComponent({ attachments: [] });
-      expect(
-        res.queryByText(I18n.t("features.mvl.details.attachments.title"))
-      ).toBeNull();
-    });
-  });
-
   describe("given an attachment", () => {
-    it("it should be rendered", () => {
-      const res = renderComponent({
-        attachments: [mvlMockPdfAttachment]
-      });
-      expect(
-        res.queryByText(I18n.t("features.mvl.details.attachments.title"))
-      ).not.toBeNull();
-    });
-
     describe("when tapping on it for the first time", () => {
       it("it should present the bottom sheet", async () => {
         const res = renderComponent({
-          attachments: [mvlMockPdfAttachment]
+          attachments: [mvlMockPdfAttachment],
+          openPreview: _ => {}
         });
         const item = res.getByText(mvlMockPdfAttachment.displayName);
         await fireEvent(item, "onPress");
@@ -64,7 +47,8 @@ describe("MvlAttachments", () => {
         it("it should NOT present the bottom sheet", async () => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment]
+              attachments: [mvlMockPdfAttachment],
+              openPreview: _ => {}
             },
             { showAlertForAttachments: false }
           );
@@ -84,7 +68,8 @@ describe("MvlAttachments", () => {
         ].forEach(loadingPot => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment]
+              attachments: [mvlMockPdfAttachment],
+              openPreview: _ => {}
             },
             { showAlertForAttachments: false },
             { [mvlMockPdfAttachment.id]: loadingPot }
@@ -109,7 +94,8 @@ describe("MvlAttachments", () => {
         ].forEach(notLoadingPot => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment]
+              attachments: [mvlMockPdfAttachment],
+              openPreview: _ => {}
             },
             { showAlertForAttachments: false },
             { [mvlMockPdfAttachment.id]: notLoadingPot }
