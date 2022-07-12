@@ -12,11 +12,16 @@ import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
-import { MvlAttachment, MvlData } from "../../../../types/mvlData";
+import {
+  MvlAttachment,
+  MvlAttachmentId,
+  MvlData
+} from "../../../../types/mvlData";
 import { useMvlAttachmentDownload } from "./MvlAttachmentDownload";
 
 type Props = {
   attachments: MvlData["attachments"];
+  openPreview: (attachmentId: MvlAttachmentId) => void;
 };
 
 const styles = StyleSheet.create({
@@ -72,9 +77,12 @@ const AttachmentIcon = (props: {
  * @param props
  * @constructor
  */
-const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
+const MvlAttachmentItem = (props: {
+  attachment: MvlAttachment;
+  openPreview: (attachmentId: MvlAttachmentId) => void;
+}) => {
   const { downloadPot, onAttachmentSelect, bottomSheet } =
-    useMvlAttachmentDownload(props.attachment);
+    useMvlAttachmentDownload(props.attachment, props.openPreview);
 
   return (
     <>
@@ -132,7 +140,10 @@ export const MvlAttachments = (props: Props): React.ReactElement | null =>
     <>
       {props.attachments.map((attachment, index) => (
         <View key={index}>
-          <MvlAttachmentItem attachment={attachment} />
+          <MvlAttachmentItem
+            attachment={attachment}
+            openPreview={props.openPreview}
+          />
           {index < props.attachments.length - 1 && (
             <ItemSeparatorComponent noPadded={true} />
           )}
