@@ -93,9 +93,9 @@ import {
   initMixpanel
 } from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
-import { askPremiumMessagesOptInOut } from "./premiumMessages";
 import {
   loadProfile,
+  upsertAppVersionSaga,
   watchProfile,
   watchProfileRefreshRequestsSaga,
   watchProfileUpsertRequestsSaga
@@ -131,6 +131,7 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
+import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -278,6 +279,15 @@ export function* initializeApplicationSaga(): Generator<
 
   const userProfile = maybeUserProfile.value;
 
+  // This saga will upsert the `last_app_version` value in the
+  // profile only if it actually changed from the one stored in
+  // the backend.
+  yield* call(
+    upsertAppVersionSaga,
+    userProfile,
+    backendClient.createOrUpdateProfile
+  );
+
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
   // logged in)
@@ -323,23 +333,20 @@ export function* initializeApplicationSaga(): Generator<
     // check if the user expressed preference about mixpanel, if not ask for it
     yield* call(askMixpanelOptIn);
 
-    // Check if the user has expressed a preference
-    // about the Premium Messages.
-    yield* call(askPremiumMessagesOptInOut);
-
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
 
     yield* call(checkAcknowledgedEmailSaga, userProfile);
 
-    yield* call(
-      askServicesPreferencesModeOptin,
-      isProfileFirstOnBoarding(userProfile)
-    );
+    const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
+
+    yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
 
     // Show the thank-you screen for the onboarding
-    yield* call(completeOnboardingSaga);
+    if (isFirstOnboarding) {
+      yield* call(completeOnboardingSaga);
+    }
 
     // Stop the watchAbortOnboardingSaga
     yield* cancel(watchAbortOnboardingSagaTask);
@@ -364,10 +371,6 @@ export function* initializeApplicationSaga(): Generator<
 
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
-
-      // Check if the user has expressed a preference
-      // about the Premium Messages.
-      yield* call(askPremiumMessagesOptInOut);
 
       yield* call(askServicesPreferencesModeOptin, false);
 
@@ -512,6 +515,7 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
     yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
     yield* fork(watchReloadAllMessages, backendClient.getMessages);
+    yield* fork(watchLoadMessageById, backendClient.getMessage);
     yield* fork(watchLoadMessageDetails, backendClient.getMessage);
     yield* fork(
       watchUpsertMessageStatusAttribues,
@@ -562,8 +566,7 @@ export function* initializeApplicationSaga(): Generator<
     if (usePaginatedMessages) {
       NavigationService.dispatchNavigationAction(
         navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          isArchived: false
+          messageId: messageId as UIMessageId
         })
       );
     } else {

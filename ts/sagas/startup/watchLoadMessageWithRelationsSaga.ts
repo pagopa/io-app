@@ -6,6 +6,7 @@ import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
+import { convertUnknownToMessagesFailure } from "../../utils/errors";
 import { loadMessage } from "../messages/loadMessage";
 
 /**
@@ -52,6 +53,8 @@ export function* watchLoadMessageWithRelationsSaga(
       yield* put(loadServiceDetail.request(message.sender_service_id));
     }
   } catch (e) {
-    yield* put(loadMessageWithRelations.failure(e));
+    yield* put(
+      loadMessageWithRelations.failure(convertUnknownToMessagesFailure(e))
+    );
   }
 }

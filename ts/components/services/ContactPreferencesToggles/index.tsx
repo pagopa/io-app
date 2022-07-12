@@ -11,6 +11,8 @@ import {
   upsertServicePreference
 } from "../../../store/actions/services/servicePreference";
 import { Dispatch } from "../../../store/actions/types";
+import { useIOSelector } from "../../../store/hooks";
+import { isPremiumMessagesOptInOutEnabledSelector } from "../../../store/reducers/backendStatus";
 import {
   servicePreferenceSelector,
   ServicePreferenceState
@@ -26,7 +28,7 @@ import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
-type Item = "email" | "push" | "inbox";
+type Item = "email" | "push" | "inbox" | "can_access_message_read_status";
 
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
@@ -71,6 +73,10 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   );
 
   const isFocused = useIsFocused();
+
+  const isPremiumMessagesOptInOutEnabled = useIOSelector(
+    isPremiumMessagesOptInOutEnabledSelector
+  );
 
   useEffect(() => {
     loadPreferences();
@@ -137,6 +143,26 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
               graphicalState={graphicalState}
               onReload={loadPreferences}
               testID={"contact-preferences-webhook-switch"}
+            />
+            <ItemSeparatorComponent noPadded />
+          </>
+        )}
+      {isPremiumMessagesOptInOutEnabled &&
+        getChannelPreference(props.servicePreferenceStatus, "inbox") && (
+          // toggle is disabled if the inbox value is false to prevent inconsistent data
+          <>
+            <PreferenceToggleRow
+              label={I18n.t("services.messageReadStatus")}
+              onPress={(value: boolean) =>
+                onValueChange(value, "can_access_message_read_status")
+              }
+              value={getChannelPreference(
+                props.servicePreferenceStatus,
+                "can_access_message_read_status"
+              )}
+              graphicalState={graphicalState}
+              onReload={loadPreferences}
+              testID={"contact-preferences-trackSeen-switch"}
             />
             <ItemSeparatorComponent noPadded />
           </>

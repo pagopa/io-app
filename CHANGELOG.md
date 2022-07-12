@@ -2,6 +2,96 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.13.0-rc.1](https://github.com/pagopa/io-app/compare/2.13.0-rc.0...2.13.0-rc.1) (2022-07-07)
+
+
+### Features
+
+* **Piattaforma Notifiche:** [[IAMVL-77](https://pagopa.atlassian.net/browse/IAMVL-77)] Show an icon in messages list to identify a message from PN ([#4010](https://github.com/pagopa/io-app/issues/4010)) ([67b0ef1](https://github.com/pagopa/io-app/commit/67b0ef14f066cc79ecfae24b9306423b12834917))
+
+
+### Chores
+
+* [[IA-875](https://pagopa.atlassian.net/browse/IA-875)] Latest app version upsert ([#4024](https://github.com/pagopa/io-app/issues/4024)) ([9c387e5](https://github.com/pagopa/io-app/commit/9c387e5e2527fa1b29ccf76ffb21261a66f8b7a7))
+* [[IA-905](https://pagopa.atlassian.net/browse/IA-905)] Enable the local feature flag for the Premium Messages Opt-out ([#4032](https://github.com/pagopa/io-app/issues/4032)) ([9ac5ce9](https://github.com/pagopa/io-app/commit/9ac5ce95dcd37a76d0046dfe76386d6c0fa48c75))
+* [[IAI-155](https://pagopa.atlassian.net/browse/IAI-155)] Upgrade Profile navigator to v5 ([#4029](https://github.com/pagopa/io-app/issues/4029)) ([d009d25](https://github.com/pagopa/io-app/commit/d009d25bfd6ffc9e902bef2048ce88793e804f58))
+
+## [2.13.0-rc.0](https://github.com/pagopa/io-app/compare/2.12.0-rc.2...2.13.0-rc.0) (2022-07-05)
+
+## [2.12.0-rc.2](https://github.com/pagopa/io-app/compare/2.12.0-rc.1...2.12.0-rc.2) (2022-06-30)
+
+
+### Features
+
+* [[IA-836](https://pagopa.atlassian.net/browse/IA-836)] Integrate the new "Spunta Blu" service preference ([#4011](https://github.com/pagopa/io-app/issues/4011)) ([bbe0d89](https://github.com/pagopa/io-app/commit/bbe0d890dcaf63acbd0a6eea63904fcca1295150))
+
+
+### Chores
+
+* [[IA-855](https://pagopa.atlassian.net/browse/IA-855)] Remove the Premium Messages Opt-In/Out placeholder screens ([#4025](https://github.com/pagopa/io-app/issues/4025)) ([cb3df4d](https://github.com/pagopa/io-app/commit/cb3df4d9d0a133ce6a0fd8073301d41c74635e06))
+* [[IA-901](https://pagopa.atlassian.net/browse/IA-901)] Adjust the new transaction summary screen UI ([#4026](https://github.com/pagopa/io-app/issues/4026)) ([de72672](https://github.com/pagopa/io-app/commit/de72672244d5c7862013c39be5fdfaeba42f3618))
+* [[IAI-153](https://pagopa.atlassian.net/browse/IAI-153)] Update messages stack navigator ([#3999](https://github.com/pagopa/io-app/issues/3999)) ([4f47d3f](https://github.com/pagopa/io-app/commit/4f47d3fa7a1cc6c00f5722a275b22d9afc8e401f))
+
+## [2.12.0-rc.1](https://github.com/pagopa/io-app/compare/2.12.0-rc.0...2.12.0-rc.1) (2022-06-23)
+
+
+### Bug Fixes
+
+* [[IA-848](https://pagopa.atlassian.net/browse/IA-848)] Message opening from push notification ([#3993](https://github.com/pagopa/io-app/issues/3993)) ([c5c733b](https://github.com/pagopa/io-app/commit/c5c733b984f79a5e12546d7da035f5addb5d422c))
+* [[IABT-1373](https://pagopa.atlassian.net/browse/IABT-1373)] Fix support CTA behaviour ([#4014](https://github.com/pagopa/io-app/issues/4014)) ([72f4b46](https://github.com/pagopa/io-app/commit/72f4b46c35798f7e1675dad634b55e5ea45ca320))
+
+
+### Chores
+
+* add awards to publiccode.yml ([#4021](https://github.com/pagopa/io-app/issues/4021)) ([2718185](https://github.com/pagopa/io-app/commit/2718185177c5971556823deb0d083043afe63027))
+
+## [2.12.0-rc.0](https://github.com/pagopa/io-app/compare/2.11.0-rc.5...2.12.0-rc.0) (2022-06-20)
+
+
+### Bug Fixes
+
+* [[IA-870](https://pagopa.atlassian.net/browse/IA-870)] Show the welcome screen only the first time for the user ([#3990](https://github.com/pagopa/io-app/issues/3990)) ([e921885](https://github.com/pagopa/io-app/commit/e921885cfa8e80cd2e918eed36da7eb77f73da09))
+* [[IA-881](https://pagopa.atlassian.net/browse/IA-881)] Wrong message for Outcome code 4 ([#4006](https://github.com/pagopa/io-app/issues/4006)) ([0f912b4](https://github.com/pagopa/io-app/commit/0f912b44301e0c243d19018c5996c1603b193746))
+
+
+### Chores
+
+* [[IA-876](https://pagopa.atlassian.net/browse/IA-876)] Enable the feature flag for the new transaction summary screen ([#4009](https://github.com/pagopa/io-app/issues/4009)) ([75b3187](https://github.com/pagopa/io-app/commit/75b318751048d36d5e034c5693fce96aae5cb4f4))
+* [[IA-886](https://pagopa.atlassian.net/browse/IA-886)] Change UADonations on iOS ([#4016](https://github.com/pagopa/io-app/issues/4016)) ([faf1e54](https://github.com/pagopa/io-app/commit/faf1e54747fa2caa13aeece8f250bfb6b4a71012))
+* [[IAI-209](https://pagopa.atlassian.net/browse/IAI-209)] The `pagopa_specs_diff` job must not fail if the UAT and PROD specs are different ([#4017](https://github.com/pagopa/io-app/issues/4017)) ([cc881bb](https://github.com/pagopa/io-app/commit/cc881bb882025302830285e2ffb437b2598c6349))
+* Improve check_urls files exclusion ([#4015](https://github.com/pagopa/io-app/issues/4015)) ([9b7b21c](https://github.com/pagopa/io-app/commit/9b7b21c46fb7f369de969005956576053349ea0f))
+* **Carta della cultura:** [[AP-37](https://pagopa.atlassian.net/browse/AP-37)] Update outcome message on CDC partially success screen ([#3985](https://github.com/pagopa/io-app/issues/3985)) ([72f9993](https://github.com/pagopa/io-app/commit/72f99935c8502cfad82c1be3f8df10badeef55c6))
+* **Carta Giovani Nazionale:** [[IOACGN-78](https://pagopa.atlassian.net/browse/IOACGN-78)] Fixes landing page to open automatically media playback ([#4013](https://github.com/pagopa/io-app/issues/4013)) ([c3e9735](https://github.com/pagopa/io-app/commit/c3e97355fc6afe76972eef186a2f8ed4b17e1fd5))
+
+## [2.11.0-rc.5](https://github.com/pagopa/io-app/compare/2.11.0-rc.4...2.11.0-rc.5) (2022-06-09)
+
+
+### Bug Fixes
+
+* [[IAI-208](https://pagopa.atlassian.net/browse/IAI-208)] Fixes the CTAs conversion from old to new linking system ([#4007](https://github.com/pagopa/io-app/issues/4007)) ([1e3f029](https://github.com/pagopa/io-app/commit/1e3f029e0a55a817937c91af3745e2d016c89135))
+
+## [2.11.0-rc.4](https://github.com/pagopa/io-app/compare/2.11.0-rc.3...2.11.0-rc.4) (2022-06-07)
+
+
+### Features
+
+* [[IIP-12](https://pagopa.atlassian.net/browse/IIP-12)] Redesign the transaction summary screen ([#3976](https://github.com/pagopa/io-app/issues/3976)) ([b84c1fa](https://github.com/pagopa/io-app/commit/b84c1fa7d8149cf053ac80f8ac5a20cc3d7607e8))
+
+
+### Bug Fixes
+
+* **Carta Giovani Nazionale:** [[IOACGN-75](https://pagopa.atlassian.net/browse/IOACGN-75)] Fixes discount code not showing on discount detail ([#4003](https://github.com/pagopa/io-app/issues/4003)) ([9743351](https://github.com/pagopa/io-app/commit/97433514ce7aca66cfe46b98ad99efa870753d9e))
+
+
+### Chores
+
+* [[IA-840](https://pagopa.atlassian.net/browse/IA-840)] Changes to Help flow ([#3932](https://github.com/pagopa/io-app/issues/3932)) ([a7c4762](https://github.com/pagopa/io-app/commit/a7c4762f79883aef5b755070a2a3efab7c735437))
+* [[IAI-206](https://pagopa.atlassian.net/browse/IAI-206)] Add missing styles to `IOBadge` ([#3996](https://github.com/pagopa/io-app/issues/3996)) ([6271c9c](https://github.com/pagopa/io-app/commit/6271c9c7c68bc216d47f4bbe6932919af304f4f1))
+* **Carta della cultura:** [[AP-38](https://pagopa.atlassian.net/browse/AP-38)] Restore swipe back for cdc navigator ([#3994](https://github.com/pagopa/io-app/issues/3994)) ([96a5577](https://github.com/pagopa/io-app/commit/96a5577eaadab77f0af1bb1d0d768e55f0c08e42))
+* **deps:** bump simple-plist from 1.1.0 to 1.3.1 ([#3995](https://github.com/pagopa/io-app/issues/3995)) ([28fce22](https://github.com/pagopa/io-app/commit/28fce222e28fef937f72c7b9e8f8e837410c8b91))
+* [[IA-874](https://pagopa.atlassian.net/browse/IA-874)] Switch support CTA order ([#3992](https://github.com/pagopa/io-app/issues/3992)) ([99a23ae](https://github.com/pagopa/io-app/commit/99a23aee6402ac590073f2f1a06291b89498b906))
+* [[IAI-193](https://pagopa.atlassian.net/browse/IAI-193)] Implements internal link navigation based on `react-navigation` v5 ([#3968](https://github.com/pagopa/io-app/issues/3968)) ([5257326](https://github.com/pagopa/io-app/commit/5257326d5a9fc857a183fcf07d201c8de854ec4c))
+
 ## [2.11.0-rc.3](https://github.com/pagopa/io-app/compare/2.11.0-rc.2...2.11.0-rc.3) (2022-06-01)
 
 

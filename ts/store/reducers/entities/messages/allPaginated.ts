@@ -554,17 +554,6 @@ export const allArchiveMessagesSelector = createSelector(
     )
 );
 
-export const getById = createSelector(
-  [
-    allInboxMessagesSelector,
-    allArchiveMessagesSelector,
-    (_: GlobalState, messageId: string) => messageId
-  ],
-  (inboxPage, archivePage, messageId): UIMessage | undefined =>
-    inboxPage.find(_ => _.id === messageId) ||
-    archivePage.find(_ => _.id === messageId)
-);
-
 /**
  * True if the inbox state is loading and the last request is for a next page.
  * @param state
