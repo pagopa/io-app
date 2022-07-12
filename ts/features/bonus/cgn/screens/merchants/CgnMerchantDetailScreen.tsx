@@ -1,9 +1,9 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
+import { Route, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
   FlatList,
   Image,
@@ -26,7 +26,6 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
@@ -36,7 +35,6 @@ import { openWebUrl } from "../../../../../utils/url";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
-import { CgnDetailsParamsList } from "../../navigation/params";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 
@@ -45,11 +43,7 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_DETAIL">
-    >;
-  };
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   merchantImage: {
@@ -68,7 +62,12 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const { merchantDetail, requestMerchantDetail } = props;
-  const merchantID = props.navigation.getParam("merchantID");
+  const route =
+    useRoute<
+      Route<"CGN_MERCHANTS_DETAIL", CgnMerchantDetailScreenNavigationParams>
+    >();
+  const merchantID = useMemo(() => route.params.merchantID, [route]);
+
   const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) =>
     isReady(merchantDetail) ? (
       <CgnMerchantDiscountItem

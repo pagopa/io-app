@@ -4,7 +4,7 @@ import { Badge, Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
@@ -190,7 +190,7 @@ const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
 
 function getTopIcon(category: MessageCategory) {
   switch (category.tag) {
-    case TagEnum.LEGAL_MESSAGE:
+    case TagEnumBase.LEGAL_MESSAGE:
       return mvlEnabled ? (
         <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
       ) : null;

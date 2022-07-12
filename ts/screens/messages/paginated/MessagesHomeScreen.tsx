@@ -26,7 +26,6 @@ import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
-import ROUTES from "../../../navigation/routes";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus,
@@ -57,6 +56,7 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
+import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = {
@@ -166,7 +166,6 @@ const MessagesHomeScreen = ({
   resetMigrationStatus,
   latestMessageOperation
 }: Props) => {
-  const navigation = useNavigation();
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
   useOnFirstRender(() => {
@@ -200,15 +199,7 @@ const MessagesHomeScreen = ({
     );
   }, [latestMessageOperation]);
 
-  const navigateToMessageDetail = (message: UIMessage) => {
-    navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
-      params: {
-        messageId: message.id,
-        isArchived: message.isArchived
-      }
-    });
-  };
+  const messageOpening = useMessageOpening();
 
   const dispatch = useDispatch();
 
@@ -269,7 +260,7 @@ const MessagesHomeScreen = ({
             <AllTabs
               inbox={allInboxMessages}
               archive={allArchiveMessages}
-              navigateToMessageDetail={navigateToMessageDetail}
+              navigateToMessageDetail={messageOpening.open}
               setArchived={setArchived}
             />
           )}
@@ -290,7 +281,7 @@ const MessagesHomeScreen = ({
                   <MessageList
                     filter={{}}
                     filteredMessages={results}
-                    onPressItem={navigateToMessageDetail}
+                    onPressItem={messageOpening.open}
                   />
                 )}
               />
@@ -301,6 +292,7 @@ const MessagesHomeScreen = ({
           ))
         )}
       {!isScreenReaderEnabled && statusComponent}
+      {messageOpening.bottomSheets.map(_ => _)}
     </TopScreenComponent>
   );
 };
