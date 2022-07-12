@@ -1789,7 +1789,7 @@ services:
           text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
         bottomSheet:
           title: "If you confirm, you won't receive any message"
-          body: "With manual configuration, neither present nor future services can contact you. To allow the services you are interested in to contact you, you will have to change their settings one by one in the corresponding service detail pages."
+          body: "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section
