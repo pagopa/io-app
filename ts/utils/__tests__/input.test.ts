@@ -1,10 +1,12 @@
-import { fromNullable, isSome, none, some } from "fp-ts/lib/Option";
 import { right } from "fp-ts/lib/Either";
+import { fromNullable, isSome, none, some } from "fp-ts/lib/Option";
 import MockDate from "mockdate";
+import { testableAddCardScreen } from "../../screens/wallet/AddCardScreen";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
+  CreditCardHolder,
   CreditCardPan,
   CreditCardState,
   getCreditCardFromState,
@@ -12,7 +14,34 @@ import {
   isValidPan,
   isValidSecurityCode
 } from "../input";
-import { testableAddCardScreen } from "../../screens/wallet/AddCardScreen";
+
+describe("CreditCardHolder", () => {
+  const validHolders: ReadonlyArray<string> = [
+    "VALID -",
+    "VALID !",
+    "Val1d H0lder",
+    "Valid holder",
+    "Valid @",
+    "@ [ \\ ] ^ _ ' { | } - . , + * ( ) & % # \" ! : ; <> = ?"
+  ];
+
+  it("should accept valid holders", () => {
+    validHolders.forEach(h => expect(CreditCardHolder.is(h)).toBeTruthy());
+  });
+
+  const invalidHolders: ReadonlyArray<string> = [
+    "VALID ~",
+    "invalid ’",
+    "! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | }",
+    ""
+  ];
+
+  it("should NOT accept valid holders", () => {
+    invalidHolders.forEach(h => {
+      expect(CreditCardHolder.is(h)).toBeFalsy();
+    });
+  });
+});
 
 describe("CreditCardPan", () => {
   const validPANs: ReadonlyArray<string> = [
@@ -205,7 +234,8 @@ describe("isValidCardHolder", () => {
     "ô",
     "ú",
     "ù",
-    "û"
+    "û",
+    "  "
   ].forEach(accentedCardHolder =>
     it(`should return false if the input string contains the accented character ${accentedCardHolder}`, () => {
       expect(isValidCardHolder(some(accentedCardHolder))).toBeFalsy();
@@ -218,8 +248,7 @@ describe("isValidCardHolder", () => {
 
   [
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    "0123456789",
-    "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+    "0123456789"
   ].forEach(notAccentedCardHolder =>
     it(`should return true if the input string is composed by character different from accented character: ${notAccentedCardHolder}`, () => {
       expect(isValidCardHolder(some(notAccentedCardHolder))).toBeTruthy();

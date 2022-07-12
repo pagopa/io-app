@@ -1,8 +1,8 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
+import { Route, useRoute } from "@react-navigation/native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
   FlatList,
   Image,
@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import OpenWeb from "../../../../../../img/icons/openweburl.svg";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -24,31 +25,24 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { showToast } from "../../../../../utils/showToast";
+import { openWebUrl } from "../../../../../utils/url";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
-import { CgnDetailsParamsList } from "../../navigation/params";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
-import { openWebUrl } from "../../../../../utils/url";
-import { showToast } from "../../../../../utils/showToast";
-import OpenWeb from "../../../../../../img/icons/openweburl.svg";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_DETAIL">
-    >;
-  };
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   merchantImage: {
@@ -67,7 +61,12 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const { merchantDetail, requestMerchantDetail } = props;
-  const merchantID = props.navigation.getParam("merchantID");
+  const route =
+    useRoute<
+      Route<"CGN_MERCHANTS_DETAIL", CgnMerchantDetailScreenNavigationParams>
+    >();
+  const merchantID = useMemo(() => route.params.merchantID, [route]);
+
   const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) =>
     isReady(merchantDetail) ? (
       <CgnMerchantDiscountItem
