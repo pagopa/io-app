@@ -3104,6 +3104,11 @@ features:
       errors:
         data:
           buttonTitle: Torna indietro
+  pn:
+    open:
+      warning:
+        title: Questo messaggio contiene una comunicazione a valore legale
+        body: !include pn/message_open_warning.html
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
