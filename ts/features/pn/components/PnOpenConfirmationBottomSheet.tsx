@@ -1,5 +1,6 @@
 import { useLinkTo } from "@react-navigation/native";
-import { fromEither, fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
@@ -53,27 +54,33 @@ export const usePnOpenConfirmationBottomSheet = ({
   };
 
   useEffect(() => {
-    const params = fromEither(MessageCategoryPN.decode(message?.category))
-      .map(
+    const params = pipe(
+      MessageCategoryPN.decode(message?.category),
+      O.fromEither,
+      O.map(
         category =>
           ({
             sender: category.original_sender ?? emptyHTMLParams.sender,
             subject: category.summary ?? emptyHTMLParams.subject,
-            date: fromNullable(category.original_receipt_date)
-              .map(timestamp => new Date(timestamp))
-              .map(
+            date: pipe(
+              category.original_receipt_date,
+              O.fromNullable,
+              O.map(timestamp => new Date(timestamp)),
+              O.map(
                 date =>
                   `${formatDateAsLocal(
                     date,
                     true,
                     true
                   )} - ${date.toLocaleTimeString()}`
-              )
-              .getOrElse(emptyHTMLParams.date),
+              ),
+              O.getOrElse(() => emptyHTMLParams.date)
+            ),
             iun: category.id
           } as HTMLParams)
-      )
-      .getOrElse(emptyHTMLParams);
+      ),
+      O.getOrElse(() => emptyHTMLParams)
+    );
     setParams(params);
   }, [message, setParams]);
 

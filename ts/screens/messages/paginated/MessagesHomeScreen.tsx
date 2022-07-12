@@ -1,6 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { useNavigation } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -12,6 +11,7 @@ import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
@@ -56,7 +56,6 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
-import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = {
