@@ -181,7 +181,7 @@ const NewTransactionSummaryScreen = ({
 
   const errorOrUndefined = O.toUndefined(error);
   const isError = O.isSome(error);
-  
+
   useEffect(() => {
     if (!isError) {
       return;

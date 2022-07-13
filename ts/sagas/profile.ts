@@ -483,7 +483,9 @@ export function* upsertAppVersionSaga() {
     return;
   }
 
-  const maybeStoredVersion = O.fromNullable(profileState.value.last_app_version);
+  const maybeStoredVersion = O.fromNullable(
+    profileState.value.last_app_version
+  );
   const rawAppVersion = yield* call(getAppVersion);
   const maybeAppVersion = O.fromEither(AppVersion.decode(rawAppVersion));
 
