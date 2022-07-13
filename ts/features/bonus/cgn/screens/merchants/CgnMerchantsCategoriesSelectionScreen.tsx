@@ -4,6 +4,8 @@ import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -17,14 +19,9 @@ import { showToast } from "../../../../../utils/showToast";
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
-import {
-  cgnCategories,
-  cgnSelectedCategory
-} from "../../store/actions/categories";
+import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { IOBadge } from "../../../../../components/core/IOBadge";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const isFirstRender = useRef<boolean>(true);
@@ -113,7 +110,6 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           title={I18n.t(s.nameKey)}
           colors={s.colors}
           onPress={() => {
-            dispatch(cgnSelectedCategory(s.type));
             navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
               category: s.type
             });

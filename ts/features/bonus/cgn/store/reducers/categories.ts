@@ -1,16 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { cgnCategories, cgnSelectedCategory } from "../actions/categories";
 import { NetworkError } from "../../../../../utils/errors";
 import { orderCategoriesByNameKey } from "../../utils/filters";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { cgnCategories } from "../actions/categories";
 
 export type CgnCategoriesState = {
-  selectedCategory: ProductCategoryEnum | undefined;
   list: pot.Pot<
     ReadonlyArray<ProductCategoryWithNewDiscountsCount>,
     NetworkError
@@ -18,7 +16,6 @@ export type CgnCategoriesState = {
 };
 
 const INITIAL_STATE: CgnCategoriesState = {
-  selectedCategory: undefined,
   list: pot.none
 };
 
@@ -27,12 +24,6 @@ const reducer = (
   action: Action
 ): CgnCategoriesState => {
   switch (action.type) {
-    // Selected Category
-    case getType(cgnSelectedCategory):
-      return {
-        ...state,
-        selectedCategory: action.payload
-      };
     // Categories List
     case getType(cgnCategories.request):
       return {
@@ -57,11 +48,6 @@ export default reducer;
 
 export const cgnCategoriesSelector = (state: GlobalState) =>
   state.bonus.cgn.categories;
-
-export const cgnSelectedCategorySelector = createSelector(
-  cgnCategoriesSelector,
-  categories => categories.selectedCategory
-);
 
 export const cgnCategoriesListSelector = createSelector(
   cgnCategoriesSelector,
