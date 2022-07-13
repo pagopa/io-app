@@ -49,6 +49,7 @@ import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
+import { IOColors } from "../components/core/variables/IOColors";
 
 type OwnProp = {
   onClose: () => void;
@@ -222,7 +223,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           onPress={() => {
             this.setState({ displayError: false });
           }}
-          color={customVariables.colorWhite}
+          color={IOColors.white}
           accessible={true}
           accessibilityLabel={I18n.t("global.buttons.close")}
         />

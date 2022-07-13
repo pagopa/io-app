@@ -24,6 +24,7 @@ import {
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = {
   message: CreatedMessageWithContentAndAttachments;
@@ -126,14 +127,14 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     return dueDate.fold(null, dd => {
       const iconBackgoundColor =
         this.isPrescriptionExpiring || this.isPrescriptionExpired
-          ? customVariables.colorWhite
+          ? IOColors.white
           : customVariables.brandDarkGray;
 
       const textColor = this.isPrescriptionExpiring
         ? customVariables.calendarExpirableColor
         : this.isPrescriptionExpired
         ? customVariables.brandDarkGray
-        : customVariables.colorWhite;
+        : IOColors.white;
 
       return (
         <CalendarIconComponent

@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import IconFont from "../ui/IconFont";
 
 import variables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 
 type MarkerState = "SCANNING" | "VALID" | "INVALID";
 
@@ -48,7 +49,7 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
     smallBorded: {
       height: borderLength,
       width: borderLength,
-      borderColor: variables.colorWhite,
+      borderColor: IOColors.white,
       backgroundColor: "transparent",
       position: "absolute"
     },

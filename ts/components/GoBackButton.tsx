@@ -6,6 +6,7 @@ import NavigationService from "../navigation/NavigationService";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
+import { IOColors } from "../components/core/variables/IOColors";
 
 interface OwnProps {
   [k: string]: any;
@@ -63,7 +64,7 @@ class GoBackButton extends React.PureComponent<Props> {
       >
         <IconFont
           name={"io-back"}
-          style={{ color: white ? variables.colorWhite : variables.colorBlack }}
+          style={{ color: white ? IOColors.white : variables.colorBlack }}
         />
       </ButtonDefaultOpacity>
     );

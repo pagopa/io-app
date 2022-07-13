@@ -17,6 +17,7 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import { getIuv } from "../../utils/payment";
 import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
+import { IOColors } from "../core/variables/IOColors";
 
 import PaymentHistoryItem from "./PaymentHistoryItem";
 
@@ -29,7 +30,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     flex: 1
   },
   subHeaderContent: {

@@ -62,6 +62,7 @@ import {
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 import { mixpanelTrack } from "../../../mixpanel";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps> &
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
 
   white: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
 
   bottomText: {
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     marginTop: -cameraTextOverlapping,
     zIndex: 1
   },
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: -cameraTextOverlapping,
     width: screenWidth - customVariables.contentPadding * 2,
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     zIndex: 999
   },
 
@@ -342,7 +343,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         <SafeAreaView style={IOStyles.flex}>
           <FocusAwareStatusBar
             barStyle={"dark-content"}
-            backgroundColor={customVariables.colorWhite}
+            backgroundColor={IOColors.white}
           />
           <ScrollView bounces={false}>
             <BarcodeCamera

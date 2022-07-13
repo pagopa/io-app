@@ -45,6 +45,7 @@ import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/walle
 import variables from "../../../theme/variables";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 export type ManualDataInsertionScreenNavigationParams = {
   isInvalidAmount?: boolean;
@@ -72,7 +73,7 @@ type State = Readonly<{
 
 const styles = StyleSheet.create({
   whiteBg: {
-    backgroundColor: variables.colorWhite
+    backgroundColor: IOColors.white
   }
 });
 

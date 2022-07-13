@@ -30,6 +30,7 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageListItem from "./MessageListItem";
+import { IOColors } from "../core/variables/IOColors";
 
 // Used to calculate the cell item layouts.
 const LIST_HEADER_HEIGHT = 70;
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     height: SECTION_HEADER_HEIGHT,
     paddingTop: 19,
     paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   sectionHeaderContent: {
     paddingBottom: 8,
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: screenWidth,
     zIndex: 999,
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   progress: { alignSelf: "center" },
   messageNoOthers: {

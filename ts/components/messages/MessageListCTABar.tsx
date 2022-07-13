@@ -23,6 +23,7 @@ import { euCovidCertificateEnabled } from "../../config";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
+import { IOColors } from "../core/variables/IOColors";
 
 type OwnProps = {
   message: CreatedMessageWithContentAndAttachments;
@@ -111,7 +112,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           month={capitalize(formatDateAsMonth(dueDate.value))}
           day={formatDateAsDay(dueDate.value)}
           backgroundColor={customVariables.brandDarkGray}
-          textColor={customVariables.colorWhite}
+          textColor={IOColors.white}
         />
       );
     }

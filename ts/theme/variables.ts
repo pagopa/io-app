@@ -12,6 +12,7 @@ import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
+import { IOColors } from "../components/core/variables/IOColors";
 
 export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
@@ -43,9 +44,11 @@ const customVariables = Object.assign(materialVariables, {
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
-  btnLightBorderColor: "#AEB5BF",
 
-  // Color
+  /* ALIAS TOKENS */
+  /* Don't put hardcoded color values here.
+    Add them to IOColors object, instead.
+  */
   brandPrimary: "#0066CC",
   brandGray: "#F5F6F7",
   brandLight: "#FCFDFF",
@@ -66,9 +69,9 @@ const customVariables = Object.assign(materialVariables, {
   lighterGray: "#C1C9D2",
   lightestGray: "#E0E3E6",
 
+  btnLightBorderColor: "#AEB5BF",
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
-  colorWhite: "#FFFFFF",
   colorBlack: "#000000",
   disabledService: "#909DA8",
   itemBorderDefaultColor: "#5F6F82",
@@ -168,7 +171,7 @@ const customVariables = Object.assign(materialVariables, {
   contentPrimaryBackground: "#0073E6",
 
   // Footer
-  footerBackground: "#FFFFFF",
+  footerBackground: IOColors.white,
   footerElevation: 20,
   footerPaddingTop: 16,
   footerPaddingLeft: 24,

@@ -13,14 +13,11 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
-  colorWhite: "#FFFFFF" /* from variables.ts, duplicate of white */,
-  colorWhiteRGB: `rgb(255, 255, 255)`,
-  footerBackground:
-    "#FFFFFF" /* from variables.ts, duplicate of white, ALIAS TOKEN */,
+  colorWhiteRGB: `rgb(255, 255, 255)` /* from various JEST tests */,
   greyUltralight: "#FCFDFF",
   brandLight: "#FCFDFF" /* from variables.ts, duplicate of greyUltraLight */,
   tabUnderlineColor:
-    "#F6F6F6" /* from variables.ts, similar to brandGray ALIAS TOKEN */,
+    "#F6F6F6" /* from variables.ts, similar to brandGray, ALIAS TOKEN */,
   brandGray: "#F5F6F7" /* from variables.ts */,
   greyLight: "#E6E9F2",
   brandLightGray: "#E6E9F2" /* from variables.ts, duplicate of greyLight */,

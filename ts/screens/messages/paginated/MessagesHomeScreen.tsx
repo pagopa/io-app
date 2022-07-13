@@ -48,7 +48,6 @@ import {
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
 import { makeFontStyleObject } from "../../../theme/fonts";
-import customVariables from "../../../theme/variables";
 import {
   setAccessibilityFocus,
   useScreenReaderEnabled
@@ -57,6 +56,9 @@ import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
 import MigratingMessage from "./MigratingMessage";
+
+import customVariables from "../../../theme/variables";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Props = {
   navigation: CompatNavigationProp<
@@ -255,7 +257,7 @@ const MessagesHomeScreen = ({
     >
       <FocusAwareStatusBar
         barStyle={"dark-content"}
-        backgroundColor={customVariables.colorWhite}
+        backgroundColor={IOColors.white}
       />
       {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (
