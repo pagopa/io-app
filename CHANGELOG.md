@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.13.0-rc.2](https://github.com/pagopa/io-app/compare/2.13.0-rc.1...2.13.0-rc.2) (2022-07-13)
+
+
+### Features
+
+* **Piattaforma Notifiche:** [[IAMVL-78](https://pagopa.atlassian.net/browse/IAMVL-78)] Show a disclaimer to the user before opening a message from PN ([#4033](https://github.com/pagopa/io-app/issues/4033)) ([e52b50a](https://github.com/pagopa/io-app/commit/e52b50a3b92b03e3cbf518729b211fce030096e8))
+* [[IA-877](https://pagopa.atlassian.net/browse/IA-877)] Implements type validation on Card Holder name to avoid unsupported special characters ([#4034](https://github.com/pagopa/io-app/issues/4034)) ([3755b3d](https://github.com/pagopa/io-app/commit/3755b3d977d7fc332e9b98e1e9a5b2116b2ae1ce))
+
+
+### Bug Fixes
+
+* [[IA-908](https://pagopa.atlassian.net/browse/IA-908)] Error is not reported to user if payment check fails ([#4038](https://github.com/pagopa/io-app/issues/4038)) ([adbaddf](https://github.com/pagopa/io-app/commit/adbaddf27152c58918aa34194695075a0101044e))
+* [[IAI-212](https://pagopa.atlassian.net/browse/IAI-212)] Outdated libraries script doesn't run ([#4039](https://github.com/pagopa/io-app/issues/4039)) ([223c312](https://github.com/pagopa/io-app/commit/223c3126226b909f44711cecea731cb610804553))
+
+
+### Chores
+
+* [[IA-906](https://pagopa.atlassian.net/browse/IA-906)] Update `tosVersion` to `4.0` ([#4048](https://github.com/pagopa/io-app/issues/4048)) ([5f71719](https://github.com/pagopa/io-app/commit/5f71719685a3ca8c549d90a8872136691ed777ca))
+* [[IA-911](https://pagopa.atlassian.net/browse/IA-911)] Fix a race condition in the last app version upsert during the startup ([#4052](https://github.com/pagopa/io-app/issues/4052)) ([b03645c](https://github.com/pagopa/io-app/commit/b03645cf09d744c671453a7f44778bbd630241c1))
+* [[IAI-156](https://pagopa.atlassian.net/browse/IAI-156),[IAI-157](https://pagopa.atlassian.net/browse/IAI-157),[IAI-158](https://pagopa.atlassian.net/browse/IAI-158)] Upgrades CGN navigators to avoid the compat mode on RN v5 ([#4022](https://github.com/pagopa/io-app/issues/4022)) ([79ffd61](https://github.com/pagopa/io-app/commit/79ffd6117741870e374f8a804abd6ccfbd6a4a9b))
+* [[IAI-161](https://pagopa.atlassian.net/browse/IAI-161)] Update EUCovidCert stack navigator ([#4001](https://github.com/pagopa/io-app/issues/4001)) ([043960d](https://github.com/pagopa/io-app/commit/043960d51697d520f5c31e691a92485c328746f1))
+* **deps:** bump moment from 2.29.2 to 2.29.4 ([#4035](https://github.com/pagopa/io-app/issues/4035)) ([8aa61cd](https://github.com/pagopa/io-app/commit/8aa61cddae3bb50ba241d0aae61c6fa18023bdc9))
+* [[IAI-190](https://pagopa.atlassian.net/browse/IAI-190)] Handle try-catch `unknown` parameter instead of `any` ([#4000](https://github.com/pagopa/io-app/issues/4000)) ([325b08f](https://github.com/pagopa/io-app/commit/325b08f40455f3d4fd8d38cd2db43fda1bf74436))
+
 ## [2.13.0-rc.1](https://github.com/pagopa/io-app/compare/2.13.0-rc.0...2.13.0-rc.1) (2022-07-07)
 
 
