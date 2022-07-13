@@ -198,30 +198,31 @@ const ServiceDetailsScreen = (props: Props) => {
           )}
         </Content>
 
-        {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) && (
-          <FooterTopShadow>
-            {maybeCTA.isSome() && (
-              <View style={[styles.flexRow]}>
-                <ExtractedCTABar
-                  ctas={maybeCTA.value}
-                  xsmall={false}
-                  dispatch={props.dispatch}
-                  serviceMetadata={metadata}
-                  service={service}
-                />
-              </View>
-            )}
-            {SpecialServiceMetadata.is(metadata) && (
-              <>
-                <View spacer small />
-                <SpecialServicesCTA
-                  serviceId={props.serviceId}
-                  customSpecialFlow={metadata.custom_special_flow}
-                />
-              </>
-            )}
-          </FooterTopShadow>
-        )}
+        {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) &&
+          canRenderItems && (
+            <FooterTopShadow>
+              {maybeCTA.isSome() && (
+                <View style={[styles.flexRow]}>
+                  <ExtractedCTABar
+                    ctas={maybeCTA.value}
+                    xsmall={false}
+                    dispatch={props.dispatch}
+                    serviceMetadata={metadata}
+                    service={service}
+                  />
+                </View>
+              )}
+              {SpecialServiceMetadata.is(metadata) && (
+                <>
+                  <View spacer small />
+                  <SpecialServicesCTA
+                    serviceId={props.serviceId}
+                    customSpecialFlow={metadata.custom_special_flow}
+                  />
+                </>
+              )}
+            </FooterTopShadow>
+          )}
       </SafeAreaView>
     </BaseScreenComponent>
   );
