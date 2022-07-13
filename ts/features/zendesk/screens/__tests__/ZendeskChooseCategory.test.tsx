@@ -1,17 +1,14 @@
-import { fireEvent, RenderAPI } from "@testing-library/react-native";
-import { ReactTestInstance } from "react-test-renderer";
+import { RenderAPI } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import { ZendeskCategories } from "../../../../../definitions/content/ZendeskCategories";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import { ZendeskSubCategories } from "../../../../../definitions/content/ZendeskSubCategories";
-import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import ZENDESK_ROUTES from "../../navigation/routes";
 import * as zendeskAction from "../../store/actions";
 import { getZendeskConfig } from "../../store/actions";
 import ZendeskChooseCategory from "../ZendeskChooseCategory";
