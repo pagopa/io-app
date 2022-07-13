@@ -47,7 +47,7 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskChooseCategory = (props: Props) => {
   const dispatch = useDispatch();
-  const assistanceForPayment = props.route.params.assistanceForPayment;
+  const { assistanceForPayment } = props.route.params;
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
   const selectedCategory = (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category));
