@@ -3084,6 +3084,9 @@ features:
       warning:
         title: Questo messaggio contiene una comunicazione a valore legale
         body: !include pn/message_open_warning.html
+    service:
+      activate: "Attiva il servizio"
+      deactivate: "Disattiva il servizio"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
