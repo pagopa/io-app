@@ -1,5 +1,6 @@
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
+import * as pot from "italia-ts-commons/lib/pot";
 import sha from "sha.js";
 import {
   profileSagaTestable,
@@ -21,9 +22,9 @@ import { isDifferentFiscalCodeSelector } from "../../store/reducers/crossSession
 import { GlobalState } from "../../store/reducers/types";
 import { appReducer } from "../../store/reducers";
 import mockedProfile from "../../__mocks__/initializedProfile";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { getAppVersion } from "../../utils/appVersion";
 import { AppVersion } from "../../../definitions/backend/AppVersion";
+import { profileSelector } from "../../store/reducers/profile";
 
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");
@@ -107,7 +108,6 @@ describe("profile", () => {
 
   describe("upsertAppVersionSaga", () => {
     it("should trigger the app version upsert request since there's not a stored version", () => {
-      const createOrUpdateProfile = jest.fn();
       const storedAppVersion = undefined;
       const currentAppVersion = "1.2.4";
 
@@ -115,29 +115,24 @@ describe("profile", () => {
         last_app_version: currentAppVersion as AppVersion
       });
 
-      testSaga(
-        upsertAppVersionSaga,
-        { last_app_version: storedAppVersion } as InitializedProfile,
-        createOrUpdateProfile
-      )
+      testSaga(upsertAppVersionSaga)
         .next()
+        .select(profileSelector)
+        .next(pot.some({ last_app_version: storedAppVersion }))
         .call(getAppVersion)
         .next(currentAppVersion)
         .call(profileUpsert.request, {
           last_app_version: currentAppVersion
         })
         .next(requestAction)
-        .call(
-          profileSagaTestable!.createOrUpdateProfileSaga,
-          createOrUpdateProfile,
-          requestAction
-        )
+        .put(requestAction)
         .next()
+        .take([profileUpsert.success, profileUpsert.failure])
+        .next(profileUpsert.success({} as any))
         .isDone();
     });
 
     it("should trigger the app version upsert request since the stored version is different", () => {
-      const createOrUpdateProfile = jest.fn();
       const storedAppVersion = "1.2.3";
       const currentAppVersion = "1.2.4";
 
@@ -145,54 +140,44 @@ describe("profile", () => {
         last_app_version: currentAppVersion as AppVersion
       });
 
-      testSaga(
-        upsertAppVersionSaga,
-        { last_app_version: storedAppVersion } as InitializedProfile,
-        createOrUpdateProfile
-      )
+      testSaga(upsertAppVersionSaga)
         .next()
+        .select(profileSelector)
+        .next(pot.some({ last_app_version: storedAppVersion }))
         .call(getAppVersion)
         .next(currentAppVersion)
         .call(profileUpsert.request, {
           last_app_version: currentAppVersion
         })
         .next(requestAction)
-        .call(
-          profileSagaTestable!.createOrUpdateProfileSaga,
-          createOrUpdateProfile,
-          requestAction
-        )
+        .put(requestAction)
         .next()
+        .take([profileUpsert.success, profileUpsert.failure])
+        .next(profileUpsert.failure(new Error()))
         .isDone();
     });
 
     it("should NOT trigger the app version upsert request because the stored app version is the same", () => {
-      const createOrUpdateProfile = jest.fn();
       const storedAppVersion = "1.2.3";
       const currentAppVersion = "1.2.3";
 
-      testSaga(
-        upsertAppVersionSaga,
-        { last_app_version: storedAppVersion } as InitializedProfile,
-        createOrUpdateProfile
-      )
+      testSaga(upsertAppVersionSaga)
         .next()
+        .select(profileSelector)
+        .next(pot.some({ last_app_version: storedAppVersion }))
         .call(getAppVersion)
         .next(currentAppVersion)
         .isDone();
     });
 
     it("should NOT trigger the app version upsert request since the local version is not in the right format", () => {
-      const createOrUpdateProfile = jest.fn();
       const storedAppVersion = "1.2.3";
       const currentAppVersion = "1.2";
 
-      testSaga(
-        upsertAppVersionSaga,
-        { last_app_version: storedAppVersion } as InitializedProfile,
-        createOrUpdateProfile
-      )
+      testSaga(upsertAppVersionSaga)
         .next()
+        .select(profileSelector)
+        .next(pot.some({ last_app_version: storedAppVersion }))
         .call(getAppVersion)
         .next(currentAppVersion)
         .isDone();
