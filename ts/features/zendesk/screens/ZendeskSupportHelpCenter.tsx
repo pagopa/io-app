@@ -165,7 +165,7 @@ const ZendeskSupportHelpCenter = () => {
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
   // Navigation prop
-  const { 
+  const {
     faqCategories,
     contextualHelp,
     contextualHelpMarkdown,
