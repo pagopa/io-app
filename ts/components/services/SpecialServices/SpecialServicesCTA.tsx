@@ -64,7 +64,9 @@ const SpecialServicesCTA = (props: Props) => {
           case "cdc":
             return isEnabled ? <CdcServiceCTA /> : null;
           case "pn":
-            return isEnabled ? <PnServiceCTA /> : null;
+            return isEnabled ? (
+              <PnServiceCTA serviceId={props.serviceId} />
+            ) : null;
           default:
             return <UpdateAppCTA />;
         }
