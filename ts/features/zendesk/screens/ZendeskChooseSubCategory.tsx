@@ -46,7 +46,7 @@ type Props = IOStackNavigationRouteProps<
 const ZendeskChooseSubCategory = (props: Props) => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useDispatch();
-  const assistanceForPayment = props.route.params.assistanceForPayment;
+  const { assistanceForPayment } = props.route.params;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
     dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
