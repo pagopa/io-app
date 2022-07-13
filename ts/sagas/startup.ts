@@ -95,7 +95,6 @@ import {
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
-  upsertAppVersionSaga,
   watchProfile,
   watchProfileRefreshRequestsSaga,
   watchProfileUpsertRequestsSaga
@@ -278,15 +277,6 @@ export function* initializeApplicationSaga(): Generator<
   }
 
   const userProfile = maybeUserProfile.value;
-
-  // This saga will upsert the `last_app_version` value in the
-  // profile only if it actually changed from the one stored in
-  // the backend.
-  yield* call(
-    upsertAppVersionSaga,
-    userProfile,
-    backendClient.createOrUpdateProfile
-  );
 
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
