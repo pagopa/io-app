@@ -115,7 +115,7 @@ export const newTransactionSummaryEnabled =
 export const pnEnabled = Config.PN_ENABLED === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 4.0 as NonNegativeNumber;
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),

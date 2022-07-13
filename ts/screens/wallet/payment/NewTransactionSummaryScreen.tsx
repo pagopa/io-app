@@ -109,6 +109,12 @@ const renderFooter = (
             leftButton={helpButtonProps(help)}
           />
         );
+      // There's a strange case where error is 'some' but
+      // its value is undefined (e.g. network error).
+      // In this case we fallback to the 'continue' CTA
+      // so that the user can eventually retry.
+      case undefined:
+        break;
       default:
         return <></>;
     }
@@ -174,17 +180,26 @@ const NewTransactionSummaryScreen = ({
   const showsInlineError = paymentStartOrigin === "message";
 
   const errorOrUndefined = O.toUndefined(error);
+  const isError = O.isSome(error);
+  
   useEffect(() => {
-    if (errorOrUndefined === undefined) {
+    if (!isError) {
       return;
     }
     if (errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO") {
       onDuplicatedPayment();
     }
-    if (pot.isError(paymentVerification) && !showsInlineError) {
+    // in case of a payment verification error we should navigate
+    // to the error screen only if showsInlineError is false
+    // in any other case we should always navigate to the error screen
+    if (
+      (pot.isError(paymentVerification) && !showsInlineError) ||
+      (!pot.isError(paymentVerification) && isError)
+    ) {
       navigateToPaymentTransactionError(O.fromNullable(errorOrUndefined));
     }
   }, [
+    isError,
     errorOrUndefined,
     onDuplicatedPayment,
     navigateToPaymentTransactionError,
