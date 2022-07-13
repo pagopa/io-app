@@ -1,11 +1,11 @@
 import { createStore, Store } from "redux";
 import configureMockStore, { MockStore } from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { DEPRECATED_setMessageReadState } from "../../../../store/actions/messages";
 import { Action } from "../../../../store/actions/types";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { DEPRECATED_setMessageReadState } from "../../../../store/actions/messages";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import MVL_ROUTES from "../../navigation/routes";
 import { mvlDetailsLoad } from "../../store/actions";
 import { mvlMock, mvlMockId } from "../../types/__mock__/mvlMock";
@@ -154,7 +154,7 @@ const dispatchActionAndRenderComponent = (actions: ReadonlyArray<Action>) => {
 };
 
 const renderComponent = (store: MockStore<GlobalState> | Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenWithNavigationStoreContext<GlobalState>(
     MvlRouterScreen,
     MVL_ROUTES.DETAILS,
     { id: mvlMockId },
