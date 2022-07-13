@@ -165,11 +165,13 @@ const ZendeskSupportHelpCenter = () => {
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
   // Navigation prop
-  const faqCategories = route.params.faqCategories;
-  const contextualHelp = route.params.contextualHelp;
-  const contextualHelpMarkdown = route.params.contextualHelpMarkdown;
-  const startingRoute = route.params.startingRoute;
-  const assistanceForPayment = route.params.assistanceForPayment;
+  const { 
+    faqCategories,
+    contextualHelp,
+    contextualHelpMarkdown,
+    startingRoute,
+    assistanceForPayment
+  } = route.params;
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
     !contextualHelpMarkdown
