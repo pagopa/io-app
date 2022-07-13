@@ -1421,8 +1421,8 @@ wallet:
       holder:
         label: Intestatario carta
         description:
-          base: "Inserisci come riportato sulla carta"
-          error: "Inserisci esattamente come riportato sulla carta"
+          base: "Segui l’ordine riportato sulla carta"
+          error: "Non usare lettere accentate o simboli"
       pan: Numero carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza
@@ -1435,8 +1435,8 @@ wallet:
       securityCode4D: "••••"
     accessibility:
       holder:
-        base: "Intestatario carta, inserisci come riportato sulla carta"
-        error: "Intestatario carta. Per favore, non utilizzare lettere accentate"
+        base: "Intestatario carta, segui l’ordine riportato sulla carta"
+        error: "Intestatario carta, non usare lettere accentate o simboli"
       pan:
         base: "Numero carta"
         error: "Numero carta. Per favore, inserisci almeno {{minLength}} cifre"
@@ -3104,6 +3104,11 @@ features:
       errors:
         data:
           buttonTitle: Torna indietro
+  pn:
+    open:
+      warning:
+        title: Questo messaggio contiene una comunicazione a valore legale
+        body: !include pn/message_open_warning.html
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
