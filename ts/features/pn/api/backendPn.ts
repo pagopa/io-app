@@ -14,7 +14,7 @@ import { defaultRetryingFetch } from "../../../utils/fetch";
 const upsertActivation: UpsertPNActivationT = {
   method: "post",
   url: _ => `/api/v1/pn/activation`,
-  headers: tokenHeaderProducer,
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   query: _ => ({}),
   body: body => JSON.stringify(body.pNActivation),
   response_decoder: upsertPNActivationDefaultDecoder()
