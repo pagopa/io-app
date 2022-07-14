@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
@@ -43,7 +42,7 @@ import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
-  service: ServicePublic;
+  serviceId: ServiceId;
 }>;
 
 type OwnProps = {
@@ -229,7 +228,7 @@ const ServiceDetailsScreen = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
-  const serviceId = props.navigation.getParam("service").service_id;
+  const serviceId = props.navigation.getParam("serviceId");
 
   return {
     serviceId,
