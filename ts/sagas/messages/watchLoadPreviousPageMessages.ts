@@ -7,7 +7,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { isTestEnv } from "../../utils/environment";
-import { getError } from "../../utils/errors";
+import { convertUnknownToError, getError } from "../../utils/errors";
 
 import { handleResponse } from "./utils";
 
@@ -57,8 +57,13 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
       );
 
       yield* put(nextAction);
-    } catch (error) {
-      yield* put(loadPreviousPageMessagesAction.failure({ error, filter }));
+    } catch (e) {
+      yield* put(
+        loadPreviousPageMessagesAction.failure({
+          error: convertUnknownToError(e),
+          filter
+        })
+      );
     }
   };
 }

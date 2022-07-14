@@ -6,6 +6,7 @@ import { call, fork, put } from "typed-redux-saga/macro";
 import { VersionInfo } from "../../../../definitions/content/VersionInfo";
 import { ContentClient } from "../../../api/content";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { convertUnknownToError } from "../../../utils/errors";
 import { startTimer } from "../../../utils/timer";
 import {
   versionInfoLoadFailure,
@@ -52,7 +53,7 @@ function* versionInfoWatcher(): Generator<ReduxSagaEffect, void, any> {
         yield* call(startTimer, VERSION_INFO_RETRY_INTERVAL);
       }
     } catch (e) {
-      yield* put(versionInfoLoadFailure(new Error(e)));
+      yield* put(versionInfoLoadFailure(convertUnknownToError(e)));
     }
   }
 }

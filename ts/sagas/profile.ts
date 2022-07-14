@@ -67,6 +67,7 @@ import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 import { getAppVersion } from "../utils/appVersion";
 import { AppVersion } from "../../definitions/backend/AppVersion";
+import { convertUnknownToError } from "../utils/errors";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -100,8 +101,8 @@ export function* loadProfile(
     throw response
       ? Error(`response status ${response.value.status}`)
       : Error(I18n.t("profile.errors.load"));
-  } catch (error) {
-    yield* put(profileLoadFailure(error));
+  } catch (e) {
+    yield* put(profileLoadFailure(convertUnknownToError(e)));
   }
   return none;
 }
@@ -193,7 +194,10 @@ function* createOrUpdateProfileSaga(
       );
     }
   } catch (e) {
-    const error: Error = e || Error(I18n.t("profile.errors.upsert"));
+    const error = e
+      ? convertUnknownToError(e)
+      : Error(I18n.t("profile.errors.upsert"));
+
     yield* put(profileUpsert.failure(error));
   }
 }
@@ -290,8 +294,8 @@ function* startEmailValidationProcessSaga(
     throw response
       ? Error(`response status ${response.value.status}`)
       : Error(I18n.t("profile.errors.load"));
-  } catch (error) {
-    yield* put(startEmailValidation.failure(error));
+  } catch (e) {
+    yield* put(startEmailValidation.failure(convertUnknownToError(e)));
   }
 }
 
@@ -430,6 +434,11 @@ function* checkStoreHashedFiscalCode(
 function* checkLoadedProfile(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
+  // This saga will upsert the `last_app_version` value in the
+  // profile only if it actually changed from the one stored in
+  // the backend.
+  yield* call(upsertAppVersionSaga);
+
   yield* all([
     call(checkPreferredLanguage, profileLoadSuccessAction),
     call(checkStoreHashedFiscalCode, profileLoadSuccessAction)
@@ -463,15 +472,22 @@ export function* watchProfile(
 /**
  * Upsert the user's latest app version, only if it's different
  * from the one stored in the backend.
+ *
+ * ⚠️ This saga will _block_ if the upsert request will be triggered
+ * because of possible race conditions with the profile version.
  */
-export function* upsertAppVersionSaga(
-  userProfile: InitializedProfile,
-  createOrUpdateProfile: ReturnType<
-    typeof BackendClient
-  >["createOrUpdateProfile"]
-) {
-  const maybeStoredVersion = fromNullable(userProfile.last_app_version);
+export function* upsertAppVersionSaga() {
+  const profileState: ReturnType<typeof profileSelector> = yield* select(
+    profileSelector
+  );
 
+  // If we don't have the profile inside the state there is
+  // something wrong.
+  if (pot.isNone(profileState)) {
+    return;
+  }
+
+  const maybeStoredVersion = fromNullable(profileState.value.last_app_version);
   const rawAppVersion = yield* call(getAppVersion);
   const maybeAppVersion = fromEither(AppVersion.decode(rawAppVersion));
 
@@ -492,7 +508,12 @@ export function* upsertAppVersionSaga(
     last_app_version: maybeAppVersion.value
   });
 
-  yield* call(createOrUpdateProfileSaga, createOrUpdateProfile, requestAction);
+  yield* put(requestAction);
+
+  // Here we are waiting for the response in order to block
+  // other possible upsert requests that would cause a race
+  // condition with the profile version number.
+  yield* take([profileUpsert.success, profileUpsert.failure]);
 }
 
 // to ensure right code encapsulation we export functions/variables just for tests purposes
