@@ -13,28 +13,36 @@ import { AppDispatch } from "../../../App";
 import { pnActivationUpsert } from "../store/actions/service";
 import { pnActivationSelector } from "../store/reducers/activation";
 import { showToast } from "../../../utils/showToast";
+import { Link } from "../../../components/core/typography/Link";
 
 type Props = {
   serviceId: ServiceId;
 };
 
-const LoadingButton = () => (
+const LoadingIndicator = () => (
+  <ActivityIndicator
+    animating={true}
+    size={"small"}
+    color={IOColors.bluegreyDark}
+    accessible={true}
+    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
+    importantForAccessibility={"no-hide-descendants"}
+  />
+);
+
+const LoadingButton = (props: { isServiceActive: boolean }) => (
   <ButtonDefaultOpacity
     block
     primary
-    style={{ backgroundColor: IOColors.greyLight, width: "100%" }}
+    style={{
+      backgroundColor: props.isServiceActive
+        ? IOColors.white
+        : IOColors.greyLight,
+      width: "100%"
+    }}
   >
-    <ActivityIndicator
-      animating={true}
-      size={"small"}
-      color={IOColors.bluegreyDark}
-      accessible={true}
-      accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
-      accessibilityLabel={I18n.t(
-        "global.accessibility.activityIndicator.label"
-      )}
-      importantForAccessibility={"no-hide-descendants"}
-    />
+    <LoadingIndicator />
   </ButtonDefaultOpacity>
 );
 
@@ -52,9 +60,14 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
   <ButtonDefaultOpacity
     block
     primary
-    onPress={() => props.dispatch(pnActivationUpsert.request(false))}
+    onPress={() => props.dispatch(pnActivationUpsert.request(true))}
+    style={{
+      backgroundColor: IOColors.white
+    }}
   >
-    <Label color={"white"}>{I18n.t("features.pn.service.deactivate")}</Label>
+    <Link weight={"SemiBold"} color={"red"}>
+      {I18n.t("features.pn.service.deactivate")}
+    </Link>
   </ButtonDefaultOpacity>
 );
 
@@ -106,7 +119,7 @@ const PnServiceCTA = (props: Props) => {
   }
 
   return isLoading ? (
-    <LoadingButton />
+    <LoadingButton isServiceActive />
   ) : isServiceActive ? (
     <DeactivateButton dispatch={dispatch} />
   ) : (
