@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { useEffect } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActivityIndicator } from "react-native";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -11,6 +11,8 @@ import { isServicePreferenceResponseSuccess } from "../../../types/services/Serv
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { AppDispatch } from "../../../App";
 import { pnActivationUpsert } from "../store/actions/service";
+import { pnActivationSelector } from "../store/reducers/activation";
+import { showToast } from "../../../utils/showToast";
 
 type Props = {
   serviceId: ServiceId;
@@ -58,8 +60,43 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
 
 const PnServiceCTA = (props: Props) => {
   const dispatch = useIODispatch();
+  const serviceActivation = useIOSelector(pnActivationSelector);
   const servicePreference = useIOSelector(servicePreferenceSelector);
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
+
+  const isLoading =
+    pot.isLoading(servicePreference) ||
+    pot.isLoading(serviceActivation) ||
+    pot.isUpdating(serviceActivation);
+
+  const isError = pot.isError(serviceActivation);
+  useEffect(() => {
+    if (isError) {
+      showToast(I18n.t("features.pn.service.toast.error"), "danger");
+    }
+  }, [isError]);
+
+  const didActivate = pot.fold(
+    serviceActivation,
+    () => false,
+    () => false,
+    _ => false,
+    _ => false,
+    _ => _,
+    _ => false,
+    (_, __) => false,
+    (_, __) => false
+  );
+  useEffect(() => {
+    if (didActivate) {
+      showToast(I18n.t("features.pn.service.toast.activated"), "success");
+    }
+  }, [didActivate]);
+
+  const isServiceActive =
+    servicePreferenceValue &&
+    isServicePreferenceResponseSuccess(servicePreferenceValue) &&
+    servicePreferenceValue.value.inbox;
 
   if (
     !servicePreferenceValue ||
@@ -68,32 +105,12 @@ const PnServiceCTA = (props: Props) => {
     return null;
   }
 
-  const isServiceActive =
-    servicePreferenceValue &&
-    isServicePreferenceResponseSuccess(servicePreferenceValue) &&
-    servicePreferenceValue.value.inbox;
-
-  return pot.fold(
-    servicePreference,
-    () => null,
-    () => <LoadingButton />,
-    _ => <LoadingButton />,
-    _ => null,
-    _ =>
-      isServiceActive ? (
-        <DeactivateButton dispatch={dispatch} />
-      ) : (
-        <ActivateButton dispatch={dispatch} />
-      ),
-    _ => <LoadingButton />,
-    (_, __) => <LoadingButton />,
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    _ =>
-      isServiceActive ? (
-        <DeactivateButton dispatch={dispatch} />
-      ) : (
-        <ActivateButton dispatch={dispatch} />
-      )
+  return isLoading ? (
+    <LoadingButton />
+  ) : isServiceActive ? (
+    <DeactivateButton dispatch={dispatch} />
+  ) : (
+    <ActivateButton dispatch={dispatch} />
   );
 };
 

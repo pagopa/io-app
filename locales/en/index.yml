@@ -3087,6 +3087,9 @@ features:
     service:
       activate: "Attiva il servizio"
       deactivate: "Disattiva il servizio"
+      toast:
+        activated: "Grazie, il servizio è attivo!"
+        error: "Si è verificato un errore con la tua richiesta"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

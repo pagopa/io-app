@@ -1,6 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pnActivationUpsert } from "../actions/service";
@@ -25,6 +26,8 @@ export const pnActivationReducer = (
       return pot.some(action.payload);
     case getType(pnActivationUpsert.failure):
       return pot.toError(state, action.payload);
+    case getType(loadServicePreference.request):
+      return pot.none;
   }
   return state;
 };

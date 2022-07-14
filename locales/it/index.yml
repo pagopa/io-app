@@ -3112,6 +3112,9 @@ features:
     service:
       activate: "Attiva il servizio"
       deactivate: "Disattiva il servizio"
+      toast:
+        activated: "Grazie, il servizio è attivo!"
+        error: "Si è verificato un errore con la tua richiesta"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
