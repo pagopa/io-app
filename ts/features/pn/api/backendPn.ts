@@ -15,7 +15,7 @@ const upsertActivation: UpsertPNActivationT = {
   method: "post",
   url: _ => `/api/v1/pn/activation`,
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  query: _ => ({}),
+  query: query => ({ isTest: query.isTest }),
   body: body => JSON.stringify(body.pNActivation),
   response_decoder: upsertPNActivationDefaultDecoder()
 };
