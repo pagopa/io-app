@@ -5,6 +5,7 @@ import configureMockStore from "redux-mock-store";
 import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPayment } from "../../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
+import { PnPreferences } from "../../../../features/pn/store/reducers/preferences";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -14,12 +15,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
-import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
-import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
-import { TagEnum as TagEnumPayment } from "../../../../../definitions/backend/MessageCategoryPayment";
-import { PnPreferences } from "../../../../features/pn/store/reducers/preferences";
 
 jest.useFakeTimers();
 
