@@ -21,10 +21,7 @@ import { showToast } from "../../../../../utils/showToast";
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
-import {
-  cgnCategories,
-  cgnSelectedCategory
-} from "../../store/actions/categories";
+import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
 

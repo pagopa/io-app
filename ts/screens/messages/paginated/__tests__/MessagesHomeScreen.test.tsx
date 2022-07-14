@@ -14,6 +14,12 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
+import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum as TagEnumPayment } from "../../../../../definitions/backend/MessageCategoryPayment";
+import { PnPreferences } from "../../../../features/pn/store/reducers/preferences";
 
 jest.useFakeTimers();
 
@@ -79,22 +85,38 @@ describe("MessagesHomeScreen", () => {
   });
 
   describe("given a PN message", () => {
-    const message = {
+    const pnMessage = {
       ...successReloadMessagesPayload.messages[0],
       category: { tag: TagEnumPN.PN }
     } as UIMessage;
 
     describe("when tapping on it", () => {
       it("then a navigation should NOT be dispatched", () => {
-        const { component } = renderComponent({ inboxMessages: [message] });
-        fireEvent(component.getByText(message.title), "onPress");
+        const { component } = renderComponent({ inboxMessages: [pnMessage] });
+        fireEvent(component.getByText(pnMessage.title), "onPress");
         expect(mockNavigate).toHaveBeenCalledTimes(0);
       });
 
       it("and the bottom sheet for PN is presented", () => {
-        const { component } = renderComponent({ inboxMessages: [message] });
-        fireEvent(component.getByText(message.title), "onPress");
-        expect(mockPresentPNBottomSheet).toHaveBeenCalledWith(message);
+        const { component } = renderComponent({ inboxMessages: [pnMessage] });
+        fireEvent(component.getByText(pnMessage.title), "onPress");
+        expect(mockPresentPNBottomSheet).toHaveBeenCalledWith(pnMessage);
+      });
+
+      describe("and showAlertForMessageOpening is false", () => {
+        it("then a navigation should be dispatched", () => {
+          const { component } = renderComponent({
+            inboxMessages: [pnMessage],
+            pnPreferences: { showAlertForMessageOpening: false }
+          });
+          fireEvent(component.getByText(pnMessage.title), "onPress");
+          expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
+            screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+            params: {
+              messageId: pnMessage.id
+            }
+          });
+        });
       });
     });
   });
@@ -102,6 +124,7 @@ describe("MessagesHomeScreen", () => {
 
 type InputState = {
   inboxMessages: ReadonlyArray<UIMessage>;
+  pnPreferences?: PnPreferences;
 };
 
 const renderComponent = (state: InputState = { inboxMessages: [] }) => {
@@ -131,6 +154,16 @@ const renderComponent = (state: InputState = { inboxMessages: [] }) => {
       messages: {
         ...globalState.entities.messages,
         allPaginated
+      }
+    },
+    features: {
+      ...globalState.features,
+      pn: {
+        ...globalState.features.pn,
+        preferences: {
+          ...globalState.features.pn.preferences,
+          ...state.pnPreferences
+        }
       }
     }
   } as GlobalState);

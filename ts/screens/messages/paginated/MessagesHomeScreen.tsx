@@ -198,7 +198,7 @@ const MessagesHomeScreen = ({
     );
   }, [latestMessageOperation]);
 
-  const messageOpening = useMessageOpening();
+  const { openMessage, bottomSheets } = useMessageOpening();
 
   const dispatch = useDispatch();
 
@@ -259,7 +259,7 @@ const MessagesHomeScreen = ({
             <AllTabs
               inbox={allInboxMessages}
               archive={allArchiveMessages}
-              navigateToMessageDetail={messageOpening.open}
+              navigateToMessageDetail={openMessage}
               setArchived={setArchived}
             />
           )}
@@ -280,7 +280,7 @@ const MessagesHomeScreen = ({
                   <MessageList
                     filter={{}}
                     filteredMessages={results}
-                    onPressItem={messageOpening.open}
+                    onPressItem={openMessage}
                   />
                 )}
               />
@@ -291,7 +291,7 @@ const MessagesHomeScreen = ({
           ))
         )}
       {!isScreenReaderEnabled && statusComponent}
-      {messageOpening.bottomSheets.map(_ => _)}
+      {bottomSheets.map(_ => _)}
     </TopScreenComponent>
   );
 };

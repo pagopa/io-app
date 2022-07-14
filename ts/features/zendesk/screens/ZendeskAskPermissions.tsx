@@ -1,4 +1,4 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ListItem, View } from "native-base";
@@ -25,7 +25,6 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
@@ -191,19 +190,15 @@ export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_ASK_PERMISSIONS">
-  >;
-};
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
  * @constructor
  */
-const ZendeskAskPermissions = (props: Props) => {
-  const assistanceForPayment = props.navigation.getParam(
-    "assistanceForPayment"
-  );
+const ZendeskAskPermissions = () => {
+  const route =
+    useRoute<RouteProp<ZendeskParamsList, "ZENDESK_ASK_PERMISSIONS">>();
+
+  const assistanceForPayment = route.params.assistanceForPayment;
 
   const dispatch = useDispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());

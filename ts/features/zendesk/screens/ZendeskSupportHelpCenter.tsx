@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
@@ -19,7 +19,6 @@ import {
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
@@ -158,31 +157,26 @@ const FaqManager = (props: FaqManagerProps) => {
   );
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">
-  >;
-};
 /**
  * Ingress screen to access the Zendesk assistance tool
  * the user can choose to open a new ticket, follow previous conversations or read the faqs
  * @constructor
  */
-const ZendeskSupportHelpCenter = (props: Props) => {
+const ZendeskSupportHelpCenter = () => {
   const dispatch = useDispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
 
+  const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
+
   // Navigation prop
-  const faqCategories = props.navigation.getParam("faqCategories");
-  const contextualHelp = props.navigation.getParam("contextualHelp");
-  const contextualHelpMarkdown = props.navigation.getParam(
-    "contextualHelpMarkdown"
-  );
-  const startingRoute = props.navigation.getParam("startingRoute");
-  const assistanceForPayment = props.navigation.getParam(
-    "assistanceForPayment"
-  );
+  const {
+    faqCategories,
+    contextualHelp,
+    contextualHelpMarkdown,
+    startingRoute,
+    assistanceForPayment
+  } = route.params;
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
     !contextualHelpMarkdown

@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
@@ -8,7 +7,7 @@ import WorkunitGenericFailure from "../../../../../../components/error/WorkunitG
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import customVariables from "../../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
@@ -111,15 +110,11 @@ export type MvlAttachmentPreviewNavigationParams = Readonly<{
   attachmentId: MvlAttachmentId;
 }>;
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MvlParamsList, "MVL_ATTACHMENT">
-  >;
-};
+type Props = IOStackNavigationRouteProps<MvlParamsList, "MVL_ATTACHMENT">;
 
 export const MvlAttachmentPreview = (props: Props): React.ReactElement => {
   const dispatch = useIODispatch();
-  const attachmentId = props.navigation.getParam("attachmentId");
+  const attachmentId = props.route.params.attachmentId;
   const downloadPot = useIOSelector(state =>
     mvlAttachmentDownloadFromIdSelector(state, attachmentId)
   );
