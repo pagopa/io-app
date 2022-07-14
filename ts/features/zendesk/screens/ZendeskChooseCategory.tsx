@@ -1,5 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { useNavigation } from "@react-navigation/native";
 import { ListItem } from "native-base";
 import React from "react";
 import {
@@ -17,7 +15,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import IconFont from "../../../components/ui/IconFont";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { toArray } from "../../../store/helpers/indexer";
 import { useIOSelector } from "../../../store/hooks";
 import customVariables from "../../../theme/variables";
@@ -39,24 +37,17 @@ export type ZendeskChooseCategoryNavigationParams = {
   assistanceForPayment: boolean;
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_CATEGORY">
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  ZendeskParamsList,
+  "ZENDESK_CHOOSE_CATEGORY"
+>;
 
 /**
  * this screen shows the categories for which the user can ask support with the assistance
  */
 const ZendeskChooseCategory = (props: Props) => {
   const dispatch = useDispatch();
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<ZendeskParamsList, "ZENDESK_CHOOSE_CATEGORY">
-    >();
-  const assistanceForPayment = props.navigation.getParam(
-    "assistanceForPayment"
-  );
+  const { assistanceForPayment } = props.route.params;
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
   const selectedCategory = (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category));
@@ -93,11 +84,11 @@ const ZendeskChooseCategory = (props: Props) => {
           // Set category as custom field
           addTicketCustomField(categoriesId, category.value);
           if (hasSubCategories(category)) {
-            navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
+            props.navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
               assistanceForPayment
             });
           } else {
-            navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
+            props.navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
               assistanceForPayment
             });
           }
