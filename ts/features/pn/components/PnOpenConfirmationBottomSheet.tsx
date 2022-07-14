@@ -141,6 +141,7 @@ export const usePnOpenConfirmationBottomSheet = ({
 
   return {
     present: (message: UIMessage) => {
+      setDontAskAgain(false);
       setMessage(message);
       bsPresent();
     },
