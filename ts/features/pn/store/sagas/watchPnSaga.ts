@@ -1,12 +1,13 @@
 import { SagaIterator } from "redux-saga";
 import { ActionType, getType } from "typesafe-actions";
-import { call, put, takeLatest } from "typed-redux-saga/macro";
+import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { pnActivationUpsert } from "../actions/service";
 import { BackendPnClient } from "../../api/backendPn";
 import { apiUrlPrefix } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 function* upsertPnActivation(
   client: ReturnType<typeof BackendPnClient>,
@@ -14,10 +15,15 @@ function* upsertPnActivation(
 ) {
   const activation_status = action.payload;
   try {
+    const isTest: ReturnType<typeof isPnTestEnabledSelector> = yield* select(
+      isPnTestEnabledSelector
+    );
+
     const result = yield* call(client.upsertPnActivation, {
       pNActivation: {
         activation_status
-      }
+      },
+      isTest
     });
 
     if (result.isLeft()) {
