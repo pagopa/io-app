@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   colorItem: {
     width: "100%",
-    height: 50,
+    aspectRatio: 4 / 1,
     padding: 8,
     borderRadius: 4,
     alignItems: "flex-end",
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   gradientItem: {
-    aspectRatio: 16 / 9,
+    aspectRatio: 2 / 1,
     borderRadius: 8,
     padding: 12,
     alignItems: "flex-end",

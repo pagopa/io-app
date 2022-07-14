@@ -1,5 +1,6 @@
 import * as React from "react";
-import { View, Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
+import { View } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";

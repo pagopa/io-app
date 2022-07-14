@@ -1,4 +1,5 @@
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
