@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, ViewProps, StyleSheet } from "react-native";
 import { PNMessage } from "../store/types/types";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
@@ -6,7 +6,8 @@ import { H1 } from "../../../components/core/typography/H1";
 import { Body } from "../../../components/core/typography/Body";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
 import { getNotificationStatusInfo } from "../utils";
-import { H5 } from "../../../components/core/typography/H5";
+import { Link } from "../../../components/core/typography/Link";
+import I18n from "../../../i18n";
 
 const styles = StyleSheet.create({
   row: {
@@ -98,20 +99,43 @@ const PnMessageTimelineItem = (props: ItemProps) => (
   </View>
 );
 
-type Props = Readonly<{ message: PNMessage }>;
+type Props = Readonly<{
+  message: PNMessage;
+  onExpand?: () => void;
+}>;
 
-export const PnMessageTimeline = (props: Props & ViewProps) => (
-  <>
-    {props.message.notificationStatusHistory.map((obj, i, arr) => {
-      const props = {
-        day: formatDateAsDay(obj.activeFrom),
-        month: formatDateAsMonth(obj.activeFrom),
-        time: obj.activeFrom.toLocaleTimeString(),
-        text: getNotificationStatusInfo(obj.status).label,
-        hasNext: i < arr.length - 1,
-        hasPrevious: i > 0
-      } as ItemProps;
-      return <PnMessageTimelineItem key={i} {...props} />;
-    })}
-  </>
-);
+export const PnMessageTimeline = (props: Props & ViewProps) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const onExpand = props.onExpand;
+  useEffect(() => {
+    if (onExpand && expanded) {
+      onExpand();
+    }
+  }, [onExpand, expanded]);
+
+  const history = expanded
+    ? props.message.notificationStatusHistory
+    : [props.message.notificationStatusHistory[0]];
+
+  return (
+    <>
+      {history.map((obj, i, arr) => {
+        const props = {
+          day: formatDateAsDay(obj.activeFrom),
+          month: formatDateAsMonth(obj.activeFrom),
+          time: obj.activeFrom.toLocaleTimeString(),
+          text: getNotificationStatusInfo(obj.status).label,
+          hasNext: i < arr.length - 1,
+          hasPrevious: i > 0
+        } as ItemProps;
+        return <PnMessageTimelineItem key={i} {...props} />;
+      })}
+      {!expanded && (
+        <Link onPress={() => setExpanded(true)}>
+          {I18n.t("features.pn.details.timeline.expand")}
+        </Link>
+      )}
+    </>
+  );
+};

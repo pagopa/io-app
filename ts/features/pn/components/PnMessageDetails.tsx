@@ -112,12 +112,17 @@ export const PnMessageDetails = (props: Props) => {
 
   useOnFirstRender(verifyPaymentIfNeeded);
 
+  const scrollViewRef = React.createRef<ScrollView>();
+
   return (
     <>
       {firstLoadingRequest && paymentVerificationError.isSome() && (
         <TransactionSummaryStatus error={paymentVerificationError} />
       )}
-      <ScrollView style={{ padding: customVariables.contentPadding }}>
+      <ScrollView
+        style={{ padding: customVariables.contentPadding }}
+        ref={scrollViewRef}
+      >
         {props.service && <PnMessageDetailsHeader service={props.service} />}
         <PnMessageDetailsContent
           style={styles.content}
@@ -178,7 +183,12 @@ export const PnMessageDetails = (props: Props) => {
           >
             {I18n.t("features.pn.details.timeline.title")}
           </H5>
-          <PnMessageTimeline message={props.message} />
+          <PnMessageTimeline
+            message={props.message}
+            onExpand={() =>
+              scrollViewRef.current?.scrollToEnd({ animated: true })
+            }
+          />
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
       </ScrollView>
