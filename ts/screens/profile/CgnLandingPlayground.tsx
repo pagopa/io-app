@@ -9,7 +9,6 @@ import IconFont from "../../components/ui/IconFont";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { H5 } from "../../components/core/typography/H5";
 import WebviewComponent from "../../components/WebviewComponent";
-import customVariables from "../../theme/variables";
 import { IOColors } from "../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
