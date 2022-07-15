@@ -3097,6 +3097,18 @@ features:
       infoSection:
         title: Informazioni sulla notifica
         iun: Codice IUN
+      timeline:
+        title: STATO DELLA NOTIFICA
+        status:
+          DELIVERED: Consegnata
+          DELIVERING: Invio in corso
+          UNREACHABLE: Destinatario irreperibile
+          PAID: Pagata
+          ACCEPTED: Depositata
+          EFFECTIVE_DATE: Perfezionata per decorrenza termini
+          VIEWED: Perfezionata per visione
+          REFUSED: REFUSED
+          UNDEFINED: Non definito
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

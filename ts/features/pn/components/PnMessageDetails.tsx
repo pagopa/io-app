@@ -33,6 +33,7 @@ import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageTimeline } from "./PnMessageTimeline";
+import { H5 } from "../../../components/core/typography/H5";
 
 const styles = StyleSheet.create({
   content: {
@@ -165,11 +166,18 @@ export const PnMessageDetails = (props: Props) => {
           <TransactionSummaryRow
             axis="horizontal"
             title={I18n.t("features.pn.details.infoSection.iun")}
+            hideSeparator={true}
             subtitle={props.message.iun}
             onPress={() => clipboardSetStringWithFeedback(props.message.iun)}
           />
         </PnMessageDetailsSection>
-        <PnMessageDetailsSection title="">
+        <PnMessageDetailsSection>
+          <H5
+            color="bluegrey"
+            style={{ marginBottom: customVariables.spacerLargeHeight }}
+          >
+            {I18n.t("features.pn.details.timeline.title")}
+          </H5>
           <PnMessageTimeline message={props.message} />
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
