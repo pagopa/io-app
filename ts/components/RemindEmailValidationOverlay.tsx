@@ -38,6 +38,7 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
+import { IOColors } from "../components/core/variables/IOColors";
 import { isOnboardingCompleted } from "../utils/navigation";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
@@ -49,7 +50,6 @@ import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
-import { IOColors } from "../components/core/variables/IOColors";
 
 type OwnProp = {
   onClose: () => void;

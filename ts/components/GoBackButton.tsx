@@ -4,9 +4,9 @@ import { BackHandler, NativeEventSubscription } from "react-native";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import variables from "../theme/variables";
+import { IOColors } from "../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
-import { IOColors } from "../components/core/variables/IOColors";
 
 interface OwnProps {
   [k: string]: any;

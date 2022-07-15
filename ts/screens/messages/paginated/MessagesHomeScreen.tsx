@@ -55,10 +55,10 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
-import MigratingMessage from "./MigratingMessage";
-
-import customVariables from "../../../theme/variables";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import customVariables from "../../../theme/variables";
+
+import MigratingMessage from "./MigratingMessage";
 
 type Props = {
   navigation: CompatNavigationProp<

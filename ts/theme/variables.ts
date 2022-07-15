@@ -10,9 +10,9 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
+import { IOColors } from "../components/core/variables/IOColors";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
-import { IOColors } from "../components/core/variables/IOColors";
 
 export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 

@@ -28,9 +28,11 @@ import { format } from "../../utils/dates";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
+
+import { IOColors } from "../core/variables/IOColors";
+
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageListItem from "./MessageListItem";
-import { IOColors } from "../core/variables/IOColors";
 
 // Used to calculate the cell item layouts.
 const LIST_HEADER_HEIGHT = 70;

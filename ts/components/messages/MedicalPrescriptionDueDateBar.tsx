@@ -22,9 +22,9 @@ import {
   getMessagePaymentExpirationInfo
 } from "../../utils/messages";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { IOColors } from "../core/variables/IOColors";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
-import { IOColors } from "../core/variables/IOColors";
 
 type Props = {
   message: CreatedMessageWithContentAndAttachments;

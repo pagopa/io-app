@@ -36,10 +36,11 @@ import {
 } from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { IdentificationLockModal } from "./IdentificationLockModal";
 
 import customVariables from "../../theme/variables";
 import { IOColors } from "../../components/core/variables/IOColors";
+
+import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
