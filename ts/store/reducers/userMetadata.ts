@@ -3,6 +3,7 @@ import * as t from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { UserMetadata as BackendUserMetadata } from "../../../definitions/backend/UserMetadata";
+import { convertUnknownToError } from "../../utils/errors";
 import { Action } from "../actions/types";
 import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import { GlobalState } from "./types";
@@ -55,7 +56,7 @@ export function backendUserMetadataToUserMetadata(
       metadata: metadataOrError.value
     });
   } catch (e) {
-    return left(e);
+    return left(convertUnknownToError(e));
   }
 }
 

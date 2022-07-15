@@ -160,15 +160,6 @@ export const errorTransactionUIElements = (
   canShowHelpButton: boolean,
   paymentHistory?: PaymentHistory
 ): ScreenUIContents => {
-  const errorORUndefined = maybeError.toUndefined();
-
-  if (errorORUndefined === "PAYMENT_ID_TIMEOUT") {
-    return {
-      image: require(baseIconPath +
-        "wallet/errors/missing-payment-id-icon.png"),
-      title: I18n.t("wallet.errors.MISSING_PAYMENT_ID")
-    };
-  }
   const requestAssistance = () => {
     switch (choosenTool) {
       case ToolEnum.zendesk:
@@ -179,23 +170,6 @@ export const errorTransactionUIElements = (
         return;
     }
   };
-
-  const errorMacro = getV2ErrorMainType(errorORUndefined);
-  const validError = t.keyof(Detail_v2Enum).decode(errorORUndefined);
-  const genericErrorSubTestID = "generic-error-subtitle";
-  const subtitle = validError.fold(
-    _ => (
-      <H4 weight={"Regular"} testID={genericErrorSubTestID}>
-        {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
-      </H4>
-    ),
-    error => <ErrorCodeCopyComponent error={error} />
-  );
-
-  const image = errorMacro
-    ? imageMapping[errorMacro]
-    : require(baseIconPath + "/wallet/errors/generic-error-icon.png");
-
   const sendReportButtonConfirm = [
     confirmButtonProps(
       requestAssistance,
@@ -228,6 +202,33 @@ export const errorTransactionUIElements = (
       "closeButtonConfirm"
     )
   ];
+
+  const errorORUndefined = maybeError.toUndefined();
+
+  if (errorORUndefined === "PAYMENT_ID_TIMEOUT") {
+    return {
+      image: require(baseIconPath +
+        "wallet/errors/missing-payment-id-icon.png"),
+      title: I18n.t("wallet.errors.MISSING_PAYMENT_ID"),
+      footerButtons: [...closeButtonCancel]
+    };
+  }
+
+  const errorMacro = getV2ErrorMainType(errorORUndefined);
+  const validError = t.keyof(Detail_v2Enum).decode(errorORUndefined);
+  const genericErrorSubTestID = "generic-error-subtitle";
+  const subtitle = validError.fold(
+    _ => (
+      <H4 weight={"Regular"} testID={genericErrorSubTestID}>
+        {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
+      </H4>
+    ),
+    error => <ErrorCodeCopyComponent error={error} />
+  );
+
+  const image = errorMacro
+    ? imageMapping[errorMacro]
+    : require(baseIconPath + "/wallet/errors/generic-error-icon.png");
 
   switch (errorMacro) {
     case "TECHNICAL":

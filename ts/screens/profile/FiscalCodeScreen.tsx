@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -30,9 +29,7 @@ import customVariables from "../../theme/variables";
 import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> & {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">
-  >;
+  navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">;
 } & ReturnType<typeof mapDispatchToProps> &
   LightModalContextInterface;
 

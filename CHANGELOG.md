@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.13.0-rc.3](https://github.com/pagopa/io-app/compare/2.13.0-rc.2...2.13.0-rc.3) (2022-07-14)
+
+
+### Features
+
+* **Piattaforma Notifiche:** [[IAMVL-81](https://pagopa.atlassian.net/browse/IAMVL-81)] Let the user disable the disclaimer before opening a message from PN ([#4036](https://github.com/pagopa/io-app/issues/4036)) ([ad8d851](https://github.com/pagopa/io-app/commit/ad8d8511a7450a53492382a0a068a34ee3a6a052))
+
+
+### Chores
+
+* [[IAI-159](https://pagopa.atlassian.net/browse/IAI-159)] Update Zendesk navigator ([#4050](https://github.com/pagopa/io-app/issues/4050)) ([438b60a](https://github.com/pagopa/io-app/commit/438b60a4a0f41a34cab08137296d97ef25f13a05))
+* **Carta Giovani Nazionale:** [[IOACGN-80](https://pagopa.atlassian.net/browse/IOACGN-80)] Removes unused store information about cgn selected category ([#4055](https://github.com/pagopa/io-app/issues/4055)) ([7aaf9dd](https://github.com/pagopa/io-app/commit/7aaf9dd9ed5be2636b333c28acb14954e8a14cc8))
+* [[IAI-162](https://pagopa.atlassian.net/browse/IAI-162)] Update MVL stack navigator ([#4002](https://github.com/pagopa/io-app/issues/4002)) ([9e24884](https://github.com/pagopa/io-app/commit/9e24884e36db2399dadf5c73f8ebcece0f12094e))
+* Remove background screen ([#4049](https://github.com/pagopa/io-app/issues/4049)) ([0d8567c](https://github.com/pagopa/io-app/commit/0d8567cc251af3f2443f4050c91b2f8fa074b816))
+
+## [2.13.0-rc.2](https://github.com/pagopa/io-app/compare/2.13.0-rc.1...2.13.0-rc.2) (2022-07-13)
+
+
+### Features
+
+* **Piattaforma Notifiche:** [[IAMVL-78](https://pagopa.atlassian.net/browse/IAMVL-78)] Show a disclaimer to the user before opening a message from PN ([#4033](https://github.com/pagopa/io-app/issues/4033)) ([e52b50a](https://github.com/pagopa/io-app/commit/e52b50a3b92b03e3cbf518729b211fce030096e8))
+* [[IA-877](https://pagopa.atlassian.net/browse/IA-877)] Implements type validation on Card Holder name to avoid unsupported special characters ([#4034](https://github.com/pagopa/io-app/issues/4034)) ([3755b3d](https://github.com/pagopa/io-app/commit/3755b3d977d7fc332e9b98e1e9a5b2116b2ae1ce))
+
+
+### Bug Fixes
+
+* [[IA-908](https://pagopa.atlassian.net/browse/IA-908)] Error is not reported to user if payment check fails ([#4038](https://github.com/pagopa/io-app/issues/4038)) ([adbaddf](https://github.com/pagopa/io-app/commit/adbaddf27152c58918aa34194695075a0101044e))
+* [[IAI-212](https://pagopa.atlassian.net/browse/IAI-212)] Outdated libraries script doesn't run ([#4039](https://github.com/pagopa/io-app/issues/4039)) ([223c312](https://github.com/pagopa/io-app/commit/223c3126226b909f44711cecea731cb610804553))
+
+
+### Chores
+
+* [[IA-906](https://pagopa.atlassian.net/browse/IA-906)] Update `tosVersion` to `4.0` ([#4048](https://github.com/pagopa/io-app/issues/4048)) ([5f71719](https://github.com/pagopa/io-app/commit/5f71719685a3ca8c549d90a8872136691ed777ca))
+* [[IA-911](https://pagopa.atlassian.net/browse/IA-911)] Fix a race condition in the last app version upsert during the startup ([#4052](https://github.com/pagopa/io-app/issues/4052)) ([b03645c](https://github.com/pagopa/io-app/commit/b03645cf09d744c671453a7f44778bbd630241c1))
+* [[IAI-156](https://pagopa.atlassian.net/browse/IAI-156),[IAI-157](https://pagopa.atlassian.net/browse/IAI-157),[IAI-158](https://pagopa.atlassian.net/browse/IAI-158)] Upgrades CGN navigators to avoid the compat mode on RN v5 ([#4022](https://github.com/pagopa/io-app/issues/4022)) ([79ffd61](https://github.com/pagopa/io-app/commit/79ffd6117741870e374f8a804abd6ccfbd6a4a9b))
+* [[IAI-161](https://pagopa.atlassian.net/browse/IAI-161)] Update EUCovidCert stack navigator ([#4001](https://github.com/pagopa/io-app/issues/4001)) ([043960d](https://github.com/pagopa/io-app/commit/043960d51697d520f5c31e691a92485c328746f1))
+* **deps:** bump moment from 2.29.2 to 2.29.4 ([#4035](https://github.com/pagopa/io-app/issues/4035)) ([8aa61cd](https://github.com/pagopa/io-app/commit/8aa61cddae3bb50ba241d0aae61c6fa18023bdc9))
+* [[IAI-190](https://pagopa.atlassian.net/browse/IAI-190)] Handle try-catch `unknown` parameter instead of `any` ([#4000](https://github.com/pagopa/io-app/issues/4000)) ([325b08f](https://github.com/pagopa/io-app/commit/325b08f40455f3d4fd8d38cd2db43fda1bf74436))
+
+## [2.13.0-rc.1](https://github.com/pagopa/io-app/compare/2.13.0-rc.0...2.13.0-rc.1) (2022-07-07)
+
+
+### Features
+
+* **Piattaforma Notifiche:** [[IAMVL-77](https://pagopa.atlassian.net/browse/IAMVL-77)] Show an icon in messages list to identify a message from PN ([#4010](https://github.com/pagopa/io-app/issues/4010)) ([67b0ef1](https://github.com/pagopa/io-app/commit/67b0ef14f066cc79ecfae24b9306423b12834917))
+
+
+### Chores
+
+* [[IA-875](https://pagopa.atlassian.net/browse/IA-875)] Latest app version upsert ([#4024](https://github.com/pagopa/io-app/issues/4024)) ([9c387e5](https://github.com/pagopa/io-app/commit/9c387e5e2527fa1b29ccf76ffb21261a66f8b7a7))
+* [[IA-905](https://pagopa.atlassian.net/browse/IA-905)] Enable the local feature flag for the Premium Messages Opt-out ([#4032](https://github.com/pagopa/io-app/issues/4032)) ([9ac5ce9](https://github.com/pagopa/io-app/commit/9ac5ce95dcd37a76d0046dfe76386d6c0fa48c75))
+* [[IAI-155](https://pagopa.atlassian.net/browse/IAI-155)] Upgrade Profile navigator to v5 ([#4029](https://github.com/pagopa/io-app/issues/4029)) ([d009d25](https://github.com/pagopa/io-app/commit/d009d25bfd6ffc9e902bef2048ce88793e804f58))
+
+## [2.13.0-rc.0](https://github.com/pagopa/io-app/compare/2.12.0-rc.2...2.13.0-rc.0) (2022-07-05)
+
 ## [2.12.0-rc.2](https://github.com/pagopa/io-app/compare/2.12.0-rc.1...2.12.0-rc.2) (2022-06-30)
 
 

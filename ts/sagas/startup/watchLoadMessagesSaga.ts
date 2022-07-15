@@ -24,6 +24,7 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
 import { isTestEnv } from "../../utils/environment";
+import { convertUnknownToError } from "../../utils/errors";
 
 /**
  * A generator to load messages from the Backend.
@@ -164,9 +165,9 @@ function* loadMessages(
         );
       }
     }
-  } catch (error) {
+  } catch (e) {
     // Dispatch failure action
-    yield* put(loadMessagesAction.failure(error));
+    yield* put(loadMessagesAction.failure(convertUnknownToError(e)));
   }
 }
 

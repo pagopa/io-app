@@ -1,5 +1,4 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Tab, Tabs } from "native-base";
@@ -14,6 +13,7 @@ import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
+import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -24,7 +24,6 @@ import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
-import ROUTES from "../../../navigation/routes";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus,
@@ -167,7 +166,6 @@ const MessagesHomeScreen = ({
   resetMigrationStatus,
   latestMessageOperation
 }: Props) => {
-  const navigation = useNavigation();
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
   useOnFirstRender(() => {
@@ -207,15 +205,7 @@ const MessagesHomeScreen = ({
     )(latestMessageOperation);
   }, [latestMessageOperation]);
 
-  const navigateToMessageDetail = (message: UIMessage) => {
-    navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
-      params: {
-        messageId: message.id,
-        isArchived: message.isArchived
-      }
-    });
-  };
+  const { openMessage, bottomSheets } = useMessageOpening();
 
   const dispatch = useDispatch();
 
@@ -276,7 +266,7 @@ const MessagesHomeScreen = ({
             <AllTabs
               inbox={allInboxMessages}
               archive={allArchiveMessages}
-              navigateToMessageDetail={navigateToMessageDetail}
+              navigateToMessageDetail={openMessage}
               setArchived={setArchived}
             />
           )}
@@ -296,7 +286,7 @@ const MessagesHomeScreen = ({
                   <MessageList
                     filter={{}}
                     filteredMessages={results}
-                    onPressItem={navigateToMessageDetail}
+                    onPressItem={openMessage}
                   />
                 )}
               />
@@ -306,6 +296,7 @@ const MessagesHomeScreen = ({
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
           )}
       {!isScreenReaderEnabled && statusComponent}
+      {bottomSheets.map(_ => _)}
     </TopScreenComponent>
   );
 };

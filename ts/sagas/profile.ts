@@ -1,7 +1,15 @@
 /**
  * A saga that manages the Profile.
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import {
+  none,
+  Option,
+  some,
+  fromNullable,
+  isNone,
+  fromEither
+} from "fp-ts/lib/Option";
+import { setoidString } from "fp-ts/lib/Setoid";
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   all,
@@ -57,6 +65,9 @@ import { readablePrivacyReport } from "../utils/reporters";
 import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
+import { getAppVersion } from "../utils/appVersion";
+import { AppVersion } from "../../definitions/backend/AppVersion";
+import { convertUnknownToError } from "../utils/errors";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -90,8 +101,8 @@ export function* loadProfile(
     throw response
       ? Error(`response status ${response.value.status}`)
       : Error(I18n.t("profile.errors.load"));
-  } catch (error) {
-    yield* put(profileLoadFailure(error));
+  } catch (e) {
+    yield* put(profileLoadFailure(convertUnknownToError(e)));
   }
   return none;
 }
@@ -183,7 +194,10 @@ function* createOrUpdateProfileSaga(
       );
     }
   } catch (e) {
-    const error: Error = e || Error(I18n.t("profile.errors.upsert"));
+    const error = e
+      ? convertUnknownToError(e)
+      : Error(I18n.t("profile.errors.upsert"));
+
     yield* put(profileUpsert.failure(error));
   }
 }
@@ -280,8 +294,8 @@ function* startEmailValidationProcessSaga(
     throw response
       ? Error(`response status ${response.value.status}`)
       : Error(I18n.t("profile.errors.load"));
-  } catch (error) {
-    yield* put(startEmailValidation.failure(error));
+  } catch (e) {
+    yield* put(startEmailValidation.failure(convertUnknownToError(e)));
   }
 }
 
@@ -420,6 +434,11 @@ function* checkStoreHashedFiscalCode(
 function* checkLoadedProfile(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
+  // This saga will upsert the `last_app_version` value in the
+  // profile only if it actually changed from the one stored in
+  // the backend.
+  yield* call(upsertAppVersionSaga);
+
   yield* all([
     call(checkPreferredLanguage, profileLoadSuccessAction),
     call(checkStoreHashedFiscalCode, profileLoadSuccessAction)
@@ -450,6 +469,53 @@ export function* watchProfile(
   yield* takeLatest(removeAccountMotivation, handleRemoveAccount);
 }
 
+/**
+ * Upsert the user's latest app version, only if it's different
+ * from the one stored in the backend.
+ *
+ * ⚠️ This saga will _block_ if the upsert request will be triggered
+ * because of possible race conditions with the profile version.
+ */
+export function* upsertAppVersionSaga() {
+  const profileState: ReturnType<typeof profileSelector> = yield* select(
+    profileSelector
+  );
+
+  // If we don't have the profile inside the state there is
+  // something wrong.
+  if (pot.isNone(profileState)) {
+    return;
+  }
+
+  const maybeStoredVersion = fromNullable(profileState.value.last_app_version);
+  const rawAppVersion = yield* call(getAppVersion);
+  const maybeAppVersion = fromEither(AppVersion.decode(rawAppVersion));
+
+  // There was a problem decoding the local app version
+  // using the regex from the backend. The upsert won't be
+  // triggered in this case.
+  if (isNone(maybeAppVersion)) {
+    return;
+  }
+
+  // If the stored app version is the same as the
+  // current one, we are going to skip the upsert.
+  if (maybeStoredVersion.contains(setoidString, maybeAppVersion.value)) {
+    return;
+  }
+
+  const requestAction = yield* call(profileUpsert.request, {
+    last_app_version: maybeAppVersion.value
+  });
+
+  yield* put(requestAction);
+
+  // Here we are waiting for the response in order to block
+  // other possible upsert requests that would cause a race
+  // condition with the profile version number.
+  yield* take([profileUpsert.success, profileUpsert.failure]);
+}
+
 // to ensure right code encapsulation we export functions/variables just for tests purposes
 export const profileSagaTestable = isTestEnv
   ? {
@@ -457,6 +523,7 @@ export const profileSagaTestable = isTestEnv
       checkLoadedProfile,
       handleLoadBonusBeforeRemoveAccount,
       handleRemoveAccount,
-      checkStoreHashedFiscalCode
+      checkStoreHashedFiscalCode,
+      createOrUpdateProfileSaga
     }
   : undefined;

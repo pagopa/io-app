@@ -1,6 +1,7 @@
 import { call, takeEvery, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
+import { convertUnknownToError } from "../../utils/errors";
 import { BackendClient } from "../../api/backend";
 import { loadMessageById } from "../../store/actions/messages";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
@@ -32,7 +33,9 @@ function* handleLoadMessageById(
       error => loadMessageById.failure({ id, error })
     );
     yield* put(nextAction);
-  } catch (error) {
-    yield* put(loadMessageById.failure({ id, error }));
+  } catch (e) {
+    yield* put(
+      loadMessageById.failure({ id, error: convertUnknownToError(e) })
+    );
   }
 }

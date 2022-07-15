@@ -1,27 +1,40 @@
-import { createCompatNavigatorFactory } from "@react-navigation/compat";
 import { createStackNavigator } from "@react-navigation/stack";
-import ZendeskSupportHelpCenter from "../screens/ZendeskSupportHelpCenter";
+import * as React from "react";
 import ZendeskAskPermissions from "../screens/ZendeskAskPermissions";
 import ZendeskChooseCategory from "../screens/ZendeskChooseCategory";
 import ZendeskChooseSubCategory from "../screens/ZendeskChooseSubCategory";
 import ZendeskPanicMode from "../screens/ZendeskPanicMode";
+import ZendeskSupportHelpCenter from "../screens/ZendeskSupportHelpCenter";
+import { ZendeskParamsList } from "./params";
 import ZENDESK_ROUTES from "./routes";
 
-export const zendeskSupportNavigator = createCompatNavigatorFactory(
-  createStackNavigator
-)(
-  {
-    [ZENDESK_ROUTES.HELP_CENTER]: { screen: ZendeskSupportHelpCenter },
-    [ZENDESK_ROUTES.PANIC_MODE]: { screen: ZendeskPanicMode },
-    [ZENDESK_ROUTES.ASK_PERMISSIONS]: { screen: ZendeskAskPermissions },
-    [ZENDESK_ROUTES.CHOOSE_CATEGORY]: { screen: ZendeskChooseCategory },
-    [ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY]: { screen: ZendeskChooseSubCategory }
-  },
-  {
-    // Let each screen handles the header and navigation
-    headerMode: "none",
-    defaultNavigationOptions: {
-      gestureEnabled: false
-    }
-  }
+const Stack = createStackNavigator<ZendeskParamsList>();
+
+export const ZendeskStackNavigator = () => (
+  <Stack.Navigator
+    initialRouteName={ZENDESK_ROUTES.HELP_CENTER}
+    headerMode={"none"}
+    screenOptions={{ gestureEnabled: true }}
+  >
+    <Stack.Screen
+      name={ZENDESK_ROUTES.HELP_CENTER}
+      component={ZendeskSupportHelpCenter}
+    />
+    <Stack.Screen
+      name={ZENDESK_ROUTES.PANIC_MODE}
+      component={ZendeskPanicMode}
+    />
+    <Stack.Screen
+      name={ZENDESK_ROUTES.ASK_PERMISSIONS}
+      component={ZendeskAskPermissions}
+    />
+    <Stack.Screen
+      name={ZENDESK_ROUTES.CHOOSE_CATEGORY}
+      component={ZendeskChooseCategory}
+    />
+    <Stack.Screen
+      name={ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY}
+      component={ZendeskChooseSubCategory}
+    />
+  </Stack.Navigator>
 );

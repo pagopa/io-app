@@ -1,3 +1,6 @@
+import { Detail_v2Enum } from "../../definitions/backend/PaymentProblemJson";
+import { MessagesFailurePayload } from "../store/actions/messages";
+
 export type TimeoutError = { readonly kind: "timeout" };
 export type GenericError = { readonly kind: "generic"; value: Error };
 export type NetworkError = TimeoutError | GenericError;
@@ -44,4 +47,42 @@ export const getErrorFromNetworkError = (networkError: NetworkError): Error => {
     case "generic":
       return networkError.value;
   }
+};
+
+/**
+ * Convert an `unknown` variable to a generic `Error`.
+ */
+export const convertUnknownToError = (e: unknown): Error =>
+  e instanceof Error ? e : new Error(`${e}`);
+
+/**
+ * Convert an `unknown` variable to a `Detail_v2Enum`.
+ */
+export const getWalletError = (e: unknown): Detail_v2Enum => {
+  const message =
+    typeof e === "object" && e !== null && "message" in e
+      ? `${(e as any).message}`
+      : null;
+
+  return message && message in Detail_v2Enum
+    ? (message as Detail_v2Enum)
+    : Detail_v2Enum.GENERIC_ERROR;
+};
+
+/**
+ * Convert an `unknown` variable to a `MessagesFailurePayload`.
+ */
+export const convertUnknownToMessagesFailure = (
+  e: unknown
+): MessagesFailurePayload => {
+  // If this is actually a `MessagesFailurePayload` then return it.
+  if (typeof e === "object" && e !== null && "error" in e && "filter" in e) {
+    return e as MessagesFailurePayload;
+  }
+
+  // Otherwise create a new `MessagesFailurePayload` ad-hoc.
+  return {
+    error: convertUnknownToError(e),
+    filter: {}
+  };
 };
