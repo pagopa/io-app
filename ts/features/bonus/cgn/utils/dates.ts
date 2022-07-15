@@ -14,7 +14,7 @@ export const getCgnUserAgeRange = (
       return "31-35";
     } else if (age > 25) {
       return "26-30";
-    } else if (age > 18) {
+    } else if (age > 17) {
       return "18-25";
     }
   }
