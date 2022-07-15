@@ -1,11 +1,10 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { usePaginatedMessages } from "../../../config";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
 import { GlobalState } from "../../../store/reducers/types";
 import { EUCovidCertParamsList } from "../navigation/params";
@@ -35,11 +34,7 @@ export type EuCovidCertificateRouterScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<EUCovidCertParamsList, "EUCOVIDCERT_CERTIFICATE">
-    >;
-  };
+  ReturnType<typeof mapStateToProps>;
 
 /**
  * Return the right screen based on the response value
@@ -104,8 +99,11 @@ export const EUCovidContext =
 const EuCovidCertificateRouterScreen = (
   props: Props
 ): React.ReactElement | null => {
-  const authCode = props.navigation.getParam("authCode");
-  const messageId = props.navigation.getParam("messageId");
+  const route =
+    useRoute<RouteProp<EUCovidCertParamsList, "EUCOVIDCERT_CERTIFICATE">>();
+
+  const authCode = route.params.authCode;
+  const messageId = route.params.messageId;
   const { setMessageRead, shouldBeLoaded, loadCertificate } = props;
   const firstLoading = useRef<boolean>(true);
 

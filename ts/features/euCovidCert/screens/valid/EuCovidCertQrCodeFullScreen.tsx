@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -12,7 +11,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { withBase64Uri } from "../../../../utils/image";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -31,11 +30,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export const EuCovidCertQrCodeFullScreen = (props: {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<EUCovidCertParamsList, "EUCOVIDCERT_QRCODE">
-  >;
-}): React.ReactElement => {
+export const EuCovidCertQrCodeFullScreen = (
+  props: IOStackNavigationRouteProps<
+    EUCovidCertParamsList,
+    "EUCOVIDCERT_QRCODE"
+  >
+): React.ReactElement => {
   useMaxBrightness();
   return (
     <BaseScreenComponent goBack={true}>
@@ -54,10 +54,7 @@ export const EuCovidCertQrCodeFullScreen = (props: {
               "features.euCovidCertificate.valid.accessibility.qrCode"
             )}
             source={{
-              uri: withBase64Uri(
-                props.navigation.getParam("qrCodeContent"),
-                "png"
-              )
+              uri: withBase64Uri(props.route.params.qrCodeContent, "png")
             }}
             style={styles.qrCode}
           />
