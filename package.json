@@ -74,7 +74,8 @@
     "generate:cgn": "npm-run-all generate:cgn-definitions generate:cgn-merchants-definitions",
     "generate:sicilia_vola": "npm-run-all generate:io_sicilia_vola_token generate:sicilia_vola_api",
     "generate:cdc": "npm-run-all generate:cdc-api",
-    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:pagopa-api-walletv2 generate:pagopa-cobadge-configuration generate:pagopa-privative-configuration generate:content-definitions generate:bonus-vacanze-definitions generate:bpd generate:cgn generate:eu-covid-cert generate:sicilia_vola generate:cdc generate:locales",
+    "generate:pn": "npm-run-all generate:pn-definitions",
+    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:pagopa-api-walletv2 generate:pagopa-cobadge-configuration generate:pagopa-privative-configuration generate:content-definitions generate:bonus-vacanze-definitions generate:bpd generate:cgn generate:eu-covid-cert generate:sicilia_vola generate:cdc generate:pn generate:locales",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
   },
