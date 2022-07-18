@@ -171,8 +171,8 @@ export const useMvlAttachmentDownload = (
     useDownloadAttachmentConfirmationBottomSheet({
       onConfirm: dontAskAgain => {
         dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
-        dismiss();
         void downloadAttachmentIfNeeded();
+        dismiss();
       },
       onCancel: () => {
         dismiss();
