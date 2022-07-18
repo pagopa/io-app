@@ -23,9 +23,9 @@ export const IOColors = asIOColors({
   bluegreyLight: "#CCD4DC",
   /* ALIAS TOKEN: colorSkeleton → bluegreyLight */
   /* ALIAS TOKEN: itemSeparator → bluegreyLight */
-  btnLightBorderColor: "#AEB5BF" /* from variables.ts, ALIAS TOKEN */,
   grey: "#909DA8",
   /* ALIAS TOKEN: disabledService → grey, not referenced by anything */
+  /* ↳ ALIAS TOKEN: btnLightBorderColor → grey */
   milderGray: "#5F6F80",
   /* ALIAS TOKEN: headerIconDark → milderGray */
   bluegrey: "#475A6D",

@@ -59,7 +59,7 @@ const customVariables = Object.assign(materialVariables, {
 
   lighterGray: "#C1C9D2",
 
-  btnLightBorderColor: "#AEB5BF",
+  btnLightBorderColor: IOColors.grey,
   cardExpiredTextColor: "#FF0000",
   cardTextColor: IOColors.bluegreyDark,
   colorBlack: "#000000",
