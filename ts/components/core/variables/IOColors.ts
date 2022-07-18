@@ -15,12 +15,9 @@ export const IOColors = asIOColors({
   white: "#FFFFFF",
   colorWhiteRGB: `rgb(255, 255, 255)` /* from various JEST tests */,
   greyUltralight: "#FCFDFF",
-
   brandGray: "#F5F6F7" /* from variables.ts */,
-  tabUnderlineColor:
-    "#F6F6F6" /* from variables.ts, similar to brandGray, ALIAS TOKEN */,
+  /* ALIAS TOKEN: tabUnderlineColor -> brandGray */
   greyLight: "#E6E9F2",
-  brandLightGray: "#E6E9F2" /* from variables.ts, duplicate of greyLight */,
   lightestGray: "#E0E3E6" /* from variables.ts */,
   headerIconLight: "#E4E7EA" /* from variables.ts, ALIAS TOKEN */,
   optCodeComponent: "#D9D9D9" /* from relative component */,

@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   sectionHeaderContent: {
     paddingBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: customVariables.brandLightGray
+    borderBottomColor: IOColors.greyLight
   },
   sectionHeaderText: {
     fontSize: 18,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   itemSeparator: {
     height: ITEM_SEPARATOR_HEIGHT,
-    backgroundColor: customVariables.brandLightGray
+    backgroundColor: IOColors.greyLight
   },
   button: {
     alignContent: "center",

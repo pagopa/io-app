@@ -60,7 +60,7 @@ const CiePinpad = (props: Props) => {
       <InputPlaceHolder
         digits={props.pinLength}
         activeColor={customVariables.colorBlack}
-        inactiveColor={customVariables.brandLightGray}
+        inactiveColor={IOColors.greyLight}
         inputValue={props.pin || ""}
         accessibilityLabel={I18n.t(
           "authentication.cie.pin.accessibility.placeholderLabel"

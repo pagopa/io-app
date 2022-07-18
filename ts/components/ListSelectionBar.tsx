@@ -2,7 +2,6 @@ import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../i18n";
-import customVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { IOColors } from "./core/variables/IOColors";
 
@@ -11,7 +10,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
-    backgroundColor: customVariables.brandLightGray,
+    backgroundColor: IOColors.greyLight,
     padding: 5
   },
   flex2: {
