@@ -15,26 +15,26 @@ export const IOColors = asIOColors({
   white: "#FFFFFF",
   greyUltralight: "#FCFDFF",
   brandGray: "#F5F6F7" /* from variables.ts */,
-  /* ALIAS TOKEN: tabUnderlineColor → brandGray */
+  /* ↳ ALIAS TOKEN: tabUnderlineColor → brandGray */
   greyLight: "#E6E9F2",
-  /* ALIAS TOKEN: headerIconLight → greyLight */
+  /* ↳ ALIAS TOKEN: headerIconLight → greyLight */
   optCodeComponent: "#D9D9D9" /* from relative component */,
   lighterGray: "#C1C9D2" /* from variables.ts */,
   bluegreyLight: "#CCD4DC",
-  /* ALIAS TOKEN: colorSkeleton → bluegreyLight */
-  /* ALIAS TOKEN: itemSeparator → bluegreyLight */
+  /* ↳ ALIAS TOKEN: colorSkeleton → bluegreyLight */
+  /* ↳ ALIAS TOKEN: itemSeparator → bluegreyLight */
   grey: "#909DA8",
-  /* ALIAS TOKEN: disabledService → grey, not referenced by anything */
   /* ↳ ALIAS TOKEN: btnLightBorderColor → grey */
+  /* ↳ ALIAS TOKEN: disabledService → grey, not referenced though */
   milderGray: "#5F6F80",
-  /* ALIAS TOKEN: headerIconDark → milderGray */
+  /* ↳ ALIAS TOKEN: headerIconDark → milderGray */
   bluegrey: "#475A6D",
-  /* ALIAS TOKEN: textColor → bluegrey */
-  /* ALIAS TOKEN: topTabBarTextColor → bluegrey */
-  /* ALIAS TOKEN: unselectedColor → bluegrey */
+  /* ↳ ALIAS TOKEN: textColor → bluegrey */
+  /* ↳ ALIAS TOKEN: topTabBarTextColor → bluegrey */
+  /* ↳ ALIAS TOKEN: unselectedColor → bluegrey */
   bluegreyDark: "#17324D",
-  /* ALIAS TOKEN: textColorDark → bluegreyDark */
-  /* ALIAS TOKEN: cardTextColor → bluegreyDark */
+  /* ↳ ALIAS TOKEN: textColorDark → bluegreyDark */
+  /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
   colorBlack: "#000000" /* from variables.ts, duplicate of black */,
   footerShadowColor:
