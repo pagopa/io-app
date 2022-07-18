@@ -7,6 +7,8 @@ import I18n from "../../../../i18n";
 import variables from "../../../../theme/variables";
 import { getRemoteLocale } from "../../../../utils/messages";
 
+import { IOColors } from "../../../../components/core/variables/IOColors";
+
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
 type Props = {

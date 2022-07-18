@@ -35,7 +35,7 @@ type Props = ReturnType<typeof mapStateToProps> & {
 
 const styles = StyleSheet.create({
   darkBg: {
-    backgroundColor: customVariables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   },
   white: {
     color: IOColors.white

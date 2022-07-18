@@ -25,6 +25,7 @@ import IconFont from "../../ui/IconFont";
 import { H5 } from "../../core/typography/H5";
 import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";
+import { IOColors } from "../../core/variables/IOColors";
 import styles from "./CardComponent.style";
 import Logo, { cardIcons } from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -139,7 +140,7 @@ export default class CardComponent extends React.Component<Props> {
               }
               color={
                 pot.isUpdating(isFavorite)
-                  ? variables.brandDarkGray
+                  ? IOColors.bluegrey
                   : variables.brandPrimary
               }
               onPress={this.handleFavoritePress}

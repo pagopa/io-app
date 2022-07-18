@@ -78,7 +78,7 @@ export default (): Theme => ({
     "UIComponent.IconFont": {
       color: IOColors.white
     },
-    backgroundColor: variables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   },
 
   ".gray": {
@@ -156,7 +156,7 @@ export default (): Theme => ({
   },
 
   ".cancel": {
-    backgroundColor: variables.brandDarkGray,
+    backgroundColor: IOColors.bluegrey,
     "NativeBase.Text": {
       color: IOColors.white
     },

@@ -54,7 +54,6 @@ const customVariables = Object.assign(materialVariables, {
   brandSuccess: "#007005",
   brandDanger: "#CC3333",
   brandMildGray: "#C7D1D9",
-  brandDarkGray: "#475A6D",
   brandDarkestGray: "#17324D",
   brandPrimaryLight: "#99CCFF",
   brandHighlight: "#00C5CA",
@@ -267,7 +266,7 @@ const customVariables = Object.assign(materialVariables, {
   modalHeaderHeight: 75,
 
   // Text
-  textColor: "#475A6D",
+  textColor: IOColors.bluegrey,
   textLinkColor: "#0073E6",
   textMessageDetailLinkColor: "#0073E6",
   textNormalWeight: "400" as FontWeight,
@@ -298,7 +297,7 @@ const customVariables = Object.assign(materialVariables, {
   tabDefaultBg: "#FFFFFF",
   tabUnderlineColor: IOColors.brandGray,
   tabUnderlineHeight: 2,
-  topTabBarTextColor: "#475A6D",
+  topTabBarTextColor: IOColors.bluegrey,
   topTabBarActiveTextColor: "#0066CC",
 
   // Animations
@@ -310,7 +309,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: "#0073E6",
-  unselectedColor: "#475A6D",
+  unselectedColor: IOColors.bluegrey,
 
   // Checkbox
   checkboxDefaultColor: "transparent"

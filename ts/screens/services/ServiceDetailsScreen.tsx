@@ -41,6 +41,7 @@ import customVariables from "../../theme/variables";
 import { getServiceCTA } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   service: ServicePublic;

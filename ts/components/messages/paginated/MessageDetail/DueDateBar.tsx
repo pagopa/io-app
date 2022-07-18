@@ -97,7 +97,7 @@ const getCalendarIconBackgroundColor = (status: PaymentStatus) => {
       return IOColors.white;
     case "expiring":
     case "valid":
-      return customVariables.brandDarkGray;
+      return IOColors.bluegrey;
   }
 };
 
@@ -107,7 +107,7 @@ const getCalendarTextColor = (status: PaymentStatus) => {
     case "valid":
       return IOColors.white;
     case "expired":
-      return customVariables.brandDarkGray;
+      return IOColors.bluegrey;
   }
 };
 
@@ -139,7 +139,7 @@ const bannerStyle = (status: PaymentStatus): ViewStyle => {
     case "valid":
       return { backgroundColor: customVariables.brandGray };
     case "expired":
-      return { backgroundColor: customVariables.brandDarkGray };
+      return { backgroundColor: IOColors.bluegrey };
   }
 };
 

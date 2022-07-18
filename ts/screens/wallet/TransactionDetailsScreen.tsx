@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import { Link } from "../../components/core/typography/Link";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
@@ -220,7 +221,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
         faqCategories={["wallet_transaction"]}
       >
         <FocusAwareStatusBar
-          backgroundColor={customVariables.brandDarkGray}
+          backgroundColor={IOColors.bluegrey}
           barStyle={"light-content"}
         />
         <NavigationEvents onWillFocus={this.handleWillFocus} />

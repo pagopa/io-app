@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     fontSize: customVariables.fontSizeSmall,
     lineHeight: 16,
-    color: customVariables.brandDarkGray
+    color: IOColors.bluegrey
   },
   cardInner: {
     paddingBottom: 13,
@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginRight: 0
   },
-  cardGrey: {
-    backgroundColor: customVariables.brandDarkGray
+  cardBlueGrey: {
+    backgroundColor: IOColors.bluegrey
   },
   flatBottom: {
     borderBottomLeftRadius: 0,
@@ -212,7 +212,11 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         accessibilityRole={"button"}
       >
         <View
-          style={[styles.card, styles.flatBottom, cardStyle || styles.cardGrey]}
+          style={[
+            styles.card,
+            styles.flatBottom,
+            cardStyle || styles.cardBlueGrey
+          ]}
         >
           <View
             style={[styles.cardInner]}

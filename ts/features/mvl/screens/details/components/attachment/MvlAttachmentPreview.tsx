@@ -9,7 +9,6 @@ import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons
 import I18n from "../../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
-import customVariables from "../../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { isIos } from "../../../../../../utils/platform";
 import { share } from "../../../../../../utils/share";
@@ -22,6 +21,7 @@ import {
   MvlDownload
 } from "../../../../store/reducers/downloads";
 import { MvlAttachmentId } from "../../../../types/mvlData";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   pdf: {
     flex: 1,
-    backgroundColor: customVariables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   }
 });
 

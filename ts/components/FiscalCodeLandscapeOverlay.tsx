@@ -24,7 +24,7 @@ export type Props = Readonly<{
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: customVariables.brandDarkGray,
+    backgroundColor: IOColors.bluegrey,
     paddingHorizontal: customVariables.contentPadding,
     paddingTop: 0
   }
@@ -76,7 +76,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
   useMaxBrightness();
 
   return (
-    <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
+    <Container style={{ backgroundColor: IOColors.bluegrey }}>
       <AppHeader noLeft={true} dark={true}>
         <Body />
         <Right>
@@ -92,7 +92,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
         </Right>
       </AppHeader>
       <StatusBar
-        backgroundColor={customVariables.brandDarkGray}
+        backgroundColor={IOColors.bluegrey}
         barStyle={"light-content"}
       />
       <ScrollView

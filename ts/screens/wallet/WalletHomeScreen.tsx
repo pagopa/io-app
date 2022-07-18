@@ -155,9 +155,6 @@ const styles = StyleSheet.create({
   colorBrandGray: {
     color: customVariables.brandGray
   },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   whiteBg: {
     backgroundColor: IOColors.white
   },

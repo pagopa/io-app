@@ -16,7 +16,7 @@ export const IOColors = asIOColors({
   colorWhiteRGB: `rgb(255, 255, 255)` /* from various JEST tests */,
   greyUltralight: "#FCFDFF",
   brandGray: "#F5F6F7" /* from variables.ts */,
-  /* ALIAS TOKEN: tabUnderlineColor -> brandGray */
+  /* ALIAS TOKEN: tabUnderlineColor → brandGray */
   greyLight: "#E6E9F2",
   lightestGray: "#E0E3E6" /* from variables.ts */,
   headerIconLight: "#E4E7EA" /* from variables.ts, ALIAS TOKEN */,
@@ -31,20 +31,16 @@ export const IOColors = asIOColors({
   listSelectionBarColor: "#A9A9A9" /* from relative JEST snap test */,
   btnLightBorderColor: "#AEB5BF" /* from variables.ts, ALIAS TOKEN */,
   grey: "#909DA8",
-  /* ALIAS TOKEN: disabledService -> grey, not referenced by anything */
+  /* ALIAS TOKEN: disabledService → grey, not referenced by anything */
   headerIconDark: "#798593" /* from variables.ts, ALIAS TOKEN */,
   itemBorderDefaultColor:
     "#5F6F82" /* from variables.ts, similar to milderGray, ALIAS TOKEN */,
   milderGray: "#5F6F80" /* from variables.ts */,
   darkerGray: "#4B5C6F" /* from variables.ts */,
   bluegrey: "#475A6D",
-  brandDarkGray: "#475A6D" /* from variables.ts, duplicate of bluegrey */,
-  textColor:
-    "#475A6D" /* from variables.ts, duplicate of bluegrey, ALIAS TOKEN */,
-  topTabBarTextColor:
-    "#475A6D" /* from variables.ts, duplicate of bluegrey, ALIAS TOKEN */,
-  unselectedColor:
-    "#475A6D" /* from variables.ts, duplicate of bluegrey, ALIAS TOKEN */,
+  /* ALIAS TOKEN: textColor → bluegrey */
+  /* ALIAS TOKEN: topTabBarTextColor → bluegrey */
+  /* ALIAS TOKEN: unselectedColor → bluegrey */
   bluegreyDark: "#17324D",
   brandDarkestGray:
     "#17324D" /* from variables.ts, duplicate of bluegreyDark */,

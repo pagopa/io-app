@@ -548,7 +548,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             <ActivityIndicator
               style={styles.progress}
               size={"small"}
-              color={customVariables.brandDarkGray}
+              color={IOColors.bluegrey}
             />
           </View>
         )}

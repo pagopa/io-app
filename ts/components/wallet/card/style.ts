@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import variables from "../../../theme/variables";
 import { makeFontStyleObject } from "../../core/fonts";
+import { IOColors } from "../../core/variables/IOColors";
 
 export const CreditCardStyles = StyleSheet.create({
   largeTextStyle: {
@@ -15,7 +16,7 @@ export const CreditCardStyles = StyleSheet.create({
     color: variables.cardFontColor
   },
   smallTextStyle: {
-    color: variables.brandDarkGray
+    color: IOColors.bluegrey
   },
   expiredTextStyle: {
     fontSize: variables.fontSize1,

@@ -29,9 +29,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   viewStyle: {
     flexDirection: "row"
   },
