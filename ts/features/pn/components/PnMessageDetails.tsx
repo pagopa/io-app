@@ -90,7 +90,7 @@ export const PnMessageDetails = (props: Props) => {
       );
       setFirstLoadingRequest(true);
     }
-  }, [rptId, dispatch, setFirstLoadingRequest]);
+  }, [rptId, dispatch]);
 
   const startPayment = useCallback(() => {
     if (rptId) {
