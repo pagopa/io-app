@@ -1,28 +1,27 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
+import Pdf from "react-native-pdf";
+import WorkunitGenericFailure from "../../../../../../components/error/WorkunitGenericFailure";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import customVariables from "../../../../../../theme/variables";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { isIos } from "../../../../../../utils/platform";
-import { showToast } from "../../../../../../utils/showToast";
 import I18n from "../../../../../../i18n";
-import { MvlAttachmentId } from "../../../../types/mvlData";
+import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
+import customVariables from "../../../../../../theme/variables";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import { isIos } from "../../../../../../utils/platform";
 import { share } from "../../../../../../utils/share";
-import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import { showToast } from "../../../../../../utils/showToast";
+import { confirmButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { MvlParamsList } from "../../../../navigation/params";
 import { mvlRemoveCachedAttachment } from "../../../../store/actions/downloads";
-import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import {
   mvlAttachmentDownloadFromIdSelector,
   MvlDownload
 } from "../../../../store/reducers/downloads";
-import WorkunitGenericFailure from "../../../../../../components/error/WorkunitGenericFailure";
+import { MvlAttachmentId } from "../../../../types/mvlData";
 
 const styles = StyleSheet.create({
   container: {
@@ -113,15 +112,11 @@ export type MvlAttachmentPreviewNavigationParams = Readonly<{
   attachmentId: MvlAttachmentId;
 }>;
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MvlParamsList, "MVL_ATTACHMENT">
-  >;
-};
+type Props = IOStackNavigationRouteProps<MvlParamsList, "MVL_ATTACHMENT">;
 
 export const MvlAttachmentPreview = (props: Props): React.ReactElement => {
   const dispatch = useIODispatch();
-  const attachmentId = props.navigation.getParam("attachmentId");
+  const attachmentId = props.route.params.attachmentId;
   const downloadPot = useIOSelector(state =>
     mvlAttachmentDownloadFromIdSelector(state, attachmentId)
   );
