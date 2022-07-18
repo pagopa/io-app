@@ -11,6 +11,7 @@ import {
 import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     paddingRight: 16
   },
   disabledItem: {
-    color: customVariables.lightGray
+    color: IOColors.grey
   },
   description: {
     paddingRight: PADDING_R_DESCRIPTION,

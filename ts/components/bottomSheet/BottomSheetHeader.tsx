@@ -70,11 +70,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
         accessibilityRole={"button"}
         accessibilityLabel={I18n.t("global.buttons.close")}
       >
-        <IconFont
-          name="io-close"
-          color={customVariables.lightGray}
-          style={styles.icon}
-        />
+        <IconFont name="io-close" color={IOColors.grey} style={styles.icon} />
       </ButtonDefaultOpacity>
     </View>
   );

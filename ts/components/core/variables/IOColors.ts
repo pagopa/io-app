@@ -30,11 +30,8 @@ export const IOColors = asIOColors({
   itemSeparator: "#C9C9C9" /* from variables.ts, ALIAS TOKEN */,
   listSelectionBarColor: "#A9A9A9" /* from relative JEST snap test */,
   btnLightBorderColor: "#AEB5BF" /* from variables.ts, ALIAS TOKEN */,
-  lightGray: "#909DA8" /* from variables.ts, duplicate of grey */,
-
-  disabledService:
-    "#909DA8" /* from variables.ts, duplicate of grey, ALIAS TOKEN */,
   grey: "#909DA8",
+  /* ALIAS TOKEN: disabledService -> grey, not referenced by anything */
   headerIconDark: "#798593" /* from variables.ts, ALIAS TOKEN */,
   itemBorderDefaultColor:
     "#5F6F82" /* from variables.ts, similar to milderGray, ALIAS TOKEN */,

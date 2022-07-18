@@ -6,6 +6,7 @@ import customVariables from "../../theme/variables";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { BadgeComponent } from "../screens/BadgeComponent";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   title: string;
@@ -29,8 +30,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 24
   },
-  lightGray: {
-    color: customVariables.lightGray
+  grey: {
+    color: IOColors.grey
   },
   lighterGray: {
     color: customVariables.lighterGray
@@ -95,10 +96,7 @@ export const PaymentSummaryComponent = (props: Props) => {
     <React.Fragment>
       <Text
         bold={true}
-        style={[
-          styles.title,
-          props.dark ? styles.lighterGray : styles.lightGray
-        ]}
+        style={[styles.title, props.dark ? styles.lighterGray : styles.grey]}
       >
         {props.title}
       </Text>

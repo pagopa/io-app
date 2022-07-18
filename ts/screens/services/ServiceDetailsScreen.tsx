@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
     color: customVariables.brandDarkestGray
   },
   disabledColor: {
-    color: customVariables.lightGray
+    /* Disabled state */
+    color: IOColors.grey
   },
   info: {
     marginTop: -5

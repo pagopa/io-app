@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   badge: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.lightGray
+    backgroundColor: IOColors.grey
   },
   badgeText: {
     lineHeight: Platform.OS === "ios" ? 20 : 21

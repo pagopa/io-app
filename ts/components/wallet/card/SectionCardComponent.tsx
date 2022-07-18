@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center"
   },
-  brandLightGray: {
+  brandGray: {
     color: customVariables.brandGray
   },
   badgeColor: {
@@ -223,7 +223,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View style={[styles.flexRow, styles.topSpacing]}>
               <View style={styles.flexRow2}>
                 <Text
-                  style={[styles.brandLightGray, styles.headerText]}
+                  style={[styles.brandGray, styles.headerText]}
                   ellipsizeMode="tail"
                 >
                   {label}
