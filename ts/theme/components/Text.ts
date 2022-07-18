@@ -70,7 +70,7 @@ export default (): Theme => ({
     color: IOColors.white
   },
   ".dark": {
-    color: variables.brandDarkestGray
+    color: variables.textColorDark
   },
   ".alignCenter": {
     textAlign: "center"

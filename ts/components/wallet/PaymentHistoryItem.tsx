@@ -34,14 +34,14 @@ const styles = StyleSheet.create({
   },
   text11: {
     paddingLeft: 8,
-    color: customVariables.brandDarkestGray
+    color: customVariables.textColorDark
   },
   text3FontWeight: {
     ...makeFontStyleObject(Platform.select, "600")
   },
   text3: {
     fontSize: 16,
-    color: customVariables.brandDarkestGray
+    color: customVariables.textColorDark
   },
   icon: {
     width: 64,

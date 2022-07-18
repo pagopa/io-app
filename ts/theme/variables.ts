@@ -54,7 +54,6 @@ const customVariables = Object.assign(materialVariables, {
   brandSuccess: "#007005",
   brandDanger: "#CC3333",
   brandMildGray: "#C7D1D9",
-  brandDarkestGray: "#17324D",
   brandPrimaryLight: "#99CCFF",
   brandHighlight: "#00C5CA",
   brandHighLighter: "#00CDD2",
@@ -67,7 +66,7 @@ const customVariables = Object.assign(materialVariables, {
 
   btnLightBorderColor: "#AEB5BF",
   cardExpiredTextColor: "#FF0000",
-  cardFontColor: "#17324D",
+  cardTextColor: IOColors.bluegreyDark,
   colorBlack: "#000000",
   itemBorderDefaultColor: "#5F6F82",
 
@@ -267,6 +266,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // Text
   textColor: IOColors.bluegrey,
+  textColorDark: IOColors.bluegreyDark,
   textLinkColor: "#0073E6",
   textMessageDetailLinkColor: "#0073E6",
   textNormalWeight: "400" as FontWeight,

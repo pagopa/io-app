@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   sectionHeaderText: {
     fontSize: 18,
-    color: customVariables.brandDarkestGray,
+    color: customVariables.textColorDark,
     ...makeFontStyleObject(Platform.select, "600"),
     lineHeight: 20
   },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   itemEmptyText: {
-    color: customVariables.brandDarkestGray
+    color: customVariables.textColorDark
   },
   itemSeparator: {
     height: ITEM_SEPARATOR_HEIGHT,

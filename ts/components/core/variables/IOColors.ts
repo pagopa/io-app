@@ -40,10 +40,8 @@ export const IOColors = asIOColors({
   /* ALIAS TOKEN: topTabBarTextColor → bluegrey */
   /* ALIAS TOKEN: unselectedColor → bluegrey */
   bluegreyDark: "#17324D",
-  brandDarkestGray:
-    "#17324D" /* from variables.ts, duplicate of bluegreyDark */,
-  cardFontColor:
-    "#17324D" /* from variables.ts, duplicate of bluegreyDark and brandDarkestGray, ALIAS TOKEN */,
+  /* ALIAS TOKEN: textColorDark → bluegreyDark */
+  /* ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
   colorBlack: "#000000" /* from variables.ts, duplicate of black */,
   footerShadowColor:

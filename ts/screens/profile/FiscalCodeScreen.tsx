@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   shadow: {
     // iOS
     paddingBottom: 20,
-    shadowColor: customVariables.brandDarkestGray,
+    shadowColor: IOColors.bluegreyDark,
     shadowOffset: {
       width: 1,
       height: 8

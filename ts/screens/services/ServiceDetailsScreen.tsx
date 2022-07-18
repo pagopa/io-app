@@ -81,9 +81,6 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: "row"
   },
-  enabledColor: {
-    color: customVariables.brandDarkestGray
-  },
   disabledColor: {
     /* Disabled state */
     color: IOColors.grey

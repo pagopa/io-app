@@ -81,9 +81,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 48
   },
-  darkText: {
-    color: customVariables.brandDarkestGray
-  },
   bigText: {
     fontSize: 20
   },

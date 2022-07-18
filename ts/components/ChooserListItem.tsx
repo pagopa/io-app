@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 22,
     marginTop: 4,
-    color: customVariables.brandDarkestGray
+    color: customVariables.textColorDark
   }
 });
 
