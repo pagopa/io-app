@@ -104,19 +104,26 @@ type Props = Readonly<{
   onExpand?: () => void;
 }>;
 
-export const PnMessageTimeline = (props: Props & ViewProps) => {
+export const PnMessageTimeline = ({ message, onExpand }: Props & ViewProps) => {
   const [expanded, setExpanded] = useState(false);
 
-  const onExpand = props.onExpand;
   useEffect(() => {
     if (onExpand && expanded) {
       onExpand();
     }
   }, [onExpand, expanded]);
 
+  if (message.notificationStatusHistory.length === 0) {
+    return null;
+  }
+
   const history = expanded
-    ? props.message.notificationStatusHistory
-    : [props.message.notificationStatusHistory[0]];
+    ? [...message.notificationStatusHistory].reverse()
+    : [
+        message.notificationStatusHistory[
+          message.notificationStatusHistory.length - 1
+        ]
+      ];
 
   return (
     <>
@@ -131,7 +138,7 @@ export const PnMessageTimeline = (props: Props & ViewProps) => {
         } as ItemProps;
         return <PnMessageTimelineItem key={i} {...props} />;
       })}
-      {!expanded && (
+      {!expanded && message.notificationStatusHistory.length > 1 && (
         <Link onPress={() => setExpanded(true)}>
           {I18n.t("features.pn.details.timeline.expand")}
         </Link>

@@ -175,8 +175,6 @@ export const PnMessageDetails = (props: Props) => {
             subtitle={props.message.iun}
             onPress={() => clipboardSetStringWithFeedback(props.message.iun)}
           />
-        </PnMessageDetailsSection>
-        <PnMessageDetailsSection>
           <H5
             color="bluegrey"
             style={{ marginBottom: customVariables.spacerLargeHeight }}
