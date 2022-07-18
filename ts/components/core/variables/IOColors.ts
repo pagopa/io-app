@@ -13,7 +13,6 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
-  colorWhiteRGB: `rgb(255, 255, 255)` /* from various JEST tests */,
   greyUltralight: "#FCFDFF",
   brandGray: "#F5F6F7" /* from variables.ts */,
   /* ALIAS TOKEN: tabUnderlineColor → brandGray */
@@ -28,7 +27,6 @@ export const IOColors = asIOColors({
   shineColor:
     "#C1CCD6" /* from variables.ts, similar to brandMildGray, Animation ALIAS TOKEN */,
   itemSeparator: "#C9C9C9" /* from variables.ts, ALIAS TOKEN */,
-  listSelectionBarColor: "#A9A9A9" /* from relative JEST snap test */,
   btnLightBorderColor: "#AEB5BF" /* from variables.ts, ALIAS TOKEN */,
   grey: "#909DA8",
   /* ALIAS TOKEN: disabledService → grey, not referenced by anything */
@@ -46,7 +44,6 @@ export const IOColors = asIOColors({
     "#17324D" /* from variables.ts, duplicate of bluegreyDark */,
   cardFontColor:
     "#17324D" /* from variables.ts, duplicate of bluegreyDark and brandDarkestGray, ALIAS TOKEN */,
-  textColorDark: `rgb(28, 28, 30)` /* found in various JEST tests */,
   black: "#000000",
   colorBlack: "#000000" /* from variables.ts, duplicate of black */,
   footerShadowColor:
