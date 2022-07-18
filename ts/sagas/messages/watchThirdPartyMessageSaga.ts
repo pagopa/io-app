@@ -20,7 +20,7 @@ function* getThirdPartyMessage(
           error: new Error(readableReport(result.value))
         })
       );
-    } else if (result.isRight() && result.value.status === 200) {
+    } else if (result.value.status === 200) {
       yield* put(
         loadThirdPartyMessage.success({ id, content: result.value.value })
       );
