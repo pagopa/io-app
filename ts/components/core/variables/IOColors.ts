@@ -17,8 +17,7 @@ export const IOColors = asIOColors({
   brandGray: "#F5F6F7" /* from variables.ts */,
   /* ALIAS TOKEN: tabUnderlineColor → brandGray */
   greyLight: "#E6E9F2",
-  lightestGray: "#E0E3E6" /* from variables.ts */,
-  headerIconLight: "#E4E7EA" /* from variables.ts, ALIAS TOKEN */,
+  /* ALIAS TOKEN: headerIconLight → greyLight */
   optCodeComponent: "#D9D9D9" /* from relative component */,
   lighterGray: "#C1C9D2" /* from variables.ts */,
   bluegreyLight: "#CCD4DC",
@@ -27,8 +26,8 @@ export const IOColors = asIOColors({
   btnLightBorderColor: "#AEB5BF" /* from variables.ts, ALIAS TOKEN */,
   grey: "#909DA8",
   /* ALIAS TOKEN: disabledService → grey, not referenced by anything */
-  headerIconDark: "#798593" /* from variables.ts, ALIAS TOKEN */,
   milderGray: "#5F6F80",
+  /* ALIAS TOKEN: headerIconDark → milderGray */
   bluegrey: "#475A6D",
   /* ALIAS TOKEN: textColor → bluegrey */
   /* ALIAS TOKEN: topTabBarTextColor → bluegrey */

@@ -98,7 +98,7 @@ export default (): Theme => ({
     "UIComponent.IconFont": {
       color: variables.textMessageDetailLinkColor
     },
-    backgroundColor: variables.lightestGray
+    backgroundColor: IOColors.greyLight
   },
 
   ".light": {

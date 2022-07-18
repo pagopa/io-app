@@ -58,7 +58,6 @@ const customVariables = Object.assign(materialVariables, {
   brandHighLighter: "#00CDD2",
 
   lighterGray: "#C1C9D2",
-  lightestGray: "#E0E3E6",
 
   btnLightBorderColor: "#AEB5BF",
   cardExpiredTextColor: "#FF0000",
@@ -72,8 +71,10 @@ const customVariables = Object.assign(materialVariables, {
   toastColor: "#C1f4f2",
   badgeYellow: "#ffc824",
 
-  headerIconDark: "#798593",
-  headerIconLight: "#E4E7EA",
+  /* When the background is dark */
+  headerIconDark: IOColors.milderGray,
+  /* When the background is light */
+  headerIconLight: IOColors.greyLight,
 
   // Font
   ...makeFontStyleObject(Platform.select),

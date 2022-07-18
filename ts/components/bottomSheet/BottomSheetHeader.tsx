@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "native-base";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import customVariables from "../../theme/variables";
 import I18n from "../../i18n";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H3 } from "../core/typography/H3";
