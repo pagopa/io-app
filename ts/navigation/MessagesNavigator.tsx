@@ -3,7 +3,7 @@ import * as React from "react";
 import { mvlEnabled } from "../config";
 import { EUCovidCertStackNavigator } from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
-import MvlNavigator from "../features/mvl/navigation/navigator";
+import { MvlStackNavigator } from "../features/mvl/navigation/navigator";
 import MVL_ROUTES from "../features/mvl/navigation/routes";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
@@ -48,7 +48,7 @@ export const MessagesStackNavigator = () => (
     />
 
     {mvlEnabled && (
-      <Stack.Screen name={MVL_ROUTES.MAIN} component={MvlNavigator} />
+      <Stack.Screen name={MVL_ROUTES.MAIN} component={MvlStackNavigator} />
     )}
   </Stack.Navigator>
 );

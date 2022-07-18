@@ -55,7 +55,7 @@ const MessagesInbox = ({
         navigateToMessageDetail(message);
       }
     },
-    [selectedItems]
+    [navigateToMessageDetail, selectedItems, toggleItem]
   );
 
   const onLongPressItem = (id: string) => {
