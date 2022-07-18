@@ -53,7 +53,6 @@ const customVariables = Object.assign(materialVariables, {
   brandGray: "#F5F6F7",
   brandSuccess: "#007005",
   brandDanger: "#CC3333",
-  brandMildGray: "#C7D1D9",
   brandPrimaryLight: "#99CCFF",
   brandHighlight: "#00C5CA",
   brandHighLighter: "#00CDD2",
@@ -68,7 +67,7 @@ const customVariables = Object.assign(materialVariables, {
 
   calendarExpirableColor: "#D0021B",
 
-  itemSeparator: "#C9C9C9",
+  itemSeparator: IOColors.bluegreyLight,
 
   toastColor: "#C1f4f2",
   badgeYellow: "#ffc824",
@@ -269,6 +268,9 @@ const customVariables = Object.assign(materialVariables, {
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
 
+  // Skeleton/Placeholder
+  colorSkeleton: IOColors.bluegreyLight,
+
   // Label
   labelNormalWeight: "400" as FontWeight,
 
@@ -297,7 +299,6 @@ const customVariables = Object.assign(materialVariables, {
   topTabBarActiveTextColor: "#0066CC",
 
   // Animations
-  shineColor: "#C1CCD6",
   activeOpacity: 0.25,
 
   // Spacing

@@ -51,7 +51,8 @@ const PADDING_R_DESCRIPTION = 24;
 const styles = StyleSheet.create({
   listItem: {
     paddingLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    borderBottomColor: customVariables.itemSeparator
   },
   spacingBase: {
     paddingTop: 6,

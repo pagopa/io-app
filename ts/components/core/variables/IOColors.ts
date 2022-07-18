@@ -20,13 +20,10 @@ export const IOColors = asIOColors({
   lightestGray: "#E0E3E6" /* from variables.ts */,
   headerIconLight: "#E4E7EA" /* from variables.ts, ALIAS TOKEN */,
   optCodeComponent: "#D9D9D9" /* from relative component */,
-  borderColor: `rgb(216, 216, 216)` /* found in various JEST tests, similar to optCodeComponent */,
   lighterGray: "#C1C9D2" /* from variables.ts */,
   bluegreyLight: "#CCD4DC",
-  brandMildGray: "#C7D1D9" /* from variables.ts */,
-  shineColor:
-    "#C1CCD6" /* from variables.ts, similar to brandMildGray, Animation ALIAS TOKEN */,
-  itemSeparator: "#C9C9C9" /* from variables.ts, ALIAS TOKEN */,
+  /* ALIAS TOKEN: colorSkeleton → bluegreyLight */
+  /* ALIAS TOKEN: itemSeparator → bluegreyLight */
   btnLightBorderColor: "#AEB5BF" /* from variables.ts, ALIAS TOKEN */,
   grey: "#909DA8",
   /* ALIAS TOKEN: disabledService → grey, not referenced by anything */
