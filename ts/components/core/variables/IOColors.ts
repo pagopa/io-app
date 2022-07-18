@@ -34,7 +34,6 @@ export const IOColors = asIOColors({
   itemBorderDefaultColor:
     "#5F6F82" /* from variables.ts, similar to milderGray, ALIAS TOKEN */,
   milderGray: "#5F6F80" /* from variables.ts */,
-  darkerGray: "#4B5C6F" /* from variables.ts */,
   bluegrey: "#475A6D",
   /* ALIAS TOKEN: textColor → bluegrey */
   /* ALIAS TOKEN: topTabBarTextColor → bluegrey */

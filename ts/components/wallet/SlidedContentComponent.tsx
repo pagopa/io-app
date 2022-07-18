@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     padding: 16
   },
   dark: {
-    backgroundColor: customVariables.darkerGray
+    backgroundColor: IOColors.bluegrey
   },
   white: {
     backgroundColor: IOColors.white
