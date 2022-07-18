@@ -58,8 +58,6 @@ const customVariables = Object.assign(materialVariables, {
   brandHighlight: "#00C5CA",
   brandHighLighter: "#00CDD2",
 
-  milderGray: "#5F6F80",
-
   lighterGray: "#C1C9D2",
   lightestGray: "#E0E3E6",
 
@@ -67,7 +65,6 @@ const customVariables = Object.assign(materialVariables, {
   cardExpiredTextColor: "#FF0000",
   cardTextColor: IOColors.bluegreyDark,
   colorBlack: "#000000",
-  itemBorderDefaultColor: "#5F6F82",
 
   calendarExpirableColor: "#D0021B",
 

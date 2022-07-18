@@ -290,10 +290,10 @@ class TransactionSummaryScreen extends React.Component<Props> {
       <BaseScreenComponent
         goBack={this.handleBackPress}
         dark={true}
-        headerBackgroundColor={customVariables.milderGray}
+        headerBackgroundColor={IOColors.milderGray}
       >
         <FocusAwareStatusBar
-          backgroundColor={customVariables.milderGray}
+          backgroundColor={IOColors.milderGray}
           barStyle={"light-content"}
         />
         <SafeAreaView style={styles.flex}>

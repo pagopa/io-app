@@ -1,7 +1,6 @@
 import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import customVariables from "../../theme/variables";
 import { FOOTER_SAFE_AREA } from "../../utils/constants";
 import { IOColors } from "../core/variables/IOColors";
 
@@ -12,7 +11,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: customVariables.milderGray
+    backgroundColor: IOColors.milderGray
   },
   content: {
     borderRadius: 8,
