@@ -17,7 +17,6 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: tabUnderlineColor → greyUltraLight */
   greyLight: "#E6E9F2",
   /* ↳ ALIAS TOKEN: headerIconLight → greyLight */
-  optCodeComponent: "#D9D9D9" /* from relative component */,
   bluegreyLight: "#CCD4DC",
   /* ↳ ALIAS TOKEN: colorSkeleton → bluegreyLight */
   /* ↳ ALIAS TOKEN: itemSeparator → bluegreyLight */
