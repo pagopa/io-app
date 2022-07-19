@@ -112,7 +112,7 @@ export default (): Theme => ({
       },
       borderWidth: 1,
       borderColor: variables.btnLightBorderColor,
-      backgroundColor: IOColors.greyUltralight,
+      backgroundColor: IOColors.white,
       ".primary": {
         "NativeBase.Text": { color: variables.brandPrimary },
         borderWidth: 1,

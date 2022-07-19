@@ -50,7 +50,6 @@ const customVariables = Object.assign(materialVariables, {
     Add them to IOColors object, instead.
   */
   brandPrimary: "#0066CC",
-  brandGray: "#F5F6F7",
   brandSuccess: "#007005",
   brandDanger: "#CC3333",
   brandPrimaryLight: "#99CCFF",
@@ -294,7 +293,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // Tabs
   tabDefaultBg: "#FFFFFF",
-  tabUnderlineColor: IOColors.brandGray,
+  tabUnderlineColor: IOColors.greyUltraLight,
   tabUnderlineHeight: 2,
   topTabBarTextColor: IOColors.bluegrey,
   topTabBarActiveTextColor: "#0066CC",

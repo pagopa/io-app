@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   topContainerLarge: {
     paddingVertical: customVariables.contentPadding / 2,
     paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: customVariables.brandGray
+    backgroundColor: IOColors.greyUltraLight
   },
   topContainerPaid: {
     paddingVertical: 0,

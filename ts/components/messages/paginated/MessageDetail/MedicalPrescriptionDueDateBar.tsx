@@ -71,7 +71,7 @@ const MedicalPrescriptionDueDateBar = ({
     ? { backgroundColor: IOColors.bluegrey }
     : isPrescriptionExpiring
     ? { backgroundColor: customVariables.calendarExpirableColor }
-    : { backgroundColor: customVariables.brandGray };
+    : { backgroundColor: IOColors.greyUltraLight };
 
   if (isPrescriptionExpiring || isPrescriptionExpired) {
     return (

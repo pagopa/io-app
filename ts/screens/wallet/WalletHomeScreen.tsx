@@ -149,12 +149,6 @@ const styles = StyleSheet.create({
   emptyListContentTitle: {
     paddingBottom: customVariables.contentPadding / 2
   },
-  bordercColorBrandGray: {
-    borderColor: customVariables.brandGray
-  },
-  colorBrandGray: {
-    color: customVariables.brandGray
-  },
   whiteBg: {
     backgroundColor: IOColors.white
   },

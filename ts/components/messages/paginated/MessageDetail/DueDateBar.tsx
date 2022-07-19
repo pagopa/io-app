@@ -137,7 +137,7 @@ const bannerStyle = (status: PaymentStatus): ViewStyle => {
   switch (status) {
     case "expiring":
     case "valid":
-      return { backgroundColor: customVariables.brandGray };
+      return { backgroundColor: IOColors.greyUltraLight };
     case "expired":
       return { backgroundColor: IOColors.bluegrey };
   }

@@ -13,16 +13,15 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
-  greyUltralight: "#FCFDFF",
-  brandGray: "#F5F6F7" /* from variables.ts */,
-  /* ↳ ALIAS TOKEN: tabUnderlineColor → brandGray */
+  greyUltraLight: "#F5F6F7",
+  /* ↳ ALIAS TOKEN: tabUnderlineColor → greyUltraLight */
   greyLight: "#E6E9F2",
   /* ↳ ALIAS TOKEN: headerIconLight → greyLight */
   optCodeComponent: "#D9D9D9" /* from relative component */,
-  lighterGray: "#C1C9D2" /* from variables.ts */,
   bluegreyLight: "#CCD4DC",
   /* ↳ ALIAS TOKEN: colorSkeleton → bluegreyLight */
   /* ↳ ALIAS TOKEN: itemSeparator → bluegreyLight */
+  lighterGray: "#C1C9D2" /* from variables.ts */,
   grey: "#909DA8",
   /* ↳ ALIAS TOKEN: btnLightBorderColor → grey */
   /* ↳ ALIAS TOKEN: disabledService → grey, not referenced though */

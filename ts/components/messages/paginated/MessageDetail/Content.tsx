@@ -9,10 +9,11 @@ import { Link } from "../../../core/typography/Link";
 import EmailCallCTA from "../../../screens/EmailCallCTA";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import { convertDateTimeToWordDistance } from "../../../../utils/convertDateToWordDistance";
+import { IOColors } from "../../../core/variables/IOColors";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: customVariables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     padding: customVariables.contentPadding
   },
   row: {

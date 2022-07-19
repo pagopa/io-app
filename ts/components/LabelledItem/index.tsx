@@ -74,7 +74,9 @@ type CommonProp = Readonly<{
 
 export type Props = WithTestID<CommonProp>;
 
-const brandGrayDarken = color(variables.brandGray).darken(0.2).string();
+/* TODO: Replace this generated color variable with a value from IOCOlors
+Or Alias Token from variables.ts */
+const brandGrayDarken = color(IOColors.greyUltraLight).darken(0.2).string();
 
 type DescriptionColor = "bluegreyLight" | "bluegreyDark" | "red";
 type LabelColor = Exclude<DescriptionColor, "red">;

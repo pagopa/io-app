@@ -1,3 +1,4 @@
+import { IOColors } from "../../components/core/variables/IOColors";
 import { FOOTER_SAFE_AREA } from "../../utils/constants";
 import { Theme } from "../types";
 import variables from "../variables";
@@ -17,7 +18,7 @@ declare module "native-base" {
 
 export default (): Theme => ({
   ".alternative": {
-    backgroundColor: variables.brandGray
+    backgroundColor: IOColors.greyUltraLight
   },
   ".noPadded": {
     paddingBottom: FOOTER_SAFE_AREA,
