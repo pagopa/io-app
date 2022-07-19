@@ -1,8 +1,8 @@
 import * as t from "io-ts";
-import { UTCISODateFromString } from "italia-ts-commons/lib/dates";
 import { enumType } from "italia-ts-commons/lib/types";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MvlAttachment } from "../../../mvl/types/mvlData";
+import { UTCISODateFromString } from "../../utils/dates";
 
 export enum NotificationStatusEnum {
   "IN_VALIDATION" = "IN_VALIDATION",
