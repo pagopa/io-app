@@ -57,7 +57,6 @@ import {
   getFavoriteWallet,
   withPaymentFeatureSelector
 } from "../../../store/reducers/wallet/wallets";
-import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
@@ -89,7 +88,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 const styles = StyleSheet.create({
   lighterGray: {
-    color: customVariables.lighterGray
+    color: IOColors.lighterGray
   },
   row: {
     flexDirection: "row",

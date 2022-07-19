@@ -23,7 +23,6 @@ import {
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
 
 import { isStringNullyOrEmpty } from "../../utils/strings";

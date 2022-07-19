@@ -2,7 +2,6 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { BadgeComponent } from "../screens/BadgeComponent";
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
     color: IOColors.grey
   },
   lighterGray: {
-    color: customVariables.lighterGray
+    color: IOColors.lighterGray
   },
   row: {
     flexDirection: "row",

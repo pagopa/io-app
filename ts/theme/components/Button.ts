@@ -88,7 +88,7 @@ export default (): Theme => ({
     "UIComponent.IconFont": {
       color: IOColors.white
     },
-    backgroundColor: variables.lighterGray
+    backgroundColor: IOColors.lighterGray
   },
 
   ".unNamed": {
