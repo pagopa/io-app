@@ -53,7 +53,7 @@ import onboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
-import servicesNavigator from "./ServicesNavigator";
+import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import walletNavigator from "./WalletNavigator";
 
@@ -89,7 +89,7 @@ export const AppStackNavigator = () => {
       />
       <Stack.Screen
         name={ROUTES.SERVICES_NAVIGATOR}
-        component={servicesNavigator}
+        component={ServicesNavigator}
       />
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
