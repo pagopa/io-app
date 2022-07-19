@@ -122,7 +122,7 @@ const TextContent: React.FunctionComponent<{
 const getCalendarIconBackgoundColor = (status: PaymentStatus) => {
   switch (status) {
     case "paid":
-      return IOColors.lighterGray;
+      return IOColors.bluegreyLight;
     case "expired":
       return IOColors.white;
     case "expiring":

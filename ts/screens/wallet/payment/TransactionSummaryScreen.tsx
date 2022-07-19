@@ -87,8 +87,8 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  lighterGray: {
-    color: IOColors.lighterGray
+  bluegreyLight: {
+    color: IOColors.bluegreyLight
   },
   row: {
     flexDirection: "row",
@@ -279,7 +279,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text style={styles.lighterGray}>{label}</Text>
+        <Text style={styles.bluegreyLight}>{label}</Text>
         <Text bold={true} white={true}>
           {value}
         </Text>
@@ -312,7 +312,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
             {/** Amount to pay */}
             <View style={styles.row}>
               <View style={styles.row}>
-                <Text style={[styles.title, styles.lighterGray]}>
+                <Text style={[styles.title, styles.bluegreyLight]}>
                   {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
                 </Text>
               </View>
@@ -323,7 +323,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
             <React.Fragment>
               <View spacer={true} small={true} />
-              <Text style={styles.lighterGray}>
+              <Text style={styles.bluegreyLight}>
                 {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
               </Text>
             </React.Fragment>

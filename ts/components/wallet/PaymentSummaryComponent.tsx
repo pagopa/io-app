@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   grey: {
     color: IOColors.grey
   },
-  lighterGray: {
-    color: IOColors.lighterGray
+  bluegreyLight: {
+    color: IOColors.bluegreyLight
   },
   row: {
     flexDirection: "row",
@@ -66,7 +66,7 @@ export const PaymentSummaryComponent = (props: Props) => {
     }
     return (
       <React.Fragment>
-        <Text style={props.dark && styles.lighterGray}>{label}</Text>
+        <Text style={props.dark && styles.bluegreyLight}>{label}</Text>
         <Text
           bold={true}
           dark={!props.dark}
@@ -95,7 +95,7 @@ export const PaymentSummaryComponent = (props: Props) => {
     <React.Fragment>
       <Text
         bold={true}
-        style={[styles.title, props.dark ? styles.lighterGray : styles.grey]}
+        style={[styles.title, props.dark ? styles.bluegreyLight : styles.grey]}
       >
         {props.title}
       </Text>
