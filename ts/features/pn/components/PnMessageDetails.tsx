@@ -29,11 +29,11 @@ import { MvlAttachments } from "../../mvl/screens/details/components/attachment/
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import PN_ROUTES from "../navigation/routes";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
+import { H5 } from "../../../components/core/typography/H5";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageTimeline } from "./PnMessageTimeline";
-import { H5 } from "../../../components/core/typography/H5";
 
 const styles = StyleSheet.create({
   content: {
