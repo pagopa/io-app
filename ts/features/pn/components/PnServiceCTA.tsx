@@ -60,7 +60,7 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
   <ButtonDefaultOpacity
     block
     primary
-    onPress={() => props.dispatch(pnActivationUpsert.request(true))}
+    onPress={() => props.dispatch(pnActivationUpsert.request(false))}
     style={{
       backgroundColor: IOColors.white
     }}
