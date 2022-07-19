@@ -4,9 +4,11 @@ import { ContentTypeValues } from "../../../../types/contentType";
 import { MvlAttachmentId } from "../../../mvl/types/mvlData";
 import { PNMessage, FullReceivedNotification } from "./types";
 
-// note that attachmentUrl already contains a / at the beginning
 const generateAttachmentUrl = (messageId: string, attachmentUrl: string) =>
-  `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments${attachmentUrl}`;
+  `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments/${attachmentUrl.replace(
+    /^\//g, // note that attachmentUrl might contains a / at the beginning, so let's strip it
+    ""
+  )}`;
 
 export const toPNMessage = (
   messageFromApi: ThirdPartyMessageWithContent

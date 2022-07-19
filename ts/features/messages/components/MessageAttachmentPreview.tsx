@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
@@ -15,11 +15,13 @@ import I18n from "../../../i18n";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import { mvlRemoveCachedAttachment } from "../../mvl/store/actions/downloads";
+import image from "../../../../img/servicesStatus/error-detail-icon.png";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 
 const styles = StyleSheet.create({
   container: {
@@ -111,7 +113,8 @@ type Props = {
 };
 
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
-  const dispatch = useIODispatch();
+  const [isError, setIsError] = useState(false);
+
   const attachmentId = props.attachmentId;
   const downloadPot = useIOSelector(state =>
     mvlAttachmentDownloadFromIdSelector(state, attachmentId)
@@ -124,23 +127,23 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
     >
       <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
-        <Pdf
-          source={{ uri: download.path, cache: true }}
-          style={styles.pdf}
-          onError={_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.bottomSheet.failing.details"
-              )
-            );
-            dispatch(
-              mvlRemoveCachedAttachment({
-                id: download.attachment.id,
-                path: download.path
-              })
-            );
-          }}
-        />
+        {!isError && (
+          <Pdf
+            source={{ uri: download.path, cache: true }}
+            style={styles.pdf}
+            onError={_ => {
+              setIsError(true);
+            }}
+          />
+        )}
+        {isError && (
+          <InfoScreenComponent
+            image={renderInfoRasterImage(image)}
+            title={I18n.t(
+              "features.mvl.details.attachments.pdfPreview.errors.previewing"
+            )}
+          />
+        )}
         {renderFooter(download)}
       </SafeAreaView>
     </BaseScreenComponent>

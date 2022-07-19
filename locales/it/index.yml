@@ -3030,6 +3030,7 @@ features:
           save: "Salva"
           savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
           errors:
+            previewing: "Non è possibile mostrare l'anteprima del documento. E' comunque possibile salvarlo e aprirlo con un'applicazione per i PDF"
             sharing: "Si è verificato un errore condividendo il documento."
             opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
             saving: "Si è verificato un errore salvando il documento."
