@@ -139,7 +139,7 @@ export const PnMessageTimeline = ({ message, onExpand }: Props & ViewProps) => {
         return <PnMessageTimelineItem key={i} {...props} />;
       })}
       {!expanded && message.notificationStatusHistory.length > 1 && (
-        <Link onPress={() => setExpanded(true)}>
+        <Link onPress={() => setExpanded(true)} style={{ paddingBottom: 24 }}>
           {I18n.t("features.pn.details.timeline.expand")}
         </Link>
       )}
