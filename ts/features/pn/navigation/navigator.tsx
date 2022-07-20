@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { PnAttachmentPreview } from "../screens/PnAttachmentPreview";
 import { PnMessageDetailsScreen } from "../screens/PnMessageDetailsScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
@@ -15,6 +16,10 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_DETAILS}
       component={PnMessageDetailsScreen}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.MESSAGE_ATTACHMENT}
+      component={PnAttachmentPreview}
     />
   </Stack.Navigator>
 );
