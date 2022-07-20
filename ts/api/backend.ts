@@ -55,7 +55,7 @@ import {
   UpsertUserMetadataT,
   upsertMessageStatusAttributesDefaultDecoder,
   UpsertMessageStatusAttributesT,
-  getUserProfileDefaultDecoder
+  getUserProfileDefaultDecoder,
   GetThirdPartyMessageT,
   getThirdPartyMessageDefaultDecoder
 } from "../../definitions/backend/requestTypes";
