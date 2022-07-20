@@ -48,15 +48,13 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
         bordered: true,
         primary: false,
         onPress: () => {
-          share(`file://${path}`, undefined, false)
-            .run()
-            .catch(_ => {
-              showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.errors.sharing"
-                )
-              );
-            });
+          share(`file://${path}`, undefined, false)().catch(_ => {
+            showToast(
+              I18n.t(
+                "features.mvl.details.attachments.pdfPreview.errors.sharing"
+              )
+            );
+          });
         },
         title: I18n.t("global.buttons.share")
       }}

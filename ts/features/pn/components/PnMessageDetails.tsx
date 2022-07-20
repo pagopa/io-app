@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { none, some } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -63,11 +64,10 @@ export const PnMessageDetails = (props: Props) => {
   );
 
   const rptId =
-    noticeNumber.isRight() && creditorTaxId.isRight()
-      ? getRptIdFromNoticeNumber(
-          creditorTaxId.value,
-          noticeNumber.value
-        ).toUndefined()
+    E.isRight(noticeNumber) && E.isRight(creditorTaxId)
+      ? O.toUndefined(
+          getRptIdFromNoticeNumber(creditorTaxId.right, noticeNumber.right)
+        )
       : undefined;
 
   const paymentVerification = useIOSelector(
@@ -77,8 +77,8 @@ export const PnMessageDetails = (props: Props) => {
   const paymentVerificationError: TransactionSummaryError = pot.isError(
     paymentVerification
   )
-    ? some(paymentVerification.error)
-    : none;
+    ? O.some(paymentVerification.error)
+    : O.none;
 
   const verifyPaymentIfNeeded = useCallback(() => {
     if (rptId) {
@@ -112,7 +112,7 @@ export const PnMessageDetails = (props: Props) => {
 
   return (
     <>
-      {firstLoadingRequest && paymentVerificationError.isSome() && (
+      {firstLoadingRequest && O.isSome(paymentVerificationError) && (
         <TransactionSummaryStatus error={paymentVerificationError} />
       )}
       <ScrollView style={{ padding: customVariables.contentPadding }}>
@@ -142,11 +142,11 @@ export const PnMessageDetails = (props: Props) => {
                   paymentNoticeNumber={maybePayment.noticeCode}
                   organizationFiscalCode={maybePayment.creditorTaxId}
                   isPaid={
-                    paymentVerificationError.toUndefined() ===
+                    O.toUndefined(paymentVerificationError) ===
                     "PAA_PAGAMENTO_DUPLICATO"
                   }
                 />
-                {paymentVerificationError.isSome() && (
+                {O.isSome(paymentVerificationError) && (
                   <TransactionSummaryErrorDetails
                     error={paymentVerificationError}
                     paymentNoticeNumber={maybePayment.noticeCode}
