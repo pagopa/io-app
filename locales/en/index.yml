@@ -2970,11 +2970,12 @@ bonus:
       misc:
         conjunction: " and "
 features:
-  mvl:
-    title: "legal message"
+  messages:
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
+  mvl:
+    title: "legal message"
     ko:
       genericError:
         title: "There was an error retrieving the message"
@@ -3084,6 +3085,18 @@ features:
       warning:
         title: Questo messaggio contiene una comunicazione a valore legale
         body: !include pn/message_open_warning.html
+    details:
+      title: Dettaglio del messaggio
+      loadError:
+        title: Qualcosa è andato storto
+        body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
+      paymentSection:
+        title: Avviso di pagamento
+      attachmentsSection:
+        title: Allegati
+      infoSection:
+        title: Informazioni sulla notifica
+        iun: Codice IUN
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
