@@ -11,6 +11,7 @@ import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
@@ -52,6 +53,7 @@ import {
   getFavoriteWallet,
   withPaymentFeatureSelector
 } from "../../../store/reducers/wallet/wallets";
+import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -66,10 +68,6 @@ import {
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
-import customVariables from "../../../theme/variables";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { TransactionSummary } from "./components/TransactionSummary";
-import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
 import { TransactionSummary } from "./components/TransactionSummary";
 import {

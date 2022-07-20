@@ -4,7 +4,6 @@ import { StyleSheet, View } from "react-native";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { RawAccordion } from "../../../../components/core/accordion/RawAccordion";
 import { H4 } from "../../../../components/core/typography/H4";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BlockButtons from "../../../../components/ui/BlockButtons";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";

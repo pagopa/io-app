@@ -20,6 +20,7 @@ import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/comp
 import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/EUCovidCertificate";
 import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
+import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
@@ -45,8 +46,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
-import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;

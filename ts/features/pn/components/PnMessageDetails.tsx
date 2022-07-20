@@ -1,34 +1,34 @@
-import React, { useCallback, useState } from "react";
-import * as pot from "italia-ts-commons/lib/pot";
-import { ScrollView } from "react-native-gesture-handler";
-import { StyleSheet, View } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { none, some } from "fp-ts/lib/Option";
+import React, { useCallback, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
+import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { PNMessage } from "../store/types/types";
-import customVariables from "../../../theme/variables";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
+import ROUTES from "../../../navigation/routes";
 import {
   TransactionSummary,
   TransactionSummaryRow
 } from "../../../screens/wallet/payment/components/TransactionSummary";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { paymentVerifica } from "../../../store/actions/wallet/payment";
-import { getRptIdFromNoticeNumber } from "../../../utils/payment";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import ROUTES from "../../../navigation/routes";
-import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
-import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
 import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
+import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
+import { paymentVerifica } from "../../../store/actions/wallet/payment";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
-import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
+import customVariables from "../../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { getRptIdFromNoticeNumber } from "../../../utils/payment";
+import { PNMessage } from "../store/types/types";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
+import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 
 const styles = StyleSheet.create({
   content: {
