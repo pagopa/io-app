@@ -49,7 +49,6 @@ export const IOColors = asIOColors({
   brandPrimaryLight: "#99CCFF" /* from variables.ts */,
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
-  featuredCardShadow: "#00274E" /* from FeaturedCard component */,
   activeBonus: "#2C489D" /* from relative component (BonusVacanze) */,
   cgnDiscount: "#9B5897" /* from CgnDiscountValueBox */,
   aqua: "#00C5CA",
