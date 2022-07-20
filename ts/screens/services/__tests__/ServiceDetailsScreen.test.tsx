@@ -9,7 +9,7 @@ import { DepartmentName } from "../../../../definitions/backend/DepartmentName";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ServiceDetailsScreen from "../ServiceDetailsScreen";
 import ROUTES from "../../../navigation/routes";
 import {
@@ -71,7 +71,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       ServiceDetailsScreen,
       ROUTES.SERVICE_DETAIL,
       { service },
