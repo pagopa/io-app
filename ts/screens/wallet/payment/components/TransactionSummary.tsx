@@ -27,9 +27,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: customVariables.contentPadding
-  },
   row: {
     flex: 1,
     flexDirection: "row",
@@ -123,7 +120,7 @@ export const TransactionSummaryRow = (
 
   return (
     <TouchableDefaultOpacity onPress={props.onPress} accessible={false}>
-      <View style={styles.container}>
+      <View>
         <View style={styles.row}>
           {props.icon && <View style={styles.icon}>{props.icon}</View>}
           <View
@@ -197,6 +194,10 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     )
   );
 
+  const formattedPaymentNoticeNumber = props.paymentNoticeNumber
+    .replace(/(\d{4})/g, "$1  ")
+    .trim();
+
   const { presentPaymentInfoBottomSheet, paymentInfoBottomSheet } =
     usePaymentAmountInfoBottomSheet();
 
@@ -266,9 +267,9 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
       <TransactionSummaryRow
         axis={"horizontal"}
         title={I18n.t("payment.noticeCode")}
-        subtitle={props.paymentNoticeNumber}
+        subtitle={formattedPaymentNoticeNumber}
         onPress={() =>
-          clipboardSetStringWithFeedback(props.paymentNoticeNumber)
+          clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
         }
       />
       <TransactionSummaryRow
