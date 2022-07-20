@@ -50,16 +50,15 @@ const customVariables = Object.assign(materialVariables, {
     Add them to IOColors object, instead.
   */
   brandPrimary: "#0066CC",
-  brandSuccess: "#007005",
-  brandDanger: "#CC3333",
   brandPrimaryLight: "#99CCFF",
   brandHighlight: "#00C5CA",
   brandHighLighter: "#00CDD2",
+  brandSuccess: "#007005",
+  brandDanger: "#CC3333",
 
   btnLightBorderColor: IOColors.grey,
   cardExpiredTextColor: "#FF0000",
   cardTextColor: IOColors.bluegreyDark,
-  colorBlack: "#000000",
 
   calendarExpirableColor: "#D0021B",
 
@@ -164,7 +163,7 @@ const customVariables = Object.assign(materialVariables, {
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
-  footerShadowColor: "#000000",
+  footerShadowColor: IOColors.black,
   footerShadowOffsetWidth: 0,
   footerShadowOffsetHeight: 50,
   footerShadowOpacity: 0.5,

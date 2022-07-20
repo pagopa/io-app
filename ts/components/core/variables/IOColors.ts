@@ -33,9 +33,7 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: textColorDark → bluegreyDark */
   /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
-  colorBlack: "#000000" /* from variables.ts, duplicate of black */,
-  footerShadowColor:
-    "#000000" /* from variables.ts, duplicate of black, ALIAS TOKEN */,
+  /* ↳ ALIAS TOKEN: footerShadowColor → black */
   brandPrimary: "#0066CC" /* from variables.ts */,
   topTabBarActiveTextColor:
     "#0066CC" /* from variables.ts, duplicate of brandPrimary, ALIAS TOKEN */,
@@ -44,7 +42,7 @@ export const IOColors = asIOColors({
     "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
   contentPrimaryBackground:
     "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-  ListSelectionBarColor: "#007AFF" /* from ListSelectionBar JEST test */,
+
   textLinkColor:
     "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
   checkBoxColor: "#039BE5" /* from CheckBox component */,
@@ -62,7 +60,6 @@ export const IOColors = asIOColors({
   cgnDiscountDetailBg: "#EB9505" /* from relative component */,
   cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
   calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,
-  itemTest: "#ED1727" /* from relative JEST snap test */,
   red: "#C02927",
   brandDanger: "#CC3333" /* from variables.ts */,
   brandSuccess: "#007005" /* from variables.ts */,

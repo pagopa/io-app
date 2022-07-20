@@ -64,7 +64,7 @@ class GoBackButton extends React.PureComponent<Props> {
       >
         <IconFont
           name={"io-back"}
-          style={{ color: white ? IOColors.white : variables.colorBlack }}
+          style={{ color: white ? IOColors.white : IOColors.black }}
         />
       </ButtonDefaultOpacity>
     );

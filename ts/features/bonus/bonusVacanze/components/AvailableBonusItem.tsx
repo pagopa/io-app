@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   methodTitle: {
-    color: variables.colorBlack
+    color: IOColors.black
   },
   methodImage: {
     width: 48,

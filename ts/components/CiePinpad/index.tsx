@@ -59,7 +59,7 @@ const CiePinpad = (props: Props) => {
     <View>
       <InputPlaceHolder
         digits={props.pinLength}
-        activeColor={customVariables.colorBlack}
+        activeColor={IOColors.black}
         inactiveColor={IOColors.greyLight}
         inputValue={props.pin || ""}
         accessibilityLabel={I18n.t(
