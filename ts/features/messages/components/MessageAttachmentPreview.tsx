@@ -1,27 +1,27 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import * as pot from "italia-ts-commons/lib/pot";
+import Pdf from "react-native-pdf";
+import image from "../../../../img/servicesStatus/error-detail-icon.png";
+import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import I18n from "../../../i18n";
+import { useIOSelector } from "../../../store/hooks";
 import customVariables from "../../../theme/variables";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { isIos } from "../../../utils/platform";
+import { share } from "../../../utils/share";
+import { showToast } from "../../../utils/showToast";
+import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import {
   mvlAttachmentDownloadFromIdSelector,
   MvlDownload
 } from "../../mvl/store/reducers/downloads";
-import { isIos } from "../../../utils/platform";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import I18n from "../../../i18n";
-import { share } from "../../../utils/share";
-import { showToast } from "../../../utils/showToast";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
-import { useIOSelector } from "../../../store/hooks";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import image from "../../../../img/servicesStatus/error-detail-icon.png";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 
 const styles = StyleSheet.create({
   container: {

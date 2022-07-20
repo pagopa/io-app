@@ -25,14 +25,13 @@ import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
-import { PNMessage } from "../store/types/types";
 import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import PN_ROUTES from "../navigation/routes";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
-import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
-import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import PN_ROUTES from "../navigation/routes";
+import { PNMessage } from "../store/types/types";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
+import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 
 const styles = StyleSheet.create({
   content: {

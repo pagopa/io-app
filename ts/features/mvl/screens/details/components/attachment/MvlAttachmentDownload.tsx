@@ -2,7 +2,6 @@ import { View } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
 
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
@@ -10,11 +9,6 @@ import { Body } from "../../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import i18n from "../../../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
@@ -24,14 +18,11 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { MvlAttachment, MvlAttachmentId } from "../../../../types/mvlData";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
 import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
 import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
-import { isIos } from "../../../../../../utils/platform";
-import { ContentTypeValues } from "../../../../../../types/contentType";
-import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
+import { MvlAttachment, MvlAttachmentId } from "../../../../types/mvlData";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
