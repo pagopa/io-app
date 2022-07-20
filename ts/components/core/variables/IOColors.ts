@@ -42,8 +42,9 @@ export const IOColors = asIOColors({
   blueUltraLight: "#99CCFF" /* Rarely used, evaluate a removal */,
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
-  activeBonus: "#2C489D" /* from relative component (BonusVacanze) */,
-  cgnDiscount: "#9B5897" /* from CgnDiscountValueBox */,
+  cobalt: "#2C489D" /* used in the component BonusVacanze only */,
+  antiqueFuchsia:
+    "#9B5897" /* used in the CgnDiscountValueBox component only */,
   aqua: "#00C5CA",
   brandHighlight: "#00C5CA" /* from variables.ts, duplicate of aqua */,
   brandHighLighter: "#00CDD2" /* from variables.ts */,

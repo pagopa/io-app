@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   containerColor: {
     padding: customVariables.appHeaderPaddingHorizontal,
-    backgroundColor: "#2C489D",
+    backgroundColor: IOColors.cobalt,
     color: IOColors.white
   }
 });

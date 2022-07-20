@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { H3 } from "../../../../../components/core/typography/H3";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type ValueBoxProps = {
   value: number;
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     width: 40,
     textAlign: "center",
-    backgroundColor: "#9B5897"
+    backgroundColor: IOColors.antiqueFuchsia
   },
   discountValueBox: {
     borderRadius: 6.5,
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     width: 48,
     marginLeft: "auto",
     height: 48,
-    backgroundColor: "#9B5897"
+    backgroundColor: IOColors.antiqueFuchsia
   }
 });
 
