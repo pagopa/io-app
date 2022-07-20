@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActivityIndicator } from "react-native";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -14,6 +14,7 @@ import { pnActivationUpsert } from "../store/actions/service";
 import { pnActivationSelector } from "../store/reducers/activation";
 import { showToast } from "../../../utils/showToast";
 import { Link } from "../../../components/core/typography/Link";
+import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 
 type Props = {
   serviceId: ServiceId;
@@ -71,7 +72,10 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
   </ButtonDefaultOpacity>
 );
 
-const PnServiceCTA = (props: Props) => {
+// eslint-disable-next-line sonarjs/cognitive-complexity
+const PnServiceCTA = ({ serviceId }: Props) => {
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const dispatch = useIODispatch();
   const serviceActivation = useIOSelector(pnActivationSelector);
   const servicePreference = useIOSelector(servicePreferenceSelector);
@@ -82,39 +86,29 @@ const PnServiceCTA = (props: Props) => {
     pot.isLoading(serviceActivation) ||
     pot.isUpdating(serviceActivation);
 
-  const isError = pot.isError(serviceActivation);
-  useEffect(() => {
-    if (isError) {
-      showToast(I18n.t("features.pn.service.toast.error"), "danger");
-    }
-  }, [isError]);
-
-  const didActivate = pot.fold(
-    serviceActivation,
-    () => false,
-    () => false,
-    _ => false,
-    _ => false,
-    _ => _,
-    _ => false,
-    (_, __) => false,
-    (_, __) => false
-  );
-  useEffect(() => {
-    if (didActivate) {
-      showToast(I18n.t("features.pn.service.toast.activated"), "success");
-    }
-  }, [didActivate]);
-
   const isServiceActive =
     servicePreferenceValue &&
     isServicePreferenceResponseSuccess(servicePreferenceValue) &&
     servicePreferenceValue.value.inbox;
 
-  if (
-    !servicePreferenceValue ||
-    servicePreferenceValue.id !== props.serviceId
-  ) {
+  useEffect(() => {
+    const wasUpdating = isUpdating;
+    const isStillUpdating = pot.isUpdating(serviceActivation);
+    const isError = pot.isError(serviceActivation);
+    if (wasUpdating && !isStillUpdating) {
+      if (isError) {
+        showToast(I18n.t("features.pn.service.toast.error"), "danger");
+      } else {
+        dispatch(loadServicePreference.request(serviceId));
+        if (pot.toUndefined(serviceActivation)) {
+          showToast(I18n.t("features.pn.service.toast.activated"), "success");
+        }
+      }
+    }
+    setIsUpdating(isStillUpdating);
+  }, [isUpdating, dispatch, serviceId, serviceActivation]);
+
+  if (!servicePreferenceValue || servicePreferenceValue.id !== serviceId) {
     return null;
   }
 
