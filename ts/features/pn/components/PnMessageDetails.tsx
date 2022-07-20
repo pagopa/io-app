@@ -26,9 +26,13 @@ import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 import { PNMessage } from "../store/types/types";
-import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
-import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import PN_ROUTES from "../navigation/routes";
+import { MvlAttachmentId } from "../../mvl/types/mvlData";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
+import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 
 const styles = StyleSheet.create({
   content: {
@@ -98,6 +102,13 @@ export const PnMessageDetails = (props: Props) => {
     }
   }, [rptId, navigation]);
 
+  const openAttachment = useCallback(
+    (attachmentId: MvlAttachmentId) => {
+      navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, { attachmentId });
+    },
+    [navigation]
+  );
+
   useOnFirstRender(verifyPaymentIfNeeded);
 
   return (
@@ -114,7 +125,12 @@ export const PnMessageDetails = (props: Props) => {
         {props.message.attachments && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
-          />
+          >
+            <MvlAttachments
+              attachments={props.message.attachments}
+              openPreview={openAttachment}
+            />
+          </PnMessageDetailsSection>
         )}
         {maybePayment && (
           <PnMessageDetailsSection

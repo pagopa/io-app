@@ -24,12 +24,14 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import MVL_ROUTES from "../../../../navigation/routes";
+import { MvlAttachment, MvlAttachmentId } from "../../../../types/mvlData";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
 import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
 import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
+import { isIos } from "../../../../../../utils/platform";
+import { ContentTypeValues } from "../../../../../../types/contentType";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
-import { MvlAttachment } from "../../../../types/mvlData";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -89,11 +91,13 @@ const useDownloadAttachmentConfirmationBottomSheet = ({
   );
 };
 
-export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
+export const useMvlAttachmentDownload = (
+  attachment: MvlAttachment,
+  openPreview: (attachmentId: MvlAttachmentId) => void
+) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useIODispatch();
-  const { navigate } = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
 
@@ -112,15 +116,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
       const path = download.path;
       const attachment = download.attachment;
       if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        navigate(ROUTES.MESSAGES_NAVIGATOR, {
-          screen: MVL_ROUTES.MAIN,
-          params: {
-            screen: MVL_ROUTES.ATTACHMENT,
-            params: {
-              attachmentId: attachment.id
-            }
-          }
-        });
+        openPreview(attachment.id);
       } else {
         if (isIos) {
           ReactNativeBlobUtil.ios.presentOptionsMenu(path);
@@ -154,7 +150,7 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
         }
       }
     }
-  }, [downloadPot, navigate]);
+  }, [downloadPot, openPreview]);
 
   useEffect(() => {
     const wasLoading = isLoading;
@@ -184,8 +180,8 @@ export const useMvlAttachmentDownload = (attachment: MvlAttachment) => {
     useDownloadAttachmentConfirmationBottomSheet({
       onConfirm: dontAskAgain => {
         dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
-        dismiss();
         void downloadAttachmentIfNeeded();
+        dismiss();
       },
       onCancel: () => {
         dismiss();

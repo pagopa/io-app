@@ -2,8 +2,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import CtaBar from "../../../../components/messages/paginated/MessageDetail/common/CtaBar";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -16,7 +17,12 @@ import {
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { Mvl } from "../../types/mvlData";
+import { loadServiceDetail } from "../../../../store/actions/services";
+import { Mvl, MvlAttachmentId } from "../../types/mvlData";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import I18n from "../../../../i18n";
+import { H2 } from "../../../../components/core/typography/H2";
+import MVL_ROUTES from "../../navigation/routes";
 import { MvlAttachments } from "./components/attachment/MvlAttachments";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
@@ -41,11 +47,20 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
     selectServiceState(state, props)
   );
   const dispatch = useIODispatch();
+  const navigation = useNavigation();
+
   useEffect(() => {
     if (service === undefined) {
       dispatch(loadServiceDetail.request(props.mvl.message.serviceId));
     }
   }, [dispatch, props.mvl.message.serviceId, service]);
+
+  const openAttachment = useCallback(
+    (attachmentId: MvlAttachmentId) => {
+      navigation.navigate(MVL_ROUTES.ATTACHMENT, { attachmentId });
+    },
+    [navigation]
+  );
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
@@ -58,7 +73,13 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
           />
           <MvlBody body={props.mvl.legalMessage.body} />
           <View spacer={true} large={true} />
-          <MvlAttachments attachments={props.mvl.legalMessage.attachments} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} large={true} />
+          <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
+          <MvlAttachments
+            attachments={props.mvl.legalMessage.attachments}
+            openPreview={openAttachment}
+          />
           <View spacer={true} />
           <MvlMetadataComponent metadata={props.mvl.legalMessage.metadata} />
         </ScrollView>

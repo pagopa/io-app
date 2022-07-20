@@ -29,6 +29,7 @@ import {
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
+  pnEnabled,
   svEnabled,
   usePaginatedMessages,
   zendeskEnabled
@@ -77,6 +78,7 @@ import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
+import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -406,6 +408,11 @@ export function* initializeApplicationSaga(): Generator<
   if (mvlEnabled) {
     // Start watching for MVL actions
     yield* fork(watchMvlSaga, sessionToken);
+  }
+
+  if (mvlEnabled || pnEnabled) {
+    // Start watching for message attachments actions
+    yield* fork(watchMessageAttachmentsSaga, sessionToken);
   }
 
   // Load the user metadata
