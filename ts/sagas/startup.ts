@@ -131,6 +131,7 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
+import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -516,6 +517,9 @@ export function* initializeApplicationSaga(): Generator<
       backendClient.upsertMessageStatusAttributes
     );
   }
+
+  // Load third party message content when requested
+  yield* fork(watchThirdPartyMessageSaga, backendClient);
 
   // Load a message when requested
   yield* fork(watchMessageLoadSaga, backendClient.getMessage);

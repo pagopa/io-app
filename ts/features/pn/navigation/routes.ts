@@ -1,0 +1,6 @@
+const PN_ROUTES = {
+  MAIN: "PN_ROUTES_MAIN",
+  MESSAGE_DETAILS: "PN_ROUTES_MESSAGE_DETAILS"
+} as const;
+
+export default PN_ROUTES;
