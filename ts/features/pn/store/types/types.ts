@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { Attachment } from "../../../../store/reducers/entities/messages/types";
+import { MvlAttachment } from "../../../mvl/types/mvlData";
 
 export const NotificationPaymentInfoR = t.interface({
   noticeCode: t.string,
@@ -50,5 +50,5 @@ export type FullReceivedNotification = t.TypeOf<
 export type PNMessage = FullReceivedNotification &
   Readonly<{
     serviceId: ServiceId;
-    attachments?: ReadonlyArray<Attachment>;
+    attachments?: ReadonlyArray<MvlAttachment>;
   }>;
