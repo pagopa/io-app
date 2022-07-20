@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
     fontWeight: Platform.OS === "android" ? "normal" : "bold",
-    color: customVariables.brandPrimary
+    color: customVariables.colorPrimary
   },
   textStyle: {
     color: customVariables.textColor
@@ -203,18 +203,18 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: IOColors.white,
     borderWidth: 1,
-    borderColor: customVariables.brandPrimary
+    borderColor: customVariables.colorPrimary
   },
   helpButtonIcon: {
     lineHeight: 24,
-    color: customVariables.brandPrimary
+    color: customVariables.colorPrimary
   },
   helpButtonText: {
     paddingRight: 10,
     paddingBottom: 0,
     paddingLeft: 10,
     lineHeight: 20,
-    color: customVariables.brandPrimary
+    color: customVariables.colorPrimary
   },
   headerLinkContainer: {
     flexDirection: "row",

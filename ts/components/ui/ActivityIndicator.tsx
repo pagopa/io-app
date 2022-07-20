@@ -10,7 +10,7 @@ const ActivityIndicator = (props: ActivityIndicatorProps) => (
   <RNActivityIndicator
     size={props.size ?? "large"}
     accessibilityLabel={props.accessibilityLabel}
-    color={props.color || variables.brandPrimary}
+    color={props.color || variables.colorPrimary}
     testID={props.testID ?? "rn-activity-indicator"}
   />
 );

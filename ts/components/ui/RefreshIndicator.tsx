@@ -23,7 +23,7 @@ export const RefreshIndicator: React.FunctionComponent = () => {
   const activityIndicator = (
     <ActivityIndicator
       size={isAndroid ? 24 : "large"}
-      color={isAndroid ? variables.brandPrimary : undefined}
+      color={isAndroid ? variables.colorPrimary : undefined}
     />
   );
   return isAndroid ? (

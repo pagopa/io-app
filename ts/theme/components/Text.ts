@@ -76,7 +76,7 @@ export default (): Theme => ({
     textAlign: "center"
   },
   ".primary": {
-    color: variables.brandPrimary
+    color: variables.colorPrimary
   },
   ".badge": {
     ...makeFontStyleObject(Platform.select, variables.textBoldWeight),

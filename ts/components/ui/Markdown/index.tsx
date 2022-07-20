@@ -135,7 +135,7 @@ const generateCustomFontList = `<style>
     ol li::before {
       content: counter(li);
       counter-increment: li;
-      color: ${customVariables.brandPrimary};
+      color: ${customVariables.colorPrimary};
       display: inline-block;
       width: 1em;
       margin-left: -1.5em;
@@ -318,7 +318,7 @@ class Markdown extends React.PureComponent<Props, State> {
           <ActivityIndicator
             testID={this.props.testID}
             size={"large"}
-            color={customVariables.brandPrimary}
+            color={customVariables.colorPrimary}
             animating={true}
             accessible={true}
             accessibilityHint={I18n.t(

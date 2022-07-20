@@ -16,7 +16,7 @@ const maybeDisabled = fromPredicate(
 export default class Switch extends React.Component<NativeBase.Switch> {
   public render() {
     const thumbColor: string = maybeDisabled(this.props.disabled)
-      .map(_ => variables.brandPrimaryLight)
+      .map(_ => IOColors.blueUltraLight)
       .getOrElse(variables.contentPrimaryBackground);
 
     return (

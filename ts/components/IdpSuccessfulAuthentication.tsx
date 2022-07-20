@@ -11,7 +11,7 @@ import { IOColors } from "./core/variables/IOColors";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: variables.brandPrimary,
+    backgroundColor: variables.colorPrimary,
     flex: 1,
     alignItems: "center",
     justifyContent: "center"

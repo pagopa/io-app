@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   sectionHeaderHighlightText: {
     fontSize: 18,
-    color: customVariables.brandPrimary,
+    color: customVariables.colorPrimary,
     ...makeFontStyleObject(Platform.select, "600"),
     lineHeight: 20
   },

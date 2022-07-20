@@ -94,7 +94,7 @@ const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
                 animating={true}
                 size={"large"}
                 style={styles.activityIndicator}
-                color={customVariables.brandPrimary}
+                color={customVariables.colorPrimary}
                 accessible={true}
                 accessibilityHint={I18n.t(
                   "global.accessibility.activityIndicator.hint"

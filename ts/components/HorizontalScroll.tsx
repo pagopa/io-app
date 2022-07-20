@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
 
   bar: {
-    backgroundColor: variables.brandPrimary,
+    backgroundColor: variables.colorPrimary,
     borderRadius: itemWidth / 2,
     width: itemWidth,
     height: itemWidth

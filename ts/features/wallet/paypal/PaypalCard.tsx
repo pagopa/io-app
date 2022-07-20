@@ -52,7 +52,7 @@ const topLeft = (isFavourite: boolean) => (
       <Image source={paypalLogoExt} style={styles.paypalLogoExt} />
     </View>
     {isFavourite && (
-      <IconFont name={"io-filled-star"} color={variables.brandPrimary} />
+      <IconFont name={"io-filled-star"} color={variables.colorPrimary} />
     )}
   </View>
 );

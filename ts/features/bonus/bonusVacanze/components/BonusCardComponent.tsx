@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end"
   },
   actions: {
-    // color: customVariables.brandPrimary,
+    // color: customVariables.colorPrimary,
     textAlign: "center",
     ...makeFontStyleObject(Platform.select)
   },

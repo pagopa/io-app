@@ -83,7 +83,7 @@ const topLeft = (
         </H5>
       </View>
       {pot.getOrElse(favorite, false) && (
-        <IconFont name={"io-filled-star"} color={variables.brandPrimary} />
+        <IconFont name={"io-filled-star"} color={variables.colorPrimary} />
       )}
     </View>
   );

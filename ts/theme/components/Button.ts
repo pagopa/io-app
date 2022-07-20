@@ -114,9 +114,9 @@ export default (): Theme => ({
       borderColor: variables.btnLightBorderColor,
       backgroundColor: IOColors.white,
       ".primary": {
-        "NativeBase.Text": { color: variables.brandPrimary },
+        "NativeBase.Text": { color: variables.colorPrimary },
         borderWidth: 1,
-        borderColor: variables.brandPrimary,
+        borderColor: variables.colorPrimary,
         backgroundColor: IOColors.white
       }
     },
@@ -136,7 +136,7 @@ export default (): Theme => ({
       backgroundColor: IOColors.white
     },
     "UIComponent.IconFont": {
-      color: variables.brandPrimary
+      color: variables.colorPrimary
     },
     backgroundColor: IOColors.white
   },

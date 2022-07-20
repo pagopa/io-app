@@ -141,7 +141,7 @@ export default class CardComponent extends React.Component<Props> {
               color={
                 pot.isUpdating(isFavorite)
                   ? IOColors.bluegrey
-                  : variables.brandPrimary
+                  : variables.colorPrimary
               }
               onPress={this.handleFavoritePress}
             />
@@ -152,7 +152,7 @@ export default class CardComponent extends React.Component<Props> {
               <MenuTrigger>
                 <IconFont
                   name={"io-more"}
-                  color={variables.brandPrimary}
+                  color={variables.colorPrimary}
                   style={styles.paddedIcon}
                 />
               </MenuTrigger>

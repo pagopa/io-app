@@ -77,10 +77,10 @@ export default StyleSheet.create({
     backgroundColor: IOColors.white
   },
   transactionsText: {
-    color: variables.brandPrimary
+    color: variables.colorPrimary
   },
   pickPayment: {
-    backgroundColor: variables.brandPrimary
+    backgroundColor: variables.colorPrimary
   },
   pickPaymentText: {
     color: IOColors.white
@@ -93,7 +93,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 0
   },
   blueText: {
-    color: variables.brandPrimary,
+    color: variables.colorPrimary,
     textAlign: "center",
     ...makeFontStyleObject(Platform.select)
   },

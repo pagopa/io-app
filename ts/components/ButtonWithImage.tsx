@@ -51,9 +51,9 @@ const baseStyles = StyleSheet.create({
 
 const darkStyles = StyleSheet.create({
   button: {
-    backgroundColor: customVariables.brandPrimary,
+    backgroundColor: customVariables.colorPrimary,
     borderWidth: 1,
-    borderColor: customVariables.brandPrimary
+    borderColor: customVariables.colorPrimary
   },
 
   icon: {
@@ -69,15 +69,15 @@ const lightStyles = StyleSheet.create({
   button: {
     backgroundColor: IOColors.white,
     borderWidth: 1,
-    borderColor: customVariables.brandPrimary
+    borderColor: customVariables.colorPrimary
   },
 
   icon: {
-    color: customVariables.brandPrimary
+    color: customVariables.colorPrimary
   },
 
   text: {
-    color: customVariables.brandPrimary
+    color: customVariables.colorPrimary
   }
 });
 

@@ -13,7 +13,7 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
-  greyUltraLight: "#F5F6F7",
+  greyUltraLight: "#FCFDFF",
   /* ↳ ALIAS TOKEN: tabUnderlineColor → greyUltraLight */
   greyLight: "#E6E9F2",
   /* ↳ ALIAS TOKEN: headerIconLight → greyLight */
@@ -34,19 +34,12 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
   /* ↳ ALIAS TOKEN: footerShadowColor → black */
-  brandPrimary: "#0066CC" /* from variables.ts */,
-  topTabBarActiveTextColor:
-    "#0066CC" /* from variables.ts, duplicate of brandPrimary, ALIAS TOKEN */,
   blue: "#0073E6",
-  selectedColor:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-  contentPrimaryBackground:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-
-  textLinkColor:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-  checkBoxColor: "#039BE5" /* from CheckBox component */,
-  brandPrimaryLight: "#99CCFF" /* from variables.ts */,
+  /* ↳ ALIAS TOKEN: topTabBarActiveTextColor → blue */
+  /* ↳ ALIAS TOKEN: selectedColor → blue */
+  /* ↳ ALIAS TOKEN: contentPrimaryBackground → blue */
+  /* ↳ ALIAS TOKEN: textLinkColor → blue */
+  blueUltraLight: "#99CCFF" /* Rarely used, evaluate a removal */,
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
   activeBonus: "#2C489D" /* from relative component (BonusVacanze) */,

@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#789ccd"
   },
   fullOpacity: {
-    backgroundColor: variables.brandPrimary
+    backgroundColor: variables.colorPrimary
   },
   link: {
     textAlign: "center",

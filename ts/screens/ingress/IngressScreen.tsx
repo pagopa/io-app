@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: variables.contentPaddingLarge,
-    backgroundColor: variables.brandPrimary
+    backgroundColor: variables.colorPrimary
   }
 });
 
@@ -64,7 +64,7 @@ class IngressScreen extends React.PureComponent<Props> {
         goBack={false}
         contextualHelpMarkdown={contextualHelpMarkdown}
         primary={true}
-        headerBackgroundColor={variables.brandPrimary}
+        headerBackgroundColor={variables.colorPrimary}
         appLogo={false}
       >
         <StatusBar

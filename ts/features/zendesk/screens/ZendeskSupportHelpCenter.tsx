@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
 import { H3 } from "../../../components/core/typography/H3";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FAQComponent from "../../../components/FAQComponent";
 import BaseScreenComponent, {
@@ -22,7 +23,6 @@ import I18n from "../../../i18n";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
-import themeVariables from "../../../theme/variables";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
@@ -119,7 +119,7 @@ const FaqManager = (props: FaqManagerProps) => {
     <>
       {isContentLoading && (
         <View centerJustified={true}>
-          <ActivityIndicator color={themeVariables.brandPrimaryLight} />
+          <ActivityIndicator color={IOColors.blueUltraLight} />
         </View>
       )}
       {!isContentLoading && (
