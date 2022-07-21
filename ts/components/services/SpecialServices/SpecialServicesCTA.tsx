@@ -22,6 +22,7 @@ type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 type Props = {
   customSpecialFlow: CustomSpecialFlow;
   serviceId: ServiceId;
+  activate?: boolean;
 };
 
 const UpdateAppCTA = () => {
@@ -67,7 +68,10 @@ const SpecialServicesCTA = (props: Props) => {
             return isEnabled ? <CdcServiceCTA /> : null;
           case "pn":
             return isEnabled ? (
-              <PnServiceCTA serviceId={props.serviceId} />
+              <PnServiceCTA
+                serviceId={props.serviceId}
+                activate={props.activate}
+              />
             ) : (
               <UpdateAppCTA />
             );

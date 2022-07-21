@@ -14,10 +14,12 @@ import { pnActivationUpsert } from "../store/actions/service";
 import { pnActivationSelector } from "../store/reducers/activation";
 import { showToast } from "../../../utils/showToast";
 import { Link } from "../../../components/core/typography/Link";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 
 type Props = {
   serviceId: ServiceId;
+  activate?: boolean;
 };
 
 const LoadingIndicator = () => (
@@ -73,7 +75,7 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
 );
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
-const PnServiceCTA = ({ serviceId }: Props) => {
+const PnServiceCTA = ({ serviceId, activate }: Props) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const dispatch = useIODispatch();
@@ -107,6 +109,13 @@ const PnServiceCTA = ({ serviceId }: Props) => {
     }
     setIsUpdating(isStillUpdating);
   }, [isUpdating, dispatch, serviceId, serviceActivation]);
+
+  useOnFirstRender(
+    () => {
+      dispatch(pnActivationUpsert.request(true));
+    },
+    () => activate === true
+  );
 
   if (!servicePreferenceValue || servicePreferenceValue.id !== serviceId) {
     return null;
