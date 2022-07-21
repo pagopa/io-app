@@ -114,7 +114,7 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
     () => {
       dispatch(pnActivationUpsert.request(true));
     },
-    () => activate
+    () => activate === true
   );
 
   if (!servicePreferenceValue || servicePreferenceValue.id !== serviceId) {
