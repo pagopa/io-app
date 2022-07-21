@@ -1,3 +1,9 @@
+/*
+ TODO: Remove this file after updating ts-commons to a version
+ that includes https://github.com/pagopa/io-ts-commons/pull/387.
+
+ https://pagopa.atlassian.net/browse/IA-913
+ */
 import * as t from "io-ts";
 import { PatternString } from "italia-ts-commons/lib/strings";
 
