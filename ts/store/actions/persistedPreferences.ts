@@ -41,6 +41,10 @@ export const continueWithRootOrJailbreak = createStandardAction(
   "CONTINUE_WITH_ROOT_OR_JAILBREAK"
 )<boolean>();
 
+export const preferencesPnTestEnvironmentSetEnabled = createStandardAction(
+  "PREFERENCES_PN_TEST_ENVIRONMENT_SET_ENABLED"
+)<{ isPnTestEnabled: boolean }>();
+
 export type PersistedPreferencesActions = ActionType<
   // eslint-disable-next-line
   | typeof preferenceFingerprintIsEnabledSaveSuccess
@@ -52,4 +56,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesExperimentalFeaturesSetEnabled
   | typeof customEmailChannelSetEnabled
   | typeof continueWithRootOrJailbreak
+  | typeof preferencesPnTestEnvironmentSetEnabled
 >;

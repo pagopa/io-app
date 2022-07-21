@@ -111,7 +111,7 @@ const ServiceDetailsScreen = (props: Props) => {
 
   useEffect(() => {
     props.loadServiceDetail(props.serviceId);
-  }, []);
+  }, [props]);
 
   const onMarkdownEnd = () => setIsMarkdownLoaded(true);
 
@@ -132,6 +132,9 @@ const ServiceDetailsScreen = (props: Props) => {
   const canRenderItems = isMarkdownAvailable ? isMarkdownLoaded : true;
 
   const maybeCTA = getServiceCTA(metadata);
+  const showCTA =
+    (maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) &&
+    canRenderItems;
 
   return (
     <BaseScreenComponent
@@ -198,7 +201,7 @@ const ServiceDetailsScreen = (props: Props) => {
           )}
         </Content>
 
-        {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) && (
+        {showCTA && (
           <FooterTopShadow>
             {maybeCTA.isSome() && (
               <View style={[styles.flexRow]}>

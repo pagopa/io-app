@@ -433,6 +433,8 @@ profile:
       alertConfirmTitle: Do you want to use the pagoPA test environment?
       alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
       alertMessage: The application must be restarted for the changes to take effect.
+    pnEnvironment:
+      pnEnv: PN Test Environment
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -3086,6 +3088,12 @@ features:
       warning:
         title: Questo messaggio contiene una comunicazione a valore legale
         body: !include pn/message_open_warning.html
+    service:
+      activate: "Attiva il servizio"
+      deactivate: "Disattiva il servizio"
+      toast:
+        activated: "Grazie, il servizio è attivo!"
+        error: "Si è verificato un errore con la tua richiesta"
     details:
       title: Dettaglio del messaggio
       loadError:

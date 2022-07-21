@@ -14,7 +14,8 @@ import {
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
-import { cdcEnabled } from "../../../config";
+import { cdcEnabled, pnEnabled } from "../../../config";
+import PnServiceCTA from "../../../features/pn/components/PnServiceCTA";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 
@@ -42,12 +43,15 @@ const SpecialServicesCTA = (props: Props) => {
 
   const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
+  const isPnEnabled = pnEnabled;
+
   const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
     CustomSpecialFlow,
     boolean
   >([
     ["cgn" as CustomSpecialFlow, isCGNEnabled],
-    ["cdc" as CustomSpecialFlow, isCdcEnabled]
+    ["cdc" as CustomSpecialFlow, isCdcEnabled],
+    ["pn" as CustomSpecialFlow, isPnEnabled]
   ]);
 
   return fromNullable(customSpecialFlow).fold(null, csf =>
@@ -61,6 +65,12 @@ const SpecialServicesCTA = (props: Props) => {
             ) : null;
           case "cdc":
             return isEnabled ? <CdcServiceCTA /> : null;
+          case "pn":
+            return isEnabled ? (
+              <PnServiceCTA serviceId={props.serviceId} />
+            ) : (
+              <UpdateAppCTA />
+            );
           default:
             return <UpdateAppCTA />;
         }
