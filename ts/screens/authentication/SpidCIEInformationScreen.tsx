@@ -41,7 +41,7 @@ type State = {
 const styles = StyleSheet.create({
   value: {
     alignSelf: "flex-start",
-    color: customVariables.colorPrimary,
+    color: customVariables.brandPrimary,
     paddingTop: 2
   },
   row: {
@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
     elevation: 0
   },
   tabBarUnderline: {
-    borderBottomColor: customVariables.colorPrimary,
+    borderBottomColor: customVariables.brandPrimary,
     borderBottomWidth: customVariables.tabUnderlineHeight
   },
   activeTextStyle: {
-    color: customVariables.colorPrimary
+    color: customVariables.brandPrimary
   }
 });
 

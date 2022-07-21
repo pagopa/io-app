@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start"
   },
   badgeStyle: {
-    backgroundColor: customVariables.colorPrimary,
+    backgroundColor: customVariables.brandPrimary,
     borderColor: "white",
     borderWidth: 2,
     elevation: 0.1,

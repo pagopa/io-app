@@ -49,7 +49,7 @@ const customVariables = Object.assign(materialVariables, {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  colorPrimary: IOColors.blue,
+  brandPrimary: IOColors.blueDark,
   brandHighlight: "#00C5CA",
   brandHighLighter: "#00CDD2",
   brandSuccess: "#007005",

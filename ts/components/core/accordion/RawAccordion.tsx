@@ -112,7 +112,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
           >
             <IconFont
               name={"io-right"}
-              color={customVariables.colorPrimary}
+              color={customVariables.brandPrimary}
               size={24}
             />
           </Animated.View>

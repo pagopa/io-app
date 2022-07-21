@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   ring: {
     position: "absolute",
     borderWidth: 2,
-    borderColor: themeVariables.colorPrimary
+    borderColor: themeVariables.brandPrimary
   }
 });
 

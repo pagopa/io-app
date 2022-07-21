@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject("SemiBold"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
     fontWeight: Platform.OS === "android" ? "normal" : "bold",
-    color: customVariables.colorPrimary
+    color: customVariables.brandPrimary
   },
   textStyle: {
     color: customVariables.textColor

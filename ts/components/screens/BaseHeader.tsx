@@ -298,7 +298,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       ? variables.brandHighlight
       : primary || dark
       ? IOColors.white
-      : variables.colorPrimary;
+      : variables.brandPrimary;
 
     return (
       !isSearchEnabled &&

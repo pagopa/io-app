@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   screenshotTime: {
     textAlign: "center",
-    color: variables.colorPrimary,
+    color: variables.brandPrimary,
     fontSize: variables.fontSizeBase + 2
   },
   statusText: {

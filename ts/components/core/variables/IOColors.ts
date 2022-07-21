@@ -34,6 +34,7 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
   /* ↳ ALIAS TOKEN: footerShadowColor → black */
+  blueDark: "#0066CC",
   blue: "#0073E6",
   /* ↳ ALIAS TOKEN: topTabBarActiveTextColor → blue */
   /* ↳ ALIAS TOKEN: selectedColor → blue */

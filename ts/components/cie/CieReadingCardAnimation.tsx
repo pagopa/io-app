@@ -205,7 +205,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             color={
               this.props.readingState === ReadingState.error
                 ? customVariables.brandDanger
-                : customVariables.colorPrimary
+                : customVariables.brandPrimary
             }
             shadowColor={IOColors.greyLight}
             bgColor={IOColors.greyLight}

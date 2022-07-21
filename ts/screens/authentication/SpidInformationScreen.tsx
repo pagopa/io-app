@@ -26,7 +26,7 @@ type Props = {
 const styles = StyleSheet.create({
   value: {
     alignSelf: "flex-start",
-    color: variables.colorPrimary,
+    color: variables.brandPrimary,
     paddingTop: 2
   },
   row: {

@@ -106,7 +106,7 @@ const Loader = () => (
     animating={true}
     size={"large"}
     style={styles.activityIndicator}
-    color={customVariables.colorPrimary}
+    color={customVariables.brandPrimary}
     accessible={true}
     accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
     accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}

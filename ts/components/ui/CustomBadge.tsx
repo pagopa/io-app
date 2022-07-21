@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     paddingRight: 0
   },
   badgeStyle: {
-    backgroundColor: variables.colorPrimary,
+    backgroundColor: variables.brandPrimary,
     borderColor: "white",
     borderWidth: 2,
     position: "absolute",

@@ -65,7 +65,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
         </Text>
         <IconFont
           name={"io-right"}
-          color={customVariables.colorPrimary}
+          color={customVariables.brandPrimary}
           size={24}
           style={[
             styles.headerIcon,
