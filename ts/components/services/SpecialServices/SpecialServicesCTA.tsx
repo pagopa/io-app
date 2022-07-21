@@ -43,13 +43,15 @@ const SpecialServicesCTA = (props: Props) => {
 
   const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
+  const isPnEnabled = pnEnabled;
+
   const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
     CustomSpecialFlow,
     boolean
   >([
     ["cgn" as CustomSpecialFlow, isCGNEnabled],
     ["cdc" as CustomSpecialFlow, isCdcEnabled],
-    ["pn" as CustomSpecialFlow, pnEnabled]
+    ["pn" as CustomSpecialFlow, isPnEnabled]
   ]);
 
   return fromNullable(customSpecialFlow).fold(null, csf =>
