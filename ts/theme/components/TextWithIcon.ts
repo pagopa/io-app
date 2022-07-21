@@ -4,11 +4,11 @@ import variables from "../variables";
 export default (): Theme => ({
   ".danger": {
     "NativeBase.Text": {
-      color: variables.brandDanger
+      color: variables.colorDanger
     },
 
     "UIComponent.IconFont": {
-      color: variables.brandDanger
+      color: variables.colorDanger
     }
   },
 

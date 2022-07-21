@@ -50,11 +50,11 @@ export const IOColors = asIOColors({
     "#9B5897" /* used in the CgnDiscountValueBox component only */,
   yellow: "#FFC824" /* Almost deprecated, used in `PaymentHistoryList` only */,
   orange: "#EA7614",
-  cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
-  calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,
   red: "#C02927",
-  brandDanger: "#CC3333" /* from variables.ts */,
-  green: "#007005" /* from variables.ts */,
+  /* ↳ ALIAS TOKEN: colorDanger → red */
+  /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
+  green: "#007005",
+  /* ↳ ALIAS TOKEN: colorSuccess → green */
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
   greyGradientTop: "#475A6D",

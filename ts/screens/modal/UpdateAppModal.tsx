@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginTop: customVariables.contentPadding,
     fontSize: 18,
     textAlign: "center",
-    color: customVariables.brandDanger
+    color: customVariables.colorDanger
   },
   container: {
     margin: customVariables.contentPadding,

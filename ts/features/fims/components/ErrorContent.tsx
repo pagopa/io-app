@@ -21,7 +21,7 @@ const ErrorContent = ({ text, close }: Props) => (
     <IconFont
       name={"io-error"}
       size={120}
-      color={customVariables.brandDanger}
+      color={customVariables.colorDanger}
       style={styles.selfCenter}
     />
     <View spacer={true} />

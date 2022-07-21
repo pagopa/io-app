@@ -52,15 +52,14 @@ const customVariables = Object.assign(materialVariables, {
   brandPrimary: IOColors.blueDark,
   colorHighlight: IOColors.aqua,
   colorSuccess: IOColors.green,
-  brandDanger: "#CC3333",
+  colorDanger: IOColors.red,
 
   btnLightBorderColor: IOColors.grey,
 
   cardShadow: IOColors.black,
-  cardExpiredTextColor: "#FF0000",
   cardTextColor: IOColors.bluegreyDark,
 
-  calendarExpirableColor: "#D0021B",
+  calendarExpirableColor: IOColors.red,
 
   itemSeparator: IOColors.bluegreyLight,
 
