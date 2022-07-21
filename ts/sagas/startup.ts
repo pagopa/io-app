@@ -78,6 +78,7 @@ import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
+import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -133,7 +134,6 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
-import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;

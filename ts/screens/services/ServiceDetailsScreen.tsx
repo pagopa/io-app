@@ -111,7 +111,7 @@ const ServiceDetailsScreen = (props: Props) => {
 
   useEffect(() => {
     props.loadServiceDetail(props.serviceId);
-  }, []);
+  }, [props]);
 
   const onMarkdownEnd = () => setIsMarkdownLoaded(true);
 
