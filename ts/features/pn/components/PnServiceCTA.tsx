@@ -122,7 +122,7 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
   }
 
   return isLoading ? (
-    <LoadingButton isServiceActive />
+    <LoadingButton isServiceActive={isServiceActive ?? false} />
   ) : isServiceActive ? (
     <DeactivateButton dispatch={dispatch} />
   ) : (
