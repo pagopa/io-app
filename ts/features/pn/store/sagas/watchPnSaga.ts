@@ -30,7 +30,7 @@ function* upsertPnActivation(
       yield* put(
         pnActivationUpsert.failure(new Error(readableReport(result.value)))
       );
-    } else if (result.isRight() && result.value.status === 204) {
+    } else if (result.value.status === 204) {
       yield* put(pnActivationUpsert.success(activation_status));
     } else {
       yield* put(
