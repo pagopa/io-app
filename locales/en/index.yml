@@ -2972,11 +2972,12 @@ bonus:
       misc:
         conjunction: " and "
 features:
-  mvl:
-    title: "legal message"
+  messages:
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
+  mvl:
+    title: "legal message"
     ko:
       genericError:
         title: "There was an error retrieving the message"
@@ -3006,6 +3007,7 @@ features:
           save: "Save"
           savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
           errors:
+            previewing: "Non è possibile mostrare l'anteprima del documento. E' comunque possibile salvarlo e aprirlo con un'applicazione per i PDF"
             sharing: "An error occurred while sharing the document"
             opening: "An error occurred while opening the document. You may not have a PDF reader installed."
             saving: "An error occurred while saving the document"
@@ -3092,6 +3094,31 @@ features:
       toast:
         activated: "Grazie, il servizio è attivo!"
         error: "Si è verificato un errore con la tua richiesta"
+    details:
+      title: Dettaglio del messaggio
+      loadError:
+        title: Qualcosa è andato storto
+        body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
+      paymentSection:
+        title: Avviso di pagamento
+      attachmentsSection:
+        title: Allegati
+      infoSection:
+        title: Informazioni sulla notifica
+        iun: Codice IUN
+      timeline:
+        title: STATO DELLA NOTIFICA
+        status:
+          DELIVERED: Consegnata
+          DELIVERING: Invio in corso
+          UNREACHABLE: Destinatario irreperibile
+          PAID: Pagata
+          ACCEPTED: Depositata
+          EFFECTIVE_DATE: Perfezionata per decorrenza termini
+          VIEWED: Perfezionata per visione
+          REFUSED: REFUSED
+          UNDEFINED: Non definito
+        expand: mostra gli stati precedenti
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

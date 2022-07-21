@@ -2997,11 +2997,12 @@ bonus:
       misc:
         conjunction: ", "
 features:
-  mvl:
-    title: "messaggio a valore legale"
+  messages:
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
+  mvl:
+    title: "messaggio a valore legale"
     ko:
       genericError:
         title: "Si è verificato un errore nel recupero del messaggio"
@@ -3031,6 +3032,7 @@ features:
           save: "Salva"
           savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
           errors:
+            previewing: "Non è possibile mostrare l'anteprima del documento. E' comunque possibile salvarlo e aprirlo con un'applicazione per i PDF"
             sharing: "Si è verificato un errore condividendo il documento."
             opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
             saving: "Si è verificato un errore salvando il documento."
@@ -3117,6 +3119,31 @@ features:
       toast:
         activated: "Grazie, il servizio è attivo!"
         error: "Si è verificato un errore con la tua richiesta"
+    details:
+      title: Dettaglio del messaggio
+      loadError:
+        title: Qualcosa è andato storto
+        body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
+      paymentSection:
+        title: Avviso di pagamento
+      attachmentsSection:
+        title: Allegati
+      infoSection:
+        title: Informazioni sulla notifica
+        iun: Codice IUN
+      timeline:
+        title: STATO DELLA NOTIFICA
+        status:
+          DELIVERED: Consegnata
+          DELIVERING: Invio in corso
+          UNREACHABLE: Destinatario irreperibile
+          PAID: Pagata
+          ACCEPTED: Depositata
+          EFFECTIVE_DATE: Perfezionata per decorrenza termini
+          VIEWED: Perfezionata per visione
+          REFUSED: REFUSED
+          UNDEFINED: Non definito
+        expand: mostra gli stati precedenti      
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

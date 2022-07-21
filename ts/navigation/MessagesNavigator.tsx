@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { mvlEnabled } from "../config";
+import { mvlEnabled, pnEnabled } from "../config";
 import { EUCovidCertStackNavigator } from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { MvlStackNavigator } from "../features/mvl/navigation/navigator";
@@ -9,8 +9,9 @@ import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageDetailScreen";
 import PaginatedMessageRouterScreen from "../screens/messages/paginated/MessageRouterScreen";
+import { PnStackNavigator } from "../features/pn/navigation/navigator";
+import PN_ROUTES from "../features/pn/navigation/routes";
 import { MessagesParamsList } from "./params/MessagesParamsList";
-
 import ROUTES from "./routes";
 
 const Stack = createStackNavigator<MessagesParamsList>();
@@ -49,6 +50,10 @@ export const MessagesStackNavigator = () => (
 
     {mvlEnabled && (
       <Stack.Screen name={MVL_ROUTES.MAIN} component={MvlStackNavigator} />
+    )}
+
+    {pnEnabled && (
+      <Stack.Screen name={PN_ROUTES.MAIN} component={PnStackNavigator} />
     )}
   </Stack.Navigator>
 );
