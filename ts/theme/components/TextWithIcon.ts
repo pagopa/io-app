@@ -14,11 +14,11 @@ export default (): Theme => ({
 
   ".success": {
     "NativeBase.Text": {
-      color: variables.brandSuccess
+      color: variables.colorSuccess
     },
 
     "UIComponent.IconFont": {
-      color: variables.brandSuccess
+      color: variables.colorSuccess
     }
   },
 

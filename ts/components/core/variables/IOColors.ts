@@ -40,7 +40,7 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: selectedColor → blue */
   /* ↳ ALIAS TOKEN: contentPrimaryBackground → blue */
   /* ↳ ALIAS TOKEN: textLinkColor → blue */
-  blueUltraLight: "#99CCFF" /* Rarely used, evaluate a removal */,
+  blueUltraLight: "#99CCFF" /* Almost deprecated, avoid if possible */,
   aqua: "#00C5CA",
   /* ↳ ALIAS TOKEN: colorHighlight → aqua */
   aquaUltraLight: "#C1F4F2",
@@ -48,14 +48,13 @@ export const IOColors = asIOColors({
   cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
   antiqueFuchsia:
     "#9B5897" /* used in the CgnDiscountValueBox component only */,
-  yellow:
-    "#FFC824" /* probably deprecated, used in `PaymentHistoryList` only */,
+  yellow: "#FFC824" /* Almost deprecated, used in `PaymentHistoryList` only */,
   orange: "#EA7614",
   cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
   calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,
   red: "#C02927",
   brandDanger: "#CC3333" /* from variables.ts */,
-  brandSuccess: "#007005" /* from variables.ts */,
+  green: "#007005" /* from variables.ts */,
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
   greyGradientTop: "#475A6D",

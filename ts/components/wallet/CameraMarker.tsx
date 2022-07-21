@@ -99,7 +99,7 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
     },
 
     iconValid: {
-      color: variables.brandSuccess
+      color: variables.colorSuccess
     },
 
     iconInvalid: {

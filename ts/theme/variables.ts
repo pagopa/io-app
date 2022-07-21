@@ -51,7 +51,7 @@ const customVariables = Object.assign(materialVariables, {
   */
   brandPrimary: IOColors.blueDark,
   colorHighlight: IOColors.aqua,
-  brandSuccess: "#007005",
+  colorSuccess: IOColors.green,
   brandDanger: "#CC3333",
 
   btnLightBorderColor: IOColors.grey,
