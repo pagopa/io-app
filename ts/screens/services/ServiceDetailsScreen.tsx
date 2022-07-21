@@ -134,6 +134,9 @@ const ServiceDetailsScreen = (props: Props) => {
   const canRenderItems = isMarkdownAvailable ? isMarkdownLoaded : true;
 
   const maybeCTA = getServiceCTA(metadata);
+  const showCTA =
+    (maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) &&
+    canRenderItems;
 
   return (
     <BaseScreenComponent
@@ -200,32 +203,31 @@ const ServiceDetailsScreen = (props: Props) => {
           )}
         </Content>
 
-        {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) &&
-          canRenderItems && (
-            <FooterTopShadow>
-              {maybeCTA.isSome() && (
-                <View style={[styles.flexRow]}>
-                  <ExtractedCTABar
-                    ctas={maybeCTA.value}
-                    xsmall={false}
-                    dispatch={props.dispatch}
-                    serviceMetadata={metadata}
-                    service={service}
-                  />
-                </View>
-              )}
-              {SpecialServiceMetadata.is(metadata) && (
-                <>
-                  <View spacer small />
-                  <SpecialServicesCTA
-                    serviceId={props.serviceId}
-                    customSpecialFlow={metadata.custom_special_flow}
-                    activate={props.activate}
-                  />
-                </>
-              )}
-            </FooterTopShadow>
-          )}
+        {showCTA && (
+          <FooterTopShadow>
+            {maybeCTA.isSome() && (
+              <View style={[styles.flexRow]}>
+                <ExtractedCTABar
+                  ctas={maybeCTA.value}
+                  xsmall={false}
+                  dispatch={props.dispatch}
+                  serviceMetadata={metadata}
+                  service={service}
+                />
+              </View>
+            )}
+            {SpecialServiceMetadata.is(metadata) && (
+              <>
+                <View spacer small />
+                <SpecialServicesCTA
+                  serviceId={props.serviceId}
+                  customSpecialFlow={metadata.custom_special_flow}
+                  activate={props.activate}
+                />
+              </>
+            )}
+          </FooterTopShadow>
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
   );
