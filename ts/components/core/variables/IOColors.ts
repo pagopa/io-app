@@ -34,7 +34,8 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
   /* ↳ ALIAS TOKEN: footerShadowColor → black */
-  blueDark: "#0066CC",
+  noCieButton:
+    "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
   blue: "#0073E6",
   /* ↳ ALIAS TOKEN: topTabBarActiveTextColor → blue */
   /* ↳ ALIAS TOKEN: selectedColor → blue */
@@ -55,8 +56,6 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
   green: "#005C3C",
   /* ↳ ALIAS TOKEN: colorSuccess → green */
-  noCieButton:
-    "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
   greyGradientTop: "#475A6D",
   greyGradientBottom: "#42484F",
   yellowGradientTop: "#FEC709",
