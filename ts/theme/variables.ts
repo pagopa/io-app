@@ -65,7 +65,6 @@ const customVariables = Object.assign(materialVariables, {
   itemSeparator: IOColors.bluegreyLight,
 
   toastColor: IOColors.aquaUltraLight,
-  badgeYellow: "#ffc824",
 
   /* When the background is dark */
   headerIconDark: IOColors.milderGray,

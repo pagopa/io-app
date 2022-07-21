@@ -13,7 +13,7 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
-  greyUltraLight: "#FCFDFF",
+  greyUltraLight: "#F5F6F7",
   /* ↳ ALIAS TOKEN: tabUnderlineColor → greyUltraLight */
   greyLight: "#E6E9F2",
   /* ↳ ALIAS TOKEN: headerIconLight → greyLight */
@@ -41,22 +41,23 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: contentPrimaryBackground → blue */
   /* ↳ ALIAS TOKEN: textLinkColor → blue */
   blueUltraLight: "#99CCFF" /* Rarely used, evaluate a removal */,
-  noCieButton:
-    "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
-  cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
-  antiqueFuchsia:
-    "#9B5897" /* used in the CgnDiscountValueBox component only */,
   aqua: "#00C5CA",
   /* ↳ ALIAS TOKEN: colorHighlight → aqua */
   aquaUltraLight: "#C1F4F2",
   /* ↳ ALIAS TOKEN: toastColor → aquaUltraLight */
-  badgeYellow: "#FFC824" /* from variables.ts, ALIAS TOKEN */,
+  cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
+  antiqueFuchsia:
+    "#9B5897" /* used in the CgnDiscountValueBox component only */,
+  yellow:
+    "#FFC824" /* probably deprecated, used in `PaymentHistoryList` only */,
   orange: "#EA7614",
   cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
   calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,
   red: "#C02927",
   brandDanger: "#CC3333" /* from variables.ts */,
   brandSuccess: "#007005" /* from variables.ts */,
+  noCieButton:
+    "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
   greyGradientTop: "#475A6D",
   greyGradientBottom: "#42484F",
   yellowGradientTop: "#FEC709",
