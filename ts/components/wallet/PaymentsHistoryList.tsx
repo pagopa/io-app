@@ -60,7 +60,7 @@ export const getPaymentHistoryInfo = (
             vd =>
               fromNullable(vd.causaleVersamento).fold(notAvailable, cv => cv)
           ),
-          color: customVariables.brandHighlight
+          color: customVariables.colorHighlight
         };
       }
 

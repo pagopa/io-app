@@ -43,21 +43,20 @@ export const IOColors = asIOColors({
   blueUltraLight: "#99CCFF" /* Rarely used, evaluate a removal */,
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
-  cobalt: "#2C489D" /* used in the component BonusVacanze only */,
+  cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
   antiqueFuchsia:
     "#9B5897" /* used in the CgnDiscountValueBox component only */,
   aqua: "#00C5CA",
-  brandHighlight: "#00C5CA" /* from variables.ts, duplicate of aqua */,
-  brandHighLighter: "#00CDD2" /* from variables.ts */,
-  toastColor: "#C1F4F2" /* from variables.ts, ALIAS TOKEN */,
+  /* ↳ ALIAS TOKEN: colorHighlight → aqua */
+  aquaUltraLight: "#C1F4F2",
+  /* ↳ ALIAS TOKEN: toastColor → aquaUltraLight */
   badgeYellow: "#FFC824" /* from variables.ts, ALIAS TOKEN */,
-  cgnDiscountDetailBg: "#EB9505" /* from relative component */,
+  orange: "#EA7614",
   cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
   calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,
   red: "#C02927",
   brandDanger: "#CC3333" /* from variables.ts */,
   brandSuccess: "#007005" /* from variables.ts */,
-  orange: "#EA7614",
   greyGradientTop: "#475A6D",
   greyGradientBottom: "#42484F",
   yellowGradientTop: "#FEC709",

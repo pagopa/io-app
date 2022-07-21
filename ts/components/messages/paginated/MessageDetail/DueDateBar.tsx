@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5
   },
   highlight: {
-    color: customVariables.brandHighlight
+    color: customVariables.colorHighlight
   },
   center: {
     justifyContent: "center"

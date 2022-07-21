@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   statusBadgeRevoked: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.brandHighLighter
+    backgroundColor: variables.colorHighlight
   },
   screenshotTime: {
     textAlign: "center",

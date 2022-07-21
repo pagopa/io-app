@@ -50,8 +50,7 @@ const customVariables = Object.assign(materialVariables, {
     Add them to IOColors object, instead.
   */
   brandPrimary: IOColors.blueDark,
-  brandHighlight: "#00C5CA",
-  brandHighLighter: "#00CDD2",
+  colorHighlight: IOColors.aqua,
   brandSuccess: "#007005",
   brandDanger: "#CC3333",
 
@@ -65,7 +64,7 @@ const customVariables = Object.assign(materialVariables, {
 
   itemSeparator: IOColors.bluegreyLight,
 
-  toastColor: "#C1f4f2",
+  toastColor: IOColors.aquaUltraLight,
   badgeYellow: "#ffc824",
 
   /* When the background is dark */

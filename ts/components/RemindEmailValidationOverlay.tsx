@@ -382,7 +382,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           <IconFont
             name={icon}
             size={VALIDATION_ICON_WIDTH}
-            color={customVariables.brandHighlight}
+            color={customVariables.colorHighlight}
             style={styles.center}
           />
           <View spacer={true} extralarge={true} />
