@@ -53,7 +53,7 @@ export const IOColors = asIOColors({
   red: "#C02927",
   /* ↳ ALIAS TOKEN: colorDanger → red */
   /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
-  green: "#007005",
+  green: "#005C3C",
   /* ↳ ALIAS TOKEN: colorSuccess → green */
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
