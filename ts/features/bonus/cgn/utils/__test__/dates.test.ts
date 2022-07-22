@@ -11,7 +11,9 @@ describe("getCgnUserAgeRange", () => {
     [undefined, "unrecognized"],
     [DateFromString.decode("1991-01-06").value as Date, "31-35"],
     [DateFromString.decode("1994-01-06").value as Date, "26-30"],
-    [DateFromString.decode("1999-01-06").value as Date, "18-25"]
+    [DateFromString.decode("1999-01-06").value as Date, "18-25"],
+    [DateFromString.decode("2004-01-06").value as Date, "18-25"],
+    [DateFromString.decode("2006-01-06").value as Date, "unrecognized"]
   ])(
     "when the birthdate is $birthDate the range should be $ageRange",
     (birthDate, ageRange) => {
