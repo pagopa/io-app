@@ -74,7 +74,7 @@ const renderComponent = () => {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       ServiceDetailsScreen,
       ROUTES.SERVICE_DETAIL,
-      { service },
+      { serviceId: service.service_id },
       store
     ),
     store
