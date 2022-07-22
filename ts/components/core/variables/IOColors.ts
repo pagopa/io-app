@@ -54,10 +54,8 @@ export const IOColors = asIOColors({
   red: "#C02927",
   /* ↳ ALIAS TOKEN: colorDanger → red */
   /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
-  green: "#005C3C",
+  green: "#005C3C"
   /* ↳ ALIAS TOKEN: colorSuccess → green */
-  greyGradientTop: "#475A6D",
-  greyGradientBottom: "#42484F"
 });
 
 export const IOColorGradients = asIOColorGradients({

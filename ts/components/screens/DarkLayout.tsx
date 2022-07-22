@@ -14,7 +14,7 @@ import { IconProps } from "react-native-vector-icons/Icon";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors, IOColorGradients } from "../core/variables/IOColors";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
 });
 
 export default class DarkLayout extends React.Component<Props> {
-  private screenContent() {
+  screenContent() {
+    const [gradFirstColor, gradSecondColor] = IOColorGradients.grey;
+
     const wrapper = (children: React.ReactNode) =>
       this.props.gradientHeader ? (
         <LinearGradient
-          /* grey gradient */
-          /* TODO: Replace IOColors values with IOColorGradients ones */
-          colors={[IOColors.bluegrey, "#42484F"]}
+          colors={[gradFirstColor, gradSecondColor]}
           style={
             this.props.headerPaddingMin
               ? styles.headerContentsMin
