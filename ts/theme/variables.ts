@@ -151,7 +151,7 @@ const customVariables = Object.assign(materialVariables, {
   // Content
   contentPadding: 24,
   contentPaddingLarge: 48,
-  contentBackground: "#FFFFFF",
+  contentBackground: IOColors.white,
   contentPrimaryBackground: IOColors.blue,
 
   // Footer
