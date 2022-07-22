@@ -1,5 +1,6 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { ComponentProps, FC } from "react";
+import { ColorValue } from "react-native";
 import { SvgProps } from "react-native-svg";
 import LinearGradient from "react-native-linear-gradient";
 import { TranslationKeys } from "../../../../../locales/locales";
@@ -19,6 +20,10 @@ import SustainableMobility from "../../../../../img/bonus/cgn/categories/sustain
 import Job from "../../../../../img/bonus/cgn/categories/job.svg";
 import I18n from "../../../../i18n";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import {
+  IOColorGradients,
+  IOColorGradientType
+} from "../../../../components/core/variables/IOColors";
 
 export type Category = {
   type: ProductCategory;
@@ -27,76 +32,73 @@ export type Category = {
   colors: ComponentProps<typeof LinearGradient>["colors"];
 };
 
+export const getGradientColorValues = (
+  gradientId: IOColorGradientType
+): ComponentProps<typeof LinearGradient>["colors"] => {
+  const [first, second]: Array<ColorValue> = IOColorGradients[gradientId];
+  return [first, second];
+};
+
 export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.cultureAndEntertainment]: {
     type: ProductCategoryEnum.cultureAndEntertainment,
     icon: Culture,
     nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment",
-    /* cgnCulture gradient */
-    colors: ["#C51C82", "#E28DC0"]
+    colors: getGradientColorValues("cgnCulture")
   },
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
     icon: Wellness,
     nameKey: "bonus.cgn.merchantDetail.categories.health",
-    /* cgnHealth gradient */
-    colors: ["#F1901A", "#EE898A"]
+    colors: getGradientColorValues("cgnHealth")
   },
   [ProductCategoryEnum.learning]: {
     type: ProductCategoryEnum.learning,
     icon: Learning,
     nameKey: "bonus.cgn.merchantDetail.categories.learning",
-    /* cgnLearning gradient */
-    colors: ["#0871B6", "#AE97C3"]
+    colors: getGradientColorValues("cgnLearning")
   },
   [ProductCategoryEnum.sports]: {
     type: ProductCategoryEnum.sports,
     icon: Sport,
     nameKey: "bonus.cgn.merchantDetail.categories.sport",
-    /* cgnSport gradient */
-    colors: ["#1D827D", "#83B8DA"]
+    colors: getGradientColorValues("cgnSport")
   },
   [ProductCategoryEnum.home]: {
     type: ProductCategoryEnum.home,
     icon: Home,
     nameKey: "bonus.cgn.merchantDetail.categories.home",
-    /* cgnHome gradient */
-    colors: ["#DC1415", "#F8C78C"]
+    colors: getGradientColorValues("cgnHome")
   },
   [ProductCategoryEnum.telephonyAndInternet]: {
     type: ProductCategoryEnum.telephonyAndInternet,
     icon: Telco,
     nameKey: "bonus.cgn.merchantDetail.categories.telco",
-    /* cgnTelco gradient */
-    colors: ["#0871B6", "#83B8DA"]
+    colors: getGradientColorValues("cgnTelco")
   },
   [ProductCategoryEnum.bankingServices]: {
     type: ProductCategoryEnum.bankingServices,
     icon: Bank,
     nameKey: "bonus.cgn.merchantDetail.categories.finance",
-    /* cgnFinance gradient */
-    colors: ["#3E2F87", "#8FDBC0"]
+    colors: getGradientColorValues("cgnFinance")
   },
   [ProductCategoryEnum.travelling]: {
     type: ProductCategoryEnum.travelling,
     icon: Travel,
     nameKey: "bonus.cgn.merchantDetail.categories.travel",
-    /* cgnTravel gradient */
-    colors: ["#E00F69", "#F8C78C"]
+    colors: getGradientColorValues("cgnTravel")
   },
   [ProductCategoryEnum.sustainableMobility]: {
     type: ProductCategoryEnum.sustainableMobility,
     icon: SustainableMobility,
     nameKey: "bonus.cgn.merchantDetail.categories.mobility",
-    /* cgnMobility gradient */
-    colors: ["#1D827D", "#8FC7C5"]
+    colors: getGradientColorValues("cgnMobility")
   },
   [ProductCategoryEnum.jobOffers]: {
     type: ProductCategoryEnum.jobOffers,
     icon: Job,
     nameKey: "bonus.cgn.merchantDetail.categories.job",
-    /* cgnJobOffers gradient */
-    colors: ["#DC1415", "#EE898A"]
+    colors: getGradientColorValues("cgnJobOffers")
   }
 };
 
