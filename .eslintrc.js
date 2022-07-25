@@ -12,11 +12,15 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "tsconfig.json",
-    sourceType: "module"
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   plugins: [
     "@typescript-eslint",
     "react",
+    "react-native",
     "react-hooks",
     "import",
     "functional",
@@ -93,7 +97,16 @@ module.exports = {
     "functional/immutable-data": "error",
     "sonarjs/no-small-switch": "off",
     "sonarjs/no-duplicate-string": "off",
-    "sonarjs/no-nested-template-literals": "warn"
+    "sonarjs/no-nested-template-literals": "warn",
+    "react-native/no-unused-styles": "error",
+    "react-native/split-platform-components": "error",
+    "react-native/no-inline-styles": "error",
+    "react-native/no-color-literals": "error",
+    "react-native/no-raw-text": "error",
+    "react-native/no-single-element-style-arrays": "error"
+  },
+  env: {
+    "react-native/react-native": true
   },
   overrides: [
     {

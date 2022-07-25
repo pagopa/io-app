@@ -101,6 +101,7 @@
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
     "detox": "^19.7.0",
+    "eslint-plugin-react-native": "^4.0.0",
     "fbjs": "^3.0.2",
     "fp-ts": "1.17.4",
     "front-matter": "^4.0.2",
