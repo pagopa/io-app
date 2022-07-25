@@ -153,12 +153,6 @@ const styles = StyleSheet.create({
     marginBottom: -customVariables.tabUnderlineHeight,
     backgroundColor: customVariables.contentPrimaryBackground
   },
-  searchDisableIcon: {
-    color: customVariables.headerFontColor
-  },
-  organizationLogo: {
-    marginBottom: 0
-  },
   activeTextStyle: {
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
@@ -176,45 +170,6 @@ const styles = StyleSheet.create({
   },
   customSpacer: {
     height: customVariables.spacerHeight + customVariables.h1LineHeight
-  },
-  errorText: {
-    fontSize: customVariables.fontSize2,
-    paddingTop: customVariables.contentPadding
-  },
-  varBar: {
-    flexDirection: "row",
-    zIndex: 1,
-    justifyContent: "space-around",
-    backgroundColor: IOColors.white,
-    padding: 10
-  },
-  buttonBar: {
-    flex: 2,
-    marginEnd: 5
-  },
-  // TODO: remove this section after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
-  helpButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: 8,
-    height: 40,
-    backgroundColor: IOColors.white,
-    borderWidth: 1,
-    borderColor: customVariables.brandPrimary
-  },
-  helpButtonIcon: {
-    lineHeight: 24,
-    color: customVariables.brandPrimary
-  },
-  helpButtonText: {
-    paddingRight: 10,
-    paddingBottom: 0,
-    paddingLeft: 10,
-    lineHeight: 20,
-    color: customVariables.brandPrimary
   },
   headerLinkContainer: {
     flexDirection: "row",

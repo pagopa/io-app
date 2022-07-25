@@ -16,9 +16,6 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { ShowroomSection } from "../ShowroomSection";
 
 const styles = StyleSheet.create({
-  alignCenter: {
-    alignItems: "center"
-  },
   row: {
     flexDirection: "row",
     flexWrap: "wrap"

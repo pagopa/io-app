@@ -37,11 +37,9 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { getServiceCTA } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   service: ServicePublic;
@@ -58,41 +56,8 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  infoHeader: {
-    marginTop: customVariables.spacerLargeHeight
-  },
-  infoItem: {
-    flexDirection: "column",
-    marginTop: customVariables.spacerHeight
-  },
-  badgeLogo: {
-    width: 150,
-    height: 50,
-    alignSelf: "flex-start"
-  },
-  switchRow: {
-    justifyContent: "space-between",
-    paddingVertical: 12
-  },
-  otherSwitchRow: {
-    borderTopColor: customVariables.itemSeparator,
-    borderTopWidth: 1 / 3
-  },
   flexRow: {
     flexDirection: "row"
-  },
-  disabledColor: {
-    /* Disabled state */
-    color: IOColors.grey
-  },
-  info: {
-    marginTop: -5
-  },
-  imageHeight: {
-    height: 60
-  },
-  imageWidth: {
-    width: 60
   }
 });
 
@@ -200,7 +165,7 @@ const ServiceDetailsScreen = (props: Props) => {
         {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) && (
           <FooterTopShadow>
             {maybeCTA.isSome() && (
-              <View style={[styles.flexRow]}>
+              <View style={styles.flexRow}>
                 <ExtractedCTABar
                   ctas={maybeCTA.value}
                   xsmall={false}
