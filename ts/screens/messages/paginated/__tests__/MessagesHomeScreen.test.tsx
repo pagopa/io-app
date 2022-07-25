@@ -99,18 +99,15 @@ describe("MessagesHomeScreen", () => {
       });
 
       describe("and showAlertForMessageOpening is false", () => {
-        it("then a navigation should be dispatched", () => {
+        // as required by legal for now the bottom sheet should always
+        // be presented to the user, whether or not this flag is false
+        it("then the bottom sheet for PN is ALWAYS presented", () => {
           const { component } = renderComponent({
             inboxMessages: [pnMessage],
             pnPreferences: { showAlertForMessageOpening: false }
           });
           fireEvent(component.getByText(pnMessage.title), "onPress");
-          expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
-            screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
-            params: {
-              messageId: pnMessage.id
-            }
-          });
+          expect(mockPresentPNBottomSheet).toHaveBeenCalledWith(pnMessage);
         });
       });
     });
