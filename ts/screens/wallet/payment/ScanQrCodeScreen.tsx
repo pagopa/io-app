@@ -85,10 +85,6 @@ const styles = StyleSheet.create({
     paddingLeft: customVariables.contentPadding
   },
 
-  white: {
-    backgroundColor: IOColors.white
-  },
-
   bottomText: {
     paddingTop: cameraTextOverlapping
   },
@@ -97,12 +93,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     marginTop: -cameraTextOverlapping,
     zIndex: 1
-  },
-
-  cameraContainer: {
-    alignItems: "flex-start",
-    justifyContent: "center",
-    backgroundColor: "transparent"
   },
 
   button: {
@@ -114,13 +104,6 @@ const styles = StyleSheet.create({
     width: screenWidth - customVariables.contentPadding * 2,
     backgroundColor: IOColors.white,
     zIndex: 999
-  },
-
-  camera: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-    width: screenWidth
   }
 });
 

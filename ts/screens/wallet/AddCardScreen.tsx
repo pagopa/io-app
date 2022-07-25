@@ -87,17 +87,6 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  noBottomLine: {
-    borderBottomWidth: 0
-  },
-
-  addCardImage: {
-    width: 60,
-    height: 45,
-    resizeMode: "contain",
-    marginTop: 5
-  },
-
   creditCardForm: {
     height: 24,
     width: 24

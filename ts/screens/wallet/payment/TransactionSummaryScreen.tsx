@@ -316,7 +316,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
                   {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
                 </Text>
               </View>
-              <Text white={true} style={[styles.title]} bold={true}>
+              <Text white={true} style={styles.title} bold={true}>
                 {currentAmount}
               </Text>
             </View>
