@@ -164,6 +164,7 @@ Object {
   "isFingerprintEnabled": undefined,
   "isMixpanelEnabled": null,
   "isPagoPATestEnabled": false,
+  "isPnTestEnabled": false,
   "preferredCalendar": undefined,
   "preferredLanguage": undefined,
   "wasServiceAlertDisplayedOnce": false,

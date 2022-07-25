@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
+import { StatusEnum } from "../../../../../definitions/cgn/CardActivated";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -159,20 +160,21 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 </View>
               </ScrollView>
               <SectionStatusComponent sectionKey={"cgn"} />
-              {props.isCgnEnabled && (
-                <FooterWithButtons
-                  type={"SingleButton"}
-                  leftButton={confirmButtonProps(
-                    props.isMerchantV2Enabled
-                      ? props.navigateToMerchantsTabs
-                      : () =>
-                          navigation.navigate(
-                            CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES
-                          ),
-                    I18n.t("bonus.cgn.detail.cta.buyers")
-                  )}
-                />
-              )}
+              {props.isCgnEnabled &&
+                props.cgnDetails?.status === StatusEnum.ACTIVATED && (
+                  <FooterWithButtons
+                    type={"SingleButton"}
+                    leftButton={confirmButtonProps(
+                      props.isMerchantV2Enabled
+                        ? props.navigateToMerchantsTabs
+                        : () =>
+                            navigation.navigate(
+                              CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES
+                            ),
+                      I18n.t("bonus.cgn.detail.cta.buyers")
+                    )}
+                  />
+                )}
             </>
           )}
         </SafeAreaView>

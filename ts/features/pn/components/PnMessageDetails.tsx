@@ -25,10 +25,15 @@ import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
 import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
+import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import PN_ROUTES from "../navigation/routes";
+import { MvlAttachmentId } from "../../mvl/types/mvlData";
+import { H5 } from "../../../components/core/typography/H5";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
+import { PnMessageTimeline } from "./PnMessageTimeline";
 
 const styles = StyleSheet.create({
   content: {
@@ -98,14 +103,26 @@ export const PnMessageDetails = (props: Props) => {
     }
   }, [rptId, navigation]);
 
+  const openAttachment = useCallback(
+    (attachmentId: MvlAttachmentId) => {
+      navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, { attachmentId });
+    },
+    [navigation]
+  );
+
   useOnFirstRender(verifyPaymentIfNeeded);
+
+  const scrollViewRef = React.createRef<ScrollView>();
 
   return (
     <>
       {firstLoadingRequest && paymentVerificationError.isSome() && (
         <TransactionSummaryStatus error={paymentVerificationError} />
       )}
-      <ScrollView style={{ padding: customVariables.contentPadding }}>
+      <ScrollView
+        style={{ padding: customVariables.contentPadding }}
+        ref={scrollViewRef}
+      >
         {props.service && <PnMessageDetailsHeader service={props.service} />}
         <PnMessageDetailsContent
           style={styles.content}
@@ -114,7 +131,12 @@ export const PnMessageDetails = (props: Props) => {
         {props.message.attachments && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
-          />
+          >
+            <MvlAttachments
+              attachments={props.message.attachments}
+              openPreview={openAttachment}
+            />
+          </PnMessageDetailsSection>
         )}
         {maybePayment && (
           <PnMessageDetailsSection
@@ -149,8 +171,21 @@ export const PnMessageDetails = (props: Props) => {
           <TransactionSummaryRow
             axis="horizontal"
             title={I18n.t("features.pn.details.infoSection.iun")}
+            hideSeparator={true}
             subtitle={props.message.iun}
             onPress={() => clipboardSetStringWithFeedback(props.message.iun)}
+          />
+          <H5
+            color="bluegrey"
+            style={{ marginBottom: customVariables.spacerLargeHeight }}
+          >
+            {I18n.t("features.pn.details.timeline.title")}
+          </H5>
+          <PnMessageTimeline
+            message={props.message}
+            onExpand={() =>
+              scrollViewRef.current?.scrollToEnd({ animated: true })
+            }
           />
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
