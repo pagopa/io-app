@@ -13402,10 +13402,10 @@ react-native-flag-secure-android@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-flag-secure-android/-/react-native-flag-secure-android-1.0.3.tgz#0e86b24836c68ff38f75d43774bf475ae6f70793"
   integrity sha512-vbwTUVFAAqzcTlmqt09ykfzBsSTXKQOIW87eg9pQkgVuqkO4Vo9kX7JMs3nE2GF+xlrr7tCaDYf+jKQmgOVMdQ==
 
-react-native-flipper@^0.155.0:
-  version "0.155.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.155.0.tgz#aec09336b6e67a5661707e91d71c69aa85247840"
-  integrity sha512-W3PAfTr4MAcA+xm5rXzXvrrW+NahQcq1Fsyk7hrQo6PV4an9ogPowXF6i+0/b1MzpsmGJTb0kmcglUfsXi164Q==
+react-native-flipper@^0.154.0:
+  version "0.154.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.154.0.tgz#724f8cada8d31e7e9512c9fe54d4f46421de1e16"
+  integrity sha512-YxVKEuOF4FDobPA+OyE27u9S4Sd8TghhGc493dPJ3MS6r3G9JAGsKSC4+tEFTV2SgC55FNFLLxhdfFUquzARZQ==
 
 react-native-flipper@^0.34.0:
   version "0.34.0"

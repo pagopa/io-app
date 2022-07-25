@@ -130,7 +130,7 @@
     "react-native-exception-handler": "^2.10.8",
     "react-native-fingerprint-scanner": "^6.0.0",
     "react-native-flag-secure-android": "^1.0.3",
-    "react-native-flipper": "^0.155.0",
+    "react-native-flipper": "^0.154.0",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "2.1.1",
     "react-native-i18n": "^2.0.15",
