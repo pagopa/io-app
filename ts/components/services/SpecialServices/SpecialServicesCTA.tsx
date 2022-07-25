@@ -9,7 +9,8 @@ import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialS
 import { useIOSelector } from "../../../store/hooks";
 import {
   isCdcEnabledSelector,
-  isCGNEnabledSelector
+  isCGNEnabledSelector,
+  isPnEnabledSelector
 } from "../../../store/reducers/backendStatus";
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -44,7 +45,8 @@ const SpecialServicesCTA = (props: Props) => {
 
   const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
-  const isPnEnabled = pnEnabled;
+  const pnEnabledSelector = useIOSelector(isPnEnabledSelector);
+  const isPnEnabled = pnEnabledSelector;
 
   const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
     CustomSpecialFlow,

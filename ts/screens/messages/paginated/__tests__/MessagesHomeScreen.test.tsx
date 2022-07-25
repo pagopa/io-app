@@ -15,6 +15,12 @@ import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/Messa
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import { TagEnum as TagEnumPayment } from "../../../../../definitions/backend/MessageCategoryPayment";
 import { PnPreferences } from "../../../../features/pn/store/reducers/preferences";
+import {
+  baseBackendConfig,
+  baseBackendState,
+  baseRawBackendStatus
+} from "../../../../store/reducers/__mock__/backendStatus";
+import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 jest.useFakeTimers();
 
@@ -66,7 +72,10 @@ describe("MessagesHomeScreen", () => {
 
       describe("when tapping on it", () => {
         it("then a navigation should be dispatched", () => {
-          const { component } = renderComponent({ inboxMessages: [message] });
+          const { component } = renderComponent(
+            { inboxMessages: [message] },
+            true
+          );
           fireEvent(component.getByText(message.title), "onPress");
           expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
             screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
@@ -85,29 +94,62 @@ describe("MessagesHomeScreen", () => {
       category: { tag: TagEnumPN.PN }
     } as UIMessage;
 
-    describe("when tapping on it", () => {
-      it("then a navigation should NOT be dispatched", () => {
-        const { component } = renderComponent({ inboxMessages: [pnMessage] });
-        fireEvent(component.getByText(pnMessage.title), "onPress");
-        expect(mockNavigate).toHaveBeenCalledTimes(0);
-      });
+    describe("and PN is enabled", () => {
+      const isPnEnabled = true;
 
-      it("and the bottom sheet for PN is presented", () => {
-        const { component } = renderComponent({ inboxMessages: [pnMessage] });
-        fireEvent(component.getByText(pnMessage.title), "onPress");
-        expect(mockPresentPNBottomSheet).toHaveBeenCalledWith(pnMessage);
-      });
+      describe("when tapping on the message", () => {
+        it("then a navigation should NOT be dispatched", () => {
+          const { component } = renderComponent(
+            { inboxMessages: [pnMessage] },
+            isPnEnabled
+          );
+          fireEvent(component.getByText(pnMessage.title), "onPress");
+          expect(mockNavigate).toHaveBeenCalledTimes(0);
+        });
 
-      describe("and showAlertForMessageOpening is false", () => {
-        // as required by legal for now the bottom sheet should always
-        // be presented to the user, whether or not this flag is false
-        it("then the bottom sheet for PN is ALWAYS presented", () => {
-          const { component } = renderComponent({
-            inboxMessages: [pnMessage],
-            pnPreferences: { showAlertForMessageOpening: false }
-          });
+        it("and the bottom sheet for PN is presented", () => {
+          const { component } = renderComponent(
+            { inboxMessages: [pnMessage] },
+            isPnEnabled
+          );
           fireEvent(component.getByText(pnMessage.title), "onPress");
           expect(mockPresentPNBottomSheet).toHaveBeenCalledWith(pnMessage);
+        });
+
+        describe("and showAlertForMessageOpening is false", () => {
+          // as required by legal for now the bottom sheet should always
+          // be presented to the user, whether or not this flag is false
+          it("then the bottom sheet for PN is ALWAYS presented", () => {
+            const { component } = renderComponent(
+              {
+                inboxMessages: [pnMessage],
+                pnPreferences: { showAlertForMessageOpening: false }
+              },
+              isPnEnabled
+            );
+            fireEvent(component.getByText(pnMessage.title), "onPress");
+            expect(mockPresentPNBottomSheet).toHaveBeenCalledWith(pnMessage);
+          });
+        });
+      });
+    });
+
+    describe("and PN is disabled", () => {
+      const isPnEnabled = false;
+
+      describe("when tapping on the message", () => {
+        it("then a navigation should be dispatched", () => {
+          const { component } = renderComponent(
+            { inboxMessages: [pnMessage] },
+            isPnEnabled
+          );
+          fireEvent(component.getByText(pnMessage.title), "onPress");
+          expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
+            screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+            params: {
+              messageId: pnMessage.id
+            }
+          });
         });
       });
     });
@@ -119,7 +161,10 @@ type InputState = {
   pnPreferences?: PnPreferences;
 };
 
-const renderComponent = (state: InputState = { inboxMessages: [] }) => {
+const renderComponent = (
+  state: InputState = { inboxMessages: [] },
+  isPnEnabled: boolean
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const allPaginated = {
@@ -157,6 +202,16 @@ const renderComponent = (state: InputState = { inboxMessages: [] }) => {
           ...state.pnPreferences
         }
       }
+    },
+    backendStatus: {
+      ...baseBackendState,
+      status: O.some({
+        ...baseRawBackendStatus,
+        config: {
+          ...baseBackendConfig,
+          pn: { enabled: isPnEnabled, frontend_url: "" }
+        }
+      })
     }
   } as GlobalState);
   const spyStoreDispatch = spyOn(store, "dispatch");

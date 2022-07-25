@@ -9,11 +9,7 @@ import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageC
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
-import {
-  euCovidCertificateEnabled,
-  mvlEnabled,
-  pnEnabled
-} from "../../../config";
+import { euCovidCertificateEnabled, mvlEnabled } from "../../../config";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/EUCovidCertificate";
@@ -44,6 +40,8 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
+import { useIOSelector } from "../../../store/hooks";
+import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -65,7 +63,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @param messageDetails
  */
 const navigateToScreenHandler =
-  (message: UIMessage, messageDetails: UIMessageDetails) =>
+  (
+    message: UIMessage,
+    messageDetails: UIMessageDetails,
+    isPnEnabled: boolean
+  ) =>
   (dispatch: Props["navigation"]["dispatch"]) => {
     if (euCovidCertificateEnabled && messageDetails.euCovidCertificate) {
       navigateBack();
@@ -80,7 +82,7 @@ const navigateToScreenHandler =
     ) {
       navigateBack();
       dispatch(navigateToMvlDetailsScreen({ id: message.id }));
-    } else if (pnEnabled && message.category.tag === TagEnumPN.PN) {
+    } else if (isPnEnabled && message.category.tag === TagEnumPN.PN) {
       navigateBack();
       dispatch(
         navigateToPnMessageDetailsScreen({
@@ -120,6 +122,8 @@ const MessageRouterScreen = ({
   const firstRendering = useRef(true);
   const isLoading = !pot.isError(maybeMessageDetails);
 
+  const isPnEnabled = useIOSelector(isPnEnabledSelector);
+
   const tryLoadMessageDetails = useCallback(() => {
     if (maybeMessage === undefined) {
       loadMessageById(messageId);
@@ -144,7 +148,8 @@ const MessageRouterScreen = ({
     if (isStrictSome(maybeMessageDetails) && maybeMessage !== undefined) {
       navigateToScreenHandler(
         maybeMessage,
-        maybeMessageDetails.value
+        maybeMessageDetails.value,
+        isPnEnabled
       )(navigation.dispatch);
       return;
     }
@@ -159,7 +164,8 @@ const MessageRouterScreen = ({
     maybeMessageDetails,
     messageId,
     navigation,
-    tryLoadMessageDetails
+    tryLoadMessageDetails,
+    isPnEnabled
   ]);
 
   return (
