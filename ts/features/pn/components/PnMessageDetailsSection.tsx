@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  title: string;
+  title?: string;
   icon?: React.ReactNode;
 }>;
 
@@ -27,7 +27,7 @@ export const PnMessageDetailsSection = (
 ): React.ReactElement | null => (
   <View style={styles.container}>
     <View style={styles.header}>
-      <H2 color="bluegrey">{props.title}</H2>
+      {props.title && <H2 color="bluegrey">{props.title}</H2>}
       {props.icon && <View style={styles.icon}>{props.icon}</View>}
     </View>
     {props.children && <View>{props.children}</View>}
