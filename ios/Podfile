@@ -26,7 +26,7 @@ target 'ItaliaApp' do
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
   if not IS_CI
-    use_flipper!({ 'Flipper' => '0.155.0' })
+    use_flipper!({ 'Flipper' => '0.154.0' })
   end
 
   post_install do |installer|
