@@ -7,6 +7,7 @@ import {
   View
 } from "react-native";
 import variables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 import { Overlay } from "./Overlay";
 
 const styles = StyleSheet.create({
@@ -16,14 +17,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    backgroundColor: "#fff",
+    backgroundColor: IOColors.white,
     padding: variables.contentPadding,
     marginLeft: variables.contentPadding,
     marginRight: variables.contentPadding,
     borderRadius: 8
   },
   message: {
-    color: "#000"
+    color: IOColors.black
   }
 });
 

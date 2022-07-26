@@ -39,7 +39,9 @@ const styles = StyleSheet.create({
     width: BUTTON_DIAMETER,
     height: BUTTON_DIAMETER,
     borderRadius: BUTTON_DIAMETER / 2,
-    backgroundColor: `rgba(0,0,0,0.1)`
+    // TODO: Replace reference to RGB with formatted value from IOColors
+    // (after HEX to RGB conversion)
+    backgroundColor: `rgba(0, 0, 0, 0.1)`
   },
   transparent: {
     backgroundColor: `transparent`

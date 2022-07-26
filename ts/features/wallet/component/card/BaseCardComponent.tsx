@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: IOColors.greyUltraLight,
     borderRadius: 8,
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 3
@@ -39,7 +39,9 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 10,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    // TODO: Replace reference to RGB with formatted value from IOColors
+    // (after HEX to RGB conversion)
+    borderTopColor: `rgba(0, 0, 0, 0.1)`,
     height: 15,
     width: widthPercentageToDP("90%"),
     maxWidth: 343

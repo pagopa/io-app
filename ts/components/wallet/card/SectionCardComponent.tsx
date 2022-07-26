@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0
   },
   rotateCard: {
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     marginBottom: -38,
     flex: 1,
     shadowRadius: 10,
@@ -106,7 +106,9 @@ const styles = StyleSheet.create({
     marginBottom: -15,
     borderRadius: 8,
     borderTopWidth: 8,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    // TODO: Replace reference to RGB with formatted value from IOColors
+    // (after HEX to RGB conversion)
+    borderTopColor: `rgba(0, 0, 0, 0.1)`,
     height: 15
   }
 });
@@ -162,7 +164,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 fontSize: customVariables.fontSize1 + 16,
                 height: 22,
                 paddingTop: 8,
-                color: "white"
+                color: IOColors.white
               }}
             >
               {" ⟳"}

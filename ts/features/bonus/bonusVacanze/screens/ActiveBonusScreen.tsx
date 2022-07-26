@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     top: -144,
     height: 168,
     width: "100%",
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 3
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   viewShot: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: IOColors.white
   },
   commonLabel: {
     lineHeight: 18

@@ -18,6 +18,7 @@ import OrganizationLogo from "../services/OrganizationLogo";
 import { MultiImage } from "../ui/MultiImage";
 import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   sectionHeader: string;
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   sectionView: {
-    backgroundColor: "#FFF",
+    backgroundColor: IOColors.white,
     flexDirection: "row",
     borderBottomColor: customVariables.itemSeparator,
     borderBottomWidth: StyleSheet.hairlineWidth

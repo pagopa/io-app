@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    backgroundColor: "rgba(255,255,255,0.5)",
+    // TODO: Replace reference to RGB with formatted value from IOColors
+    // (after HEX to RGB conversion)
+    backgroundColor: `rgba(255, 255, 255, 0.5)`,
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000

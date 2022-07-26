@@ -13,7 +13,9 @@ export const BlurredBackgroundComponent = (onPress: () => void) => (
     style={{
       ...StyleSheet.absoluteFillObject,
       overflow: "hidden",
-      backgroundColor: "rgba(0,0,0, 0.5)"
+      // TODO: Replace reference to RGB with formatted value from IOColors
+      // (after HEX to RGB conversion)
+      backgroundColor: `rgba(0,0,0, 0.5`
     }}
   />
 );

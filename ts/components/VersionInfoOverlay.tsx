@@ -12,8 +12,13 @@ import { currentRouteSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
+import { IOColors } from "../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
+
+// TODO: Replace reference to RGB with formatted value from IOColors
+// (after HEX to RGB conversion)
+const bgColor = `rgba(255, 255, 255, 0.67)`;
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -33,19 +38,19 @@ const styles = StyleSheet.create({
 
   versionText: {
     padding: 2,
-    backgroundColor: "#ffffffaa",
+    backgroundColor: bgColor,
     fontSize: 16,
     lineHeight: 24,
-    color: "#000000"
+    color: IOColors.black
   },
 
   routeText: {
     maxWidth: widthPercentageToDP(80),
     padding: 2,
-    backgroundColor: "#ffffffaa",
+    backgroundColor: bgColor,
     fontSize: 14,
     lineHeight: 22,
-    color: "#000000"
+    color: IOColors.black
   }
 });
 

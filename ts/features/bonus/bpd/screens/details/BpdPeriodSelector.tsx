@@ -16,6 +16,7 @@ import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
 import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -23,7 +24,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const styles = StyleSheet.create({
   cardWrapper: {
     width: widthPercentageToDP("100%"),
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 7

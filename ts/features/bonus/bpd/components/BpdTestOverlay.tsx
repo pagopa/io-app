@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
   },
   versionText: {
     padding: 2,
-    backgroundColor: "#ffffffaa"
+    // TODO: Replace reference to RGB with formatted value from IOColors
+    // (after HEX to RGB conversion)
+    backgroundColor: `rgba(255, 255, 255, 0.67)`
   }
 });
 

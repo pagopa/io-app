@@ -13,7 +13,7 @@ type Props = {
 const styles = StyleSheet.create({
   card: {
     // iOS and Android card shadow
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 
   rotatedCard: {
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     marginBottom: -30,
     flex: 1,
     shadowRadius: 10,
@@ -50,7 +50,9 @@ const styles = StyleSheet.create({
     marginBottom: -15,
     borderRadius: 8,
     borderTopWidth: 8,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    // TODO: Replace reference to RGB with formatted value from IOColors
+    // (after HEX to RGB conversion)
+    borderTopColor: `rgba(0, 0, 0, 0.1)`,
     height: 15
   }
 });

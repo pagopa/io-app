@@ -11,8 +11,10 @@ import { ShowroomSection } from "../ShowroomSection";
 
 const colorItemGutter = 16;
 const sectionTitleMargin = 16;
-const colorItemBorder = "rgba(0, 0, 0, 0.1)";
-const colorPillBg = "rgba(0, 0, 0, 0.3)";
+// TODO: Replace reference to RGB with formatted value from IOColors
+// (after HEX to RGB conversion)
+const colorItemBorder = `rgba(0, 0, 0, 0.1)`;
+const colorPillBg = `rgba(0, 0, 0, 0.3)`;
 
 const styles = StyleSheet.create({
   itemsWrapper: {

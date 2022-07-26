@@ -44,6 +44,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -55,8 +56,13 @@ type BonusUtils = {
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: "white", paddingTop: 14 },
-  scrollViewPadding: { paddingVertical: 15 }
+  container: {
+    backgroundColor: IOColors.white,
+    paddingTop: 14
+  },
+  scrollViewPadding: {
+    paddingVertical: 15
+  }
 });
 
 /**

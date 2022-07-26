@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 13,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    // TODO: Replace reference to RGB with formatted value from IOColors
+    // (after HEX to RGB conversion)
+    borderTopColor: `rgba(0, 0, 0, 0.1)`,
     height: 17,
     width: "100%"
   }
