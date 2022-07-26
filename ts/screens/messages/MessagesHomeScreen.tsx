@@ -79,9 +79,6 @@ const styles = StyleSheet.create({
     marginBottom: -customVariables.tabUnderlineHeight,
     backgroundColor: customVariables.contentPrimaryBackground
   },
-  searchDisableIcon: {
-    color: customVariables.headerFontColor
-  },
   activeTextStyle: {
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,

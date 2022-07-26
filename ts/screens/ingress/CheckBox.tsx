@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   checked: {
-    borderColor: "transparent",
+    borderColor: `transparent`,
     backgroundColor: checkBoxColor
   }
 });
