@@ -8,7 +8,8 @@ import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import {
   loadMessageById,
-  loadMessageDetails
+  loadMessageDetails,
+  upsertMessageStatusAttributes
 } from "../../../../store/actions/messages";
 import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../../store/actions/services";
@@ -173,12 +174,27 @@ describe("MessageRouterScreen", () => {
             loadServiceDetail.request(serviceId)
           );
         });
-        it("should not dispatch any other action", () => {
+        it("should dispatch `loadServiceDetail`", () => {
+          const { spyStoreDispatch } = renderComponent(id, { paginatedById });
+          expect(spyStoreDispatch).toHaveBeenCalledWith(
+            loadServiceDetail.request(serviceId)
+          );
+        });
+        it("should dispatch read state upsert", () => {
           const { spyStoreDispatch } = renderComponent(id, {
             paginatedById,
             detailsById
           });
-          expect(spyStoreDispatch).toHaveBeenCalledTimes(1);
+          expect(spyStoreDispatch).toHaveBeenCalledWith(
+            upsertMessageStatusAttributes.request({
+              message: targetMessage,
+              update: { tag: "reading" }
+            })
+          );
+        });
+        it("should not dispatch any other action", () => {
+          const { spyStoreDispatch } = renderComponent(id, { paginatedById });
+          expect(spyStoreDispatch).toHaveBeenCalledTimes(2);
         });
       });
     });
@@ -225,7 +241,7 @@ const renderComponent = (messageId: string, state: InputState = {}) => {
   const component = renderScreenWithNavigationStoreContext(
     MessageRouterScreen,
     ROUTES.MESSAGE_ROUTER,
-    { messageId },
+    { messageId, fromNotification: false },
     store
   );
 
