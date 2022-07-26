@@ -23,18 +23,11 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   textInput: { flex: 1, padding: 1, borderWidth: 1, height: 30 },
-  center: { alignItems: "center" },
   contentCenter: { justifyContent: "center" },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
-  },
-  debugArea: {
-    position: "absolute",
-    bottom: 0,
-    zIndex: 10,
-    height: heightPercentageToDP("15%")
   }
 });
 

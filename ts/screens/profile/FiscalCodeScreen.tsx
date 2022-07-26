@@ -37,9 +37,6 @@ const styles = StyleSheet.create({
   darkBg: {
     backgroundColor: IOColors.bluegrey
   },
-  white: {
-    color: IOColors.white
-  },
   shadow: {
     // iOS
     paddingBottom: 20,
