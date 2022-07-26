@@ -174,12 +174,6 @@ describe("MessageRouterScreen", () => {
             loadServiceDetail.request(serviceId)
           );
         });
-        it("should dispatch `loadServiceDetail`", () => {
-          const { spyStoreDispatch } = renderComponent(id, { paginatedById });
-          expect(spyStoreDispatch).toHaveBeenCalledWith(
-            loadServiceDetail.request(serviceId)
-          );
-        });
         it("should dispatch read state upsert", () => {
           const { spyStoreDispatch } = renderComponent(id, {
             paginatedById,
