@@ -20,7 +20,6 @@ import {
   baseBackendState,
   baseRawBackendStatus
 } from "../../../../store/reducers/__mock__/backendStatus";
-import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 jest.useFakeTimers();
 
