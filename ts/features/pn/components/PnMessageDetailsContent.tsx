@@ -5,6 +5,7 @@ import { H1 } from "../../../components/core/typography/H1";
 import { H2 } from "../../../components/core/typography/H2";
 import { PNMessage } from "../store/types/types";
 import customVariables from "../../../theme/variables";
+import { isStringNullyOrEmpty } from "../../../utils/strings";
 
 const styles = StyleSheet.create({
   subject: {
@@ -19,11 +20,11 @@ type Props = Readonly<{ message: PNMessage }>;
 
 export const PnMessageDetailsContent = (props: Props & ViewProps) => (
   <View style={props.style}>
-    {props.message.senderDenomination && (
+    {!isStringNullyOrEmpty(props.message.senderDenomination) && (
       <H2>{props.message.senderDenomination}</H2>
     )}
     <H1 style={styles.subject}>{props.message.subject}</H1>
-    {props.message.abstract && (
+    {!isStringNullyOrEmpty(props.message.abstract) && (
       <Body style={styles.abstract}>{props.message.abstract}</Body>
     )}
   </View>

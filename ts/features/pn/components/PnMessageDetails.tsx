@@ -28,11 +28,11 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
-import PN_ROUTES from "../navigation/routes";
-import { PNMessage } from "../store/types/types";
-import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
-import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { H5 } from "../../../components/core/typography/H5";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
+import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
+import { PnMessageTimeline } from "./PnMessageTimeline";
 
 const styles = StyleSheet.create({
   content: {
@@ -110,12 +110,17 @@ export const PnMessageDetails = (props: Props) => {
 
   useOnFirstRender(verifyPaymentIfNeeded);
 
+  const scrollViewRef = React.createRef<ScrollView>();
+
   return (
     <>
       {firstLoadingRequest && O.isSome(paymentVerificationError) && (
         <TransactionSummaryStatus error={paymentVerificationError} />
       )}
-      <ScrollView style={{ padding: customVariables.contentPadding }}>
+      <ScrollView
+        style={{ padding: customVariables.contentPadding }}
+        ref={scrollViewRef}
+      >
         {props.service && <PnMessageDetailsHeader service={props.service} />}
         <PnMessageDetailsContent
           style={styles.content}
@@ -164,8 +169,21 @@ export const PnMessageDetails = (props: Props) => {
           <TransactionSummaryRow
             axis="horizontal"
             title={I18n.t("features.pn.details.infoSection.iun")}
+            hideSeparator={true}
             subtitle={props.message.iun}
             onPress={() => clipboardSetStringWithFeedback(props.message.iun)}
+          />
+          <H5
+            color="bluegrey"
+            style={{ marginBottom: customVariables.spacerLargeHeight }}
+          >
+            {I18n.t("features.pn.details.timeline.title")}
+          </H5>
+          <PnMessageTimeline
+            message={props.message}
+            onExpand={() =>
+              scrollViewRef.current?.scrollToEnd({ animated: true })
+            }
           />
         </PnMessageDetailsSection>
         <View style={styles.spacer} />

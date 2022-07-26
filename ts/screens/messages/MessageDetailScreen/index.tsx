@@ -57,7 +57,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     // When a service gets selected, before navigating to the service detail
     // screen, we issue a loadServiceMetadata request to refresh the service metadata
     this.props.navigateToServiceDetailsScreen({
-      service
+      serviceId: service.service_id
     });
   };
 

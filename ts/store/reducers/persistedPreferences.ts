@@ -17,7 +17,8 @@ import {
   preferredCalendarRemoveSuccess,
   preferredCalendarSaveSuccess,
   preferredLanguageSaveSuccess,
-  serviceAlertDisplayedOnceSuccess
+  serviceAlertDisplayedOnceSuccess,
+  preferencesPnTestEnvironmentSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -35,6 +36,7 @@ export type PersistedPreferencesState = Readonly<{
   isCustomEmailChannelEnabled: pot.Pot<boolean, undefined>;
   continueWithRootOrJailbreak?: boolean;
   isMixpanelEnabled: boolean | null;
+  isPnTestEnabled: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -46,7 +48,8 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isExperimentalFeaturesEnabled: false,
   isCustomEmailChannelEnabled: pot.none,
   continueWithRootOrJailbreak: false,
-  isMixpanelEnabled: null
+  isMixpanelEnabled: null,
+  isPnTestEnabled: false
 };
 
 export default function preferencesReducer(
@@ -118,6 +121,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesPnTestEnvironmentSetEnabled, action)) {
+    return {
+      ...state,
+      isPnTestEnabled: action.payload.isPnTestEnabled
+    };
+  }
+
   // when the current user is different from the previous logged one
   // reset the mixpanel opt-in preference
   if (isActionOf(differentProfileLoggedIn, action)) {
@@ -154,6 +164,9 @@ export const continueWithRootOrJailbreakSelector = (state: GlobalState) =>
 
 export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
   state.persistedPreferences.isMixpanelEnabled;
+
+export const isPnTestEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences.isPnTestEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

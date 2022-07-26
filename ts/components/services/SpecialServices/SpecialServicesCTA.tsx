@@ -4,7 +4,7 @@ import * as React from "react";
 import { useCallback } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
-import { cdcEnabled } from "../../../config";
+import { cdcEnabled, pnEnabled } from "../../../config";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
 import I18n from "../../../i18n";
@@ -16,12 +16,14 @@ import {
 import { openAppStoreUrl } from "../../../utils/url";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import { Label } from "../../core/typography/Label";
+import PnServiceCTA from "../../../features/pn/components/PnServiceCTA";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 
 type Props = {
   customSpecialFlow: CustomSpecialFlow;
   serviceId: ServiceId;
+  activate?: boolean;
 };
 
 const UpdateAppCTA = () => {
@@ -43,12 +45,15 @@ const SpecialServicesCTA = (props: Props) => {
 
   const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
+  const isPnEnabled = pnEnabled;
+
   const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
     CustomSpecialFlow,
     boolean
   >([
     ["cgn" as CustomSpecialFlow, isCGNEnabled],
-    ["cdc" as CustomSpecialFlow, isCdcEnabled]
+    ["cdc" as CustomSpecialFlow, isCdcEnabled],
+    ["pn" as CustomSpecialFlow, isPnEnabled]
   ]);
 
   return pipe(
@@ -70,6 +75,15 @@ const SpecialServicesCTA = (props: Props) => {
                   ) : null;
                 case "cdc":
                   return isEnabled ? <CdcServiceCTA /> : null;
+                case "pn":
+                  return isEnabled ? (
+                    <PnServiceCTA
+                      serviceId={props.serviceId}
+                      activate={props.activate}
+                    />
+                  ) : (
+                    <UpdateAppCTA />
+                  );
                 default:
                   return <UpdateAppCTA />;
               }

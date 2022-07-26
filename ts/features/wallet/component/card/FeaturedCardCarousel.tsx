@@ -108,7 +108,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               dispatch(showServiceDetails(s));
               navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
                 screen: ROUTES.SERVICE_DETAIL,
-                params: { service: s }
+                params: { serviceId: s.service_id }
               });
             }
           )

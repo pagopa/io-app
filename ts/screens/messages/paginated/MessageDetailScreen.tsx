@@ -98,7 +98,7 @@ const MessageDetailScreen = ({
     // When a service gets selected, before navigating to the service detail
     // screen, we issue a loadServiceMetadata request to refresh the service metadata
     if (service) {
-      navigateToServiceDetailsScreen({ service: service.raw });
+      navigateToServiceDetailsScreen({ serviceId: service.raw.service_id });
     }
   };
 
