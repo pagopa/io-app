@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
@@ -22,7 +21,7 @@ import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
 import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { ServicesParamsList } from "../../navigation/params/ServicesParamsList";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
@@ -49,11 +48,10 @@ export type ServiceDetailsScreenNavigationParams = Readonly<{
   activate?: boolean;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ServicesParamsList, "SERVICE_DETAIL">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  ServicesParamsList,
+  "SERVICE_DETAIL"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -234,8 +232,9 @@ const ServiceDetailsScreen = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
-  const serviceId = props.navigation.getParam("serviceId");
-  const activate = props.navigation.getParam("activate");
+  const serviceId = props.route.params.serviceId;
+  const activate = props.route.params.activate;
+
   return {
     serviceId,
     activate,
