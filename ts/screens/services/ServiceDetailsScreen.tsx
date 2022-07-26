@@ -232,9 +232,9 @@ const ServiceDetailsScreen = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
-  const serviceId = props.route.params.service.service_id;
-  const activate = props.route.params.service.activate;
-  
+  const serviceId = props.route.params.serviceId;
+  const activate = props.route.params.activate;
+
   return {
     serviceId,
     activate,
