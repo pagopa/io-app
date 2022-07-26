@@ -15,7 +15,7 @@ import {
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
-import { cdcEnabled, pnEnabled } from "../../../config";
+import { cdcEnabled } from "../../../config";
 import PnServiceCTA from "../../../features/pn/components/PnServiceCTA";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
@@ -45,8 +45,7 @@ const SpecialServicesCTA = (props: Props) => {
 
   const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
-  const pnEnabledSelector = useIOSelector(isPnEnabledSelector);
-  const isPnEnabled = pnEnabledSelector;
+  const isPnEnabled = useIOSelector(isPnEnabledSelector);
 
   const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
     CustomSpecialFlow,
