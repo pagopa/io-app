@@ -47,11 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between"
-  },
-  descriptionPadding: { marginRight: 4 },
-
-  badgeContainer: { height: 18, backgroundColor: IOColors.blue },
-  badgeText: { fontSize: 12, lineHeight: 18 }
+  }
 });
 
 const WalletHomeHeader = (props: Props) => {
@@ -113,11 +109,11 @@ const WalletHomeHeader = (props: Props) => {
   return (
     <View
       style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 8
-        }}
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: 8
+      }}
     >
       <H1 color={"white"} accessible={true} accessibilityRole="header">
         {I18n.t("wallet.wallet")}

@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
   codeContainer: { alignItems: "center", justifyContent: "space-between" },
   codeText: {
     fontSize: 20
-  },
-  flexEnd: { alignSelf: "flex-end" }
+  }
 });
 
 const COPY_ICON_SIZE = 24;

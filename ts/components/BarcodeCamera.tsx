@@ -16,6 +16,7 @@ import { barcodesScannerConfigSelector } from "../store/reducers/backendStatus";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
 import { Body } from "./core/typography/Body";
+import { IOColors } from "./core/variables/IOColors";
 
 /**
  * Type describing the supported barcodes in IO.
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "100%",
     height: screenWidth,
-    backgroundColor: "#000"
+    backgroundColor: IOColors.black
   },
 
   camera: {

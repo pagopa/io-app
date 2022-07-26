@@ -29,9 +29,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  addButton: {
-    width: "100%"
   }
 });
 

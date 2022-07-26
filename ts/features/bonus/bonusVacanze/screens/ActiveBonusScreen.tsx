@@ -96,7 +96,6 @@ type Props = OwnProps &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
-  emptyHeader: { height: 90 },
   flex: {
     flex: 1
   },
@@ -121,9 +120,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     maxWidth: 327
-  },
-  center: {
-    alignSelf: "center"
   },
   validUntil: {
     color: variables.textColorDark,

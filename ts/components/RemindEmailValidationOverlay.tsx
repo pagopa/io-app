@@ -72,9 +72,6 @@ const styles = StyleSheet.create({
   center: {
     alignSelf: "center"
   },
-  emailTitle: {
-    textAlign: "center"
-  },
   error: {
     backgroundColor: customVariables.colorDanger,
     paddingHorizontal: customVariables.contentPadding,

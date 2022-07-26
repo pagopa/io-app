@@ -36,23 +36,15 @@ type Props = {
 } & LightModalContextInterface;
 
 const styles = StyleSheet.create({
-  textInput: { padding: 1, borderWidth: 1, height: 30 },
-  contentPadding: { paddingHorizontal: customVariables.contentPadding },
   itemsCenter: { alignItems: "center" },
   selfCenter: { alignSelf: "center" },
   flex1: { flex: 1 },
-  webViewHeight: { height: heightPercentageToDP("100%") },
   errorContainer: {
     flex: 1,
     alignItems: "center"
   },
   errorTitle: {
     marginTop: 10
-  },
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
   },
   errorButtonsContainer: {
     position: "absolute",

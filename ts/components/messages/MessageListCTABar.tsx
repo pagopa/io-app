@@ -41,11 +41,6 @@ const styles = StyleSheet.create({
   topContainer: {
     flexDirection: "row"
   },
-  topContainerLarge: {
-    paddingVertical: customVariables.contentPadding / 2,
-    paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: IOColors.greyUltraLight
-  },
   topContainerPaid: {
     paddingVertical: 0,
     paddingHorizontal: 0

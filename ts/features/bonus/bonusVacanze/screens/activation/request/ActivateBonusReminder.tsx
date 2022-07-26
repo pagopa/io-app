@@ -14,9 +14,6 @@ type Props = {
 const styles = StyleSheet.create({
   reminder: {
     color: IOColors.grey
-  },
-  link: {
-    color: themeVariables.textLinkColor
   }
 });
 

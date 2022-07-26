@@ -51,29 +51,6 @@ import {
 } from "./helpers";
 
 const styles = StyleSheet.create({
-  itemLoadingContainer: {
-    height: ITEM_HEIGHT,
-    paddingVertical: 16,
-    paddingHorizontal: customVariables.contentPadding,
-    flex: 1
-  },
-  itemLoadingHeaderWrapper: {
-    flexDirection: "row",
-    marginBottom: 4
-  },
-  itemLoadingHeaderCenter: {
-    flex: 1,
-    paddingRight: 55 // Includes right header space
-  },
-  itemLoadingContentWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 42
-  },
-  itemLoadingContentCenter: {
-    flex: 1,
-    paddingRight: 32
-  },
   padded: {
     paddingHorizontal: customVariables.contentPadding
   },

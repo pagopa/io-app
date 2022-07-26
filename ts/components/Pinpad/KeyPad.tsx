@@ -42,19 +42,13 @@ const styles = StyleSheet.create({
     backgroundColor: `rgba(0,0,0,0.1)`
   },
   transparent: {
-    backgroundColor: "transparent"
+    backgroundColor: `transparent`
   },
   buttonTextBase: {
     ...makeFontStyleObject(Platform.select, "300"),
     fontSize: 30,
     lineHeight: 32,
     marginBottom: -10
-  },
-  white: {
-    color: IOColors.white
-  },
-  buttonTextDigit: {
-    fontSize: radius + 10
   },
   buttonTextLabel: {
     fontSize: radius - 5

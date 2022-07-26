@@ -48,11 +48,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end"
-  },
-  bancomatLogo: {
-    width: 60,
-    height: 36,
-    resizeMode: "contain"
   }
 });
 

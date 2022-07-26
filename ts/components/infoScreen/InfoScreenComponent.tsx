@@ -21,15 +21,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  title: {
-    textAlign: "center",
-    fontSize: 20
-  },
   textAlignCenter: {
     textAlign: "center"
-  },
-  bold: {
-    fontWeight: "bold"
   }
 });
 

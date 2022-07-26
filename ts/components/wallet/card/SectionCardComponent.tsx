@@ -93,9 +93,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     transform: [{ perspective: 1200 }, { rotateX: "-20deg" }, { scaleX: 0.99 }]
   },
-  rotateText: {
-    flex: 1
-  },
   button: {
     flexDirection: "row",
     alignItems: "center",

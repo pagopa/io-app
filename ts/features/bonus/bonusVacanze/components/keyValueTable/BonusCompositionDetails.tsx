@@ -20,9 +20,6 @@ type Props = {
 const styles = StyleSheet.create({
   bold: {
     fontWeight: "bold"
-  },
-  bonusAmount: {
-    fontSize: themeVariables.fontSize2
   }
 });
 

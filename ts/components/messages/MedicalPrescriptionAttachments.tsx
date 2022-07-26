@@ -30,11 +30,6 @@ const styles = StyleSheet.create({
   padded: {
     paddingHorizontal: customVariables.contentPadding
   },
-  image: {
-    width: 300,
-    height: BARCODE_HEIGHT,
-    resizeMode: "contain"
-  },
   note: {
     lineHeight: 16
   },

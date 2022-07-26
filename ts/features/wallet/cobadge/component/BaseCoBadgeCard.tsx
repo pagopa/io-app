@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     height: 31,
     resizeMode: "contain"
   },
-  bankName: { textTransform: "capitalize" },
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",

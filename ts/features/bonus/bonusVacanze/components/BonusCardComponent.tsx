@@ -47,17 +47,6 @@ const styles = StyleSheet.create({
     marginBottom: -20,
     height: 88
   },
-  previewContainer: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 12
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.0,
-    zIndex: 0,
-    elevation: 0
-  },
   row: {
     flexDirection: "row",
     alignItems: "center",
@@ -65,9 +54,6 @@ const styles = StyleSheet.create({
   },
   spaced: {
     justifyContent: "space-between"
-  },
-  alignCenter: {
-    alignSelf: "center"
   },
   flexEnd: {
     alignSelf: "flex-end"
@@ -77,9 +63,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     ...makeFontStyleObject(Platform.select)
   },
-  paddedIcon: {
-    paddingLeft: 10
-  },
   paddedContent: {
     padding: 16
   },
@@ -88,10 +71,6 @@ const styles = StyleSheet.create({
   },
   fontLarge: {
     fontSize: customVariables.fontSize2
-  },
-  fontXLarge: {
-    lineHeight: 30,
-    fontSize: customVariables.fontSize4
   },
   previewName: {
     lineHeight: 24,
@@ -115,10 +94,6 @@ const styles = StyleSheet.create({
     marginRight: 6,
     height: 40,
     width: 40
-  },
-  euroCharacter: {
-    fontSize: customVariables.fontSize3,
-    lineHeight: customVariables.lineHeightH3
   },
   badge: {
     height: 18,
