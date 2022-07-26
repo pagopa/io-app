@@ -6,7 +6,6 @@ import svNavigationConfig, {
   SvVoucherGenerationNavigator,
   SvVoucherListNavigator
 } from "../features/bonus/siciliaVola/navigation/navigator";
-
 import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
 import ServiceDetailsScreen from "../screens/services/ServiceDetailsScreen";
 import ServicesWebviewScreen from "../screens/services/ServicesWebviewScreen";
