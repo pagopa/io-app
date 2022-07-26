@@ -15,6 +15,7 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { AppVersion } from "../../definitions/backend/AppVersion";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
@@ -52,7 +53,9 @@ import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
+import { getAppVersion } from "../utils/appVersion";
 import { isTestEnv } from "../utils/environment";
+import { convertUnknownToError } from "../utils/errors";
 import { deletePin } from "../utils/keychain";
 import {
   fromLocaleToPreferredLanguage,
@@ -60,9 +63,6 @@ import {
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
-import { getAppVersion } from "../utils/appVersion";
-import { AppVersion } from "../../definitions/backend/AppVersion";
-import { convertUnknownToError } from "../utils/errors";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -123,7 +123,7 @@ function* createOrUpdateProfileSaga(
   const currentProfile = profileState.value;
 
   const rawAppVersion = yield* call(getAppVersion);
-  const maybeAppVersion = fromEither(AppVersion.decode(rawAppVersion));
+  const maybeAppVersion = O.fromEither(AppVersion.decode(rawAppVersion));
 
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
@@ -141,7 +141,7 @@ function* createOrUpdateProfileSaga(
         preferred_languages: currentProfile.preferred_languages,
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
         accepted_tos_version: currentProfile.accepted_tos_version,
-        last_app_version: maybeAppVersion.toUndefined(),
+        last_app_version: O.toUndefined(maybeAppVersion),
         ...action.payload
       }
     : {
@@ -152,7 +152,7 @@ function* createOrUpdateProfileSaga(
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,
         is_email_enabled: action.payload.is_email_enabled || false,
-        last_app_version: maybeAppVersion.toUndefined(),
+        last_app_version: O.toUndefined(maybeAppVersion),
         ...action.payload,
         accepted_tos_version: tosVersion,
         version: 0

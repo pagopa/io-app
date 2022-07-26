@@ -1,10 +1,10 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { BackendStatusState } from "../backendStatus";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import { Config } from "../../../../definitions/content/Config";
+import * as O from "fp-ts/lib/Option";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { Config } from "../../../../definitions/content/Config";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { BackendStatusState } from "../backendStatus";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -266,6 +266,13 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     barcodesScanner: {
       dataMatrixPosteEnabled: false
+    },
+    pn: {
+      enabled: true,
+      frontend_url: "string"
+    },
+    fci: {
+      enabled: false
     }
   }
 };
@@ -323,6 +330,13 @@ export const baseBackendConfig: Config = {
   },
   barcodesScanner: {
     dataMatrixPosteEnabled: false
+  },
+  pn: {
+    enabled: true,
+    frontend_url: "string"
+  },
+  fci: {
+    enabled: false
   }
 };
 

@@ -1,5 +1,5 @@
+import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
-import { enumType } from "italia-ts-commons/lib/types";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MvlAttachment } from "../../../mvl/types/mvlData";
 import { UTCISODateFromString } from "../../utils/dates";

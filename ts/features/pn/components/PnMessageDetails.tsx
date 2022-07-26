@@ -8,6 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
@@ -28,10 +29,11 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
-import { H5 } from "../../../components/core/typography/H5";
-import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
-import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import PN_ROUTES from "../navigation/routes";
+import { PNMessage } from "../store/types/types";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
+import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 
 const styles = StyleSheet.create({
