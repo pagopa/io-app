@@ -2,7 +2,10 @@ import { createCompatNavigatorFactory } from "@react-navigation/compat";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { myPortalEnabled, svEnabled } from "../config";
-import svNavigationConfig from "../features/bonus/siciliaVola/navigation/navigator";
+import svNavigationConfig, {
+  SvVoucherGenerationNavigator,
+  SvVoucherListNavigator
+} from "../features/bonus/siciliaVola/navigation/navigator";
 
 import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
 import ServiceDetailsScreen from "../screens/services/ServiceDetailsScreen";
@@ -39,7 +42,16 @@ const ServicesNavigator = () => (
       />
     )}
     {svEnabled && (
-      <Stack.Screen name={SV_ROUTES.MAIN} component={SvNavigator} />
+      <>
+        <Stack.Screen
+          name={SV_ROUTES.VOUCHER_GENERATION.MAIN}
+          component={SvVoucherGenerationNavigator}
+        />
+        <Stack.Screen
+          name={SV_ROUTES.VOUCHER_LIST.MAIN}
+          component={SvVoucherListNavigator}
+        />
+      </>
     )}
   </Stack.Navigator>
 );
