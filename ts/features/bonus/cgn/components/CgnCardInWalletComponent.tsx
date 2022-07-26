@@ -15,9 +15,15 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../components/core/typography/H3";
 import I18n from "../../../../i18n";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   preview: {
@@ -47,9 +53,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 13,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    borderTopColor: `rgba(0, 0, 0, 0.1)`,
+    borderTopColor: opaqueBorderColor,
     height: 17,
     width: "100%"
   }

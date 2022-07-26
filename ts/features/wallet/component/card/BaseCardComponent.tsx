@@ -4,7 +4,10 @@ import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import customVariables from "../../../../theme/variables";
 import { TestID } from "../../../../types/WithTestID";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   topLeftCorner: React.ReactNode;
@@ -12,6 +15,8 @@ type Props = {
   bottomRightCorner: React.ReactNode;
   accessibilityLabel?: string;
 } & TestID;
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   cardBox: {
@@ -39,9 +44,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 10,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    borderTopColor: `rgba(0, 0, 0, 0.1)`,
+    borderTopColor: opaqueBorderColor,
     height: 15,
     width: widthPercentageToDP("90%"),
     maxWidth: 343

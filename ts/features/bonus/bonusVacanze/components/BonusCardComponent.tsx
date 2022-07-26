@@ -18,7 +18,10 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isShareEnabled } from "../../../../utils/share";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -27,6 +30,8 @@ type Props = {
   viewQR?: () => void;
   share?: () => void;
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   container: {
@@ -112,9 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 10,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    borderTopColor: `rgba(0, 0, 0, 0.1)`,
+    borderTopColor: opaqueBorderColor,
     height: 15,
     width: "100%",
     maxWidth: 327

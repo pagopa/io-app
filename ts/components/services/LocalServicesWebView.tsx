@@ -18,11 +18,14 @@ import { localServicesWebUrl } from "../../config";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { IOColors, hexToRgba } from "../core/variables/IOColors";
 
 type Props = {
   onServiceSelect: (service: ServicePublic) => void;
 } & ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const opaqueBgColor = hexToRgba(IOColors.white, 0.5);
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -31,9 +34,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    backgroundColor: `rgba(255, 255, 255, 0.5)`,
+    backgroundColor: opaqueBgColor,
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000

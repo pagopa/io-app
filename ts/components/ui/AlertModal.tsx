@@ -7,8 +7,10 @@ import {
   View
 } from "react-native";
 import variables from "../../theme/variables";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { Overlay } from "./Overlay";
+
+const opaqueBgColor = hexToRgba(IOColors.black, 0.6);
 
 const styles = StyleSheet.create({
   container: {
@@ -60,7 +62,7 @@ export class AlertModal extends React.PureComponent<Props> {
   public render() {
     return (
       <Overlay
-        backgroundColor={"rgba(0,0,0,0.6)"}
+        backgroundColor={opaqueBgColor}
         foreground={
           <View style={styles.container}>
             <Text style={styles.message}>{this.props.message}</Text>

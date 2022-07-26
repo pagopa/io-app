@@ -7,7 +7,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import StyledIconFont from "../ui/IconFont";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors, hexToRgba } from "../core/variables/IOColors";
 
 // left -> the string to represent as text
 // right -> the icon to represent with name and size
@@ -26,6 +26,7 @@ type Props = Readonly<{
 // it generate buttons width of 56
 const radius = 18;
 const BUTTON_DIAMETER = 56;
+const opaqueButtonBackground = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   roundButton: {
@@ -39,9 +40,7 @@ const styles = StyleSheet.create({
     width: BUTTON_DIAMETER,
     height: BUTTON_DIAMETER,
     borderRadius: BUTTON_DIAMETER / 2,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    backgroundColor: `rgba(0, 0, 0, 0.1)`
+    backgroundColor: opaqueButtonBackground
   },
   transparent: {
     backgroundColor: `transparent`

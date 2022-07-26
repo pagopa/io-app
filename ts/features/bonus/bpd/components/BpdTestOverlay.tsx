@@ -7,6 +7,10 @@ import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { Body } from "../../../../components/core/typography/Body";
 import { Label } from "../../../../components/core/typography/Label";
 import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
+import {
   bpdApiSitUrlPrefix,
   bpdApiUatUrlPrefix,
   bpdApiUrlPrefix,
@@ -14,6 +18,8 @@ import {
   pagoPaApiUrlPrefixTest
 } from "../../../../config";
 import { getAppVersion } from "../../../../utils/appVersion";
+
+const opaqueBgColor = hexToRgba(IOColors.white, 0.67);
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -31,9 +37,7 @@ const styles = StyleSheet.create({
   },
   versionText: {
     padding: 2,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    backgroundColor: `rgba(255, 255, 255, 0.67)`
+    backgroundColor: opaqueBgColor
   }
 });
 

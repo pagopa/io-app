@@ -5,7 +5,10 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../../components/core/variables/IOColors";
 import { BpdAmount } from "../../saga/networking/amount";
 import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -24,6 +27,8 @@ type Props = {
   preview?: boolean;
   onPress?: () => void;
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   flex1: {
@@ -118,9 +123,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 13,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    borderTopColor: `rgba(0, 0, 0, 0.1)`,
+    borderTopColor: opaqueBorderColor,
     height: 17,
     width: "100%"
   },
@@ -128,9 +131,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     borderRadius: 8,
     borderBottomWidth: 15,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    borderBottomColor: `rgba(0, 0, 0, 0.1)`,
+    borderBottomColor: opaqueBorderColor,
     width: "100%"
   }
 });

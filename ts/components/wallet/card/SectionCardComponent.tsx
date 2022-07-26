@@ -10,7 +10,7 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { IOColors } from "../../core/variables/IOColors";
+import { hexToRgba, IOColors } from "../../core/variables/IOColors";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
@@ -23,6 +23,8 @@ type Props = {
   accessibilityLabel?: string;
   accessibilityHint?: string;
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -106,9 +108,7 @@ const styles = StyleSheet.create({
     marginBottom: -15,
     borderRadius: 8,
     borderTopWidth: 8,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    borderTopColor: `rgba(0, 0, 0, 0.1)`,
+    borderTopColor: opaqueBorderColor,
     height: 15
   }
 });

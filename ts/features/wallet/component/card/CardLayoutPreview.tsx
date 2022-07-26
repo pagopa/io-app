@@ -2,13 +2,18 @@ import { View } from "native-base";
 import * as React from "react";
 import { AccessibilityProps, Platform, StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   left: React.ReactNode;
   right: React.ReactNode;
   onPress?: () => void;
 } & AccessibilityProps;
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   card: {
@@ -50,9 +55,7 @@ const styles = StyleSheet.create({
     marginBottom: -15,
     borderRadius: 8,
     borderTopWidth: 8,
-    // TODO: Replace reference to RGB with formatted value from IOColors
-    // (after HEX to RGB conversion)
-    borderTopColor: `rgba(0, 0, 0, 0.1)`,
+    borderTopColor: opaqueBorderColor,
     height: 15
   }
 });

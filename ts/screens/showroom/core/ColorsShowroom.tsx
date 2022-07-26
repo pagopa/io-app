@@ -5,16 +5,15 @@ import { H2 } from "../../../components/core/typography/H2";
 import { H5 } from "../../../components/core/typography/H5";
 import {
   IOColors,
-  IOColorGradients
+  IOColorGradients,
+  hexToRgba
 } from "../../../components/core/variables/IOColors";
 import { ShowroomSection } from "../ShowroomSection";
 
 const colorItemGutter = 16;
 const sectionTitleMargin = 16;
-// TODO: Replace reference to RGB with formatted value from IOColors
-// (after HEX to RGB conversion)
-const colorItemBorder = `rgba(0, 0, 0, 0.1)`;
-const colorPillBg = `rgba(0, 0, 0, 0.3)`;
+const colorItemBorder = hexToRgba(IOColors.black, 0.1);
+const colorPillBg = hexToRgba(IOColors.black, 0.3);
 
 const styles = StyleSheet.create({
   itemsWrapper: {

@@ -10,6 +10,22 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 ): T {
   return arg;
 }
+/**
+Return the color value with RGBA format (RGB + Alpha transparency), starting from the hexadecimal color value only.
+
+@param hexCode Color value in hexadecimal format. No short version accepted.
+@param opacity Opacity value that range from 0 to 1. Default value = 1.
+ */
+/* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
+export const hexToRgba = (hexCode: string, opacity: number = 1) => {
+  const hex = hexCode.replace("#", "");
+
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return `rgba(${r},${g},${b},${opacity})`;
+};
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",

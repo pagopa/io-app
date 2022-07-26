@@ -12,13 +12,11 @@ import { currentRouteSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
-import { IOColors } from "../components/core/variables/IOColors";
+import { IOColors, hexToRgba } from "../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
-// TODO: Replace reference to RGB with formatted value from IOColors
-// (after HEX to RGB conversion)
-const bgColor = `rgba(255, 255, 255, 0.67)`;
+const bgColor = hexToRgba(IOColors.white, 0.67);
 
 const styles = StyleSheet.create({
   versionContainer: {
