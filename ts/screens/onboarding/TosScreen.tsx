@@ -56,13 +56,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "flex-start"
   },
-  boldH4: {
-    fontWeight: customVariables.textBoldWeight,
-    paddingTop: customVariables.spacerLargeHeight
-  },
-  horizontalPadding: {
-    paddingHorizontal: customVariables.contentPadding
-  },
   webViewContainer: {
     flex: 1
   },
@@ -77,22 +70,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10
   },
-
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
-  },
-
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
     flex: 1,
     flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
   }
 });
 
