@@ -219,7 +219,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           ]}
         >
           <View
-            style={[styles.cardInner]}
+            style={styles.cardInner}
             accessibilityLabel={props.accessibilityLabel}
             accessibilityHint={props.accessibilityHint}
             accessibilityRole="button"
@@ -240,7 +240,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                   </Badge>
                 )}
               </View>
-              {!isError && <View style={[styles.button]}>{rightLabel()}</View>}
+              {!isError && <View style={styles.button}>{rightLabel()}</View>}
             </View>
           </View>
         </View>

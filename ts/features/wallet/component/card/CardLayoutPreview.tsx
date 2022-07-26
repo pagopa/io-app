@@ -72,8 +72,8 @@ export const CardLayoutPreview: React.FunctionComponent<Props> = props => (
       style={styles.rotatedCard}
       testID={"cardPreview"}
     >
-      <View style={[styles.card]}>
-        <View style={[styles.cardInner]}>
+      <View style={styles.card}>
+        <View style={styles.cardInner}>
           <View style={[styles.row, styles.spaced]}>
             {props.left}
             {props.right}

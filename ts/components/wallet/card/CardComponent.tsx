@@ -303,7 +303,7 @@ export default class CardComponent extends React.Component<Props> {
           isHeader && styles.cardHeader
         ]}
       >
-        <View style={[styles.cardInner]}>
+        <View style={styles.cardInner}>
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
               <BlurredPan>

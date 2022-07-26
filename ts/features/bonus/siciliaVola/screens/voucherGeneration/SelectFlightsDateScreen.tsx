@@ -92,7 +92,7 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
         testID={"SelectFlightsDateScreen"}
         ref={elementRef}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>
             {I18n.t("bonus.sv.voucherGeneration.selectFlightsDate.title")}
           </H1>

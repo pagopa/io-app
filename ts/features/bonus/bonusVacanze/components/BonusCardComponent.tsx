@@ -205,7 +205,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             )}
           </View>
           <View spacer={true} />
-          <Text style={[styles.colorWhite]}>
+          <Text style={styles.colorWhite}>
             {I18n.t("bonus.bonusVacanze.code")}
           </Text>
           <Text style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}>
@@ -275,7 +275,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         })
       })}
     >
-      <View style={[styles.row]}>
+      <View style={styles.row}>
         <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
           {I18n.t("bonus.bonusVacanze.name")}
         </Text>

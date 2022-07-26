@@ -79,7 +79,7 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
   ]);
 
   return (
-    <View style={[IOStyles.flex]}>
+    <View style={IOStyles.flex}>
       {pot.isSome(props.periodsWithAmount) &&
         props.periodsWithAmount.value.length > 0 && (
           <HorizontalScroll

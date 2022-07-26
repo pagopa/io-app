@@ -110,7 +110,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={IOStyles.flex}>
         {isReady(merchantDetail) ? (
           <>
-            <ScrollView style={[IOStyles.flex]} bounces={false}>
+            <ScrollView style={IOStyles.flex} bounces={false}>
               {merchantDetail.value.imageUrl && (
                 <View style={{ paddingHorizontal: 16 }}>
                   <Image

@@ -48,7 +48,7 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex} testID={"MvlDetailsScreen"}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <MvlDetailsHeader
             mvl={props.mvl}
             hasAttachments={hasAttachments}

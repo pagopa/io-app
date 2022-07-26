@@ -289,7 +289,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
         <View>
           <View style={[styles.row, { alignItems: "center" }]}>
-            <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
+            <Text bold={true} white={true} style={styles.amountTextBaseFull}>
               {"€ "}
               <Text white={true} style={styles.amountTextUpperFull}>
                 {`${amount[0]}${I18n.t(
@@ -307,7 +307,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        <Badge style={[styles.badgeBase]}>
+        <Badge style={styles.badgeBase}>
           <Text semibold={true} style={styles.badgeTextBase} dark={true}>
             {statusBadge.label}
           </Text>
@@ -413,7 +413,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       )}
       <ImageBackground
         source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
-        style={[props.preview ? styles.preview : styles.container]}
+        style={props.preview ? styles.preview : styles.container}
         imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
       >
         {props.preview ? <PreviewCard /> : <FullCard />}

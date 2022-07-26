@@ -112,14 +112,12 @@ const WalletHomeHeader = (props: Props) => {
 
   return (
     <View
-      style={[
-        {
+      style={{
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
           paddingHorizontal: 8
-        }
-      ]}
+        }}
     >
       <H1 color={"white"} accessible={true} accessibilityRole="header">
         {I18n.t("wallet.wallet")}

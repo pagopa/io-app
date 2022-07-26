@@ -113,7 +113,7 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
           headerTitle={I18n.t("bonus.sv.headerTitle")}
         >
           <SafeAreaView style={IOStyles.flex} testID={"VoucherGeneratedScreen"}>
-            <ScrollView style={[IOStyles.horizontalContentPadding]}>
+            <ScrollView style={IOStyles.horizontalContentPadding}>
               <H1>
                 {I18n.t("bonus.sv.voucherGeneration.voucherGenerated.title")}
               </H1>

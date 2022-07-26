@@ -205,7 +205,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
         {!isSearchEnabled && (
-          <Body style={[goBack || customGoBack ? styles.body : styles.noLeft]}>
+          <Body style={goBack || customGoBack ? styles.body : styles.noLeft}>
             {this.state.isScreenReaderActive &&
             maybeAccessibilityLabel.isSome() ? (
               this.renderBodyLabel(

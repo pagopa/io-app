@@ -339,11 +339,9 @@ export default class FiscalCodeComponent extends React.Component<Props> {
       <Text
         robotomono={true}
         bold={true}
-        style={[
-          isLandscape
+        style={isLandscape
             ? [styles.landscapeText, landscapeStyle]
-            : [styles.fullText, fullStyle]
-        ]}
+            : [styles.fullText, fullStyle]}
         selectable={selectable}
         accessible={true}
         accessibilityElementsHidden={true}

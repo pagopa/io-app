@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
  * @constructor
  */
 export const ActivateBonusReminder: React.FunctionComponent<Props> = props => (
-  <View style={[bonusVacanzeStyle.row]}>
+  <View style={bonusVacanzeStyle.row}>
     <IconFont name={"io-titolare"} size={24} color={IOColors.grey} />
     <View hspacer={true} />
     <Text style={[activateBonusStyle.boxText, styles.reminder]}>

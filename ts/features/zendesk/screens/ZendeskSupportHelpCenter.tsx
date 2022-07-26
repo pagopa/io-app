@@ -212,7 +212,7 @@ const ZendeskSupportHelpCenter = () => {
         style={IOStyles.flex}
         testID={"ZendeskSupportHelpCenterScreen"}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <FaqManager
             contextualHelpConfig={contextualHelpConfig}
             faqCategories={faqCategories}

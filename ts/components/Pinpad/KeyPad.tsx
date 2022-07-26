@@ -111,7 +111,7 @@ const renderPinCol = (
             <StyledIconFont
               name={ic.name}
               size={ic.size}
-              style={[styles.noPadded]}
+              style={styles.noPadded}
               color={
                 buttonType === "light"
                   ? customVariables.contentPrimaryBackground
