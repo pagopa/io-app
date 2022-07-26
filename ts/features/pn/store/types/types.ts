@@ -13,7 +13,8 @@ export enum NotificationStatusEnum {
   "EFFECTIVE_DATE" = "EFFECTIVE_DATE",
   "PAID" = "PAID",
   "UNREACHABLE" = "UNREACHABLE",
-  "REFUSED" = "REFUSED"
+  "REFUSED" = "REFUSED",
+  "CANCELLED" = "CANCELLED"
 }
 
 export type NotificationStatus = t.TypeOf<typeof NotificationStatus>;
