@@ -127,6 +127,9 @@ function* createOrUpdateProfileSaga(
 
   const currentProfile = profileState.value;
 
+  const rawAppVersion = yield* call(getAppVersion);
+  const maybeAppVersion = fromEither(AppVersion.decode(rawAppVersion));
+
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
   // FIXME: perhaps this is responsibility of the caller?
@@ -143,6 +146,7 @@ function* createOrUpdateProfileSaga(
         preferred_languages: currentProfile.preferred_languages,
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
         accepted_tos_version: currentProfile.accepted_tos_version,
+        last_app_version: maybeAppVersion.toUndefined(),
         ...action.payload
       }
     : {
@@ -153,6 +157,7 @@ function* createOrUpdateProfileSaga(
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,
         is_email_enabled: action.payload.is_email_enabled || false,
+        last_app_version: maybeAppVersion.toUndefined(),
         ...action.payload,
         accepted_tos_version: tosVersion,
         version: 0
