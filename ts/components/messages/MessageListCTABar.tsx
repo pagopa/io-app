@@ -8,7 +8,6 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { Dispatch } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   getCTA,

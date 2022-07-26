@@ -26,8 +26,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export const InfoScreenStyle = styles;
-
 const renderNode = (body: string | React.ReactNode) => {
   if (typeof body === "string") {
     return (

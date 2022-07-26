@@ -2,7 +2,6 @@ import { View } from "native-base";
 import React from "react";
 import { StyleProp, StyleSheet, TextStyle } from "react-native";
 import I18n from "../../../../../i18n";
-import themeVariables from "../../../../../theme/variables";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H2 } from "../../../../../components/core/typography/H2";

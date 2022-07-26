@@ -44,7 +44,6 @@ import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import {
   EmptyComponent,
   generateItemLayout,
-  ITEM_HEIGHT,
   ItemSeparator,
   renderEmptyList,
   renderItem

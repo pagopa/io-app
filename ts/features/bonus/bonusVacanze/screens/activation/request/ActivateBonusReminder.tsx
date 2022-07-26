@@ -2,7 +2,6 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import IconFont from "../../../../../../components/ui/IconFont";
-import themeVariables from "../../../../../../theme/variables";
 import { bonusVacanzeStyle } from "../../../components/Styles";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { activateBonusStyle } from "./Style";

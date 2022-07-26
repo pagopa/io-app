@@ -15,7 +15,6 @@ import {
 import { logosForService } from "../../utils/services";
 import OrganizationHeader from "../OrganizationHeader";
 import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
-import { IOColors } from "../core/variables/IOColors";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";

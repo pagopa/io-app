@@ -2,7 +2,6 @@ import { Content, View } from "native-base";
 import URLParse from "url-parse";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import { Label } from "../../components/core/typography/Label";

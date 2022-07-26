@@ -2,7 +2,6 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Body, Container, Content, Right, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, StyleSheet } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import URLParse from "url-parse";
 import {
