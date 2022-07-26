@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0-rc.3](https://github.com/pagopa/io-app/compare/2.14.0-rc.2...2.14.0-rc.3) (2022-07-26)
+
+
+### Bug Fixes
+
+* [[IA-912](https://pagopa.atlassian.net/browse/IA-912)] Fix Android 12 push notifications ([#4073](https://github.com/pagopa/io-app/issues/4073)) ([554674f](https://github.com/pagopa/io-app/commit/554674f67636e66b64581a2f3622765849d4abb5))
+
+
+### Chores
+
+* [[IA-915](https://pagopa.atlassian.net/browse/IA-915)] Add `last_app_version` on every profile update request ([#4071](https://github.com/pagopa/io-app/issues/4071)) ([a8b5f32](https://github.com/pagopa/io-app/commit/a8b5f324d5927ce8ff45cf058a31b6cf61798424))
+* [[IA-916](https://pagopa.atlassian.net/browse/IA-916)] Fix build errors on Apple silicon ([#4077](https://github.com/pagopa/io-app/issues/4077)) ([9b47d53](https://github.com/pagopa/io-app/commit/9b47d5341c1cd70c77f334ea67101462c340614d))
+* [[IAI-154](https://pagopa.atlassian.net/browse/IAI-154)] Upgrades Services navigator to v5  ([#4067](https://github.com/pagopa/io-app/issues/4067)) ([d0c102c](https://github.com/pagopa/io-app/commit/d0c102c42b509f3ca0fe73d658b340d991165fa3))
+
+## [2.14.0-rc.2](https://github.com/pagopa/io-app/compare/2.14.0-rc.1...2.14.0-rc.2) (2022-07-25)
+
 ## [2.14.0-rc.1](https://github.com/pagopa/io-app/compare/2.14.0-rc.0...2.14.0-rc.1) (2022-07-21)
 
 
