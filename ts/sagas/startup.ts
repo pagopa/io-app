@@ -573,7 +573,8 @@ export function* initializeApplicationSaga(): Generator<
     if (usePaginatedMessages) {
       NavigationService.dispatchNavigationAction(
         navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId
+          messageId: messageId as UIMessageId,
+          fromNotification: true
         })
       );
     } else {

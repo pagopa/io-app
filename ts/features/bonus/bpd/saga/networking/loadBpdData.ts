@@ -1,6 +1,5 @@
-import { all, call, delay, put, take, select } from "typed-redux-saga/macro";
+import { call, delay, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getBackoffTime } from "../../../../../utils/backoffError";
 import { isTestEnv } from "../../../../../utils/environment";
@@ -12,7 +11,6 @@ import {
   bpdLoadActivationStatus
 } from "../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
-import { bpdTransactionsLoad } from "../../store/actions/transactions";
 
 /**
  * retrieve possible backoff waiting time and if there is, wait that time
@@ -79,18 +77,6 @@ export function* loadBpdData() {
     if (periods.type === getType(bpdPeriodsAmountLoad.success)) {
       // The load of all the required data for bpd is now completed with success
       yield* put(bpdAllData.success());
-
-      // Prefetch the transactions list foreach required period (optional, can fail)
-      // TODO: Remove after cleaning code v1
-      if (!bpdTransactionsPaging) {
-        yield* all(
-          periods.payload
-            .filter(p => p.status !== "Inactive")
-            .map(period =>
-              put(bpdTransactionsLoad.request(period.awardPeriodId))
-            )
-        );
-      }
     } else {
       // The load of all the required bpd data is failed
       yield* put(bpdAllData.failure(periods.payload));
