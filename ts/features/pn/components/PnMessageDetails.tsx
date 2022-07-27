@@ -30,10 +30,12 @@ import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import PN_ROUTES from "../navigation/routes";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
 import { H5 } from "../../../components/core/typography/H5";
+import { PnConfigSelector } from "../../../store/reducers/backendStatus";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageTimeline } from "./PnMessageTimeline";
+import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
 
 const styles = StyleSheet.create({
   content: {
@@ -54,6 +56,7 @@ export const PnMessageDetails = (props: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
 
   const maybePayment = props.message.recipients.find(
     _ => _.taxId === currentFiscalCode
@@ -187,6 +190,7 @@ export const PnMessageDetails = (props: Props) => {
               scrollViewRef.current?.scrollToEnd({ animated: true })
             }
           />
+          {frontendUrl.length > 0 && <PnMessageTimelineCTA url={frontendUrl} />}
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
       </ScrollView>
