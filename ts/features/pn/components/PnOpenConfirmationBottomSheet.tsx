@@ -1,12 +1,8 @@
 import { useLinkTo } from "@react-navigation/native";
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
 import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
 import { IORenderHtml } from "../../../components/core/IORenderHtml";
-import { RawCheckBox } from "../../../components/core/selection/checkbox/RawCheckBox";
-import { Body } from "../../../components/core/typography/Body";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
 import i18n from "../../../i18n";
@@ -104,18 +100,6 @@ export const usePnOpenConfirmationBottomSheet = ({
           }
         }}
       />
-      <View style={{ ...IOStyles.row, marginBottom: 20 }}>
-        <RawCheckBox
-          checked={dontAskAgain}
-          onPress={() => setDontAskAgain(!dontAskAgain)}
-        />
-        <Body
-          style={{ paddingLeft: 8 }}
-          onPress={() => setDontAskAgain(!dontAskAgain)}
-        >
-          {i18n.t("features.mvl.details.attachments.bottomSheet.checkBox")}
-        </Body>
-      </View>
     </>,
     i18n.t("features.pn.open.warning.title"),
     BOTTOM_SHEET_HEIGHT,

@@ -318,7 +318,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     // when a service gets selected the service is recorded as read
     this.props.serviceDetailsLoad(service);
     this.props.navigateToServiceDetailsScreen({
-      service
+      serviceId: service.service_id
     });
   };
 
