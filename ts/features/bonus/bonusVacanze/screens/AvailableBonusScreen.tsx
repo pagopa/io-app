@@ -158,7 +158,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
           s => () => {
             this.props.showServiceDetails(s);
             this.props.navigateToServiceDetailsScreen({
-              service: s
+              serviceId: s.service_id
             });
           }
         )();

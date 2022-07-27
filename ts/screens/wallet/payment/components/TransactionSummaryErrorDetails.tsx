@@ -1,7 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { RawAccordion } from "../../../../components/core/accordion/RawAccordion";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H4 } from "../../../../components/core/typography/H4";
 import customVariables from "../../../../theme/variables";
 import BlockButtons from "../../../../components/ui/BlockButtons";
@@ -22,8 +21,7 @@ const Separator = () => (
   <View
     style={{
       backgroundColor: customVariables.itemSeparator,
-      height: StyleSheet.hairlineWidth,
-      marginHorizontal: customVariables.contentPadding
+      height: StyleSheet.hairlineWidth
     }}
   />
 );
@@ -82,7 +80,6 @@ export const TransactionSummaryErrorDetails = ({
           <H4>{I18n.t("wallet.firstTransactionSummary.errorDetails.title")}</H4>
         }
         headerStyle={{
-          ...IOStyles.horizontalContentPadding,
           paddingTop: customVariables.spacerLargeHeight,
           paddingBottom: customVariables.spacerSmallHeight
         }}
@@ -103,7 +100,7 @@ export const TransactionSummaryErrorDetails = ({
               />
             ) : undefined
           )}
-          <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+          <View>
             <BlockButtons
               type={"SingleButton"}
               leftButton={{
