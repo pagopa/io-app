@@ -8,6 +8,7 @@ import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
 import { getNotificationStatusInfo } from "../utils";
 import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   row: {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   timeline: {},
   line: {
     width: 1,
-    backgroundColor: "#BACCD9"
+    backgroundColor: IOColors.bluegreyLight
   },
   topLine: {
     height: 16
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "#BACCD9",
+    backgroundColor: IOColors.bluegreyLight,
     left: -3.5,
     marginVertical: 4
   },
