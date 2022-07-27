@@ -199,8 +199,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             [ROUTES.SERVICE_DETAIL]: {
               path: "service-detail",
               parse: {
-                serviceId: String,
-                activate: Boolean
+                activate: activate => activate === "true"
               }
             },
             ...(myPortalEnabled ? { [ROUTES.SERVICE_WEBVIEW]: "webview" } : {}),
