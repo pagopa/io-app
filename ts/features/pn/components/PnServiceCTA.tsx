@@ -110,11 +110,12 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
     setIsUpdating(isStillUpdating);
   }, [isUpdating, dispatch, serviceId, serviceActivation]);
 
-  useOnFirstRender(() => {
-    if (activate) {
+  useOnFirstRender(
+    () => {
       dispatch(pnActivationUpsert.request(true));
-    }
-  });
+    },
+    () => activate === true
+  );
 
   if (!servicePreferenceValue || servicePreferenceValue.id !== serviceId) {
     return null;
