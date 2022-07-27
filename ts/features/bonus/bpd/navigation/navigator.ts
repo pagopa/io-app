@@ -1,8 +1,6 @@
 import { createCompatNavigatorFactory } from "@react-navigation/compat";
 import { createStackNavigator } from "@react-navigation/stack";
-import { bpdTransactionsPaging } from "../../../../config";
 import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
-import BpdTransactionsScreen from "../screens/details/transaction/BpdTransactionsScreen";
 import BpdTransactionsRouterScreen from "../screens/details/transaction/v2/BpdTransactionsRouterScreen";
 import CtaLandingScreen from "../screens/onboarding/BpdCTAStartOnboardingScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
@@ -64,9 +62,7 @@ export const BpdDetailsNavigator = createCompatNavigatorFactory(
       screen: BpdDetailsScreen
     },
     [BPD_ROUTES.TRANSACTIONS]: {
-      screen: bpdTransactionsPaging
-        ? BpdTransactionsRouterScreen
-        : BpdTransactionsScreen
+      screen: BpdTransactionsRouterScreen
     }
   },
   {

@@ -6,7 +6,7 @@ import {
   bpdLoadActivationStatus
 } from "../../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../../store/actions/periods";
-import { testableFunctions, loadBpdData } from "../loadBpdData";
+import { loadBpdData, testableFunctions } from "../loadBpdData";
 
 // TODO: tested only two base case, add more if needed
 describe("loadBpdData", () => {
@@ -53,8 +53,6 @@ describe("loadBpdData", () => {
       .take([bpdPeriodsAmountLoad.success, bpdPeriodsAmountLoad.failure])
       .next(bpdPeriodsAmountLoad.success([]))
       .put(bpdAllData.success())
-      .next()
-      .all([])
       .next()
       .isDone();
   });
