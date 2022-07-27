@@ -36,6 +36,10 @@ export function getNotificationStatusInfo(status: NotificationStatus): {
       return {
         label: I18n.t("features.pn.details.timeline.status.VIEWED")
       };
+    case NotificationStatusEnum.CANCELLED:
+      return {
+        label: I18n.t("features.pn.details.timeline.status.CANCELLED")
+      };
     default:
       return {
         label: I18n.t("features.pn.details.timeline.status.UNDEFINED")

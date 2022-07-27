@@ -3118,6 +3118,7 @@ features:
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
           UNDEFINED: Non definito
+          CANCELLED: Annullata
         expand: mostra gli stati precedenti
 webView:
   error:

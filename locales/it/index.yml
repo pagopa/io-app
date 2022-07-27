@@ -3143,7 +3143,8 @@ features:
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
           UNDEFINED: Non definito
-        expand: mostra gli stati precedenti      
+          CANCELLED: Annullata
+        expand: mostra gli stati precedenti
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
