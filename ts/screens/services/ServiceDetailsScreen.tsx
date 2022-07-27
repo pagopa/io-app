@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
@@ -7,7 +6,6 @@ import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
@@ -23,7 +21,7 @@ import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
 import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { ServicesParamsList } from "../../navigation/params/ServicesParamsList";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
@@ -44,14 +42,17 @@ import { handleItemOnPress } from "../../utils/url";
 import { IOColors } from "../../components/core/variables/IOColors";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
-  service: ServicePublic;
+  serviceId: ServiceId;
+  // if true the service should be activated automatically
+  // as soon as the screen is shown (used for custom activation
+  // flows like PN)
+  activate?: boolean;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<ServicesParamsList, "SERVICE_DETAIL">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  ServicesParamsList,
+  "SERVICE_DETAIL"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -108,13 +109,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const ServiceDetailsScreen = (props: Props) => {
   const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
 
+  const { service, serviceId, loadServiceDetail } = props;
   useEffect(() => {
-    props.loadServiceDetail(props.serviceId);
-  }, []);
+    loadServiceDetail(serviceId);
+  }, [serviceId, loadServiceDetail]);
 
   const onMarkdownEnd = () => setIsMarkdownLoaded(true);
-
-  const { service } = props;
 
   // This has been considered just to avoid compiling errors
   // once we navigate from list or a message we always have the service data since they're previously loaded
@@ -131,6 +131,9 @@ const ServiceDetailsScreen = (props: Props) => {
   const canRenderItems = isMarkdownAvailable ? isMarkdownLoaded : true;
 
   const maybeCTA = getServiceCTA(metadata);
+  const showCTA =
+    (maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) &&
+    canRenderItems;
 
   return (
     <BaseScreenComponent
@@ -197,7 +200,7 @@ const ServiceDetailsScreen = (props: Props) => {
           )}
         </Content>
 
-        {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) && (
+        {showCTA && (
           <FooterTopShadow>
             {maybeCTA.isSome() && (
               <View style={[styles.flexRow]}>
@@ -216,6 +219,7 @@ const ServiceDetailsScreen = (props: Props) => {
                 <SpecialServicesCTA
                   serviceId={props.serviceId}
                   customSpecialFlow={metadata.custom_special_flow}
+                  activate={props.activate}
                 />
               </>
             )}
@@ -227,10 +231,12 @@ const ServiceDetailsScreen = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
-  const serviceId = props.navigation.getParam("service").service_id;
+  const serviceId = props.route.params.serviceId;
+  const activate = props.route.params.activate;
 
   return {
     serviceId,
+    activate,
     service: fromNullable(serviceByIdSelector(serviceId)(state))
       .chain(pot.toOption)
       .toUndefined(),

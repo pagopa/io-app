@@ -3,6 +3,8 @@ import { EUCovidCertParamsList } from "../../features/euCovidCert/navigation/par
 import EUCOVIDCERT_ROUTES from "../../features/euCovidCert/navigation/routes";
 import { MvlParamsList } from "../../features/mvl/navigation/params";
 import MVL_ROUTES from "../../features/mvl/navigation/routes";
+import { PnParamsList } from "../../features/pn/navigation/params";
+import PN_ROUTES from "../../features/pn/navigation/routes";
 import { MessageDetailScreenNavigationParams } from "../../screens/messages/MessageDetailScreen";
 import { MessageRouterScreenNavigationParams } from "../../screens/messages/MessageRouterScreen";
 import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageDetailScreen";
@@ -16,4 +18,5 @@ export type MessagesParamsList = {
   [ROUTES.MESSAGE_DETAIL_PAGINATED]: MessageDetailScreenPaginatedNavigationParams;
   [EUCOVIDCERT_ROUTES.MAIN]: NavigatorScreenParams<EUCovidCertParamsList>;
   [MVL_ROUTES.MAIN]: NavigatorScreenParams<MvlParamsList>;
+  [PN_ROUTES.MAIN]: NavigatorScreenParams<PnParamsList>;
 };
