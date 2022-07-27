@@ -147,7 +147,8 @@ describe("MessagesHomeScreen", () => {
           expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
             screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
             params: {
-              messageId: pnMessage.id
+              messageId: pnMessage.id,
+              fromNotification: false
             }
           });
         });
