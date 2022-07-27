@@ -5,8 +5,6 @@ import Svg from "react-native-svg";
 import * as pot from "italia-ts-commons/lib/pot";
 import Default from "../../../../../../../img/features/mvl/attachmentsIcon/default.svg";
 import Pdf from "../../../../../../../img/features/mvl/attachmentsIcon/pdf.svg";
-import { H2 } from "../../../../../../components/core/typography/H2";
-import { H3 } from "../../../../../../components/core/typography/H3";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
@@ -14,18 +12,23 @@ import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { formatByte } from "../../../../../../types/digitalInformationUnit";
-import { MvlAttachment, MvlData } from "../../../../types/mvlData";
+import {
+  MvlAttachment,
+  MvlAttachmentId,
+  MvlData
+} from "../../../../types/mvlData";
 import { useMvlAttachmentDownload } from "./MvlAttachmentDownload";
 
 type Props = {
   attachments: MvlData["attachments"];
+  openPreview: (attachmentId: MvlAttachmentId) => void;
 };
 
 const styles = StyleSheet.create({
   container: {
     paddingRight: 0,
     paddingLeft: 0,
-    marginVertical: 20,
+    marginVertical: 0,
     height: 80,
     backgroundColor: IOColors.white
   },
@@ -74,9 +77,12 @@ const AttachmentIcon = (props: {
  * @param props
  * @constructor
  */
-const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
+const MvlAttachmentItem = (props: {
+  attachment: MvlAttachment;
+  openPreview: (attachmentId: MvlAttachmentId) => void;
+}) => {
   const { downloadPot, onAttachmentSelect, bottomSheet } =
-    useMvlAttachmentDownload(props.attachment);
+    useMvlAttachmentDownload(props.attachment, props.openPreview);
 
   return (
     <>
@@ -88,14 +94,14 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
         <View style={styles.row}>
           <AttachmentIcon contentType={props.attachment.contentType} />
           <View style={styles.middleSection}>
-            <H3
+            <H5
               color={"bluegrey"}
               weight={"SemiBold"}
               ellipsizeMode={"middle"}
               numberOfLines={2}
             >
               {props.attachment.displayName}
-            </H3>
+            </H5>
             {typeof props.attachment.size !== "undefined" && (
               <H5 color={"bluegrey"} weight={"Regular"}>
                 {formatByte(props.attachment.size)}
@@ -132,12 +138,12 @@ const MvlAttachmentItem = (props: { attachment: MvlAttachment }) => {
 export const MvlAttachments = (props: Props): React.ReactElement | null =>
   props.attachments.length > 0 ? (
     <>
-      <ItemSeparatorComponent noPadded={true} />
-      <View spacer={true} large={true} />
-      <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
       {props.attachments.map((attachment, index) => (
         <View key={index}>
-          <MvlAttachmentItem attachment={attachment} />
+          <MvlAttachmentItem
+            attachment={attachment}
+            openPreview={props.openPreview}
+          />
           {index < props.attachments.length - 1 && (
             <ItemSeparatorComponent noPadded={true} />
           )}

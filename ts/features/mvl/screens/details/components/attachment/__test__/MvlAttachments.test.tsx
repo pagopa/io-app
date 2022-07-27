@@ -3,7 +3,6 @@ import React from "react";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import * as pot from "italia-ts-commons/lib/pot";
-import I18n from "../../../../../../../i18n";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
@@ -28,29 +27,12 @@ describe("MvlAttachments", () => {
     mockPresentBottomSheet.mockReset();
   });
 
-  describe("given no attachments", () => {
-    it("it should NOT be rendered", () => {
-      const res = renderComponent({ attachments: [] });
-      expect(
-        res.queryByText(I18n.t("features.mvl.details.attachments.title"))
-      ).toBeNull();
-    });
-  });
-
   describe("given an attachment", () => {
-    it("it should be rendered", () => {
-      const res = renderComponent({
-        attachments: [mvlMockPdfAttachment]
-      });
-      expect(
-        res.queryByText(I18n.t("features.mvl.details.attachments.title"))
-      ).not.toBeNull();
-    });
-
     describe("when tapping on it for the first time", () => {
       it("it should present the bottom sheet", async () => {
         const res = renderComponent({
-          attachments: [mvlMockPdfAttachment]
+          attachments: [mvlMockPdfAttachment],
+          openPreview: jest.fn()
         });
         const item = res.getByText(mvlMockPdfAttachment.displayName);
         await fireEvent(item, "onPress");
@@ -64,7 +46,8 @@ describe("MvlAttachments", () => {
         it("it should NOT present the bottom sheet", async () => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment]
+              attachments: [mvlMockPdfAttachment],
+              openPreview: jest.fn()
             },
             { showAlertForAttachments: false }
           );
@@ -84,7 +67,8 @@ describe("MvlAttachments", () => {
         ].forEach(loadingPot => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment]
+              attachments: [mvlMockPdfAttachment],
+              openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
             { [mvlMockPdfAttachment.id]: loadingPot }
@@ -109,7 +93,8 @@ describe("MvlAttachments", () => {
         ].forEach(notLoadingPot => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment]
+              attachments: [mvlMockPdfAttachment],
+              openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
             { [mvlMockPdfAttachment.id]: notLoadingPot }
