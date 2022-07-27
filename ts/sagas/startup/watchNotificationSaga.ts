@@ -44,7 +44,8 @@ export function* watchNotificationSaga(
       if (usePaginatedMessages) {
         NavigationService.dispatchNavigationAction(
           navigateToPaginatedMessageRouterAction({
-            messageId: messageId as UIMessageId
+            messageId: messageId as UIMessageId,
+            fromNotification: true
           })
         );
       } else {
