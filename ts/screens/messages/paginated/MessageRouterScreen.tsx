@@ -36,15 +36,16 @@ import {
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
 import { useIOSelector } from "../../../store/hooks";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
+import ROUTES from "../../../navigation/routes";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
+  fromNotification: boolean;
 };
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -114,7 +115,8 @@ const MessageRouterScreen = ({
   maybeMessage,
   maybeMessageDetails,
   messageId,
-  setMessageReadState
+  setMessageReadState,
+  fromNotification
 }: Props): React.ReactElement => {
   const navigation = useNavigation();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
@@ -131,12 +133,6 @@ const MessageRouterScreen = ({
     loadMessageDetails(messageId);
   }, [maybeMessage, messageId, loadMessageById, loadMessageDetails]);
 
-  useOnFirstRender(() => {
-    if (maybeMessage !== undefined && !maybeMessage.isRead) {
-      setMessageReadState(maybeMessage);
-    }
-  });
-
   useEffect(() => {
     if (!isServiceAvailable && maybeMessage) {
       loadServiceDetail(maybeMessage.serviceId);
@@ -146,11 +142,25 @@ const MessageRouterScreen = ({
   useEffect(() => {
     // message in the list and its details loaded: green light
     if (isStrictSome(maybeMessageDetails) && maybeMessage !== undefined) {
-      navigateToScreenHandler(
-        maybeMessage,
-        maybeMessageDetails.value,
-        isPnEnabled
-      )(navigation.dispatch);
+      // TODO: this is a mitigation to prevent user from opening
+      // a PN message without a confirmation. If the user taps on
+      // a push notification from PN, she will navigate to the inbox
+      // instead of the message details. A better solution with a good
+      // UX will come later.
+      //
+      // https://pagopa.atlassian.net/browse/IA-917
+      if (fromNotification && maybeMessage.category.tag === "PN") {
+        navigation.navigate(ROUTES.MAIN, {
+          screen: ROUTES.MESSAGES_HOME
+        });
+      } else {
+        setMessageReadState(maybeMessage);
+        navigateToScreenHandler(
+          maybeMessage,
+          maybeMessageDetails.value,
+          isPnEnabled
+        )(navigation.dispatch);
+      }
       return;
     }
     if (firstRendering.current) {
@@ -165,7 +175,9 @@ const MessageRouterScreen = ({
     messageId,
     navigation,
     tryLoadMessageDetails,
-    isPnEnabled
+    isPnEnabled,
+    fromNotification,
+    setMessageReadState
   ]);
 
   return (
@@ -202,6 +214,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState, ownProps: NavigationProps) => {
   const messageId = ownProps.route.params.messageId;
+  const fromNotification = ownProps.route.params.fromNotification;
   const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
   const isServiceAvailable = O.fromNullable(maybeMessage?.serviceId)
     .map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none)
@@ -212,7 +225,8 @@ const mapStateToProps = (state: GlobalState, ownProps: NavigationProps) => {
     isServiceAvailable,
     maybeMessage,
     maybeMessageDetails,
-    messageId
+    messageId,
+    fromNotification
   };
 };
 
