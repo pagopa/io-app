@@ -3,6 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import { Badge, Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
+import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
+import PnMessage from "../../../../../img/features/pn/pn_message_badge.svg";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
@@ -196,7 +199,7 @@ function getTopIcon(category: MessageCategory) {
       ) : null;
     case TagEnumPN.PN:
       return pnEnabled ? (
-        <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
+        <PnMessage width={20} height={20} fill={IOColors.bluegreyLight} />
       ) : null;
     default:
       return null;
