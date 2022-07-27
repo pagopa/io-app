@@ -23,6 +23,7 @@ import {
 import { BpdAmount, bpdLoadAmountSaga } from "../amount";
 import { loadPeriodsWithInfo } from "../loadPeriodsWithInfo";
 import { bpdLoadPeriodsSaga } from "../periods";
+import { bpdLoadRakingV2 } from "../ranking";
 
 describe("loadPeriodsAmount, mock networking saga", () => {
   it("Dispatch failure if awardsPeriods fails", async () => {
@@ -30,7 +31,6 @@ describe("loadPeriodsAmount, mock networking saga", () => {
     const backendClient = {
       totalCashback: jest.fn(),
       awardPeriods: jest.fn(),
-      getRanking: jest.fn(),
       getRankingV2: jest.fn()
     };
     await expectSaga(loadPeriodsWithInfo, backendClient)
@@ -64,6 +64,10 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
           left(totalCashbackFailure)
+        ],
+        [
+          call(bpdLoadRakingV2, backendClient.getRankingV2),
+          right([readyRanking])
         ]
       ])
       .put(
@@ -91,6 +95,10 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
           left(totalCashbackFailure)
+        ],
+        [
+          call(bpdLoadRakingV2, backendClient.getRankingV2),
+          right([readyRanking])
         ]
       ])
       .put(
@@ -119,6 +127,10 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
           left(totalCashbackFailure)
+        ],
+        [
+          call(bpdLoadRakingV2, backendClient.getRankingV2),
+          left(new Error("error"))
         ]
       ])
       .put(
@@ -154,6 +166,10 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
           right(amountForPeriod1)
+        ],
+        [
+          call(bpdLoadRakingV2, backendClient.getRankingV2),
+          right([readyRanking])
         ]
       ])
       .put(
@@ -207,6 +223,10 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 2),
           right(amountForPeriod2)
+        ],
+        [
+          call(bpdLoadRakingV2, backendClient.getRankingV2),
+          right([readyRanking])
         ]
       ])
       .put(
