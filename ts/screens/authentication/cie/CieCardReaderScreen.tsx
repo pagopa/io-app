@@ -54,14 +54,13 @@ export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
 };
 
-type NavigationProps = {
-  navigator: IOStackNavigationRouteProps<
-    AuthenticationParamsList,
-    "CIE_CARD_READER_SCREEN"
-  >;
-};
+type NavigationProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "CIE_CARD_READER_SCREEN"
+>;
 
-type Props = NavigationProps & ReduxProps & ReturnType<typeof mapStateToProps>;
+type Props = { nav: NavigationProps } & ReduxProps &
+  ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   padded: {
@@ -178,8 +177,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
-  private navigation = this.props.navigator.navigation;
-  private route = this.props.navigator.route;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -199,11 +196,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 
   get ciePin(): string {
-    return this.route.params.ciePin;
+    return this.props.nav.route.params.ciePin;
   }
 
   get cieAuthorizationUri(): string {
-    return this.route.params.authorizationUri;
+    return this.props.nav.route.params.authorizationUri;
   }
 
   private setError = ({
@@ -263,7 +260,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.navigation.navigate(ROUTES.AUTHENTICATION, {
+            this.props.nav.navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
             })
         });
@@ -274,7 +271,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.navigation.navigate(ROUTES.AUTHENTICATION, {
+            this.props.nav.navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.CIE_WRONG_PIN_SCREEN,
               params: {
                 remainingCount: event.attemptsLeft
@@ -289,7 +286,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.navigation.navigate(ROUTES.AUTHENTICATION, {
+            this.props.nav.navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.CIE_EXPIRED_SCREEN
             })
         });
@@ -362,7 +359,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       this.updateContent();
       setTimeout(
         async () => {
-          this.navigation.navigate(ROUTES.AUTHENTICATION, {
+          this.props.nav.navigation.navigate(ROUTES.AUTHENTICATION, {
             screen: ROUTES.CIE_CONSENT_DATA_USAGE,
             params: {
               cieConsentUri
