@@ -4,21 +4,21 @@ import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
+import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
 import { IORenderHtml } from "../../../components/core/IORenderHtml";
+import { H4 } from "../../../components/core/typography/H4";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
 import i18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import customVariables from "../../../theme/variables";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { localeDateFormat } from "../../../utils/locale";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
-import { H4 } from "../../../components/core/typography/H4";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import customVariables from "../../../theme/variables";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -92,7 +92,8 @@ export const usePnOpenConfirmationBottomSheet = ({
                 date =>
                   `${localeDateFormat(
                     date,
-                    i18n.t("global.dateFormats.shortFormatWithTime")`
+                    i18n.t("global.dateFormats.shortFormatWithTime")
+                  )}`
               ),
               O.getOrElse(() => emptyHTMLParams.date)
             ),
