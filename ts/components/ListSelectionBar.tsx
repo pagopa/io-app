@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { IOColors } from "./core/variables/IOColors";
 
 const styles = StyleSheet.create({
   buttonBar: {
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     margin: 5
   },
   buttonBarCenter: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   }
 });
 

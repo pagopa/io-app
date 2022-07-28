@@ -101,6 +101,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSize1
   },
   white: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   container: {
     flex: 1,
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandDarkGray
   },
   whiteBg: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   noBottomPadding: {
     padding: customVariables.contentPadding,

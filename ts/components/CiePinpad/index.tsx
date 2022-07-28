@@ -5,6 +5,7 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import InputPlaceHolder from "../Pinpad/InputPlaceholder";
 import { INPUT_PLACEHOLDER_HEIGHT } from "../Pinpad/Placeholders";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = {
   pinLength: number;
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: "center",
     justifyContent: "center",
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   placeHolderStyle: {
     height: 4,

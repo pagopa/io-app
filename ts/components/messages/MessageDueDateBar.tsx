@@ -124,7 +124,7 @@ const getCalendarIconBackgoundColor = (status: PaymentStatus) => {
     case "paid":
       return customVariables.lighterGray;
     case "expired":
-      return customVariables.colorWhite;
+      return IOColors.white;
     case "expiring":
     case "valid":
       return customVariables.brandDarkGray;
@@ -136,7 +136,7 @@ const getCalendarTextColor = (status: PaymentStatus) => {
     case "paid":
     case "expiring":
     case "valid":
-      return customVariables.colorWhite;
+      return IOColors.white;
     case "expired":
       return customVariables.brandDarkGray;
   }

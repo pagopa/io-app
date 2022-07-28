@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import customVariables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 import { RefreshIndicator } from "./RefreshIndicator";
 
 const styles = StyleSheet.create({
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
 
   whiteBg: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   }
 });
 

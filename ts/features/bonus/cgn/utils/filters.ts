@@ -32,60 +32,70 @@ export const categories: Record<ProductCategory, Category> = {
     type: ProductCategoryEnum.cultureAndEntertainment,
     icon: Culture,
     nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment",
+    /* cgnCulture gradient */
     colors: ["#C51C82", "#E28DC0"]
   },
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
     icon: Wellness,
     nameKey: "bonus.cgn.merchantDetail.categories.health",
+    /* cgnHealth gradient */
     colors: ["#F1901A", "#EE898A"]
   },
   [ProductCategoryEnum.learning]: {
     type: ProductCategoryEnum.learning,
     icon: Learning,
     nameKey: "bonus.cgn.merchantDetail.categories.learning",
+    /* cgnLearning gradient */
     colors: ["#0871B6", "#AE97C3"]
   },
   [ProductCategoryEnum.sports]: {
     type: ProductCategoryEnum.sports,
     icon: Sport,
     nameKey: "bonus.cgn.merchantDetail.categories.sport",
+    /* cgnSport gradient */
     colors: ["#1D827D", "#83B8DA"]
   },
   [ProductCategoryEnum.home]: {
     type: ProductCategoryEnum.home,
     icon: Home,
     nameKey: "bonus.cgn.merchantDetail.categories.home",
+    /* cgnHome gradient */
     colors: ["#DC1415", "#F8C78C"]
   },
   [ProductCategoryEnum.telephonyAndInternet]: {
     type: ProductCategoryEnum.telephonyAndInternet,
     icon: Telco,
     nameKey: "bonus.cgn.merchantDetail.categories.telco",
+    /* cgnTelco gradient */
     colors: ["#0871B6", "#83B8DA"]
   },
   [ProductCategoryEnum.bankingServices]: {
     type: ProductCategoryEnum.bankingServices,
     icon: Bank,
     nameKey: "bonus.cgn.merchantDetail.categories.finance",
+    /* cgnFinance gradient */
     colors: ["#3E2F87", "#8FDBC0"]
   },
   [ProductCategoryEnum.travelling]: {
     type: ProductCategoryEnum.travelling,
     icon: Travel,
     nameKey: "bonus.cgn.merchantDetail.categories.travel",
+    /* cgnTravel gradient */
     colors: ["#E00F69", "#F8C78C"]
   },
   [ProductCategoryEnum.sustainableMobility]: {
     type: ProductCategoryEnum.sustainableMobility,
     icon: SustainableMobility,
     nameKey: "bonus.cgn.merchantDetail.categories.mobility",
+    /* cgnMobility gradient */
     colors: ["#1D827D", "#8FC7C5"]
   },
   [ProductCategoryEnum.jobOffers]: {
     type: ProductCategoryEnum.jobOffers,
     icon: Job,
     nameKey: "bonus.cgn.merchantDetail.categories.job",
+    /* cgnJobOffers gradient */
     colors: ["#DC1415", "#EE898A"]
   }
 };

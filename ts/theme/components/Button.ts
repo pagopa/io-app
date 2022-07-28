@@ -2,6 +2,7 @@ import { Platform, TouchableOpacityProperties } from "react-native";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 declare module "native-base" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -62,30 +63,30 @@ export default (): Theme => ({
 
   ".alert": {
     "NativeBase.Text": {
-      color: variables.colorWhite
+      color: IOColors.white
     },
     "UIComponent.IconFont": {
-      color: variables.colorWhite
+      color: IOColors.white
     },
     backgroundColor: variables.calendarExpirableColor
   },
 
   ".darkGray": {
     "NativeBase.Text": {
-      color: variables.colorWhite
+      color: IOColors.white
     },
     "UIComponent.IconFont": {
-      color: variables.colorWhite
+      color: IOColors.white
     },
     backgroundColor: variables.brandDarkGray
   },
 
   ".gray": {
     "NativeBase.Text": {
-      color: variables.colorWhite
+      color: IOColors.white
     },
     "UIComponent.IconFont": {
-      color: variables.colorWhite
+      color: IOColors.white
     },
     backgroundColor: variables.lighterGray
   },
@@ -116,7 +117,7 @@ export default (): Theme => ({
         "NativeBase.Text": { color: variables.brandPrimary },
         borderWidth: 1,
         borderColor: variables.brandPrimary,
-        backgroundColor: variables.colorWhite
+        backgroundColor: IOColors.white
       }
     },
     "NativeBase.Text": {
@@ -132,41 +133,41 @@ export default (): Theme => ({
       "UIComponent.IconFont": {
         color: variables.btnDisabledBg
       },
-      backgroundColor: variables.colorWhite
+      backgroundColor: IOColors.white
     },
     "UIComponent.IconFont": {
       color: variables.brandPrimary
     },
-    backgroundColor: variables.colorWhite
+    backgroundColor: IOColors.white
   },
 
-  ".white": { backgroundColor: variables.colorWhite },
+  ".white": { backgroundColor: IOColors.white },
 
   ".whiteBordered": {
     backgroundColor: "transparent",
-    borderColor: variables.colorWhite,
+    borderColor: IOColors.white,
     borderWidth: 1,
     "NativeBase.Text": {
-      color: variables.colorWhite
+      color: IOColors.white
     },
     "UIComponent.IconFont": {
-      color: variables.colorWhite
+      color: IOColors.white
     }
   },
 
   ".cancel": {
     backgroundColor: variables.brandDarkGray,
     "NativeBase.Text": {
-      color: variables.colorWhite
+      color: IOColors.white
     },
     "UIComponent.IconFont": {
-      color: variables.colorWhite
+      color: IOColors.white
     }
   },
 
   ".disabled": {
     "UIComponent.IconFont": {
-      color: variables.colorWhite
+      color: IOColors.white
     }
   },
 
