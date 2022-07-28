@@ -2,13 +2,16 @@
  * Implements the reducers for BackendServicesState.
  */
 
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
+import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { BpdConfig } from "../../../definitions/content/BpdConfig";
+import { PnConfig } from "../../../definitions/content/PnConfig";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
@@ -25,9 +28,6 @@ import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
-import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
-import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
-import { PnConfig } from "../../../definitions/content/PnConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -291,10 +291,9 @@ export const barcodesScannerConfigSelector = createSelector(
     pipe(
       backendStatus,
       O.map(bs => bs.config.barcodesScanner),
-      O
-        // If the local feature flag is disabled all the
-        // configurations should be set as `false`.
-        .filter(() => scanAdditionalBarcodesEnabled),
+      // If the local feature flag is disabled all the
+      // configurations should be set as `false`.
+      O.filter(() => scanAdditionalBarcodesEnabled),
       O.getOrElseW(() => ({
         dataMatrixPosteEnabled: false
       }))
@@ -307,12 +306,14 @@ export const barcodesScannerConfigSelector = createSelector(
 export const PnConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): PnConfig =>
-    backendStatus
-      .map(bs => bs.config.pn)
-      .getOrElse({
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.pn),
+      O.getOrElseW(() => ({
         enabled: false,
         frontend_url: ""
-      })
+      }))
+    )
 );
 
 /**
@@ -323,7 +324,12 @@ export const PnConfigSelector = createSelector(
 export const isPnEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    pnEnabled && backendStatus.map(bs => bs.config.pn.enabled).getOrElse(false)
+    pnEnabled &&
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.pn.enabled),
+      O.getOrElseW(() => false)
+    )
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
