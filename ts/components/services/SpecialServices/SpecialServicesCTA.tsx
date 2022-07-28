@@ -4,19 +4,20 @@ import * as React from "react";
 import { useCallback } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
-import { cdcEnabled, pnEnabled } from "../../../config";
+import { cdcEnabled } from "../../../config";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
+import PnServiceCTA from "../../../features/pn/components/PnServiceCTA";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import {
   isCdcEnabledSelector,
-  isCGNEnabledSelector
+  isCGNEnabledSelector,
+  isPnEnabledSelector
 } from "../../../store/reducers/backendStatus";
 import { openAppStoreUrl } from "../../../utils/url";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import { Label } from "../../core/typography/Label";
-import PnServiceCTA from "../../../features/pn/components/PnServiceCTA";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 
@@ -45,7 +46,7 @@ const SpecialServicesCTA = (props: Props) => {
 
   const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
-  const isPnEnabled = pnEnabled;
+  const isPnEnabled = useIOSelector(isPnEnabledSelector);
 
   const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
     CustomSpecialFlow,

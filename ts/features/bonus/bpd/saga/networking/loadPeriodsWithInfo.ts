@@ -1,9 +1,8 @@
 import * as AR from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { all, call, put } from "typed-redux-saga/macro";
-import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
@@ -15,7 +14,7 @@ import {
 } from "../../store/reducers/details/periods";
 import { BpdAmount, BpdAmountError, bpdLoadAmountSaga } from "./amount";
 import { bpdLoadPeriodsSaga } from "./periods";
-import { bpdLoadRaking, bpdLoadRakingV2 } from "./ranking";
+import { bpdLoadRakingV2 } from "./ranking";
 
 /**
  * Load the periods information list and adds the amount and ranking information
@@ -25,7 +24,7 @@ import { bpdLoadRaking, bpdLoadRakingV2 } from "./ranking";
 export function* loadPeriodsWithInfo(
   bpdClient: Pick<
     ReturnType<typeof BackendBpdClient>,
-    "awardPeriods" | "totalCashback" | "getRanking" | "getRankingV2"
+    "awardPeriods" | "totalCashback" | "getRankingV2"
   >
 ) {
   // Request the period list
@@ -41,10 +40,7 @@ export function* loadPeriodsWithInfo(
     const rankings: E.Either<
       Error,
       ReadonlyArray<BpdRankingReady>
-    > = yield* call(
-      bpdTransactionsPaging ? bpdLoadRakingV2 : bpdLoadRaking,
-      bpdTransactionsPaging ? bpdClient.getRankingV2 : bpdClient.getRanking
-    );
+    > = yield* call(bpdLoadRakingV2, bpdClient.getRankingV2);
 
     if (E.isLeft(rankings)) {
       yield* put(

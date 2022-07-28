@@ -267,12 +267,12 @@ export const baseRawBackendStatus: BackendStatus = {
     barcodesScanner: {
       dataMatrixPosteEnabled: false
     },
-    pn: {
-      enabled: true,
-      frontend_url: "string"
-    },
     fci: {
       enabled: false
+    },
+    pn: {
+      enabled: false,
+      frontend_url: ""
     }
   }
 };
@@ -331,12 +331,12 @@ export const baseBackendConfig: Config = {
   barcodesScanner: {
     dataMatrixPosteEnabled: false
   },
-  pn: {
-    enabled: true,
-    frontend_url: "string"
-  },
   fci: {
     enabled: false
+  },
+  pn: {
+    enabled: false,
+    frontend_url: ""
   }
 };
 

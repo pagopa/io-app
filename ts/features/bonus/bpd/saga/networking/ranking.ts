@@ -1,14 +1,12 @@
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
-import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
 import { CitizenRankingMilestoneResourceArray } from "../../../../../../definitions/bpd/citizen_v2/CitizenRankingMilestoneResourceArray";
 import { MilestoneResource } from "../../../../../../definitions/bpd/citizen_v2/MilestoneResource";
-import { bpdTransactionsPaging } from "../../../../../config";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import {
   ReduxSagaEffect,
@@ -24,71 +22,11 @@ import {
 import { BpdRankingReady } from "../../store/reducers/details/periods";
 import { BpdPivotTransaction } from "../../store/reducers/details/transactionsv2/entities";
 
-// TODO: clean after V1 removal
-const version = bpdTransactionsPaging ? "_V2" : "";
+const version = "_V2";
 
 const mixpanelActionRequest = `BPD_RANKING${version}_REQUEST`;
 const mixpanelActionSuccess = `BPD_RANKING${version}_SUCCESS`;
 const mixpanelActionFailure = `BPD_RANKING${version}_FAILURE`;
-
-// convert the network payload ranking into the relative app domain model
-const convertRankingArray = (
-  rankings: CitizenRankingResourceArray
-): ReadonlyArray<BpdRankingReady> =>
-  rankings.map<BpdRankingReady>(rr => ({
-    ...rr,
-    awardPeriodId: rr.awardPeriodId as AwardPeriodId,
-    kind: "ready"
-  }));
-
-/**
- * Load the ranking for all the periods
- * @deprecated TODO: remove after replacing transactions v1
- * @param getRanking
- */
-export function* bpdLoadRaking(
-  getRanking: ReturnType<typeof BackendBpdClient>["getRanking"]
-): Generator<
-  ReduxSagaEffect,
-  E.Either<Error, ReadonlyArray<BpdRankingReady>>,
-  any
-> {
-  try {
-    void mixpanelTrack(mixpanelActionRequest);
-    const getRankingResult: SagaCallReturnType<typeof getRanking> = yield* call(
-      getRanking,
-      {} as any
-    );
-    if (E.isRight(getRankingResult)) {
-      if (getRankingResult.right.status === 200) {
-        void mixpanelTrack(mixpanelActionSuccess, {
-          count: getRankingResult.right.value?.length
-        });
-        return E.right<Error, ReadonlyArray<BpdRankingReady>>(
-          convertRankingArray(getRankingResult.right.value)
-        );
-      } else if (getRankingResult.right.status === 404) {
-        void mixpanelTrack(mixpanelActionSuccess, {
-          count: 0
-        });
-        return E.right<Error, ReadonlyArray<BpdRankingReady>>([]);
-      } else {
-        return E.left<Error, ReadonlyArray<BpdRankingReady>>(
-          new Error(`response status ${getRankingResult.right.status}`)
-        );
-      }
-    } else {
-      return E.left<Error, ReadonlyArray<BpdRankingReady>>(
-        new Error(readableReport(getRankingResult.left))
-      );
-    }
-  } catch (e) {
-    void mixpanelTrack(mixpanelActionFailure, {
-      reason: getError(e).message
-    });
-    return E.left<Error, ReadonlyArray<BpdRankingReady>>(getError(e));
-  }
-}
 
 // convert the network payload ranking into the relative app domain model
 const convertRankingArrayV2 = (

@@ -1,21 +1,6 @@
-import { call, put } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import {
-  BpdTransaction,
-  BpdTransactions,
-  bpdTransactionsLoad,
-  CircuitType
-} from "../../store/actions/transactions";
-import { BackendBpdClient } from "../../api/backendBpdClient";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { getError } from "../../../../../utils/errors";
-import { AwardPeriodId } from "../../store/actions/periods";
-import { BpdWinningTransactions } from "../../../../../../definitions/bpd/winning_transactions/BpdWinningTransactions";
-import { HPan } from "../../store/actions/paymentMethods";
+import * as O from "fp-ts/lib/Option";
+import { CircuitType } from "../../store/actions/transactions";
 
 /**
  * convert a network circuit into the relative app domain model
@@ -43,61 +28,5 @@ export const convertCircuitTypeCode = (code: string): CircuitType =>
   pipe(
     mapNetworkCircuitType.get(code),
     O.fromNullable,
-    O.getOrElseW(() => "Unknown" as const)
+    O.getOrElse(() => "Unknown" as CircuitType)
   );
-
-// convert a network payload amount into the relative app domain model
-const convertTransactions = (
-  networkTransactions: BpdWinningTransactions,
-  awardPeriodId: AwardPeriodId
-): BpdTransactions => {
-  const results = networkTransactions.map<BpdTransaction>(nt => ({
-    ...nt,
-    hashPan: nt.hashPan as HPan,
-    awardPeriodId,
-    circuitType: convertCircuitTypeCode(nt.circuitType)
-  }));
-  return {
-    results,
-    awardPeriodId
-  };
-};
-
-/**
- * Networking code to request the transactions for a specified period.
- * @deprecated TODO: remove along with bpdTransactionsPaging FF
- * @param winningTransactions
- * @param action
- */
-export function* bpdLoadTransactionsSaga(
-  winningTransactions: ReturnType<
-    typeof BackendBpdClient
-  >["winningTransactions"],
-  action: ActionType<typeof bpdTransactionsLoad.request>
-) {
-  const awardPeriodId = action.payload;
-  try {
-    const winningTransactionsResult: SagaCallReturnType<
-      typeof winningTransactions
-    > = yield* call(winningTransactions, { awardPeriodId } as any);
-    if (E.isRight(winningTransactionsResult)) {
-      if (winningTransactionsResult.right.status === 200) {
-        const transactions = convertTransactions(
-          winningTransactionsResult.right.value,
-          awardPeriodId
-        );
-        yield* put(bpdTransactionsLoad.success(transactions));
-      } else {
-        throw new Error(
-          `response status ${winningTransactionsResult.right.status}`
-        );
-      }
-    } else {
-      throw new Error(readableReport(winningTransactionsResult.left));
-    }
-  } catch (e) {
-    yield* put(
-      bpdTransactionsLoad.failure({ error: getError(e), awardPeriodId })
-    );
-  }
-}
