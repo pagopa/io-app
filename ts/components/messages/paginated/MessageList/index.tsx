@@ -1,6 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
