@@ -121,6 +121,8 @@ const styles = StyleSheet.create({
   },
   noCie: {
     // don't use opacity since the button still have the active color when it is pressed
+    // TODO: Remove this half-disabled state.
+    // See also discusssion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
     backgroundColor: IOColors.noCieButton
   },
   fullOpacity: {

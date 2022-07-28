@@ -2,19 +2,10 @@
  * A screen where the user can know more about SPID, CIE and access to spid.gov.it
  */
 import { CompatNavigationProp } from "@react-navigation/compat";
-import {
-  Col,
-  Content,
-  Grid,
-  H2,
-  Row,
-  Tab,
-  Tabs,
-  Text,
-  View
-} from "native-base";
+import { Col, Content, Grid, Row, Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -39,14 +30,10 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  value: {
-    alignSelf: "flex-start",
-    color: customVariables.brandPrimary,
-    paddingTop: 2
-  },
   row: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 8
   },
   tabBarContainer: {
     elevation: 0
@@ -72,7 +59,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
     return (
       <Row style={styles.row}>
         <Col size={1}>
-          <H2 style={styles.value}>{value}</H2>
+          <H1 color={"blue"}>{value}</H1>
         </Col>
         <Col size={5}>
           <Text>{content}</Text>
@@ -126,6 +113,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
               <Markdown>
                 {I18n.t("authentication.spid_information.spid")}
               </Markdown>
+              <View spacer={true} />
               <Grid>
                 {this.getValueContent(
                   I18n.t("authentication.spid_information.point1-value"),

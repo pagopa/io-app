@@ -2,17 +2,17 @@
  * A screen where the user can know more about spid and access to spid.gov.it
  */
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { Col, Content, Grid, H1, H2, Row, Text, View } from "native-base";
+import { Col, Content, Grid, Row, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { H1 } from "../../components/core/typography/H1";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
-import variables from "../../theme/variables";
 
 type Props = {
   navigation: CompatNavigationProp<
@@ -24,14 +24,10 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  value: {
-    alignSelf: "flex-start",
-    color: variables.brandPrimary,
-    paddingTop: 2
-  },
   row: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 8
   }
 });
 
@@ -42,7 +38,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
     return (
       <Row style={styles.row}>
         <Col size={1}>
-          <H2 style={styles.value}>{value}</H2>
+          <H1 color={"blue"}>{value}</H1>
         </Col>
         <Col size={5}>
           <Text>{content}</Text>
@@ -59,9 +55,15 @@ class SpidInformationScreen extends React.Component<Props, never> {
         headerTitle={I18n.t("authentication.spid_information.headerTitle")}
       >
         <Content>
-          <H1>{I18n.t("authentication.spid_information.contentTitle")}</H1>
+          <H1
+            accessible={true}
+            weight="Bold"
+            testID={"screen-content-header-title"}
+          >
+            {I18n.t("authentication.spid_information.contentTitle")}
+          </H1>
 
-          <View spacer={true} large={true} />
+          <View spacer={true} />
           <Text>{I18n.t("authentication.spid_information.paragraph1")}</Text>
           <View spacer={true} extralarge={true} />
 
@@ -76,6 +78,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
               {` ${I18n.t("authentication.spid_information.paragraph2-part2")}`}
             </Text>
           </Text>
+          <View spacer={true} />
           <Grid>
             {this.getValueContent(
               I18n.t("authentication.spid_information.point1-value"),

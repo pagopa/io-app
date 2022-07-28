@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { View } from "native-base";
+import { H2 as NBH2, H3 as NBH3, View } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -22,8 +22,19 @@ const styles = StyleSheet.create({
   }
 });
 
+const sectionTitleMargin = 16;
+
 export const TypographyShowroom = () => (
   <ShowroomSection title={"Typography"}>
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
+      Font family
+    </H2>
+    <FontFamilyShowroom />
+    <DarkBackgroundTypographicScale />
     <H1Row />
     <H2Row />
     <H3Row />
@@ -38,14 +49,27 @@ export const TypographyShowroom = () => (
   </ShowroomSection>
 );
 
+export const FontFamilyShowroom = () => (
+  <>
+    <View style={styles.row}>
+      <H1>Header H1</H1>
+      <View hspacer={true} />
+    </View>
+  </>
+);
+
+export const DarkBackgroundTypographicScale = () => (
+  <View style={{ backgroundColor: IOColors.bluegrey }}>
+    <H1 color={"white"}>Header H1</H1>
+    <View hspacer={true} />
+  </View>
+);
+
 export const H1Row = () => (
   <>
     <View style={styles.row}>
       <H1>Header H1</H1>
       <View hspacer={true} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <H1 color={"white"}>Header h1</H1>
-      </View>
     </View>
     <View spacer={true} extralarge={true} />
   </>
@@ -56,6 +80,7 @@ export const H2Row = () => (
     <View style={styles.row}>
       <H2>Header H2</H2>
       <View hspacer={true} />
+      <NBH2>Header H2 NB</NBH2>
     </View>
     <View spacer={true} extralarge={true} />
   </>
@@ -65,6 +90,7 @@ export const H3Row = () => (
   <>
     <View style={styles.row}>
       <H3>Header H3 SB</H3>
+      <NBH3>Header H3 NB</NBH3>
       <View hspacer={true} />
       <H3 color={"bluegreyLight"}>Header H3 SB</H3>
       <View hspacer={true} />
