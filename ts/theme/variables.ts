@@ -10,6 +10,7 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
+import { IOColors } from "../components/core/variables/IOColors";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
@@ -20,9 +21,6 @@ export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
 // eslint-disable-next-line
 const customVariables = Object.assign(materialVariables, {
   minTouchableAreaSize: 48,
-
-  // Android
-  buttonUppercaseAndroidText: false,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
@@ -46,11 +44,12 @@ const customVariables = Object.assign(materialVariables, {
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
-  btnLightBorderColor: "#AEB5BF",
 
-  // Color
+  /* ALIAS TOKENS */
+  /* Don't put hardcoded color values here.
+    Add them to IOColors object, instead.
+  */
   brandPrimary: "#0066CC",
-  brandPrimaryInverted: "#FFFFFF",
   brandGray: "#F5F6F7",
   brandLight: "#FCFDFF",
   brandSuccess: "#007005",
@@ -70,9 +69,9 @@ const customVariables = Object.assign(materialVariables, {
   lighterGray: "#C1C9D2",
   lightestGray: "#E0E3E6",
 
+  btnLightBorderColor: "#AEB5BF",
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
-  colorWhite: "#FFFFFF",
   colorBlack: "#000000",
   disabledService: "#909DA8",
   itemBorderDefaultColor: "#5F6F82",
@@ -172,7 +171,7 @@ const customVariables = Object.assign(materialVariables, {
   contentPrimaryBackground: "#0073E6",
 
   // Footer
-  footerBackground: "#FFFFFF",
+  footerBackground: IOColors.white,
   footerElevation: 20,
   footerPaddingTop: 16,
   footerPaddingLeft: 24,

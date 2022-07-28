@@ -20,6 +20,7 @@ import {
 } from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
 import { H2 } from "../core/typography/H2";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -43,7 +44,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   whiteBg: {
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     marginBottom: 10
   },
 
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "baseline",
     justifyContent: "space-between",
     paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   }
 });
 

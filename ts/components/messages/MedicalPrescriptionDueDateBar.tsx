@@ -22,6 +22,7 @@ import {
   getMessagePaymentExpirationInfo
 } from "../../utils/messages";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { IOColors } from "../core/variables/IOColors";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
@@ -126,14 +127,14 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     return dueDate.fold(null, dd => {
       const iconBackgoundColor =
         this.isPrescriptionExpiring || this.isPrescriptionExpired
-          ? customVariables.colorWhite
+          ? IOColors.white
           : customVariables.brandDarkGray;
 
       const textColor = this.isPrescriptionExpiring
         ? customVariables.calendarExpirableColor
         : this.isPrescriptionExpired
         ? customVariables.brandDarkGray
-        : customVariables.colorWhite;
+        : IOColors.white;
 
       return (
         <CalendarIconComponent

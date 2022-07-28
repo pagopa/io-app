@@ -42,8 +42,8 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
-import variables from "../../../theme/variables";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
@@ -72,7 +72,7 @@ type State = Readonly<{
 
 const styles = StyleSheet.create({
   whiteBg: {
-    backgroundColor: variables.colorWhite
+    backgroundColor: IOColors.white
   }
 });
 

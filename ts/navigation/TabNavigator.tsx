@@ -25,7 +25,7 @@ const Tab = createBottomTabNavigator<MainTabParamsList>();
 const hasiOSNotch = deviceInfoModule.hasNotch() && isIos;
 const styles = StyleSheet.create({
   tabBarStyle: {
-    backgroundColor: variables.colorWhite,
+    backgroundColor: IOColors.white,
     paddingLeft: 3,
     paddingRight: 3,
     borderTopWidth: 0,

@@ -1,6 +1,7 @@
 import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
+import { IOColors } from "../../core/variables/IOColors";
 
 export default StyleSheet.create({
   cardHeader: {
@@ -73,7 +74,7 @@ export default StyleSheet.create({
     margin: 2
   },
   transactions: {
-    backgroundColor: variables.colorWhite
+    backgroundColor: IOColors.white
   },
   transactionsText: {
     color: variables.brandPrimary
@@ -82,7 +83,7 @@ export default StyleSheet.create({
     backgroundColor: variables.brandPrimary
   },
   pickPaymentText: {
-    color: variables.colorWhite
+    color: IOColors.white
   },
   marginTop: {
     marginTop: variables.fontSizeBase
