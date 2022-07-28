@@ -254,12 +254,7 @@ const MessageList = ({
         }
 
         setIsRefreshing(true);
-
-        if (messages.length === 0) {
-          reloadAll();
-        } else if (previousCursor !== undefined) {
-          loadPreviousPage(previousCursor);
-        }
+        reloadAll();
       }}
     />
   ) : undefined;
