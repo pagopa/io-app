@@ -21,8 +21,18 @@ import VoucherListScreen from "../screens/voucherList/VoucherListScreen";
 import SV_ROUTES from "./routes";
 
 export const svLinkingOptions: PathConfigMap = {
-  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]: "sv-check-status",
-  [SV_ROUTES.VOUCHER_LIST.LIST]: "vouchers-list"
+  [SV_ROUTES.VOUCHER_GENERATION.MAIN]: {
+    path: "sv-generation",
+    screens: {
+      [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]: "check-status"
+    }
+  },
+  [SV_ROUTES.VOUCHER_LIST.MAIN]: {
+    path: "sv-vouchers",
+    screens: {
+      [SV_ROUTES.VOUCHER_LIST.LIST]: "list"
+    }
+  }
 };
 
 const ListStack = createStackNavigator();
