@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0-rc.4](https://github.com/pagopa/io-app/compare/2.14.0-rc.3...2.14.0-rc.4) (2022-07-28)
+
+
+### Bug Fixes
+
+* [[IA-838](https://pagopa.atlassian.net/browse/IA-838)] Automatically check for new messages on focus ([#4089](https://github.com/pagopa/io-app/issues/4089)) ([567a654](https://github.com/pagopa/io-app/commit/567a6546800f4e9f03dfbaa89968544387a4eafc))
+* **Piattaforma Notifiche:** [[IAMVL-94](https://pagopa.atlassian.net/browse/IAMVL-94)] Do not open PN messages automatically from push notifications ([#4080](https://github.com/pagopa/io-app/issues/4080)) ([77b1f66](https://github.com/pagopa/io-app/commit/77b1f66aa9b64cc80c469997d44d135d44872efa))
+* **Piattaforma Notifiche:** [[IAMVL-95](https://pagopa.atlassian.net/browse/IAMVL-95)] Fix PN service activation from CTA in message ([#4085](https://github.com/pagopa/io-app/issues/4085)) ([edb5132](https://github.com/pagopa/io-app/commit/edb5132668cb718361831608fed00ac939aac87b))
+
+
+### Chores
+
+* **Piattaforma Notifiche:** [[IAMVL-96](https://pagopa.atlassian.net/browse/IAMVL-96)] Disable PN feature flag ([#4090](https://github.com/pagopa/io-app/issues/4090)) ([0d8b4f3](https://github.com/pagopa/io-app/commit/0d8b4f340b3a04f41bfd9e766607299b603b846f))
+* [[IAI-214](https://pagopa.atlassian.net/browse/IAI-214),[IAI-226](https://pagopa.atlassian.net/browse/IAI-226)] Color values inventory + Update references to white color ([#4057](https://github.com/pagopa/io-app/issues/4057)) ([95301c7](https://github.com/pagopa/io-app/commit/95301c704113859d7a0ab6f6cdff20473bee720e))
+* **Piattaforma Notifiche:** [[IAMVL-88](https://pagopa.atlassian.net/browse/IAMVL-88)] Update copy of the PN message opening alert ([#4086](https://github.com/pagopa/io-app/issues/4086)) ([ae36bf1](https://github.com/pagopa/io-app/commit/ae36bf1d2e8e312007fd8ee117e6d1534fe3784e))
+* **Piattaforma Notifiche:** [[IAMVL-90](https://pagopa.atlassian.net/browse/IAMVL-90)] Use PN remote config ([#4083](https://github.com/pagopa/io-app/issues/4083)) ([9648e5e](https://github.com/pagopa/io-app/commit/9648e5ee7f5f8e567e33cc4ea72000dc0ff3bb0c))
+* [[IA-907](https://pagopa.atlassian.net/browse/IA-907)] Improved manual configuration disclaimer ([#4046](https://github.com/pagopa/io-app/issues/4046)) ([8276761](https://github.com/pagopa/io-app/commit/82767611a86cecbf9e860d543df91ecc9c5e9df1))
+* [[IAI-145](https://pagopa.atlassian.net/browse/IAI-145)] Remove bpdTransactionsPaging feature flag and all the related references ([#4087](https://github.com/pagopa/io-app/issues/4087)) ([de92fa7](https://github.com/pagopa/io-app/commit/de92fa72a73165239e86795a7350b579d987ca3f))
+
 ## [2.14.0-rc.3](https://github.com/pagopa/io-app/compare/2.14.0-rc.2...2.14.0-rc.3) (2022-07-26)
 
 
