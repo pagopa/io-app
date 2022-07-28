@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { H2 as NBH2, H3 as NBH3, View } from "native-base";
+import { H3 as NBH3, View } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     flexWrap: "wrap"
+  },
+  distancedTitle: {
+    marginTop: 12
   }
 });
 
@@ -33,8 +36,8 @@ export const TypographyShowroom = () => (
     >
       Font family
     </H2>
-    <FontFamilyShowroom />
-    <DarkBackgroundTypographicScale />
+    {/* <FontFamilyShowroom /> */}
+    {/*  <DarkBackgroundTypographicScale /> */}
     <H1Row />
     <H2Row />
     <H3Row />
@@ -49,14 +52,17 @@ export const TypographyShowroom = () => (
   </ShowroomSection>
 );
 
-export const FontFamilyShowroom = () => (
+/* export const FontFamilyShowroom = () => (
   <>
     <View style={styles.row}>
-      <H1>Header H1</H1>
       <View hspacer={true} />
     </View>
   </>
-);
+); */
+
+const getTitle = (element: string) => `Heading ${element}`;
+const getLongerTitle = (element: string) =>
+  `Very loooong looong title set with Heading ${element}`;
 
 export const DarkBackgroundTypographicScale = () => (
   <View style={{ backgroundColor: IOColors.bluegrey }}>
@@ -67,9 +73,9 @@ export const DarkBackgroundTypographicScale = () => (
 
 export const H1Row = () => (
   <>
-    <View style={styles.row}>
-      <H1>Header H1</H1>
-      <View hspacer={true} />
+    <View>
+      <H1>{getTitle("H1")}</H1>
+      <H1 style={styles.distancedTitle}>{getLongerTitle("H1")}</H1>
     </View>
     <View spacer={true} extralarge={true} />
   </>
@@ -77,10 +83,9 @@ export const H1Row = () => (
 
 export const H2Row = () => (
   <>
-    <View style={styles.row}>
-      <H2>Header H2</H2>
-      <View hspacer={true} />
-      <NBH2>Header H2 NB</NBH2>
+    <View>
+      <H2>{getTitle("H2")}</H2>
+      <H2 style={styles.distancedTitle}>{getLongerTitle("H2")}</H2>
     </View>
     <View spacer={true} extralarge={true} />
   </>

@@ -4,7 +4,7 @@
  */
 
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Container, H2, Text, View } from "native-base";
+import { Button, Container, Text, View } from "native-base";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   BackHandler,
@@ -15,6 +15,7 @@ import {
   StyleSheet
 } from "react-native";
 import updateIcon from "../../../img/icons/update-icon.png";
+import { H1 } from "../../components/core/typography/H1";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -131,7 +132,7 @@ const UpdateAppModal: React.FC = () => {
       >
         <Container>
           <View style={styles.container}>
-            <H2>{I18n.t("titleUpdateApp")}</H2>
+            <H1>{I18n.t("titleUpdateApp")}</H1>
             <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
             <Image style={styles.img} source={updateIcon} />
             {error && (

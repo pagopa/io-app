@@ -1,6 +1,6 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import AnimatedRing from "../../components/animations/AnimatedRing";
@@ -9,6 +9,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
+import { H1 } from "../../components/core/typography/H1";
 import customVariables from "../../theme/variables";
 
 type Props = {
@@ -63,9 +64,9 @@ const CardSelectionScreen: React.SFC<Props> = props => (
     <Content noPadded={true} bounces={false}>
       <ScreenHeader
         heading={
-          <H2 style={styles.titleHeader}>
+          <H1 style={styles.titleHeader}>
             {I18n.t("authentication.cie.card.title")}
-          </H2>
+          </H1>
         }
       />
       <Text style={styles.messageHeader}>
