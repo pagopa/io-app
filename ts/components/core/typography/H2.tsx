@@ -16,6 +16,7 @@ type OwnProps = ExternalTypographyProps<
 
 const fontName: IOFontFamily = "TitilliumWeb";
 export const h2FontSize = 20;
+export const h2LineHeight = h2FontSize * 1.25;
 export const h2DefaultColor: AllowedColors = "bluegreyDark";
 export const h2DefaultWeight: AllowedWeight = "Bold";
 
@@ -31,5 +32,5 @@ export const H2: React.FunctionComponent<OwnProps> = props =>
     defaultWeight: h2DefaultWeight,
     defaultColor: h2DefaultColor,
     font: fontName,
-    fontStyle: { fontSize: h2FontSize }
+    fontStyle: { fontSize: h2FontSize, lineHeight: h2LineHeight }
   });

@@ -86,6 +86,9 @@ export const H2Row = () => (
     <View>
       <H2>{getTitle("H2")}</H2>
       <H2 style={styles.distancedTitle}>{getLongerTitle("H2")}</H2>
+      <H2 style={styles.distancedTitle} weight={"SemiBold"}>
+        {getTitle("H2 Semibold")}
+      </H2>
     </View>
     <View spacer={true} extralarge={true} />
   </>
