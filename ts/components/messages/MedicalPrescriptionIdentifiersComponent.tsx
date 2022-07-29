@@ -6,6 +6,7 @@ import { PrescriptionData } from "../../../definitions/backend/PrescriptionData"
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import CopyButtonComponent from "../CopyButtonComponent";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   prescriptionData: PrescriptionData;
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding,
     backgroundColor: customVariables.brandGray,
     borderBottomWidth: 1,
-    borderBottomColor: customVariables.colorWhite
+    borderBottomColor: IOColors.white
   },
   row: {
     flexDirection: "row",

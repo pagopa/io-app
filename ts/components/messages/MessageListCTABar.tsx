@@ -21,6 +21,7 @@ import ExtractedCTABar from "../cta/ExtractedCTABar";
 import { ViewEUCovidButton } from "../../features/euCovidCert/components/ViewEUCovidButton";
 import { euCovidCertificateEnabled } from "../../config";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { IOColors } from "../core/variables/IOColors";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
@@ -111,7 +112,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           month={capitalize(formatDateAsMonth(dueDate.value))}
           day={formatDateAsDay(dueDate.value)}
           backgroundColor={customVariables.brandDarkGray}
-          textColor={customVariables.colorWhite}
+          textColor={IOColors.white}
         />
       );
     }

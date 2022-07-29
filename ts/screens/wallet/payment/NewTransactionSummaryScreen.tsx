@@ -65,6 +65,8 @@ import {
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
+import customVariables from "../../../theme/variables";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -85,7 +87,7 @@ export type TransactionSummaryError = Option<
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    marginHorizontal: customVariables.contentPadding
   }
 });
 
@@ -240,9 +242,7 @@ const NewTransactionSummaryScreen = ({
 
   const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
     rptId.paymentNoticeNumber
-  )
-    .replace(/(\d{4})/g, "$1  ")
-    .trim();
+  );
 
   /**
    * try to show the fiscal code coming from the 'verification' API
@@ -261,9 +261,9 @@ const NewTransactionSummaryScreen = ({
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
     >
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={IOStyles.flex}>
         {showsInlineError && <TransactionSummaryStatus error={error} />}
-        <ScrollView>
+        <ScrollView style={styles.container}>
           <TransactionSummary
             paymentVerification={paymentVerification}
             paymentNoticeNumber={paymentNoticeNumber}

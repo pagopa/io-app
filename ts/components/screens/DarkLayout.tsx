@@ -61,6 +61,7 @@ export default class DarkLayout extends React.Component<Props> {
     const wrapper = (children: React.ReactNode) =>
       this.props.gradientHeader ? (
         <LinearGradient
+          /* grey gradient */
           colors={[customVariables.brandDarkGray, "#42484F"]}
           style={
             this.props.headerPaddingMin

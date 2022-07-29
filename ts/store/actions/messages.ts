@@ -21,6 +21,7 @@ import { Cursor } from "../reducers/entities/messages/allPaginated";
 import { MessageCategory } from "../../../definitions/backend/MessageCategory";
 import { TagEnum } from "../../../definitions/backend/MessageCategoryPayment";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
+import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 
 /**
  * Load a single message given its ID
@@ -213,4 +214,5 @@ export type MessagesActions =
   | ActionType<typeof DEPRECATED_setMessageReadState>
   | ActionType<typeof upsertMessageStatusAttributes>
   | ActionType<typeof DEPRECATED_setMessagesArchivedState>
-  | ActionType<typeof loadMessageById>;
+  | ActionType<typeof loadMessageById>
+  | ActionType<typeof loadThirdPartyMessage>;

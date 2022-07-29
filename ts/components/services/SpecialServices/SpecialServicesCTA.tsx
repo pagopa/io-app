@@ -9,18 +9,21 @@ import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialS
 import { useIOSelector } from "../../../store/hooks";
 import {
   isCdcEnabledSelector,
-  isCGNEnabledSelector
+  isCGNEnabledSelector,
+  isPnEnabledSelector
 } from "../../../store/reducers/backendStatus";
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
 import { cdcEnabled } from "../../../config";
+import PnServiceCTA from "../../../features/pn/components/PnServiceCTA";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 
 type Props = {
   customSpecialFlow: CustomSpecialFlow;
   serviceId: ServiceId;
+  activate?: boolean;
 };
 
 const UpdateAppCTA = () => {
@@ -42,12 +45,15 @@ const SpecialServicesCTA = (props: Props) => {
 
   const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
+  const isPnEnabled = useIOSelector(isPnEnabledSelector);
+
   const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
     CustomSpecialFlow,
     boolean
   >([
     ["cgn" as CustomSpecialFlow, isCGNEnabled],
-    ["cdc" as CustomSpecialFlow, isCdcEnabled]
+    ["cdc" as CustomSpecialFlow, isCdcEnabled],
+    ["pn" as CustomSpecialFlow, isPnEnabled]
   ]);
 
   return fromNullable(customSpecialFlow).fold(null, csf =>
@@ -61,6 +67,15 @@ const SpecialServicesCTA = (props: Props) => {
             ) : null;
           case "cdc":
             return isEnabled ? <CdcServiceCTA /> : null;
+          case "pn":
+            return isEnabled ? (
+              <PnServiceCTA
+                serviceId={props.serviceId}
+                activate={props.activate}
+              />
+            ) : (
+              <UpdateAppCTA />
+            );
           default:
             return <UpdateAppCTA />;
         }

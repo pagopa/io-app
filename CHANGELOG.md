@@ -2,6 +2,67 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0-rc.5](https://github.com/pagopa/io-app/compare/2.14.0-rc.4...2.14.0-rc.5) (2022-07-29)
+
+
+### Bug Fixes
+
+* [[IA-922](https://pagopa.atlassian.net/browse/IA-922)] Prevent multiple navigations when opening a message ([#4092](https://github.com/pagopa/io-app/issues/4092)) ([19bcf6e](https://github.com/pagopa/io-app/commit/19bcf6e99c60e4fca8f6766f06a2e04fc57d2da0))
+
+## [2.14.0-rc.4](https://github.com/pagopa/io-app/compare/2.14.0-rc.3...2.14.0-rc.4) (2022-07-28)
+
+
+### Bug Fixes
+
+* [[IA-838](https://pagopa.atlassian.net/browse/IA-838)] Automatically check for new messages on focus ([#4089](https://github.com/pagopa/io-app/issues/4089)) ([567a654](https://github.com/pagopa/io-app/commit/567a6546800f4e9f03dfbaa89968544387a4eafc))
+* **Piattaforma Notifiche:** [[IAMVL-94](https://pagopa.atlassian.net/browse/IAMVL-94)] Do not open PN messages automatically from push notifications ([#4080](https://github.com/pagopa/io-app/issues/4080)) ([77b1f66](https://github.com/pagopa/io-app/commit/77b1f66aa9b64cc80c469997d44d135d44872efa))
+* **Piattaforma Notifiche:** [[IAMVL-95](https://pagopa.atlassian.net/browse/IAMVL-95)] Fix PN service activation from CTA in message ([#4085](https://github.com/pagopa/io-app/issues/4085)) ([edb5132](https://github.com/pagopa/io-app/commit/edb5132668cb718361831608fed00ac939aac87b))
+
+
+### Chores
+
+* **Piattaforma Notifiche:** [[IAMVL-96](https://pagopa.atlassian.net/browse/IAMVL-96)] Disable PN feature flag ([#4090](https://github.com/pagopa/io-app/issues/4090)) ([0d8b4f3](https://github.com/pagopa/io-app/commit/0d8b4f340b3a04f41bfd9e766607299b603b846f))
+* [[IAI-214](https://pagopa.atlassian.net/browse/IAI-214),[IAI-226](https://pagopa.atlassian.net/browse/IAI-226)] Color values inventory + Update references to white color ([#4057](https://github.com/pagopa/io-app/issues/4057)) ([95301c7](https://github.com/pagopa/io-app/commit/95301c704113859d7a0ab6f6cdff20473bee720e))
+* **Piattaforma Notifiche:** [[IAMVL-88](https://pagopa.atlassian.net/browse/IAMVL-88)] Update copy of the PN message opening alert ([#4086](https://github.com/pagopa/io-app/issues/4086)) ([ae36bf1](https://github.com/pagopa/io-app/commit/ae36bf1d2e8e312007fd8ee117e6d1534fe3784e))
+* **Piattaforma Notifiche:** [[IAMVL-90](https://pagopa.atlassian.net/browse/IAMVL-90)] Use PN remote config ([#4083](https://github.com/pagopa/io-app/issues/4083)) ([9648e5e](https://github.com/pagopa/io-app/commit/9648e5ee7f5f8e567e33cc4ea72000dc0ff3bb0c))
+* [[IA-907](https://pagopa.atlassian.net/browse/IA-907)] Improved manual configuration disclaimer ([#4046](https://github.com/pagopa/io-app/issues/4046)) ([8276761](https://github.com/pagopa/io-app/commit/82767611a86cecbf9e860d543df91ecc9c5e9df1))
+* [[IAI-145](https://pagopa.atlassian.net/browse/IAI-145)] Remove bpdTransactionsPaging feature flag and all the related references ([#4087](https://github.com/pagopa/io-app/issues/4087)) ([de92fa7](https://github.com/pagopa/io-app/commit/de92fa72a73165239e86795a7350b579d987ca3f))
+
+## [2.14.0-rc.3](https://github.com/pagopa/io-app/compare/2.14.0-rc.2...2.14.0-rc.3) (2022-07-26)
+
+
+### Bug Fixes
+
+* [[IA-912](https://pagopa.atlassian.net/browse/IA-912)] Fix Android 12 push notifications ([#4073](https://github.com/pagopa/io-app/issues/4073)) ([554674f](https://github.com/pagopa/io-app/commit/554674f67636e66b64581a2f3622765849d4abb5))
+
+
+### Chores
+
+* [[IA-915](https://pagopa.atlassian.net/browse/IA-915)] Add `last_app_version` on every profile update request ([#4071](https://github.com/pagopa/io-app/issues/4071)) ([a8b5f32](https://github.com/pagopa/io-app/commit/a8b5f324d5927ce8ff45cf058a31b6cf61798424))
+* [[IA-916](https://pagopa.atlassian.net/browse/IA-916)] Fix build errors on Apple silicon ([#4077](https://github.com/pagopa/io-app/issues/4077)) ([9b47d53](https://github.com/pagopa/io-app/commit/9b47d5341c1cd70c77f334ea67101462c340614d))
+* [[IAI-154](https://pagopa.atlassian.net/browse/IAI-154)] Upgrades Services navigator to v5  ([#4067](https://github.com/pagopa/io-app/issues/4067)) ([d0c102c](https://github.com/pagopa/io-app/commit/d0c102c42b509f3ca0fe73d658b340d991165fa3))
+
+## [2.14.0-rc.2](https://github.com/pagopa/io-app/compare/2.14.0-rc.1...2.14.0-rc.2) (2022-07-25)
+
+## [2.14.0-rc.1](https://github.com/pagopa/io-app/compare/2.14.0-rc.0...2.14.0-rc.1) (2022-07-21)
+
+
+### Features
+
+* **Piattaforma Notifiche:** [[IAMVL-79](https://pagopa.atlassian.net/browse/IAMVL-79)] Fetch and show PN message details ([#4043](https://github.com/pagopa/io-app/issues/4043)) ([385ced5](https://github.com/pagopa/io-app/commit/385ced5d1d3514c7c26b2f0fc377f042eea1eecd))
+* **Piattaforma Notifiche:** [[IAMVL-82](https://pagopa.atlassian.net/browse/IAMVL-82)] Handle attachments from PN message ([#4047](https://github.com/pagopa/io-app/issues/4047)) ([8baf87a](https://github.com/pagopa/io-app/commit/8baf87a81121b71deb2b7e075a01e1b288c049f5))
+* **Piattaforma Notifiche:** [[IAMVL-83](https://pagopa.atlassian.net/browse/IAMVL-83)] Show the timeline in a PN message ([#4061](https://github.com/pagopa/io-app/issues/4061)) ([cd67f77](https://github.com/pagopa/io-app/commit/cd67f773b18b0da66f6f60a7b7d9450c92ef3833))
+* **Piattaforma Notifiche:** [[IAMVL-84](https://pagopa.atlassian.net/browse/IAMVL-84)] Add support for PN custom activation flow ([#4069](https://github.com/pagopa/io-app/issues/4069)) ([01346c2](https://github.com/pagopa/io-app/commit/01346c215df37ae520d1fd7e38ae2fbfc79a6d6e))
+* **Piattaforma Notifiche:** [[IAMVL-85](https://pagopa.atlassian.net/browse/IAMVL-85)] Add an internal link for activating PN from a CTA ([#4070](https://github.com/pagopa/io-app/issues/4070)) ([f49521e](https://github.com/pagopa/io-app/commit/f49521e57a1ebbc843e197d4a24f492d0084196b))
+* [[IIP-83](https://pagopa.atlassian.net/browse/IIP-83)] Prevent user from disabling the warning when opening a PN message ([#4066](https://github.com/pagopa/io-app/issues/4066)) ([f55babc](https://github.com/pagopa/io-app/commit/f55babc812e508f0a3d9de1980056652d4c41a98))
+
+## [2.14.0-rc.0](https://github.com/pagopa/io-app/compare/2.13.0-rc.3...2.14.0-rc.0) (2022-07-19)
+
+
+### Bug Fixes
+
+* **Carta Giovani Nazionale:** [[IOACGN-81](https://pagopa.atlassian.net/browse/IOACGN-81)] Fixes userAgeRange calculus ([#4054](https://github.com/pagopa/io-app/issues/4054)) ([85b4565](https://github.com/pagopa/io-app/commit/85b45652d556df6b4d33eb1eb253ce76268c705f))
+
 ## [2.13.0-rc.3](https://github.com/pagopa/io-app/compare/2.13.0-rc.2...2.13.0-rc.3) (2022-07-14)
 
 

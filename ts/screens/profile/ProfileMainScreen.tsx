@@ -27,7 +27,10 @@ import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { navigateToLogout } from "../../store/actions/navigation";
-import { preferencesPagoPaTestEnvironmentSetEnabled } from "../../store/actions/persistedPreferences";
+import {
+  preferencesPagoPaTestEnvironmentSetEnabled,
+  preferencesPnTestEnvironmentSetEnabled
+} from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -36,13 +39,16 @@ import {
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isPagoPATestEnabledSelector,
+  isPnTestEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -77,7 +83,7 @@ const styles = StyleSheet.create({
     lineHeight: 40
   },
   whiteBg: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
 
   noRightPadding: {
@@ -234,6 +240,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  private onPnEnvironmentToggle = (enabled: boolean) => {
+    this.props.setPnTestEnabled(enabled);
+  };
+
   private idResetTap?: number;
 
   // When tapped 5 times activate the debug mode of the application.
@@ -273,6 +283,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       dispatchSessionExpired,
       isDebugModeEnabled,
       isPagoPATestEnabled,
+      isPnTestEnabled,
       navigation,
       notificationId,
       notificationToken,
@@ -332,6 +343,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           isPagoPATestEnabled,
           this.onPagoPAEnvironmentToggle,
           I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
+        )}
+        {this.developerListItem(
+          I18n.t("profile.main.pnEnvironment.pnEnv"),
+          isPnTestEnabled,
+          this.onPnEnvironmentToggle
         )}
         {this.developerListItem(
           I18n.t("profile.main.debugMode"),
@@ -564,7 +580,8 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: isDebugModeEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  isPnTestEnabled: isPnTestEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -576,6 +593,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
+  setPnTestEnabled: (isPnTestEnabled: boolean) =>
+    dispatch(preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled })),
   dispatchSessionExpired: () => dispatch(sessionExpired())
 });
 

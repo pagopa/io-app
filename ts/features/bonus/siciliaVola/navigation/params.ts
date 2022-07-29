@@ -1,5 +1,9 @@
 import SV_ROUTES from "./routes";
 
+export type SvMainNavigatorParamsList = {
+  [SV_ROUTES.MAIN]: undefined;
+};
+
 export type SvVoucherListNavigatorParamsList = {
   [SV_ROUTES.VOUCHER_LIST.LIST]: undefined;
   [SV_ROUTES.VOUCHER_LIST.DETAILS]: undefined;
