@@ -1,5 +1,5 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { Content, H3, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -12,6 +12,7 @@ import {
   cleanMarkdownFromCTAs,
   paymentExpirationInfo
 } from "../../utils/messages";
+import { H1 } from "../core/typography/H1";
 import { logosForService } from "../../utils/services";
 import OrganizationHeader from "../OrganizationHeader";
 import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
@@ -88,10 +89,10 @@ export default class MessageDetailComponent extends React.PureComponent<
 
   private getTitle = () =>
     this.maybeMedicalData.fold(
-      <H3>{this.props.message.content.subject}</H3>,
+      <H1>{this.props.message.content.subject}</H1>,
       _ => (
         <React.Fragment>
-          <H3>{I18n.t("messages.medical.prescription")}</H3>
+          <H1>{I18n.t("messages.medical.prescription")}</H1>
           <Text>{I18n.t("messages.medical.memo")}</Text>
         </React.Fragment>
       )

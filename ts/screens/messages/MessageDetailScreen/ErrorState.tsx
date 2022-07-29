@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { H3, Text, View } from "native-base";
-
+import { Text, View } from "native-base";
 import I18n from "../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { H1 } from "../../../components/core/typography/H1";
 import customVariables from "../../../theme/variables";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 
@@ -79,9 +79,9 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
       <Image
         source={require("../../../../img/messages/error-message-detail-icon.png")}
       />
-      <H3 style={styles.errorStateHeader}>
+      <H1 style={styles.errorStateHeader}>
         {I18n.t("messageDetails.errorText")}
-      </H3>
+      </H1>
       <View style={styles.errorStateMessageData}>
         <View style={styles.erroStateMessageDataLeft}>
           <Text numberOfLines={1}>{`ID: ${messageId}`}</Text>

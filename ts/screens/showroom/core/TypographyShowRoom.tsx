@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { H3 as NBH3, View } from "native-base";
+import { View } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -95,7 +95,6 @@ export const H3Row = () => (
   <>
     <View style={styles.row}>
       <H3>Header H3 SB</H3>
-      <NBH3>Header H3 NB</NBH3>
       <View hspacer={true} />
       <H3 color={"bluegreyLight"}>Header H3 SB</H3>
       <View hspacer={true} />

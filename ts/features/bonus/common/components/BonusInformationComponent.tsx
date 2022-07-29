@@ -26,7 +26,8 @@ import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { Link } from "../../../../components/core/typography/Link";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import { H1 } from "../../../../components/core/typography/H1";
+import { H3 } from "../../../../components/core/typography/H3";
 
 type OwnProps = {
   onBack?: () => void;
@@ -71,15 +72,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-  },
-  orgName: {
-    fontSize: 18,
-    lineHeight: customVariables.lineHeight2
-  },
-  title: {
-    fontSize: customVariables.fontSize3,
-    lineHeight: customVariables.lineHeightH3,
-    color: IOColors.black
   },
   urlButton: { flex: 1, textAlign: "center" }
 });
@@ -221,14 +213,10 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           <View style={styles.row}>
             <View style={styles.flexStart}>
               {maybeSponsorshipDescription.isSome() && (
-                <Text dark={true} style={styles.orgName} semibold={true}>
-                  {maybeSponsorshipDescription.value}
-                </Text>
+                <H3>{maybeSponsorshipDescription.value}</H3>
               )}
 
-              <Text bold={true} dark={true} style={styles.title}>
-                {bonusTypeLocalizedContent.title}
-              </Text>
+              <H1>{bonusTypeLocalizedContent.title}</H1>
             </View>
             <View style={styles.flexEnd}>
               {maybeCover.isSome() && (

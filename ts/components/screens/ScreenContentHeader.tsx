@@ -3,7 +3,7 @@
  * - an image, displayed on the right of the title
  * - a subtitle, displayed below the title
  */
-import { H3, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
@@ -12,6 +12,7 @@ import {
   HEADER_HEIGHT
 } from "../../utils/constants";
 import ScreenHeader from "../ScreenHeader";
+import { H1 } from "../../components/core/typography/H1";
 
 import variables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
@@ -36,9 +37,6 @@ const styles = StyleSheet.create({
   },
   darkGrayBg: {
     backgroundColor: IOColors.bluegrey
-  },
-  white: {
-    color: IOColors.white
   }
 });
 
@@ -107,12 +105,15 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
           <View spacer={true} />
           <ScreenHeader
             heading={
-              <H3
+              <H1
+                accessible={true}
+                accessibilityRole="header"
+                weight="Bold"
                 testID={"screen-content-header-title"}
-                style={dark && styles.white}
+                color={dark ? "white" : "bluegreyDark"}
               >
                 {title}
-              </H3>
+              </H1>
             }
             icon={icon}
             iconFont={iconFont}

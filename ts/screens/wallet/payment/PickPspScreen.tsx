@@ -1,12 +1,13 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
-import { H3, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -126,7 +127,7 @@ class PickPspScreen extends React.Component<Props> {
           <SafeAreaView style={IOStyles.flex} testID="PickPspScreen">
             <View spacer />
             <View style={styles.padded}>
-              <H3>{I18n.t("wallet.pickPsp.title")}</H3>
+              <H1>{I18n.t("wallet.pickPsp.title")}</H1>
               <View spacer small />
               <H4 weight="Regular" color="bluegreyDark">
                 {I18n.t("wallet.pickPsp.info")}
