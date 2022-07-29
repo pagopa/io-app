@@ -8,9 +8,6 @@ import getTheme from "native-base/src/theme/components";
 import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
-import h4Theme from "./components/H4";
-import h5Theme from "./components/H5";
-import h6Theme from "./components/H6";
 import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
 import inputTheme from "./components/Input";
@@ -36,15 +33,6 @@ const theme = (): Theme => {
     },
     "NativeBase.Content": {
       ...contentTheme()
-    },
-    "UIComponent.H4": {
-      ...h4Theme()
-    },
-    "UIComponent.H5": {
-      ...h5Theme()
-    },
-    "UIComponent.H6": {
-      ...h6Theme()
     },
     "NativeBase.Header": {
       ...headerTheme()

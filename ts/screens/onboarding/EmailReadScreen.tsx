@@ -43,6 +43,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 import { isOnboardingCompleted } from "../../utils/navigation";
+import { H3 } from "../../components/core/typography/H3";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -69,14 +70,9 @@ const styles = StyleSheet.create({
   },
   spacerSmall: { height: 12 },
   spacerLarge: { height: 24 },
-  email: {
-    fontWeight: customVariables.h1FontWeight,
-    color: customVariables.h1Color,
-    fontSize: 18,
-    marginLeft: 8
-  },
   icon: {
-    marginTop: Platform.OS === "android" ? 3 : 0 // correct icon position to align it with baseline of email text}
+    marginTop: Platform.OS === "android" ? 3 : 0, // correct icon position to align it with baseline of email text
+    marginRight: 8
   }
 });
 
@@ -174,9 +170,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                   style={styles.icon}
                 />
                 {this.props.optionEmail.isSome() && (
-                  <Text style={styles.email}>
-                    {this.props.optionEmail.value}
-                  </Text>
+                  <H3>{this.props.optionEmail.value}</H3>
                 )}
               </View>
               <View style={styles.spacerLarge} />

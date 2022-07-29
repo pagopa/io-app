@@ -131,6 +131,8 @@ type DataLoadFailure =
   | "userMetadaLoadFailure"
   | undefined;
 
+const customSpacerHeight = 64;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding
   },
   customSpacer: {
-    height: customVariables.spacerHeight + customVariables.h1LineHeight
+    height: customSpacerHeight
   },
   headerLinkContainer: {
     flexDirection: "row",

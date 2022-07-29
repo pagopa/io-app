@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   itemsCenter: {
     alignItems: "center"
   },
-  paddedIconLeft: {
+  icon: {
     paddingLeft: 12
   },
   paddedContentLeft: {
@@ -488,8 +488,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <IconFont
             name={icon}
             color={fromNullable(iconColor).getOrElse(variables.textColor)}
-            size={variables.fontSize3}
-            style={styles.paddedIconLeft}
+            size={variables.iconSize3}
+            style={styles.icon}
           />
           <View hspacer={true} />
           <Text style={[styles.flex, styles.validUntil]} bold={true}>
