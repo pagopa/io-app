@@ -44,11 +44,11 @@ import {
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     lineHeight: 40
   },
   whiteBg: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
 
   noRightPadding: {

@@ -97,7 +97,7 @@ a {
 }
 
 div.custom-block.io-demo-block {
-  background-color: #c1f4f2;
+  background-color: ${customVariables.toastColor};
   border-radius: 4px;
   margin-bottom: 32px;
   padding: 4px 8px;

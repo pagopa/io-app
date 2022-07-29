@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
 import { FOOTER_SAFE_AREA } from "../../utils/constants";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   dark?: boolean;
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.darkerGray
   },
   white: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   flexGrow: {
     flexGrow: 1

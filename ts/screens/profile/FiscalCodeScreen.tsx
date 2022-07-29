@@ -24,8 +24,9 @@ import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import customVariables from "../../theme/variables";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> & {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">;
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.brandDarkGray
   },
   white: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   shadow: {
     // iOS
@@ -108,10 +109,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
     >
-      <IconFont
-        name={"io-back"}
-        style={{ color: customVariables.colorWhite }}
-      />
+      <IconFont name={"io-back"} style={{ color: IOColors.white }} />
     </TouchableDefaultOpacity>
   );
 

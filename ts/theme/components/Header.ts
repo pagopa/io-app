@@ -3,6 +3,7 @@ import { Platform } from "react-native";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 declare module "native-base" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -95,7 +96,7 @@ export default (): Theme => ({
     "NativeBase.Right": {
       "NativeBase.Button": {
         "UIComponent.IconFont": {
-          color: variables.brandPrimaryInverted
+          color: IOColors.white
         }
       }
     }
@@ -106,7 +107,7 @@ export default (): Theme => ({
     "NativeBase.Right": {
       "NativeBase.Button": {
         "UIComponent.IconFont": {
-          color: variables.brandPrimaryInverted
+          color: IOColors.white
         }
       }
     }

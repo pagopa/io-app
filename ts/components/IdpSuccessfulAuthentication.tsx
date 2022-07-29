@@ -7,6 +7,7 @@ import { StatusBar, StyleSheet } from "react-native";
 
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
+import { IOColors } from "./core/variables/IOColors";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,6 @@ export const IdpSuccessfulAuthentication = () => (
       barStyle="light-content"
       backgroundColor={styles.container.backgroundColor}
     />
-    <IconFont name="io-tick-big" color={variables.colorWhite} size={tickSize} />
+    <IconFont name="io-tick-big" color={IOColors.white} size={tickSize} />
   </View>
 );

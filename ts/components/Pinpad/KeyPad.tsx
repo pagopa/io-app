@@ -7,6 +7,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import StyledIconFont from "../ui/IconFont";
+import { IOColors } from "../core/variables/IOColors";
 
 // left -> the string to represent as text
 // right -> the icon to represent with name and size
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     marginBottom: -10
   },
   white: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   buttonTextDigit: {
     fontSize: radius + 10
@@ -113,7 +114,7 @@ const renderPinCol = (
               color={
                 buttonType === "light"
                   ? customVariables.contentPrimaryBackground
-                  : customVariables.colorWhite
+                  : IOColors.white
               }
             />
           )

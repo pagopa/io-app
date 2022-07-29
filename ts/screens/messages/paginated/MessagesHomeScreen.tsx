@@ -13,6 +13,7 @@ import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
+import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -46,7 +47,6 @@ import {
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
 import { makeFontStyleObject } from "../../../theme/fonts";
-import customVariables from "../../../theme/variables";
 import {
   setAccessibilityFocus,
   useScreenReaderEnabled
@@ -54,7 +54,9 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
-import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import customVariables from "../../../theme/variables";
+
 import MigratingMessage from "./MigratingMessage";
 
 type Props = {
@@ -245,7 +247,7 @@ const MessagesHomeScreen = ({
     >
       <FocusAwareStatusBar
         barStyle={"dark-content"}
-        backgroundColor={customVariables.colorWhite}
+        backgroundColor={IOColors.white}
       />
       {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (

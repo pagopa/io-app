@@ -297,7 +297,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     const iconColor = isPagoPATestEnabled
       ? variables.brandHighlight
       : primary || dark
-      ? variables.colorWhite
+      ? IOColors.white
       : variables.brandPrimary;
 
     return (

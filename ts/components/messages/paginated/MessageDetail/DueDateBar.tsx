@@ -94,7 +94,7 @@ const TextContent: React.FunctionComponent<{
 const getCalendarIconBackgroundColor = (status: PaymentStatus) => {
   switch (status) {
     case "expired":
-      return customVariables.colorWhite;
+      return IOColors.white;
     case "expiring":
     case "valid":
       return customVariables.brandDarkGray;
@@ -105,7 +105,7 @@ const getCalendarTextColor = (status: PaymentStatus) => {
   switch (status) {
     case "expiring":
     case "valid":
-      return customVariables.colorWhite;
+      return IOColors.white;
     case "expired":
       return customVariables.brandDarkGray;
   }

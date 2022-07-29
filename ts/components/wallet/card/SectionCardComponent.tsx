@@ -10,6 +10,7 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
+import { IOColors } from "../../core/variables/IOColors";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   },
   labelButton: {
     marginLeft: customVariables.fontSizeBase / 4,
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   shadowBox: {
     marginBottom: -15,
@@ -123,7 +124,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           <>
             <IconFont
               name="io-plus"
-              color={customVariables.colorWhite}
+              color={IOColors.white}
               size={customVariables.fontSize2}
             />
             <Text
@@ -186,7 +187,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             <IconFont
               style={{ marginTop: 1, marginLeft: 2 }}
               name={"io-right"}
-              color={customVariables.colorWhite}
+              color={IOColors.white}
               size={20}
             />
           </View>

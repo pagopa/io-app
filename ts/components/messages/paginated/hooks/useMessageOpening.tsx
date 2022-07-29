@@ -4,11 +4,12 @@ import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import ROUTES from "../../../../navigation/routes";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { usePnOpenConfirmationBottomSheet } from "../../../../features/pn/components/PnOpenConfirmationBottomSheet";
-import { pnEnabled } from "../../../../config";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { useIOSelector } from "../../../../store/hooks";
 
 export const useMessageOpening = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -32,16 +33,18 @@ export const useMessageOpening = () => {
     }
   });
 
+  const isPnEnabled = useIOSelector(isPnEnabledSelector);
+
   const showAlertFor = useCallback(
     (message: UIMessage) => {
-      if (message.category.tag === TagEnum.PN && pnEnabled) {
+      if (message.category.tag === TagEnum.PN && isPnEnabled) {
         // show the bottomsheet if needed
         pnBottomSheet.present(message);
         return true;
       }
       return false;
     },
-    [pnBottomSheet]
+    [pnBottomSheet, isPnEnabled]
   );
 
   const openMessage = useCallback(
