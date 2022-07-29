@@ -94,6 +94,7 @@ const customVariables = Object.assign(materialVariables, {
   lineHeightXSmall: 17,
 
   // Icon
+  iconFamily: "Entypo" /* NB Theme variable, don't remove */,
   iconSizeBase: 24,
 
   get iconSize2(): number {
@@ -128,12 +129,17 @@ const customVariables = Object.assign(materialVariables, {
   gridGutter: 10,
 
   // Header
+  toolbarDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
   appHeaderHeight: 56,
   appHeaderPaddingHorizontal: 12,
   titleHeaderPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
   headerBodyFontWeight: "600" as FontWeight,
+  get toolbarBtnColor(): ThemeSimpleValue {
+    /* NB Theme variable, don't remove */
+    return this.textColor;
+  },
   get toolbarTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
@@ -174,6 +180,9 @@ const customVariables = Object.assign(materialVariables, {
   spacerExtralargeWidth: 40,
 
   // Tabs
+  tabDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
+  topTabBarTextColor: IOColors.bluegrey /* NB Theme variable, don't remove */,
+  topTabBarActiveTextColor: IOColors.blue /* NB Theme variable, don't remove */,
   tabUnderlineColor: IOColors.greyUltraLight,
   tabUnderlineHeight: 2,
 
