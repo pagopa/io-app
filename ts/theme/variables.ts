@@ -49,10 +49,11 @@ const customVariables = Object.assign(materialVariables, {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: IOColors.blue,
+  brandPrimary: IOColors.blue /* NB Official theme variable, don't remove it */,
   colorHighlight: IOColors.aqua,
-  colorSuccess: IOColors.green,
-  colorDanger: IOColors.red,
+  brandSuccess:
+    IOColors.green /* NB Official theme variable, don't remove it */,
+  brandDanger: IOColors.red /* NB Official theme variable, don't remove it */,
 
   btnLightBorderColor: IOColors.grey,
 

@@ -67,7 +67,7 @@ export const getPaymentHistoryInfo = (
       return {
         text11: I18n.t("payment.details.state.failed"),
         text3: getIuv(paymentHistory.data),
-        color: customVariables.colorDanger
+        color: customVariables.brandDanger
       };
     }
   );
