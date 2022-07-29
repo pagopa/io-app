@@ -29,7 +29,6 @@ const customVariables = Object.assign(materialVariables, {
   btnHeight: 40,
   btnWidgetHeight: 24,
   btnFontSize: 16,
-  btnIconSize: 24,
 
   btnXSmallHeight: 32,
   btnXSmallLineHeight: 18,
@@ -40,6 +39,8 @@ const customVariables = Object.assign(materialVariables, {
   btnSmallLineHeight: 20,
   btnSmallFontSize: 14,
   btnSmallIconSize: 20,
+
+  btnBorderRadius: 4,
 
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
@@ -91,28 +92,15 @@ const customVariables = Object.assign(materialVariables, {
   lineHeightBase: 24,
   lineHeightSmall: 18,
   lineHeightXSmall: 17,
-  get lineHeightFontSizeRatio(): number {
-    return this.lineHeightBase / this.fontSizeBase;
-  },
 
   // Icon
-  iconFamily: "Entypo",
   iconSizeBase: 24,
 
-  get iconSize1(): number {
-    return this.iconSizeBase * (2 / 3);
-  },
   get iconSize2(): number {
     return this.iconSizeBase * (5 / 6);
   },
   get iconSize3(): number {
     return this.iconSizeBase * 1;
-  },
-  get iconSize4(): number {
-    return this.iconSizeBase * (7 / 6);
-  },
-  get iconSize5(): number {
-    return this.iconSizeBase * 1.5;
   },
   get iconSize6(): number {
     return this.iconSizeBase * 2;
@@ -135,7 +123,6 @@ const customVariables = Object.assign(materialVariables, {
   footerShadowOffsetHeight: 50,
   footerShadowOpacity: 0.5,
   footerShadowRadius: 37,
-  footerBottomBorderWidth: 1,
 
   // Grid
   gridGutter: 10,
@@ -146,27 +133,19 @@ const customVariables = Object.assign(materialVariables, {
   titleHeaderPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
-  headerFontColor: "#000000",
   headerBodyFontWeight: "600" as FontWeight,
-  toolbarDefaultBg: "#FFFFFF",
   get toolbarTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
-  get toolbarBtnColor(): ThemeSimpleValue {
-    return this.textColor;
-  },
-  androidStatusBarColor: "#FFFFFF",
-
-  // Modal
-  modalMargin: 0,
-  modalPadding: 24,
-  modalHeaderHeight: 75,
+  androidStatusBarColor: IOColors.white,
 
   // Text
   textColor: IOColors.bluegrey,
   textColorDark: IOColors.bluegreyDark,
   textLinkColor: IOColors.blue,
   textMessageDetailLinkColor: "#0073E6",
+  // TODO: Delete the following variables after refactor using
+  // the new Text component (not from NativeBase)
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
@@ -175,6 +154,8 @@ const customVariables = Object.assign(materialVariables, {
   colorSkeleton: IOColors.bluegreyLight,
 
   // Label
+  // TODO: Delete the following line after refactor using
+  // the new Label component (not from NativeBase)
   labelNormalWeight: "400" as FontWeight,
 
   // Input
@@ -192,14 +173,9 @@ const customVariables = Object.assign(materialVariables, {
   spacerLargeWidth: 24,
   spacerExtralargeWidth: 40,
 
-  borderRadiusBase: 4,
-
   // Tabs
-  tabDefaultBg: "#FFFFFF",
   tabUnderlineColor: IOColors.greyUltraLight,
   tabUnderlineHeight: 2,
-  topTabBarTextColor: IOColors.bluegrey,
-  topTabBarActiveTextColor: IOColors.blue,
 
   // Animations
   activeOpacity: 0.25,
@@ -209,10 +185,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: IOColors.blue,
-  unselectedColor: IOColors.bluegrey,
-
-  // Checkbox
-  checkboxDefaultColor: "transparent"
+  unselectedColor: IOColors.bluegrey
 });
 
 export default customVariables;
