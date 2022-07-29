@@ -1,21 +1,24 @@
+import { useNavigation } from "@react-navigation/native";
+import { isSome } from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { isSome } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
+import CheckIncomeComponent from "../../components/CheckIncomeComponent";
+import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherFailure,
   svGenerateVoucherSelectCategory
 } from "../../store/actions/voucherGeneration";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
-import { navigateToSvSickSelectDestinationScreen } from "../../navigation/actions";
-import CheckIncomeComponent from "../../components/CheckIncomeComponent";
+import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
+  const navigation = useNavigation();
+
   if (
     isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "sick"
@@ -26,16 +29,18 @@ const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
 
   return (
     <CheckIncomeComponent
-      onContinuePress={props.navigateToSvSickSelectDestination}
+      onContinuePress={() =>
+        navigation.navigate(
+          SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
+        )
+      }
     />
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   selectCategory: (category: SvBeneficiaryCategory) =>
-    dispatch(svGenerateVoucherSelectCategory(category)),
-  navigateToSvSickSelectDestination: () =>
-    navigateToSvSickSelectDestinationScreen()
+    dispatch(svGenerateVoucherSelectCategory(category))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)
