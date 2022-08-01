@@ -77,12 +77,12 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
 
   get bannerStyle(): ViewStyle {
     if (this.isPrescriptionExpired) {
-      return { backgroundColor: customVariables.brandDarkGray };
+      return { backgroundColor: IOColors.bluegrey };
     }
     if (this.isPrescriptionExpiring) {
       return { backgroundColor: customVariables.calendarExpirableColor };
     }
-    return { backgroundColor: customVariables.brandGray };
+    return { backgroundColor: IOColors.greyUltraLight };
   }
 
   get textContent() {
@@ -128,12 +128,12 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
       const iconBackgoundColor =
         this.isPrescriptionExpiring || this.isPrescriptionExpired
           ? IOColors.white
-          : customVariables.brandDarkGray;
+          : IOColors.bluegrey;
 
       const textColor = this.isPrescriptionExpiring
         ? customVariables.calendarExpirableColor
         : this.isPrescriptionExpired
-        ? customVariables.brandDarkGray
+        ? IOColors.bluegrey
         : IOColors.white;
 
       return (

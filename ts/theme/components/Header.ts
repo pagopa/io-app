@@ -103,7 +103,7 @@ export default (): Theme => ({
   },
 
   ".dark": {
-    backgroundColor: variables.brandDarkGray,
+    backgroundColor: IOColors.bluegrey,
     "NativeBase.Right": {
       "NativeBase.Button": {
         "UIComponent.IconFont": {

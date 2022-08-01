@@ -151,7 +151,7 @@ const MessageListItemPlaceholder = (
       <View style={styles.itemLoadingHeaderCenter}>
         <Placeholder.Paragraph
           textSize={customVariables.fontSizeBase}
-          color={customVariables.shineColor}
+          color={customVariables.colorSkeleton}
           lineNumber={2}
           lineSpacing={5}
           width="100%"
@@ -167,7 +167,7 @@ const MessageListItemPlaceholder = (
       <View style={styles.itemLoadingContentCenter}>
         <Placeholder.Line
           textSize={customVariables.fontSizeBase}
-          color={customVariables.shineColor}
+          color={customVariables.colorSkeleton}
           width="75%"
           animate="shine"
         />

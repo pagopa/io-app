@@ -2,10 +2,10 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { BadgeComponent } from "../screens/BadgeComponent";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   title: string;
@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 24
   },
-  lightGray: {
-    color: customVariables.lightGray
+  grey: {
+    color: IOColors.grey
   },
-  lighterGray: {
-    color: customVariables.lighterGray
+  bluegreyLight: {
+    color: IOColors.bluegreyLight
   },
   row: {
     flexDirection: "row",
@@ -66,7 +66,7 @@ export const PaymentSummaryComponent = (props: Props) => {
     }
     return (
       <React.Fragment>
-        <Text style={props.dark && styles.lighterGray}>{label}</Text>
+        <Text style={props.dark && styles.bluegreyLight}>{label}</Text>
         <Text
           bold={true}
           dark={!props.dark}
@@ -95,10 +95,7 @@ export const PaymentSummaryComponent = (props: Props) => {
     <React.Fragment>
       <Text
         bold={true}
-        style={[
-          styles.title,
-          props.dark ? styles.lighterGray : styles.lightGray
-        ]}
+        style={[styles.title, props.dark ? styles.bluegreyLight : styles.grey]}
       >
         {props.title}
       </Text>

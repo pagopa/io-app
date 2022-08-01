@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
+import { IOColors } from "../core/variables/IOColors";
 
 const styles = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center" },
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     marginTop: 3
   },
   badgeText: {
-    color: customVariables.brandDarkGray,
+    color: IOColors.bluegrey,
     fontSize: 6,
     paddingLeft: 3,
     paddingRight: 3,

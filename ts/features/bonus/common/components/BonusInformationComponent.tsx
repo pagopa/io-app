@@ -26,6 +26,7 @@ import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { Link } from "../../../../components/core/typography/Link";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type OwnProps = {
   onBack?: () => void;
@@ -45,7 +46,7 @@ type Props = OwnProps &
 const CSS_STYLE = `
 body {
   font-size: ${customVariables.fontSize1}px;
-  color: ${customVariables.brandDarkestGray}
+  color: ${customVariables.textColorDark}
 }
 
 h4 {
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: customVariables.fontSize3,
     lineHeight: customVariables.lineHeightH3,
-    color: customVariables.colorBlack
+    color: IOColors.black
   },
   urlButton: { flex: 1, textAlign: "center" }
 });

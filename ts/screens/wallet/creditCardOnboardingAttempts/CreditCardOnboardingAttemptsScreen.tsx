@@ -33,9 +33,6 @@ const styles = StyleSheet.create({
     padding: variables.contentPadding,
     paddingBottom: 0
   },
-  brandDarkGray: {
-    color: variables.brandDarkGray
-  },
   whiteBg: {
     backgroundColor: IOColors.white
   }
