@@ -5,7 +5,7 @@
 
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
@@ -104,9 +104,9 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
       return (
         <React.Fragment>
           {I18n.t("messages.cta.prescription.expiredAlert.block1")}
-          <Text bold={true} white={true}>{` ${time} `}</Text>
+          <NBText bold={true} white={true}>{` ${time} `}</NBText>
           {I18n.t("messages.cta.prescription.expiredAlert.block2")}
-          <Text bold={true} white={true}>{` ${date}`}</Text>
+          <NBText bold={true} white={true}>{` ${date}`}</NBText>
         </React.Fragment>
       );
     }
@@ -114,7 +114,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     return (
       <React.Fragment>
         {I18n.t("messages.cta.prescription.addMemo")}
-        <Text bold={true}>{` ${date}`}</Text>
+        <NBText bold={true}>{` ${date}`}</NBText>
       </React.Fragment>
     );
   }
@@ -155,9 +155,9 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     return dueDate.fold(null, _ =>
       !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
         <View style={[styles.container, this.bannerStyle]}>
-          <Text style={styles.text} white={false}>
+          <NBText style={styles.text} white={false}>
             {this.textContent}
-          </Text>
+          </NBText>
           <View spacer={true} xsmall={true} />
           <View style={styles.row}>
             {this.renderCalendarIcon()}
@@ -169,9 +169,9 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
         <View style={[styles.container, styles.row, this.bannerStyle]}>
           {this.renderCalendarIcon()}
           <View hspacer={true} small={true} />
-          <Text style={styles.text} white={true}>
+          <NBText style={styles.text} white={true}>
             {this.textContent}
-          </Text>
+          </NBText>
         </View>
       )
     );

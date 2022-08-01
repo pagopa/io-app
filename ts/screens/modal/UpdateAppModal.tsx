@@ -4,7 +4,7 @@
  */
 
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Container, Text, View } from "native-base";
+import { Button, Container, Text as NBText, View } from "native-base";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   BackHandler,
@@ -62,7 +62,7 @@ const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
         onPress={onOpenAppStore}
         accessibilityRole={"button"}
       >
-        <Text>{I18n.t("btnUpdateApp")}</Text>
+        <NBText>{I18n.t("btnUpdateApp")}</NBText>
       </Button>
       <View spacer />
     </>
@@ -133,12 +133,12 @@ const UpdateAppModal: React.FC = () => {
         <Container>
           <View style={styles.container}>
             <H1>{I18n.t("titleUpdateApp")}</H1>
-            <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
+            <NBText style={styles.text}>{I18n.t("messageUpdateApp")}</NBText>
             <Image style={styles.img} source={updateIcon} />
             {error && (
-              <Text style={styles.textDanger}>
+              <NBText style={styles.textDanger}>
                 {I18n.t("msgErrorUpdateApp")}
-              </Text>
+              </NBText>
             )}
           </View>
         </Container>

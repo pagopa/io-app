@@ -1,6 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -109,8 +109,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
-  private headerRef = React.createRef<Text>();
-  private errorStatusRef = React.createRef<Text>();
+  private headerRef = React.createRef<NBText>();
+  private errorStatusRef = React.createRef<NBText>();
 
   private idUpdateCanInsertPinTooManyAttempts?: number;
 
@@ -391,7 +391,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   private renderErrorDescription = () =>
     maybeNotNullyString(this.getErrorText()).fold(undefined, des => (
-      <Text
+      <NBText
         alignCenter={true}
         bold={true}
         white={true}
@@ -400,7 +400,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         ref={this.errorStatusRef}
       >
         {des}
-      </Text>
+      </NBText>
     ));
 
   /**
@@ -417,7 +417,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   private renderHeader(isValidatingTask: boolean) {
     return (
       <React.Fragment>
-        <Text
+        <NBText
           bold={true}
           alignCenter={true}
           style={styles.header}
@@ -435,14 +435,14 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                     profileName: pN
                   })
               )}
-        </Text>
-        <Text
+        </NBText>
+        <NBText
           alignCenter={true}
           white={!isValidatingTask}
           dark={isValidatingTask}
         >
           {this.getInstructions()}
-        </Text>
+        </NBText>
       </React.Fragment>
     );
   }

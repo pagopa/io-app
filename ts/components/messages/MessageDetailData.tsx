@@ -1,6 +1,6 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -90,45 +90,47 @@ class MessageDetailData extends React.PureComponent<Props> {
 
     return (
       <View style={styles.container}>
-        <Text>
+        <NBText>
           {I18n.t("messageDetails.dateSending")}
-          <Text bold={true}>{` ${convertDateTimeToWordDistance(
+          <NBText bold={true}>{` ${convertDateTimeToWordDistance(
             this.props.message.created_at
-          )}`}</Text>
-        </Text>
+          )}`}</NBText>
+        </NBText>
 
         {this.data.organization_name.isSome() && (
-          <Text>
+          <NBText>
             {I18n.t("messageDetails.sender")}
-            <Text bold={true}>{` ${this.data.organization_name.value}`}</Text>
-          </Text>
+            <NBText
+              bold={true}
+            >{` ${this.data.organization_name.value}`}</NBText>
+          </NBText>
         )}
 
         {this.data.service_name.isSome() && this.data.service_detail.isSome() && (
           <View style={styles.service}>
-            <Text>
+            <NBText>
               {`${I18n.t("messageDetails.service")} `}
               <Link weight={"Bold"} onPress={this.props.goToServiceDetail}>
                 {this.data.service_detail.value.service_name}
               </Link>
-            </Text>
+            </NBText>
           </View>
         )}
         {this.hasEmailOrPhone && (
           <React.Fragment>
             <View spacer={true} />
 
-            <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
+            <NBText bold={true}>{I18n.t("messageDetails.question")}</NBText>
             <View spacer={true} xsmall={true} />
-            <Text>{I18n.t("messageDetails.answer")}</Text>
+            <NBText>{I18n.t("messageDetails.answer")}</NBText>
 
             <View spacer={true} />
 
             <React.Fragment>
               <View style={styles.row}>
-                <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
+                <NBText style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
                   this.props.message.id
-                }`}</Text>
+                }`}</NBText>
                 <CopyButtonComponent textToCopy={textToCopy} />
               </View>
               <View spacer={true} />

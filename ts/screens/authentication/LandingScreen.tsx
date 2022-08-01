@@ -6,7 +6,7 @@ import { CompatNavigationProp } from "@react-navigation/compat";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import JailMonkey from "jail-monkey";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -277,11 +277,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={isCieSupported ? "io-cie" : "io-profilo"}
               color={IOColors.white}
             />
-            <Text>
+            <NBText>
               {isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
                 : I18n.t("authentication.landing.loginSpid")}
-            </Text>
+            </NBText>
           </ButtonDefaultOpacity>
           <View spacer={true} />
           <ButtonDefaultOpacity
@@ -304,11 +304,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={this.isCieSupported() ? "io-profilo" : "io-cie"}
               color={IOColors.white}
             />
-            <Text>
+            <NBText>
               {this.isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
                 : I18n.t("authentication.landing.loginCie")}
-            </Text>
+            </NBText>
           </ButtonDefaultOpacity>
           <View spacer={true} />
           <Link

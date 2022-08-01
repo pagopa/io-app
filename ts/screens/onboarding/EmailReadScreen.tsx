@@ -7,7 +7,7 @@
  */
 import { StackActions } from "@react-navigation/native";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -159,7 +159,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             }
           >
             <View style={styles.content}>
-              <Text>{I18n.t("email.insert.label")}</Text>
+              <NBText>{I18n.t("email.insert.label")}</NBText>
               <View style={styles.spacerSmall} />
               <View style={styles.emailWithIcon}>
                 <IconFont
@@ -174,11 +174,11 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                 )}
               </View>
               <View style={styles.spacerLarge} />
-              <Text>
+              <NBText>
                 {isFromProfileSection
                   ? `${I18n.t("email.read.details")}`
                   : I18n.t("email.read.info")}
-              </Text>
+              </NBText>
             </View>
           </ScreenContent>
           <SectionStatusComponent sectionKey={"email_validation"} />

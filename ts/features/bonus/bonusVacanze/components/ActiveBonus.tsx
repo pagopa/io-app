@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
@@ -84,30 +84,30 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
     >
       <View style={styles.spaced}>
         {bonusValidityInterval.isSome() && (
-          <Text>{`${I18n.t("bonus.bonusVacanze.validity")} ${
+          <NBText>{`${I18n.t("bonus.bonusVacanze.validity")} ${
             bonusValidityInterval.value.e1
-          } - ${bonusValidityInterval.value.e2}`}</Text>
+          } - ${bonusValidityInterval.value.e2}`}</NBText>
         )}
-        <Text bold={true} style={styles.text12}>
+        <NBText bold={true} style={styles.text12}>
           {formatNumberAmount(props.bonus.dsu_request.max_amount, true)}
-        </Text>
+        </NBText>
       </View>
       <View small={true} />
       <View style={styles.spaced}>
-        <Text style={styles.textWhite}>
+        <NBText style={styles.textWhite}>
           {I18n.t("bonus.bonusVacanze.taxBenefit")}
-        </Text>
-        <Text bold={true} style={styles.text12}>
+        </NBText>
+        <NBText bold={true} style={styles.text12}>
           {formatNumberAmount(props.bonus.dsu_request.max_tax_benefit, true)}
-        </Text>
+        </NBText>
       </View>
       <View style={styles.smallSpacer} />
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
-          <Text numberOfLines={2} style={styles.text3}>
+          <NBText numberOfLines={2} style={styles.text3}>
             {/* TODO replace this hardcoded string */}
             {"Bonus Vacanze"}
-          </Text>
+          </NBText>
         </View>
         <View style={styles.icon}>
           <IconFont name="io-right" size={ICON_WIDTH} color={IOColors.white} />

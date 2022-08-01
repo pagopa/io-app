@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
@@ -85,18 +85,18 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
     return (
       <View style={styles.padded}>
         <View spacer={true} small={true} />
-        <Text style={styles.label}>
+        <NBText style={styles.label}>
           {I18n.t(`messages.medical.${item.name}`, {
             defaultValue: I18n.t("messages.medical.not_available")
           }).toUpperCase()}
-        </Text>
+        </NBText>
         {this.getImage(item)}
         {value.isSome() && (
-          <Text semibold={true} style={{ textAlign: "center" }}>
+          <NBText semibold={true} style={{ textAlign: "center" }}>
             {I18n.t("global.symbols.asterisk")}
             {value.value}
             {I18n.t("global.symbols.asterisk")}
-          </Text>
+          </NBText>
         )}
         <View spacer={true} />
       </View>
@@ -111,21 +111,21 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
     <React.Fragment>
       <ItemSeparatorComponent />
       <View spacer={true} />
-      <Text style={[styles.note, styles.padded]}>
+      <NBText style={[styles.note, styles.padded]}>
         {I18n.t("messages.medical.note")}
-      </Text>
+      </NBText>
     </React.Fragment>
   );
 
   private headerItem = (
     <View style={styles.padded}>
-      <Text bold={true} style={styles.customHeader}>
+      <NBText bold={true} style={styles.customHeader}>
         {I18n.t("messages.medical.nationalService").toUpperCase()}
-      </Text>
+      </NBText>
       {this.props.organizationName && (
-        <Text style={styles.label}>
+        <NBText style={styles.label}>
           {this.props.organizationName.toUpperCase()}
-        </Text>
+        </NBText>
       )}
       <View spacer={true} xsmall={true} />
       <ItemSeparatorComponent noPadded={true} bold={true} />

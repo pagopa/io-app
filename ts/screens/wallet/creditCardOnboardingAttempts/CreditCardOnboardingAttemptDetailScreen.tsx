@@ -1,5 +1,5 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
@@ -130,7 +130,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
         block={true}
       >
         <IconFont name={"io-messaggi"} />
-        <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
+        <NBText>{I18n.t("payment.details.info.buttons.help")}</NBText>
       </ButtonDefaultOpacity>
     </View>
   );

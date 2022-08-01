@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ComponentProps } from "react";
@@ -57,9 +57,9 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
       onPress={() => setExpanded(!expanded)}
     >
       <View style={styles.header}>
-        <Text bold={true} style={styles.flex}>
+        <NBText bold={true} style={styles.flex}>
           {title}
-        </Text>
+        </NBText>
         <IconFont
           name={"io-right"}
           color={customVariables.brandPrimary}

@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { ReactElement, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -117,7 +117,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
         customGoBack={customGoBack}
         headerBody={
           <TouchableDefaultOpacity onPress={() => props.navigation.goBack}>
-            <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
+            <NBText white={true}>{I18n.t("profile.fiscalCode.title")}</NBText>
           </TouchableDefaultOpacity>
         }
         contentStyle={styles.darkBg}
@@ -169,9 +169,9 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
 
               <View style={styles.largeSpacer} />
             </ScrollView>
-            <Text white={true} style={styles.text}>
+            <NBText white={true} style={styles.text}>
               {I18n.t("profile.fiscalCode.content")}
-            </Text>
+            </NBText>
           </React.Fragment>
         )}
       </DarkLayout>

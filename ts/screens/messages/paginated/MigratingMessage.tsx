@@ -69,6 +69,8 @@ const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
               onPress={onRetry}
               style={{ width: "100%" }}
             >
+              {/* TODO: Replace with BaseTypography component (custom Text
+                componented based on RN Text) */}
               <Text style={styles.migrationMessageButtonText}>
                 {I18n.t("global.buttons.retry")}
               </Text>

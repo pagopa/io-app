@@ -3,7 +3,7 @@
  * not work properly. This is due to avoid user tries to access features or services potentially can't work
  * as expected
  */
-import { Container, Text, View } from "native-base";
+import { Container, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -60,10 +60,10 @@ class SystemOffModal extends React.PureComponent<Props> {
               </React.Fragment>
               <H1 style={styles.title}>{I18n.t("systemsOff.title")}</H1>
               <View spacer={true} />
-              {message && <Text style={styles.subTitle}>{message}</Text>}
-              <Text style={styles.subTitle} bold={true}>
+              {message && <NBText style={styles.subTitle}>{message}</NBText>}
+              <NBText style={styles.subTitle} bold={true}>
                 {I18n.t("systemsOff.closeApp")}
-              </Text>
+              </NBText>
             </View>
           </Container>
         </BaseScreenComponent>

@@ -4,7 +4,7 @@ import {
 } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
@@ -189,10 +189,10 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text style={styles.flex}>{label}</Text>
-        <Text bold={true} dark={true} selectable={true}>
+        <NBText style={styles.flex}>{label}</NBText>
+        <NBText bold={true} dark={true} selectable={true}>
           {value}
-        </Text>
+        </NBText>
       </View>
     );
 
@@ -228,14 +228,14 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             {I18n.t("wallet.transactionFullReason")}
           </Link>
           {this.state.showFullReason && (
-            <Text
+            <NBText
               selectable={true}
               onLongPress={() =>
                 clipboardSetStringWithFeedback(data.fullReason)
               }
             >
               {data.fullReason}
-            </Text>
+            </NBText>
           )}
           <View spacer={true} large={true} />
           {data.iuv && standardRow(I18n.t("payment.IUV"), data.iuv)}
@@ -270,12 +270,16 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {/** Total amount (amount + fee) */}
           <View style={styles.row}>
-            <Text style={[styles.bigText, styles.flex]} bold={true} dark={true}>
+            <NBText
+              style={[styles.bigText, styles.flex]}
+              bold={true}
+              dark={true}
+            >
               {I18n.t("wallet.firstTransactionSummary.total")}
-            </Text>
-            <Text style={styles.bigText} bold={true} dark={true}>
+            </NBText>
+            <NBText style={styles.bigText} bold={true} dark={true}>
               {data.totalAmount}
-            </Text>
+            </NBText>
           </View>
 
           {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (
@@ -291,7 +295,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {data.paymentMethodIcon ? (
             <View style={[styles.row, styles.centered]}>
-              <Text>{I18n.t("wallet.paymentMethod")}</Text>
+              <NBText>{I18n.t("wallet.paymentMethod")}</NBText>
               <Image
                 style={styles.cardLogo}
                 source={{ uri: data.paymentMethodIcon }}
@@ -299,7 +303,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             </View>
           ) : (
             data.paymentMethodBrand && (
-              <Text bold={true}>{data.paymentMethodBrand}</Text>
+              <NBText bold={true}>{data.paymentMethodBrand}</NBText>
             )
           )}
 
@@ -309,11 +313,11 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {/** Transaction id */}
           <View>
-            <Text>
+            <NBText>
               {I18n.t("wallet.firstTransactionSummary.idTransaction")}
-            </Text>
+            </NBText>
             <View style={styles.row}>
-              <Text bold={true}>{data.idTransaction}</Text>
+              <NBText bold={true}>{data.idTransaction}</NBText>
               <CopyButtonComponent textToCopy={data.idTransaction.toString()} />
             </View>
           </View>
@@ -326,7 +330,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             block={true}
             onPress={this.handleBackPress}
           >
-            <Text>{I18n.t("global.buttons.close")}</Text>
+            <NBText>{I18n.t("global.buttons.close")}</NBText>
           </ButtonDefaultOpacity>
           <View spacer={true} />
         </SlidedContentComponent>

@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Button, Text, View } from "native-base";
+import { Button, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { ComponentProps } from "../../types/react";
@@ -158,7 +158,7 @@ export default class BlockButtons extends React.Component<Props, never> {
           }))}
         />
       )}
-      <Text
+      <NBText
         style={[
           fromNullable(props.buttonFontSize).fold(undefined, fs => ({
             fontSize: fs
@@ -169,7 +169,7 @@ export default class BlockButtons extends React.Component<Props, never> {
         ]}
       >
         {props.title}
-      </Text>
+      </NBText>
     </ButtonDefaultOpacity>
   );
 

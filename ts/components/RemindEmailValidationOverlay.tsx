@@ -4,7 +4,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -213,7 +213,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private renderErrorBanner = (
     <View style={styles.error}>
-      <Text white={true}>{I18n.t("global.actions.retry")}</Text>
+      <NBText white={true}>{I18n.t("global.actions.retry")}</NBText>
       <View>
         <IconFont
           name={"io-close"}
@@ -383,9 +383,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             style={styles.center}
           />
           <View spacer={true} extralarge={true} />
-          <Text alignCenter={true} bold={true}>
+          <NBText alignCenter={true} bold={true}>
             {title}
-          </Text>
+          </NBText>
           {!this.state.emailHasBeenValidate ? (
             <Markdown
               onLoadEnd={this.handleOnContentLoadEnd}
@@ -397,9 +397,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             </Markdown>
           ) : (
             <View style={styles.validated}>
-              <Text alignCenter={true}>
+              <NBText alignCenter={true}>
                 {I18n.t("email.validate.validated_ok")}
-              </Text>
+              </NBText>
             </View>
           )}
           <View spacer={true} large={true} />

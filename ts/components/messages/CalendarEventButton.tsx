@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import {
   Alert,
@@ -346,7 +346,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         style={this.props.small ? styles.oneThird : styles.button}
       >
         <IconFont name={iconName} />
-        <Text style={styles.marginTop1}>{reminderText}</Text>
+        <NBText style={styles.marginTop1}>{reminderText}</NBText>
       </ButtonDefaultOpacity>
     );
   }

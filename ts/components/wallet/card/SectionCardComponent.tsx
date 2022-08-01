@@ -1,4 +1,4 @@
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   ActivityIndicator,
@@ -126,7 +126,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               color={IOColors.white}
               size={customVariables.fontSize2}
             />
-            <Text
+            <NBText
               bold={true}
               style={[
                 styles.labelButton,
@@ -134,7 +134,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               ]}
             >
               {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
-            </Text>
+            </NBText>
           </>
         );
       case "loading":
@@ -150,7 +150,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       case "refresh":
         return (
           <View style={styles.row}>
-            <Text
+            <NBText
               bold={true}
               style={[
                 styles.labelButton,
@@ -158,8 +158,8 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               ]}
             >
               {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
-            </Text>
-            <Text
+            </NBText>
+            <NBText
               style={{
                 fontSize: customVariables.fontSize1 + 16,
                 height: 22,
@@ -168,13 +168,13 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               }}
             >
               {" ⟳"}
-            </Text>
+            </NBText>
           </View>
         );
       case "show":
         return (
           <View style={styles.row}>
-            <Text
+            <NBText
               bold={true}
               style={[
                 styles.labelButton,
@@ -182,7 +182,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               ]}
             >
               {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
-            </Text>
+            </NBText>
             <IconFont
               style={{ marginTop: 1, marginLeft: 2 }}
               name={"io-right"}
@@ -225,17 +225,21 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           >
             <View style={[styles.flexRow, styles.topSpacing]}>
               <View style={styles.flexRow2}>
-                <Text
+                <NBText
                   style={[styles.greyUltraLight, styles.headerText]}
                   ellipsizeMode="tail"
                 >
                   {label}
-                </Text>
+                </NBText>
                 {isNew && (
                   <Badge style={styles.badgeColor}>
-                    <Text semibold={true} style={styles.badgeText} dark={true}>
+                    <NBText
+                      semibold={true}
+                      style={styles.badgeText}
+                      dark={true}
+                    >
                       {I18n.t("wallet.methods.newCome")}
-                    </Text>
+                    </NBText>
                   </Badge>
                 )}
               </View>

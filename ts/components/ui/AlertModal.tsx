@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import {
   BackHandler,
@@ -65,7 +65,7 @@ export class AlertModal extends React.PureComponent<Props> {
         backgroundColor={opaqueBgColor}
         foreground={
           <View style={styles.container}>
-            <Text style={styles.message}>{this.props.message}</Text>
+            <NBText style={styles.message}>{this.props.message}</NBText>
           </View>
         }
       />

@@ -23,7 +23,7 @@
  */
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Tab, Tabs, Text, View } from "native-base";
+import { Tab, Tabs, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Animated,
@@ -272,8 +272,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           source={require("../../../img/services/icon-loading-services.png")}
         />
         <View spacer={true} extralarge={true} />
-        <Text bold={true}>{I18n.t("services.loading.title")}</Text>
-        <Text>{I18n.t("services.loading.subtitle")}</Text>
+        <NBText bold={true}>{I18n.t("services.loading.title")}</NBText>
+        <NBText>{I18n.t("services.loading.subtitle")}</NBText>
       </View>
     );
   }

@@ -1,4 +1,4 @@
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
@@ -95,7 +95,7 @@ const getTosFooter = (
         <View spacer={true} extralarge={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} extralarge={true} />
-        <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
+        <NBText dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</NBText>
         <Link
           weight={"SemiBold"}
           numberOfLines={1}
@@ -177,7 +177,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           bordered={true}
           onPress={() => handleModalPress(url.url)}
         >
-          <Text style={styles.urlButton}>{url.name}</Text>
+          <NBText style={styles.urlButton}>{url.name}</NBText>
         </ButtonDefaultOpacity>
         {idx !== urls.length - 1 && <View spacer={true} small={true} />}
       </View>
@@ -228,7 +228,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
             </View>
           </View>
           <View spacer={true} large={true} />
-          <Text dark={true}>{bonusTypeLocalizedContent.subtitle}</Text>
+          <NBText dark={true}>{bonusTypeLocalizedContent.subtitle}</NBText>
 
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />

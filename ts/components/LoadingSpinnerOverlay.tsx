@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../i18n";
@@ -44,13 +44,13 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
           isLoading && (
             <BoxedRefreshIndicator
               caption={
-                <Text
+                <NBText
                   alignCenter={true}
                   style={styles.textCaption}
                   accessible={true}
                 >
                   {loadingCaption || I18n.t("global.remoteStates.wait")}
-                </Text>
+                </NBText>
               }
               action={
                 onCancel && (
@@ -59,7 +59,7 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
                     cancel={true}
                     style={styles.cancelButtonStyle}
                   >
-                    <Text>{I18n.t("global.buttons.cancel")}</Text>
+                    <NBText>{I18n.t("global.buttons.cancel")}</NBText>
                   </ButtonDefaultOpacity>
                 )
               }

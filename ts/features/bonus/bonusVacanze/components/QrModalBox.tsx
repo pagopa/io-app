@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
@@ -58,13 +58,13 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
     <View style={styles.modalBox}>
       <View style={styles.row}>
         <View>
-          <Text style={styles.uniqueCode}>
+          <NBText style={styles.uniqueCode}>
             {I18n.t("bonus.bonusVacanze.uniqueCode")}
-          </Text>
+          </NBText>
           <View style={styles.row}>
-            <Text style={styles.codeText} bold={true}>
+            <NBText style={styles.codeText} bold={true}>
               {codeToDisplay}
-            </Text>
+            </NBText>
             <View hspacer={true} />
             <CopyButtonComponent
               textToCopy={codeToCopy}

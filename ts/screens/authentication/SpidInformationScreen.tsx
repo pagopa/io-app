@@ -2,7 +2,7 @@
  * A screen where the user can know more about spid and access to spid.gov.it
  */
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { Col, Content, Grid, Row, Text, View } from "native-base";
+import { Col, Content, Grid, Row, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -41,7 +41,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
           <H1 color={"blue"}>{value}</H1>
         </Col>
         <Col size={5}>
-          <Text>{content}</Text>
+          <NBText>{content}</NBText>
         </Col>
         <Col size={2} />
       </Row>
@@ -64,20 +64,22 @@ class SpidInformationScreen extends React.Component<Props, never> {
           </H1>
 
           <View spacer={true} />
-          <Text>{I18n.t("authentication.spid_information.paragraph1")}</Text>
+          <NBText>
+            {I18n.t("authentication.spid_information.paragraph1")}
+          </NBText>
           <View spacer={true} extralarge={true} />
 
           <H1>{I18n.t("authentication.spid_information.subtitle")}</H1>
           <View spacer={true} />
-          <Text>
+          <NBText>
             {I18n.t("authentication.spid_information.paragraph2-part1")}
-            <Text bold={true}>
+            <NBText bold={true}>
               {I18n.t("authentication.spid_information.paragraph2-bold")}
-            </Text>
-            <Text>
+            </NBText>
+            <NBText>
               {` ${I18n.t("authentication.spid_information.paragraph2-part2")}`}
-            </Text>
-          </Text>
+            </NBText>
+          </NBText>
           <View spacer={true} />
           <Grid>
             {this.getValueContent(
@@ -109,7 +111,9 @@ class SpidInformationScreen extends React.Component<Props, never> {
             primary={true}
             onPress={browseToLink}
           >
-            <Text>{I18n.t("authentication.spid_information.knowMore")}</Text>
+            <NBText>
+              {I18n.t("authentication.spid_information.knowMore")}
+            </NBText>
           </ButtonDefaultOpacity>
         </View>
       </BaseScreenComponent>

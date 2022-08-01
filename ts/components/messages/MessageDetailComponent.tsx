@@ -1,5 +1,5 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -93,7 +93,7 @@ export default class MessageDetailComponent extends React.PureComponent<
       _ => (
         <React.Fragment>
           <H1>{I18n.t("messages.medical.prescription")}</H1>
-          <Text>{I18n.t("messages.medical.memo")}</Text>
+          <NBText>{I18n.t("messages.medical.memo")}</NBText>
         </React.Fragment>
       )
     );

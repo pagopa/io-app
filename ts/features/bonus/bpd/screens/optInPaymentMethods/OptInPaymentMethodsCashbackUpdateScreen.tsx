@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import {
   Image,
@@ -90,11 +90,11 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
               <H2>
                 {I18n.t("bonus.bpd.optInPaymentMethods.cashbackUpdate.title")}
               </H2>
-              <Text>
+              <NBText>
                 {I18n.t(
                   "bonus.bpd.optInPaymentMethods.cashbackUpdate.subtitle"
                 )}
-              </Text>
+              </NBText>
             </View>
             <Image source={bpdLogo} style={styles.logo} />
           </View>

@@ -13,7 +13,7 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
-import { Content, Form, Text, View } from "native-base";
+import { Content, Form, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -165,7 +165,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           >
             <Content scrollEnabled={false}>
               <H1>{I18n.t("wallet.insertManually.title")}</H1>
-              <Text>{I18n.t("wallet.insertManually.info")}</Text>
+              <NBText>{I18n.t("wallet.insertManually.info")}</NBText>
               <Link onPress={this.showModal}>
                 {I18n.t("wallet.insertManually.link")}
               </Link>

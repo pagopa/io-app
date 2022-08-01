@@ -6,7 +6,7 @@ import { StackActions } from "@react-navigation/native";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
-import { Content, Form, Text, View } from "native-base";
+import { Content, Form, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -265,18 +265,18 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             </H1>
             <View spacer={true} />
             <View style={styles.horizontalPadding}>
-              <Text>
+              <NBText>
                 {isFromProfileSection
                   ? this.props.isEmailValidated
                     ? I18n.t("email.edit.validated")
                     : I18n.t("email.edit.subtitle")
                   : I18n.t("email.insert.subtitle")}
                 {isFromProfileSection && (
-                  <Text style={styles.textColorDark}>
+                  <NBText style={styles.textColorDark}>
                     {` ${this.props.optionEmail.getOrElse("")}`}
-                  </Text>
+                  </NBText>
                 )}
-              </Text>
+              </NBText>
             </View>
             <View spacer={true} />
             <View style={styles.horizontalPadding}>

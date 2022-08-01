@@ -1,5 +1,5 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { Content, Text } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
@@ -98,11 +98,11 @@ class FingerprintScreen extends React.PureComponent<Props> {
           iconFont={{ name: getBiometryIconName(biometryType) }}
         />
         <Content>
-          <Text>
+          <NBText>
             {I18n.t("onboarding.fingerprint.body.enrolledText", {
               biometryType: localizeBiometricsType(biometryType)
             })}
-          </Text>
+          </NBText>
         </Content>
         <FooterWithButtons
           type={"SingleButton"}

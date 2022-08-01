@@ -3,7 +3,7 @@
  * TODO: The contextualHelp will be added in https://www.pivotaltracker.com/n/projects/2048617/stories/169392558
  */
 
-import { Container, Text, View } from "native-base";
+import { Container, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -65,9 +65,9 @@ class InvalidNfcConnectionScreen extends React.Component<Props, never> {
           <Container>
             <View style={styles.container}>
               <H1>{I18n.t("authentication.cie.nfc.noNfcConnectionTitle")}</H1>
-              <Text style={styles.textStyle}>
+              <NBText style={styles.textStyle}>
                 {I18n.t("authentication.cie.nfc.noNfcConnectionContent")}
-              </Text>
+              </NBText>
             </View>
           </Container>
         </BaseScreenComponent>

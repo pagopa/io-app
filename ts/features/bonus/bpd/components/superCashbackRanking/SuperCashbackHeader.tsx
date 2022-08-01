@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import { StyleSheet, Platform } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -47,9 +47,9 @@ const SuperCashbackHeader: React.FunctionComponent<Props> = (props: Props) => (
   <View style={[IOStyles.row, { alignItems: "center" }]}>
     {isPeriodOnGoing(props.selectedPeriod) && (
       <Badge style={styles.badgeAqua}>
-        <Text style={styles.badgeText} semibold={true}>
+        <NBText style={styles.badgeText} semibold={true}>
           {I18n.t("global.badges.onGoing")}
-        </Text>
+        </NBText>
       </Badge>
     )}
     <View hspacer />

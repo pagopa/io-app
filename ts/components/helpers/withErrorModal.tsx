@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 
@@ -99,7 +99,7 @@ export function withErrorModal<
           light={true}
           block={true}
         >
-          <Text white={true}>{I18n.t("global.buttons.cancel")}</Text>
+          <NBText white={true}>{I18n.t("global.buttons.cancel")}</NBText>
         </ButtonDefaultOpacity>
         {this.props.onRetry && <View style={styles.separator} />}
         {this.props.onRetry && (
@@ -109,7 +109,7 @@ export function withErrorModal<
             onPress={this.props.onRetry}
             style={styles.buttonRetry}
           >
-            <Text>{I18n.t("global.buttons.retry")}</Text>
+            <NBText>{I18n.t("global.buttons.retry")}</NBText>
           </ButtonDefaultOpacity>
         )}
       </View>

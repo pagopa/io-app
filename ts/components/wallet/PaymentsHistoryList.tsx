@@ -4,7 +4,7 @@
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 
 import I18n from "../../i18n";
 import {
@@ -109,7 +109,7 @@ export default class PaymentHistoryList extends React.Component<Props> {
       <Content style={styles.whiteContent}>
         <View>
           <View style={styles.subHeaderContent}>
-            <Text>{I18n.t("payment.details.list.title")}</Text>
+            <NBText>{I18n.t("payment.details.list.title")}</NBText>
           </View>
         </View>
 

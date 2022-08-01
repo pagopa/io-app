@@ -2,7 +2,7 @@
  * This component will display the payment methods that can be registered
  * on the app
  */
-import { Badge, ListItem, Text, View } from "native-base";
+import { Badge, ListItem, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FC } from "react";
 import {
@@ -123,9 +123,9 @@ const getBadgeStatus = (
               { backgroundColor: statusColorMap[section.level] }
             ]}
           >
-            <Text style={styles.badgeText} semibold={true}>
+            <NBText style={styles.badgeText} semibold={true}>
               {badgeLabel}
-            </Text>
+            </NBText>
           </Badge>
         ),
         alert:
@@ -185,9 +185,9 @@ const renderListItem = (
           <View style={styles.flexColumn}>
             <View>
               <Badge style={styles.badgeContainer}>
-                <Text style={styles.badgeText} semibold={true}>
+                <NBText style={styles.badgeText} semibold={true}>
                   {I18n.t("wallet.methods.comingSoon")}
-                </Text>
+                </NBText>
               </Badge>
               <H3 color={"bluegrey"} weight={"SemiBold"}>
                 {itemInfo.item.name}

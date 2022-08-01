@@ -1,7 +1,7 @@
 import { NavigationEvents } from "@react-navigation/compat";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Body, Left, Right, Text, View } from "native-base";
+import { Body, Left, Right, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
 import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
@@ -161,11 +161,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }, noReferenceTimeout);
   }
 
-  private renderBodyLabel = (label?: string, ref?: Ref<Text>) =>
+  private renderBodyLabel = (label?: string, ref?: Ref<NBText>) =>
     maybeNotNullyString(label).fold(undefined, l => {
       const { titleColor } = this.props;
       return (
-        <Text
+        <NBText
           ref={ref}
           numberOfLines={1}
           accessible={true}
@@ -175,7 +175,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           }}
         >
           {l}
-        </Text>
+        </NBText>
       );
     });
 

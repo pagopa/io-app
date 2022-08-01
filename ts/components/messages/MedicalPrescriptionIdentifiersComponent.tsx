@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { PrescriptionData } from "../../../definitions/backend/PrescriptionData";
@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
 export default class MedicalPrescriptionIdentifiersComponent extends React.PureComponent<Props> {
   private renderItem = (label: string, value: string) => (
     <React.Fragment>
-      <Text>{label}</Text>
+      <NBText>{label}</NBText>
       <View style={styles.row}>
-        <Text style={styles.value} bold={true}>
+        <NBText style={styles.value} bold={true}>
           {value}
-        </Text>
+        </NBText>
         <CopyButtonComponent textToCopy={value} />
       </View>
     </React.Fragment>

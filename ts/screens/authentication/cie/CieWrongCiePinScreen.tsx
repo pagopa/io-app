@@ -2,7 +2,7 @@
  * A screen to alert the user about the number of attempts remains
  */
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -70,13 +70,13 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
           })}
         />
         <Content>
-          <Text>
+          <NBText>
             {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
-          </Text>
+          </NBText>
           <View spacer={true} />
-          <Text>
+          <NBText>
             {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
-          </Text>
+          </NBText>
           <View spacer={true} />
         </Content>
 

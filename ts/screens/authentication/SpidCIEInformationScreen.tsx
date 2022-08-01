@@ -2,7 +2,16 @@
  * A screen where the user can know more about SPID, CIE and access to spid.gov.it
  */
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { Col, Content, Grid, Row, Tab, Tabs, Text, View } from "native-base";
+import {
+  Col,
+  Content,
+  Grid,
+  Row,
+  Tab,
+  Tabs,
+  Text as NBText,
+  View
+} from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { H1 } from "../../components/core/typography/H1";
@@ -62,7 +71,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
           <H1 color={"blue"}>{value}</H1>
         </Col>
         <Col size={5}>
-          <Text>{content}</Text>
+          <NBText>{content}</NBText>
         </Col>
         <Col size={2} />
       </Row>

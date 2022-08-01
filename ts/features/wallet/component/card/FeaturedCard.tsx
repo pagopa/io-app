@@ -1,4 +1,4 @@
-import { Badge, View, Text } from "native-base";
+import { Badge, View, Text as NBText } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -70,9 +70,9 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
       )}
       {props.isNew && (
         <Badge style={styles.badgeContainer}>
-          <Text style={styles.badgeText} semibold={true}>
+          <NBText style={styles.badgeText} semibold={true}>
             {I18n.t("wallet.methods.newCome")}
-          </Text>
+          </NBText>
         </Badge>
       )}
     </View>

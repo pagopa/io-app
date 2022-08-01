@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../../components/messages/MessageDetailComponent";
 import I18n from "../../../i18n";
@@ -65,9 +65,9 @@ const messageDetail = ({
   if (pot.isLoading(potMessage)) {
     return (
       <View style={styles.notFullStateContainer}>
-        <Text style={styles.notFullStateMessageText}>
+        <NBText style={styles.notFullStateMessageText}>
           {I18n.t("messageDetails.loadingText")}
-        </Text>
+        </NBText>
         <ActivityIndicator />
       </View>
     );
@@ -82,9 +82,9 @@ const messageDetail = ({
   // Fallback to invalid state
   return (
     <View style={styles.notFullStateContainer}>
-      <Text style={styles.notFullStateMessageText}>
+      <NBText style={styles.notFullStateMessageText}>
         {I18n.t("messageDetails.emptyMessage")}
-      </Text>
+      </NBText>
     </View>
   );
 };

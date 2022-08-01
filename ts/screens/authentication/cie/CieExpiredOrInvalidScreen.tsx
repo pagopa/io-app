@@ -1,5 +1,5 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "../../../components/core/typography/Link";
@@ -38,7 +38,7 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
           title={I18n.t("authentication.landing.expiredCardTitle")}
         />
         <Content>
-          <Text>{I18n.t("authentication.landing.expiredCardContent")}</Text>
+          <NBText>{I18n.t("authentication.landing.expiredCardContent")}</NBText>
           <View spacer={true} />
           <Link onPress={browseToLink}>
             {I18n.t("authentication.landing.expiredCardHelp")}

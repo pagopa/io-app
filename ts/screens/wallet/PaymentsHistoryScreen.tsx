@@ -1,5 +1,5 @@
 import { reverse } from "fp-ts/lib/Array";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -45,7 +45,7 @@ const ListEmptyComponent = (
   >
     <H2 color={"bluegrey"}>{I18n.t("payment.details.list.empty.title")}</H2>
     <View spacer={true} />
-    <Text>{I18n.t("payment.details.list.empty.description")}</Text>
+    <NBText>{I18n.t("payment.details.list.empty.description")}</NBText>
     <View spacer={true} large={true} />
     <EdgeBorderComponent />
   </Content>

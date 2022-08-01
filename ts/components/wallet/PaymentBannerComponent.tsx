@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ImportoEuroCents } from "../../../definitions/backend/ImportoEuroCents";
@@ -43,26 +43,26 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Text white={true} bold={true} style={styles.flex} numberOfLines={1}>
+        <NBText white={true} bold={true} style={styles.flex} numberOfLines={1}>
           {props.paymentReason}
-        </Text>
-        <Text white={true} bold={true}>
+        </NBText>
+        <NBText white={true} bold={true}>
           {formatNumberCentsToAmount(props.currentAmount, true)}
-        </Text>
+        </NBText>
       </View>
       <View style={styles.row}>
-        <Text white={true}>{I18n.t("wallet.ConfirmPayment.fee")}</Text>
-        <Text white={true} testID={"PaymentBannerComponentFee"}>
+        <NBText white={true}>{I18n.t("wallet.ConfirmPayment.fee")}</NBText>
+        <NBText white={true} testID={"PaymentBannerComponentFee"}>
           {formatNumberCentsToAmount(props.fee ?? 0, true)}
-        </Text>
+        </NBText>
       </View>
       <View style={styles.row}>
-        <Text white={true} bold={true}>
+        <NBText white={true} bold={true}>
           {I18n.t("wallet.total")}
-        </Text>
-        <Text white={true} bold={true} testID={"PaymentBannerComponentTotal"}>
+        </NBText>
+        <NBText white={true} bold={true} testID={"PaymentBannerComponentTotal"}>
           {formatNumberCentsToAmount(totalAmount, true)}
-        </Text>
+        </NBText>
       </View>
     </View>
   );
