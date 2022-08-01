@@ -68,10 +68,10 @@ export const IOColors = asIOColors({
   yellow: "#FFC824" /* Almost deprecated, used in `PaymentHistoryList` only */,
   orange: "#EA7614",
   red: "#C02927",
-  /* ↳ ALIAS TOKEN: colorDanger → red */
+  /* ↳ ALIAS TOKEN: brandDanger → red */
   /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
   green: "#005C3C"
-  /* ↳ ALIAS TOKEN: colorSuccess → green */
+  /* ↳ ALIAS TOKEN: brandSuccess → green */
 });
 
 export const IOColorGradients = asIOColorGradients({

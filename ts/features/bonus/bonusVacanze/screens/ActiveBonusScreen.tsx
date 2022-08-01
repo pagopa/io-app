@@ -519,7 +519,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               true
             )
           }),
-          variables.colorSuccess
+          variables.brandSuccess
         );
       case BonusActivationStatusEnum.FAILED:
         return renderInformationBlock(
