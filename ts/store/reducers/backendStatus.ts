@@ -15,6 +15,7 @@ import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfi
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
+  pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
   uaDonationsEnabled
@@ -25,6 +26,7 @@ import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
+import { PnConfig } from "../../../definitions/content/PnConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -242,6 +244,31 @@ export const barcodesScannerConfigSelector = createSelector(
       .getOrElse({
         dataMatrixPosteEnabled: false
       })
+);
+
+/**
+ * Return the remote config for the PN feature.
+ */
+export const PnConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): PnConfig =>
+    backendStatus
+      .map(bs => bs.config.pn)
+      .getOrElse({
+        enabled: false,
+        frontend_url: ""
+      })
+);
+
+/**
+ * Return the remote config about PN enabled/disabled
+ * if there is no data or the local Feature Flag is disabled,
+ * false is the default value -> (PN disabled)
+ */
+export const isPnEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    pnEnabled && backendStatus.map(bs => bs.config.pn.enabled).getOrElse(false)
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times

@@ -106,7 +106,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       Array [
         Object {},
         Object {
-          "backgroundColor": "#C9C9C9",
+          "backgroundColor": "#CCD4DC",
         },
         false,
         Object {
