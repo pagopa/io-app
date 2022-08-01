@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   error: {
-    backgroundColor: customVariables.colorDanger,
+    backgroundColor: customVariables.brandDanger,
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: 11,
     flexDirection: "row",

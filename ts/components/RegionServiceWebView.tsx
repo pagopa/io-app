@@ -118,7 +118,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <IconFont
           name={"io-error"}
           size={120}
-          color={customVariables.colorDanger}
+          color={customVariables.brandDanger}
           style={styles.selfCenter}
         />
         <View spacer={true} />

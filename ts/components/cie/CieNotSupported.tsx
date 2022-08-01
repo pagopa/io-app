@@ -13,8 +13,8 @@ type Props = {
 };
 
 const ICON_SIZE = 24;
-const okColor = customVariables.colorSuccess;
-const koColor = customVariables.colorDanger;
+const okColor = customVariables.brandSuccess;
+const koColor = customVariables.brandDanger;
 const okIcon = "io-complete";
 const koIcon = "io-error";
 const markDownElements = 2;
