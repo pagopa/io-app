@@ -33,9 +33,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   text3: {
     fontSize: 18,
     color: IOColors.white

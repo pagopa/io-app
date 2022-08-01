@@ -6,6 +6,7 @@ import { ImportoEuroCents } from "../../../definitions/backend/ImportoEuroCents"
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   paymentReason: string;
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: variables.contentPadding,
     paddingTop: 12,
     paddingBottom: 16,
-    backgroundColor: variables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   },
   row: {
     flexDirection: "row",

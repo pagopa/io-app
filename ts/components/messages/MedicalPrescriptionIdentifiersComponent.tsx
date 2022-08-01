@@ -15,7 +15,7 @@ type Props = Readonly<{
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: customVariables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     borderBottomWidth: 1,
     borderBottomColor: IOColors.white
   },

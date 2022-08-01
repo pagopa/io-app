@@ -39,6 +39,7 @@ import customVariables from "../../theme/variables";
 import { getServiceCTA } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -81,11 +82,9 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: "row"
   },
-  enabledColor: {
-    color: customVariables.brandDarkestGray
-  },
   disabledColor: {
-    color: customVariables.lightGray
+    /* Disabled state */
+    color: IOColors.grey
   },
   info: {
     marginTop: -5

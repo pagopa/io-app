@@ -8,6 +8,7 @@ import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { Overlay } from "../ui/Overlay";
 import { H1 } from "../core/typography/H1";
+import { IOColors } from "../core/variables/IOColors";
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
 
   buttonCancel: {
     flex: 4,
-    backgroundColor: variables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   },
 
   separator: {

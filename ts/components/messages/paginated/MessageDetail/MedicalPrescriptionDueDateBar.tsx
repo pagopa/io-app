@@ -68,10 +68,10 @@ const MedicalPrescriptionDueDateBar = ({
   const time = format(dueDate, "HH.mm");
 
   const bannerStyle = isPrescriptionExpired
-    ? { backgroundColor: customVariables.brandDarkGray }
+    ? { backgroundColor: IOColors.bluegrey }
     : isPrescriptionExpiring
     ? { backgroundColor: customVariables.calendarExpirableColor }
-    : { backgroundColor: customVariables.brandGray };
+    : { backgroundColor: IOColors.greyUltraLight };
 
   if (isPrescriptionExpiring || isPrescriptionExpired) {
     return (
@@ -86,7 +86,7 @@ const MedicalPrescriptionDueDateBar = ({
           textColor={
             isPrescriptionExpiring
               ? customVariables.calendarExpirableColor
-              : customVariables.brandDarkGray
+              : IOColors.bluegrey
           }
         />
 
@@ -121,7 +121,7 @@ const MedicalPrescriptionDueDateBar = ({
         <CalendarIconComponent
           month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
-          backgroundColor={customVariables.brandDarkGray}
+          backgroundColor={IOColors.bluegrey}
           textColor={IOColors.white}
         />
         <View hspacer={true} small={true} />
