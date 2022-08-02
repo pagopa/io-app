@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   text: {
+    fontSize: 14,
+    lineHeight: 18,
     ...makeFontStyleObject(Platform.select, customVariables.textNormalWeight),
     paddingLeft: 0,
     paddingRight: 0
@@ -66,7 +68,6 @@ const CopyButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
     >
       <NBText
         style={[styles.text, isTap ? styles.colorWhite : styles.colorBlue]}
-        small={true}
       >
         {isTap
           ? I18n.t("clipboard.copyFeedbackButton")

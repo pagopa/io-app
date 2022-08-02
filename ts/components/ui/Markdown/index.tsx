@@ -72,7 +72,7 @@ body {
   margin: 0;
   padding: 0;
   color: ${customVariables.textColor};
-  font-size: ${customVariables.fontSize1}px;
+  font-size: ${customVariables.fontSizeBase}px;
   font-family: 'Titillium Web';
   overflow-wrap: break-word;
   hyphens: auto;
@@ -84,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-block-start: 0;
-  font-size: ${customVariables.fontSize1}px;
+  font-size: ${customVariables.fontSizeBase}px;
 }
 
 ul, ol {

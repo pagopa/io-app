@@ -74,24 +74,10 @@ const customVariables = Object.assign(materialVariables, {
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
-  get fontSizeXSmall(): number {
-    return this.fontSizeBase * 0.8125;
-  },
-  get fontSizeSmall(): number {
-    return this.fontSizeBase * 0.875;
-  },
-  get fontSize1(): number {
-    return this.fontSizeBase;
-  },
   get fontSize2(): number {
     return this.fontSizeBase * 1.25;
   },
-  get fontSize4(): number {
-    return this.fontSizeBase * 1.75;
-  },
   lineHeightBase: 24,
-  lineHeightSmall: 18,
-  lineHeightXSmall: 17,
 
   // Icon
   iconFamily: "Entypo" /* NB Theme variable, don't remove */,

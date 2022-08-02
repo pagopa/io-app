@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   previewAmount: {
     lineHeight: 30,
-    fontSize: customVariables.fontSize4,
+    fontSize: 28,
     ...makeFontStyleObject(Platform.select, "700", undefined, "RobotoMono")
   },
   bonusCode: {

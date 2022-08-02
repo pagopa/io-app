@@ -46,7 +46,7 @@ type Props = OwnProps &
 
 const CSS_STYLE = `
 body {
-  font-size: ${customVariables.fontSize1}px;
+  font-size: ${customVariables.fontSizeBase}px;
   color: ${customVariables.textColorDark}
 }
 

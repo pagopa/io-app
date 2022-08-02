@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   validUntil: {
     color: variables.textColorDark,
-    lineHeight: variables.lineHeightSmall,
+    lineHeight: 18,
     paddingVertical: 8
   },
   rowBlock: {
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     color: variables.textColor
   },
   sectionLabel: {
-    fontSize: variables.fontSize1,
+    fontSize: variables.fontSizeBase,
     lineHeight: 21
   },
   viewShot: {
