@@ -22,8 +22,8 @@ export const convertUrlToNavigationLink = (path: string) =>
   path.replace(IO_INTERNAL_LINK_PREFIX, "/");
 
 /**
- * This variable should be used on every `gestureEnabled` settings
+ * This variable should be used on every `gestureEnabled` setting
  * in the navigator. This prevents the gestures to be enabled on Android
- * creating glitches with the scroll on old Android versions.
+ * creating glitches with the scroll on old Android versions (version 9 and below).
  */
 export const areGestureEnabled = Platform.OS !== "android";
