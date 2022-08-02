@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { areGestureEnabled } from "../../../utils/navigation";
 import { MvlAttachmentPreview } from "../screens/details/components/attachment/MvlAttachmentPreview";
 import { MvlCertificatesScreen } from "../screens/metadata/MvlCertificatesScreen";
 import { MvlRecipientsScreen } from "../screens/metadata/MvlRecipientsScreen";
@@ -14,7 +15,7 @@ export const MvlStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={MVL_ROUTES.DETAILS}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: true }}
+    screenOptions={{ gestureEnabled: areGestureEnabled }}
   >
     <Stack.Screen name={MVL_ROUTES.DETAILS} component={MvlRouterScreen} />
     <Stack.Screen

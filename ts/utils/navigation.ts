@@ -1,4 +1,5 @@
 // gets the current screen from navigation state
+import { Platform } from "react-native";
 import { navigationRef } from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 
@@ -19,3 +20,10 @@ export const IO_INTERNAL_LINK_PREFIX = IO_INTERNAL_LINK_PROTOCOL + "//";
 
 export const convertUrlToNavigationLink = (path: string) =>
   path.replace(IO_INTERNAL_LINK_PREFIX, "/");
+
+/**
+ * This variable should be used on every `gestureEnabled` settings
+ * in the navigator. This prevents the gestures to be enabled on Android
+ * creating glitches with the scroll on old Android versions.
+ */
+export const areGestureEnabled = Platform.OS !== "android";
