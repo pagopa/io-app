@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import { connect } from "react-redux";
@@ -12,7 +11,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import { profileEmailSelector } from "../../../store/reducers/profile";
@@ -26,11 +25,10 @@ export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_OUTCOMECODE_MESSAGE">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_OUTCOMECODE_MESSAGE"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -83,7 +81,7 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
     if (pot.isSome(props.verifica)) {
       const totalAmount =
         (props.verifica.value.importoSingoloVersamento as number) +
-        (props.navigation.getParam("fee") as number);
+        (props.route.params.fee as number);
 
       return successComponent(
         props.profileEmail.getOrElse(""),

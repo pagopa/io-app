@@ -2,7 +2,6 @@
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { NavigationEvents } from "@react-navigation/compat";
 import { head } from "fp-ts/lib/Array";
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
@@ -27,6 +26,7 @@ import {
   ScannedBarcode
 } from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -36,6 +36,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -47,8 +48,8 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { GlobalState } from "../../../store/reducers/types";
 import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../store/reducers/types";
 import customVariables, {
   VIBRATION_BARCODE_SCANNED_DURATION
 } from "../../../theme/variables";
@@ -61,8 +62,6 @@ import {
 } from "../../../utils/payment";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
-import { mixpanelTrack } from "../../../mixpanel";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps> &
@@ -135,6 +134,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
+  private focusUnsubscribe!: () => void;
+  private blurUnsubscribe!: () => void;
   private goBack = () => this.props.navigation.goBack();
 
   /**
@@ -292,9 +293,25 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       // cancel the QR scanner reactivation before unmounting the component
       clearTimeout(this.scannerReactivateTimeoutHandler);
     }
+    this.focusUnsubscribe();
+    this.blurUnsubscribe();
   }
 
+  private handleWillFocus = () => this.setState({ isFocused: true });
+
+  private handleWillBlur = () => this.setState({ isFocused: false });
+
   public async componentDidMount() {
+    // eslint-disable-next-line functional/immutable-data
+    this.blurUnsubscribe = this.props.navigation.addListener(
+      "blur",
+      this.handleWillBlur
+    );
+    // eslint-disable-next-line functional/immutable-data
+    this.focusUnsubscribe = this.props.navigation.addListener(
+      "focus",
+      this.handleWillFocus
+    );
     if (Platform.OS !== "android") {
       return;
     }
@@ -316,10 +333,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.setState({ permissionRationaleDisplayed: true });
   }
 
-  private handleWillFocus = () => this.setState({ isFocused: true });
-
-  private handleWillBlur = () => this.setState({ isFocused: false });
-
   public render(): React.ReactNode {
     const primaryButtonProps = {
       buttonFontSize: customVariables.btnFontSize - 1,
@@ -336,10 +349,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet"]}
       >
-        <NavigationEvents
-          onWillFocus={this.handleWillFocus}
-          onWillBlur={this.handleWillBlur}
-        />
         <SafeAreaView style={IOStyles.flex}>
           <FocusAwareStatusBar
             barStyle={"dark-content"}

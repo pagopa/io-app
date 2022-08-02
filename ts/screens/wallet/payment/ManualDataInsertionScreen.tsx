@@ -3,10 +3,6 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import {
-  CompatNavigationProp,
-  NavigationEvents
-} from "@react-navigation/compat";
 import { Either, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
@@ -21,6 +17,7 @@ import { H1 } from "../../../components/core/typography/H1";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent, {
@@ -30,7 +27,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -43,18 +40,16 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
   isInvalidAmount?: boolean;
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_MANUAL_DATA_INSERTION">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_MANUAL_DATA_INSERTION"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -158,7 +153,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         faqCategories={["wallet_insert_notice_data"]}
       >
         <SafeAreaView style={IOStyles.flex}>
-          <NavigationEvents />
           <ScrollView
             style={styles.whiteBg}
             keyboardShouldPersistTaps="handled"
