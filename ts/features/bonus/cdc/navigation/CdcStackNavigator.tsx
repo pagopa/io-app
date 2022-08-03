@@ -4,7 +4,7 @@ import CdcBonusRequestInformationTos from "../screens/CdcBonusRequestInformation
 import CdcBonusRequestSelectYear from "../screens/CdcBonusRequestSelectYear";
 import CdcBonusRequestSelectResidence from "../screens/CdcBonusRequestSelectResidence";
 import CdcBonusRequestBonusRequested from "../screens/CdcBonusRequestBonusRequested";
-import { areGestureEnabled } from "../../../../utils/navigation";
+import { isGestureEnabled } from "../../../../utils/navigation";
 import { CdcBonusRequestParamsList } from "./params";
 import { CDC_ROUTES } from "./routes";
 
@@ -14,7 +14,7 @@ export const CdcStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={CDC_ROUTES.INFORMATION_TOS}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: areGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen
       name={CDC_ROUTES.INFORMATION_TOS}

@@ -26,4 +26,4 @@ export const convertUrlToNavigationLink = (path: string) =>
  * in the navigator. This prevents the gestures to be enabled on Android
  * creating glitches with the scroll on old Android versions (version 9 and below).
  */
-export const areGestureEnabled = Platform.OS !== "android";
+export const isGestureEnabled = Platform.OS !== "android";

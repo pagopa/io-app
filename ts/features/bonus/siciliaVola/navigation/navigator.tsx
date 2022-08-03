@@ -1,7 +1,7 @@
 import { PathConfigMap } from "@react-navigation/core";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { areGestureEnabled } from "../../../../utils/navigation";
+import { isGestureEnabled } from "../../../../utils/navigation";
 import CheckStatusRouterScreen from "../screens/voucherGeneration/CheckStatusRouterScreen";
 import DisabledAdditionalInfoScreen from "../screens/voucherGeneration/DisabledAdditionalInfoScreen";
 import SvCheckIncomeKoScreen from "../screens/voucherGeneration/ko/SvCheckIncomeKoScreen";
@@ -42,7 +42,7 @@ export const SvVoucherListNavigator = () => (
   <ListStack.Navigator
     initialRouteName={SV_ROUTES.VOUCHER_LIST.LIST}
     headerMode="none"
-    screenOptions={{ gestureEnabled: areGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <ListStack.Screen
       name={SV_ROUTES.VOUCHER_LIST.LIST}
@@ -61,7 +61,7 @@ export const SvVoucherGenerationNavigator = () => (
   <GenerationStack.Navigator
     initialRouteName={SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS}
     headerMode="none"
-    screenOptions={{ gestureEnabled: areGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <GenerationStack.Screen
       name={SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS}

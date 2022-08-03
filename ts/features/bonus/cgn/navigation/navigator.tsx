@@ -1,7 +1,7 @@
 import { PathConfigMap } from "@react-navigation/core";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { areGestureEnabled } from "../../../../utils/navigation";
+import { isGestureEnabled } from "../../../../utils/navigation";
 import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
 import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
@@ -49,7 +49,7 @@ export const CgnActivationNavigator = () => (
   <ActivationStack.Navigator
     initialRouteName={CGN_ROUTES.ACTIVATION.INFORMATION_TOS}
     headerMode="none"
-    screenOptions={{ gestureEnabled: areGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <ActivationStack.Screen
       name={CGN_ROUTES.ACTIVATION.INFORMATION_TOS}
@@ -92,7 +92,7 @@ export const CgnDetailsNavigator = () => (
   <DetailStack.Navigator
     initialRouteName={CGN_ROUTES.DETAILS.DETAILS}
     headerMode="none"
-    screenOptions={{ gestureEnabled: areGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.DETAILS}
@@ -131,7 +131,7 @@ export const CgnEYCAActivationNavigator = () => (
   <EycaActivationStack.Navigator
     initialRouteName={CGN_ROUTES.EYCA.ACTIVATION.LOADING}
     headerMode="none"
-    screenOptions={{ gestureEnabled: areGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <EycaActivationStack.Screen
       name={CGN_ROUTES.EYCA.ACTIVATION.LOADING}

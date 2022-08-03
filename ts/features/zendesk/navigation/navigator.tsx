@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { areGestureEnabled } from "../../../utils/navigation";
+import { isGestureEnabled } from "../../../utils/navigation";
 import ZendeskAskPermissions from "../screens/ZendeskAskPermissions";
 import ZendeskChooseCategory from "../screens/ZendeskChooseCategory";
 import ZendeskChooseSubCategory from "../screens/ZendeskChooseSubCategory";
@@ -15,7 +15,7 @@ export const ZendeskStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ZENDESK_ROUTES.HELP_CENTER}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: areGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen
       name={ZENDESK_ROUTES.HELP_CENTER}

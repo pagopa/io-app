@@ -12,7 +12,7 @@ import PaginatedMessageRouterScreen from "../screens/messages/paginated/MessageR
 import { PnStackNavigator } from "../features/pn/navigation/navigator";
 import PN_ROUTES from "../features/pn/navigation/routes";
 import { useIOSelector } from "../store/hooks";
-import { areGestureEnabled } from "../utils/navigation";
+import { isGestureEnabled } from "../utils/navigation";
 import { isPnEnabledSelector } from "../store/reducers/backendStatus";
 import { MessagesParamsList } from "./params/MessagesParamsList";
 import ROUTES from "./routes";
@@ -26,7 +26,7 @@ export const MessagesStackNavigator = () => {
     <Stack.Navigator
       initialRouteName={ROUTES.MESSAGE_ROUTER}
       headerMode={"none"}
-      screenOptions={{ gestureEnabled: areGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
         name={ROUTES.MESSAGE_ROUTER}

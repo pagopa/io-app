@@ -22,7 +22,7 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
-import { areGestureEnabled } from "../utils/navigation";
+import { isGestureEnabled } from "../utils/navigation";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -35,7 +35,7 @@ const ProfileStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.PROFILE_DATA}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: areGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen name={ROUTES.PROFILE_DATA} component={ProfileDataScreen} />
     <Stack.Screen
