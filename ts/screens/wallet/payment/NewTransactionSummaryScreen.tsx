@@ -181,12 +181,16 @@ const NewTransactionSummaryScreen = ({
   const showsInlineError = paymentStartOrigin === "message";
 
   const errorOrUndefined = error.toUndefined();
+  const isPaid =
+    errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
+    errorOrUndefined === "PPT_PAGAMENTO_DUPLICATO";
+
   const isError = error.isSome();
   useEffect(() => {
     if (!isError) {
       return;
     }
-    if (errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO") {
+    if (isPaid) {
       onDuplicatedPayment();
     }
     // in case of a payment verification error we should navigate
@@ -204,7 +208,8 @@ const NewTransactionSummaryScreen = ({
     onDuplicatedPayment,
     navigateToPaymentTransactionError,
     showsInlineError,
-    paymentVerification
+    paymentVerification,
+    isPaid
   ]);
 
   const goBack = () => {
@@ -268,7 +273,7 @@ const NewTransactionSummaryScreen = ({
             paymentVerification={paymentVerification}
             paymentNoticeNumber={paymentNoticeNumber}
             organizationFiscalCode={organizationFiscalCode}
-            isPaid={errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO"}
+            isPaid={isPaid}
           />
           {showsInlineError && pot.isError(paymentVerification) && (
             <TransactionSummaryErrorDetails

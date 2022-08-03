@@ -114,6 +114,11 @@ export const PnMessageDetails = (props: Props) => {
 
   const scrollViewRef = React.createRef<ScrollView>();
 
+  const errorOrUndefined = paymentVerificationError.toUndefined();
+  const isPaid =
+    errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
+    errorOrUndefined === "PPT_PAGAMENTO_DUPLICATO";
+
   return (
     <>
       {firstLoadingRequest && paymentVerificationError.isSome() && (
@@ -148,10 +153,7 @@ export const PnMessageDetails = (props: Props) => {
                   paymentVerification={paymentVerification}
                   paymentNoticeNumber={maybePayment.noticeCode}
                   organizationFiscalCode={maybePayment.creditorTaxId}
-                  isPaid={
-                    paymentVerificationError.toUndefined() ===
-                    "PAA_PAGAMENTO_DUPLICATO"
-                  }
+                  isPaid={isPaid}
                 />
                 {paymentVerificationError.isSome() && (
                   <TransactionSummaryErrorDetails

@@ -36,6 +36,7 @@ export const TransactionSummaryErrorDetails = ({
   if (
     errorOrUndefined === undefined ||
     errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
+    errorOrUndefined === "PPT_PAGAMENTO_DUPLICATO" ||
     !Object.keys(Detail_v2Enum).includes(errorOrUndefined)
   ) {
     return null;
