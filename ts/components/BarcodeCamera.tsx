@@ -127,7 +127,10 @@ export const retrieveNextBarcode = (
 };
 
 /**
- *
+ * Show the Android permissions rationale and after
+ * pressing the button trigger the permissions request.
+ * Everything is wrapped inside a Promise in order to
+ * be used with async/await.
  */
 function handleAndroidPermissions() {
   return new Promise<CameraPermissionRequestResult>((resolve, reject) => {
