@@ -1,8 +1,9 @@
 import * as React from "react";
 
 import { createStore, Store } from "redux";
-import { TypeEnum } from "../../../../../../definitions/pagopa/walletv2/CardInfo";
+import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import { WalletTypeEnum } from "../../../../../../definitions/pagopa/WalletV2";
+import { TypeEnum } from "../../../../../../definitions/pagopa/walletv2/CardInfo";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { fetchWalletsSuccess } from "../../../../../store/actions/wallet/wallets";
@@ -13,10 +14,9 @@ import {
   CreditCardPaymentMethod,
   PatchedWalletV2ListResponse
 } from "../../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import CreditCardDetailScreen from "../CreditCardDetailScreen";
-import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 // import I18n from "../../../../../i18n";
 
 const creditCard: CreditCardPaymentMethod = {
@@ -119,7 +119,7 @@ const renderDetailScreen = (
   store: Store,
   creditCard: CreditCardPaymentMethod
 ) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     CreditCardWrapper,
     ROUTES.WALLET_CREDIT_CARD_DETAIL,
     { creditCard },
