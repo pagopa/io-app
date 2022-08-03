@@ -64,7 +64,7 @@ import ROUTES from "./routes";
 
 const Stack = createStackNavigator();
 
-const BpdRoutes = () => (
+const bptRoutes = () => (
   <>
     <Stack.Screen
       name={BPD_ROUTES.ONBOARDING.MAIN}
@@ -186,10 +186,6 @@ const WalletNavigator = () => (
       component={ManualDataInsertionScreen}
     />
     <Stack.Screen
-      name={ROUTES.PAYMENT_MANUAL_DATA_INSERTION}
-      component={ManualDataInsertionScreen}
-    />
-    <Stack.Screen
       name={ROUTES.PAYMENT_TRANSACTION_SUMMARY}
       component={
         newTransactionSummaryEnabled
@@ -255,7 +251,7 @@ const WalletNavigator = () => (
     )}
 
     {/* BPD */}
-    <BpdRoutes />
+    {bptRoutes()}
     {/* BPD Opt-In */}
     {bpdOptInPaymentMethodsEnabled && (
       <Stack.Screen

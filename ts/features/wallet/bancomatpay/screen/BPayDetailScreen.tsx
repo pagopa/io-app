@@ -1,8 +1,6 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
+import { Route, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { BPayPaymentMethod, isBPay } from "../../../../types/pagopa";
@@ -15,18 +13,14 @@ export type BPayDetailScreenNavigationParams = Readonly<{
   bPay: BPayPaymentMethod;
 }>;
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "WALLET_BPAY_DETAIL">
-  >;
-};
-
 /**
  * Detail screen for a Bancomat Pay
  * @constructor
  */
-export const BPayDetailScreen: React.FunctionComponent<Props> = props => {
-  const bPayId = props.navigation.getParam("bPay").idWallet;
+export const BPayDetailScreen: React.FunctionComponent = () => {
+  const route =
+    useRoute<Route<"WALLET_BPAY_DETAIL", BPayDetailScreenNavigationParams>>();
+  const bPayId = route.params.bPay.idWallet;
   const bPay = useIOSelector(s => paymentMethodByIdSelector(s, bPayId));
   // it should never happen
   if (!isBPay(bPay)) {
