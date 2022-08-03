@@ -1,6 +1,10 @@
 import "react-native-reanimated";
 import React, { useEffect, useState } from "react";
-import { Camera, useCameraDevices } from "react-native-vision-camera";
+import {
+  Camera,
+  CameraPermissionRequestResult,
+  useCameraDevices
+} from "react-native-vision-camera";
 import { View, Dimensions, StyleSheet } from "react-native";
 import {
   useScanBarcodes,
@@ -8,6 +12,8 @@ import {
   Barcode
 } from "vision-camera-code-scanner";
 import I18n from "../i18n";
+import { isAndroid } from "../utils/platform";
+import { AsyncAlert } from "../utils/asyncAlert";
 import customVariables from "../theme/variables";
 import { usePrevious } from "../utils/hooks/usePrevious";
 import { openAppSettings } from "../utils/appSettings";
@@ -120,6 +126,26 @@ export const retrieveNextBarcode = (
   return chosenBarcodes.QRCODE || chosenBarcodes.DATA_MATRIX || null;
 };
 
+/**
+ *
+ */
+function handleAndroidPermissions() {
+  return new Promise<CameraPermissionRequestResult>((resolve, reject) => {
+    void AsyncAlert(
+      I18n.t("permissionRationale.camera.title"),
+      I18n.t("permissionRationale.camera.message"),
+      [
+        {
+          text: I18n.t("global.buttons.choose"),
+          style: "default",
+          onPress: () =>
+            Camera.requestCameraPermission().then(resolve).catch(reject)
+        }
+      ]
+    );
+  });
+}
+
 type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
   disabled?: boolean;
@@ -150,8 +176,16 @@ export const BarcodeCamera = (props: Props) => {
     async function checkPermissions() {
       const cameraPermissions = await Camera.getCameraPermissionStatus();
 
-      if (cameraPermissions === "not-determined") {
-        const selectedPermissions = await Camera.requestCameraPermission();
+      if (
+        cameraPermissions === "not-determined" ||
+        cameraPermissions === "denied"
+      ) {
+        const selectedPermissions = isAndroid
+          ? // The scanner package automatically asks for android permission, but we have to display before an alert with
+            // the rationale
+            await handleAndroidPermissions()
+          : await Camera.requestCameraPermission();
+
         setPermissionsGranted(selectedPermissions === "authorized");
       } else {
         setPermissionsGranted(cameraPermissions === "authorized");

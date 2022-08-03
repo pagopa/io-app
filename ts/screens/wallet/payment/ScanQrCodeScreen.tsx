@@ -11,8 +11,6 @@ import * as React from "react";
 import {
   Alert,
   Dimensions,
-  PermissionsAndroid,
-  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -71,9 +69,6 @@ type Props = IOStackNavigationRouteProps<AppParamsList> &
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
   isFocused: boolean;
-  // The scanner package automatically asks for android permission, but we have to display before an alert with
-  // the rationale
-  permissionRationaleDisplayed: boolean;
 };
 
 const screenWidth = Dimensions.get("screen").width;
@@ -282,8 +277,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       scanningState: "SCANNING",
-      isFocused: false,
-      permissionRationaleDisplayed: Platform.OS !== "android"
+      isFocused: false
     };
   }
 
@@ -292,28 +286,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       // cancel the QR scanner reactivation before unmounting the component
       clearTimeout(this.scannerReactivateTimeoutHandler);
     }
-  }
-
-  public async componentDidMount() {
-    if (Platform.OS !== "android") {
-      return;
-    }
-    const hasPermission = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.CAMERA
-    );
-    if (!hasPermission) {
-      await AsyncAlert(
-        I18n.t("permissionRationale.camera.title"),
-        I18n.t("permissionRationale.camera.message"),
-        [
-          {
-            text: I18n.t("global.buttons.choose"),
-            style: "default"
-          }
-        ]
-      );
-    }
-    this.setState({ permissionRationaleDisplayed: true });
   }
 
   private handleWillFocus = () => this.setState({ isFocused: true });
