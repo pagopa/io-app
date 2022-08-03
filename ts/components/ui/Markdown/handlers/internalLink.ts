@@ -13,10 +13,10 @@ import {
 import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
+import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { isTestEnv } from "../../../../utils/environment";
-import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_INTERNAL_LINK_PROTOCOL
@@ -66,8 +66,9 @@ const uaDonationsRoutesToNavigationLink: Record<string, string> = {
 };
 
 const svRoutesToNavigationLink: Record<string, string> = {
-  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]: "/services/sv-check-status",
-  [SV_ROUTES.VOUCHER_LIST.LIST]: "/services/vouchers-list"
+  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]:
+    "/services/sv-generation/check-status",
+  [SV_ROUTES.VOUCHER_LIST.LIST]: "/services/sv-vouchers/list"
 };
 
 const fimsRoutesToNavigationLink: Record<string, string> = {
