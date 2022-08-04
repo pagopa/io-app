@@ -87,7 +87,7 @@ export type TransactionSummaryError = Option<
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: customVariables.contentPadding
+    paddingHorizontal: customVariables.contentPadding
   }
 });
 
