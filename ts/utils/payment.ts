@@ -456,10 +456,8 @@ export const isDuplicatedPayment = (
     >
   >
 ) =>
-  error
-    .map(
-      detail =>
-        detail === "PAA_PAGAMENTO_DUPLICATO" ||
-        detail === "PPT_PAGAMENTO_DUPLICATO"
-    )
-    .getOrElse(false);
+  error.exists(
+    detail =>
+      detail === "PAA_PAGAMENTO_DUPLICATO" ||
+      detail === "PPT_PAGAMENTO_DUPLICATO"
+  );
