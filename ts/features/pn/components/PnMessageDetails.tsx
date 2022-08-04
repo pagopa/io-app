@@ -16,7 +16,10 @@ import {
 } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
-import { getRptIdFromNoticeNumber } from "../../../utils/payment";
+import {
+  getRptIdFromNoticeNumber,
+  isDuplicatedPayment
+} from "../../../utils/payment";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -114,10 +117,7 @@ export const PnMessageDetails = (props: Props) => {
 
   const scrollViewRef = React.createRef<ScrollView>();
 
-  const errorOrUndefined = paymentVerificationError.toUndefined();
-  const isPaid =
-    errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
-    errorOrUndefined === "PPT_PAGAMENTO_DUPLICATO";
+  const isPaid = isDuplicatedPayment(paymentVerificationError);
 
   return (
     <>

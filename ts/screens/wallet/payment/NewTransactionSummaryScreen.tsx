@@ -52,7 +52,11 @@ import {
 } from "../../../store/reducers/backendStatus";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
-import { DetailV2Keys, getV2ErrorMainType } from "../../../utils/payment";
+import {
+  DetailV2Keys,
+  getV2ErrorMainType,
+  isDuplicatedPayment
+} from "../../../utils/payment";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
@@ -181,9 +185,7 @@ const NewTransactionSummaryScreen = ({
   const showsInlineError = paymentStartOrigin === "message";
 
   const errorOrUndefined = error.toUndefined();
-  const isPaid =
-    errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
-    errorOrUndefined === "PPT_PAGAMENTO_DUPLICATO";
+  const isPaid = isDuplicatedPayment(error);
 
   const isError = error.isSome();
   useEffect(() => {
