@@ -12,10 +12,11 @@ import EmailCallCTA from "../screens/EmailCallCTA";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
 import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
+import { IOColors } from "../core/variables/IOColors";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: customVariables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     padding: customVariables.contentPadding
   },
   row: {

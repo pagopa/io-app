@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0-rc.5](https://github.com/pagopa/io-app/compare/2.14.0-rc.4...2.14.0-rc.5) (2022-07-29)
+
+
+### Bug Fixes
+
+* [[IA-922](https://pagopa.atlassian.net/browse/IA-922)] Prevent multiple navigations when opening a message ([#4092](https://github.com/pagopa/io-app/issues/4092)) ([19bcf6e](https://github.com/pagopa/io-app/commit/19bcf6e99c60e4fca8f6766f06a2e04fc57d2da0))
+
 ## [2.14.0-rc.4](https://github.com/pagopa/io-app/compare/2.14.0-rc.3...2.14.0-rc.4) (2022-07-28)
 
 

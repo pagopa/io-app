@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
   card: {
     // iOS and Android card shadow
-    backgroundColor: variables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     borderRadius: 8,
     marginLeft: 0,
     marginRight: 0

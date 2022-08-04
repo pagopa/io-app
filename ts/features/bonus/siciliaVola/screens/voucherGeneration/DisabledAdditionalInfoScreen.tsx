@@ -1,25 +1,26 @@
+import { useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { Link } from "../../../../../components/core/typography/Link";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { openWebUrl } from "../../../../../utils/url";
+import { DeclarationEntry } from "../../../bpd/screens/onboarding/declaration/DeclarationEntry";
+import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel
 } from "../../store/actions/voucherGeneration";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
-import I18n from "../../../../../i18n";
-import { DeclarationEntry } from "../../../bpd/screens/onboarding/declaration/DeclarationEntry";
-import { Link } from "../../../../../components/core/typography/Link";
-import { openWebUrl } from "../../../../../utils/url";
-import { Body } from "../../../../../components/core/typography/Body";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -43,6 +44,7 @@ const loadLocales = () => ({
 
 const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
   const [acceptedDisclaimer, setAcceptedDisclaimer] = useState<boolean>(false);
+  const navigation = useNavigation();
 
   const cancelButtonProps = {
     primary: false,
@@ -52,7 +54,8 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
   };
   const continueButtonProps = {
     bordered: false,
-    onPress: props.navigateToSelectFlightsDateScreen,
+    onPress: () =>
+      navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA),
     title: I18n.t("global.buttons.continue"),
     disabled: !acceptedDisclaimer
   };
@@ -94,8 +97,7 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
-  cancel: () => dispatch(svGenerateVoucherCancel()),
-  navigateToSelectFlightsDateScreen: () => navigateToSvSelectFlightsDateScreen()
+  cancel: () => dispatch(svGenerateVoucherCancel())
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

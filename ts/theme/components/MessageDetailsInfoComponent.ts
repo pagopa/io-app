@@ -1,5 +1,5 @@
+import { IOColors } from "../../components/core/variables/IOColors";
 import { Theme } from "../types";
-import customVariables from "../variables";
 
 export default (): Theme => ({
   "NativeBase.ViewNB": {
@@ -10,6 +10,6 @@ export default (): Theme => ({
     },
     paddingLeft: 10,
     borderLeftWidth: 2,
-    borderLeftColor: customVariables.brandLightGray
+    borderLeftColor: IOColors.greyLight
   }
 });

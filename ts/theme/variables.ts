@@ -22,6 +22,9 @@ export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
 const customVariables = Object.assign(materialVariables, {
   minTouchableAreaSize: 48,
 
+  // Android
+  buttonUppercaseAndroidText: false /* NB Theme variable, don't remove */,
+
   // Button
   btnTextFontWeight: "700" as FontWeight,
   textLightButtonWeight: "600" as FontWeight,
@@ -50,41 +53,29 @@ const customVariables = Object.assign(materialVariables, {
     Add them to IOColors object, instead.
   */
   brandPrimary: "#0066CC",
-  brandGray: "#F5F6F7",
-  brandLight: "#FCFDFF",
-  brandSuccess: "#007005",
-  brandDanger: "#CC3333",
-  brandLightGray: "#E6E9F2",
-  brandMildGray: "#C7D1D9",
-  brandDarkGray: "#475A6D",
-  brandDarkestGray: "#17324D",
   brandPrimaryLight: "#99CCFF",
   brandHighlight: "#00C5CA",
   brandHighLighter: "#00CDD2",
+  brandSuccess: "#007005",
+  brandDanger: "#CC3333",
 
-  milderGray: "#5F6F80",
-  darkerGray: "#4B5C6F",
+  btnLightBorderColor: IOColors.grey,
 
-  lightGray: "#909DA8",
-  lighterGray: "#C1C9D2",
-  lightestGray: "#E0E3E6",
-
-  btnLightBorderColor: "#AEB5BF",
+  cardShadow: IOColors.black,
   cardExpiredTextColor: "#FF0000",
-  cardFontColor: "#17324D",
-  colorBlack: "#000000",
-  disabledService: "#909DA8",
-  itemBorderDefaultColor: "#5F6F82",
+  cardTextColor: IOColors.bluegreyDark,
 
   calendarExpirableColor: "#D0021B",
 
-  itemSeparator: "#C9C9C9",
+  itemSeparator: IOColors.bluegreyLight,
 
   toastColor: "#C1f4f2",
   badgeYellow: "#ffc824",
 
-  headerIconDark: "#798593",
-  headerIconLight: "#E4E7EA",
+  /* When the background is dark */
+  headerIconDark: IOColors.milderGray,
+  /* When the background is light */
+  headerIconLight: IOColors.greyLight,
 
   // Font
   ...makeFontStyleObject(Platform.select),
@@ -177,7 +168,7 @@ const customVariables = Object.assign(materialVariables, {
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
-  footerShadowColor: "#000000",
+  footerShadowColor: IOColors.black,
   footerShadowOffsetWidth: 0,
   footerShadowOffsetHeight: 50,
   footerShadowOpacity: 0.5,
@@ -271,12 +262,16 @@ const customVariables = Object.assign(materialVariables, {
   modalHeaderHeight: 75,
 
   // Text
-  textColor: "#475A6D",
+  textColor: IOColors.bluegrey,
+  textColorDark: IOColors.bluegreyDark,
   textLinkColor: "#0073E6",
   textMessageDetailLinkColor: "#0073E6",
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
+
+  // Skeleton/Placeholder
+  colorSkeleton: IOColors.bluegreyLight,
 
   // Label
   labelNormalWeight: "400" as FontWeight,
@@ -300,13 +295,12 @@ const customVariables = Object.assign(materialVariables, {
 
   // Tabs
   tabDefaultBg: "#FFFFFF",
-  tabUnderlineColor: "#F6F6F6",
+  tabUnderlineColor: IOColors.greyUltraLight,
   tabUnderlineHeight: 2,
-  topTabBarTextColor: "#475A6D",
+  topTabBarTextColor: IOColors.bluegrey,
   topTabBarActiveTextColor: "#0066CC",
 
   // Animations
-  shineColor: "#C1CCD6",
   activeOpacity: 0.25,
 
   // Spacing
@@ -314,7 +308,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: "#0073E6",
-  unselectedColor: "#475A6D",
+  unselectedColor: IOColors.bluegrey,
 
   // Checkbox
   checkboxDefaultColor: "transparent"

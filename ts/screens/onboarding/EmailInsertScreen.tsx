@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
   },
-  darkestGray: {
-    color: customVariables.brandDarkestGray
+  textColorDark: {
+    color: customVariables.textColorDark
   }
 });
 
@@ -272,7 +272,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                     : I18n.t("email.edit.subtitle")
                   : I18n.t("email.insert.subtitle")}
                 {isFromProfileSection && (
-                  <Text style={styles.darkestGray}>
+                  <Text style={styles.textColorDark}>
                     {` ${this.props.optionEmail.getOrElse("")}`}
                   </Text>
                 )}

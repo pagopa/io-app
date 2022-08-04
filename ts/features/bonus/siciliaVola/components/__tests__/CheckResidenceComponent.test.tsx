@@ -1,14 +1,11 @@
-import { CommonActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../i18n";
-import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import SV_ROUTES from "../../navigation/routes";
 import { svGenerateVoucherCancel } from "../../store/actions/voucherGeneration";
 
 import CheckResidenceComponent from "../CheckResidenceComponent";
@@ -44,45 +41,6 @@ describe("the CheckResidenceComponent", () => {
         I18n.t("bonus.sv.voucherGeneration.checkResidence.info")
       )
     ).toBeDefined();
-  });
-
-  describe("when 'I reside in Sicily' is checked", () => {
-    it("the continue button should navigate to SelectBeneficiaryCategory screen", () => {
-      const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
-      const { component } = renderComponent();
-      const itemYes = component.getByText(
-        I18n.t("bonus.sv.voucherGeneration.checkResidence.items.inSicily")
-      );
-      fireEvent(itemYes, "onPress");
-      const continueButton = component.getByText(
-        I18n.t("global.buttons.continue")
-      );
-      fireEvent(continueButton, "onPress");
-
-      expect(spy).toHaveBeenCalledWith(
-        CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
-          screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
-        })
-      );
-    });
-  });
-
-  describe("when 'I reside in another region' is checked", () => {
-    const { component } = renderComponent();
-    const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
-    const itemYes = component.getByText(
-      I18n.t("bonus.sv.voucherGeneration.checkResidence.items.notInSicily")
-    );
-    fireEvent(itemYes, "onPress");
-    const continueButton = component.getByText(
-      I18n.t("global.buttons.continue")
-    );
-    fireEvent(continueButton, "onPress");
-    expect(spy).toHaveBeenCalledWith(
-      CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
-        screen: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
-      })
-    );
   });
 
   describe("when the cancel button is pressed", () => {

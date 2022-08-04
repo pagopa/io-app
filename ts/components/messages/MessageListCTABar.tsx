@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   topContainerLarge: {
     paddingVertical: customVariables.contentPadding / 2,
     paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: customVariables.brandGray
+    backgroundColor: IOColors.greyUltraLight
   },
   topContainerPaid: {
     paddingVertical: 0,
@@ -111,7 +111,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           small={true}
           month={capitalize(formatDateAsMonth(dueDate.value))}
           day={formatDateAsDay(dueDate.value)}
-          backgroundColor={customVariables.brandDarkGray}
+          backgroundColor={IOColors.bluegrey}
           textColor={IOColors.white}
         />
       );

@@ -37,9 +37,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "baseline",
     justifyContent: "space-between"
-  },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
   }
 });
 

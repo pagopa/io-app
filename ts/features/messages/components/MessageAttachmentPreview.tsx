@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import * as pot from "italia-ts-commons/lib/pot";
-import customVariables from "../../../theme/variables";
 import {
   mvlAttachmentDownloadFromIdSelector,
   MvlDownload
@@ -22,6 +21,7 @@ import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFai
 import image from "../../../../img/servicesStatus/error-detail-icon.png";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   pdf: {
     flex: 1,
-    backgroundColor: customVariables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   }
 });
 
