@@ -22,8 +22,9 @@ import Landing01 from "../../../../img/landing/01.png";
 import Landing02 from "../../../../img/landing/02.png";
 import Landing03 from "../../../../img/landing/03.png";
 import Landing04 from "../../../../img/landing/04.png";
+/* CIE */
 import LandingCIE from "../../../../img/cie/CIE-onboarding-illustration.png";
-import Completed from "../../../../img/pictograms/payment-completed.svg";
+import PlacingCard from "../../../../img/cie/place-card-illustration.png";
 
 const illustrationItemGutter = 16;
 
@@ -107,10 +108,20 @@ export const IllustrationsShowroom = () => (
         name={"04"}
         image={renderRasterImage(Landing04)}
       ></IllustrationBox>
+    </View>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      CIE
+    </H2>
+    <View style={styles.itemsWrapper}>
       <IllustrationBox
         raster={true}
         name={"CIE"}
         image={renderRasterImage(LandingCIE)}
+      ></IllustrationBox>
+      <IllustrationBox
+        raster={true}
+        name={"Placing Card"}
+        image={renderRasterImage(PlacingCard)}
       ></IllustrationBox>
     </View>
   </ShowroomSection>
