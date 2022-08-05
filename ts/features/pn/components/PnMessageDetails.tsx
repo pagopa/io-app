@@ -16,7 +16,10 @@ import {
 } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
-import { getRptIdFromNoticeNumber } from "../../../utils/payment";
+import {
+  getRptIdFromNoticeNumber,
+  isDuplicatedPayment
+} from "../../../utils/payment";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -114,6 +117,8 @@ export const PnMessageDetails = (props: Props) => {
 
   const scrollViewRef = React.createRef<ScrollView>();
 
+  const isPaid = isDuplicatedPayment(paymentVerificationError);
+
   return (
     <>
       {firstLoadingRequest && paymentVerificationError.isSome() && (
@@ -148,10 +153,7 @@ export const PnMessageDetails = (props: Props) => {
                   paymentVerification={paymentVerification}
                   paymentNoticeNumber={maybePayment.noticeCode}
                   organizationFiscalCode={maybePayment.creditorTaxId}
-                  isPaid={
-                    paymentVerificationError.toUndefined() ===
-                    "PAA_PAGAMENTO_DUPLICATO"
-                  }
+                  isPaid={isPaid}
                 />
                 {paymentVerificationError.isSome() && (
                   <TransactionSummaryErrorDetails
