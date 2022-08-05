@@ -6,6 +6,7 @@ import ProgressCircle from "react-native-progress-circle";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
 import IconFont from "../ui/IconFont";
+import { IOColors } from "../core/variables/IOColors";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   },
   img: {
     overflow: "hidden",
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     height: imgDimension - 3,
     width: imgDimension - 3,
     borderRadius: imgDimension / 2
@@ -206,8 +207,8 @@ export default class CieReadingCardAnimation extends React.PureComponent<
                 ? customVariables.brandDanger
                 : customVariables.brandPrimary
             }
-            shadowColor={customVariables.brandLightGray}
-            bgColor={customVariables.brandLightGray}
+            shadowColor={IOColors.greyLight}
+            bgColor={IOColors.greyLight}
           >
             <Image
               source={require("../../../img/cie/place-card-illustration.png")}

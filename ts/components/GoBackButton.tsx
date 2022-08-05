@@ -3,7 +3,7 @@ import * as React from "react";
 import { BackHandler, NativeEventSubscription } from "react-native";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
-import variables from "../theme/variables";
+import { IOColors } from "../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
 
@@ -63,7 +63,7 @@ class GoBackButton extends React.PureComponent<Props> {
       >
         <IconFont
           name={"io-back"}
-          style={{ color: white ? variables.colorWhite : variables.colorBlack }}
+          style={{ color: white ? IOColors.white : IOColors.black }}
         />
       </ButtonDefaultOpacity>
     );

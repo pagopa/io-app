@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "native-base";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import customVariables from "../../theme/variables";
 import I18n from "../../i18n";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H3 } from "../core/typography/H3";
@@ -70,11 +69,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
         accessibilityRole={"button"}
         accessibilityLabel={I18n.t("global.buttons.close")}
       >
-        <IconFont
-          name="io-close"
-          color={customVariables.lightGray}
-          style={styles.icon}
-        />
+        <IconFont name="io-close" color={IOColors.grey} style={styles.icon} />
       </ButtonDefaultOpacity>
     </View>
   );

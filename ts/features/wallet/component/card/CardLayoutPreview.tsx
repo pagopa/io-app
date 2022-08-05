@@ -2,7 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { AccessibilityProps, Platform, StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import variables from "../../../../theme/variables";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   left: React.ReactNode;
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1.5,
     elevation: -7,
     zIndex: -7,
-    backgroundColor: variables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     borderRadius: 8,
     marginLeft: 0,
     marginRight: 0

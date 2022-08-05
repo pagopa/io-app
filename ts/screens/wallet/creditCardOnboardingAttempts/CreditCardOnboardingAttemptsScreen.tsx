@@ -22,6 +22,7 @@ import {
   CreditCardInsertion
 } from "../../../store/reducers/wallet/creditCard";
 import variables from "../../../theme/variables";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -32,11 +33,8 @@ const styles = StyleSheet.create({
     padding: variables.contentPadding,
     paddingBottom: 0
   },
-  brandDarkGray: {
-    color: variables.brandDarkGray
-  },
   whiteBg: {
-    backgroundColor: variables.colorWhite
+    backgroundColor: IOColors.white
   }
 });
 

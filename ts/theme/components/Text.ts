@@ -2,6 +2,7 @@ import { Platform, TextProperties } from "react-native";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 /**
  * @deprecated
@@ -66,10 +67,10 @@ export default (): Theme => ({
     textAlign: "right"
   },
   ".white": {
-    color: variables.colorWhite
+    color: IOColors.white
   },
   ".dark": {
-    color: variables.brandDarkestGray
+    color: variables.textColorDark
   },
   ".alignCenter": {
     textAlign: "center"
@@ -79,7 +80,7 @@ export default (): Theme => ({
   },
   ".badge": {
     ...makeFontStyleObject(Platform.select, variables.textBoldWeight),
-    color: variables.colorWhite,
+    color: IOColors.white,
     fontSize: 10,
     textAlign: "center",
     lineHeight: 14

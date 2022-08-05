@@ -5,6 +5,7 @@ import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 import { Body } from "./core/typography/Body";
+import { IOColors } from "./core/variables/IOColors";
 
 const styles = StyleSheet.create({
   experimentalFeaturesBannerContainer: {
@@ -23,18 +24,14 @@ const styles = StyleSheet.create({
   },
   experimentalFeaturesBannerMessage: {
     ...makeFontStyleObject(Platform.select, "600"),
-    color: variables.colorWhite
+    color: IOColors.white
   }
 });
 
 const ExperimentalFeaturesBanner = (
   <View style={styles.experimentalFeaturesBannerContainer}>
     <View style={styles.experimentalFeaturesBannerLeft}>
-      <IconFont
-        size={36}
-        color={variables.colorWhite}
-        name={"io-profilo-exp"}
-      />
+      <IconFont size={36} color={IOColors.white} name={"io-profilo-exp"} />
     </View>
     <View style={styles.experimentalFeaturesBannerRight}>
       <Body color={"white"} weight={"SemiBold"}>

@@ -28,6 +28,9 @@ import { format } from "../../utils/dates";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
+
+import { IOColors } from "../core/variables/IOColors";
+
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageListItem from "./MessageListItem";
 
@@ -63,16 +66,16 @@ const styles = StyleSheet.create({
     height: SECTION_HEADER_HEIGHT,
     paddingTop: 19,
     paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   sectionHeaderContent: {
     paddingBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: customVariables.brandLightGray
+    borderBottomColor: IOColors.greyLight
   },
   sectionHeaderText: {
     fontSize: 18,
-    color: customVariables.brandDarkestGray,
+    color: customVariables.textColorDark,
     ...makeFontStyleObject(Platform.select, "600"),
     lineHeight: 20
   },
@@ -90,11 +93,11 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   itemEmptyText: {
-    color: customVariables.brandDarkestGray
+    color: customVariables.textColorDark
   },
   itemSeparator: {
     height: ITEM_SEPARATOR_HEIGHT,
-    backgroundColor: customVariables.brandLightGray
+    backgroundColor: IOColors.greyLight
   },
   button: {
     alignContent: "center",
@@ -118,7 +121,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: screenWidth,
     zIndex: 999,
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   progress: { alignSelf: "center" },
   messageNoOthers: {
@@ -545,7 +548,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             <ActivityIndicator
               style={styles.progress}
               size={"small"}
-              color={customVariables.brandDarkGray}
+              color={IOColors.bluegrey}
             />
           </View>
         )}
