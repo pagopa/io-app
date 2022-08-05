@@ -43,6 +43,7 @@ import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
 import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
 import Completed from "../../../../img/pictograms/payment-completed.svg";
+import BrokenLink from "../../../../img/broken-link.png";
 /* EU Covid Certificate */
 import CertificateExpired from "../../../../img/features/euCovidCert/certificate_expired.png";
 import CertificateNotFound from "../../../../img/features/euCovidCert/certificate_not_found.png";
@@ -51,22 +52,32 @@ import CertificateWrongFormat from "../../../../img/features/euCovidCert/certifi
 /* Donations */
 import Heart from "../../../../img/features/uaDonations/heart.svg";
 
-const illustrationItemGutter = 16;
+/* Sections */
+import Smile from "../../../../img/messages/smile.png";
+import Profile from "../../../../img/icons/profile-illustration.png";
+
+const pictogramItemGutter = 16;
 
 const styles = StyleSheet.create({
   itemsWrapper: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
-    marginLeft: (illustrationItemGutter / 2) * -1,
-    marginRight: (illustrationItemGutter / 2) * -1,
-    marginBottom: 16
+    marginLeft: (pictogramItemGutter / 2) * -1,
+    marginRight: (pictogramItemGutter / 2) * -1,
+    marginBottom: 24
   },
-  illustrationWrapper: {
+  pictogramWrapper: {
     width: "50%",
     justifyContent: "flex-start",
     marginBottom: 16,
-    paddingHorizontal: illustrationItemGutter / 2
+    paddingHorizontal: pictogramItemGutter / 2
+  },
+  pictogramWrapperDark: {
+    width: "33%",
+    justifyContent: "flex-start",
+    marginBottom: 16,
+    paddingHorizontal: pictogramItemGutter / 2
   },
   bgImage: {
     position: "absolute",
@@ -77,7 +88,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  illustrationItem: {
+  fakeTransparentBg: {
+    position: "absolute",
+    width: "200%",
+    height: "200%",
+    opacity: 0.4
+  },
+  pictogramItem: {
     overflow: "hidden",
     position: "relative",
     aspectRatio: 1,
@@ -87,6 +104,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderColor: "rgba(0, 0, 0, 0.1)",
     borderWidth: 1
+  },
+  pictogramItemDark: {
+    padding: 24,
+    backgroundColor: "rgba(0,0,0,1)"
   },
   rasterPill: {
     position: "absolute",
@@ -99,6 +120,12 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     padding: 4,
     borderRadius: 4
+  },
+  rasterPillDark: {
+    right: 4,
+    top: 4,
+    backgroundColor: IOColors.yellow,
+    color: IOColors.black
   }
 });
 
@@ -225,6 +252,11 @@ export const PictogramsShowroom = () => (
         image={renderRasterImage(CompletedRaster)}
       />
       <PictogramBox name={"Completed"} image={<Completed />} />
+      <PictogramBox
+        raster={true}
+        name={"BrokenLink"}
+        image={renderRasterImage(BrokenLink)}
+      />
       <PictogramBox name={"Heart"} image={<Heart fill={IOColors.blue} />} />
     </View>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
@@ -253,6 +285,24 @@ export const PictogramsShowroom = () => (
       />
       {/* ↳ Duplicate of Question */}
     </View>
+
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Sections
+    </H2>
+    <View style={styles.itemsWrapper}>
+      <PictogramBox
+        dark={true}
+        raster={true}
+        name={"Smile"}
+        image={renderRasterImage(Smile)}
+      />
+      <PictogramBox
+        dark={true}
+        raster={true}
+        name={"Profile"}
+        image={renderRasterImage(Profile)}
+      />
+    </View>
   </ShowroomSection>
 );
 
@@ -260,6 +310,7 @@ type PictogramBoxProps = {
   name: string;
   image: React.ReactNode;
   raster?: boolean;
+  dark?: boolean;
 };
 
 const renderRasterImage = (image: ImageSourcePropType) => (
@@ -272,23 +323,27 @@ const renderRasterImage = (image: ImageSourcePropType) => (
 );
 
 const PictogramBox = (props: PictogramBoxProps) => (
-  <View style={styles.illustrationWrapper}>
+  <View
+    style={[
+      styles.pictogramWrapper,
+      props.dark ? styles.pictogramWrapperDark : {}
+    ]}
+  >
     <View
-      style={{
-        ...styles.illustrationItem
-      }}
+      style={[styles.pictogramItem, props.dark ? styles.pictogramItemDark : {}]}
     >
       <ImageBackground
-        style={{
-          position: "absolute",
-          width: "200%",
-          height: "200%",
-          opacity: 0.4
-        }}
+        style={styles.fakeTransparentBg}
         source={FakeTransparentBg}
       />
       {props.image}
-      {props.raster && <Text style={styles.rasterPill}>Png</Text>}
+      {props.raster && (
+        <Text
+          style={[styles.rasterPill, props.dark ? styles.rasterPillDark : {}]}
+        >
+          Png
+        </Text>
+      )}
     </View>
     <View
       style={{
