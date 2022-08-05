@@ -15,14 +15,14 @@
 </p>
 
 
-<div style="display: flex; justify-content: center; margin: 16px;">
-    <a style="display: block; margin: 8px;" href="https://apps.apple.com/it/app/io/id1501681835">
+<p align="center">
+    <a href="https://apps.apple.com/it/app/io/id1501681835">
         <img height="50" src="img/badges/app-store-badge.png" alt="Download on the App Store" />
     </a>
-    <a style="display: block; margin: 8px;" href="https://play.google.com/store/apps/details?id=it.pagopa.io.app">
+    <a href="https://play.google.com/store/apps/details?id=it.pagopa.io.app">
         <img height="50" src="img/badges/google-play-badge.png" alt="Get it on Google Play"/>
     </a>
-</div>
+</p>
 
 # The mobile app of the Digital Citizenship project
 
