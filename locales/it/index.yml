@@ -569,10 +569,8 @@ authentication:
     card3-content:
       Tramite la scansione del QR code puoi velocemente pagare anche
       un avviso cartaceo
-    card4-title: Potrai utilizzare l'app solo tramite SPID
-    card4-content:
-      L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
-      Digitale) per garantire la tua sicurezza online
+    card4-title: Puoi accedere all’app solo con SPID
+    card4-content: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE)
     card5-title: Benvenuto nella prima versione pubblica di IO!
     card5-content: In alto a destra trovi l'icona '?' per aprire
       una chat con il team di IO se qualcosa non funziona come dovrebbe.
