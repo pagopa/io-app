@@ -26,7 +26,10 @@ import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { getRptIdFromNoticeNumber } from "../../../utils/payment";
+import {
+  getRptIdFromNoticeNumber,
+  isDuplicatedPayment
+} from "../../../utils/payment";
 import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
 import PN_ROUTES from "../navigation/routes";
@@ -114,6 +117,8 @@ export const PnMessageDetails = (props: Props) => {
 
   const scrollViewRef = React.createRef<ScrollView>();
 
+  const isPaid = isDuplicatedPayment(paymentVerificationError);
+
   return (
     <>
       {firstLoadingRequest && O.isSome(paymentVerificationError) && (
@@ -148,10 +153,7 @@ export const PnMessageDetails = (props: Props) => {
                   paymentVerification={paymentVerification}
                   paymentNoticeNumber={maybePayment.noticeCode}
                   organizationFiscalCode={maybePayment.creditorTaxId}
-                  isPaid={
-                    O.toUndefined(paymentVerificationError) ===
-                    "PAA_PAGAMENTO_DUPLICATO"
-                  }
+                  isPaid={isPaid}
                 />
                 {O.isSome(paymentVerificationError) && (
                   <TransactionSummaryErrorDetails

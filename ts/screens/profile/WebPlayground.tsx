@@ -14,9 +14,9 @@ import { Dispatch } from "../../store/actions/types";
 import { navigateBack } from "../../store/actions/navigation";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IconFont from "../../components/ui/IconFont";
-import customVariables from "../../theme/variables";
 import { LabelledItem } from "../../components/LabelledItem";
 import { showToast } from "../../utils/showToast";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -97,7 +97,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
               <IconFont
                 name={"io-right"}
                 style={{
-                  color: customVariables.colorWhite
+                  color: IOColors.white
                 }}
               />
             </ButtonDefaultOpacity>

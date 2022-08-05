@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useRef } from "react";
@@ -11,7 +12,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
+import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
@@ -28,6 +29,8 @@ const StudentSelectDestinationScreen = (
   props: Props
 ): React.ReactElement | null => {
   const elementRef = useRef(null);
+  const navigation = useNavigation();
+
   const backButtonProps = {
     primary: false,
     bordered: true,
@@ -37,7 +40,8 @@ const StudentSelectDestinationScreen = (
   const continueButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.navigateToSelectFlightsDateScreen,
+    onPress: () =>
+      navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA),
     title: "Continue"
   };
 
@@ -81,8 +85,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   selectUniversity: (university: University) =>
-    dispatch(svGenerateVoucherSelectUniversity(university)),
-  navigateToSelectFlightsDateScreen: () => navigateToSvSelectFlightsDateScreen()
+    dispatch(svGenerateVoucherSelectUniversity(university))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

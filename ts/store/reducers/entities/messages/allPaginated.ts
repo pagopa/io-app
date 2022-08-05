@@ -402,6 +402,17 @@ const reduceUpsertMessageStatusAttributes = (
       }))
     });
 
+  // Replaces a message with the same ID in the collection (if found)
+  const replace = (message: UIMessage, collection: Collection): Collection => ({
+    ...collection,
+    data: pot.map(collection.data, old => ({
+      ...old,
+      page: old.page.map(oldMessage =>
+        oldMessage.id === message.id ? message : oldMessage
+      )
+    }))
+  });
+
   const refreshCursors = (of: Collection): Collection => ({
     ...of,
     data: pot.map(of.data, old => ({
@@ -421,18 +432,25 @@ const reduceUpsertMessageStatusAttributes = (
       const message = action.payload.message;
       if (message) {
         const { update } = action.payload;
-        if (update.tag === "bulk" || update.tag === "reading") {
-          // We only update TRUE for is_read state
-          // eslint-disable-next-line functional/immutable-data
-          message.isRead = true;
+        const isRead =
+          update.tag === "reading" || update.tag === "bulk" || message.isRead;
+
+        if (update.tag === "reading") {
+          return {
+            ...state,
+            archive: replace({ ...message, isRead }, state.archive),
+            inbox: replace({ ...message, isRead }, state.inbox)
+          };
         }
+
         if (update.tag === "bulk" || update.tag === "archiving") {
-          // eslint-disable-next-line functional/immutable-data
-          message.isArchived = update.isArchived;
           if (update.isArchived) {
             return {
               ...state,
-              archive: insert(message, state.archive),
+              archive: insert(
+                { ...message, isRead, isArchived: true },
+                state.archive
+              ),
               inbox: remove(message, state.inbox),
               latestMessageOperation: undefined
             };
@@ -440,7 +458,10 @@ const reduceUpsertMessageStatusAttributes = (
             return {
               ...state,
               archive: remove(message, state.archive),
-              inbox: insert(message, state.inbox),
+              inbox: insert(
+                { ...message, isRead, isArchived: false },
+                state.inbox
+              ),
               latestMessageOperation: undefined
             };
           }
@@ -453,14 +474,16 @@ const reduceUpsertMessageStatusAttributes = (
       const message = action.payload.payload.message;
       if (message) {
         const { update } = action.payload.payload;
-        if (update.tag === "bulk" || update.tag === "reading") {
-          // We only update TRUE for is_read state
-          // eslint-disable-next-line functional/immutable-data
-          message.isRead = false;
+
+        if (update.tag === "reading") {
+          return {
+            ...state,
+            archive: replace(message, state.archive),
+            inbox: replace(message, state.inbox)
+          };
         }
+
         if (update.tag === "bulk" || update.tag === "archiving") {
-          // eslint-disable-next-line functional/immutable-data
-          message.isArchived = !update.isArchived;
           if (update.isArchived) {
             return {
               ...state,

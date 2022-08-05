@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
 
   landscapeText: {
     position: "absolute",
-    color: customVariables.brandDarkestGray,
+    color: customVariables.textColorDark,
     fontSize: textFontSizeL,
     width: cardWidthL,
     paddingLeft: textLeftMarginL,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
 
   landscapeGender: {
     position: "absolute",
-    color: customVariables.brandDarkestGray,
+    color: customVariables.textColorDark,
     fontSize: textFontSizeL,
     width: cardWidthL,
     paddingLeft: textGenderLeftMarginL,
@@ -297,14 +297,14 @@ const styles = StyleSheet.create({
     lineHeight: 38 * fullScaleFactor,
     position: "absolute",
     fontSize: textFontSizeF,
-    color: customVariables.brandDarkestGray,
+    color: customVariables.textColorDark,
     width: barCodeWidthF
   },
 
   landscapeFacSimile: {
     marginTop: 290 * landscapeScaleFactor,
     position: "absolute",
-    color: customVariables.brandDarkestGray,
+    color: customVariables.textColorDark,
     fontSize: textFontSizeL,
     lineHeight: textLineHeightL,
     width: barCodeWidthL

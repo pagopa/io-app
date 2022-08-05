@@ -64,6 +64,7 @@ import {
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
   loadServiceDetail,
@@ -75,7 +76,7 @@ export type Props = ReturnType<typeof mapStateToProps> &
 
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: variables.colorWhite,
+    backgroundColor: IOColors.white,
     flex: 1
   },
   paddedContent: {

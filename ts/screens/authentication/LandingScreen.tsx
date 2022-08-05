@@ -55,6 +55,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = {
   navigation: CompatNavigationProp<
@@ -277,7 +278,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
           >
             <IconFont
               name={isCieSupported ? "io-cie" : "io-profilo"}
-              color={variables.colorWhite}
+              color={IOColors.white}
             />
             <Text>
               {isCieSupported
@@ -304,7 +305,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
           >
             <IconFont
               name={this.isCieSupported() ? "io-profilo" : "io-cie"}
-              color={variables.colorWhite}
+              color={IOColors.white}
             />
             <Text>
               {this.isCieSupported()

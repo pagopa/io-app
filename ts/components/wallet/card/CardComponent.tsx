@@ -26,6 +26,7 @@ import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import { H5 } from "../../core/typography/H5";
+import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo, { cardIcons } from "./Logo";
@@ -141,7 +142,7 @@ export default class CardComponent extends React.Component<Props> {
               }
               color={
                 pot.isUpdating(isFavorite)
-                  ? variables.brandDarkGray
+                  ? IOColors.bluegrey
                   : variables.brandPrimary
               }
               onPress={this.handleFavoritePress}

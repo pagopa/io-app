@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
 import image from "../../../../img/servicesStatus/error-detail-icon.png";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -11,7 +12,6 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
-import customVariables from "../../../theme/variables";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   pdf: {
     flex: 1,
-    backgroundColor: customVariables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   }
 });
 

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingBottom: 22,
     flexDirection: "column",
     justifyContent: "space-between",
-    backgroundColor: customVariables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: {

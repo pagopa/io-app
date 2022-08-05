@@ -23,6 +23,7 @@ import {
   ExpireStatus,
   getMessagePaymentExpirationInfo
 } from "../../utils/messages";
+import { IOColors } from "../core/variables/IOColors";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
@@ -93,12 +94,12 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
 
   get bannerStyle(): ViewStyle {
     if (this.isPrescriptionExpired) {
-      return { backgroundColor: customVariables.brandDarkGray };
+      return { backgroundColor: IOColors.bluegrey };
     }
     if (this.isPrescriptionExpiring) {
       return { backgroundColor: customVariables.calendarExpirableColor };
     }
-    return { backgroundColor: customVariables.brandGray };
+    return { backgroundColor: IOColors.greyUltraLight };
   }
 
   get textContent() {
@@ -147,14 +148,14 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
         dd => {
           const iconBackgoundColor =
             this.isPrescriptionExpiring || this.isPrescriptionExpired
-              ? customVariables.colorWhite
-              : customVariables.brandDarkGray;
+              ? IOColors.white
+              : IOColors.bluegrey;
 
           const textColor = this.isPrescriptionExpiring
             ? customVariables.calendarExpirableColor
             : this.isPrescriptionExpired
-            ? customVariables.brandDarkGray
-            : customVariables.colorWhite;
+            ? IOColors.bluegrey
+            : IOColors.white;
 
           return (
             <CalendarIconComponent

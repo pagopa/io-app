@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 8,
     width: widthPercentageToDP("42.13%"),
-    backgroundColor: "white",
-    shadowColor: "#00274e",
+    backgroundColor: IOColors.white,
+    shadowColor: customVariables.cardShadow,
     shadowOffset: {
       width: 0,
       height: 5

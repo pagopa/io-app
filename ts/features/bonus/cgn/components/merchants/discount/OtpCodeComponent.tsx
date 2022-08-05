@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor: "#d9d9d9",
+    backgroundColor: IOColors.bluegreyLight,
     width: "100%",
     height: 2,
     margin: 4,

@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray
+    color: customVariables.textColor
   },
   center: {
     alignItems: "center"
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     padding: 10
   },
   buttonBar: {
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     paddingLeft: 8,
     height: 40,
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     borderWidth: 1,
     borderColor: customVariables.brandPrimary
   },
@@ -420,7 +420,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <View style={styles.topScreenContainer}>
           <FocusAwareStatusBar
             barStyle={"dark-content"}
-            backgroundColor={customVariables.colorWhite}
+            backgroundColor={IOColors.white}
           />
           <TopScreenComponent
             accessibilityLabel={I18n.t("services.title")}

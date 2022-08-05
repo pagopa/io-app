@@ -57,7 +57,11 @@ import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { DetailV2Keys, getV2ErrorMainType } from "../../../utils/payment";
+import {
+  DetailV2Keys,
+  getV2ErrorMainType,
+  isDuplicatedPayment
+} from "../../../utils/payment";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import {
@@ -88,7 +92,7 @@ export type TransactionSummaryError = O.Option<
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: customVariables.contentPadding
+    paddingHorizontal: customVariables.contentPadding
   }
 });
 
@@ -184,11 +188,12 @@ const NewTransactionSummaryScreen = ({
   const errorOrUndefined = O.toUndefined(error);
   const isError = O.isSome(error);
 
+  const isPaid = isDuplicatedPayment(error);
   useEffect(() => {
     if (!isError) {
       return;
     }
-    if (errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO") {
+    if (isPaid) {
       onDuplicatedPayment();
     }
     // in case of a payment verification error we should navigate
@@ -206,7 +211,8 @@ const NewTransactionSummaryScreen = ({
     onDuplicatedPayment,
     navigateToPaymentTransactionError,
     showsInlineError,
-    paymentVerification
+    paymentVerification,
+    isPaid
   ]);
 
   const goBack = () => {
@@ -273,7 +279,7 @@ const NewTransactionSummaryScreen = ({
             paymentVerification={paymentVerification}
             paymentNoticeNumber={paymentNoticeNumber}
             organizationFiscalCode={organizationFiscalCode}
-            isPaid={errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO"}
+            isPaid={isPaid}
           />
           {showsInlineError && pot.isError(paymentVerification) && (
             <TransactionSummaryErrorDetails

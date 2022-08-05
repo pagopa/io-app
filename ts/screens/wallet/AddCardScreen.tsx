@@ -35,7 +35,6 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
     borderColor: IOColors.blue
   },
   whiteBg: {
-    backgroundColor: variables.colorWhite
+    backgroundColor: IOColors.white
   },
   flex: {
     flex: 1

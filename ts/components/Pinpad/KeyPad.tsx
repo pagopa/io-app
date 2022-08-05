@@ -7,6 +7,7 @@ import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { IOColors } from "../core/variables/IOColors";
 import StyledIconFont from "../ui/IconFont";
 
 // left -> the string to represent as text
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     marginBottom: -10
   },
   white: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   buttonTextDigit: {
     fontSize: radius + 10
@@ -119,7 +120,7 @@ const renderPinCol = (
                 color={
                   buttonType === "light"
                     ? customVariables.contentPrimaryBackground
-                    : customVariables.colorWhite
+                    : IOColors.white
                 }
               />
             )

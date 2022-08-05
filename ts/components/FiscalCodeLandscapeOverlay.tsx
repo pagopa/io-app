@@ -13,6 +13,7 @@ import customVariables from "../theme/variables";
 import { useMaxBrightness } from "../utils/brightness";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
+import { IOColors } from "./core/variables/IOColors";
 
 export type Props = Readonly<{
   onCancel: () => void;
@@ -23,7 +24,7 @@ export type Props = Readonly<{
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: customVariables.brandDarkGray,
+    backgroundColor: IOColors.bluegrey,
     paddingHorizontal: customVariables.contentPadding,
     paddingTop: 0
   }
@@ -75,7 +76,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
   useMaxBrightness();
 
   return (
-    <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
+    <Container style={{ backgroundColor: IOColors.bluegrey }}>
       <AppHeader noLeft={true} dark={true}>
         <Body />
         <Right>
@@ -86,12 +87,12 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
             accessibilityRole={"button"}
             accessibilityLabel={I18n.t("global.buttons.close")}
           >
-            <IconFont name="io-close" color={customVariables.colorWhite} />
+            <IconFont name="io-close" color={IOColors.white} />
           </Button>
         </Right>
       </AppHeader>
       <StatusBar
-        backgroundColor={customVariables.brandDarkGray}
+        backgroundColor={IOColors.bluegrey}
         barStyle={"light-content"}
       />
       <ScrollView

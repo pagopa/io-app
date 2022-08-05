@@ -16,6 +16,8 @@ import I18n from "../i18n";
 import variables from "../theme/variables";
 import { roundToThirdDecimal } from "../utils/number";
 
+import { IOColors } from "./core/variables/IOColors";
+
 type Props = {
   cards: ReadonlyArray<JSX.Element>;
   onCurrentElement?: (index: number) => void;
@@ -28,7 +30,7 @@ const screenWidth = Dimensions.get("screen").width;
 
 const styles = StyleSheet.create({
   track: {
-    backgroundColor: variables.brandLightGray,
+    backgroundColor: IOColors.greyLight,
     overflow: "hidden",
     width: itemWidth,
     height: itemWidth,

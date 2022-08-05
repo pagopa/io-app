@@ -722,7 +722,7 @@ describe("isLoadingNextPage selector", () => {
   );
 });
 
-describe("Message archiving", () => {
+describe("Message state upsert", () => {
   const A = successReloadMessagesPayload.messages[0];
   const B = successReloadMessagesPayload.messages[1];
   const C = successReloadMessagesPayload.messages[2];
@@ -740,7 +740,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message",
-        archivingMessage: A
+        message: A,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is deleted from inbox and archive remains unchanged",
@@ -769,7 +770,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message",
-        archivingMessage: A
+        message: A,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is moved from inbox to archive and cursors updated",
@@ -779,7 +781,7 @@ describe("Message archiving", () => {
           next: undefined
         }),
         expectedArchive: pot.some({
-          page: [A],
+          page: [{ ...A, isArchived: true }],
           previous: A.id,
           next: undefined
         })
@@ -802,7 +804,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message newer than the archived ones",
-        archivingMessage: A
+        message: A,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is moved from inbox to archive and cursors updated",
@@ -812,7 +815,7 @@ describe("Message archiving", () => {
           next: undefined
         }),
         expectedArchive: pot.some({
-          page: [A, B, C],
+          page: [{ ...A, isArchived: true }, B, C],
           previous: A.id,
           next: C.id
         })
@@ -835,7 +838,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message older than the archived ones",
-        archivingMessage: C
+        message: C,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is removed from inbox and archive remains unchanged",
@@ -868,7 +872,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message neither newer nor older than the archived ones",
-        archivingMessage: B
+        message: B,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is moved from inbox to archive and archive cursors remain unchanged",
@@ -878,7 +883,7 @@ describe("Message archiving", () => {
           next: undefined
         }),
         expectedArchive: pot.some({
-          page: [A, B, C],
+          page: [A, { ...B, isArchived: true }, C],
           previous: A.id,
           next: C.id
         })
@@ -901,7 +906,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message older than the archived ones",
-        archivingMessage: C
+        message: C,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is moved from inbox to archive and next cursor remains undefined",
@@ -911,7 +917,65 @@ describe("Message archiving", () => {
           next: undefined
         }),
         expectedArchive: pot.some({
-          page: [A, B, C],
+          page: [A, B, { ...C, isArchived: true }],
+          previous: A.id,
+          next: undefined
+        })
+      }
+    },
+    {
+      given: {
+        desc: "given an unread message in inbox",
+        inbox: pot.some({
+          page: [{ ...A, isRead: false }],
+          previous: A.id,
+          next: undefined
+        }),
+        archive: pot.none
+      },
+      when: {
+        desc: "when reading the message",
+        message: { ...A, isRead: false },
+        update: { tag: "reading" }
+      },
+      then: {
+        desc: "then the message state is updated accordingly",
+        expectedInbox: pot.some({
+          page: [{ ...A, isRead: true }],
+          previous: A.id,
+          next: undefined
+        }),
+        expectedArchive: pot.none
+      }
+    },
+    {
+      given: {
+        desc: "given an unread message in inbox",
+        inbox: pot.some({
+          page: [{ ...A, isRead: false, isArchived: false }],
+          previous: A.id,
+          next: undefined
+        }),
+        archive: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        })
+      },
+      when: {
+        desc: "when reading and archiving the message",
+        message: { ...A, isRead: false, isArchived: false },
+        update: { tag: "bulk", isArchived: true }
+      },
+      then: {
+        desc: "then the message state is updated accordingly",
+        expectedInbox: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        }),
+        expectedArchive: pot.some({
+          page: [{ ...A, isRead: true, isArchived: true }],
           previous: A.id,
           next: undefined
         })
@@ -927,8 +991,8 @@ describe("Message archiving", () => {
 
       describe(`${when.desc}`, () => {
         const payload: UpsertMessageStatusAttributesPayload = {
-          message: when.archivingMessage,
-          update: { tag: "archiving", isArchived: true }
+          message: when.message,
+          update: when.update as UpsertMessageStatusAttributesPayload["update"]
         };
 
         const requestState = reducer(

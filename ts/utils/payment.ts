@@ -19,6 +19,11 @@ import {
 } from "../../definitions/backend/PaymentProblemJson";
 import { PspData } from "../../definitions/pagopa/PspData";
 import I18n from "../i18n";
+import {
+  paymentAttiva,
+  paymentIdPolling,
+  paymentVerifica
+} from "../store/actions/wallet/payment";
 import { PaymentHistory } from "../store/reducers/payments/history";
 import {
   OutcomeCode,
@@ -33,6 +38,7 @@ import {
   Transaction,
   Wallet
 } from "../types/pagopa";
+import { PayloadForAction } from "../types/utils";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
@@ -469,3 +475,21 @@ export const getPickPaymentMethodDescription = (
         O.getOrElse(() => defaultHolder)
       );
 };
+
+export const isDuplicatedPayment = (
+  error: O.Option<
+    PayloadForAction<
+      | typeof paymentVerifica["failure"]
+      | typeof paymentAttiva["failure"]
+      | typeof paymentIdPolling["failure"]
+    >
+  >
+) =>
+  pipe(
+    error,
+    O.exists(
+      detail =>
+        detail === "PAA_PAGAMENTO_DUPLICATO" ||
+        detail === "PPT_PAGAMENTO_DUPLICATO"
+    )
+  );

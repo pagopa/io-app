@@ -6,6 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 
 const maybeDisabled = O.fromPredicate(
   (isDisabled: boolean | undefined = undefined) => isDisabled === true
@@ -33,7 +34,7 @@ export default class Switch extends React.Component<NativeBase.Switch> {
           false: "default",
           true:
             Platform.OS === "android"
-              ? variables.brandLightGray
+              ? IOColors.greyLight
               : variables.contentPrimaryBackground
         }}
         // Circle
@@ -41,7 +42,7 @@ export default class Switch extends React.Component<NativeBase.Switch> {
           Platform.OS === "android"
             ? this.props.value
               ? thumbColor
-              : variables.brandLightGray
+              : IOColors.greyLight
             : "default"
         }
         {...this.props}

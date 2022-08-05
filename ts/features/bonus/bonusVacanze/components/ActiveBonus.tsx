@@ -9,6 +9,7 @@ import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { validityInterval } from "../utils/bonus";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -33,18 +34,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   text3: {
     fontSize: 18,
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   text12: {
     lineHeight: 18,
     marginBottom: -4,
     justifyContent: "flex-end",
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   icon: {
     width: 64,
@@ -61,12 +59,12 @@ const styles = StyleSheet.create({
     minHeight: 24
   },
   textWhite: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   containerColor: {
     padding: customVariables.appHeaderPaddingHorizontal,
     backgroundColor: "#2C489D",
-    color: customVariables.colorWhite
+    color: IOColors.white
   }
 });
 
@@ -113,11 +111,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           </Text>
         </View>
         <View style={styles.icon}>
-          <IconFont
-            name="io-right"
-            size={ICON_WIDTH}
-            color={customVariables.colorWhite}
-          />
+          <IconFont name="io-right" size={ICON_WIDTH} color={IOColors.white} />
         </View>
       </View>
     </TouchableDefaultOpacity>

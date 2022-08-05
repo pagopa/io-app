@@ -28,6 +28,7 @@ import {
   ScannedBarcode
 } from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
   },
 
   white: {
-    backgroundColor: customVariables.brandPrimaryInverted
+    backgroundColor: IOColors.white
   },
 
   bottomText: {
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     marginTop: -cameraTextOverlapping,
     zIndex: 1
   },
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: -cameraTextOverlapping,
     width: screenWidth - customVariables.contentPadding * 2,
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     zIndex: 999
   },
 
@@ -354,7 +355,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         <SafeAreaView style={IOStyles.flex}>
           <FocusAwareStatusBar
             barStyle={"dark-content"}
-            backgroundColor={customVariables.colorWhite}
+            backgroundColor={IOColors.white}
           />
           <ScrollView bounces={false}>
             <BarcodeCamera

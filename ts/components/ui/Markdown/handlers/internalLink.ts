@@ -67,8 +67,9 @@ const uaDonationsRoutesToNavigationLink: Record<string, string> = {
 };
 
 const svRoutesToNavigationLink: Record<string, string> = {
-  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]: "/services/sv-check-status",
-  [SV_ROUTES.VOUCHER_LIST.LIST]: "/services/vouchers-list"
+  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]:
+    "/services/sv-generation/check-status",
+  [SV_ROUTES.VOUCHER_LIST.LIST]: "/services/sv-vouchers/list"
 };
 
 const fimsRoutesToNavigationLink: Record<string, string> = {

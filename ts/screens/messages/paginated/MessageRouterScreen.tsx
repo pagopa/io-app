@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
@@ -124,6 +124,11 @@ const MessageRouterScreen = ({
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
   // (avoid displaying error at the first frame)
   const firstRendering = useRef(true);
+
+  // used to avoid multiple navigations dispatch
+  const [didNavigateToScreenHandler, setDidNavigateToScreenHandler] =
+    useState(false);
+
   const isLoading = !pot.isError(maybeMessageDetails);
 
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
@@ -142,6 +147,10 @@ const MessageRouterScreen = ({
   }, [isServiceAvailable, loadServiceDetail, maybeMessage]);
 
   useEffect(() => {
+    if (didNavigateToScreenHandler) {
+      return;
+    }
+
     // message in the list and its details loaded: green light
     if (isStrictSome(maybeMessageDetails) && maybeMessage !== undefined) {
       // TODO: this is a mitigation to prevent user from opening
@@ -163,6 +172,7 @@ const MessageRouterScreen = ({
           isPnEnabled
         )(navigation.dispatch);
       }
+      setDidNavigateToScreenHandler(true);
       return;
     }
     if (firstRendering.current) {
@@ -171,15 +181,14 @@ const MessageRouterScreen = ({
       firstRendering.current = false;
     }
   }, [
-    loadMessageDetails,
+    didNavigateToScreenHandler,
+    fromNotification,
+    isPnEnabled,
     maybeMessage,
     maybeMessageDetails,
-    messageId,
     navigation,
-    tryLoadMessageDetails,
-    isPnEnabled,
-    fromNotification,
-    setMessageReadState
+    setMessageReadState,
+    tryLoadMessageDetails
   ]);
 
   return (

@@ -23,7 +23,6 @@ import {
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
 
 import { isStringNullyOrEmpty } from "../../utils/strings";
@@ -74,7 +73,9 @@ type CommonProp = Readonly<{
 
 export type Props = WithTestID<CommonProp>;
 
-const brandGrayDarken = color(variables.brandGray).darken(0.2).string();
+/* TODO: Replace this generated color variable with a value from IOCOlors
+Or Alias Token from variables.ts */
+const brandGrayDarken = color(IOColors.greyUltraLight).darken(0.2).string();
 
 type DescriptionColor = "bluegreyLight" | "bluegreyDark" | "red";
 type LabelColor = Exclude<DescriptionColor, "red">;
@@ -108,10 +109,9 @@ function getColorsByProps({
     };
   }
   return {
-    borderColor:
-      hasFocus && isEmpty ? variables.itemBorderDefaultColor : undefined,
+    borderColor: hasFocus && isEmpty ? IOColors.milderGray : undefined,
     descriptionColor: isValid === false ? "red" : "bluegreyDark",
-    iconColor: iconColor ?? variables.brandDarkGray,
+    iconColor: iconColor ?? IOColors.bluegrey,
     placeholderTextColor: brandGrayDarken,
     labelColor: "bluegreyDark"
   };

@@ -15,6 +15,7 @@ import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSize1
   },
   white: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   container: {
     flex: 1,
@@ -148,17 +149,8 @@ const styles = StyleSheet.create({
   emptyListContentTitle: {
     paddingBottom: customVariables.contentPadding / 2
   },
-  bordercColorBrandGray: {
-    borderColor: customVariables.brandGray
-  },
-  colorBrandGray: {
-    color: customVariables.brandGray
-  },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   whiteBg: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   noBottomPadding: {
     padding: customVariables.contentPadding,

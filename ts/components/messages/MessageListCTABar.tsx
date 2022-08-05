@@ -21,6 +21,7 @@ import {
   isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
+import { IOColors } from "../core/variables/IOColors";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   topContainerLarge: {
     paddingVertical: customVariables.contentPadding / 2,
     paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: customVariables.brandGray
+    backgroundColor: IOColors.greyUltraLight
   },
   topContainerPaid: {
     paddingVertical: 0,
@@ -126,8 +127,8 @@ class MessageListCTABar extends React.PureComponent<Props> {
           small={true}
           month={capitalize(formatDateAsMonth(dueDate.value))}
           day={formatDateAsDay(dueDate.value)}
-          backgroundColor={customVariables.brandDarkGray}
-          textColor={customVariables.colorWhite}
+          backgroundColor={IOColors.bluegrey}
+          textColor={IOColors.white}
         />
       );
     }

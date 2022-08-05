@@ -123,12 +123,12 @@ const TextContent: React.FunctionComponent<{
 const getCalendarIconBackgoundColor = (status: PaymentStatus) => {
   switch (status) {
     case "paid":
-      return customVariables.lighterGray;
+      return IOColors.bluegreyLight;
     case "expired":
-      return customVariables.colorWhite;
+      return IOColors.white;
     case "expiring":
     case "valid":
-      return customVariables.brandDarkGray;
+      return IOColors.bluegrey;
   }
 };
 
@@ -137,9 +137,9 @@ const getCalendarTextColor = (status: PaymentStatus) => {
     case "paid":
     case "expiring":
     case "valid":
-      return customVariables.colorWhite;
+      return IOColors.white;
     case "expired":
-      return customVariables.brandDarkGray;
+      return IOColors.bluegrey;
   }
 };
 
@@ -169,9 +169,9 @@ const bannerStyle = (status: PaymentStatus): ViewStyle => {
     case "paid":
     case "expiring":
     case "valid":
-      return { backgroundColor: customVariables.brandGray };
+      return { backgroundColor: IOColors.greyUltraLight };
     case "expired":
-      return { backgroundColor: customVariables.brandDarkGray };
+      return { backgroundColor: IOColors.bluegrey };
   }
 };
 

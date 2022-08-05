@@ -15,6 +15,7 @@ import {
   paymentExpirationInfo
 } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
+import { IOColors } from "../core/variables/IOColors";
 import OrganizationHeader from "../OrganizationHeader";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: variables.spacerSmallHeight
   },
   ctaBarContainer: {
-    backgroundColor: variables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     padding: variables.contentPadding,
     marginBottom: variables.contentPadding
   },

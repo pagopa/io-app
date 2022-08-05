@@ -1,11 +1,16 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { H1 } from "../../components/core/typography/H1";
 
 const styles = StyleSheet.create({
-  alignCenter: {
-    alignItems: "center"
+  content: {
+    marginBottom: 54
+  },
+  title: {
+    marginBottom: 16,
+    borderBottomWidth: 2,
+    borderBottomColor: IOColors.greyLight
   }
 });
 
@@ -14,9 +19,8 @@ type OwnProps = {
 };
 
 export const ShowroomSection: React.FunctionComponent<OwnProps> = props => (
-  <View style={styles.alignCenter}>
-    <H1>{props.title}</H1>
-    <View spacer={true} />
+  <View style={styles.content}>
+    <H1 style={styles.title}>{props.title}</H1>
     {props.children}
   </View>
 );

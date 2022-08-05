@@ -10,6 +10,7 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Link } from "../../../../components/core/typography/Link";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -45,7 +46,7 @@ type Props = OwnProps &
 const CSS_STYLE = `
 body {
   font-size: ${customVariables.fontSize1}px;
-  color: ${customVariables.brandDarkestGray}
+  color: ${customVariables.textColorDark}
 }
 
 h4 {
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: customVariables.fontSize3,
     lineHeight: customVariables.lineHeightH3,
-    color: customVariables.colorBlack
+    color: IOColors.black
   },
   urlButton: { flex: 1, textAlign: "center" }
 });

@@ -39,6 +39,7 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
+import { IOColors } from "../components/core/variables/IOColors";
 import { isOnboardingCompleted } from "../utils/navigation";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
@@ -229,7 +230,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           onPress={() => {
             this.setState({ displayError: false });
           }}
-          color={customVariables.colorWhite}
+          color={IOColors.white}
           accessible={true}
           accessibilityLabel={I18n.t("global.buttons.close")}
         />

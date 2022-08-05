@@ -8,6 +8,7 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../theme/variables";
 import { HEADER_ICON_HEIGHT } from "../utils/constants";
+import { IOColors } from "../components/core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 
 type Props = {
@@ -22,7 +23,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   darkGrayBg: {
-    backgroundColor: customVariables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   },
   container: {
     justifyContent: "space-between",

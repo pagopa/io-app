@@ -12,11 +12,12 @@ import customVariables from "../../theme/variables";
 import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
 import CopyButtonComponent from "../CopyButtonComponent";
 import { Link } from "../core/typography/Link";
+import { IOColors } from "../core/variables/IOColors";
 import EmailCallCTA from "../screens/EmailCallCTA";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: customVariables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     padding: customVariables.contentPadding
   },
   row: {

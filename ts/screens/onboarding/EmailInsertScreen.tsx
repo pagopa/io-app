@@ -2,9 +2,9 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
-import { StackActions } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
+import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
   },
-  darkestGray: {
-    color: customVariables.brandDarkestGray
+  textColorDark: {
+    color: customVariables.textColorDark
   }
 });
 
@@ -279,7 +279,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                     : I18n.t("email.edit.subtitle")
                   : I18n.t("email.insert.subtitle")}
                 {isFromProfileSection && (
-                  <Text style={styles.darkestGray}>
+                  <Text style={styles.textColorDark}>
                     {` ${pipe(
                       this.props.optionEmail,
                       O.getOrElse(() => "")

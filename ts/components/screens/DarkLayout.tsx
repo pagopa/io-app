@@ -1,5 +1,5 @@
 /**
- * A component to display a brandDarkGray background color on the screen using it
+ * A component to display a bluegrey background color on the screen using it
  */
 import { View } from "native-base";
 import * as React from "react";
@@ -14,6 +14,7 @@ import { IconProps } from "react-native-vector-icons/Icon";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
+import { IOColors } from "../core/variables/IOColors";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -61,7 +62,9 @@ export default class DarkLayout extends React.Component<Props> {
     const wrapper = (children: React.ReactNode) =>
       this.props.gradientHeader ? (
         <LinearGradient
-          colors={[customVariables.brandDarkGray, "#42484F"]}
+          /* grey gradient */
+          /* TODO: Replace IOColors values with IOColorGradients ones */
+          colors={[IOColors.bluegrey, "#42484F"]}
           style={
             this.props.headerPaddingMin
               ? styles.headerContentsMin
@@ -76,7 +79,7 @@ export default class DarkLayout extends React.Component<Props> {
             this.props.headerPaddingMin
               ? styles.headerContentsMin
               : styles.headerContents,
-            { backgroundColor: customVariables.brandDarkGray }
+            { backgroundColor: IOColors.bluegrey }
           ]}
         >
           {children}
@@ -110,7 +113,7 @@ export default class DarkLayout extends React.Component<Props> {
         titleColor={"white"}
       >
         <FocusAwareStatusBar
-          backgroundColor={customVariables.brandDarkGray}
+          backgroundColor={IOColors.bluegrey}
           barStyle={"light-content"}
         />
         {this.props.hasDynamicSubHeader ? (

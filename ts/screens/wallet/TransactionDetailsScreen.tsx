@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import { Link } from "../../components/core/typography/Link";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
@@ -36,7 +37,6 @@ import { fetchPsp } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";
 import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
-import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
@@ -80,9 +80,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     height: 30,
     width: 48
-  },
-  darkText: {
-    color: customVariables.brandDarkestGray
   },
   bigText: {
     fontSize: 20
@@ -222,7 +219,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
         faqCategories={["wallet_transaction"]}
       >
         <FocusAwareStatusBar
-          backgroundColor={customVariables.brandDarkGray}
+          backgroundColor={IOColors.bluegrey}
           barStyle={"light-content"}
         />
         <NavigationEvents onWillFocus={this.handleWillFocus} />

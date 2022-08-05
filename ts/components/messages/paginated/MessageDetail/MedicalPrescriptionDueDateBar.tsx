@@ -19,6 +19,7 @@ import {
 import { UIMessageDetails } from "../../../../store/reducers/entities/messages/types";
 import CalendarIconComponent from "../../CalendarIconComponent";
 import CalendarEventButton from "../../CalendarEventButton";
+import { IOColors } from "../../../core/variables/IOColors";
 
 type Props = {
   dueDate: Date;
@@ -67,10 +68,10 @@ const MedicalPrescriptionDueDateBar = ({
   const time = format(dueDate, "HH.mm");
 
   const bannerStyle = isPrescriptionExpired
-    ? { backgroundColor: customVariables.brandDarkGray }
+    ? { backgroundColor: IOColors.bluegrey }
     : isPrescriptionExpiring
     ? { backgroundColor: customVariables.calendarExpirableColor }
-    : { backgroundColor: customVariables.brandGray };
+    : { backgroundColor: IOColors.greyUltraLight };
 
   if (isPrescriptionExpiring || isPrescriptionExpired) {
     return (
@@ -81,11 +82,11 @@ const MedicalPrescriptionDueDateBar = ({
         <CalendarIconComponent
           month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
-          backgroundColor={customVariables.colorWhite}
+          backgroundColor={IOColors.white}
           textColor={
             isPrescriptionExpiring
               ? customVariables.calendarExpirableColor
-              : customVariables.brandDarkGray
+              : IOColors.bluegrey
           }
         />
 
@@ -120,8 +121,8 @@ const MedicalPrescriptionDueDateBar = ({
         <CalendarIconComponent
           month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
-          backgroundColor={customVariables.brandDarkGray}
-          textColor={customVariables.colorWhite}
+          backgroundColor={IOColors.bluegrey}
+          textColor={IOColors.white}
         />
         <View hspacer={true} small={true} />
         <CalendarEventButton message={messageDetails.raw} medium={true} />

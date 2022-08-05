@@ -10,6 +10,7 @@ import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import MessageList from "../../../components/messages/paginated/MessageList";
@@ -56,6 +57,7 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
+
 import MigratingMessage from "./MigratingMessage";
 
 type Props = {
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray
+    color: customVariables.textColor
   }
 });
 
@@ -240,7 +242,7 @@ const MessagesHomeScreen = ({
     >
       <FocusAwareStatusBar
         barStyle={"dark-content"}
-        backgroundColor={customVariables.colorWhite}
+        backgroundColor={IOColors.white}
       />
       {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (

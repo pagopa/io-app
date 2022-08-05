@@ -5,6 +5,7 @@ import customVariables from "../theme/variables";
 import { WithTestID } from "../types/WithTestID";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
+import { IOColors } from "./core/variables/IOColors";
 
 const styles = StyleSheet.create({
   viewRL: {
@@ -56,17 +57,17 @@ const darkStyles = StyleSheet.create({
   },
 
   icon: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
 
   text: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   }
 });
 
 const lightStyles = StyleSheet.create({
   button: {
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     borderWidth: 1,
     borderColor: customVariables.brandPrimary
   },

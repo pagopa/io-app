@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -39,6 +40,7 @@ import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { showToast } from "../../../../utils/showToast";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import {
@@ -126,6 +128,9 @@ const animated = {
   scrollEventThrottle: 8
 };
 
+// Do not refresh again automatically before minimumRefreshInterval has passed
+const minimumRefreshInterval = 60000 as Millisecond; // 1 minute
+
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -196,6 +201,13 @@ const MessageList = ({
     () => shouldUseLoad && !didLoad
   );
 
+  useActionOnFocus(() => {
+    // check if there are new messages when the component becomes focused
+    if (previousCursor) {
+      loadPreviousPage(previousCursor);
+    }
+  }, minimumRefreshInterval);
+
   useEffect(() => {
     if (error) {
       showToast(I18n.t("global.genericError"), "warning");
@@ -243,12 +255,7 @@ const MessageList = ({
         }
 
         setIsRefreshing(true);
-
-        if (messages.length === 0) {
-          reloadAll();
-        } else if (previousCursor !== undefined) {
-          loadPreviousPage(previousCursor);
-        }
+        reloadAll();
       }}
     />
   ) : undefined;

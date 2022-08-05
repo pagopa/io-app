@@ -5,6 +5,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ListItemComponent from "../screens/ListItemComponent";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = {
   item: pot.Pot<ServicePublic, Error>;
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     paddingRight: customVariables.fontSizeBase / 3
   },
   serviceName: {
-    color: customVariables.brandDarkGray
+    color: IOColors.bluegrey
   },
   headerWrapper: {
     flexDirection: "row",

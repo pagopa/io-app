@@ -7,6 +7,7 @@
 <rect x="-26" y="-26" width="100" height="100" fill="white"/>
 </g>
 <defs>
+<!-- appIcon gradient -->
 <linearGradient id="paint0_linear" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse">
 <stop stop-color="#1D51DF"/>
 <stop offset="1" stop-color="#1723D5"/>

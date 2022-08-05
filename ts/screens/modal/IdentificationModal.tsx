@@ -29,7 +29,6 @@ import {
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { profileNameSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
   biometricAuthenticationRequest,
@@ -38,6 +37,10 @@ import {
   isBiometricsValidType
 } from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
+
+import { IOColors } from "../../components/core/variables/IOColors";
+import customVariables from "../../theme/variables";
+
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -512,7 +515,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     const defaultColor = isValidatingTask
       ? customVariables.contentPrimaryBackground
-      : customVariables.colorWhite;
+      : IOColors.white;
 
     return !this.state.canInsertPinTooManyAttempts ? (
       IdentificationLockModal({ countdown })

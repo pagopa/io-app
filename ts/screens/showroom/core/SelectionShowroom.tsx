@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { Label } from "../../../components/core/typography/Label";

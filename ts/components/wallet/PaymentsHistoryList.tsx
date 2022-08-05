@@ -16,6 +16,7 @@ import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
 import customVariables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import { getIuv } from "../../utils/payment";
+import { IOColors } from "../core/variables/IOColors";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 
@@ -30,16 +31,13 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     flex: 1
   },
   subHeaderContent: {
     flexDirection: "row",
     alignItems: "baseline",
     justifyContent: "space-between"
-  },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
   }
 });
 

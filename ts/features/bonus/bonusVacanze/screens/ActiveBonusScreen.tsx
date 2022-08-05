@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   validUntil: {
-    color: variables.brandDarkestGray,
+    color: variables.textColorDark,
     lineHeight: variables.lineHeightSmall,
     paddingVertical: 8
   },
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 18
   },
-  colorDarkest: {
-    color: variables.brandDarkestGray
+  textColorDark: {
+    color: variables.textColorDark
   },
   colorGrey: {
     color: variables.textColor
@@ -653,7 +653,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   <View style={styles.rowBlock}>
                     <Text
                       semibold={true}
-                      style={[styles.sectionLabel, styles.colorDarkest]}
+                      style={[styles.sectionLabel, styles.textColorDark]}
                     >
                       {I18n.t("bonus.bonusVacanze.status")}
                     </Text>
