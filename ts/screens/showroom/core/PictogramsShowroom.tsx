@@ -11,6 +11,7 @@ import { H2 } from "../../../components/core/typography/H2";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ShowroomSection } from "../ShowroomSection";
+import IconFont from "../../../components/ui/IconFont";
 
 /* Fake Transparent BG */
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
@@ -116,6 +117,18 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: IOColors.orange,
     color: "#FFFFFF",
+    fontSize: 8,
+    textTransform: "uppercase",
+    padding: 4,
+    borderRadius: 4
+  },
+  iconFontPill: {
+    position: "absolute",
+    right: 4,
+    top: 4,
+    overflow: "hidden",
+    backgroundColor: IOColors.aqua,
+    color: IOColors.black,
     fontSize: 8,
     textTransform: "uppercase",
     padding: 4,
@@ -302,6 +315,26 @@ export const PictogramsShowroom = () => (
         name={"Profile"}
         image={renderRasterImage(Profile)}
       />
+      <PictogramBox
+        dark={true}
+        iconFont={true}
+        name={"Messages"}
+        image={
+          <IconFont
+            name={"io-home-messaggi"}
+            color={IOColors.white}
+            size={24}
+          />
+        }
+      />
+      <PictogramBox
+        dark={true}
+        iconFont={true}
+        name={"Services"}
+        image={
+          <IconFont name={"io-home-servizi"} color={IOColors.white} size={48} />
+        }
+      />
     </View>
   </ShowroomSection>
 );
@@ -310,6 +343,7 @@ type PictogramBoxProps = {
   name: string;
   image: React.ReactNode;
   raster?: boolean;
+  iconFont?: boolean;
   dark?: boolean;
 };
 
@@ -344,6 +378,7 @@ const PictogramBox = (props: PictogramBoxProps) => (
           Png
         </Text>
       )}
+      {props.iconFont && <Text style={styles.iconFontPill}>Font</Text>}
     </View>
     <View
       style={{
