@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0-rc.6](https://github.com/pagopa/io-app/compare/2.14.0-rc.5...2.14.0-rc.6) (2022-08-04)
+
+
+### Bug Fixes
+
+* [[IA-921](https://pagopa.atlassian.net/browse/IA-921)] Disable navigation gestures on Android ([#4094](https://github.com/pagopa/io-app/issues/4094)) ([e8ca902](https://github.com/pagopa/io-app/commit/e8ca90201748093390742104bec3e2ce4c644c59))
+* [[IA-924](https://pagopa.atlassian.net/browse/IA-924)] Disable uppercase buttons on Android ([b6741d8](https://github.com/pagopa/io-app/commit/b6741d83d368aa74828870aa29ca48c8701982ca))
+* [[IABT-1382](https://pagopa.atlassian.net/browse/IABT-1382)] Do not consider PPT_PAGAMENTO_DUPLICATO as error  ([#4098](https://github.com/pagopa/io-app/issues/4098)) ([d346aa1](https://github.com/pagopa/io-app/commit/d346aa11d161c1340352108df4127ac219dc735c))
+* [[IABT-1385](https://pagopa.atlassian.net/browse/IABT-1385)] Fix transaction summary scrollbar ([#4091](https://github.com/pagopa/io-app/issues/4091)) ([555553b](https://github.com/pagopa/io-app/commit/555553b0ac04aa1b011eda9f637ff393684c9562))
+
+
+### Chores
+
+* [[IAI-173](https://pagopa.atlassian.net/browse/IAI-173),[IAI-174](https://pagopa.atlassian.net/browse/IAI-174)] Upgrades SiciliaVola Navigators ([#4084](https://github.com/pagopa/io-app/issues/4084)) ([37483d8](https://github.com/pagopa/io-app/commit/37483d860cb55c685346ff9d2ff39de4726b22b7))
+* [[IAI-227](https://pagopa.atlassian.net/browse/IAI-227),[IAI-229](https://pagopa.atlassian.net/browse/IAI-229)] Remove/Update references to neutral color values ([#4062](https://github.com/pagopa/io-app/issues/4062)) ([feea850](https://github.com/pagopa/io-app/commit/feea85012279e545bc9b1902db8466f39b1ce565))
+
 ## [2.14.0-rc.5](https://github.com/pagopa/io-app/compare/2.14.0-rc.4...2.14.0-rc.5) (2022-07-29)
 
 
