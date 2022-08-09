@@ -14,9 +14,11 @@ import { ShowroomSection } from "../ShowroomSection";
 import IconFont from "../../../components/ui/IconFont";
 import {
   Pictogram,
-  PictogramMap,
+  IOPictograms,
+  IOPictogramType,
   SectionPictogram,
-  SectionPictogramMap
+  IOSectionPictograms,
+  IOSectionPictogramType
 } from "../../../components/core/pictograms";
 
 /* Fake Transparent BG */
@@ -347,11 +349,16 @@ export const PictogramsShowroom = () => (
       Pictograms (SVG Components)
     </H2>
     <View style={styles.itemsWrapper}>
-      {Object.entries(PictogramMap).map(([pictogramItemName]) => (
+      {Object.entries(IOPictograms).map(([pictogramItemName]) => (
         <PictogramBox
           key={pictogramItemName}
           name={pictogramItemName}
-          image={<Pictogram name={pictogramItemName} size={"100%"} />}
+          image={
+            <Pictogram
+              name={pictogramItemName as IOPictogramType}
+              size={"100%"}
+            />
+          }
         />
       ))}
     </View>
@@ -360,12 +367,17 @@ export const PictogramsShowroom = () => (
       Sections (SVG Components)
     </H2>
     <View style={styles.itemsWrapper}>
-      {Object.entries(SectionPictogramMap).map(([pictogramItemName]) => (
+      {Object.entries(IOSectionPictograms).map(([pictogramItemName]) => (
         <PictogramBox
           dark={true}
           key={pictogramItemName}
           name={pictogramItemName}
-          image={<SectionPictogram name={pictogramItemName} size={"100%"} />}
+          image={
+            <SectionPictogram
+              name={pictogramItemName as IOSectionPictogramType}
+              size="100%"
+            />
+          }
         />
       ))}
     </View>
