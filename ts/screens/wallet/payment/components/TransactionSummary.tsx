@@ -269,7 +269,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         title={I18n.t("payment.noticeCode")}
         subtitle={formattedPaymentNoticeNumber}
         onPress={() =>
-          clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
+          clipboardSetStringWithFeedback(props.paymentNoticeNumber)
         }
       />
       <TransactionSummaryRow

@@ -22,6 +22,9 @@ export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
 const customVariables = Object.assign(materialVariables, {
   minTouchableAreaSize: 48,
 
+  // Android
+  buttonUppercaseAndroidText: false /* NB Theme variable, don't remove */,
+
   // Button
   btnTextFontWeight: "700" as FontWeight,
   textLightButtonWeight: "600" as FontWeight,

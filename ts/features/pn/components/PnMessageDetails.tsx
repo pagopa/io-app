@@ -16,7 +16,10 @@ import {
 } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
-import { getRptIdFromNoticeNumber } from "../../../utils/payment";
+import {
+  getRptIdFromNoticeNumber,
+  isDuplicatedPayment
+} from "../../../utils/payment";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -30,10 +33,12 @@ import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import PN_ROUTES from "../navigation/routes";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
 import { H5 } from "../../../components/core/typography/H5";
+import { PnConfigSelector } from "../../../store/reducers/backendStatus";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageTimeline } from "./PnMessageTimeline";
+import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
 
 const styles = StyleSheet.create({
   content: {
@@ -54,6 +59,7 @@ export const PnMessageDetails = (props: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
 
   const maybePayment = props.message.recipients.find(
     _ => _.taxId === currentFiscalCode
@@ -114,6 +120,8 @@ export const PnMessageDetails = (props: Props) => {
 
   const scrollViewRef = React.createRef<ScrollView>();
 
+  const isPaid = isDuplicatedPayment(paymentVerificationError);
+
   return (
     <>
       {firstLoadingRequest && paymentVerificationError.isSome() && (
@@ -148,10 +156,7 @@ export const PnMessageDetails = (props: Props) => {
                   paymentVerification={paymentVerification}
                   paymentNoticeNumber={maybePayment.noticeCode}
                   organizationFiscalCode={maybePayment.creditorTaxId}
-                  isPaid={
-                    paymentVerificationError.toUndefined() ===
-                    "PAA_PAGAMENTO_DUPLICATO"
-                  }
+                  isPaid={isPaid}
                 />
                 {paymentVerificationError.isSome() && (
                   <TransactionSummaryErrorDetails
@@ -187,6 +192,7 @@ export const PnMessageDetails = (props: Props) => {
               scrollViewRef.current?.scrollToEnd({ animated: true })
             }
           />
+          {frontendUrl.length > 0 && <PnMessageTimelineCTA url={frontendUrl} />}
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
       </ScrollView>
