@@ -12,7 +12,12 @@ import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ShowroomSection } from "../ShowroomSection";
 import IconFont from "../../../components/ui/IconFont";
-import { Pictogram, PictogramMap } from "../../../components/core/pictograms";
+import {
+  Pictogram,
+  PictogramMap,
+  SectionPictogram,
+  SectionPictogramMap
+} from "../../../components/core/pictograms";
 
 /* Fake Transparent BG */
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
@@ -347,6 +352,20 @@ export const PictogramsShowroom = () => (
           key={pictogramItemName}
           name={pictogramItemName}
           image={<Pictogram name={pictogramItemName} size={"100%"} />}
+        />
+      ))}
+    </View>
+
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Sections (SVG Components)
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(SectionPictogramMap).map(([pictogramItemName]) => (
+        <PictogramBox
+          dark={true}
+          key={pictogramItemName}
+          name={pictogramItemName}
+          image={<SectionPictogram name={pictogramItemName} size={"100%"} />}
         />
       ))}
     </View>
