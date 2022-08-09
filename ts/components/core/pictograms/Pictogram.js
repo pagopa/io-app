@@ -18,13 +18,22 @@ import ErrorPictogram from "./svg/ErrorPictogram";
 import Umbrella from "./svg/Umbrella";
 import InProgress from "./svg/InProgress";
 import Fireworks from "./svg/Fireworks";
+import Puzzle from "./svg/Puzzle";
+import Question from "./svg/Question";
+import Pin from "./svg/Pin";
+import TimeoutPictogram from "./svg/TimeoutPictogram";
+import UploadFilePictogram from "./svg/UploadFilePictogram";
+import Hourglass from "./svg/Hourglass";
+import TeaBreak from "./svg/TeaBreak";
+import SmsPictogram from "./svg/SmsPictogram";
+import Condom from "./svg/Condom";
+import InboxPictogram from "./svg/InboxPictogram";
 
-const PictogramMap = {
+export const PictogramMap = {
   airBaloon: AirBaloon,
-  heart: Heart,
-  completed: Completed,
-  emailValidation: EmailValidation,
   abacus: Abacus,
+  emailValidation: EmailValidation,
+  inbox: InboxPictogram,
   piggyBank: PiggyBank,
   processing: Processing,
   baloons: Baloons,
@@ -36,7 +45,18 @@ const PictogramMap = {
   error: ErrorPictogram,
   umbrella: Umbrella,
   inProgress: InProgress,
-  fireworks: Fireworks
+  fireworks: Fireworks,
+  puzzle: Puzzle,
+  question: Question,
+  pin: Pin,
+  timeout: TimeoutPictogram,
+  uploadFile: UploadFilePictogram,
+  hourglass: Hourglass,
+  teaBreak: TeaBreak,
+  sms: SmsPictogram,
+  condom: Condom,
+  heart: Heart,
+  completed: Completed
 };
 
 const Pictogram = ({ name, color, ...props }, ref) => {

@@ -12,7 +12,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ShowroomSection } from "../ShowroomSection";
 import IconFont from "../../../components/ui/IconFont";
-import { Pictogram } from "../../../components/core/pictograms";
+import { Pictogram, PictogramMap } from "../../../components/core/pictograms";
 
 /* Fake Transparent BG */
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
@@ -342,74 +342,13 @@ export const PictogramsShowroom = () => (
       Pictograms (SVG Components)
     </H2>
     <View style={styles.itemsWrapper}>
-      <PictogramBox
-        name={"Heart"}
-        image={<Pictogram name="heart" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Air Baloon"}
-        image={<Pictogram name="airBaloon" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Completed"}
-        image={<Pictogram name="completed" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Email Validation"}
-        image={<Pictogram name="emailValidation" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Abacus"}
-        image={<Pictogram name="abacus" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"PiggyBank"}
-        image={<Pictogram name="piggyBank" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Processing"}
-        image={<Pictogram name="processing" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Baloons"}
-        image={<Pictogram name="baloons" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Places"}
-        image={<Pictogram name="places" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Not Available"}
-        image={<Pictogram name="notAvailable" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Airship"}
-        image={<Pictogram name="airship" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Search"}
-        image={<Pictogram name="search" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Unrecognized"}
-        image={<Pictogram name="unrecognized" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Error"}
-        image={<Pictogram name="error" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Umbrella"}
-        image={<Pictogram name="umbrella" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"In Progress"}
-        image={<Pictogram name="inProgress" size={"100%"} />}
-      />
-      <PictogramBox
-        name={"Fireworks"}
-        image={<Pictogram name="fireworks" size={"100%"} />}
-      />
+      {Object.entries(PictogramMap).map(([pictogramItemName]) => (
+        <PictogramBox
+          key={pictogramItemName}
+          name={pictogramItemName}
+          image={<Pictogram name={pictogramItemName} size={"100%"} />}
+        />
+      ))}
     </View>
   </ShowroomSection>
 );
