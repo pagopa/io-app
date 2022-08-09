@@ -134,7 +134,7 @@ export const retrieveNextBarcode = (
  */
 function handleAndroidPermissions() {
   return new Promise<CameraPermissionRequestResult>((resolve, reject) => {
-    void AsyncAlert(
+    AsyncAlert(
       I18n.t("permissionRationale.camera.title"),
       I18n.t("permissionRationale.camera.message"),
       [
@@ -145,7 +145,7 @@ function handleAndroidPermissions() {
             Camera.requestCameraPermission().then(resolve).catch(reject)
         }
       ]
-    );
+    ).catch(reject);
   });
 }
 
