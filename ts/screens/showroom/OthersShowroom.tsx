@@ -13,7 +13,7 @@ import { H5 } from "../../components/core/typography/H5";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { ShowroomSection } from "./ShowroomSection";
+import { ShowroomSection } from "./components/ShowroomSection";
 
 const styles = StyleSheet.create({
   content: {
