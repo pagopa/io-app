@@ -7,7 +7,7 @@ import {
   IOColors,
   IOColorGradients
 } from "../../../components/core/variables/IOColors";
-import { ShowroomSection } from "../ShowroomSection";
+import { ShowroomSection } from "../components/ShowroomSection";
 
 const colorItemGutter = 16;
 
