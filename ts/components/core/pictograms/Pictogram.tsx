@@ -72,13 +72,18 @@ export type SVGPictogramProps = {
   color?: IOColorType;
 };
 
-const Pictogram = ({ name, color, size, ...props }: IOPictogramsProps) => {
+const Pictogram = ({
+  name,
+  color = "aqua",
+  size = 120,
+  ...props
+}: IOPictogramsProps) => {
   const PictogramElement = IOPictograms[name];
   return (
     <PictogramElement
       {...props}
       size={size}
-      color={color && (IOColors[color] as IOColorType)}
+      color={IOColors[color] as IOColorType}
     />
   );
 };

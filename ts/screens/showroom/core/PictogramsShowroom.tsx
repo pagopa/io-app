@@ -283,7 +283,7 @@ export const PictogramsShowroom = () => (
           image={
             <Pictogram
               name={pictogramItemName as IOPictogramType}
-              size={"100%"}
+              size="100%"
             />
           }
         />

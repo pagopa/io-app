@@ -31,8 +31,8 @@ type IOSectionPictogramsProps = {
 
 const SectionPictogram = ({
   name,
-  color,
-  size,
+  color = "greyLight",
+  size = 48,
   ...props
 }: IOSectionPictogramsProps) => {
   const SectionPictogramElement = IOSectionPictograms[name];
@@ -40,7 +40,7 @@ const SectionPictogram = ({
     <SectionPictogramElement
       {...props}
       size={size}
-      color={color && (IOColors[color] as IOColorType)}
+      color={IOColors[color] as IOColorType}
     />
   );
 };

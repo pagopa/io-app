@@ -1,13 +1,9 @@
 import React from "react";
 import { Svg, Path } from "react-native-svg";
-import { IOColors, IOColorType } from "../../variables/IOColors";
+
 import { SVGPictogramProps } from "../Pictogram";
 
-const TimeoutPictogram = ({
-  size = 120,
-  color = IOColors.aqua as IOColorType,
-  ...props
-}: SVGPictogramProps) => (
+const TimeoutPictogram = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fill={color}

@@ -1,11 +1,10 @@
 import React from "react";
 import { Svg, Path } from "react-native-svg";
-import { IOColors, IOColorType } from "../../variables/IOColors";
 import { SVGPictogramProps } from "../Pictogram";
 
 const SectionPictogramProfile = ({
-  size = 48,
-  color = IOColors.greyLight as IOColorType,
+  size,
+  color,
   ...props
 }: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 48 48" {...props}>

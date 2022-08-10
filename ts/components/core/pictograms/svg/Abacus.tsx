@@ -1,14 +1,9 @@
 import React from "react";
 import { Svg, Path } from "react-native-svg";
-import { IOColors, IOColorType } from "../../variables/IOColors";
 import { SVGPictogramProps } from "../Pictogram";
 
-const Abacus = ({
-  size = 120,
-  color = IOColors.aqua as IOColorType,
-  ...props
-}: SVGPictogramProps) => (
-  <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
+const Abacus = ({ size, color, ...props }: SVGPictogramProps) => (
+  <Svg width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fillRule="evenodd"
       clipRule="evenodd"
