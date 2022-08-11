@@ -37,11 +37,7 @@ const SectionPictogram = ({
 }: IOSectionPictogramsProps) => {
   const SectionPictogramElement = IOSectionPictograms[name];
   return (
-    <SectionPictogramElement
-      {...props}
-      size={size}
-      color={IOColors[color] as IOColorType}
-    />
+    <SectionPictogramElement {...props} size={size} color={IOColors[color]} />
   );
 };
 export default SectionPictogram;

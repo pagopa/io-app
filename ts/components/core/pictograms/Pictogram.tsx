@@ -1,4 +1,5 @@
 import React from "react";
+import { ColorValue } from "react-native";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
 import AirBaloon from "./svg/AirBaloon";
@@ -68,8 +69,8 @@ type IOPictogramsProps = {
 };
 
 export type SVGPictogramProps = {
-  size: number | "100%" | undefined;
-  color?: IOColorType;
+  size: number | "100%";
+  color: ColorValue;
 };
 
 const Pictogram = ({
@@ -79,13 +80,7 @@ const Pictogram = ({
   ...props
 }: IOPictogramsProps) => {
   const PictogramElement = IOPictograms[name];
-  return (
-    <PictogramElement
-      {...props}
-      size={size}
-      color={IOColors[color] as IOColorType}
-    />
-  );
+  return <PictogramElement {...props} size={size} color={IOColors[color]} />;
 };
 
 export default Pictogram;
