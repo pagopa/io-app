@@ -2,62 +2,62 @@ import React from "react";
 import { ColorValue } from "react-native";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
-import AirBaloon from "./svg/AirBaloon";
-import Heart from "./svg/Heart";
-import Completed from "./svg/Completed";
-import EmailValidation from "./svg/EmailValidation";
-import Abacus from "./svg/Abacus";
-import PiggyBank from "./svg/PiggyBank";
-import Processing from "./svg/Processing";
-import Baloons from "./svg/Baloons";
-import Places from "./svg/Places";
-import NotAvailable from "./svg/NotAvailable";
-import Airship from "./svg/Airship";
-import SearchPictogram from "./svg/SearchPictogram";
-import Unrecognized from "./svg/Unrecognized";
-import ErrorPictogram from "./svg/ErrorPictogram";
-import Umbrella from "./svg/Umbrella";
-import InProgress from "./svg/InProgress";
-import Fireworks from "./svg/Fireworks";
-import Puzzle from "./svg/Puzzle";
-import Question from "./svg/Question";
-import Pin from "./svg/Pin";
-import TimeoutPictogram from "./svg/TimeoutPictogram";
-import UploadFilePictogram from "./svg/UploadFilePictogram";
-import Hourglass from "./svg/Hourglass";
-import TeaBreak from "./svg/TeaBreak";
-import SmsPictogram from "./svg/SmsPictogram";
-import Condom from "./svg/Condom";
+import PictogramAirBaloon from "./svg/PictogramAirBaloon";
+import PictogramHeart from "./svg/PictogramHeart";
+import PictogramCompleted from "./svg/PictogramCompleted";
+import PictogramEmailValidation from "./svg/PictogramEmailValidation";
+import PictogramAbacus from "./svg/PictogramAbacus";
+import PictogramPiggyBank from "./svg/PictogramPiggyBank";
+import PictogramProcessing from "./svg/PictogramProcessing";
+import PictogramBaloons from "./svg/PictogramBaloons";
+import PictogramPlaces from "./svg/PictogramPlaces";
+import PictogramNotAvailable from "./svg/PictogramNotAvailable";
+import PictogramAirship from "./svg/PictogramAirship";
+import PictogramSearch from "./svg/PictogramSearch";
+import PictogramUnrecognized from "./svg/PictogramUnrecognized";
+import PictogramError from "./svg/PictogramError";
+import PictogramUmbrella from "./svg/PictogramUmbrella";
+import PictogramInProgress from "./svg/PictogramInProgress";
+import PictogramFireworks from "./svg/PictogramFireworks";
+import PictogramPuzzle from "./svg/PictogramPuzzle";
+import PictogramQuestion from "./svg/PictogramQuestion";
+import PictogramPin from "./svg/PictogramPin";
+import PictogramTimeout from "./svg/PictogramTimeout";
+import PictogramUploadFile from "./svg/PictogramUploadFile";
+import PictogramHourglass from "./svg/PictogramHourglass";
+import PictogramTeaBreak from "./svg/PictogramTeaBreak";
+import PictogramSms from "./svg/PictogramSms";
+import PictogramCondom from "./svg/PictogramCondom";
 import InboxPictogram from "./svg/InboxPictogram";
 
 export const IOPictograms = {
-  airBaloon: AirBaloon,
-  abacus: Abacus,
-  emailValidation: EmailValidation,
+  airBaloon: PictogramAirBaloon,
+  abacus: PictogramAbacus,
+  emailValidation: PictogramEmailValidation,
   inbox: InboxPictogram,
-  piggyBank: PiggyBank,
-  processing: Processing,
-  baloons: Baloons,
-  places: Places,
-  notAvailable: NotAvailable,
-  airship: Airship,
-  search: SearchPictogram,
-  unrecognized: Unrecognized,
-  error: ErrorPictogram,
-  umbrella: Umbrella,
-  inProgress: InProgress,
-  fireworks: Fireworks,
-  puzzle: Puzzle,
-  question: Question,
-  pin: Pin,
-  timeout: TimeoutPictogram,
-  uploadFile: UploadFilePictogram,
-  hourglass: Hourglass,
-  teaBreak: TeaBreak,
-  sms: SmsPictogram,
-  condom: Condom,
-  heart: Heart,
-  completed: Completed
+  piggyBank: PictogramPiggyBank,
+  processing: PictogramProcessing,
+  baloons: PictogramBaloons,
+  places: PictogramPlaces,
+  notAvailable: PictogramNotAvailable,
+  airship: PictogramAirship,
+  search: PictogramSearch,
+  unrecognized: PictogramUnrecognized,
+  error: PictogramError,
+  umbrella: PictogramUmbrella,
+  inProgress: PictogramInProgress,
+  fireworks: PictogramFireworks,
+  puzzle: PictogramPuzzle,
+  question: PictogramQuestion,
+  pin: PictogramPin,
+  timeout: PictogramTimeout,
+  uploadFile: PictogramUploadFile,
+  hourglass: PictogramHourglass,
+  teaBreak: PictogramTeaBreak,
+  sms: PictogramSms,
+  condom: PictogramCondom,
+  heart: PictogramHeart,
+  completed: PictogramCompleted
 };
 
 export type IOPictogramType = keyof typeof IOPictograms;

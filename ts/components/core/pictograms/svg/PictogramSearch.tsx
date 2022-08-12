@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const SearchPictogram = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramSearch = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fill={color}
@@ -27,4 +27,4 @@ const SearchPictogram = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default SearchPictogram;
+export default PictogramSearch;

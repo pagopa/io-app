@@ -2,7 +2,11 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const NotAvailable = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramNotAvailable = ({
+  size,
+  color,
+  ...props
+}: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fill={color}
@@ -31,4 +35,4 @@ const NotAvailable = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default NotAvailable;
+export default PictogramNotAvailable;

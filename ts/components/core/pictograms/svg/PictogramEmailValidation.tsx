@@ -3,7 +3,11 @@ import { Svg, Path } from "react-native-svg";
 
 import { SVGPictogramProps } from "../Pictogram";
 
-const EmailValidation = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramEmailValidation = ({
+  size,
+  color,
+  ...props
+}: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fillRule="evenodd"
@@ -26,4 +30,4 @@ const EmailValidation = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default EmailValidation;
+export default PictogramEmailValidation;

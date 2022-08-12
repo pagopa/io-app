@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const Completed = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramCompleted = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fillRule="evenodd"
@@ -19,4 +19,4 @@ const Completed = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default Completed;
+export default PictogramCompleted;

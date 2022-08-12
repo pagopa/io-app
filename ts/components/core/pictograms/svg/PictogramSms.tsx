@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const SmsPictogram = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramSms = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       d="M62.344 38.906a2.345 2.345 0 0 0 0 4.688 2.345 2.345 0 0 0 0-4.688ZM62.344 52.969a2.345 2.345 0 0 0 0 4.687 2.345 2.345 0 0 0 0-4.687ZM29.531 105.938a2.344 2.344 0 0 0 0 4.687 2.345 2.345 0 0 0 0-4.687ZM69.375 41.25a2.344 2.344 0 0 0 2.344 2.344h28.125a2.344 2.344 0 1 0 0-4.688H71.719a2.344 2.344 0 0 0-2.344 2.344ZM99.844 52.969H71.719a2.344 2.344 0 1 0 0 4.687h28.125a2.344 2.344 0 1 0 0-4.687Z"
@@ -19,4 +19,4 @@ const SmsPictogram = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default SmsPictogram;
+export default PictogramSms;

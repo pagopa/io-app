@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const Abacus = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramAbacus = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fillRule="evenodd"
@@ -13,4 +13,4 @@ const Abacus = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default Abacus;
+export default PictogramAbacus;

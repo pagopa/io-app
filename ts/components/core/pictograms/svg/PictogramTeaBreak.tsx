@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const TeaBreak = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramTeaBreak = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fill={color}
@@ -17,4 +17,4 @@ const TeaBreak = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default TeaBreak;
+export default PictogramTeaBreak;

@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const InProgress = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramInProgress = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 120 120" {...props}>
     <Path
       fill={color}
@@ -19,4 +19,4 @@ const InProgress = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default InProgress;
+export default PictogramInProgress;

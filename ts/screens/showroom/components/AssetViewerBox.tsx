@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type PictogramBoxProps = {
+type AssetViewerBoxProps = {
   name: string;
   image: React.ReactNode;
   type?: "vector" | "raster" | "iconFont";
@@ -115,7 +115,7 @@ export const AssetViewerBox = ({
   type = "vector",
   size = "medium",
   colorMode = "light"
-}: PictogramBoxProps) => (
+}: AssetViewerBoxProps) => (
   <View
     style={[
       styles.assetWrapper,
