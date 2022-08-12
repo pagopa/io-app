@@ -68,7 +68,11 @@ export const IconViewerBox = ({
         marginTop: 4
       }}
     >
-      {name && <Text style={styles.iconLabel}>{name}</Text>}
+      {name && (
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.iconLabel}>
+          {name}
+        </Text>
+      )}
     </View>
   </View>
 );
