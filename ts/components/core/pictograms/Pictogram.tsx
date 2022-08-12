@@ -28,13 +28,13 @@ import PictogramHourglass from "./svg/PictogramHourglass";
 import PictogramTeaBreak from "./svg/PictogramTeaBreak";
 import PictogramSms from "./svg/PictogramSms";
 import PictogramCondom from "./svg/PictogramCondom";
-import InboxPictogram from "./svg/InboxPictogram";
+import PictogramInbox from "./svg/PictogramInbox";
 
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
   abacus: PictogramAbacus,
   emailValidation: PictogramEmailValidation,
-  inbox: InboxPictogram,
+  inbox: PictogramInbox,
   piggyBank: PictogramPiggyBank,
   processing: PictogramProcessing,
   baloons: PictogramBaloons,
