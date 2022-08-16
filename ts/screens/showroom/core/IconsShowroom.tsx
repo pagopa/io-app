@@ -11,7 +11,10 @@ import {
   IONavIconType,
   IconBiometric,
   IOBiometricIcons,
-  IOBiometricIconType
+  IOBiometricIconType,
+  IconCategory,
+  IOCategoryIcons,
+  IOCategoryIconType
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
 
@@ -62,6 +65,24 @@ export const IconsShowroom = () => (
           image={
             <IconBiometric
               name={iconItemName as IOBiometricIconType}
+              size="100%"
+            />
+          }
+        />
+      ))}
+    </View>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Categories
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(IOCategoryIcons).map(([iconItemName]) => (
+        <IconViewerBox
+          key={iconItemName}
+          name={iconItemName}
+          size="medium"
+          image={
+            <IconCategory
+              name={iconItemName as IOCategoryIconType}
               size="100%"
             />
           }
