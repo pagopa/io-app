@@ -34,9 +34,9 @@ import IconMessage from "./svg/IconMessage";
 import IconInstitution from "./svg/IconInstitution";
 import IconDocument from "./svg/IconDocument";
 import IconDocumentSign from "./svg/IconDocumentSign";
+import IconGiacenza from "./svg/IconGiacenza";
 import IconChat from "./svg/IconChat";
 import IconAgreement from "./svg/IconAgreement";
-import IconBarcode from "./svg/IconBarcode";
 import IconSave from "./svg/IconSave";
 import IconCompleted from "./svg/IconCompleted";
 import IconCompletedBig from "./svg/IconCompletedBig";
@@ -52,12 +52,12 @@ import IconAdd from "./svg/IconAdd";
 import IconAddAlt from "./svg/IconAddAlt";
 import IconCoggle from "./svg/IconCoggle";
 import IconCoggleAlt from "./svg/IconCoggleAlt";
-import IconLadybug from "./svg/IconLadybug";
 import IconWarning from "./svg/IconWarning";
 import IconInfo from "./svg/IconInfo";
 import IconNotice from "./svg/IconNotice";
 import IconError from "./svg/IconError";
 import IconReload from "./svg/IconReload";
+import IconHistory from "./svg/IconHistory";
 import IconEdit from "./svg/IconEdit";
 import IconBattery from "./svg/IconBattery";
 import IconTrashcan from "./svg/IconTrashcan";
@@ -74,6 +74,20 @@ import IconStarEmpty from "./svg/IconStarEmpty";
 import IconAbacus from "./svg/IconAbacus";
 import IconSwitchOff from "./svg/IconSwitchOff";
 import IconDotMenu from "./svg/IconDotMenu";
+import IconBarcode from "./svg/IconBarcode";
+import IconLogin from "./svg/IconLogin";
+import IconLadybug from "./svg/IconLadybug";
+import IconTag from "./svg/IconTag";
+import IconGallery from "./svg/IconGallery";
+import IconCancel from "./svg/IconCancel";
+import IconQuestion from "./svg/IconQuestion";
+import IconSearch from "./svg/IconSearch";
+import IconArrowRight from "./svg/IconArrowRight";
+import IconArrowLeft from "./svg/IconArrowLeft";
+import IconArrowDown from "./svg/IconArrowDown";
+import IconArrowUp from "./svg/IconArrowUp";
+import IconClose from "./svg/IconClose";
+import IconCloseSmall from "./svg/IconCloseSmall";
 
 export const IOIcons = {
   app: IconApp /* io-logo */,
@@ -110,7 +124,7 @@ export const IOIcons = {
   doc: IconDocument,
   docSign: IconDocumentSign,
   docAgree: IconAgreement,
-  barcode: IconBarcode,
+  docGiacenza: IconGiacenza,
   save: IconSave /* io-save */,
   completed: IconCompleted,
   completedBig: IconCompletedBig /* io-tick-big */,
@@ -131,12 +145,12 @@ export const IOIcons = {
   info: IconInfo /* io-info */,
   error: IconError /* io-error */,
   reload: IconReload /* io-reload */,
-  edit: IconEdit,
+  history: IconHistory,
+  edit: IconEdit /* io-edit */,
   battery: IconBattery,
   trashcan: IconTrashcan,
   trashcanAlt: IconTrashcanAlt /* io-trash */,
   location: IconLocation,
-  ladybug: IconLadybug,
   calendar: IconCalendar /* io-calendar */,
   calendarAlt: IconCalendarAlt /* io-calendario */,
   profile: IconProfile,
@@ -147,7 +161,21 @@ export const IOIcons = {
   magicWand: IconMagicWand,
   abacus: IconAbacus /* io-abacus */,
   switchOff: IconSwitchOff,
-  dotMenu: IconDotMenu /* io-more */
+  dotMenu: IconDotMenu /* io-more */,
+  barcode: IconBarcode,
+  login: IconLogin,
+  ladybug: IconLadybug,
+  tag: IconTag,
+  gallery: IconGallery,
+  cancel: IconCancel /* io-cancel */,
+  help: IconQuestion /* io-question */,
+  search: IconSearch /* io-search */,
+  arrowRight: IconArrowRight /* io-right */,
+  arrowLeft: IconArrowLeft /* io-back */,
+  arrowDown: IconArrowDown,
+  arrowUp: IconArrowUp,
+  close: IconClose /* io-close */,
+  closeSmall: IconCloseSmall
 } as const;
 
 export type IOIconType = keyof typeof IOIcons;
