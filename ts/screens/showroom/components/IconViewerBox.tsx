@@ -23,6 +23,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
+  nameWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 4
+  },
   iconItem: {
     overflow: "hidden",
     position: "relative",
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0, 0, 0, 0.1)",
     borderWidth: 1
   },
-  iconItemSmall: {
+  iconItemLarger: {
     padding: 12
   },
   iconLabel: {
@@ -60,14 +66,17 @@ type IconViewerBoxProps = {
 const sizeMap = {
   small: {
     wrapper: styles.iconWrapperSmall,
+    item: styles.iconItemLarger,
     label: styles.iconLabelSmall
   },
   medium: {
     wrapper: styles.iconWrapperMedium,
+    item: null,
     label: styles.iconLabelMedium
   },
   large: {
     wrapper: styles.iconWrapperLarge,
+    item: styles.iconItemLarger,
     label: styles.iconLabelLarge
   }
 };
@@ -78,19 +87,8 @@ export const IconViewerBox = ({
   size = "small"
 }: IconViewerBoxProps) => (
   <View style={[styles.iconWrapper, sizeMap[size].wrapper]}>
-    <View
-      style={[styles.iconItem, size === "small" ? styles.iconItemSmall : {}]}
-    >
-      {image}
-    </View>
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 4
-      }}
-    >
+    <View style={[styles.iconItem, sizeMap[size].item]}>{image}</View>
+    <View style={styles.nameWrapper}>
       {name && (
         <Text
           numberOfLines={1}

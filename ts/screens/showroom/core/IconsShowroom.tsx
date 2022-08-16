@@ -8,10 +8,12 @@ import {
   IOIconType,
   IconNav,
   IONavIcons,
-  IONavIconType
+  IONavIconType,
+  IconBiometric,
+  IOBiometricIcons,
+  IOBiometricIconType
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
-import {} from "../../../components/core/icons";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -45,6 +47,24 @@ export const IconsShowroom = () => (
           name={iconItemName}
           size="medium"
           image={<IconNav name={iconItemName as IONavIconType} size="100%" />}
+        />
+      ))}
+    </View>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Biometric
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(IOBiometricIcons).map(([iconItemName]) => (
+        <IconViewerBox
+          key={iconItemName}
+          name={iconItemName}
+          size="large"
+          image={
+            <IconBiometric
+              name={iconItemName as IOBiometricIconType}
+              size="100%"
+            />
+          }
         />
       ))}
     </View>
