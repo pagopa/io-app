@@ -6,13 +6,18 @@ export const iconItemGutter = 8;
 
 const styles = StyleSheet.create({
   iconWrapper: {
-    width: "25%",
     justifyContent: "flex-start",
     marginBottom: 16,
     paddingHorizontal: iconItemGutter / 2
   },
   iconWrapperSmall: {
     width: `${100 / 6}%`
+  },
+  iconWrapperMedium: {
+    width: "20%"
+  },
+  iconWrapperLarge: {
+    width: "25%"
   },
   image: {
     width: "100%",
@@ -33,15 +38,38 @@ const styles = StyleSheet.create({
     padding: 12
   },
   iconLabel: {
-    fontSize: 9,
     color: IOColors.bluegrey
+  },
+  iconLabelSmall: {
+    fontSize: 9
+  },
+  iconLabelMedium: {
+    fontSize: 10
+  },
+  iconLabelLarge: {
+    fontSize: 11
   }
 });
 
 type IconViewerBoxProps = {
   name: string;
   image: React.ReactNode;
-  size?: "small" | "medium";
+  size?: "small" | "medium" | "large";
+};
+
+const sizeMap = {
+  small: {
+    wrapper: styles.iconWrapperSmall,
+    label: styles.iconLabelSmall
+  },
+  medium: {
+    wrapper: styles.iconWrapperMedium,
+    label: styles.iconLabelMedium
+  },
+  large: {
+    wrapper: styles.iconWrapperLarge,
+    label: styles.iconLabelLarge
+  }
 };
 
 export const IconViewerBox = ({
@@ -49,12 +77,7 @@ export const IconViewerBox = ({
   image,
   size = "small"
 }: IconViewerBoxProps) => (
-  <View
-    style={[
-      styles.iconWrapper,
-      size === "small" ? styles.iconWrapperSmall : {}
-    ]}
-  >
+  <View style={[styles.iconWrapper, sizeMap[size].wrapper]}>
     <View
       style={[styles.iconItem, size === "small" ? styles.iconItemSmall : {}]}
     >
@@ -69,7 +92,11 @@ export const IconViewerBox = ({
       }}
     >
       {name && (
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.iconLabel}>
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={[styles.iconLabel, sizeMap[size].label]}
+        >
           {name}
         </Text>
       )}

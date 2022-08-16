@@ -191,7 +191,12 @@ export type SVGIconProps = {
   color: ColorValue;
 };
 
-const Icon = ({ name, color = "blue", size = 24, ...props }: IOIconsProps) => {
+const Icon = ({
+  name,
+  color = "bluegrey",
+  size = 24,
+  ...props
+}: IOIconsProps) => {
   const IconElement = IOIcons[name];
   return <IconElement {...props} size={size} color={IOColors[color]} />;
 };
