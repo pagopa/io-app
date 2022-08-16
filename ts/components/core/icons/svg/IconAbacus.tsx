@@ -1,5 +1,5 @@
 import React from "react";
-import { Svg, Path, G } from "react-native-svg";
+import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
 const IconAbacus = ({ size, color }: SVGIconProps) => (

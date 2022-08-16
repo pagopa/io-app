@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconTelephone = ({ size, color }: SVGIconProps) => (
+const IconPhone = ({ size, color }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24">
     <Path
       fillRule="evenodd"
@@ -19,4 +19,4 @@ const IconTelephone = ({ size, color }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconTelephone;
+export default IconPhone;
