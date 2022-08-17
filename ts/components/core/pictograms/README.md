@@ -11,7 +11,7 @@ There are different sets:
 - **Sections**: `PictogramSection…`
 
 ## Add a new pictogram
-If you have to add a new pictogram in the `General` set, open the `Pictogram.tsx` file and import the React component:
+If you want to add a new pictogram in the `General` set, open the `Pictogram.tsx` file and import the React component:
 ```jsx
 […]
 import PictogramAirBaloon from "./svg/PictogramAirBaloon";
