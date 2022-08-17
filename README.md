@@ -514,12 +514,12 @@ Most of the images used in the app can be rendered as vector assets using SVG im
 - **Pictograms**: assets with an intended size greather than `56px`
 - **Icons**: assets with an intended size between `16px` and `56px`
 
-Once you understand which group you must put the asset in, you must take into consideration the following guidelines to improve future maintenance:
+Once you understand which group you must put the asset in, you must take into consideration the following instructions for the best result in terms of quality and future maintenance:
 
-1. In your user interface design app (Figma/Sketch) you should make the vector path as simple as possible. Follow these instructions for the best result:
+1. In your user interface design app (Figma/Sketch) make the vector path as simple as possible:
     * Detach the symbol instance to avoid destructive actions to the original source component. Feel free to use a draft or disposable project document.
     * Outline all the present strokes (unless required for dynamic stroke width, but we don't manage this case at the moment)
-    * Flatten all the paths into one
+    * Select all the different paths and flatten into one. Now you should have a single vector layer.
     * Make sure your vector path is centered (both vertically and horizontally) in a square
 2. Export your SVG with `1×` preset
 3. Delete `width` and `height` attributes and leave the original `viewBox` attribute. You could easily process the image using online editors like [SVGOmg](https://jakearchibald.github.io/svgomg/) (enable `Prefer viewBox to width/height`)
@@ -534,12 +534,11 @@ Once you understand which group you must put the asset in, you must take into co
   />
 </Svg>
 ```
-7. Add the key associated to the asset in the corresponding sets. If you want to learn more, read the contextual documentation:
+7. Add the key associated to the single pictogram/icon in the corresponding set. If you want to learn more, read the contextual documentation:
     * [Pictograms](ts/components/core/pictograms)
     * [Icons](ts/components/core/icons)
 
 8. There's no need to add the new asset in the `UI Showroom` because it happens automatically.
-
 
 ### Io-Icon-Font
 **Note**: ⚠️ Deprecated
