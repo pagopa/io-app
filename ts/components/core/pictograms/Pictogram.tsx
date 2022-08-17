@@ -6,6 +6,7 @@ import PictogramAirBaloon from "./svg/PictogramAirBaloon";
 import PictogramHeart from "./svg/PictogramHeart";
 import PictogramCompleted from "./svg/PictogramCompleted";
 import PictogramEmailValidation from "./svg/PictogramEmailValidation";
+import PictogramEmailToValidate from "./svg/PictogramEmailToValidate";
 import PictogramAbacus from "./svg/PictogramAbacus";
 import PictogramPiggyBank from "./svg/PictogramPiggyBank";
 import PictogramProcessing from "./svg/PictogramProcessing";
@@ -29,11 +30,13 @@ import PictogramTeaBreak from "./svg/PictogramTeaBreak";
 import PictogramSms from "./svg/PictogramSms";
 import PictogramCondom from "./svg/PictogramCondom";
 import PictogramInbox from "./svg/PictogramInbox";
+import PictogramBeerMug from "./svg/PictogramBeerMug";
 
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
   abacus: PictogramAbacus,
   emailValidation: PictogramEmailValidation,
+  emailToValidate: PictogramEmailToValidate,
   inbox: PictogramInbox,
   piggyBank: PictogramPiggyBank,
   processing: PictogramProcessing,
@@ -54,6 +57,7 @@ export const IOPictograms = {
   uploadFile: PictogramUploadFile,
   hourglass: PictogramHourglass,
   teaBreak: PictogramTeaBreak,
+  beerMug: PictogramBeerMug,
   sms: PictogramSms,
   condom: PictogramCondom,
   heart: PictogramHeart,
