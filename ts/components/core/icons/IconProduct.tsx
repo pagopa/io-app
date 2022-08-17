@@ -3,8 +3,10 @@ import { IOColors, IOColorType } from "../variables/IOColors";
 
 /* Icons */
 import IconProductPagoPA from "./svg/IconProductPagoPA";
+import IconProductIOApp from "./svg/IconProductIOApp";
 
 export const IOProductIcons = {
+  ioApp: IconProductIOApp /* io-logo */,
   pagoPA: IconProductPagoPA /* io-pagopa */
 } as const;
 
@@ -18,7 +20,7 @@ type IOProductIconsProps = {
 
 const IconProduct = ({
   name,
-  color = "grey",
+  color = "bluegrey",
   size = 56,
   ...props
 }: IOProductIconsProps) => {

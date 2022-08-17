@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconApp = ({ size, color }: SVGIconProps) => (
+const IconProductIOApp = ({ size, color }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24">
     <Path d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill={color} />
     <Path
@@ -25,4 +25,4 @@ const IconApp = ({ size, color }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconApp;
+export default IconProductIOApp;

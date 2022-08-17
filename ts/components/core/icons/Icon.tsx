@@ -2,7 +2,7 @@ import React from "react";
 import { ColorValue } from "react-native";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
-import IconApp from "./svg/IconApp";
+/* Icons */
 import IconSpid from "./svg/IconSpid";
 import IconCie from "./svg/IconCie";
 import IconQrCode from "./svg/IconQrCode";
@@ -98,12 +98,12 @@ import IconAttachment from "./svg/IconAttachment";
 import IconExternalLink from "./svg/IconExternalLink";
 
 export const IOIcons = {
-  app: IconApp /* io-logo */,
   spid: IconSpid,
   cie: IconCie /* io-cie */,
   qrCode: IconQrCode /* io-qr */,
   qrCodeAlt: IconQrCodeAlt,
   website: IconWebsite,
+  abacus: IconAbacus /* io-abacus */,
   home: IconHome,
   copy: IconCopy /* io-copy */,
   selfCert: IconSelfCertification,
@@ -172,7 +172,6 @@ export const IOIcons = {
   magicWand: IconMagicWand,
   starFilled: IconStarFilled /* io-filled-star */,
   starEmpty: IconStarEmpty /* io-empty-star */,
-  abacus: IconAbacus /* io-abacus */,
   switchOff: IconSwitchOff,
   deviceSignal: IconDeviceSignal,
   dotMenu: IconDotMenu /* io-more */,
