@@ -14,6 +14,8 @@ There are different sets:
 - **Product**: `IconProduct…`
 
 ## Add a new icon
+First of all, follow the instructions stated in the main README (`Vector graphics` section).
+
 If you want to add a new icon in the `General` set, open the `Icon.tsx` file and import the React component:
 ```jsx
 […]

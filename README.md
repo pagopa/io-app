@@ -525,20 +525,25 @@ Once you understand which group you must put the asset in, you must take into co
 3. Delete `width` and `height` attributes and leave the original `viewBox` attribute. You could easily process the image using online editors like [SVGOmg](https://jakearchibald.github.io/svgomg/) (enable `Prefer viewBox to width/height`)
 4. To easily preview the available SVG assets, include the original SVG in the `originals` subfolder **with the same filename of your corresponding React component**.
 5. If your asset is part of one of the subset, make sure to use the same prefix of the corresponding set. *E.g*: If you want to add a new pictogram related to a section, you should use the `PictogramSection…` prefix.
-6. Add the dynamic size and colour replacing the hardcoded values with the corresponding props:
+6. Copy all the `<path>` elements into a new React component and replace the original `<path>` with the element `<Path>` (capital P) from the `react-native-svg` package
+7. Add the dynamic size and colour replacing the hardcoded values with the corresponding props:
 ```jsx
-<Svg width={size} height={size} viewBox="0 0 24 24">
-  <Path
-    d="M13.615 …"
-    fill={color}
-  />
-</Svg>
+import { Svg, Path } from "react-native-svg";
+
+const IconSpid = ({ size, color }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path
+      d="M13.615 …"
+      fill={color}
+    />
+  </Svg>
+);
 ```
-7. Add the key associated to the single pictogram/icon in the corresponding set. If you want to learn more, read the contextual documentation:
+8. Add the key associated to the single pictogram/icon in the corresponding set. If you want to learn more, read the contextual documentation:
     * [Pictograms](ts/components/core/pictograms)
     * [Icons](ts/components/core/icons)
 
-8. There's no need to add the new asset in the `UI Showroom` because it happens automatically.
+9. There's no need to add the new pictogram/icon in the `UI Showroom` because it happens automatically.
 
 ### Io-Icon-Font
 **Note**: ⚠️ Deprecated
