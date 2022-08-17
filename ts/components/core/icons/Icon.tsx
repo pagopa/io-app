@@ -95,6 +95,7 @@ import IconEmailLegal from "./svg/IconEmailLegal";
 import IconDocumentAttachment from "./svg/IconDocumentAttachment";
 import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconAttachment from "./svg/IconAttachment";
+import IconExternalLink from "./svg/IconExternalLink";
 
 export const IOIcons = {
   app: IconApp /* io-logo */,
@@ -181,6 +182,7 @@ export const IOIcons = {
   ladybug: IconLadybug,
   tag: IconTag,
   gallery: IconGallery,
+  externalLink: IconExternalLink,
   cancel: IconCancel /* io-cancel */,
   help: IconQuestion /* io-question */,
   search: IconSearch /* io-search */,
