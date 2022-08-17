@@ -6,3 +6,5 @@ export { default as IconBiometric } from "./IconBiometric";
 export * from "./IconBiometric";
 export { default as IconCategory } from "./IconCategory";
 export * from "./IconCategory";
+export { default as IconProduct } from "./IconProduct";
+export * from "./IconProduct";
