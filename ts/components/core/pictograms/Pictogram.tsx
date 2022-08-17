@@ -35,8 +35,8 @@ import PictogramBeerMug from "./svg/PictogramBeerMug";
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
   abacus: PictogramAbacus,
-  emailValidation: PictogramEmailValidation,
-  emailToValidate: PictogramEmailToValidate,
+  emailValidation: PictogramEmailValidation /* io-email-validated */,
+  emailToValidate: PictogramEmailToValidate /* io-email-to-validate */,
   inbox: PictogramInbox,
   piggyBank: PictogramPiggyBank,
   processing: PictogramProcessing,
@@ -49,7 +49,7 @@ export const IOPictograms = {
   error: PictogramError,
   umbrella: PictogramUmbrella,
   inProgress: PictogramInProgress,
-  fireworks: PictogramFireworks,
+  fireworks: PictogramFireworks /* io-fireworks */,
   puzzle: PictogramPuzzle,
   question: PictogramQuestion,
   pin: PictogramPin,
@@ -60,7 +60,7 @@ export const IOPictograms = {
   beerMug: PictogramBeerMug,
   sms: PictogramSms,
   condom: PictogramCondom,
-  heart: PictogramHeart,
+  heart: PictogramHeart /* io-heart */,
   completed: PictogramCompleted
 };
 

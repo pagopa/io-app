@@ -12,10 +12,10 @@ import SectionPictogramSettings from "./svg/SectionPictogramSettings";
 import SectionPictogramSmile from "./svg/SectionPictogramSmile";
 
 export const IOSectionPictograms = {
-  messages: SectionPictogramMessages,
+  messages: SectionPictogramMessages /* io-home-messaggi */,
   payments: SectionPictogramPayments,
   documents: SectionPictogramDocuments,
-  services: SectionPictogramServices,
+  services: SectionPictogramServices /* io-home-servizi */,
   profile: SectionPictogramProfile,
   settings: SectionPictogramSettings,
   smile: SectionPictogramSmile
