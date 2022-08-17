@@ -13,7 +13,7 @@ import {
   Pictogram,
   IOPictograms,
   IOPictogramType,
-  SectionPictogram,
+  PictogramSection,
   IOSectionPictograms,
   IOSectionPictogramType
 } from "../../../components/core/pictograms";
@@ -301,7 +301,7 @@ export const PictogramsShowroom = () => (
           key={pictogramItemName}
           name={pictogramItemName}
           image={
-            <SectionPictogram
+            <PictogramSection
               name={pictogramItemName as IOSectionPictogramType}
               size="100%"
             />

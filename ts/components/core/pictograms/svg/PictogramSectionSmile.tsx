@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const SectionPictogramSmile = ({
+const PictogramSectionSmile = ({
   size,
   color,
   ...props
@@ -15,4 +15,4 @@ const SectionPictogramSmile = ({
   </Svg>
 );
 
-export default SectionPictogramSmile;
+export default PictogramSectionSmile;

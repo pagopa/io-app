@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const SectionPictogramServices = ({
+const PictogramSectionServices = ({
   size,
   color,
   ...props
@@ -35,4 +35,4 @@ const SectionPictogramServices = ({
   </Svg>
 );
 
-export default SectionPictogramServices;
+export default PictogramSectionServices;
