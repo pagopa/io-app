@@ -12,6 +12,7 @@ import IconHome from "./svg/IconHome";
 import IconCopy from "./svg/IconCopy";
 import IconSelfCertification from "./svg/IconSelfCertification";
 import IconPEC from "./svg/IconPEC";
+import IconMessageLegal from "./svg/IconMessageLegal";
 import IconHourglass from "./svg/IconHourglass";
 import IconShare from "./svg/IconShare";
 import IconLockOnAlt from "./svg/IconLockOnAlt";
@@ -46,6 +47,7 @@ import IconCreditCard from "./svg/IconCreditCard";
 import IconCreditCardAlt from "./svg/IconCreditCardAlt";
 import IconBonus from "./svg/IconBonus";
 import IconTransactions from "./svg/IconTransactions";
+import IconCurrencyEuro from "./svg/IconCurrencyEuro";
 import IconAmount from "./svg/IconAmount";
 import IconPSP from "./svg/IconPSP";
 import IconAdd from "./svg/IconAdd";
@@ -73,6 +75,7 @@ import IconStarFilled from "./svg/IconStarFilled";
 import IconStarEmpty from "./svg/IconStarEmpty";
 import IconAbacus from "./svg/IconAbacus";
 import IconSwitchOff from "./svg/IconSwitchOff";
+import IconDeviceSignal from "./svg/IconDeviceSignal";
 import IconDotMenu from "./svg/IconDotMenu";
 import IconBarcode from "./svg/IconBarcode";
 import IconLogin from "./svg/IconLogin";
@@ -88,6 +91,10 @@ import IconArrowDown from "./svg/IconArrowDown";
 import IconArrowUp from "./svg/IconArrowUp";
 import IconClose from "./svg/IconClose";
 import IconCloseSmall from "./svg/IconCloseSmall";
+import IconEmailLegal from "./svg/IconEmailLegal";
+import IconDocumentAttachment from "./svg/IconDocumentAttachment";
+import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
+import IconAttachment from "./svg/IconAttachment";
 
 export const IOIcons = {
   app: IconApp /* io-logo */,
@@ -119,13 +126,19 @@ export const IOIcons = {
   email: IconEmail,
   envelope: IconEnvelope /* io-envelope */,
   pec: IconPEC,
+  emailLegal: IconEmailLegal,
+  messageLegal: IconMessageLegal,
   message: IconMessage /* io-send-message */,
   chat: IconChat,
   doc: IconDocument,
   docSign: IconDocumentSign,
   docAgree: IconAgreement,
   docGiacenza: IconGiacenza,
-  save: IconSave /* io-save */,
+  docAttach: IconDocumentAttachment,
+  docAttachPDF: IconDocumentAttachmentPDF,
+  attachment: IconAttachment,
+  add: IconAdd /* io-plus */,
+  addAlt: IconAddAlt,
   completed: IconCompleted,
   completedBig: IconCompletedBig /* io-tick-big */,
   success: IconSuccess /* io-success */,
@@ -134,10 +147,10 @@ export const IOIcons = {
   creditCardAlt: IconCreditCardAlt /* io-carta */,
   bonus: IconBonus,
   transactions: IconTransactions /* io-transactions */,
+  currencyEuro: IconCurrencyEuro,
   amount: IconAmount,
   psp: IconPSP,
-  add: IconAdd /* io-plus */,
-  addAlt: IconAddAlt,
+  location: IconLocation,
   coggle: IconCoggle /* io-coggle */,
   coggleAlt: IconCoggleAlt /* Io-preferenze */,
   warning: IconWarning /* io-warning */,
@@ -150,19 +163,20 @@ export const IOIcons = {
   battery: IconBattery,
   trashcan: IconTrashcan,
   trashcanAlt: IconTrashcanAlt /* io-trash */,
-  location: IconLocation,
   calendar: IconCalendar /* io-calendar */,
   calendarAlt: IconCalendarAlt /* io-calendario */,
   profile: IconProfile,
   profileAlt: IconProfileAlt /* io-titolare */,
   profileExperiment: IconProfileExperiment /* io-profilo-exp */,
+  magicWand: IconMagicWand,
   starFilled: IconStarFilled /* io-filled-star */,
   starEmpty: IconStarEmpty /* io-empty-star */,
-  magicWand: IconMagicWand,
   abacus: IconAbacus /* io-abacus */,
   switchOff: IconSwitchOff,
+  deviceSignal: IconDeviceSignal,
   dotMenu: IconDotMenu /* io-more */,
   barcode: IconBarcode,
+  save: IconSave /* io-save */,
   login: IconLogin,
   ladybug: IconLadybug,
   tag: IconTag,
