@@ -49,6 +49,7 @@
   - [Connection monitoring](#connection-monitoring)
   - [Deep linking](#deep-linking)
   - [Fonts](#fonts)
+  - [Vector graphics](#vector-graphics)
   - [Io-Icon-Font](#io-icon-font) (⚠️ deprecated)
   - [Theming](#theming)
   - [Custom UI components](#custom-ui-components)
@@ -516,10 +517,10 @@ Most of the images used in the app can be rendered as vector assets using SVG im
 Once you understand which group you must put the asset in, you must take into consideration the following guidelines to improve future maintenance:
 
 1. In your user interface design app (Figma/Sketch) you should make the vector path as simple as possible. Follow these instructions for the best result:
-  * Detach the symbol instance to avoid destructive actions to the original source component. Feel free to use a draft or disposable project document.
-  * Outline all the present strokes (unless required for dynamic stroke width, but we don't manage this case at the moment)
-  * Flatten all the paths into one
-  * Make sure your vector path is centered (both vertically and horizontally) in a square
+    * Detach the symbol instance to avoid destructive actions to the original source component. Feel free to use a draft or disposable project document.
+    * Outline all the present strokes (unless required for dynamic stroke width, but we don't manage this case at the moment)
+    * Flatten all the paths into one
+    * Make sure your vector path is centered (both vertically and horizontally) in a square
 2. Export your SVG with `1×` preset
 3. Delete `width` and `height` attributes and leave the original `viewBox` attribute. You could easily process the image using online editors like [SVGOmg](https://jakearchibald.github.io/svgomg/) (enable `Prefer viewBox to width/height`)
 4. To easily preview the available SVG assets, include the original SVG in the `originals` subfolder **with the same filename of your corresponding React component**.
@@ -534,8 +535,8 @@ Once you understand which group you must put the asset in, you must take into co
 </Svg>
 ```
 7. Add the key associated to the asset in the corresponding sets. If you want to learn more, read the contextual documentation:
-  * [Pictograms](ts/components/core/pictograms)
-  * [Icons](ts/components/core/icons)
+    * [Pictograms](ts/components/core/pictograms)
+    * [Icons](ts/components/core/icons)
 
 8. There's no need to add the new asset in the `UI Showroom` because it happens automatically.
 
