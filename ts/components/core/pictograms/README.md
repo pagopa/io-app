@@ -11,6 +11,8 @@ There are different sets:
 - **Sections**: `PictogramSection…`
 
 ## Add a new pictogram
+First of all, follow the instructions stated in the main README (`Vector graphics` section).
+
 If you want to add a new pictogram in the `General` set, open the `Pictogram.tsx` file and import the React component:
 ```jsx
 […]
