@@ -153,7 +153,7 @@ export const IOIcons = {
   psp: IconPSP,
   location: IconLocation,
   coggle: IconCoggle /* io-coggle */,
-  coggleAlt: IconCoggleAlt /* Io-preferenze */,
+  coggleAlt: IconCoggleAlt /* io-preferenze */,
   warning: IconWarning /* io-warning */,
   notice: IconNotice /* io-notice */,
   info: IconInfo /* io-info */,
