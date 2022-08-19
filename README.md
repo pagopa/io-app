@@ -510,9 +510,10 @@ while in iOS the code to be applied is:
 To manage fonts and variants more easily, we have created utility functions within the file [ts/theme/fonts.ts](ts/theme/fonts.ts).
 
 ### Vector graphics
-Most of the images used in the app can be rendered as vector assets using SVG image format. Currently we have two main groups:
+Most of the images used in the app can be rendered as vector assets using SVG image format. Currently we have these groups:
 - **Pictograms**: assets with an intended size greather than `56px`
 - **Icons**: assets with an intended size between `16px` and `56px`
+- **Logos**
 
 Once you understand which group you must put the asset in, you must take into consideration the following instructions for the best result in terms of quality and future maintenance:
 
@@ -526,7 +527,7 @@ Once you understand which group you must put the asset in, you must take into co
 4. To easily preview the available SVG assets, include the original SVG in the `originals` subfolder **with the same filename of your corresponding React component**.
 5. If your asset is part of one of the subset, make sure to use the same prefix of the corresponding set. *E.g*: If you want to add a new pictogram related to a section, you should use the `PictogramSection…` prefix.
 6. Copy all the `<path>` elements into a new React component and replace the original `<path>` with the element `<Path>` (capital P) from the `react-native-svg` package
-7. Add the dynamic size and colour replacing the hardcoded values with the corresponding props:
+7. Add the dynamic size and colour (if required), replacing the hardcoded values with the corresponding props:
 ```jsx
 import { Svg, Path } from "react-native-svg";
 
