@@ -25,11 +25,6 @@ const styles = StyleSheet.create({
   assetWrapperSmall: {
     width: "33%"
   },
-  bgImage: {
-    position: "absolute",
-    width: "150%",
-    height: "150%"
-  },
   image: {
     width: "100%",
     height: "100%"

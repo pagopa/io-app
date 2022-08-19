@@ -22,10 +22,6 @@ const styles = StyleSheet.create({
   iconWrapperAuto: {
     width: "auto"
   },
-  image: {
-    width: "100%",
-    height: "100%"
-  },
   nameWrapper: {
     display: "flex",
     flexDirection: "row",
@@ -34,9 +30,8 @@ const styles = StyleSheet.create({
   },
   iconItem: {
     overflow: "hidden",
-    position: "relative",
-    aspectRatio: 1,
     borderRadius: 8,
+    aspectRatio: 1,
     padding: 16,
     alignItems: "center",
     justifyContent: "center",
