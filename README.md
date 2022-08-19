@@ -542,6 +542,7 @@ const IconSpid = ({ size, color }: SVGIconProps) => (
 8. Add the key associated to the single pictogram/icon in the corresponding set. If you want to learn more, read the contextual documentation:
     * [Pictograms](ts/components/core/pictograms)
     * [Icons](ts/components/core/icons)
+    * [Logos](ts/components/core/logos)
 
 9. There's no need to add the new pictogram/icon in the `UI Showroom` because it happens automatically.
 
