@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0, 0, 0, 0.1)",
     borderWidth: 1
   },
-  iconItemLarger: {
+  iconItemSmall: {
     padding: 12
   },
   iconLabel: {
@@ -70,7 +70,7 @@ type IconViewerBoxProps = {
 const sizeMap = {
   small: {
     wrapper: styles.iconWrapperSmall,
-    item: styles.iconItemLarger,
+    item: styles.iconItemSmall,
     label: styles.iconLabelSmall
   },
   medium: {
@@ -80,7 +80,7 @@ const sizeMap = {
   },
   large: {
     wrapper: styles.iconWrapperLarge,
-    item: styles.iconItemLarger,
+    item: null,
     label: styles.iconLabelLarge
   }
 };

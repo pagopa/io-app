@@ -1,5 +1,5 @@
 import React from "react";
-import { Svg, Path, Rect } from "react-native-svg";
+import { Svg, Path } from "react-native-svg";
 import { SVGLogoProps } from "../LogoPayment";
 
 const LogoPaymentPagoBancomat = ({ size }: SVGLogoProps) => (
